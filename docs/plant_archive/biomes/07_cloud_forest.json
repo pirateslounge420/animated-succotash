@@ -1,0 +1,1460 @@
+{
+ "key": "CLOUD_FOREST",
+ "name": "Montane / cloud forest",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Clusia",
+    "genus": "Clusia",
+    "species": "multiflora",
+    "origin": "Northern Andes and Central America",
+    "shape": "umbrella",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     1200,
+     3200
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#3A8535",
+    "accent": "#E8B0B0",
+    "source": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO / Wikipedia",
+    "traits": {
+     "genus": "Clusia",
+     "species": "multiflora",
+     "native_range": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.6,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7A7268",
+     "color_2": "#5A524A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "umbrella",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.15,
+      0.35
+     ],
+     "buttress": "low",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "flat-topped dense dark crown, thick leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds wrapped in bright orange-red arils are dropped by birds, often onto branches or rock crevices. The seedling has thick, glossy, paddle-shaped (obovate) leaves in opposite pairs like the adult, and on a host tree sends long aerial roots to the ground before becoming self-supporting. In the open it grows as a stout single-stemmed sapling.",
+     "confidence": "estimated",
+     "source": "Pipoly & Graf / Flora of Ecuador and Colombia (Clusia multiflora: dioecious tree or hemiepiphyte 5-20 m in Andean and Central American montane forest, white to pink flowers with resin rewards, capsules splitting to show arillate seeds); growth and ages estimated from Clusia literature"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 5,
+     "flower_colour": "#f5e6ea",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#6e8e4a",
+     "ripe_colour": "#8c6a3e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Clusia pollination studies (Bittrich & Amaral: resin-collecting bees incl. stingless bees on male and female flowers); Flora of Ecuador (Clusia multiflora many-flowered cymes, white to pink cup flowers; globose capsule opening by valves to show seeds in orange-red arils, bird-dispersed); timings estimated"
+    }
+   },
+   {
+    "name": "Gnarled cloud-forest tree",
+    "genus": "Weinmannia",
+    "species": "tomentosa",
+    "origin": "Andes of Colombia and Venezuela",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3500
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#6E5A44",
+    "source": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trunks 8-20 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Weinmannia",
+     "species": "tomentosa",
+     "native_range": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trun",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      7
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       9,
+       17
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 2.2,
+      "leaflet_margin": "dentate"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A7268",
+     "color_2": "#4E4840",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "silhouette": "gnarled grey tree with a fine-textured crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine, hairy, wind-borne seeds sprout on moss and humus; the seedling has small opposite compound leaves with only a few leaflets on a winged midrib, the young shoots densely rusty-hairy. Saplings are slender and leafy, often leaning or forking low, and after cutting or fire they resprout into bushy multi-stemmed clumps; adult leaves carry many pairs of small leaflets.",
+     "confidence": "estimated",
+     "source": "Wikipedia (EN/ES, Weinmannia tomentosa, encenillo): 15-25 m, trunk to 70 cm, 2500-3300 m in the Andes of Colombia and Venezuela, leaves 2-7 cm. Germination, growth rate, first flowering and lifespan estimated from cloud-forest trees of similar habit."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#f2ead2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      150
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#b8483a",
+     "ripe_colour": "#a8743e",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5000,
+      200000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Spanish Wikipedia (Weinmannia tomentosa): creamy-white flower spikes 4-6 cm, Aug-Nov; fruits Oct-Jan, small capsules that turn reddish and then caramel when ripe and open; seeds 1 mm with hairs for wind dispersal; pollinated by honeybees and tachinid flies. Flower counts, fruit set, hang, rot and crop estimated."
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Andean miconia",
+    "genus": "Miconia",
+    "species": "theizans",
+    "origin": "Mexico to Bolivia",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     19
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#8A5A6A",
+    "source": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropicos",
+    "traits": {
+     "genus": "Miconia",
+     "species": "theizans",
+     "native_range": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropi",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "arcuate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8A7A6A",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "silhouette": "bushy shrub of paired three-veined leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with tiny round cotyledons, then opposite, elliptic, leathery leaves with three strong curved veins from the base, as in the adult. It branches low into a small twiggy shrub of stiff paired leaves, often in forest edges and montane scrub, later a small, rounded tree.",
+     "confidence": "estimated",
+     "source": "Estimated from Andean montane Miconia (Melastomataceae) shrubs and small trees: bird-dispersed berries, tiny light-germinating seeds, moderate growth; habit from Flora of Ecuador/Tropicos specimen descriptions"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 1,
+     "flower_colour": "#f2ece4",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      150
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8aa052",
+     "ripe_colour": "#2f2a4a",
+     "ripen_days": [
+      45,
+      80
+     ],
+     "hang_days": [
+      5,
+      25
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      15
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Estimated from Andean Miconia: terminal panicles of small white 5-petalled flowers with poricidal anthers buzzed by bees and bumblebees; small blue-black many-seeded berries eaten by birds; flowering spread through the year near the equator"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Begonia",
+    "genus": "Begonia",
+    "species": "foliosa",
+    "origin": "Andes of Colombia and Venezuela",
+    "shape": "cushion",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1200,
+     3000
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#F0B8C8",
+    "source": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew POWO / Wikipedia",
+    "traits": {
+     "genus": "Begonia",
+     "species": "foliosa",
+     "native_range": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.6,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "distichous",
+     "size_cm": [
+      1,
+      2.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.05,
+     "scale_cm": 1,
+     "color": "#7A9A58",
+     "color_2": "#9A6A60",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "trailing sprays of tiny glossy leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds sprout on wet moss or mossy banks in 1-3 weeks with two tiny round cotyledons. The seedling is a small succulent sprig of tiny, glossy, oval, finely toothed leaves in two rows; it branches from the base into arching, fern-like stems densely clothed in little leaves, with tiny white to pink flowers often within its first year.",
+     "confidence": "estimated",
+     "source": "Wikipedia (shrub-like begonia to 1 m with succulent pendent stems ~45 cm clothed in small glossy oval leaves, small white flowers in panicles, no frost tolerance); germination and flowering times from general Begonia species culture; lifespan estimated."
+    }
+   },
+   {
+    "name": "Peperomia",
+    "genus": "Peperomia",
+    "species": "galioides",
+    "origin": "Mexico to Bolivia",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1000,
+     3500
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C8D880",
+    "source": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm — Kew POWO / Tropicos",
+    "traits": {
+     "genus": "Peperomia",
+     "species": "galioides",
+     "native_range": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm —",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      1,
+      2.5
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.05,
+     "scale_cm": 1,
+     "color": "#7AA058",
+     "color_2": "#A06A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "succulent-leaved little mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny, with two round cotyledons, then small fleshy leaves. The young plant becomes a clump of erect to sprawling, often reddish, succulent stems with whorls of 3-6 small, narrow, fleshy leaves at each node (like a bedstraw), tipped by thin, green, catkin-like flower spikes.",
+     "confidence": "estimated",
+     "source": "Estimated from Peperomia biology (small-seeded, fast-maturing succulent herbs of moist montane rocks, banks and tree trunks) and the species' whorled-leaf description in Andean floras"
+    }
+   },
+   {
+    "name": "Cave bonnet",
+    "genus": "Mycena",
+    "species": "luxaeterna",
+    "origin": "Atlantic forest, Brazil",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "moss",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "CLOUD_FOREST"
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8E0C0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": true,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.5,
+      1.0
+     ]
+    },
+    "source": "Brazilian Atlantic forest; cave mouths and deep shade; Eternal light: stems glow in the dark; deep shade and cave entrances.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "luxaeterna",
+     "native_range": "Brazilian Atlantic forest",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.02
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8b898",
+      "secondary": "#8a7a68",
+      "form": "tiny bell cap 0.5-2 cm, yellow-brown to grey",
+      "size_cm": [
+       0.5,
+       2
+      ],
+      "texture": "gelatinous",
+      "gloss": 0.3,
+      "notes": "tiny brownish bonnets whose gelatinous stems glow yellow-green continuously"
+     },
+     "underside": {
+      "colour": "#e8e0d0",
+      "type": "gills pale"
+     },
+     "stipe": {
+      "colour": "#d8c8a8",
+      "height_cm": [
+       1,
+       4
+      ]
+     },
+     "habit": "scattered on twigs in deep shade",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "faint green sparks on a twig in deep shade",
+     "confidence": "partly",
+     "refs": "Wikipedia Mycena luxaeterna; Desjardin et al 2010",
+     "glow": {
+      "colour": "#a8f860",
+      "part": "stem, continuous"
+     }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Tank bromeliad",
+    "genus": "Guzmania",
+    "species": "monostachia",
+    "origin": "Florida, Caribbean and Andes",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     10,
+     21
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A9A3A",
+    "accent": "#E84A3A",
+    "source": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette 30-60 cm, red-tipped spike — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Guzmania",
+     "species": "monostachia",
+     "native_range": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette ",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      30,
+      45
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "tank rosette of strap leaves with a red spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      5,
+      9
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are minute, silvery-scaly tufts of narrow leaves that at first hold no water; as they grow the leaf bases widen into an upright, funnel-shaped, pale yellow-green tank rosette. It flowers once, a simple spike of white flowers in green bracts with dark stripes, topped by red-orange bracts, then makes pups and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Guzmania monostachia: C3-CAM tank epiphyte of Florida, the Caribbean and the Andes); bromeliad horticulture and ecophysiology literature (monocarpic rosettes, simple striped spike with red tip, pups after flowering). Ages estimated."
+    }
+   },
+   {
+    "name": "Bird's nest fern",
+    "genus": "Asplenium",
+    "species": "nidus",
+    "origin": "Tropical Asia, Australia and Pacific",
+    "family": "Aspleniaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5AB040",
+    "accent": "#6A5A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      100,
+      180
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate over 2-7 weeks into heart-shaped prothalli on wet bark and moss; 3-6 months after sowing tiny, simple, spoon- to strap-shaped, apple-green fronds appear. The young fern is a small open funnel of undivided glossy fronds with a dark midrib that widens year by year into a nest-like rosette catching leaf litter.",
+     "confidence": "estimated",
+     "source": "Asplenium nidus developmental study (Am. J. Plant Sci., scirp.org): 47% of spores germinated by day 47, 100% by day 60, gametangia at 60-100 days; grower guides (Planet Natural); frond growth, first spores and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tropical Asian and Pacific rainforest trunks; a rosette that catches leaf litter and makes its own soil. Kew POWO.",
+    "traits": {
+     "genus": "Asplenium",
+     "species": "nidus",
+     "native_range": "Tropical Asian and Pacific rainforest trunks",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#5ab848",
+      "underside": "#5ab848",
+      "gloss": 0.8,
+      "veins": "parallel",
+      "vein_colour": "#1a1a1a",
+      "margin": "wavy",
+      "size_cm": [
+       60,
+       150
+      ],
+      "notes": "wide undivided glossy bright green straps with a black midrib, crinkled edges, in a funnel rosette collecting litter"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "very short black stipe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "big bright green funnel on a trunk or fork",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 7,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#5A8A48",
+     "color_2": "#2A2020",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Hanging moss",
+    "genus": "Papillaria",
+    "species": "crocea",
+    "origin": "Eastern Australia and New Zealand",
+    "family": "Meteoriaceae",
+    "shape": "hanging_moss",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     600,
+     3000
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TEMPERATE_RAINFOREST"
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8AA060",
+    "accent": "#8AA060",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores give a green, thread-like protonema on bark; small upright shoots follow as a thin golden-green fuzz on twigs. Shoots then lengthen and droop into slender, pendent, sparsely branched strands with tiny closely pressed leaves, golden-orange to yellow-brown, hanging in curtains from branches in wet forest.",
+     "confidence": "estimated",
+     "source": "Estimated from pendent epiphytic mosses (Meteoriaceae) of humid Australasian forests: spore-to-shoot time and strand growth of a few cm a year inferred from hanging-moss growth studies; no species-specific data found"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cloud-forest branches; golden curtains dripping fog. Kew POWO.",
+    "traits": {
+     "genus": "Papillaria",
+     "species": "crocea",
+     "native_range": "Cloud-forest branches",
+     "leaf_shape": "thread-like strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pendent",
+      "colour": "#c8b848",
+      "underside": "#a89838",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8b848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "long golden-yellow to orange-brown pendent strands with tiny leaves, hanging in curtains from branches"
+     },
+     "mat": {
+      "height_cm": [
+       20,
+       60
+      ],
+      "texture": "pendent"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "golden curtains dripping from cloud-forest limbs",
+     "confidence": "partly",
+     "refs": "Papillaria crocea descriptions (Australian/NZ bryophyte floras)"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.2
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 1.0
+    },
+    "tint": {
+     "hue_shift": 20,
+     "sat": 0.9,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ]
+ }
+}

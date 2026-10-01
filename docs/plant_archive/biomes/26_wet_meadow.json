@@ -1,0 +1,1331 @@
+{
+ "key": "WET_MEADOW",
+ "name": "Wet meadow",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Common sedge",
+    "genus": "Carex",
+    "species": "nigra",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A3A2A",
+    "source": "Carex nigra, common sedge, circumboreal, dense low sward in wet meadows and fen margins, 20-60 cm, black-glumed spikes — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Carex",
+     "species": "nigra",
+     "native_range": "Carex nigra, common sedge, circumboreal, dense low sward in wet meadows and fen margins, 20-60 cm, black-glumed spikes —",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      50
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "fine glaucous channelled blades 1-5 mm wide (true aspect > 100), creeping to form a low sward"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#b8a870",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 8,
+     "color": "#6A9A60",
+     "color_2": "#4A3A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "slender triangular culms with blackish-brown basal sheaths"
+    },
+    "silhouette": "low fine glaucous sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      35
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      6
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small tuft of narrow grey-green leaves. It soon sends out creeping rhizomes that throw up loose tufts of leafy shoots, knitting into a low lawn-like sward in wet meadows and fens; flowering stems carry slim dark blackish-purple spikes.",
+     "confidence": "estimated",
+     "source": "Schutz 2000 Flora 195 (Carex seed ecology: light and fluctuating temperatures, germination within weeks after winter); BSBI/Stace (rhizomatous, 7-70 cm, fens and wet grassland); ramet lifespan estimated from rhizomatous Carex"
+    }
+   },
+   {
+    "name": "Marsh marigold",
+    "genus": "Caltha",
+    "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "cushion",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#F0C020",
+    "source": "Caltha palustris, marsh marigold, circumboreal, wet meadows, springs and ditch edges, 20-50 cm, golden spring flowers — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Caltha",
+     "species": "palustris",
+     "native_range": "Caltha palustris, marsh marigold, circumboreal, wet meadows, springs and ditch edges, 20-50 cm, golden spring flowers — ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "reniform",
+     "aspect": 0.8,
+     "base": "cordate",
+     "apex": "rounded",
+     "margin": "crenate",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 0.8,
+     "underside": 0.2,
+     "autumn": "#b0a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#5A8A40",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow succulent stems, brownish at the base"
+    },
+    "silhouette": "low mound of glossy round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then long-stalked round to kidney-shaped glossy leaves with scalloped edges, a small version of the adult. It builds a low leafy rosette/clump from a short thick rootstock over 1-2 years and flowers (bright yellow cups) from about the second or third spring; clumps widen slowly by branching of the rootstock.",
+     "confidence": "estimated",
+     "source": "Jelitto seed (germinates in 3-4 weeks at ~20C); SDSU Native Plant propagation (60-day cold-moist treatment or fall sowing; low germination; sun to shade); Wikipedia/MBG (10-80 cm, marshes and wet woodland, dies back in winter); time to flower and lifespan estimated from growers and growth form"
+    }
+   },
+   {
+    "name": "Ragged robin",
+    "genus": "Silene",
+    "species": "flos-cuculi",
+    "origin": "Europe and Western Asia",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     15
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#E878B0",
+    "source": "Silene flos-cuculi (Lychnis flos-cuculi), ragged robin, Europe & W Asia, damp meadows, 30-80 cm, ragged pink flowers — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Silene",
+     "species": "flos-cuculi",
+     "native_range": "Silene flos-cuculi (Lychnis flos-cuculi), ragged robin, Europe & W Asia, damp meadows, 30-80 cm, ragged pink flowers — W",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "basal leaves oblanceolate-spatulate, stem leaves narrowly lanceolate"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#b8a850",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#6A9A50",
+     "color_2": "#8A5A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "slender stems sticky below the nodes, reddish"
+    },
+    "silhouette": "thin stems with pink ragged flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a small rosette of spoon-shaped leaves; in the first year it stays a low rosette with short leafy runners. From the second year it sends up slender, forked, reddish stems with narrow opposite leaves and pink flowers whose petals are torn into 4 ragged, thread-like lobes.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and RHS (short-lived perennial of wet meadows and fens, 30-75 cm, flowers May-Aug in its second year; seed germinates in 1-3 weeks without pretreatment); lifespan estimated"
+    }
+   },
+   {
+    "name": "Purple moor-grass",
+    "genus": "Molinia",
+    "species": "caerulea",
+    "origin": "Europe and Western Asia",
+    "shape": "tussock",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.62,
+     0.95
+    ],
+    "height_m": [
+     0.4,
+     1.2
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "color": "#7AA860",
+    "accent": "#C8A060",
+    "source": "Molinia caerulea, purple moor-grass, Europe & W Asia, tussock dominant of damp acid meadows, 0.4-1.2 m, purple-tinged panicles — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Molinia",
+     "species": "caerulea",
+     "native_range": "Molinia caerulea, purple moor-grass, Europe & W Asia, tussock dominant of damp acid meadows, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.4,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      45
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "flat blades 3-10 mm wide tapering to a fine point, shed cleanly in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#c8a850",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 8,
+     "color": "#7AA050",
+     "color_2": "#B0A070",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "culms with a single swollen basal internode"
+    },
+    "silhouette": "tight tussock of fine arching blades",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A slender seedling tuft of flat, soft, mid-green leaves. Over a few years its tillers pack into a firm tussock with swollen, bulb-like leaf bases that store food; the leaves turn straw-buff and die back each autumn, so the tussock is pale all winter. Narrow purple-tinged panicles rise on tall bare stems in late summer; on wet moors old tussocks become raised pedestals.",
+     "confidence": "estimated",
+     "source": "Wikipedia (dense tussocks to 120 cm, flowers Jul-Sept, moist heath, bogs and moorland, pH 3.5-5); Taylor, Rowland & Jones 2001 Biological Flora of the British Isles: Molinia caerulea (J. Ecol. 89) for deciduous habit, storage leaf bases and tussock formation; ages estimated"
+    }
+   },
+   {
+    "name": "Tufted hair-grass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.62,
+     0.95
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Deschampsia cespitosa, tufted hair-grass, circumboreal, dominant tussock grass of wet meadows, 0.5-1.5 m airy flower heads — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Deschampsia",
+     "species": "cespitosa",
+     "native_range": "Deschampsia cespitosa, tufted hair-grass, circumboreal, dominant tussock grass of wet meadows, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "strongly ribbed scabrous dark green blades 2-5 mm wide (true aspect > 100); semi-evergreen tussock"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 15.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 8,
+     "color": "#6A9A48",
+     "color_2": "#9A8A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dense tussock of old leaf bases"
+    },
+    "silhouette": "dense dark tussock under an airy seed haze",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
+   },
+   {
+    "name": "Dung roundhead",
+    "genus": "Protostropharia",
+    "species": "semiglobata",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "SAVANNA",
+     "WET_MEADOW",
+     "ALPINE_MEADOW"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8C060",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "dung",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Protostropharia",
+     "species": "semiglobata",
+     "native_range": "worldwide pasture",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c860",
+      "secondary": "#d8b850",
+      "form": "hemispherical slimy cap, pale yellow-ochre",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "slimy-glossy",
+      "gloss": 0.3,
+      "notes": "small glossy yellow half-globe on a slender pale stem on dung"
+     },
+     "underside": {
+      "colour": "#4a4a48",
+      "type": "gills grey-black, broad"
+     },
+     "stipe": {
+      "colour": "#e8d890",
+      "height_cm": [
+       4,
+       10
+      ]
+     },
+     "habit": "scattered on herbivore dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little yellow domes on cowpats",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.96,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Joe-pye weed",
+    "genus": "Eutrochium",
+    "species": "maculatum",
+    "origin": "Northern North America",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     1,
+     2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#3E8F3A",
+    "accent": "#C878A8",
+    "source": "Eutrochium maculatum, spotted joe-pye weed, northern North America, wet meadows and stream sides, 1-2 m, pink-purple flower domes — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Eutrochium",
+     "species": "maculatum",
+     "native_range": "Eutrochium maculatum, spotted joe-pye weed, northern North America, wet meadows and stream sides, 1-2 m, pink-purple flo",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      6,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "lanceolate, coarsely serrate, in whorls of 4-5 on purple-spotted stems"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#a89050",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 8,
+     "color": "#6A8A48",
+     "color_2": "#6A3A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout stems spotted or streaked purple"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "tall straight stems with flat purple tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed needs a winter's cold before sprouting; the seedling has two small round cotyledons, then whorls of 3-5 lance-shaped toothed leaves on a short upright stem. The first year it stays a knee-high leafy shoot; from year 2 the clump sends up several stout purple-spotted stems 1-2 m tall topped by flat domes of mauve flower heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Eutrochium maculatum: to 2 m, rose-purple heads of 8-22 disc florets, butterflies and bees, open wetlands); standard native-seed guidance (cold-moist stratification before spring germination). Ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#b5608e",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "butterfly",
+      "bee",
+      "bumblebee",
+      "moth"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.3,
+      0.45
+     ],
+     "unripe_colour": "#9c8f6a",
+     "ripe_colour": "#b9a27c",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (late-summer flat-topped clusters of rose-purple heads with 8-22 disc florets and no rays; butterflies and honeybees; larval host of several moths). Plumed achenes, timings and counts estimated from Eupatorieae."
+    }
+   },
+   {
+    "name": "Meadowsweet",
+    "genus": "Filipendula",
+    "species": "ulmaria",
+    "origin": "Europe and Western Asia",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.8,
+     2
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#F0F0E0",
+    "source": "Filipendula ulmaria, meadowsweet, Europe & W Asia, tall herb dominant of damp meadows and ditch sides, 0.8-2 m creamy plumes — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Filipendula",
+     "species": "ulmaria",
+     "native_range": "Filipendula ulmaria, meadowsweet, Europe & W Asia, tall herb dominant of damp meadows and ditch sides, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.8,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       5,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 1.6,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "interruptedly pinnate: 2-5 pairs of large doubly-serrate leaflets with tiny leaflets between, terminal leaflet 3-5-lobed, white-felted beneath"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.6,
+     "autumn": "#b09048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 8,
+     "color": "#6A8A48",
+     "color_2": "#8A5A4A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "erect ridged stems, often reddish"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "erect leafy clump with creamy plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Small epigeal seedling; the first leaves are simple and 3-lobed, soon followed by a basal rosette of pinnate leaves with a large 3-5-lobed toothed end leaflet, dark green above and whitish beneath. From a creeping rootstock it builds a clump, and from year 2-3 sends up tall, stiff, reddish stems crowned by frothy cream flower plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Filipendula ulmaria: stems 1-2 m, cream flowers early summer to early autumn in irregular cymes, visited mainly by flies; damp meadows, fens, wet woods); Grime et al. Comparative Plant Ecology (wetland perennial, spring germination). Ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f3eed8",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "fly",
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "coiled",
+     "fruit_size_cm": [
+      0.2,
+      0.3
+     ],
+     "unripe_colour": "#b8c28a",
+     "ripe_colour": "#8a6a45",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (dense irregular cymes of small cream 5-petalled flowers with 7-20 stamens, strongly scented, visited mainly by flies); floras (each flower gives 5-10 small spirally twisted one-seeded fruits, water-dispersed). Timings and counts estimated."
+    }
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "origin": "Europe and Western Asia",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, scattered scrub on ungrazed wet meadow, 2-6 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Salix",
+     "species": "cinerea",
+     "native_range": "Salix cinerea, grey willow, Europe & W Asia, scattered scrub on ungrazed wet meadow, 2-6 m — Wikipedia / Kew POWO",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "obovate to oblanceolate, dull green above, grey-tomentose beneath, margin entire to sinuate"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.5,
+     "autumn": "#c0b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#7A7670",
+     "color_2": "#5A544E",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "documented"
+    },
+    "silhouette": "grey-green rounded bush of many stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
+   }
+  ]
+ }
+}

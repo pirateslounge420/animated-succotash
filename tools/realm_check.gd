@@ -103,11 +103,12 @@ func _run() -> void:
 		var ctx = VegetationPlacer._Context.new(key, map, data, 2)
 		for plants in [base.plants, detail]:
 			for sp_idx in plants:
-				var sp: PlantSpecies = SpeciesDB.all()[int(sp_idx)]
+				# Young understory comes keyed by stage too (PlantGrowth.JUV_KEY).
+				var sp: PlantSpecies = SpeciesDB.all()[int(sp_idx) % PlantGrowth.JUV_KEY]
 				if not sp.from_catalogue and sp.realms.is_empty():
 					continue
 				var buf: PackedFloat32Array = plants[sp_idx]
-				for i in range(0, buf.size(), 11):
+				for i in range(0, buf.size(), VegetationPlacer.STRIDE):
 					var pd := Vector3(buf[i], buf[i + 1], buf[i + 2])
 					var s = ctx.site_at_dir(pd)
 					var bkey: String = BiomeTemplates.KEYS[s.biome]

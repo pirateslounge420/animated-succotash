@@ -8,9 +8,2209 @@
  "notes": "Underground: reserved for the cave system (DESIGN.md \"Caves\"), which is not built yet. Plants listed here are loaded but have nowhere to grow until caves exist.",
  "plants": {
   "emergent": [],
-  "canopy": [],
-  "shrub": [],
-  "ground": [],
+  "canopy": [
+   {
+    "name": "Manna ash",
+    "genus": "Fraxinus",
+    "species": "ornus",
+    "origin": "Southern Europe and SW Asia",
+    "family": "Oleaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     17
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "karst",
+      "sandstone",
+      "basalt"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.15,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A8A3E",
+    "accent": "#EDE6C8",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Fraxinus ornus L., manna or flowering ash: southern Europe from Spain to the Balkans and Turkey, the characteristic small tree of the Dinaric and Classical Karst (Kras) with Ostrya carpinifolia and Quercus pubescens, on dry rocky limestone slopes; 8-15 (to 20) m. Kew POWO; Flora Europaea; Euforgen.",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8a84",
+      "secondary": "#6a6a64",
+      "feature_cm": 1,
+      "roughness": 0.1,
+      "notes": "smooth grey bark that stays smooth on old trunks, unlike common ash"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "compound",
+      "colour": "#4a8a3e",
+      "underside": "#7aa86a",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a5a",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       30
+      ],
+      "notes": "opposite pinnate leaves of 5-9 (usually 7) stalked, ovate, finely toothed leaflets; buds grey-brown and downy, not black"
+     },
+     "flower": {
+      "colour": "#efe8cc",
+      "secondary": "#f6f2e0",
+      "form": "dense fluffy panicles 10-20 cm of tiny four-petalled creamy-white scented flowers, with the leaves in May",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8a6a40",
+      "form": "narrow single-winged samaras 2-3.5 cm in hanging bunches, green ripening brown"
+     },
+     "seasonal": "deciduous; white with blossom in May, yellow to purplish in autumn",
+     "silhouette": "small round-crowned grey-stemmed tree foaming creamy white in late spring",
+     "confidence": "documented",
+     "refs": "Wikipedia Fraxinus ornus; Flora Europaea; Euforgen technical guidelines (Fraxinus ornus)"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       5,
+       9
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 2.2,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#8A8A84",
+     "color_2": "#6A6A64",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c09a48",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 4,
+     "branch_angle_deg": [
+      35,
+      60
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "small rounded grey-stemmed tree, creamy white blossom",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      540
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow strap-shaped cotyledons, then a pair of simple or three-parted toothed leaves, then pinnate leaves of 5-7 leaflets. Seed is dormant and usually germinates in the second spring. Saplings are slim grey whips with opposite grey downy buds; cut or burned stems resprout fast from the stool into multi-stemmed coppice, the usual form on grazed karst.",
+     "confidence": "estimated",
+     "source": "Euforgen (Fraxinus ornus: pioneer of abandoned karst pasture, vigorous coppice regrowth, seed dormancy broken by a warm then a cold stratification); seeding age, growth and lifespan estimated from the genus."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#efe8cc",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      100,
+      500
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      2.0,
+      3.5
+     ],
+     "unripe_colour": "#9cb25a",
+     "ripe_colour": "#8a6a40",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      540
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia and Flora Europaea (scented creamy-white flowers with petals, in dense panicles with or after the leaves, April-June, insect- and wind-pollinated; samaras 2-3.5 cm ripen Sept-Oct). Set, crop and rot estimated."
+    }
+   },
+   {
+    "name": "Yew",
+    "genus": "Taxus",
+    "species": "baccata",
+    "origin": "Europe, N Africa and SW Asia",
+    "family": "Taxaceae",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "karst",
+      "till",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#1E3A24",
+    "accent": "#C8202A",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Taxus baccata L., European yew: Europe to N Iran and the Atlas, an understorey and cliff tree of limestone scarps, gorges and chalk downs (yew woods on karst), 10-20 (to 28) m, extremely shade-tolerant and long-lived. Kew POWO; Thomas & Polwart 2003, Biological Flora of the British Isles: Taxus baccata.",
+    "appearance": {
+     "bark": {
+      "pattern": "flaky",
+      "base": "#7a4a38",
+      "secondary": "#a0503a",
+      "feature_cm": 4,
+      "roughness": 0.4,
+      "notes": "thin red-brown bark flaking in scales to show purple-red patches; old trunks fluted and fused from several stems"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.6,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#1e3a24",
+      "underside": "#7a8a4a",
+      "gloss": 0.6,
+      "veins": "parallel",
+      "vein_colour": "#1e3a24",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       4
+      ],
+      "notes": "flat soft dark glossy needles with two pale yellow-green bands beneath, spirally set but twisted into two flat ranks on side shoots"
+     },
+     "flower": {
+      "colour": "#d8c060",
+      "secondary": "#7a8a4a",
+      "form": "dioecious: tiny pale-yellow pollen cones under the shoots of male trees; minute green ovules on female trees",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c8202a",
+      "form": "single seed in a fleshy, open, bright red cup (aril) about 1 cm, on female trees"
+     },
+     "seasonal": "evergreen; male trees smoke yellow pollen in March, female trees red with arils in autumn",
+     "silhouette": "dense, almost black-green dome on a squat, fluted red-brown trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia Taxus baccata; Thomas & Polwart 2003 J. Ecol. 91; Kew POWO"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 4,
+     "color": "#7A4A38",
+     "color_2": "#A0503A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.12,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.8,
+     "val": 0.6,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      50,
+      85
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.05,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.95,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense black-green dome on a squat fluted trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      730
+     ],
+     "height_years": [
+      40,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      400,
+      2000
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed waits one or two winters, then comes up with two needle-like cotyledons and a whorl of the same flat dark needles the adult bears. Seedlings and saplings grow a few cm a year under shade, forming small dark conical bushes; in the open they thicken into a dense broad cone and later a dome, often of several fused stems.",
+     "confidence": "documented",
+     "source": "Thomas & Polwart 2003, Biological Flora: Taxus baccata (seed dormant 1-2 winters; very slow growth; coning from c. 10-30 yr; lifespan routinely several centuries, exceptional trees perhaps 2000 yr; the most shade-tolerant European tree)."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#d8c060",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.2
+     ],
+     "unripe_colour": "#7a9a5a",
+     "ripe_colour": "#c8202a",
+     "ripen_days": [
+      160,
+      210
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      50000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Thomas & Polwart 2003 (dioecious, wind-pollinated Feb-Apr; seed ripens Aug-Oct in a red fleshy aril eaten by thrushes, which pass the seed; all parts but the aril flesh toxic). Fruit set, crop and rot estimated."
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Dwarf juniper",
+    "genus": "Juniperus",
+    "species": "communis",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "biomes": [
+     "ALPINE_MEADOW",
+     "CAVES",
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#3A6A40",
+    "accent": "#4A4A6A",
+    "source": "Juniperus communis var. saxatilis, alpine ridges Eurasia and N America, prostrate mat 20-80 cm",
+    "traits": {
+     "genus": "Juniperus",
+     "species": "communis",
+     "native_range": "Juniperus communis var",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "whorled",
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#7A5A48",
+     "color_2": "#9A8A78",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      70,
+      100
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "documented"
+    },
+    "silhouette": "flat prostrate grey-green mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      150,
+      730
+     ],
+     "height_years": [
+      15,
+      40
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      120,
+      1600
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: 2 (up to 6) slender cotyledons, then whorls of three sharp, needle-like leaves with a white band above - the same prickly needles the adult keeps all its life (it never makes scale leaves). Seedlings are tiny, slow, prickly sprigs that build over decades into a dense, spreading grey-green shrub, a low mat, or a narrow column.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Juniperus: J. communis flowers Apr-May, cones take 2-3 seasons, green to bluish-black glaucous, persist; 1-3 seeds; bears from 10-20 yr, heavy crops every 2-5 yr; deep dormancy; 2-6 cotyledons); Wikipedia (ripens in 18 months, cones 4-12 mm, a Lapland plant aged 1,647 yr). Growth rate estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      1.2
+     ],
+     "unripe_colour": "#6f8f5a",
+     "ripe_colour": "#3c4a6e",
+     "ripen_days": [
+      480,
+      900
+     ],
+     "hang_days": [
+      90,
+      365
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated; berry-like cones 4-12 mm, green ripening in ~18 months to purple-black with a blue bloom; too bitter raw, dried as spice and for gin); USDA WPSM (2-3 seasons to ripen, cones persist). Set, crop and rot estimated."
+    }
+   },
+   {
+    "name": "Boxwood",
+    "genus": "Buxus",
+    "species": "sempervirens",
+    "origin": "S and W Europe, N Africa, W Asia",
+    "family": "Buxaceae",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     16
+    ],
+    "moisture": [
+     0.3,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     1.0,
+     6.0
+    ],
+    "density": 0.8,
+    "soil": {
+     "classes": [
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#2E5A2E",
+    "accent": "#C8C870",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Buxus sempervirens L., common box: S and W Europe to the Caucasus and N Africa, a strict calcicole of limestone gorges, karst scrub and beech-wood understoreys (Jura, Causses, Box Hill), evergreen shrub 1-6 m, rarely a tree to 10 m. Kew POWO; Di Domenico et al. 2012, Biological Flora of the British Isles: Buxus sempervirens.",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#b0a48a",
+      "secondary": "#7e7260",
+      "feature_cm": 0.5,
+      "roughness": 0.2,
+      "notes": "pale buff-grey bark finely cracked into small squares on old stems; young twigs green and four-angled"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e5a2e",
+      "underside": "#8aa060",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#2e5a2e",
+      "margin": "entire",
+      "size_cm": [
+       1.5,
+       3
+      ],
+      "notes": "small opposite, leathery, glossy dark green oval leaves with a notched tip, paler yellow-green beneath; bronze-orange in sun and drought"
+     },
+     "flower": {
+      "colour": "#d8d880",
+      "secondary": "#c8c870",
+      "form": "tiny petal-less yellowish flowers in axillary clusters, one female among several males, honey-scented, March-April",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8a6a3a",
+      "form": "small three-horned capsule about 8 mm that splits and flicks out shiny black seeds"
+     },
+     "seasonal": "evergreen; leaves bronze-orange on sunny dry rock in winter",
+     "silhouette": "dense dark rounded evergreen bush packed with tiny glossy leaves",
+     "confidence": "documented",
+     "refs": "Wikipedia Buxus sempervirens; Di Domenico et al. 2012 J. Ecol. 100; Flora Europaea"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1.5,
+      3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#B0A48A",
+     "color_2": "#7E7260",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.12,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.7,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      55
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.95,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense dark rounded bush of tiny glossy leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      15,
+      60
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      200,
+      600
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Two oval fleshy cotyledons, then pairs of small glossy oval leaves on a green four-angled twig. The seedling is a tiny upright sprig that thickens over years, a few cm a year, into a dense, many-stemmed, rounded dark bush.",
+     "confidence": "estimated",
+     "source": "Di Domenico et al. 2012, Biological Flora: Buxus sempervirens (very slow growth, wood growth rings under 1 mm; shade-tolerant; seeds short-lived, germinating the following spring; stems several centuries old). Seeding age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 14,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#d8d880",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.7,
+      1.0
+     ],
+     "unripe_colour": "#8aa860",
+     "ripe_colour": "#8a6a3a",
+     "ripen_days": [
+      100,
+      150
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      100,
+      5000
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Di Domenico et al. 2012 (insect-pollinated Mar-Apr, capsules ripen Aug-Sept and eject seeds a few metres, ants carry them on; all parts toxic). Set, crop and rot estimated."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Maidenhair fern",
+    "genus": "Adiantum",
+    "species": "capillus-veneris",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Pteridaceae",
+    "shape": "fern",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "CANYON",
+     "CAVES",
+     "HOT_SPRING",
+     "MEDITERRANEAN_SCRUB",
+     "OASIS"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB050",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate in about 6 days; heart-shaped green prothalli a few mm across form in 1-2 months on wet rock or soil, then two-leaved fernlets appear: tiny single fan-shaped leaflets on hair-thin black stalks. Later fronds branch into many wedge-shaped, pale-green leaflets and the creeping rhizome spreads a lacy mat over seeps and damp walls.",
+     "confidence": "estimated",
+     "source": "Spore culture study, Not Sci Biol 9(4) 2017 (germination from day 6, heart-shaped gametophytes at 27-60 d, then two-leaved fernlets); clump growth, spore age and rhizome life estimated from growers and genus habit"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Wet limestone, seeps, waterfall spray and cave mouths worldwide; black wire stems. Kew POWO.",
+    "traits": {
+     "genus": "Adiantum",
+     "species": "capillus-veneris",
+     "native_range": "Wet limestone, seeps, waterfall spray and cave mouths worldwide",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#7ab858",
+      "underside": "#7ab858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#7ab858",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       40
+      ],
+      "notes": "delicate fan-shaped leaflets on black wiry hair-thin stalks, drooping"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "glossy black wire stipe"
+     },
+     "seasonal": "evergreen in mild sites",
+     "silhouette": "airy green mist of tiny fans on black threads over wet rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       30,
+       80
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.0,
+      "leaflet_margin": "crenate"
+     },
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#3A2A2A",
+     "color_2": "#1A1414",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Hart's-tongue fern",
+    "genus": "Asplenium",
+    "species": "scolopendrium",
+    "origin": "Europe, N Africa and W Asia",
+    "family": "Aspleniaceae",
+    "shape": "fern",
+    "temp_c": [
+     5,
+     16
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     0.15,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "karst",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "alkaline",
+     "fertility_min": 0.3,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4E9A3A",
+    "accent": "#6A4A2A",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_summer",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores, no flowers: sori in herringbone lines under the frond release spores late summer"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Asplenium scolopendrium L. (Phyllitis scolopendrium), hart's-tongue fern: Europe to the Caucasus and N Africa, on moist shaded limestone - sinkholes, gorge walls, cave and pothole mouths, scree woods; undivided strap fronds 10-60 cm. Kew POWO; Flora Europaea.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e9a3a",
+      "underside": "#7aa858",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#3e7a2e",
+      "margin": "wavy",
+      "size_cm": [
+       10,
+       60
+      ],
+      "notes": "undivided, glossy, bright green strap-shaped fronds with a heart-shaped base and wavy edge; brown sori in paired diagonal stripes like a herringbone beneath"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a3a2a",
+      "markings": "#5a3a2a",
+      "marking_size": "fine",
+      "texture": "scaly",
+      "notes": "short dark brown scaly stipe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "shuttlecock of glossy green tongues arching out of wet limestone",
+     "confidence": "documented",
+     "refs": "Wikipedia Asplenium scolopendrium; Flora Europaea; BSBI"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 7,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      60
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A3A2A",
+     "color_2": "#3A2A1E",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "shuttlecock of glossy undivided green tongues",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate on wet limestone into a small heart-shaped green prothallus; the first fronds are tiny rounded green blades, already undivided. Over two or three years the sporeling builds a rosette of longer, glossy, strap-shaped fronds arching out of the crevice.",
+     "confidence": "estimated",
+     "source": "Genus spore biology (Asplenium spores germinate in weeks on wet calcareous substrate); timings and lifespan estimated from growers and the BSBI account."
+    }
+   },
+   {
+    "name": "Wall rue",
+    "genus": "Asplenium",
+    "species": "ruta-muraria",
+    "origin": "Europe, Asia and North America",
+    "family": "Aspleniaceae",
+    "shape": "fern",
+    "temp_c": [
+     0,
+     16
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     2800
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     0.04,
+     0.15
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#3E6A3A",
+    "accent": "#5A4A3A",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_summer",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores, no flowers; sori along the veins under the leaflets"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Asplenium ruta-muraria L., wall rue: Europe, temperate Asia and eastern North America, in crevices of limestone pavement, karst walls, cliff and cave-mouth rock (and mortared walls); tufts 4-15 cm. Kew POWO; Flora Europaea; Flora of North America.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#3e6a3a",
+      "underside": "#4e7a44",
+      "gloss": 0.15,
+      "veins": "dichotomous",
+      "vein_colour": "#3e6a3a",
+      "margin": "toothed",
+      "size_cm": [
+       3,
+       12
+      ],
+      "notes": "small dull dark green fronds twice divided into a few stalked, wedge- to diamond-shaped leaflets toothed at the tip, on green stalks darkening at the base"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a5a3a",
+      "markings": "#3a2a1e",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "green stipe, dark only at the very base"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "small dark green rue-like tufts in cracks of pale rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Asplenium ruta-muraria; Flora of North America vol. 2; BSBI"
+    },
+    "leaf": {
+     "type": "frond",
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      12
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       6,
+       20
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.3,
+      "leaflet_margin": "dentate"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.7,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.3,
+     "color": "#4A5A3A",
+     "color_2": "#3A2A1E",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "small dark green tufts in cracks of pale rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Spores lodge in a damp crack of limestone and form a tiny heart-shaped prothallus; the first fronds are single fan-shaped leaflets on thin stalks, later ones divide into three, then into the twice-cut adult frond. The plant stays a small tight tuft wedged in the rock.",
+     "confidence": "estimated",
+     "source": "Genus spore biology and Flora of North America (juvenile fronds simpler); timings and lifespan estimated."
+    }
+   },
+   {
+    "name": "Blue moor-grass",
+    "genus": "Sesleria",
+    "species": "caerulea",
+    "origin": "Europe, from Iceland to the Alps",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     14
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     0.1,
+     0.45
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6E9A78",
+    "accent": "#6A5A9A",
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sesleria caerulea (L.) Ard. (S. albicans), blue moor-grass: Europe from Iceland and Britain to the Alps and Carpathians, the dominant grass of limestone pavement, karst crags and calcareous scree grassland (Sesleria-dominated swards of the Burren and the northern English karst); tufts 10-45 cm. Kew POWO; Dixon 1982, Biological Flora: Sesleria albicans.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#6e9a78",
+      "underside": "#8aa878",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#6e9a78",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       20
+      ],
+      "notes": "flat blades 2-4 mm wide, glaucous blue-green above, abruptly narrowed to a small hooded tip"
+     },
+     "flower": {
+      "colour": "#6a5a9a",
+      "secondary": "#c8c0a0",
+      "form": "dense ovoid blue-violet spike-like heads 1-3 cm on bare stems, early spring",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; blue-purple heads in March-May",
+     "silhouette": "blue-green grass tufts with small violet heads among white rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Sesleria caerulea; Dixon 1982 J. Ecol. 70; Flora Europaea"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      20
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -14,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 12.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#7A9A70",
+     "color_2": "#A09878",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "blue-green tufts with violet heads on white rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A thin first blade, then a small tuft of flat blue-green leaves; short rhizomes and tillers knit it into a dense tussock that flowers very early in spring from its second or third year and spreads slowly into turf over rock.",
+     "confidence": "estimated",
+     "source": "Dixon 1982, Biological Flora: Sesleria albicans (flowering March-May, among the earliest grasses; long-lived clonal tussocks); germination and timings estimated."
+    }
+   },
+   {
+    "name": "Limestone oat-grass",
+    "genus": "Helictotrichon",
+    "species": "sedenense",
+    "origin": "Pyrenees, Alps and Morocco",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     12
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1000,
+     2800
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#7A9A6A",
+    "accent": "#9A7A5A",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Helictotrichon sedenense (Clarion ex DC.) Holub: mountains from Spain and the Pyrenees to the SW Alps and Italy, and Morocco, in stony calcareous grassland, limestone ledges and scree of the subalpine and alpine belts; dense tufts with culms 20-60 cm. Kew POWO; Flora Iberica; Info Flora.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#7a9a6a",
+      "underside": "#8aa878",
+      "gloss": 0.1,
+      "veins": "parallel",
+      "vein_colour": "#7a9a6a",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       25
+      ],
+      "notes": "fine, stiff, inrolled grey-green leaves in a dense basal tuft"
+     },
+     "flower": {
+      "colour": "#9a7a5a",
+      "secondary": "#c8b890",
+      "form": "narrow loose panicle of shiny purplish-brown and silver oat spikelets 1-1.5 cm with bent awns",
+      "scent": "none"
+     },
+     "seasonal": "evergreen tufts; panicles in July-August, straw-coloured by autumn",
+     "silhouette": "fine grey-green tuft with a shimmering oat panicle on stony ledges",
+     "confidence": "estimated",
+     "refs": "Flora Iberica vol. 19 (Helictotrichon); Info Flora; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "leaf_confidence": "estimated",
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#b8a070"
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A9A70",
+     "color_2": "#A08A68",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "fine grey-green tuft with a shimmering oat panicle",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A hair-fine first leaf, then a small tuft of stiff inrolled grey-green leaves; tillers pack it into a dense tussock that sends up its first oat panicles in the second or third summer.",
+     "confidence": "estimated",
+     "source": "Estimated from the life history of perennial mountain oat-grasses (Helictotrichon, Avenula)."
+    }
+   },
+   {
+    "name": "Liverwort",
+    "genus": "Marchantia",
+    "species": "polymorpha",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Marchantiaceae",
+    "shape": "moss",
+    "temp_c": [
+     0,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "CAVES",
+     "FRESHWATER"
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A8A4A",
+    "accent": "#4A8A4A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      0.15,
+      0.5
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      2,
+      10
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore grows into a short green filament, then a tiny flat plate; gemmae (lens-shaped buds splashed out of cups on the thallus) grow straight into little two-lobed thalli. The plant is a flat, forking, ribbon-like green thallus up to 10 cm long and 2 cm wide with a dark midline, pale pores and little cup-shaped gemma cups; stalked umbrella-like sex organs rise from mature patches.",
+     "confidence": "documented",
+     "source": "Shimamura 2016 Plant Cell Physiol. 'Marchantia polymorpha: taxonomy, phylogeny and morphology of a model system' (gemma to sexual maturity in ~1-2 months in culture); Wikipedia (thalli to 10 x 2 cm; rapid colonist that can carpet burned ground); field timings and lifespan estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Wet ground, stream banks and burns worldwide; flat green scales with umbrella stalks; the first plant back after fire on wet ground. Kew POWO.",
+    "traits": {
+     "genus": "Marchantia",
+     "species": "polymorpha",
+     "native_range": "Wet ground, stream banks and burns worldwide",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.02
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#5a9a48",
+      "underside": "#3a7a3a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#5a9a48",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat forking green ribbons 1 cm wide with a dark midline and cup-like gemma cups; umbrella-shaped stalks (male discs, female palm-like) rise 3-5 cm"
+     },
+     "mat": {
+      "height_cm": [
+       0.2,
+       1
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "flat green scales with little umbrellas on wet burned ground",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "flower": {
+      "colour": "#7ab848",
+      "secondary": "#7ab848",
+      "form": "stalked green umbrellas 3-5 cm: flat lobed discs and finger-rayed heads",
+      "scent": "none"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      2,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Goblin gold",
+    "genus": "Schistostega",
+    "species": "pennata",
+    "origin": "Northern temperate zone",
+    "family": "Schistostegaceae",
+    "shape": "moss",
+    "temp_c": [
+     0,
+     15
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "biomes": [
+     "CAVES"
+    ],
+    "height_m": [
+     0.005,
+     0.015
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "sandstone",
+      "granite",
+      "sand",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6AA040",
+    "accent": "#C8D84A",
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores from tiny capsules; spreads by its persistent protonema; needs a wet film to reproduce"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Schistostega pennata (Hedw.) F.Weber & D.Mohr, goblin gold or luminous moss: Europe, temperate Asia and North America, in the dim mouths of caves, rock crevices, old mine adits and under root plates on acid sandstone, granite and sandy soil; its protonema of lens-shaped cells reflects the light back golden-green; shoots under 1.5 cm. British Bryological Society; Edwards 2012, English Names for British Bryophytes.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "frond",
+      "colour": "#6aa040",
+      "underside": "#5a9038",
+      "gloss": 0.6,
+      "veins": "none",
+      "vein_colour": "#6aa040",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       1.2
+      ],
+      "notes": "tiny flat feather-like shoots, the leaves in two ranks fused along the stem, rising from a carpet of protonema that glows golden-emerald where light falls into the dark"
+     },
+     "mat": {
+      "height_cm": [
+       0.2,
+       1.5
+      ],
+      "texture": "protonema"
+     },
+     "seasonal": "evergreen; glows all year where light reaches it",
+     "silhouette": "patches of glowing golden-green in a dark cave mouth",
+     "confidence": "documented",
+     "refs": "British Bryological Society species finder; Wikipedia Schistostega; Atlas of British and Irish Bryophytes"
+    },
+    "leaf": {
+     "type": "frond",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      0.5,
+      1.2
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       10,
+       20
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 1.2,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "glowing golden-green patches in a dark cave mouth",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      3,
+      20
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "different",
+     "juvenile_note": "A spore grows into a persistent protonema: a film of branching threads ending in lens-shaped cells that focus the faint light onto their chloroplasts and shine golden-green back at the viewer. From it rise the tiny flat feather-like leafy shoots, under 1.5 cm.",
+     "confidence": "estimated",
+     "source": "British Bryological Society (persistent luminous protonema; shoots 5-15 mm; capsules in spring); timings and lifespan estimated."
+    }
+   }
+  ],
   "epiphyte": []
  },
  "hero_species": []

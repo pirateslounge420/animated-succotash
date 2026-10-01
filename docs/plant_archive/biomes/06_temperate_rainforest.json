@@ -1,0 +1,1869 @@
+{
+ "key": "TEMPERATE_RAINFOREST",
+ "name": "Temperate rainforest",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Rimu",
+    "genus": "Dacrydium",
+    "species": "cupressinum",
+    "origin": "New Zealand",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     35,
+     50
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3A7A3A",
+    "accent": "#8A6A4A",
+    "source": "Dacrydium cupressinum, rimu, endemic New Zealand lowland podocarp rainforest, 35-50 m weeping foliage — Wikipedia / NZ Plant Conservation Network",
+    "traits": {
+     "genus": "Dacrydium",
+     "species": "cupressinum",
+     "native_range": "Dacrydium cupressinum, rimu, endemic New Zealand lowland podocarp rainforest, 35-50 m weeping foliage — Wikipedia / NZ P",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      35,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.2,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.45,
+     "scale_cm": 8,
+     "color": "#6A5A4C",
+     "color_2": "#9A5A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.8
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      80,
+      110
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.6,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
+    },
+    "silhouette": "weeping dark-green curtains on a tall trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
+     ],
+     "height_years": [
+      100,
+      350
+     ],
+     "first_seed_years": 40,
+     "lifespan_years": [
+      600,
+      1200
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Young rimu are unmistakable: a slender pyramid whose long branchlets hang straight down like a weeping willow, clothed in soft, sickle-shaped juvenile leaves 4-10 mm long, dark green, bronze or orange in sun. Grows 1-2 cm a year under canopy, 15-30 cm in the open, reaching 12 m tall while still only ~10 cm thick; the weeping habit gives way to short, scale-like adult leaves.",
+     "confidence": "documented",
+     "source": "Wikipedia Dacrydium cupressinum (35 m, to 60 m; 15-30 cm/yr height in the open, 1-2 cm in shade; lifespan 600-800, some ~1200 yr; juvenile pendulous foliage 4-10 mm; seeds ripen Mar-May 15-18 months after pollination; bird-dispersed; seeds dormant >= 30 d; seedlings need partial shade). First seed age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#b8b25a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#6f8b4a",
+     "ripe_colour": "#a8322a",
+     "ripen_days": [
+      450,
+      550
+     ],
+     "hang_days": [
+      7,
+      45
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      1000,
+      200000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (pollen cones 5-10 mm, yellow; the seed, 4-5 mm, dark brown-black, sits on a small red to deep-orange fleshy cup; ripe Mar-May, 15-18 months after pollination; eaten by kereru, tui and bellbirds; mast seeding with strong yearly swings). Pollination month, set, crop and decay estimated."
+    }
+   },
+   {
+    "name": "Hemlock",
+    "genus": "Tsuga",
+    "species": "heterophylla",
+    "origin": "Pacific NW, Alaska to California",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     40,
+     70
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "color": "#2A6A38",
+    "accent": "#6E5A44",
+    "source": "Tsuga heterophylla, western hemlock, Pacific NW Alaska-California, shade-tolerant climax conifer of coastal rainforest, 40-70 m — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Tsuga",
+     "species": "heterophylla",
+     "native_range": "Tsuga heterophylla, western hemlock, Pacific NW Alaska-California, shade-tolerant climax conifer of coastal rainforest, ",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      40,
+      70
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "scaly",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6A4A3E",
+     "color_2": "#8A3A34",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.3,
+     "layering": "tiered",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "excurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      70,
+      95
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.45
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "feathery dark cone with a drooping tip",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      45,
+      150
+     ],
+     "first_seed_years": 25,
+     "lifespan_years": [
+      400,
+      1200
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny epigeal seedling with 3-4 needle-like cotyledons, only 3-5 cm tall after its first year, very often perched on rotting logs and stumps (nurse logs) in deep shade. Saplings are narrow, feathery cones of flat sprays of short needles, with the leader and branch tips drooping; they can wait for decades suppressed under the canopy.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 1 (Packee): cones regular from 25-30 yr, very shade tolerant, height/site-index tables, max age usually 400-500 yr (record >700); Wikipedia (trees >1,200 yr known, seedlings 3-5 cm after year one, saplings 50-120 cm/yr in light)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#7a4a6e",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.9,
+      3.2
+     ],
+     "unripe_colour": "#6b7f4a",
+     "ripe_colour": "#9a7b5a",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      300,
+      900
+     ],
+     "drop": "persists",
+     "rot_days": [
+      300,
+      1100
+     ],
+     "crop_per_tree": [
+      500,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (Packee): pollination mid-April to June, solitary pendent cones 19-32 mm maturing 120-160 days after pollination, seed ripe mid-late Sept, scales open late Oct, empty cones persist 2+ yr, 30-40 seeds per cone, heavy crops every 3-4 yr; Wikipedia (green cones ripen grey-brown). Crop per tree estimated."
+    }
+   },
+   {
+    "name": "Coihue",
+    "genus": "Nothofagus",
+    "species": "dombeyi",
+    "origin": "Southern Chile and Argentina",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     30,
+     45
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#7A7A6A",
+    "source": "Nothofagus dombeyi, coihue, evergreen southern beech, Valdivian temperate rainforest of Chile/Argentina, 30-45 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Nothofagus",
+     "species": "dombeyi",
+     "native_range": "Nothofagus dombeyi, coihue, evergreen southern beech, Valdivian temperate rainforest of Chile/Argentina, 30-45 m — Wikip",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      30,
+      45
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "beech",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#7A7670",
+     "color_2": "#5A4E46",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -3,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "decurrent",
+     "orders": 7,
+     "branch_angle_deg": [
+      55,
+      80
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.15,
+      0.35
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.7,
+      0.35
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "huge layered dark crown of tiny leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      40
+     ],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      250,
+      600
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two roundish cotyledons, then small, thick, glossy, finely toothed evergreen leaves (2.5-4 cm) in two flat rows along zigzag twigs. In the open it grows fast into a narrow cone with a straight leader and fine, feathery, fan-like branch sprays; old trees become huge, with a tall straight bole and flat, layered, cloud-like crowns.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nothofagus dombeyi (evergreen, fast growing, to 45 m and 1.9 m diameter; leaves 25-40 mm, leathery, toothed; nut triangular 4-7 mm); Veblen et al. (Nothofagus as a light-demanding pioneer after landslides, volcanism and fire in Chile/Argentina); first seed age and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 5,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#9a5a3a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "nut",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#8a6038",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      5000,
+      500000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (triangular nut 4-7 mm); Nothofagus: tiny wind-pollinated flowers in spring (Sep-Nov), males with red-tipped stamens, females in threes inside a small scaly cupule that splits in late summer to drop two winged three-angled nuts and one flat one; heavy mast years; timings and crop estimated"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Kuril bamboo",
+    "genus": "Sasa",
+    "species": "kurilensis",
+    "origin": "Northern Japan, Kurils and Sakhalin",
+    "shape": "bamboo",
+    "temp_c": [
+     2,
+     10
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Sasa kurilensis, chishima-zasa, Hokkaido, Kurils, Sakhalin & N Honshu, dense dwarf-bamboo understory of cool wet forest, 1-3 m — Wikipedia / Flora of Japan",
+    "traits": {
+     "genus": "Sasa",
+     "species": "kurilensis",
+     "native_range": "Sasa kurilensis, chishima-zasa, Hokkaido, Kurils, Sakhalin & N Honshu, dense dwarf-bamboo understory of cool wet forest,",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 4.5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 15,
+     "color": "#78A050",
+     "color_2": "#4A6A30",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "silhouette": "dense waist-high bamboo thicket",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "culm_days": 50,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      5,
+      10
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings appear only after a rare mass flowering: grass-like tufts of a few thin culms 10-20 cm tall with small leaves; each year the clump sends up taller culms from spreading rhizomes. Mature culms 1-3 m, arching at the base under snow, with big oblong leaves crowded at the top; each new culm reaches full height in about 2 months of early summer.",
+     "confidence": "estimated",
+     "source": "Makita 1992 Ecological Research (Sasa kurilensis is monocarpic: after mass flowering the stand dies and regrows from seedlings over one to two decades); Japanese bamboo literature (culms 1-3 m, shoots May-June, edible 'nemagari-dake'); flowering interval not known, estimated as many decades"
+    }
+   },
+   {
+    "name": "Colihue",
+    "genus": "Chusquea",
+    "species": "culeou",
+    "origin": "Southern Chile and Argentina",
+    "shape": "bamboo",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     3,
+     6
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Chusquea culeou, colihue, Valdivian rainforest understory of Chile/Argentina, clumping bamboo 3-6 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Chusquea",
+     "species": "culeou",
+     "native_range": "Chusquea culeou, colihue, Valdivian rainforest understory of Chile/Argentina, clumping bamboo 3-6 m — Wikipedia / Kew PO",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      3,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 20,
+     "color": "#A8A860",
+     "color_2": "#6A6A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "fountain of arching solid canes",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      5,
+      12
+     ],
+     "culm_days": 90,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      10,
+      20
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings after a mass flowering look like thin grass. The young clump makes new culms each season, at first thread-thin and short, each generation thicker and taller, and dense bunches of whiskery branchlets grow at every node. Colihue culms are solid, pale, erect and closely packed, to ~6 m.",
+     "confidence": "documented",
+     "source": "Wikipedia Chusquea culeou (culms to 6 m, solid; flowers after variable periods up to ~60 yr, then the plant dies after seeding); Pearson et al. 1994 and Marchesini et al. 2009 (2001 mass flowering in Patagonia, seedling recruitment); culm lifespan and culm_days estimated"
+    }
+   },
+   {
+    "name": "Vine maple",
+    "genus": "Acer",
+    "species": "circinatum",
+    "origin": "Pacific Northwest",
+    "shape": "gnarled",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#C8542A",
+    "source": "Acer circinatum, vine maple, Pacific NW, sprawling understory tree of moist conifer forest, 3-8 m — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Acer",
+     "species": "circinatum",
+     "native_range": "Acer circinatum, vine maple, Pacific NW, sprawling understory tree of moist conifer forest, 3-8 m — Wikipedia / USDA Pla",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "beech",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 0.95,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "lobes": 7,
+     "venation": "palmate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7A7062",
+     "color_2": "#9A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#e07a28",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "silhouette": "sprawling multi-stemmed maple, round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "tolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two strap-shaped cotyledons, then pairs of small round leaves with 7-9 shallow lobes. Seedlings are rare; most young plants come from layered or sprouting stems, so the young shrub is a clump of thin green-barked stems. In shade the stems arch, sprawl and root where they touch the ground (vine-like); in sun it stays a compact upright shrub.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Acer circinatum (flowers Apr-Jun, probably before age 10; seed needs ~6 months chilling and germinates in spring; seedlings rare, spreads by layering and root-crown sprouts; shade tolerant; to 9 m); growth rate and stem ages estimated (clones persist much longer)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1,
+     "flower_colour": "#a8324a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      4,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      1.2,
+      2.5
+     ],
+     "unripe_colour": "#c0485a",
+     "ripe_colour": "#9a6a44",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Acer circinatum (loose drooping clusters from branchlet tips Apr-Jun, red-purple sepals and white petals; only a few flowers per cluster set fruit; rose-coloured double samaras 1.2-2.5 cm with wings spread flat, ripe Sep-Oct, dispersed to Nov; very poor seed producer)"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Oregon oxalis",
+    "genus": "Oxalis",
+    "species": "oregana",
+    "origin": "Coastal Oregon and California",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#F0D8E8",
+    "source": "Oxalis oregana, redwood sorrel, coastal Oregon-California redwood forest floor, dense 5-15 cm carpet — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Oxalis",
+     "species": "oregana",
+     "native_range": "Oxalis oregana, redwood sorrel, coastal Oregon-California redwood forest floor, dense 5-15 cm carpet — Wikipedia / USDA ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "compound",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": {
+      "form": "trifoliate",
+      "leaflets": [
+       3,
+       3
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 0.9,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.05,
+     "scale_cm": 0.5,
+     "color": "#7A9A58",
+     "color_2": "#9A7A70",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "dense clover-leaf carpet of the redwood floor",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings show two small cotyledons, then clover-like leaves of three broad, heart-shaped leaflets, often with a pale central blotch. Scaly rhizomes spread into dense, soft, ankle-high carpets under redwoods; the leaflets fold down like a closed umbrella within minutes when a sunfleck hits them and reopen in shade.",
+     "confidence": "estimated",
+     "source": "Wikipedia (5-15 cm stems from a scaly rhizome; photosynthesises at 1/200 of full sunlight; leaves fold within minutes in direct sun; white to pink flowers); growth and ages estimated from Oxalis acetosella"
+    }
+   },
+   {
+    "name": "Chanterelle",
+    "genus": "Cantharellus",
+    "species": "cibarius",
+    "origin": "Europe",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0B020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate and boreal forest; Golden funnels in mossy conifer and beech woods.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Cantharellus",
+     "species": "cibarius",
+     "native_range": "temperate and boreal forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8c030",
+      "secondary": "#f0b028",
+      "form": "funnel cap with wavy irregular margin, egg-yellow",
+      "size_cm": [
+       3,
+       10
+      ],
+      "texture": "smooth-matte",
+      "gloss": 0.3,
+      "notes": "uniform egg-yolk to apricot yellow funnel with wavy edge and forked ridges"
+     },
+     "underside": {
+      "colour": "#f8c030",
+      "type": "blunt forked ridges, same yellow, running down the stem"
+     },
+     "stipe": {
+      "colour": "#f8c030",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "scattered in moss under conifers and beech",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "yellow funnels dotting mossy ground",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.49,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Red-belted conk",
+    "genus": "Fomitopsis",
+    "species": "pinicola",
+    "origin": "Northern Hemisphere (circumboreal)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     -4,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "KRUMMHOLZ",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A4A28",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "boreal and mountain conifer; On spruce and fir snags; the boreal wood-rotter.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomitopsis",
+     "species": "pinicola",
+     "native_range": "boreal and mountain conifer",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#5a3a30",
+      "secondary": "#c82818",
+      "form": "hoof to shelf bracket, dark grey-brown top, bright red-orange resinous band near the white margin",
+      "size_cm": [
+       5,
+       40
+      ],
+      "texture": "hard-resinous",
+      "gloss": 0.3,
+      "notes": "dark brown to black older zones, glossy red-orange belt, white rim"
+     },
+     "underside": {
+      "colour": "#f0e8d8",
+      "type": "pores cream-white"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "perennial bracket on conifers",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "hard dark hooves with a red band on a spruce snag",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.22,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Turkey tail",
+    "genus": "Trametes",
+    "species": "versicolor",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.45,
+     0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST",
+     "TAIGA"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#7A6A50",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide temperate; Banded bracket on dead hardwood; the commonest wood-rotter on Earth.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Trametes",
+     "species": "versicolor",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#6a4a3a",
+      "secondary": "#c8b898",
+      "form": "thin fan bracket in overlapping tiers, concentric bands",
+      "size_cm": [
+       2,
+       8
+      ],
+      "texture": "velvety",
+      "gloss": 0.3,
+      "notes": "concentric zones alternating brown, tan, grey-blue, rust, with pale wavy margin"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white-cream, tiny"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "tiered brackets on dead hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "shelves of striped fans on a log",
+     "confidence": "documented",
+     "refs": "Wikipedia Trametes versicolor; Phillips"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.59,
+     "val": 0.89,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Tree moss",
+    "genus": "Dendroalsia",
+    "species": "abietina",
+    "origin": "Pacific coast of North America",
+    "family": "Cryphaeaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A8A3A",
+    "accent": "#5A8A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a green thread-like protonema on bark or rock, from which small leafy shoots bud. These grow into stiff, erect, frond-like shoots branched like a tiny fir tree ('abietina'), forming patches that spread up oak trunks; when dry each shoot curls downward like a clenched fist, and it uncurls green within minutes of rain.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendroalsia (sole species; conspicuous, often covering whole oak trunks, also on rock; each stem curls like a clenched fist when dry; oak woodlands from Los Angeles County to Vancouver Island). Spore-to-shoot time, growth and ages estimated from pleurocarpous epiphytic mosses."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Pacific coast oak and maple trunks; tiny fronds. Kew POWO.",
+    "traits": {
+     "genus": "Dendroalsia",
+     "species": "abietina",
+     "native_range": "Pacific coast oak and maple trunks",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#4a8a3a",
+      "underside": "#7aa858",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#4a8a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "dense flat frond-like plumes arching out from trunks, curling inward when dry, like tiny fern fronds"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       8
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "curls inward brown-green when dry",
+     "silhouette": "green fringing plumes on oak and maple trunks",
+     "confidence": "documented",
+     "refs": "Wikipedia Dendroalsia abietina, Flora of North America"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "tiered",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ]
+ },
+ "associations": [
+  {
+   "name": "Coihue-colihue Valdivian forest",
+   "realm": "neotropic",
+   "where": "mid-slopes and valleys of the southern Andes, high rainfall",
+   "dominant": [
+    "Coihue"
+   ],
+   "companion": [
+    "Colihue",
+    "Old man's beard",
+    "Cat-tail moss"
+   ],
+   "ground": [
+    "Stair-step moss",
+    "Deer fern"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Veblen et al. 1996 Ecology and Biogeography of Nothofagus Forests"
+  }
+ ]
+}

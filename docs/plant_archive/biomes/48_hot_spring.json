@@ -1,0 +1,333 @@
+{
+ "key": "HOT_SPRING",
+ "name": "Hot spring",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Green cyanobacteria mat",
+    "genus": "Synechococcus",
+    "species": "lividus",
+    "origin": "Yellowstone hot springs, USA",
+    "shape": "thermophile_mat",
+    "temp_c": [
+     -10,
+     35
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     0.0,
+     0.02
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "hot_ground",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#7AC040",
+    "accent": "#3F8A38",
+    "source": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wikipedia / NPS",
+    "traits": {
+     "genus": "Synechococcus",
+     "species": "lividus",
+     "native_range": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wiki",
+     "leaf_shape": "none — microbial mat",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.0,
+      0.02
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "microbial mat"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.05,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#7AC040",
+     "color_2": "#3F8A38",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "green slimy film in hot runoff",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.15,
+      0.8
+     ],
+     "first_seed_years": 0.1,
+     "lifespan_years": [
+      3,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No plant form: single rod-shaped cells a few microns long. A new colony shows as a thin olive-green slime film on bare sinter in 50-72 C outflow channels, thickening into a gelatinous, layered mat about 1 cm deep: bright green on top over orange layers of filamentous bacteria. In strong summer sun the surface looks more yellow-orange, in winter greener.",
+     "confidence": "estimated",
+     "source": "Copeland 1936 and T. D. Brock's Yellowstone work (Thermophilic Microorganisms and Life at High Temperatures, 1978): unicellular cyanobacterium of alkaline hot springs forming green mats up to ~72 C, the upper limit for photosynthesis, over Chloroflexus layers (Octopus and Mushroom springs). Colonisation, mat-building times and mat age estimated."
+    }
+   },
+   {
+    "name": "Thermophile mat",
+    "genus": "Thermus",
+    "species": "aquaticus",
+    "origin": "Yellowstone hot springs, USA",
+    "shape": "thermophile_mat",
+    "temp_c": [
+     -10,
+     35
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     0.0,
+     0.02
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "hot_ground",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#E8A020",
+    "accent": "#D04020",
+    "source": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels at 50-80 C, Yellowstone/Iceland/NZ — Wikipedia / NPS",
+    "traits": {
+     "genus": "Thermus",
+     "species": "aquaticus",
+     "native_range": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels",
+     "leaf_shape": "none — microbial mat",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.0,
+      0.02
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "microbial mat"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.05,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#E8A020",
+     "color_2": "#D04020",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "orange-yellow microbial mat in hot channel",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      0.05,
+      0.3
+     ],
+     "first_seed_years": 0.02,
+     "lifespan_years": [
+      1,
+      20
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No plant form: rod-shaped to short filamentous bacteria 0.5-0.8 um wide that clump into 10-20 um spheres. On new surfaces in 50-80 C water it shows within days as a thin slimy film, yellow to pinkish-orange from carotenoid pigments, usually mixed into cyanobacterial mats and streamers rather than forming a large mat of its own.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thermus aquaticus (isolated by T. D. Brock from Mushroom Spring, Lower Geyser Basin; grows at 50-80 C, optimum 65-70 C; rods 0.5-0.8 x 5-10 um, filaments >200 um, spherical bodies 10-20 um; yellow to pink or red in sunlight; a chemotroph that needs no light, living partly on cyanobacterial products). Colonisation and film age estimated."
+    }
+   },
+   {
+    "name": "Tufted hairgrass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "origin": "Circumboreal (Holarctic)",
+    "shape": "tussock",
+    "temp_c": [
+     -5,
+     12
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#6AB050",
+    "accent": "#C8B060",
+    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Deschampsia",
+     "species": "cespitosa",
+     "native_range": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#c8b060",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A50",
+     "color_2": "#A09060",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "dense green tussock with airy seed haze",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,650 @@
+{
+ "key": "FEN",
+ "name": "Fen",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Grass of Parnassus",
+    "genus": "Parnassia",
+    "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "color": "#4A9A45",
+    "accent": "#F8F8F0",
+    "source": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
+    "traits": {
+     "genus": "Parnassia",
+     "species": "palustris",
+     "native_range": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.2,
+     "base": "cordate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "long-stalked ovate-cordate basal leaves with 5-7 radiating veins; one clasping stem leaf"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#b0a048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 3,
+     "color": "#6A9A50",
+     "color_2": "#8A8A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "single slender flower stem"
+    },
+    "silhouette": "small heart-leaf rosette with one white flower",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with round cotyledons form a small rosette of long-stalked, heart-shaped, hairless, glossy leaves. The adult keeps this low rosette and sends up stiff stems, each with one clasping leaf and a single white cup flower with green veins and a ring of fringed, yellow-knobbed false stamens.",
+     "confidence": "estimated",
+     "source": "Estimated from the species' biology (tiny wind-dispersed seeds needing winter chilling, slow-developing rosettes of fens and wet dune slacks, short-lived perennial) as summarised in British and Nordic floras"
+    }
+   },
+   {
+    "name": "Marsh marigold",
+    "genus": "Caltha",
+    "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.15,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#3F8A3A",
+    "accent": "#F0C020",
+    "source": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
+    "traits": {
+     "genus": "Caltha",
+     "species": "palustris",
+     "native_range": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.15,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "reniform",
+     "aspect": 0.8,
+     "base": "cordate",
+     "apex": "rounded",
+     "margin": "crenate",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 0.8,
+     "underside": 0.2,
+     "autumn": "#b0a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#5A8A40",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow succulent stems, brownish at the base"
+    },
+    "silhouette": "low mound of glossy round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then long-stalked round to kidney-shaped glossy leaves with scalloped edges, a small version of the adult. It builds a low leafy rosette/clump from a short thick rootstock over 1-2 years and flowers (bright yellow cups) from about the second or third spring; clumps widen slowly by branching of the rootstock.",
+     "confidence": "estimated",
+     "source": "Jelitto seed (germinates in 3-4 weeks at ~20C); SDSU Native Plant propagation (60-day cold-moist treatment or fall sowing; low germination; sun to shade); Wikipedia/MBG (10-80 cm, marshes and wet woodland, dies back in winter); time to flower and lifespan estimated from growers and growth form"
+    }
+   },
+   {
+    "name": "Black bog-rush",
+    "genus": "Schoenus",
+    "species": "nigricans",
+    "origin": "Europe, N Africa and W Asia",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#6A9A48",
+    "accent": "#2A2A2A",
+    "source": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 cm",
+    "traits": {
+     "genus": "Schoenus",
+     "species": "nigricans",
+     "native_range": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 c",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      45
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "wiry inrolled dark green basal leaves 1-2 mm wide (true aspect > 100) from shiny blackish sheaths"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#5A8A48",
+     "color_2": "#2A2020",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "wiry culms rising from glossy black-brown basal sheaths"
+    },
+    "silhouette": "wiry dark tussock with black bases",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a tiny tuft of thread-like leaves. Builds slowly into a dense, hard tussock of wiry, grey-green, rush-like leaves with glossy black-brown leaf bases; stiff flowering stems carry a small, flattened, blackish head with a longer leaf-like bract.",
+     "confidence": "estimated",
+     "source": "Sparling 1968, Biological Flora of the British Isles: Schoenus nigricans (tussock sedge of calcareous fens, dune slacks and bogs; slow establishment, long-lived tussocks); Stace; timings and ages estimated"
+    }
+   },
+   {
+    "name": "Bottle sedge",
+    "genus": "Carex",
+    "species": "rostrata",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "grass",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#6AA850",
+    "accent": "#A8A050",
+    "source": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
+    "traits": {
+     "genus": "Carex",
+     "species": "rostrata",
+     "native_range": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "glaucous channelled blades 2-7 mm wide, ascending, longer than the culms, in rhizomatous lawns"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c0a868",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#7AA068",
+     "color_2": "#9A7A58",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "bluntly triangular culms with brown basal sheaths"
+    },
+    "silhouette": "upright glaucous sedge lawn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      5
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small tuft of narrow, glaucous, spongy-based leaves. Long rhizomes then run through the mud of pond and lake margins sending up upright shoots, forming extensive open swards in shallow water; fertile stems carry fat cylindrical female spikes of bottle-shaped beaked perigynia.",
+     "confidence": "estimated",
+     "source": "Schutz 2000 Flora (Carex germination needs light and fluctuating temperatures); Flora of North America / BSBI (strongly rhizomatous, 30-120 cm, shallow water); shoot lifespan estimated from FEIS Carex utriculata/aquatilis accounts"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Fen willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "origin": "Europe and Western Asia",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#7AA070",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
+    "traits": {
+     "genus": "Salix",
+     "species": "cinerea",
+     "native_range": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "obovate to oblanceolate, dull green above, grey-tomentose beneath, margin entire to sinuate"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.5,
+     "autumn": "#c0b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#7A7670",
+     "color_2": "#5A544E",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "documented"
+    },
+    "silhouette": "grey-green rounded bush of many stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
+   }
+  ]
+ }
+}

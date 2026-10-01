@@ -1,0 +1,1207 @@
+{
+ "key": "STEPPE",
+ "name": "Steppe",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Neneo",
+    "genus": "Mulinum",
+    "species": "spinosum",
+    "origin": "Patagonia, Argentina and Chile",
+    "shape": "cushion",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8FA860",
+    "accent": "#E8D858",
+    "source": "Mulinum spinosum, Patagonian steppe, spiny cushion shrub 0.3-1 m — Flora Argentina",
+    "traits": {
+     "genus": "Mulinum",
+     "species": "spinosum",
+     "native_range": "Mulinum spinosum, Patagonian steppe, spiny cushion shrub 0",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": {
+      "form": "trifoliate",
+      "leaflets": [
+       3,
+       3
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 10,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A6E60",
+     "color_2": "#5A4E40",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "tight spiny green cushion, yellow-flowered",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling with two narrow cotyledons, then small, stiff, three-forked leaves ending in yellow spines. It branches densely from the base into a small, round, spiny cushion; year by year the green-yellow hemisphere of interlocked stems and spiny leaves widens, and in early summer it is dotted with small yellow umbels. Grazing animals avoid it, so it spreads in overgrazed steppe.",
+     "confidence": "estimated",
+     "source": "Estimated from the growth form and Patagonian steppe literature on neneo (now Azorella prolifera; hemispherical spiny cushion shrub to ~1 m that increases under heavy grazing); germination from Apiaceae steppe shrubs needing winter cold"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Steppe tulip",
+    "genus": "Tulipa",
+    "species": "suaveolens",
+    "origin": "Pontic-Caspian steppe",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#E03030",
+    "source": "Tulipa suaveolens (T. schrenkii), Pontic-Caspian steppe spring bulb, 10-30 cm, red flowers — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Tulipa",
+     "species": "suaveolens",
+     "native_range": "Tulipa suaveolens (T",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#B8A860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#7A9A6A",
+     "color_2": "#9A8A8A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "low glaucous leaves with a red cup",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
+     ],
+     "height_years": [
+      2.5,
+      5
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Year one: a single hair-thin, tubular green cotyledon like a blade of grass, dying back by early summer over a pea-sized bulb that is pushed deeper on a dropper. Following springs: one flat, grey-green, channelled leaf that widens each year; only after 4-6 years does the bulb send up a short stem with 3-4 wavy-edged leaves and a flower.",
+     "confidence": "estimated",
+     "source": "Kazakhstan flora treatment on Zenodo (T. suaveolens = T. schrenkii: steppe and semi-desert, flowers Mar-Apr, fruits May-Jun); Tulipa genus growers (Pacific Bulb Society; Garden of Eaden: seeds germinate after a winter chill, 1 month to 1 yr; species tulips flower about 4-7 yr from seed)."
+    }
+   },
+   {
+    "name": "Coiron",
+    "genus": "Pappostipa",
+    "species": "speciosa",
+    "origin": "Patagonian steppe",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#E0D0A0",
+    "source": "Pappostipa speciosa, dominant Patagonian steppe bunchgrass, 30-60 cm — Flora Argentina",
+    "traits": {
+     "genus": "Pappostipa",
+     "species": "speciosa",
+     "native_range": "Pappostipa speciosa, dominant Patagonian steppe bunchgrass, 30-60 cm — Flora Argentina",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#D0C090",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#8A9A70",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "stiff grey-green needle-grass tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are thin tufts of a few rolled, needle-like, grey-green leaves. The plant slowly builds a dense, rounded tussock of stiff, sharp-tipped, rolled blades, pale and tough, with a skirt of old straw at the base; in late spring it carries narrow panicles of seeds with long feathery awns.",
+     "confidence": "estimated",
+     "source": "Estimated from Patagonian steppe tussock grasses (Stipa/Pappostipa: slow establishment on winter-spring moisture, long-lived tussocks) and the species' role as the dominant hard 'coiron' of the steppe"
+    }
+   },
+   {
+    "name": "Carcass cup",
+    "genus": "Peziza",
+    "species": "vesiculosa",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "STEPPE",
+     "WET_MEADOW",
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8B090",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "carcass",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide, rich decaying ground; Cup fungus on midden, dung and carcass ground.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Peziza",
+     "species": "vesiculosa",
+     "native_range": "worldwide, rich decaying ground",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c8a0",
+      "secondary": "#e8dcc0",
+      "form": "cup 3-8 cm, inrolled edges, pale tan inside, whitish scurfy outside",
+      "size_cm": [
+       3,
+       8
+      ],
+      "texture": "scurfy",
+      "gloss": 0.3,
+      "notes": "pale buff cups clustered, incurved rims, outside whitish granular"
+     },
+     "underside": {
+      "colour": "#e8dcc0",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "clustered on rich ground and dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "cluster of pale cups on a midden",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.48,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Krylov needlegrass",
+    "genus": "Stipa",
+    "species": "krylovii",
+    "origin": "Mongolia and Central Asia",
+    "shape": "tussock",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#D8C880",
+    "source": "Stipa krylovii, dominant of the Mongolian dry steppe, 0.3-0.7 m — Flora of China",
+    "traits": {
+     "genus": "Stipa",
+     "species": "krylovii",
+     "native_range": "Stipa krylovii, dominant of the Mongolian dry steppe, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.7
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#D0C090",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#8A9A70",
+     "color_2": "#C8B888",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small stiff grey-green bunchgrass",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one or two very fine, inrolled leaves from a grain whose hygroscopic awn has screwed it into the soil; it tillers slowly into a small bunch. Mature: a dense tussock of thread-like grey-green leaves with slender culms bearing grains with long, twice-bent, mostly bare awns, dominant over the typical Mongolian steppe.",
+     "confidence": "estimated",
+     "source": "Flora of China / Mongolian steppe literature (typical-steppe dominant, 30-70 cm tussock, scabrous non-plumose awns); growth, flowering age and tussock lifespan estimated from Eurasian Stipa steppe grasses"
+    }
+   },
+   {
+    "name": "Fairy ring champignon",
+    "genus": "Marasmius",
+    "species": "oreades",
+    "origin": "Europe and North America",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "DUNES"
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8B880",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate grassland; Rings in meadows and prairie that widen a little every year — a ring's age is readable.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Marasmius",
+     "species": "oreades",
+     "native_range": "temperate grassland",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.05
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c888",
+      "secondary": "#c8a060",
+      "form": "convex to broad umbo cap, buff-tan, hygrophanous paling to cream",
+      "size_cm": [
+       2,
+       6
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "buff tan caps with darker umbo, in arcs and rings in grass; grass ring darker green"
+     },
+     "underside": {
+      "colour": "#f0e8d0",
+      "type": "gills cream, widely spaced"
+     },
+     "stipe": {
+      "colour": "#e8d8b0",
+      "height_cm": [
+       4,
+       8
+      ]
+     },
+     "habit": "rings in grassland",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "arcs of small tan mushrooms in a meadow",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.7,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Shaggy inkcap",
+    "genus": "Coprinus",
+    "species": "comatus",
+    "origin": "Northern temperate zone",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "STEPPE",
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#E8E0D0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate disturbed ground and camp edges; Rises overnight on middens and paths, dissolves to ink by evening.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Coprinus",
+     "species": "comatus",
+     "native_range": "temperate disturbed ground and camp edges",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#c8b090",
+      "form": "tall cylindrical cap covered in shaggy white scales tipped tan, opening to a bell, edges dissolving black",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "shaggy",
+      "gloss": 0.3,
+      "notes": "white lawyer's-wig cylinder with tan tip and brown-edged scales; edge liquefies black"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white turning pink then black ink"
+     },
+     "stipe": {
+      "colour": "#f8f4ec",
+      "height_cm": [
+       10,
+       30
+      ]
+     },
+     "habit": "scattered on disturbed ground",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "white shaggy columns on a path edge",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Dung roundhead",
+    "genus": "Protostropharia",
+    "species": "semiglobata",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "SAVANNA",
+     "WET_MEADOW",
+     "ALPINE_MEADOW"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8C060",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "dung",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Protostropharia",
+     "species": "semiglobata",
+     "native_range": "worldwide pasture",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c860",
+      "secondary": "#d8b850",
+      "form": "hemispherical slimy cap, pale yellow-ochre",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "slimy-glossy",
+      "gloss": 0.3,
+      "notes": "small glossy yellow half-globe on a slender pale stem on dung"
+     },
+     "underside": {
+      "colour": "#4a4a48",
+      "type": "gills grey-black, broad"
+     },
+     "stipe": {
+      "colour": "#e8d890",
+      "height_cm": [
+       4,
+       10
+      ]
+     },
+     "habit": "scattered on herbivore dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little yellow domes on cowpats",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.96,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": []
+ }
+}

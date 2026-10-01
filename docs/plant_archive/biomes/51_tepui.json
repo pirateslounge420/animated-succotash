@@ -1,0 +1,1759 @@
+{
+ "key": "TEPUI",
+ "name": "Tepui summit",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Giant brocchinia",
+    "genus": "Brocchinia",
+    "species": "micrantha",
+    "origin": "Guiana Highlands, Venezuela",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1000,
+     2500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A5A",
+    "accent": "#E0E080",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 18,
+     "lifespan_years": [
+      18,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged seeds. The seedling is a small tank rosette of soft, strap-shaped, yellow-green leaves; it grows into a giant rosette of broad, gutter-like leaves holding litres of water, then lifts on a thick stem into a tree-like rosette several metres tall before a huge terminal flower panicle.",
+     "confidence": "estimated",
+     "source": "Wikipedia and Givnish et al. 1997 on Brocchinioideae (B. micrantha a tree-like giant to ~8 m on Guayana Shield sandstone, winged seeds); rosettes of Bromeliaceae are terminated by their inflorescence; timings estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui slopes; a 4 m bromeliad with a tree-like stem. Kew POWO.",
+    "traits": {
+     "genus": "Brocchinia",
+     "species": "micrantha",
+     "native_range": "Tepui slopes",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "tree-like stem clothed in old leaf bases"
+    },
+    "silhouette": "giant bromeliad rosette atop a stout leaf-clad stem",
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f3f1e4",
+     "flower_form": "panicle",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      500,
+      5000
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.8
+     ],
+     "unripe_colour": "#9aab6a",
+     "ripe_colour": "#8a6a43",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from Brocchinia descriptions (micrantha = tiny white flowers in a huge branched panicle; small septicidal capsules shedding winged seeds); phenology, timings and counts estimated."
+    }
+   },
+   {
+    "name": "Tepui stegolepis",
+    "genus": "Stegolepis",
+    "species": "guianensis",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
+    "family": "Rapateaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#D8C040",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny fan of two-ranked, strap-shaped leaves at ground level in wet peat or rock cracks, growing very slowly on nutrient-poor tepui summits. It becomes a stout clump of stiff, leathery, dark-green leaf fans (leaves to 1.5 m in lowland forms) from a thick rhizome wrapped in persistent, mucilage-filled leaf bases.",
+     "confidence": "estimated",
+     "source": "Givnish et al. 2000 Evolution 54 (Stegolepis: massive rhizomes, distichous leaf fans, fire-tolerant, tepui bogs; narrow endemics); botany.cz (leaves to 150 cm, flowering stalks to 2 m); growth timings estimated from slow-growing tepui monocots"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; the dominant rosette herb of the open summit, in vast stands over bare rock. Kew POWO.",
+    "traits": {
+     "genus": "Stegolepis",
+     "species": "guianensis",
+     "native_range": "Tepui summits",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      50,
+      150
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "stiff sword-shaped equitant leaves in a fan (Rapateaceae)"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A8A5A",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "stiff sword-leaf fan, tall flower scapes",
+    "fruiting": {
+     "flower_months": [
+      9,
+      3
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#f2c12e",
+     "flower_form": "cup",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#8a9a5b",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      80
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Givnish et al. 2000 Evolution 54 (Stegolepis: yellow nectarless flowers with poricidal anthers, buzz-pollinated by halictid bees, weevils also visit; septicidal capsules; seeds without long-distance dispersal); botany.cz (petals 20-22 mm, yellow to pale orange); timings estimated"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Brocchinia",
+    "genus": "Brocchinia",
+    "species": "reducta",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#A0C060",
+    "accent": "#E0E080",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 3.5,
+     "lifespan_years": [
+      4,
+      6
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Winged seeds. Seedlings are small, open rosettes of soft green leaves; in full sun they become tall, narrow, yellow-green tubes of upright, waxy, slippery leaves whose acid tank traps ants. A rosette flowers once and then dies while side pups take over.",
+     "confidence": "documented",
+     "source": "Carnivorous Plant Newsletter 38(1) (rosettes mature within a few years, flower, then die; pups; very high light on tepuis and Gran Sabana); Givnish et al. 1984 Am. Nat. (carnivory, habitat); Wikipedia (winged seeds). lifespan_years is the rosette."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits and slopes; a carnivorous bromeliad — its yellow tank drowns insects and smells of nectar; Utricularia humboldtii lives in its water. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "bromeliad": {
+     "tank": true
+    },
+    "traits": {
+     "genus": "Brocchinia",
+     "species": "reducta",
+     "native_range": "Tepui summits and slopes",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "erect overlapping leaves form a waxy yellow-green tank"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 0.9,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#A0B860",
+     "color_2": "#7A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "erect yellow-green tank of overlapping leaves"
+   },
+   {
+    "name": "Giant sun pitcher",
+    "genus": "Heliamphora",
+    "species": "tatei",
+    "origin": "Cerro Duida, Amazonas, Venezuela",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2600
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small rosettes of narrow tubular pitchers like other sun pitchers; after several years the rosette starts climbing on a woody stem that elongates and scrambles up through shrubs, carrying spirals of tall (to 30-50 cm) green-to-red funnel pitchers with a prominent nectar spoon.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Heliamphora tatei: stem-forming sun pitcher of Cerro Duida, Huachamacari and Marahuaca). Growth and ages estimated from Heliamphora cultivation."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cerro Duida and Marahuaka; the tallest sun pitcher, stems to 1.5 m. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Heliamphora",
+     "species": "tatei",
+     "native_range": "Cerro Duida and Marahuaka",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "obovate",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "truncate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "each leaf is a funnel-shaped pitcher with a nectar spoon, drawn as a flared strap"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#7A9A58",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "erect stems clothed in old pitcher bases"
+    },
+    "silhouette": "clustered tall green funnel pitchers on stems"
+   },
+   {
+    "name": "Roraima sundew",
+    "genus": "Drosera",
+    "species": "roraimae",
+    "origin": "Guiana Highlands (Venezuela, Brazil)",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#8A3A3A",
+    "accent": "#C03040",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small flat rosette of reddish, spoon-shaped leaves fringed with sticky glandular tentacles, pressed onto wet sand or moss. With age it slowly lifts on a short stem sheathed in old dead leaves, as tepui sundews do on wet open sandstone, and sends up slender stalks of small white to pink flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Drosera roraimae (sundew of the Guiana Highlands tepuis of Venezuela, Guyana and Brazil); ICPS subtropical Drosera notes. Form, growth rate, flowering age and lifespan estimated from tepui sundews in cultivation (slow in cool conditions)."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; red sundew on wet sandstone and moss. Kew POWO.",
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Drosera",
+     "species": "roraimae",
+     "native_range": "Tepui summits",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented",
+     "note": "red glandular tentacles fringe the narrow blade"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 1.0,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A3A3A",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tiny red sticky rosette"
+   },
+   {
+    "name": "Summit moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "origin": "Americas, Patagonia to Canada",
+    "family": "Sphagnaceae",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#A0B060",
+    "accent": "#C08080",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
+     "confidence": "documented",
+     "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summit bog mats; the peat maker of the plateau. Kew POWO.",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Tepui summit bog mats",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "hooded ovate branch leaves; wine-red hummock moss"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B04A40",
+     "color_2": "#8A6030",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "wine-red moss hummock"
+   },
+   {
+    "name": "Sun pitcher",
+    "genus": "Heliamphora",
+    "species": "nutans",
+    "origin": "Mount Roraima, Venezuela/Guyana",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds germinate on wet moss in 3-8 weeks. Seedlings are tiny rosettes of narrow tubular leaves, the first ones simple funnels without the little helmet-like nectar spoon; over several years the pitchers widen into green, red-flushed trumpets 10-20 cm tall with a small spoon, and branching rhizomes make dense clumps.",
+     "confidence": "estimated",
+     "source": "Estimated from Heliamphora cultivation (carnivorous-plant grower notes: light-requiring seed germinates in weeks, seedlings take years to mature) and tepui ecology (Wikipedia: Roraima, Kukenan and neighbouring tepuis)."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Roraima summit marsh; the tepui pitcher plant, overflow-slotted for the endless rain. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Heliamphora",
+     "species": "nutans",
+     "native_range": "Roraima summit marsh",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "obovate",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "truncate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "funnel pitcher constricted mid-way, red nectar spoon; drawn as a flared strap"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A9A58",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "low cluster of green funnel pitchers, red spoons"
+   },
+   {
+    "name": "Tepui bromeliad",
+    "genus": "Navia",
+    "species": "glauca",
+    "origin": "Guiana Highlands, Venezuela",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#E06060",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a minute rosette of narrow, stiff, grass-like leaves on wet sandstone or peat. Over years it becomes a dense, low rosette of narrow, glaucous blue-grey leaves with spiny edges, often offsetting into clumps and cushions among rocks and bog on the tepui summit; a short head of small flowers sits in or just above the rosette centre.",
+     "confidence": "estimated",
+     "source": "Estimated from Navia/Navioideae (Bromeliaceae) of the Guiana Highland tepuis (Flora of the Venezuelan Guayana: terrestrial rosettes on open sandstone summits); slow growth and ages inferred from nutrient-poor tepui habitat"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Navia is almost entirely tepui-endemic; N. glauca forms rock rosettes on Guayana cliffs and summits. Kew POWO.",
+    "traits": {
+     "genus": "Navia",
+     "species": "glauca",
+     "native_range": "Navia is almost entirely tepui-endemic",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.55,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A9A7A",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "spiny blue-grey bromeliad rosette on bare rock"
+   },
+   {
+    "name": "Tepui cushion",
+    "genus": "Connellia",
+    "species": "augustae",
+    "origin": "Mount Roraima, Guiana Highlands",
+    "family": "Bromeliaceae",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#7AA070",
+    "accent": "#E08080",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny rosette of stiff, narrow, spine-edged leaves on bare wet sandstone or peat. The stem slowly lengthens and branches, clothed in overlapping old leaves, so rosettes pack side by side into a low, dense, dark green to reddish cushion on the open tepui summit; terminal flower spikes rise from the rosette centres.",
+     "confidence": "estimated",
+     "source": "Estimated from genus/habitat: Connellia is a Navioideae bromeliad genus of 5-6 species endemic to Pantepui summits, terrestrial, Puya-like, not in cultivation (bromeliads.info; Wikipedia Connellia; Kew POWO). Slow growth inferred from the cold, wet, nutrient-poor summit of Roraima; no measured growth data found."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; cushion bromeliad on bare quartzite. Kew POWO.",
+    "traits": {
+     "genus": "Connellia",
+     "species": "augustae",
+     "native_range": "Tepui summits",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA070",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "spiny-leaved bromeliad cushion"
+   },
+   {
+    "name": "Tepui orectanthe",
+    "genus": "Orectanthe",
+    "species": "sceptrum",
+    "origin": "Guiana Highlands, Venezuela",
+    "family": "Xyridaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6A9A5A",
+    "accent": "#E0E0A0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny fan-like tuft of narrow, flat, equitant (iris-like, edge-on) leaves in wet sand or peat. It slowly builds a stiff rosette of sword-shaped, often reddish-tipped leaves on open tepui rock and bog; mature plants raise a tall, stout, sceptre-like stalk ending in a cone-like head of overlapping bracts from which yellow flowers emerge.",
+     "confidence": "estimated",
+     "source": "Estimated from Xyridaceae of the Guiana Highlands (Flora of the Venezuelan Guayana: Orectanthe, robust rosette plants of open tepui summits with scapes ending in bracteate heads, yellow flowers); growth and ages inferred from nutrient-poor tepui habitat"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summit bogs; sceptre-headed rosette endemic to the Guiana Highlands. Kew POWO.",
+    "traits": {
+     "genus": "Orectanthe",
+     "species": "sceptrum",
+     "native_range": "Tepui summit bogs",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      80
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated",
+     "note": "stiff sword leaves in an equitant fan; sceptre-headed scape"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A5A",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "stiff sword-leaf fan with sceptre flower head"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Humboldt's bladderwort",
+    "genus": "Utricularia",
+    "species": "humboldtii",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#8060C0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A dust-fine seed sprouts on wet peat or in the water held in a Brocchinia bromeliad rosette: a few small round-bladed leaves on thin stalks plus colourless runners carrying minute bladder traps. Each flush of leaves is larger until the plant holds a loose tuft of upright, long-stalked, kidney-shaped to round leaves; runners creep across to neighbouring bromeliads and start new tufts.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Utricularia humboldtii): Guiana Highland tepuis, mostly 1200-2500 m (down to 300 m), living in the water-filled leaf rosettes of Brocchinia bromeliads and on wet ground, flowering in every month, the largest flowers in the genus, stolons that travel between bromeliads. Germination, growth and ages estimated from cultivated terrestrial bladderworts."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; grows in the water tanks of Brocchinia bromeliads, big violet flowers — placed in a tank, not on a tree. Kew POWO.",
+    "carnivore": {
+     "trap": "bladder",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "tank_dweller": true,
+    "traits": {
+     "genus": "Utricularia",
+     "species": "humboldtii",
+     "native_range": "Tepui summits",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.6,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "long-stalked emergent leaves from stolons in a bromeliad tank"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#5A8A5A",
+     "color_2": "#8060C0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "submerged stolons in a tank; no stem surface"
+    },
+    "silhouette": "few long-stalked leaves rising from a bromeliad tank, violet flowers"
+   }
+  ]
+ }
+}

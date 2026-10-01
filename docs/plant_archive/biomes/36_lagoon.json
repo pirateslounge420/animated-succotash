@@ -1,0 +1,1383 @@
+{
+ "key": "LAGOON",
+ "name": "Lagoon",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Neptune grass",
+    "genus": "Posidonia",
+    "species": "oceanica",
+    "origin": "Mediterranean Sea (endemic)",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     24
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     1,
+     40
+    ],
+    "color": "#3E9A3A",
+    "accent": "#5A4A30",
+    "source": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia",
+    "traits": {
+     "genus": "Posidonia",
+     "species": "oceanica",
+     "native_range": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "submerged; rhizome clothed in persistent brown fibrous sheaths"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "dense dark ribbon meadow on the seabed",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The floating 'sea olive' splits and drops its seed, which germinates at once: a small white root, then a tuft of 3-6 short, bright green strap leaves from the stout seed, anchored by hairy roots in sand or rock crevices. A new leaf appears only about every 51 days and the rhizome creeps just 1-6 cm a year, so a patch spreads extremely slowly.",
+     "confidence": "estimated",
+     "source": "Wikipedia (leaves to 1-1.5 m x 1 cm; horizontal rhizome 1-6 cm/yr, vertical 0.1-4 cm/yr; a new leaf about every 51 days; flowers Sept-Oct, fruit matures in about 6 months; an Ibiza clone ~8 km across is estimated at 100,000 yr). Shoot lifespan, time to full leaf length and first flowering (rare, episodic) estimated."
+    }
+   },
+   {
+    "name": "Saltmarsh rush",
+    "genus": "Juncus",
+    "species": "maritimus",
+    "origin": "Europe, Mediterranean and Western Asia",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A8A40",
+    "accent": "#8A7A50",
+    "source": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0.5-1.2 m — Wikipedia",
+    "traits": {
+     "genus": "Juncus",
+     "species": "maritimus",
+     "native_range": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "attenuate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      40,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 10,
+     "color": "#4A8A40",
+     "color_2": "#8A7A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stiff terete dark green stems and leaves; brown basal sheaths"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -3,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "stiff dark-green rush tussock of vertical needles",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny tufts of thread-fine, grey-green, sharp-tipped stems on bare upper-marsh mud after rain has lowered the salinity. They spread by short creeping rhizomes into dense, spiky, blue-green clumps of stiff, pungent-tipped stems, with pale straw-coloured flower clusters branching out just below the tip in late summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Juncus maritimus: coastal rush of the western Palearctic, Europe to the Maghreb); timings estimated from salt-marsh Juncus ecology (germination after rain lowers salinity, slow clonal spread)."
+    }
+   },
+   {
+    "name": "Sea purslane",
+    "genus": "Sesuvium",
+    "species": "portulacastrum",
+    "origin": "Pantropical coasts worldwide",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#5AB040",
+    "accent": "#E070A0",
+    "source": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia",
+    "traits": {
+     "genus": "Sesuvium",
+     "species": "portulacastrum",
+     "native_range": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1.5,
+      6
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#8A6A5A",
+     "color_2": "#C86A78",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "succulent prostrate stems, green flushed pink-red, rooting at the nodes"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "flat pink-stemmed succulent mat on sand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 small fleshy cotyledons, then opposite, thick, glossy, finger-shaped leaves on a reddish stem. The stems creep over sand or mud and root at every node, quickly making a spreading succulent mat that is often reddish in full sun, with small pink star-shaped flowers.",
+     "confidence": "estimated",
+     "source": "Flora of N America and PROSEA/Useful Tropical Plants Sesuvium portulacastrum (creeping succulent perennial of tropical beaches and salt flats, rooting at nodes, flowering within the first season, mostly spreading vegetatively); timings estimated"
+    }
+   },
+   {
+    "name": "Tape seagrass",
+    "genus": "Enhalus",
+    "species": "acoroides",
+    "origin": "Indo-West Pacific",
+    "shape": "grass",
+    "temp_c": [
+     24,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     5
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1.5 m ribbon leaves — Wikipedia",
+    "traits": {
+     "genus": "Enhalus",
+     "species": "acoroides",
+     "native_range": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      50,
+      150
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "submerged; thick rhizome bristling with black fibres of old sheaths"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "very long tape leaves swaying from a fibrous rhizome",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      7
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds have no dormancy and sprout within days of release from the big ribbed fruit, often while drifting. The seedling is a small fan of a few short, flat, ribbon-like leaves from a stout rhizome; it anchors with thick cord-like roots and grows into a tall shoot of long, strap-like leaves (to 1.5 m) sheathed at the base in black fibrous remains of old leaves.",
+     "confidence": "estimated",
+     "source": "Wikipedia Enhalus acoroides (leaves 30-150 cm; rhizomes ~1.5 cm thick; the only surface-pollinated seagrass, male flowers detach and float; fruit round, 4-6 cm, dark and ribbed, with 6-7 white seeds; to ~4 m deep on mud, sand and coral flats). Seed germination speed, growth and shoot lifespan estimated from seagrass literature."
+    }
+   },
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "origin": "Worldwide (cosmopolitan)",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8AB860",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia",
+    "traits": {
+     "genus": "Phragmites",
+     "species": "australis",
+     "native_range": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      2,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 18,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 25,
+     "color": "#7AA058",
+     "color_2": "#C8B878",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "tall hollow culms, green then straw, standing dead through winter"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8B060",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "tall even reed wall with feathery plumed tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
+     "confidence": "documented",
+     "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
+    }
+   },
+   {
+    "name": "Dwarf eelgrass",
+    "genus": "Zostera",
+    "species": "noltei",
+    "origin": "Europe, Mediterranean and North Africa",
+    "shape": "grass",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     3
+    ],
+    "color": "#4AA040",
+    "accent": "#3E7A3A",
+    "source": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 cm — Wikipedia",
+    "traits": {
+     "genus": "Zostera",
+     "species": "noltei",
+     "native_range": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 ",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      6,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "submerged; leaves sheathed on a creeping rhizome"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "short fine-leaved seagrass lawn on tidal mud",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      0.15,
+      0.5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      0.5,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A 2 mm seed germinates on sandy mud of the middle shore; the seedling is a tiny tuft of 2-3 thread-narrow, dark green, blunt leaves with a few fine roots. It soon sends out a thin creeping rhizome that branches and roots at each node, with a tuft of 2-5 short strap leaves at every node, knitting into a flat green turf that lies limp on the mud at low tide.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Zostera noltei): leaves to 22 cm in groups of 2-5, up to 4 roots per node, seeds about 2 mm; grows in spring, flowers in dense summer beds, loses most leaves over winter; rhizome clumps may live many years; intertidal, harmed by nutrients and turbid water. Germination, shoot life and flowering age estimated."
+    }
+   },
+   {
+    "name": "Perennial glasswort",
+    "genus": "Sarcocornia",
+    "species": "fruticosa",
+    "origin": "Mediterranean and Atlantic Europe",
+    "shape": "cushion",
+    "temp_c": [
+     11,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#6AB040",
+    "accent": "#C05040",
+    "source": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm — Wikipedia",
+    "traits": {
+     "genus": "Sarcocornia",
+     "species": "fruticosa",
+     "native_range": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7AA850",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "erect succulent jointed green stems over a woody grey-brown base"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "silhouette": "woody-based glasswort mound of jointed green fingers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling like a glasswort: 2 fleshy cotyledons, then jointed, leafless, succulent green stems. It turns woody at the base and grows into an upright to sprawling bush of many jointed green stems (red-tinged in autumn), up to about 1 m, building low hummocks on the upper salt marsh; sprawling stems root.",
+     "confidence": "estimated",
+     "source": "Flora Iberica/Flora Europaea Sarcocornia fruticosa (woody perennial glasswort, erect shrublet to 1 m+, upper salt marsh); halophyte germination studies (fresh seed germinates within 1-3 weeks when salinity is low); growth and ages estimated"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Black mangrove",
+    "genus": "Avicennia",
+    "species": "germinans",
+    "origin": "Tropical Americas and West Africa",
+    "shape": "mangrove",
+    "temp_c": [
+     20,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     3,
+     15
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.8
+    ],
+    "color": "#5A9A50",
+    "accent": "#9A9A8A",
+    "source": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia",
+    "traits": {
+     "genus": "Avicennia",
+     "species": "germinans",
+     "native_range": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia",
+     "leaf_shape": "thick glossy salt-excreting leaves",
+     "trunk": "prop roots or pneumatophores over mud",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "mangrove",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#4A4844",
+     "color_2": "#B87A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey to black, fissured into small scaly plates; inner bark orange"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "silhouette": "dark rounded mangrove dome above spiky pneumatophores",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Cryptoviviparous: the embryo germinates inside the fruit on the tree. A stranded propagule sheds its skin, opens two thick, folded, fleshy green cotyledons like a butterfly and anchors with a hairy radicle. The seedling is a slender single stem with opposite, leathery, narrow leaves, grey-hairy beneath; pencil-like pneumatophores soon ring the young tree.",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual, Avicennia germinans (14-20 m, young trees add ~60 cm/yr, viviparous, propagules float >4 months); Useful Tropical Plants (seedlings 26 cm at 4 months); first flowering age and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f7f3e3",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#6d8f4a",
+     "ripe_colour": "#a9ad6a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual (flowers May-Jul, white with yellow base, nectar-rich honey flowers, flattened 2-valved capsule, propagules peak Sep-Oct); Useful Tropical Plants (cotyledons eaten in famine after careful preparation); flower life, fruit set and crop estimated."
+    }
+   },
+   {
+    "name": "Tamarisk",
+    "genus": "Tamarix",
+    "species": "gallica",
+    "origin": "Western Mediterranean",
+    "shape": "gnarled",
+    "temp_c": [
+     12,
+     22
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#7FA07A",
+    "accent": "#E8A0C0",
+    "source": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wikipedia",
+    "traits": {
+     "genus": "Tamarix",
+     "species": "gallica",
+     "native_range": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wik",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.15,
+      0.3
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#5E4E48",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "mature trunk dark red-brown to grey, rough and fissured; young branches smooth purplish-red"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.55,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8A860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "silhouette": "wispy feathery small tree, pink haze in summer",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout within a day on wet mud; seedlings are tiny, with two small cotyledons and thread-thin shoots set with minute scale leaves, growing a few mm a day. They branch from the base into a feathery, multi-stemmed shrub of slender purplish-brown stems and blue-green scale-leaved sprays, later a small gnarled tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tamarix gallica (to ~5 m; pink flowers in narrow feathery spikes, first in May and sometimes again in August); USDA FEIS Tamarix spp. incl. French tamarisk (germination <24 h, seedlings 2-5 mm/day, flowering from year 1-3, resprouts 3-4 m in a season). Height-age curve and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#efbacd",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#aab68c",
+     "ripe_colour": "#c2a57e",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      100000,
+      5000000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (tiny pink flowers in feathery spikes, May and again in August); USDA FEIS Tamarix spp. (5-merous flowers, insect cross-pollinated, ~20 flowers per 2.5 cm of raceme, 8-20+ tiny plumed seeds per capsule). Flower life, fruit set, ripening and crop estimated."
+    }
+   }
+  ]
+ },
+ "replaced_by_catalogue_copy": {
+  "canopy": [
+   {
+    "name": "Coconut palm",
+    "genus": "Cocos",
+    "species": "nucifera",
+    "origin": "Indo-Pacific tropical coasts",
+    "shape": "palm",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#A88A5A",
+    "source": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Cocos",
+     "species": "nucifera",
+     "native_range": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "palm",
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 18,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      60,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 6,
+     "color": "#9A8A78",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown trunk ringed with leaf scars"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.6,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.0,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "leaning ringed pole with a tousled feather crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
+    }
+   }
+  ]
+ }
+}

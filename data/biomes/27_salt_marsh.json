@@ -18,7 +18,433 @@
  },
  "plants": {
   "emergent": [],
-  "canopy": [],
+  "canopy": [
+   {
+    "name": "Loblolly pine",
+    "genus": "Pinus",
+    "species": "taeda",
+    "origin": "Southeastern United States",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     25,
+     35
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#2A6A38",
+    "accent": "#8A5A3A",
+    "source": "Pinus taeda, loblolly pine, southeastern US coastal plain, mixed with live oak in maritime forest, 25-35 m — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Pinus",
+     "species": "taeda",
+     "native_range": "Pinus taeda, loblolly pine, southeastern US coastal plain, mixed with live oak in maritime forest, 25-35 m — USDA Plants",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      25,
+      35
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 3,
+     "size_cm": [
+      12,
+      22
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#8A6A50",
+     "color_2": "#5A4034",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
+    },
+    "silhouette": "rounded crown high on a long straight trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      18,
+      50
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      150,
+      245
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 5-8 cotyledons and single primary needles, then slender needles in bundles of three. Fast saplings add several growth flushes a year, forming open, fairly narrow cones with long, soft, yellow-green needles and a strong leader; older trees self-prune into tall, clear trunks with rounded crowns.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Baker & Langdon): germination from March at 18-27 C; site index ~27 m at 50 years on average sites; stands of 25 years can reseed, 40-year-olds bear 3-5 times more; moderately tolerant when young, intolerant with age; medium-lived, max recorded 245 years"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#b0405a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      7.5,
+      15
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#a06a3a",
+     "ripen_days": [
+      540,
+      600
+     ],
+     "hang_days": [
+      180,
+      700
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1500
+     ],
+     "crop_per_tree": [
+      100,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (flowers Feb 15-Apr 10; cones 7.5-15 cm, light reddish-brown when mature, ripe by the second October after flowering, ~26 months after the strobili are initiated; seedfall Oct-early Dec); crop and decay estimated"
+    },
+    "biomes": [
+     "MARITIME_FOREST",
+     "SALT_MARSH"
+    ]
+   },
+   {
+    "name": "Mangrove buckthorn",
+    "genus": "Sideroxylon",
+    "species": "celastrinum",
+    "origin": "Gulf coast, Mexico and the Caribbean",
+    "family": "Sapotaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     18,
+     27
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "biomes": [
+     "SALT_MARSH"
+    ],
+    "height_m": [
+     2.0,
+     8.0
+    ],
+    "density": 0.15,
+    "soil": "sand",
+    "needs": [],
+    "color": "#3E6A3A",
+    "accent": "#2A1E2E",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling from a bird-dropped stone: a wiry stem with small, leathery, spoon-shaped grey-green leaves. It branches early and stiffly at wide angles, each short side shoot ending in a sharp thorn, and becomes a dense, tangled, thorny shrub before one or a few stems lift it into a small, crooked tree.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 8 (Sideroxylon celastrinum: shrubs or trees to 9 m, branches thorn-tipped; coastal thickets, shell ridges and salt marsh edges, S Texas and S Florida); germination, growth and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sideroxylon celastrinum (syn. Bumelia celastrina), saffron plum / mangrove buckthorn, S Texas and S Florida to Mexico and the Caribbean, thorny shrub or tree to 9 m of coastal thickets and the upper edge of salt marshes and mangroves — Flora of North America vol. 8; Kew POWO (accepted)",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#6e6862",
+      "secondary": "#4a4440",
+      "feature_cm": 1.5,
+      "roughness": 0.4,
+      "notes": "grey, smooth on young stems, shallowly fissured on old trunks; twigs stiff, ending in thorns"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e6a3a",
+      "underside": "#6a8a60",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#5a7a50",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       4
+      ],
+      "notes": "small leathery obovate to spoon-shaped leaves, alternate or crowded on short spur shoots beside the thorns"
+     },
+     "flower": {
+      "colour": "#e8ecd0",
+      "secondary": "#c8d0a0",
+      "form": "tiny fragrant greenish-white bell flowers in clusters along the twigs",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#2a1e2e",
+      "form": "ellipsoid purple-black drupes 1-2 cm"
+     },
+     "seasonal": "evergreen to semi-evergreen",
+     "silhouette": "crooked thorny thicket-tree at the marsh's landward edge",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 8; USDA PLANTS Sideroxylon celastrinum"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.2,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "obovate to spatulate, leathery, glabrous, often fascicled on spur shoots"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 1.5,
+     "color": "#6E6862",
+     "color_2": "#4A4440",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "grey, shallowly fissured; thorn-tipped twigs"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#e8ecd0",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.0,
+      2.0
+     ],
+     "unripe_colour": "#6a8a48",
+     "ripe_colour": "#2a1e2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      14,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 8 (small greenish-white flowers in axillary fascicles; drupes ellipsoid, purple-black); fruit eaten by birds and mammals and by people; phenology window, set and crop estimated"
+    }
+   }
+  ],
   "shrub": [
    {
     "name": "Groundsel bush",
@@ -212,7 +638,11 @@
      "edible": "toxic",
      "confidence": "estimated",
      "source": "Wikipedia (autumn flowering, female heads become snowy-white tufts, seeds toxic); weed literature (a large female bush sheds up to ~1.5 million plumed achenes); heads-per-plant, fruit set and timings estimated. Counts are flower heads."
-    }
+    },
+    "biomes": [
+     "ESTUARY",
+     "SALT_MARSH"
+    ]
    },
    {
     "name": "Marsh elder",
@@ -402,44 +832,45 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (elongated arrays of many small whitish heads); Iva heads are wind-pollinated and set small dark obovoid achenes shed through autumn and winter (timings, set and crop estimated)."
-    }
+    },
+    "biomes": [
+     "ESTUARY",
+     "SALT_MARSH"
+    ]
    },
    {
-    "name": "Sea purslane shrub (halimione)",
-    "genus": "Atriplex",
-    "species": "portulacoides",
-    "origin": "Coasts of Europe and W Asia",
+    "name": "Wax myrtle",
+    "genus": "Morella",
+    "species": "cerifera",
+    "origin": "Southeastern US and Caribbean",
     "shape": "shrub",
     "temp_c": [
-     6,
-     18
+     12,
+     22
     ],
     "moisture": [
-     0.6,
-     0.95
+     0.5,
+     1
     ],
     "height_m": [
-     0.3,
-     0.8
+     2,
+     6
     ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#9AB8A0",
-    "accent": "#B8C8B0",
-    "source": "Atriplex portulacoides (Halimione portulacoides), sea purslane, European Atlantic & Mediterranean coasts, grey-leaved shrublet along creek banks of the mid marsh, 30-80 cm — Wikipedia / Kew POWO",
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#3E8F3A",
+    "accent": "#A8B8C0",
+    "source": "Morella cerifera, southern wax myrtle, US Atlantic & Gulf coasts, dense evergreen thicket of maritime forest and dune swales, 2-6 m, waxy grey berries — USDA Plants / Wikipedia",
     "traits": {
-     "genus": "Atriplex",
-     "species": "portulacoides",
-     "native_range": "Atriplex portulacoides (Halimione portulacoides), sea purslane, European Atlantic & Mediterranean coasts, grey-leaved sh",
+     "genus": "Morella",
+     "species": "cerifera",
+     "native_range": "Morella cerifera, southern wax myrtle, US Atlantic & Gulf coasts, dense evergreen thicket of maritime forest and dune sw",
      "leaf_shape": "small leaves on many stems",
      "trunk": "multi-stemmed from the base",
      "petiole": "short petiole",
      "height_m": [
-      0.3,
-      0.8
+      2,
+      6
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -451,63 +882,62 @@
     "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.8,
+     "outline": "obovate",
+     "aspect": 4,
      "base": "attenuate",
-     "apex": "obtuse",
-     "margin": "entire",
+     "apex": "acute",
+     "margin": "serrate",
      "venation": "pinnate",
-     "arrangement": "opposite",
+     "arrangement": "alternate",
      "size_cm": [
-      1.5,
-      5
+      3,
+      10
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
+     "texture": "matte",
      "confidence": "documented"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#8A8070",
-     "color_2": "#6A5A4A",
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#8A8478",
+     "color_2": "#B0AA9E",
      "lenticels": "none",
-     "confidence": "estimated",
-     "note": "procumbent woody stems, pale grey-brown, finely fissured; silvery-mealy young shoots"
+     "confidence": "documented"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.3,
+     "gap": 0.25,
      "layering": "clumped",
-     "droop": 0.2
+     "droop": 0.15
     },
     "tint": {
-     "hue_shift": -6,
-     "sat": 0.5,
-     "val": 1.1,
-     "underside": 0.1
+     "hue_shift": 6,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.15
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "architecture": {
-     "model": "mangenot",
-     "habit": "shrub",
-     "orders": 3,
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
      "branch_angle_deg": [
-      40,
-      80
+      25,
+      55
      ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.6,
+     "taper_exponent": 1.7,
+     "sinuosity": 0.4,
      "fork_height_frac": [
       0.0,
       0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 30,
+     "lean_max_deg": 20,
      "live_crown_ratio": [
       0.9,
       0.7
@@ -515,79 +945,337 @@
      "self_prune": false,
      "dead_limbs": 0.2,
      "root_flare": false,
-     "spacing_m": 0.1,
+     "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "low silvery-grey sprawling mat",
+    "silhouette": "dense rounded olive-green multi-stem bush",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      7,
-      30
+      30,
+      90
      ],
      "height_years": [
-      2,
-      5
+      3,
+      10
      ],
-     "first_seed_years": 2,
+     "first_seed_years": 4,
      "lifespan_years": [
-      10,
-      30
+      20,
+      50
      ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are scarce in the marsh: two small fleshy cotyledons, then opposite, oval, silvery-grey mealy leaves. The young plant is a few low, rooting stems that spread by layering into a dense, silver-grey, knee-high mat lining creek banks and pool edges.",
+     "juvenile_note": "Epigeal seedling with small oval cotyledons, then narrow, aromatic, olive-green leaves toothed near the tip and dotted with tiny amber resin glands, as in the adult. It soon branches from the base into a dense, twiggy evergreen bush; nitrogen-fixing root nodules let it grow fast (often ~1 m a year) on poor sand, and it spreads by root sprouts into thickets.",
      "confidence": "estimated",
-     "source": "Wikipedia (Halimione portulacoides, shrub to 1 m, flowers Jul-Sep, wind-pollinated); Useful Temperate Plants (to 0.75 m, seed ripe in autumn, germinates from winter on, salt-marsh creek edges); ScienceDirect 2006 on bracteoles and germination; growth and ages estimated."
+     "source": "Wikipedia (to 14 m; dioecious catkins late winter-spring; waxy globular fruit in late summer-fall; birds strip the wax, needed for germination); USDA Woody Plant Seed Manual Myrica (small waxy dry drupes persisting over winter; no endosperm); growth and ages estimated"
     },
     "fruiting": {
      "flower_months": [
-      7,
-      9
+      2,
+      4
      ],
      "hemisphere": "north",
-     "flower_days": 4,
-     "flower_size_cm": 0.2,
-     "flower_colour": "#c9b86a",
-     "flower_form": "spike",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#b7a65a",
+     "flower_form": "catkin",
      "flower_position": "twigs",
      "flowers_per_cluster": [
       5,
-      30
+      20
      ],
      "pollinators": [
       "wind"
      ],
      "fruit_set": 0.3,
-     "fruit_kind": "achene",
-     "fruit_shape": "ovoid",
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.25,
-      0.5
+      0.2,
+      0.4
      ],
-     "unripe_colour": "#a9b98c",
-     "ripe_colour": "#b69a6a",
+     "unripe_colour": "#8fa870",
+     "ripe_colour": "#b7c1c6",
      "ripen_days": [
-      45,
-      90
+      150,
+      210
      ],
      "hang_days": [
-      14,
-      90
+      90,
+      200
      ],
-     "drop": "falls",
+     "drop": "persists",
      "rot_days": [
       90,
       365
      ],
      "crop_per_tree": [
-      200,
-      5000
+      2000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated catkins late winter-spring; fruit ripe late summer-fall, globular with a pale blue-grey wax coat, used for bayberry candles); USDA Woody Plant Seed Manual Myrica (tiny dry waxy drupes that persist on the shrub over winter); set and crop estimated"
+    },
+    "biomes": [
+     "DUNES",
+     "ESTUARY",
+     "MARITIME_FOREST",
+     "SALT_MARSH"
+    ]
+   },
+   {
+    "name": "Sea oxeye",
+    "genus": "Borrichia",
+    "species": "frutescens",
+    "origin": "SE US, Mexico and Caribbean coasts",
+    "family": "Asteraceae",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.45,
+     1.0
+    ],
+    "biomes": [
+     "MANGROVE",
+     "SALT_MARSH"
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#8FA88A",
+    "accent": "#E8C428",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      8,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are uncommon; most new plants are shoots from the running rhizomes of an existing colony. A young shoot is a single upright stem with pairs of thick, silvery-grey, hairy, spoon-shaped leaves; it branches little, turns woody at the base and is soon one of many stems in a dense, knee- to waist-high grey patch topped by yellow daisies.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 21 (Borrichia frutescens: rhizomatous colonial shrub 10-120(-200) cm; leaves opposite, obovate to oblanceolate, sericeous; heads solitary, rays yellow; salt marshes, mangrove margins and coastal flats); establishment mostly clonal; timings estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spreads mainly by rhizomes into clonal colonies; heads visited by bees and butterflies; the corky achenes float"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Borrichia frutescens, sea oxeye: silvery-leaved colonial subshrub 0.3-1.2 m of salt-marsh edges, mangrove margins and salt flats, Virginia to Texas, Mexico, Bermuda and the West Indies — Flora of North America vol. 21; Odum et al. 1982 (landward mangrove fringe). Kew POWO for the name.",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8070",
+      "secondary": "#9aaa88",
+      "feature_cm": 0.5,
+      "roughness": 0.15,
+      "notes": "stems grey-green and hairy above, woody and grey-brown only near the base"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#93a88c",
+      "underside": "#a8b8a0",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#93a88c",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       7
+      ],
+      "notes": "thick, fleshy, spoon-shaped leaves in pairs, densely silky-grey on both faces; a few teeth near the base on some"
+     },
+     "flower": {
+      "colour": "#e8c428",
+      "secondary": "#c89a28",
+      "form": "solitary yellow daisy heads 1.5-2.5 cm on the stem tips, yellow-brown centre",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a4a3a",
+      "form": "dark brown, stiff, prickly-chaffed seed heads that persist on the dead stems"
+     },
+     "seasonal": "evergreen; flowers mostly spring to autumn, all year in the south",
+     "silhouette": "a low dense grey-green colony of upright stems dotted with yellow daisies",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 21; USDA PLANTS; Wunderlin & Hansen, Atlas of Florida Plants"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      7
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#8A8070",
+     "color_2": "#9AAA88",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "grey-brown woody stem bases; upper stems green and silky-hairy"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      15,
+      35
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.0,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low silvery colony of upright stems with yellow daisies",
+    "fruiting": {
+     "flower_months": [
+      4,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 2.0,
+     "flower_colour": "#e8c428",
+     "flower_form": "star",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8a9a60",
+     "ripe_colour": "#4a3a2a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      400
      ],
      "edible": "no",
      "confidence": "estimated",
-     "source": "Wikipedia and Useful Temperate Plants (flowers Jul-Sep in short spikes, wind-pollinated, seed ripe in autumn); fruit a utricle in fused 3-lobed bracteoles 2.5-5 mm (standard floras), floats for water dispersal; fruit set and crop estimated."
+     "source": "Flora of North America vol. 21 (heads solitary, 15-25 rays, paleae spine-tipped; cypselae 3-4-angled); flowering all year in Florida, mainly spring-summer; set, timings and crop estimated."
     }
    }
   ],
@@ -702,126 +1390,10 @@
      "juvenile_note": "Light-requiring seeds germinate on open sandy mud; the seedling is a thin, dark-green, needle-sharp tuft that spreads by rhizome into a dense stand of stiff, grey-green to blackish, spine-tipped leaves. Each leaf-shoot lives a year or two, then stands dead and grey for years, giving the marsh its dark 'black rush' colour; the clonal stands themselves persist for decades.",
      "confidence": "estimated",
      "source": "Wikipedia (Juncus roemerianus: over 2 m at low salinity, under 30 cm at high; spreads by rhizome; seeds need light and fail under mud; seedlings mainly on open sand; new shoots all year, dead leaves persist). Lifespan is for the clump (each leaf-shoot lives ~1-2 yr); timings estimated."
-    }
-   },
-   {
-    "name": "Common cordgrass",
-    "genus": "Sporobolus",
-    "species": "anglicus",
-    "origin": "Southern England (hybrid origin)",
-    "shape": "grass",
-    "temp_c": [
-     7,
-     16
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.3,
-     1.3
-    ],
-    "density": 0.8,
-    "soil": "wet",
-    "needs": [
-     "salt_water",
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.5
-    ],
-    "color": "#5AB040",
-    "accent": "#A8B860",
-    "source": "Spartina (Sporobolus) anglica, common cordgrass, NW European estuaries (origin S England), pioneer of intertidal mudflats, 0.3-1.3 m — Wikipedia / Kew POWO",
-    "traits": {
-     "genus": "Sporobolus",
-     "species": "anglicus",
-     "native_range": "Spartina (Sporobolus) anglica, common cordgrass, NW European estuaries (origin S England), pioneer of intertidal mudflat",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      1.3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 30,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "distichous",
-     "size_cm": [
-      15,
-      45
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 8,
-     "color": "#6A9A48",
-     "color_2": "#A8A870",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "stout yellow-green culms; pale straw nodes and sheaths"
-    },
-    "canopy": {
-     "form": "tussock",
-     "gap": 0.35,
-     "layering": "even",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.8,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#C8B060",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "silhouette": "stiff upright grass sward",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      5,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: a stiff single shoot with flat, grey-green, sharply pointed leaves; it tillers and sends short rhizomes so each seedling becomes a round tussock widening up to 30 cm a year, and tussocks merge into a dense sward within one to two decades. Culms live about a year; old swards may die back after decades.",
-     "confidence": "documented",
-     "source": "IUCN GISD and NOBANIS fact sheets (seed viable only one season, 0.6-5% viable; tussock radial growth up to 30 cm/yr; flowers Jul-Oct, seed ripens in ~12 weeks; 0.3-1.3 m); Gray et al. 1991 ITE Spartina anglica research review (germination faster at 20 C, marsh die-back from the 1920s)"
-    }
+    "biomes": [
+     "SALT_MARSH"
+    ]
    },
    {
     "name": "Cordgrass",
@@ -940,49 +1512,44 @@
      "juvenile_note": "Seedling: one soft shoot with flat, tapering, bright-green leaves; it tillers within weeks and sends out rhizomes, reaching ~15 cm in 3-4 months and a small tuft of spongy stems by autumn. Each culm lives about a year (north: dies back in autumn), but the rhizome clone spreads up to 3 m a season and persists for decades.",
      "confidence": "documented",
      "source": "USDA FEIS Spartina alterniflora (germinates Apr-Jun, flowers Jun-Oct, 0.4-2.5 m, shoots die back in autumn); USDA NRCS Cape May PMC Plant Guide (most seed germinates in 7-10 d after 1-4 months cold-wet storage; ~15 cm in 3-4 months; 2.5-3 m lateral spread per season; cover in 2-3 seasons)"
-    }
+    },
+    "biomes": [
+     "SALT_MARSH"
+    ]
    },
    {
-    "name": "Glasswort",
-    "genus": "Salicornia",
-    "species": "europaea",
-    "origin": "Coasts of Europe and N Africa",
-    "shape": "cushion",
+    "name": "Saltgrass",
+    "genus": "Distichlis",
+    "species": "spicata",
+    "origin": "The Americas (coasts and playas)",
+    "shape": "grass",
     "temp_c": [
-     3,
-     21
+     5,
+     28
     ],
     "moisture": [
-     0.8,
-     1
+     0.1,
+     0.8
     ],
     "height_m": [
      0.1,
-     0.3
+     0.4
     ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "salt_water",
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.3
-    ],
-    "color": "#5AB040",
-    "accent": "#C84A3A",
-    "source": "Salicornia europaea, common glasswort, coasts of Europe, N America & Asia, succulent annual pioneer of bare intertidal mud, 10-30 cm, reddens in autumn — Wikipedia / Kew POWO",
+    "density": 0.9,
+    "soil": "sand",
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
     "traits": {
-     "genus": "Salicornia",
-     "species": "europaea",
-     "native_range": "Salicornia europaea, common glasswort, coasts of Europe, N America & Asia, succulent annual pioneer of bare intertidal m",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
+     "genus": "Distichlis",
+     "species": "spicata",
+     "native_range": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
      "height_m": [
       0.1,
-      0.3
+      0.4
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -991,74 +1558,81 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "leaf_type": "grass",
     "leaf": {
-     "type": "scale",
-     "venation": "none",
-     "arrangement": "opposite",
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
      "size_cm": [
-      0.1,
-      0.4
+      2,
+      10
      ],
      "compound": null,
-     "texture": "succulent",
-     "confidence": "documented",
-     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.65,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8B878",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
     },
     "bark": {
      "pattern": "green_stem",
      "orientation": "none",
      "depth": 0.15,
-     "scale_cm": 1,
-     "color": "#6AB848",
-     "color_2": "#9AD070",
+     "scale_cm": 2,
+     "color": "#8A9A68",
+     "color_2": "#B0A878",
      "lenticels": "none",
-     "confidence": "documented",
-     "note": "succulent jointed green stems; segments flush red in autumn"
+     "confidence": "documented"
     },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 6,
-     "sat": 1.0,
-     "val": 1.05,
-     "underside": 0.05,
-     "autumn": "#C84A3A",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 13.0,
-     "response": "flower"
-    },
-    "silhouette": "low jointed succulent stubble",
+    "silhouette": "short stiff two-ranked saltgrass turf",
     "growth": {
-     "life": "annual",
-     "season": "spring",
+     "life": "perennial",
      "germination_days": [
-      3,
-      14
+      7,
+      30
      ],
      "height_years": [
-      0.15,
-      0.35
+      1,
+      3
      ],
-     "first_seed_years": 0.45,
+     "first_seed_years": 1.5,
      "lifespan_years": [
-      0.5,
-      0.75
+      10,
+      40
      ],
      "shade": "very_intolerant",
-     "juvenile": "sprig",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedling with 2 fleshy, finger-like green cotyledons, then a leafless, jointed, succulent green stem (the tiny leaves are fused into the segments) that branches into a little candelabra 10-30 cm tall. Flowers hide in the joints late in summer; the whole plant turns red or purple in autumn, sheds seed and dies.",
+     "juvenile_note": "Seedlings are rare (germination is episodic, needing fresh water on saline ground); the seedling is a small tuft of short, stiff, grey-green leaves in two neat opposite ranks. Scaly rhizomes then run through the soil and send up rows of short, stiff, leafy shoots, forming a dense, low turf patch; male and female plants are separate.",
      "confidence": "documented",
-     "source": "Davy, Bishop & Costa 2001, Biological Flora of the British Isles: Salicornia (spring germination on the marsh after rain lowers salinity, flowering Aug-Sep, seed shed in autumn, strictly annual); Wikipedia S. europaea (shoots harvested Jun-Aug, turns red/purple in autumn, edible)"
-    }
+     "source": "USDA FEIS Distichlis spicata (dioecious; seeds need stratification and scarification, germination rare and episodic, seedling survival 0-95% with falling salinity; rhizomes to 180 cm long, 10-25 cm deep; 15-45 cm tall, usually <30 cm; photosynthesis rises with light). Time to flowering and clone lifespan estimated."
+    },
+    "biomes": [
+     "ESTUARY",
+     "MANGROVE",
+     "ROCKY_SHORE",
+     "SALT_FLAT",
+     "SALT_MARSH"
+    ]
    },
    {
     "name": "Salt hay",
@@ -1172,120 +1746,159 @@
      "juvenile_note": "Seedling: a hair-thin shoot with wiry, inrolled leaves, emerging in May; it tillers and sends thin rhizomes into a small dense tuft, with no flowers in year one and only a few in year two. Mature stands are a dense turf of fine, wiry stems that lodge into swirled 'cowlicks'.",
      "confidence": "documented",
      "source": "Washington State Noxious Weed Control Board written findings 1999 (seedlings emerge in May, do not flower in first season, few flowers in second; flowers Jun-Sep; spreads mainly by rhizomes); USDA NRCS plant guides (rhizomatous, mostly under 1 m); FEIS Spartina patens"
-    }
+    },
+    "biomes": [
+     "BEACH",
+     "SALT_MARSH"
+    ]
    },
    {
-    "name": "Sea lavender",
-    "genus": "Limonium",
-    "species": "vulgare",
-    "origin": "Atlantic coasts of Europe",
-    "shape": "rosette",
+    "name": "Common orange lichen",
+    "genus": "Xanthoria",
+    "species": "parietina",
+    "origin": "Worldwide (mainly temperate)",
+    "family": "Teloschistaceae",
+    "shape": "moss",
     "temp_c": [
-     6,
-     18
+     -5,
+     30
     ],
     "moisture": [
-     0.6,
+     0.1,
      0.9
     ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "OASIS",
+     "SALT_MARSH"
+    ],
     "height_m": [
-     0.2,
-     0.4
+     0.001,
+     0.005
     ],
-    "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#3E8F3A",
-    "accent": "#9A7AC8",
-    "source": "Limonium vulgare, common sea lavender, European Atlantic & North Sea coasts, mid-high salt marsh, 20-40 cm, lilac flower sprays in summer — Wikipedia / Kew POWO",
-    "traits": {
-     "genus": "Limonium",
-     "species": "vulgare",
-     "native_range": "Limonium vulgare, common sea lavender, European Atlantic & North Sea coasts, mid-high salt marsh, 20-40 cm, lilac flower",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.2,
-      0.4
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#E8A020",
+    "accent": "#D87A10",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a speck of orange granules where a spore met its green alga on nutrient-rich bark or stone. It spreads outward a few millimetres a year as a rosette of flat, crinkled, overlapping lobes 1-4 mm wide, bright orange-yellow in sun and greyish-green in shade, soon crowded in the middle with little orange cup-shaped fruit bodies.",
+     "confidence": "estimated",
+     "source": "British Lichen Society and Wikipedia (Xanthoria parietina: foliose rosettes to about 10 cm, lobes 1-4 mm, orange apothecia, greener in shade; favours nitrogen-rich bark and stone); radial growth of a few mm a year from lichenometric studies; lifespan estimated"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 3.0,
-     "base": "attenuate",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "basal",
-     "size_cm": [
-      5,
-      15
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
      ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores from the orange cups must meet a free green alga; no flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Xanthoria parietina, common orange lichen, nearly cosmopolitan, on nutrient-rich bark of palms, tamarisk and fig and on walls and stones, North Africa and Arabia included; foliose rosettes to 10 cm of flat orange-yellow lobes with orange cups, greener in shade — British Lichen Society / Wikipedia",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#e8a020",
+      "underside": "#e8e0c8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#e8a020",
+      "margin": "undulate",
+      "size_cm": [
+       0.1,
+       0.4
+      ],
+      "notes": "rosettes of flat crinkled lobes 1-4 mm wide, bright orange-yellow, pale beneath, crowded with orange cups in the middle"
+     },
+     "mat": {
+      "height_cm": [
+       0.1,
+       0.3
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "brighter orange in full sun, grey-green in shade",
+     "silhouette": "bright orange rosettes splashed on bark and stone",
+     "confidence": "documented",
+     "refs": "British Lichen Society; Wikipedia Xanthoria parietina"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
      "compound": null,
-     "texture": "matte",
      "confidence": "documented"
     },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 3,
-     "color": "#5A8A48",
-     "color_2": "#8A7A58",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "woody rootstock; wiry green branched flowering stems"
-    },
     "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.2
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "sparse",
+     "droop": 0.0
     },
     "tint": {
      "hue_shift": 0,
-     "sat": 0.85,
-     "val": 0.95,
-     "underside": 0.15,
-     "autumn": "#A88C50",
-     "drop": true
+     "sat": 1.2,
+     "val": 1.1,
+     "underside": 0.0
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat leaf rosette with a lilac spray",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      2,
-      5
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      10,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are small rosettes of oval, leathery, long-stalked leaves flat on the salt-marsh mud; the woody rootstock slowly branches into a clump of several rosettes. From about the second summer stiff, branched, flat-topped sprays of tiny lavender-purple flowers rise above the rosettes, turning upper marshes purple in July-August.",
-     "confidence": "estimated",
-     "source": "Wikipedia (Limonium vulgare: clumping perennial of salt marshes and other maritime habitats, Atlantic Europe from SW Sweden to SW Iberia); timings and ages estimated."
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -1301,8 +1914,7 @@
    ],
    "companion": [],
    "ground": [
-    "Cordgrass",
-    "Glasswort"
+    "Cordgrass"
    ],
    "catalogue": [],
    "cover": 0.6,
@@ -1317,12 +1929,14 @@
    ],
    "companion": [
     "Marsh elder",
-    "Groundsel bush"
+    "Groundsel bush",
+    "Wax myrtle",
+    "Sea oxeye"
    ],
    "ground": [
     "Salt hay",
-    "Black needlerush",
-    "Sea lavender"
+    "Saltgrass",
+    "Black needlerush"
    ],
    "catalogue": [],
    "cover": 0.6,
@@ -1336,7 +1950,8 @@
     "Black needlerush"
    ],
    "companion": [
-    "Marsh elder"
+    "Marsh elder",
+    "Sea oxeye"
    ],
    "ground": [
     "Black needlerush",
@@ -1351,13 +1966,11 @@
    "realm": "palearctic",
    "where": "open mudflat and salt pans at the lowest marsh edge, bare mud",
    "dominant": [
-    "Glasswort"
+    "Cordgrass"
    ],
    "companion": [],
    "ground": [
-    "Glasswort",
-    "Sea lavender",
-    "Common cordgrass"
+    "Cordgrass"
    ],
    "catalogue": [],
    "cover": 0.25,
@@ -1368,14 +1981,11 @@
    "realm": "palearctic",
    "where": "creek levees and upper marsh of NW European saltings, well-drained mud",
    "dominant": [
-    "Sea purslane shrub (halimione)",
-    "Common cordgrass"
+    "Cordgrass"
    ],
    "companion": [],
    "ground": [
-    "Sea lavender",
-    "Glasswort",
-    "Common cordgrass"
+    "Cordgrass"
    ],
    "catalogue": [],
    "cover": 0.6,

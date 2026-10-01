@@ -1,0 +1,548 @@
+{
+ "key": "SALT_MARSH",
+ "name": "Salt marsh",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Common cordgrass",
+    "genus": "Sporobolus",
+    "species": "anglicus",
+    "origin": "Southern England (hybrid origin)",
+    "shape": "grass",
+    "temp_c": [
+     7,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#5AB040",
+    "accent": "#A8B860",
+    "source": "Spartina (Sporobolus) anglica, common cordgrass, NW European estuaries (origin S England), pioneer of intertidal mudflats, 0.3-1.3 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Sporobolus",
+     "species": "anglicus",
+     "native_range": "Spartina (Sporobolus) anglica, common cordgrass, NW European estuaries (origin S England), pioneer of intertidal mudflat",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      15,
+      45
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 8,
+     "color": "#6A9A48",
+     "color_2": "#A8A870",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout yellow-green culms; pale straw nodes and sheaths"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8B060",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "stiff upright grass sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a stiff single shoot with flat, grey-green, sharply pointed leaves; it tillers and sends short rhizomes so each seedling becomes a round tussock widening up to 30 cm a year, and tussocks merge into a dense sward within one to two decades. Culms live about a year; old swards may die back after decades.",
+     "confidence": "documented",
+     "source": "IUCN GISD and NOBANIS fact sheets (seed viable only one season, 0.6-5% viable; tussock radial growth up to 30 cm/yr; flowers Jul-Oct, seed ripens in ~12 weeks; 0.3-1.3 m); Gray et al. 1991 ITE Spartina anglica research review (germination faster at 20 C, marsh die-back from the 1920s)"
+    }
+   },
+   {
+    "name": "Sea lavender",
+    "genus": "Limonium",
+    "species": "vulgare",
+    "origin": "Atlantic coasts of Europe",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3E8F3A",
+    "accent": "#9A7AC8",
+    "source": "Limonium vulgare, common sea lavender, European Atlantic & North Sea coasts, mid-high salt marsh, 20-40 cm, lilac flower sprays in summer — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Limonium",
+     "species": "vulgare",
+     "native_range": "Limonium vulgare, common sea lavender, European Atlantic & North Sea coasts, mid-high salt marsh, 20-40 cm, lilac flower",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#5A8A48",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "woody rootstock; wiry green branched flowering stems"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#A88C50",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "flat leaf rosette with a lilac spray",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small rosettes of oval, leathery, long-stalked leaves flat on the salt-marsh mud; the woody rootstock slowly branches into a clump of several rosettes. From about the second summer stiff, branched, flat-topped sprays of tiny lavender-purple flowers rise above the rosettes, turning upper marshes purple in July-August.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Limonium vulgare: clumping perennial of salt marshes and other maritime habitats, Atlantic Europe from SW Sweden to SW Iberia); timings and ages estimated."
+    }
+   },
+   {
+    "name": "Glasswort",
+    "genus": "Salicornia",
+    "species": "europaea",
+    "origin": "Coasts of Europe and N Africa",
+    "shape": "cushion",
+    "temp_c": [
+     3,
+     21
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#5AB040",
+    "accent": "#C84A3A",
+    "source": "Salicornia europaea, common glasswort, coasts of Europe, N America & Asia, succulent annual pioneer of bare intertidal mud, 10-30 cm, reddens in autumn — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Salicornia",
+     "species": "europaea",
+     "native_range": "Salicornia europaea, common glasswort, coasts of Europe, N America & Asia, succulent annual pioneer of bare intertidal m",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6AB848",
+     "color_2": "#9AD070",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "succulent jointed green stems; segments flush red in autumn"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#C84A3A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "silhouette": "low jointed succulent stubble",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.45,
+     "lifespan_years": [
+      0.5,
+      0.75
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 fleshy, finger-like green cotyledons, then a leafless, jointed, succulent green stem (the tiny leaves are fused into the segments) that branches into a little candelabra 10-30 cm tall. Flowers hide in the joints late in summer; the whole plant turns red or purple in autumn, sheds seed and dies.",
+     "confidence": "documented",
+     "source": "Davy, Bishop & Costa 2001, Biological Flora of the British Isles: Salicornia (spring germination on the marsh after rain lowers salinity, flowering Aug-Sep, seed shed in autumn, strictly annual); Wikipedia S. europaea (shoots harvested Jun-Aug, turns red/purple in autumn, edible)"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Sea purslane shrub (halimione)",
+    "genus": "Atriplex",
+    "species": "portulacoides",
+    "origin": "Coasts of Europe and W Asia",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#9AB8A0",
+    "accent": "#B8C8B0",
+    "source": "Atriplex portulacoides (Halimione portulacoides), sea purslane, European Atlantic & Mediterranean coasts, grey-leaved shrublet along creek banks of the mid marsh, 30-80 cm — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Atriplex",
+     "species": "portulacoides",
+     "native_range": "Atriplex portulacoides (Halimione portulacoides), sea purslane, European Atlantic & Mediterranean coasts, grey-leaved sh",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.8,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1.5,
+      5
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A8070",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "procumbent woody stems, pale grey-brown, finely fissured; silvery-mealy young shoots"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.5,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "mangenot",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low silvery-grey sprawling mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are scarce in the marsh: two small fleshy cotyledons, then opposite, oval, silvery-grey mealy leaves. The young plant is a few low, rooting stems that spread by layering into a dense, silver-grey, knee-high mat lining creek banks and pool edges.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Halimione portulacoides, shrub to 1 m, flowers Jul-Sep, wind-pollinated); Useful Temperate Plants (to 0.75 m, seed ripe in autumn, germinates from winter on, salt-marsh creek edges); ScienceDirect 2006 on bracteoles and germination; growth and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#c9b86a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      30
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.5
+     ],
+     "unripe_colour": "#a9b98c",
+     "ripe_colour": "#b69a6a",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia and Useful Temperate Plants (flowers Jul-Sep in short spikes, wind-pollinated, seed ripe in autumn); fruit a utricle in fused 3-lobed bracteoles 2.5-5 mm (standard floras), floats for water dispersal; fruit set and crop estimated."
+    }
+   }
+  ]
+ }
+}

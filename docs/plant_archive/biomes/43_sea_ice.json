@@ -1,0 +1,115 @@
+{
+ "key": "SEA_ICE",
+ "name": "Sea ice",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Ice algae",
+    "genus": "Nitzschia",
+    "species": "frigida",
+    "origin": "Arctic Ocean sea ice",
+    "shape": "moss",
+    "temp_c": [
+     -30,
+     0
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#8A7A30",
+    "accent": "#B0A050",
+    "source": "underwater — Nitzschia frigida, dominant Arctic sea-ice diatom, brown algal film on the underside of floes, mm-cm scale — Wikipedia / polar research literature",
+    "traits": {
+     "genus": "Nitzschia",
+     "species": "frigida",
+     "native_range": "underwater — Nitzschia frigida, dominant Arctic sea-ice diatom, brown algal film on the underside of floes, mm-cm scale ",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.02
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.7,
+     "val": 0.8,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#8A7A30",
+     "color_2": "#B0A050",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "brown stain film on the underside of sea ice",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      0.1,
+      0.2
+     ],
+     "first_seed_years": 0.15,
+     "lifespan_years": [
+      0.2,
+      0.4
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No juvenile form: single glassy, boat-shaped diatom cells divide every few days and link into ribbon- or tree-like colonies in the brine channels at the underside of sea ice. By spring they stain the bottom few centimetres of the ice golden-brown, then are released into the water as the ice melts; a few cells overwinter in the ice to seed next year's bloom.",
+     "confidence": "estimated",
+     "source": "Arctic sea-ice algae literature (N. frigida is the key colonial pennate diatom of bottom-ice communities; spring bloom roughly Mar-Jun when light returns, growth at <1% of surface light, released at ice melt); values are for the visible bloom layer"
+    }
+   }
+  ]
+ }
+}

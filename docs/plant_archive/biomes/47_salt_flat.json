@@ -1,0 +1,700 @@
+{
+ "key": "SALT_FLAT",
+ "name": "Salt flat",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Nitre bush",
+    "genus": "Nitraria",
+    "species": "retusa",
+    "origin": "Sahara and Arabian Peninsula",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     0.03,
+     0.25
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#8FA878",
+    "accent": "#D04040",
+    "source": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0.5-2 m with red berries — Kew POWO",
+    "traits": {
+     "genus": "Nitraria",
+     "species": "retusa",
+     "native_range": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#B8B4A8",
+     "color_2": "#7A7264",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "spiny grey-green succulent-leaved mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with two fleshy cotyledons, then small, fleshy, bluish-grey wedge-shaped leaves notched at the tip, like the adult's; young twigs are downy. It branches into a stiff, tangled, spine-tipped little shrub that traps blowing sand, so older plants sit on rounded sand hummocks (nabkhas) on saline flats and coastal dunes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nitraria retusa (to 2.5 m, rarely over 1 m; fleshy bluish-grey leaves 10-15 mm; small sweet-scented whitish-green flowers; red edible drupe 5-10 mm; salt marshes, saline semi-deserts, builds nabkhas); growth, ages and germination estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#e6e8c8",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      1.0
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#b0283a",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (small, sweetly scented whitish or greenish 5-part flowers in small cymes; triangular drupe 5-10 mm turning red, edible and enjoyed by people and eaten by birds, camels and goats); spring flowering in the Sahara-Arabian range; set, ripening and crop estimated"
+    }
+   },
+   {
+    "name": "Shrubby seablite",
+    "genus": "Suaeda",
+    "species": "vera",
+    "origin": "Mediterranean and North Africa",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.3
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#6A8A60",
+    "accent": "#8A6A60",
+    "source": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0.3-1.2 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Suaeda",
+     "species": "vera",
+     "native_range": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      1.8
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 0.8,
+     "color": "#7A7066",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "compact grey-green succulent bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two fleshy, strap-like cotyledons, then small, fleshy, half-round blue-green leaves crowded along a thin stem. It hardens into a woody-based, densely branched evergreen bush of glaucous succulent leaves, often forming low hummocks on shingle at the top of salt marshes; leaves may redden in winter.",
+     "confidence": "estimated",
+     "source": "Wikipedia Suaeda vera (small shrub of arid salt flats and salt marshes; in Britain mainly where shingle meets salt marsh; seeds germinate more readily in fresh than in salt water). Stature (to ~1.2 m), growth rate, age at first flowering and lifespan estimated from shrubby halophytes."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#9ab070",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.12,
+      0.2
+     ],
+     "unripe_colour": "#8aa865",
+     "ripe_colour": "#4a3a30",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "British flora accounts (tiny green petal-less flowers 1-3 in the leaf axils, Jul-Oct; fruit a utricle in the persistent fleshy perianth with one shiny black seed ~1-1.5 mm). Pollination, ripening, persistence and crop estimated from Suaeda biology."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Alkali heath",
+    "genus": "Frankenia",
+    "species": "salina",
+    "origin": "California and Baja California",
+    "shape": "cushion",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.35
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#7A9A70",
+    "accent": "#E080A0",
+    "source": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
+    "traits": {
+     "genus": "Frankenia",
+     "species": "salina",
+     "native_range": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.3,
+      1
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "margins rolled under, often salt-crusted"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.55,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#8A7E70",
+     "color_2": "#6A6058",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "flat grey-green salt-crusted mat, pink flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with narrow, rolled, grey-green leaves on wiry stems; it creeps by rhizomes and rooting stems into a low, dense, matted subshrub of small, salt-crusted, heath-like leaves, dotted with tiny pink-purple five-petalled flowers from the second year.",
+     "confidence": "estimated",
+     "source": "Estimated from Jepson eFlora and Calflora descriptions of Frankenia salina (rhizomatous perennial herb or subshrub 1-4 dm of coastal salt marshes and alkali flats) and salt-marsh subshrub growth."
+    }
+   },
+   {
+    "name": "Halocnemum",
+    "genus": "Halocnemum",
+    "species": "strobilaceum",
+    "origin": "North Africa to Central Asia",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     24
+    ],
+    "moisture": [
+     0.03,
+     0.3
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#8AA080",
+    "accent": "#A08070",
+    "source": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of China",
+    "traits": {
+     "genus": "Halocnemum",
+     "species": "strobilaceum",
+     "native_range": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "knobby cone-like succulent joints"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.4,
+     "color": "#8AA080",
+     "color_2": "#6E6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "knobby grey-green succulent hummock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny succulent green stems with two fleshy cotyledons that branch into short, jointed, bead-like green shoots. Over years it builds a low, woody-based cushion of densely branched, glaucous succulent twigs tipped with short cone-like fertile spikes; often forms mounds that trap sand on salt flats and redden in autumn.",
+     "confidence": "estimated",
+     "source": "Estimated from halophyte literature on Halocnemum strobilaceum (perennial succulent subshrub of Mediterranean to Central Asian salt flats; rapid germination at low salinity) and related Salicornioideae."
+    }
+   },
+   {
+    "name": "Pickleweed",
+    "genus": "Sarcocornia",
+    "species": "fruticosa",
+    "origin": "Mediterranean and North Africa",
+    "shape": "cushion",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.1,
+     0.5
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#6A9A58",
+    "accent": "#B05050",
+    "source": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Sarcocornia",
+     "species": "fruticosa",
+     "native_range": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7AA850",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "woody-based glasswort mound of jointed green fingers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling like a glasswort: 2 fleshy cotyledons, then jointed, leafless, succulent green stems. It turns woody at the base and grows into an upright to sprawling bush of many jointed green stems (red-tinged in autumn), up to about 1 m, building low hummocks on the upper salt marsh; sprawling stems root.",
+     "confidence": "estimated",
+     "source": "Flora Iberica/Flora Europaea Sarcocornia fruticosa (woody perennial glasswort, erect shrublet to 1 m+, upper salt marsh); halophyte germination studies (fresh seed germinates within 1-3 weeks when salinity is low); growth and ages estimated"
+    }
+   }
+  ]
+ }
+}

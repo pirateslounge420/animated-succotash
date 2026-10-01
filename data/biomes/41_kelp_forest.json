@@ -18,677 +18,10 @@
  },
  "plants": {
   "emergent": [],
-  "canopy": [
-   {
-    "name": "Bull kelp",
-    "genus": "Nereocystis",
-    "species": "luetkeana",
-    "origin": "Pacific coast, Alaska to California",
-    "shape": "liana",
-    "temp_c": [
-     6,
-     15
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     10,
-     30
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     3,
-     20
-    ],
-    "color": "#7A7A30",
-    "accent": "#5A4A20",
-    "source": "underwater — Nereocystis luetkeana, Alaska to California rocky shallows, single stipe with float bulb 10-30 m — Wikipedia",
-    "traits": {
-     "genus": "Nereocystis",
-     "species": "luetkeana",
-     "native_range": "underwater — Nereocystis luetkeana, Alaska to California rocky shallows, single stipe with float bulb 10-30 m — Wikipedi",
-     "leaf_shape": "leaves along a climbing stem",
-     "trunk": "long woody or soft climbing stem on a host",
-     "petiole": "petiole, often twining",
-     "height_m": [
-      10,
-      30
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "palmate",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 25,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "spiral",
-     "size_cm": [
-      150,
-      400
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented",
-     "note": "kelp: 30-60 smooth strap blades to 4 m trailing from the float, drawn as straps"
-    },
-    "canopy": {
-     "form": "weeping",
-     "gap": 0.55,
-     "layering": "clumped",
-     "droop": 0.85
-    },
-    "tint": {
-     "hue_shift": 20,
-     "sat": 0.65,
-     "val": 0.65,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#7A7A30",
-     "color_2": "#5A4A20",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "alga; smooth rope-like stipe, no bark"
-    },
-    "silhouette": "long rope stipe to a bulb float trailing long straps",
-    "growth": {
-     "life": "annual",
-     "season": "spring",
-     "germination_days": [
-      30,
-      60
-     ],
-     "height_years": [
-      0.2,
-      0.4
-     ],
-     "first_seed_years": 0.4,
-     "lifespan_years": [
-      0.6,
-      1.5
-     ],
-     "shade": "intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Microscopic gametophytes overwinter on rock; in late winter a tiny sporophyte appears as one flat blade on a thread-like stipe with a small claw-like holdfast. The stipe lengthens and swells at the top into a hollow ball float, the blade splits into two tufts of ribbon blades (30-64 in all, up to 4 m), and a whip-like stipe up to 36 m lifts the float to the surface by summer.",
-     "confidence": "documented",
-     "source": "Wikipedia Nereocystis (usually annual, sometimes persisting up to 18 months; to 36 m; blades grow up to 15 cm/day, 30-64 blades to 4 m; single large pneumatocyst; sori form on the blades and drop to the seafloor at maturity); seasonal timing from Pacific NW kelp-bed studies"
-    },
-    "fruiting": {
-     "flower_months": [
-      6,
-      11
-     ],
-     "hemisphere": "north",
-     "flower_days": 7,
-     "flower_size_cm": 8,
-     "flower_colour": "#4e3a1e",
-     "flower_form": "tiny",
-     "flower_position": "crown",
-     "flowers_per_cluster": [
-      2,
-      10
-     ],
-     "pollinators": [
-      "water"
-     ],
-     "fruit_set": 0.8,
-     "fruit_kind": "capsule",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      4,
-      15
-     ],
-     "unripe_colour": "#7a6a36",
-     "ripe_colour": "#3f2c16",
-     "ripen_days": [
-      14,
-      30
-     ],
-     "hang_days": [
-      0,
-      5
-     ],
-     "drop": "falls",
-     "rot_days": [
-      3,
-      14
-     ],
-     "crop_per_tree": [
-      100,
-      800
-     ],
-     "edible": "yes",
-     "confidence": "estimated",
-     "source": "Kelp has no flowers or fruit: 'flowers/fruit' are the dark sori, oblong spore patches on the blades that mature in summer-autumn and then cut themselves out and sink, releasing swimming spores near the parent (Wikipedia; Amsler & Neushul). Bull kelp blades are eaten (pickled). Sizes and timings estimated"
-    }
-   },
-   {
-    "name": "Giant kelp",
-    "genus": "Macrocystis",
-    "species": "pyrifera",
-    "origin": "Temperate Pacific and Southern Ocean",
-    "shape": "liana",
-    "temp_c": [
-     6,
-     18
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     15,
-     45
-    ],
-    "density": 1.2,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     5,
-     40
-    ],
-    "color": "#6A7A28",
-    "accent": "#4A4A20",
-    "source": "underwater — Macrocystis pyrifera, California, Chile, S Africa, Tasmania/NZ rocky bottom 5-30 m, fronds to 45 m reaching the surface — Wikipedia",
-    "traits": {
-     "genus": "Macrocystis",
-     "species": "pyrifera",
-     "native_range": "underwater — Macrocystis pyrifera, California, Chile, S Africa, Tasmania/NZ rocky bottom 5-30 m, fronds to 45 m reaching",
-     "leaf_shape": "leaves along a climbing stem",
-     "trunk": "long woody or soft climbing stem on a host",
-     "petiole": "petiole, often twining",
-     "height_m": [
-      15,
-      45
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "palmate",
-    "leaf": {
-     "type": "strap",
-     "outline": "ovate",
-     "aspect": 9,
-     "base": "rounded",
-     "apex": "acute",
-     "margin": "dentate",
-     "venation": "none",
-     "arrangement": "alternate",
-     "size_cm": [
-      30,
-      90
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented",
-     "note": "kelp: corrugated toothed blades 30-90 cm alternate along the stipe, each on a gas bladder"
-    },
-    "canopy": {
-     "form": "climbing",
-     "gap": 0.5,
-     "layering": "clumped",
-     "droop": 0.4
-    },
-    "tint": {
-     "hue_shift": 18,
-     "sat": 0.65,
-     "val": 0.6,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#6A7A28",
-     "color_2": "#4A4A20",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "alga; no bark"
-    },
-    "silhouette": "towering brown vine of bladdered blades to the surface",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      30,
-      60
-     ],
-     "height_years": [
-      0.4,
-      1.0
-     ],
-     "first_seed_years": 1,
-     "lifespan_years": [
-      3,
-      7
-     ],
-     "shade": "intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Spores settle and grow into microscopic gametophytes; the young sporophyte is a single thin, ruffled golden-brown strap blade on a tiny stipe and claw-like holdfast. The primary blade tears repeatedly from the base into separate blades that each grow a gas bulb and a stipe, so the plantlet becomes a bunch of fronds rising to the surface. Under a closed canopy juveniles stall until light returns.",
-     "confidence": "documented",
-     "source": "Wikipedia Macrocystis (grows up to 60 cm/day, fronds live ~100 days, young kelp with 1-2 primary blades that split, sporophylls at the base); Kinlan et al. 2003 J. Phycol. (arrested development of microscopic stages in low light); North 1994 (individuals live several years, up to ~7)"
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "south",
-     "flower_days": 30,
-     "flower_size_cm": 15,
-     "flower_colour": "#5b4322",
-     "flower_form": "tiny",
-     "flower_position": "trunk",
-     "flowers_per_cluster": [
-      23,
-      155
-     ],
-     "pollinators": [
-      "water"
-     ],
-     "fruit_set": 0.8,
-     "fruit_kind": "capsule",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      15,
-      40
-     ],
-     "unripe_colour": "#7b6a33",
-     "ripe_colour": "#4a3419",
-     "ripen_days": [
-      14,
-      40
-     ],
-     "hang_days": [
-      30,
-      90
-     ],
-     "drop": "splits",
-     "rot_days": [
-      14,
-      45
-     ],
-     "crop_per_tree": [
-      23,
-      155
-     ],
-     "edible": "cooked",
-     "confidence": "estimated",
-     "source": "Kelp has no flowers or fruit: 'flowers/fruit' are the fertile sporophylls, short blades without gas bladders in a bunch just above the holdfast, whose dark-brown sori release swimming spores into the water. 23-155 sporophylls per plant, fertile year-round (Fernandez et al. 2021, NZ reproductive phenology). Sorus timings and decay estimated."
-    }
-   },
-   {
-    "name": "Oarweed",
-    "genus": "Laminaria",
-    "species": "digitata",
-    "origin": "North Atlantic coasts",
-    "shape": "liana",
-    "temp_c": [
-     4,
-     16
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     1,
-     20
-    ],
-    "color": "#5A5A28",
-    "accent": "#3A3A18",
-    "source": "underwater — Laminaria digitata (L. hyperborea deeper), N Atlantic rocky subtidal, fingered blade 1-3 m — Wikipedia",
-    "traits": {
-     "genus": "Laminaria",
-     "species": "digitata",
-     "native_range": "underwater — Laminaria digitata (L",
-     "leaf_shape": "leaves along a climbing stem",
-     "trunk": "long woody or soft climbing stem on a host",
-     "petiole": "petiole, often twining",
-     "height_m": [
-      1,
-      3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "palmate",
-    "leaf": {
-     "type": "strap",
-     "outline": "palmate_lobed",
-     "lobes": 8,
-     "aspect": 1.2,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "lobed",
-     "venation": "none",
-     "arrangement": "basal",
-     "size_cm": [
-      100,
-      200
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented",
-     "note": "kelp: broad blade split into 5-12 finger-like straps on a flexible stipe"
-    },
-    "canopy": {
-     "form": "palmate_crown",
-     "gap": 0.45,
-     "layering": "clumped",
-     "droop": 0.5
-    },
-    "tint": {
-     "hue_shift": 18,
-     "sat": 0.6,
-     "val": 0.55,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#5A5A28",
-     "color_2": "#3A3A18",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "alga; no bark"
-    },
-    "silhouette": "broad hand-split brown blade on a flexible stipe",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      30,
-      90
-     ],
-     "height_years": [
-      0.7,
-      2
-     ],
-     "first_seed_years": 1.5,
-     "lifespan_years": [
-      4,
-      6
-     ],
-     "shade": "tolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Microscopic spores settle within a day and grow into microscopic gametophytes; young sporophytes appear as tiny brown, undivided strap blades on a thread-like stalk, splitting into finger-like straps as the blade widens. Each winter-spring a new blade grows from the stipe-blade junction (up to 1.3 cm a day), pushing the worn old blade off its tip; the holdfast is a conical tangle of rhizoids.",
-     "confidence": "documented",
-     "source": "MarLIN species review (Laminaria digitata: growth 1.3 cm/day Feb-Jul, slower Aug-Jan; lives 4-6 yr; sporophytes mature at 18-20 months; zoospores settle within 24 h; recruits all year; standing crop recovers in 18-20 months, full recovery ~25 months; 2-4 m); Wikipedia (sori over central blade)."
-    },
-    "fruiting": {
-     "flower_months": [
-      7,
-      12
-     ],
-     "hemisphere": "north",
-     "flower_days": 21,
-     "flower_size_cm": 15,
-     "flower_colour": "#4a3a1e",
-     "flower_form": "tiny",
-     "flower_position": "crown",
-     "flowers_per_cluster": [
-      1,
-      3
-     ],
-     "pollinators": [
-      "water"
-     ],
-     "fruit_set": 0.9,
-     "fruit_kind": "capsule",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      10,
-      40
-     ],
-     "unripe_colour": "#6b5a2a",
-     "ripe_colour": "#3e2e16",
-     "ripen_days": [
-      30,
-      60
-     ],
-     "hang_days": [
-      14,
-      60
-     ],
-     "drop": "splits",
-     "rot_days": [
-      7,
-      30
-     ],
-     "crop_per_tree": [
-      1,
-      3
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "Kelp has no flowers or fruit: this block treats the sori (dark, slightly raised spore patches over the central blade) as flower and fruit. MarLIN (sori all year, peaks Jul-Aug and Nov-Dec; zoospores released into the water). Sorus size and timings estimated; blades eaten cooked or dried."
-    }
-   },
-   {
-    "name": "Southern bull kelp",
-    "genus": "Durvillaea",
-    "species": "antarctica",
-    "origin": "Chile, New Zealand and subantarctic",
-    "shape": "liana",
-    "temp_c": [
-     6,
-     15
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     3,
-     10
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     5
-    ],
-    "color": "#6A5A28",
-    "accent": "#4A3A18",
-    "source": "underwater — Durvillaea antarctica, Chile, NZ and subantarctic exposed rocky shores, thick honeycombed fronds 3-10 m — Wikipedia",
-    "traits": {
-     "genus": "Durvillaea",
-     "species": "antarctica",
-     "native_range": "underwater — Durvillaea antarctica, Chile, NZ and subantarctic exposed rocky shores, thick honeycombed fronds 3-10 m — W",
-     "leaf_shape": "leaves along a climbing stem",
-     "trunk": "long woody or soft climbing stem on a host",
-     "petiole": "petiole, often twining",
-     "height_m": [
-      3,
-      10
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "palmate",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 15,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "basal",
-     "size_cm": [
-      300,
-      1000
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented",
-     "note": "thick leathery honeycombed fronds splitting into long straps"
-    },
-    "canopy": {
-     "form": "weeping",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.9
-    },
-    "tint": {
-     "hue_shift": 20,
-     "sat": 0.65,
-     "val": 0.6,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#6A5A28",
-     "color_2": "#4A3A18",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "alga; massive holdfast, no bark"
-    },
-    "silhouette": "thick leathery brown straps thrashing from a wave-battered holdfast",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      30,
-      90
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      4,
-      10
-     ],
-     "shade": "intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Fertilised eggs settle on bare wave-swept rock within days and grow into tiny discs; the juvenile is a small, simple, smooth strap blade on a short stalk above a sucker-like holdfast. Only later does the blade thicken, fill with buoyant honeycomb tissue and split into many long, leathery, golden-brown whip-like straps that thrash in the surf.",
-     "confidence": "estimated",
-     "source": "Wikipedia Durvillaea antarctica (huge, tenacious holdfast; long leathery honeycombed blades; a large plant releases 100 million eggs in 12 h, mostly in winter; eggs settle close by in calm-moderate water; detached plants raft up to 210 days and 10,000 km; eaten as cochayuyo). Growth rate, maturity and lifespan estimated from bull-kelp literature."
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      9
-     ],
-     "hemisphere": "south",
-     "flower_days": 0.5,
-     "flower_size_cm": 0.1,
-     "flower_colour": "#5f4e22",
-     "flower_form": "tiny",
-     "flower_position": "crown",
-     "flowers_per_cluster": [
-      1000,
-      10000
-     ],
-     "pollinators": [
-      "water"
-     ],
-     "fruit_set": 0.8,
-     "fruit_kind": "capsule",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      0.1,
-      0.3
-     ],
-     "unripe_colour": "#7a6a2e",
-     "ripe_colour": "#4f4020",
-     "ripen_days": [
-      60,
-      120
-     ],
-     "hang_days": [
-      30,
-      120
-     ],
-     "drop": "splits",
-     "rot_days": [
-      14,
-      60
-     ],
-     "crop_per_tree": [
-      100000,
-      2000000
-     ],
-     "edible": "cooked",
-     "confidence": "estimated",
-     "source": "A kelp has no flowers or fruit: values map its sunken conceptacles (1-3 mm pits over the blades) that release eggs or sperm into the sea, mostly in winter (Wikipedia: 100 million eggs in 12 h). Rot time is for torn fertile blades cast ashore; counts are conceptacles per plant. Timings estimated; blades are eaten cooked as cochayuyo."
-    }
-   }
-  ],
+  "canopy": [],
   "shrub": [
    {
-    "name": "Coastal heather",
+    "name": "Heather",
     "genus": "Calluna",
     "species": "vulgaris",
     "origin": "Europe and Northwest Africa",
@@ -865,7 +198,11 @@
      "edible": "no",
      "confidence": "documented",
      "source": "Wikipedia (flowers Jul-Sep, mauve, in racemes; capsule); FEIS (flowers Jul-Nov in N America, wind and animal dispersal, seed bank long-lived); Gimingham 1960 (bees and wind pollinate; capsules ripen in autumn and shed seed over winter); counts approximate."
-    }
+    },
+    "biomes": [
+     "KELP_FOREST",
+     "VOLCANIC_FIELD"
+    ]
    },
    {
     "name": "Coyote brush",
@@ -1050,7 +387,10 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA FEIS (dioecious, flowers Jul-Oct, 55 insect visitor species incl. honey bees, achenes 1-2 mm with 6-10 mm pappus, ripe Sep-Nov, dispersed Oct-Jan); counts are flower heads, estimated."
-    }
+    },
+    "biomes": [
+     "KELP_FOREST"
+    ]
    },
    {
     "name": "Salal",
@@ -1234,7 +574,12 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "USDA FEIS (flowers May-Jul, white to pink urn-shaped flowers on terminal bracteate racemes, ~6 per twig, bee and fly pollinated; hairy blue-black pseudoberries 6-10 mm ripen Aug-Oct and may persist to December, ~126 seeds each; regular good crops). Fruit set, rot and crop estimated."
-    }
+    },
+    "biomes": [
+     "KELP_FOREST",
+     "ROCKY_SHORE",
+     "TEMPERATE_RAINFOREST"
+    ]
    },
    {
     "name": "Sea blite bush",
@@ -1420,29 +765,36 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia Suaeda taxifolia (petal-less flowers with fleshy hairy sepals, 1-3 per cluster; fruit a utricle enclosed by the calyx). Flowering months, wind/self pollination, ripening (one shiny dark seed ~1.5-2 mm) and crop estimated from Suaeda and other coastal chenopods."
-    }
+    },
+    "biomes": [
+     "KELP_FOREST"
+    ]
    }
   ],
   "ground": [
    {
-    "name": "Coralline alga",
-    "genus": "Corallina",
-    "species": "officinalis",
-    "origin": "North Atlantic coasts",
-    "shape": "moss",
+    "name": "Torrey's surfgrass",
+    "genus": "Phyllospadix",
+    "species": "torreyi",
+    "origin": "Pacific coast, British Columbia to Baja",
+    "family": "Zosteraceae",
+    "shape": "grass",
     "temp_c": [
-     4,
-     18
+     8,
+     20
     ],
     "moisture": [
      1.0,
      1.0
     ],
-    "height_m": [
-     0.03,
-     0.12
+    "biomes": [
+     "KELP_FOREST"
     ],
-    "density": 0.6,
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 0.7,
     "soil": "thin",
     "needs": [
      "standing_water",
@@ -1452,162 +804,119 @@
      0,
      15
     ],
-    "color": "#D890A8",
-    "accent": "#E8C0D0",
-    "source": "underwater — Corallina officinalis, N Atlantic and N Pacific kelp understory and pools, pink jointed calcified turf 3-12 cm — Wikipedia",
-    "traits": {
-     "genus": "Corallina",
-     "species": "officinalis",
-     "native_range": "underwater — Corallina officinalis, N Atlantic and N Pacific kelp understory and pools, pink jointed calcified turf 3-12",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.03,
-      0.12
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
-     "confidence": "documented",
-     "note": "jointed calcified red alga: pink articulated turf"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.5,
-     "val": 1.05,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#D890A8",
-     "color_2": "#E8C0D0",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "pink jointed turf in tide pools",
+    "color": "#2E7A30",
+    "accent": "#2F6A35",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      21,
-      60
+      30,
+      120
      ],
      "height_years": [
-      1.5,
-      4
+      2,
+      6
      ],
-     "first_seed_years": 1,
+     "first_seed_years": 4,
      "lifespan_years": [
-      5,
-      20
+      10,
+      30
      ],
-     "shade": "tolerant",
-     "juvenile": "mat",
+     "shade": "intolerant",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Spores settle within 2 days and form a tiny pink calcified crust within 3; the first jointed fronds rise from the crust after about 3 weeks and the first full segment takes ~13 weeks. The young plant is a small pink-purple crust sprouting stiff, jointed, feather-branched chalky fronds that thicken into a turf; fronds may be shed and regrow from the perennial crust.",
-     "confidence": "documented",
-     "source": "MarLIN species review (Corallina officinalis: fronds grow 2.2 mm/month at 12-18 C, 0.2 at 6 C; fronds up to 12 cm; spore settlement 48 h, crust 72 h, fronds 3 weeks, first segment 13 weeks; crust perennial; new fronds within 6 months, 10% cover in 12 months on cleared rock; shade-tolerant understorey alga)"
-    }
-   },
-   {
-    "name": "Rockweed",
-    "genus": "Fucus",
-    "species": "distichus",
-    "origin": "North Pacific and North Atlantic coasts",
-    "shape": "epiphyte_clump",
-    "temp_c": [
-     0,
-     16
-    ],
-    "moisture": [
-     0.9,
-     1.0
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     2
-    ],
-    "color": "#6A6A28",
-    "accent": "#3A3A18",
-    "source": "Fucus distichus, N Pacific and N Atlantic intertidal rock at the kelp-forest shoreline, olive rockweed 10-40 cm — Wikipedia",
-    "traits": {
-     "genus": "Fucus",
-     "species": "distichus",
-     "native_range": "Fucus distichus, N Pacific and N Atlantic intertidal rock at the kelp-forest shoreline, olive rockweed 10-40 cm — Wikipe",
-     "leaf_shape": "strap or rosette leaves in a clump on a branch",
-     "trunk": "none — roots grip bark",
-     "petiole": "short",
-     "height_m": [
-      0.1,
-      0.4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "juvenile_note": "The crescent-shaped seed has two barbed arms that snag on branched coralline red algae on rock; the seedling roots into that turf and puts up a tuft of hair-fine green leaves. Rhizomes then creep over and bind to the rock, and the clump grows into a dense mop of wiry leaves up to 2 m long that streams in the surge.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 22 (Phyllospadix torreyi: leaves 0.5-1.5 mm wide, nearly round in section, to about 2 m; lower intertidal to subtidal on surf-swept rock, British Columbia to Baja California); seed attachment to coralline algae from surfgrass recruitment studies; ages estimated"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "frond",
+    "repro": {
+     "mode": "both",
+     "pollinator": "water",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "dioecious; pollen strands carried by water; barbed seeds catch on coralline algae"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Phyllospadix torreyi, Torrey's surfgrass, Pacific coast from British Columbia to Baja California, seagrass of surf-swept rock from the low intertidal into the shallow subtidal under the kelp, wiry leaves 0.5-1.5 mm wide to 2 m — Kew POWO / Flora of North America",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#2e7a30",
+      "underside": "#2e7a30",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#2a6a2a",
+      "margin": "entire",
+      "size_cm": [
+       50,
+       200
+      ],
+      "notes": "very narrow, wiry, almost round dark green leaves to 2 m, in dense mops streaming with the swell"
+     },
+     "flower": {
+      "colour": "#5a8a40",
+      "secondary": "#5a8a40",
+      "form": "hidden flowers in short leaf-sheath spikes",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; leaf tips bleach in summer low tides",
+     "silhouette": "dark green wiry mops streaming over surf-washed rock",
+     "confidence": "documented",
+     "refs": "Flora of North America; Kew POWO"
+    },
     "leaf": {
      "type": "strap",
      "outline": "linear",
-     "aspect": 12,
-     "base": "attenuate",
+     "aspect": 60,
+     "base": "truncate",
      "apex": "obtuse",
      "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "basal",
+     "venation": "parallel",
+     "arrangement": "distichous",
      "size_cm": [
-      10,
-      40
+      50,
+      200
      ],
      "compound": null,
      "texture": "glossy",
-     "confidence": "estimated",
-     "note": "brown alga: flat dichotomous fronds with a midrib, drawn as straps"
+     "confidence": "documented",
+     "note": "wiry, 0.5-1.5 mm wide, nearly terete (true aspect over 500)"
     },
     "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.5
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.7
     },
     "tint": {
-     "hue_shift": 18,
-     "sat": 0.6,
-     "val": 0.55,
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.8,
      "underside": 0.05
     },
     "photoperiod": {
@@ -1618,45 +927,22 @@
      "orientation": "none",
      "depth": 0.0,
      "scale_cm": 1,
-     "color": "#6A6A28",
-     "color_2": "#3A3A18",
+     "color": "#2E7A30",
+     "color_2": "#6A5A3A",
      "lenticels": "none",
-     "confidence": "estimated",
-     "note": "holdfast and short stipe; no stem surface"
-    },
-    "silhouette": "small olive forked straps on the rocks",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      30
-     ],
-     "height_years": [
-      1.2,
-      2.5
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      2.5,
-      5
-     ],
-     "shade": "intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "same",
-     "juvenile_note": "No juvenile form to draw: fertilised eggs glue to rock and within 2-4 weeks become speck-sized germlings with hair-like rhizoids, growing into a small flat, forked, olive-brown frond. Adults are small stiff tufts of narrow, repeatedly forked strap-like blades (no air bladders) with swollen pointed fruiting tips from about the second year.",
      "confidence": "documented",
-     "source": "MarLIN species account (Fucus distichus: growth ~10 cm/yr, lifespan 2-5 yr, mostly 2-3; mature at ~2 yr and ~10 cm; gametes Apr-Aug; cited by an earlier research pass); Wikipedia (to 30 cm, fronds <4 mm wide, mostly in rock pools; receptacles form in late autumn under short days)."
+     "note": "submerged seagrass; rhizome and sheaths only"
     }
    },
    {
-    "name": "Sea palm",
-    "genus": "Postelsia",
-    "species": "palmaeformis",
-    "origin": "Pacific coast, BC to California",
-    "shape": "palm",
+    "name": "Eelgrass",
+    "genus": "Zostera",
+    "species": "marina",
+    "origin": "North Atlantic and North Pacific coasts",
+    "shape": "grass",
     "temp_c": [
-     8,
-     15
+     0,
+     22
     ],
     "moisture": [
      1.0,
@@ -1664,31 +950,31 @@
     ],
     "height_m": [
      0.3,
-     0.6
+     1.2
     ],
-    "density": 0.5,
-    "soil": "thin",
+    "density": 1.0,
+    "soil": "sand",
     "needs": [
      "standing_water",
      "salt_water"
     ],
     "water_depth_m": [
-     0,
-     1
+     0.5,
+     10
     ],
-    "color": "#6A7A28",
-    "accent": "#4A4A20",
-    "source": "Postelsia palmaeformis, British Columbia to California surf-exposed rocks, miniature palm-like kelp 30-60 cm — Wikipedia",
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Zostera marina, N Hemisphere shelf shallows on sand, temperate seagrass meadows 0.3-1.2 m — Wikipedia",
     "traits": {
-     "genus": "Postelsia",
-     "species": "palmaeformis",
-     "native_range": "Postelsia palmaeformis, British Columbia to California surf-exposed rocks, miniature palm-like kelp 30-60 cm — Wikipedia",
-     "leaf_shape": "fan or feather fronds in a terminal crown",
-     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
-     "petiole": "long fibrous petiole with a leaf sheath",
+     "genus": "Zostera",
+     "species": "marina",
+     "native_range": "underwater — Zostera marina, N Hemisphere shelf shallows on sand, temperate seagrass meadows 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
      "height_m": [
       0.3,
-      0.6
+      1.2
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1696,76 +982,73 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "palm",
-    "leaf_type": "frond",
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
     "leaf": {
      "type": "strap",
      "outline": "linear",
-     "aspect": 12,
+     "aspect": 60,
      "base": "truncate",
-     "apex": "acute",
+     "apex": "rounded",
      "margin": "entire",
      "venation": "parallel",
-     "arrangement": "spiral",
+     "arrangement": "distichous",
      "size_cm": [
-      10,
-      25
+      30,
+      120
      ],
      "compound": null,
      "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
      "confidence": "documented",
-     "note": "kelp: stout stipe topped by up to 100 grooved strap blades"
+     "note": "submerged; leaves sheathed on a creeping rhizome"
     },
     "canopy": {
-     "form": "palmate_crown",
+     "form": "tussock",
      "gap": 0.4,
      "layering": "even",
      "droop": 0.6
     },
     "tint": {
-     "hue_shift": 18,
-     "sat": 0.65,
-     "val": 0.7,
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
      "underside": 0.05
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#6A7A28",
-     "color_2": "#4A4A20",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "alga; hollow rubbery stipe, no bark"
-    },
-    "silhouette": "miniature palm tree of drooping green straps on surf rock",
+    "silhouette": "submerged meadow of long green ribbons streaming with tide",
     "growth": {
-     "life": "annual",
-     "season": "spring",
+     "life": "perennial",
      "germination_days": [
-      30,
-      90
+      14,
+      60
      ],
      "height_years": [
-      0.15,
-      0.35
-     ],
-     "first_seed_years": 0.35,
-     "lifespan_years": [
-      0.6,
+      0.3,
       1
      ],
-     "shade": "very_intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Spores drip down the grooved blades at low tide and settle close to the parent; microscopic gametophytes overwinter on rock, mussels or barnacles. In late winter the young sporophyte appears as a single small flat blade on a short stalk, then splits into many grooved blades while the hollow, flexible, rubbery stipe thickens, making a miniature palm by early summer.",
+     "first_seed_years": 1,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seed splits and a white seedling axis anchors in sandy mud; a green cotyledon is followed by 2-3 narrow, flat, bright green ribbon leaves from a sheath. The seedling soon grows a creeping white rhizome with roots at each node and new shoots along it, so a first-year plant is a short row of leafy tufts; leaf length (a few cm to over 1 m) depends on water depth and clarity.",
      "confidence": "estimated",
-     "source": "Wikipedia Postelsia (annual kelp, 50-75 cm; sporangia in blade grooves, spores released at low tide onto the rock below; microscopic dioecious gametophytes; wave-beaten mid to upper intertidal, Vancouver Island to central California). Recruitment timing, growth and die-off estimated from kelp field studies."
-    }
+     "source": "Wikipedia (Zostera marina): leaves to 1.2 cm wide and over 1 m long (a few cm in clear shallow water), perennial but may grow as an annual, several thousand seeds per m2, inflorescence about 10 cm, one meadow clone about 3000 years old. Germination, seedling growth, flowering age and shoot life estimated from eelgrass restoration studies."
+    },
+    "biomes": [
+     "ESTUARY",
+     "KELP_FOREST",
+     "SHELF_SEA"
+    ]
    },
    {
     "name": "Surfgrass",
@@ -1882,118 +1165,10 @@
      "juvenile_note": "Seeds are crescent-shaped with two barbed arms that snag on bushy coralline red algae; the seedling roots into the algal turf and puts up a small tuft of narrow, bright-green, thread-like leaves. Over years it forms rhizomes that bind to rock and makes dense emerald tufts of long, narrow (2-4 mm) ribbon leaves streaming in the surge.",
      "confidence": "estimated",
      "source": "Wikipedia (seedlings establish among red coralline algae, attaching by small barbs and roots; rhizomes colonise rock in the mid to low intertidal); slow seedling establishment and ages estimated from surfgrass recruitment studies"
-    }
-   },
-   {
-    "name": "Thrift",
-    "genus": "Armeria",
-    "species": "maritima",
-    "origin": "Northern Hemisphere coasts",
-    "shape": "cushion",
-    "temp_c": [
-     -2,
-     16
-    ],
-    "moisture": [
-     0.3,
-     0.8
-    ],
-    "height_m": [
-     0.05,
-     0.3
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#4A9A40",
-    "accent": "#E878A0",
-    "source": "Armeria maritima, N Hemisphere sea cliffs above kelp coasts, pink cushions 5-30 cm — Wikipedia",
-    "traits": {
-     "genus": "Armeria",
-     "species": "maritima",
-     "native_range": "Armeria maritima, N Hemisphere sea cliffs above kelp coasts, pink cushions 5-30 cm — Wikipedia",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.05,
-      0.3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 40,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      2,
-      10
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.15,
-     "layering": "even",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.9,
-     "val": 0.9,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 2,
-     "color": "#5A8A48",
-     "color_2": "#8A7A60",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "tight grassy cushion topped with pink pom-poms",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      3,
-      8
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      50
-     ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: two small oval cotyledons, then narrow, grass-like dark green leaves in a tiny rosette on a stout taproot. Rosettes multiply as the woody base branches, building a dense, rounded cushion of hundreds of linear leaves; from about year 2, leafless stalks 5-30 cm tall carry round pink papery pompom heads.",
-     "confidence": "estimated",
-     "source": "Wikipedia (Armeria maritima: compact evergreen perennial in low clumps with long flower stems and globes of bright pink flowers; flowers Apr-Oct in British salt marshes; bee and butterfly pollinated; sea cliffs, dunes, salt marsh; copper tolerant). Germination, cushion growth, first flowering and lifespan estimated from Woodell & Dale 1993 as recalled."
-    }
+    "biomes": [
+     "KELP_FOREST"
+    ]
    }
   ],
   "epiphyte": []

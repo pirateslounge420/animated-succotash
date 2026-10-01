@@ -1,0 +1,393 @@
+{
+ "key": "SHORTGRASS_PRAIRIE",
+ "name": "Shortgrass prairie",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Soapweed yucca",
+    "genus": "Yucca",
+    "species": "glauca",
+    "origin": "Great Plains, Alberta to Texas",
+    "shape": "spike_rosette",
+    "temp_c": [
+     3,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6E9A8A",
+    "accent": "#F0E8C8",
+    "source": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0.5-1.2 m with white flower stalk — USDA PLANTS",
+    "traits": {
+     "genus": "Yucca",
+     "species": "glauca",
+     "native_range": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "ciliate",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      70
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#8A7A60",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "stiff blue-green spike rosette with a flower stalk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within days in warm moist soil: a long thin cotyledon, then a small rosette of narrow, soft, grass-like leaves. Seedlings grow slower than offsets; over several years the rosette becomes a dense stemless tuft of narrow, stiff, blue-green, sharp-tipped leaves edged in white with fine curling threads, on a deep taproot and rhizomes that sprout new rosettes.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Yucca glauca): 50% germination in 6 days, 4 days after soaking at 27-32 C, up to 91%; seedlings grow slower than ramets; to 1 m, leaves 20-100 cm, roots over 6 m deep, rhizomes 10-60 cm deep; takes several years to bloom. Size curve (rosette spread), first flowering and rosette lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 5,
+     "flower_colour": "#eef0d6",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      25,
+      80
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7a9a55",
+     "ripe_colour": "#6b5236",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      90,
+      240
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      3,
+      40
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca glauca): flowers May-Jul on racemes 30-200 cm with 25-30 or more drooping flowers; pollinated by the yucca moth, flowers and pollen viable at least 4 days; erect, dehiscent, oblong capsules about 3 cm, ripe Jul-Aug, glossy black seeds shed in Sep; fruits and flower stalks eaten. Fruit set, crop and capsule persistence estimated."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Scarlet globemallow",
+    "genus": "Sphaeralcea",
+    "species": "coccinea",
+    "origin": "Western North American plains",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#E86A40",
+    "source": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Sphaeralcea",
+     "species": "coccinea",
+     "native_range": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "lobes": 5,
+     "aspect": 1.0,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.6,
+     "val": 1.05,
+     "underside": 0.1,
+     "autumn": "#B09A70",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 3,
+     "color": "#8A9A78",
+     "color_2": "#A88A70",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "low grey mound with orange cups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      4,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: roundish cotyledons, then small grey, star-haired leaves, the first shallowly lobed, later ones cut into 3-5 narrow fingers; a slender taproot dives a metre or more. Becomes a low sprawl of silvery stems from a woody crown, spreading by rhizomes into small colonies of brick-red cups.",
+     "confidence": "documented",
+     "source": "USDA Forest Service RMRS scarlet globemallow review (scarification needed; 3-month transplants flower the first year; flowers Mar-Oct; field data suggest max age ~6 yr, models use up to 35 yr; shade intolerant; taproot 1.5-4 m; rhizomes to 1 m)"
+    }
+   },
+   {
+    "name": "Western wheatgrass",
+    "genus": "Pascopyrum",
+    "species": "smithii",
+    "origin": "Northern Great Plains",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0.3-0.9 m, blue-green — USDA PLANTS",
+    "traits": {
+     "genus": "Pascopyrum",
+     "species": "smithii",
+     "native_range": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      8,
+      25
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -12,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8B48A",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#7A9A88",
+     "color_2": "#B8A888",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "blue-green wheatgrass sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are sparse, upright tufts of narrow, blue-green leaves with strongly ridged upper surfaces and claw-like auricles. Stands fill in slowly: rhizomes send up scattered, stiff, glaucous blue-green shoots forming an open sod, topped in summer by narrow, wheat-like spikes. Each shoot lives 2-3 years; the rhizome sod persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pascopyrum smithii (94% germination, mean ~12 days at 15/30 C, slow at constant 19-23 C; stands slow from seed, uniform sod in 2-3 years; flowers June-Aug, seed ripe Aug-Sep; tiller longevity 2-3 years in Saskatchewan); lifespan given per shoot (ramet)"
+    }
+   }
+  ],
+  "epiphyte": []
+ }
+}

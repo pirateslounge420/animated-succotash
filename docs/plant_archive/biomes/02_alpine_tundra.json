@@ -1,0 +1,814 @@
+{
+ "key": "ALPINE_TUNDRA",
+ "name": "Alpine tundra",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Moss campion",
+    "genus": "Silene",
+    "species": "acaulis",
+    "origin": "Circumpolar Arctic-alpine",
+    "shape": "cushion",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     4000
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#3E8A3A",
+    "accent": "#E858A0",
+    "source": "Silene acaulis, circumpolar Arctic-alpine (Rockies, Alps, Himalaya-adjacent), dense cushion 2-8 cm with pink flowers",
+    "traits": {
+     "genus": "Silene",
+     "species": "acaulis",
+     "native_range": "Silene acaulis, circumpolar Arctic-alpine (Rockies, Alps, Himalaya-adjacent), dense cushion 2-8 cm with pink flowers",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.4,
+      1.2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A9A48",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tight green cushion studded pink",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: 2 tiny cotyledons, then a small rosette of narrow, pointed leaves. It sends down a long taproot and very slowly builds a tight, moss-like hemispherical cushion of densely packed short shoots, adding only a few mm a year; the first pink flowers often come after about 10 years.",
+     "confidence": "documented",
+     "source": "Morris & Doak 1998 Am J Bot (slow-growing, long-lived cushions; Colorado plants 75-100 yr, Alaskan to ~300 yr, record ~350 yr); Wikipedia Silene acaulis (cushions to 30-60 cm, flowers Jun-Aug); US National Park Service notes (about 10 yr to first flowering)"
+    }
+   },
+   {
+    "name": "Mountain avens",
+    "genus": "Dryas",
+    "species": "octopetala",
+    "origin": "Arctic-alpine Eurasia and N America",
+    "shape": "cushion",
+    "temp_c": [
+     -10,
+     3
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1000,
+     3500
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#3A7A35",
+    "accent": "#F8F8F0",
+    "source": "Dryas octopetala, Arctic-alpine Eurasia and N America on limestone, evergreen mat, white 8-petal flowers",
+    "traits": {
+     "genus": "Dryas",
+     "species": "octopetala",
+     "native_range": "Dryas octopetala, Arctic-alpine Eurasia and N America on limestone, evergreen mat, white 8-petal flowers",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.2,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.8,
+      2.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.65
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4636",
+     "color_2": "#8A7458",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "flat evergreen mat with white eight-petal flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small oblong leaves with rounded teeth, glossy dark green above and white-woolly beneath, like miniature oak leaves. The seedling's woody stem creeps and branches over limestone gravel, rooting as it goes, and slowly builds a flat evergreen mat that carries eight-petalled white flowers and twisting feathery seed plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dryas octopetala (creamy white flowers with 8, occasionally up to 16, petals on 3-10 cm stalks; persistent feathery styles twisted, then spreading into a ball for wind dispersal; early-melting gravel and rock barrens, mostly on limestone). Mat growth, first flowering and age estimated (Elkington 1971 Biol. Flora, not read)."
+    }
+   },
+   {
+    "name": "Purple saxifrage",
+    "genus": "Saxifraga",
+    "species": "oppositifolia",
+    "origin": "Circumpolar Arctic-alpine",
+    "shape": "cushion",
+    "temp_c": [
+     -12,
+     0
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     4500
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3A7A3A",
+    "accent": "#B040A0",
+    "source": "Saxifraga oppositifolia, circumpolar and alpine to 4500 m in Alps, mat-forming on scree, earliest purple flowers",
+    "traits": {
+     "genus": "Saxifraga",
+     "species": "oppositifolia",
+     "native_range": "Saxifraga oppositifolia, circumpolar and alpine to 4500 m in Alps, mat-forming on scree, earliest purple flowers",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.05
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.6
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A7A48",
+     "color_2": "#7A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "dense purple-flowered cushion on rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 tiny cotyledons, then minute, opposite, blunt, blue-green leaves in 4 rows, often with a white lime-pit at the tip. Trailing stems branch and root to make a loose mat (or a tight cushion on dry ridges), and vivid purple cup-shaped flowers sit right on the shoot tips just after snowmelt.",
+     "confidence": "estimated",
+     "source": "Stace and Flora of N America Saxifraga oppositifolia (prostrate mat- or cushion-forming arctic-alpine, among the earliest flowering plants after snowmelt); arctic seedling studies (cold-stratified seed germinates in 1-4 weeks); size-age and lifespan estimated"
+    }
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     5
+    ],
+    "moisture": [
+     0,
+     1
+    ],
+    "altitude_m": [
+     1000,
+     6000
+    ],
+    "height_m": [
+     0.001,
+     0.01
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#B8C830",
+    "accent": "#2A2A2A",
+    "source": "Rhizocarpon geographicum, crustose lichen on alpine boulders worldwide",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Rhizocarpon geographicum, crustose lichen on alpine boulders worldwide",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.01
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.2,
+     "val": 1.15,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B8C830",
+     "color_2": "#2A2A2A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "yellow-green crust map painted on bare rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    }
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Rhizocarpaceae",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     10
+    ],
+    "moisture": [
+     0.3,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     6000
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "GLACIER",
+     "ICE_SHEET",
+     "TUNDRA",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C020",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bare rock from tundra to the highest peaks; yellow-green maps with black borders; centuries old. Index Fungorum.",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Bare rock from tundra to the highest peaks",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.005
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.44,
+     "val": 1.39,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Snow willow",
+    "genus": "Salix",
+    "species": "herbacea",
+    "origin": "Arctic-alpine Europe and NE N America",
+    "shape": "shrub",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#4A9A45",
+    "accent": "#7A6A4A",
+    "source": "Salix herbacea (dwarf/least willow), Arctic-alpine Europe and NE North America, snowbed creeping willow 2-6 cm",
+    "traits": {
+     "genus": "Salix",
+     "species": "herbacea",
+     "native_range": "Salix herbacea (dwarf/least willow), Arctic-alpine Europe and NE North America, snowbed creeping willow 2-6 cm",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.1,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#d8b040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#7A6048",
+     "color_2": "#9A8A6A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "tiny willow mat lost in the turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      2000
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling minute: 2 round cotyledons and a pair of small, round, glossy leaves on a thread stem. Its woody stems creep just UNDER the soil and send up shoots only 1-6 cm tall, each with 2-3 round, finely toothed, shiny leaves and one tiny catkin; over decades it spreads as an open carpet in snowbeds. Genets in the Apennines are at least 2,000 years old.",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of GB Salix herbacea (1-6 cm tall, stems creep underground forming open mats; genets in the N Apennines at least 2,000 yr old; female catkins red when ripe); USDA Woody Plant Seed Manual Salix (fast germination); spread rate and first seed estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#c8624f",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8ea25a",
+     "ripe_colour": "#b34a3c",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      5,
+      200
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/Stace Salix herbacea (dioecious; tiny terminal catkins of few flowers, female red when ripe, male yellow; flowers soon after snowmelt, Jun-Jul); pollinated by small flies and bumblebees with some wind; counts, ripening and decay estimated"
+    }
+   }
+  ]
+ }
+}

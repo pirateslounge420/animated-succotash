@@ -46,7 +46,7 @@ func _run() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 11
 	# 1. Under a birch, looking up.
-	var birch := _tree("Paper birch", 16.0)
+	var birch := _tree("Downy birch", 16.0)
 	var cl: PackedVector4Array = birch[0][0]
 	var gap: float = birch[0][1]
 	var reach := 0.0
@@ -66,8 +66,8 @@ func _run() -> void:
 
 	# 2. A player in an oak's crown, on a limb.
 	var oak_h := 18.0
-	var oak := _tree("Oak", oak_h)
-	var sk := TreeLayouts.skeleton(SpeciesDB.index_of(SpeciesDB.find("Oak")), 0)
+	var oak := _tree("White oak", oak_h)
+	var sk := TreeLayouts.skeleton(SpeciesDB.index_of(SpeciesDB.find("White oak")), 0)
 	var seat := Vector3.ZERO
 	for pc in sk.pieces:
 		if pc.order == 1 and not pc.dead and pc.kind == TreeLayouts.Kind.LIMB:

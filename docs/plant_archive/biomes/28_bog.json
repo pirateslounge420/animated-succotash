@@ -1,0 +1,1068 @@
+{
+ "key": "BOG",
+ "name": "Bog",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Bog myrtle",
+    "genus": "Myrica",
+    "species": "gale",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#4A8A40",
+    "accent": "#7A5A3A",
+    "source": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0.5-2 m",
+    "traits": {
+     "genus": "Myrica",
+     "species": "gale",
+     "native_range": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "oblanceolate, toothed only toward the apex, dotted with yellow resin glands, grey-green"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c0a840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A4A3A",
+     "color_2": "#A08A70",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "dark red-brown smooth stems with pale lenticels and resin glands"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "low grey-green twiggy bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling on wet peat or sandy lake shores; leaves narrowly wedge-shaped, toothed near the tip, grey-green and dotted with fragrant resin glands, as in the adult. It branches from the base into an upright, reddish-brown-twigged little bush and spreads by root suckers into dense clonal thickets; nitrogen-fixing root nodules help it on poor bog soils.",
+     "confidence": "estimated",
+     "source": "Wikipedia Myrica gale (deciduous shrub to 2 m; catkins before the leaves, male yellowish to orange-brown, female red to purple; usually dioecious but plants may change sex from year to year; dense clonal colonies from root suckers); USDA Woody Plant Seed Manual Myrica (1-6 ft); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#b0603a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "nut",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      110,
+      150
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (catkins in spring before the leaves, several per twig; red-purple female catkins; small waxy fruits). Here one 'flower' is a female catkin and one 'fruit' the small brown cone-like head it becomes, of 2-3 mm resin-dotted winged nutlets that float off in water; ripe late summer, persists into winter; set and crop estimated"
+    }
+   },
+   {
+    "name": "Cranberry",
+    "genus": "Vaccinium",
+    "species": "oxycoccos",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#2F6A35",
+    "accent": "#C02030",
+    "source": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "oxycoccos",
+     "native_range": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.3,
+      1.0
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "tiny evergreen leaves with revolute margins, dark glossy green above, whitish beneath, on wiry trailing stems"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#5A3A30",
+     "color_2": "#7A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thread-like dark red-brown creeping stems"
+    },
+    "architecture": {
+     "model": "mangenot",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "thread-like mat with tiny leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A minute seedling on wet sphagnum: two tiny cotyledons, then a hair-thin wiry stem with small pointed leaves, dark green above and whitish beneath with rolled edges. It creeps over and through the moss instead of rising, rooting at the nodes, so a young plant is a loose web of thread-like reddish runners a hand-width across with a few short upright leafy tips.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Vaccinium oxycoccos): seed needs cold after-ripening (6-7 months at 0 C) before germinating at 25 C, shade intolerant, spreads by rhizomes and runners, flowers and fruits profusely 1-3 years after fire. Height given as mat spread; seedling growth, first flowering and ages estimated from the genus and V. macrocarpon."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#e58aa8",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#d6ddb8",
+     "ripe_colour": "#b3232e",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      5,
+      40
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (Vaccinium oxycoccos): pink to red flowers borne singly or in clusters at stem ends, June-July; self-pollinating but insects, especially bees, raise seed set; red juicy berries ripen Aug-Oct and often persist through winter. Flower size (reflexed petals), fruit set, fruit size, rot time and crop estimated."
+    }
+   },
+   {
+    "name": "Heather",
+    "genus": "Calluna",
+    "species": "vulgaris",
+    "origin": "Europe and Western Asia",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4A7A40",
+    "accent": "#C050A0",
+    "source": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
+    "traits": {
+     "genus": "Calluna",
+     "species": "vulgaris",
+     "native_range": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.35
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "tiny scale leaves in four ranks, closely pressed to the twig"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4A40",
+     "color_2": "#7A6050",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "old woody stems dark grey-brown, rough, bark shredding in thin strips"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense low purple-grey mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds need light and sprout in 2-6 weeks on bare peat, sand or burnt ground. The seedling is a tiny green sprig of minute, overlapping, scale-like leaves in four rows; it branches into a small upright bush (pioneer phase), then a dense, rounded dome (building phase) that later spreads, thins and opens in the centre as it ages.",
+     "confidence": "documented",
+     "source": "USDA FEIS Calluna vulgaris (pioneer 0-6 yr, building 6-14, mature 14-25, degenerate after 25; lives about 30-40 yr on dry heaths; seeds rarely germinate without light; highly shade-intolerant); Gimingham 1960 Biological Flora of the British Isles."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 8,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#b9709c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      50
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.15,
+      0.25
+     ],
+     "unripe_colour": "#8a9a60",
+     "ripe_colour": "#8a6a4a",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers Jul-Sep, mauve, in racemes; capsule); FEIS (flowers Jul-Nov in N America, wind and animal dispersal, seed bank long-lived); Gimingham 1960 (bees and wind pollinate; capsules ripen in autumn and shed seed over winter); counts approximate."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Pitcher plant",
+    "genus": "Sarracenia",
+    "species": "purpurea",
+    "origin": "Eastern North America",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "color": "#7A9A40",
+    "accent": "#B03040",
+    "source": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm",
+    "traits": {
+     "genus": "Sarracenia",
+     "species": "purpurea",
+     "native_range": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      8,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "leaves are inflated decumbent pitchers with a broad erect wavy hood, green netted with purple-red veins; obovate is the nearest flat card"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "stemless rosette on a rhizome"
+    },
+    "silhouette": "rosette of squat purple-veined pitchers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      7
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: tiny green tubular pitchers about 1 cm. Adult an evergreen rosette of fat, curved, jug-like pitchers 10-30 cm lying on the moss, green to deep red with purple veins, with a flared, hairy hood and full of rainwater; it adds only a few pitchers a year.",
+     "confidence": "estimated",
+     "source": "Schnell 2002, Carnivorous Plants of the United States and Canada, and ICPS growing guides (seed needs 4-8 weeks of cold, then germinates in 2-6 weeks; seedlings reach flowering size in about 3-5+ yr; long-lived rhizomes; fire-maintained sunny bogs); Wikipedia S. purpurea (seed falls a median 5 cm from the parent, so plants form clusters)"
+    }
+   },
+   {
+    "name": "Round-leaved sundew",
+    "genus": "Drosera",
+    "species": "rotundifolia",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#C03030",
+    "accent": "#F06060",
+    "source": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm",
+    "traits": {
+     "genus": "Drosera",
+     "species": "rotundifolia",
+     "native_range": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 0.8,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "estimated",
+     "note": "blade wider than long on a long petiole, covered in red glandular tentacles (ciliate = the marginal tentacles); forms a winter hibernaculum"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.0,
+     "autumn": "#b04030",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "stemless rosette"
+    },
+    "silhouette": "tiny red-dotted rosette",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need winter cold, then germinate in spring on wet Sphagnum; the seedling is a tiny flat rosette of round red-haired leaves on long stalks. Each autumn it shrinks to a tight winter bud (hibernaculum) that reopens in April-May; in shade the rosette turns spindly and upright instead of flat.",
+     "confidence": "documented",
+     "source": "USDA FEIS Drosera rotundifolia (short-lived perennial; flowers every summer once established, Jun-Sep, one flower opening per day; hibernaculum forms in fall and opens Apr-May; very shade intolerant; shallow roots <6 cm); Nordbakken et al. 2004 J. Ecol. (demography); seed stratification from growers"
+    }
+   },
+   {
+    "name": "Cottongrass",
+    "genus": "Eriophorum",
+    "species": "vaginatum",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "tussock",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#7AA850",
+    "accent": "#F4F2E8",
+    "source": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm",
+    "traits": {
+     "genus": "Eriophorum",
+     "species": "vaginatum",
+     "native_range": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "filiform channelled blades about 1 mm wide (true aspect > 200) in dense tussocks, russet in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#c08040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#7AA050",
+     "color_2": "#9A7050",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "culms with inflated bladeless sheaths; tussock of brown persistent sheaths"
+    },
+    "silhouette": "dense tussock with white cotton heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      20
+     ],
+     "height_years": [
+      20,
+      80
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings need bare, wet, light-flooded peat (e.g. after fire): a hair-thin first leaf, then a tiny tuft of wiry leaves. New tillers form inside the old leaf sheaths, so the tuft slowly builds into a dense raised tussock of old sheaths and roots: about 3 years to first flowering, decades to full size. Each tiller lives ~7 years; the tussock goes on for a century or more.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (Eriophorum vaginatum): germination within ~20 days in light at 23-30 C; first flowering ~3 yr (Finland); tillers live 3-15 yr (mean 7-8); central Alaska tussocks average 158 yr old (Mark et al. 1985); shade intolerant. Tussock size-age curve estimated."
+    }
+   },
+   {
+    "name": "Reindeer lichen",
+    "genus": "Cladonia",
+    "species": "rangiferina",
+    "origin": "Circumboreal and Arctic",
+    "family": "Cladoniaceae",
+    "shape": "cushion",
+    "temp_c": [
+     -12,
+     8
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "TUNDRA",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "BOG"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#C8D0C0",
+    "accent": "#C8D0C0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      12,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. The young thallus is a scatter of tiny grey stalks that branch in threes and fours, tips all bending one way; over decades they build a springy ash-grey mat up to ~10 cm deep, dying at the base while growing at the tips.",
+     "confidence": "documented",
+     "source": "Wikipedia Cladonia rangiferina (grows 3-11 mm/yr, 3.9-4.4 mm/yr in Finland; mats to ~10 cm, ~12 cm in humid, 4-6 cm in dry sites; can establish ~2 yr after fire but takes decades to recover; individual lives ~20-30 yr; faster growth in shadier forests)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tundra and open taiga; grey-white mats the caribou dig for in winter; grows millimetres a year. Index Fungorum.",
+    "cannot_be_browsed": false,
+    "traits": {
+     "genus": "Cladonia",
+     "species": "rangiferina",
+     "native_range": "Tundra and open taiga",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#d8dcc8",
+      "underside": "#b8c0a8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#d8dcc8",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "pale grey-white densely branched shrubby tufts, branches curved to one side, in spongy mats"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "grey-white spongy mats among dwarf shrubs",
+     "confidence": "documented",
+     "refs": "Wikipedia Cladonia rangiferina, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ]
+ }
+}

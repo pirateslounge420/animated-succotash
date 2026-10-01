@@ -22,194 +22,38 @@
   "shrub": [],
   "ground": [
    {
-    "name": "Glacier buttercup",
-    "genus": "Ranunculus",
-    "species": "glacialis",
-    "origin": "Alps, Pyrenees and the Arctic",
-    "shape": "cushion",
-    "temp_c": [
-     -12,
-     0
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "altitude_m": [
-     1800,
-     4300
-    ],
-    "height_m": [
-     0.03,
-     0.12
-    ],
-    "density": 0.1,
-    "soil": "thin",
-    "color": "#3E8A3A",
-    "accent": "#F0F0E8",
-    "source": "Ranunculus glacialis, Alps/Scandinavia/Arctic, moraine and snowbed to 4275 m, one of Europe's highest flowering plants, 3-12 cm",
-    "traits": {
-     "genus": "Ranunculus",
-     "species": "glacialis",
-     "native_range": "Ranunculus glacialis, Alps/Scandinavia/Arctic, moraine and snowbed to 4275 m, one of Europe's highest flowering plants, ",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.03,
-      0.12
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "palmate_lobed",
-     "lobes": 3,
-     "aspect": 1.0,
-     "base": "truncate",
-     "apex": "obtuse",
-     "margin": "lobed",
-     "venation": "palmate",
-     "arrangement": "basal",
-     "size_cm": [
-      1,
-      4
-     ],
-     "compound": null,
-     "texture": "succulent",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.9,
-     "val": 0.8,
-     "underside": 0.1,
-     "autumn": "#8a6a4a",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#5A8A48",
-     "color_2": "#8A5A58",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "tiny fleshy rosette with white-pink flowers",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      40
-     ],
-     "height_years": [
-      3,
-      8
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      20,
-      50
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings appear after snowmelt on scree and moraine: two small cotyledons, then a few fleshy, glossy, dark green leaves divided into three lobes. It grows very slowly in the short summers, building a small tuft of thick, deeply 3-parted leaves on a stout rootstock; flower buds take 2-3 seasons to develop before the first white flowers (ageing pink-red) open.",
-     "confidence": "estimated",
-     "source": "German Wikipedia Gletscher-Hahnenfuss (5-20 cm; flowers 3 cm, white turning pink to dark red; blooms Jul-Aug; needs 2-3 growing seasons to form flowers; fly-pollinated; 2,300-4,275 m, highest flowering plant of the Alps); English Wikipedia (flowers 1.8-3.8 cm); ages estimated"
-    }
-   },
-   {
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
     "origin": "Worldwide (cosmopolitan)",
+    "family": "Rhizocarpaceae",
     "shape": "moss",
     "temp_c": [
-     -30,
-     5
+     -15,
+     10
     ],
     "moisture": [
+     0.3,
+     1.0
+    ],
+    "altitude_m": [
      0,
-     1
+     6000
+    ],
+    "biomes": [
+     "GLACIER",
+     "SEA_ICE",
+     "VOLCANIC_FIELD"
     ],
     "height_m": [
      0.001,
-     0.01
+     0.005
     ],
-    "density": 0.15,
+    "density": 1.0,
     "soil": "thin",
-    "color": "#B8C830",
+    "needs": [],
+    "color": "#B0C020",
     "accent": "#2A2A2A",
-    "source": "Rhizocarpon geographicum, crustose lichen on moraine boulders worldwide, used for lichenometric dating of glacier retreat",
-    "traits": {
-     "genus": "Rhizocarpon",
-     "species": "geographicum",
-     "native_range": "Rhizocarpon geographicum, crustose lichen on moraine boulders worldwide, used for lichenometric dating of glacier retrea",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.001,
-      0.01
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.1,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 1.2,
-     "val": 1.15,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#B8C830",
-     "color_2": "#2A2A2A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "yellow-green crust map with black borders on rock",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -231,50 +75,92 @@
      "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
      "confidence": "documented",
      "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
-    }
-   },
-   {
-    "name": "Snow algae",
-    "genus": "Chlamydomonas",
-    "species": "nivalis",
-    "origin": "Worldwide (cosmopolitan)",
-    "shape": "thermophile_mat",
-    "temp_c": [
-     -30,
-     0
-    ],
-    "moisture": [
-     0.6,
-     1
-    ],
-    "height_m": [
-     0.001,
-     0.002
-    ],
-    "density": 0.2,
-    "soil": "wet",
-    "color": "#D85070",
-    "accent": "#B03050",
-    "source": "Chlamydomonas nivalis (watermelon snow), cosmopolitan snowfield/glacier alga; pink surface film on summer snow (alpine and polar snow-algae literature)",
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bare rock from tundra to the highest peaks; yellow-green maps with black borders; centuries old. Index Fungorum.",
     "traits": {
-     "genus": "Chlamydomonas",
-     "species": "nivalis",
-     "native_range": "Chlamydomonas nivalis (watermelon snow), cosmopolitan snowfield/glacier alga",
-     "leaf_shape": "none — microbial mat",
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Bare rock from tundra to the highest peaks",
+     "leaf_shape": "tiny leaves on thread stems",
      "trunk": "none",
      "petiole": "none",
      "height_m": [
       0.001,
-      0.002
+      0.005
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
     "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    },
     "leaf": {
      "type": "none",
      "venation": "none",
@@ -283,14 +169,14 @@
     },
     "canopy": {
      "form": "mat",
-     "gap": 0.5,
+     "gap": 0.1,
      "layering": "even",
      "droop": 0.0
     },
     "tint": {
      "hue_shift": 0,
-     "sat": 0.6,
-     "val": 1.15,
+     "sat": 1.44,
+     "val": 1.39,
      "underside": 0.0
     },
     "photoperiod": {
@@ -301,55 +187,16 @@
      "orientation": "none",
      "depth": 0.0,
      "scale_cm": 1,
-     "color": "#D85070",
-     "color_2": "#B03050",
+     "color": "#000000",
+     "color_2": "#000000",
      "lenticels": "none",
      "confidence": "documented"
-    },
-    "silhouette": "pink-red stain across old snow",
-    "growth": {
-     "life": "annual",
-     "season": "spring",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      0.05,
-      0.15
-     ],
-     "first_seed_years": 0.2,
-     "lifespan_years": [
-      0.3,
-      1
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "none",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Nothing plant-like to see: overwintering red cysts in the snow and soil wake at snowmelt, release tiny green swimming cells (5-15 um) that move up through wet snow, then turn orange and finally into red resting cysts (35-40 um). What shows is a pink-to-blood-red 'watermelon snow' stain in footprints and sun cups that deepens over the summer.",
-     "confidence": "estimated",
-     "source": "Wikipedia Chlamydomonas nivalis (green motile cells 5-15 um in spring-summer meltwater, orange stage, red cysts 35-40 um are the longest phase, cysts in the top 0-20 cm of snow, growth optimum 5-15C); bloom timing after melt onset estimated"
     }
    }
   ],
   "epiphyte": []
  },
  "associations": [
-  {
-   "name": "Snow algae ice field",
-   "realm": "any",
-   "where": "the glacier surface and snowfields in summer, red-tinted snow",
-   "dominant": [
-    "Snow algae"
-   ],
-   "companion": [],
-   "ground": [
-    "Snow algae"
-   ],
-   "catalogue": [],
-   "cover": 0.1,
-   "source": "Hoham & Duval 2001 snow algae ecology"
-  },
   {
    "name": "Map lichen-glacier buttercup fresh moraine",
    "realm": "any",
@@ -359,8 +206,7 @@
    ],
    "companion": [],
    "ground": [
-    "Map lichen",
-    "Glacier buttercup"
+    "Map lichen"
    ],
    "catalogue": [],
    "cover": 0.1,

@@ -1,0 +1,1443 @@
+{
+ "key": "HOT_DESERT",
+ "name": "Hot desert",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "canopy": [
+   {
+    "name": "Cardon",
+    "genus": "Pachycereus",
+    "species": "pringlei",
+    "origin": "Baja California and Sonora",
+    "shape": "cactus",
+    "temp_c": [
+     19,
+     25
+    ],
+    "moisture": [
+     0.05,
+     0.18
+    ],
+    "height_m": [
+     8,
+     18
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4F8A50",
+    "accent": "#F0F0E0",
+    "source": "Pachycereus pringlei, Baja California and Sonora coast, giant columnar cactus 8-18 m — Flora of North America",
+    "traits": {
+     "genus": "Pachycereus",
+     "species": "pringlei",
+     "native_range": "Pachycereus pringlei, Baja California and Sonora coast, giant columnar cactus 8-18 m — Flora of North America",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      8,
+      18
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.65,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 5,
+     "color": "#6A8A70",
+     "color_2": "#B8B0A0",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 1.0,
+     "confidence": "documented"
+    },
+    "silhouette": "massive grey-green column with several arms",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      60,
+      150
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are pea-sized green globes with tiny spines, nearly always under a nurse shrub or tree. They elongate into a single thick, ribbed, grey-green column, much spinier than adults (old cardons can be almost spineless); after decades arms branch from low on the trunk and turn upward like a candelabra.",
+     "confidence": "documented",
+     "source": "Radiocarbon dating of cardon spines (Radiocarbon journal): growth 3-23 cm/yr, mean 9.8 cm/yr, faster in taller plants; Wikipedia (slow-growing, lifespan hundreds of years, tallest 19.2 m); El cardon gigante (Acta Universitaria 2017); age at first flowering estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 0.75,
+     "flower_size_cm": 6,
+     "flower_colour": "#f3efe2",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bat",
+      "bee",
+      "bird"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      4,
+      7
+     ],
+     "unripe_colour": "#8c8f4e",
+     "ripe_colour": "#b0472f",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "splits",
+     "rot_days": [
+      10,
+      40
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USA-NPN photo guide (milky-white flowers late spring; fruit turns reddish and splits to show red pulp; lesser long-nosed bats depend on its nectar); Nativas Landscape (flowers open late afternoon, die next day around noon); Acta Universitaria (flowering-fruiting Apr-Sep); fruit size, set and crop estimated"
+    }
+   },
+   {
+    "name": "Quiver tree",
+    "genus": "Aloidendron",
+    "species": "dichotomum",
+    "origin": "Namibia and South Africa",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     22
+    ],
+    "moisture": [
+     0.05,
+     0.15
+    ],
+    "height_m": [
+     3,
+     9
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#7FA870",
+    "accent": "#C8B080",
+    "source": "Aloidendron dichotomum, Namib and Namaqualand rocky slopes, forked succulent tree 3-9 m — SANBI PlantZAfrica",
+    "traits": {
+     "genus": "Aloidendron",
+     "species": "dichotomum",
+     "native_range": "Aloidendron dichotomum, Namib and Namaqualand rocky slopes, forked succulent tree 3-9 m — SANBI PlantZAfrica",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      3,
+      9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "strap",
+     "outline": "ovate",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      35
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -14,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#C8A870",
+     "color_2": "#8A6A48",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "forked golden trunk, rounded crown of rosettes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      60,
+      140
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 25,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: a tiny fan of thick, triangular, blue-green leaves in two ranks, often pale-spotted and edged with small teeth, later twisting into a spiral rosette. For years it stays a squat rosette; then a single stout trunk lifts it and at 1-2 m the crown forks again and again into a rounded head of rosettes. Old bark peels in golden, sharp-edged plates.",
+     "confidence": "estimated",
+     "source": "Wikipedia (slow growth, stems repeatedly fork in two) and SANBI PlantZAfrica as recalled (tree aloe to 7-9 m of Namibia and the Northern Cape; first flowers at about 20-30 yr; large trees thought well over a century old). Two-ranked spotted seedling leaves as in most aloes; rates estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 1,
+     "flower_colour": "#f2c418",
+     "flower_form": "tube",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bird",
+      "bee"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      3
+     ],
+     "unripe_colour": "#8aa050",
+     "ripe_colour": "#a88a5a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "German Wikipedia (Koecherbaum: 3-5-branched inflorescence to 30 cm with cylindrical racemes to 15 cm; bulbous flowers 33 mm long, bright canary-yellow; nectar favoured by sunbirds). Winter (Jun-Jul) flowering, bee visits, capsules with papery winged seeds, timings and crop estimated from SANBI as recalled and related tree aloes."
+    }
+   },
+   {
+    "name": "Umbrella thorn",
+    "genus": "Vachellia",
+    "species": "tortilis",
+    "origin": "Africa (Sahel to South Africa) and Arabia",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.15,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 1.0,
+    "soil": {
+     "classes": [
+      "sand",
+      "alluvium",
+      "basalt",
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      21
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      150,
+      650
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two oval cotyledons, then tiny feathery bipinnate leaves on a thin stem with paired spines, some long, straight and white, others short and hooked. The taproot dives deep first. Browsed saplings become dense, low, cage-like spiny bushes for years; once a leader escapes browsers it gains about 1.5 m in two years and only later spreads the flat umbrella crown.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): up to 21 m, about 1.5 m in 2 years, a 6-7-year-old tree yields 5-6 kg of clean seed, 10-12 kg pods a year at 10 yr; Andersen & Krzywinski 2007 (BMC Ecology): radiocarbon ages of 200-650 yr for trees in Egypt's Eastern Desert, radial growth up to 2.4 mm a year. Germination and height curve estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sahel to South Africa savanna; the flat-top. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted.",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "tortilis",
+     "native_range": "Sahel to South Africa savanna",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      5.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e36",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "grey to black-brown, rough and fissured; young twigs reddish; paired thorns: long straight white ones and short hooked ones"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#5e8a48",
+      "underside": "#6e9a58",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#5e8a48",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "tiny feathery bipinnate leaves, minute leaflets; foliage fine grey-green haze"
+     },
+     "flower": {
+      "colour": "#f8f4e0",
+      "secondary": "#e8d890",
+      "form": "small creamy-white fluffy balls in clusters",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c8a868",
+      "form": "pale yellow-brown pods twisted into tight spirals and coils, 8-12 cm; fall for browsers"
+     },
+     "seasonal": "drops leaves in the long dry season; flushes with rains",
+     "silhouette": "the flat-top: a wide, perfectly flat or slightly domed umbrella crown on a short trunk or several leaning stems; the savanna signature",
+     "confidence": "documented",
+     "refs": "Wikipedia Vachellia tortilis; Kew POWO; PlantZAfrica"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       600
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#b8a05a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 2.5,
+     "color": "#6A5A4E",
+     "color_2": "#4A3E36",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "umbrella",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.15,
+      0.35
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.4,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f5f0d8",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "coiled",
+     "fruit_size_cm": [
+      7,
+      10
+     ],
+     "unripe_colour": "#9aae5c",
+     "ripe_colour": "#b8904e",
+     "ripen_days": [
+      90,
+      180
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): white or pale yellowish-white heads 0.5-1.1 cm, pods 7-10 cm by 6-10 mm, spirally twisted, 10-12 kg pods per 10-yr tree; the Turkana make porridge from the pods, the Maasai eat immature seeds; Wikipedia: aromatic flowers, springlike coiled pods. Flowering at the onset of the rains, ripening, pod fall and rot times estimated."
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Whitethorn acacia",
+    "genus": "Vachellia",
+    "species": "constricta",
+    "origin": "SW USA and Northern Mexico",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.06,
+     0.22
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A9A45",
+    "accent": "#F0F0E0",
+    "source": "Vachellia constricta, Sonoran/Chihuahuan deserts, thorny shrub 1-4 m — USDA PLANTS",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "constricta",
+     "native_range": "Vachellia constricta, Sonoran/Chihuahuan deserts, thorny shrub 1-4 m — USDA PLANTS",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       70,
+       290
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#C8B860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A6E64",
+     "color_2": "#E8E4DC",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "open thorny white-spined shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      21
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hard-coated seeds germinate after summer rains once the coat is cracked: two thick oval cotyledons, a first once-pinnate leaf, then tiny bipinnate leaves on a slender reddish stem with a pair of straight white spines at each node. A deep taproot grows first; the plant soon branches from the base into a low, open, spiny shrublet with zigzag red-brown twigs.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Vachellia constricta): usually 2 m, occasionally 6 m, flowers Apr-May with a second bloom Jul-Oct. Germination, growth, first flowering and lifespan estimated from related Sonoran and Chihuahuan desert acacias."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f4c531",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      5,
+      12
+     ],
+     "unripe_colour": "#8a9a4a",
+     "ripe_colour": "#7a3a28",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (Vachellia constricta): blooms Apr-May and again Jul-Oct, small yellow balls about 1 cm offering no nectar and little pollen; pods long and thin, up to 12 cm by 3-6 mm. Red-brown colour, constriction between seeds and splitting per the species' usual description; fruit set, timings and crop estimated."
+    }
+   },
+   {
+    "name": "Barrel cactus",
+    "genus": "Ferocactus",
+    "species": "wislizeni",
+    "origin": "SW USA and Northern Mexico",
+    "shape": "cactus",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4F8A50",
+    "accent": "#D08030",
+    "source": "Ferocactus wislizeni, Sonoran/Chihuahuan deserts, barrel 0.5-1.5 m, hooked red spines — Flora of North America",
+    "traits": {
+     "genus": "Ferocactus",
+     "species": "wislizeni",
+     "native_range": "Ferocactus wislizeni, Sonoran/Chihuahuan deserts, barrel 0",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 3,
+     "color": "#5A8A5A",
+     "color_2": "#A85A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "columnar",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.95,
+      0.95
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "documented"
+    },
+    "silhouette": "squat red-spined green barrel",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      30,
+      80
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      50,
+      130
+     ],
+     "shade": "intolerant",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: a tiny green knob with two fleshy cotyledons, soon covered in fine white spines; stays a small spiny globe for years (often in the shade of a nurse shrub), growing a few cm a year and gaining its hooked reddish central spines. At 20-30 cm across it starts to flower; it lengthens into a ribbed barrel and, when tall, leans toward the south-southwest.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Ferocactus wislizeni: germination best at 20-30 C with >=8 h light; lifespan 50-130 yr); Wikipedia (0.9-1.8 m, rarely 3 m; 50-100 yr). Growth rate and first flowering estimated from barrel-cactus growth."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 6,
+     "flower_colour": "#e2702a",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#8aa24a",
+     "ripe_colour": "#e8c13a",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      120,
+      400
+     ],
+     "drop": "persists",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      10,
+      40
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowers sporadically in late spring, profusely Jul-Sep; fruit yellow, barrel-shaped, fleshy); Wikipedia (yellow to red-orange flowers visited by cactus bees Lithurgus; fruits persist atop the plant, sometimes >1 yr; eaten by deer, javelina, ground squirrels; sour but edible). Flower size, counts, ripening estimated."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Lechuguilla",
+    "genus": "Agave",
+    "species": "lechuguilla",
+    "origin": "Chihuahuan Desert",
+    "shape": "spike_rosette",
+    "temp_c": [
+     17,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#7FA070",
+    "accent": "#E8D888",
+    "source": "Agave lechuguilla, indicator of the Chihuahuan Desert, spiky rosettes 30-60 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Agave",
+     "species": "lechuguilla",
+     "native_range": "Agave lechuguilla, indicator of the Chihuahuan Desert, spiky rosettes 30-60 cm — USDA PLANTS",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 10,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      50
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#8A8A70",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small stiff spiny rosette",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      15,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rarely seen; nearly all young rosettes are pups rising from rhizomes about 10 cm down, spreading 2-3 times the parent's width, so plants form dense colonies. A young rosette is a tight upright cup of a few stiff, thick, yellow-green, slightly incurved leaves with small down-hooked edge teeth and a sharp tip spine; it adds only 4-11 leaves a year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Agave lechuguilla: 50% germination in ~4 days at 25-30 C; 3.9-10.8 new leaves/plant/yr; rosette of 20-50 leaves, 20-60 cm; leaves live 12-15 yr; flowers once, typically at 10-20 yr (stalk 1-4 m), then dies and is replaced by clones; rhizomes ~10 cm deep; seedlings rarely observed. Rosette size-age estimated."
+    }
+   },
+   {
+    "name": "Welwitschia",
+    "genus": "Welwitschia",
+    "species": "mirabilis",
+    "origin": "Namib Desert",
+    "shape": "rosette",
+    "temp_c": [
+     17,
+     23
+    ],
+    "moisture": [
+     0.02,
+     0.12
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.15,
+    "soil": "sand",
+    "color": "#6A8A50",
+    "accent": "#A07040",
+    "source": "Welwitschia mirabilis, Namib Desert fog belt, two strap leaves on a woody stump, 0.3-1 m — SANBI PlantZAfrica",
+    "traits": {
+     "genus": "Welwitschia",
+     "species": "mirabilis",
+     "native_range": "Welwitschia mirabilis, Namib Desert fog belt, two strap leaves on a woody stump, 0",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "succulent",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "truncate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "opposite",
+     "size_cm": [
+      150,
+      400
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#8A7A68",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "two long shredded straps on a stump",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      30,
+      200
+     ],
+     "trunk_years": 10,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      500,
+      2000
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two strap-like cotyledons 25-35 mm long, pink at first then green, lie on the sand; between them the only two true leaves appear, broad grey-green straps that keep growing from their base for the plant's whole life. For years it is a flat cross of four blades over a deep taproot; the woody, two-lobed, dish-like crown widens slowly and the leaves fray into ribbons.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Welwitschia): only two leaves, growing continuously to 4 m, crown up to about 1 m across, many plants hundreds of years old, the oldest perhaps 2000; cotyledons 25-35 mm, pink turning green; dioecious, green to salmon or brown cones, pollinated mainly by flies. Germination, spread curve (height_years), crown emergence and first coning estimated."
+    }
+   },
+   {
+    "name": "Hard spinifex",
+    "genus": "Triodia",
+    "species": "basedowii",
+    "origin": "Central Australia",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.04,
+     0.2
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#A8B860",
+    "accent": "#C8B060",
+    "source": "Triodia basedowii, dominant hummock grass of the central Australian sand deserts, 30-100 cm rings — Flora of Australia",
+    "traits": {
+     "genus": "Triodia",
+     "species": "basedowii",
+     "native_range": "Triodia basedowii, dominant hummock grass of the central Australian sand deserts, 30-100 cm rings — Flora of Australia",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8B070",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#8A9A60",
+     "color_2": "#C8B888",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "spiny ring-shaped hummock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      40,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling (it regrows only from seed after fire): a small tuft of thin grass blades, soft and green at first, soon rolled into stiff, sharp, grey-green needles. Tillers spread outward into a low dense dome of spiny needles; after 20-40 unburnt years the centre dies and the hummock opens into a ring, then broken arcs, several metres across.",
+     "confidence": "documented",
+     "source": "WA DPIRD 'Insights into spinifex (Triodia) pastures' (T. basedowii rings 40-50 yr old; hard spinifex seeds 4-5 yr after fire); Lewandrowski et al. 2018 Ann. Bot. (Triodia germination, t50 about 3 d, dormancy broken by karrikin); Macquarie Univ. spinifex page (rings common 25+ yr after fire)."
+    }
+   },
+   {
+    "name": "Tabush grass",
+    "genus": "Panicum",
+    "species": "turgidum",
+    "origin": "Sahara and Arabia",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.03,
+     0.15
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#A8B878",
+    "accent": "#C8B060",
+    "source": "Panicum turgidum, Sahara and Arabian sand deserts, wiry tussock 30-100 cm — Kew POWO",
+    "traits": {
+     "genus": "Panicum",
+     "species": "turgidum",
+     "native_range": "Panicum turgidum, Sahara and Arabian sand deserts, wiry tussock 30-100 cm — Kew POWO",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      2,
+      10
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#D0C498",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 4,
+     "color": "#9AA888",
+     "color_2": "#C8B888",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "grey-green wiry tussock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings appear within days of rain as tiny grey-green tufts of narrow leaves. The plant quickly builds a stiff, much-branched tussock of cane-like, glaucous, jointed stems with short, sparse leaves, woody at the base, often catching wind-blown sand into a low mound around itself.",
+     "confidence": "estimated",
+     "source": "Estimated from its ecology as a long-lived, rain-triggered Saharo-Arabian desert bunchgrass (tussocks to 1 m, woody culms, sand-trapping hummocks) and from Panicum germination data (FEIS P. virgatum)"
+    }
+   }
+  ]
+ },
+ "associations": [
+  {
+   "name": "Quiver tree-welwitschia Namib rock desert",
+   "realm": "afrotropic",
+   "where": "rocky ridges, gravel plains and fog-belt slopes of the Namib",
+   "dominant": [
+    "Quiver tree"
+   ],
+   "companion": [],
+   "ground": [],
+   "catalogue": [],
+   "cover": 0.1,
+   "source": "Jurgens et al. 1997 Desert (Vegetation of Southern Africa, Cowling et al.); Giess 1971 Vegetation map of South West Africa"
+  }
+ ]
+}

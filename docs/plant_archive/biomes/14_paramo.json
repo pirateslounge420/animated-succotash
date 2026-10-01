@@ -1,0 +1,837 @@
+{
+ "key": "PARAMO",
+ "name": "Paramo",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Frailejon",
+    "genus": "Espeletia",
+    "species": "grandiflora",
+    "origin": "Eastern Cordillera of Colombia",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     2700,
+     4300
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#A8B890",
+    "accent": "#C8A050",
+    "source": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0.5-3 m with yellow daisies",
+    "traits": {
+     "genus": "Espeletia",
+     "species": "grandiflora",
+     "native_range": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      45
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A6A50",
+     "color_2": "#A09070",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "woolly rosette atop skirt of dead leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      90
+     ],
+     "height_years": [
+      20,
+      40
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 8,
+     "lifespan_years": [
+      50,
+      90
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny flat rosettes of woolly, silver-green, strap-shaped leaves on bare ground or moss (~85% die in dry spells). For about 4-5 years a stemless ground rosette widens to 25-30 cm; then the stem begins to rise ~7-8 cm a year, clothed in a skirt of dead leaves, and the plant can first flower at ~20 cm of stem.",
+     "confidence": "documented",
+     "source": "Fagua & Gonzalez 2007 Plant Biology (E. grandiflora: stem growth 7.6 cm/yr, plants >=2 m ~40-45 yr old, first flowering at ~21 cm stem, seedling mortality ~85% in dry season); Exotica Esoterica frailejon cultivation notes (stemless for 4+ yr, 25-30 cm rosette in <2 yr, ~90% germination within 3 months)."
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 14,
+     "flower_size_cm": 5.5,
+     "flower_colour": "#f0c02c",
+     "flower_form": "star",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "fly",
+      "beetle",
+      "moth"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.4
+     ],
+     "unripe_colour": "#a7a44e",
+     "ripe_colour": "#3d3025",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      8000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Fagua & Gonzalez 2007 Plant Biology (flowering peak Oct-Nov, 30-96 days per plant; inflorescence stalks ~85 cm; heads 5.0-6.2 cm, ~86 per plant; Bombus the main pollinators plus hummingbirds, flies, beetles, nocturnal moths; seeds shed Sep-May). Achene size, crop and rot estimated."
+    }
+   },
+   {
+    "name": "Paramo puya",
+    "genus": "Puya",
+    "species": "clava-herculis",
+    "origin": "Andes of Ecuador and Colombia",
+    "shape": "spike_rosette",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3300,
+     4400
+    ],
+    "height_m": [
+     0.8,
+     2.5
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8AB0A0",
+    "accent": "#4060C0",
+    "source": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2.5 m with blue-green spike",
+    "traits": {
+     "genus": "Puya",
+     "species": "clava-herculis",
+     "native_range": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.8,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      40,
+      80
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A6A58",
+     "color_2": "#A09080",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "spiky grey rosette with club flower spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      18
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      20,
+      35
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny grass-like tuft among paramo bunchgrass that slowly becomes a stemless rosette of stiff, narrow, channelled grey-green leaves with small hooked spines along the edges and silvery scales beneath. It widens for many years; finally one thick, club-shaped spike densely wrapped in white-buff wool rises from the centre, flowers, and the rosette dies.",
+     "confidence": "estimated",
+     "source": "Kew POWO (perennial of the paramo, SW Colombia to Ecuador); Wikipedia Puya (many species monocarpic); Miller 1986 Oecologia (woolly inflorescences of Ecuadorian paramo Puya keep flowers warmer at night; from knowledge); ages and rates estimated from Puya raimondii and other paramo giant rosettes"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 3,
+     "flower_colour": "#a8bf6a",
+     "flower_form": "tube",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      300,
+      1500
+     ],
+     "pollinators": [
+      "bird",
+      "bumblebee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7f9a5a",
+     "ripe_colour": "#7a5c3c",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      150,
+      800
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from paramo Puya (P. hamata, P. raimondii): tubular greenish flowers half hidden in the woolly spike, visited by hummingbirds (e.g. Ecuadorian hillstar) and bumblebees; individuals flower at any time of year; capsules split on the dead standing spike, releasing small winged seeds"
+    }
+   },
+   {
+    "name": "Tall frailejon",
+    "genus": "Espeletia",
+    "species": "pycnophylla",
+    "origin": "Andes of Ecuador and S Colombia",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     3000,
+     4200
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#A8B890",
+    "accent": "#D0B058",
+    "source": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
+    "traits": {
+     "genus": "Espeletia",
+     "species": "pycnophylla",
+     "native_range": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      50
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6E6050",
+     "color_2": "#9A8A6A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tall column of dead leaves, woolly rosette on top",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      90
+     ],
+     "height_years": [
+      40,
+      100
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Like other frailejones: a flat, silvery-woolly rosette of narrow leaves at ground level for several years, then a stem rises very slowly (a few cm a year), wrapped in a thick skirt of dead, hanging grey leaves under a dense crown rosette of felted silver-green leaves; old plants are shaggy columns 2-6 m tall.",
+     "confidence": "estimated",
+     "source": "Estimated from Espeletia: Useful Tropical Plants (E. pycnophylla to ~4 m, slow); Cumbal (Narino) transplant study in Ingeniare (young plants +0.7-0.95 cm per 6 months); Fagua & Gonzalez 2007 (E. grandiflora 7.6 cm/yr); Flora 2018 long-term growth of Coespeletia and E. schultzii (~1.1-1.3 cm/yr)."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 14,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#f0c030",
+     "flower_form": "star",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.4
+     ],
+     "unripe_colour": "#a2a24e",
+     "ripe_colour": "#3b2f24",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      800,
+      6000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from E. grandiflora (Fagua & Gonzalez 2007 Plant Biology: yellow heads ~5-6 cm on long stalks, bumblebee/hummingbird/fly/beetle pollination, seed shed over months) and frailejon growers' notes (a stalk flowers ~2 months)."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bog moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "origin": "South America (Andes to Patagonia)",
+    "shape": "moss",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#B04A40",
+    "accent": "#8A6030",
+    "source": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B04A40",
+     "color_2": "#8A6030",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "reddish spongy moss hummock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
+     "confidence": "documented",
+     "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
+    }
+   },
+   {
+    "name": "Cushion plant",
+    "genus": "Plantago",
+    "species": "rigida",
+    "origin": "Andes of Venezuela to Bolivia",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     3500,
+     4800
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#5AA040",
+    "accent": "#8A9A50",
+    "source": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
+    "traits": {
+     "genus": "Plantago",
+     "species": "rigida",
+     "native_range": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.5,
+      1.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.08,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A9A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "hard bright green cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny rosettes of narrow, stiff, grey-green leaves; each keeps branching into more tight rosettes packed side by side, building a hard, convex, green cushion as firm as a pillow. Old cushions fuse into mounds and hummocks in wet paramo bogs, with small brownish flower spikes barely raised above the surface.",
+     "confidence": "estimated",
+     "source": "Estimated from Andean paramo cushion-bog ecology (Plantago rigida and Distichia cushions: slow radial growth of millimetres to a few cm a year, cushions persisting for decades to centuries) and Plantago seed biology"
+    }
+   },
+   {
+    "name": "Paramo lupine",
+    "genus": "Lupinus",
+    "species": "alopecuroides",
+    "origin": "Andes of Colombia and Ecuador",
+    "shape": "rosette",
+    "temp_c": [
+     -3,
+     4
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3800,
+     4800
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#5050C0",
+    "source": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
+    "traits": {
+     "genus": "Lupinus",
+     "species": "alopecuroides",
+     "native_range": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8A9A80",
+     "color_2": "#B0B0A0",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "woolly silver rosette with blue spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      7
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings show two thick cotyledons, then small palmate leaves densely clothed in silky silver hairs. For years the plant builds a dense, silvery-woolly rosette of palmately divided leaves hugging the paramo ground, then sends up a single thick, woolly, fox-tail spike packed with blue-violet pea flowers, sets seed and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lupinus alopecuroides: 2,700-4,500 m on ten isolated peaks in Colombia and Ecuador); giant-rosette, flower-once (monocarpic) life history and timings estimated from paramo rosette lupines such as L. weberbaueri - treat as uncertain."
+    }
+   }
+  ]
+ }
+}

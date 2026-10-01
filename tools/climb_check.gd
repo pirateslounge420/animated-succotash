@@ -13,7 +13,7 @@ extends SceneTree
 ## Prints the climb step by step (height, pose, handhold) so a stall shows.
 ##
 ##   ~/bin/godot --headless --path . --fixed-fps 60 --script tools/climb_check.gd
-## SPECIES="Cerrado pequi": the nearest tree of that species instead (the
+## SPECIES="Marula": the nearest tree of that species instead (the
 ## nearest tree changes from run to run with what loads first).
 
 var main

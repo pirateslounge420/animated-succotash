@@ -203,7 +203,12 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "General Betula pubescens silvics (Atkinson 1992): catkins open with the leaves in spring (May-Jun in the subarctic), wind-pollinated, fruiting catkins 2-3.5 cm break up on the tree from late summer through winter; counts are catkins, estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING",
+     "VOLCANIC_FIELD",
+     "WET_MEADOW"
+    ]
    },
    {
     "name": "Etna broom tree",
@@ -222,6 +227,9 @@
     "altitude_m": [
      300,
      2000
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
     ],
     "height_m": [
      3,
@@ -383,189 +391,6 @@
     }
    },
    {
-    "name": "Japanese larch",
-    "genus": "Larix",
-    "species": "kaempferi",
-    "origin": "Central Honshu, Japan",
-    "shape": "conifer",
-    "temp_c": [
-     2,
-     12
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     500,
-     2500
-    ],
-    "height_m": [
-     10,
-     30
-    ],
-    "density": 0.4,
-    "soil": "volcanic",
-    "color": "#6AB050",
-    "accent": "#8A5A38",
-    "source": "Larix kaempferi, Japanese larch, pioneer conifer on volcanic scoria of Mt Fuji and central Honshu, 10-30 m — Wikipedia",
-    "traits": {
-     "genus": "Larix",
-     "species": "kaempferi",
-     "native_range": "Larix kaempferi, Japanese larch, pioneer conifer on volcanic scoria of Mt Fuji and central Honshu, 10-30 m — Wikipedia",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
-     "height_m": [
-      10,
-      30
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "scaly",
-    "leaf_type": "needle",
-    "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "spiral",
-     "size_cm": [
-      2,
-      3.5
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented",
-     "note": "soft blue-green needles in spur tufts of 20-40; deciduous, gold in autumn"
-    },
-    "canopy": {
-     "form": "conical",
-     "gap": 0.45,
-     "layering": "tiered",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.8,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#d9a030",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 13.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "scaly",
-     "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 4,
-     "color": "#6E5A4E",
-     "color_2": "#8A4A38",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "massart",
-     "habit": "excurrent",
-     "orders": 5,
-     "branch_angle_deg": [
-      80,
-      100
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.15,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.7,
-      0.4
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.25,
-     "root_flare": true,
-     "spacing_m": 0.4,
-     "confidence": "documented"
-    },
-    "silhouette": "open conical larch with tiered horizontal branches, gold autumn",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      30
-     ],
-     "height_years": [
-      15,
-      45
-     ],
-     "first_seed_years": 15,
-     "lifespan_years": [
-      150,
-      400
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "cone",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: about six needle-like cotyledons, then soft blue-green single needles spiralled along an orange-red first-year shoot; tufts on short spur shoots follow. Young trees grow fast into open, airy cones with level, slightly upswept branches and conspicuous orange-red winter twigs, turning gold and shedding their needles each autumn.",
-     "confidence": "documented",
-     "source": "USDA Woody Plant Seed Manual (L. kaempferi: 30-40 m; flowers late Apr-early Jun; cones ripen Sep-Oct; seed from 12-16 yr; good crops every 3-8 yr); Wikipedia (20-40 m; cones 2-3.5 cm with 30-50 reflexed scales, mature 4-6 months after pollination, persist for years). Growth rate and lifespan estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      4,
-      5
-     ],
-     "hemisphere": "north",
-     "flower_days": 6,
-     "flower_size_cm": 1.0,
-     "flower_colour": "#d07a8a",
-     "flower_form": "cone",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      1
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.6,
-     "fruit_kind": "cone",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      2,
-      3.5
-     ],
-     "unripe_colour": "#7a8a52",
-     "ripe_colour": "#7a5634",
-     "ripen_days": [
-      120,
-      180
-     ],
-     "hang_days": [
-      365,
-      1500
-     ],
-     "drop": "persists",
-     "rot_days": [
-      700,
-      2500
-     ],
-     "crop_per_tree": [
-      300,
-      10000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Wikipedia (erect ovoid-conic cones 2-3.5 cm with reflexed scales, mature 4-6 months after pollination, stay on the tree for many years turning grey-black); USDA WPSM (brown ripe cones 19-32 mm, ripen Sep-Oct). Set and crop estimated."
-    }
-   },
-   {
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
@@ -582,6 +407,13 @@
     "altitude_m": [
      500,
      3000
+    ],
+    "biomes": [
+     "BOG",
+     "HOT_SPRING",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "VOLCANIC_FIELD"
     ],
     "height_m": [
      10,
@@ -762,6 +594,9 @@
      0,
      2500
     ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
      3,
      25
@@ -936,39 +771,306 @@
   ],
   "shrub": [
    {
-    "name": "Etna soapwort",
-    "genus": "Astragalus",
-    "species": "siculus",
-    "origin": "Mount Etna, Sicily (endemic)",
-    "shape": "cushion",
+    "name": "Green alder",
+    "genus": "Alnus",
+    "species": "alnobetula",
+    "origin": "Mountains of Europe, Asia and N America",
+    "family": "Betulaceae",
+    "shape": "shrub",
     "temp_c": [
-     4,
-     14
+     -4,
+     12
     ],
     "moisture": [
-     0.3,
-     0.5
+     0.45,
+     0.95
     ],
     "altitude_m": [
-     1500,
+     0,
      2800
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     1,
+     5
+    ],
+    "density": 0.6,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#4E8A3A",
+    "accent": "#7A5A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged nutlets germinate on bare mineral ground, ash or pumice in the first wet spell. The seedling is a thin reddish stem with a few small, sticky, finely double-toothed oval leaves; root nodules fix nitrogen from the first year, so it grows on raw ash where little else can. Within a few years it sprouts more stems from the base and becomes a springy, many-stemmed clump whose stems curve downhill under the snow.",
+     "confidence": "estimated",
+     "source": "Flora of North America (Alnus viridis subsp. sinuata/crispa: shrub to 3(-10) m, flowers with the leaves); Dale, Swanson & Crisafulli, Ecological Responses to the 1980 Eruption of Mount St. Helens (Sitka alder a chief woody colonist of the debris avalanche and mudflows); ages and rates estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "nitrogen-fixing (Frankia root nodules): a pioneer of raw ash, pumice and scoria"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alnus alnobetula (Ehrh.) K.Koch (syn. Alnus viridis), green alder: many-stemmed nitrogen-fixing shrub 1-5 m of subalpine slopes and avalanche tracks; subsp. sinuata (Sitka alder) colonises the Mt St Helens pumice and mudflows, subsp. maximowiczii the Fuji scoria at the treeline. Kew POWO (accepted name); Flora of North America; Flora of Japan.",
+    "traits": {
+     "genus": "Alnus",
+     "species": "alnobetula",
+     "native_range": "Alnus alnobetula (Ehrh.) K.Koch (syn. Alnus viridis), green alder",
+     "leaf_shape": "oval double-toothed leaves on many stems",
+     "trunk": "many springy stems from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6e6a62",
+      "secondary": "#8a7a64",
+      "feature_cm": 0.3,
+      "roughness": 0.15,
+      "notes": "smooth grey-brown stems with small pale lenticels; twigs reddish and sticky when young"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.5,
+      "lean": 0.4
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e8a3a",
+      "underside": "#7aa060",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a50",
+      "margin": "serrate",
+      "size_cm": [
+       3,
+       9
+      ],
+      "notes": "oval leaves, finely and sharply double-toothed, slightly sticky and glossy, 6-10 vein pairs"
+     },
+     "flower": {
+      "colour": "#c8b450",
+      "secondary": "#7a5a3a",
+      "form": "yellow male catkins 5-12 cm hanging from the twig tips with the new leaves; small erect female catkins below",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#4a3a2a",
+      "form": "small woody cones 1-1.5 cm on slender stalks, persisting after the seed falls"
+     },
+     "seasonal": "deciduous; leaves fall nearly green-brown in autumn; old cones stay on all winter",
+     "silhouette": "dense springy many-stemmed clump, stems sweeping downslope",
+     "confidence": "documented",
+     "refs": "Flora of North America (Alnus viridis); Trees and Shrubs Online (Alnus alnobetula); Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.4,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#6E6A62",
+     "color_2": "#8A7A64",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#8C8040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "bud_set"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 35,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 8,
+     "flower_colour": "#c8b450",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      1,
+      1.5
+     ],
+     "unripe_colour": "#6a8a40",
+     "ripe_colour": "#4a3a2a",
+     "ripen_days": [
+      100,
+      130
+     ],
+     "hang_days": [
+      90,
+      300
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      700
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of North America (catkins open with the leaves, unlike other alders; cones 1-1.5 cm, nutlets with broad wings); timing for Mt St Helens / Fuji elevations and crop estimated."
+    }
+   },
+   {
+    "name": "Heather",
+    "genus": "Calluna",
+    "species": "vulgaris",
+    "origin": "Europe and Western Asia",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.6,
+     0.9
     ],
     "height_m": [
      0.2,
      0.6
     ],
-    "density": 0.5,
-    "soil": "volcanic",
-    "color": "#8AA860",
-    "accent": "#D0C080",
-    "source": "Astragalus siculus, spiny cushion milkvetch endemic to high Etna lava slopes, 0.2-0.6 m — Wikipedia / Etna Park",
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4A7A40",
+    "accent": "#C050A0",
+    "source": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
     "traits": {
-     "genus": "Astragalus",
-     "species": "siculus",
-     "native_range": "Astragalus siculus, spiny cushion milkvetch endemic to high Etna lava slopes, 0",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
+     "genus": "Calluna",
+     "species": "vulgaris",
+     "native_range": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
      "height_m": [
       0.2,
       0.6
@@ -980,483 +1082,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "compound",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      3,
-      8
-     ],
-     "compound": {
-      "form": "pinnate",
-      "leaflets": [
-       10,
-       18
-      ],
-      "leaflet_outline": "elliptic",
-      "leaflet_aspect": 2.5,
-      "leaflet_margin": "entire"
-     },
-     "texture": "hairy_tomentose",
-     "confidence": "estimated",
-     "note": "tragacanthic cushion: the leaf rachis persists as a spine"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.2,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.55,
-     "val": 1.0,
-     "underside": 0.15
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "spiny",
-     "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 1,
-     "color": "#8A8272",
-     "color_2": "#5A5248",
-     "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "silhouette": "spiny grey hedgehog cushion",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      10,
-      35
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      50,
-      120
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Hard-coated seeds sprout after snowmelt on black volcanic sand, often in the lee of an old cushion. Two oval cotyledons, then small pinnate leaves of 6-12 narrow grey-green leaflets on a stalk tipped with a horny point that hardens into a spine when the leaflets fall, so within a few years the seedling is a tiny prickly dome that widens slowly into a dense hemispherical cushion.",
-     "confidence": "estimated",
-     "source": "Acta Plantarum (spiny cushion chamaephyte/nanophanerophyte, leaves of 6-12 leaflets with a horny spine tip, Etna 1600-1900+ m, blue-violet flowers); J. Veg. Sci. 2023 (N-fixing nurse cushion along the Etna elevation gradient); growth and ages estimated from other Mediterranean spiny Astragalus cushions."
-    }
-   },
-   {
-    "name": "Fuji knotweed",
-    "genus": "Reynoutria",
-    "species": "japonica",
-    "origin": "Japan, China and Korea",
-    "shape": "shrub",
-    "temp_c": [
-     4,
-     16
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "altitude_m": [
-     300,
-     2500
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.6,
-    "soil": "volcanic",
-    "color": "#5AB040",
-    "accent": "#C05A50",
-    "source": "Reynoutria (Fallopia) japonica, Japanese knotweed, primary coloniser of volcanic scoria slopes on Mt Fuji, 1-3 m — Wikipedia (Hirose & Tateno)",
-    "traits": {
-     "genus": "Reynoutria",
-     "species": "japonica",
-     "native_range": "Reynoutria (Fallopia) japonica, Japanese knotweed, primary coloniser of volcanic scoria slopes on Mt Fuji, 1-3 m — Wikip",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      1,
-      3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
     "leaf_type": "broadleaf",
     "leaf": {
-     "type": "simple",
-     "outline": "deltoid",
-     "aspect": 1.2,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
      "size_cm": [
-      6,
-      15
+      0.2,
+      0.35
      ],
      "compound": null,
      "texture": "matte",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "tiny scale leaves in four ranks, closely pressed to the twig"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.95,
-     "val": 0.95,
-     "underside": 0.15,
-     "autumn": "#d0b040",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 15,
-     "color": "#6E9A4E",
-     "color_2": "#8A3A4A",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "hollow bamboo-like canes speckled red-purple, nodes ~15 cm"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "multi_stem",
-     "orders": 2,
-     "branch_angle_deg": [
-      15,
-      35
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.1,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.0,
-     "root_flare": false,
-     "spacing_m": 0.15,
-     "confidence": "estimated"
-    },
-    "silhouette": "dense thicket of bamboo-like canes with big leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      21
-     ],
-     "height_years": [
-      1.5,
-      4
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      20,
-      70
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: two small cotyledons, then a few small heart-shaped leaves on a thin reddish stem, 5-30 cm tall in its first year. Established crowns send up fat red asparagus-like shoots each spring that grow up to 30 cm a day into hollow, red-speckled zigzag canes 2-3 m tall; all die back brown each autumn. In Britain nearly every plant is one female clone introduced around 1850.",
-     "confidence": "documented",
-     "source": "Wikipedia Reynoutria japonica (up to 30 cm/day; canes 3-4 m in a season; thickets 2-3 m; rhizomes 7 m out and 3 m deep); CABI (0.7 g rhizome fragments regenerate; needs high light; seeds in the native range but male-sterile clone in UK/USA; pioneer on volcanic ground in Japan); clump lifespan and seedling age to flower estimated"
-    },
-    "fruiting": {
-     "flower_months": [
-      8,
-      10
-     ],
-     "hemisphere": "north",
-     "flower_days": 2,
-     "flower_size_cm": 0.3,
-     "flower_colour": "#f2eedc",
-     "flower_form": "panicle",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      100,
-      400
-     ],
-     "pollinators": [
-      "bee",
-      "fly",
-      "wasp",
-      "butterfly"
-     ],
-     "fruit_set": 0.3,
-     "fruit_kind": "achene",
-     "fruit_shape": "winged",
-     "fruit_size_cm": [
-      0.6,
-      1.0
-     ],
-     "unripe_colour": "#dfe6c4",
-     "ripe_colour": "#b8987a",
-     "ripen_days": [
-      20,
-      45
-     ],
-     "hang_days": [
-      10,
-      90
-     ],
-     "drop": "falls",
-     "rot_days": [
-      30,
-      180
-     ],
-     "crop_per_tree": [
-      5000,
-      200000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Wikipedia (small cream-white flowers in erect racemes 6-15 cm, late summer to early autumn); CABI (off-white flowers in clusters of 3-6 on panicles to 10 cm; perianth enlarges into a 3-winged fruit around a glossy dark brown achene 2-4 mm); generalist bee, wasp and fly visitors from knowledge; set and crop estimated"
-    }
-   },
-   {
-    "name": "Pumice lupine",
-    "genus": "Lupinus",
-    "species": "lepidus",
-    "origin": "Western North America",
-    "shape": "cushion",
-    "temp_c": [
-     0,
-     12
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "altitude_m": [
-     500,
-     3000
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.5,
-    "soil": "volcanic",
-    "color": "#7AB840",
-    "accent": "#6A5AC0",
-    "source": "Lupinus lepidus, prairie lupine, nitrogen-fixing pioneer that led recovery on Mt St Helens pumice plain, 0.1-0.4 m — Wikipedia / USGS",
-    "traits": {
-     "genus": "Lupinus",
-     "species": "lepidus",
-     "native_range": "Lupinus lepidus, prairie lupine, nitrogen-fixing pioneer that led recovery on Mt St Helens pumice plain, 0",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.1,
-      0.4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "compound",
-     "venation": "palmate",
-     "arrangement": "basal",
-     "size_cm": [
-      2,
-      5
-     ],
-     "compound": {
-      "form": "palmate",
-      "leaflets": [
-       5,
-       9
-      ],
-      "leaflet_outline": "obovate",
-      "leaflet_aspect": 3.5,
-      "leaflet_margin": "entire"
-     },
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.25,
+     "gap": 0.3,
      "layering": "even",
      "droop": 0.05
     },
     "tint": {
-     "hue_shift": -4,
-     "sat": 0.55,
-     "val": 1.05,
-     "underside": 0.2,
-     "autumn": "#a89a6a",
-     "drop": true
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.0
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "green_stem",
+     "pattern": "stringy",
      "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#7A9A6A",
-     "color_2": "#8A7A6A",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4A40",
+     "color_2": "#7A6050",
      "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "silver-grey rosette mat with purple spikes",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      3,
-      8
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two thick, oval cotyledons, then small, silky, silver-haired palmate leaves in a flat rosette on bare pumice or gravel. It spreads into a low, dense, silvery cushion of long-stalked leaves, fixing nitrogen, with short dense spikes of blue-purple pea flowers; on Mount St Helens it was the first colonist of the 1980 pumice, its patches spreading outward and dying back in the middle.",
-     "confidence": "estimated",
-     "source": "Wikipedia (Lupinus lepidus: 10-61 cm, blooms mid-April to August, dense spike-like racemes of pink, purple or blue flowers, pods with several seeds); pioneer role on Mount St Helens pumice from general knowledge; germination and ages estimated."
-    }
-   },
-   {
-    "name": "Sea buckthorn",
-    "genus": "Hippophae",
-    "species": "rhamnoides",
-    "origin": "Europe and Central Asia",
-    "shape": "shrub",
-    "temp_c": [
-     0,
-     14
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "height_m": [
-     1,
-     5
-    ],
-    "density": 0.3,
-    "soil": "volcanic",
-    "color": "#8AA890",
-    "accent": "#E88A20",
-    "source": "Hippophae rhamnoides, sea buckthorn, nitrogen-fixing thorny shrub planted/naturalised on Icelandic and Eurasian volcanic gravels, 1-5 m — Wikipedia",
-    "traits": {
-     "genus": "Hippophae",
-     "species": "rhamnoides",
-     "native_range": "Hippophae rhamnoides, sea buckthorn, nitrogen-fixing thorny shrub planted/naturalised on Icelandic and Eurasian volcanic",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      1,
-      5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 8,
-     "base": "attenuate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      2,
-      6
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "irregular",
-     "gap": 0.4,
-     "layering": "sparse",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.5,
-     "val": 1.05,
-     "underside": 0.6,
-     "autumn": "#B8A860",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 11.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.4,
-     "scale_cm": 1.5,
-     "color": "#4A4038",
-     "color_2": "#7A6A50",
-     "lenticels": "none",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "old woody stems dark grey-brown, rough, bark shredding in thin strips"
     },
     "architecture": {
      "model": "rauh",
-     "habit": "multi_stem",
+     "habit": "shrub",
      "orders": 4,
      "branch_angle_deg": [
-      30,
-      65
+      20,
+      50
      ],
      "taper_exponent": 1.5,
      "sinuosity": 0.6,
@@ -1465,7 +1137,7 @@
       0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 20,
+     "lean_max_deg": 25,
      "live_crown_ratio": [
       0.9,
       0.7
@@ -1473,268 +1145,350 @@
      "self_prune": false,
      "dead_limbs": 0.3,
      "root_flare": false,
-     "spacing_m": 0.2,
+     "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "thorny silver-grey thicket, orange berries on stems",
+    "silhouette": "dense low purple-grey mound",
     "growth": {
      "life": "perennial",
      "germination_days": [
       14,
-      40
+      45
      ],
      "height_years": [
-      5,
+      4,
       12
      ],
-     "first_seed_years": 4,
+     "first_seed_years": 2,
      "lifespan_years": [
       30,
-      70
+      50
      ],
      "shade": "very_intolerant",
      "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two small oval cotyledons, then narrow willow-like leaves, grey-green above and silvery-scaled beneath, on a thin single stem. For its first years the plant is a wispy, spiny sprig; soon it throws up root suckers all around, so a young plant becomes a spreading, silvery, thorny thicket rather than a single bush.",
+     "juvenile_note": "Dust-fine seeds need light and sprout in 2-6 weeks on bare peat, sand or burnt ground. The seedling is a tiny green sprig of minute, overlapping, scale-like leaves in four rows; it branches into a small upright bush (pioneer phase), then a dense, rounded dome (building phase) that later spreads, thins and opens in the centre as it ages.",
      "confidence": "documented",
-     "source": "USDA Woody Plant Seed Manual (Hippophae: flowers Mar-Apr before leaves, fruit Sep-Oct persisting to March, epigeal, 40-day germination tests); ICRAF Agroforestree (fruits from ~3 yr, peak 7-8 yr, 10-20 cm/yr, dies under >50% canopy); Wikipedia (4-5 yr from seed to fruit, productive ~30 yr). Max lifespan estimated."
+     "source": "USDA FEIS Calluna vulgaris (pioneer 0-6 yr, building 6-14, mature 14-25, degenerate after 25; lives about 30-40 yr on dry heaths; seeds rarely germinate without light; highly shade-intolerant); Gimingham 1960 Biological Flora of the British Isles."
     },
     "fruiting": {
      "flower_months": [
-      3,
-      5
+      7,
+      9
      ],
      "hemisphere": "north",
-     "flower_days": 6,
-     "flower_size_cm": 0.3,
-     "flower_colour": "#b4a24a",
-     "flower_form": "tiny",
+     "flower_days": 8,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#b9709c",
+     "flower_form": "bell",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      2,
-      6
+      10,
+      50
      ],
      "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly",
       "wind"
      ],
-     "fruit_set": 0.5,
-     "fruit_kind": "drupe",
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
      "fruit_shape": "round",
      "fruit_size_cm": [
-      0.5,
-      1.0
+      0.15,
+      0.25
      ],
-     "unripe_colour": "#8aa35a",
-     "ripe_colour": "#f28a1a",
+     "unripe_colour": "#8a9a60",
+     "ripe_colour": "#8a6a4a",
      "ripen_days": [
-      100,
-      160
+      40,
+      70
      ],
      "hang_days": [
       60,
-      180
+      200
      ],
-     "drop": "persists",
+     "drop": "splits",
      "rot_days": [
-      10,
-      40
+      60,
+      365
      ],
      "crop_per_tree": [
       1000,
       20000
      ],
-     "edible": "yes",
+     "edible": "no",
      "confidence": "documented",
-     "source": "ICRAF Agroforestree (dioecious, wind-pollinated, tiny yellow flowers before leaves, drupe 5-12 mm reddish-orange ripening late Jul-early Oct, 5-7 kg per plant); USDA WPSM (fruits persist to March); Wikipedia (berries 6-8 mm, 270-480 mg, edible, sour). Fruit set estimated."
-    }
+     "source": "Wikipedia (flowers Jul-Sep, mauve, in racemes; capsule); FEIS (flowers Jul-Nov in N America, wind and animal dispersal, seed bank long-lived); Gimingham 1960 (bees and wind pollinate; capsules ripen in autumn and shed seed over winter); counts approximate."
+    },
+    "biomes": [
+     "KELP_FOREST",
+     "VOLCANIC_FIELD"
+    ]
    },
    {
-    "name": "Tea-leaved willow",
-    "genus": "Salix",
-    "species": "phylicifolia",
-    "origin": "Northern Europe and Iceland",
+    "name": "Kukaenene",
+    "genus": "Coprosma",
+    "species": "ernodeoides",
+    "origin": "Hawaii (Hawaii Island and Maui)",
+    "family": "Rubiaceae",
     "shape": "shrub",
     "temp_c": [
-     -3,
-     8
+     6,
+     18
     ],
     "moisture": [
-     0.4,
+     0.3,
      0.9
     ],
+    "altitude_m": [
+     900,
+     3000
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
-     1,
-     4
+     0.1,
+     0.5
     ],
     "density": 0.6,
     "soil": "volcanic",
-    "color": "#5AB040",
-    "accent": "#8A6A40",
-    "source": "Salix phylicifolia, tea-leaved willow, colonist scrub on Icelandic lava and ash, 1-4 m — Wikipedia",
-    "traits": {
-     "genus": "Salix",
-     "species": "phylicifolia",
-     "native_range": "Salix phylicifolia, tea-leaved willow, colonist scrub on Icelandic lava and ash, 1-4 m — Wikipedia",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      1,
-      4
+    "needs": [],
+    "color": "#2E5A30",
+    "accent": "#151515",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.7,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "serrate",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
+     "height_years": [
       3,
       8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds, dropped by nene and other birds, sprout in cracks of young pahoehoe and cinder. The seedling is a wiry reddish-brown stem with pairs of tiny, glossy, narrow dark leaves crowded along it; it soon branches and sprawls over the rock, rooting where stems touch, into a low dark-green mat studded with shiny black berries.",
+     "confidence": "estimated",
+     "source": "Wagner, Herbst & Sohmer, Manual of the Flowering Plants of Hawai'i (prostrate or trailing shrub, leaves 5-12 mm, drupes black, glossy, on lava and cinder 1,000-3,000 m); rates and ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "stolon",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "dioecious, wind-pollinated like all Coprosma; berries eaten by nene and native birds; trailing stems root where they touch"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Coprosma ernodeoides A.Gray, kukaenene ('nene droppings'): endemic prostrate shrub of recent lava and cinder on Hawaii Island and Maui, 1,000-3,000 m (Kilauea, Mauna Loa, Haleakala), glossy black drupes eaten by nene. Wagner et al., Manual of the Flowering Plants of Hawai'i; Kew POWO.",
+    "traits": {
+     "genus": "Coprosma",
+     "species": "ernodeoides",
+     "native_range": "Coprosma ernodeoides A.Gray, kukaenene ('nene droppings')",
+     "leaf_shape": "tiny narrow glossy leaves in pairs",
+     "trunk": "wiry trailing stems rooting on lava",
+     "petiole": "very short",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by stolon",
+     "pollinator": "wind",
+     "disperser": [
+      "bird"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#5a4436",
+      "secondary": "#3e2e24",
+      "feature_cm": 0.2,
+      "roughness": 0.2,
+      "notes": "thin wiry reddish-brown trailing stems"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.6,
+      "lean": 0.8
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e5a30",
+      "underside": "#4a7040",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#3a6a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       1.2
+      ],
+      "notes": "tiny narrow glossy dark green leaves in crowded opposite pairs, edges rolled under"
+     },
+     "flower": {
+      "colour": "#9aa070",
+      "secondary": "#c8c890",
+      "form": "tiny greenish wind flowers, single in the leaf axils",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#151515",
+      "form": "shiny round black berries about 1 cm"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "low dark-green mat sprawling over black lava",
+     "confidence": "documented",
+     "refs": "Wagner et al., Manual of the Flowering Plants of Hawai'i; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 4,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.5,
+      1.2
      ],
      "compound": null,
      "texture": "glossy",
      "confidence": "documented"
     },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.9,
-     "val": 0.85,
-     "underside": 0.4,
-     "autumn": "#d8b040",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 13.5,
-     "response": "leaf_drop"
-    },
     "bark": {
      "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#7A6E60",
-     "color_2": "#5A4A40",
-     "lenticels": "dots",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#5A4436",
+     "color_2": "#3E2E24",
+     "lenticels": "none",
      "confidence": "estimated"
     },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.7,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
     "architecture": {
-     "model": "champagnat",
-     "habit": "multi_stem",
+     "model": "troll",
+     "habit": "shrub",
      "orders": 4,
      "branch_angle_deg": [
-      30,
-      60
+      50,
+      90
      ],
-     "taper_exponent": 1.5,
+     "taper_exponent": 2.0,
      "sinuosity": 0.5,
      "fork_height_frac": [
       0.0,
-      0.1
+      0.05
      ],
      "buttress": "none",
-     "lean_max_deg": 20,
+     "lean_max_deg": 45,
      "live_crown_ratio": [
-      0.9,
-      0.7
+      0.95,
+      0.9
      ],
      "self_prune": false,
-     "dead_limbs": 0.2,
+     "dead_limbs": 0.3,
      "root_flare": false,
-     "spacing_m": 0.15,
+     "spacing_m": 0.05,
      "confidence": "estimated"
-    },
-    "silhouette": "glossy-leaved willow bush, rounded and multi-stemmed",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      1,
-      3
-     ],
-     "height_years": [
-      4,
-      12
-     ],
-     "first_seed_years": 4,
-     "lifespan_years": [
-      30,
-      70
-     ],
-     "shade": "intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Germinates within a day or two on wet ground: tiny cotyledons, then a shoot with narrow-elliptic, glossy dark-green leaves that are blue-grey beneath, like tea leaves. Soon branches from the base into an upright, dense bush of shiny dark reddish-brown twigs.",
-     "confidence": "estimated",
-     "source": "Stace, New Flora of the British Isles, and Meikle (BSBI) for form (1-4 m shrub), leaves and catkins; USDA Woody Plant Seed Manual Salix (fast germination, no dormancy); growth rate, first seed and lifespan estimated from similar shrub willows"
     },
     "fruiting": {
      "flower_months": [
-      4,
+      2,
       6
      ],
      "hemisphere": "north",
      "flower_days": 5,
-     "flower_size_cm": 3.0,
-     "flower_colour": "#d8cf72",
-     "flower_form": "catkin",
+     "flower_size_cm": 0.4,
+     "flower_colour": "#9aa070",
+     "flower_form": "tiny",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      30,
-      80
+      1,
+      1
      ],
      "pollinators": [
-      "bee",
-      "bumblebee",
-      "fly",
       "wind"
      ],
-     "fruit_set": 0.5,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
+     "fruit_set": 0.4,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.5,
-      0.7
+      0.6,
+      1.2
      ],
-     "unripe_colour": "#a3b16c",
-     "ripe_colour": "#bba980",
+     "unripe_colour": "#7a9a50",
+     "ripe_colour": "#151515",
      "ripen_days": [
-      35,
-      55
+      60,
+      120
      ],
      "hang_days": [
-      5,
-      30
+      30,
+      120
      ],
-     "drop": "splits",
+     "drop": "falls",
      "rot_days": [
-      20,
-      90
+      30,
+      120
      ],
      "crop_per_tree": [
-      2000,
-      50000
+      20,
+      500
      ],
      "edible": "no",
      "confidence": "estimated",
-     "source": "Stace and Meikle (BSBI): catkins just before or with the leaves, Apr-May (to June in the north), 2-4 cm; hairy conical capsules ~5-7 mm; willow insect-plus-wind pollination; ripening, set and crop estimated"
+     "source": "Manual of the Flowering Plants of Hawai'i (dioecious; flowers solitary, axillary; drupes black, glossy); months, set and crop estimated."
     }
    },
    {
@@ -1754,6 +1508,9 @@
     "altitude_m": [
      600,
      3700
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
     ],
     "height_m": [
      0.3,
@@ -1944,6 +1701,9 @@
      0,
      2500
     ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
      0.5,
      3
@@ -2068,187 +1828,171 @@
     }
    },
    {
-    "name": "Fireweed",
-    "genus": "Chamaenerion",
-    "species": "angustifolium",
-    "origin": "Circumboreal Northern Hemisphere",
-    "shape": "grass",
+    "name": "Ash cup",
+    "genus": "Peziza",
+    "species": "echinospora",
+    "origin": "Europe and North America",
+    "kingdom": "Fungi",
+    "family": "Pezizaceae",
+    "shape": "rosette",
     "temp_c": [
-     -4,
-     14
+     4,
+     22
     ],
     "moisture": [
-     0.3,
-     0.8
+     0.35,
+     0.9
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
     ],
     "height_m": [
-     0.5,
-     2
+     0.01,
+     0.04
     ],
-    "density": 0.6,
+    "density": 0.5,
     "soil": "volcanic",
-    "color": "#5AB040",
-    "accent": "#D040A0",
-    "source": "Chamaenerion angustifolium, fireweed, first colonist on Mt St Helens ash and Icelandic tephra, 0.5-2 m — Wikipedia",
-    "traits": {
-     "genus": "Chamaenerion",
-     "species": "angustifolium",
-     "native_range": "Chamaenerion angustifolium, fireweed, first colonist on Mt St Helens ash and Icelandic tephra, 0",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
-     "petiole": "sheath",
-     "height_m": [
-      0.5,
-      2
+    "needs": [],
+    "color": "#7A5A3A",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "burn",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      6
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 6,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      5,
-      15
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "fastigiate",
-     "gap": 0.5,
-     "layering": "even",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.9,
-     "val": 1.0,
-     "underside": 0.3,
-     "autumn": "#c8402a",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "long_day",
-     "threshold_h": 14.5,
-     "response": "flower"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#6A9A48",
-     "color_2": "#A04A48",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "tall leafy wands topped with magenta spires",
     "growth": {
-     "life": "perennial",
-     "germination_days": [
-      3,
-      10
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
      ],
-     "height_years": [
-      1.1,
-      1.3
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
      ],
-     "first_seed_years": 1.2,
-     "lifespan_years": [
-      5,
-      20
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
      ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny round cotyledons, then a small flat rosette of narrow willow-like leaves that overwinters; buds form on spreading lateral roots in its first autumn. From the second summer, and each year after, tall unbranched leafy stems rise from the roots and carry magenta spires of flowers, then silky seed-fluff; the stems die back every winter.",
-     "confidence": "documented",
-     "source": "USDA FEIS Chamerion angustifolium (100% of fresh seed germinated within 10 days; seedlings overwinter as rosettes; flowers Jun-Sep in first or second season; rhizome 6.1 m long at 4 yr; 1-3 m tall; shade intolerant; ~80,000 seeds per plant; stems from rhizomes can bloom within a month)"
-    }
-   },
-   {
-    "name": "Lava moss",
-    "genus": "Racomitrium",
-    "species": "lanuginosum",
-    "origin": "Worldwide (cosmopolitan)",
-    "shape": "moss",
-    "temp_c": [
-     -5,
-     12
-    ],
-    "moisture": [
-     0.4,
-     1.0
-    ],
-    "height_m": [
-     0.02,
-     0.15
-    ],
-    "density": 1.0,
-    "soil": "volcanic",
-    "color": "#A0B090",
-    "accent": "#D0D8C0",
-    "source": "Racomitrium lanuginosum, woolly fringe-moss, grey moss carpet covering Icelandic lava fields — Wikipedia",
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Peziza echinospora P.Karst., a cup fungus of burnt ground: brown cups 2-7 cm, whitish and scurfy outside, in the months after a fire (as where lava flows burn the forest edge). Index Fungorum; Phillips, Mushrooms; Breitenbach & Kranzlin, Fungi of Switzerland 1.",
     "traits": {
-     "genus": "Racomitrium",
-     "species": "lanuginosum",
-     "native_range": "Racomitrium lanuginosum, woolly fringe-moss, grey moss carpet covering Icelandic lava fields — Wikipedia",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
+     "genus": "Peziza",
+     "species": "echinospora",
+     "native_range": "Peziza echinospora P.Karst., a cup fungus of burnt ground",
+     "leaf_shape": "none — a cup-shaped fruiting body",
+     "trunk": "none — stemless",
      "petiole": "none",
      "height_m": [
-      0.02,
-      0.15
+      0.01,
+      0.04
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 5,
-     "base": "rounded",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "spiral",
-     "size_cm": [
-      0.3,
-      0.5
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#7a5a3a",
+      "secondary": "#e0d8c8",
+      "form": "sessile cup 2-7 cm, brown inside, whitish and mealy-scurfy outside, rim pale and slightly toothed",
+      "size_cm": [
+       2,
+       7
+      ],
+      "texture": "scurfy",
+      "gloss": 0.2,
+      "notes": "brown cups scattered or clustered on burnt soil and charcoal"
+     },
+     "underside": {
+      "colour": "#e0d8c8",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "scattered on burnt ground the season after a fire",
+     "seasonal": "fruits in the first wet season after a burn, then fades",
+     "silhouette": "brown cups with pale rims on black ash",
      "confidence": "documented",
-     "note": "long hyaline hair-points make the carpet grey-white"
+     "refs": "Phillips, Mushrooms; Breitenbach & Kranzlin"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
     },
     "canopy": {
-     "form": "mat",
-     "gap": 0.1,
-     "layering": "even",
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
      "droop": 0.0
     },
     "tint": {
-     "hue_shift": -6,
-     "sat": 0.4,
-     "val": 1.1,
+     "hue_shift": 0,
+     "sat": 0.6,
+     "val": 0.8,
      "underside": 0.0
     },
     "photoperiod": {
@@ -2259,12 +2003,573 @@
      "orientation": "none",
      "depth": 0.0,
      "scale_cm": 1,
-     "color": "#A0B090",
-     "color_2": "#D0D8C0",
+     "color": "#000000",
+     "color_2": "#000000",
      "lenticels": "none",
      "confidence": "documented"
+    }
+   },
+   {
+    "name": "Fragile campylopus moss",
+    "genus": "Campylopus",
+    "species": "hawaiicus",
+    "origin": "Hawaii",
+    "family": "Leucobryaceae",
+    "shape": "moss",
+    "temp_c": [
+     10,
+     22
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     300,
+     2500
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.8,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#9AA848",
+    "accent": "#C8B860",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts from spores or from the fragile leaf tips that snap off and blow about: a green thread on damp lava or humus that buds tiny upright shoots. These crowd into a dense yellow-green turf of narrow, needle-pointed leaves, golden and shining when dry.",
+     "confidence": "estimated",
+     "source": "Staples et al., A revised checklist of Hawaiian mosses (Tropical Bryology 25, 2004: indigenous, on trunks, humus and soil in mesic to wet forest); habit of Campylopus from Frahm's monographs; rates estimated."
     },
-    "silhouette": "grey-white woolly moss carpet over lava",
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Campylopus hawaiicus (Mull.Hal.) A.Jaeger, fragile campylopus moss: indigenous Hawaiian moss forming yellow-green turfs on humus, soil, lava and trunks in the ohia forest of Hawaii Island and the other islands (some authors sink it in C. umbellatus). Staples et al. 2004, Hawaiian moss checklist; Tropicos.",
+    "traits": {
+     "genus": "Campylopus",
+     "species": "hawaiicus",
+     "native_range": "Campylopus hawaiicus (Mull.Hal.) A.Jaeger, fragile campylopus moss",
+     "leaf_shape": "tiny needle-pointed leaves on upright stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#9aa848",
+      "underside": "#b8b868",
+      "gloss": 0.4,
+      "veins": "none",
+      "vein_colour": "#9aa848",
+      "margin": "entire",
+      "size_cm": [
+       0.4,
+       0.8
+      ],
+      "notes": "dense turf of narrow needle-pointed leaves with a broad nerve; tips break off easily"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       5
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen; golden and shining when dry",
+     "silhouette": "yellow-green turfs on lava and humus under ohia",
+     "confidence": "estimated",
+     "refs": "Staples et al. 2004; Frahm, Campylopus monographs"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.4,
+      0.8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.85,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Hawaiian bentgrass",
+    "genus": "Agrostis",
+    "species": "sandwicensis",
+    "origin": "Hawaii (high volcano summits)",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     0,
+     12
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "altitude_m": [
+     2000,
+     4100
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.4,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#9AA070",
+    "accent": "#A08AA0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A single thread-fine, inrolled grey-green leaf comes up in the shelter of a cinder or lava block, then tillers into a small stiff tuft; in a few years it is a low wiry bunch that sends up narrow purplish panicles above the cinders.",
+     "confidence": "estimated",
+     "source": "Wagner et al., Manual of the Flowering Plants of Hawai'i (tufted perennial of alpine and subalpine cinder and lava); Maunakea alpine flora surveys; ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Agrostis sandwicensis Hillebr., Hawaiian bentgrass: endemic bunchgrass of alpine and subalpine cinder cones and lava, about 2,000-4,100 m, with the silverswords on Haleakala and in the Maunakea alpine shrubland. Wagner et al., Manual of the Flowering Plants of Hawai'i; Kew POWO.",
+    "traits": {
+     "genus": "Agrostis",
+     "species": "sandwicensis",
+     "native_range": "Agrostis sandwicensis Hillebr., Hawaiian bentgrass",
+     "leaf_shape": "narrow inrolled grass blades in a tuft",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#9aa070",
+      "underside": "#a8b088",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#8a9060",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       15
+      ],
+      "notes": "short stiff inrolled grey-green blades in a tight tuft"
+     },
+     "flower": {
+      "colour": "#a08aa0",
+      "secondary": "#c8b890",
+      "form": "narrow purplish panicle of tiny one-flowered spikelets",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; tips straw-coloured in the dry season",
+     "silhouette": "small wiry grey-green tufts scattered on cinder",
+     "confidence": "estimated",
+     "refs": "Manual of the Flowering Plants of Hawai'i; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#8A9468",
+     "color_2": "#A89A80",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Lava lichen",
+    "genus": "Stereocaulon",
+    "species": "vulcani",
+    "origin": "Hawaii and Pacific volcanic islands",
+    "family": "Stereocaulaceae",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.8,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#C8CCC0",
+    "accent": "#7A6A58",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "One of the first living things on new Hawaiian lava: within a few years of a flow cooling, tiny grey-white granular specks appear in wet cracks. They rise into little branched stalks crusted with grey-white granules, which crowd into pale cushions a few cm high, tipped with small brown fruit discs.",
+     "confidence": "estimated",
+     "source": "Smathers & Mueller-Dombois, Invasion and recovery of vegetation after a volcanic eruption in Hawaii (Stereocaulon vulcani the first macroscopic colonist of wet-side lava); Hawaiian lichen checklists; rates estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Stereocaulon vulcani (Bory) Ach., the Hawaiian lava lichen: fruticose grey-white cushions 1-5 cm, the first visible colonist of new pahoehoe and aa on the wet flanks of Kilauea and Mauna Loa. Index Fungorum; Smathers & Mueller-Dombois (US NPS Scientific Monograph 5).",
+    "traits": {
+     "genus": "Stereocaulon",
+     "species": "vulcani",
+     "native_range": "Stereocaulon vulcani (Bory) Ach., the Hawaiian lava lichen",
+     "leaf_shape": "granular grey branchlets",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#d0d4c8",
+      "underside": "#b0b4a8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#d0d4c8",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "short branched stalks crusted with grey-white granules (phyllocladia), tipped with small brown discs"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       5
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "grey-white cushions freckling black lava",
+     "confidence": "documented",
+     "refs": "Smathers & Mueller-Dombois 1974; Brodo, Lichens of North America (genus)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.35,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Lava moss",
+    "genus": "Racomitrium",
+    "species": "lanuginosum",
+    "origin": "Worldwide, cold and montane regions",
+    "family": "Grimmiaceae",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     12
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "TUNDRA",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#A0B090",
+    "accent": "#A0B090",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -2286,6 +2591,133 @@
      "juvenile_note": "Mostly starts from broken shoot fragments (sporophytes are rare): a small tuft of wiry shoots whose narrow leaves end in long, toothed, white hair-points, so the patch looks hoary grey when dry and olive-green when wet. Shoots branch and creep outward, piling up into a springy, woolly carpet 5-15 cm deep over lava, boulders and heath; lower parts die brown.",
      "confidence": "estimated",
      "source": "Wikipedia Racomitrium lanuginosum (stems to 12 cm; leaves 3-5 mm with toothed white hair-points; sporophytes rarely produced; capsules 1-1.7 mm); growth (roughly 0.5-1.5 cm of shoot a year) and carpet age estimated from bryological knowledge of Icelandic lava fields and upland heaths"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Iceland's lava fields and every cold rock; grey woolly mats that hide the ground. Kew POWO.",
+    "traits": {
+     "genus": "Racomitrium",
+     "species": "lanuginosum",
+     "native_range": "Iceland's lava fields and every cold rock",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#a8b8a0",
+      "underside": "#e8ece8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#a8b8a0",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "thick woolly grey-white mats, leaves with long white hair-points; olive-green when wet"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "grey-white dry, olive-green wet",
+     "silhouette": "grey woolly blanket over lava and rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2396,82 +2828,45 @@
      "juvenile_note": "Seedlings are stiff, broad, blue-grey grass tufts on bare sand. They send out long rhizomes that throw up new tufts and grow up through burial by blowing sand, building low dunes of coarse, glaucous blue leaves topped by thick, wheat-like flower spikes up to about 1.5 m.",
      "confidence": "estimated",
      "source": "Wikipedia (Leymus arenarius: dune-building grass, notably in Iceland after volcanic events; salt-tolerant germination; nitrogen boosts growth and seed yield; mycorrhizae aid seedling survival); growth and ages estimated from dune-grass ecology."
-    }
+    },
+    "biomes": [
+     "DUNES",
+     "VOLCANIC_FIELD"
+    ]
    },
    {
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
     "origin": "Worldwide (cosmopolitan)",
+    "family": "Rhizocarpaceae",
     "shape": "moss",
     "temp_c": [
-     -8,
-     15
+     -15,
+     10
     ],
     "moisture": [
-     0.1,
+     0.3,
      1.0
     ],
-    "height_m": [
-     0.0,
-     0.01
+    "altitude_m": [
+     0,
+     6000
     ],
-    "density": 0.7,
-    "soil": "volcanic",
-    "color": "#C0D040",
-    "accent": "#2A2A28",
-    "source": "Rhizocarpon geographicum, map lichen, yellow-green crust on bare basalt worldwide — Wikipedia",
-    "traits": {
-     "genus": "Rhizocarpon",
-     "species": "geographicum",
-     "native_range": "Rhizocarpon geographicum, map lichen, yellow-green crust on bare basalt worldwide — Wikipedia",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.0,
-      0.01
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.1,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 1.2,
-     "val": 1.15,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#B8C830",
-     "color_2": "#2A2A2A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "yellow-green crust map with black borders on rock",
+    "biomes": [
+     "GLACIER",
+     "SEA_ICE",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C020",
+    "accent": "#2A2A2A",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -2493,6 +2888,303 @@
      "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
      "confidence": "documented",
      "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bare rock from tundra to the highest peaks; yellow-green maps with black borders; centuries old. Index Fungorum.",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Bare rock from tundra to the highest peaks",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.005
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.44,
+     "val": 1.39,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Spike trisetum",
+    "genus": "Koeleria",
+    "species": "spicata",
+    "origin": "Arctic and mountains worldwide",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -10,
+     12
+    ],
+    "moisture": [
+     0.2,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     4500
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.4,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#7A9A5A",
+    "accent": "#8A7A8A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a short soft-hairy grass leaf in a crack of lava or among cinders; it tillers into a small dense tuft of short flat leaves and, from the second summer, sends up stiff stems with a dense, shining, spike-like purplish-silver panicle.",
+     "confidence": "estimated",
+     "source": "Flora of North America (Trisetum spicatum: tufted perennial 5-50 cm, panicle dense, spike-like, often purplish); Icelandic and Cascade alpine floras; ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Koeleria spicata (L.) Barbera, Quintanar, Soreng & P.M.Peterson (syn. Trisetum spicatum, the name on the seed list), spike trisetum: circumpolar-alpine bunchgrass 5-50 cm on rock, gravel and lava; native in Iceland, the Cascades (Mt St Helens) and the Japanese high mountains. Kew POWO (accepted name); Flora of North America; Flora of Iceland.",
+    "traits": {
+     "genus": "Koeleria",
+     "species": "spicata",
+     "native_range": "Koeleria spicata (L.) Barbera, Quintanar, Soreng & P.M.Peterson (syn. Trisetum spicatum, the name on the seed list), spike trisetum",
+     "leaf_shape": "short flat grass blades in a tuft",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#7a9a5a",
+      "underside": "#8aa868",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#6a8a4a",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       15
+      ],
+      "notes": "short flat soft-hairy leaves in a dense tuft"
+     },
+     "flower": {
+      "colour": "#8a7a8a",
+      "secondary": "#d8d0c0",
+      "form": "dense spike-like panicle 2-10 cm, shining purplish to silvery, softly awned",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; tufts straw-brown in winter",
+     "silhouette": "small tufts with stiff purplish spikes on lava",
+     "confidence": "documented",
+     "refs": "Flora of North America (Trisetum spicatum); Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      15
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#C8B488",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#7A9060",
+     "color_2": "#9A8A8A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -2605,10 +3297,371 @@
      "juvenile_note": "Sporelings show tiny simple fronds over heart-shaped gametophytes, but most new plants arise from wiry, hairy runners (stolons) that root and send up small tufts. The clump becomes a dense, arching fountain of long, narrow, once-pinnate fronds with many small sword-shaped pinnae, spreading by runners and sometimes perched in palm-leaf bases as an epiphyte.",
      "confidence": "estimated",
      "source": "Estimated from fern growers' spore propagation (Nephrolepis spores give sporelings in ~1-3 months) and Flora of North America Nephrolepis (stoloniferous, pinnate fronds 0.5-2.5 m; terrestrial or epiphytic)"
+    },
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ]
+   },
+   {
+    "name": "Bracken",
+    "genus": "Pteridium",
+    "species": "aquilinum",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Dennstaedtiaceae",
+    "shape": "fern",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "DUNES",
+     "JUNGLE",
+     "MARITIME_FOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A3A",
+    "accent": "#8A6A40",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      42,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      25,
+      72
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants appear 6-7 weeks after spores land on burnt or disturbed bare soil: the first fronds are small, simple and lobed, becoming finely divided and adult-like after about 18 weeks. After up to 10 fronds a rhizome starts, which may grow 2 m in the first year; by year two the patch can be about 2 m across, sending up single, triangular, much-divided fronds from underground.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pteridium aquilinum (young plants 6-7 weeks after spores shed; adult-like fronds after 18 weeks; rhizome to 217 cm in year 1; spores usually in the 3rd-4th season; cover under 5% below 25% of full sun); Wikipedia (individual rhizomes live up to 72 yr; colonies 650 to over 1,400 yr old)."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Every continent but Antarctica; dry hillsides, heath, burns — the first thing back after fire; toxic to browsers. Kew POWO.",
+    "cannot_be_browsed": true,
+    "traits": {
+     "genus": "Pteridium",
+     "species": "aquilinum",
+     "native_range": "Every continent but Antarctica",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.5,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#6aa848",
+      "underside": "#6aa848",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#6aa848",
+      "margin": "toothed",
+      "size_cm": [
+       50,
+       200
+      ],
+      "notes": "large triangular tripinnate fronds on tall wiry stems, held horizontally; whole colonies"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#7a6a3a",
+      "markings": "#7a6a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stiff brown-green stipe 1 m"
+     },
+     "seasonal": "deciduous: turns rust-orange then brown in autumn and stands dead through winter",
+     "silhouette": "knee-high to head-high green (autumn orange-brown) mass covering whole hillsides",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "tripinnate",
+      "leaflets": [
+       12,
+       24
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      50,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#B8702A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6A8A3A",
+     "color_2": "#3A2A1A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
-  "epiphyte": []
+  "epiphyte": [
+   {
+    "name": "Whisk fern",
+    "genus": "Psilotum",
+    "species": "nudum",
+    "origin": "Tropics and subtropics worldwide",
+    "family": "Psilotaceae",
+    "shape": "moss",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#6AA050",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      120,
+      540
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate underground into a tiny (under 2 mm), colourless, branching gametophyte fed by mycorrhizal fungi. The young sporophyte pushes up a few thin, green, rootless stems that fork again and again into leafless 'whisks' with ribbed branches and tiny scale-like bumps, from a brown rhizome in rock cracks, tree-fern trunks or palm leaf bases; yellow, 3-lobed spore cases follow.",
+     "confidence": "estimated",
+     "source": "Wikipedia Psilotum and P. nudum (subterranean mycoheterotrophic gametophyte under 2 mm; sporophyte to 30 cm or more, leafless, with a rootless rhizome; three-lobed synangia with yellow-white spores; epiphytic in the tropics, in rock crevices in temperate areas). Timings and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tropics worldwide on trunks and rock; leafless green forks; the most primitive living land plant. Kew POWO.",
+    "traits": {
+     "genus": "Psilotum",
+     "species": "nudum",
+     "native_range": "Tropics worldwide on trunks and rock",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       50
+      ],
+      "notes": "leafless green repeatedly forked wiry stems 20-50 cm, minute scales, tiny yellow 3-lobed sporangia"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "a green tuft of forking twigs, like a small green whisk broom",
+     "confidence": "documented",
+     "refs": "Wikipedia Psilotum nudum, Kew POWO"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6AA048",
+     "color_2": "#C8B040",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   }
+  ]
  },
  "associations": [
   {
@@ -2619,12 +3672,14 @@
     "Ohia lehua"
    ],
    "companion": [
-    "Volcanic pioneer shrub"
+    "Volcanic pioneer shrub",
+    "Kukaenene"
    ],
    "ground": [
     "Amaumau fern",
     "Lava moss",
-    "Swordfern"
+    "Swordfern",
+    "Lava lichen"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -2635,8 +3690,7 @@
    "realm": "palearctic",
    "where": "raw tephra and ash plains, wind-blown, dry and nutrient-poor",
    "dominant": [
-    "Lyme grass",
-    "Sea buckthorn"
+    "Lyme grass"
    ],
    "companion": [
     "Volcanic pioneer shrub"
@@ -2661,7 +3715,8 @@
    "companion": [],
    "ground": [
     "Lava moss",
-    "Map lichen"
+    "Map lichen",
+    "Lava lichen"
    ],
    "catalogue": [],
    "cover": 0.2,
@@ -2675,12 +3730,10 @@
     "Downy birch"
    ],
    "companion": [
-    "Tea-leaved willow",
-    "Sea buckthorn"
+    "Heather"
    ],
    "ground": [
-    "Lava moss",
-    "Fireweed"
+    "Lava moss"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -2691,12 +3744,12 @@
    "realm": "nearctic",
    "where": "pumice and blast deposits recovering after eruption, open ground",
    "dominant": [
-    "Pumice lupine",
-    "Fireweed"
+    "Lodgepole pine"
    ],
-   "companion": [],
+   "companion": [
+    "Green alder"
+   ],
    "ground": [
-    "Fireweed",
     "Lava moss"
    ],
    "catalogue": [],
@@ -2710,11 +3763,8 @@
    "dominant": [
     "Lodgepole pine"
    ],
-   "companion": [
-    "Pumice lupine"
-   ],
+   "companion": [],
    "ground": [
-    "Fireweed",
     "Swordfern"
    ],
    "catalogue": [],
@@ -2726,10 +3776,10 @@
    "realm": "east_asia_temperate",
    "where": "cinder cones and scoria slopes of Mt Fuji, dry and loose",
    "dominant": [
-    "Japanese larch"
+    "Downy birch"
    ],
    "companion": [
-    "Fuji knotweed"
+    "Green alder"
    ],
    "ground": [
     "Map lichen"
@@ -2745,9 +3795,7 @@
    "dominant": [
     "Etna broom tree"
    ],
-   "companion": [
-    "Etna soapwort"
-   ],
+   "companion": [],
    "ground": [
     "Map lichen"
    ],

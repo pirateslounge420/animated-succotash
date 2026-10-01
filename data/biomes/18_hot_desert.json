@@ -20,334 +20,564 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Cardon",
-    "genus": "Pachycereus",
-    "species": "pringlei",
-    "origin": "Baja California and Sonora",
-    "shape": "cactus",
+    "name": "Date palm",
+    "genus": "Phoenix",
+    "species": "dactylifera",
+    "origin": "North Africa and the Middle East",
+    "family": "Arecaceae",
+    "shape": "palm",
     "temp_c": [
-     19,
-     25
+     18,
+     30
     ],
     "moisture": [
      0.05,
-     0.18
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS"
     ],
     "height_m": [
-     8,
-     18
+     15.0,
+     25.0
     ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#4F8A50",
-    "accent": "#F0F0E0",
-    "source": "Pachycereus pringlei, Baja California and Sonora coast, giant columnar cactus 8-18 m — Flora of North America",
-    "traits": {
-     "genus": "Pachycereus",
-     "species": "pringlei",
-     "native_range": "Pachycereus pringlei, Baja California and Sonora coast, giant columnar cactus 8-18 m — Flora of North America",
-     "leaf_shape": "none — spines on ribs",
-     "trunk": "succulent columns or pads",
-     "petiole": "none",
-     "height_m": [
-      8,
-      18
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
+     "height_years": [
+      25,
+      70
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Remote germination: the cotyledon stalk pushes the growing point down into the soil, then grass-like, undivided strap leaves emerge. For several years it is a stemless, spiny fountain of increasingly pinnate, stiff, grey-green fronds, often with suckers (offshoots) at the base, before a rough trunk clad in old leaf bases rises.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 30 m, slow-growing; fruits 4-8 years after planting, commercial yields at 7-10; offshoots fruit 2-3 years earlier than seedlings; lives 100+ years when maintained); FAO date palm manuals (remote germination, undivided first leaves); height-age estimated from trunk growth"
+    },
+    "repro": {
+     "mode": "both",
      "pollinator": "insect",
-     "disperser": [],
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Sahara, Arabia, Mesopotamia oases; height 15-25 m. Oasis palm; suckers from the base. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Phoenix",
+     "species": "dactylifera",
+     "native_range": "Sahara, Arabia, Mesopotamia oases",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "cactus",
-    "leaf_type": "spine",
+    "bark_type": "palm",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a7a60",
+      "secondary": "#5e5040",
+      "feature_cm": 15,
+      "roughness": 0.7,
+      "notes": "trunk covered in persistent diamond-shaped leaf bases in a spiralling pattern, brown, fibrous between; base ringed with suckers"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#6a8a6a",
+      "underside": "#7a9a7a",
+      "gloss": 0.25,
+      "veins": "parallel",
+      "vein_colour": "#6a8a6a",
+      "margin": "spiny",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "stiff grey-green pinnate fronds with V-folded leaflets in several planes; lower leaflets become sharp spines"
+     },
+     "flower": {
+      "colour": "#e8e0b0",
+      "secondary": "#c8c090",
+      "form": "cream-yellow branched spikes bursting from a spathe among the leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e89830",
+      "form": "dates 3-7 cm, yellow to orange ripening amber-brown, in big hanging bunches on orange stalks"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a stout rough-scaled column with a full spherical crown of stiff grey-green fronds and hanging orange fruit bunches; suckers at the base; oasis groves",
+     "confidence": "documented",
+     "refs": "Wikipedia Phoenix dactylifera; Kew POWO; Palmpedia"
+    },
     "leaf": {
-     "type": "none",
-     "venation": "none",
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      40
+     ],
      "compound": null,
+     "texture": "waxy_glaucous",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "columnar",
-     "gap": 0.4,
+     "form": "palmate_crown",
+     "gap": 0.5,
      "layering": "even",
-     "droop": 0.0
+     "droop": 0.3
     },
     "tint": {
-     "hue_shift": -8,
-     "sat": 0.65,
-     "val": 0.95,
-     "underside": 0.0
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.1
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "spiny",
-     "orientation": "none",
-     "depth": 0.6,
-     "scale_cm": 5,
-     "color": "#6A8A70",
-     "color_2": "#B8B0A0",
+     "pattern": "plated",
+     "orientation": "diamond",
+     "depth": 0.7,
+     "scale_cm": 15,
+     "color": "#8A7A60",
+     "color_2": "#5E5040",
      "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
-     "model": "rauh",
-     "habit": "columnar",
-     "orders": 2,
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
      "branch_angle_deg": [
-      10,
-      30
+      60,
+      90
      ],
      "taper_exponent": 1.0,
      "sinuosity": 0.1,
-     "fork_height_frac": [
-      0.1,
-      0.3
-     ],
+     "fork_height_frac": null,
      "buttress": "none",
-     "lean_max_deg": 5,
+     "lean_max_deg": 10,
      "live_crown_ratio": [
-      0.9,
-      0.9
+      0.2,
+      0.2
      ],
      "self_prune": false,
-     "dead_limbs": 0.05,
-     "root_flare": false,
-     "spacing_m": 1.0,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.3,
      "confidence": "documented"
-    },
-    "silhouette": "massive grey-green column with several arms",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      20
-     ],
-     "height_years": [
-      60,
-      150
-     ],
-     "first_seed_years": 30,
-     "lifespan_years": [
-      150,
-      300
-     ],
-     "shade": "intermediate",
-     "juvenile": "globe",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are pea-sized green globes with tiny spines, nearly always under a nurse shrub or tree. They elongate into a single thick, ribbed, grey-green column, much spinier than adults (old cardons can be almost spineless); after decades arms branch from low on the trunk and turn upward like a candelabra.",
-     "confidence": "documented",
-     "source": "Radiocarbon dating of cardon spines (Radiocarbon journal): growth 3-23 cm/yr, mean 9.8 cm/yr, faster in taller plants; Wikipedia (slow-growing, lifespan hundreds of years, tallest 19.2 m); El cardon gigante (Acta Universitaria 2017); age at first flowering estimated"
     },
     "fruiting": {
      "flower_months": [
-      3,
-      5
+      2,
+      4
      ],
      "hemisphere": "north",
-     "flower_days": 0.75,
-     "flower_size_cm": 6,
-     "flower_colour": "#f3efe2",
-     "flower_form": "cup",
-     "flower_position": "stem_tips",
+     "flower_days": 4,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f0e8c8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
      "flowers_per_cluster": [
-      1,
-      1
+      1000,
+      8000
      ],
      "pollinators": [
-      "bat",
-      "bee",
-      "bird"
+      "wind"
      ],
-     "fruit_set": 0.5,
+     "fruit_set": 0.4,
      "fruit_kind": "berry",
-     "fruit_shape": "round",
+     "fruit_shape": "ovoid",
      "fruit_size_cm": [
-      4,
+      3,
       7
      ],
-     "unripe_colour": "#8c8f4e",
-     "ripe_colour": "#b0472f",
+     "unripe_colour": "#7fa83a",
+     "ripe_colour": "#8b4a1f",
      "ripen_days": [
-      45,
-      75
+      140,
+      210
      ],
      "hang_days": [
-      5,
-      20
+      14,
+      60
      ],
-     "drop": "splits",
+     "drop": "falls",
      "rot_days": [
-      10,
-      40
+      20,
+      90
      ],
      "crop_per_tree": [
-      20,
-      500
+      3000,
+      15000
      ],
      "edible": "yes",
      "confidence": "documented",
-     "source": "USA-NPN photo guide (milky-white flowers late spring; fruit turns reddish and splits to show red pulp; lesser long-nosed bats depend on its nectar); Nativas Landscape (flowers open late afternoon, die next day around noon); Acta Universitaria (flowering-fruiting Apr-Sep); fruit size, set and crop estimated"
+     "source": "Wikipedia (dioecious and wind-pollinated, today hand-pollinated; fruit 3-7 cm, bright red to yellow before browning; 70-140 kg per tree per season, several pickings); FAO (kimri-khalal-rutab-tamar stages over ~5-7 months); dates ~7-15 g each"
     }
    },
    {
-    "name": "Quiver tree",
-    "genus": "Aloidendron",
-    "species": "dichotomum",
-    "origin": "Namibia and South Africa",
-    "shape": "rosette",
+    "name": "Desert ironwood",
+    "genus": "Olneya",
+    "species": "tesota",
+    "origin": "Sonoran Desert",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
     "temp_c": [
-     18,
-     22
+     19,
+     27
     ],
     "moisture": [
-     0.05,
-     0.15
+     0.04,
+     0.2
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "biomes": [
+     "HOT_DESERT"
     ],
     "height_m": [
-     3,
-     9
+     4,
+     10
     ],
-    "density": 0.2,
-    "soil": "thin",
-    "color": "#7FA870",
-    "accent": "#C8B080",
-    "source": "Aloidendron dichotomum, Namib and Namaqualand rocky slopes, forked succulent tree 3-9 m — SANBI PlantZAfrica",
-    "traits": {
-     "genus": "Aloidendron",
-     "species": "dichotomum",
-     "native_range": "Aloidendron dichotomum, Namib and Namaqualand rocky slopes, forked succulent tree 3-9 m — SANBI PlantZAfrica",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      3,
-      9
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sand",
+      "alluvium",
+      "granite",
+      "basalt"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#7A8A6A",
+    "accent": "#B898C8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      300,
+      800
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds germinate within days of the summer rains, often under a nurse shrub; the seedling raises two fleshy cotyledons and then small grey-green pinnate leaves with a pair of short curved spines at each node, and drives a deep taproot. It grows slowly into a many-stemmed spiny shrub and, over decades, a broad grey-green tree.",
+     "confidence": "estimated",
+     "source": "Kearney & Peebles, Arizona Flora; Arizona-Sonora Desert Museum, A Natural History of the Sonoran Desert (ironwood: to 10 m, frost-limited, lives several centuries, a nurse tree). Germination, height curve and first seed estimated."
+    },
+    "repro": {
+     "mode": "seed",
      "pollinator": "insect",
-     "disperser": [],
+     "disperser": [
+      "mammal",
+      "water",
+      "gravity"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "dry",
+     "note": "bees (carpenter and Centris bees) pollinate; rodents cache the seeds and wash floods carry them"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Olneya tesota, the desert ironwood of washes and bajadas of the Sonoran Desert (Arizona, SE California, Sonora, Baja California), 4-10 m, grey-green pinnate leaves, lavender pea flowers in spring; its range follows the frost line — Kearney & Peebles Arizona Flora; Kew POWO for the name.",
+    "traits": {
+     "genus": "Olneya",
+     "species": "tesota",
+     "native_range": "Washes and bajadas of the Sonoran Desert",
+     "leaf_shape": "small grey-green pinnate leaves",
+     "trunk": "several stout trunks under a broad crown",
+     "petiole": "short petiole",
+     "height_m": [
+      4,
+      10
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "water",
+      "gravity"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
+    "bark_type": "oak",
     "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "shredding",
+      "base": "#6E6860",
+      "secondary": "#4E443C",
+      "feature_cm": 2,
+      "roughness": 0.5,
+      "notes": "smooth pale grey on young stems, older trunks dark grey-brown and shredding in thin strips; paired short curved spines at the nodes"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "compound",
+      "colour": "#7A8A6A",
+      "underside": "#8E9A80",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#7A8A6A",
+      "margin": "entire",
+      "size_cm": [
+       2.5,
+       6
+      ],
+      "notes": "once-pinnate, 6-24 small oblong grey-green finely hairy leaflets 0.5-1.5 cm"
+     },
+     "flower": {
+      "colour": "#B898C8",
+      "secondary": "#E8D8F0",
+      "form": "lavender to pink-purple pea flowers about 1.2 cm in short racemes, the whole crown tinted in a good spring",
+      "scent": "faint"
+     },
+     "fruit": {
+      "colour": "#A08058",
+      "form": "short glandular-hairy brown pods 3-6 cm with 1-4 shiny seeds"
+     },
+     "seasonal": "evergreen in warm winters, sheds leaves after frost or deep drought; flowers Apr-May",
+     "silhouette": "dense grey-green dome on several dark trunks",
+     "confidence": "documented",
+     "refs": "Kearney & Peebles Arizona Flora; Arizona-Sonora Desert Museum"
+    },
     "leaf": {
-     "type": "strap",
-     "outline": "ovate",
-     "aspect": 6,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "dentate",
-     "venation": "parallel",
-     "arrangement": "spiral",
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      25,
-      35
+      2.5,
+      6
      ],
-     "compound": null,
-     "texture": "succulent",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       6,
+       24
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "canopy": {
      "form": "rounded",
-     "gap": 0.45,
+     "gap": 0.4,
      "layering": "clumped",
-     "droop": 0.0
+     "droop": 0.2
     },
     "tint": {
-     "hue_shift": -14,
-     "sat": 0.55,
-     "val": 1.05,
-     "underside": 0.0
+     "hue_shift": -12,
+     "sat": 0.45,
+     "val": 0.9,
+     "underside": 0.1,
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "flaky",
+     "pattern": "stringy",
      "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 8,
-     "color": "#C8A870",
-     "color_2": "#8A6A48",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#6E6860",
+     "color_2": "#4E443C",
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "forked golden trunk, rounded crown of rosettes",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
      ],
-     "height_years": [
-      60,
-      140
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.2
      ],
-     "trunk_years": 5,
-     "first_seed_years": 25,
-     "lifespan_years": [
-      150,
-      300
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.85,
+      0.6
      ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Seedling: a tiny fan of thick, triangular, blue-green leaves in two ranks, often pale-spotted and edged with small teeth, later twisting into a spiral rosette. For years it stays a squat rosette; then a single stout trunk lifts it and at 1-2 m the crown forks again and again into a rounded head of rosettes. Old bark peels in golden, sharp-edged plates.",
-     "confidence": "estimated",
-     "source": "Wikipedia (slow growth, stems repeatedly fork in two) and SANBI PlantZAfrica as recalled (tree aloe to 7-9 m of Namibia and the Northern Cape; first flowers at about 20-30 yr; large trees thought well over a century old). Two-ranked spotted seedling leaves as in most aloes; rates estimated."
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
     },
+    "silhouette": "dense grey-green dome on several dark trunks",
     "fruiting": {
      "flower_months": [
-      6,
-      7
+      4,
+      5
      ],
-     "hemisphere": "south",
+     "hemisphere": "north",
      "flower_days": 3,
-     "flower_size_cm": 1,
-     "flower_colour": "#f2c418",
-     "flower_form": "tube",
-     "flower_position": "stalk",
+     "flower_size_cm": 1.2,
+     "flower_colour": "#b898c8",
+     "flower_form": "pea",
+     "flower_position": "twigs",
      "flowers_per_cluster": [
-      30,
-      80
+      5,
+      15
      ],
      "pollinators": [
-      "bird",
       "bee"
      ],
-     "fruit_set": 0.2,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
      "fruit_size_cm": [
-      2,
-      3
+      3,
+      6
      ],
-     "unripe_colour": "#8aa050",
-     "ripe_colour": "#a88a5a",
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#a08058",
      "ripen_days": [
-      60,
-      90
+      40,
+      70
      ],
      "hang_days": [
-      30,
-      120
+      7,
+      30
      ],
      "drop": "splits",
      "rot_days": [
-      60,
-      240
+      30,
+      180
      ],
      "crop_per_tree": [
-      50,
-      1000
+      100,
+      5000
      ],
-     "edible": "no",
+     "edible": "cooked",
      "confidence": "estimated",
-     "source": "German Wikipedia (Koecherbaum: 3-5-branched inflorescence to 30 cm with cylindrical racemes to 15 cm; bulbous flowers 33 mm long, bright canary-yellow; nectar favoured by sunbirds). Winter (Jun-Jul) flowering, bee visits, capsules with papery winged seeds, timings and crop estimated from SANBI as recalled and related tree aloes."
+     "source": "Kearney & Peebles (flowers Apr-May, pale purple; pods glandular, 1-4 seeds; seeds roasted and eaten by the Seri and Tohono O'odham). Ripening, set and crop estimated."
     }
    },
    {
@@ -521,198 +751,10 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "Arizona-Sonora Desert Museum fact sheet (white flowers ~8 cm, open at night <24 h; lesser long-nosed and Mexican long-tongued bats, bees, white-winged doves; red fruit with up to 2000 seeds); NRCS (bloom late Apr-early Jun, fruit ripe ~37 days after flowering); Wikipedia (~4 flowers/day for a month, fruits 6-9 cm, split open)"
-    }
-   },
-   {
-    "name": "Umbrella thorn",
-    "genus": "Vachellia",
-    "species": "tortilis",
-    "origin": "Africa and Arabia",
-    "shape": "umbrella",
-    "leaf_density": 0.5,
-    "temp_c": [
-     20,
-     30
-    ],
-    "moisture": [
-     0.05,
-     0.25
-    ],
-    "height_m": [
-     4,
-     14
-    ],
-    "density": 0.5,
-    "soil": "sand",
-    "color": "#6A9A45",
-    "accent": "#8A7050",
-    "source": "Vachellia tortilis, Sahara, Sahel, Arabia and E Africa, flat-topped umbrella acacia 4-14 m — Kew POWO",
-    "traits": {
-     "genus": "Vachellia",
-     "species": "tortilis",
-     "native_range": "Vachellia tortilis, Sahara, Sahel, Arabia and E Africa, flat-topped umbrella acacia 4-14 m — Kew POWO",
-     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
-     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
-     "petiole": "long petiole",
-     "height_m": [
-      4,
-      14
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "compound",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      1,
-      3
-     ],
-     "compound": {
-      "form": "bipinnate",
-      "leaflets": [
-       50,
-       600
-      ],
-      "leaflet_outline": "oblong",
-      "leaflet_aspect": 3.0,
-      "leaflet_margin": "entire"
-     },
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "umbrella",
-     "gap": 0.5,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.7,
-     "val": 0.9,
-     "underside": 0.15,
-     "autumn": "#B8A05A",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "furrowed",
-     "orientation": "vertical",
-     "depth": 0.5,
-     "scale_cm": 2,
-     "color": "#5A5450",
-     "color_2": "#3A3430",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "troll",
-     "habit": "umbrella",
-     "orders": 5,
-     "branch_angle_deg": [
-      40,
-      70
-     ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.5,
-     "fork_height_frac": [
-      0.15,
-      0.35
-     ],
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.4,
-      0.3
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.3,
-     "root_flare": true,
-     "spacing_m": 1.0,
-     "confidence": "documented"
-    },
-    "silhouette": "flat-topped disc on bare thorny limbs",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      4,
-      21
-     ],
-     "height_years": [
-      10,
-      35
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      150,
-      650
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two oval cotyledons, then tiny feathery bipinnate leaves on a thin stem with paired spines, some long, straight and white, others short and hooked. The taproot dives deep first. Browsed saplings become dense, low, cage-like spiny bushes for years; once a leader escapes browsers it gains about 1.5 m in two years and only later spreads the flat umbrella crown.",
-     "confidence": "documented",
-     "source": "ICRAF Agroforestree (Acacia tortilis): up to 21 m, about 1.5 m in 2 years, a 6-7-year-old tree yields 5-6 kg of clean seed, 10-12 kg pods a year at 10 yr; Andersen & Krzywinski 2007 (BMC Ecology): radiocarbon ages of 200-650 yr for trees in Egypt's Eastern Desert, radial growth up to 2.4 mm a year. Germination and height curve estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      10,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 2,
-     "flower_size_cm": 0.8,
-     "flower_colour": "#f5f0d8",
-     "flower_form": "ball",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      2,
-      8
-     ],
-     "pollinators": [
-      "bee",
-      "fly",
-      "butterfly"
-     ],
-     "fruit_set": 0.03,
-     "fruit_kind": "pod",
-     "fruit_shape": "coiled",
-     "fruit_size_cm": [
-      7,
-      10
-     ],
-     "unripe_colour": "#9aae5c",
-     "ripe_colour": "#b8904e",
-     "ripen_days": [
-      90,
-      180
-     ],
-     "hang_days": [
-      14,
-      90
-     ],
-     "drop": "falls",
-     "rot_days": [
-      90,
-      365
-     ],
-     "crop_per_tree": [
-      1000,
-      20000
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "ICRAF Agroforestree (Acacia tortilis): white or pale yellowish-white heads 0.5-1.1 cm, pods 7-10 cm by 6-10 mm, spirally twisted, 10-12 kg pods per 10-yr tree; the Turkana make porridge from the pods, the Maasai eat immature seeds; Wikipedia: aromatic flowers, springlike coiled pods. Flowering at the onset of the rains, ripening, pod fall and rot times estimated."
-    }
+    "biomes": [
+     "HOT_DESERT"
+    ]
    },
    {
     "name": "Velvet mesquite",
@@ -903,7 +945,10 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "USDA FEIS P. velutina (yellowish-green flowers on 5-7.6 cm spikelike racemes, pollinated mainly by bees; pods 7.6-20 cm mature about 7-9 weeks after bud burst, ripe in July and drop in September, some June-Oct). Flowers per raceme, crop, fruit set, colours and decay estimated."
-    }
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
    },
    {
     "name": "Yellow paloverde",
@@ -1092,19 +1137,22 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "Wikipedia (small pale-yellow flowers at branch ends in late spring, not every year; soft 4-8 cm pods constricted between the seeds ripen in July and stick to the branches); bee pollination and green seeds eaten by Sonoran peoples from regional ethnobotany; set and crop estimated"
-    }
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
    }
   ],
   "shrub": [
    {
-    "name": "Barrel cactus",
-    "genus": "Ferocactus",
-    "species": "wislizeni",
+    "name": "Brittlebush",
+    "genus": "Encelia",
+    "species": "farinosa",
     "origin": "SW USA and Northern Mexico",
-    "shape": "cactus",
+    "shape": "shrub",
     "temp_c": [
      18,
-     25
+     26
     ],
     "moisture": [
      0.05,
@@ -1112,23 +1160,23 @@
     ],
     "height_m": [
      0.5,
-     1.5
+     1.2
     ],
-    "density": 0.4,
+    "density": 0.5,
     "soil": "thin",
-    "color": "#4F8A50",
-    "accent": "#D08030",
-    "source": "Ferocactus wislizeni, Sonoran/Chihuahuan deserts, barrel 0.5-1.5 m, hooked red spines — Flora of North America",
+    "color": "#AEBCA0",
+    "accent": "#F0D030",
+    "source": "Encelia farinosa, Sonoran and Mojave slopes, silver-leaved 0.5-1.2 m, yellow daisies — USDA PLANTS",
     "traits": {
-     "genus": "Ferocactus",
-     "species": "wislizeni",
-     "native_range": "Ferocactus wislizeni, Sonoran/Chihuahuan deserts, barrel 0",
-     "leaf_shape": "none — spines on ribs",
-     "trunk": "succulent columns or pads",
-     "petiole": "none",
+     "genus": "Encelia",
+     "species": "farinosa",
+     "native_range": "Encelia farinosa, Sonoran and Mojave slopes, silver-leaved 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
      "height_m": [
       0.5,
-      1.5
+      1.2
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1136,133 +1184,244 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "cactus",
-    "leaf_type": "spine",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
     "leaf": {
-     "type": "none",
-     "venation": "none",
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
      "compound": null,
+     "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "columnar",
-     "gap": 0.25,
-     "layering": "even",
-     "droop": 0.0
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": -4,
-     "sat": 0.8,
-     "val": 0.9,
-     "underside": 0.0
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.15,
+     "underside": 0.05,
+     "autumn": "#B8B090",
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "spiny",
+     "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.7,
-     "scale_cm": 3,
-     "color": "#5A8A5A",
-     "color_2": "#A85A40",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#9A9080",
+     "color_2": "#7A6A58",
      "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
-     "model": "corner",
-     "habit": "columnar",
-     "orders": 0,
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
      "branch_angle_deg": [
-      0,
-      0
+      30,
+      60
      ],
-     "taper_exponent": 1.0,
-     "sinuosity": 0.05,
-     "fork_height_frac": null,
+     "taper_exponent": 1.8,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
      "buttress": "none",
-     "lean_max_deg": 15,
+     "lean_max_deg": 10,
      "live_crown_ratio": [
-      0.95,
-      0.95
+      0.9,
+      0.7
      ],
      "self_prune": false,
-     "dead_limbs": 0.0,
+     "dead_limbs": 0.3,
      "root_flare": false,
-     "spacing_m": 0.5,
-     "confidence": "documented"
+     "spacing_m": 0.05,
+     "confidence": "estimated"
     },
-    "silhouette": "squat red-spined green barrel",
+    "silhouette": "silver-leaved mound with yellow daisies",
     "growth": {
      "life": "perennial",
      "germination_days": [
       5,
-      21
+      15
      ],
      "height_years": [
-      30,
-      80
+      1,
+      3
      ],
-     "first_seed_years": 12,
+     "first_seed_years": 1.5,
      "lifespan_years": [
-      50,
-      130
+      15,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up after winter rains: two small cotyledons, then broad, soft, greener leaves. It branches quickly from the base into a rounded, brittle-stemmed dome of silvery-white, woolly, oval leaves (whiter and smaller in drought, dropped entirely in severe drought) topped by long stalks of bright yellow daisies.",
+     "confidence": "estimated",
+     "source": "Wikipedia Encelia farinosa (30-150 cm; drought-deciduous, sheds all leaves in dry seasons and relies on water in thick stems; heads 3-3.5 cm with 8-18 yellow rays; dry gravelly slopes and sandy washes to 1000 m). Germination, growth, first flowering and lifespan (Tumamoc Hill plot studies) estimated."
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
+   },
+   {
+    "name": "Bursage",
+    "genus": "Ambrosia",
+    "species": "dumosa",
+    "origin": "SW USA and Northern Mexico",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     26
+    ],
+    "moisture": [
+     0.03,
+     0.18
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "color": "#B0B8A0",
+    "accent": "#C8C0A8",
+    "source": "Ambrosia dumosa, co-dominant low shrub with creosote, Mojave/Sonoran, 30-70 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Ambrosia",
+     "species": "dumosa",
+     "native_range": "Ambrosia dumosa, co-dominant low shrub with creosote, Mojave/Sonoran, 30-70 cm — USDA PLANTS",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      0.7
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 5,
+     "aspect": 1.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.05,
+     "autumn": "#B8B09A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 0.5,
+     "color": "#B0ACA0",
+     "color_2": "#8A7A68",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": false,
+     "spacing_m": 0.05,
+     "confidence": "estimated"
+    },
+    "silhouette": "low grey-white rounded bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      14
+     ],
+     "height_years": [
+      2.5,
+      7
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      25,
+      50
      ],
      "shade": "intolerant",
-     "juvenile": "globe",
+     "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: a tiny green knob with two fleshy cotyledons, soon covered in fine white spines; stays a small spiny globe for years (often in the shade of a nurse shrub), growing a few cm a year and gaining its hooked reddish central spines. At 20-30 cm across it starts to flower; it lengthens into a ribbed barrel and, when tall, leans toward the south-southwest.",
-     "confidence": "estimated",
-     "source": "USDA FEIS (Ferocactus wislizeni: germination best at 20-30 C with >=8 h light; lifespan 50-130 yr); Wikipedia (0.9-1.8 m, rarely 3 m; 50-100 yr). Growth rate and first flowering estimated from barrel-cactus growth."
-    },
-    "fruiting": {
-     "flower_months": [
-      7,
-      9
-     ],
-     "hemisphere": "north",
-     "flower_days": 3,
-     "flower_size_cm": 6,
-     "flower_colour": "#e2702a",
-     "flower_form": "cup",
-     "flower_position": "stem_tips",
-     "flowers_per_cluster": [
-      5,
-      20
-     ],
-     "pollinators": [
-      "bee"
-     ],
-     "fruit_set": 0.6,
-     "fruit_kind": "berry",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      3,
-      5
-     ],
-     "unripe_colour": "#8aa24a",
-     "ripe_colour": "#e8c13a",
-     "ripen_days": [
-      60,
-      120
-     ],
-     "hang_days": [
-      120,
-      400
-     ],
-     "drop": "persists",
-     "rot_days": [
-      14,
-      60
-     ],
-     "crop_per_tree": [
-      10,
-      40
-     ],
-     "edible": "yes",
+     "juvenile_note": "Seedlings appear in flushes after heavy autumn rains: two small oval cotyledons, then pinnately lobed, white-woolly grey-green leaves on a thin stem, with a root 5-15 times longer than the shoot. It soon branches into a low, rounded, silvery-grey mound of stiff, intricately forked twigs, leafy after rains and nearly bare in drought; small spiny burs form among older twigs.",
      "confidence": "documented",
-     "source": "USDA FEIS (flowers sporadically in late spring, profusely Jul-Sep; fruit yellow, barrel-shaped, fleshy); Wikipedia (yellow to red-orange flowers visited by cactus bees Lithurgus; fruits persist atop the plant, sometimes >1 yr; eaten by deer, javelina, ground squirrels; sour but edible). Flower size, counts, ripening estimated."
-    }
+     "source": "USDA FEIS Ambrosia dumosa: large seedling flushes after heavy fall rain (1,151 seedlings/ha after 1976 rains); moist stratification improves 7- and 14-day germination; shrub 20-60 cm, clones to 1 m wide; roots 5-15x stem length, to 70 cm; longevity 'somewhat less than 50 years' (clones perhaps far older); mean flowering May 2. Growth rate and first flowering estimated."
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
    },
    {
     "name": "Creosote bush",
@@ -1448,50 +1607,444 @@
      "edible": "no",
      "confidence": "documented",
      "source": "Wikipedia (flowers to 25 mm, five yellow twisted petals, visited by 22 bee species; fuzzy spherical capsule splitting into five one-seeded carpels); USDA WPSM (densely white-villous fruit maturing late spring-early summer). Flower life, set, crop and rot estimated."
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
+   },
+   {
+    "name": "Jumping cholla",
+    "genus": "Cylindropuntia",
+    "species": "fulgida",
+    "origin": "Sonoran Desert",
+    "family": "Cactaceae",
+    "shape": "cactus",
+    "temp_c": [
+     18,
+     27
+    ],
+    "moisture": [
+     0.04,
+     0.2
+    ],
+    "altitude_m": [
+     0,
+     1100
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0A880",
+    "accent": "#C8508A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Almost every young plant is a fallen joint or a sterile fruit that rooted where it dropped: a short spiny cylinder that roots from below and puts up a new joint. It thickens into a short dark trunk crowned by whorls of densely spined, silvery-gold jointed branches, and hangs ever-longer chains of green fruits that flower again from the old fruit each summer.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 4 (Cylindropuntia fulgida: shrubby to treelike 1-4.5 m; stem segments easily detached; fruits proliferating in long hanging chains, mostly sterile; flowers pink to magenta). Ages and growth estimated from cholla demography."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "spreads mainly by joints that snag on passing animals and by fallen fruits that root ('sucker' here = rooted joints and fruits); seed is rarely viable"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cylindropuntia fulgida (jumping or chain-fruit cholla), a treelike cholla of the Arizona Upland and Sonoran lowlands, 1-4 m, joints thickly sheathed in silvery-gold spines that detach at a touch, fruits in hanging chains — Flora of North America vol. 4; Kew POWO for the name.",
+    "traits": {
+     "genus": "Cylindropuntia",
+     "species": "fulgida",
+     "native_range": "Arizona Upland and lowlands of the Sonoran Desert",
+     "leaf_shape": "none — spines on jointed stems",
+     "trunk": "short dark trunk with whorled jointed branches",
+     "petiole": "none",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "both, clonal by rooted joints",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#6E8A50",
+      "secondary": "#C8C098",
+      "ribs": [
+       0,
+       0
+      ],
+      "rib_depth": 0.2,
+      "areole_colour": "#E8E0C8",
+      "spine_colour": "#D8C890",
+      "spine_cm": [
+       1.5,
+       3
+      ],
+      "spines_per_areole": [
+       6,
+       12
+      ],
+      "height_m": [
+       1,
+       4
+      ],
+      "diameter_cm": [
+       3,
+       5
+      ],
+      "gloss": 0.3,
+      "notes": "cylindrical joints 5-20 cm of low tubercles hidden under dense straw-silver papery-sheathed spines; whole plant glows gold against the sun"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#C8508A",
+      "secondary": "#E8A0C0",
+      "form": "pink to magenta cup about 2.5 cm, opening in the afternoon from the tips of the hanging fruit chains",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7A9A50",
+      "form": "green spineless pear-shaped fruits 2.5-5 cm in hanging chains that stay on the plant for years"
+     },
+     "seasonal": "evergreen succulent; flowers May-Sept; fruit chains lengthen each year",
+     "silhouette": "small glowing silvery tree hung with green fruit chains",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 4; Arizona-Sonora Desert Museum"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.5,
+     "val": 1.15,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 1.5,
+     "color": "#B8A878",
+     "color_2": "#3A3028",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "candelabra",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.75,
+      0.65
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "small glowing silvery tree hung with green fruit chains",
+    "fruiting": {
+     "flower_months": [
+      5,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#c8508a",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      5
+     ],
+     "unripe_colour": "#7a9a50",
+     "ripe_colour": "#8aa858",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      10,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 4 (flowers pink to magenta; fruits green, proliferating, persisting in chains for years, mostly sterile). Counts and timings estimated."
     }
    },
    {
     "name": "Mulga",
     "genus": "Acacia",
     "species": "aneura",
-    "origin": "Arid Australia",
-    "shape": "shrub",
+    "origin": "Arid interior of Australia",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
     "temp_c": [
-     18,
+     19,
      26
     ],
     "moisture": [
-     0.06,
-     0.22
+     0.08,
+     0.25
+    ],
+    "altitude_m": [
+     100,
+     900
+    ],
+    "biomes": [
+     "HOT_DESERT"
     ],
     "height_m": [
-     3,
-     8
+     4.0,
+     10.0
     ],
-    "density": 0.6,
-    "soil": "sand",
-    "color": "#8A9A70",
-    "accent": "#7A6A50",
-    "source": "Acacia aneura, dominant of arid central Australia, grey-green shrub/tree 3-8 m — Flora of Australia",
+    "density": 1.0,
+    "soil": {
+     "classes": [
+      "sand",
+      "sandstone",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: 2 cotyledons, then a few feathery bipinnate true leaves before narrow silvery-grey phyllodes take over in the first months. It sends a taproot ~3 m down while only 20 cm tall and stays a slender silver sprig for years (20 cm at 6-8 months), then becomes a many-stemmed shrub whose branches angle upward like a funnel.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree DB and Winrock FACT sheet (germinates in ~10 days after scarification; 20 cm at 6-8 months; 3 m multi-stemmed shrub at 10 yr on 370 mm rain); Hawaii PRA (reproductive maturity 10+ yr); The Conversation 2019 (lives three centuries or more; 3 m taproot at 20 cm tall)"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Australian arid interior. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted.",
     "traits": {
      "genus": "Acacia",
      "species": "aneura",
-     "native_range": "Acacia aneura, dominant of arid central Australia, grey-green shrub/tree 3-8 m — Flora of Australia",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
+     "native_range": "Australian arid interior",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
      "petiole": "short petiole",
      "height_m": [
-      3,
-      8
+      4.0,
+      10.0
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
      "pollinator": "insect",
-     "disperser": [],
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
     "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e34",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "dark grey, rough, fibrous and fissured, flaking in narrow strips; no thorns (Australian wattle)"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#7a8a68",
+      "underside": "#7a8a68",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7a8a68",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "narrow grey-green to silver-grey phyllodes (flattened leaf stalks), needle-like, held upright; whole bush a dull silvery haze"
+     },
+     "flower": {
+      "colour": "#f0d040",
+      "secondary": "#e8c828",
+      "form": "short bright yellow cylindrical spikes after rain",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b0a070",
+      "form": "flat papery pale brown pods 2-4 cm, oblong"
+     },
+     "seasonal": "evergreen; none; flowers opportunistically after rain",
+     "silhouette": "a low grey-green upright shrub or small tree with a narrow, upswept, broom-like crown of vertical branches; in endless open stands",
+     "confidence": "documented",
+     "refs": "Wikipedia Acacia aneura; WorldWideWattle; Kew POWO"
+    },
     "leaf": {
      "type": "simple",
      "outline": "linear",
@@ -1527,10 +2080,10 @@
     "bark": {
      "pattern": "fissured",
      "orientation": "vertical",
-     "depth": 0.4,
+     "depth": 0.5,
      "scale_cm": 2,
-     "color": "#7A7670",
-     "color_2": "#5A5048",
+     "color": "#6A5A4E",
+     "color_2": "#4A3E34",
      "lenticels": "none",
      "confidence": "documented"
     },
@@ -1559,29 +2112,6 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    },
-    "silhouette": "grey-green upright broom-shaped tree",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      21
-     ],
-     "height_years": [
-      10,
-      35
-     ],
-     "first_seed_years": 10,
-     "lifespan_years": [
-      100,
-      300
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Seedling: 2 cotyledons, then a few feathery bipinnate true leaves before narrow silvery-grey phyllodes take over in the first months. It sends a taproot ~3 m down while only 20 cm tall and stays a slender silver sprig for years (20 cm at 6-8 months), then becomes a many-stemmed shrub whose branches angle upward like a funnel.",
-     "confidence": "documented",
-     "source": "ICRAF Agroforestree DB and Winrock FACT sheet (germinates in ~10 days after scarification; 20 cm at 6-8 months; 3 m multi-stemmed shrub at 10 yr on 370 mm rain); Hawaii PRA (reproductive maturity 10+ yr); The Conversation 2019 (lives three centuries or more; 3 m taproot at 20 cm tall)"
     },
     "fruiting": {
      "flower_months": [
@@ -1792,7 +2322,10 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA FEIS (flowers Mar-Jun by latitude, scarlet tubular flowers in panicles at the stem tips, often before leaves, flowering 50-60 days; hummingbird and bee pollinated, higher seed set during hummingbird migration; capsules of winged seeds shed May-mid June; at most a few hundred seeds per plant a year). Sizes, counts estimated."
-    }
+    },
+    "biomes": [
+     "HOT_DESERT"
+    ]
    },
    {
     "name": "Prickly pear",
@@ -1964,732 +2497,146 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "Wikipedia (flowers Apr-May, each lasting 1-2 days, yellow sometimes red-tinged, 6-9 cm; copious nectar; solitary bees (Anthophorini, Andrenidae, Megachilidae) pollinate, sap beetles visit; fruit purple, 3.5-9 x 2-4 cm, fleshy, sweet, 144-172 seeds); fruits ripen late summer and hang for months; crop estimated"
-    }
-   },
-   {
-    "name": "Whitethorn acacia",
-    "genus": "Vachellia",
-    "species": "constricta",
-    "origin": "SW USA and Northern Mexico",
-    "shape": "shrub",
-    "temp_c": [
-     17,
-     25
-    ],
-    "moisture": [
-     0.06,
-     0.22
-    ],
-    "height_m": [
-     1,
-     4
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#6A9A45",
-    "accent": "#F0F0E0",
-    "source": "Vachellia constricta, Sonoran/Chihuahuan deserts, thorny shrub 1-4 m — USDA PLANTS",
-    "traits": {
-     "genus": "Vachellia",
-     "species": "constricta",
-     "native_range": "Vachellia constricta, Sonoran/Chihuahuan deserts, thorny shrub 1-4 m — USDA PLANTS",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      1,
-      4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "compound",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      2,
-      6
-     ],
-     "compound": {
-      "form": "bipinnate",
-      "leaflets": [
-       70,
-       290
-      ],
-      "leaflet_outline": "oblong",
-      "leaflet_aspect": 2.5,
-      "leaflet_margin": "entire"
-     },
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rounded",
-     "gap": 0.5,
-     "layering": "sparse",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 2,
-     "sat": 0.85,
-     "val": 0.95,
-     "underside": 0.1,
-     "autumn": "#C8B860",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "spiny",
-     "orientation": "none",
-     "depth": 0.4,
-     "scale_cm": 2,
-     "color": "#7A6E64",
-     "color_2": "#E8E4DC",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "troll",
-     "habit": "multi_stem",
-     "orders": 4,
-     "branch_angle_deg": [
-      40,
-      75
-     ],
-     "taper_exponent": 2.0,
-     "sinuosity": 0.6,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.35,
-     "root_flare": false,
-     "spacing_m": 0.15,
-     "confidence": "estimated"
-    },
-    "silhouette": "open thorny white-spined shrub",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      4,
-      21
-     ],
-     "height_years": [
-      3,
-      10
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      30,
-      80
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Hard-coated seeds germinate after summer rains once the coat is cracked: two thick oval cotyledons, a first once-pinnate leaf, then tiny bipinnate leaves on a slender reddish stem with a pair of straight white spines at each node. A deep taproot grows first; the plant soon branches from the base into a low, open, spiny shrublet with zigzag red-brown twigs.",
-     "confidence": "estimated",
-     "source": "Wikipedia (Vachellia constricta): usually 2 m, occasionally 6 m, flowers Apr-May with a second bloom Jul-Oct. Germination, growth, first flowering and lifespan estimated from related Sonoran and Chihuahuan desert acacias."
-    },
-    "fruiting": {
-     "flower_months": [
-      4,
-      9
-     ],
-     "hemisphere": "north",
-     "flower_days": 2,
-     "flower_size_cm": 1.0,
-     "flower_colour": "#f4c531",
-     "flower_form": "ball",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      5
-     ],
-     "pollinators": [
-      "bee",
-      "fly"
-     ],
-     "fruit_set": 0.05,
-     "fruit_kind": "pod",
-     "fruit_shape": "pod",
-     "fruit_size_cm": [
-      5,
-      12
-     ],
-     "unripe_colour": "#8a9a4a",
-     "ripe_colour": "#7a3a28",
-     "ripen_days": [
-      60,
-      100
-     ],
-     "hang_days": [
-      14,
-      90
-     ],
-     "drop": "splits",
-     "rot_days": [
-      90,
-      365
-     ],
-     "crop_per_tree": [
-      50,
-      2000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Wikipedia (Vachellia constricta): blooms Apr-May and again Jul-Oct, small yellow balls about 1 cm offering no nectar and little pollen; pods long and thin, up to 12 cm by 3-6 mm. Red-brown colour, constriction between seeds and splitting per the species' usual description; fruit set, timings and crop estimated."
-    }
+    "biomes": [
+     "CANYON",
+     "HOT_DESERT",
+     "THORN_SCRUB"
+    ]
    }
   ],
   "ground": [
    {
-    "name": "Brittlebush",
-    "genus": "Encelia",
-    "species": "farinosa",
-    "origin": "SW USA and Northern Mexico",
-    "shape": "shrub",
-    "temp_c": [
-     18,
-     26
-    ],
-    "moisture": [
-     0.05,
-     0.2
-    ],
-    "height_m": [
-     0.5,
-     1.2
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#AEBCA0",
-    "accent": "#F0D030",
-    "source": "Encelia farinosa, Sonoran and Mojave slopes, silver-leaved 0.5-1.2 m, yellow daisies — USDA PLANTS",
-    "traits": {
-     "genus": "Encelia",
-     "species": "farinosa",
-     "native_range": "Encelia farinosa, Sonoran and Mojave slopes, silver-leaved 0",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.5,
-      1.2
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 1.8,
-     "base": "rounded",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      3,
-      8
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.4,
-     "val": 1.15,
-     "underside": 0.05,
-     "autumn": "#B8B090",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 2,
-     "color": "#9A9080",
-     "color_2": "#7A6A58",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "shrub",
-     "orders": 3,
-     "branch_angle_deg": [
-      30,
-      60
-     ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.3,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.3,
-     "root_flare": false,
-     "spacing_m": 0.05,
-     "confidence": "estimated"
-    },
-    "silhouette": "silver-leaved mound with yellow daisies",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      15
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 1.5,
-     "lifespan_years": [
-      15,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings come up after winter rains: two small cotyledons, then broad, soft, greener leaves. It branches quickly from the base into a rounded, brittle-stemmed dome of silvery-white, woolly, oval leaves (whiter and smaller in drought, dropped entirely in severe drought) topped by long stalks of bright yellow daisies.",
-     "confidence": "estimated",
-     "source": "Wikipedia Encelia farinosa (30-150 cm; drought-deciduous, sheds all leaves in dry seasons and relies on water in thick stems; heads 3-3.5 cm with 8-18 yellow rays; dry gravelly slopes and sandy washes to 1000 m). Germination, growth, first flowering and lifespan (Tumamoc Hill plot studies) estimated."
-    }
-   },
-   {
-    "name": "Bursage",
-    "genus": "Ambrosia",
-    "species": "dumosa",
-    "origin": "SW USA and Northern Mexico",
-    "shape": "shrub",
+    "name": "Big galleta",
+    "genus": "Pleuraphis",
+    "species": "rigida",
+    "origin": "Mojave and Sonoran deserts",
+    "family": "Poaceae",
+    "shape": "grass",
     "temp_c": [
      17,
-     26
-    ],
-    "moisture": [
-     0.03,
-     0.18
-    ],
-    "height_m": [
-     0.3,
-     0.7
-    ],
-    "density": 0.9,
-    "soil": "sand",
-    "color": "#B0B8A0",
-    "accent": "#C8C0A8",
-    "source": "Ambrosia dumosa, co-dominant low shrub with creosote, Mojave/Sonoran, 30-70 cm — USDA PLANTS",
-    "traits": {
-     "genus": "Ambrosia",
-     "species": "dumosa",
-     "native_range": "Ambrosia dumosa, co-dominant low shrub with creosote, Mojave/Sonoran, 30-70 cm — USDA PLANTS",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      0.7
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "pinnate_lobed",
-     "lobes": 5,
-     "aspect": 1.5,
-     "base": "cuneate",
-     "apex": "obtuse",
-     "margin": "lobed",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      0.5,
-      2
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.4,
-     "val": 1.1,
-     "underside": 0.05,
-     "autumn": "#B8B09A",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "stringy",
-     "orientation": "none",
-     "depth": 0.25,
-     "scale_cm": 0.5,
-     "color": "#B0ACA0",
-     "color_2": "#8A7A68",
-     "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "shrub",
-     "orders": 3,
-     "branch_angle_deg": [
-      30,
-      70
-     ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.5,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.4,
-     "root_flare": false,
-     "spacing_m": 0.05,
-     "confidence": "estimated"
-    },
-    "silhouette": "low grey-white rounded bush",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      14
-     ],
-     "height_years": [
-      2.5,
-      7
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      25,
-      50
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings appear in flushes after heavy autumn rains: two small oval cotyledons, then pinnately lobed, white-woolly grey-green leaves on a thin stem, with a root 5-15 times longer than the shoot. It soon branches into a low, rounded, silvery-grey mound of stiff, intricately forked twigs, leafy after rains and nearly bare in drought; small spiny burs form among older twigs.",
-     "confidence": "documented",
-     "source": "USDA FEIS Ambrosia dumosa: large seedling flushes after heavy fall rain (1,151 seedlings/ha after 1976 rains); moist stratification improves 7- and 14-day germination; shrub 20-60 cm, clones to 1 m wide; roots 5-15x stem length, to 70 cm; longevity 'somewhat less than 50 years' (clones perhaps far older); mean flowering May 2. Growth rate and first flowering estimated."
-    }
-   },
-   {
-    "name": "Hard spinifex",
-    "genus": "Triodia",
-    "species": "basedowii",
-    "origin": "Central Australia",
-    "shape": "tussock",
-    "temp_c": [
-     20,
      28
     ],
     "moisture": [
-     0.04,
+     0.02,
      0.2
     ],
-    "height_m": [
-     0.3,
-     1
+    "biomes": [
+     "HOT_DESERT"
     ],
-    "density": 1.0,
+    "height_m": [
+     0.5,
+     1.0
+    ],
+    "density": 0.5,
     "soil": "sand",
-    "color": "#A8B860",
-    "accent": "#C8B060",
-    "source": "Triodia basedowii, dominant hummock grass of the central Australian sand deserts, 30-100 cm rings — Flora of Australia",
-    "traits": {
-     "genus": "Triodia",
-     "species": "basedowii",
-     "native_range": "Triodia basedowii, dominant hummock grass of the central Australian sand deserts, 30-100 cm rings — Flora of Australia",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      10,
-      30
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": 10,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.05,
-     "autumn": "#C8B070",
-     "drop": false
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 5,
-     "color": "#8A9A60",
-     "color_2": "#C8B888",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "spiny ring-shaped hummock",
+    "needs": [],
+    "color": "#A0A488",
+    "accent": "#C8B898",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      5,
-      21
+      4,
+      14
      ],
      "height_years": [
-      6,
-      20
+      2,
+      5
      ],
-     "first_seed_years": 4,
+     "first_seed_years": 2,
      "lifespan_years": [
-      40,
-      80
+      20,
+      60
      ],
      "shade": "very_intolerant",
      "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedling (it regrows only from seed after fire): a small tuft of thin grass blades, soft and green at first, soon rolled into stiff, sharp, grey-green needles. Tillers spread outward into a low dense dome of spiny needles; after 20-40 unburnt years the centre dies and the hummock opens into a ring, then broken arcs, several metres across.",
-     "confidence": "documented",
-     "source": "WA DPIRD 'Insights into spinifex (Triodia) pastures' (T. basedowii rings 40-50 yr old; hard spinifex seeds 4-5 yr after fire); Lewandrowski et al. 2018 Ann. Bot. (Triodia germination, t50 about 3 d, dormancy broken by karrikin); Macquarie Univ. spinifex page (rings common 25+ yr after fire)."
-    }
-   },
-   {
-    "name": "Lechuguilla",
-    "genus": "Agave",
-    "species": "lechuguilla",
-    "origin": "Chihuahuan Desert",
-    "shape": "spike_rosette",
-    "temp_c": [
-     17,
-     24
-    ],
-    "moisture": [
-     0.05,
-     0.2
-    ],
-    "height_m": [
-     0.3,
-     0.6
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "color": "#7FA070",
-    "accent": "#E8D888",
-    "source": "Agave lechuguilla, indicator of the Chihuahuan Desert, spiky rosettes 30-60 cm — USDA PLANTS",
-    "traits": {
-     "genus": "Agave",
-     "species": "lechuguilla",
-     "native_range": "Agave lechuguilla, indicator of the Chihuahuan Desert, spiky rosettes 30-60 cm — USDA PLANTS",
-     "leaf_shape": "stiff spined sword leaves in a rosette",
-     "trunk": "none or a short woody stem; tall flower spike",
-     "petiole": "none",
-     "height_m": [
+     "juvenile_note": "The seedling is a thin tuft of stiff grey blades; from its base woody, felty culms branch and stout rhizomes spread, so the plant becomes a coarse, rounded, almost shrubby clump of many-jointed, woolly grey stems that greens up after any rain.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 25 (Pleuraphis rigida: perennial, rhizomatous, culms 50-100 cm, woody and branched at the base, felty-hairy; blades 2-10 cm, stiff; on sand flats and dunes). Ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "rhizomes and branching woody culms make long-lived clumps; flowers again after summer rain"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
       0.3,
       0.6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     ]
     },
-    "bark_type": "furry",
-    "leaf_type": "spine",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 10,
-     "base": "truncate",
-     "apex": "mucronate",
-     "margin": "spinose",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      25,
-      50
-     ],
-     "compound": null,
-     "texture": "succulent",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.4,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.75,
-     "val": 1.0,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 2,
-     "color": "#8A8A70",
-     "color_2": "#C8B890",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "small stiff spiny rosette",
-    "growth": {
-     "life": "monocarpic",
-     "germination_days": [
-      3,
-      10
-     ],
-     "height_years": [
-      4,
-      10
-     ],
-     "first_seed_years": 15,
-     "lifespan_years": [
-      15,
-      25
-     ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are rarely seen; nearly all young rosettes are pups rising from rhizomes about 10 cm down, spreading 2-3 times the parent's width, so plants form dense colonies. A young rosette is a tight upright cup of a few stiff, thick, yellow-green, slightly incurved leaves with small down-hooked edge teeth and a sharp tip spine; it adds only 4-11 leaves a year.",
-     "confidence": "documented",
-     "source": "USDA FEIS Agave lechuguilla: 50% germination in ~4 days at 25-30 C; 3.9-10.8 new leaves/plant/yr; rosette of 20-50 leaves, 20-60 cm; leaves live 12-15 yr; flowers once, typically at 10-20 yr (stalk 1-4 m), then dies and is replaced by clones; rhizomes ~10 cm deep; seedlings rarely observed. Rosette size-age estimated."
-    }
-   },
-   {
-    "name": "Tabush grass",
-    "genus": "Panicum",
-    "species": "turgidum",
-    "origin": "Sahara and Arabia",
-    "shape": "tussock",
-    "temp_c": [
-     20,
-     30
-    ],
-    "moisture": [
-     0.03,
-     0.15
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 0.5,
-    "soil": "sand",
-    "color": "#A8B878",
-    "accent": "#C8B060",
-    "source": "Panicum turgidum, Sahara and Arabian sand deserts, wiry tussock 30-100 cm — Kew POWO",
+    "source": "Pleuraphis rigida (syn. Hilaria rigida), a coarse woody-based rhizomatous grass of sandy flats and dunes in the Mojave and Sonoran deserts, a companion of creosote bush and bursage, 50-100 cm — Flora of North America vol. 25; Kew POWO (as Hilaria rigida).",
     "traits": {
-     "genus": "Panicum",
-     "species": "turgidum",
-     "native_range": "Panicum turgidum, Sahara and Arabian sand deserts, wiry tussock 30-100 cm — Kew POWO",
-     "leaf_shape": "narrow grass blades in a dense tussock",
+     "genus": "Pleuraphis",
+     "species": "rigida",
+     "native_range": "Sand flats and dunes of the Mojave and Sonoran deserts",
+     "leaf_shape": "narrow grass blades",
      "trunk": "none",
      "petiole": "sheath",
      "height_m": [
-      0.3,
-      1
+      0.5,
+      1.0
      ],
      "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "reproduction": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
     "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#A0A488",
+      "underside": "#B0B498",
+      "gloss": 0.05,
+      "veins": "parallel",
+      "vein_colour": "#A0A488",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       10
+      ],
+      "notes": "short stiff spreading grey blades on felty-woolly jointed culms"
+     },
+     "flower": {
+      "colour": "#C8B898",
+      "secondary": "#A89878",
+      "form": "dense spike 5-10 cm of hairy spikelet clusters",
+      "scent": "none"
+     },
+     "seasonal": "grey and dormant most of the year, greens and flowers after winter or summer rain",
+     "silhouette": "coarse grey woody-stemmed clump on sand",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25"
+    },
     "leaf": {
      "type": "simple",
      "outline": "linear",
@@ -2704,21 +2651,21 @@
       10
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
+     "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "canopy": {
      "form": "tussock",
-     "gap": 0.5,
-     "layering": "even",
-     "droop": 0.2
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
     },
     "tint": {
      "hue_shift": -8,
-     "sat": 0.55,
+     "sat": 0.4,
      "val": 1.05,
-     "underside": 0.05,
-     "autumn": "#D0C498",
+     "underside": 0.1,
+     "autumn": "#C8B898",
      "drop": false
     },
     "photoperiod": {
@@ -2727,145 +2674,1262 @@
     "bark": {
      "pattern": "green_stem",
      "orientation": "none",
-     "depth": 0.25,
+     "depth": 0.2,
      "scale_cm": 4,
-     "color": "#9AA888",
-     "color_2": "#C8B888",
+     "color": "#9A9A78",
+     "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    },
-    "silhouette": "grey-green wiry tussock",
+    }
+   },
+   {
+    "name": "Desert panicgrass",
+    "genus": "Panicum",
+    "species": "urvilleanum",
+    "origin": "SW USA dunes, Chile, Peru, Argentina",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.02,
+     0.2
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [],
+    "color": "#A8AC88",
+    "accent": "#D8D0B8",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      3,
-      10
+      5,
+      20
      ],
      "height_years": [
       1,
       3
      ],
-     "first_seed_years": 1,
+     "first_seed_years": 2,
      "lifespan_years": [
       10,
-      30
+      40
      ],
      "shade": "very_intolerant",
      "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings appear within days of rain as tiny grey-green tufts of narrow leaves. The plant quickly builds a stiff, much-branched tussock of cane-like, glaucous, jointed stems with short, sparse leaves, woody at the base, often catching wind-blown sand into a low mound around itself.",
+     "juvenile_note": "A seedling or a shoot from a buried rhizome pushes up through loose sand as a single stiff grey-green culm; long scaly rhizomes run through the dune and send up scattered clumps of coarse culms with silky-haired open panicles.",
      "confidence": "estimated",
-     "source": "Estimated from its ecology as a long-lived, rain-triggered Saharo-Arabian desert bunchgrass (tussocks to 1 m, woody culms, sand-trapping hummocks) and from Panicum germination data (FEIS P. virgatum)"
-    }
-   },
-   {
-    "name": "Welwitschia",
-    "genus": "Welwitschia",
-    "species": "mirabilis",
-    "origin": "Namib Desert",
-    "shape": "rosette",
-    "temp_c": [
-     17,
-     23
-    ],
-    "moisture": [
-     0.02,
-     0.12
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 0.15,
-    "soil": "sand",
-    "color": "#6A8A50",
-    "accent": "#A07040",
-    "source": "Welwitschia mirabilis, Namib Desert fog belt, two strap leaves on a woody stump, 0.3-1 m — SANBI PlantZAfrica",
+     "source": "Flora of North America vol. 25 (Panicum urvilleanum: perennial from long scaly rhizomes; culms 30-100 cm; panicles 15-30 cm; spikelets densely villous; on sand dunes). Ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "rhizomes bind and climb moving sand; silky spikelets blow across the dunes"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Panicum urvilleanum, a rhizomatous dune grass of the Mojave and Colorado deserts (Algodones, Kelso dunes) and the coastal and Monte deserts of Peru, Chile and Argentina, 30-100 cm — Flora of North America vol. 25; Kew POWO for the name.",
     "traits": {
-     "genus": "Welwitschia",
-     "species": "mirabilis",
-     "native_range": "Welwitschia mirabilis, Namib Desert fog belt, two strap leaves on a woody stump, 0",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
+     "genus": "Panicum",
+     "species": "urvilleanum",
+     "native_range": "Sand dunes of the SW US and S American deserts",
+     "leaf_shape": "narrow grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
      "height_m": [
       0.3,
-      1
+      1.0
      ],
      "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "reproduction": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#A8AC88",
+      "underside": "#B8BC98",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#A8AC88",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       35
+      ],
+      "notes": "stiff glaucous blades 3-8 mm wide, rolling inward as they dry"
+     },
+     "flower": {
+      "colour": "#D8D0B8",
+      "secondary": "#A8A088",
+      "form": "open panicle 15-30 cm of silky white-haired spikelets",
+      "scent": "none"
+     },
+     "seasonal": "grey-green after winter rains, flowers in spring, cures pale straw in the heat",
+     "silhouette": "scattered coarse clumps with silky panicles on sand",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25"
+    },
     "leaf": {
-     "type": "strap",
+     "type": "simple",
      "outline": "linear",
-     "aspect": 6,
+     "aspect": 30,
      "base": "truncate",
-     "apex": "truncate",
+     "apex": "acute",
      "margin": "entire",
      "venation": "parallel",
-     "arrangement": "opposite",
+     "arrangement": "distichous",
      "size_cm": [
-      150,
-      400
+      10,
+      35
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.45,
+     "val": 1.05,
+     "underside": 0.1,
+     "autumn": "#D0C49A",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 4,
+     "color": "#9A9A78",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Desert rock-shield",
+    "genus": "Xanthoparmelia",
+    "species": "novomexicana",
+    "origin": "SW North America",
+    "kingdom": "Fungi",
+    "family": "Parmeliaceae",
+    "shape": "moss",
+    "temp_c": [
+     8,
+     30
+    ],
+    "moisture": [
+     0.02,
+     0.4
+    ],
+    "altitude_m": [
+     300,
+     2500
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B8BE70",
+    "accent": "#3A2E24",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1095
+     ],
+     "height_years": [
+      10,
+      40
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      50,
+      250
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a speck of yellow-green lobes on sun-baked rock, spreading a millimetre or two a year into a tightly attached round rosette whose centre becomes crowded with tiny isidia; old rosettes die back in the middle and spread as rings.",
+     "confidence": "estimated",
+     "source": "Nash et al. 2002 Lichen Flora of the Greater Sonoran Desert Region vol. 1 (Xanthoparmelia: foliose, yellow-green, on rock in the Sonoran region). Growth rate and ages estimated from other foliose rock lichens."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "a lichen: fungal spores and broken lobes or isidia by wind and water; no flowers; grows only while wet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Xanthoparmelia novomexicana, a closely attached, isidiate yellow-green foliose lichen of sunny rock in the deserts and dry hills of the American Southwest and northern Mexico — Nash et al. 2002 Lichen Flora of the Greater Sonoran Desert Region; Index Fungorum for the name.",
+    "traits": {
+     "genus": "Xanthoparmelia",
+     "species": "novomexicana",
+     "native_range": "Sunny rock of the American Southwest",
+     "leaf_shape": "flat lobes in a rosette",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.005
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by isidia",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#B8BE70",
+      "underside": "#3A2E24",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#B8BE70",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.4
+      ],
+      "notes": "flat yellow-green lobes 1-3 mm wide, tightly pressed to rock in rosettes 3-10 cm, the centre crowded with small cylindrical isidia; brown-black below"
+     },
+     "mat": {
+      "height_cm": [
+       0.05,
+       0.3
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "pale yellow-green dry, greener when wet",
+     "silhouette": "yellow-green rosettes on sunny rock",
+     "confidence": "documented",
+     "refs": "Nash et al. 2002 Lichen Flora of the Greater Sonoran Desert Region"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 0.6,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Desert star moss",
+    "genus": "Syntrichia",
+    "species": "inermis",
+    "origin": "Arid SW N America, Mediterranean",
+    "family": "Pottiaceae",
+    "shape": "moss",
+    "temp_c": [
+     8,
+     30
+    ],
+    "moisture": [
+     0.02,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.005,
+     0.015
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6A6A40",
+    "accent": "#8AA050",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      60
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores or broken shoots start on soil, rock crevices and the shady foot of boulders and shrubs; short upright shoots crowd into small cushions. Dry, the tongue-shaped leaves twist and curl so the cushion looks dark and shrivelled; wet, they spread into green stars.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 27, Syntrichia inermis (small; leaves lingulate, the costa ending at or just beyond the tip, without the long hair-point of S. caninervis; on soil and rock in dry regions). Ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "spores by wind and water and, far more often, broken shoot fragments; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Syntrichia inermis, a small cushion moss of soil, rock and soil crusts in the warm deserts of the American Southwest and Mexico and round the Mediterranean — Flora of North America vol. 27 (Pottiaceae); Tropicos for the name.",
+    "traits": {
+     "genus": "Syntrichia",
+     "species": "inermis",
+     "native_range": "Soil and rock of the warm deserts and the Mediterranean",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.015
+     ],
+     "growth_rate": "slow (years)",
+     "reproduction": "both, clonal by fragments",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#6A6A40",
+      "underside": "#8AA050",
+      "gloss": 0.05,
+      "veins": "none",
+      "vein_colour": "#6A6A40",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.3
+      ],
+      "notes": "tongue-shaped leaves 1-3 mm, blunt or with a tiny point, twisted when dry, spreading star-like and green when wet"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       1.5
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "dark olive-brown and curled dry, green stars after rain",
+     "silhouette": "small dark cushions at the foot of rocks",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 27"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.3
      ],
      "compound": null,
      "texture": "matte",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "rosette",
-     "gap": 0.4,
+     "form": "mound",
+     "gap": 0.15,
      "layering": "even",
-     "droop": 0.6
+     "droop": 0.0
     },
     "tint": {
-     "hue_shift": -4,
-     "sat": 0.75,
-     "val": 0.9,
-     "underside": 0.1
+     "hue_shift": 4,
+     "sat": 0.55,
+     "val": 0.8,
+     "underside": 0.05
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "fissured",
+     "pattern": "none",
      "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 3,
-     "color": "#8A7A68",
-     "color_2": "#5A4A3A",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
      "lenticels": "none",
      "confidence": "documented"
+    }
+   },
+   {
+    "name": "Dwarf earthstar",
+    "genus": "Geastrum",
+    "species": "schmidelii",
+    "origin": "Dry sandy lands, N Hemisphere",
+    "kingdom": "Fungi",
+    "family": "Geastraceae",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     28
+    ],
+    "moisture": [
+     0.03,
+     0.5
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.01,
+     0.025
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [],
+    "color": "#8A7860",
+    "accent": "#5A4E44",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      10
+     ],
+     "fruit_season": "any",
+     "decay_rate": 0.1
     },
-    "silhouette": "two long shredded straps on a stump",
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "The mycelium is the organism and lives in the substrate for years; the fruiting body is what is seen. 'rhizome' here = the mycelium spreading through the substrate; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Geastrum schmidelii, a small earthstar of dry sandy soils, dunes and open dry ground; the stalked spore sac has a pleated beak. Records from warm dry regions are fewer than from temperate dunes (estimated fit). Index Fungorum for the name; Sunhede 1989 Geastraceae.",
+    "traits": {
+     "genus": "Geastrum",
+     "species": "schmidelii",
+     "native_range": "Dry sandy soils and dunes",
+     "leaf_shape": "none",
+     "trunk": "none — stemless",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.025
+     ],
+     "growth_rate": "fast (weeks)",
+     "reproduction": "seed, clonal by mycelium",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8A7860",
+      "secondary": "#5A4E44",
+      "form": "small star of 5-8 rays 1.5-4 cm across under a grey-brown spore ball on a short stalk, with a pleated pointed mouth",
+      "size_cm": [
+       1.5,
+       4
+      ],
+      "texture": "smooth-matte",
+      "gloss": 0.05,
+      "notes": "buff to brown rays, often with sand stuck to them"
+     },
+     "underside": {
+      "colour": "#8A7860",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#8A7860",
+      "height_cm": [
+       0.1,
+       0.3
+      ]
+     },
+     "habit": "scattered on dry sand",
+     "seasonal": "fruits after rain; old stars persist for months",
+     "silhouette": "small brown stars on sand",
+     "confidence": "estimated",
+     "refs": "Sunhede 1989; Wikipedia Geastrum schmidelii"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.4,
+     "val": 0.85,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Fluffgrass",
+    "genus": "Dasyochloa",
+    "species": "pulchella",
+    "origin": "SW USA and Mexico",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     14,
+     28
+    ],
+    "moisture": [
+     0.02,
+     0.25
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.03,
+     0.15
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#9AA080",
+    "accent": "#F0ECE4",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      7,
-      28
+      3,
+      14
      ],
      "height_years": [
-      30,
-      200
+      0.3,
+      1
      ],
-     "trunk_years": 10,
-     "first_seed_years": 15,
+     "first_seed_years": 1,
      "lifespan_years": [
-      500,
-      2000
+      2,
+      8
      ],
      "shade": "very_intolerant",
-     "juvenile": "establishment",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two strap-like cotyledons 25-35 mm long, pink at first then green, lie on the sand; between them the only two true leaves appear, broad grey-green straps that keep growing from their base for the plant's whole life. For years it is a flat cross of four blades over a deep taproot; the woody, two-lobed, dish-like crown widens slowly and the leaves fray into ribbons.",
+     "juvenile_note": "A tiny tuft of short, rolled, grey-green blades; its flowering culms bend over and root where the woolly head touches the ground, so one plant becomes a chain of little tufts, each crowned with white fluff.",
      "confidence": "estimated",
-     "source": "Wikipedia (Welwitschia): only two leaves, growing continuously to 4 m, crown up to about 1 m across, many plants hundreds of years old, the oldest perhaps 2000; cotyledons 25-35 mm, pink turning green; dioecious, green to salmon or brown cones, pollinated mainly by flies. Germination, spread curve (height_years), crown emergence and first coning estimated."
+     "source": "Flora of North America vol. 25 (Dasyochloa pulchella: tufted perennial, often stoloniferous, 3-15 cm; spikelets in dense white-woolly heads among the leaves). Ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "stolon",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "the arching culms root at the head, making chains of tufts"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Dasyochloa pulchella (syn. Erioneuron pulchellum), a tiny tufted grass of gravelly desert flats and bajadas from California and Utah to Texas and central Mexico, 3-15 cm, crowned with white-woolly spikelets — Flora of North America vol. 25; Kew POWO for the name.",
+    "traits": {
+     "genus": "Dasyochloa",
+     "species": "pulchella",
+     "native_range": "Gravelly desert flats of the SW USA and Mexico",
+     "leaf_shape": "narrow grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.03,
+      0.15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#9AA080",
+      "underside": "#A8AC90",
+      "gloss": 0.05,
+      "veins": "parallel",
+      "vein_colour": "#9AA080",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       4
+      ],
+      "notes": "short, stiff, rolled grey-green blades"
+     },
+     "flower": {
+      "colour": "#F0ECE4",
+      "secondary": "#C8C0B0",
+      "form": "small dense heads of white-woolly spikelets nestled among the leaves",
+      "scent": "none"
+     },
+     "seasonal": "grey-green after rain; the white woolly heads last for months",
+     "silhouette": "tiny grey tufts tipped with white fluff",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.45,
+     "val": 1.1,
+     "underside": 0.1,
+     "autumn": "#D8D0C0",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 4,
+     "color": "#9A9A78",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
     }
+   },
+   {
+    "name": "Sixweeks grama",
+    "genus": "Bouteloua",
+    "species": "barbata",
+    "origin": "SW USA to S America",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     0.03,
+     0.3
+    ],
+    "biomes": [
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#A0A070",
+    "accent": "#8A5A7A",
+    "growth": {
+     "life": "annual",
+     "season": "rains",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      0.05,
+      0.12
+     ],
+     "first_seed_years": 0.12,
+     "lifespan_years": [
+      0.15,
+      0.4
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Comes up within days of the summer monsoon rains as a tiny tuft of short blades; the culms bend out and root at the nodes into a low spreading patch, flower within about six weeks with little one-sided purplish comb spikes, and die as the soil dries.",
+     "confidence": "documented",
+     "source": "Flora of North America vol. 25 (Bouteloua barbata: annual, culms 3-30 cm, often decumbent and rooting; 4-11 spikes 1-2.5 cm); the common name records its six-week life after summer rains."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "wet",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed",
+     "note": "a summer ephemeral: seed waits in the soil for the monsoon"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Bouteloua barbata, an ephemeral summer annual grama of desert flats, washes and roadsides from the SW United States to Mexico and South America, 3-30 cm — Flora of North America vol. 25; Kew POWO for the name.",
+    "traits": {
+     "genus": "Bouteloua",
+     "species": "barbata",
+     "native_range": "Desert flats and washes, SW USA to S America",
+     "leaf_shape": "narrow grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "fast (weeks)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#A0A070",
+      "underside": "#AAAA80",
+      "gloss": 0.1,
+      "veins": "parallel",
+      "vein_colour": "#A0A070",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       6
+      ],
+      "notes": "short narrow blades on spreading culms"
+     },
+     "flower": {
+      "colour": "#8A5A7A",
+      "secondary": "#C8B890",
+      "form": "4-11 short one-sided comb-like spikes 1-2.5 cm, purplish when fresh",
+      "scent": "none"
+     },
+     "seasonal": "appears only after summer rains, green for a few weeks, then dries to a pale straw mat",
+     "silhouette": "low spreading green patch of tiny comb spikes",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      1,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8A880",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 4,
+     "color": "#9A9A78",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Desert shaggy mane",
+    "genus": "Podaxis",
+    "species": "pistillaris",
+    "origin": "Hot deserts worldwide",
+    "kingdom": "Fungi",
+    "family": "Agaricaceae",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     35
+    ],
+    "moisture": [
+     0.0,
+     0.35
+    ],
+    "height_m": [
+     0.08,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "needs": [],
+    "color": "#E8E0D0",
+    "accent": "#3A2A20",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "cook",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      10
+     ],
+     "fruit_season": "any",
+     "decay_rate": 0.1
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "The mycelium is the organism and lives in the substrate for years; the fruiting body is what is seen. 'rhizome' here = the mycelium spreading through the substrate; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Podaxis pistillaris (desert shaggy mane), a secotioid fungus of sandy desert soil and termite mounds in the hot deserts of the Americas, Africa, Arabia, India and Australia; the white scaly club-shaped head never opens and fills with dark spores; the young head is eaten in parts of Arabia, Africa and Australia. Index Fungorum for the name; Wikipedia.",
+    "traits": {
+     "genus": "Podaxis",
+     "species": "pistillaris",
+     "native_range": "Sandy soil of hot deserts worldwide",
+     "leaf_shape": "none",
+     "trunk": "a stiff woody stalk",
+     "petiole": "none",
+     "height_m": [
+      0.08,
+      0.3
+     ],
+     "growth_rate": "fast (weeks)",
+     "reproduction": "seed, clonal by mycelium",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#E8E0D0",
+      "secondary": "#3A2A20",
+      "form": "elongated egg- to club-shaped head 5-15 cm long that never opens, white and shaggy-scaly, splitting with age to show a dark brown-black powdery spore mass",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "shaggy",
+      "gloss": 0.05,
+      "notes": "looks like a shaggy inkcap on a stiff stalk; turns brown and papery when old"
+     },
+     "underside": {
+      "colour": "#3A2A20",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#E0D8C8",
+      "height_cm": [
+       5,
+       15
+      ]
+     },
+     "habit": "solitary or scattered on sand, often from old termite mounds",
+     "seasonal": "fruits after rain; dried fruitbodies stand for months",
+     "silhouette": "white shaggy clubs standing on bare sand",
+     "confidence": "documented",
+     "refs": "Wikipedia Podaxis pistillaris; Index Fungorum"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.3,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "biomes": [
+     "HOT_DESERT",
+     "SAVANNA",
+     "THORN_SCRUB"
+    ]
    }
   ],
   "epiphyte": []
@@ -2880,16 +3944,14 @@
     "Yellow paloverde"
    ],
    "companion": [
-    "Cardon",
+    "Desert ironwood",
     "Ocotillo",
+    "Jumping cholla",
     "Prickly pear",
-    "Barrel cactus",
-    "Whitethorn acacia"
-   ],
-   "ground": [
     "Brittlebush",
     "Bursage"
    ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.3,
    "source": "Shreve & Wiggins 1964 Vegetation and Flora of the Sonoran Desert (Arizona Upland); Turner & Brown 1982 Sonoran desertscrub"
@@ -2902,12 +3964,13 @@
     "Creosote bush"
    ],
    "companion": [
-    "Ocotillo"
+    "Ocotillo",
+    "Bursage",
+    "Brittlebush"
    ],
    "ground": [
-    "Bursage",
-    "Brittlebush",
-    "Lechuguilla"
+    "Big galleta",
+    "Fluffgrass"
    ],
    "catalogue": [],
    "cover": 0.15,
@@ -2921,34 +3984,15 @@
     "Velvet mesquite"
    ],
    "companion": [
-    "Whitethorn acacia",
-    "Umbrella thorn",
-    "Prickly pear"
+    "Creosote bush",
+    "Desert ironwood",
+    "Prickly pear",
+    "Bursage"
    ],
-   "ground": [
-    "Bursage",
-    "Tabush grass"
-   ],
-   "catalogue": [
-    "Date palm"
-   ],
+   "ground": [],
+   "catalogue": [],
    "cover": 0.5,
    "source": "Stromberg 1993 Riparian mesquite forests (J. Ariz.-Nev. Acad. Sci.); Turner & Brown 1982"
-  },
-  {
-   "name": "Quiver tree-welwitschia Namib rock desert",
-   "realm": "afrotropic",
-   "where": "rocky ridges, gravel plains and fog-belt slopes of the Namib",
-   "dominant": [
-    "Quiver tree"
-   ],
-   "companion": [],
-   "ground": [
-    "Welwitschia"
-   ],
-   "catalogue": [],
-   "cover": 0.1,
-   "source": "Jurgens et al. 1997 Desert (Vegetation of Southern Africa, Cowling et al.); Giess 1971 Vegetation map of South West Africa"
   },
   {
    "name": "Mulga-spinifex sandplain",
@@ -2958,9 +4002,7 @@
     "Mulga"
    ],
    "companion": [],
-   "ground": [
-    "Hard spinifex"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.25,
    "source": "Beadle 1981 The Vegetation of Australia; Specht 1970 Vegetation (Australian Environment)"

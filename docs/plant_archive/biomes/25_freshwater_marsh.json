@@ -1,0 +1,439 @@
+{
+ "key": "FRESHWATER_MARSH",
+ "name": "Freshwater marsh",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Reed sweet-grass",
+    "genus": "Glyceria",
+    "species": "maxima",
+    "origin": "Europe and Western Asia",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#5AB040",
+    "accent": "#C8C880",
+    "source": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2.5 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Glyceria",
+     "species": "maxima",
+     "native_range": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 30.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "bright green glossy keeled blades 0.7-2 cm wide with rough margins"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.1,
+     "autumn": "#c8b860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 15,
+     "color": "#7AB050",
+     "color_2": "#A8B070",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout hollow culms"
+    },
+    "silhouette": "tall bright green leafy stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings on wet mud are small tufts of flat, soft, bright-green leaves; from the first year thick white rhizomes creep out and send up leafy shoots at intervals, so one seedling becomes a spreading, dense bed of broad (1-2 cm) keeled leaves; tall shoots with large open plumes appear from year 2.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Glyceria maxima: highly competitive, invasive rhizomatous perennial grass); Biological Flora of the British Isles (Lambert 1947) and weed-risk accounts (vigorous rhizome spread, germination on wet mud). Values estimated."
+    }
+   },
+   {
+    "name": "Yellow flag iris",
+    "genus": "Iris",
+    "species": "pseudacorus",
+    "origin": "Europe, W Asia and N Africa",
+    "shape": "spike_rosette",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.7,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A9A3A",
+    "accent": "#F0C820",
+    "source": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0.7-1.5 m sword leaves, yellow flowers — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Iris",
+     "species": "pseudacorus",
+     "native_range": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.7,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      50,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "grey-green sword leaves 1-3 cm wide with a raised midrib, in flat basal fans"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#6A9A58",
+     "color_2": "#9A6A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout flower stems; leaf bases flushed pink-brown"
+    },
+    "silhouette": "upright fans of sword-shaped leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a small flat fan of 2-4 narrow, sword-shaped, grey-green leaves rising from a corky floating seed. By the second or third year the rhizome has thickened and branched into several fans of stiff, erect leaves about 1 m tall and the first bright yellow flowers appear; clumps then creep outward on thick rhizomes into dense stands at the water's edge.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Iris pseudacorus: 1-1.5 m, rarely 2 m; flowers 7-10 cm; spreads quickly by rhizome and water-dispersed seed; very wet, even anoxic soils); germination, first flowering and clump ages estimated from rhizomatous iris growth."
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Sweet gale",
+    "genus": "Myrica",
+    "species": "gale",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#8A6A4A",
+    "source": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0.6-2 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Myrica",
+     "species": "gale",
+     "native_range": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "oblanceolate, toothed only toward the apex, dotted with yellow resin glands, grey-green"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c0a840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A4A3A",
+     "color_2": "#A08A70",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "dark red-brown smooth stems with pale lenticels and resin glands"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "low grey-green twiggy bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling on wet peat or sandy lake shores; leaves narrowly wedge-shaped, toothed near the tip, grey-green and dotted with fragrant resin glands, as in the adult. It branches from the base into an upright, reddish-brown-twigged little bush and spreads by root suckers into dense clonal thickets; nitrogen-fixing root nodules help it on poor bog soils.",
+     "confidence": "estimated",
+     "source": "Wikipedia Myrica gale (deciduous shrub to 2 m; catkins before the leaves, male yellowish to orange-brown, female red to purple; usually dioecious but plants may change sex from year to year; dense clonal colonies from root suckers); USDA Woody Plant Seed Manual Myrica (1-6 ft); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#b0603a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "nut",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      110,
+      150
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (catkins in spring before the leaves, several per twig; red-purple female catkins; small waxy fruits). Here one 'flower' is a female catkin and one 'fruit' the small brown cone-like head it becomes, of 2-3 mm resin-dotted winged nutlets that float off in water; ripe late summer, persists into winter; set and crop estimated"
+    }
+   }
+  ]
+ }
+}

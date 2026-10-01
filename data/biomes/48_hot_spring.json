@@ -203,7 +203,12 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "General Betula pubescens silvics (Atkinson 1992): catkins open with the leaves in spring (May-Jun in the subarctic), wind-pollinated, fruiting catkins 2-3.5 cm break up on the tree from late summer through winter; counts are catkins, estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING",
+     "VOLCANIC_FIELD",
+     "WET_MEADOW"
+    ]
    },
    {
     "name": "Lodgepole pine",
@@ -378,7 +383,14 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
-    }
+    },
+    "biomes": [
+     "BOG",
+     "HOT_SPRING",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "VOLCANIC_FIELD"
+    ]
    },
    {
     "name": "Manuka",
@@ -566,10 +578,204 @@
      "edible": "no",
      "confidence": "documented",
      "source": "Wikipedia (flowers 8-15 mm, rarely 25 mm, white occasionally pink, five petals; visited by hoverflies, Hylaeus bees and honeybees; woody capsules 5-7 mm often stay on the plant year-round, serotinous, releasing seed after fire). Flowering months, flower life, timings and counts estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    }
   ],
   "shrub": [
+   {
+    "name": "Antelope bitterbrush",
+    "genus": "Purshia",
+    "species": "tridentata",
+    "origin": "Intermountain western USA",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     15
+    ],
+    "moisture": [
+     0.18,
+     0.38
+    ],
+    "height_m": [
+     0.6,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7E9A78",
+    "accent": "#F0E0A0",
+    "source": "Purshia tridentata, Great Basin and intermountain west, browse shrub 0.6-3 m, cream flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Purshia",
+     "species": "tridentata",
+     "native_range": "Purshia tridentata, Great Basin and intermountain west, browse shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.6,
+     "base": "cuneate",
+     "apex": "truncate",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.4,
+     "autumn": "#A89A60",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 1,
+     "color": "#7A6E60",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      65
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "grey-green spreading shrub, wedge leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 9,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings usually come up in tight clumps of 5-30 from a forgotten rodent seed cache. Each has two small oval cotyledons, then tiny wedge-shaped leaves with three teeth at the tip, grey-green above and woolly-white below, on one thin stem. The taproot races ahead while the top grows slowly; after some years it branches into a stiff, twiggy, rounded grey-green shrub.",
+     "confidence": "documented",
+     "source": "USDA FEIS Purshia tridentata (seed needs 4-6 wk chilling at 2 C; seed-bearing at 8-10 yr; plants of 115 and 128 yr; usually 0.9-1.2 m, up to 4.5 m; shade intolerant; natural regeneration mostly from rodent caches); Wikipedia (1-5 m; leaves 5-20 mm, 3-5-lobed)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f1e39a",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#9aa47a",
+     "ripe_colour": "#7a6a55",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      540
+     ],
+     "crop_per_tree": [
+      100,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Purshia tridentata (flowers early spring to Jul; insect-pollinated, wind possible in dense stands; highly self-incompatible; achenes 3-13 mm ripen Jul-Sep and fall beneath the shrub when dry, then rodents cache them); Wikipedia (5 pale yellow petals 6-8 mm); fruit set, crop and decay estimated"
+    },
+    "biomes": [
+     "HOT_SPRING",
+     "SAGEBRUSH"
+    ]
+   },
    {
     "name": "Geothermal willow",
     "genus": "Salix",
@@ -757,7 +963,10 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia/Stace Salix lanata (stout erect catkins with or after the leaves, May-July; males golden-yellow and silky, 2-5 cm, females lengthen in fruit); insect plus wind pollination as in other arctic willows; ripening, set and crop estimated"
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    },
    {
     "name": "Prostrate kanuka",
@@ -944,7 +1153,10 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (flowers Oct-Feb, small white with up to 25 stamens, crowded on side branches; cup-shaped capsules 2-4 mm open to release seed when mature). Pollinators, timings and counts estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    },
    {
     "name": "Shrubby cinquefoil",
@@ -1137,7 +1349,11 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (flowers 2-3 cm, pale to bright yellow, 5 petals, 15-25 stamens, early-late summer; fruit a cluster of long-haired achenes). Fruit size is the achene head in its persistent calyx; pollinator guilds, timing, set and crop estimated from Potentilla ecology."
-    }
+    },
+    "biomes": [
+     "FEN",
+     "HOT_SPRING"
+    ]
    },
    {
     "name": "Umbrella fern",
@@ -1254,12 +1470,15 @@
      "juvenile_note": "A green prothallus on bare soil or lava gives rise to small fronds that fork once or twice. The rhizome then creeps and sends up wiry, repeatedly forking fronds whose branches bud and fork again at wide angles without end, piling up into a springy, layered, pale-green thicket 1-3 m deep over its own dead brown fronds.",
      "confidence": "estimated",
      "source": "Wikipedia Dicranopteris linearis (pseudo-dichotomously forking fronds with indeterminate growth; thickets 3 m deep, climbing to 10 m on support; rhizomatous clonal mats; pioneer of lava, talus and roadsides; cannot tolerate shade). Rates and ages estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    }
   ],
   "ground": [
    {
-    "name": "Broad-leaved cattail",
+    "name": "Cattail",
     "genus": "Typha",
     "species": "latifolia",
     "origin": "Northern Hemisphere (Holarctic)",
@@ -1373,6 +1592,196 @@
      "juvenile_note": "Germinates on wet mud or in shallow water: a hair-like shoot, then 2-4 tiny leaves and 2-6 ribbon leaves floating flat on the water before stiff, erect, flat grey-green leaves rise. By the end of its first summer a seedling is 60-85 cm tall and has sent rhizomes out into a clump up to 3 m across. Each shoot lives about a year; the clone persists for decades.",
      "confidence": "documented",
      "source": "USDA FEIS (Typha latifolia): germinates best at 25-30 C in high light; 2-4 small then 2-6 floating leaves before erect ones; seedlings 60-85 cm after 84 d; flowers early in 2nd year; ramets die within a year, rhizomes live about 2 yr; one seedling's rhizomes spread 3 m in a season; shade intolerant."
+    },
+    "biomes": [
+     "FEN",
+     "FRESHWATER",
+     "FRESHWATER_MARSH",
+     "HOT_SPRING",
+     "SWAMP"
+    ]
+   },
+   {
+    "name": "Dwarf swan-neck moss",
+    "genus": "Campylopus",
+    "species": "pyriformis",
+    "origin": "Europe and New Zealand",
+    "family": "Leucobryaceae",
+    "shape": "moss",
+    "temp_c": [
+     0,
+     18
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3800
+    ],
+    "biomes": [
+     "HOT_SPRING"
+    ],
+    "height_m": [
+     0.005,
+     0.05
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#8AA040",
+    "accent": "#6A5A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spreads mostly by its brittle shoot tips and tiny buds that break off and blow about; on warm, steaming ground a fragment puts out green threads and short upright shoots of narrow, long-pointed leaves. These pack into a soft, yellowish-green turf; next to the vents, where nothing else can grow, it forms a continuous short mossfield.",
+     "confidence": "estimated",
+     "source": "Given, vegetation of the Taupo Volcanic Zone geothermal fields (Campylopus pyriformis mossfield, mean height 5 cm, on ground 44 C at 10 cm; with Kunzea tenuicaulis on 50 C ground); Smith, Moss Flora of Britain and Ireland (turfs, deciduous shoot tips); rates estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Campylopus pyriformis (Schultz) Brid., dwarf swan-neck moss: yellowish-green turf moss of peat and bare ground in Europe, and the most heat-tolerant plant of New Zealand's geothermal fields (soil to 72 C), forming mossfields round the fumaroles of Rotorua and Taupo. Smith, Moss Flora of Britain and Ireland; Landcare Research, Naturally uncommon ecosystems: fumaroles.",
+    "traits": {
+     "genus": "Campylopus",
+     "species": "pyriformis",
+     "native_range": "Campylopus pyriformis (Schultz) Brid., dwarf swan-neck moss",
+     "leaf_shape": "tiny long-pointed leaves on upright stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.05
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#8aa040",
+      "underside": "#a0b060",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#8aa040",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       0.6
+      ],
+      "notes": "dense yellow-green turf of narrow leaves drawn out into fine points; brittle shoot tips"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       5
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen on warm ground",
+     "silhouette": "short yellow-green moss carpet round steaming vents",
+     "confidence": "documented",
+     "refs": "Smith, Moss Flora of Britain and Ireland; Landcare Research"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.6
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1485,112 +1894,191 @@
      "juvenile_note": "Spores (12-14 um) or broken shoot tips grow a green thread-like protonema film on bare peat or sand, from which tiny upright shoots arise within weeks. These pack into a small dark olive-green cushion; the shoots carry grey-white hair points that bend back when dry, giving a frosted, star-like look. Patches merge into a continuous carpet that can smother dune heath.",
      "confidence": "estimated",
      "source": "GB Non-native Species Secretariat factsheet (rapid colonist after heath fires, abundant capsules in large populations, shoot fragments dispersed by wind, exposed sites to partial shade); Univ. Oldenburg neophyte page (0.5-5 cm, carpets on grey dunes); Wikipedia (spores 12-14 um, setae 7-12 mm); timings estimated from moss biology"
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    },
    {
-    "name": "Green cyanobacteria mat",
-    "genus": "Synechococcus",
-    "species": "lividus",
-    "origin": "Yellowstone hot springs, USA",
-    "shape": "thermophile_mat",
+    "name": "Hot springs panic grass",
+    "genus": "Dichanthelium",
+    "species": "lanuginosum",
+    "origin": "North America",
+    "family": "Poaceae",
+    "shape": "grass",
     "temp_c": [
-     -10,
-     35
+     -2,
+     24
     ],
     "moisture": [
-     0.9,
-     1.0
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "HOT_SPRING"
     ],
     "height_m": [
-     0.0,
-     0.02
+     0.1,
+     0.5
     ],
-    "density": 0.8,
-    "soil": "wet",
+    "density": 0.6,
+    "soil": "thin",
     "needs": [
-     "hot_ground",
-     "standing_water"
+     "hot_ground"
     ],
-    "water_depth_m": [
-     0,
-     0.1
-    ],
-    "color": "#7AC040",
-    "accent": "#3F8A38",
-    "source": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wikipedia / NPS",
-    "traits": {
-     "genus": "Synechococcus",
-     "species": "lividus",
-     "native_range": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wiki",
-     "leaf_shape": "none — microbial mat",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.0,
-      0.02
+    "color": "#7A9A58",
+    "accent": "#8A7A9A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Like all Dichanthelium it starts as a flat winter rosette of short, broad, softly hairy leaves pressed to the warm ground. In spring it sends up leafy stems with small open panicles; later in the season side branches carry smaller leaves and hidden self-pollinating flowers. On geothermal soil roots grow in ground at 40-57 C, helped by a fungus living in the plant.",
+     "confidence": "estimated",
+     "source": "Stout & Al-Niemi, Heat-tolerant flowering plants of active geothermal areas in Yellowstone National Park (Annals of Botany 2002); Redman et al., Thermotolerance generated by plant/fungal symbiosis (Science 2002); Flora of North America (Dichanthelium life cycle); ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "gravity",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "spring flowers open; later autumn branches carry closed, self-pollinating flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Dichanthelium lanuginosum (Elliott) Gould, hot springs panic grass: small softly hairy rosette panic grass, the commonest flowering plant on hot geothermal soil in Yellowstone (roots at 40-57 C, with the fungal endophyte Curvularia protuberata); also widespread on ordinary dry ground across North America. Kew POWO (accepted); Stout & Al-Niemi 2002; Redman et al. 2002.",
+    "traits": {
+     "genus": "Dichanthelium",
+     "species": "lanuginosum",
+     "native_range": "Dichanthelium lanuginosum (Elliott) Gould, hot springs panic grass",
+     "leaf_shape": "short soft-hairy blades; winter rosette",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "gravity",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#7a9a58",
+      "underside": "#90a870",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#6a8a48",
+      "margin": "ciliate",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "short lance-shaped blades, soft silky hairs; a flat winter rosette of broader leaves at the base"
+     },
+     "flower": {
+      "colour": "#8a7a9a",
+      "secondary": "#b0a890",
+      "form": "small open panicle 3-8 cm of tiny round purplish spikelets",
+      "scent": "none"
+     },
+     "seasonal": "green almost all year on warm ground; rosette in winter",
+     "silhouette": "low silky tufts on steaming crust",
      "confidence": "documented",
-     "note": "microbial mat"
+     "refs": "Flora of North America; Stout & Al-Niemi 2002"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "ciliate",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
     },
     "canopy": {
-     "form": "mat",
-     "gap": 0.05,
+     "form": "tussock",
+     "gap": 0.45,
      "layering": "even",
-     "droop": 0.0
+     "droop": 0.15
     },
     "tint": {
      "hue_shift": 0,
-     "sat": 1.0,
-     "val": 1.05,
-     "underside": 0.0
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.15
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "none",
+     "pattern": "green_stem",
      "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#7AC040",
-     "color_2": "#3F8A38",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#7A9A58",
+     "color_2": "#9A8A8A",
      "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "green slimy film in hot runoff",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      0.15,
-      0.8
-     ],
-     "first_seed_years": 0.1,
-     "lifespan_years": [
-      3,
-      30
-     ],
-     "shade": "intermediate",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "No plant form: single rod-shaped cells a few microns long. A new colony shows as a thin olive-green slime film on bare sinter in 50-72 C outflow channels, thickening into a gelatinous, layered mat about 1 cm deep: bright green on top over orange layers of filamentous bacteria. In strong summer sun the surface looks more yellow-orange, in winter greener.",
-     "confidence": "estimated",
-     "source": "Copeland 1936 and T. D. Brock's Yellowstone work (Thermophilic Microorganisms and Life at High Temperatures, 1978): unicellular cyanobacterium of alkaline hot springs forming green mats up to ~72 C, the upper limit for photosynthesis, over Chloroflexus layers (Octopus and Mushroom springs). Colonisation, mat-building times and mat age estimated."
+     "confidence": "estimated"
     }
    },
    {
@@ -1703,7 +2191,10 @@
      "juvenile_note": "Spores, bulbils or broken shoot tips sprout within days into a green felt of branching protonema threads on bare soil, stone or pavement cracks. Within weeks tiny silvery, catkin-like shoots under 1 cm tall rise from it, with closely pressed leaves whose colourless tips give the silver sheen; they pack into small whitish-green cushions that turn silvery when dry.",
      "confidence": "estimated",
      "source": "Wikipedia (shoots <1 cm in dense clumps; pavements, roofs, rocks, dunes, alpine herbfields; spores plus bulbils and protonemal gemmae; desiccation-tolerant, survives brief 120 C; hyaline leaf tips screen strong sun); spore-to-shoot and colony timings estimated from moss culture."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    },
    {
     "name": "Ross' bentgrass",
@@ -1817,168 +2308,358 @@
      "juvenile_note": "Seedlings come up in December or January on steaming, geothermally heated ground while snow lies all around: hair-thin single blades, soon a small dense tuft of very fine, short, often in-rolled green leaves a few cm tall. By May-June it carries tiny, narrow, purplish panicles on stems 5-20 cm, then yellows and dies by July as summer heat bakes the crust.",
      "confidence": "documented",
      "source": "Wikipedia / Yellowstone NPS accounts of Agrostis rossiae: endemic to thermal ground of the Firehole River and Shoshone Geyser Basin; seeds sprout Dec-Jan on warm soil, green by late winter, flowers May-June, plants die by July (sources differ on annual vs perennial). Culms 5-20 cm (batch). Germination days and growth fractions estimated."
-    }
+    },
+    "biomes": [
+     "HOT_SPRING"
+    ]
    },
    {
-    "name": "Thermophile mat",
-    "genus": "Thermus",
-    "species": "aquaticus",
-    "origin": "Yellowstone hot springs, USA",
-    "shape": "thermophile_mat",
+    "name": "Maidenhair fern",
+    "genus": "Adiantum",
+    "species": "capillus-veneris",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Pteridaceae",
+    "shape": "fern",
     "temp_c": [
-     -10,
-     35
+     10,
+     24
     ],
     "moisture": [
-     0.9,
+     0.7,
      1.0
     ],
-    "height_m": [
-     0.0,
-     0.02
-    ],
-    "density": 1.0,
-    "soil": "wet",
-    "needs": [
-     "hot_ground",
-     "standing_water"
-    ],
-    "water_depth_m": [
+    "altitude_m": [
      0,
-     0.1
+     2500
     ],
-    "color": "#E8A020",
-    "accent": "#D04020",
-    "source": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels at 50-80 C, Yellowstone/Iceland/NZ — Wikipedia / NPS",
-    "traits": {
-     "genus": "Thermus",
-     "species": "aquaticus",
-     "native_range": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels",
-     "leaf_shape": "none — microbial mat",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.0,
-      0.02
+    "biomes": [
+     "CANYON",
+     "CAVES",
+     "HOT_SPRING",
+     "MEDITERRANEAN_SCRUB",
+     "OASIS"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB050",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate in about 6 days; heart-shaped green prothalli a few mm across form in 1-2 months on wet rock or soil, then two-leaved fernlets appear: tiny single fan-shaped leaflets on hair-thin black stalks. Later fronds branch into many wedge-shaped, pale-green leaflets and the creeping rhizome spreads a lacy mat over seeps and damp walls.",
+     "confidence": "estimated",
+     "source": "Spore culture study, Not Sci Biol 9(4) 2017 (germination from day 6, heart-shaped gametophytes at 27-60 d, then two-leaved fernlets); clump growth, spore age and rhizome life estimated from growers and genus habit"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Wet limestone, seeps, waterfall spray and cave mouths worldwide; black wire stems. Kew POWO.",
+    "traits": {
+     "genus": "Adiantum",
+     "species": "capillus-veneris",
+     "native_range": "Wet limestone, seeps, waterfall spray and cave mouths worldwide",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#7ab858",
+      "underside": "#7ab858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#7ab858",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       40
+      ],
+      "notes": "delicate fan-shaped leaflets on black wiry hair-thin stalks, drooping"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "glossy black wire stipe"
+     },
+     "seasonal": "evergreen in mild sites",
+     "silhouette": "airy green mist of tiny fans on black threads over wet rock",
      "confidence": "documented",
-     "note": "microbial mat"
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       30,
+       80
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.0,
+      "leaflet_margin": "crenate"
+     },
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "texture": "matte",
+     "confidence": "documented"
     },
     "canopy": {
-     "form": "mat",
-     "gap": 0.05,
-     "layering": "even",
-     "droop": 0.0
+     "form": "mound",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.6
     },
     "tint": {
-     "hue_shift": 0,
-     "sat": 1.0,
+     "hue_shift": 8,
+     "sat": 0.95,
      "val": 1.0,
-     "underside": 0.0
+     "underside": 0.1
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "none",
+     "pattern": "green_stem",
      "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#E8A020",
-     "color_2": "#D04020",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#3A2A2A",
+     "color_2": "#1A1414",
      "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "orange-yellow microbial mat in hot channel",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      2,
-      10
-     ],
-     "height_years": [
-      0.05,
-      0.3
-     ],
-     "first_seed_years": 0.02,
-     "lifespan_years": [
-      1,
-      20
-     ],
-     "shade": "very_tolerant",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "No plant form: rod-shaped to short filamentous bacteria 0.5-0.8 um wide that clump into 10-20 um spheres. On new surfaces in 50-80 C water it shows within days as a thin slimy film, yellow to pinkish-orange from carotenoid pigments, usually mixed into cyanobacterial mats and streamers rather than forming a large mat of its own.",
-     "confidence": "estimated",
-     "source": "Wikipedia Thermus aquaticus (isolated by T. D. Brock from Mushroom Spring, Lower Geyser Basin; grows at 50-80 C, optimum 65-70 C; rods 0.5-0.8 x 5-10 um, filaments >200 um, spherical bodies 10-20 um; yellow to pink or red in sunlight; a chemotroph that needs no light, living partly on cyanobacterial products). Colonisation and film age estimated."
+     "confidence": "estimated"
     }
    },
    {
-    "name": "Tufted hairgrass",
-    "genus": "Deschampsia",
-    "species": "cespitosa",
-    "origin": "Circumboreal (Holarctic)",
-    "shape": "tussock",
+    "name": "Stream orchid",
+    "genus": "Epipactis",
+    "species": "gigantea",
+    "origin": "Western North America",
+    "family": "Orchidaceae",
+    "shape": "reed",
     "temp_c": [
-     -5,
-     12
+     4,
+     26
     ],
     "moisture": [
      0.6,
      1.0
     ],
+    "altitude_m": [
+     0,
+     2600
+    ],
+    "biomes": [
+     "HOT_SPRING"
+    ],
     "height_m": [
      0.3,
-     1.2
+     1.0
     ],
-    "density": 0.6,
+    "density": 0.5,
     "soil": "wet",
-    "color": "#6AB050",
-    "accent": "#C8B060",
-    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA",
+    "needs": [],
+    "color": "#4A7A3A",
+    "accent": "#B86A4A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      3,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The dust-like seed must meet a soil fungus and lives for a year or more as a tiny underground protocorm. The first shoot is a short stem with a few pleated, clasping leaves; spreading rhizomes then send up more and more leafy stems, so an old plant is a dense colony at the edge of a seep or warm stream.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 26 (Epipactis gigantea: 30-140 cm, rhizomatous, forming colonies; leaves 4-12; seeps, springs, stream banks, including thermal springs; flowers Mar-Aug); Yellowstone flora (thermal populations); years estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "pollinated by hoverflies drawn to an aphid-like scent; dust seed by wind; colonies spread by rhizome"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Epipactis gigantea Douglas ex Hook., stream orchid (giant helleborine): leafy-stemmed rhizomatous orchid 0.3-1 m in colonies at seeps, springs and stream banks of western North America, including the warm runoff of Yellowstone's thermal springs. Kew POWO; Flora of North America vol. 26.",
+    "orchid": {
+     "mycoheterotroph": false,
+     "specific_pollinator": false
+    },
     "traits": {
-     "genus": "Deschampsia",
-     "species": "cespitosa",
-     "native_range": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
+     "genus": "Epipactis",
+     "species": "gigantea",
+     "native_range": "Epipactis gigantea Douglas ex Hook., stream orchid (giant helleborine)",
+     "leaf_shape": "pleated lance-shaped leaves on an upright stem",
+     "trunk": "leafy stems from a creeping rhizome",
+     "petiole": "none — leaves clasp the stem",
      "height_m": [
       0.3,
-      1.2
+      1.0
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
      "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "disperser": [
+      "wind"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a7a3a",
+      "underside": "#6a9a58",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#3a6a2a",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       20
+      ],
+      "notes": "pleated, ribbed, lance-shaped leaves clasping a stout stem"
+     },
+     "flower": {
+      "colour": "#b86a4a",
+      "secondary": "#c8b860",
+      "form": "loose one-sided spike of 3-15 nodding flowers 3-4 cm: greenish sepals veined purple, pink-red petals, a hinged lip veined red and orange",
+      "scent": "none"
+     },
+     "seasonal": "dies back to the rhizome in winter; flowers late spring to summer",
+     "silhouette": "clumps of leafy upright stems with nodding red-green flowers",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 26; Kew POWO"
+    },
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "acute",
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3,
+     "base": "rounded",
+     "apex": "acuminate",
      "margin": "entire",
      "venation": "parallel",
-     "arrangement": "basal",
+     "arrangement": "alternate",
      "size_cm": [
-      10,
-      40
+      5,
+      20
      ],
      "compound": null,
      "texture": "matte",
@@ -1986,55 +2667,212 @@
     },
     "canopy": {
      "form": "tussock",
-     "gap": 0.4,
-     "layering": "even",
-     "droop": 0.45
+     "gap": 0.45,
+     "layering": "sparse",
+     "droop": 0.2
     },
     "tint": {
      "hue_shift": -2,
-     "sat": 0.95,
+     "sat": 0.9,
      "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#A89040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#5A8A40",
+     "color_2": "#7A5A40",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Ticklegrass",
+    "genus": "Agrostis",
+    "species": "scabra",
+    "origin": "North America, Greenland and East Asia",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -6,
+     18
+    ],
+    "moisture": [
+     0.25,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     3800
+    ],
+    "biomes": [
+     "HOT_SPRING"
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#7A9A60",
+    "accent": "#A07890",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A quick pioneer of bare, disturbed and warm ground: the seedling is a fine, rough-edged blade that tillers into a small tuft of short basal leaves and flowers in its first or second summer, raising a huge, hair-fine purplish panicle that later snaps off and tumbles in the wind.",
+     "confidence": "documented",
+     "source": "Flora of North America vol. 24 (Agrostis scabra: tufted perennial 20-80 cm, panicle very open, capillary branches, breaking off at maturity; short-lived; disturbed ground, including thermal areas in Yellowstone)."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 45,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "the ripe panicle breaks off whole and rolls with the wind like a tumbleweed"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Agrostis scabra Willd., ticklegrass (rough bentgrass): short-lived tufted bentgrass 0.2-0.8 m with a huge hair-fine purple panicle; across North America, Greenland and East Asia, and one of the commonest grasses on the warm ground of Yellowstone's thermal basins. Kew POWO; Flora of North America vol. 24; Stout & Al-Niemi 2002.",
+    "traits": {
+     "genus": "Agrostis",
+     "species": "scabra",
+     "native_range": "Agrostis scabra Willd., ticklegrass (rough bentgrass)",
+     "leaf_shape": "short narrow basal grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#7a9a60",
+      "underside": "#8aa870",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#6a8a50",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       15
+      ],
+      "notes": "short narrow rough-edged leaves mostly at the base"
+     },
+     "flower": {
+      "colour": "#a07890",
+      "secondary": "#c8b8a8",
+      "form": "very open panicle 10-30 cm of hair-fine branches with tiny purplish spikelets at the tips",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; purple haze of panicles late summer; straw in winter",
+     "silhouette": "small tufts under a wide purple haze",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 24"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.65,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 1.0,
      "underside": 0.1,
-     "autumn": "#c8b060",
+     "autumn": "#B8A088",
      "drop": false
     },
     "photoperiod": {
      "mode": "long_day",
-     "threshold_h": 14.5,
+     "threshold_h": 14.0,
      "response": "flower"
     },
     "bark": {
      "pattern": "green_stem",
      "orientation": "none",
      "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#6A9A50",
-     "color_2": "#A09060",
+     "scale_cm": 5,
+     "color": "#7A9A60",
+     "color_2": "#A08898",
      "lenticels": "none",
      "confidence": "documented"
-    },
-    "silhouette": "dense green tussock with airy seed haze",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      1,
-      4
-     ],
-     "first_seed_years": 1.5,
-     "lifespan_years": [
-      10,
-      40
-     ],
-     "shade": "intermediate",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
-     "confidence": "documented",
-     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
     }
    }
   ],
@@ -2046,14 +2884,10 @@
    "realm": "any",
    "where": "hot runoff channels and pool rims, water too hot for plants",
    "dominant": [
-    "Thermophile mat",
-    "Green cyanobacteria mat"
+    "Hot-spring moss"
    ],
    "companion": [],
-   "ground": [
-    "Thermophile mat",
-    "Green cyanobacteria mat"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.5,
    "source": "Brock 1978 Thermophilic Microorganisms and Life at High Temperatures, Yellowstone"
@@ -2069,7 +2903,8 @@
    "companion": [],
    "ground": [
     "Hot-spring moss",
-    "Ross' bentgrass"
+    "Ross' bentgrass",
+    "Hot springs panic grass"
    ],
    "catalogue": [],
    "cover": 0.4,
@@ -2086,7 +2921,8 @@
     "Manuka"
    ],
    "ground": [
-    "Geothermal kanuka moss"
+    "Geothermal kanuka moss",
+    "Dwarf swan-neck moss"
    ],
    "catalogue": [],
    "cover": 0.4,
@@ -2100,15 +2936,15 @@
    ],
    "where": "wet cooled outflow, marshy ground downstream of the springs",
    "dominant": [
-    "Broad-leaved cattail"
+    "Cattail"
    ],
    "companion": [
     "Geothermal willow",
     "Shrubby cinquefoil"
    ],
    "ground": [
-    "Tufted hairgrass",
-    "Broad-leaved cattail"
+    "Cattail",
+    "Stream orchid"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -2125,7 +2961,7 @@
     "Shrubby cinquefoil"
    ],
    "ground": [
-    "Tufted hairgrass"
+    "Ticklegrass"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -2141,9 +2977,7 @@
    "companion": [
     "Geothermal willow"
    ],
-   "ground": [
-    "Tufted hairgrass"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.45,
    "source": "Elmarsdottir et al. 2003 Icelandic geothermal vegetation"

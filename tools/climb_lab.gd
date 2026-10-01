@@ -16,7 +16,7 @@ extends SceneTree
 ## along it to where it gets too thin? Prints each miss and a score per
 ## tree; fails below BRANCH_PASS of them reached.
 
-const SPECIES := ["Acacia", "Beach she-oak", "Miombo tree", "Oak", "Beech", "Baobab", "Paper birch", "Scots pine"]
+const SPECIES := ["Umbrella thorn", "Beach she-oak", "Miombo tree", "White oak", "American beech", "African baobab", "Downy birch", "Scots pine"]
 const DT := 1.0 / 60.0
 ## Share of a tree's holdable branches W must take you out along.
 const BRANCH_PASS := 0.9

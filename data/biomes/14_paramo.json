@@ -22,151 +22,792 @@
  },
  "plants": {
   "emergent": [],
-  "canopy": [],
-  "shrub": [
+  "canopy": [
    {
-    "name": "Frailejon",
-    "genus": "Espeletia",
-    "species": "grandiflora",
-    "origin": "Eastern Cordillera of Colombia",
-    "shape": "rosette",
+    "name": "Paramo polylepis",
+    "genus": "Polylepis",
+    "species": "reticulata",
+    "origin": "Andes of Ecuador and N Peru",
+    "family": "Rosaceae",
+    "shape": "gnarled",
     "temp_c": [
-     -2,
+     -1,
      8
     ],
     "moisture": [
      0.6,
-     1
+     1.0
     ],
     "altitude_m": [
-     2700,
-     4300
+     3400,
+     4500
+    ],
+    "biomes": [
+     "PARAMO"
     ],
     "height_m": [
-     0.5,
-     3
+     3,
+     10
     ],
-    "density": 1.0,
-    "soil": "peat",
-    "color": "#A8B890",
-    "accent": "#C8A050",
-    "source": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0.5-3 m with yellow daisies",
-    "traits": {
-     "genus": "Espeletia",
-     "species": "grandiflora",
-     "native_range": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.5,
-      3
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E6A3A",
+    "accent": "#B0603A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in moss and leaf litter under the parent trees. The young plant is a stiff sprig of compound leaves with 3-5 small, thick, dark, net-veined leaflets, felted pale beneath, crowded at the shoot tips; within a few years the stem twists and starts shedding thin red-brown papery bark.",
+     "confidence": "estimated",
+     "source": "Kessler 1995 / Simpson 1979 Polylepis revision (P. reticulata: tree of humid paramo, Ecuador and N Peru, ~3,400-4,500 m, leathery reticulate leaflets, multilayered red peeling bark); growth rate from tree-ring work on P. reticulata in the Ecuadorian Andes (slow radial growth); ages and first seeding estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Polylepis reticulata (Kew POWO; Simpson 1979 A revision of the genus Polylepis): small twisted tree of the humid paramo of Ecuador and northern Peru, 3,400-4,500 m, forming patches and groves on sheltered slopes and rock outcrops above the cloud forest; leaflets coriaceous with deeply impressed reticulate veins above and dense pale tomentum beneath; bark of many thin red-brown papery layers.",
+    "traits": {
+     "genus": "Polylepis",
+     "species": "reticulata",
+     "native_range": "humid paramo of Ecuador and N Peru, 3400-4500 m",
+     "leaf_shape": "small compound leaves of thick net-veined leaflets",
+     "trunk": "short twisted trunk, crooked low limbs, peeling red bark",
+     "petiole": "short petiole with a sheathing base",
+     "height_m": [
+      3,
+      10
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
+    "bark_type": "peeling",
     "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "papery",
+      "base": "#a85a3a",
+      "secondary": "#d09a6a",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "dozens of thin red-brown papery layers peel and flutter from trunk and limbs"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#3e5e34",
+      "underside": "#c8bc98",
+      "gloss": 0.35,
+      "veins": "reticulate",
+      "vein_colour": "#2e4628",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       5
+      ],
+      "notes": "leaves of 3-5 thick obovate leaflets, dark green and deeply net-veined above, felted buff below, crowded at twig tips"
+     },
+     "flower": {
+      "colour": "#7a7a50",
+      "secondary": "#a03a3a",
+      "form": "pendent spikes of small green petal-less flowers with purple-red anthers",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5a3a",
+      "form": "small hard achene with irregular wings or knobs"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "crooked red-barked tree with dark leathery crown",
+     "confidence": "estimated",
+     "refs": "Simpson 1979; Kessler 1995; Ecuadorian treeline studies"
+    },
     "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 5,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
+     "type": "compound",
      "venation": "pinnate",
-     "arrangement": "spiral",
+     "arrangement": "alternate",
      "size_cm": [
-      20,
-      45
+      2,
+      5
      ],
-     "compound": null,
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       3,
+       5
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.8,
+      "leaflet_margin": "entire"
+     },
      "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.2
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
     },
     "tint": {
-     "hue_shift": -6,
-     "sat": 0.45,
-     "val": 1.15,
-     "underside": 0.05
+     "hue_shift": -8,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.55
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "ringed",
+     "pattern": "papery",
      "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 3,
-     "color": "#7A6A50",
-     "color_2": "#A09070",
+     "depth": 0.6,
+     "scale_cm": 2,
+     "color": "#A85A3A",
+     "color_2": "#D09A6A",
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "woolly rosette atop skirt of dead leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      15,
-      90
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      80
      ],
-     "height_years": [
-      20,
-      40
+     "taper_exponent": 2.2,
+     "sinuosity": 0.85,
+     "fork_height_frac": [
+      0.0,
+      0.2
      ],
-     "trunk_years": 5,
-     "first_seed_years": 8,
-     "lifespan_years": [
-      50,
-      90
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.85,
+      0.6
      ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are tiny flat rosettes of woolly, silver-green, strap-shaped leaves on bare ground or moss (~85% die in dry spells). For about 4-5 years a stemless ground rosette widens to 25-30 cm; then the stem begins to rise ~7-8 cm a year, clothed in a skirt of dead leaves, and the plant can first flower at ~20 cm of stem.",
-     "confidence": "documented",
-     "source": "Fagua & Gonzalez 2007 Plant Biology (E. grandiflora: stem growth 7.6 cm/yr, plants >=2 m ~40-45 yr old, first flowering at ~21 cm stem, seedling mortality ~85% in dry season); Exotica Esoterica frailejon cultivation notes (stemless for 4+ yr, 25-30 cm rosette in <2 yr, ~90% germination within 3 months)."
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     },
     "fruiting": {
      "flower_months": [
-      9,
+      1,
       12
      ],
      "hemisphere": "equatorial",
-     "flower_days": 14,
-     "flower_size_cm": 5.5,
-     "flower_colour": "#f0c02c",
-     "flower_form": "star",
-     "flower_position": "stalk",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7a7a50",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
      "flowers_per_cluster": [
-      5,
-      20
+      3,
+      12
      ],
      "pollinators": [
-      "bumblebee",
-      "bird",
-      "fly",
-      "beetle",
-      "moth"
+      "wind"
      ],
-     "fruit_set": 0.5,
+     "fruit_set": 0.25,
      "fruit_kind": "achene",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#8a9a6a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Simpson 1979 (Polylepis: wind-pollinated, petal-less flowers on pendent racemes, sepals green, anthers purple; achenes winged or spiny); equatorial flowering spread through the year estimated"
+    },
+    "silhouette": "crooked red-barked tree with dark leathery crown"
+   },
+   {
+    "name": "Kolle",
+    "genus": "Buddleja",
+    "species": "coriacea",
+    "origin": "Andes of Ecuador, Peru and Bolivia",
+    "family": "Scrophulariaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.35,
+     0.8
+    ],
+    "altitude_m": [
+     3000,
+     4350
+    ],
+    "biomes": [
+     "PARAMO"
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E6A3E",
+    "accent": "#E08A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged seeds germinate on bare rocky soil. The seedling bears opposite pairs of small, thick, shiny leaves, woolly beneath, and soon branches from near the ground into a dense, low, many-stemmed bush that only slowly lifts a short crooked trunk.",
+     "confidence": "estimated",
+     "source": "Norman 2000 Flora Neotropica Buddlejaceae (B. coriacea: densely crowned sprawling shrub or tree branching near the ground, usually under 4 m, rarely 12 m; 3,000-4,350 m on dry to semi-humid rocky soils, −3 to 15 °C); growth rates and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Buddleja coriacea (Kew POWO; Norman 2000 Flora Neotropica): high-Andean shrub or small tree of Ecuador, Peru and Bolivia, 3,000-4,350 m on dry to semi-humid rocky soils; leaves small, thick and leathery, 1-4 cm, glossy and waxy above, appressed-tomentose below, margins entire and often recurved; orange flowers in small heads; used with Polylepis in high-Andean woodland.",
+    "traits": {
+     "genus": "Buddleja",
+     "species": "coriacea",
+     "native_range": "high Andes of Ecuador, Peru and Bolivia, 3000-4350 m",
+     "leaf_shape": "small thick leathery opposite leaves",
+     "trunk": "short crooked trunk branching near the ground",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#6e5e4e",
+      "secondary": "#4a3e34",
+      "feature_cm": 1,
+      "roughness": 0.5,
+      "notes": "grey-brown bark in shallow vertical fissures, flaking in narrow strips on old stems"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e5a34",
+      "underside": "#c8b890",
+      "gloss": 0.55,
+      "veins": "pinnate",
+      "vein_colour": "#334a2c",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       4
+      ],
+      "notes": "small thick elliptic leaves in opposite pairs, glossy waxy green above, buff-felted beneath, edges rolled under"
+     },
+     "flower": {
+      "colour": "#e08a2a",
+      "secondary": "#f0b040",
+      "form": "small orange tubular flowers in round heads at the twig tips",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7a5a3a",
+      "form": "small brown two-valved capsules with tiny winged seeds"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "dense low dark-green bush-tree on rock",
+     "confidence": "estimated",
+     "refs": "Norman 2000 Flora Neotropica Buddlejaceae; Wikipedia Buddleja coriacea"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.4,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#6E5E4E",
+     "color_2": "#4A3E34",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.95,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 6,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#e08a2a",
+     "flower_form": "tube",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      6,
+      30
+     ],
+     "pollinators": [
+      "bird",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
      "fruit_shape": "ovoid",
      "fruit_size_cm": [
-      0.25,
-      0.4
+      0.3,
+      0.5
      ],
-     "unripe_colour": "#a7a44e",
-     "ripe_colour": "#3d3025",
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      40,
+      80
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Norman 2000 (orange tubular corollas in head-like cymes; capsules septicidal with small winged seeds); flowering season, pollinators and counts estimated"
+    },
+    "silhouette": "dense low dark-green bush-tree on rock"
+   },
+   {
+    "name": "Rodamonte",
+    "genus": "Escallonia",
+    "species": "myrtilloides",
+    "origin": "Andes, Costa Rica to Bolivia",
+    "family": "Escalloniaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     -1,
+     12
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     2500,
+     4200
+    ],
+    "biomes": [
+     "PARAMO"
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "needs": [],
+    "color": "#3E7A3A",
+    "accent": "#E8E4D0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds germinate on moist moss and bare peat. The seedling is a thin upright stem with tiny glossy obovate leaves; early on it puts out near-horizontal side branches in tiers, so even a young plant shows the flat-layered 'pagoda' outline, the leaves crowded in rosettes on short shoots along each tier.",
+     "confidence": "estimated",
+     "source": "Colombian floras / Luteyn 1999 (E. myrtilloides: shrub or tree 2-5 m, strongly tiered pagoda-like crown, subparamo and paramo 2,500-3,900 m in Colombia, 1,900-4,200 m overall); growth rates and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 15,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Escallonia myrtilloides (Kew POWO; Luteyn 1999 Paramos checklist; Flora de Costa Rica): shrub or small tree 2-5 m of subparamo and paramo from Costa Rica to Bolivia, 2,500-3,900 m in Colombia; branches in flat horizontal tiers, giving a 'Chinese pagoda' crown; small obovate crenulate leaves crowded on short shoots; small white flowers solitary at the shoot tips.",
+    "traits": {
+     "genus": "Escallonia",
+     "species": "myrtilloides",
+     "native_range": "subparamo and paramo, Costa Rica to Bolivia",
+     "leaf_shape": "small obovate leaves in rosettes on short shoots",
+     "trunk": "single short trunk with flat horizontal tiers of branches",
+     "petiole": "very short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#6a5040",
+      "secondary": "#8a6a50",
+      "feature_cm": 1,
+      "roughness": 0.5,
+      "notes": "reddish-brown bark in shallow fissures, flaking on old trunks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3a6a34",
+      "underside": "#6a8a54",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#2e5428",
+      "margin": "crenate",
+      "size_cm": [
+       1,
+       2.5
+      ],
+      "notes": "small glossy obovate leaves with finely toothed tips, crowded in rosettes along the flat branch tiers"
+     },
+     "flower": {
+      "colour": "#f0ecd8",
+      "secondary": "#b8c890",
+      "form": "small white cup-shaped flowers, one at each shoot tip",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a4a3a",
+      "form": "small dark top-shaped capsule crowned by the old style"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "small tree with flat pagoda tiers of branches",
+     "confidence": "estimated",
+     "refs": "Luteyn 1999; Flora de Costa Rica Escallonia myrtilloides; NaturaLista Colombia"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.2,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      2.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.45,
+     "layering": "tiered",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 1,
+     "color": "#6A5040",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "aubreville",
+     "habit": "excurrent",
+     "orders": 4,
+     "branch_angle_deg": [
+      75,
+      95
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f0ecd8",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#5a4a3a",
      "ripen_days": [
       60,
       120
@@ -177,18 +818,21 @@
      ],
      "drop": "splits",
      "rot_days": [
-      90,
-      365
+      60,
+      300
      ],
      "crop_per_tree": [
-      1000,
-      8000
+      200,
+      3000
      ],
      "edible": "no",
-     "confidence": "documented",
-     "source": "Fagua & Gonzalez 2007 Plant Biology (flowering peak Oct-Nov, 30-96 days per plant; inflorescence stalks ~85 cm; heads 5.0-6.2 cm, ~86 per plant; Bombus the main pollinators plus hummingbirds, flies, beetles, nocturnal moths; seeds shed Sep-May). Achene size, crop and rot estimated."
-    }
-   },
+     "confidence": "estimated",
+     "source": "Flora de Costa Rica (flowers solitary, terminal on short shoots, white; capsule with many tiny seeds); timing and counts estimated"
+    },
+    "silhouette": "small tree with flat pagoda tiers of branches"
+   }
+  ],
+  "shrub": [
    {
     "name": "Paramo dwarf bamboo",
     "genus": "Chusquea",
@@ -206,6 +850,9 @@
     "altitude_m": [
      3000,
      4300
+    ],
+    "biomes": [
+     "PARAMO"
     ],
     "height_m": [
      0.5,
@@ -326,6 +973,545 @@
     }
    },
    {
+    "name": "Chuquiragua",
+    "genus": "Chuquiraga",
+    "species": "jussieui",
+    "origin": "Andes of Colombia, Ecuador and Peru",
+    "family": "Asteraceae",
+    "shape": "shrub",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     3000,
+     5000
+    ],
+    "biomes": [
+     "PARAMO"
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E6A3A",
+    "accent": "#E8962A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling with two small cotyledons, then a stiff upright sprig densely clothed in small, hard, overlapping, spine-tipped leaves. It branches slowly from the base into a low, prickly, rounded shrub whose stem tips carry single bright orange flower heads.",
+     "confidence": "estimated",
+     "source": "Ezcurra 1985 revision of Chuquiraga; Ecuadorian paramo floras (low shrub to ~75 cm, to 3 m on Cotopaxi; 3,000-5,000 m); growth rates and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Chuquiraga jussieui (Kew POWO; Ezcurra 1985 Revision del genero Chuquiraga): 'flower of the Andes', national flower of Ecuador; low rigid shrub of grass and rocky paramo of Colombia, Ecuador and Peru, 3,000-5,000 m; leaves small, coriaceous, imbricate and spine-tipped; solitary terminal heads of orange-yellow tubular florets visited by hillstar hummingbirds.",
+    "traits": {
+     "genus": "Chuquiraga",
+     "species": "jussieui",
+     "native_range": "paramo of Colombia, Ecuador and Peru, 3000-5000 m",
+     "leaf_shape": "small hard overlapping spine-tipped leaves",
+     "trunk": "many stiff stems from the base",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#6a5a48",
+      "secondary": "#4a3e32",
+      "feature_cm": 0.5,
+      "roughness": 0.6,
+      "notes": "stems rough and grey-brown, studded with old leaf bases"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a6a3a",
+      "underside": "#7a8a5a",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#3a5a2e",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       1.5
+      ],
+      "notes": "small stiff ovate leaves tipped with a sharp spine, tightly overlapping all along the stems"
+     },
+     "flower": {
+      "colour": "#e8962a",
+      "secondary": "#f0c040",
+      "form": "single bright orange heads of long tubular florets at each stem tip",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c8b890",
+      "form": "hairy achenes with a buff feathery pappus"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "low prickly shrub tipped with orange flower heads",
+     "confidence": "documented",
+     "refs": "Ezcurra 1985; Wikipedia Chuquiraga jussieui"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.5,
+      1.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 0.5,
+     "color": "#6A5A48",
+     "color_2": "#4A3E32",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      15,
+      40
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 14,
+     "flower_size_cm": 3,
+     "flower_colour": "#e8962a",
+     "flower_form": "brush",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.8
+     ],
+     "unripe_colour": "#a8a070",
+     "ripe_colour": "#c8b890",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      20,
+      400
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Ezcurra 1985 (solitary terminal heads, orange tubular florets, pappose achenes); hillstar hummingbird pollination from Ecuadorian studies; timing and counts estimated"
+    },
+    "silhouette": "low prickly shrub tipped with orange flower heads"
+   },
+   {
+    "name": "Andean blueberry",
+    "genus": "Vaccinium",
+    "species": "floribundum",
+    "origin": "Andes, Venezuela to Bolivia",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     1,
+     12
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "altitude_m": [
+     2800,
+     4500
+    ],
+    "biomes": [
+     "PARAMO"
+    ],
+    "height_m": [
+     0.2,
+     2.5
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#3E6A34",
+    "accent": "#2A2E4A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seeds germinate on moist peat and moss. The seedling has small glossy oval leaves, bronze-red when new, and soon sends several thin wiry stems up from a woody base, becoming a low twiggy evergreen bush that later layers along the ground.",
+     "confidence": "estimated",
+     "source": "Mortino reviews (Vasco et al. 2009; Coba et al. 2022): evergreen shrub 0.2-2.5 m, often prostrate or scandent, edges of humid paramo 3,000-4,500 m; growth rates and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bumblebee",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Vaccinium floribundum (Kew POWO; Luteyn 1999 Paramos checklist): mortino, evergreen shrub of the humid paramo and upper montane forest from Venezuela to Bolivia, 1,600-4,500 m, most common 3,000-4,500 m; leaves small, glossy, crenate-serrulate, reddish when young; pink to red urn-shaped flowers in racemes of 6-10; blue-black berries 5-8 mm, eaten and gathered.",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "floribundum",
+     "native_range": "humid paramo, Venezuela to Bolivia, 2800-4500 m",
+     "leaf_shape": "small glossy oval leaves, red when young",
+     "trunk": "many wiry stems from a woody base",
+     "petiole": "very short petiole",
+     "height_m": [
+      0.2,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "bumblebee",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "flaky",
+      "base": "#7a4a3a",
+      "secondary": "#a87a5a",
+      "feature_cm": 0.5,
+      "roughness": 0.3,
+      "notes": "thin reddish-brown bark on wiry stems, shredding a little on old wood"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.25
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3a6232",
+      "underside": "#6a8a54",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#2e5028",
+      "margin": "crenate",
+      "size_cm": [
+       0.8,
+       2
+      ],
+      "notes": "small glossy oval leaves with finely toothed edges; new shoots bronze-red"
+     },
+     "flower": {
+      "colour": "#e898a8",
+      "secondary": "#c83a4a",
+      "form": "small pink to red urn-shaped bells hanging in short racemes",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#2a2e4a",
+      "form": "round blue-black berries 5-8 mm with a pale bloom"
+     },
+     "seasonal": "evergreen; red new growth",
+     "silhouette": "low twiggy glossy bush with blue-black berries",
+     "confidence": "documented",
+     "refs": "Coba et al. 2022 Mortino review; Luteyn 1999"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.8,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 0.5,
+     "color": "#7A4A3A",
+     "color_2": "#A87A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 7,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#e898a8",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      10
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#2a2e4a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Mortino reviews (racemes of 6-10 white to pink or red urceolate flowers; blue-black glabrous berries 5-8 mm, main harvest around Oct-Dec in Ecuador); pollinators and counts estimated"
+    },
+    "silhouette": "low twiggy glossy bush with blue-black berries"
+   },
+   {
     "name": "Paramo dwarf shrub",
     "genus": "Hypericum",
     "species": "laricifolium",
@@ -342,6 +1528,9 @@
     "altitude_m": [
      2800,
      4300
+    ],
+    "biomes": [
+     "PARAMO"
     ],
     "height_m": [
      0.5,
@@ -512,419 +1701,42 @@
      "confidence": "estimated",
      "source": "Estimated from Hypericum sect. Brathys (solitary or few golden 5-petalled flowers at branch tips, dry septicidal capsules, tiny seeds) and paramo pollination studies (bumblebees and flies); flowering spread through the year in the equatorial Andes."
     }
-   },
-   {
-    "name": "Paramo puya",
-    "genus": "Puya",
-    "species": "clava-herculis",
-    "origin": "Andes of Ecuador and Colombia",
-    "shape": "spike_rosette",
-    "temp_c": [
-     -2,
-     6
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     3300,
-     4400
-    ],
-    "height_m": [
-     0.8,
-     2.5
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#8AB0A0",
-    "accent": "#4060C0",
-    "source": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2.5 m with blue-green spike",
-    "traits": {
-     "genus": "Puya",
-     "species": "clava-herculis",
-     "native_range": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2",
-     "leaf_shape": "stiff spined sword leaves in a rosette",
-     "trunk": "none or a short woody stem; tall flower spike",
-     "petiole": "none",
-     "height_m": [
-      0.8,
-      2.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "furry",
-    "leaf_type": "spine",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 20,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "spinose",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      40,
-      80
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.35,
-     "layering": "even",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": -10,
-     "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.5
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.4,
-     "scale_cm": 2,
-     "color": "#7A6A58",
-     "color_2": "#A09080",
-     "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "silhouette": "spiky grey rosette with club flower spike",
-    "growth": {
-     "life": "monocarpic",
-     "germination_days": [
-      14,
-      45
-     ],
-     "height_years": [
-      8,
-      18
-     ],
-     "first_seed_years": 20,
-     "lifespan_years": [
-      20,
-      35
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "A tiny grass-like tuft among paramo bunchgrass that slowly becomes a stemless rosette of stiff, narrow, channelled grey-green leaves with small hooked spines along the edges and silvery scales beneath. It widens for many years; finally one thick, club-shaped spike densely wrapped in white-buff wool rises from the centre, flowers, and the rosette dies.",
-     "confidence": "estimated",
-     "source": "Kew POWO (perennial of the paramo, SW Colombia to Ecuador); Wikipedia Puya (many species monocarpic); Miller 1986 Oecologia (woolly inflorescences of Ecuadorian paramo Puya keep flowers warmer at night; from knowledge); ages and rates estimated from Puya raimondii and other paramo giant rosettes"
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 2,
-     "flower_size_cm": 3,
-     "flower_colour": "#a8bf6a",
-     "flower_form": "tube",
-     "flower_position": "stalk",
-     "flowers_per_cluster": [
-      300,
-      1500
-     ],
-     "pollinators": [
-      "bird",
-      "bumblebee"
-     ],
-     "fruit_set": 0.4,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      1.5,
-      2.5
-     ],
-     "unripe_colour": "#7f9a5a",
-     "ripe_colour": "#7a5c3c",
-     "ripen_days": [
-      60,
-      120
-     ],
-     "hang_days": [
-      60,
-      300
-     ],
-     "drop": "splits",
-     "rot_days": [
-      120,
-      540
-     ],
-     "crop_per_tree": [
-      150,
-      800
-     ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "Estimated from paramo Puya (P. hamata, P. raimondii): tubular greenish flowers half hidden in the woolly spike, visited by hummingbirds (e.g. Ecuadorian hillstar) and bumblebees; individuals flower at any time of year; capsules split on the dead standing spike, releasing small winged seeds"
-    }
-   },
-   {
-    "name": "Tall frailejon",
-    "genus": "Espeletia",
-    "species": "pycnophylla",
-    "origin": "Andes of Ecuador and S Colombia",
-    "shape": "rosette",
-    "temp_c": [
-     -2,
-     8
-    ],
-    "moisture": [
-     0.6,
-     1
-    ],
-    "altitude_m": [
-     3000,
-     4200
-    ],
-    "height_m": [
-     2,
-     6
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#A8B890",
-    "accent": "#D0B058",
-    "source": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
-    "traits": {
-     "genus": "Espeletia",
-     "species": "pycnophylla",
-     "native_range": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      2,
-      6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 8,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "spiral",
-     "size_cm": [
-      25,
-      50
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.25
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.45,
-     "val": 1.15,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 3,
-     "color": "#6E6050",
-     "color_2": "#9A8A6A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "tall column of dead leaves, woolly rosette on top",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      15,
-      90
-     ],
-     "height_years": [
-      40,
-      100
-     ],
-     "trunk_years": 8,
-     "first_seed_years": 15,
-     "lifespan_years": [
-      100,
-      200
-     ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Like other frailejones: a flat, silvery-woolly rosette of narrow leaves at ground level for several years, then a stem rises very slowly (a few cm a year), wrapped in a thick skirt of dead, hanging grey leaves under a dense crown rosette of felted silver-green leaves; old plants are shaggy columns 2-6 m tall.",
-     "confidence": "estimated",
-     "source": "Estimated from Espeletia: Useful Tropical Plants (E. pycnophylla to ~4 m, slow); Cumbal (Narino) transplant study in Ingeniare (young plants +0.7-0.95 cm per 6 months); Fagua & Gonzalez 2007 (E. grandiflora 7.6 cm/yr); Flora 2018 long-term growth of Coespeletia and E. schultzii (~1.1-1.3 cm/yr)."
-    },
-    "fruiting": {
-     "flower_months": [
-      7,
-      11
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 14,
-     "flower_size_cm": 4.5,
-     "flower_colour": "#f0c030",
-     "flower_form": "star",
-     "flower_position": "stalk",
-     "flowers_per_cluster": [
-      3,
-      15
-     ],
-     "pollinators": [
-      "bumblebee",
-      "bird",
-      "fly",
-      "beetle"
-     ],
-     "fruit_set": 0.4,
-     "fruit_kind": "achene",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      0.25,
-      0.4
-     ],
-     "unripe_colour": "#a2a24e",
-     "ripe_colour": "#3b2f24",
-     "ripen_days": [
-      60,
-      120
-     ],
-     "hang_days": [
-      30,
-      180
-     ],
-     "drop": "splits",
-     "rot_days": [
-      90,
-      365
-     ],
-     "crop_per_tree": [
-      800,
-      6000
-     ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "Estimated from E. grandiflora (Fagua & Gonzalez 2007 Plant Biology: yellow heads ~5-6 cm on long stalks, bumblebee/hummingbird/fly/beetle pollination, seed shed over months) and frailejon growers' notes (a stalk flowers ~2 months)."
-    }
    }
   ],
   "ground": [
    {
-    "name": "Bog moss",
+    "name": "Sphagnum moss",
     "genus": "Sphagnum",
     "species": "magellanicum",
-    "origin": "South America (Andes to Patagonia)",
+    "origin": "Southern South America",
+    "family": "Sphagnaceae",
     "shape": "moss",
     "temp_c": [
-     -3,
-     8
+     -8,
+     18
     ],
     "moisture": [
-     0.8,
-     1
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "BOG",
+     "PARAMO",
+     "TEPUI"
     ],
     "height_m": [
      0.02,
-     0.1
+     0.15
     ],
-    "density": 0.5,
+    "density": 1.0,
     "soil": "peat",
-    "color": "#B04A40",
-    "accent": "#8A6030",
-    "source": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
-    "traits": {
-     "genus": "Sphagnum",
-     "species": "magellanicum",
-     "native_range": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.02,
-      0.1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 1.5,
-     "base": "rounded",
-     "apex": "rounded",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "spiral",
-     "size_cm": [
-      0.1,
-      0.25
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.1,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 30,
-     "sat": 0.7,
-     "val": 0.85,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#B04A40",
-     "color_2": "#8A6030",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "reddish spongy moss hummock",
+    "needs": [],
+    "color": "#A0B060",
+    "accent": "#C08080",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -946,80 +1758,123 @@
      "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
      "confidence": "documented",
      "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
-    }
-   },
-   {
-    "name": "Cushion plant",
-    "genus": "Plantago",
-    "species": "rigida",
-    "origin": "Andes of Venezuela to Bolivia",
-    "shape": "cushion",
-    "temp_c": [
-     -3,
-     5
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "altitude_m": [
-     3500,
-     4800
-    ],
-    "height_m": [
-     0.05,
-     0.3
-    ],
-    "density": 0.8,
-    "soil": "wet",
-    "color": "#5AA040",
-    "accent": "#8A9A50",
-    "source": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bogs worldwide; holds twenty times its weight in water and makes the peat; red in the open, green in shade. Kew POWO.",
+    "peat_maker": true,
     "traits": {
-     "genus": "Plantago",
-     "species": "rigida",
-     "native_range": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
-     "leaf_shape": "tiny leaves packed in a dome",
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Bogs worldwide",
+     "leaf_shape": "tiny leaves on thread stems",
      "trunk": "none",
      "petiole": "none",
      "height_m": [
-      0.05,
-      0.3
+      0.02,
+      0.15
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
     "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#c83a48",
+      "underside": "#8ab848",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c83a48",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "dense hummocks of pom-pom heads; crimson-red in open sun, pale green in shade, pale straw when dry"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       15
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "red in open sun, green shaded; bleaches pale when dry",
+     "silhouette": "red and green hummocky carpet in the bog",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "fruit": {
+      "colour": "#3a2a20",
+      "form": "tiny brown spore capsules on short stalks, summer"
+     }
+    },
     "leaf": {
      "type": "simple",
-     "outline": "linear",
-     "aspect": 8,
-     "base": "truncate",
-     "apex": "mucronate",
+     "outline": "ovate",
+     "aspect": 1.6,
+     "base": "rounded",
+     "apex": "obtuse",
      "margin": "entire",
-     "venation": "parallel",
+     "venation": "none",
      "arrangement": "spiral",
      "size_cm": [
-      0.5,
-      1.5
+      0.1,
+      0.3
      ],
      "compound": null,
-     "texture": "glossy",
+     "texture": "matte",
      "confidence": "documented"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.08,
+     "gap": 0.1,
      "layering": "even",
      "droop": 0.0
     },
     "tint": {
-     "hue_shift": 4,
-     "sat": 1.0,
+     "hue_shift": 10,
+     "sat": 0.9,
      "val": 1.0,
      "underside": 0.05
     },
@@ -1027,37 +1882,14 @@
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "green_stem",
+     "pattern": "none",
      "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#5A9A48",
-     "color_2": "#8A8A58",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
      "lenticels": "none",
      "confidence": "documented"
-    },
-    "silhouette": "hard bright green cushion",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      60
-     ],
-     "height_years": [
-      20,
-      60
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      50,
-      200
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are tiny rosettes of narrow, stiff, grey-green leaves; each keeps branching into more tight rosettes packed side by side, building a hard, convex, green cushion as firm as a pillow. Old cushions fuse into mounds and hummocks in wet paramo bogs, with small brownish flower spikes barely raised above the surface.",
-     "confidence": "estimated",
-     "source": "Estimated from Andean paramo cushion-bog ecology (Plantago rigida and Distichia cushions: slow radial growth of millimetres to a few cm a year, cushions persisting for decades to centuries) and Plantago seed biology"
     }
    },
    {
@@ -1166,123 +1998,10 @@
      "juvenile_note": "Spores germinate underground into a tiny non-green, fungus-fed gametophyte that takes years (often 6-15) to mature, so the value above is capped. The sporeling is one small upright shoot densely clad in tiny needle-like scale leaves; it then sends a creeping runner over the ground that roots and throws up forked, bristly upright shoots. Spore cones on long stalks come ~4-6 yr later.",
      "confidence": "documented",
      "source": "USDA Forest Service GTR NC-217 'Lycopodium: growth form, morphology and sustainability' (spore-gametophyte-sporophyte cycle up to 20 yr; gametophytes live weeks to 10+ yr; aerial stems produce spores at 4-6 yr; ramets 1-6 yr old); Bruchmann/Whittier on subterranean mycoheterotrophic gametophytes"
-    }
-   },
-   {
-    "name": "Paramo lupine",
-    "genus": "Lupinus",
-    "species": "alopecuroides",
-    "origin": "Andes of Colombia and Ecuador",
-    "shape": "rosette",
-    "temp_c": [
-     -3,
-     4
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     3800,
-     4800
-    ],
-    "height_m": [
-     0.2,
-     0.6
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#A0B0A0",
-    "accent": "#5050C0",
-    "source": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
-    "traits": {
-     "genus": "Lupinus",
-     "species": "alopecuroides",
-     "native_range": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.2,
-      0.6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "compound",
-     "venation": "pinnate",
-     "arrangement": "basal",
-     "size_cm": [
-      5,
-      10
-     ],
-     "compound": {
-      "form": "palmate",
-      "leaflets": [
-       7,
-       11
-      ],
-      "leaflet_outline": "obovate",
-      "leaflet_aspect": 5,
-      "leaflet_margin": "entire"
-     },
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.45,
-     "val": 1.15,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#8A9A80",
-     "color_2": "#B0B0A0",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "woolly silver rosette with blue spike",
-    "growth": {
-     "life": "monocarpic",
-     "germination_days": [
-      14,
-      45
-     ],
-     "height_years": [
-      3,
-      7
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      8,
-      15
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings show two thick cotyledons, then small palmate leaves densely clothed in silky silver hairs. For years the plant builds a dense, silvery-woolly rosette of palmately divided leaves hugging the paramo ground, then sends up a single thick, woolly, fox-tail spike packed with blue-violet pea flowers, sets seed and dies.",
-     "confidence": "estimated",
-     "source": "Wikipedia (Lupinus alopecuroides: 2,700-4,500 m on ten isolated peaks in Colombia and Ecuador); giant-rosette, flower-once (monocarpic) life history and timings estimated from paramo rosette lupines such as L. weberbaueri - treat as uncertain."
-    }
+    "biomes": [
+     "PARAMO"
+    ]
    },
    {
     "name": "Tussock grass",
@@ -1301,6 +2020,9 @@
     "altitude_m": [
      2800,
      4300
+    ],
+    "biomes": [
+     "PARAMO"
     ],
     "height_m": [
      0.4,
@@ -1396,6 +2118,473 @@
      "confidence": "estimated",
      "source": "Estimated from paramo tussock-grass ecology (C. effusa is a dominant bunchgrass of the northern Andean paramos, forming dense tussocks insulated by dead leaves); no species growth data found."
     }
+   },
+   {
+    "name": "Bofedal cushion",
+    "genus": "Distichia",
+    "species": "muscoides",
+    "origin": "High Andes",
+    "family": "Juncaceae",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     3800,
+     5000
+    ],
+    "biomes": [
+     "PARAMO",
+     "PUNA"
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AA040",
+    "accent": "#8A9A50",
+    "source": "Distichia muscoides, Andean peat bogs (bofedales) 3800-5000 m, hard bright-green cushion peat former",
+    "traits": {
+     "genus": "Distichia",
+     "species": "muscoides",
+     "native_range": "Distichia muscoides, Andean peat bogs (bofedales) 3800-5000 m, hard bright-green cushion peat former",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      0.3,
+      0.8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.06,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5AA040",
+     "color_2": "#8A8A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "flat dense green bog cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny tuft of short, stiff, two-ranked leaves a few millimetres long. Shoots branch and pack side by side into a small, hard, flat-topped, bright green cushion that spreads into sheets over the wet ground of high-Andean bogs; dead lower shoots build up underneath as peat, so the living surface rises a few cm a year.",
+     "confidence": "estimated",
+     "source": "Wikipedia Distichia muscoides (cushion of densely packed evergreen shoots and mm-long leaves forming a firm flat surface; growth up to 5 cm/yr in favourable sites; dominates Andean bofedales over peat up to 5 m thick; year-round grazing). Germination, first flowering and cushion age estimated."
+    }
+   },
+   {
+    "name": "Paramo sphagnum",
+    "genus": "Sphagnum",
+    "species": "sancto-josephense",
+    "origin": "Costa Rica and the northern Andes",
+    "family": "Sphagnaceae",
+    "shape": "moss",
+    "temp_c": [
+     -2,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     2800,
+     4200
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "PARAMO"
+    ],
+    "height_m": [
+     0.03,
+     0.12
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#7A8A3A",
+    "accent": "#A0603A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      500
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into a small flat thalloid protonema on wet peat, which sends up the first leafy shoots; each shoot ends in a dense head of short branches, and shoots packed side by side build a spongy carpet that grows up a few cm a year while the base dies to peat.",
+     "confidence": "estimated",
+     "source": "Crum & Crosby 1974 Ann. Missouri Bot. Gard. (described from high Costa Rica); Colombian high-Andean peatland surveys (a dominant of disturbed high peatlands, Cundinamarca); carpet growth and ages from Sphagnum in general, estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "spores by wind from capsules shot off the capitulum; spreads mainly by fragments and branching shoots in the wet carpet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sphagnum sancto-josephense H.A.Crum & Crosby (Tropicos; Crum & Crosby 1974): peat moss described from high-altitude Costa Rica, one of the commonest Sphagnum there and a carpet-former in high Andean peatlands of Colombia, dominant on disturbed sites; colour estimated from the genus.",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "sancto-josephense",
+     "native_range": "peat bogs of high Costa Rica and the Colombian Andes",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "slow (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "moss",
+      "colour": "#7a8a3a",
+      "underside": "#a0603a",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#7a8a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "star-shaped heads of short branches packed into a soft wet carpet, yellow-green flushing brown-red in sun"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       12
+      ],
+      "texture": "spongy"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "soft yellow-green to rusty spongy carpet in bog hollows",
+     "confidence": "estimated",
+     "refs": "Crum & Crosby 1974; Colombian high-Andean peatland surveys"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.2
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.05,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Coral lichen",
+    "genus": "Stereocaulon",
+    "species": "ramulosum",
+    "origin": "Tropical mountains and the southern hemisphere",
+    "family": "Stereocaulaceae",
+    "shape": "cushion",
+    "temp_c": [
+     -2,
+     15
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     4600
+    ],
+    "biomes": [
+     "PARAMO"
+    ],
+    "height_m": [
+     0.02,
+     0.07
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#C8C8B8",
+    "accent": "#4A2E24",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a crust of tiny granules on bare soil or rock; upright grey-white stalks rise from it, covered in small coral-like branchlets, and grow into loose tufts a few cm tall tipped with dark brown fruit discs.",
+     "confidence": "estimated",
+     "source": "Colombian Stereocaulon revision (pseudopodetia over 20 mm, sparsely branched above, cylindrical phyllocladia, abundant red-brown to black apothecia; paramos of Colombia and Ecuador); growth rate estimated from the genus"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "spores from the dark apothecia by wind; also spreads by broken fragments of the stalks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Stereocaulon ramulosum Raeusch. (Index Fungorum): terricolous fruticose lichen of cool, cloudy, wet mountains, widely spread in the southern hemisphere and tropical mountains; in the paramos of Colombia and Ecuador; grey-white pseudopodetia over 20 mm with coral-like phyllocladia and large dark brown apothecia.",
+    "traits": {
+     "genus": "Stereocaulon",
+     "species": "ramulosum",
+     "native_range": "paramos of Colombia and Ecuador, tropical mountains, southern hemisphere",
+     "leaf_shape": "tiny coral-like branchlets",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.07
+     ],
+     "growth_rate": "slow (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "fruticose",
+      "colour": "#c8c8b8",
+      "underside": "#a8a898",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#c8c8b8",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.3
+      ],
+      "notes": "upright grey-white stalks crusted with tiny coral-like branchlets, tipped with dark brown discs"
+     },
+     "mat": {
+      "height_cm": [
+       2,
+       7
+      ],
+      "texture": "coralloid"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "tufts of grey-white coral stalks on bare ground",
+     "confidence": "documented",
+     "refs": "Colombian Stereocaulon revision; Wikipedia Stereocaulon ramulosum"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.4,
+     "val": 1.3,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []
@@ -1406,16 +2595,17 @@
    "realm": "andes",
    "where": "open humid slopes and rolling plateaus above treeline, well-drained peaty soil",
    "dominant": [
-    "Frailejon"
+    "Paramo dwarf bamboo"
    ],
    "companion": [
     "Paramo dwarf shrub",
-    "Paramo dwarf bamboo"
+    "Chuquiragua",
+    "Andean blueberry"
    ],
    "ground": [
     "Tussock grass",
-    "Paramo lupine",
-    "Paramo club moss"
+    "Paramo club moss",
+    "Coral lichen"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -1426,15 +2616,15 @@
    "realm": "andes",
    "where": "sheltered lower paramo just above the cloud forest edge, deeper soil",
    "dominant": [
-    "Tall frailejon",
     "Paramo dwarf bamboo"
    ],
    "companion": [
-    "Paramo dwarf shrub"
+    "Paramo dwarf shrub",
+    "Rodamonte",
+    "Andean blueberry"
    ],
    "ground": [
-    "Tussock grass",
-    "Paramo lupine"
+    "Tussock grass"
    ],
    "catalogue": [],
    "cover": 0.6,
@@ -1445,14 +2635,14 @@
    "realm": "andes",
    "where": "flat valley floors, hollows and lake margins with waterlogged peat",
    "dominant": [
-    "Cushion plant"
+    "Bofedal cushion"
    ],
    "companion": [
-    "Frailejon"
+    "Paramo dwarf bamboo"
    ],
    "ground": [
-    "Cushion plant",
-    "Bog moss",
+    "Sphagnum moss",
+    "Paramo sphagnum",
     "Paramo club moss"
    ],
    "catalogue": [],
@@ -1464,15 +2654,16 @@
    "realm": "andes",
    "where": "rocky ridges, cliffs and dry exposed slopes with thin soil",
    "dominant": [
-    "Paramo puya",
     "Paramo dwarf shrub"
    ],
    "companion": [
-    "Frailejon"
+    "Paramo polylepis",
+    "Kolle",
+    "Chuquiragua"
    ],
    "ground": [
     "Tussock grass",
-    "Paramo lupine"
+    "Coral lichen"
    ],
    "catalogue": [],
    "cover": 0.4,
@@ -1486,11 +2677,11 @@
     "Tussock grass"
    ],
    "companion": [
-    "Paramo dwarf shrub"
+    "Paramo dwarf shrub",
+    "Chuquiragua"
    ],
    "ground": [
-    "Tussock grass",
-    "Paramo lupine"
+    "Tussock grass"
    ],
    "catalogue": [],
    "cover": 0.4,

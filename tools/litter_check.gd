@@ -96,7 +96,7 @@ func _run() -> void:
 
 	# --- Species -------------------------------------------------------------
 	var pine := SpeciesDB.find("Scots pine")
-	var oak := SpeciesDB.find("Oak")
+	var oak := SpeciesDB.find("White oak")
 	var palm := SpeciesDB.find("Coconut palm")
 	print("[litter] multipliers: Scots pine %.2f (%s), Oak %.2f (%s/%s), Coconut palm %.2f (%s/%s, %.0f cm)" % [LitterField.rot_multiplier(pine), pine.leaf_type, LitterField.rot_multiplier(oak), oak.leaf_type, oak.leaf_texture, LitterField.rot_multiplier(palm), palm.leaf_type, palm.leaf_texture, palm.leaf_m * 100.0])
 	ok(LitterField.rot_multiplier(pine) < LitterField.rot_multiplier(oak), "needles rot slower than oak leaves")

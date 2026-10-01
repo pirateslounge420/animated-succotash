@@ -20,184 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Dahurian larch",
-    "genus": "Larix",
-    "species": "gmelinii",
-    "origin": "Eastern Siberia and Mongolia",
-    "shape": "conifer",
-    "temp_c": [
-     -6,
-     2
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     3,
-     10
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#7AB050",
-    "accent": "#7A5A3A",
-    "source": "Larix gmelinii, northern Siberia treeline on permafrost, world's northernmost tree; stunted 3-10 m at forest-tundra edge",
-    "traits": {
-     "genus": "Larix",
-     "species": "gmelinii",
-     "native_range": "Larix gmelinii, northern Siberia treeline on permafrost, world's northernmost tree",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
-     "height_m": [
-      3,
-      10
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "scaly",
-    "leaf_type": "needle",
-    "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "spiral",
-     "size_cm": [
-      1.5,
-      3
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "irregular",
-     "gap": 0.5,
-     "layering": "sparse",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": 10,
-     "sat": 0.95,
-     "val": 1.05,
-     "underside": 0.1,
-     "autumn": "#d9a52a",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 14.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "scaly",
-     "orientation": "none",
-     "depth": 0.45,
-     "scale_cm": 3,
-     "color": "#6A5A4E",
-     "color_2": "#8A4A38",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "massart",
-     "habit": "multi_stem",
-     "orders": 4,
-     "branch_angle_deg": [
-      80,
-      100
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.7,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 35,
-     "live_crown_ratio": [
-      0.9,
-      0.6
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.4,
-     "root_flare": true,
-     "spacing_m": 0.4,
-     "confidence": "estimated"
-    },
-    "silhouette": "stunted ragged larch, sparse tiered branches",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      30
-     ],
-     "height_years": [
-      40,
-      120
-     ],
-     "first_seed_years": 15,
-     "lifespan_years": [
-      250,
-      900
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "cone",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: about six needle-like cotyledons, then soft, bright-green single needles spiralled along the first-year shoot; tufted needles on short spur shoots follow from the second year. Young trees are slender, open, feathery cones with level branches that turn gold and drop every needle in autumn; on permafrost they often stay stunted and sparse for decades.",
-     "confidence": "documented",
-     "source": "USDA Woody Plant Seed Manual (Larix: L. gmelinii flowers May-Jun, cones ripen Sep, seed from 14-15 yr, good crops every 2-4 yr, 30-day germination tests, empty cones persist); Wikipedia (10-30 m; oldest 919 yr in Yakutia; permafrost; seed ripe 3-5 months after pollination). Growth on permafrost estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      6
-     ],
-     "hemisphere": "north",
-     "flower_days": 6,
-     "flower_size_cm": 1.0,
-     "flower_colour": "#a8406a",
-     "flower_form": "cone",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      1
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.6,
-     "fruit_kind": "cone",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      1,
-      2.5
-     ],
-     "unripe_colour": "#9a4a4a",
-     "ripe_colour": "#7a5a3a",
-     "ripen_days": [
-      90,
-      150
-     ],
-     "hang_days": [
-      365,
-      1500
-     ],
-     "drop": "persists",
-     "rot_days": [
-      700,
-      2500
-     ],
-     "crop_per_tree": [
-      200,
-      5000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Wikipedia (upright cones 1-2.5 cm, green or red when young, brown when ripe, seed shed 3-5 months after pollination, old cones persist grey-black); USDA WPSM (young cones light to deep purple, ripen Sep, empty cones stay on the tree indefinitely). Set and crop estimated."
-    }
-   },
-   {
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
@@ -216,12 +38,31 @@
      0,
      3500
     ],
+    "biomes": [
+     "BOG",
+     "HOT_SPRING",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
-     2,
-     10
+     20.0,
+     35.0
     ],
     "density": 0.9,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "sand",
+      "basalt",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E7A44",
     "accent": "#8A7A60",
@@ -282,7 +123,6 @@
      ]
     },
     "source": "western North American mountains; 20–35 m. Dense even-aged stands after fire; cones open in heat. Kew POWO for the name; standard floras for range.",
-    "from_catalogue": "pine",
     "traits": {
      "genus": "Pinus",
      "species": "contorta",
@@ -306,6 +146,49 @@
     },
     "bark_type": "pine",
     "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a5a3e",
+      "secondary": "#4e3a30",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "thin bark of small orange-brown to grey-brown scales; fine flaky, never plated"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.25,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4e7a3c",
+      "underside": "#5e8a4a",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4e7a3c",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "short paired needles, often twisted, yellow-green to dark green; dense along the twig"
+     },
+     "flower": {
+      "colour": "#d8a83a",
+      "secondary": "#b04a4a",
+      "form": "orange-yellow pollen cones in clusters; small red female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5030",
+      "form": "small lopsided ovoid cones 3-6 cm, prickly scales, many held closed (serotinous) on the branches for years"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "slender straight pole trunk with a narrow, sparse, spire-like crown; grows in dense even-aged thickets of identical poles",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus contorta; Flora of North America; USFS Silvics"
+    },
     "leaf": {
      "type": "needle",
      "venation": "none",
@@ -320,9 +203,9 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "conical",
      "gap": 0.4,
-     "layering": "clumped",
+     "layering": "sparse",
      "droop": 0.05
     },
     "tint": {
@@ -337,40 +220,36 @@
     "bark": {
      "pattern": "scaly",
      "orientation": "none",
-     "depth": 0.35,
+     "depth": 0.4,
      "scale_cm": 2,
-     "color": "#7A6A58",
-     "color_2": "#9A6A48",
+     "color": "#8A5A3E",
+     "color_2": "#4E3A30",
      "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
      "model": "rauh",
-     "habit": "multi_stem",
-     "orders": 4,
+     "habit": "excurrent",
+     "orders": 5,
      "branch_angle_deg": [
       50,
       75
      ],
      "taper_exponent": 1.4,
-     "sinuosity": 0.7,
-     "fork_height_frac": [
-      0.0,
-      0.15
-     ],
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
      "buttress": "none",
-     "lean_max_deg": 35,
+     "lean_max_deg": 15,
      "live_crown_ratio": [
-      0.9,
-      0.7
+      0.5,
+      0.3
      ],
      "self_prune": true,
-     "dead_limbs": 0.45,
+     "dead_limbs": 0.35,
      "root_flare": true,
-     "spacing_m": 0.4,
-     "confidence": "estimated"
+     "spacing_m": 0.6,
+     "confidence": "documented"
     },
-    "silhouette": "wind-flagged dwarf pine, branches downwind only",
     "fruiting": {
      "flower_months": [
       5,
@@ -421,192 +300,6 @@
     }
    },
    {
-    "name": "Mountain birch",
-    "genus": "Betula",
-    "species": "pubescens",
-    "origin": "Northern Europe and Siberia",
-    "shape": "broadleaf",
-    "temp_c": [
-     -4,
-     6
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "height_m": [
-     2,
-     8
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#E8E0D0",
-    "source": "Betula pubescens (subsp. czerepanovii), Fennoscandian and Icelandic treeline, crooked multi-stemmed birch 2-8 m",
-    "traits": {
-     "genus": "Betula",
-     "species": "pubescens",
-     "native_range": "Betula pubescens (subsp",
-     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
-     "trunk": "single trunk dividing into a rounded crown",
-     "petiole": "short petiole",
-     "height_m": [
-      2,
-      8
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "birch",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 1.4,
-     "base": "rounded",
-     "apex": "acute",
-     "margin": "serrate",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      2,
-      5
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "irregular",
-     "gap": 0.45,
-     "layering": "clumped",
-     "droop": 0.25
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.95,
-     "val": 1.0,
-     "underside": 0.2,
-     "autumn": "#e0b830",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 13.5,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 1,
-     "color": "#C8C0B0",
-     "color_2": "#3A2E28",
-     "lenticels": "horizontal_bands",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "multi_stem",
-     "orders": 5,
-     "branch_angle_deg": [
-      45,
-      65
-     ],
-     "taper_exponent": 2.0,
-     "sinuosity": 0.7,
-     "fork_height_frac": [
-      0.05,
-      0.2
-     ],
-     "buttress": "none",
-     "lean_max_deg": 35,
-     "live_crown_ratio": [
-      0.9,
-      0.6
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.3,
-     "root_flare": false,
-     "spacing_m": 0.6,
-     "confidence": "estimated"
-    },
-    "silhouette": "crooked multi-stemmed birch, pale trunks",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      28
-     ],
-     "height_years": [
-      10,
-      35
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      70,
-      150
-     ],
-     "shade": "intolerant",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny two-winged nutlets sprout in early summer on moss, bare soil or burnt ground. Seedlings have minute round cotyledons, then small, downy, coarsely toothed, rounded leaves on hairy reddish twigs. At the treeline the young tree soon sprouts extra stems from its base, becoming a crooked, multi-stemmed bush with dark reddish-brown bark that whitens and peels only on older stems.",
-     "confidence": "estimated",
-     "source": "Wikipedia (short-lived tree; subarctic mountain birch small, contorted and shrubby); Atkinson 1992 Biological Flora of Betula pendula and B. pubescens (light-demanding pioneer, seed from young age, winged nutlets shed late summer to winter); treeline growth rates and ages estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      6
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 4,
-     "flower_colour": "#b89a55",
-     "flower_form": "catkin",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      3
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.3,
-     "fruit_kind": "samara",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      2,
-      3.5
-     ],
-     "unripe_colour": "#89a25b",
-     "ripe_colour": "#8c6d47",
-     "ripen_days": [
-      80,
-      110
-     ],
-     "hang_days": [
-      20,
-      200
-     ],
-     "drop": "shatters",
-     "rot_days": [
-      60,
-      365
-     ],
-     "crop_per_tree": [
-      300,
-      5000
-     ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "General Betula pubescens silvics (Atkinson 1992): catkins open with the leaves in spring (May-Jun in the subarctic), wind-pollinated, fruiting catkins 2-3.5 cm break up on the tree from late summer through winter; counts are catkins, estimated."
-    }
-   },
-   {
     "name": "Wind-stunted conifer",
     "genus": "Picea",
     "species": "engelmannii",
@@ -623,6 +316,9 @@
     "altitude_m": [
      2500,
      3700
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
     ],
     "height_m": [
      1,
@@ -783,6 +479,832 @@
      "confidence": "documented",
      "source": "USDA Silvics (strobili break bud late April-May; pollen late May to early July by elevation; cones 2.5-6.3 cm mature in one season, ripen Aug-early Sep, open and shed seed Sep-Oct with some through winter); crop and decay estimated"
     }
+   },
+   {
+    "name": "Subalpine fir",
+    "genus": "Abies",
+    "species": "lasiocarpa",
+    "origin": "Western North American mountains",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -6,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.95
+    ],
+    "altitude_m": [
+     600,
+     3700
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     1.0,
+     20.0
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "basalt",
+      "karst"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#3A6A5A",
+    "accent": "#5A3A6A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      50,
+      120
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      150,
+      250
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates on moist mineral soil or rotten wood just after snowmelt: 4-6 cotyledons, then short flat blue-green needles. Seedlings grow only a few centimetres a year in shade and make dense, narrow, spire-shaped young trees. At the treeline the young fir stays a low mat whose snow-buried branches root (layering), with a few wind-flagged stems poking above the snow.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Alexander, Shearer & Shepperd): seed production begins at about 20 years, good crops every 3-5 years; seeds germinate soon after snowmelt; very tolerant of shade; trees rarely exceed 250 years; at timberline reproduces by layering and forms krummholz."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       3,
+       5
+      ]
+     },
+     "dormant": "cold",
+     "note": "at the treeline lower branches pressed down by snow take root (layering), which here plays the runner's part"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Abies lasiocarpa, subalpine fir: Yukon and SE Alaska to Arizona and New Mexico; with Engelmann spruce the forming tree of the Rocky Mountain spruce-fir treeline; 15-30 m in subalpine forest, a wind-shorn mat with flagged spires at its upper limit. Kew POWO; USDA Silvics; Arno & Hammerly 1984 Timberline.",
+    "traits": {
+     "genus": "Abies",
+     "species": "lasiocarpa",
+     "native_range": "Rocky Mountain and Cascade subalpine forest and treeline",
+     "leaf_shape": "flat blunt needles, upturned on the twig",
+     "trunk": "single straight trunk, a narrow spire",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      1.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by layering",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8a82",
+      "secondary": "#6a5a50",
+      "feature_cm": 1,
+      "roughness": 0.2,
+      "notes": "thin smooth grey bark with raised resin blisters, cracking into small scales only at the base of old trees"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#3a6a5a",
+      "underside": "#8aa8a0",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#3a6a5a",
+      "margin": "entire",
+      "size_cm": [
+       1.5,
+       4
+      ],
+      "notes": "flat blunt needles 1.5-4 cm, blue-green with white stomatal lines, crowded and curving upward on the top of the twig"
+     },
+     "flower": {
+      "colour": "#5a3a7a",
+      "secondary": "#7a4a5a",
+      "form": "small bluish pollen cones under the twigs; dark purple seed cones upright near the top",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#4a2a5a",
+      "form": "upright barrel cones 6-10 cm, dark purple, near the crown top, falling apart on the branch in autumn and leaving bare spikes"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "very narrow dark spire; at the treeline a low mat with flagged stems",
+     "confidence": "documented",
+     "refs": "USDA Silvics; Flora of North America; Wikipedia Abies lasiocarpa"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -14,
+     "sat": 0.7,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#8A8A82",
+     "color_2": "#6A5A50",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.95,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#5a3a7a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      6
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      6,
+      10
+     ],
+     "unripe_colour": "#4a2a5a",
+     "ripe_colour": "#6a4a3a",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      100,
+      400
+     ],
+     "crop_per_tree": [
+      20,
+      400
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (strobili open in June-July just after snowmelt; seed cones erect, dark purple, 6-10 cm, ripen by September and disintegrate on the tree, leaving the central spike; good crops every 3-5 years)"
+    }
+   },
+   {
+    "name": "Mountain hemlock",
+    "genus": "Tsuga",
+    "species": "mertensiana",
+    "origin": "Pacific mountains, Alaska to California",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     1.0,
+     30.0
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.15,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A6A5A",
+    "accent": "#5A3A5A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      60,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      400,
+      800
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates on rotten wood, moss or mineral soil after the snow goes: 3-4 cotyledons, then short, soft, blue-green needles set all round the twig. Saplings grow slowly (often only a few cm a year under snowpack) into a narrow cone whose leader droops at the tip. At the treeline it stays a sprawling shrub whose snow-pressed branches root.",
+     "confidence": "estimated",
+     "source": "USDA Silvics (Means): very slow early growth; seed crops from about 20 years (estimated from the silvics range); old trees commonly 400-800 years; tolerant of shade; krummholz and layering at timberline."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       2,
+       4
+      ]
+     },
+     "dormant": "cold",
+     "note": "at the treeline snow-pressed lower branches take root (layering), which here plays the runner's part"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Tsuga mertensiana, mountain hemlock: Kenai Peninsula to the southern Sierra Nevada, east into the northern Rockies of Idaho and Montana; the treeline tree of the snowy Cascades and Coast Mountains; 10-40 m below, a krummholz shrub at its upper limit. Kew POWO; USDA Silvics; Arno & Hammerly 1984 Timberline.",
+    "traits": {
+     "genus": "Tsuga",
+     "species": "mertensiana",
+     "native_range": "snowy Pacific mountain treelines, Alaska to California",
+     "leaf_shape": "short blue-green needles all round the twig",
+     "trunk": "single trunk, drooping leader",
+     "petiole": "short stalk on each needle",
+     "height_m": [
+      1.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by layering",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#5a4a42",
+      "secondary": "#7a4a3a",
+      "feature_cm": 3,
+      "roughness": 0.6,
+      "notes": "dark grey-brown to purplish bark, deeply divided into narrow flat-topped ridges, red-brown in the furrows"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4a6a5a",
+      "underside": "#7a9a8a",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4a6a5a",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "short soft needles 1-3 cm, grey-green to blue-green with stomata on both faces, set all round the twig so shoots look like little stars"
+     },
+     "flower": {
+      "colour": "#6a3a7a",
+      "secondary": "#4a5a7a",
+      "form": "small purple seed cones and bluish pollen cones at the twig tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5a3a",
+      "form": "hanging cylindrical cones 3-8 cm, purple when young, light brown when ripe, scales spreading"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "narrow blue-grey cone with a nodding tip and drooping branch ends",
+     "confidence": "documented",
+     "refs": "USDA Silvics; Flora of North America; Wikipedia Tsuga mertensiana"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -12,
+     "sat": 0.65,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#5A4A42",
+     "color_2": "#7A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "excurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      70,
+      95
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.15,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.85,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.25,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#6a3a7a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      3,
+      8
+     ],
+     "unripe_colour": "#5a3a6a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      100,
+      130
+     ],
+     "hang_days": [
+      30,
+      365
+     ],
+     "drop": "falls",
+     "rot_days": [
+      365,
+      1500
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "USDA Silvics (cones mature in one season, August-October, purple to brown, 3-8 cm, pendent; seed shed from late September through winter); crop and set estimated"
+    }
+   },
+   {
+    "name": "Whitebark pine",
+    "genus": "Pinus",
+    "species": "albicaulis",
+    "origin": "Western North American mountains",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     3600
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "granite",
+      "till",
+      "basalt",
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#3A7040",
+    "accent": "#B0A890",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      730
+     ],
+     "height_years": [
+      80,
+      200
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      500,
+      1000
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in clusters from the seed caches of Clark's nutcrackers, often a year or two after caching: 7-11 cotyledons, then single primary needles, then bundles of five stout yellow-green needles. Growth is very slow; clusters grow into several-stemmed trees, and at the treeline into low, sprawling krummholz with white-grey bark.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Arno & Hoff): seeds largely dispersed and planted by Clark's nutcracker, germination often delayed one or more years; cone-bearing begins at 20-30 years, large crops at 60-80; very slow growth; ages commonly over 500 years, to about 1,000+"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western treeline; 5–15 m. Nutcracker-planted treeline pine, often krummholz. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Pinus",
+     "species": "albicaulis",
+     "native_range": "western North American treeline",
+     "leaf_shape": "needles in fives, stout and curved",
+     "trunk": "short trunk, often several stems from one nutcracker cache",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      5.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#b8b2a6",
+      "secondary": "#7a6a5a",
+      "feature_cm": 2,
+      "roughness": 0.3,
+      "notes": "thin chalky white-grey bark, smooth on young stems, breaking into thin brown-grey scales on old trunks"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4a6e40",
+      "underside": "#6a8a5a",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4a6e40",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       8
+      ],
+      "notes": "stout, slightly curved yellow-green needles in bundles of five, clustered at the branch ends"
+     },
+     "flower": {
+      "colour": "#b04a5a",
+      "secondary": "#d8a83a",
+      "form": "scarlet pollen cones; small purple seed cones near the top",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a3a4a",
+      "form": "egg-shaped dark purple-brown cones 5-8 cm that never open; nutcrackers and squirrels tear them apart"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "broad irregular crown on pale grey, often forked stems",
+     "confidence": "documented",
+     "refs": "USDA Silvics; Flora of North America; Wikipedia Pinus albicaulis"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 5,
+     "size_cm": [
+      4,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#B8B2A6",
+     "color_2": "#7A6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#b04a5a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      8
+     ],
+     "unripe_colour": "#4a3a5a",
+     "ripe_colour": "#5a3a4a",
+     "ripen_days": [
+      420,
+      470
+     ],
+     "hang_days": [
+      10,
+      90
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1500
+     ],
+     "crop_per_tree": [
+      5,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA Silvics (strobili July; cones ripen in August-September of the second year, 5-8 cm, purple-brown, indehiscent, held on the tree until Clark's nutcrackers and red squirrels take them apart; large wingless seeds eaten by nutcrackers, squirrels, grizzly bears and people)"
+    }
    }
   ],
   "shrub": [
@@ -804,6 +1326,10 @@
     "altitude_m": [
      1500,
      2800
+    ],
+    "biomes": [
+     "ALPINE_MEADOW",
+     "KRUMMHOLZ"
     ],
     "height_m": [
      0.3,
@@ -870,7 +1396,6 @@
      ]
     },
     "source": "Alps subalpine; Heath above the trees. Kew POWO; standard floras.",
-    "from_catalogue": "rhododendron",
     "traits": {
      "genus": "Rhododendron",
      "species": "ferrugineum",
@@ -893,47 +1418,90 @@
     },
     "bark_type": "peeling",
     "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e34",
+      "feature_cm": 0.5,
+      "roughness": 0.3,
+      "notes": "grey-brown thin scaly bark on wiry low stems"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.6,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e6a38",
+      "underside": "#b06a30",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#4a7a50",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       4
+      ],
+      "notes": "small glossy dark green elliptic leaves, edges rolled under, underside densely rusty-brown scaly (ferrugineum)"
+     },
+     "flower": {
+      "colour": "#e0306a",
+      "secondary": "#f080a0",
+      "form": "clusters of 6-10 small bell flowers, deep rose-pink to crimson, June-July",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "small brown capsules"
+     },
+     "seasonal": "evergreen; slopes pink in early summer",
+     "silhouette": "a knee-high (0.5-1 m) dense evergreen heath mat above the treeline, dotted pink in bloom",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron ferrugineum; Flora Europaea; Kew POWO"
+    },
     "leaf": {
      "type": "simple",
      "outline": "elliptic",
-     "aspect": 3.0,
+     "aspect": 3,
      "base": "cuneate",
-     "apex": "obtuse",
+     "apex": "acute",
      "margin": "entire",
      "venation": "pinnate",
      "arrangement": "alternate",
      "size_cm": [
-      2.5,
-      5
+      2,
+      4
      ],
      "compound": null,
      "texture": "glossy",
      "confidence": "documented"
     },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#6A5A4E",
+     "color_2": "#4A3E34",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
     "canopy": {
      "form": "mound",
-     "gap": 0.3,
+     "gap": 0.2,
      "layering": "clumped",
      "droop": 0.1
     },
     "tint": {
      "hue_shift": -4,
-     "sat": 0.9,
+     "sat": 0.85,
      "val": 0.75,
-     "underside": 0.2
+     "underside": 0.4
     },
     "photoperiod": {
      "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "flaky",
-     "orientation": "vertical",
-     "depth": 0.3,
-     "scale_cm": 1,
-     "color": "#7A6A5A",
-     "color_2": "#9A7A5A",
-     "lenticels": "none",
-     "confidence": "estimated"
     },
     "architecture": {
      "model": "scarrone",
@@ -961,7 +1529,6 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "dense dark-green mound, glossy leaves",
     "fruiting": {
      "flower_months": [
       5,
@@ -1014,38 +1581,47 @@
     }
    },
    {
-    "name": "Dwarf birch",
-    "genus": "Betula",
-    "species": "nana",
-    "origin": "Circumpolar Arctic and subarctic",
-    "shape": "shrub",
+    "name": "Dwarf juniper",
+    "genus": "Juniperus",
+    "species": "communis",
+    "origin": "Circumboreal (N Hemisphere)",
+    "shape": "conifer",
     "temp_c": [
-     -8,
-     3
+     -2,
+     6
     ],
     "moisture": [
-     0.4,
-     0.9
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "biomes": [
+     "ALPINE_MEADOW",
+     "CAVES",
+     "KRUMMHOLZ"
     ],
     "height_m": [
-     0.3,
-     1.2
+     0.2,
+     0.8
     ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#3F8A3A",
-    "accent": "#7A4A2A",
-    "source": "Betula nana, circumpolar forest-tundra and bog, 0.2-1.2 m",
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#3A6A40",
+    "accent": "#4A4A6A",
+    "source": "Juniperus communis var. saxatilis, alpine ridges Eurasia and N America, prostrate mat 20-80 cm",
     "traits": {
-     "genus": "Betula",
-     "species": "nana",
-     "native_range": "Betula nana, circumpolar forest-tundra and bog, 0",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
+     "genus": "Juniperus",
+     "species": "communis",
+     "native_range": "Juniperus communis var",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
      "height_m": [
-      0.3,
-      1.2
+      0.2,
+      0.8
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1053,250 +1629,55 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "birch",
-    "leaf_type": "broadleaf",
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
     "leaf": {
-     "type": "simple",
-     "outline": "orbicular",
-     "aspect": 1.0,
-     "base": "rounded",
-     "apex": "rounded",
-     "margin": "crenate",
-     "venation": "pinnate",
-     "arrangement": "alternate",
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "whorled",
      "size_cm": [
-      0.5,
-      1.5
+      0.4,
+      1.0
      ],
      "compound": null,
-     "texture": "glossy",
+     "texture": "waxy_glaucous",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "mound",
-     "gap": 0.45,
+     "form": "mat",
+     "gap": 0.25,
      "layering": "clumped",
-     "droop": 0.1
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": 0,
-     "sat": 0.95,
-     "val": 0.85,
-     "underside": 0.2,
-     "autumn": "#b8382a",
-     "drop": true
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.4
     },
     "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 14.0,
-     "response": "leaf_drop"
+     "mode": "neutral"
     },
     "bark": {
-     "pattern": "smooth",
+     "pattern": "stringy",
      "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 0.5,
-     "color": "#5E4A3E",
-     "color_2": "#8A7A6A",
-     "lenticels": "dots",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "multi_stem",
-     "orders": 4,
-     "branch_angle_deg": [
-      30,
-      70
-     ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.6,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 30,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.2,
-     "root_flare": false,
-     "spacing_m": 0.15,
-     "confidence": "estimated"
-    },
-    "silhouette": "low tangled shrub of tiny round leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      6,
-      20
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      30,
-      80
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny winged nutlets blow across the snow and sprout in early summer on bare, moist peat or moss. The seedling has two minute oval cotyledons, then small, round, deeply round-toothed leaves on a thin reddish stem; it stays a tiny sprig for years, then branches low and layers into a knee-high spreading mat of wiry brown twigs with coin-sized crinkly leaves that turn red in autumn.",
-     "confidence": "estimated",
-     "source": "USDA FEIS Betula nana (0.15-1 m, slow-growing seedlings, establishment from seed rare, layering and sprouting; 15 d stratification then germination within 14 d at 12 C); Wikipedia (low shade tolerance); growth, first seed and stem ages estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      6
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 1.5,
-     "flower_colour": "#a88a55",
-     "flower_form": "catkin",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      2
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.3,
-     "fruit_kind": "samara",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      0.5,
-      1.5
-     ],
-     "unripe_colour": "#7f9a58",
-     "ripe_colour": "#8b6a45",
-     "ripen_days": [
-      60,
-      90
-     ],
-     "hang_days": [
-      20,
-      240
-     ],
-     "drop": "shatters",
-     "rot_days": [
-      60,
-      365
-     ],
-     "crop_per_tree": [
-      50,
-      1000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "USDA FEIS (monoecious, wind-pollinated, self-incompatible; female catkins in flower early June; male catkins 10-25 mm, female 6-10 mm; seeds ripen in August and disperse from late summer to the next spring, blowing over snow); Wikipedia (fruiting catkins 5-15 mm); counts are catkins, estimated."
-    }
-   },
-   {
-    "name": "Dwarf willow",
-    "genus": "Salix",
-    "species": "glauca",
-    "origin": "Circumboreal (northern hemisphere)",
-    "shape": "shrub",
-    "temp_c": [
-     -6,
-     4
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "color": "#7AA070",
-    "accent": "#8A7A5A",
-    "source": "Salix glauca, circumboreal treeline and tundra, grey-leaved shrub 0.3-1.5 m along streams",
-    "traits": {
-     "genus": "Salix",
-     "species": "glauca",
-     "native_range": "Salix glauca, circumboreal treeline and tundra, grey-leaved shrub 0",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      1.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.5,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      2,
-      7
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.55,
-     "val": 1.05,
-     "underside": 0.4,
-     "autumn": "#d4a838",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 14.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.15,
+     "depth": 0.4,
      "scale_cm": 1,
-     "color": "#7A6E60",
-     "color_2": "#9A8A70",
+     "color": "#7A5A48",
+     "color_2": "#9A8A78",
      "lenticels": "none",
-     "confidence": "estimated"
+     "confidence": "documented"
     },
     "architecture": {
-     "model": "champagnat",
-     "habit": "multi_stem",
+     "model": "attims",
+     "habit": "shrub",
      "orders": 4,
      "branch_angle_deg": [
-      40,
-      80
+      70,
+      100
      ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.7,
+     "taper_exponent": 1.5,
+     "sinuosity": 0.8,
      "fork_height_frac": [
       0.0,
       0.1
@@ -1308,118 +1689,118 @@
       0.7
      ],
      "self_prune": false,
-     "dead_limbs": 0.2,
+     "dead_limbs": 0.4,
      "root_flare": false,
-     "spacing_m": 0.15,
-     "confidence": "estimated"
+     "spacing_m": 0.1,
+     "confidence": "documented"
     },
-    "silhouette": "grey-green leafy willow mound",
+    "silhouette": "flat prostrate grey-green mat",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      2,
-      10
+      150,
+      730
      ],
      "height_years": [
-      6,
-      20
+      15,
+      40
      ],
-     "first_seed_years": 7,
+     "first_seed_years": 10,
      "lifespan_years": [
-      40,
-      120
+      120,
+      1600
      ],
-     "shade": "very_intolerant",
+     "shade": "intolerant",
      "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seed shed in autumn lies under the snow and germinates right after snowmelt: 2 tiny round cotyledons, then oval grey-green leaves that are whitish (glaucous) underneath and hairy when young. Adds only a few cm a year, building a low, rounded, much-branched bush of stout knobbly twigs; wind-blasted plants stay low and sprawling.",
-     "confidence": "estimated",
-     "source": "USDA Woody Plant Seed Manual Salix (S. glauca flowers Jun-Jul and disperses seed Sep-Nov; fall-shed willow seed overwinters and germinates quickly after snowmelt); Flora of N America (0.3-1.5 m, to 6 m in shelter); growth, first seed and lifespan estimated for a tundra shrub willow"
+     "juvenile_note": "Epigeal: 2 (up to 6) slender cotyledons, then whorls of three sharp, needle-like leaves with a white band above - the same prickly needles the adult keeps all its life (it never makes scale leaves). Seedlings are tiny, slow, prickly sprigs that build over decades into a dense, spreading grey-green shrub, a low mat, or a narrow column.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Juniperus: J. communis flowers Apr-May, cones take 2-3 seasons, green to bluish-black glaucous, persist; 1-3 seeds; bears from 10-20 yr, heavy crops every 2-5 yr; deep dormancy; 2-6 cotyledons); Wikipedia (ripens in 18 months, cones 4-12 mm, a Lapland plant aged 1,647 yr). Growth rate estimated."
     },
     "fruiting": {
      "flower_months": [
-      6,
-      7
+      4,
+      5
      ],
      "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 3.5,
-     "flower_colour": "#cfc67e",
-     "flower_form": "catkin",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      30,
-      80
+      1,
+      2
      ],
      "pollinators": [
-      "bumblebee",
-      "fly",
-      "bee",
       "wind"
      ],
      "fruit_set": 0.5,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.5,
-      0.9
+      0.4,
+      1.2
      ],
-     "unripe_colour": "#9aa46a",
-     "ripe_colour": "#b8a882",
+     "unripe_colour": "#6f8f5a",
+     "ripe_colour": "#3c4a6e",
      "ripen_days": [
-      60,
-      100
+      480,
+      900
      ],
      "hang_days": [
-      14,
-      60
+      90,
+      365
      ],
-     "drop": "splits",
+     "drop": "persists",
      "rot_days": [
       60,
       365
      ],
      "crop_per_tree": [
-      500,
-      20000
+      200,
+      5000
      ],
-     "edible": "no",
+     "edible": "cooked",
      "confidence": "documented",
-     "source": "USDA Woody Plant Seed Manual Salix table (S. glauca: flowers June-July, seed dispersed Sept-Nov); Flora of N America (catkins 2-6 cm with the leaves, hairy capsules 5-9 mm); fruit set, crop and rot estimated"
+     "source": "Wikipedia (dioecious, wind-pollinated; berry-like cones 4-12 mm, green ripening in ~18 months to purple-black with a blue bloom; too bitter raw, dried as spice and for gin); USDA WPSM (2-3 seasons to ripen, cones persist). Set, crop and rot estimated."
     }
    },
    {
-    "name": "Heath",
+    "name": "Bog bilberry",
     "genus": "Vaccinium",
-    "species": "myrtillus",
-    "origin": "Northern and mountain Eurasia",
+    "species": "uliginosum",
+    "origin": "Circumpolar Arctic and boreal",
     "shape": "shrub",
     "temp_c": [
-     -4,
-     8
+     -12,
+     4
     ],
     "moisture": [
-     0.4,
-     0.9
+     0.5,
+     1
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
     ],
     "height_m": [
-     0.2,
+     0.1,
      0.6
     ],
-    "density": 0.9,
+    "density": 0.5,
     "soil": "peat",
-    "color": "#4A9A3A",
-    "accent": "#3A3A5A",
-    "source": "Vaccinium myrtillus (bilberry), Eurasian subalpine heath and birch forest floor, 20-60 cm; Empetrum/Vaccinium heath dominant at treeline",
+    "color": "#4A8A5A",
+    "accent": "#6A3A6A",
+    "source": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
     "traits": {
      "genus": "Vaccinium",
-     "species": "myrtillus",
-     "native_range": "Vaccinium myrtillus (bilberry), Eurasian subalpine heath and birch forest floor, 20-60 cm",
+     "species": "uliginosum",
+     "native_range": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
      "leaf_shape": "small leaves on many stems",
      "trunk": "multi-stemmed from the base",
      "petiole": "short petiole",
      "height_m": [
-      0.2,
+      0.1,
       0.6
      ],
      "growth_rate": "medium",
@@ -1432,11 +1813,11 @@
     "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "ovate",
+     "outline": "obovate",
      "aspect": 1.8,
-     "base": "rounded",
-     "apex": "acute",
-     "margin": "serrate",
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "entire",
      "venation": "pinnate",
      "arrangement": "alternate",
      "size_cm": [
@@ -1444,7 +1825,7 @@
       3
      ],
      "compound": null,
-     "texture": "matte",
+     "texture": "waxy_glaucous",
      "confidence": "documented"
     },
     "canopy": {
@@ -1454,27 +1835,27 @@
      "droop": 0.1
     },
     "tint": {
-     "hue_shift": 8,
-     "sat": 1.0,
+     "hue_shift": -8,
+     "sat": 0.6,
      "val": 1.0,
-     "underside": 0.15,
-     "autumn": "#b83a2a",
+     "underside": 0.3,
+     "autumn": "#b8442e",
      "drop": true
     },
     "photoperiod": {
      "mode": "short_day",
-     "threshold_h": 13.0,
+     "threshold_h": 14.0,
      "response": "leaf_drop"
     },
     "bark": {
-     "pattern": "green_stem",
+     "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 0.5,
-     "color": "#5A8A3A",
-     "color_2": "#7A6A48",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6E5A48",
+     "color_2": "#8A6A48",
      "lenticels": "none",
-     "confidence": "documented"
+     "confidence": "estimated"
     },
     "architecture": {
      "model": "rauh",
@@ -1502,7 +1883,7 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low green twiggy carpet",
+    "silhouette": "low blue-green twiggy mound, knee-high at most",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -1510,62 +1891,62 @@
       42
      ],
      "height_years": [
-      3,
-      8
+      4,
+      12
      ],
-     "first_seed_years": 3,
+     "first_seed_years": 5,
      "lifespan_years": [
-      15,
-      30
+      25,
+      100
      ],
-     "shade": "tolerant",
+     "shade": "intolerant",
      "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: tiny oval cotyledons, then a thread-thin green stem with small oval, finely toothed, bright green leaves. Seedlings are rare and grow very slowly; after a few years the plant is a low tuft of sharply angled, bright green, broom-like twigs that stay green through winter after the leaves drop, and rhizomes start sending up new shoots around it.",
-     "confidence": "documented",
-     "source": "USDA FEIS (Vaccinium myrtillus): 35-64% germination after cold, seedlings rare and initially very slow, seed production begins at about age 3, aerial shoots live up to about 15 yr, rhizomes 23-28 yr, understory dominant in conifer forests with few berries under a closed canopy; Wikipedia: 10-51 cm, can live up to 30 years."
+     "juvenile_note": "Tiny epigeal seedling with rounded cotyledons, then small, oval, untoothed, blue-green leaves on a thin brownish stem. Growth is slow: the young plant is a low, stiff, much-branched twiggy tuft of round, rather thick, blue-grey leaves that fall in autumn, later spreading by rhizomes and layering into a low mat.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Vaccinium uliginosum): usually 20-40 cm, germination improved by 30 days cold at 2 C and poor below 15 C, seed short-lived, rhizomes to 20 cm deep, grows for 50-60 years after fire. Seedling growth, first fruiting and stem ages estimated from arctic shrub studies and the genus."
     },
     "fruiting": {
      "flower_months": [
-      4,
-      6
+      6,
+      7
      ],
      "hemisphere": "north",
      "flower_days": 5,
      "flower_size_cm": 0.5,
-     "flower_colour": "#e2b0a8",
+     "flower_colour": "#f2d6dc",
      "flower_form": "bell",
      "flower_position": "twigs",
      "flowers_per_cluster": [
       1,
-      2
+      4
      ],
      "pollinators": [
       "bumblebee",
-      "bee",
-      "fly"
+      "fly",
+      "bee"
      ],
-     "fruit_set": 0.5,
+     "fruit_set": 0.4,
      "fruit_kind": "berry",
      "fruit_shape": "round",
      "fruit_size_cm": [
-      0.5,
+      0.6,
       1.0
      ],
-     "unripe_colour": "#8fa860",
-     "ripe_colour": "#303452",
+     "unripe_colour": "#9cb070",
+     "ripe_colour": "#3d4f7c",
      "ripen_days": [
       50,
-      70
+      75
      ],
      "hang_days": [
-      7,
-      25
+      10,
+      40
      ],
      "drop": "falls",
      "rot_days": [
-      5,
-      20
+      7,
+      25
      ],
      "crop_per_tree": [
       20,
@@ -1573,46 +1954,42 @@
      ],
      "edible": "yes",
      "confidence": "documented",
-     "source": "USDA FEIS (Vaccinium myrtillus): pink, cream or greenish-white urn to bell flowers borne singly in leaf axils, bees the main pollinators, round dark red to blue-black berries 5-8 mm ripening about 50 days after flowering; Wikipedia: blooms Apr-May, blue-black fruit up to 1 cm Jul-Sep, fruit persists on average 16.7 days. Fruit set and crop estimated."
+     "source": "USDA FEIS (Vaccinium uliginosum): white to pink flowers singly or in clusters at stem ends, June to early July; blue to black berries ripen late July-Sept and are eaten heavily by bears Jul-Sep. Pollinators (bumblebees, flies), berry size, fruit set, hang and rot times and crop estimated."
     }
    },
    {
-    "name": "Mountain pine",
-    "genus": "Pinus",
-    "species": "mugo",
-    "origin": "Alps, Carpathians and Balkans",
-    "shape": "conifer",
+    "name": "Labrador tea",
+    "genus": "Rhododendron",
+    "species": "groenlandicum",
+    "origin": "Boreal North America and Greenland",
+    "shape": "shrub",
     "temp_c": [
-     -2,
-     6
+     -6,
+     5
     ],
     "moisture": [
-     0.4,
-     0.8
-    ],
-    "altitude_m": [
-     1400,
-     2700
+     0.6,
+     1
     ],
     "height_m": [
-     1,
-     3
+     0.3,
+     1
     ],
-    "density": 0.7,
-    "soil": "thin",
-    "color": "#2F6A30",
-    "accent": "#6A5040",
-    "source": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#3A6A35",
+    "accent": "#F0F0E0",
+    "source": "Rhododendron groenlandicum, N American boreal bogs and black spruce forest, evergreen shrub 0.3-1 m with white flower clusters",
     "traits": {
-     "genus": "Pinus",
-     "species": "mugo",
-     "native_range": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
+     "genus": "Rhododendron",
+     "species": "groenlandicum",
+     "native_range": "Rhododendron groenlandicum, N American boreal bogs and black spruce forest, evergreen shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
      "height_m": [
-      1,
-      3
+      0.3,
+      1
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1620,44 +1997,363 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "pine",
-    "leaf_type": "needle",
+    "bark_type": "peeling",
+    "leaf_type": "glossy",
     "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "fascicled",
-     "fascicle": 2,
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      3,
-      7
+      2,
+      5
      ],
      "compound": null,
-     "texture": "matte",
+     "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.25,
+     "gap": 0.35,
      "layering": "clumped",
-     "droop": 0.05
+     "droop": 0.2
     },
     "tint": {
      "hue_shift": -4,
-     "sat": 0.9,
+     "sat": 0.85,
      "val": 0.8,
-     "underside": 0.1
+     "underside": 0.2
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "scaly",
-     "orientation": "none",
-     "depth": 0.4,
-     "scale_cm": 2,
-     "color": "#5A5048",
-     "color_2": "#7A6A58",
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 1,
+     "color": "#7A6A58",
+     "color_2": "#9A6A48",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      25,
+      50
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "low mound of rusty-backed leathery leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      35
+     ],
+     "height_years": [
+      6,
+      18
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Extremely slow start: seedlings on moss are only 2 mm tall after a month and 4 mm after four. Tiny narrow leaves with rolled-under edges become the adult's leathery, strap-like leaves, dark green above and thickly rusty-woolly beneath. It builds a few thin, hairy stems, then spreads by rhizomes and layering into a low, open, aromatic evergreen patch.",
+     "confidence": "documented",
+     "source": "USDA FEIS Ledum groenlandicum (most seeds germinate in 25-30 days; seedlings 2 mm at 1 month, 4 mm at 4 months; flowers late May-Jul; capsules 4-6 mm ripen in fall; often >50 seeds per flower); Wikipedia (usually 50 cm, rarely 2 m; slow-growing; up to 35 flowers per cluster); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#f8f6ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      35
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#9aa36a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      90,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "USDA FEIS Ledum groenlandicum (flowers late May-Jul; 352 flowers per 100 cm2 in good stands; capsules 4-6 mm ripen in fall; Apis, Bombus and Andrena bees visit); Wikipedia (small white flowers, petals ~1 cm, up to 35 per cluster; mainly bees, also butterflies and beetles; toxic in quantity); set, crop and capsule persistence estimated"
+    },
+    "biomes": [
+     "BOG",
+     "KRUMMHOLZ"
+    ]
+   },
+   {
+    "name": "Green alder",
+    "genus": "Alnus",
+    "species": "alnobetula",
+    "origin": "Northern mountains and subarctic",
+    "family": "Betulaceae",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     8
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2800
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     1.0,
+     5.0
+    ],
+    "density": 0.8,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "alluvium",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#3E7A34",
+    "accent": "#8A6A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      6,
+      15
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged nutlets germinate on bare moist mineral soil (avalanche tracks, landslides, moraine). The seedling makes a whip with small, sticky, toothed leaves, then sprouts several stems from the base. Snow presses the stems downslope every winter, so the shrub grows as a thicket of arching, elbowed stems that curve up at the tips.",
+     "confidence": "estimated",
+     "source": "Flora Europaea and Flora of North America Alnus viridis / A. alnobetula (shrub 1-5 m, rarely more; leaves sticky, doubly serrate; catkins with the leaves; N-fixing with Frankia; pioneer of avalanche tracks and treeline). Germination, first fruit and age estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alnus alnobetula (Ehrh.) K.Koch, green alder (accepted name in Kew POWO for Mike's Alnus viridis; Sitka alder is its subsp. sinuata): Alps and Carpathians (Gruenerle scrub on avalanche tracks above the spruce), Siberian forest-tundra (subsp. fruticosa), and the Cascades, Rockies and Alaska (subsp. sinuata); a nitrogen-fixing many-stemmed shrub 1-5 m. Kew POWO; Flora Europaea; Flora of North America; Ellenberg 1988 (Alnetum viridis).",
+    "traits": {
+     "genus": "Alnus",
+     "species": "alnobetula",
+     "native_range": "avalanche tracks and treeline of the Alps, Siberia and western North America",
+     "leaf_shape": "glossy toothed leaves",
+     "trunk": "multi-stemmed from the base, arching downslope",
+     "petiole": "short petiole",
+     "height_m": [
+      1.0,
+      5.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by suckers",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6a665e",
+      "secondary": "#a09080",
+      "feature_cm": 0.3,
+      "roughness": 0.15,
+      "notes": "smooth grey-brown stems dotted with pale lenticels"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.5
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e7a34",
+      "underside": "#7aa060",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#2e5a2a",
+      "margin": "serrate",
+      "size_cm": [
+       3,
+       9
+      ],
+      "notes": "ovate leaves 3-9 cm with fine double teeth, glossy and sticky when young, bright green"
+     },
+     "flower": {
+      "colour": "#c8b040",
+      "secondary": "#7a4a3a",
+      "form": "yellow hanging male catkins 4-12 cm opening with the leaves; small red-brown female catkins on long stalks",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a3a2a",
+      "form": "small woody cones 1-1.5 cm on long stalks, held through winter"
+     },
+     "seasonal": "deciduous; leaves fall still green or dull yellow",
+     "silhouette": "dense head-high thicket of arching stems on a steep slope",
+     "confidence": "documented",
+     "refs": "Flora Europaea; Flora of North America; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#8a8a3a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14,
+     "response": "bud_set"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#6A665E",
+     "color_2": "#A09080",
+     "lenticels": "dots",
      "confidence": "documented"
     },
     "architecture": {
@@ -1665,11 +2361,11 @@
      "habit": "multi_stem",
      "orders": 4,
      "branch_angle_deg": [
-      50,
-      75
+      30,
+      60
      ],
-     "taper_exponent": 2.0,
-     "sinuosity": 0.8,
+     "taper_exponent": 1.6,
+     "sinuosity": 0.6,
      "fork_height_frac": [
       0.0,
       0.1
@@ -1678,36 +2374,13 @@
      "lean_max_deg": 45,
      "live_crown_ratio": [
       0.9,
-      0.8
+      0.7
      ],
-     "self_prune": true,
-     "dead_limbs": 0.3,
-     "root_flare": true,
-     "spacing_m": 0.6,
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
      "confidence": "estimated"
-    },
-    "silhouette": "dark sprawling pine mound, knee to head high",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      40
-     ],
-     "height_years": [
-      15,
-      50
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      150,
-      400
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings have 5-7 cotyledons and a tuft of short primary needles; the young plant soon branches from the base into a low, dense, rounded bush of stiff, dark-green, paired, curved needles. Stems lie downhill under snow and rise at the tips, so old plants form thickets of crooked, interlaced, ground-hugging branches.",
-     "confidence": "estimated",
-     "source": "Wikipedia (subsp. mugo a low, shrubby, often multi-stemmed plant to 3-6 m; cones 2.5-5.5 cm, nut-brown); growth, first cones and lifespan estimated from treeline dwarf-pine studies in the Alps"
     },
     "fruiting": {
      "flower_months": [
@@ -1715,159 +2388,51 @@
       7
      ],
      "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 1,
-     "flower_colour": "#a03a5a",
-     "flower_form": "cone",
+     "flower_days": 10,
+     "flower_size_cm": 6,
+     "flower_colour": "#c8b040",
+     "flower_form": "catkin",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      1,
+      2,
       4
      ],
      "pollinators": [
       "wind"
      ],
-     "fruit_set": 0.7,
+     "fruit_set": 0.5,
      "fruit_kind": "cone",
      "fruit_shape": "ovoid",
      "fruit_size_cm": [
-      2.5,
-      5.5
+      1,
+      1.5
      ],
-     "unripe_colour": "#6a4a6a",
-     "ripe_colour": "#8a5a2a",
+     "unripe_colour": "#5a7a3a",
+     "ripe_colour": "#5a3a2a",
      "ripen_days": [
-      460,
-      520
+      90,
+      120
      ],
      "hang_days": [
-      365,
-      1200
+      120,
+      365
      ],
      "drop": "persists",
      "rot_days": [
-      700,
-      2000
+      180,
+      730
      ],
      "crop_per_tree": [
-      20,
-      500
+      50,
+      1000
      ],
      "edible": "no",
      "confidence": "estimated",
-     "source": "Wikipedia (cones 2.5-5.5 cm, nut-brown, matt and symmetrical in subsp. mugo); two-season pine cone cycle, violet young cones and empty cones lingering on the branches estimated from the genus"
+     "source": "Flora Europaea / Flora of North America (catkins open with the leaves, unlike other alders; woody cones 1-1.5 cm on long stalks ripen in autumn and persist through winter); timing at the treeline, set and crop estimated"
     }
    }
   ],
   "ground": [
-   {
-    "name": "Mountain avens",
-    "genus": "Dryas",
-    "species": "octopetala",
-    "origin": "Arctic-alpine Eurasia and N America",
-    "shape": "cushion",
-    "temp_c": [
-     -6,
-     3
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "height_m": [
-     0.03,
-     0.1
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#3A7A35",
-    "accent": "#F8F8F0",
-    "source": "Dryas octopetala, Arctic-alpine Eurasia/N America, evergreen mat on calcareous ground",
-    "traits": {
-     "genus": "Dryas",
-     "species": "octopetala",
-     "native_range": "Dryas octopetala, Arctic-alpine Eurasia/N America, evergreen mat on calcareous ground",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.03,
-      0.1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "oblong",
-     "aspect": 2.2,
-     "base": "truncate",
-     "apex": "obtuse",
-     "margin": "crenate",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      0.8,
-      2.5
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.2,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.85,
-     "val": 0.8,
-     "underside": 0.65
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "stringy",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 0.5,
-     "color": "#5A4636",
-     "color_2": "#8A7458",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "flat evergreen mat with white eight-petal flowers",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      15,
-      50
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      80,
-      200
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two tiny round cotyledons, then small oblong leaves with rounded teeth, glossy dark green above and white-woolly beneath, like miniature oak leaves. The seedling's woody stem creeps and branches over limestone gravel, rooting as it goes, and slowly builds a flat evergreen mat that carries eight-petalled white flowers and twisting feathery seed plumes.",
-     "confidence": "estimated",
-     "source": "Wikipedia Dryas octopetala (creamy white flowers with 8, occasionally up to 16, petals on 3-10 cm stalks; persistent feathery styles twisted, then spreading into a ball for wind dispersal; early-melting gravel and rock barrens, mostly on limestone). Mat growth, first flowering and age estimated (Elkington 1971 Biol. Flora, not read)."
-    }
-   },
    {
     "name": "Sheep fescue",
     "genus": "Festuca",
@@ -1977,41 +2542,1764 @@
      "juvenile_note": "Hair-fine first leaf, then a tiny tuft of bristle-like, inrolled grey-green leaves; tillers pack into a dense, low, cushion-like tussock within 2-3 years that flowers from year 2 and can persist for decades, slowly spreading outward.",
      "confidence": "estimated",
      "source": "Estimated from Festuca ovina life history (Grime et al., Comparative Plant Ecology: slow-growing stress-tolerant tussock grass; seed germination in 1-3 weeks; flowering from the second year); long-lived tussocks."
-    }
+    },
+    "biomes": [
+     "KRUMMHOLZ"
+    ]
    },
    {
-    "name": "Star reindeer lichen",
-    "genus": "Cladonia",
-    "species": "stellaris",
+    "name": "Feather moss",
+    "genus": "Pleurozium",
+    "species": "schreberi",
     "origin": "Circumboreal (northern hemisphere)",
+    "family": "Hylocomiaceae",
     "shape": "moss",
     "temp_c": [
      -8,
-     5
+     14
     ],
     "moisture": [
-     0.2,
-     0.7
+     0.5,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "BOG",
+     "KRUMMHOLZ",
+     "TAIGA"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A8A3A",
+    "accent": "#7A5A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a green, thread-like protonema on humus or rotten wood that buds small leafy shoots. These become loose, glossy yellow-green, once-pinnate feathery shoots on conspicuous red stems with blunt, crowded leaves, adding roughly 1-2 cm a year and weaving into a springy carpet 3-10 cm deep. Most new patches start from broken shoot fragments.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Pleurozium schreberi (stems 6-15 cm; spores shed 9-12 months after fertilization; post-fire cover ~1% at 5 yr, 3% at 20-30 yr, 9% at 50 yr: decades to recover). Annual shoot growth (~1-2 cm/yr), patch size-age and lifespan estimated from feathermoss literature."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "The boreal forest floor from Scandinavia to Alaska; under spruce and pine. Kew POWO.",
+    "traits": {
+     "genus": "Pleurozium",
+     "species": "schreberi",
+     "native_range": "The boreal forest floor from Scandinavia to Alaska",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#8ab838",
+      "underside": "#c8a848",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#8ab838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "loose yellow-green feathery shoots with distinctive red stems, forming deep soft carpets"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "continuous yellow-green carpet under spruce",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#c83a3a",
+      "markings": "#c83a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-orange stem visible through the leaves"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Stair-step moss",
+    "genus": "Hylocomium",
+    "species": "splendens",
+    "origin": "Circumboreal (northern hemisphere)",
+    "family": "Hylocomiaceae",
+    "shape": "moss",
+    "temp_c": [
+     -6,
+     14
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "TUNDRA"
     ],
     "height_m": [
      0.05,
-     0.12
+     0.15
     ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#D8E0C8",
-    "accent": "#B8C0A8",
-    "source": "Cladonia stellaris, circumboreal forest-tundra, pale star-shaped lichen mats dominant on dry lichen heath",
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A8A3A",
+    "accent": "#7A5A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants are small loose wefts of red-stemmed, feathery, olive to golden-green fronds creeping over humus, logs or rock. Each year a new frond arches up from the middle of last year's, so a shoot becomes a staircase of flat, fern-like steps, one per year, the oldest dying brown underneath. A deep carpet rebuilds only slowly after fire, once a canopy has closed.",
+     "confidence": "documented",
+     "source": "Trees for Life (new segment each year from the centre of the previous one, segments live up to ~8 yr, sporophytes uncommon, slow recolonisation after fire, shade-loving); Wikipedia (one step per year used to age shoots). Lifespan is for the patch; spore-to-plant time and first capsule age estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Boreal and temperate rainforest; one storey per year, so its age is readable. Kew POWO.",
     "traits": {
-     "genus": "Cladonia",
-     "species": "stellaris",
-     "native_range": "Cladonia stellaris, circumboreal forest-tundra, pale star-shaped lichen mats dominant on dry lichen heath",
+     "genus": "Hylocomium",
+     "species": "splendens",
+     "native_range": "Boreal and temperate rainforest",
      "leaf_shape": "tiny leaves on thread stems",
      "trunk": "none",
      "petiole": "none",
      "height_m": [
       0.05,
-      0.12
+      0.15
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#7ab848",
+      "underside": "#c8a860",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "glossy green fern-like fronds in annual tiers; each year's growth a new storey; red-brown stems"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       15
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "layered glossy green carpet in old forest",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#a84a3a",
+      "markings": "#a84a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-brown wiry stem"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Haircap moss",
+    "genus": "Polytrichum",
+    "species": "commune",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Polytrichaceae",
+    "shape": "moss",
+    "temp_c": [
+     -10,
+     16
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "biomes": [
+     "BOG",
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#3A7A3A",
+    "accent": "#8A6A40",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate on bare, damp, acid soil into a green felt of protonema that buds tiny upright shoots. These grow into stiff, unbranched stems clothed in spreading, narrow, dark green leaves, like miniature spruce seedlings (star-shaped from above, folding up when dry), forming loose to dense turfs that get taller and thicker year by year.",
+     "confidence": "estimated",
+     "source": "Wikipedia Polytrichum commune (stems usually 5-10 cm, often over 30 cm, rarely 70 cm; dioicous with splash-cup males; bogs, wet heath, forest streams and recently disturbed, partly open ground). Growth increments, age at first capsules and turf lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tundra, bog and wet heath; the tallest moss, like a tiny pine forest. Kew POWO.",
+    "traits": {
+     "genus": "Polytrichum",
+     "species": "commune",
+     "native_range": "Tundra, bog and wet heath",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "upright",
+      "colour": "#3a7a3a",
+      "underside": "#5a9a48",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#3a7a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "tall stiff dark green shoots like tiny pine trees with narrow spreading leaves; red-brown stems"
+     },
+     "mat": {
+      "height_cm": [
+       10,
+       40
+      ],
+      "texture": "upright"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "miniature dark green forest on bog",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "fruit": {
+      "colour": "#c8a860",
+      "form": "four-sided capsules with golden hairy calyptra on 5-10 cm red stalks"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.5,
+      1.0
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Alpine oatgrass",
+    "genus": "Danthonia",
+    "species": "intermedia",
+    "origin": "Western North America and NE Asia",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -6,
+     6
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     600,
+     3800
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5A8A48",
+    "accent": "#8A5A7A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a few narrow, slightly hairy leaves. It tillers into a dense small tuft of mostly basal leaves; thin stems rise 10-50 cm with a short, narrow cluster of 3-10 large, shiny, purple-tinged spikelets whose twisted, bent awns catch the light.",
+     "confidence": "estimated",
+     "source": "Flora of North America Danthonia intermedia (densely cespitose; culms 10-50 cm; leaves mostly basal, flat to involute, 1-3 mm wide; inflorescence of 3-10 spikelets, glumes 12-20 mm, purplish; montane to alpine meadows). Germination, first flowering and lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Danthonia intermedia, timber oatgrass (Mike's 'Alpine oatgrass'): Alaska to California and the Rockies to New Mexico, also NE Asia; subalpine and alpine meadows and open treeline slopes; densely tufted, culms 10-50 cm with a few large purple-tinged spikelets. Kew POWO; Flora of North America.",
+    "traits": {
+     "genus": "Danthonia",
+     "species": "intermedia",
+     "native_range": "subalpine meadows and treeline of western North America",
+     "leaf_shape": "narrow basal grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#5a8a48",
+      "underside": "#6a9a58",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#5a8a48",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       15
+      ],
+      "notes": "narrow flat to rolled leaves 1-3 mm wide, mostly at the base, sparsely hairy"
+     },
+     "flower": {
+      "colour": "#8a5a7a",
+      "secondary": "#d0c090",
+      "form": "short narrow cluster of 3-10 large shiny purple-tinged spikelets with twisted bent awns",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; spikelets purple then papery straw",
+     "silhouette": "small dense tuft with a few big shiny purplish spikelets",
+     "confidence": "documented",
+     "refs": "Flora of North America; Intermountain Flora"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#c0a860",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 15,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#5A8A48",
+     "color_2": "#8A6A7A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Timberline bluegrass",
+    "genus": "Poa",
+    "species": "glauca",
+    "origin": "Circumpolar Arctic and mountains",
+    "family": "Poaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -14,
+     4
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     3900
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "granite",
+      "till",
+      "karst",
+      "basalt"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6A8E80",
+    "accent": "#7A5A7A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a small tuft of narrow, blue-grey, waxy leaves with boat-shaped tips. It tillers into a dense glaucous tuft; stiff stems 10-40 cm carry a narrow, contracted panicle of small, often purplish spikelets.",
+     "confidence": "estimated",
+     "source": "Flora of North America Poa glauca (densely tufted, glaucous; culms 10-40 cm; leaves 1-3 mm wide; panicle narrow, contracted, spikelets often purplish; dry rocky slopes, ledges, arctic and alpine). Germination, first flowering and lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Poa glauca, glaucous bluegrass (Mike's 'Timberline bluegrass'): circumpolar Arctic and the mountains of Scandinavia, the Alps and the Rockies; dry rocky slopes, ledges and gravel at and above the treeline; a dense blue-grey tuft 10-40 cm. Kew POWO; Flora of North America.",
+    "traits": {
+     "genus": "Poa",
+     "species": "glauca",
+     "native_range": "dry rocky slopes at and above the treeline, circumpolar",
+     "leaf_shape": "narrow blue-grey blades with boat-shaped tips",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (one to three years)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#6a8e80",
+      "underside": "#8aa898",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#6a8e80",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "narrow, stiff, blue-grey waxy leaves 1-3 mm wide with hooded tips"
+     },
+     "flower": {
+      "colour": "#7a5a7a",
+      "secondary": "#c8c098",
+      "form": "narrow contracted panicle 2-8 cm of small purple-tinged spikelets",
+      "scent": "none"
+     },
+     "seasonal": "blue-grey all summer; straw in autumn",
+     "silhouette": "dense blue-grey grass tuft among rocks",
+     "confidence": "documented",
+     "refs": "Flora of North America; Flora Nordica"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -16,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#b8b080",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 15,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6A8E80",
+     "color_2": "#7A6A7A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Highland rush",
+    "genus": "Juncus",
+    "species": "trifidus",
+    "origin": "Arctic-alpine Europe, Asia, NE America",
+    "family": "Juncaceae",
+    "shape": "tussock",
+    "temp_c": [
+     -10,
+     4
+    ],
+    "moisture": [
+     0.2,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     3100
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "granite",
+      "till"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4E7040",
+    "accent": "#6A3A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a few hair-fine leaves. It slowly builds a dense, wiry tuft from short rhizomes; each thread-like stem ends in two or three long bristle leaves that overtop one to three small dark brown flowers, and the old sheaths and leaf tips turn the whole tuft rusty brown by late summer.",
+     "confidence": "estimated",
+     "source": "Flora Europaea / Flora of North America Juncus trifidus (densely tufted, 5-30 cm; stems filiform with 2-3 filiform leaves at the top overtopping 1-3 dark brown flowers; acid, windswept, rocky ground). Germination, first flowering and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Juncus trifidus, highland rush: arctic-alpine Europe (Scandinavian mountains, Scotland, Alps), Asia and Greenland to NE North America; the wiry rush of windswept acid ridges and lichen-heath above the last birches. Kew POWO; Flora Europaea; Dahl 1957 Rondane.",
+    "traits": {
+     "genus": "Juncus",
+     "species": "trifidus",
+     "native_range": "windswept acid ridges and lichen-heath, arctic-alpine",
+     "leaf_shape": "hair-fine wiry leaves",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "slow (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#4e7040",
+      "underside": "#6a7a48",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#4e7040",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "thread-fine wiry leaves and stems, two or three long bristle leaves at each stem top; tips and old sheaths rusty brown"
+     },
+     "flower": {
+      "colour": "#6a3a2a",
+      "secondary": "#c8a870",
+      "form": "one to three small dark brown flowers just below the top leaves",
+      "scent": "none"
+     },
+     "seasonal": "dark green in early summer, rusty brown from August",
+     "silhouette": "dense wiry tuft turning rusty brown on bare ridges",
+     "confidence": "documented",
+     "refs": "Flora Europaea; Flora Nordica; Flora of North America"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.05,
+     "autumn": "#a0602e",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 15,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#4E7040",
+     "color_2": "#7A4A2E",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Subalpine slippery jack",
+    "genus": "Suillus",
+    "species": "subalpinus",
+    "origin": "Northern Rocky Mountains",
+    "kingdom": "Fungi",
+    "family": "Suillaceae",
+    "shape": "rosette",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1800,
+     3300
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.04,
+     0.1
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "till",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#D8C890",
+    "accent": "#C8A030",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      6
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.4
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Suillus subalpinus, a five-needle-pine slippery jack known only with whitebark pine in the northern and central Rocky Mountains (Greater Yellowstone treeline studies), close to S. placidus; on a fungal conservation list with its host. Mohatt, Cripps & Lavin 2008 Can. J. Bot. 86 (ectomycorrhizal fungi of whitebark pine); Cripps 2019.",
+    "traits": {
+     "genus": "Suillus",
+     "species": "subalpinus",
+     "native_range": "whitebark pine treeline of the northern Rockies",
+     "leaf_shape": "none",
+     "trunk": "stout stalk",
+     "petiole": "none",
+     "height_m": [
+      0.04,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "spores; mycelium on pine roots",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c890",
+      "secondary": "#a08a5a",
+      "form": "convex to flat slimy cap 4-10 cm",
+      "size_cm": [
+       4,
+       10
+      ],
+      "texture": "slimy",
+      "gloss": 0.7,
+      "notes": "pale buff to yellowish cap, slimy when wet, staining darker with age; like S. placidus"
+     },
+     "underside": {
+      "colour": "#c8a030",
+      "type": "pores yellow, angular"
+     },
+     "stipe": {
+      "colour": "#e8dcb0",
+      "height_cm": [
+       3,
+       7
+      ]
+     },
+     "habit": "scattered under whitebark pine at the treeline",
+     "seasonal": "fruits in late summer after rain, then rots within days",
+     "silhouette": "pale slimy bolete under a whitebark pine",
+     "confidence": "estimated",
+     "refs": "Mohatt, Cripps & Lavin 2008; Cripps 2019 (Mycorrhizal fungi and whitebark pine); Smith & Thiers 1964 (Suillus)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 24,
+     "sat": 0.6,
+     "val": 1.2,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Conifer coral",
+    "genus": "Phaeoclavulina",
+    "species": "abietina",
+    "origin": "Northern Hemisphere conifer forest",
+    "kingdom": "Fungi",
+    "family": "Gomphaceae",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     2400
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.02,
+     0.07
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "karst"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#B8A050",
+    "accent": "#5A8A5A",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Phaeoclavulina abietina (Pers.) Giachini (syn. Ramaria abietina, Mike's binomial), green-staining coral: Europe and North America in needle litter under spruce and fir; a small ochre to olive coral 2-7 cm that bruises green. Index Fungorum; Funga Nordica.",
+    "traits": {
+     "genus": "Phaeoclavulina",
+     "species": "abietina",
+     "native_range": "needle litter under spruce and fir",
+     "leaf_shape": "none",
+     "trunk": "short trunk branching into many tips",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.07
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "spores; mycelium in the needle litter",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#b8a050",
+      "secondary": "#5a8a5a",
+      "form": "small coral 2-7 cm tall, a short base dividing into many upright forked branches with pointed tips",
+      "size_cm": [
+       2,
+       5
+      ],
+      "texture": "matte",
+      "gloss": 0.1,
+      "notes": "ochre to olive-ochre branches that bruise and age blue-green; white mycelium binds the needles at the base"
+     },
+     "underside": {
+      "colour": "#b8a050",
+      "type": "none — spores on the branch surfaces"
+     },
+     "stipe": {
+      "colour": "#e8e0c8",
+      "height_cm": [
+       0.5,
+       1.5
+      ]
+     },
+     "habit": "scattered or in arcs in spruce and fir needle litter",
+     "seasonal": "fruits late summer to autumn, then rots",
+     "silhouette": "small ochre coral greening at the tips in the needles",
+     "confidence": "estimated",
+     "refs": "Funga Nordica; Index Fungorum; Breitenbach & Kraenzlin Fungi of Switzerland"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 22,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Witch's hair lichen",
+    "genus": "Alectoria",
+    "species": "sarmentosa",
+    "origin": "Circumboreal oceanic mountains",
+    "family": "Parmeliaceae",
+    "shape": "hanging_moss",
+    "temp_c": [
+     -6,
+     10
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B8C890",
+    "accent": "#E0E8C8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "New thalli start from fragments blown or dropped onto conifer twigs. A young thallus is a small erect pale tuft; as it lengthens it bends over and hangs as a loose beard of branched, pale yellow-green to grey-green strands, flecked with tiny white streaks, growing a few centimetres a year in humid subalpine air.",
+     "confidence": "estimated",
+     "source": "Brodo, Sharnoff & Sharnoff 2001 Lichens of North America (Alectoria sarmentosa: pendent, 10-30 cm or more, pale yellowish-green, with conspicuous white elongate pseudocyphellae; on conifers in humid subalpine and boreal forest); Stevenson & Coxson growth studies (a few cm a year); ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "a lichen: spreads almost entirely by fragments, carried by wind and nesting birds; no flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Alectoria sarmentosa, witch's hair: oceanic boreal and subalpine conifer forest, Cascades, Coast Mountains, interior Rockies, Scandinavia and the Alps; pale yellow-green hair lichen hanging 10-30 cm from spruce and fir branches; caribou winter forage. Brodo et al. 2001; Index Fungorum.",
+    "traits": {
+     "genus": "Alectoria",
+     "species": "sarmentosa",
+     "native_range": "humid subalpine conifer forest and treeline",
+     "leaf_shape": "hair-like hanging strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "fragments",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strands",
+      "colour": "#b8c890",
+      "underside": "#c8d4a8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#b8c890",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       30
+      ],
+      "notes": "loose beards of branched pale yellow-green strands with white streaks, hanging from conifer branches"
+     },
+     "seasonal": "evergreen; paler and brittle when dry, greener when wet",
+     "silhouette": "pale lichen beards draped on treeline spruce and fir",
+     "confidence": "documented",
+     "refs": "Brodo et al. 2001 Lichens of North America; Wikipedia Alectoria sarmentosa"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.85
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.5,
+     "val": 1.1,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Beard lichen",
+    "genus": "Usnea",
+    "species": "barbata",
+    "origin": "Worldwide (cosmopolitan)",
+    "shape": "hanging_moss",
+    "temp_c": [
+     0,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "KRUMMHOLZ"
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#A8C890",
+    "accent": "#C8D8B0",
+    "source": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — Wikipedia",
+    "traits": {
+     "genus": "Usnea",
+     "species": "barbata",
+     "native_range": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — W",
+     "leaf_shape": "thread-like strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.5
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -2023,47 +4311,40 @@
     "leaf_type": "moss",
     "leaf": {
      "type": "none",
-     "venation": "none",
      "compound": null,
      "confidence": "documented"
     },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented"
+    },
     "canopy": {
-     "form": "mound",
-     "gap": 0.25,
-     "layering": "even",
-     "droop": 0.0
+     "form": "weeping",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.8
     },
     "tint": {
      "hue_shift": 0,
-     "sat": 0.35,
-     "val": 1.3,
-     "underside": 0.0
+     "sat": 0.45,
+     "val": 1.0,
+     "underside": 0.05
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#D8E0C8",
-     "color_2": "#B8C0A8",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "pale cauliflower-like lichen cushion",
+    "silhouette": "short pale lichen beards on twigs",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      60,
-      365
+      180,
+      730
      ],
      "height_years": [
-      15,
-      35
+      8,
+      25
      ],
-     "first_seed_years": 12,
+     "first_seed_years": 6,
      "lifespan_years": [
       30,
       80
@@ -2071,13 +4352,12 @@
      "shade": "intermediate",
      "juvenile": "mat",
      "juvenile_leaves": "same",
-     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. Each piece grows into a pale yellow-green, rounded head of dense, fine, star-like branching; heads pack side by side into a smooth cauliflower-like carpet 5-12 cm deep that takes decades to rebuild after fire or grazing.",
-     "confidence": "documented",
-     "source": "Wikipedia Cladonia stellaris (grows on average <5 mm per year under good conditions; key reindeer and caribou winter forage); Kytoviita & Crittenden 2007 and boreal lichen-woodland studies (slow recovery over decades after fire or grazing); lifespan estimated"
+     "juvenile_note": "Soredia or broken bits lodge on twigs and bark and grow into a tiny pale grey-green tuft a few mm tall, fixed by a blackened basal holdfast. Young thalli are shrubby and upright with short side fibrils; as they lengthen they bend over and hang as a beard of stringy, branched strands, each with a stretchy white central cord that shows when a strand is gently pulled apart.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Usnea): thalli from a few mm in polluted air to over 3 m, spread by fragments, soredia or isidia and by spores, very sensitive to sulphur dioxide, slow-growing in nature. Growth (on the order of 1 cm a year), establishment and ages estimated from pendulous beard lichens."
     }
    }
-  ],
-  "epiphyte": []
+  ]
  },
  "associations": [
   {
@@ -2085,15 +4365,17 @@
    "realm": "nearctic",
    "where": "upper treeline slopes and wind-exposed shoulders, snow-drift lee",
    "dominant": [
-    "Wind-stunted conifer"
+    "Wind-stunted conifer",
+    "Subalpine fir"
    ],
    "companion": [
-    "Dwarf willow",
-    "Heath"
+    "Whitebark pine",
+    "Dwarf juniper",
+    "Bog bilberry"
    ],
    "ground": [
     "Sheep fescue",
-    "Star reindeer lichen"
+    "Alpine oatgrass"
    ],
    "catalogue": [],
    "cover": 0.5,
@@ -2104,14 +4386,13 @@
    "realm": "palearctic",
    "where": "gentle upper slopes and valley sides of the subarctic mountains, moist acid soil",
    "dominant": [
-    "Mountain birch"
+    "Dwarf juniper"
    ],
    "companion": [
-    "Dwarf birch",
-    "Heath"
+    "Bog bilberry"
    ],
    "ground": [
-    "Star reindeer lichen",
+    "Highland rush",
     "Sheep fescue"
    ],
    "catalogue": [],
@@ -2123,14 +4404,13 @@
    "realm": "palearctic",
    "where": "permafrost lowlands and north slopes of the Siberian treeline, cold wet soil",
    "dominant": [
-    "Dahurian larch"
+    "Green alder"
    ],
    "companion": [
-    "Dwarf birch",
-    "Dwarf willow"
+    "Bog bilberry"
    ],
    "ground": [
-    "Star reindeer lichen"
+    "Feather moss"
    ],
    "catalogue": [],
    "cover": 0.3,
@@ -2141,13 +4421,14 @@
    "realm": "palearctic",
    "where": "steep subalpine slopes, avalanche tracks and limestone screes of the Alps",
    "dominant": [
-    "Mountain pine"
+    "Alpenrose",
+    "Green alder"
    ],
    "companion": [
-    "Heath"
+    "Bog bilberry",
+    "Dwarf juniper"
    ],
    "ground": [
-    "Mountain avens",
     "Sheep fescue"
    ],
    "catalogue": [],
@@ -2159,14 +4440,13 @@
    "realm": "palearctic",
    "where": "bare ridges and summits above the last trees, dry thin soil",
    "dominant": [
-    "Heath",
-    "Mountain avens"
+    "Dwarf juniper"
    ],
    "companion": [
-    "Dwarf willow"
+    "Bog bilberry"
    ],
    "ground": [
-    "Star reindeer lichen",
+    "Highland rush",
     "Sheep fescue"
    ],
    "catalogue": [],

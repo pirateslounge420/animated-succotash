@@ -1,0 +1,673 @@
+{
+ "key": "SAGEBRUSH",
+ "name": "Sagebrush shrubland",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Singleleaf pinyon",
+    "genus": "Pinus",
+    "species": "monophylla",
+    "origin": "Great Basin, western USA",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "altitude_m": [
+     1200,
+     2700
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "color": "#3A6A3A",
+    "accent": "#7A6050",
+    "source": "Pinus monophylla, Great Basin pinyon-juniper woodland, 5-12 m — USDA PLANTS",
+    "traits": {
+     "genus": "Pinus",
+     "species": "monophylla",
+     "native_range": "Pinus monophylla, Great Basin pinyon-juniper woodland, 5-12 m — USDA PLANTS",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 1,
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A6A5A",
+     "color_2": "#5A4030",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "silhouette": "short bushy round-crowned pinyon",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      100,
+      190
+     ],
+     "first_seed_years": 35,
+     "lifespan_years": [
+      400,
+      1000
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings, usually from seeds cached by jays under shrubs, have 7-9 cotyledons and bluish primary needles, then unique single, round, stiff, sharp grey-green needles (the only pine with one needle per bundle). Young trees are compact, bluish cones; old ones become rounded, flat-topped and often multi-stemmed.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pinus monophylla: a dominant tree takes ~60 years to reach 2 m and ~150 to reach 8.5 m (about 5 cm/yr); first cones ~35 yrs, good crops from 75-100, peak at 160-200; not shade tolerant; dominants often 400 years, some 800-1,000"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#9a4a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3.5,
+      5.5
+     ],
+     "unripe_colour": "#6a7a42",
+     "ripe_colour": "#8a6a3a",
+     "ripen_days": [
+      460,
+      500
+     ],
+     "hang_days": [
+      60,
+      400
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1800
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (strobili late spring-early summer, pollen shed by mid-June; three-season cone cycle, ripe seed about 26 months after the buds form; cones 3.5-5.5 cm, thick-scaled, open Sep-Nov; masting every 2-3 years); its large wingless nuts were a Great Basin staple"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Greasewood",
+    "genus": "Sarcobatus",
+    "species": "vermiculatus",
+    "origin": "Western North America",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.25,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#C0B090",
+    "source": "Sarcobatus vermiculatus, alkaline basins of western N America, 1-2.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Sarcobatus",
+     "species": "vermiculatus",
+     "native_range": "Sarcobatus vermiculatus, alkaline basins of western N America, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.9,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#C8B050",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 3,
+     "color": "#B8B4A8",
+     "color_2": "#7A6A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "bright green spiny shrub with white stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 long, narrow, fleshy cotyledons and a coiled embryo that uncoils fast; first leaves bright green, fleshy and cylindrical (1-4 cm) like the adult's. Grows slowly into a stiff, rigid, much-branched spiny shrub with pale bark; after 12 years only about 0.7 m tall on dry sites. Resprouts from the root crown.",
+     "confidence": "documented",
+     "source": "USDA FEIS Sarcobatus vermiculatus (transplants 0.73 m tall after 12 yr; to 3 m; vigorous crown sprouting); USDA Woody Plant Seed Manual Sarcobatus (67-91% germination in 2-10 days at 10 C); lifespan estimated from its slow growth"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a9a35a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.4,
+      1.0
+     ],
+     "unripe_colour": "#9db35f",
+     "ripe_colour": "#c7a57a",
+     "ripen_days": [
+      90,
+      130
+     ],
+     "hang_days": [
+      30,
+      240
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS and Woody Plant Seed Manual Sarcobatus (monoecious, wind-pollinated; male flowers in small cone-like spikes at twig tips, female flowers single in leaf axils; tan winged utricles 4-5 mm, 1 cm across the wing, mature late Sep-Nov, a few hang until next summer)"
+    }
+   },
+   {
+    "name": "Shadscale",
+    "genus": "Atriplex",
+    "species": "confertifolia",
+    "origin": "Great Basin, western USA",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.28
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#B0B8A0",
+    "accent": "#D0C8A0",
+    "source": "Atriplex confertifolia, Great Basin saline valley floors, spiny grey shrub 0.3-1 m — USDA PLANTS",
+    "traits": {
+     "genus": "Atriplex",
+     "species": "confertifolia",
+     "native_range": "Atriplex confertifolia, Great Basin saline valley floors, spiny grey shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.3,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.1,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#A8A090",
+     "color_2": "#6E5E4E",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low grey spiny mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need a winter of chilling and sprout in spring. Epigeal seedling with two narrow cotyledons and small, round-oval, grey scurfy leaves; it grows slowly into a compact, rounded, grey-green shrublet whose older twigs harden into short spines. Seedlings survive best beside an established shrub.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Atriplex confertifolia (chilling needed, fungal breakdown of bracteoles, relatively short-lived, seedlings survive best near adults); Woody Plant Seed Manual (rarely germinable without chilling); growth rate and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#bda45c",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      12
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      1.2
+     ],
+     "unripe_colour": "#b9c48a",
+     "ripe_colour": "#c7ae82",
+     "ripen_days": [
+      150,
+      180
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowers late Mar-mid Jun, dioecious, wind-pollinated, utricles in 2 round bracts 4-12 mm, mature ~25 weeks after flowering, persist through winter); Woody Plant Seed Manual (65-277 thousand fruits/kg); PFAF (seed eaten as mush); crop estimated."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Arrowleaf balsamroot",
+    "genus": "Balsamorhiza",
+    "species": "sagittata",
+    "origin": "Intermountain western USA",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#7E9A78",
+    "accent": "#F0C020",
+    "source": "Balsamorhiza sagittata, sagebrush steppe forb with yellow sunflower heads, 20-60 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Balsamorhiza",
+     "species": "sagittata",
+     "native_range": "Balsamorhiza sagittata, sagebrush steppe forb with yellow sunflower heads, 20-60 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "sagittate",
+     "aspect": 2.0,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.2,
+     "autumn": "#B8A070",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#8A9A78",
+     "color_2": "#A8A088",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "silvery arrow leaves under big yellow daisies",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need a long cold, wet winter and sprout right after snowmelt with two oval cotyledons. For years the plant is a small rosette of a few narrow, heart-based, silvery-hairy leaves while a taproot plunges deep; only after 3-8 years does it build the big clump of arrowhead-shaped, silver-woolly leaves and golden sunflower heads.",
+     "confidence": "documented",
+     "source": "USDA FEIS Balsamorhiza sagittata (12 weeks cold stratification, germinates at 0-10 C, weak seedling vigour, first flowering 3-4 yr on good sites and 7-8 yr on dry sites, long-lived, taproot to 2.7 m); lifespan figures estimated."
+    }
+   }
+  ],
+  "epiphyte": []
+ }
+}

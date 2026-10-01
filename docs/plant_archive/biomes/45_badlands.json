@@ -1,0 +1,1054 @@
+{
+ "key": "BADLANDS",
+ "name": "Badlands",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "canopy": [
+   {
+    "name": "Aleppo pine",
+    "genus": "Pinus",
+    "species": "halepensis",
+    "origin": "Mediterranean Basin",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#4A8040",
+    "accent": "#A08060",
+    "source": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pinus",
+     "species": "halepensis",
+     "native_range": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      6,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 4,
+     "color": "#8A7060",
+     "color_2": "#B06A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.2,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.5,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
+    },
+    "silhouette": "leaning twisted trunk, open irregular pale-green crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      18,
+      60
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      120,
+      250
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After autumn rains, epigeal seedlings with 6-9 cotyledons put out soft, single, blue-green primary needles; thin, bright-green paired needles follow in the second year. Young trees grow fast into loose, open, irregular cones of light-green foliage and may already bear cones at 5-10 years; the crown later becomes open and rounded over grey bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia (15-25 m; cones 5-12 cm, green then glossy red-brown at 24 months, opening slowly over years or after fire); very early coning (from about 5-10 years), growth and lifespan estimated from Mediterranean post-fire pine studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#a0506a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      5,
+      12
+     ],
+     "unripe_colour": "#6f8a3a",
+     "ripe_colour": "#9a4a2a",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2000
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (cones 5-12 cm, green, ripening glossy red-brown when 24 months old, then opening slowly over several years or quickly after fire); the small seeds are ground for the Tunisian pudding assida zgougou; crop and decay estimated"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Soapweed yucca",
+    "genus": "Yucca",
+    "species": "glauca",
+    "origin": "Great Plains of North America",
+    "shape": "spike_rosette",
+    "temp_c": [
+     3,
+     19
+    ],
+    "moisture": [
+     0.1,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#6E9A8A",
+    "accent": "#F0E8C8",
+    "source": "Yucca glauca, dry badland slopes of the Great Plains, 0.5-1.2 m — USDA PLANTS",
+    "traits": {
+     "genus": "Yucca",
+     "species": "glauca",
+     "native_range": "Yucca glauca, dry badland slopes of the Great Plains, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "ciliate",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      70
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#8A7A60",
+     "color_2": "#C8B890",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "stemless spiky blue-grey rosette with tall flower stalk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within days in warm moist soil: a long thin cotyledon, then a small rosette of narrow, soft, grass-like leaves. Seedlings grow slower than offsets; over several years the rosette becomes a dense stemless tuft of narrow, stiff, blue-green, sharp-tipped leaves edged in white with fine curling threads, on a deep taproot and rhizomes that sprout new rosettes.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Yucca glauca): 50% germination in 6 days, 4 days after soaking at 27-32 C, up to 91%; seedlings grow slower than ramets; to 1 m, leaves 20-100 cm, roots over 6 m deep, rhizomes 10-60 cm deep; takes several years to bloom. Size curve (rosette spread), first flowering and rosette lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 5,
+     "flower_colour": "#eef0d6",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      25,
+      80
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7a9a55",
+     "ripe_colour": "#6b5236",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      90,
+      240
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      3,
+      40
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca glauca): flowers May-Jul on racemes 30-200 cm with 25-30 or more drooping flowers; pollinated by the yucca moth, flowers and pollen viable at least 4 days; erect, dehiscent, oblong capsules about 3 cm, ripe Jul-Aug, glossy black seeds shed in Sep; fruits and flower stalks eaten. Fruit set, crop and capsule persistence estimated."
+    }
+   },
+   {
+    "name": "Skunkbush sumac",
+    "genus": "Rhus",
+    "species": "trilobata",
+    "origin": "Western North America",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#D04030",
+    "source": "Rhus trilobata, western N America ravines and rocky slopes, 1-2.5 m, red autumn foliage — USDA PLANTS",
+    "traits": {
+     "genus": "Rhus",
+     "species": "trilobata",
+     "native_range": "Rhus trilobata, western N America ravines and rocky slopes, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": {
+      "form": "trifoliate",
+      "leaflets": [
+       3,
+       3
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.5,
+      "leaflet_margin": "crenate"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#c84a2a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3A",
+     "lenticels": "dots",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "koriba",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense rounded thicket of small three-part leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 oval cotyledons; the first leaves are small and simple or weakly lobed, soon followed by 3-lobed trifoliolate leaves. It makes a few thin brown stems, then a rounded twiggy mound; root and crown sprouts turn it into a thicket up to 9 m across. Resprouts after fire can grow 1 m in one season.",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhus trilobata (height 0.6-3.6 m, sprouts 1 m in a season, underground parts 30+ yr, fruit set 5-15%); USDA Woody Plant Seed Manual Rhus (seed needs scarification plus 1-3 months cold stratification)"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#e3d77e",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      30
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#9aa65a",
+     "ripe_colour": "#c4442c",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      200
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhus trilobata (flowers 1-3 weeks before leaves in dense yellowish spikes; only 5-15% of flowers set fruit; sticky red hairy drupes ripen Jul-Oct and persist into winter); WPSM Rhus; drupes used for a sour lemonade-like drink"
+    }
+   },
+   {
+    "name": "Silver sagebrush",
+    "genus": "Artemisia",
+    "species": "cana",
+    "origin": "Northern Great Plains and Rockies",
+    "shape": "shrub",
+    "temp_c": [
+     0,
+     14
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#A8B4A0",
+    "accent": "#B8A878",
+    "source": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0.5-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Artemisia",
+     "species": "cana",
+     "native_range": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      8
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.45,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#7A7268",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      25,
+      55
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low silver-grey sage mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      3,
+      9
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      7,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small round cotyledons, then narrow, soft, silvery-hairy leaves on a single stem; only seed within 7.5 mm of the surface comes up. It stays a small silver sprig for a year or two, then branches and sprouts from spreading rhizomes, becoming a rounded silver-grey bush of upright stems with straight, narrow, silky leaves 2-9 cm; sprays of tiny yellowish heads in late summer.",
+     "confidence": "documented",
+     "source": "USDA FEIS Artemisia cana: germinates at 5-25 C, best ~10 C after >28 d stratification, 51-97%; none from >7.5 mm deep; 1st-year survival 3.4%; first seed at ~4 yr; mature plants 0.4-1 m; rhizomes ~1.1 m with 1-52 sprouts; mean stem age 3.4 yr, rhizome system 6.0 yr, taproot 6.9 yr; intolerant of all but light shade. Height-age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#d4c46a",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.25
+     ],
+     "unripe_colour": "#9aa070",
+     "ripe_colour": "#5a4a35",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      15,
+      75
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      365
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Artemisia cana: flowers Aug-Sep in the Great Plains and interior Northwest; seed shatters mostly Sep-Nov; achene ~2.1 x 0.9 mm (680 ug); may build a short-term seed bank. Pollination (mainly wind), fruit set, ripening days and crop estimated."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Gumbo evening primrose",
+    "genus": "Oenothera",
+    "species": "caespitosa",
+    "origin": "Western North America",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#F8F8F0",
+    "source": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Oenothera",
+     "species": "caespitosa",
+     "native_range": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4.5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      15
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.2,
+     "autumn": "#a89a78",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#7A8A68",
+     "color_2": "#9A8A70",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "flat grey rosette with big white evening flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1.2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A flat rosette of greyish, wavy-toothed, lance-shaped leaves on a stout taproot from the start; it stays stemless. Big white four-petalled flowers sit right in the rosette on long floral tubes, open at dusk and fade to pink by the next morning; old plants form woody-crowned clumps on dry, rocky slopes and road cuts.",
+     "confidence": "estimated",
+     "source": "Estimated from Flora of North America Oenothera sect. Pachylophus (stemless, taprooted short-lived perennial; white flowers 4-10 cm on long tubes, vespertine, hawkmoth pollinated, fading pink) and Intermountain native-seed germination notes"
+    }
+   },
+   {
+    "name": "Esparto grass",
+    "genus": "Macrochloa",
+    "species": "tenacissima",
+    "origin": "Spain and North Africa",
+    "shape": "tussock",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#E0D090",
+    "source": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0.5-1.2 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Macrochloa",
+     "species": "tenacissima",
+     "native_range": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#C8B888",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 15,
+     "color": "#8A9A70",
+     "color_2": "#C8BC98",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "big wiry grey-green tussock of thread leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A single thin tiller of narrow grey-green leaves that roll up into wiry cylinders in drought. It tillers slowly into a dense, erect tussock of tough rush-like leaves with a skirt of dead ones; seedlings mostly survive in the lee of an old tussock or shrub. Old tussocks die in the centre and become rings; in wet springs they send up tall, silvery, feathery-awned flower plumes.",
+     "confidence": "estimated",
+     "source": "Acta Physiologiae Plantarum 2017 'Environmental factors that limit Stipa tenacissima germination' (base temperature <2 C, drought and burial limit establishment); Seed Sci. Res. (seed dormancy/longevity in S. tenacissima); tussock growth, ring formation and ages estimated from Stipa steppe literature"
+    }
+   },
+   {
+    "name": "Little bluestem",
+    "genus": "Schizachyrium",
+    "species": "scoparium",
+    "origin": "North American prairies",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8FA070",
+    "accent": "#B05A40",
+    "source": "Schizachyrium scoparium, badland slopes and tables, 0.5-1 m, red-brown in autumn — USDA PLANTS",
+    "traits": {
+     "genus": "Schizachyrium",
+     "species": "scoparium",
+     "native_range": "Schizachyrium scoparium, badland slopes and tables, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 45.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#a8583a",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 8,
+     "color": "#7A9A88",
+     "color_2": "#A05A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "upright blue-green tussock turning russet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a single thin tiller with narrow, flat, blue-green leaves. Tillers at the base and within 2-3 years makes a tight bunch 10-25 cm across of flattened, bluish, folded leaves; flowering stems 0.5-1 m turn copper-red in autumn, with fluffy silvery seed tufts along them.",
+     "confidence": "documented",
+     "source": "USDA FEIS Schizachyrium scoparium (germination begins in 4 days at 30 C, ~50% within 6 days after stratification; culms 0.5-2 m; bunches 10-25 cm across; flowers Jul-Dec by region; shade intolerant); first seed and bunch lifespan estimated"
+    }
+   }
+  ]
+ }
+}

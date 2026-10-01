@@ -1,0 +1,280 @@
+{
+ "key": "ICE_SHEET",
+ "name": "Ice sheet / polar desert",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
+    "shape": "moss",
+    "temp_c": [
+     -40,
+     5
+    ],
+    "moisture": [
+     0,
+     1
+    ],
+    "height_m": [
+     0.001,
+     0.01
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "color": "#B8C830",
+    "accent": "#2A2A2A",
+    "source": "Rhizocarpon geographicum, bipolar/cosmopolitan crustose lichen on exposed rock incl. Antarctic nunataks; yellow-green crust <1 cm thick (Antarctic lichen flora refs)",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Rhizocarpon geographicum, bipolar/cosmopolitan crustose lichen on exposed rock incl",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.01
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.2,
+     "val": 1.15,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B8C830",
+     "color_2": "#2A2A2A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "yellow-green crust map painted on bare rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    }
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Rhizocarpaceae",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     10
+    ],
+    "moisture": [
+     0.3,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     6000
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "GLACIER",
+     "ICE_SHEET",
+     "TUNDRA",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C020",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bare rock from tundra to the highest peaks; yellow-green maps with black borders; centuries old. Index Fungorum.",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Bare rock from tundra to the highest peaks",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.005
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.44,
+     "val": 1.39,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ]
+ }
+}

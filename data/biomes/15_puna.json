@@ -41,6 +41,9 @@
      3800,
      5200
     ],
+    "biomes": [
+     "PUNA"
+    ],
     "height_m": [
      2,
      8
@@ -212,6 +215,820 @@
      "confidence": "estimated",
      "source": "Wikipedia es (flowers 0.4-0.8 cm, petal-less, 1-2 per inflorescence; flowering and fruiting Sept-Dec; one-seeded achene with glandular or woolly hairs and 3-4 spiny ridges); Wikipedia en Polylepis (wind pollinated: green sepals, no scent or nectar, fringed stigma). Timings and crop estimated."
     }
+   },
+   {
+    "name": "Southern queñua",
+    "genus": "Polylepis",
+    "species": "tomentella",
+    "origin": "Bolivia, N Chile and NW Argentina",
+    "family": "Rosaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "altitude_m": [
+     2750,
+     5000
+    ],
+    "biomes": [
+     "PUNA"
+    ],
+    "height_m": [
+     1,
+     8
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A7A4A",
+    "accent": "#B0603A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      30,
+      120
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      500
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings establish among rocks and bunchgrass. The young plant is a short sprig with small compound leaves of few tiny, densely woolly, grey-green leaflets bunched at the shoot tips; it grows only a few cm a year and soon has twisted stems wrapped in thin flaking red-brown bark.",
+     "confidence": "estimated",
+     "source": "Kessler 1995 Polylepis-Walder Boliviens; Wikipedia Polylepis tomentella (tree or shrub to 10 m, 2,750-5,000 m, southern Bolivia to NW Argentina, wet and dry puna); growth and ages estimated from Polylepis tree-ring studies"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Polylepis tomentella Wedd. (Kew POWO; Kessler 1995; Simpson 1979): queñoa of the southern puna, a shrub or tree to 10 m at 2,750-5,000 m in southern Bolivia, northern Chile and NW Argentina, in open woodland in the puna; leaflets small and densely tomentose; bark of thin peeling red-brown layers.",
+    "traits": {
+     "genus": "Polylepis",
+     "species": "tomentella",
+     "native_range": "southern puna, Bolivia to NW Argentina, 2750-5000 m",
+     "leaf_shape": "small compound leaves of woolly leaflets",
+     "trunk": "short twisted trunk, crooked limbs, peeling red bark",
+     "petiole": "short petiole with a sheathing base",
+     "height_m": [
+      1,
+      8
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "papery",
+      "base": "#a0563a",
+      "secondary": "#c88a5a",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "thin red-brown papery bark peeling in many layers"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.45,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#6a7e5a",
+      "underside": "#d0c8b0",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#5a6a4a",
+      "margin": "crenate",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "small leaves of a few tiny obovate leaflets, grey-green and woolly, crowded at the twig tips"
+     },
+     "flower": {
+      "colour": "#7a7a58",
+      "secondary": "#9a3a3a",
+      "form": "short spikes of small green petal-less flowers",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5a3c",
+      "form": "small hard achene with knobs or short spines"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "stunted grey-green tree with shaggy red bark",
+     "confidence": "estimated",
+     "refs": "Kessler 1995; Simpson 1979; Wikipedia Polylepis tomentella"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       3,
+       5
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.6,
+      "leaflet_margin": "crenate"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.65,
+     "val": 0.9,
+     "underside": 0.6
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "papery",
+     "orientation": "none",
+     "depth": 0.55,
+     "scale_cm": 2,
+     "color": "#A0563A",
+     "color_2": "#C88A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.85,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      2
+     ],
+     "hemisphere": "south",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7a7a58",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#8e9a6a",
+     "ripe_colour": "#7a5a3c",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      200,
+      4000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Simpson 1979 (Polylepis wind-pollinated; achenes with spines or knobs); wet-season flowering and counts estimated"
+    },
+    "silhouette": "stunted grey-green tree with shaggy red bark"
+   },
+   {
+    "name": "Quewiña",
+    "genus": "Polylepis",
+    "species": "pepei",
+    "origin": "Andes of Peru and Bolivia",
+    "family": "Rosaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     -3,
+     7
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "altitude_m": [
+     3550,
+     4800
+    ],
+    "biomes": [
+     "PUNA"
+    ],
+    "height_m": [
+     1.5,
+     6
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E6A3A",
+    "accent": "#B0603A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      30,
+      100
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in moss and litter in the shelter of boulders and parent trees. The young plant is a stiff sprig of small dark compound leaves crowded at the tip, soon twisting and wrapping itself in thin, flaking, red-brown bark.",
+     "confidence": "estimated",
+     "source": "Kessler 1995; Peruvian Polylepis diversity survey (P. pepei: central Bolivia to N Peru, 3,550-4,800 m; humid puna and the treeline above the Yungas); growth and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Polylepis pepei B.B.Simpson (Kew POWO; Simpson 1979; Kessler 1995): small tree of the humid puna and the high treeline from central Bolivia to northern Peru, 3,550-4,800 m, in patches among boulders on moist slopes; IUCN Vulnerable; leaflets small, few and leathery; bark of peeling red-brown layers.",
+    "traits": {
+     "genus": "Polylepis",
+     "species": "pepei",
+     "native_range": "humid puna, central Bolivia to N Peru, 3550-4800 m",
+     "leaf_shape": "small compound leaves of few leathery leaflets",
+     "trunk": "short twisted trunk, crooked limbs, peeling red bark",
+     "petiole": "short petiole with a sheathing base",
+     "height_m": [
+      1.5,
+      6
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "papery",
+      "base": "#a85a3a",
+      "secondary": "#d09a6a",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "thin red-brown papery bark peeling in layers"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.45,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#3e5e36",
+      "underside": "#b8a888",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#2e4a2a",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "small dark green leaves of few thick leaflets, crowded at the twig tips"
+     },
+     "flower": {
+      "colour": "#7a7a58",
+      "secondary": "#9a3a3a",
+      "form": "short spikes of small green petal-less flowers",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5a3c",
+      "form": "small hard achene with ridges or wings"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "low twisted dark-green tree among boulders",
+     "confidence": "estimated",
+     "refs": "Simpson 1979; Kessler 1995"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       3,
+       3
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.8,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.45
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "papery",
+     "orientation": "none",
+     "depth": 0.55,
+     "scale_cm": 2,
+     "color": "#A85A3A",
+     "color_2": "#D09A6A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.85,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.35,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      2
+     ],
+     "hemisphere": "south",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7a7a58",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#8e9a6a",
+     "ripe_colour": "#7a5a3c",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Simpson 1979 (Polylepis wind-pollinated, achenes ridged, winged or spiny); timing and counts estimated"
+    },
+    "silhouette": "low twisted dark-green tree among boulders"
+   },
+   {
+    "name": "Quishuar",
+    "genus": "Buddleja",
+    "species": "incana",
+    "origin": "Andes of Ecuador, Peru and Bolivia",
+    "family": "Scrophulariaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     0,
+     14
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "altitude_m": [
+     2500,
+     4500
+    ],
+    "biomes": [
+     "PUNA"
+    ],
+    "height_m": [
+     3,
+     12
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A7A4A",
+    "accent": "#E8A02A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged seeds germinate on bare disturbed soil. The seedling bears opposite pairs of narrow, wrinkled, dark green leaves that are white-felted beneath and grows quickly into a slender sapling that branches low into a rounded, grey-green tree.",
+     "confidence": "estimated",
+     "source": "Norman 2000 Flora Neotropica Buddlejaceae; Wikipedia Buddleja incana (shrub or tree of the Andes, 1,400-4,500 m); growth rates and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bee",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Buddleja incana Ruiz & Pav. (Kew POWO; Norman 2000 Flora Neotropica): quishuar, tree of the high Andes of Ecuador, Peru and Bolivia, 1,400-4,500 m, growing with Polylepis in high-Andean woodland remnants and planted as windbreaks; leaves lanceolate, rugose dark green above, densely white-tomentose beneath; small orange-yellow flowers in globose heads on terminal panicles.",
+    "traits": {
+     "genus": "Buddleja",
+     "species": "incana",
+     "native_range": "high Andes of Ecuador, Peru and Bolivia, to 4500 m",
+     "leaf_shape": "lanceolate wrinkled leaves, white-felted beneath",
+     "trunk": "single short trunk dividing low into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "bee",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#7a6a5a",
+      "secondary": "#4e4238",
+      "feature_cm": 1.5,
+      "roughness": 0.5,
+      "notes": "grey-brown bark in shallow vertical fissures"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a6a3e",
+      "underside": "#e0dcd0",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#3a5430",
+      "margin": "crenate",
+      "size_cm": [
+       5,
+       15
+      ],
+      "notes": "long narrow wrinkled leaves in opposite pairs, dull dark green above, white-felted beneath"
+     },
+     "flower": {
+      "colour": "#e8a02a",
+      "secondary": "#f0c850",
+      "form": "small orange-yellow flowers in round heads on branched terminal panicles",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7a5a3a",
+      "form": "small brown capsules with tiny winged seeds"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "rounded grey-green tree with orange flower heads",
+     "confidence": "estimated",
+     "refs": "Norman 2000; Wikipedia Buddleja incana"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 4.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.7
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#7A6A5A",
+     "color_2": "#4E4238",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 7,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e8a02a",
+     "flower_form": "ball",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "bird"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      40,
+      80
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Norman 2000 (globose heads of orange-yellow tubular flowers on terminal panicles; septicidal capsules with small winged seeds); season and counts estimated"
+    },
+    "silhouette": "rounded grey-green tree with orange flower heads"
    }
   ],
   "shrub": [
@@ -232,6 +1049,9 @@
     "altitude_m": [
      3500,
      4700
+    ],
+    "biomes": [
+     "PUNA"
     ],
     "height_m": [
      0.1,
@@ -410,6 +1230,9 @@
      3500,
      4800
     ],
+    "biomes": [
+     "PUNA"
+    ],
     "height_m": [
      0.5,
      1.5
@@ -575,278 +1398,273 @@
     }
    },
    {
-    "name": "Queen of the Andes",
-    "genus": "Puya",
-    "species": "raimondii",
-    "origin": "Andes of Peru and Bolivia",
-    "shape": "spike_rosette",
+    "name": "Lejía tola",
+    "genus": "Baccharis",
+    "species": "tola",
+    "origin": "Andes, S Peru to NW Argentina",
+    "family": "Asteraceae",
+    "shape": "shrub",
     "temp_c": [
      -3,
-     5
-    ],
-    "moisture": [
-     0.2,
-     0.5
-    ],
-    "altitude_m": [
-     3200,
-     4800
-    ],
-    "height_m": [
-     3,
-     12
-    ],
-    "density": 0.2,
-    "soil": "thin",
-    "color": "#8AB0A0",
-    "accent": "#C8D880",
-    "source": "Puya raimondii, Peru/Bolivia puna 3200-4800 m, giant rosette 3 m with flowering spike to 12 m, largest bromeliad",
-    "traits": {
-     "genus": "Puya",
-     "species": "raimondii",
-     "native_range": "Puya raimondii, Peru/Bolivia puna 3200-4800 m, giant rosette 3 m with flowering spike to 12 m, largest bromeliad",
-     "leaf_shape": "stiff spined sword leaves in a rosette",
-     "trunk": "none or a short woody stem; tall flower spike",
-     "petiole": "none",
-     "height_m": [
-      3,
-      12
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "furry",
-    "leaf_type": "spine",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 15,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "spinose",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      100,
-      125
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.35,
-     "layering": "even",
-     "droop": 0.25
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.6,
-     "val": 1.05,
-     "underside": 0.4
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.45,
-     "scale_cm": 4,
-     "color": "#7A6A58",
-     "color_2": "#A09080",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "huge spiny rosette with giant flower column",
-    "growth": {
-     "life": "monocarpic",
-     "germination_days": [
-      10,
-      30
-     ],
-     "height_years": [
-      25,
-      55
-     ],
-     "trunk_years": 20,
-     "first_seed_years": 60,
-     "lifespan_years": [
-      60,
-      100
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "For decades a stemless, ever-widening ball of stiff, narrow, grey-green leaves (to 1-1.25 m long) with hooked spines on the edges. Later a thick trunk up to 4 m lifts the rosette, skirted by a shaggy thatch of dead leaves. At the end a colossal spike 4-8 m tall bursts from the centre carrying thousands of flowers; after seeding the whole plant dies.",
-     "confidence": "documented",
-     "source": "Wikipedia Puya raimondii (flowers at 40-100 yr in the wild, 28 yr at UC Botanical Garden Berkeley; trunk to 4 m; leaves 1-1.25 m; spike 4-8 m with 8,000-20,000 flowers and ~12 million seeds; 2,400-4,200 m); germination and trunk age estimated from Puya growers"
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      12
-     ],
-     "hemisphere": "south",
-     "flower_days": 2,
-     "flower_size_cm": 5,
-     "flower_colour": "#e4ead0",
-     "flower_form": "cup",
-     "flower_position": "stalk",
-     "flowers_per_cluster": [
-      8000,
-      20000
-     ],
-     "pollinators": [
-      "bird",
-      "self"
-     ],
-     "fruit_set": 0.5,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      2.5,
-      3
-     ],
-     "unripe_colour": "#7d9460",
-     "ripe_colour": "#6e5238",
-     "ripen_days": [
-      60,
-      120
-     ],
-     "hang_days": [
-      90,
-      365
-     ],
-     "drop": "splits",
-     "rot_days": [
-      180,
-      720
-     ],
-     "crop_per_tree": [
-      4000,
-      10000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Wikipedia Puya raimondii (flowers from May/Jun to mid-Dec; 3 greenish-white petals often tinged purple; 8,000-20,000 flowers per spike; capsules 2.5-3 cm; ~12 million seeds 3-5 mm; hummingbirds such as the black metaltail and perching birds such as ground doves and sierra finches take nectar); ripening and decay estimated"
-    }
-   },
-   {
-    "name": "Yareta",
-    "genus": "Azorella",
-    "species": "compacta",
-    "origin": "Central Andes",
-    "shape": "cushion",
-    "temp_c": [
-     -3,
-     4
+     8
     ],
     "moisture": [
      0.12,
-     0.4
+     0.45
     ],
     "altitude_m": [
-     3200,
-     5200
+     3000,
+     4600
+    ],
+    "biomes": [
+     "PUNA"
     ],
     "height_m": [
      0.3,
      1.5
     ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#7AB030",
-    "accent": "#9AC040",
-    "source": "Azorella compacta, Peru/Bolivia/Chile/Argentina 3200-5200 m, huge rock-hard bright green cushion mounds up to 1-3 m across",
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [],
+    "color": "#5A7A40",
+    "accent": "#E8E0C8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up after summer rains on gravelly soil: two cotyledons, then a sprig of tiny, sticky, resinous green leaves. It branches from the base into a compact, dark-green, glutinous, aromatic bush with upright twiggy stems.",
+     "confidence": "estimated",
+     "source": "Flora Argentina Baccharis tola (shrub 30-75 cm, to 1.5 m; 2,200-4,500 m; shrub steppe of the puna 3,400-4,600 m); growth and ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_wet",
+      "days": 20,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Baccharis tola Phil. (Kew POWO accepted name; Baccharis incarum (Wedd.) Perkins is a heterotypic synonym; Flora Argentina): tola or lejia, resinous dioecious shrub 0.3-1.5 m of the shrub steppe of the puna and altiplano from southern Peru to NW Argentina, 3,000-4,600 m; leaves small, sessile, glutinous; small whitish heads, achenes with a white pappus.",
     "traits": {
-     "genus": "Azorella",
-     "species": "compacta",
-     "native_range": "Azorella compacta, Peru/Bolivia/Chile/Argentina 3200-5200 m, huge rock-hard bright green cushion mounds up to 1-3 m acro",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
+     "genus": "Baccharis",
+     "species": "tola",
+     "native_range": "puna and altiplano, S Peru to NW Argentina, 3000-4600 m",
+     "leaf_shape": "small sticky resinous leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "none — leaves sessile",
      "height_m": [
       0.3,
       1.5
      ],
      "growth_rate": "medium",
-     "reproduction": "",
+     "reproduction": "seed",
      "pollinator": "insect",
-     "disperser": [],
+     "disperser": [
+      "wind"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "bark_type": "fibrous",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#6e6458",
+      "secondary": "#4a4238",
+      "feature_cm": 0.5,
+      "roughness": 0.4,
+      "notes": "grey-brown woody stems, green and resinous at the tips"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e6e3a",
+      "underside": "#6a8250",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#3e5a2e",
+      "margin": "dentate",
+      "size_cm": [
+       0.3,
+       1.2
+      ],
+      "notes": "small narrow sticky leaves, glossy with resin, sometimes with a few teeth near the tip"
+     },
+     "flower": {
+      "colour": "#e8e0c8",
+      "secondary": "#d0c890",
+      "form": "small whitish flower heads at the twig tips",
+      "scent": "resinous"
+     },
+     "fruit": {
+      "colour": "#e8e4d8",
+      "form": "tiny achenes with fluffy white pappus"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "compact dark resinous bush on gravel plains",
+     "confidence": "estimated",
+     "refs": "Flora Argentina; Giuliano 2001 Baccharis of Argentina"
+    },
     "leaf": {
      "type": "simple",
-     "outline": "oblong",
-     "aspect": 2.0,
-     "base": "cuneate",
-     "apex": "obtuse",
-     "margin": "entire",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "dentate",
      "venation": "pinnate",
-     "arrangement": "spiral",
+     "arrangement": "alternate",
      "size_cm": [
       0.3,
-      0.6
+      1.2
      ],
      "compound": null,
      "texture": "glossy",
-     "confidence": "documented"
+     "confidence": "estimated"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.06,
-     "layering": "even",
+     "gap": 0.3,
+     "layering": "clumped",
      "droop": 0.0
     },
     "tint": {
-     "hue_shift": 8,
-     "sat": 1.05,
-     "val": 1.05,
-     "underside": 0.05
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.1
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
      "scale_cm": 0.5,
-     "color": "#7AB030",
-     "color_2": "#C0B050",
+     "color": "#6E6458",
+     "color_2": "#4A4238",
      "lenticels": "none",
-     "confidence": "documented"
+     "confidence": "estimated"
     },
-    "silhouette": "hard bright green boulder-like cushion",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
       15,
-      60
+      35
      ],
-     "height_years": [
-      60,
-      200
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
      ],
-     "first_seed_years": 15,
-     "lifespan_years": [
-      500,
-      3000
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
      ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are rare: a tiny rosette of minute, stiff, glossy, leathery leaves that branches densely into a hard little bright-green dome on bare rocky ground. Shoots pack so tightly that the resinous cushion can bear a person's weight; it widens only about a centimetre a year, so a knee-high cushion is centuries old.",
-     "confidence": "documented",
-     "source": "Wikipedia (cushions to 6 m across at 3200-5250 m, ~1.5 cm growth per year, oldest cushions ~1.4 mm/yr, many estimated over 3000 years old; self-fertile flowers visited by flies, bees, wasps, moths); Kleier & Rundel 2004 Austral Ecol. (growth and population structure); germination and first flowering estimated."
-    }
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      4
+     ],
+     "hemisphere": "south",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e8e0c8",
+     "flower_form": "tiny",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "fly",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.1,
+      0.3
+     ],
+     "unripe_colour": "#a0a070",
+     "ripe_colour": "#e8e4d8",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Baccharis generally (dioecious; small discoid heads; achenes with a white pappus shed by wind); wet-season timing and counts estimated"
+    },
+    "silhouette": "compact dark resinous bush on gravel plains"
    }
   ],
   "ground": [
@@ -855,18 +1673,23 @@
     "genus": "Distichia",
     "species": "muscoides",
     "origin": "High Andes",
+    "family": "Juncaceae",
     "shape": "cushion",
     "temp_c": [
      -3,
      5
     ],
     "moisture": [
-     0.7,
+     0.55,
      1
     ],
     "altitude_m": [
      3800,
      5000
+    ],
+    "biomes": [
+     "PARAMO",
+     "PUNA"
     ],
     "height_m": [
      0.05,
@@ -983,6 +1806,9 @@
      3700,
      4800
     ],
+    "biomes": [
+     "PUNA"
+    ],
     "height_m": [
      0.3,
      0.8
@@ -1079,118 +1905,6 @@
     }
    },
    {
-    "name": "Ground rosette",
-    "genus": "Werneria",
-    "species": "nubigena",
-    "origin": "Andes of Peru and Bolivia",
-    "shape": "rosette",
-    "temp_c": [
-     -3,
-     5
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "altitude_m": [
-     3800,
-     4800
-    ],
-    "height_m": [
-     0.03,
-     0.1
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#4A9A45",
-    "accent": "#F0F0E0",
-    "source": "Werneria nubigena, Peru/Bolivia puna 3800-4800 m, flat ground-hugging rosette with white daisy flowers",
-    "traits": {
-     "genus": "Werneria",
-     "species": "nubigena",
-     "native_range": "Werneria nubigena, Peru/Bolivia puna 3800-4800 m, flat ground-hugging rosette with white daisy flowers",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.03,
-      0.1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 7,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "basal",
-     "size_cm": [
-      3,
-      10
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.2,
-     "layering": "even",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 2,
-     "sat": 0.9,
-     "val": 0.95,
-     "underside": 0.1
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#5A9A48",
-     "color_2": "#8A7A58",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "flat ground rosette with white daisy",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      45
-     ],
-     "height_years": [
-      2,
-      6
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      10,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "A tiny flat rosette of narrow, thick, fleshy, grass-like leaves pressed into wet peat or bog cushion, the leaf bases sheathing. It thickens a short buried stem and rhizome and slowly widens into a tight rosette, then a small clonal patch; the large white-rayed daisy heads, often pink-flushed beneath, sit almost stemless in the centre.",
-     "confidence": "estimated",
-     "source": "Spanish Wikipedia (Rockhausenia or Werneria nubigena, condor cebolla): high Andean bogs (bofedales) from Costa Rica to Argentina, forming very large populations that can cover whole bogs. Rosette spread, germination, flowering age and lifespan estimated from Andean rosette daisies."
-    }
-   },
-   {
     "name": "Ichu grass",
     "genus": "Jarava",
     "species": "ichu",
@@ -1207,6 +1921,9 @@
     "altitude_m": [
      3000,
      4800
+    ],
+    "biomes": [
+     "PUNA"
     ],
     "height_m": [
      0.3,
@@ -1304,115 +2021,179 @@
     }
    },
    {
-    "name": "Puna gentian",
-    "genus": "Gentianella",
-    "species": "primuloides",
-    "origin": "Andes of Peru and Bolivia",
-    "shape": "cushion",
+    "name": "High-altitude grimmia",
+    "genus": "Grimmia",
+    "species": "longirostris",
+    "origin": "Mountains worldwide",
+    "family": "Grimmiaceae",
+    "shape": "moss",
     "temp_c": [
-     -3,
-     5
+     -8,
+     10
     ],
     "moisture": [
-     0.4,
-     0.7
+     0.15,
+     0.8
     ],
     "altitude_m": [
-     3800,
-     4600
+     1000,
+     5800
+    ],
+    "biomes": [
+     "PUNA"
     ],
     "height_m": [
-     0.03,
-     0.08
+     0.01,
+     0.04
     ],
-    "density": 0.2,
+    "density": 0.6,
     "soil": "thin",
-    "color": "#4A8A45",
-    "accent": "#4050C0",
-    "source": "Gentianella primuloides, Peruvian/Bolivian puna 3800-4600 m, tiny rosette gentian with blue-purple flowers",
+    "needs": [],
+    "color": "#3A4A2E",
+    "accent": "#C8C8C0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into green threads on bare rock or stony soil; small upright shoots follow and pack together into a firm dark cushion, hoary with the white hair points of the leaves. On frost-heaved ground cushions break free and roll about as small moss balls.",
+     "confidence": "estimated",
+     "source": "Munoz & Pando, Grimmia in the Neotropics (G. longirostris in the puna, andino-alpine and nival belts of the Cordillera Real, 4,000-5,250 m, to ~5,800 m in Bolivia); Venezuelan paramo moss-ball studies; growth rate estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "spores from small capsules on curved stalks, carried by wind; cushions also spread as broken fragments and rolled moss balls"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Grimmia longirostris Hook. (Tropicos; Munoz & Pando, Grimmia in the Neotropics): rock and soil moss of high mountains worldwide; in Bolivia from the puna into the nival belt, 4,000-5,250 m and recorded near 5,800 m, the highest moss collection in the country; dark green cushions with hyaline hair points.",
     "traits": {
-     "genus": "Gentianella",
-     "species": "primuloides",
-     "native_range": "Gentianella primuloides, Peruvian/Bolivian puna 3800-4600 m, tiny rosette gentian with blue-purple flowers",
-     "leaf_shape": "tiny leaves packed in a dome",
+     "genus": "Grimmia",
+     "species": "longirostris",
+     "native_range": "high mountains worldwide; Bolivian puna 4000-5800 m",
+     "leaf_shape": "tiny leaves on thread stems",
      "trunk": "none",
      "petiole": "none",
      "height_m": [
-      0.03,
-      0.08
+      0.01,
+      0.04
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
+     "growth_rate": "slow (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
     "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "moss",
+      "colour": "#3a4a2e",
+      "underside": "#2a3420",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#3a4a2e",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.3
+      ],
+      "notes": "dark olive to blackish-green cushions frosted grey by long white hair points on the leaves"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       4
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "small dark hoary cushions on rock and stony ground",
+     "confidence": "documented",
+     "refs": "Munoz & Pando, Grimmia in the Neotropics; British Bryological Society"
+    },
     "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 2.0,
-     "base": "attenuate",
-     "apex": "rounded",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "basal",
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
      "size_cm": [
-      0.5,
-      1.5
+      0.1,
+      0.3
      ],
      "compound": null,
-     "texture": "glossy",
-     "confidence": "estimated"
+     "texture": "matte",
+     "confidence": "documented"
     },
     "canopy": {
-     "form": "rosette",
-     "gap": 0.15,
+     "form": "mound",
+     "gap": 0.05,
      "layering": "even",
      "droop": 0.0
     },
     "tint": {
-     "hue_shift": -2,
-     "sat": 0.9,
-     "val": 0.9,
-     "underside": 0.1
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 0.6,
+     "underside": 0.0
     },
     "photoperiod": {
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "green_stem",
+     "pattern": "none",
      "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#5A8A48",
-     "color_2": "#7A6A58",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
      "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "silhouette": "tiny cushion with blue flowers",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      20,
-      90
-     ],
-     "height_years": [
-      2,
-      5
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      5,
-      15
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny seedling with two rounded cotyledons, then a flat rosette of small, fleshy, spoon-shaped leaves pressed to the puna soil; it grows into a tight little cushion of rosettes a few cm across, studded in season with upright tubular flowers.",
-     "confidence": "estimated",
-     "source": "Estimated from Andean Gentianella biology (small rosette or cushion herbs of puna and paramo) and Gentianaceae germination (cold-stratified, slow); no species-specific data found."
+     "confidence": "documented"
     }
    }
   ],
@@ -1427,13 +2208,12 @@
     "Ichu grass"
    ],
    "companion": [
-    "Puna daisy shrub"
+    "Puna daisy shrub",
+    "Lejía tola"
    ],
    "ground": [
     "Ichu grass",
-    "Bunch grass",
-    "Puna gentian",
-    "Ground rosette"
+    "Bunch grass"
    ],
    "catalogue": [],
    "cover": 0.35,
@@ -1444,16 +2224,19 @@
    "realm": "andes",
    "where": "sheltered rocky slopes, boulder fields and gullies at 3800-4800 m",
    "dominant": [
-    "Queñua"
+    "Queñua",
+    "Southern queñua",
+    "Quewiña"
    ],
    "companion": [
     "Puna daisy shrub",
-    "Puna cactus"
+    "Puna cactus",
+    "Quishuar"
    ],
    "ground": [
     "Bunch grass",
     "Ichu grass",
-    "Ground rosette"
+    "High-altitude grimmia"
    ],
    "catalogue": [],
    "cover": 0.6,
@@ -1464,7 +2247,8 @@
    "realm": "andes",
    "where": "dry gravelly plains and gentle slopes of the southern puna and altiplano",
    "dominant": [
-    "Puna daisy shrub"
+    "Puna daisy shrub",
+    "Lejía tola"
    ],
    "companion": [
     "Puna cactus"
@@ -1486,9 +2270,7 @@
    ],
    "companion": [],
    "ground": [
-    "Bofedal cushion",
-    "Puna gentian",
-    "Ground rosette"
+    "Bofedal cushion"
    ],
    "catalogue": [],
    "cover": 0.9,
@@ -1499,16 +2281,16 @@
    "realm": "andes",
    "where": "steep rocky slopes and scree at 3800-4300 m among bunchgrass",
    "dominant": [
-    "Queen of the Andes"
+    "Queñua"
    ],
    "companion": [
     "Puna daisy shrub",
-    "Puna cactus",
-    "Yareta"
+    "Puna cactus"
    ],
    "ground": [
     "Ichu grass",
-    "Bunch grass"
+    "Bunch grass",
+    "High-altitude grimmia"
    ],
    "catalogue": [],
    "cover": 0.3,

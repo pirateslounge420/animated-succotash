@@ -1,0 +1,607 @@
+{
+ "key": "CORAL_REEF",
+ "name": "Coral reef",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Beach morning glory",
+    "genus": "Ipomoea",
+    "species": "pes-caprae",
+    "origin": "Pantropical beaches worldwide",
+    "shape": "grass",
+    "temp_c": [
+     23,
+     33
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#C860B0",
+    "source": "Ipomoea pes-caprae, reef-cay sand strand, creeping vine 10-30 cm — Wikipedia",
+    "traits": {
+     "genus": "Ipomoea",
+     "species": "pes-caprae",
+     "native_range": "Ipomoea pes-caprae, reef-cay sand strand, creeping vine 10-30 cm — Wikipedia",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 0.9,
+     "base": "rounded",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "goat's-foot: broad thick blade deeply notched at the apex"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A8A48",
+     "color_2": "#7A4A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "trailing vine mat of notched round leaves, pink trumpets",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two broad, deeply notched, butterfly-shaped cotyledons, then thick, glossy, two-lobed 'goat's-foot' leaves on a trailing stem. The seedling runs straight out over the sand as a cord-like runner that roots at the nodes and branches, spreading many metres into a net of runners and leathery leaves across the upper beach and foredune.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (flowers pink-violet, open one morning, bees main pollinators, capsule 12-17 mm, seeds need scarification); ANPSA (flowers 20-25 mm wide, last one day, any time of year, fast spreading); Wikipedia (runners several m, rarely 30 m, floating hairy seeds). Plant lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 0.5,
+     "flower_size_cm": 4,
+     "flower_colour": "#c4509c",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.7
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#7a5a38",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (funnel flowers 30-60 mm long, pink to violet, one-day, bees plus butterflies and moths, spherical capsule 12-17 mm with 4 floating hairy seeds); ANPSA (flowers year-round in the tropics). Fruit set, ripening, hang, rot and crop estimated."
+    }
+   },
+   {
+    "name": "Crustose coralline alga",
+    "genus": "Porolithon",
+    "species": "onkodes",
+    "origin": "Indo-Pacific reefs",
+    "shape": "moss",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.01,
+     0.03
+    ],
+    "density": 1.2,
+    "soil": "thin",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     20
+    ],
+    "color": "#D080A0",
+    "accent": "#E8B0C0",
+    "source": "underwater — Porolithon onkodes, Indo-Pacific reef crest, pink encrusting coralline red alga that cements the reef, 1-3 cm crust — Wikipedia",
+    "traits": {
+     "genus": "Porolithon",
+     "species": "onkodes",
+     "native_range": "underwater — Porolithon onkodes, Indo-Pacific reef crest, pink encrusting coralline red alga that cements the reef, 1-3 ",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "encrusting red alga: pink calcified crust"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.05,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#D080A0",
+     "color_2": "#E8B0C0",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "pink calcified crust on reef rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      3,
+      12
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores settle on bare reef rock and within days to weeks grow into tiny, pink, flat, disc-shaped crusts a few mm wide. Discs spread at the margin and merge into a hard, stony, pink to mauve crust with a smooth, faintly glossy surface that paves and cements the reef crest. It sheds its thin surface layer now and then, which helps keep it free of fouling.",
+     "confidence": "estimated",
+     "source": "Wikipedia Coralline algae (crusts expand 0.1-80 mm a year; intertidal to 270 m; Hydrolithon onkodes forms 'castles' with the chiton Cryptoplax). Growth, age at first conceptacles and crust longevity for P. onkodes estimated from crustose coralline literature."
+    }
+   },
+   {
+    "name": "Halimeda",
+    "genus": "Halimeda",
+    "species": "opuntia",
+    "origin": "Pantropical reefs worldwide",
+    "shape": "cushion",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     30
+    ],
+    "color": "#4AA840",
+    "accent": "#D8D8C0",
+    "source": "underwater — Halimeda opuntia, pantropical reef flats and slopes, calcified segmented green alga forming clumps 5-25 cm — Wikipedia",
+    "traits": {
+     "genus": "Halimeda",
+     "species": "opuntia",
+     "native_range": "underwater — Halimeda opuntia, pantropical reef flats and slopes, calcified segmented green alga forming clumps 5-25 cm ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "calcified green alga: chains of flat 0.5-1 cm segments in a clump"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#4AA840",
+     "color_2": "#D8D8C0",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "clump of chained green calcified discs",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.1,
+      0.4
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      0.5,
+      1
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling stage to draw: new plants mostly grow from broken-off pieces that anchor with fine rhizoids and add a new flat, kidney-shaped segment almost every night (green at first, hardening white-green with lime within ~1-2 days), building branched chains like tiny prickly-pear pads that tangle into a cushion. After spawning the whole thallus bleaches white and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Halimeda: segments 60-80% aragonite, calcification from ~36 h; sexual reproduction completed in ~36 h and holocarpic, leaving the thallus white and dead; lifespan a few months to a year; spreads by fragmentation; H. opuntia up to ~54 g CaCO3 per m2 per yr). Timings estimated."
+    }
+   },
+   {
+    "name": "Sea grapes alga",
+    "genus": "Caulerpa",
+    "species": "racemosa",
+    "origin": "Pantropical reefs worldwide",
+    "shape": "moss",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.03,
+     0.15
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     30
+    ],
+    "color": "#5AC040",
+    "accent": "#3E9A3A",
+    "source": "underwater — Caulerpa racemosa, pantropical reef sand and rubble, runners with grape-like bladders 3-15 cm — Wikipedia",
+    "traits": {
+     "genus": "Caulerpa",
+     "species": "racemosa",
+     "native_range": "underwater — Caulerpa racemosa, pantropical reef sand and rubble, runners with grape-like bladders 3-15 cm — Wikipedia",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "green alga: runners bearing grape-like bladders"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#5AC040",
+     "color_2": "#3E9A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "green runner mat studded with grape-like beads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.1,
+      0.5
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: new plants start from torn fragments or swimming gametes' zygotes. A fragment glues itself down with colourless rhizoids within days and runs a pale green stolon over sand or rock, sending up short upright branches covered in little glossy green grape-like spheres. The whole plant is a single giant cell with many nuclei.",
+     "confidence": "estimated",
+     "source": "AlgaeBase / Guiry (Caulerpa: siphonous coenocytic thallus, stolons with erect ramuli, holocarpic sexual reproduction, spread by fragments); Mediterranean studies of C. racemosa var. cylindracea (stolons grow ~1-2 cm/day in summer, seasonal die-back); values estimated"
+    }
+   },
+   {
+    "name": "Turbinaria alga",
+    "genus": "Turbinaria",
+    "species": "ornata",
+    "origin": "Indo-Pacific reefs",
+    "shape": "shrub",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     15
+    ],
+    "color": "#8A7A30",
+    "accent": "#5A4A20",
+    "source": "underwater — Turbinaria ornata, Indo-Pacific reef flats and crests, stiff brown alga with triangular blades 10-40 cm — Wikipedia",
+    "traits": {
+     "genus": "Turbinaria",
+     "species": "ornata",
+     "native_range": "underwater — Turbinaria ornata, Indo-Pacific reef flats and crests, stiff brown alga with triangular blades 10-40 cm — W",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.0,
+     "base": "cuneate",
+     "apex": "truncate",
+     "margin": "spinose",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      1,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: stiff top-shaped triangular blades crowned with teeth, drawn as tiny deltoid leaves"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.5,
+     "val": 0.7,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#8A7A30",
+     "color_2": "#5A4A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; short stipe, no stem surface"
+    },
+    "silhouette": "stiff brown bushlet of toothed top-shaped blades",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      0.3,
+      0.8
+     ],
+     "first_seed_years": 0.7,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "A germling from a settled zygote (or a regrowing holdfast): a tiny disc holdfast with a few flat, leaf-like blades. As it grows the axis lengthens and the 'leaves' become stiff, top-shaped (turbinate) blades with a toothed triangular rim and an air bladder inside, stacked spirally up an erect stem 5-30 cm tall.",
+     "confidence": "estimated",
+     "source": "PROSEA Turbinaria (T. ornata 20-30 cm; young populations appear Jan-May and receptacles develop Oct-Dec in the Philippines); Univ. Hawaii reef algae pages (reproductive at 2-20 cm, thalli scoured off in winter, perennial holdfast regrows blades, spreads by fragments); Wikipedia (buoyant fronds raft)."
+    }
+   }
+  ]
+ }
+}

@@ -196,119 +196,44 @@
      "edible": "no",
      "confidence": "documented",
      "source": "ICRAF Agroforestree (flowers May-Jul in racemes; capsule ~5 mm; seeds 0.5 mm with a 3 mm hair tuft, 100,000-286,000 seeds/kg); Wikipedia (blooms July-November); USDA FEIS Tamarix spp. (insect cross-pollination, many-seeded capsules). Flower life, fruit set, ripening and crop estimated."
-    }
+    },
+    "biomes": [
+     "OASIS",
+     "SALT_FLAT"
+    ]
    },
    {
     "name": "Date palm",
     "genus": "Phoenix",
     "species": "dactylifera",
     "origin": "North Africa and the Middle East",
+    "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
      18,
-     32
+     30
     ],
     "moisture": [
-     0.1,
-     0.6
+     0.05,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS"
     ],
     "height_m": [
-     15,
-     25
+     15.0,
+     25.0
     ],
-    "density": 1.0,
-    "soil": "sand",
-    "needs": [
-     "river_bank"
-    ],
-    "color": "#4F8A45",
-    "accent": "#8A7050",
-    "source": "Phoenix dactylifera, N Africa and Middle East oases, 15-25 m palm — Kew POWO",
-    "traits": {
-     "genus": "Phoenix",
-     "species": "dactylifera",
-     "native_range": "Phoenix dactylifera, N Africa and Middle East oases, 15-25 m palm — Kew POWO",
-     "leaf_shape": "fan or feather fronds in a terminal crown",
-     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
-     "petiole": "long fibrous petiole with a leaf sheath",
-     "height_m": [
-      15,
-      25
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "palm",
-    "leaf_type": "frond",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 20,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      20,
-      45
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "palmate_crown",
-     "gap": 0.55,
-     "layering": "even",
-     "droop": 0.5
-    },
-    "tint": {
-     "hue_shift": -10,
-     "sat": 0.7,
-     "val": 0.95,
-     "underside": 0.1
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.6,
-     "scale_cm": 15,
-     "color": "#8A7A60",
-     "color_2": "#6A5A48",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "tomlinson",
-     "habit": "palm",
-     "orders": 0,
-     "branch_angle_deg": [
-      0,
-      0
-     ],
-     "taper_exponent": 1.0,
-     "sinuosity": 0.2,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 20,
-     "live_crown_ratio": [
-      0.2,
-      0.2
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.15,
-     "root_flare": true,
-     "spacing_m": 0.5,
-     "confidence": "documented"
-    },
-    "silhouette": "tall rough pole, stiff grey-green feather crown, date clusters",
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -331,6 +256,174 @@
      "juvenile_note": "Remote germination: the cotyledon stalk pushes the growing point down into the soil, then grass-like, undivided strap leaves emerge. For several years it is a stemless, spiny fountain of increasingly pinnate, stiff, grey-green fronds, often with suckers (offshoots) at the base, before a rough trunk clad in old leaf bases rises.",
      "confidence": "documented",
      "source": "Wikipedia (to 30 m, slow-growing; fruits 4-8 years after planting, commercial yields at 7-10; offshoots fruit 2-3 years earlier than seedlings; lives 100+ years when maintained); FAO date palm manuals (remote germination, undivided first leaves); height-age estimated from trunk growth"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Sahara, Arabia, Mesopotamia oases; height 15-25 m. Oasis palm; suckers from the base. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Phoenix",
+     "species": "dactylifera",
+     "native_range": "Sahara, Arabia, Mesopotamia oases",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "palm",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a7a60",
+      "secondary": "#5e5040",
+      "feature_cm": 15,
+      "roughness": 0.7,
+      "notes": "trunk covered in persistent diamond-shaped leaf bases in a spiralling pattern, brown, fibrous between; base ringed with suckers"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#6a8a6a",
+      "underside": "#7a9a7a",
+      "gloss": 0.25,
+      "veins": "parallel",
+      "vein_colour": "#6a8a6a",
+      "margin": "spiny",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "stiff grey-green pinnate fronds with V-folded leaflets in several planes; lower leaflets become sharp spines"
+     },
+     "flower": {
+      "colour": "#e8e0b0",
+      "secondary": "#c8c090",
+      "form": "cream-yellow branched spikes bursting from a spathe among the leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e89830",
+      "form": "dates 3-7 cm, yellow to orange ripening amber-brown, in big hanging bunches on orange stalks"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a stout rough-scaled column with a full spherical crown of stiff grey-green fronds and hanging orange fruit bunches; suckers at the base; oasis groves",
+     "confidence": "documented",
+     "refs": "Wikipedia Phoenix dactylifera; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "diamond",
+     "depth": 0.7,
+     "scale_cm": 15,
+     "color": "#8A7A60",
+     "color_2": "#5E5040",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     },
     "fruiting": {
      "flower_months": [
@@ -385,113 +478,33 @@
     "name": "Doum palm",
     "genus": "Hyphaene",
     "species": "thebaica",
-    "origin": "Sahel and Nile valley",
+    "origin": "Sahel and the Nile valley",
+    "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
      22,
-     32
+     30
     ],
     "moisture": [
-     0.1,
-     0.5
+     0.08,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "biomes": [
+     "OASIS"
     ],
     "height_m": [
-     8,
-     15
+     8.0,
+     15.0
     ],
     "density": 0.4,
     "soil": "sand",
-    "color": "#7FA060",
-    "accent": "#8A7A60",
-    "source": "Hyphaene thebaica, Sahel and Nile valley oases, branching fan palm 8-15 m — Kew POWO",
-    "traits": {
-     "genus": "Hyphaene",
-     "species": "thebaica",
-     "native_range": "Hyphaene thebaica, Sahel and Nile valley oases, branching fan palm 8-15 m — Kew POWO",
-     "leaf_shape": "fan or feather fronds in a terminal crown",
-     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
-     "petiole": "long fibrous petiole with a leaf sheath",
-     "height_m": [
-      8,
-      15
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "palm",
-    "leaf_type": "frond",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 15,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      40,
-      70
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "palmate_crown",
-     "gap": 0.6,
-     "layering": "even",
-     "droop": 0.35
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.1
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "ringed",
-     "orientation": "none",
-     "depth": 0.35,
-     "scale_cm": 8,
-     "color": "#8A8070",
-     "color_2": "#6A6050",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "schoute",
-     "habit": "palm",
-     "orders": 2,
-     "branch_angle_deg": [
-      20,
-      40
-     ],
-     "taper_exponent": 1.0,
-     "sinuosity": 0.2,
-     "fork_height_frac": [
-      0.3,
-      0.6
-     ],
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.15,
-      0.15
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.05,
-     "root_flare": true,
-     "spacing_m": 3.0,
-     "confidence": "documented"
-    },
-    "silhouette": "forking trunk, each arm topped by a fan-leaf tuft",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -514,6 +527,178 @@
      "juvenile_note": "Remote-tubular germination: the cotyledon stalk drives the growing point 60-80 cm down into the soil, so the first sign is a single strap-shaped, pleated leaf. Stiff grey-green fan leaves follow from year 2-3, forming a stemless tuft for well over a decade (it may start fruiting while still nearly stemless); the trunk then rises and later forks into two, four or more crowns.",
      "confidence": "documented",
      "source": "PROTA via Palmpedia and ICRAF Agroforestree (germination 1 month to 1 year, cotyledon stalk buries shoot to 60 cm, first leaf strap-shaped, fan leaves from yr 2-3, stem after 18-20 yr in the wild, first fruit after 6-8 yr, slow growth); hyphaene.org (to 80 cm deep, first fork 2.5-4 m). Lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Sahel and Nile valley; height 8-15 m. The only branching palm; forked trunk. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Hyphaene",
+     "species": "thebaica",
+     "native_range": "Sahel and Nile valley",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      8.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "palm",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#8a7a68",
+      "secondary": "#5e5248",
+      "feature_cm": 8,
+      "roughness": 0.5,
+      "notes": "grey-brown trunk marked with leaf-base ring scars, fibrous; trunk forks dichotomously"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.15,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "fan",
+      "colour": "#5a8a5a",
+      "underside": "#6a9a6a",
+      "gloss": 0.3,
+      "veins": "palmate",
+      "vein_colour": "#5a8a5a",
+      "margin": "spiny",
+      "size_cm": [
+       100,
+       150
+      ],
+      "notes": "stiff fan leaves grey-green, on long spiny petioles; crowns at each branch tip"
+     },
+     "flower": {
+      "colour": "#d8c890",
+      "secondary": "#b8a870",
+      "form": "brown-cream branched spikes among leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c87830",
+      "form": "shiny orange-brown oval fruits 6-8 cm in dense clusters; gingerbread smell"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "the only branching palm: a trunk that forks in Ys two or three times, each fork tipped with a round tuft of fan leaves; candelabra of tufts",
+     "confidence": "documented",
+     "refs": "Wikipedia Hyphaene thebaica; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      150
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.55,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#8A7A68",
+     "color_2": "#5E5248",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "schoute",
+     "habit": "candelabra",
+     "orders": 2,
+     "branch_angle_deg": [
+      15,
+      30
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.15,
+     "fork_height_frac": [
+      0.25,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.05,
+     "root_flare": true,
+     "spacing_m": 3.0,
+     "confidence": "documented"
     },
     "fruiting": {
      "flower_months": [
@@ -565,112 +750,185 @@
     }
    },
    {
-    "name": "Euphrates poplar",
-    "genus": "Populus",
-    "species": "euphratica",
-    "origin": "Central Asia and the Middle East",
-    "shape": "broadleaf",
+    "name": "Saharan cypress",
+    "genus": "Cupressus",
+    "species": "dupreziana",
+    "origin": "Tassili n'Ajjer, central Sahara",
+    "family": "Cupressaceae",
+    "shape": "conifer",
     "temp_c": [
-     10,
+     12,
      28
     ],
     "moisture": [
-     0.15,
-     0.6
+     0.02,
+     0.15
+    ],
+    "altitude_m": [
+     1000,
+     1800
+    ],
+    "biomes": [
+     "OASIS"
     ],
     "height_m": [
      10,
      20
     ],
-    "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "river_bank"
-    ],
-    "color": "#8FA870",
-    "accent": "#A09070",
-    "source": "Populus euphratica, Central Asian and Middle Eastern desert rivers/oases, 10-20 m — Flora of China",
-    "traits": {
-     "genus": "Populus",
-     "species": "euphratica",
-     "native_range": "Populus euphratica, Central Asian and Middle Eastern desert rivers/oases, 10-20 m — Flora of China",
-     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
-     "trunk": "single trunk dividing into a rounded crown",
-     "petiole": "short petiole",
-     "height_m": [
-      10,
-      20
+    "density": 0.3,
+    "soil": "sand",
+    "needs": [],
+    "color": "#5A7A5A",
+    "accent": "#7A4A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "height_years": [
+      40,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      1000,
+      3000
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings are almost never seen in the wild now. In nurseries the seed sprouts with slender cotyledons and a few spreading needle-like juvenile leaves before the grey-green scale leaves take over; the young tree is a dense narrow cone, which the wild relicts lost long ago to drought, wind and age.",
+     "confidence": "estimated",
+     "source": "Gymnosperm Database and conifers.org (Cupressus dupreziana: to 20 m, trunks to 3.5 m across, about 230 trees left in the Tassili n'Ajjer, oldest estimated well over 2000 years, virtually no natural regeneration); Pichot et al. 2001 Nature (paternal apomixis: many seeds carry only the pollen parent's genome); growth rates and first seed estimated"
     },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "dry",
+     "note": "much of the seed is empty or apomictic; seedlings survive only after rare wadi floods"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Cupressus dupreziana, Saharan cypress (tarout), relict endemic of the dry wadis of the Tassili n'Ajjer in the central Sahara, 10-20 m, massive fluted trunks to 3.5 m across, about 230 ancient trees, Critically Endangered — Kew POWO / Gymnosperm Database / IUCN",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#7a4a3a",
+      "secondary": "#a88a70",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "reddish-brown, thick, in long fibrous vertical ridges, greying with age; old trunks massive, fluted and partly dead"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.5,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#5a7a5a",
+      "underside": "#6a8a6a",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#5a7a5a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "tiny glaucous grey-green scale leaves on flattened, two-ranked sprays"
+     },
+     "flower": {
+      "colour": "#c8b070",
+      "secondary": "#5a7a5a",
+      "form": "small yellowish pollen cones at shoot tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a4a",
+      "form": "oblong woody cones 2-3.5 cm of 8-10 scales, brown when ripe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "broad ragged grey-green cone on a massive trunk in a dry wadi",
+     "confidence": "documented",
+     "refs": "Gymnosperm Database Cupressus dupreziana; Kew POWO; Abdoun & Beddiaf 2002"
+    },
     "leaf": {
-     "type": "simple",
-     "outline": "reniform",
-     "aspect": 0.75,
-     "base": "truncate",
-     "apex": "obtuse",
-     "margin": "dentate",
-     "venation": "palmate",
-     "arrangement": "alternate",
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
      "size_cm": [
-      2.5,
-      5
+      0.1,
+      0.2
      ],
      "compound": null,
      "texture": "waxy_glaucous",
      "confidence": "documented"
     },
     "canopy": {
-     "form": "spreading",
-     "gap": 0.45,
+     "form": "irregular",
+     "gap": 0.3,
      "layering": "clumped",
-     "droop": 0.15
+     "droop": 0.1
     },
     "tint": {
      "hue_shift": -8,
      "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#e8c020",
-     "drop": true
+     "val": 0.8,
+     "underside": 0.05
     },
     "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 12.0,
-     "response": "leaf_drop"
+     "mode": "neutral"
     },
     "bark": {
-     "pattern": "furrowed",
-     "orientation": "vertical",
-     "depth": 0.6,
-     "scale_cm": 4,
-     "color": "#8A8070",
-     "color_2": "#5A4A40",
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#7A4A3A",
+     "color_2": "#A88A70",
      "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
-     "model": "rauh",
-     "habit": "decurrent",
-     "orders": 5,
+     "model": "attims",
+     "habit": "excurrent",
+     "orders": 6,
      "branch_angle_deg": [
       30,
       60
      ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.5,
+     "taper_exponent": 1.6,
+     "sinuosity": 0.4,
      "fork_height_frac": [
-      0.1,
-      0.3
+      0.2,
+      0.5
      ],
      "buttress": "none",
-     "lean_max_deg": 15,
+     "lean_max_deg": 10,
      "live_crown_ratio": [
       0.8,
       0.5
@@ -678,79 +936,56 @@
      "self_prune": false,
      "dead_limbs": 0.3,
      "root_flare": true,
-     "spacing_m": 0.8,
+     "spacing_m": 0.2,
      "confidence": "estimated"
-    },
-    "silhouette": "open spreading poplar, small grey-green leaves shimmering",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      1,
-      3
-     ],
-     "height_years": [
-      10,
-      35
-     ],
-     "first_seed_years": 10,
-     "lifespan_years": [
-      100,
-      300
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "whip",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Short-lived cottony seed must land on freshly wetted, bare riverbank silt and germinates within a day or two. Seedlings, root suckers and young trees bear narrow, willow-like, linear-lanceolate leaves; the broad, grey-green, rhombic to kidney-shaped leaves with a few coarse teeth near the tip appear only in older crowns. Most new stems in a grove are root suckers.",
-     "confidence": "estimated",
-     "source": "Wikipedia en/zh (to 15 m; leaves very variable: lanceolate or linear-lanceolate vs ovate, rhombic or reniform; lives about 100 yr with good water, legend of 1000 yr; catkins 2.5-7 cm; capsules 7-12 mm; desert riparian). Germination, growth rate and age at first flowering estimated from riparian Populus."
     },
     "fruiting": {
      "flower_months": [
-      4,
-      5
+      1,
+      3
      ],
      "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 4,
-     "flower_colour": "#8e4a5a",
-     "flower_form": "catkin",
+     "flower_days": 14,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#c8b070",
+     "flower_form": "cone",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      20,
-      60
+      1,
+      3
      ],
      "pollinators": [
       "wind"
      ],
-     "fruit_set": 0.5,
-     "fruit_kind": "capsule",
+     "fruit_set": 0.3,
+     "fruit_kind": "cone",
      "fruit_shape": "ovoid",
      "fruit_size_cm": [
-      0.7,
-      1.2
+      2,
+      3.5
      ],
-     "unripe_colour": "#8aa06a",
-     "ripe_colour": "#b39b6c",
+     "unripe_colour": "#6a7a5a",
+     "ripe_colour": "#8a6a4a",
      "ripen_days": [
-      70,
-      110
+      500,
+      700
      ],
      "hang_days": [
-      3,
-      21
+      100,
+      1000
      ],
-     "drop": "splits",
+     "drop": "persists",
      "rot_days": [
-      20,
-      90
+      365,
+      1800
      ],
      "crop_per_tree": [
-      10000,
-      500000
+      50,
+      2000
      ],
      "edible": "no",
      "confidence": "estimated",
-     "source": "Wikipedia (male catkins 2.5-5 cm, female 5-7 cm; ovoid-lanceolate capsules 7-12 mm with silky-haired seeds); wind pollinated like all poplars. Seed release in mid to late summer with the river floods (from memory of Tarim studies); timings, crop and colours estimated."
+     "source": "Gymnosperm Database (cones 2-3.5 cm, 8-10 scales, ripening in the second year as in other Cupressus); timing, set, crop and decay estimated from C. sempervirens"
     }
    }
   ],
@@ -937,192 +1172,10 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (bright pink to maroon pea flowers up to 1 cm; brown or reddish pods up to 2.5 cm, constricted between the mottled brown seeds; sweet 'manna' exudate used as a sweetener). Flowering months, bee pollination, few-flowered spiny racemes, pod persistence and crop estimated from floras."
-    }
-   },
-   {
-    "name": "Fig",
-    "genus": "Ficus",
-    "species": "carica",
-    "origin": "Middle East and Mediterranean",
-    "shape": "gnarled",
-    "temp_c": [
-     14,
-     28
-    ],
-    "moisture": [
-     0.15,
-     0.5
-    ],
-    "height_m": [
-     3,
-     8
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#8A8070",
-    "source": "Ficus carica, Middle East and Mediterranean, spreading small tree 3-8 m — Kew POWO",
-    "traits": {
-     "genus": "Ficus",
-     "species": "carica",
-     "native_range": "Ficus carica, Middle East and Mediterranean, spreading small tree 3-8 m — Kew POWO",
-     "leaf_shape": "small tough leaves",
-     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
-     "petiole": "short petiole",
-     "height_m": [
-      3,
-      8
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "smooth_grey",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "palmate_lobed",
-     "lobes": 5,
-     "aspect": 1.0,
-     "base": "cordate",
-     "apex": "obtuse",
-     "margin": "lobed",
-     "venation": "palmate",
-     "arrangement": "alternate",
-     "size_cm": [
-      10,
-      25
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "spreading",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.95,
-     "val": 0.9,
-     "underside": 0.3,
-     "autumn": "#d8b830",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 3,
-     "color": "#9A9488",
-     "color_2": "#7A7468",
-     "lenticels": "dots",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "multi_stem",
-     "orders": 6,
-     "branch_angle_deg": [
-      45,
-      80
-     ],
-     "taper_exponent": 2.2,
-     "sinuosity": 0.6,
-     "fork_height_frac": [
-      0.05,
-      0.2
-     ],
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.9,
-      0.6
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.15,
-     "root_flare": true,
-     "spacing_m": 0.6,
-     "confidence": "documented"
-    },
-    "silhouette": "low wide spreading crown of big hand leaves, pale trunk",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      4,
-      12
-     ],
-     "first_seed_years": 3.5,
-     "lifespan_years": [
-      60,
-      200
-     ],
-     "shade": "intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two tiny round cotyledons, then rough, hairy, heart-shaped toothed leaves that become deeply 3-5-lobed within the first season. Grows fast into a low spreading bush of several thick smooth grey stems from the base (it suckers freely), with big lobed leaves on stubby twigs; often roots into walls and rock crevices.",
-     "confidence": "documented",
-     "source": "Purdue NewCROP (Morton, Fruits of Warm Climates: Fig); PFAF (to ~6 m, mature in 3-5 yr, seedlings crop at 3-4 yr and cuttings at 1-2 yr, trees known to live ~200 yr, cannot grow in shade; cited by an earlier research pass); Wikipedia (Common fig)."
-    },
-    "fruiting": {
-     "flower_months": [
-      4,
-      7
-     ],
-     "hemisphere": "north",
-     "flower_days": 10,
-     "flower_size_cm": 1,
-     "flower_colour": "#8aa84f",
-     "flower_form": "tiny",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      2
-     ],
-     "pollinators": [
-      "fig_wasp"
-     ],
-     "fruit_set": 0.6,
-     "fruit_kind": "fig",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      3,
-      7
-     ],
-     "unripe_colour": "#6f9a3f",
-     "ripe_colour": "#5e3552",
-     "ripen_days": [
-      60,
-      100
-     ],
-     "hang_days": [
-      2,
-      7
-     ],
-     "drop": "falls",
-     "rot_days": [
-      3,
-      14
-     ],
-     "crop_per_tree": [
-      200,
-      3000
-     ],
-     "edible": "yes",
-     "confidence": "documented",
-     "source": "Purdue NewCROP (Morton: Fig): syconia in leaf axils, a breba crop on old wood in early summer and a main crop Aug-Oct; wild and Smyrna figs need Blastophaga wasps from caprifigs while common figs set without pollination; ripe figs soften and sour within days. Counts and rot estimated."
-    }
+    "biomes": [
+     "OASIS"
+    ]
    },
    {
     "name": "Oleander",
@@ -1309,101 +1362,194 @@
      "edible": "toxic",
      "confidence": "documented",
      "source": "Wikipedia (Apr-Oct, heaviest May-June; wild pink 2.5-3 cm funnel flowers with fringed lobes in clusters; nectarless, few visitors, so fruit set is very low, cf. Herrera 1991; paired follicles 5-23 cm split to release downy seeds); very toxic cardiac glycosides; ripening and crop estimated"
-    }
+    },
+    "biomes": [
+     "OASIS"
+    ]
    },
    {
-    "name": "Saltcedar",
-    "genus": "Tamarix",
-    "species": "ramosissima",
-    "origin": "Central Asia and the Middle East",
+    "name": "Pomegranate",
+    "genus": "Punica",
+    "species": "granatum",
+    "origin": "Iran and Central Asia to Pakistan",
+    "family": "Lythraceae",
     "shape": "shrub",
     "temp_c": [
-     8,
-     28
+     12,
+     30
     ],
     "moisture": [
      0.1,
-     0.5
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "biomes": [
+     "OASIS"
     ],
     "height_m": [
      2,
      6
     ],
-    "density": 0.5,
-    "soil": "sand",
-    "color": "#8AA890",
-    "accent": "#E0A0B0",
-    "source": "Tamarix ramosissima, Central Asian and Middle Eastern oasis and salt-flat margins, feathery shrub 2-6 m — Flora of China",
-    "traits": {
-     "genus": "Tamarix",
-     "species": "ramosissima",
-     "native_range": "Tamarix ramosissima, Central Asian and Middle Eastern oasis and salt-flat margins, feathery shrub 2-6 m — Flora of China",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      2,
-      6
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A8A3A",
+    "accent": "#C83A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed from fallen, split fruit sprouts in warm moist soil: two small round cotyledons, then narrow glossy opposite leaves, bronze-red when new. The seedling soon branches from the base into a twiggy, spiny little bush; suckers keep coming from the root crown all its life.",
+     "confidence": "estimated",
+     "source": "Flora Iranica / Flora of Pakistan (Punica granatum: deciduous shrub or small tree, wild in ravines and riverbeds of Iran, Transcaucasia and Central Asia); extension growers' data (seed germinates in 30-40 days, fruits from about year 3, bushes productive for decades, old plants centuries); ages partly estimated"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Punica granatum, pomegranate, wild in ravines and riverbeds from SE Turkey and Iran to Central Asia and Pakistan, grown in the middle storey of every oasis garden under the date palms; deciduous spiny shrub 2-6 m — Kew POWO / Flora Iranica",
+    "appearance": {
+     "bark": {
+      "pattern": "peeling",
+      "base": "#7a7068",
+      "secondary": "#a89888",
+      "feature_cm": 2,
+      "roughness": 0.4,
+      "notes": "grey-brown, thin, twisted and fluted on old stems, flaking in small patches; side twigs end in spines"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e7a2e",
+      "underside": "#6a9a50",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#8a4a3a",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       8
+      ],
+      "notes": "narrow oblong glossy leaves, opposite or clustered, bronze-red when young, red midrib"
+     },
+     "flower": {
+      "colour": "#e0402a",
+      "secondary": "#c83020",
+      "form": "scarlet-orange flowers 3-5 cm, crumpled petals from a thick red tubular calyx",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#b8302a",
+      "form": "round leathery fruit 6-12 cm, red to yellow-red, crowned by the calyx, packed with juicy red seeds"
+     },
+     "seasonal": "deciduous; leaves turn butter-yellow",
+     "silhouette": "dense twiggy bush with scarlet flowers and red globes",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora Iranica; Wikipedia Punica granatum"
+    },
     "leaf": {
-     "type": "scale",
-     "venation": "none",
-     "arrangement": "alternate",
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
      "size_cm": [
-      0.1,
-      0.3
+      2,
+      8
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented",
-     "note": "plume foliage: scale leaves on fine, wiry, much-branched twigs read as soft feathery sprays, never as a solid mass"
+     "texture": "glossy",
+     "confidence": "documented"
     },
     "canopy": {
-     "form": "weeping",
-     "gap": 0.65,
-     "layering": "sparse",
-     "droop": 0.8,
-     "note": "feathery — long arching whip twigs, plume-like foliage, see-through at every range; pink flower plumes on the tips in summer"
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
     },
     "tint": {
-     "hue_shift": -14,
-     "sat": 0.55,
-     "val": 1.05,
-     "underside": 0.1,
-     "autumn": "#d8a040",
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.3,
+     "autumn": "#e0c040",
      "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.35,
-     "scale_cm": 1.5,
-     "color": "#5A4A44",
-     "color_2": "#8A4A3A",
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#7A7068",
+     "color_2": "#A89888",
      "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
-     "model": "champagnat",
-     "habit": "weeping",
-     "orders": 6,
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
      "branch_angle_deg": [
-      25,
+      30,
       60
      ],
-     "taper_exponent": 2.0,
-     "sinuosity": 0.6,
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
      "fork_height_frac": [
       0.0,
       0.1
@@ -1411,105 +1557,307 @@
      "buttress": "none",
      "lean_max_deg": 15,
      "live_crown_ratio": [
-      0.95,
-      0.8
+      0.9,
+      0.7
      ],
      "self_prune": false,
      "dead_limbs": 0.2,
      "root_flare": false,
-     "spacing_m": 0.08,
-     "confidence": "estimated",
-     "note": "many fine whip-like twigs that thin fast and arch over (feathery, plume-like)"
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     },
-    "foliage": {
-     "style": "plume",
-     "twig_density": 0.9,
-     "twig_len_m": [
-      0.4,
-      1.2
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
      ],
-     "wisp": 0.85,
-     "note": "foliage drawn as fine drooping sprays of scale-leaved twigs rather than leaf clumps; a soft feathery haze around the stems"
-    },
-    "flower": {
-     "colour": "#E8A0B8",
-     "secondary": "#F4D0DC",
-     "form": "dense pink plumes 2-5 cm on the twig tips",
-     "season": "summer"
-    },
-    "silhouette": "feathery see-through plume bush with weeping whip twigs",
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 4,
+     "flower_colour": "#e0402a",
+     "flower_form": "bell",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      6,
+      12
+     ],
+     "unripe_colour": "#7a9a48",
+     "ripe_colour": "#b8302a",
+     "ripen_days": [
+      120,
+      180
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Flora Iranica; extension growers' data: flowers May-July, fruit ripens Sep-Nov about 5-6 months after bloom and splits on the bush if left; bees and beetles pollinate. Crop and decay estimated."
+    }
+   },
+   {
+    "name": "Henna",
+    "genus": "Lawsonia",
+    "species": "inermis",
+    "origin": "North Africa and Arabia to India",
+    "family": "Lythraceae",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     34
+    ],
+    "moisture": [
+     0.1,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "OASIS"
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [],
+    "color": "#5A8A3A",
+    "accent": "#E8E0C0",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      1,
-      2
+      7,
+      30
      ],
      "height_years": [
       2,
       6
      ],
-     "first_seed_years": 3,
+     "first_seed_years": 2,
      "lifespan_years": [
-      50,
-      100
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Germinates within hours on wet sand or silt left by a flood; the seedling is a minute two-leaved sprout that grows 2-5 mm a day, with a ~12 cm shoot over a longer root by 8 weeks. It becomes a dense, multi-stemmed shrub of reddish-brown stems and feathery grey-green scale-leaved twigs, pink-plumed in summer, and resprouts hard after fire or cutting.",
-     "confidence": "documented",
-     "source": "USDA FEIS Tamarix spp. (germination <24 h; seed viable ~24-45 days in summer; seedlings 2-5 mm/day in month 1, 11.7 cm shoot at 8 weeks; may flower in year 1, most from year 3; 4-8 m, usually <6 m; resprouts 3-4 m in one season; shrubs 75-100 yr old show no decline). Height-age curve estimated from these."
-    },
-    "fruiting": {
-     "flower_months": [
-      4,
-      9
-     ],
-     "hemisphere": "north",
-     "flower_days": 3,
-     "flower_size_cm": 0.3,
-     "flower_colour": "#e8a6c2",
-     "flower_form": "spike",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
       20,
       60
      ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seeds sprout in warm wet soil after a soak; seedlings are slow at first, with pairs of small elliptic leaves, then branch from the base into a slender, twiggy, much-branched bush that can be cut back to the stump again and again.",
+     "confidence": "estimated",
+     "source": "Flora of Tropical East Africa and Flora of Egypt (Lawsonia inermis: glabrous much-branched shrub or small tree 2-6 m, leaves opposite, fragrant panicles); growers' data (leaf harvests from year 2, bushes cut for 20-30 years); ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "water",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Lawsonia inermis, henna, much-branched shrub or small tree 2-6 m of seasonally wet ground, wadis and oasis gardens from North Africa and Arabia to India, grown for the red dye in its leaves; fragrant cream panicles — Kew POWO / Flora of Egypt",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a7a68",
+      "secondary": "#6a5a48",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown, smooth on young stems, finely rough with age; old twigs sometimes end in a blunt spine"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#5a8a3a",
+      "underside": "#7aa058",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#4a7a30",
+      "margin": "entire",
+      "size_cm": [
+       1.5,
+       5
+      ],
+      "notes": "small opposite elliptic to lance-shaped leaves on slender twigs"
+     },
+     "flower": {
+      "colour": "#f0e8c8",
+      "secondary": "#e8b0a0",
+      "form": "large loose terminal panicles of small four-petalled cream to pinkish flowers",
+      "scent": "strong and sweet"
+     },
+     "fruit": {
+      "colour": "#8a6a4a",
+      "form": "small round brown capsules 4-8 mm in long-lasting clusters"
+     },
+     "seasonal": "evergreen in warmth; drops leaves in drought or cold",
+     "silhouette": "dense twiggy bush with frothy cream flower plumes",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of Egypt; Flora of Tropical East Africa"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1.5,
+      5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#8A7A68",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#f0e8c8",
+     "flower_form": "panicle",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      100,
+      500
+     ],
      "pollinators": [
       "bee",
-      "wasp",
-      "fly",
-      "butterfly"
+      "moth"
      ],
-     "fruit_set": 0.4,
+     "fruit_set": 0.2,
      "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.3,
-      0.5
+      0.4,
+      0.8
      ],
-     "unripe_colour": "#b0b98e",
-     "ripe_colour": "#c4a67c",
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#8a6a4a",
      "ripen_days": [
-      20,
-      40
-     ],
-     "hang_days": [
-      5,
-      30
-     ],
-     "drop": "splits",
-     "rot_days": [
-      20,
+      60,
       90
      ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
      "crop_per_tree": [
-      200000,
-      10000000
+      500,
+      10000
      ],
      "edible": "no",
-     "confidence": "documented",
-     "source": "USDA FEIS Tamarix spp. (5 sepals and petals, dense racemes of ~20 flowers per 2.5 cm on new growth; insect cross-pollinated, wind unlikely; ~22 ovules, 8-20+ tiny plumed seeds per flower; up to 2.5 x 10^8 seeds per plant per year, shed all season). Flower life, ripening and capsule persistence estimated."
+     "confidence": "estimated",
+     "source": "Flora of Egypt (flowers in the hot season, capsules globose 4-8 mm, many-seeded); timing of ripening, set, crop and decay estimated"
     }
    }
   ],
@@ -1622,7 +1970,10 @@
      "juvenile_note": "Seedling: a tiny tuft of short, flat, grey-green blades. Within weeks it throws out flattened stolons that creep over the ground and root at every node, plus scaly rhizomes below, knitting into a dense mat; short erect shoots carry 2-6 finger-like spikes. Individual shoots are short-lived but the stolon-rhizome network persists and browns off in winter or drought.",
      "confidence": "documented",
      "source": "USDA FEIS Cynodon dactylon (culms 0.1-0.4 m, stolons several feet long rooting at nodes; acid-scarified seed 68% germination in 4 d; emergence at 17 C soil; flowers July-Oct; shade reduces vigour and canopy closure eliminates it); Wikipedia (dense mat, 2-6 spikes 2-5 cm, dormant brown in winter or dry season)"
-    }
+    },
+    "biomes": [
+     "OASIS"
+    ]
    },
    {
     "name": "Common reed",
@@ -1739,118 +2090,12 @@
      "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
      "confidence": "documented",
      "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
-    }
-   },
-   {
-    "name": "Desert rush",
-    "genus": "Juncus",
-    "species": "rigidus",
-    "origin": "Sahara, Arabia and Middle East",
-    "shape": "reed",
-    "temp_c": [
-     14,
-     32
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "height_m": [
-     0.5,
-     1.5
-    ],
-    "density": 0.6,
-    "soil": "wet",
-    "needs": [
-     "river_bank"
-    ],
-    "color": "#5A8A48",
-    "accent": "#8A7A50",
-    "source": "Juncus rigidus, Saharan and Arabian oasis and sabkha margins, stiff rush 0.5-1.5 m — Kew POWO",
-    "traits": {
-     "genus": "Juncus",
-     "species": "rigidus",
-     "native_range": "Juncus rigidus, Saharan and Arabian oasis and sabkha margins, stiff rush 0",
-     "leaf_shape": "tall strap leaves",
-     "trunk": "hollow stems rising from water",
-     "petiole": "sheath",
-     "height_m": [
-      0.5,
-      1.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      40,
-      120
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "tussock",
-     "gap": 0.45,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.7,
-     "val": 0.95,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#6A8A50",
-     "color_2": "#8A7A50",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "stiff dark-green rush tussock of vertical needles",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      30
-     ],
-     "height_years": [
-      2,
-      6
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      40
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are thin, stiff, grey-green spikes in wet saline sand around desert springs, wadis and sabkha edges. They grow into large, dense, hard tussocks of rigid, sharply pointed stems and leaves, with compact brown many-flowered clusters near the tips.",
-     "confidence": "estimated",
-     "source": "Estimated from the ecology of Juncus rigidus (rhizomatous rush of saline wetlands and oases in North Africa and the Middle East) and related salt-marsh Juncus species; no species-specific growth data found."
-    }
+    "biomes": [
+     "FRESHWATER",
+     "FRESHWATER_MARSH",
+     "OASIS"
+    ]
    },
    {
     "name": "Halfa grass",
@@ -1960,87 +2205,347 @@
      "juvenile_note": "Seedling: a small tuft of narrow, stiff, rough leaves. It quickly builds a stout, scaly creeping rootstock and branches from the base into a tall, leafy, harsh tussock; spreading rhizomes raise new tufts, forming dense stands with long, narrow, spike-like plumes that bristle with small spikelets.",
      "confidence": "estimated",
      "source": "Wikipedia Desmostachya bipinnata (tall, tufted, leafy perennial branching from the base, erect from a stout creeping rootstock; N Africa to India and SE Asia; sacred kusha grass; fodder and a weed of wheat). Germination, growth and lifespan estimated from arid rhizomatous grasses."
-    }
+    },
+    "biomes": [
+     "OASIS"
+    ]
    },
    {
-    "name": "Smooth flatsedge",
-    "genus": "Cyperus",
-    "species": "laevigatus",
-    "origin": "Africa, Arabia and warm regions",
-    "shape": "reed",
+    "name": "Sharp rush",
+    "genus": "Juncus",
+    "species": "acutus",
+    "origin": "Mediterranean and SW Asia",
+    "family": "Juncaceae",
+    "shape": "tussock",
     "temp_c": [
-     14,
+     8,
      32
     ],
     "moisture": [
-     0.6,
-     1
+     0.4,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "biomes": [
+     "OASIS"
     ],
     "height_m": [
-     0.3,
-     1
+     0.5,
+     1.5
     ],
-    "density": 0.6,
-    "soil": "wet",
+    "density": 0.8,
+    "soil": "sand",
     "needs": [
-     "standing_water"
+     "river_bank"
     ],
-    "water_depth_m": [
-     0,
-     0.3
-    ],
-    "color": "#5AB040",
-    "accent": "#A08050",
-    "source": "Cyperus laevigatus, salt-tolerant sedge of oasis springs in Africa and Arabia, 30-100 cm — Kew POWO",
-    "traits": {
-     "genus": "Cyperus",
-     "species": "laevigatus",
-     "native_range": "Cyperus laevigatus, salt-tolerant sedge of oasis springs in Africa and Arabia, 30-100 cm — Kew POWO",
-     "leaf_shape": "tall strap leaves",
-     "trunk": "hollow stems rising from water",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
+    "color": "#5A7A48",
+    "accent": "#7A4A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
       10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
       50
      ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates in light on wet, brackish sand after rain or flooding: a thread-fine shoot, then a small tuft of stiff, round, sharp-tipped green leaves. Short rhizomes add stems each year until it is a dense, spiny dome a metre or more across.",
+     "confidence": "estimated",
+     "source": "Flora of Egypt (Boulos) and Flora of Turkey (Juncus acutus: densely tufted perennial 0.5-1.5 m, stems and leaves terete and pungent, capsules 4-6 mm, glossy brown); germination studies on saline wetlands; ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "water",
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Juncus acutus, sharp rush (spiny rush), Mediterranean, Macaronesia and SW Asia to the Saharan and Arabian oases, with a subspecies in S California and Baja; dense spiny domes on brackish wet sand at springs, salt-marsh edges and dune slacks, 0.5-1.5 m — Kew POWO / Flora of Egypt",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#5a7a48",
+      "underside": "#5a7a48",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#5a7a48",
+      "margin": "entire",
+      "size_cm": [
+       20,
+       60
+      ],
+      "notes": "stiff round grey-green stems and leaves ending in very sharp spines, in dense hemispherical clumps"
+     },
+     "flower": {
+      "colour": "#8a6a3a",
+      "secondary": "#5a4a2a",
+      "form": "compact brown flower clusters near the stem tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a4a2a",
+      "form": "glossy chestnut-brown capsules 4-6 mm, longer than the tepals"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "dense dome of spiky grey-green spears",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of Egypt; Flora of Turkey"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      60
+     ],
      "compound": null,
-     "texture": "glossy",
-     "confidence": "estimated"
+     "texture": "matte",
+     "confidence": "estimated",
+     "note": "terete pungent leaves; the flowering stems reach 1.5 m"
     },
     "canopy": {
      "form": "tussock",
-     "gap": 0.4,
+     "gap": 0.25,
      "layering": "even",
-     "droop": 0.1
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": 2,
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 30,
+     "color": "#6A8A50",
+     "color_2": "#8A7A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Maidenhair fern",
+    "genus": "Adiantum",
+    "species": "capillus-veneris",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Pteridaceae",
+    "shape": "fern",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "CANYON",
+     "CAVES",
+     "HOT_SPRING",
+     "MEDITERRANEAN_SCRUB",
+     "OASIS"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB050",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate in about 6 days; heart-shaped green prothalli a few mm across form in 1-2 months on wet rock or soil, then two-leaved fernlets appear: tiny single fan-shaped leaflets on hair-thin black stalks. Later fronds branch into many wedge-shaped, pale-green leaflets and the creeping rhizome spreads a lacy mat over seeps and damp walls.",
+     "confidence": "estimated",
+     "source": "Spore culture study, Not Sci Biol 9(4) 2017 (germination from day 6, heart-shaped gametophytes at 27-60 d, then two-leaved fernlets); clump growth, spore age and rhizome life estimated from growers and genus habit"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Wet limestone, seeps, waterfall spray and cave mouths worldwide; black wire stems. Kew POWO.",
+    "traits": {
+     "genus": "Adiantum",
+     "species": "capillus-veneris",
+     "native_range": "Wet limestone, seeps, waterfall spray and cave mouths worldwide",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#7ab858",
+      "underside": "#7ab858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#7ab858",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       40
+      ],
+      "notes": "delicate fan-shaped leaflets on black wiry hair-thin stalks, drooping"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "glossy black wire stipe"
+     },
+     "seasonal": "evergreen in mild sites",
+     "silhouette": "airy green mist of tiny fans on black threads over wet rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       30,
+       80
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.0,
+      "leaflet_margin": "crenate"
+     },
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 8,
      "sat": 0.95,
      "val": 1.0,
-     "underside": 0.05,
-     "autumn": "#b8a060",
-     "drop": false
+     "underside": 0.1
     },
     "photoperiod": {
      "mode": "neutral"
@@ -2049,13 +2554,207 @@
      "pattern": "green_stem",
      "orientation": "none",
      "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#5AA040",
-     "color_2": "#A08050",
+     "scale_cm": 0.5,
+     "color": "#3A2A2A",
+     "color_2": "#1A1414",
      "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Bonfire moss",
+    "genus": "Funaria",
+    "species": "hygrometrica",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Funariaceae",
+    "shape": "moss",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     4000
+    ],
+    "biomes": [
+     "OASIS"
+    ],
+    "height_m": [
+     0.005,
+     0.05
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#7AB040",
+    "accent": "#C87A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.1,
+      0.4
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout within days on ash, burnt or freshly turned damp soil into a felt of green threads, which buds into tiny pale yellow-green leafy shoots under 1 cm. Within a few months the patch bristles with long stalks that are yellow then orange-red, each ending in a nodding, curved, pear-shaped capsule; the stalks twist as the air dries.",
+     "confidence": "documented",
+     "source": "BBS Field Guide (Funaria hygrometrica: shoots to about 1 cm, setae 2-5 cm, hygroscopic, capsule asymmetric pear-shaped and curved; a fast colonist of bonfire sites, burnt and disturbed ground, garden soil); Wikipedia"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "a pioneer: abundant spores from many capsules; short-lived patches move with disturbance"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Funaria hygrometrica, bonfire moss (common cord-moss), cosmopolitan colonist of burnt and disturbed damp soil, garden beds and the banks of irrigation channels; pale shoots under 1 cm with crowds of curved pear-shaped capsules on 2-5 cm twisting stalks — BBS Field Guide / Wikipedia",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "upright",
+      "colour": "#8ab848",
+      "underside": "#7aa040",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#8ab848",
+      "margin": "entire",
+      "size_cm": [
+       0.2,
+       0.4
+      ],
+      "notes": "small bulb-like yellow-green rosettes of broad pointed leaves"
+     },
+     "mat": {
+      "height_cm": [
+       0.3,
+       1
+      ],
+      "texture": "upright"
+     },
+     "fruit": {
+      "colour": "#c87a30",
+      "form": "a crowd of 2-5 cm stalks, yellow then orange-red, bearing nodding curved pear-shaped capsules"
+     },
+     "seasonal": "capsules ripen in spring and early summer",
+     "silhouette": "yellow-green fuzz bristling with orange swan-necked stalks",
+     "confidence": "documented",
+     "refs": "BBS Field Guide; Wikipedia Funaria hygrometrica"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.2,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
      "confidence": "documented"
     },
-    "silhouette": "small glossy flatsedge clump on wet sand",
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.95,
+     "val": 1.1,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Bird's-claw beard-moss",
+    "genus": "Barbula",
+    "species": "unguiculata",
+    "origin": "Worldwide (nearly cosmopolitan)",
+    "family": "Pottiaceae",
+    "shape": "moss",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.15,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "OASIS"
+    ],
+    "height_m": [
+     0.005,
+     0.03
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6A8A3A",
+    "accent": "#9A3A2A",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -2063,20 +2762,278 @@
       30
      ],
      "height_years": [
-      0.3,
-      1
+      0.5,
+      2
      ],
-     "first_seed_years": 0.5,
+     "first_seed_years": 1,
      "lifespan_years": [
-      5,
-      20
+      3,
+      15
      ],
      "shade": "intolerant",
-     "juvenile": "tuft",
+     "juvenile": "mat",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: a small tuft of thread-thin green shoots. It soon sends out a creeping horizontal rhizome that raises new tufts at intervals, forming lines and patches of slender, smooth, round-topped stems up to 60 cm, leafless but for basal sheaths, each tipped by a small cluster of green to reddish-brown spikelets set just below the stem tip.",
+     "juvenile_note": "Spores and tiny broken shoots start on bare, trodden or compacted soil as a green film that buds into short upright shoots. These crowd into low dull-green tufts 0.5-2 cm tall whose leaves twist and curl inward like claws when dry and spread again within seconds of wetting; slender red-stalked capsules follow.",
      "confidence": "estimated",
-     "source": "Wikipedia Cyperus laevigatus (perennial sedge to 60 cm, clumps on horizontal rhizomes, spikelets green to dark brown; brackish marshes, alkaline soils and hot springs worldwide; makaloa of Hawaii). Growth rate, first flowering and ramet lifespan estimated from rhizomatous Cyperus."
+     "source": "BBS Field Guide (Barbula unguiculata: tufts to about 2 cm on compacted soil, paths, walls and arable fields; leaves with a short point, incurved and twisted when dry; capsules cylindrical on red setae); ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores and shoot fragments; dries out and revives in a moment"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Barbula unguiculata, bird's-claw beard-moss, nearly cosmopolitan on compacted and disturbed soil, paths, walls and field margins; dull green tufts 0.5-2 cm, leaves curled when dry, cylindrical capsules on red stalks — BBS Field Guide",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#6a8a3a",
+      "underside": "#5a7a30",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#6a8a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.25
+      ],
+      "notes": "dull olive-green tufts; tongue-shaped leaves with a short bristle tip, twisted and incurved like a claw when dry"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       2
+      ],
+      "texture": "cushion"
+     },
+     "fruit": {
+      "colour": "#9a3a2a",
+      "form": "slender upright cylindrical capsules on 1-2 cm red stalks"
+     },
+     "seasonal": "dull brownish when dry, bright green wet",
+     "silhouette": "dull green tufts on bare trodden ground",
+     "confidence": "documented",
+     "refs": "BBS Field Guide"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Common orange lichen",
+    "genus": "Xanthoria",
+    "species": "parietina",
+    "origin": "Worldwide (mainly temperate)",
+    "family": "Teloschistaceae",
+    "shape": "moss",
+    "temp_c": [
+     -5,
+     30
+    ],
+    "moisture": [
+     0.1,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "OASIS",
+     "SALT_MARSH"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#E8A020",
+    "accent": "#D87A10",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a speck of orange granules where a spore met its green alga on nutrient-rich bark or stone. It spreads outward a few millimetres a year as a rosette of flat, crinkled, overlapping lobes 1-4 mm wide, bright orange-yellow in sun and greyish-green in shade, soon crowded in the middle with little orange cup-shaped fruit bodies.",
+     "confidence": "estimated",
+     "source": "British Lichen Society and Wikipedia (Xanthoria parietina: foliose rosettes to about 10 cm, lobes 1-4 mm, orange apothecia, greener in shade; favours nitrogen-rich bark and stone); radial growth of a few mm a year from lichenometric studies; lifespan estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores from the orange cups must meet a free green alga; no flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Xanthoria parietina, common orange lichen, nearly cosmopolitan, on nutrient-rich bark of palms, tamarisk and fig and on walls and stones, North Africa and Arabia included; foliose rosettes to 10 cm of flat orange-yellow lobes with orange cups, greener in shade — British Lichen Society / Wikipedia",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#e8a020",
+      "underside": "#e8e0c8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#e8a020",
+      "margin": "undulate",
+      "size_cm": [
+       0.1,
+       0.4
+      ],
+      "notes": "rosettes of flat crinkled lobes 1-4 mm wide, bright orange-yellow, pale beneath, crowded with orange cups in the middle"
+     },
+     "mat": {
+      "height_cm": [
+       0.1,
+       0.3
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "brighter orange in full sun, grey-green in shade",
+     "silhouette": "bright orange rosettes splashed on bark and stone",
+     "confidence": "documented",
+     "refs": "British Lichen Society; Wikipedia Xanthoria parietina"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.2,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -2094,7 +3051,8 @@
     "Date palm"
    ],
    "companion": [
-    "Fig",
+    "Pomegranate",
+    "Henna",
     "Doum palm"
    ],
    "ground": [
@@ -2112,11 +3070,9 @@
    "realm": "central_asia",
    "where": "river banks and wadi floors with shallow groundwater, seasonally flooded sand and silt",
    "dominant": [
-    "Euphrates poplar",
     "Athel tamarisk"
    ],
    "companion": [
-    "Saltcedar",
     "Oleander"
    ],
    "ground": [
@@ -2137,8 +3093,8 @@
    "companion": [],
    "ground": [
     "Common reed",
-    "Smooth flatsedge",
-    "Desert rush",
+    "Halfa grass",
+    "Sharp rush",
     "Bermuda grass"
    ],
    "catalogue": [],
@@ -2153,13 +3109,12 @@
    ],
    "where": "dry saline outer rim of the oasis where groundwater is deep, bare sand around",
    "dominant": [
-    "Camelthorn",
-    "Saltcedar"
+    "Camelthorn"
    ],
    "companion": [],
    "ground": [
     "Halfa grass",
-    "Desert rush"
+    "Sharp rush"
    ],
    "catalogue": [],
    "cover": 0.3,

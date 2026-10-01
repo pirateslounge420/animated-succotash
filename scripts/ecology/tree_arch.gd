@@ -743,7 +743,9 @@ static func _palm(g: _G, a: Dictionary) -> void:
 			fp.frond = true
 			var length := fp.length()
 			var s := length * 0.15
-			var step := maxf(g.cluster_r * 1.2, length / 14.0)
+			# A clump of stems (a date palm's suckers) shares one tree's
+			# anchor budget (MAX_ANCHORS): leaflets sit farther apart.
+			var step := maxf(g.cluster_r * 1.2, length / 14.0) * float(n_stems)
 			if eophylls:
 				# An undivided first leaf: a few broad leaflets make a strap.
 				step *= 2.2

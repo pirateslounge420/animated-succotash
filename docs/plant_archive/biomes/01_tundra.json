@@ -1,0 +1,1099 @@
+{
+ "key": "TUNDRA",
+ "name": "Tundra",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "ground": [
+   {
+    "name": "Arctic annuals",
+    "genus": "Papaver",
+    "species": "radicatum",
+    "origin": "Circumpolar high Arctic",
+    "shape": "cushion",
+    "temp_c": [
+     -15,
+     0
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#F0D040",
+    "source": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
+    "traits": {
+     "genus": "Papaver",
+     "species": "radicatum",
+     "native_range": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 5,
+     "aspect": 1.8,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#a08a48",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#6A8A50",
+     "color_2": "#8A7A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "hairy leaf tuft with nodding yellow cups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings: two tiny cotyledons, then a small tuft of hairy, grey-green, deeply lobed leaves. Over a few years it becomes a dense tuft on a stout taproot, wrapped in old leaf bases, from which leafless, bristly stalks rise carrying single yellow (sometimes white) cup flowers that follow the sun.",
+     "confidence": "estimated",
+     "source": "Estimated from Arctic poppy ecology (short-lived, tufted, taprooted perennial of high-Arctic gravels with heliotropic cup flowers) and alpine Papaver cultivation; a perennial, not an annual, despite the batch's common name"
+    }
+   },
+   {
+    "name": "Entire-leaf mountain avens",
+    "genus": "Dryas",
+    "species": "integrifolia",
+    "origin": "Arctic North America and Greenland",
+    "shape": "cushion",
+    "temp_c": [
+     -15,
+     0
+    ],
+    "moisture": [
+     0.2,
+     0.7
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#3A7A35",
+    "accent": "#F8F8F0",
+    "source": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
+    "traits": {
+     "genus": "Dryas",
+     "species": "integrifolia",
+     "native_range": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.0,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.6
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4636",
+     "color_2": "#8A7458",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "flat evergreen mat spangled with white flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small leathery, narrow, entire (untoothed) leaves, dark green above and white-felted beneath, with rolled edges. The seedling is a single tiny woody stem hugging the gravel that branches horizontally and roots along the ground, slowly spreading into a flat evergreen mat studded with upward-facing white flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dryas integrifolia (prostrate mat 10-17 cm tall, stems branching along the ground; up to 11 white to cream petals; heliotropic flowers that warm insects; achenes with plumed styles to 2.5 cm; pioneer of Arctic tundra, river gravels and scree). Mat growth rate, first flowering and age estimated from Dryas studies."
+    }
+   },
+   {
+    "name": "Reindeer lichen",
+    "genus": "Cladonia",
+    "species": "rangiferina",
+    "origin": "Circumboreal and Arctic",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     5
+    ],
+    "moisture": [
+     0.2,
+     0.8
+    ],
+    "height_m": [
+     0.03,
+     0.12
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#C8D8C0",
+    "accent": "#A8B8A0",
+    "source": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
+    "traits": {
+     "genus": "Cladonia",
+     "species": "rangiferina",
+     "native_range": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.35,
+     "val": 1.3,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#C8D8C0",
+     "color_2": "#A8B8A0",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "pale grey-white spongy lichen carpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      12,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. The young thallus is a scatter of tiny grey stalks that branch in threes and fours, tips all bending one way; over decades they build a springy ash-grey mat up to ~10 cm deep, dying at the base while growing at the tips.",
+     "confidence": "documented",
+     "source": "Wikipedia Cladonia rangiferina (grows 3-11 mm/yr, 3.9-4.4 mm/yr in Finland; mats to ~10 cm, ~12 cm in humid, 4-6 cm in dry sites; can establish ~2 yr after fire but takes decades to recover; individual lives ~20-30 yr; faster growth in shadier forests)"
+    }
+   },
+   {
+    "name": "Arctic cottongrass",
+    "genus": "Eriophorum",
+    "species": "scheuchzeri",
+    "origin": "Circumpolar Arctic",
+    "shape": "tussock",
+    "temp_c": [
+     -15,
+     2
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#6AA850",
+    "accent": "#F4F2E8",
+    "source": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
+    "traits": {
+     "genus": "Eriophorum",
+     "species": "scheuchzeri",
+     "native_range": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#b8905a"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A48",
+     "color_2": "#A08A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "grassy tuft topped with white cotton puffs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny grass-like seedling with a thread-like first leaf on wet moss or mud; becomes a small tuft of narrow channelled leaves, then sends out slender rhizomes so single upright shoots pop up around it, forming a loose colony rather than a tussock. Each flowering shoot carries one round white cotton ball.",
+     "confidence": "estimated",
+     "source": "Estimated from Eriophorum biology: USDA FEIS (E. vaginatum: germination within ~20 days in light, first flowering ~3 yr, tillers live 3-15 yr); Arctic seed germination trials (Polar Biology 2013); Flora of the Canadian Arctic Archipelago (rhizomatous, single spikelet)."
+    }
+   },
+   {
+    "name": "Tundra sedge",
+    "genus": "Carex",
+    "species": "aquatilis",
+    "origin": "Circumpolar Arctic and boreal",
+    "shape": "grass",
+    "temp_c": [
+     -15,
+     2
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "color": "#5AA045",
+    "accent": "#A08A50",
+    "source": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
+    "traits": {
+     "genus": "Carex",
+     "species": "aquatilis",
+     "native_range": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#b09a58"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A50",
+     "color_2": "#8A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "blue-green sedge sward in wet ground",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      4,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny grass-like tuft of narrow, keeled, blue-green leaves; in its first season the seedling already makes tillers and short rhizomes. Colonies then spread by long rhizomes into dense stands of upright leafy shoots in shallow water and wet tundra; only a few percent of shoots ever send up a flowering culm.",
+     "confidence": "documented",
+     "source": "USDA FEIS Carex aquatilis (shoots live 4-10 years, only 6-9% of shoots flower, seedlings form rhizomes and tillers in their first season, germination 12-78% after cold storage, culms 50-100 cm, shade intolerant); Carex germination times from Schutz 2000 review"
+    }
+   },
+   {
+    "name": "Feather moss",
+    "genus": "Pleurozium",
+    "species": "schreberi",
+    "origin": "Circumboreal (northern hemisphere)",
+    "family": "Hylocomiaceae",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     14
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "BOG",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A8A3A",
+    "accent": "#7A5A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a green, thread-like protonema on humus or rotten wood that buds small leafy shoots. These become loose, glossy yellow-green, once-pinnate feathery shoots on conspicuous red stems with blunt, crowded leaves, adding roughly 1-2 cm a year and weaving into a springy carpet 3-10 cm deep. Most new patches start from broken shoot fragments.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Pleurozium schreberi (stems 6-15 cm; spores shed 9-12 months after fertilization; post-fire cover ~1% at 5 yr, 3% at 20-30 yr, 9% at 50 yr: decades to recover). Annual shoot growth (~1-2 cm/yr), patch size-age and lifespan estimated from feathermoss literature."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "The boreal forest floor from Scandinavia to Alaska; under spruce and pine. Kew POWO.",
+    "traits": {
+     "genus": "Pleurozium",
+     "species": "schreberi",
+     "native_range": "The boreal forest floor from Scandinavia to Alaska",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#8ab838",
+      "underside": "#c8a848",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#8ab838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "loose yellow-green feathery shoots with distinctive red stems, forming deep soft carpets"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "continuous yellow-green carpet under spruce",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#c83a3a",
+      "markings": "#c83a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-orange stem visible through the leaves"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Rhizocarpaceae",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     10
+    ],
+    "moisture": [
+     0.3,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     6000
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "GLACIER",
+     "ICE_SHEET",
+     "TUNDRA",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.001,
+     0.005
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C020",
+    "accent": "#2A2A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bare rock from tundra to the highest peaks; yellow-green maps with black borders; centuries old. Index Fungorum.",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Bare rock from tundra to the highest peaks",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.005
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.44,
+     "val": 1.39,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Bog bilberry",
+    "genus": "Vaccinium",
+    "species": "uliginosum",
+    "origin": "Circumpolar Arctic and boreal",
+    "shape": "shrub",
+    "temp_c": [
+     -12,
+     4
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#4A8A5A",
+    "accent": "#6A3A6A",
+    "source": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "uliginosum",
+     "native_range": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.3,
+     "autumn": "#b8442e",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6E5A48",
+     "color_2": "#8A6A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low blue-green twiggy mound, knee-high at most",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      25,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny epigeal seedling with rounded cotyledons, then small, oval, untoothed, blue-green leaves on a thin brownish stem. Growth is slow: the young plant is a low, stiff, much-branched twiggy tuft of round, rather thick, blue-grey leaves that fall in autumn, later spreading by rhizomes and layering into a low mat.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Vaccinium uliginosum): usually 20-40 cm, germination improved by 30 days cold at 2 C and poor below 15 C, seed short-lived, rhizomes to 20 cm deep, grows for 50-60 years after fire. Seedling growth, first fruiting and stem ages estimated from arctic shrub studies and the genus."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f2d6dc",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bumblebee",
+      "fly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#9cb070",
+     "ripe_colour": "#3d4f7c",
+     "ripen_days": [
+      50,
+      75
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      25
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (Vaccinium uliginosum): white to pink flowers singly or in clusters at stem ends, June to early July; blue to black berries ripen late July-Sept and are eaten heavily by bears Jul-Sep. Pollinators (bumblebees, flies), berry size, fruit set, hang and rot times and crop estimated."
+    }
+   }
+  ]
+ }
+}

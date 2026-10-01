@@ -1,0 +1,1143 @@
+{
+ "key": "ALPINE_MEADOW",
+ "name": "Alpine meadow",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Alpenrose",
+    "genus": "Rhododendron",
+    "species": "ferrugineum",
+    "origin": "Alps and Pyrenees",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     5
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#2F6A30",
+    "accent": "#E03060",
+    "source": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0.3-1 m with rose-red flowers",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ferrugineum",
+     "native_range": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2.5,
+      5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.75,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A6A5A",
+     "color_2": "#9A7A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low dark evergreen mound, pink flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Minute seedlings on moss or raw humus: two tiny cotyledons, then small glossy, dark green, leathery leaves with rusty-brown scaly undersides and rolled edges. For years it is a small, few-stemmed sprig; then it branches densely into a low, rounded evergreen bush, and stems that touch the ground root and spread it into a clonal patch.",
+     "confidence": "documented",
+     "source": "German Wikipedia Rostblaettrige Alpenrose (30-130 cm; stems 1-2 cm thick nearly 100 yr old; leaves live ~2 yr; flowers May-Jul, corolla to 2 cm, deep pink to red; capsules to 7 mm ripen from August; semi-shade light value; 440-2,840 m); germination and first flowering estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 1.8,
+     "flower_colour": "#d6336c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      12
+     ],
+     "pollinators": [
+      "bumblebee",
+      "butterfly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8a8a4a",
+     "ripe_colour": "#6e4a30",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      270
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "German Wikipedia (flowers May-Jul in terminal clusters, funnel-bell corolla to 2 cm, deep pink to red; capsules to 7 mm ripening from August); bumblebee pollination and poisonous grayanotoxins from knowledge; truss size, set and crop estimated"
+    }
+   },
+   {
+    "name": "Mountain pine",
+    "genus": "Pinus",
+    "species": "mugo",
+    "origin": "Alps, Carpathians and Balkans",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     2700
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "ALPINE_MEADOW"
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#2F6A30",
+    "accent": "#6A5040",
+    "source": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
+    "traits": {
+     "genus": "Pinus",
+     "species": "mugo",
+     "native_range": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#5A5048",
+     "color_2": "#7A6A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "silhouette": "dark sprawling pine mound, knee to head high",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings have 5-7 cotyledons and a tuft of short primary needles; the young plant soon branches from the base into a low, dense, rounded bush of stiff, dark-green, paired, curved needles. Stems lie downhill under snow and rise at the tips, so old plants form thickets of crooked, interlaced, ground-hugging branches.",
+     "confidence": "estimated",
+     "source": "Wikipedia (subsp. mugo a low, shrubby, often multi-stemmed plant to 3-6 m; cones 2.5-5.5 cm, nut-brown); growth, first cones and lifespan estimated from treeline dwarf-pine studies in the Alps"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#a03a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      5.5
+     ],
+     "unripe_colour": "#6a4a6a",
+     "ripe_colour": "#8a5a2a",
+     "ripen_days": [
+      460,
+      520
+     ],
+     "hang_days": [
+      365,
+      1200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2000
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (cones 2.5-5.5 cm, nut-brown, matt and symmetrical in subsp. mugo); two-season pine cone cycle, violet young cones and empty cones lingering on the branches estimated from the genus"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Alpine paintbrush",
+    "genus": "Castilleja",
+    "species": "rhexiifolia",
+    "origin": "Rocky Mountains",
+    "shape": "grass",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     2500,
+     3800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#4A9A45",
+    "accent": "#E03050",
+    "source": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm",
+    "traits": {
+     "genus": "Castilleja",
+     "species": "rhexiifolia",
+     "native_range": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#a06a3a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A48",
+     "color_2": "#8A5A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "upright stems with red-tipped bracts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny oval cotyledons, then a short upright stem of narrow lance-shaped leaves; it tastes host roots (grasses, forbs) with haustoria from the first months. It builds a small woody base that sends up several unbranched leafy stems; from the second or third summer the stem tips carry rose-pink to crimson bracts around hidden green tubular flowers.",
+     "confidence": "estimated",
+     "source": "NARGS 'Adventures with Castillejas' (seed needs winter stratification, alpine species longer; some germinate only in the second spring; hemiparasitic but grows without host); Flora of North America (perennial, 10-40 cm, subalpine-alpine meadows); timings estimated from genus"
+    }
+   },
+   {
+    "name": "Alpine wildflowers",
+    "genus": "Ranunculus",
+    "species": "adoneus",
+    "origin": "Rocky Mountains",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3000,
+     4000
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#4A9A40",
+    "accent": "#F0D030",
+    "source": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm",
+    "traits": {
+     "genus": "Ranunculus",
+     "species": "adoneus",
+     "native_range": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": {
+      "form": "dissected",
+      "leaflets": [
+       6,
+       20
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 8,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#a08a48",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#6A9A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small clump with yellow buttercups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds lie a year in the soil and sprout at the edge of the melting snow: two small oval cotyledons, then a first leaf that is only shallowly lobed; later leaves are cut into narrow, finger-like segments. For several years the plant is a tiny tuft of a few such leaves on a stout root before it bears its glossy yellow flowers right after snowmelt.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ranunculus adoneus (stems 9-25 cm; flowers ~4 cm, 5-10 petals, open within days of snowmelt and last ~10 days; heliotropic; seeds disperse 3-5 weeks after fertilization; 2,500-4,000 m); Galen, Stanton and Scherff snowbed studies (from knowledge); ages estimated"
+    }
+   },
+   {
+    "name": "Edelweiss",
+    "genus": "Leontopodium",
+    "species": "nivale",
+    "origin": "Mountains of Europe",
+    "shape": "cushion",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#F0F0E0",
+    "source": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 cm",
+    "traits": {
+     "genus": "Leontopodium",
+     "species": "nivale",
+     "native_range": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 c",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.2,
+     "underside": 0.1,
+     "autumn": "#9a9270",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A9A80",
+     "color_2": "#B8B8A8",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "woolly grey rosette with star flower",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings form tiny rosettes of narrow, grey-felted leaves pressed to limestone scree; over one or two short summers they make a small, tight tuft of woolly, silver-white rosettes. Flowering stems then carry the famous star of white-felted bracts around a cluster of small yellowish flower heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Leontopodium nivale: flowering stems 3-20 cm, blooms Jul-Sep, 1,800-3,400 m on limestone, full sun, cold stratification improves germination, short-lived perennial in cultivation); timings estimated."
+    }
+   },
+   {
+    "name": "Gentian",
+    "genus": "Gentiana",
+    "species": "acaulis",
+    "origin": "Mountains of Europe",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     3000
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3E8A3A",
+    "accent": "#2040C0",
+    "source": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm",
+    "traits": {
+     "genus": "Gentiana",
+     "species": "acaulis",
+     "native_range": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "basal",
+     "size_cm": [
+      2.5,
+      6
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A8A48",
+     "color_2": "#7A6A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "flat rosette with huge blue trumpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed needs winter cold and light; epigeal seedlings are minute, with two round cotyledons and then tiny paired glossy leaves. Grows slowly into a flat evergreen rosette of leathery elliptic leaves; creeping stolons then make a dense mat up to 50 cm wide, and the huge upright deep-blue trumpets usually appear from the 2nd-3rd year.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Gentiana acaulis: to 10 cm, mats to 50 cm wide, evergreen basal rosettes of 2-3.5 cm leaves, 800-3000 m, full sun); alpine seed-raising guidance (cold stratification, slow germination). Ages estimated."
+    }
+   },
+   {
+    "name": "Tibetan alpine sedge",
+    "genus": "Kobresia",
+    "species": "pygmaea",
+    "origin": "Tibetan Plateau and Himalaya",
+    "shape": "grass",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     3200,
+     5600
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#8AB048",
+    "accent": "#B8A050",
+    "source": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Earth",
+    "traits": {
+     "genus": "Kobresia",
+     "species": "pygmaea",
+     "native_range": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Ear",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#b89a50"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8AA848",
+     "color_2": "#A08A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "very short dense sedge turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny tufts of bristle-like leaves; the plant spreads mostly clonally into a dense, golf-green-like turf only 1-4 cm tall, underlain by a tough, felty root mat that thickens over centuries. Tiny brownish flower spikes barely rise above the turf in early summer.",
+     "confidence": "estimated",
+     "source": "Estimated from general knowledge of Tibetan Plateau Kobresia pygmaea pastures (dwarf 1-4 cm turf, mainly clonal, maintained by grazing, thick root mats) and alpine sedge growth; no species-specific source could be read."
+    }
+   },
+   {
+    "name": "Dung roundhead",
+    "genus": "Protostropharia",
+    "species": "semiglobata",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "SAVANNA",
+     "WET_MEADOW",
+     "ALPINE_MEADOW"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8C060",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "dung",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Protostropharia",
+     "species": "semiglobata",
+     "native_range": "worldwide pasture",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c860",
+      "secondary": "#d8b850",
+      "form": "hemispherical slimy cap, pale yellow-ochre",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "slimy-glossy",
+      "gloss": 0.3,
+      "notes": "small glossy yellow half-globe on a slender pale stem on dung"
+     },
+     "underside": {
+      "colour": "#4a4a48",
+      "type": "gills grey-black, broad"
+     },
+     "stipe": {
+      "colour": "#e8d890",
+      "height_cm": [
+       4,
+       10
+      ]
+     },
+     "habit": "scattered on herbivore dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little yellow domes on cowpats",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.96,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ]
+ }
+}

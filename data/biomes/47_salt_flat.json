@@ -18,7 +18,384 @@
  },
  "plants": {
   "emergent": [],
-  "canopy": [],
+  "canopy": [
+   {
+    "name": "Athel tamarisk",
+    "genus": "Tamarix",
+    "species": "aphylla",
+    "origin": "North Africa to Iran",
+    "shape": "gnarled",
+    "temp_c": [
+     18,
+     32
+    ],
+    "moisture": [
+     0.05,
+     0.5
+    ],
+    "height_m": [
+     8,
+     15
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#7A9A80",
+    "accent": "#8A7A60",
+    "source": "Tamarix aphylla, N Africa to Iran, salt-tolerant evergreen tree 8-15 m — Kew POWO",
+    "traits": {
+     "genus": "Tamarix",
+     "species": "aphylla",
+     "native_range": "Tamarix aphylla, N Africa to Iran, salt-tolerant evergreen tree 8-15 m — Kew POWO",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.1,
+      0.2
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -12,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6A5A50",
+     "color_2": "#8A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "silhouette": "grey-green weeping-twigged tree with a spreading crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      5,
+      18
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny hair-tufted seeds sprout within a day on wet silt; the seedling has two minute cotyledons and thread-thin, jointed grey-green shoots. It soon makes a single fast leader clothed in drooping, apparently leafless jointed twigs (leaves reduced to tiny sheaths), like a young she-oak, then a broad, dense evergreen tree; it also suckers from roots.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tamarix aphylla (tree to 18 m; spreads by seed, suckers and cuttings); ICRAF Agroforestree (to 18 m, 60-80 cm dbh, roots ~10 m deep; fuelwood cut from the 4th year after planting); USDA FEIS Tamarix spp. (germination <24 h, seed viable only weeks). Height-age curve, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      11
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#f1dae2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.5
+     ],
+     "unripe_colour": "#b7c19a",
+     "ripe_colour": "#c6ad86",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      100000,
+      5000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (flowers May-Jul in racemes; capsule ~5 mm; seeds 0.5 mm with a 3 mm hair tuft, 100,000-286,000 seeds/kg); Wikipedia (blooms July-November); USDA FEIS Tamarix spp. (insect cross-pollination, many-seeded capsules). Flower life, fruit set, ripening and crop estimated."
+    },
+    "biomes": [
+     "OASIS",
+     "SALT_FLAT"
+    ]
+   },
+   {
+    "name": "Honey mesquite",
+    "genus": "Prosopis",
+    "species": "glandulosa",
+    "origin": "SW United States and northern Mexico",
+    "shape": "gnarled",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.1,
+     0.35
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#5AA040",
+    "accent": "#6B4A2E",
+    "source": "Prosopis glandulosa, Tamaulipan thornscrub/Chihuahuan Desert (Mexico, SW USA), thorny deciduous legume 5-12 m — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Prosopis",
+     "species": "glandulosa",
+     "native_range": "Prosopis glandulosa, Tamaulipan thornscrub/Chihuahuan Desert (Mexico, SW USA), thorny deciduous legume 5-12 m — Wikipedi",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       28,
+       68
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 6.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8B850",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 2.5,
+     "color": "#6A5040",
+     "color_2": "#4A3428",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      70
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "silhouette": "low wide feathery crown on crooked trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      40
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two thick oblong cotyledons, a first once-pinnate leaf, then bright green, feathery bipinnate leaves with a few pairs of long leaflets and paired spines at the nodes of a zigzag stem. The taproot races ahead and a bud zone at the stem base resprouts if the top is killed, so young plants become low, thorny, multi-stemmed bushes; suppressed plants decades old can look like seedlings.",
+     "confidence": "documented",
+     "source": "USDA FEIS Prosopis glandulosa (scarified seed germinates in ~7 h at 33 C; best emergence from 0.5-1.5 cm; seed by age 3; 27-yr-old plants 0.2-1.5 m in an exclosure; trees 6-12 m; max ages 110-217 yr, most under 100); ICRAF Agroforestree (3-9 m; first fruit at 3-4 yr)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#ecd97a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      100,
+      250
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.01,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      10,
+      20
+     ],
+     "unripe_colour": "#8aaa5a",
+     "ripe_colour": "#d8c07a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      100,
+      4000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS P. glandulosa (spring racemes with the leaves; bee pollinated, 160+ bee species; pods 10-20 cm, ~12 seeds, mature in 2-3 months, fall by late summer; 97-131 pods/tree in one study); ICRAF (racemes 5-14 cm; pods 8-30 cm, straw-yellow or violet-tinged). Flowers per raceme, fruit set and decay estimated."
+    },
+    "biomes": [
+     "SALT_FLAT",
+     "SHORTGRASS_PRAIRIE",
+     "THORN_SCRUB"
+    ]
+   }
+  ],
   "shrub": [
    {
     "name": "Greasewood",
@@ -202,7 +579,11 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA FEIS and Woody Plant Seed Manual Sarcobatus (monoecious, wind-pollinated; male flowers in small cone-like spikes at twig tips, female flowers single in leaf axils; tan winged utricles 4-5 mm, 1 cm across the wing, mature late Sep-Nov, a few hang until next summer)"
-    }
+    },
+    "biomes": [
+     "BADLANDS",
+     "SALT_FLAT"
+    ]
    },
    {
     "name": "Iodine bush",
@@ -380,91 +761,202 @@
      "edible": "cooked",
      "confidence": "estimated",
      "source": "Estimated from floras (Jepson / Intermountain Flora as recalled: tiny flowers 3-5 per fleshy bract in cylindric spikes 5-25 mm at the stem tips, summer, wind-pollinated; utricle ~1 mm; spikes break up in autumn) and Wikipedia (seeds ground for food in prehistory)."
-    }
+    },
+    "biomes": [
+     "SALT_FLAT"
+    ]
    },
    {
-    "name": "Nitre bush",
-    "genus": "Nitraria",
-    "species": "retusa",
-    "origin": "Sahara and Arabian Peninsula",
+    "name": "Mediterranean saltbush",
+    "genus": "Atriplex",
+    "species": "halimus",
+    "origin": "Mediterranean, N Africa and Middle East",
+    "family": "Amaranthaceae",
     "shape": "shrub",
     "temp_c": [
-     16,
-     30
+     10,
+     28
     ],
     "moisture": [
-     0.03,
-     0.25
+     0.04,
+     0.4
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "SALT_FLAT"
     ],
     "height_m": [
-     0.5,
-     2
+     1,
+     3
     ],
-    "density": 0.5,
+    "density": 0.6,
     "soil": "sand",
-    "color": "#8FA878",
-    "accent": "#D04040",
-    "source": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0.5-2 m with red berries — Kew POWO",
+    "needs": [],
+    "color": "#A8B0A0",
+    "accent": "#C8B860",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      15
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds, held in a pair of papery bracts, germinate within days once rain has washed some of the salt out of them. The seedling has two narrow cotyledons, then small silvery, scurfy, diamond-shaped leaves; it grows fast into a dense, much-branched, silver-grey bush with whitish stems.",
+     "confidence": "estimated",
+     "source": "Le Houerou, The role of saltbushes (Atriplex spp.) in arid land rehabilitation (A. halimus 1-3 m, fast-growing, long-lived browse shrub of North African chotts and sebkhas); Flora of Israel; ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_summer",
+      "days": 45,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Atriplex halimus L., Mediterranean saltbush (sea orache): silver-grey shrub 1-3 m of salty plains, chott and sebkha margins around the Mediterranean, the Sahara edge and the Middle East. Kew POWO; Le Houerou; Flora of North Africa; Flora of Israel.",
     "traits": {
-     "genus": "Nitraria",
-     "species": "retusa",
-     "native_range": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0",
-     "leaf_shape": "small leaves on many stems",
+     "genus": "Atriplex",
+     "species": "halimus",
+     "native_range": "Atriplex halimus L., Mediterranean saltbush (sea orache)",
+     "leaf_shape": "small silvery scurfy leaves on many stems",
      "trunk": "multi-stemmed from the base",
      "petiole": "short petiole",
      "height_m": [
-      0.5,
-      2
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 2.5,
-     "base": "attenuate",
-     "apex": "emarginate",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "alternate",
-     "size_cm": [
       1,
       3
      ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "succulent",
+    "appearance": {
+     "bark": {
+      "pattern": "fissured",
+      "base": "#9a9488",
+      "secondary": "#6a5e50",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "young stems whitish-scurfy, older wood grey-brown with fine lengthwise fissures"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.5,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#a8b0a0",
+      "underside": "#c8ccc0",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#98a090",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       5
+      ],
+      "notes": "silvery scurfy diamond-shaped to oval leaves, slightly fleshy and salty"
+     },
+     "flower": {
+      "colour": "#c8b860",
+      "secondary": "#a8a070",
+      "form": "tiny yellowish flowers in leafless spikes at the stem tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c8b090",
+      "form": "fruits enclosed in pairs of rounded papery bracts 3-5 mm"
+     },
+     "seasonal": "evergreen silver-grey",
+     "silhouette": "dense rounded silver-grey bush",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of Israel; Le Houerou"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.3,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      5
+     ],
      "compound": null,
-     "texture": "succulent",
+     "texture": "waxy_glaucous",
      "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#9A9488",
+     "color_2": "#6A5E50",
+     "lenticels": "none",
+     "confidence": "estimated"
     },
     "canopy": {
      "form": "mound",
-     "gap": 0.35,
+     "gap": 0.3,
      "layering": "clumped",
-     "droop": 0.05
+     "droop": 0.1
     },
     "tint": {
-     "hue_shift": -6,
-     "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.05
+     "hue_shift": -10,
+     "sat": 0.35,
+     "val": 1.2,
+     "underside": 0.1
     },
     "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "spiny",
-     "orientation": "none",
-     "depth": 0.4,
-     "scale_cm": 2,
-     "color": "#B8B4A8",
-     "color_2": "#7A7264",
-     "lenticels": "none",
-     "confidence": "estimated"
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
     },
     "architecture": {
      "model": "rauh",
@@ -474,96 +966,71 @@
       30,
       70
      ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.6,
+     "taper_exponent": 2.0,
+     "sinuosity": 0.5,
      "fork_height_frac": [
       0.0,
       0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 25,
+     "lean_max_deg": 10,
      "live_crown_ratio": [
       0.9,
       0.7
      ],
      "self_prune": false,
-     "dead_limbs": 0.3,
+     "dead_limbs": 0.25,
      "root_flare": false,
-     "spacing_m": 0.1,
+     "spacing_m": 0.15,
      "confidence": "estimated"
-    },
-    "silhouette": "spiny grey-green succulent-leaved mound",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      3,
-      10
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      30,
-      80
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling with two fleshy cotyledons, then small, fleshy, bluish-grey wedge-shaped leaves notched at the tip, like the adult's; young twigs are downy. It branches into a stiff, tangled, spine-tipped little shrub that traps blowing sand, so older plants sit on rounded sand hummocks (nabkhas) on saline flats and coastal dunes.",
-     "confidence": "estimated",
-     "source": "Wikipedia Nitraria retusa (to 2.5 m, rarely over 1 m; fleshy bluish-grey leaves 10-15 mm; small sweet-scented whitish-green flowers; red edible drupe 5-10 mm; salt marshes, saline semi-deserts, builds nabkhas); growth, ages and germination estimated"
     },
     "fruiting": {
      "flower_months": [
-      2,
-      5
+      7,
+      10
      ],
      "hemisphere": "north",
-     "flower_days": 2,
-     "flower_size_cm": 0.6,
-     "flower_colour": "#e6e8c8",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#c8b860",
      "flower_form": "tiny",
-     "flower_position": "twigs",
+     "flower_position": "stem_tips",
      "flowers_per_cluster": [
       5,
-      20
+      30
      ],
      "pollinators": [
-      "bee",
-      "fly",
-      "wasp"
+      "wind"
      ],
      "fruit_set": 0.3,
-     "fruit_kind": "drupe",
-     "fruit_shape": "ovoid",
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.5,
-      1.0
+      0.3,
+      0.5
      ],
-     "unripe_colour": "#8aa060",
-     "ripe_colour": "#b0283a",
+     "unripe_colour": "#b8c09a",
+     "ripe_colour": "#c8b090",
      "ripen_days": [
-      45,
-      75
+      40,
+      80
      ],
      "hang_days": [
-      7,
-      30
+      30,
+      120
      ],
-     "drop": "falls",
+     "drop": "persists",
      "rot_days": [
-      7,
-      30
+      60,
+      365
      ],
      "crop_per_tree": [
-      500,
-      5000
+      1000,
+      50000
      ],
-     "edible": "yes",
+     "edible": "cooked",
      "confidence": "estimated",
-     "source": "Wikipedia (small, sweetly scented whitish or greenish 5-part flowers in small cymes; triangular drupe 5-10 mm turning red, edible and enjoyed by people and eaten by birds, camels and goats); spring flowering in the Sahara-Arabian range; set, ripening and crop estimated"
+     "source": "Flora of Israel and Le Houerou (monoecious, wind-pollinated, flowers in terminal panicles summer to autumn; fruit in two round valves 3-5 mm; leaves cooked as a vegetable); months, set and crop estimated."
     }
    },
    {
@@ -765,300 +1232,194 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA FEIS Tamarix spp. (5 sepals and petals, dense racemes of ~20 flowers per 2.5 cm on new growth; insect cross-pollinated, wind unlikely; ~22 ovules, 8-20+ tiny plumed seeds per flower; up to 2.5 x 10^8 seeds per plant per year, shed all season). Flower life, ripening and capsule persistence estimated."
-    }
-   },
-   {
-    "name": "Shrubby seablite",
-    "genus": "Suaeda",
-    "species": "vera",
-    "origin": "Mediterranean and North Africa",
-    "shape": "shrub",
-    "temp_c": [
-     12,
-     24
-    ],
-    "moisture": [
-     0.05,
-     0.3
-    ],
-    "height_m": [
-     0.3,
-     1.2
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#6A8A60",
-    "accent": "#8A6A60",
-    "source": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0.3-1.2 m — Euro+Med PlantBase",
-    "traits": {
-     "genus": "Suaeda",
-     "species": "vera",
-     "native_range": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      1.2
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 8,
-     "base": "truncate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "alternate",
-     "size_cm": [
-      0.5,
-      1.8
-     ],
-     "compound": null,
-     "texture": "succulent",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.6,
-     "val": 0.9,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.25,
-     "scale_cm": 0.8,
-     "color": "#7A7066",
-     "color_2": "#5A5048",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "shrub",
-     "orders": 3,
-     "branch_angle_deg": [
-      30,
-      60
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.5,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 20,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.2,
-     "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "estimated"
-    },
-    "silhouette": "compact grey-green succulent bush",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      2,
-      5
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      40
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal seedling with two fleshy, strap-like cotyledons, then small, fleshy, half-round blue-green leaves crowded along a thin stem. It hardens into a woody-based, densely branched evergreen bush of glaucous succulent leaves, often forming low hummocks on shingle at the top of salt marshes; leaves may redden in winter.",
-     "confidence": "estimated",
-     "source": "Wikipedia Suaeda vera (small shrub of arid salt flats and salt marshes; in Britain mainly where shingle meets salt marsh; seeds germinate more readily in fresh than in salt water). Stature (to ~1.2 m), growth rate, age at first flowering and lifespan estimated from shrubby halophytes."
-    },
-    "fruiting": {
-     "flower_months": [
-      7,
-      10
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 0.2,
-     "flower_colour": "#9ab070",
-     "flower_form": "tiny",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      3
-     ],
-     "pollinators": [
-      "wind",
-      "self"
-     ],
-     "fruit_set": 0.5,
-     "fruit_kind": "achene",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      0.12,
-      0.2
-     ],
-     "unripe_colour": "#8aa865",
-     "ripe_colour": "#4a3a30",
-     "ripen_days": [
-      30,
-      60
-     ],
-     "hang_days": [
-      30,
-      120
-     ],
-     "drop": "falls",
-     "rot_days": [
-      60,
-      365
-     ],
-     "crop_per_tree": [
-      1000,
-      30000
-     ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "British flora accounts (tiny green petal-less flowers 1-3 in the leaf axils, Jul-Oct; fruit a utricle in the persistent fleshy perianth with one shiny black seed ~1-1.5 mm). Pollination, ripening, persistence and crop estimated from Suaeda biology."
-    }
+    "biomes": [
+     "SALT_FLAT"
+    ]
    }
   ],
   "ground": [
    {
-    "name": "Alkali heath",
-    "genus": "Frankenia",
-    "species": "salina",
-    "origin": "California and Baja California",
-    "shape": "cushion",
+    "name": "Alkali sacaton",
+    "genus": "Sporobolus",
+    "species": "airoides",
+    "origin": "Western North America",
+    "family": "Poaceae",
+    "shape": "tussock",
     "temp_c": [
-     12,
-     24
+     4,
+     26
     ],
     "moisture": [
-     0.05,
-     0.35
+     0.08,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     2600
+    ],
+    "biomes": [
+     "SALT_FLAT"
     ],
     "height_m": [
-     0.1,
-     0.4
+     0.5,
+     1.2
     ],
     "density": 0.5,
     "soil": "sand",
-    "color": "#7A9A70",
-    "accent": "#E080A0",
-    "source": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
-    "traits": {
-     "genus": "Frankenia",
-     "species": "salina",
-     "native_range": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.1,
-      0.4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "oblong",
-     "aspect": 3,
-     "base": "attenuate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "none",
-     "arrangement": "opposite",
-     "size_cm": [
-      0.3,
-      1
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented",
-     "note": "margins rolled under, often salt-crusted"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.55,
-     "val": 0.95,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 0.5,
-     "color": "#8A7E70",
-     "color_2": "#6A6058",
-     "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "silhouette": "flat grey-green salt-crusted mat, pink flowers",
+    "needs": [],
+    "color": "#8A9A70",
+    "accent": "#B88AA0",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      7,
+      5,
       21
      ],
      "height_years": [
-      2,
-      5
+      1,
+      3
      ],
-     "first_seed_years": 1.5,
+     "first_seed_years": 2,
      "lifespan_years": [
-      10,
-      30
+      20,
+      60
      ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
+     "shade": "intolerant",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Tiny seedlings with narrow, rolled, grey-green leaves on wiry stems; it creeps by rhizomes and rooting stems into a low, dense, matted subshrub of small, salt-crusted, heath-like leaves, dotted with tiny pink-purple five-petalled flowers from the second year.",
+     "juvenile_note": "Tiny seeds need warm, wet, freshly leached soil; the seedling is a thin rolled blade that grows slowly into a tuft. Over years the bunch widens into a coarse, tough tussock up to a metre across, leaves arching outward, under wide, airy pinkish-purple panicles in summer.",
      "confidence": "estimated",
-     "source": "Estimated from Jepson eFlora and Calflora descriptions of Frankenia salina (rhizomatous perennial herb or subshrub 1-4 dm of coastal salt marshes and alkali flats) and salt-marsh subshrub growth."
+     "source": "USDA FEIS and NRCS Plant Guide Sporobolus airoides (long-lived warm-season bunchgrass 0.5-1.2 m of saline and alkaline flats; seedlings slow; flowers May-Oct); ages estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sporobolus airoides (Torr.) Torr., alkali sacaton: coarse long-lived bunchgrass 0.5-1.2 m of saline and alkaline flats and playa margins of the Great Basin and the Southwest (Bonneville basin, Death Valley margins), often with saltgrass and greasewood. Kew POWO; USDA FEIS; Flora of North America.",
+    "traits": {
+     "genus": "Sporobolus",
+     "species": "airoides",
+     "native_range": "Sporobolus airoides (Torr.) Torr., alkali sacaton",
+     "leaf_shape": "long tough grass blades in a tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "written for this species in the §CC seed-list pass (wave 3)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#8a9a70",
+      "underside": "#9aa880",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7a8a60",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       45
+      ],
+      "notes": "long tough blades rolling inward as they dry, arching from a dense base"
+     },
+     "flower": {
+      "colour": "#b88aa0",
+      "secondary": "#d0c0b0",
+      "form": "wide airy panicle 20-45 cm, branches spreading, tiny pinkish-purple spikelets",
+      "scent": "none"
+     },
+     "seasonal": "green in summer, straw-tan in winter",
+     "silhouette": "coarse round tussock under a pink-purple haze",
+     "confidence": "documented",
+     "refs": "Flora of North America; USDA FEIS"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      45
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8B488",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#8A9A70",
+     "color_2": "#C0A898",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1171,220 +1532,10 @@
      "juvenile_note": "Seedling with 2 fleshy, finger-like green cotyledons, then a leafless, jointed, succulent green stem (the tiny leaves are fused into the segments) that branches into a little candelabra 10-30 cm tall. Flowers hide in the joints late in summer; the whole plant turns red or purple in autumn, sheds seed and dies.",
      "confidence": "documented",
      "source": "Davy, Bishop & Costa 2001, Biological Flora of the British Isles: Salicornia (spring germination on the marsh after rain lowers salinity, flowering Aug-Sep, seed shed in autumn, strictly annual); Wikipedia S. europaea (shoots harvested Jun-Aug, turns red/purple in autumn, edible)"
-    }
-   },
-   {
-    "name": "Halocnemum",
-    "genus": "Halocnemum",
-    "species": "strobilaceum",
-    "origin": "North Africa to Central Asia",
-    "shape": "cushion",
-    "temp_c": [
-     8,
-     24
-    ],
-    "moisture": [
-     0.03,
-     0.3
-    ],
-    "height_m": [
-     0.1,
-     0.5
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#8AA080",
-    "accent": "#A08070",
-    "source": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of China",
-    "traits": {
-     "genus": "Halocnemum",
-     "species": "strobilaceum",
-     "native_range": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of ",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.1,
-      0.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "scale",
-     "venation": "none",
-     "arrangement": "opposite",
-     "size_cm": [
-      0.1,
-      0.25
-     ],
-     "compound": null,
-     "texture": "succulent",
-     "confidence": "documented",
-     "note": "knobby cone-like succulent joints"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.6,
-     "val": 0.95,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 0.4,
-     "color": "#8AA080",
-     "color_2": "#6E6A5A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "knobby grey-green succulent hummock",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      2,
-      10
-     ],
-     "height_years": [
-      3,
-      8
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      40
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are tiny succulent green stems with two fleshy cotyledons that branch into short, jointed, bead-like green shoots. Over years it builds a low, woody-based cushion of densely branched, glaucous succulent twigs tipped with short cone-like fertile spikes; often forms mounds that trap sand on salt flats and redden in autumn.",
-     "confidence": "estimated",
-     "source": "Estimated from halophyte literature on Halocnemum strobilaceum (perennial succulent subshrub of Mediterranean to Central Asian salt flats; rapid germination at low salinity) and related Salicornioideae."
-    }
-   },
-   {
-    "name": "Pickleweed",
-    "genus": "Sarcocornia",
-    "species": "fruticosa",
-    "origin": "Mediterranean and North Africa",
-    "shape": "cushion",
-    "temp_c": [
-     12,
-     26
-    ],
-    "moisture": [
-     0.1,
-     0.5
-    ],
-    "height_m": [
-     0.2,
-     0.8
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#6A9A58",
-    "accent": "#B05050",
-    "source": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
-    "traits": {
-     "genus": "Sarcocornia",
-     "species": "fruticosa",
-     "native_range": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.2,
-      0.8
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "scale",
-     "venation": "none",
-     "arrangement": "opposite",
-     "size_cm": [
-      0.1,
-      0.4
-     ],
-     "compound": null,
-     "texture": "succulent",
-     "confidence": "documented",
-     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "even",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.9,
-     "val": 1.0,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 13.0,
-     "response": "flower"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 1,
-     "color": "#7AA850",
-     "color_2": "#8A7A5A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "woody-based glasswort mound of jointed green fingers",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      20
-     ],
-     "height_years": [
-      2,
-      6
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      10,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling like a glasswort: 2 fleshy cotyledons, then jointed, leafless, succulent green stems. It turns woody at the base and grows into an upright to sprawling bush of many jointed green stems (red-tinged in autumn), up to about 1 m, building low hummocks on the upper salt marsh; sprawling stems root.",
-     "confidence": "estimated",
-     "source": "Flora Iberica/Flora Europaea Sarcocornia fruticosa (woody perennial glasswort, erect shrublet to 1 m+, upper salt marsh); halophyte germination studies (fresh seed germinates within 1-3 weeks when salinity is low); growth and ages estimated"
-    }
+    "biomes": [
+     "SALT_FLAT"
+    ]
    },
    {
     "name": "Saltgrass",
@@ -1494,7 +1645,14 @@
      "juvenile_note": "Seedlings are rare (germination is episodic, needing fresh water on saline ground); the seedling is a small tuft of short, stiff, grey-green leaves in two neat opposite ranks. Scaly rhizomes then run through the soil and send up rows of short, stiff, leafy shoots, forming a dense, low turf patch; male and female plants are separate.",
      "confidence": "documented",
      "source": "USDA FEIS Distichlis spicata (dioecious; seeds need stratification and scarification, germination rare and episodic, seedling survival 0-95% with falling salinity; rhizomes to 180 cm long, 10-25 cm deep; 15-45 cm tall, usually <30 cm; photosynthesis rises with light). Time to flowering and clone lifespan estimated."
-    }
+    },
+    "biomes": [
+     "ESTUARY",
+     "MANGROVE",
+     "ROCKY_SHORE",
+     "SALT_FLAT",
+     "SALT_MARSH"
+    ]
    }
   ],
   "epiphyte": []
@@ -1505,13 +1663,11 @@
    "realm": "nearctic",
    "where": "the wettest, saltiest ring right at the crust edge, brine-saturated mud",
    "dominant": [
-    "Glasswort",
-    "Pickleweed"
+    "Glasswort"
    ],
    "companion": [],
    "ground": [
-    "Glasswort",
-    "Pickleweed"
+    "Glasswort"
    ],
    "catalogue": [],
    "cover": 0.2,
@@ -1524,11 +1680,8 @@
    "dominant": [
     "Iodine bush"
    ],
-   "companion": [
-    "Shrubby seablite"
-   ],
+   "companion": [],
    "ground": [
-    "Pickleweed",
     "Saltgrass"
    ],
    "catalogue": [],
@@ -1545,7 +1698,7 @@
    "companion": [],
    "ground": [
     "Saltgrass",
-    "Alkali heath"
+    "Alkali sacaton"
    ],
    "catalogue": [],
    "cover": 0.35,
@@ -1559,9 +1712,7 @@
     "Greasewood",
     "Saltcedar"
    ],
-   "companion": [
-    "Nitre bush"
-   ],
+   "companion": [],
    "ground": [
     "Saltgrass"
    ],
@@ -1577,15 +1728,13 @@
    ],
    "where": "Saharan chott and Central Asian sabkha margins, hard salt crust",
    "dominant": [
-    "Halocnemum"
+    "Athel tamarisk"
    ],
    "companion": [
-    "Nitre bush",
-    "Saltcedar"
+    "Saltcedar",
+    "Mediterranean saltbush"
    ],
-   "ground": [
-    "Halocnemum"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.15,
    "source": "Zohary 1973 Geobotanical Foundations of the Middle East, Halocnemum strobilaceum sabkha"

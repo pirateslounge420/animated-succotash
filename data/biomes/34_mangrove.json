@@ -20,199 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Asian stilt mangrove",
-    "genus": "Rhizophora",
-    "species": "mucronata",
-    "origin": "Indo-West Pacific and East Africa",
-    "shape": "mangrove",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     8,
-     25
-    ],
-    "density": 0.9,
-    "soil": "wet",
-    "needs": [
-     "salt_water",
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     1.5
-    ],
-    "color": "#3F8A38",
-    "accent": "#7A6A50",
-    "source": "Rhizophora mucronata, loop-root mangrove, dominant seaward Rhizophora of Indo-West Pacific coasts, 8-25 m — Wikipedia",
-    "traits": {
-     "genus": "Rhizophora",
-     "species": "mucronata",
-     "native_range": "Rhizophora mucronata, loop-root mangrove, dominant seaward Rhizophora of Indo-West Pacific coasts, 8-25 m — Wikipedia",
-     "leaf_shape": "thick glossy salt-excreting leaves",
-     "trunk": "prop roots or pneumatophores over mud",
-     "petiole": "short petiole",
-     "height_m": [
-      8,
-      25
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "mangrove",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 1.8,
-     "base": "cuneate",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      10,
-      18
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "horizontal",
-     "depth": 0.35,
-     "scale_cm": 3,
-     "color": "#5A5048",
-     "color_2": "#8A4A38",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "dark grey to blackish, cracked in a horizontal-reticulate pattern; inner bark red"
-    },
-    "canopy": {
-     "form": "rounded",
-     "gap": 0.25,
-     "layering": "clumped",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.85,
-     "val": 0.8,
-     "underside": 0.25
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "multi_stem",
-     "orders": 5,
-     "branch_angle_deg": [
-      40,
-      70
-     ],
-     "taper_exponent": 1.2,
-     "sinuosity": 0.3,
-     "fork_height_frac": [
-      0.05,
-      0.2
-     ],
-     "buttress": "low",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.2,
-     "root_flare": false,
-     "spacing_m": 0.3,
-     "confidence": "documented"
-    },
-    "silhouette": "dense round crown over arching stilt roots",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      15,
-      45
-     ],
-     "height_years": [
-      10,
-      40
-     ],
-     "first_seed_years": 6,
-     "lifespan_years": [
-      80,
-      150
-     ],
-     "shade": "intermediate",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Viviparous, with the genus' biggest propagules: a heavy, warty, green club-shaped hypocotyl 36-64 cm (sometimes over 1 m) long hangs from the fruit. It spears into mud or floats, roots in a couple of weeks and opens a pair of leaves at the top. The sapling is a single stem with big glossy leaves ending in a sharp point (mucro), soon propped on arching stilt roots.",
-     "confidence": "documented",
-     "source": "ICRAF Agroforestree Database (to 27-30 m; hypocotyl 36-64 cm, sometimes over 100 cm; 35-40 yr to reach 19 cm diameter in Malaysia; 40-yr rotations; wind-pollinated, self-compatible); Wikipedia (20-25 m on riverbanks, 10-15 m on sea fringes); first flowering, rooting time and lifespan estimated"
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 2,
-     "flower_size_cm": 2.5,
-     "flower_colour": "#efe6c4",
-     "flower_form": "star",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      3,
-      8
-     ],
-     "pollinators": [
-      "wind",
-      "self",
-      "bee"
-     ],
-     "fruit_set": 0.05,
-     "fruit_kind": "berry",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      36,
-      64
-     ],
-     "unripe_colour": "#7a6a40",
-     "ripe_colour": "#4f6a2e",
-     "ripen_days": [
-      300,
-      450
-     ],
-     "hang_days": [
-      7,
-      60
-     ],
-     "drop": "falls",
-     "rot_days": [
-      30,
-      180
-     ],
-     "crop_per_tree": [
-      100,
-      2000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "ICRAF Agroforestree (inflorescences (1-)3-5(-12)-flowered; hard cream calyx 13-19 mm, 4 white hairy petals 9 mm; fruit 5-7 cm; hypocotyl 36-64 cm; wind-pollinated and self-compatible); fruit size given for the hanging propagule; months to maturity, set, crop and decay estimated from the genus"
-    }
-   },
-   {
     "name": "Black mangrove",
     "genus": "Avicennia",
     "species": "germinans",
@@ -399,7 +206,10 @@
      "edible": "cooked",
      "confidence": "documented",
      "source": "USDA Tropical Tree Seed Manual (flowers May-Jul, white with yellow base, nectar-rich honey flowers, flattened 2-valved capsule, propagules peak Sep-Oct); Useful Tropical Plants (cotyledons eaten in famine after careful preparation); flower life, fruit set and crop estimated."
-    }
+    },
+    "biomes": [
+     "MANGROVE"
+    ]
    },
    {
     "name": "Coconut palm",
@@ -419,6 +229,12 @@
     "altitude_m": [
      0,
      300
+    ],
+    "biomes": [
+     "BEACH",
+     "CORAL_REEF",
+     "LAGOON",
+     "MANGROVE"
     ],
     "height_m": [
      15.0,
@@ -641,387 +457,6 @@
     }
    },
    {
-    "name": "Grey mangrove",
-    "genus": "Avicennia",
-    "species": "marina",
-    "origin": "Indo-West Pacific and East Africa",
-    "shape": "mangrove",
-    "temp_c": [
-     16,
-     30
-    ],
-    "moisture": [
-     0.5,
-     1.0
-    ],
-    "height_m": [
-     3,
-     14
-    ],
-    "density": 0.8,
-    "soil": "wet",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#6AA870",
-    "accent": "#8A9A80",
-    "source": "Avicennia marina, grey/white mangrove, most widespread and cold-tolerant mangrove of the Indo-West Pacific (to NZ, Red Sea), 3-14 m — Wikipedia",
-    "traits": {
-     "genus": "Avicennia",
-     "species": "marina",
-     "native_range": "Avicennia marina, grey/white mangrove, most widespread and cold-tolerant mangrove of the Indo-West Pacific (to NZ, Red S",
-     "leaf_shape": "thick glossy salt-excreting leaves",
-     "trunk": "prop roots or pneumatophores over mud",
-     "petiole": "short petiole",
-     "height_m": [
-      3,
-      14
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "mangrove",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.5,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      5,
-      10
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "flaky",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 3,
-     "color": "#A8A89A",
-     "color_2": "#8A9A80",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "smooth pale grey to whitish, flaking in thin patches to greenish under-bark"
-    },
-    "canopy": {
-     "form": "rounded",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.65,
-     "val": 0.95,
-     "underside": 0.5
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "decurrent",
-     "orders": 5,
-     "branch_angle_deg": [
-      45,
-      75
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.5,
-     "fork_height_frac": [
-      0.1,
-      0.3
-     ],
-     "buttress": "none",
-     "lean_max_deg": 20,
-     "live_crown_ratio": [
-      0.9,
-      0.6
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.25,
-     "root_flare": false,
-     "spacing_m": 0.3,
-     "confidence": "estimated"
-    },
-    "silhouette": "pale grey-green crown on a pale trunk",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      5,
-      14
-     ],
-     "height_years": [
-      10,
-      30
-     ],
-     "first_seed_years": 4,
-     "lifespan_years": [
-      50,
-      150
-     ],
-     "shade": "intermediate",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Cryptoviviparous: the pale grey-green, heart-shaped propagule falls, sheds its skin within days and opens two thick fleshy cotyledons while hairy roots anchor it in the mud. The seedling is a slim stem with opposite, glossy green leaves that are silvery-grey beneath; pencil-like pneumatophores soon ring the young tree, which branches low into a bushy shrub.",
-     "confidence": "estimated",
-     "source": "Almahasheer et al. 2016 Sci. Rep. 6:37785 (Red Sea growth: ~9.6 nodes/yr, internodes 5-11 cm/yr); Duke 1990 J. Ecol. (latitudinal phenology); seedling-bank behaviour from Australian studies; height-growth timings, first flowering and lifespan estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      10,
-      12
-     ],
-     "hemisphere": "north",
-     "flower_days": 3,
-     "flower_size_cm": 0.6,
-     "flower_colour": "#f2b233",
-     "flower_form": "star",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      3,
-      12
-     ],
-     "pollinators": [
-      "bee",
-      "fly",
-      "wasp",
-      "butterfly"
-     ],
-     "fruit_set": 0.04,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      1.5,
-      3
-     ],
-     "unripe_colour": "#8aa06a",
-     "ripe_colour": "#b3b98c",
-     "ripen_days": [
-      90,
-      150
-     ],
-     "hang_days": [
-      5,
-      30
-     ],
-     "drop": "falls",
-     "rot_days": [
-      14,
-      60
-     ],
-     "crop_per_tree": [
-      500,
-      10000
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "Almahasheer et al. 2016 Sci. Rep. (Red Sea: buds from June, peak flowering Nov, propagules ~3 months after flowering, released by April); Duke 1990 (flowering-to-fruit-fall lengthens with latitude, to ~1 yr in temperate Australia/NZ); propagules eaten after soaking/roasting; fruit set and crop estimated."
-    }
-   },
-   {
-    "name": "Mangrove apple",
-    "genus": "Sonneratia",
-    "species": "alba",
-    "origin": "Indo-West Pacific and East Africa",
-    "shape": "mangrove",
-    "temp_c": [
-     23,
-     30
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     5,
-     15
-    ],
-    "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "salt_water",
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     1
-    ],
-    "color": "#5A9A60",
-    "accent": "#7A7A70",
-    "source": "Sonneratia alba, mangrove apple, cone-pneumatophore pioneer of Indo-Pacific mangrove seaward fringe, 5-15 m — Wikipedia",
-    "traits": {
-     "genus": "Sonneratia",
-     "species": "alba",
-     "native_range": "Sonneratia alba, mangrove apple, cone-pneumatophore pioneer of Indo-Pacific mangrove seaward fringe, 5-15 m — Wikipedia",
-     "leaf_shape": "thick glossy salt-excreting leaves",
-     "trunk": "prop roots or pneumatophores over mud",
-     "petiole": "short petiole",
-     "height_m": [
-      5,
-      15
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "mangrove",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 1.6,
-     "base": "cuneate",
-     "apex": "rounded",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      5,
-      12
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
-     "scale_cm": 2.5,
-     "color": "#7A7468",
-     "color_2": "#5A5048",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "grey-brown, rough, fissured and flaking in small patches"
-    },
-    "canopy": {
-     "form": "spreading",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.4
-    },
-    "tint": {
-     "hue_shift": -5,
-     "sat": 0.7,
-     "val": 0.95,
-     "underside": 0.2
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "decurrent",
-     "orders": 5,
-     "branch_angle_deg": [
-      50,
-      80
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.3,
-     "fork_height_frac": [
-      0.15,
-      0.35
-     ],
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.8,
-      0.5
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.2,
-     "root_flare": false,
-     "spacing_m": 0.4,
-     "confidence": "estimated"
-    },
-    "silhouette": "spreading drooping crown over cone roots",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      20
-     ],
-     "height_years": [
-      5,
-      20
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      60,
-      150
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Not viviparous: tiny seeds float out of the rotting fruit and germinate on mud. Seedling with 2 small cotyledons, then opposite, thick, round leathery leaves on a slender stem. Within a year or two it sends out horizontal cable roots with pencil-like breathing roots (pneumatophores) poking up through the mud around it, later becoming stout conical pegs 20-50 cm tall.",
-     "confidence": "estimated",
-     "source": "Wikipedia Sonneratia alba (tree to 40 m, white flowers pink at the base, dark-green fruit to 5 cm); Tomlinson, The Botany of Mangroves (non-viviparous seed, pneumatophores, night flowers pollinated by bats and hawkmoths); growth, first seed and lifespan estimated for a pioneer mangrove"
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 0.5,
-     "flower_size_cm": 7.0,
-     "flower_colour": "#f7f4ee",
-     "flower_form": "brush",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      3
-     ],
-     "pollinators": [
-      "bat",
-      "moth"
-     ],
-     "fruit_set": 0.3,
-     "fruit_kind": "berry",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      3,
-      5
-     ],
-     "unripe_colour": "#3f6b36",
-     "ripe_colour": "#5c7a3a",
-     "ripen_days": [
-      60,
-      90
-     ],
-     "hang_days": [
-      7,
-      30
-     ],
-     "drop": "falls",
-     "rot_days": [
-      7,
-      30
-     ],
-     "crop_per_tree": [
-      100,
-      2000
-     ],
-     "edible": "yes",
-     "confidence": "estimated",
-     "source": "Tomlinson, The Botany of Mangroves, and Wikipedia Sonneratia: flowers open at dusk and last one night, a big puff of white stamens with tiny petals, visited by nectar bats (Eonycteris, Macroglossus) and hawkmoths; flattened round green berry to 5 cm sitting on a star-shaped calyx, eaten raw or cooked; timing and counts estimated"
-    }
-   },
-   {
     "name": "Red mangrove",
     "genus": "Rhizophora",
     "species": "mangle",
@@ -1212,7 +647,11 @@
      "edible": "no",
      "confidence": "documented",
      "source": "Tropical Plants Database (flowers all year; bees and wind; 4-7 months from fertilization to hypocotyl emergence plus 4-6 months more before it falls; propagules 8-30 cm); Wikipedia (pale yellow flowers; self or wind pollination); fruit size given for the hanging propagule; set, crop and decay estimated"
-    }
+    },
+    "biomes": [
+     "LAGOON",
+     "MANGROVE"
+    ]
    },
    {
     "name": "White mangrove",
@@ -1400,7 +839,199 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (white bell-shaped flowers ~5 mm in spikes; flattened, ridged reddish-brown drupe 12-20 mm, water-dispersed). Flowering season (spring-summer in Florida and the Caribbean), pollinators, timings and counts estimated."
-    }
+    },
+    "biomes": [
+     "MANGROVE"
+    ]
+   },
+   {
+    "name": "Orange mangrove",
+    "genus": "Bruguiera",
+    "species": "gymnorhiza",
+    "origin": "Indo-West Pacific and East Africa",
+    "shape": "mangrove",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3F8A38",
+    "accent": "#C05A30",
+    "source": "Bruguiera gymnorhiza, large-leafed orange mangrove, knee-rooted landward mangrove of Indo-West Pacific, 5-20 m — Wikipedia",
+    "traits": {
+     "genus": "Bruguiera",
+     "species": "gymnorhiza",
+     "native_range": "Bruguiera gymnorhiza, large-leafed orange mangrove, knee-rooted landward mangrove of Indo-West Pacific, 5-20 m — Wikiped",
+     "leaf_shape": "thick glossy salt-excreting leaves",
+     "trunk": "prop roots or pneumatophores over mud",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "mangrove",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.3,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 3,
+     "color": "#6A5E54",
+     "color_2": "#9A5A38",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey to dark brown, rough, fissured, with large corky lenticels on the buttresses"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      60,
+      85
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.3,
+      0.5
+     ],
+     "buttress": "low",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "silhouette": "tall conical crown over knee roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      45
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous: the seedling grows on the tree as a cigar-shaped green hypocotyl hanging from a red, star-lobed calyx. It drops, lodges upright in the mud, roots within weeks and unfolds pairs of glossy, leathery, elliptic leaves on a stout single stem; later, knee-like roots loop out of the mud around the young tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia (7-20 m, occasionally 35 m; propagules drop, embed upright in mud and root rapidly); Tomlinson 1986 Botany of Mangroves (shade-tolerant late-successional Bruguiera, knee roots); growth, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#c8322a",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      10,
+      25
+     ],
+     "unripe_colour": "#4f7a3a",
+     "ripe_colour": "#5d6a34",
+     "ripen_days": [
+      120,
+      210
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (solitary flowers with a pinkish-green to red-brown calyx and cream petals turning brown; turbinate fruit ~2 cm carrying the green cigar-shaped hypocotyl; propagules eaten after grating, washing and cooking); Tomlinson 1986 (bird pollination with explosive pollen release); timings and counts estimated."
+    },
+    "biomes": [
+     "MANGROVE"
+    ]
    }
   ],
   "shrub": [
@@ -1591,44 +1222,301 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (button-like heads 5-8 mm, 35-56 flowers, red-brown cone-like fruit heads 5-15 mm that burst when ripe, water-dispersed); FNPS (flowers and fruits all year, bee and hairstreak nectar plant). Fruit set, ripening time and crop estimated."
-    }
+    },
+    "biomes": [
+     "LAGOON",
+     "MANGROVE"
+    ]
    },
    {
-    "name": "Holly mangrove",
-    "genus": "Acanthus",
-    "species": "ilicifolius",
-    "origin": "Indo-West Pacific",
+    "name": "Sea oxeye",
+    "genus": "Borrichia",
+    "species": "frutescens",
+    "origin": "SE US, Mexico and Caribbean coasts",
+    "family": "Asteraceae",
     "shape": "shrub",
     "temp_c": [
-     22,
-     30
+     16,
+     28
     ],
     "moisture": [
-     0.65,
+     0.45,
      1.0
     ],
     "height_m": [
-     0.5,
-     2
+     0.3,
+     1.2
     ],
-    "density": 0.5,
+    "density": 0.7,
     "soil": "wet",
     "needs": [
      "salt_water"
     ],
-    "color": "#5AB040",
-    "accent": "#8A7AD0",
-    "source": "Acanthus ilicifolius, sea holly, spiny-leaved shrub of Indo-Pacific mangrove understory and creek banks, 0.5-2 m — Wikipedia",
+    "color": "#8FA88A",
+    "accent": "#E8C428",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      8,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are uncommon; most new plants are shoots from the running rhizomes of an existing colony. A young shoot is a single upright stem with pairs of thick, silvery-grey, hairy, spoon-shaped leaves; it branches little, turns woody at the base and is soon one of many stems in a dense, knee- to waist-high grey patch topped by yellow daisies.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 21 (Borrichia frutescens: rhizomatous colonial shrub 10-120(-200) cm; leaves opposite, obovate to oblanceolate, sericeous; heads solitary, rays yellow; salt marshes, mangrove margins and coastal flats); establishment mostly clonal; timings estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spreads mainly by rhizomes into clonal colonies; heads visited by bees and butterflies; the corky achenes float"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Borrichia frutescens, sea oxeye: silvery-leaved colonial subshrub 0.3-1.2 m of salt-marsh edges, mangrove margins and salt flats, Virginia to Texas, Mexico, Bermuda and the West Indies — Flora of North America vol. 21; Odum et al. 1982 (landward mangrove fringe). Kew POWO for the name.",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8070",
+      "secondary": "#9aaa88",
+      "feature_cm": 0.5,
+      "roughness": 0.15,
+      "notes": "stems grey-green and hairy above, woody and grey-brown only near the base"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#93a88c",
+      "underside": "#a8b8a0",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#93a88c",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       7
+      ],
+      "notes": "thick, fleshy, spoon-shaped leaves in pairs, densely silky-grey on both faces; a few teeth near the base on some"
+     },
+     "flower": {
+      "colour": "#e8c428",
+      "secondary": "#c89a28",
+      "form": "solitary yellow daisy heads 1.5-2.5 cm on the stem tips, yellow-brown centre",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a4a3a",
+      "form": "dark brown, stiff, prickly-chaffed seed heads that persist on the dead stems"
+     },
+     "seasonal": "evergreen; flowers mostly spring to autumn, all year in the south",
+     "silhouette": "a low dense grey-green colony of upright stems dotted with yellow daisies",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 21; USDA PLANTS; Wunderlin & Hansen, Atlas of Florida Plants"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      7
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#8A8070",
+     "color_2": "#9AAA88",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "grey-brown woody stem bases; upper stems green and silky-hairy"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      15,
+      35
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.0,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "low silvery colony of upright stems with yellow daisies",
+    "fruiting": {
+     "flower_months": [
+      4,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 2.0,
+     "flower_colour": "#e8c428",
+     "flower_form": "star",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8a9a60",
+     "ripe_colour": "#4a3a2a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      400
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 21 (heads solitary, 15-25 rays, paleae spine-tipped; cypselae 3-4-angled); flowering all year in Florida, mainly spring-summer; set, timings and crop estimated."
+    },
+    "biomes": [
+     "MANGROVE",
+     "SALT_MARSH"
+    ]
+   },
+   {
+    "name": "Saltwort",
+    "genus": "Batis",
+    "species": "maritima",
+    "origin": "Tropical Americas and Hawaii",
+    "family": "Bataceae",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#7AC060",
+    "accent": "#A0A080",
+    "source": "Batis maritima, saltwort: sprawling succulent shrub, woody at the base, 0.2-1 m (to 1.5 m), forming colonies on hypersaline pans and brackish edges behind Americas mangroves and lagoons — Flora of North America (Bataceae: shrubs); Wikipedia / USDA",
     "traits": {
-     "genus": "Acanthus",
-     "species": "ilicifolius",
-     "native_range": "Acanthus ilicifolius, sea holly, spiny-leaved shrub of Indo-Pacific mangrove understory and creek banks, 0",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
+     "genus": "Batis",
+     "species": "maritima",
+     "native_range": "Batis maritima, saltwort, succulent mat on hypersaline pans behind Americas mangroves, 0",
+     "leaf_shape": "small fleshy club-shaped leaves in pairs",
+     "trunk": "sprawling stems, woody at the base, with erect leafy branches",
+     "petiole": "none",
      "height_m": [
-      0.5,
-      2
+      0.2,
+      1.0
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1637,77 +1525,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
+    "leaf_type": "moss",
     "leaf": {
      "type": "simple",
-     "outline": "elliptic",
-     "aspect": 3.0,
-     "base": "cuneate",
-     "apex": "mucronate",
-     "margin": "spinose",
-     "venation": "pinnate",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
      "arrangement": "opposite",
      "size_cm": [
-      6,
-      18
+      1,
+      3
      ],
      "compound": null,
-     "texture": "glossy",
+     "texture": "succulent",
      "confidence": "documented"
     },
     "bark": {
      "pattern": "green_stem",
      "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 6,
-     "color": "#6A9A50",
-     "color_2": "#8A8A70",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#8AB060",
+     "color_2": "#A0A080",
      "lenticels": "none",
      "confidence": "documented",
-     "note": "soft green to grey-brown stems with paired spines at the nodes"
+     "note": "sprawling yellow-green succulent stems, woody at the base"
     },
     "canopy": {
      "form": "mound",
      "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.1
+     "layering": "even",
+     "droop": 0.15
     },
     "tint": {
-     "hue_shift": 3,
+     "hue_shift": 8,
      "sat": 0.9,
-     "val": 0.9,
-     "underside": 0.15
+     "val": 1.05,
+     "underside": 0.05
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "architecture": {
-     "model": "rauh",
-     "habit": "shrub",
-     "orders": 2,
-     "branch_angle_deg": [
-      10,
-      30
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.2,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.05,
-     "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "estimated"
-    },
-    "silhouette": "low spiny-leaved thicket",
+    "silhouette": "low sprawling yellow-green succulent shrub",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -1715,70 +1577,51 @@
       21
      ],
      "height_years": [
-      0.7,
-      2
+      1.5,
+      4
      ],
      "first_seed_years": 1.5,
      "lifespan_years": [
-      5,
-      20
+      10,
+      30
      ],
-     "shade": "intermediate",
+     "shade": "very_intolerant",
      "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Hypogeal germination: the flat whitish seed stays at the mud surface while a shoot with pairs of opposite glossy leaves rises. The young plant is a single soft green stem with holly-like spiny-lobed leaves (leaves grown in shade are often entire and spineless); stems soon lean over, root where they touch the mud and build thickets.",
+     "juvenile_note": "Tiny, dark, lens-shaped seeds float on the tide and sprout on bare wet mud. The seedling shows two small cotyledons, then opposite, bright yellow-green, fleshy, club-shaped leaves 1-2 cm long on a few pale stems; the stems then sprawl and root at the nodes, knitting a low, dense, succulent carpet.",
      "confidence": "estimated",
-     "source": "PROSEA Acanthus (continuous growth with no resting buds, non-seasonal flowering, hypogeal germination, clumps spread vegetatively); NUS Mangrove guidebook (erect to 2.5 m, spines strongest in exposed plants); growth years and stem life estimated"
+     "source": "Wikipedia (dioecious, wind-pollinated perennial subshrub 0.1-1.5 m forming dense colonies, long-lived; seeds 1.1 mm germinate after long seawater flotation; brackish marshes and mangroves); timings estimated."
     },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      70
      ],
-     "hemisphere": "equatorial",
-     "flower_days": 2,
-     "flower_size_cm": 3.5,
-     "flower_colour": "#a79bd3",
-     "flower_form": "spike",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      8,
-      24
+     "taper_exponent": 1.3,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
      ],
-     "pollinators": [
-      "bee",
-      "bird"
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.9,
+      0.8
      ],
-     "fruit_set": 0.25,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      2.5,
-      3
-     ],
-     "unripe_colour": "#5f8d3e",
-     "ripe_colour": "#8a6b42",
-     "ripen_days": [
-      25,
-      35
-     ],
-     "hang_days": [
-      1,
-      7
-     ],
-     "drop": "splits",
-     "rot_days": [
-      20,
-      60
-     ],
-     "crop_per_tree": [
-      20,
-      300
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Raju et al. 2017 Transylv Rev Syst Ecol Res 19.3 (large-bee pollination, natural fruit set <30%, fruits mature within a month, capsule splits explosively, 4 seeds); PROSEA (flowers last 2 days, sunbirds and insects, non-seasonal); Wikipedia (flowers 3-4 cm, terminal spikes to 16.5 cm, capsule 2.5-3 cm)"
-    }
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "biomes": [
+     "LAGOON",
+     "MANGROVE"
+    ]
    },
    {
     "name": "Mangrove fern",
@@ -1894,7 +1737,10 @@
      "juvenile_note": "Young sporophytes start as a few small, entire, spoon-shaped fronds on a naked prothallus in wet mud, then lobed fronds, and only later the stiff once-pinnate adult fronds with broad leathery leaflets. New fronds unfurl reddish-bronze. The plant builds a thick upright rhizome and a dense fountain-like clump of fronds up to 3-4 m.",
      "confidence": "estimated",
      "source": "'The gametophyte of Acrostichum aureum L.' (Springer; naked prothallus, juvenile leaves with entire lamina); culture studies summarised on Grokipedia (spores germinate in 4-6 d, sporophytes 89-250 d after sowing); Medina et al. 1990 (growth best in full sun); frond size from Flora descriptions"
-    }
+    },
+    "biomes": [
+     "MANGROVE"
+    ]
    },
    {
     "name": "Nipa palm",
@@ -2085,422 +1931,46 @@
      "edible": "yes",
      "confidence": "estimated",
      "source": "Wikipedia (flowers all year; globular head of female flowers with catkin-like red or yellow male branches below; pollinated by small insects incl. Drosophila flies, bees, beetles; woody fruit head to 25+ cm, up to 30 kg, breaks up into floating fibrous fruits; young seeds edible); fruit size, set and timing estimated"
-    }
-   },
-   {
-    "name": "Orange mangrove",
-    "genus": "Bruguiera",
-    "species": "gymnorhiza",
-    "origin": "Indo-West Pacific and East Africa",
-    "shape": "mangrove",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     5,
-     20
-    ],
-    "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#3F8A38",
-    "accent": "#C05A30",
-    "source": "Bruguiera gymnorhiza, large-leafed orange mangrove, knee-rooted landward mangrove of Indo-West Pacific, 5-20 m — Wikipedia",
-    "traits": {
-     "genus": "Bruguiera",
-     "species": "gymnorhiza",
-     "native_range": "Bruguiera gymnorhiza, large-leafed orange mangrove, knee-rooted landward mangrove of Indo-West Pacific, 5-20 m — Wikiped",
-     "leaf_shape": "thick glossy salt-excreting leaves",
-     "trunk": "prop roots or pneumatophores over mud",
-     "petiole": "short petiole",
-     "height_m": [
-      5,
-      20
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "mangrove",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.3,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      8,
-      20
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.35,
-     "scale_cm": 3,
-     "color": "#6A5E54",
-     "color_2": "#9A5A38",
-     "lenticels": "dots",
-     "confidence": "documented",
-     "note": "grey to dark brown, rough, fissured, with large corky lenticels on the buttresses"
-    },
-    "canopy": {
-     "form": "rounded",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.85,
-     "val": 0.8,
-     "underside": 0.3
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "excurrent",
-     "orders": 5,
-     "branch_angle_deg": [
-      60,
-      85
-     ],
-     "taper_exponent": 1.3,
-     "sinuosity": 0.25,
-     "fork_height_frac": [
-      0.3,
-      0.5
-     ],
-     "buttress": "low",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.7,
-      0.5
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.2,
-     "root_flare": true,
-     "spacing_m": 0.3,
-     "confidence": "estimated"
-    },
-    "silhouette": "tall conical crown over knee roots",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      15,
-      45
-     ],
-     "first_seed_years": 6,
-     "lifespan_years": [
-      80,
-      200
-     ],
-     "shade": "tolerant",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Viviparous: the seedling grows on the tree as a cigar-shaped green hypocotyl hanging from a red, star-lobed calyx. It drops, lodges upright in the mud, roots within weeks and unfolds pairs of glossy, leathery, elliptic leaves on a stout single stem; later, knee-like roots loop out of the mud around the young tree.",
-     "confidence": "estimated",
-     "source": "Wikipedia (7-20 m, occasionally 35 m; propagules drop, embed upright in mud and root rapidly); Tomlinson 1986 Botany of Mangroves (shade-tolerant late-successional Bruguiera, knee roots); growth, first flowering and lifespan estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 5,
-     "flower_size_cm": 3.5,
-     "flower_colour": "#c8322a",
-     "flower_form": "star",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      1
-     ],
-     "pollinators": [
-      "bird"
-     ],
-     "fruit_set": 0.1,
-     "fruit_kind": "berry",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      10,
-      25
-     ],
-     "unripe_colour": "#4f7a3a",
-     "ripe_colour": "#5d6a34",
-     "ripen_days": [
-      120,
-      210
-     ],
-     "hang_days": [
-      5,
-      30
-     ],
-     "drop": "falls",
-     "rot_days": [
-      30,
-      120
-     ],
-     "crop_per_tree": [
-      100,
-      2000
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "Wikipedia (solitary flowers with a pinkish-green to red-brown calyx and cream petals turning brown; turbinate fruit ~2 cm carrying the green cigar-shaped hypocotyl; propagules eaten after grating, washing and cooking); Tomlinson 1986 (bird pollination with explosive pollen release); timings and counts estimated."
-    }
+    "biomes": [
+     "MANGROVE"
+    ]
    }
   ],
   "ground": [
    {
-    "name": "Mangrove seedling",
-    "genus": "Rhizophora",
-    "species": "mangle",
-    "origin": "Tropical Americas and West Africa",
-    "shape": "mangrove",
+    "name": "Saltgrass",
+    "genus": "Distichlis",
+    "species": "spicata",
+    "origin": "The Americas (coasts and playas)",
+    "shape": "grass",
     "temp_c": [
-     20,
-     30
+     5,
+     28
     ],
     "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "salt_water",
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.5
-    ],
-    "color": "#5AB040",
-    "accent": "#8A6A50",
-    "source": "Rhizophora mangle propagule/seedling, planted spears on tidal mudflat — Wikipedia",
-    "traits": {
-     "genus": "Rhizophora",
-     "species": "mangle",
-     "native_range": "Rhizophora mangle propagule/seedling, planted spears on tidal mudflat — Wikipedia",
-     "leaf_shape": "thick glossy salt-excreting leaves",
-     "trunk": "prop roots or pneumatophores over mud",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      1.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "mangrove",
-    "leaf_type": "glossy",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.0,
-     "base": "cuneate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      5,
-      10
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 1,
-     "color": "#7A8A60",
-     "color_2": "#6A5A48",
-     "lenticels": "dots",
-     "confidence": "estimated",
-     "note": "seedling stem: smooth, green-grey with small lenticels (entry is the propagule stage)"
-    },
-    "canopy": {
-     "form": "columnar",
-     "gap": 0.5,
-     "layering": "sparse",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.85,
-     "val": 0.8,
-     "underside": 0.3
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "excurrent",
-     "orders": 2,
-     "branch_angle_deg": [
-      50,
-      80
-     ],
-     "taper_exponent": 1.1,
-     "sinuosity": 0.1,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 10,
-     "live_crown_ratio": [
-      0.9,
-      0.9
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.0,
-     "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "estimated"
-    },
-    "silhouette": "single thin stem with a few leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      40
-     ],
-     "height_years": [
-      8,
-      30
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      60,
-      150
-     ],
-     "shade": "intermediate",
-     "juvenile": "whip",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Viviparous: the seed sprouts on the tree and a green, pencil-like hypocotyl 20-30 cm long hangs from the brown fruit. It drops, floats (weeks, up to a year), lodges upright in mud, roots from the lower tip within days and opens a pair of glossy leaves at the top. The sapling is a single stem that soon throws down arching red-brown prop roots.",
-     "confidence": "documented",
-     "source": "Tropical Plants Database (theferns.info) Rhizophora mangle (1-1.5 m/yr on productive sites; 5-20 m, rarely 30; flowers year-round; flowering by 6 yr, even 3-5 yr at 0.5-1 m tall; propagules 8-30 cm); Wikipedia (to 24 m, commonly ~6 m; propagules may float over a year); lifespan and shade estimated"
-    },
-    "fruiting": {
-     "flower_months": [
-      1,
-      12
-     ],
-     "hemisphere": "equatorial",
-     "flower_days": 2,
-     "flower_size_cm": 2,
-     "flower_colour": "#efe3a0",
-     "flower_form": "star",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      2,
-      4
-     ],
-     "pollinators": [
-      "wind",
-      "bee",
-      "self"
-     ],
-     "fruit_set": 0.08,
-     "fruit_kind": "berry",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      15,
-      30
-     ],
-     "unripe_colour": "#8a7a45",
-     "ripe_colour": "#5a7a30",
-     "ripen_days": [
-      240,
-      400
-     ],
-     "hang_days": [
-      7,
-      60
-     ],
-     "drop": "falls",
-     "rot_days": [
-      30,
-      180
-     ],
-     "crop_per_tree": [
-      100,
-      3000
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "Tropical Plants Database (flowers all year; bees and wind; 4-7 months from fertilization to hypocotyl emergence plus 4-6 months more before it falls; propagules 8-30 cm); Wikipedia (pale yellow flowers; self or wind pollination); fruit size given for the hanging propagule; set, crop and decay estimated"
-    }
-   },
-   {
-    "name": "Saltwort",
-    "genus": "Batis",
-    "species": "maritima",
-    "origin": "Tropical Americas and Hawaii",
-    "shape": "cushion",
-    "temp_c": [
-     20,
-     30
-    ],
-    "moisture": [
-     0.5,
-     1.0
+     0.1,
+     0.6
     ],
     "height_m": [
      0.1,
-     0.5
+     0.4
     ],
-    "density": 0.5,
+    "density": 0.9,
     "soil": "sand",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#7AC060",
-    "accent": "#A0A080",
-    "source": "Batis maritima, saltwort, succulent mat on hypersaline pans behind Americas mangroves, 0.1-0.5 m — Wikipedia / USDA",
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
     "traits": {
-     "genus": "Batis",
-     "species": "maritima",
-     "native_range": "Batis maritima, saltwort, succulent mat on hypersaline pans behind Americas mangroves, 0",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
+     "genus": "Distichlis",
+     "species": "spicata",
+     "native_range": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
      "height_m": [
       0.1,
-      0.5
+      0.4
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -2509,146 +1979,212 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "leaf_type": "grass",
     "leaf": {
      "type": "simple",
      "outline": "linear",
-     "aspect": 8,
-     "base": "attenuate",
-     "apex": "obtuse",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
      "margin": "entire",
-     "venation": "none",
-     "arrangement": "opposite",
+     "venation": "parallel",
+     "arrangement": "distichous",
      "size_cm": [
-      1,
-      3
+      2,
+      10
      ],
      "compound": null,
-     "texture": "succulent",
+     "texture": "waxy_glaucous",
      "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 2,
-     "color": "#8AB060",
-     "color_2": "#A0A080",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "sprawling yellow-green succulent stems, woody at the base"
     },
     "canopy": {
      "form": "mat",
-     "gap": 0.3,
+     "gap": 0.35,
      "layering": "even",
      "droop": 0.1
     },
     "tint": {
-     "hue_shift": 8,
-     "sat": 0.9,
-     "val": 1.05,
-     "underside": 0.05
+     "hue_shift": -6,
+     "sat": 0.65,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8B878",
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "low yellow-green succulent mat",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#8A9A68",
+     "color_2": "#B0A878",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "short stiff two-ranked saltgrass turf",
     "growth": {
      "life": "perennial",
      "germination_days": [
       7,
-      21
+      30
      ],
      "height_years": [
-      1.5,
-      4
+      1,
+      3
      ],
      "first_seed_years": 1.5,
      "lifespan_years": [
       10,
-      30
+      40
      ],
      "shade": "very_intolerant",
-     "juvenile": "sprig",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Tiny, dark, lens-shaped seeds float on the tide and sprout on bare wet mud. The seedling shows two small cotyledons, then opposite, bright yellow-green, fleshy, club-shaped leaves 1-2 cm long on a few pale stems; the stems then sprawl and root at the nodes, knitting a low, dense, succulent carpet.",
-     "confidence": "estimated",
-     "source": "Wikipedia (dioecious, wind-pollinated perennial subshrub 0.1-1.5 m forming dense colonies, long-lived; seeds 1.1 mm germinate after long seawater flotation; brackish marshes and mangroves); timings estimated."
-    }
+     "juvenile_note": "Seedlings are rare (germination is episodic, needing fresh water on saline ground); the seedling is a small tuft of short, stiff, grey-green leaves in two neat opposite ranks. Scaly rhizomes then run through the soil and send up rows of short, stiff, leafy shoots, forming a dense, low turf patch; male and female plants are separate.",
+     "confidence": "documented",
+     "source": "USDA FEIS Distichlis spicata (dioecious; seeds need stratification and scarification, germination rare and episodic, seedling survival 0-95% with falling salinity; rhizomes to 180 cm long, 10-25 cm deep; 15-45 cm tall, usually <30 cm; photosynthesis rises with light). Time to flowering and clone lifespan estimated."
+    },
+    "biomes": [
+     "ESTUARY",
+     "MANGROVE",
+     "ROCKY_SHORE",
+     "SALT_FLAT",
+     "SALT_MARSH"
+    ]
    },
    {
-    "name": "Sea purslane",
-    "genus": "Sesuvium",
-    "species": "portulacastrum",
-    "origin": "Pantropical coasts worldwide",
-    "shape": "cushion",
+    "name": "Shoregrass",
+    "genus": "Distichlis",
+    "species": "littoralis",
+    "origin": "Gulf and Caribbean coasts",
+    "family": "Poaceae",
+    "shape": "grass",
     "temp_c": [
-     20,
+     18,
      30
     ],
     "moisture": [
-     0.4,
-     1.0
+     0.3,
+     0.9
+    ],
+    "biomes": [
+     "MANGROVE"
     ],
     "height_m": [
      0.05,
-     0.3
+     0.2
     ],
-    "density": 0.5,
+    "density": 0.8,
     "soil": "sand",
     "needs": [
      "salt_water"
     ],
-    "color": "#5AB040",
-    "accent": "#E05A9A",
-    "source": "Sesuvium portulacastrum, shoreline sea purslane, pantropical succulent creeper on mangrove mud and sand, prostrate — Wikipedia",
-    "traits": {
-     "genus": "Sesuvium",
-     "species": "portulacastrum",
-     "native_range": "Sesuvium portulacastrum, shoreline sea purslane, pantropical succulent creeper on mangrove mud and sand, prostrate — Wik",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.05,
-      0.3
+    "color": "#8A9A78",
+    "accent": "#A87A5A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "height_years": [
+      0.3,
+      1
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a tiny tuft of short, stiff, needle-like grey-green leaves. It soon throws out wiry stolons that run over the bare salt flat and root at every node, each node carrying a little cluster of the same short, sharp leaves, until the plant knits a low, springy, grey-green mat that reddens in drought.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 25 (as Monanthochloe littoralis: stoloniferous mat-forming dioecious perennial, culms 3-20 cm, blades 3-10 mm, subulate, glaucous, clustered at the nodes; coastal salt flats and marsh edges, Florida and Texas to the Caribbean and Mexico); timings estimated."
     },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "dioecious; spreads mostly by rooting stolons; flowers hidden among the leaf clusters"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Distichlis littoralis (syn. Monanthochloe littoralis), shoregrass: low wiry stoloniferous mat grass of hypersaline flats behind mangroves, Gulf of Mexico and Caribbean, 5-20 cm — Flora of North America vol. 25; Bell & Columbus 2008 (transfer to Distichlis); Odum et al. 1982 (salt flats of the Florida mangrove margin). Kew POWO accepted name Distichlis littoralis.",
     "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#8a9a78",
+      "underside": "#8a9a78",
+      "gloss": 0.1,
+      "veins": "parallel",
+      "vein_colour": "#7a8a68",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       1.2
+      ],
+      "notes": "very short, stiff, sharp, grey-green leaves in clusters along wiry runners; reddish when stressed"
+     },
+     "flower": {
+      "colour": "#b0a080",
+      "secondary": "#8a7a60",
+      "form": "single tiny spikelets hidden among the leaf clusters",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; reddens in summer drought",
+     "silhouette": "a low wiry grey-green mat on bare salt flat",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25; USDA PLANTS"
+    },
     "leaf": {
      "type": "simple",
-     "outline": "obovate",
-     "aspect": 4.0,
-     "base": "attenuate",
-     "apex": "obtuse",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
      "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
+     "venation": "parallel",
+     "arrangement": "distichous",
      "size_cm": [
-      1.5,
-      6
+      0.3,
+      1.2
      ],
      "compound": null,
-     "texture": "succulent",
+     "texture": "waxy_glaucous",
      "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 3,
-     "color": "#8A6A5A",
-     "color_2": "#C86A78",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "succulent prostrate stems, green flushed pink-red, rooting at the nodes"
     },
     "canopy": {
      "form": "mat",
@@ -2657,37 +2193,186 @@
      "droop": 0.0
     },
     "tint": {
-     "hue_shift": 2,
-     "sat": 0.9,
-     "val": 1.0,
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.95,
      "underside": 0.05
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat succulent mat with pink stems",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#7A8A68",
+     "color_2": "#A08A6A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "wiry pale stolons rooting at the nodes"
+    },
+    "silhouette": "low wiry grey-green grass mat on salt flat"
+   },
+   {
+    "name": "Seashore paspalum",
+    "genus": "Paspalum",
+    "species": "vaginatum",
+    "origin": "Tropical and warm coasts worldwide",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5A9A48",
+    "accent": "#8A7A50",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      5,
-      15
+      7,
+      21
      ],
      "height_years": [
       0.3,
-      1.0
+      1
      ],
-     "first_seed_years": 0.5,
+     "first_seed_years": 1,
      "lifespan_years": [
-      3,
-      10
+      5,
+      30
      ],
-     "shade": "very_intolerant",
-     "juvenile": "mat",
+     "shade": "intolerant",
+     "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedling with 2 small fleshy cotyledons, then opposite, thick, glossy, finger-shaped leaves on a reddish stem. The stems creep over sand or mud and root at every node, quickly making a spreading succulent mat that is often reddish in full sun, with small pink star-shaped flowers.",
+     "juvenile_note": "Seed is set sparingly and most new plants are rooted runner tips. A young plant is a small tuft of flat, two-ranked, dark green blades; long stolons and rhizomes then creep over wet sand and mud, rooting at the nodes, and turn it into a dense, bright-green turf with paired, finger-like flower spikes standing just above the leaves.",
      "confidence": "estimated",
-     "source": "Flora of N America and PROSEA/Useful Tropical Plants Sesuvium portulacastrum (creeping succulent perennial of tropical beaches and salt flats, rooting at nodes, flowering within the first season, mostly spreading vegetatively); timings estimated"
-    }
+     "source": "Flora of North America vol. 25 (Paspalum vaginatum: rhizomatous and stoloniferous perennial, culms 10-79 cm, blades 2-15 cm x 2-8 mm, racemes usually 2, paired; brackish shores, tidal flats and ditches); timings estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spreads by stolons and rhizomes; seed set is low"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Paspalum vaginatum, seashore paspalum: creeping salt-tolerant turf grass of brackish shores, lagoon edges, tidal flats and mangrove fringes on warm coasts worldwide, 10-50 cm — Flora of North America vol. 25; Duncan & Carrow 2000 (Seashore Paspalum: The Environmental Turfgrass). Kew POWO for the name.",
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#4f8f3e",
+      "underside": "#68a058",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4a8038",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       15
+      ],
+      "notes": "flat or folded dark green blades in two ranks on creeping, rooting runners"
+     },
+     "flower": {
+      "colour": "#a89a68",
+      "secondary": "#6a5a3a",
+      "form": "two slender spikes 2-7 cm, paired in a V at the top of the culm",
+      "scent": "none"
+     },
+     "seasonal": "evergreen in the tropics; browns in a cool winter",
+     "silhouette": "a dense low bright green turf with paired V spikes",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 25; USDA PLANTS"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      3,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#5A8A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "creeping stolons with sheathed nodes, rooting where they touch"
+    },
+    "silhouette": "dense low bright green turf with paired V spikes",
+    "biomes": [
+     "LAGOON",
+     "MANGROVE"
+    ]
    },
    {
     "name": "Smooth cordgrass",
@@ -2806,339 +2491,177 @@
      "juvenile_note": "Seedling: one soft shoot with flat, tapering, bright-green leaves; it tillers within weeks and sends out rhizomes, reaching ~15 cm in 3-4 months. The same species as Spartina alterniflora (current name). Each culm lives about a year, but the rhizome clone spreads up to 3 m a season and persists for decades.",
      "confidence": "documented",
      "source": "USDA FEIS Spartina alterniflora (germinates Apr-Jun, flowers Jun-Oct, 0.4-2.5 m, shoots die back in autumn); USDA NRCS Cape May PMC Plant Guide (most seed germinates in 7-10 d after 1-4 months cold-wet storage; ~15 cm in 3-4 months; 2.5-3 m lateral spread per season; cover in 2-3 seasons)"
-    }
+    },
+    "biomes": [
+     "MANGROVE",
+     "SHELF_SEA"
+    ]
    },
    {
-    "name": "Turtle grass",
-    "genus": "Thalassia",
-    "species": "testudinum",
-    "origin": "Caribbean and Gulf of Mexico",
-    "shape": "reed",
+    "name": "Mustard yellow polypore",
+    "genus": "Fuscoporia",
+    "species": "gilva",
+    "origin": "Warm temperate and tropical, worldwide",
+    "kingdom": "Fungi",
+    "family": "Hymenochaetaceae",
+    "shape": "rosette",
     "temp_c": [
-     22,
+     12,
      30
     ],
     "moisture": [
-     1.0,
-     1.0
+     0.4,
+     0.95
+    ],
+    "biomes": [
+     "MANGROVE"
     ],
     "height_m": [
-     0.2,
-     0.6
+     0.03,
+     0.12
     ],
-    "density": 0.4,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0.5,
-     10
-    ],
-    "color": "#5AB040",
-    "accent": "#3F8A38",
-    "source": "Thalassia testudinum, turtle grass, seagrass meadow seaward of Caribbean/Gulf mangroves, 0.2-0.6 m blades — Wikipedia (underwater)",
-    "traits": {
-     "genus": "Thalassia",
-     "species": "testudinum",
-     "native_range": "Thalassia testudinum, turtle grass, seagrass meadow seaward of Caribbean/Gulf mangroves, 0",
-     "leaf_shape": "tall strap leaves",
-     "trunk": "hollow stems rising from water",
-     "petiole": "sheath",
-     "height_m": [
-      0.2,
-      0.6
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A5A2A",
+    "accent": "#D8A830",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      10
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "fruit_season": "any",
+     "decay_rate": 0.5
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 30,
-     "base": "truncate",
-     "apex": "rounded",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "distichous",
-     "size_cm": [
-      15,
-      50
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       2
+      ],
+      [
+       "button",
+       4
+      ],
+      [
+       "cap",
+       10
+      ],
+      [
+       "spent",
+       6
+      ]
      ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and rots the dead wood for years (a white rot); the brackets are annual or live a few seasons. 'rhizome' here = the mycelium spreading through the wood; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Fuscoporia gilva (syn. Phellinus gilvus), mustard yellow polypore: sessile rusty-brown brackets 2-12 cm with a bright yellow growing margin, in rows on dead hardwood; white rot; one of the commonest polypores of warm-temperate and tropical America and pantropical — Gilbertson & Ryvarden 1987 North American Polypores; Index Fungorum for the name. On the dead trunks and stumps of coastal and mangrove-margin trees (estimated).",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a5424",
+      "secondary": "#d8a830",
+      "form": "thin to thick sessile shelves, often fused side by side in rows",
+      "size_cm": [
+       2,
+       12
+      ],
+      "texture": "velvety",
+      "gloss": 0.15,
+      "notes": "rusty to yellow-brown upper surface, finely hairy to rough, with a bright mustard-yellow margin while growing"
+     },
+     "underside": {
+      "colour": "#6a4424",
+      "type": "pores tiny, brown"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "rows of overlapping brackets on dead hardwood",
+     "seasonal": "fruits after rains, brackets persist a season or more",
+     "silhouette": "rusty shelves with yellow rims on a dead trunk",
+     "confidence": "documented",
+     "refs": "Gilbertson & Ryvarden 1987 North American Polypores; Kuo, MushroomExpert (Phellinus gilvus)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
      "compound": null,
-     "texture": "matte",
      "confidence": "documented"
     },
-    "bark": {
-     "pattern": "none",
-     "confidence": "documented",
-     "note": "submerged; short vertical shoots from a buried rhizome"
-    },
     "canopy": {
-     "form": "tussock",
-     "gap": 0.4,
-     "layering": "even",
-     "droop": 0.6
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
     },
     "tint": {
-     "hue_shift": -2,
-     "sat": 0.85,
+     "hue_shift": 0,
+     "sat": 0.7,
      "val": 0.85,
-     "underside": 0.05
+     "underside": 0.0
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "submerged ribbon meadow",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      1,
-      10
-     ],
-     "height_years": [
-      0.7,
-      2.5
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      5,
-      15
-     ],
-     "shade": "intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seeds about 1 cm long are released when the ripe fruit splits and root within days on the sandy bottom. The seedling is a short shoot of 2-5 flat, bright-green ribbon leaves with rounded tips, anchored by a few thick roots; it grows a buried rhizome and after a year or two starts sending up new leaf shoots, spreading into a patch.",
-     "confidence": "estimated",
-     "source": "Wikipedia Thalassia testudinum (leaves to 30 cm x 2 cm; rhizomes 5-10 cm deep; flowers Apr-Jul; fruit 20-25 mm with 1-6 seeds, splitting after ~8 weeks; low-tide mark to 30 m). Seed germination without dormancy, shoot lifespan (up to ~10-15 yr by leaf-scar ageing) and seedling-to-flowering time estimated from seagrass literature."
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
   "epiphyte": [
-   {
-    "name": "Ant plant",
-    "genus": "Myrmecodia",
-    "species": "beccarii",
-    "origin": "Queensland, Australia",
-    "shape": "epiphyte_clump",
-    "temp_c": [
-     23,
-     30
-    ],
-    "moisture": [
-     0.65,
-     1.0
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.2,
-    "soil": "thin",
-    "color": "#5AA040",
-    "accent": "#8A7A60",
-    "source": "Myrmecodia beccarii, ant-house plant, tuberous epiphyte on Queensland mangrove trunks — Wikipedia",
-    "traits": {
-     "genus": "Myrmecodia",
-     "species": "beccarii",
-     "native_range": "Myrmecodia beccarii, ant-house plant, tuberous epiphyte on Queensland mangrove trunks — Wikipedia",
-     "leaf_shape": "strap or rosette leaves in a clump on a branch",
-     "trunk": "none — roots grip bark",
-     "petiole": "short",
-     "height_m": [
-      0.1,
-      0.4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "frond",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.5,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "opposite",
-     "size_cm": [
-      5,
-      15
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "spiny",
-     "orientation": "none",
-     "depth": 0.5,
-     "scale_cm": 1,
-     "color": "#8A7A66",
-     "color_2": "#5A4A3A",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "swollen grey-brown tuber studded with spines"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.3,
-     "layering": "sparse",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.85,
-     "val": 0.85,
-     "underside": 0.2
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "silhouette": "spiny tuber with a few leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      3,
-      8
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      40
-     ],
-     "shade": "intermediate",
-     "juvenile": "globe",
-     "juvenile_leaves": "same",
-     "juvenile_note": "The germinating seed's hypocotyl swells at once into a tiny ball that roots onto spongy paperbark, topped by a pair of leaves. The ball grows into a knobbly, spiny, grey-brown caudex honeycombed inside with smooth and warted chambers that golden ants move into; a short thick stem on top carries a tuft of leathery leaves and tiny white tubular flowers and translucent white berries.",
-     "confidence": "estimated",
-     "source": "Wikipedia Myrmecodia beccarii (epiphyte on Melaleuca and other spongy-barked trees in N Queensland wetlands and mangroves; prickly swollen caudex with hollows housing Philidris ants; white tubular flowers to 10 mm, white translucent one-seeded fruit); growth rates and ages estimated from ant-plant cultivation"
-    }
-   },
-   {
-    "name": "Mangrove bromeliad",
-    "genus": "Tillandsia",
-    "species": "utriculata",
-    "origin": "Florida, Caribbean and Central America",
-    "shape": "epiphyte_clump",
-    "temp_c": [
-     20,
-     28
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#8AA860",
-    "accent": "#B0B0A0",
-    "source": "Tillandsia utriculata, giant air plant, epiphyte on black/red mangrove branches in Florida and Caribbean — Wikipedia",
-    "traits": {
-     "genus": "Tillandsia",
-     "species": "utriculata",
-     "native_range": "Tillandsia utriculata, giant air plant, epiphyte on black/red mangrove branches in Florida and Caribbean — Wikipedia",
-     "leaf_shape": "strap or rosette leaves in a clump on a branch",
-     "trunk": "none — roots grip bark",
-     "petiole": "short",
-     "height_m": [
-      0.3,
-      1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "succulent",
-    "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 10,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "spiral",
-     "size_cm": [
-      30,
-      100
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 5,
-     "color": "#9AA880",
-     "color_2": "#B8785A",
-     "lenticels": "none",
-     "confidence": "estimated",
-     "note": "stemless tank rosette; tall red-tinged flower spike"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.35,
-     "layering": "even",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": -6,
-     "sat": 0.55,
-     "val": 1.05,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "silhouette": "grey-green tank rosette on a branch",
-    "growth": {
-     "life": "monocarpic",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      4,
-      9
-     ],
-     "first_seed_years": 10,
-     "lifespan_years": [
-      10,
-      15
-     ],
-     "shade": "intermediate",
-     "juvenile": "rosette",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Seedlings are tiny, silvery, grass-like tufts that hold no water. Over years the leaf bases widen into a big open tank rosette up to about 1 m across of broad, pale-green, often purple-tinged leaves; it flowers once on a branched stalk up to ~2 m tall with small white flowers, sets thousands of plumed seeds and then dies without making pups.",
-     "confidence": "estimated",
-     "source": "Wikipedia Tillandsia utriculata (largest Florida tank bromeliad, holding up to a litre of water; devastated by the Mexican bromeliad weevil); Florida bromeliad accounts (monocarpic, no offsets, reproduces only by seed; tall branched inflorescence with white flowers). Growth and age at flowering estimated."
-    }
-   },
    {
     "name": "Mangrove orchid",
     "genus": "Dendrobium",
@@ -3246,7 +2769,10 @@
      "juvenile_note": "Dust-like seed lodges in bark and, with a fungal partner, swells into a tiny green protocorm that sprouts roots and a first leaf over months. The young plant is a small tuft of thin stems with two ranks of short, fleshy, oblong leaves; stems thicken into pseudobulbs at the base and lengthen each year into a clump of cane-like stems, the older ones leafless and flowering.",
      "confidence": "estimated",
      "source": "Wikipedia Dendrobium crumenatum (sympodial epiphyte; stems 30-70 cm, swollen at lower nodes; leaves in two ranks; exposed lowland forest and coastal scrub; flowers 9 days after a >5.5 C temperature drop, all at once, lasting one day). Seedling timings and lifespan estimated from Dendrobium culture."
-    }
+    },
+    "biomes": [
+     "MANGROVE"
+    ]
    },
    {
     "name": "Strangler fig",
@@ -3266,6 +2792,9 @@
     "altitude_m": [
      0,
      300
+    ],
+    "biomes": [
+     "MANGROVE"
     ],
     "height_m": [
      15.0,
@@ -3474,6 +3003,169 @@
      "confidence": "documented",
      "source": "Wikipedia (Ficus aurea: figs in pairs, 0.6-1.2 cm, green turning yellow; pollinated by Pegoscapus mexicanus; trees flower and fruit asynchronously all year; figs ripe 1-5 days after the wasps emerge; eaten by pigeons, quetzals, toucanets, howler monkeys). Crop and ripening time estimated."
     }
+   },
+   {
+    "name": "Octoblepharum moss",
+    "genus": "Octoblepharum",
+    "species": "albidum",
+    "origin": "Pantropical",
+    "family": "Octoblepharaceae",
+    "shape": "moss",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.005,
+     0.03
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#C0D0A8",
+    "accent": "#A05A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores and broken leaf tips start a thin green film on bark; from it rise tiny upright shoots of thick, tongue-shaped, whitish leaves. These pack into small, pale, whitish-green cushions a centimetre or two high on tree trunks and palm stems, later dotted with short reddish capsules.",
+     "confidence": "estimated",
+     "source": "Bryophyte Flora of North America (Octoblepharum albidum: whitish-green tufts or cushions to 2 cm; leaves lingulate, fleshy, brittle, of large hyaline cells around a few green ones; on bark of trees and palms and on rotten wood; Florida, Mexico, West Indies, pantropical); Gradstein et al. 2001 Guide to the Bryophytes of Tropical America; growth timings estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind; brittle leaf tips break off and start new cushions; no flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Octoblepharum albidum, a whitish cushion moss on tree trunks and palm stems in lowland and coastal tropical forest, Florida, the Caribbean, Africa and Asia, cushions 1-3 cm — Bryophyte Flora of North America; Gradstein et al. 2001. Its occurrence on mangrove and coastal trunks is estimated from that habitat.",
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#c4d4ac",
+      "underside": "#d8e0c8",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#c4d4ac",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       0.8
+      ],
+      "notes": "thick, fleshy, tongue-shaped leaves, whitish to pale grey-green, packed in small rounded cushions"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       3
+      ],
+      "texture": "cushion"
+     },
+     "fruit": {
+      "colour": "#a05a3a",
+      "form": "short upright reddish capsules on red stalks"
+     },
+     "seasonal": "pale whitish when dry, greener wet",
+     "silhouette": "small whitish cushions on trunks and palm stems",
+     "confidence": "documented",
+     "refs": "Bryophyte Flora of North America; Gradstein et al. 2001"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 5.0,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.8
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.4,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small whitish moss cushions on bark",
+    "biomes": [
+     "MANGROVE",
+     "TROPICAL_RAINFOREST"
+    ]
    }
   ]
  },
@@ -3486,13 +3178,9 @@
     "Red mangrove"
    ],
    "companion": [
-    "Mangrove orchid",
-    "Mangrove bromeliad"
+    "Mangrove orchid"
    ],
-   "ground": [
-    "Mangrove seedling",
-    "Turtle grass"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.8,
    "source": "Lugo & Snedaker 1974 fringe and riverine mangroves; Tomlinson 1986 Botany of Mangroves"
@@ -3508,11 +3196,7 @@
    "companion": [
     "Buttonwood"
    ],
-   "ground": [
-    "Saltwort",
-    "Sea purslane",
-    "Mangrove seedling"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.7,
    "source": "Lugo & Snedaker 1974 basin mangroves; Odum et al. 1982 Ecology of the Mangroves of South Florida"
@@ -3526,19 +3210,13 @@
    ],
    "where": "sheltered estuaries and deltas of the Indo-West Pacific, seaward stilt-root belt grading landward",
    "dominant": [
-    "Asian stilt mangrove",
     "Orange mangrove"
    ],
    "companion": [
-    "Grey mangrove",
-    "Mangrove apple",
-    "Holly mangrove",
-    "Ant plant",
+    "Black mangrove",
     "Mangrove orchid"
    ],
-   "ground": [
-    "Mangrove seedling"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.85,
    "source": "Watson 1928 Mangrove Forests of the Malay Peninsula; Tomlinson 1986; Duke 2006 Australia's Mangroves"
@@ -3551,13 +3229,10 @@
    ],
    "where": "newly accreting mudflats and open river mouths, deep daily flooding",
    "dominant": [
-    "Mangrove apple",
-    "Grey mangrove"
+    "Black mangrove"
    ],
    "companion": [],
-   "ground": [
-    "Mangrove seedling"
-   ],
+   "ground": [],
    "catalogue": [],
    "cover": 0.5,
    "source": "Watson 1928; Sundarbans and Bangladesh delta accretion zones (Chaffey et al. 1985)"
@@ -3573,8 +3248,7 @@
     "Nipa palm"
    ],
    "companion": [
-    "Mangrove fern",
-    "Holly mangrove"
+    "Mangrove fern"
    ],
    "ground": [],
    "catalogue": [
@@ -3590,10 +3264,13 @@
    "dominant": [
     "Buttonwood"
    ],
-   "companion": [],
-   "ground": [
+   "companion": [
     "Saltwort",
-    "Sea purslane"
+    "Sea oxeye"
+   ],
+   "ground": [
+    "Saltgrass",
+    "Shoregrass"
    ],
    "catalogue": [],
    "cover": 0.3,
@@ -3610,8 +3287,7 @@
     "Black mangrove"
    ],
    "ground": [
-    "Smooth cordgrass",
-    "Saltwort"
+    "Smooth cordgrass"
    ],
    "catalogue": [],
    "cover": 0.5,

@@ -206,195 +206,10 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA Woody Plant Seed Manual Salix table (S. arctica flowers July, ripens Aug-Sept); Flora of N America (large erect female catkins 2-6 cm, reddish, hairy capsules); Arctic willows pollinated by flies and bumblebees plus wind; fruit set, crop and rot estimated (slow decay in cold soils)"
-    }
-   },
-   {
-    "name": "Bog bilberry",
-    "genus": "Vaccinium",
-    "species": "uliginosum",
-    "origin": "Circumpolar Arctic and boreal",
-    "shape": "shrub",
-    "temp_c": [
-     -12,
-     4
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "height_m": [
-     0.1,
-     0.6
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#4A8A5A",
-    "accent": "#6A3A6A",
-    "source": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
-    "traits": {
-     "genus": "Vaccinium",
-     "species": "uliginosum",
-     "native_range": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.1,
-      0.6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 1.8,
-     "base": "cuneate",
-     "apex": "rounded",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      1,
-      3
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.3,
-     "autumn": "#b8442e",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 14.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 1,
-     "color": "#6E5A48",
-     "color_2": "#8A6A48",
-     "lenticels": "none",
-     "confidence": "estimated"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "shrub",
-     "orders": 3,
-     "branch_angle_deg": [
-      20,
-      45
-     ],
-     "taper_exponent": 1.8,
-     "sinuosity": 0.4,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.2,
-     "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "estimated"
-    },
-    "silhouette": "low blue-green twiggy mound, knee-high at most",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      42
-     ],
-     "height_years": [
-      4,
-      12
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      25,
-      100
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny epigeal seedling with rounded cotyledons, then small, oval, untoothed, blue-green leaves on a thin brownish stem. Growth is slow: the young plant is a low, stiff, much-branched twiggy tuft of round, rather thick, blue-grey leaves that fall in autumn, later spreading by rhizomes and layering into a low mat.",
-     "confidence": "estimated",
-     "source": "USDA FEIS (Vaccinium uliginosum): usually 20-40 cm, germination improved by 30 days cold at 2 C and poor below 15 C, seed short-lived, rhizomes to 20 cm deep, grows for 50-60 years after fire. Seedling growth, first fruiting and stem ages estimated from arctic shrub studies and the genus."
-    },
-    "fruiting": {
-     "flower_months": [
-      6,
-      7
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 0.5,
-     "flower_colour": "#f2d6dc",
-     "flower_form": "bell",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      4
-     ],
-     "pollinators": [
-      "bumblebee",
-      "fly",
-      "bee"
-     ],
-     "fruit_set": 0.4,
-     "fruit_kind": "berry",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      0.6,
-      1.0
-     ],
-     "unripe_colour": "#9cb070",
-     "ripe_colour": "#3d4f7c",
-     "ripen_days": [
-      50,
-      75
-     ],
-     "hang_days": [
-      10,
-      40
-     ],
-     "drop": "falls",
-     "rot_days": [
-      7,
-      25
-     ],
-     "crop_per_tree": [
-      20,
-      300
-     ],
-     "edible": "yes",
-     "confidence": "documented",
-     "source": "USDA FEIS (Vaccinium uliginosum): white to pink flowers singly or in clusters at stem ends, June to early July; blue to black berries ripen late July-Sept and are eaten heavily by bears Jul-Sep. Pollinators (bumblebees, flies), berry size, fruit set, hang and rot times and crop estimated."
-    }
+    "biomes": [
+     "TUNDRA"
+    ]
    },
    {
     "name": "Crowberry",
@@ -574,7 +389,10 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "Wikipedia (flowers 3-6 mm, greenish-pink sepals turning reddish-purple, May-June; pollinated by generalist insects and wind; fruit 4-6 mm, black, ~7.8 seeds, persists through winter; edible, eaten fresh or in jams); USDA FEIS (ripe Aug-late fall). Fruit set and crop estimated."
-    }
+    },
+    "biomes": [
+     "TUNDRA"
+    ]
    },
    {
     "name": "Dwarf birch",
@@ -760,43 +578,52 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA FEIS (monoecious, wind-pollinated, self-incompatible; female catkins in flower early June; male catkins 10-25 mm, female 6-10 mm; seeds ripen in August and disperse from late summer to the next spring, blowing over snow); Wikipedia (fruiting catkins 5-15 mm); counts are catkins, estimated."
-    }
-   }
-  ],
-  "ground": [
+    },
+    "biomes": [
+     "TUNDRA"
+    ]
+   },
    {
-    "name": "Arctic annuals",
-    "genus": "Papaver",
-    "species": "radicatum",
-    "origin": "Circumpolar high Arctic",
-    "shape": "cushion",
+    "name": "Net-leaved willow",
+    "genus": "Salix",
+    "species": "reticulata",
+    "origin": "Circumpolar Arctic-alpine",
+    "shape": "shrub",
     "temp_c": [
-     -15,
-     0
+     -10,
+     2
     ],
     "moisture": [
-     0.2,
-     0.6
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     3200
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "TUNDRA"
     ],
     "height_m": [
-     0.05,
-     0.25
+     0.02,
+     0.08
     ],
-    "density": 0.3,
+    "density": 0.4,
     "soil": "thin",
-    "color": "#5A9A50",
-    "accent": "#F0D040",
-    "source": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
+    "color": "#3A7A3A",
+    "accent": "#8A6A4A",
+    "source": "Salix reticulata, circumpolar Arctic-alpine calcareous ground, prostrate rounded net-veined leaves",
     "traits": {
-     "genus": "Papaver",
-     "species": "radicatum",
-     "native_range": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
+     "genus": "Salix",
+     "species": "reticulata",
+     "native_range": "Salix reticulata, circumpolar Arctic-alpine calcareous ground, prostrate rounded net-veined leaves",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
      "height_m": [
-      0.05,
-      0.25
+      0.02,
+      0.08
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -804,276 +631,86 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "pinnate_lobed",
-     "lobes": 5,
-     "aspect": 1.8,
-     "base": "attenuate",
-     "apex": "obtuse",
-     "margin": "lobed",
+     "outline": "orbicular",
+     "aspect": 1.3,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
      "venation": "pinnate",
-     "arrangement": "basal",
+     "arrangement": "alternate",
      "size_cm": [
       1.5,
       4
      ],
      "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.75,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#a08a48",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 0.5,
-     "color": "#6A8A50",
-     "color_2": "#8A7A50",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "hairy leaf tuft with nodding yellow cups",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      30
-     ],
-     "height_years": [
-      2,
-      5
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      5,
-      15
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings: two tiny cotyledons, then a small tuft of hairy, grey-green, deeply lobed leaves. Over a few years it becomes a dense tuft on a stout taproot, wrapped in old leaf bases, from which leafless, bristly stalks rise carrying single yellow (sometimes white) cup flowers that follow the sun.",
-     "confidence": "estimated",
-     "source": "Estimated from Arctic poppy ecology (short-lived, tufted, taprooted perennial of high-Arctic gravels with heliotropic cup flowers) and alpine Papaver cultivation; a perennial, not an annual, despite the batch's common name"
-    }
-   },
-   {
-    "name": "Arctic cottongrass",
-    "genus": "Eriophorum",
-    "species": "scheuchzeri",
-    "origin": "Circumpolar Arctic",
-    "shape": "tussock",
-    "temp_c": [
-     -15,
-     2
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#6AA850",
-    "accent": "#F4F2E8",
-    "source": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
-    "traits": {
-     "genus": "Eriophorum",
-     "species": "scheuchzeri",
-     "native_range": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.1,
-      0.4
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      5,
-      20
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "tussock",
-     "gap": 0.5,
-     "layering": "even",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.9,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#b8905a"
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 1,
-     "color": "#6A9A48",
-     "color_2": "#A08A50",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "grassy tuft topped with white cotton puffs",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      2,
-      6
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      5,
-      15
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny grass-like seedling with a thread-like first leaf on wet moss or mud; becomes a small tuft of narrow channelled leaves, then sends out slender rhizomes so single upright shoots pop up around it, forming a loose colony rather than a tussock. Each flowering shoot carries one round white cotton ball.",
-     "confidence": "estimated",
-     "source": "Estimated from Eriophorum biology: USDA FEIS (E. vaginatum: germination within ~20 days in light, first flowering ~3 yr, tillers live 3-15 yr); Arctic seed germination trials (Polar Biology 2013); Flora of the Canadian Arctic Archipelago (rhizomatous, single spikelet)."
-    }
-   },
-   {
-    "name": "Entire-leaf mountain avens",
-    "genus": "Dryas",
-    "species": "integrifolia",
-    "origin": "Arctic North America and Greenland",
-    "shape": "cushion",
-    "temp_c": [
-     -15,
-     0
-    ],
-    "moisture": [
-     0.2,
-     0.7
-    ],
-    "height_m": [
-     0.03,
-     0.1
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "color": "#3A7A35",
-    "accent": "#F8F8F0",
-    "source": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
-    "traits": {
-     "genus": "Dryas",
-     "species": "integrifolia",
-     "native_range": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.03,
-      0.1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "simple",
-     "outline": "ovate",
-     "aspect": 3.0,
-     "base": "rounded",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      0.5,
-      2.5
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
+     "texture": "glossy",
      "confidence": "documented"
     },
     "canopy": {
      "form": "mat",
-     "gap": 0.2,
-     "layering": "even",
-     "droop": 0.0
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": -4,
-     "sat": 0.85,
+     "hue_shift": -3,
+     "sat": 0.9,
      "val": 0.8,
-     "underside": 0.6
+     "underside": 0.5,
+     "autumn": "#d4b03a",
+     "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "leaf_drop"
     },
     "bark": {
-     "pattern": "stringy",
+     "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.3,
+     "depth": 0.1,
      "scale_cm": 0.5,
-     "color": "#5A4636",
-     "color_2": "#8A7458",
+     "color": "#6E5A48",
+     "color_2": "#8A7A5A",
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat evergreen mat spangled with white flowers",
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "ground-hugging mat of round net-veined leaves",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      7,
-      30
+      2,
+      7
      ],
      "height_years": [
       15,
@@ -1081,91 +718,100 @@
      ],
      "first_seed_years": 8,
      "lifespan_years": [
-      80,
-      200
+      50,
+      150
      ],
-     "shade": "very_intolerant",
+     "shade": "intolerant",
      "juvenile": "mat",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: two tiny round cotyledons, then small leathery, narrow, entire (untoothed) leaves, dark green above and white-felted beneath, with rolled edges. The seedling is a single tiny woody stem hugging the gravel that branches horizontally and roots along the ground, slowly spreading into a flat evergreen mat studded with upward-facing white flowers.",
+     "juvenile_note": "Seedling minute with two round cotyledons; first leaves small, round and dark green. Stems creep on or just under the ground and root, forming a flat mat; each short shoot carries 2-4 round, leathery leaves with a deeply sunken net of veins (whitish below) and, later, slender long-stalked catkins standing upright above the mat.",
      "confidence": "estimated",
-     "source": "Wikipedia Dryas integrifolia (prostrate mat 10-17 cm tall, stems branching along the ground; up to 11 white to cream petals; heliotropic flowers that warm insects; achenes with plumed styles to 2.5 cm; pioneer of Arctic tundra, river gravels and scree). Mat growth rate, first flowering and age estimated from Dryas studies."
+     "source": "Wikipedia/Flora of N America Salix reticulata (to 8 cm tall, exposed stems to 20 cm, mats 30 cm+ broad; slender yellow catkins tipped pink in spring); USDA Woody Plant Seed Manual Salix (fast germination); spread rate, first seed and lifespan estimated for an arctic-alpine dwarf shrub"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#c9866e",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8e9e5c",
+     "ripe_colour": "#a86e56",
+     "ripen_days": [
+      35,
+      55
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of N America Salix reticulata (slender long-stalked catkins after the leaves, yellow tipped pink, females reddish; hairy capsules); insect plus wind pollination as in other arctic willows; ripening, set and crop estimated"
     }
-   },
+   }
+  ],
+  "ground": [
    {
     "name": "Reindeer lichen",
     "genus": "Cladonia",
     "species": "rangiferina",
     "origin": "Circumboreal and Arctic",
-    "shape": "moss",
+    "family": "Cladoniaceae",
+    "shape": "cushion",
     "temp_c": [
-     -15,
-     5
+     -12,
+     8
     ],
     "moisture": [
-     0.2,
-     0.8
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "TUNDRA"
     ],
     "height_m": [
      0.03,
-     0.12
+     0.1
     ],
-    "density": 0.9,
+    "density": 1.0,
     "soil": "thin",
-    "color": "#C8D8C0",
-    "accent": "#A8B8A0",
-    "source": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
-    "traits": {
-     "genus": "Cladonia",
-     "species": "rangiferina",
-     "native_range": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
-     "leaf_shape": "tiny leaves on thread stems",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.03,
-      0.12
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
-    "leaf": {
-     "type": "none",
-     "venation": "none",
-     "compound": null,
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.35,
-     "layering": "even",
-     "droop": 0.05
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 0.35,
-     "val": 1.3,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#C8D8C0",
-     "color_2": "#A8B8A0",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "pale grey-white spongy lichen carpet",
+    "needs": [],
+    "color": "#C8D0C0",
+    "accent": "#C8D0C0",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -1187,6 +833,123 @@
      "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. The young thallus is a scatter of tiny grey stalks that branch in threes and fours, tips all bending one way; over decades they build a springy ash-grey mat up to ~10 cm deep, dying at the base while growing at the tips.",
      "confidence": "documented",
      "source": "Wikipedia Cladonia rangiferina (grows 3-11 mm/yr, 3.9-4.4 mm/yr in Finland; mats to ~10 cm, ~12 cm in humid, 4-6 cm in dry sites; can establish ~2 yr after fire but takes decades to recover; individual lives ~20-30 yr; faster growth in shadier forests)"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tundra and open taiga; grey-white mats the caribou dig for in winter; grows millimetres a year. Index Fungorum.",
+    "cannot_be_browsed": false,
+    "traits": {
+     "genus": "Cladonia",
+     "species": "rangiferina",
+     "native_range": "Tundra and open taiga",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#d8dcc8",
+      "underside": "#b8c0a8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#d8dcc8",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "pale grey-white densely branched shrubby tufts, branches curved to one side, in spongy mats"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "grey-white spongy mats among dwarf shrubs",
+     "confidence": "documented",
+     "refs": "Wikipedia Cladonia rangiferina, Brodo Lichens of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1295,41 +1058,424 @@
      "juvenile_note": "A spore germinates into a tiny flat green plate (thalloid protonema) that buds leafy shoots within weeks to months. The young colony is a small, very dense cushion of rusty-brown to reddish, tightly packed capitula that grows 0.7-2 cm taller a year and slowly builds a firm hummock; hummocks can be centuries old.",
      "confidence": "documented",
      "source": "Bengtsson et al. 2016 Ecol. Evol. (PMC4833502): S. fuscum length growth 7-20 mm/yr; Heck et al. 2020 bioRxiv (Sphagnum spores form protonemal filaments after 2-20 weeks); hummock-building and sporophyte timing estimated"
-    }
+    },
+    "biomes": [
+     "TAIGA",
+     "TUNDRA"
+    ]
    },
    {
-    "name": "Tundra sedge",
-    "genus": "Carex",
-    "species": "aquatilis",
-    "origin": "Circumpolar Arctic and boreal",
-    "shape": "grass",
+    "name": "Stair-step moss",
+    "genus": "Hylocomium",
+    "species": "splendens",
+    "origin": "Circumboreal (northern hemisphere)",
+    "family": "Hylocomiaceae",
+    "shape": "moss",
     "temp_c": [
-     -15,
-     2
+     -6,
+     14
     ],
     "moisture": [
      0.6,
-     1
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "TUNDRA"
     ],
     "height_m": [
-     0.2,
-     0.8
+     0.05,
+     0.15
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A8A3A",
+    "accent": "#7A5A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants are small loose wefts of red-stemmed, feathery, olive to golden-green fronds creeping over humus, logs or rock. Each year a new frond arches up from the middle of last year's, so a shoot becomes a staircase of flat, fern-like steps, one per year, the oldest dying brown underneath. A deep carpet rebuilds only slowly after fire, once a canopy has closed.",
+     "confidence": "documented",
+     "source": "Trees for Life (new segment each year from the centre of the previous one, segments live up to ~8 yr, sporophytes uncommon, slow recolonisation after fire, shade-loving); Wikipedia (one step per year used to age shoots). Lifespan is for the patch; spore-to-plant time and first capsule age estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Boreal and temperate rainforest; one storey per year, so its age is readable. Kew POWO.",
+    "traits": {
+     "genus": "Hylocomium",
+     "species": "splendens",
+     "native_range": "Boreal and temperate rainforest",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#7ab848",
+      "underside": "#c8a860",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "glossy green fern-like fronds in annual tiers; each year's growth a new storey; red-brown stems"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       15
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "layered glossy green carpet in old forest",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#a84a3a",
+      "markings": "#a84a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-brown wiry stem"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Lava moss",
+    "genus": "Racomitrium",
+    "species": "lanuginosum",
+    "origin": "Worldwide, cold and montane regions",
+    "family": "Grimmiaceae",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     12
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "TUNDRA",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.02,
+     0.1
     ],
     "density": 1.0,
-    "soil": "wet",
-    "color": "#5AA045",
-    "accent": "#A08A50",
-    "source": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#A0B090",
+    "accent": "#A0B090",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      100,
+      500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Mostly starts from broken shoot fragments (sporophytes are rare): a small tuft of wiry shoots whose narrow leaves end in long, toothed, white hair-points, so the patch looks hoary grey when dry and olive-green when wet. Shoots branch and creep outward, piling up into a springy, woolly carpet 5-15 cm deep over lava, boulders and heath; lower parts die brown.",
+     "confidence": "estimated",
+     "source": "Wikipedia Racomitrium lanuginosum (stems to 12 cm; leaves 3-5 mm with toothed white hair-points; sporophytes rarely produced; capsules 1-1.7 mm); growth (roughly 0.5-1.5 cm of shoot a year) and carpet age estimated from bryological knowledge of Icelandic lava fields and upland heaths"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Iceland's lava fields and every cold rock; grey woolly mats that hide the ground. Kew POWO.",
     "traits": {
-     "genus": "Carex",
-     "species": "aquatilis",
-     "native_range": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
+     "genus": "Racomitrium",
+     "species": "lanuginosum",
+     "native_range": "Iceland's lava fields and every cold rock",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#a8b8a0",
+      "underside": "#e8ece8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#a8b8a0",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "thick woolly grey-white mats, leaves with long white hair-points; olive-green when wet"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "grey-white dry, olive-green wet",
+     "silhouette": "grey woolly blanket over lava and rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Tufted hairgrass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "origin": "Circumboreal (Holarctic)",
+    "shape": "tussock",
+    "temp_c": [
+     -5,
+     12
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "biomes": [
+     "ALPINE_MEADOW",
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#6AB050",
+    "accent": "#C8B060",
+    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Deschampsia",
+     "species": "cespitosa",
+     "native_range": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
      "petiole": "sheath",
      "height_m": [
-      0.2,
-      0.8
+      0.3,
+      1.2
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1349,11 +1495,429 @@
      "venation": "parallel",
      "arrangement": "basal",
      "size_cm": [
-      20,
-      60
+      10,
+      40
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#c8b060",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A50",
+     "color_2": "#A09060",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "dense green tussock with airy seed haze",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
+   },
+   {
+    "name": "Common cottongrass",
+    "genus": "Eriophorum",
+    "species": "angustifolium",
+    "origin": "Circumboreal (Holarctic)",
+    "family": "Cyperaceae",
+    "shape": "grass",
+    "temp_c": [
+     -15,
+     10
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2700
+    ],
+    "biomes": [
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "till",
+      "alluvium"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5E8A3A",
+    "accent": "#F4F2EA",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a small tuft of narrow, channelled, grass-like leaves on wet peat or mud. It soon sends out long creeping rhizomes, so the plant becomes a loose sward of single shoots rather than a tussock; from its second or third summer each flowering stem carries 3-7 drooping spikelets that burst into white cotton tufts.",
+     "confidence": "estimated",
+     "source": "Flora of North America Eriophorum angustifolium (rhizomatous, not tussock-forming; culms 20-70 cm; 3-7 nodding spikelets; bristles bright white, to 4 cm). Germination, first flowering and clone age estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Eriophorum angustifolium, common cottongrass: circumboreal wet tundra, fens and thaw-pond margins; a creeping sedge 20-60 cm with 3-7 nodding white cotton heads per stem. Kew POWO; Flora of North America; Walker et al. 2005 CAVM (wet sedge tundra).",
+    "traits": {
+     "genus": "Eriophorum",
+     "species": "angustifolium",
+     "native_range": "circumboreal wet tundra, fens and thaw-pond margins",
+     "leaf_shape": "narrow channelled sedge leaves",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "fast (one to three years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#5e8a3a",
+      "underside": "#6a9448",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#5e8a3a",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       40
+      ],
+      "notes": "long narrow channelled leaves tapering to a three-sided tip; tips redden early"
+     },
+     "flower": {
+      "colour": "#f4f2ea",
+      "secondary": "#6a5a3a",
+      "form": "3-7 drooping spikelets per stem that burst into white silky bristle heads 2-4 cm long",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; white cotton heads June-August; leaves turn red-brown in autumn",
+     "silhouette": "loose sward of thin stems with nodding white cotton tufts",
+     "confidence": "documented",
+     "refs": "Flora of North America; Wikipedia Eriophorum angustifolium"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#a0442e",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#5E8A3A",
+     "color_2": "#7A6A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Arctic bluegrass",
+    "genus": "Poa",
+    "species": "arctica",
+    "origin": "Circumpolar Arctic and alpine",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     -16,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     3800
+    ],
+    "biomes": [
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "till",
+      "clay_peat",
+      "granite",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5A8A50",
+    "accent": "#7A5A8A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling is a few soft, flat, bright green blades with the boat-shaped tips of all bluegrasses. It tillers and runs by short rhizomes into a loose, low tuft or small sod; flowering stems rise 10-40 cm with an open, pyramid-shaped panicle of purple-tinged spikelets.",
+     "confidence": "estimated",
+     "source": "Flora of North America Poa arctica (loosely tufted to sod-forming, rhizomatous; culms 10-40 cm; panicle open, pyramidal; spikelets often purplish). Germination, first flowering and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Poa arctica, arctic bluegrass: circumpolar arctic tundra and alpine meadows, moist to mesic ground; loosely tufted, rhizomatous, culms 10-40 cm with an open purplish panicle. Kew POWO; Flora of North America.",
+    "traits": {
+     "genus": "Poa",
+     "species": "arctica",
+     "native_range": "circumpolar arctic tundra and alpine meadows",
+     "leaf_shape": "soft flat blades with boat-shaped tips",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (one to three years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#5a8a50",
+      "underside": "#6a9a5a",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#5a8a50",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       12
+      ],
+      "notes": "short soft flat leaves 2-4 mm wide with hooded boat-shaped tips"
+     },
+     "flower": {
+      "colour": "#7a5a8a",
+      "secondary": "#c8b878",
+      "form": "open pyramidal panicle 3-10 cm of small purple-tinged spikelets",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; panicles purple then straw; leaves yellow in autumn",
+     "silhouette": "low loose tuft with airy purplish panicles",
+     "confidence": "documented",
+     "refs": "Flora of North America; Flora of the Canadian Arctic Archipelago"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
      "confidence": "documented"
     },
     "canopy": {
@@ -1363,47 +1927,797 @@
      "droop": 0.3
     },
     "tint": {
-     "hue_shift": -6,
-     "sat": 0.75,
-     "val": 1.0,
-     "underside": 0.15,
-     "autumn": "#b09a58"
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#b0a060",
+     "drop": false
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "long_day",
+     "threshold_h": 16,
+     "response": "flower"
     },
     "bark": {
      "pattern": "green_stem",
      "orientation": "none",
-     "depth": 0.2,
+     "depth": 0.15,
      "scale_cm": 1,
-     "color": "#6A9A50",
-     "color_2": "#8A5A40",
+     "color": "#5A8A50",
+     "color_2": "#8A6A8A",
      "lenticels": "none",
-     "confidence": "documented"
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Polar grass",
+    "genus": "Arctagrostis",
+    "species": "latifolia",
+    "origin": "Circumpolar Arctic and subarctic",
+    "family": "Poaceae",
+    "shape": "grass",
+    "temp_c": [
+     -15,
+     4
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "biomes": [
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "alluvium",
+      "till"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.15,
+     "salinity": "none"
     },
-    "silhouette": "blue-green sedge sward in wet ground",
+    "needs": [],
+    "color": "#4E8040",
+    "accent": "#7A4A4A",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      10,
-      40
+      7,
+      30
      ],
      "height_years": [
       1,
       3
      ],
-     "first_seed_years": 3,
+     "first_seed_years": 2,
      "lifespan_years": [
-      4,
-      10
+      10,
+      30
      ],
      "shade": "intolerant",
      "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "A tiny grass-like tuft of narrow, keeled, blue-green leaves; in its first season the seedling already makes tillers and short rhizomes. Colonies then spread by long rhizomes into dense stands of upright leafy shoots in shallow water and wet tundra; only a few percent of shoots ever send up a flowering culm.",
+     "juvenile_note": "A seedling is a small tuft of comparatively broad, flat, bright green leaves. Creeping rhizomes spread it into loose patches; flowering stems rise 20-80 cm with a narrow to spreading panicle of small, purplish-brown, one-flowered spikelets. It is one of the first grasses to colonise disturbed wet tundra.",
+     "confidence": "estimated",
+     "source": "Flora of North America Arctagrostis latifolia (rhizomatous; culms 20-100 cm; leaves flat, 4-10 mm wide; panicle purplish; wet tundra, disturbed ground). Germination, first flowering and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Arctagrostis latifolia, polar grass: circumpolar wet and moist tundra, sedge meadows and disturbed ground; rhizomatous, culms 20-80 cm, broad flat leaves and a purplish panicle. Kew POWO; Flora of North America.",
+    "traits": {
+     "genus": "Arctagrostis",
+     "species": "latifolia",
+     "native_range": "circumpolar wet and moist tundra",
+     "leaf_shape": "broad flat grass blades",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "fast (one to three years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "grass",
+      "colour": "#4e8040",
+      "underside": "#5e9050",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#4e8040",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       20
+      ],
+      "notes": "flat leaves 4-10 mm wide, broad for an arctic grass, bright to dark green"
+     },
+     "flower": {
+      "colour": "#7a4a4a",
+      "secondary": "#b8a070",
+      "form": "narrow to spreading panicle 5-15 cm of small purplish-brown spikelets",
+      "scent": "none"
+     },
+     "seasonal": "green in summer; panicle purplish-brown; straw-coloured in autumn",
+     "silhouette": "loose patch of broad-leaved stems with dusky purple panicles",
      "confidence": "documented",
-     "source": "USDA FEIS Carex aquatilis (shoots live 4-10 years, only 6-9% of shoots flower, seedlings form rhizomes and tillers in their first season, germination 12-78% after cold storage, culms 50-100 cm, shade intolerant); Carex germination times from Schutz 2000 review"
+     "refs": "Flora of North America; Flora of the Canadian Arctic Archipelago"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.1,
+     "autumn": "#b89a5a",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 16,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#4E8040",
+     "color_2": "#7A5A50",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Arctic peat moss",
+    "genus": "Sphagnum",
+    "species": "arcticum",
+    "origin": "Circumpolar Arctic",
+    "family": "Sphagnaceae",
+    "shape": "moss",
+    "temp_c": [
+     -16,
+     0
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "biomes": [
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.03,
+     0.15
+    ],
+    "density": 0.9,
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "till",
+      "alluvium"
+     ],
+     "drainage": "poor",
+     "ph": "neutral",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#7A5A2E",
+    "accent": "#A07A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots; most new colonies start from broken shoot fragments. The shoots end in a flat-topped head (capitulum) of short crowded branches that turns golden to dark brown in the open, and the colony builds low brown hummocks a few millimetres a year in wet tundra fens.",
+     "confidence": "estimated",
+     "source": "Flora of North America Sphagnum arcticum (moderately robust; flat-topped capitulum golden brown, brown or dark brown; low hummocks in weakly to moderately minerotrophic fens; all collections north of 59 N in wet or moist tundra). Growth rate and ages estimated from arctic Sphagnum."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sphagnum arcticum Flatberg & Frisvoll, arctic peat moss: circumpolar wet and moist tundra (Alaska, Yukon, Quebec, Svalbard, arctic Russia), low dark-brown hummocks in minerotrophic fens. Flora of North America; Flatberg & Frisvoll 1984.",
+    "peat_maker": true,
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "arcticum",
+     "native_range": "circumpolar wet and moist tundra",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.15
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#7a5a2e",
+      "underside": "#a08a50",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7a5a2e",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat-topped heads of short crowded branches, golden brown to dark brown, sometimes mottled green"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       15
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "brown all summer; darker and wetter-looking after rain",
+     "silhouette": "low dark-brown moss hummocks in wet tundra",
+     "confidence": "estimated",
+     "refs": "Flora of North America; Flatberg 2013 Norwegian Sphagna"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.11,
+      0.21
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 34,
+     "sat": 0.7,
+     "val": 0.7,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Iceland moss",
+    "genus": "Cetraria",
+    "species": "islandica",
+    "origin": "Circumboreal, Arctic and alpine",
+    "family": "Parmeliaceae",
+    "shape": "cushion",
+    "temp_c": [
+     -14,
+     10
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "biomes": [
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#8A6A3A",
+    "accent": "#D8D0B8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: new tufts grow from broken lobes carried by wind, water and grazing reindeer. A young thallus is a few small, erect, channelled brown lobes; over years they lengthen and fork into a loose tuft of stiff, ribbon-like, olive- to chestnut-brown lobes with tiny spines along the edges, growing a few millimetres a year among dwarf shrubs.",
+     "confidence": "estimated",
+     "source": "Brodo, Sharnoff & Sharnoff 2001 Lichens of North America (Cetraria islandica: erect, channelled lobes 3-10 cm, brown, margins with short spinules, white pseudocyphellae beneath); growth a few mm per year as in other tundra mat lichens; ages estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water",
+      "mammal"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "a lichen: spreads mainly by broken lobes (trampling, grazing, wind); no flowers"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cetraria islandica, Iceland moss (a lichen, not a moss): circumboreal heath, tundra and alpine grassland; tufts of erect, channelled, olive- to chestnut-brown lobes 3-10 cm with spiny margins among dwarf shrubs; reindeer forage. Brodo et al. 2001; Index Fungorum.",
+    "traits": {
+     "genus": "Cetraria",
+     "species": "islandica",
+     "native_range": "circumboreal heath, tundra and alpine grassland",
+     "leaf_shape": "erect channelled lobes",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by fragments",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#8a6a3a",
+      "underside": "#c8c0a0",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#8a6a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "loose tufts of stiff, ribbon-like, channelled lobes, olive-brown to chestnut, paler and white-flecked beneath, edges fringed with tiny spines"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen; greener when wet, brown and crisp when dry",
+     "silhouette": "brown crinkled lichen tufts among dwarf shrubs",
+     "confidence": "documented",
+     "refs": "Brodo et al. 2001 Lichens of North America; Wikipedia Cetraria islandica"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 36,
+     "sat": 0.6,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Tundra puffball",
+    "genus": "Lycoperdon",
+    "species": "cretaceum",
+    "origin": "Circumpolar Arctic-alpine",
+    "kingdom": "Fungi",
+    "family": "Lycoperdaceae",
+    "shape": "rosette",
+    "temp_c": [
+     -14,
+     4
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "TUNDRA"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.15,
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "karst",
+      "sand"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.05,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#F2F0E8",
+    "accent": "#8A7A5A",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.2
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Lycoperdon cretaceum Berk. (syn. Calvatia cretacea), arctic puffball: circumpolar arctic-alpine, most frequent in the Arctic with scattered records in the Alps and Rockies; small chalk-white puffballs on bare soil, among moss and dwarf shrubs in tundra and fellfield. Index Fungorum; Larsson & Jeppson 2008; IUCN Red List (Lycoperdon cretaceum).",
+    "traits": {
+     "genus": "Lycoperdon",
+     "species": "cretaceum",
+     "native_range": "circumpolar arctic-alpine tundra and fellfield",
+     "leaf_shape": "none",
+     "trunk": "none — stemless",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "spores; mycelium in the soil",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f2f0e8",
+      "secondary": "#9a8a6a",
+      "form": "small round to pear-shaped puffball 1-4 cm with a short pinched base, no cap or gills",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "chalky-warty",
+      "gloss": 0.1,
+      "notes": "chalk-white outer skin of tiny pointed warts that rub off; ages grey-brown, opens by a pore at the top and puffs olive-brown spores"
+     },
+     "underside": {
+      "colour": "#e8e0d0",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#e8e0d0",
+      "height_cm": [
+       0,
+       1
+      ]
+     },
+     "habit": "single or scattered on bare soil, among moss and dwarf shrubs",
+     "seasonal": "fruits in late summer; the papery case lingers into winter",
+     "silhouette": "small chalk-white balls on the tundra floor",
+     "confidence": "estimated",
+     "refs": "Index Fungorum; Larsson & Jeppson 2008 (Lycoperdaceae); Funga Nordica"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -1418,12 +2732,12 @@
    ],
    "where": "moist flat lowland over permafrost, peaty soil",
    "dominant": [
-    "Arctic cottongrass",
-    "Tundra sedge"
+    "Common cottongrass",
+    "Polar grass"
    ],
    "companion": [
     "Dwarf birch",
-    "Bog bilberry"
+    "Net-leaved willow"
    ],
    "ground": [
     "Rusty bog-moss",
@@ -1445,12 +2759,12 @@
     "Crowberry"
    ],
    "companion": [
-    "Bog bilberry",
+    "Net-leaved willow",
     "Arctic willow"
    ],
    "ground": [
     "Reindeer lichen",
-    "Tundra sedge"
+    "Iceland moss"
    ],
    "catalogue": [],
    "cover": 0.6,
@@ -1464,14 +2778,11 @@
    ],
    "where": "exposed windswept ridges and gravel, dry thin soil",
    "dominant": [
-    "Entire-leaf mountain avens"
-   ],
-   "companion": [
     "Arctic willow"
    ],
+   "companion": [],
    "ground": [
-    "Reindeer lichen",
-    "Arctic annuals"
+    "Reindeer lichen"
    ],
    "catalogue": [],
    "cover": 0.3,
@@ -1485,13 +2796,14 @@
    ],
    "where": "low basins, thaw-pond margins and drained lake beds with standing water",
    "dominant": [
-    "Tundra sedge"
+    "Common cottongrass"
    ],
    "companion": [
     "Arctic willow"
    ],
    "ground": [
-    "Arctic cottongrass",
+    "Polar grass",
+    "Arctic peat moss",
     "Rusty bog-moss"
    ],
    "catalogue": [],
@@ -1512,8 +2824,7 @@
     "Dwarf birch"
    ],
    "ground": [
-    "Tundra sedge",
-    "Arctic annuals"
+    "Tufted hairgrass"
    ],
    "catalogue": [],
    "cover": 0.5,

@@ -1,0 +1,3180 @@
+{
+ "key": "TROPICAL_RAINFOREST",
+ "name": "Tropical rainforest",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [
+   {
+    "name": "Tualang",
+    "genus": "Koompassia",
+    "species": "excelsa",
+    "origin": "Malay Peninsula, Sumatra and Borneo",
+    "shape": "emergent",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     45,
+     80
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#3F8A38",
+    "accent": "#B0A090",
+    "source": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — Wikipedia",
+    "traits": {
+     "genus": "Koompassia",
+     "species": "excelsa",
+     "native_range": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — W",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      45,
+      80
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       5,
+       9
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 2.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 10,
+     "color": "#B8B4A8",
+     "color_2": "#8E8A7E",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.6,
+      0.8
+     ],
+     "buttress": "high",
+     "lean_max_deg": 3,
+     "live_crown_ratio": [
+      0.35,
+      0.25
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 2.0,
+     "confidence": "documented"
+    },
+    "silhouette": "pale smooth giant with wide spreading top",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      40,
+      150
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      250,
+      600
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedlings with two leafy cotyledons, then pinnate leaves of a few glossy, alternate leaflets. Saplings are slim whips with smooth pale bark that race upward in gaps; the huge plank buttresses and the smooth, pale grey-white bole of the emergent giant come only after decades, once the crown breaks through the canopy.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Koompassia excelsa: to 85-88 m, among the tallest tropical trees; giant honey bees hang combs from its branches); growth, age and germination estimated from Koompassia and other light-demanding Malesian emergents."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#f2eedc",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      100,
+      1000
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.02,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#8aa05a",
+     "ripe_colour": "#a88a5a",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      200
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from genus Koompassia: tiny whitish flowers in large terminal panicles during supra-annual general-flowering years, thin flat papery one-seeded wind-dispersed pods; no species-specific phenology data found."
+    }
+   },
+   {
+    "name": "Yellow meranti",
+    "genus": "Shorea",
+    "species": "faguetiana",
+    "origin": "Borneo and Malay Peninsula",
+    "shape": "emergent",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     40,
+     90
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sandstone",
+      "granite",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#2F7A35",
+    "accent": "#7A6A50",
+    "source": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / Nature 2019",
+    "traits": {
+     "genus": "Shorea",
+     "species": "faguetiana",
+     "native_range": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / ",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      40,
+      90
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 4,
+     "color": "#7A6E5E",
+     "color_2": "#A8904E",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      70
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.6,
+      0.8
+     ],
+     "buttress": "low",
+     "lean_max_deg": 3,
+     "live_crown_ratio": [
+      0.4,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 2.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "towering straight bole, rounded emergent crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      45,
+      180
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      250,
+      600
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The winged nut germinates within days of falling (no dormancy), raising 2 fleshy cotyledons; the seedling is a thin stem with small glossy leathery leaves. Seedlings wait for decades as a seedling bank in deep forest shade, then shoot up as slender whips in a gap; the tree later becomes a huge emergent with a buttressed pale trunk and a broad cauliflower crown.",
+     "confidence": "estimated",
+     "source": "Wikipedia Shorea (Richetia) faguetiana (tallest tropical tree, 'Menara' in Danum Valley ~98-100 m; Borneo, Malay Peninsula, Thailand); PROSEA 5(1) dipterocarps (recalcitrant seed germinating in days, supra-annual mast flowering, yellow meranti relatively shade tolerant, slow); growth curve, first seed and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f1e7b8",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      150
+     ],
+     "pollinators": [
+      "beetle",
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      6,
+      10
+     ],
+     "unripe_colour": "#a9b25e",
+     "ripe_colour": "#8d6844",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "PROSEA and Appanah/Ashton on Shorea: flowers only in general (mast) flowering years every 2-10 yr, small cream flowers open one night in big panicles, pollinated by thrips and small beetles (thrips not a listed guild); nut with 3 long and 2 short wings ripens ~3-4 months later and spins down; very low fruit set; crop estimated"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Assai palm",
+    "genus": "Euterpe",
+    "species": "precatoria",
+    "origin": "Amazon Basin and Central America",
+    "shape": "palm",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
+    "color": "#3F8A38",
+    "accent": "#8A7A60",
+    "source": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipedia",
+    "traits": {
+     "genus": "Euterpe",
+     "species": "precatoria",
+     "native_range": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipe",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "palm",
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      350
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       90,
+       190
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 10,
+     "color": "#8A8A80",
+     "color_2": "#66665C",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.15,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "documented"
+    },
+    "silhouette": "slender grey pole with drooping feather fronds",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      12,
+      30
+     ],
+     "trunk_years": 3,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      90
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "First come a few bladeless sheaths, then a small bifid (two-lobed) eophyll, then leaves with only 2 pinnae per side. For a few years a stemless tuft of arching pinnate leaves persists on the forest floor; then a single slim smooth grey trunk rises on a cone of reddish stilt roots, topped by a green crownshaft and drooping leaflets.",
+     "confidence": "documented",
+     "source": "Embrapa Rondonia/'Plantas para o Futuro' (germination 30-60 d; first fruit 4-5 yr after planting) and Palmpedia seedling-leaf notes, as cited by an earlier research pass; Palmpedia (stems to 20 m, 4-23 cm thick); Useful Tropical Plants (young plants prefer shade). Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#7d4f73",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      5000,
+      20000
+     ],
+     "pollinators": [
+      "beetle",
+      "stingless_bee",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.9,
+      1.3
+     ],
+     "unripe_colour": "#4c7a3a",
+     "ripe_colour": "#2a1a2e",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      8000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Palmpedia (inflorescence rachis 20-94 cm with many rachillae; staminate flowers 3.5-5 mm, pistillate 2.5-4.5 mm; fruit globose 0.9-1.3 cm, black); Wikipedia (E. oleracea: panicles of 500-900 fruits, two harvests a year). Phenology, pollinators and counts estimated."
+    }
+   },
+   {
+    "name": "Limba",
+    "genus": "Terminalia",
+    "species": "superba",
+    "origin": "West and Central Africa",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#8A8A78",
+    "source": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Terminalia",
+     "species": "superba",
+     "native_range": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikiped",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      30,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      14
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#c8a848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#8A8478",
+     "color_2": "#B8A060",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "aubreville",
+     "habit": "umbrella",
+     "orders": 4,
+     "branch_angle_deg": [
+      85,
+      100
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.15,
+     "fork_height_frac": null,
+     "buttress": "low",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.7,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 2.0,
+     "confidence": "documented"
+    },
+    "silhouette": "straight trunk with pagoda tiers of branches",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      56
+     ],
+     "height_years": [
+      13,
+      45
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      120,
+      250
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two broad, leafy cotyledons, then alternate, obovate, glossy leaves crowded at the stem tips. The sapling is a fast single leader that throws out tiers of horizontal branches in whorls, giving a pagoda-like look; later a tall, straight bole with thin plank buttresses and a flat, spreading crown, bare in the dry season.",
+     "confidence": "estimated",
+     "source": "ICRAF Agroforestree (Terminalia superba: to 50 m, buttresses to 6 m; sexual maturity at ~15 yr in Cote d'Ivoire, 23 yr in Congo, 6-10 yr in plantations; rotation ~40 yr; stored seed 40-60% germination); Wikipedia (to 60 m, deciduous Nov-Feb). Height-age curve of this fast pioneer (~1.5 m/yr when young) estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#ebe9cf",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      40,
+      120
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle",
+      "butterfly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      4,
+      7
+     ],
+     "unripe_colour": "#9fb86c",
+     "ripe_colour": "#b48d4f",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (laxly flowered spikes 7-18 cm; flowering lasts 2-5 weeks; visited by beetles, flies, bugs, bees and butterflies; two-winged fruit 1.5-2.5 x 4-7 cm with a golden-brown nut ~1.5 x 2 cm; 8,000-10,000 fruits/kg); Wikipedia (small whitish flowers at the end of the dry season). Ripening and crop estimated."
+    }
+   },
+   {
+    "name": "Rattan palm",
+    "genus": "Calamus",
+    "species": "manan",
+    "origin": "Malay Peninsula and Sumatra",
+    "shape": "liana",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#5AB040",
+    "accent": "#8A8A50",
+    "source": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+    "traits": {
+     "genus": "Calamus",
+     "species": "manan",
+     "native_range": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      300,
+      600
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       100
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 20.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 2,
+     "color": "#8A9A50",
+     "color_2": "#4A3A28",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 1,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 2.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "spiny climbing cane trailing through canopy",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      70
+     ],
+     "height_years": [
+      12,
+      20
+     ],
+     "trunk_years": 3,
+     "first_seed_years": 12,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seeds sprout in 1-2 months; the first leaf is a bifid 'fishtail' eophyll, followed by a slowly enlarging rosette of pinnate leaves on very spiny sheaths. After 2-3 years the single stem begins to elongate, and the thick cane climbs by long whip-like leaf tips armed with backward hooks, shedding its lower leaves.",
+     "confidence": "estimated",
+     "source": "Wikipedia (solitary, dioecious, cane to 8 cm thick and over 100 m long, grows 1-3 m a year, up to 7 m/yr in Sabah; fruit to 2.8 x 2 cm with 15 rows of yellowish scales); PROSEA-style rattan culture for germination and rosette stage; first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      8
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e8dfb8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      200,
+      2000
+     ],
+     "pollinators": [
+      "bee",
+      "beetle",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      2.8
+     ],
+     "unripe_colour": "#8a8a52",
+     "ripe_colour": "#c2a061",
+     "ripen_days": [
+      270,
+      365
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious; fruit rounded to ovoid, to 2.8 x 2 cm, covered in 15 rows of yellowish scales with blackish-brown margins); rattan fruits take ~1 yr to ripen and their sour sarcotesta is eaten; phenology and counts estimated."
+    }
+   },
+   {
+    "name": "Red meranti",
+    "genus": "Shorea",
+    "species": "leprosula",
+    "origin": "Malay Peninsula, Sumatra and Borneo",
+    "shape": "broadleaf",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.9,
+    "soil": {
+     "classes": [
+      "sandstone",
+      "granite",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#2F7A35",
+    "accent": "#5A3A2E",
+    "source": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN",
+    "traits": {
+     "genus": "Shorea",
+     "species": "leprosula",
+     "native_range": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      30,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.6,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      14
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6E6458",
+     "color_2": "#8A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      70
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.55,
+      0.75
+     ],
+     "buttress": "low",
+     "lean_max_deg": 3,
+     "live_crown_ratio": [
+      0.4,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.8,
+     "confidence": "estimated"
+    },
+    "silhouette": "tall rounded crown on straight fissured bole",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      18,
+      70
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The winged nut germinates within days (no dormancy) with 2 fleshy cotyledons; seedling a thin stem with small, leathery lance-shaped leaves whose undersides are dull, scaly-brown ('leprous'). Waits as a seedling bank under the canopy but needs a gap (60-100% light) to grow; then it rockets up as a slender whip 1 m+ a year, one of the fastest dipterocarps for its first 20 years.",
+     "confidence": "documented",
+     "source": "Wikipedia Rubroshorea (Shorea) leprosula (to 60 m x 100 cm; fastest-growing dipterocarp to ~20 yr; seedlings need 60-73% and saplings 74-100% relative light); PROSEA 5(1) light red meranti (recalcitrant seed, mast fruiting); Appanah & Chan 1981 (thrips pollination); first seed and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f2e2c4",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      200
+     ],
+     "pollinators": [
+      "beetle",
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      7,
+      11
+     ],
+     "unripe_colour": "#b8766a",
+     "ripe_colour": "#9a6a45",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Appanah & Chan 1981 (S. leprosula flowers open at dusk for one night and are pollinated by thrips breeding in the buds; chrysomelid beetles also visit); PROSEA 5(1) (mast flowering at 2-10 yr intervals, winged nuts ~3-4 months after flowering, 3 long wings ~8-10 cm); fruit set and crop estimated"
+    }
+   },
+   {
+    "name": "Sapucaia",
+    "genus": "Lecythis",
+    "species": "pisonis",
+    "origin": "Brazil",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#3F8A38",
+    "accent": "#6A5A48",
+    "source": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Lecythis",
+     "species": "pisonis",
+     "native_range": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      35
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.6,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      14
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#b8a050",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6A6058",
+     "color_2": "#463C34",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      55,
+      85
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.4,
+      0.6
+     ],
+     "buttress": "low",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.6,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "broad rounded crown, pink new flush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      50
+     ],
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The big seed sends up a sturdy shoot with glossy, finely toothed, oblong leaves; like the adult, every new flush opens pink to purplish before turning green. Saplings are slim whips with a narrow crown; much later the tree forms a tall straight trunk and a broad crown that turns pink with new leaves just as the purple flowers open.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lecythis pisonis: ~30 m, Brazilian Atlantic forest, leaves flush pink, flowers Sep-Oct); germination, growth, first-fruit age and lifespan estimated from Lecythidaceae and Brazilian nursery descriptions."
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 1,
+     "flower_size_cm": 6,
+     "flower_colour": "#a0509a",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      8,
+      20
+     ],
+     "unripe_colour": "#6f7a4a",
+     "ripe_colour": "#6a4a2e",
+     "ripen_days": [
+      330,
+      365
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      365,
+      1500
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (purple, occasionally white, six-petalled flowers with a golden stamen boss, attractive to bees; woody pot-shaped fruit 6-15 cm long, 8.5-30 cm wide, lid bursts open when ripe after 11-12 months; seeds to 5 cm, edible raw or cooked). One-day flowers, set, crop, hang and rot estimated."
+    }
+   },
+   {
+    "name": "Strangler fig",
+    "genus": "Ficus",
+    "species": "aurea",
+    "origin": "Florida and the Caribbean",
+    "shape": "gnarled",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "karst",
+      "alluvium",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#3F8A38",
+    "accent": "#9A9A88",
+    "source": "Ficus aurea, Florida/Caribbean strangler fig; Ficus lianes typical of all tropical rainforests, 15-30 m on host trees — Wikipedia",
+    "traits": {
+     "genus": "Ficus",
+     "species": "aurea",
+     "native_range": "Ficus aurea, Florida/Caribbean strangler fig",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.9,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#A09C90",
+     "color_2": "#84806F",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "high",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "documented"
+    },
+    "silhouette": "wide dome on latticework of aerial roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Usually starts as a bird-dropped seed in a palm boot or branch fork: a tiny leafy shrublet perched on the host, with glossy oval leaves, that sends thin aerial roots down the trunk. Once they reach soil the roots thicken and fuse into a lattice that strangles the host; it can also start on the ground or on rocks as a normal sapling.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Ficus aurea: hemiepiphytic strangler to 30 m that germinates in the host canopy; fast-growing). Germination, ages and lifespan estimated from Ficus."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7fa04c",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      2
+     ],
+     "pollinators": [
+      "fig_wasp"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "fig",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#6e9a40",
+     "ripe_colour": "#e2b42c",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      1,
+      7
+     ],
+     "drop": "falls",
+     "rot_days": [
+      3,
+      14
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (Ficus aurea: figs in pairs, 0.6-1.2 cm, green turning yellow; pollinated by Pegoscapus mexicanus; trees flower and fruit asynchronously all year; figs ripe 1-5 days after the wasps emerge; eaten by pigeons, quetzals, toucanets, howler monkeys). Crop and ripening time estimated."
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Aframomum ginger",
+    "genus": "Aframomum",
+    "species": "melegueta",
+    "origin": "West Africa",
+    "shape": "shrub",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#5AB040",
+    "accent": "#E04A5A",
+    "source": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2.5 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Aframomum",
+     "species": "melegueta",
+     "native_range": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5.0,
+     "base": "attenuate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      35
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "clump of arching leafy cane stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a single thin leafy shoot with two rows of narrow, glossy, bamboo-like leaves. A creeping rhizome soon sends up more shoots, so the young plant becomes a small clump of reed-like stems 1-2 m tall. Flowers and fruits arise separately at ground level, straight from the rhizome.",
+     "confidence": "estimated",
+     "source": "Wikipedia (herbaceous perennial of swampy West African coastal forest; narrow bamboo-like leaves on scarred stems); growth, first fruiting and clump life estimated from Aframomum/Zingiberaceae cultivation accounts (PROTA)"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      6
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 6,
+     "flower_colour": "#c77daa",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      7
+     ],
+     "unripe_colour": "#6d8f3a",
+     "ripe_colour": "#d8452a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      10,
+      60
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (trumpet-shaped purple flowers with an orange lip and pinkish upper part; fleshy pods 5-7 cm holding many small golden red-brown seeds, the spice); one-day flowers, carpenter-bee pollination, ripening and crop estimated from related Aframomum"
+    }
+   },
+   {
+    "name": "Giant bamboo",
+    "genus": "Dendrocalamus",
+    "species": "giganteus",
+    "origin": "Myanmar and Thailand",
+    "shape": "bamboo",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dendrocalamus",
+     "species": "giganteus",
+     "native_range": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 35,
+     "color": "#7A9A60",
+     "color_2": "#C8C8A8",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 2,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "huge clump of thick arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      25
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 100,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      10,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a grassy tuft of thin leafy shoots. Each rainy season the young clump sends up stouter culms than the year before, reaching full-size culms (up to ~30 m tall, 20-28 cm thick) after roughly a decade. New shoots are fat conical spears wrapped in large brown hairy sheaths that elongate up to 40 cm a day; culm branches and leaves appear only after the culm reaches full height.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrocalamus giganteus (to 30 m, record 42 m; culms to 28 cm thick; up to 40 cm/day, record 46 cm in 24 h at Peradeniya; dense clumps). Culm elongation time (~3-4 months), culm lifespan, clump build-up and gregarious flowering interval (reported ~40 yr) estimated from bamboo literature."
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Amazon sword",
+    "genus": "Echinodorus",
+    "species": "grandiflorus",
+    "origin": "Brazil and Northern Argentina",
+    "shape": "reed",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#F0F0E0",
+    "source": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0.5-1.5 m — Wikipedia",
+    "traits": {
+     "genus": "Echinodorus",
+     "species": "grandiflorus",
+     "native_range": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.3,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#5A9A40",
+     "color_2": "#7AAA60",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "rosette of broad heart leaves in water",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings in mud or shallow water first make a small rosette of narrow, strap- to lance-shaped submerged leaves; as the plant grows it switches to big, erect emergent leaves: ovate, heart-based blades 15-26 cm long on stalks up to 80-120 cm, with prominent arching veins. Mature plants send up tall stalks with whorls of white three-petalled flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Echinodorus grandiflorus (emergent leaves 15-26 x 7-15 cm on 80-120 cm petioles; submersed leaves smaller on short stalks; inflorescence 90-150 cm with 5-12 whorls; white flowers 3-4 cm; achenes 3 mm; sticky mud along rivers). Germination, growth rate and lifespan estimated from Echinodorus culture."
+    }
+   },
+   {
+    "name": "Marantaceae herb",
+    "genus": "Calathea",
+    "species": "lutea",
+    "origin": "Mexico to Brazil",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#E8C040",
+    "source": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Calathea",
+     "species": "lutea",
+     "native_range": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.7,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      50,
+      120
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#5E9A44",
+     "color_2": "#8AAA70",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tall stand of huge paddle leaves, white beneath",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Arillate seeds sprout in 3-8 weeks with a narrow first leaf, then a few paddle-shaped leaves on long stalks. The young plant is a low clump of upright oval leaves, whitish-waxy beneath; it spreads by rhizomes into a thicket of banana-like leaves on stalks 2-4 m tall, with cigar-shaped, reddish-brown flower spikes.",
+     "confidence": "estimated",
+     "source": "Wikipedia (2-4 m, huge oval leaves on long yellowish-green petioles, bracts brownish-red with small purple and yellow flowers, wetlands and secondary growth, leaves used to wrap food); germination and growth timings estimated from Marantaceae culture. lifespan_years is a clump."
+    }
+   },
+   {
+    "name": "Glowing bonnet",
+    "genus": "Mycena",
+    "species": "chlorophos",
+    "origin": "Tropical Asia and the Pacific",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
+    "height_m": [
+     0.01,
+     0.03
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8F0D0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": true,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.5,
+      1.0
+     ]
+    },
+    "source": "tropical Asian and Pacific rainforest; Bright green-glowing caps on wet fallen wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "chlorophos",
+     "native_range": "tropical Asian and Pacific rainforest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8e8e0",
+      "secondary": "#c8c8b8",
+      "form": "tiny bell cap 0.5-3 cm, pale grey-white, slightly slimy",
+      "size_cm": [
+       0.5,
+       3
+      ],
+      "texture": "slimy",
+      "gloss": 0.3,
+      "notes": "small pale grey-white bonnets on wet wood; glows bright green in the dark"
+     },
+     "underside": {
+      "colour": "#f0f0e8",
+      "type": "gills white, glowing"
+     },
+     "stipe": {
+      "colour": "#e8e8e0",
+      "height_cm": [
+       1,
+       3
+      ]
+     },
+     "habit": "troops on fallen wet wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pale specks on a wet log, green glow at night",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com",
+     "glow": {
+      "colour": "#60f890",
+      "part": "cap and gills, bright"
+     }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Split gill",
+    "genus": "Schizophyllum",
+    "species": "commune",
+    "origin": "Worldwide (cosmopolitan)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     0,
+     32
+    ],
+    "moisture": [
+     0.3,
+     0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TROPICAL_DRY_FOREST",
+     "SAVANNA",
+     "THORN_SCRUB",
+     "JUNGLE",
+     "TROPICAL_RAINFOREST",
+     "TAIGA"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D0C8B8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "every continent; Tiny fan on any dead wood, from tundra edge to tropics; the widest-ranging fungus known.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Schizophyllum",
+     "species": "commune",
+     "native_range": "every continent",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8c8c0",
+      "secondary": "#8a8a80",
+      "form": "tiny fan or shell cap 1-4 cm, grey-white, hairy, lobed",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "hairy-felted",
+      "gloss": 0.3,
+      "notes": "small greyish-white fuzzy fans, wavy edge, pink-grey split gills underneath"
+     },
+     "underside": {
+      "colour": "#d8a8b0",
+      "type": "gills pinkish-grey, split lengthwise"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "clusters on dead wood worldwide",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little grey fans scattered on any dead wood",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Tropical oyster",
+    "genus": "Pleurotus",
+    "species": "djamor",
+    "origin": "Tropics worldwide",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     20,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST"
+    ],
+    "height_m": [
+     0.03,
+     0.12
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0B8B8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "tropics worldwide; Pink oyster on fallen tropical wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Pleurotus",
+     "species": "djamor",
+     "native_range": "tropics worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f0a0b0",
+      "secondary": "#f8d0d8",
+      "form": "oyster fan cap, salmon-pink, fading to buff",
+      "size_cm": [
+       3,
+       12
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "bright salmon-pink shelving clusters fading paler with age"
+     },
+     "underside": {
+      "colour": "#f0a0b0",
+      "type": "gills pink, decurrent"
+     },
+     "stipe": {
+      "colour": "#f0c0c8",
+      "height_cm": [
+       0,
+       2
+      ]
+     },
+     "habit": "shelving clusters on tropical dead wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pink shells clustered on a fallen tropical log",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.2,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.4,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Bromeliad",
+    "genus": "Guzmania",
+    "species": "lingulata",
+    "origin": "Central America to Brazil",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.8,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt",
+      "sandstone"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#E84A2A",
+    "source": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia",
+    "traits": {
+     "genus": "Guzmania",
+     "species": "lingulata",
+     "native_range": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 9.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      30,
+      45
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small glossy rosette with red flower spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      4,
+      7
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine plumed seeds lodge on bark and moss; seedlings are tiny grass-like tufts of thin green leaves that slowly widen into a glossy, strap-leaved tank rosette. After ~3-4 years the rosette flowers once (a star of scarlet/orange bracts around small white flowers), makes offsets (pups) at its base, and then slowly dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Guzmania lingulata: epiphytic tank bromeliad of Central and South American rainforests, orange-red bracted inflorescence); bromeliad horticulture (monocarpic rosettes, seed to flower in ~2-4 yr, pups after flowering). Values estimated."
+    }
+   },
+   {
+    "name": "Liana",
+    "genus": "Bauhinia",
+    "species": "guianensis",
+    "origin": "Amazon Basin",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#7A6A50",
+    "source": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Bauhinia",
+     "species": "guianensis",
+     "native_range": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "emarginate",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "lobes": 2
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 4,
+     "color": "#7A6E5E",
+     "color_2": "#5A4E44",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 1.5,
+     "confidence": "estimated"
+    },
+    "silhouette": "flat wavy ribbon stem ladder up trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout with two thick, rounded cotyledons, then the typical two-lobed 'cow-hoof' leaves. The seedling is a self-supporting whip that soon becomes a searching shoot with paired coiled tendrils. Young stems are round; only older climbing stems flatten and fold into the wavy, ribbon-like 'monkey ladder' that hangs from the canopy.",
+     "confidence": "estimated",
+     "source": "Estimated from the genus (Bauhinia/Schnella lianas: bilobed leaves, paired tendrils, flattened undulate 'monkey ladder' stems, liana growth of 1-3 m/yr to the canopy); no species growth data found."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 2,
+     "flower_colour": "#f5f1e2",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      6,
+      12
+     ],
+     "unripe_colour": "#7a9a50",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from Schnella/Bauhinia lianas: small white 5-petalled flowers in dense racemes on canopy branch tips, visited by bees and butterflies; flat woody pods that twist open explosively; timings and counts estimated."
+    }
+   },
+   {
+    "name": "Monstera",
+    "genus": "Monstera",
+    "species": "deliciosa",
+    "origin": "Southern Mexico to Panama",
+    "shape": "liana",
+    "temp_c": [
+     21,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     3,
+     20
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#3F8A38",
+    "accent": "#8A9A70",
+    "source": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wikipedia",
+    "traits": {
+     "genus": "Monstera",
+     "species": "deliciosa",
+     "native_range": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wiki",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.2,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      25,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "lobes": 11
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#5C8A3C",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "climber with huge split perforated leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "tolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings creep across the dark forest floor away from the light (skototropism) until they touch a tree trunk, then climb it. Juvenile leaves are small, entire and heart-shaped, often pressed flat against the bark like shingles; higher up the leaves get huge, deeply split and holed (fenestrated) on long stalks, and cord-like aerial roots dangle to the ground.",
+     "confidence": "documented",
+     "source": "Wikipedia Monstera deliciosa (seedlings grow towards darkness until they find a trunk; juvenile leaves entire, later lobed and fenestrate; climbs to 20 m; flowers ~3 yr after planting in ideal conditions); vine lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 15,
+     "flower_colour": "#f2ecd2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "beetle",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      25
+     ],
+     "unripe_colour": "#4f7a3a",
+     "ripe_colour": "#d8cf8c",
+     "ripen_days": [
+      365,
+      420
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      15
+     ],
+     "crop_per_tree": [
+      1,
+      10
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (cream-white spathe around a 10-15 x 3 cm spadix; pollinated mainly by nitidulid beetles; fruit up to 25 cm x 3-5 cm like a green ear of corn with hexagonal scales, takes over a year to ripen; ripe fruit edible, unripe full of irritant oxalate); flowering months and crop estimated"
+    }
+   }
+  ]
+ },
+ "associations": [
+  {
+   "name": "Bornean lowland dipterocarp forest",
+   "realm": "malesia",
+   "where": "gently rolling hills and ridges below 300 m on well-drained soil",
+   "dominant": [
+    "Yellow meranti"
+   ],
+   "companion": [
+    "Tree fern",
+    "Orchid",
+    "Bird's nest fern"
+   ],
+   "ground": [
+    "Forest-floor fern",
+    "Selaginella"
+   ],
+   "catalogue": [],
+   "cover": 0.95,
+   "source": "Whitmore 1984 Tropical Rain Forests of the Far East; Ashton 1964 Ecological studies in the mixed dipterocarp forests of Brunei State"
+  }
+ ]
+}

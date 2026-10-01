@@ -201,108 +201,390 @@
      "edible": "yes",
      "confidence": "documented",
      "source": "USDA Woody Plant Seed Manual (Ulmus): flowers Mar-Apr before the leaves, samaras 10-14 mm ripe and dispersed Apr-May; Wikipedia: flowers about 3 mm with brownish-red anthers, bloom one week, samaras whitish tan, orbicular, wind-dispersed; young samaras are eaten raw or steamed in N China. Cluster size, fruit set, hang and rot times and crop estimated."
-    }
-   }
-  ],
-  "shrub": [
+    },
+    "biomes": [
+     "STEPPE"
+    ]
+   },
    {
-    "name": "Neneo",
-    "genus": "Mulinum",
-    "species": "spinosum",
-    "origin": "Patagonia, Argentina and Chile",
-    "shape": "cushion",
+    "name": "Wild apple",
+    "genus": "Malus",
+    "species": "sieversii",
+    "family": "Rosaceae",
+    "origin": "Tian Shan, Central Asia",
+    "shape": "broadleaf",
     "temp_c": [
-     2,
-     12
+     4,
+     14
     ],
     "moisture": [
-     0.15,
-     0.35
+     0.35,
+     0.65
     ],
-    "altitude_m": [
-     0,
-     1500
+    "biomes": [
+     "STEPPE"
     ],
     "height_m": [
-     0.3,
-     1
+     5,
+     12
     ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#8FA860",
-    "accent": "#E8D858",
-    "source": "Mulinum spinosum, Patagonian steppe, spiny cushion shrub 0.3-1 m — Flora Argentina",
-    "traits": {
-     "genus": "Mulinum",
-     "species": "spinosum",
-     "native_range": "Mulinum spinosum, Patagonian steppe, spiny cushion shrub 0",
-     "leaf_shape": "tiny leaves packed in a dome",
-     "trunk": "none",
-     "petiole": "none",
-     "height_m": [
-      0.3,
-      1
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "till",
+      "alluvium",
+      "karst"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.4,
+     "salinity": "none"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "moss",
+    "needs": [],
+    "color": "#4E8A3E",
+    "accent": "#C4502E",
+    "source": "Malus sieversii, the wild ancestor of the domestic apple, a 5-12 m tree of the foothill forest-steppe and ravines of the Tian Shan and Dzungarian Alatau (Kazakhstan, Kyrgyzstan, Xinjiang) at 900-1800 m — Kew POWO / Forsline et al. 2003 / Flora of China",
+    "bark_type": "scaly",
+    "leaf_type": "broadleaf",
     "leaf": {
-     "type": "compound",
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.7,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "crenate",
      "venation": "pinnate",
      "arrangement": "alternate",
      "size_cm": [
-      1.5,
-      4
+      4,
+      9
      ],
-     "compound": {
-      "form": "trifoliate",
-      "leaflets": [
-       3,
-       3
-      ],
-      "leaflet_outline": "linear",
-      "leaflet_aspect": 10,
-      "leaflet_margin": "entire"
-     },
-     "texture": "matte",
-     "confidence": "documented"
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented",
+     "note": "ovate-elliptic, finely crenate-serrate, downy beneath"
     },
     "canopy": {
-     "form": "mound",
-     "gap": 0.2,
-     "layering": "even",
-     "droop": 0.0
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
     },
     "tint": {
-     "hue_shift": 8,
+     "hue_shift": 0,
      "sat": 0.85,
-     "val": 1.0,
-     "underside": 0.05
+     "val": 0.9,
+     "underside": 0.35,
+     "autumn": "#c8a040",
+     "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A6E62",
+     "color_2": "#5A4A3E",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
+    },
+    "silhouette": "low round-headed apple tree in a steppe ravine",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need a winter's cold before they sprout. The seedling is a thin single stem with downy, finely toothed oval leaves; browsing and drought make many young trees bushy and several-stemmed. Old trees are low and wide with a short scaly trunk and heavy, crooked limbs, standing in groves in the gullies of the foothills.",
+     "confidence": "documented",
+     "source": "Forsline et al. 2003, Collection, maintenance, characterization and utilization of wild apples of Central Asia (trees to 10-12 m, some estimated at up to 300 yr; fruit 1-8 cm, yellow-green to red; groves at 900-1600 m); Flora of China. Juvenile period and growth estimated from Malus."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#f2d8e0",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      4,
+      6
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "pome",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      7
+     ],
+     "unripe_colour": "#8aa848",
+     "ripe_colour": "#c4502e",
+     "ripen_days": [
+      110,
+      150
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Forsline et al. 2003 and Flora of China Malus sieversii (white to pink flowers in May; apples 2-8 cm, very variable in colour and taste, ripen Aug-Sep and fall; eaten and spread by bears, boar and horses). Crop estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.15
+     },
+     "bark": {
+      "pattern": "scaly",
+      "base": "#7a6e62",
+      "secondary": "#5a4a3e",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "grey-brown bark flaking in small thin scales; crooked heavy limbs"
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e8a3e",
+      "underside": "#9ab08a",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#4e8a3e",
+      "margin": "crenate",
+      "size_cm": [
+       4,
+       9
+      ],
+      "notes": "oval finely toothed leaves, downy and pale beneath"
+     },
+     "flower": {
+      "colour": "#f2d8e0",
+      "secondary": "#d88aa0",
+      "form": "white flushed pink five-petalled blossoms in clusters with the leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c4502e",
+      "form": "small to medium apples, yellow-green to red, very variable"
+     },
+     "seasonal": "deciduous; pink-white spring blossom, yellow in autumn",
+     "silhouette": "low round apple trees scattered down a grassy ravine",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of China; Forsline et al. 2003"
+    }
+   },
+   {
+    "name": "Russian olive",
+    "genus": "Elaeagnus",
+    "species": "angustifolia",
+    "family": "Elaeagnaceae",
+    "origin": "Southern Russia to Central Asia",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     4,
+     10
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#9AA89A",
+    "accent": "#C8A868",
+    "source": "Elaeagnus angustifolia, a thorny silver-leaved tree 4-10 m of river valleys, tugai and saline flats from the Caucasus and southern Russia through Kazakhstan and Mongolia to western China; nitrogen-fixing, salt- and drought-tolerant — Kew POWO / Flora of China / USDA FEIS",
+    "bark_type": "scaly",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      8
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "narrow lance-shaped leaves covered in silvery scales, especially beneath"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.4,
+     "val": 1.15,
+     "underside": 0.45,
+     "autumn": "#a8a070",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
     },
     "bark": {
      "pattern": "fissured",
      "orientation": "vertical",
-     "depth": 0.3,
-     "scale_cm": 1,
-     "color": "#7A6E60",
-     "color_2": "#5A4E40",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5E5046",
+     "color_2": "#7A5E4A",
      "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.05,
+      0.25
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "tight spiny green cushion, yellow-flowered",
+    "silhouette": "silver-grey crooked tree along a steppe river",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      20,
-      60
+      30,
+      90
      ],
      "height_years": [
       5,
@@ -310,17 +592,338 @@
      ],
      "first_seed_years": 4,
      "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout in spring after a winter's chill. The seedling is a slim thorny shoot with narrow silvery leaves; it grows fast in moist sand and silt and soon branches into a crooked, often leaning, many-stemmed small tree with dark fissured bark and thorn-tipped twigs.",
+     "confidence": "documented",
+     "source": "USDA FEIS Elaeagnus angustifolia (tree to 12 m; fruits from 3-5 yr; seeds need cold stratification; tolerates shade, salt and drought; lives ~60-100 yr); Flora of China. Height curve estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 14,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f0e070",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1,
+      1.5
+     ],
+     "unripe_colour": "#a8b0a0",
+     "ripe_colour": "#c8a868",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      1000,
+      10000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS and Flora of China Elaeagnus angustifolia (fragrant bell-shaped flowers, silvery outside and yellow inside, May-June; dry mealy silvery-yellow drupes 1-1.5 cm ripen Aug-Oct and persist into winter; eaten by birds and people). Crop estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "appearance": {
+     "trunk": {
+      "form": "leaning",
+      "taper": 0.35,
+      "lean": 0.25
+     },
+     "bark": {
+      "pattern": "fissured",
+      "base": "#5e5046",
+      "secondary": "#7a5e4a",
+      "feature_cm": 2,
+      "roughness": 0.5,
+      "notes": "dark grey-brown bark in shallow fissures, shredding in strips; twigs silvery with sharp thorns"
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#9aa89a",
+      "underside": "#d8dcd0",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#9aa89a",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       8
+      ],
+      "notes": "narrow silvery-grey willow-like leaves, scaly and almost white beneath"
+     },
+     "flower": {
+      "colour": "#f0e070",
+      "secondary": "#c8c8b8",
+      "form": "small fragrant bells, silver outside and yellow inside, along the twigs",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c8a868",
+      "form": "olive-shaped mealy silvery-yellow fruits"
+     },
+     "seasonal": "deciduous; silver foliage all summer",
+     "silhouette": "pale silver crowns lining a river through the grass",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of China; USDA FEIS"
+    }
+   },
+   {
+    "name": "Black poplar",
+    "genus": "Populus",
+    "species": "nigra",
+    "origin": "Europe to Central Asia",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.38,
+     0.95
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#6E5A44",
+    "source": "Populus nigra, black poplar, Europe to W Asia, riverine floodplain woodland on gravel and sand, 20-30 m — Wikipedia / EUFORGEN",
+    "traits": {
+     "genus": "Populus",
+     "species": "nigra",
+     "native_range": "Populus nigra, black poplar, Europe to W Asia, riverine floodplain woodland on gravel and sand, 20-30 m — Wikipedia / EU",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.1,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "rhombic-ovate to deltoid, crenate-serrate, glossy, on flattened petioles"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#d8b830",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.75,
+     "scale_cm": 4,
+     "color": "#5A5048",
+     "color_2": "#3A3028",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey-brown, deeply furrowed, trunk studded with large burrs"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      50
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.2,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.6,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.8,
+     "confidence": "documented"
+    },
+    "silhouette": "broad heavy dome on a burred leaning trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed germinates within a day or two on fresh, wet river gravel and silt after the spring floods. Seedlings and saplings form dense thickets of slender single stems with glossy, diamond- to triangular-ovate, finely toothed leaves on flattened stalks that tremble; young shoots are often reddish. Broken branches and toppled trunks root readily, so many young trees are clones.",
+     "confidence": "estimated",
+     "source": "JRC European Atlas of Forest Tree Species (to 40 m and 200 cm dbh; mature trees live 100, occasionally 300-400 yr; light-demanding pioneer, fast growing, wind pollinated, flowers before the leaves); Wikipedia (20-30 m, rarely 40 m). Germination and age at first flowering estimated from Populus."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 5,
+     "flower_colour": "#b0303a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
       20,
       60
      ],
-     "shade": "very_intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "A seedling with two narrow cotyledons, then small, stiff, three-forked leaves ending in yellow spines. It branches densely from the base into a small, round, spiny cushion; year by year the green-yellow hemisphere of interlocked stems and spiny leaves widens, and in early summer it is dotted with small yellow umbels. Grazing animals avoid it, so it spreads in overgrazed steppe.",
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      0.9
+     ],
+     "unripe_colour": "#88a458",
+     "ripe_colour": "#b39f6a",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      2,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      1000000
+     ],
+     "edible": "no",
      "confidence": "estimated",
-     "source": "Estimated from the growth form and Patagonian steppe literature on neneo (now Azorella prolifera; hemispherical spiny cushion shrub to ~1 m that increases under heavy grazing); germination from Apiaceae steppe shrubs needing winter cold"
+     "source": "JRC Atlas (flowers before leaves; wind pollinated; fluffy seeds from capsules in catkins, spread by wind and water). Colour is the crimson male catkins. Catkin and capsule sizes, ripening (seed shed May-June) and crop estimated from Populus deltoides and other poplars."
     }
-   },
+   }
+  ],
+  "shrub": [
    {
     "name": "Siberian pea shrub",
     "genus": "Caragana",
@@ -508,7 +1111,10 @@
      "edible": "cooked",
      "confidence": "documented",
      "source": "USDA Woody Plant Seed Manual (yellow bisexual flowers Apr-Jun; pods green to amber/brown Jun-Jul, 2.5-5 cm, ~6 seeds 2.5-4 mm; pods split explosively as soon as ripe); Alaska ACCS (pods 3.5-6 cm, flowers single or in small groups); PFAF (seeds and young pods eaten cooked)"
-    }
+    },
+    "biomes": [
+     "STEPPE"
+    ]
    },
    {
     "name": "Steppe spiraea",
@@ -695,7 +1301,10 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "USDA Woody Plant Seed Manual, Spiraea (5 small follicles per flower, straw-coloured when ripe, split down one side; Virginia spirea follicles dehisce Aug-late winter); Trees and Shrubs Online (flowers under 1 cm); counts and timings estimated"
-    }
+    },
+    "biomes": [
+     "STEPPE"
+    ]
    },
    {
     "name": "Steppe wormwood",
@@ -881,122 +1490,274 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Estimated from floras as recalled (tiny globose yellowish heads 2-3 mm in narrow panicles, Jul-Sep; achenes ~1 mm ripen Sep-Oct) and wind pollination typical of Artemisia; crop and timings estimated."
-    }
-   }
-  ],
-  "ground": [
+    },
+    "biomes": [
+     "STEPPE"
+    ]
+   },
    {
-    "name": "Coiron",
-    "genus": "Pappostipa",
-    "species": "speciosa",
-    "origin": "Patagonian steppe",
-    "shape": "tussock",
+    "name": "Dwarf almond",
+    "genus": "Prunus",
+    "species": "tenella",
+    "family": "Rosaceae",
+    "origin": "Steppes from Ukraine to Kazakhstan",
+    "shape": "shrub",
     "temp_c": [
-     2,
-     12
+     -2,
+     14
     ],
     "moisture": [
-     0.12,
-     0.35
+     0.2,
+     0.45
+    ],
+    "biomes": [
+     "STEPPE"
     ],
     "height_m": [
-     0.3,
-     0.6
+     0.5,
+     1.5
     ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#C8B060",
-    "accent": "#E0D0A0",
-    "source": "Pappostipa speciosa, dominant Patagonian steppe bunchgrass, 30-60 cm — Flora Argentina",
-    "traits": {
-     "genus": "Pappostipa",
-     "species": "speciosa",
-     "native_range": "Pappostipa speciosa, dominant Patagonian steppe bunchgrass, 30-60 cm — Flora Argentina",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      0.6
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "till",
+      "karst",
+      "sand"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.3,
+     "salinity": "none"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
+    "needs": [],
+    "color": "#4E7E3A",
+    "accent": "#E86A9A",
+    "source": "Prunus tenella (Amygdalus nana), the steppe almond: a suckering shrub 0.5-1.5 m forming thickets in the feather-grass steppes from central Europe and Ukraine to western Siberia and Kazakhstan, smothered in pink flowers in April — Kew POWO / Flora of the USSR",
+    "bark_type": "smooth_grey",
+    "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "mucronate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      10,
-      30
+      3,
+      9
      ],
      "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "narrow lance-shaped leaves, sharply toothed, glossy dark green"
     },
     "canopy": {
-     "form": "tussock",
+     "form": "mound",
      "gap": 0.45,
-     "layering": "even",
-     "droop": 0.3
+     "layering": "clumped",
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": -2,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#D0C090",
-     "drop": false
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#c86a3a",
+     "drop": true
     },
     "photoperiod": {
-     "mode": "long_day",
-     "threshold_h": 13.5,
-     "response": "flower"
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
     },
     "bark": {
-     "pattern": "green_stem",
+     "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 10,
-     "color": "#8A9A70",
-     "color_2": "#C8B890",
-     "lenticels": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6E4E44",
+     "color_2": "#8A6A5A",
+     "lenticels": "horizontal_bands",
      "confidence": "documented"
     },
-    "silhouette": "stiff grey-green needle-grass tuft",
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.95,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "silhouette": "low thicket of thin stems, pink in spring",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      10,
-      40
+      60,
+      150
      ],
      "height_years": [
-      3,
-      8
+      2,
+      5
      ],
      "first_seed_years": 3,
      "lifespan_years": [
       20,
-      60
+      50
      ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are thin tufts of a few rolled, needle-like, grey-green leaves. The plant slowly builds a dense, rounded tussock of stiff, sharp-tipped, rolled blades, pale and tough, with a skirt of old straw at the base; in late spring it carries narrow panicles of seeds with long feathery awns.",
+     "juvenile_note": "Seeds need a cold winter in the ground before they sprout. Seedlings are thin reddish stems with glossy, sharply toothed narrow leaves; from the second or third year root suckers come up around the parent, so a single plant spreads into a low, open thicket of upright stems that flowers before or with the leaves.",
      "confidence": "estimated",
-     "source": "Estimated from Patagonian steppe tussock grasses (Stipa/Pappostipa: slow establishment on winter-spring moisture, long-lived tussocks) and the species' role as the dominant hard 'coiron' of the steppe"
+     "source": "Kew POWO and Flora of the USSR (Amygdalus nana: shrub 0.5-1.5 m, suckering, flowers Apr-May, fruit ripens Jul); Wikipedia Prunus tenella. Germination and ages estimated from Prunus."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#e86a9a",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.2,
+      2.5
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#9a9a6a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      10,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Flora of the USSR / Kew POWO Prunus tenella (bright pink flowers 2-3 cm in April-May; velvety grey-green dry drupe 1.5-2.5 cm that splits to release a bitter, cyanogenic stone, ripe in July). Set and crop estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.6,
+      "lean": 0.1
+     },
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6e4e44",
+      "secondary": "#8a6a5a",
+      "feature_cm": 1,
+      "roughness": 0.15,
+      "notes": "smooth reddish-grey stems with horizontal lenticels"
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e7e3a",
+      "underside": "#7a9a6a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#4e7e3a",
+      "margin": "serrate",
+      "size_cm": [
+       3,
+       9
+      ],
+      "notes": "narrow glossy dark green leaves with sharp teeth"
+     },
+     "flower": {
+      "colour": "#e86a9a",
+      "secondary": "#f4b0c8",
+      "form": "bright pink five-petalled flowers crowding the bare stems",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#9a9a6a",
+      "form": "velvety grey-green almond-like drupes"
+     },
+     "seasonal": "deciduous; pink flowers April, orange-red in autumn",
+     "silhouette": "knee-high thickets blushing pink across spring steppe",
+     "confidence": "documented",
+     "refs": "Kew POWO; Flora of the USSR; Wikipedia"
     }
-   },
+   }
+  ],
+  "ground": [
    {
     "name": "Crested wheatgrass",
     "genus": "Agropyron",
@@ -1107,7 +1868,10 @@
      "juvenile_note": "Seedling: a single thin blade on unusually long, fast roots, so it establishes quickly. By its first autumn it is a tight tuft of several tillers with flat, slightly hairy, blue-green leaves; from the second year it sends up stiff stems topped by flat, comb-like spikes whose spikelets stick out sideways like fish bones.",
      "confidence": "documented",
      "source": "USDA FEIS Agropyron cristatum: germinates at 5-30 C after >=5 d dormancy break; seedlings very hardy and vigorous with long quick-growing roots; culms 25-100 cm; Alberta heading Jun 8, flowering Jun 29, seed ripe Jul 30; stands productive >30 yr (one >40 yr). NRCS plant guide: culms 30-90 cm. First-seed year and tuft size estimated."
-    }
+    },
+    "biomes": [
+     "STEPPE"
+    ]
    },
    {
     "name": "Feather grass",
@@ -1219,229 +1983,10 @@
      "juvenile_note": "Seedling: one or two very narrow, inrolled leaves after the long-awned grain screws itself into the soil; builds a small tuft slowly and flowers only after several years. Mature: a dense tussock of fine, rolled grey-green leaves topped in early summer by silvery, feathery awns 20-35 cm long that wave like plumes.",
      "confidence": "estimated",
      "source": "Wikipedia Stipa pennata (60-90 cm, Eurasian steppe from Mongolia to Hungary, silvery plumes in summer); Flora Europaea (plumose awns 25-35 cm); flowering age and tussock lifespan estimated from steppe Stipa ontogeny studies"
-    }
-   },
-   {
-    "name": "Krylov needlegrass",
-    "genus": "Stipa",
-    "species": "krylovii",
-    "origin": "Mongolia and Central Asia",
-    "shape": "tussock",
-    "temp_c": [
-     -4,
-     8
-    ],
-    "moisture": [
-     0.15,
-     0.35
-    ],
-    "height_m": [
-     0.3,
-     0.7
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "color": "#C8B060",
-    "accent": "#D8C880",
-    "source": "Stipa krylovii, dominant of the Mongolian dry steppe, 0.3-0.7 m — Flora of China",
-    "traits": {
-     "genus": "Stipa",
-     "species": "krylovii",
-     "native_range": "Stipa krylovii, dominant of the Mongolian dry steppe, 0",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      0.7
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      10,
-      30
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "tussock",
-     "gap": 0.5,
-     "layering": "even",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": -2,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#D0C090",
-     "drop": false
-    },
-    "photoperiod": {
-     "mode": "long_day",
-     "threshold_h": 14.5,
-     "response": "flower"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 10,
-     "color": "#8A9A70",
-     "color_2": "#C8B888",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "small stiff grey-green bunchgrass",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      30
-     ],
-     "height_years": [
-      2,
-      5
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      15,
-      40
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedling: one or two very fine, inrolled leaves from a grain whose hygroscopic awn has screwed it into the soil; it tillers slowly into a small bunch. Mature: a dense tussock of thread-like grey-green leaves with slender culms bearing grains with long, twice-bent, mostly bare awns, dominant over the typical Mongolian steppe.",
-     "confidence": "estimated",
-     "source": "Flora of China / Mongolian steppe literature (typical-steppe dominant, 30-70 cm tussock, scabrous non-plumose awns); growth, flowering age and tussock lifespan estimated from Eurasian Stipa steppe grasses"
-    }
-   },
-   {
-    "name": "Steppe tulip",
-    "genus": "Tulipa",
-    "species": "suaveolens",
-    "origin": "Pontic-Caspian steppe",
-    "shape": "grass",
-    "temp_c": [
-     2,
-     14
-    ],
-    "moisture": [
-     0.2,
-     0.4
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.2,
-    "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#E03030",
-    "source": "Tulipa suaveolens (T. schrenkii), Pontic-Caspian steppe spring bulb, 10-30 cm, red flowers — Euro+Med PlantBase",
-    "traits": {
-     "genus": "Tulipa",
-     "species": "suaveolens",
-     "native_range": "Tulipa suaveolens (T",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
-     "petiole": "sheath",
-     "height_m": [
-      0.1,
-      0.3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 5,
-     "base": "attenuate",
-     "apex": "acute",
-     "margin": "undulate",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      8,
-      20
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.5,
-     "layering": "even",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": -8,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#B8A860",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 5,
-     "color": "#7A9A6A",
-     "color_2": "#9A8A8A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "low glaucous leaves with a red cup",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      60,
-      150
-     ],
-     "height_years": [
-      2.5,
-      5
-     ],
-     "first_seed_years": 5,
-     "lifespan_years": [
-      10,
-      30
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Year one: a single hair-thin, tubular green cotyledon like a blade of grass, dying back by early summer over a pea-sized bulb that is pushed deeper on a dropper. Following springs: one flat, grey-green, channelled leaf that widens each year; only after 4-6 years does the bulb send up a short stem with 3-4 wavy-edged leaves and a flower.",
-     "confidence": "estimated",
-     "source": "Kazakhstan flora treatment on Zenodo (T. suaveolens = T. schrenkii: steppe and semi-desert, flowers Mar-Apr, fruits May-Jun); Tulipa genus growers (Pacific Bulb Society; Garden of Eaden: seeds germinate after a winter chill, 1 month to 1 yr; species tulips flower about 4-7 yr from seed)."
-    }
+    "biomes": [
+     "STEPPE"
+    ]
    },
    {
     "name": "Valais fescue",
@@ -1553,7 +2098,1217 @@
      "juvenile_note": "Thread-leaved seedling becomes a dense tuft of very fine, bristle-like bluish (glaucous) leaves, forming a compact low steppe tussock within a few years; flowers from year 2 in early summer and survives summer drought by going dormant.",
      "confidence": "estimated",
      "source": "Estimated from Festuca valesiaca steppe ecology and Festuca ovina-group grasses (Grime et al. Comparative Plant Ecology for F. ovina)."
+    },
+    "biomes": [
+     "STEPPE"
+    ]
+   },
+   {
+    "name": "Parasol mushroom",
+    "genus": "Macrolepiota",
+    "species": "procera",
+    "origin": "Europe",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.35,
+     0.75
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8B090",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate meadow and open wood; Tall drumstick then a parasol; grassland edges.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Macrolepiota",
+     "species": "procera",
+     "native_range": "temperate meadow and open wood",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c8a8",
+      "secondary": "#7a5a3a",
+      "form": "egg then flat parasol cap, cream with concentric brown scales and brown umbo",
+      "size_cm": [
+       10,
+       30
+      ],
+      "texture": "scaly",
+      "gloss": 0.3,
+      "notes": "cream parasol with shaggy brown scales, tall stem with brown snakeskin banding and a moveable ring"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "gills white, free"
+     },
+     "stipe": {
+      "colour": "#c8b090",
+      "height_cm": [
+       15,
+       40
+      ]
+     },
+     "habit": "scattered in grass and open wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "tall drumsticks opening to wide parasols in a meadow",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.48,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "biomes": [
+     "STEPPE"
+    ]
+   },
+   {
+    "name": "June grass",
+    "genus": "Koeleria",
+    "species": "macrantha",
+    "family": "Poaceae",
+    "origin": "Temperate Northern Hemisphere",
+    "shape": "tussock",
+    "temp_c": [
+     -4,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sand",
+      "till",
+      "karst",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6A8A5E",
+    "accent": "#C8C090",
+    "source": "Koeleria macrantha (K. cristata), Poaceae: a cool-season bunchgrass 0.2-0.6 m of steppe and prairie across Eurasia and North America, with dense shining spike-like panicles in early summer — Kew POWO / USDA FEIS / Flora of China",
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 50.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      5,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "narrow flat or inrolled grey-green blades, mostly basal"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#c0b080",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#7A9A6A",
+     "color_2": "#A8A070",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small grey-green tuft, shiny spike-like heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings make a small, fine tuft of grey-green leaves in their first season. From the second year the tuft sends up slender stems topped by dense, shining, spike-like silvery-green panicles that open briefly in bloom and then close again, ripening straw-coloured by midsummer.",
+     "confidence": "documented",
+     "source": "USDA FEIS Koeleria macrantha (C3 perennial bunchgrass 20-60 cm, circumboreal in steppe and prairie, flowers early summer, establishes readily from seed); Kew POWO. Lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#6a8a5e",
+      "underside": "#7a9a6e",
+      "gloss": 0.1,
+      "veins": "parallel",
+      "vein_colour": "#6a8a5e",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       20
+      ],
+      "notes": "fine grey-green basal blades in a dense small tuft"
+     },
+     "flower": {
+      "colour": "#c8c090",
+      "secondary": "#8a9a70",
+      "form": "dense shining spike-like panicles 4-12 cm, silvery-green turning straw",
+      "scent": "none"
+     },
+     "seasonal": "green in spring, straw by midsummer",
+     "silhouette": "small grey-green tuft, shiny spike-like heads",
+     "confidence": "documented",
+     "refs": "Kew POWO; USDA FEIS; Flora of China"
     }
+   },
+   {
+    "name": "Grey-cushioned grimmia",
+    "genus": "Grimmia",
+    "species": "pulvinata",
+    "family": "Grimmiaceae",
+    "origin": "Worldwide, temperate",
+    "shape": "moss",
+    "temp_c": [
+     -2,
+     22
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "karst",
+      "granite",
+      "sandstone",
+      "basalt"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#7A8A6A",
+    "accent": "#A0805A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      8
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into a green thread-web on bare rock and bud a few tiny upright shoots, which grow outward in all directions at the same rate so the clump becomes a perfect little dome. It grows only while wet and stays grey and hoary when dry; old cushions crowd into grey mosaics across a sunny boulder.",
+     "confidence": "estimated",
+     "source": "BBS field guide and Flora of North America (cushions 1-2 cm high, leaves with long hyaline awns, setae arcuate burying the capsules in the cushion; on calcareous and acid rock and walls). Growth and ages estimated from moss biology."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "spores by wind and water; no flowers; dries out and revives with rain, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Grimmia pulvinata, Grimmiaceae: neat round grey cushions 1-4 cm across and 1-2 cm high on sunny rock outcrops, walls and stones, hoary with long silver hair points; capsules on curved stalks tucked into the cushion — British Bryological Society field guide / Flora of North America vol. 27",
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#7a8a6a",
+      "underside": "#c8c8b8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7a8a6a",
+      "margin": "entire",
+      "size_cm": [
+       0.2,
+       0.4
+      ],
+      "notes": "lance-shaped leaves each ending in a long silver hair point, giving a hoary grey look"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       2
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "grey and hoary when dry, darker green when wet",
+     "silhouette": "round hoary grey cushions on sunny rock",
+     "confidence": "documented",
+     "refs": "British Bryological Society field guide; Flora of North America vol. 27",
+     "fruit": {
+      "colour": "#a0805a",
+      "form": "small ribbed capsules on curved stalks nestled into the cushion"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.2,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "round hoary grey cushions on sunny rock"
+   },
+   {
+    "name": "Bristly haircap",
+    "genus": "Polytrichum",
+    "species": "piliferum",
+    "family": "Polytrichaceae",
+    "origin": "Worldwide, cool temperate",
+    "shape": "moss",
+    "temp_c": [
+     -6,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "sand",
+      "granite",
+      "sandstone",
+      "till"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5A7A3A",
+    "accent": "#C83A2A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into a green thread-web on bare sand that buds short stiff shoots; underground rhizoids send up more shoots so a patch spreads into a carpet. Shoots look like tiny grey-green bottlebrushes tipped with white hairs; in spring the male shoots open into red, flower-like rosettes.",
+     "confidence": "estimated",
+     "source": "BBS field guide and Flora of North America (shoots 1-4 cm, leaves with long hyaline awns, male cups red; on dry sandy and gravelly ground, pioneer on burnt and disturbed sand). Growth and ages estimated from Polytrichum."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "spores by wind and water; no flowers; dries out and revives with rain, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Polytrichum piliferum, Polytrichaceae: short stiff shoots 1-5 cm with grey-green leaves ending in white hair points, in carpets on dry sand and gravel, sandy steppe and rock; male shoots end in red splash-cups — British Bryological Society field guide / Flora of North America vol. 27",
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#5a7a3a",
+      "underside": "#d8d8c8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#5a7a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       0.6
+      ],
+      "notes": "stiff narrow leaves crowded at the shoot tips, each with a white hair point, so the carpet looks frosted"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       5
+      ],
+      "texture": "carpet"
+     },
+     "seasonal": "frosted grey when dry; red male splash-cups in spring",
+     "silhouette": "grey-green bristly carpet on dry sand",
+     "confidence": "documented",
+     "refs": "British Bryological Society field guide; Flora of North America vol. 27",
+     "fruit": {
+      "colour": "#8a5a3a",
+      "form": "four-angled capsules under hairy caps on red-brown stalks"
+     }
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6.0,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "grey-green bristly carpet on dry sand"
+   },
+   {
+    "name": "Steppe lichen",
+    "genus": "Xanthoparmelia",
+    "species": "camtschadalis",
+    "family": "Parmeliaceae",
+    "origin": "Steppes of Eurasia and North America",
+    "shape": "cushion",
+    "temp_c": [
+     -6,
+     16
+    ],
+    "moisture": [
+     0.1,
+     0.45
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "sand",
+      "till",
+      "karst",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#B8C08A",
+    "accent": "#6A6050",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Rarely from spores; nearly always from wind-blown fragments that lodge between grass clumps. A fragment keeps growing at its lobe tips without ever attaching, curling into a loose, springy, tangled ball that drifts across bare ground with the wind and piles up in hollows.",
+     "confidence": "estimated",
+     "source": "Brodo et al., Lichens of North America; Hale 1990, A synopsis of Xanthoparmelia (vagrant, lobes 1-2 mm wide, canaliculate, yellow-green to grey with usnic acid; Eurasian and North American steppe). Growth and ages estimated from foliose lichens."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "no flowers: spreads as unattached fragments rolled by the wind; spores rare; grows only when wet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Xanthoparmelia camtschadalis, Parmeliaceae: a vagrant foliose lichen of steppe and dry grassland, narrow yellowish-grey lobes rolled into tubes and curled into loose cushions 2-5 cm that lie unattached on the soil and roll in the wind — Index Fungorum; Brodo, Lichens of North America; Hale 1990",
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "foliose",
+      "colour": "#b8c08a",
+      "underside": "#6a6050",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#b8c08a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.3
+      ],
+      "notes": "narrow strap-like lobes, yellowish-grey above and dark brown beneath, rolled into tubes and tangled into loose balls"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       4
+      ],
+      "texture": "curled"
+     },
+     "seasonal": "paler and brittle when dry, greener when wet",
+     "silhouette": "loose pale yellow-grey curls lying on bare steppe soil",
+     "confidence": "documented",
+     "refs": "Brodo et al., Lichens of North America; Index Fungorum"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "loose pale yellow-grey curls lying on bare steppe soil"
+   },
+   {
+    "name": "King oyster",
+    "genus": "Pleurotus",
+    "species": "eryngii",
+    "kingdom": "Fungi",
+    "family": "Pleurotaceae",
+    "origin": "Mediterranean to the Central Asian steppe",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.55
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.05,
+     0.12
+    ],
+    "density": 0.1,
+    "soil": {
+     "classes": [
+      "till",
+      "karst",
+      "sand"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#B89A78",
+    "accent": "#F0E8DC",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Pleurotus eryngii, Pleurotaceae: the steppe or king oyster mushroom, a weak parasite and decomposer of the roots of Eryngium, Ferula and other Apiaceae in dry grassland from the Mediterranean through the Ukrainian and Kazakh steppes to Central Asia; cap 3-12 cm on a thick white stem — Index Fungorum; Zervakis et al. 2001",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a88a68",
+      "secondary": "#d8c8b0",
+      "form": "convex then funnel-shaped cap 3-12 cm, grey-brown to tan, margin inrolled",
+      "size_cm": [
+       3,
+       12
+      ],
+      "texture": "smooth",
+      "gloss": 0.2,
+      "notes": "often off-centre on the stem; caps pale with age"
+     },
+     "underside": {
+      "colour": "#f0e8dc",
+      "type": "gills whitish, running down the stem"
+     },
+     "stipe": {
+      "colour": "#f4ede2",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "single or in small clusters on the dead roots of eryngo, ferula and other umbellifers in steppe and dry grassland",
+     "seasonal": "fruits after spring and autumn rains",
+     "silhouette": "tan funnel caps on fat white stems around dead steppe thistles",
+     "confidence": "documented",
+     "refs": "Index Fungorum; Zervakis et al. 2001; Phillips, Mushrooms"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.45,
+     "val": 1.3,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tan funnel caps on fat white stems around dead steppe thistles"
+   },
+   {
+    "name": "Steppe puffball",
+    "genus": "Disciseda",
+    "species": "bovista",
+    "kingdom": "Fungi",
+    "family": "Agaricaceae",
+    "origin": "Dry grasslands of Eurasia and North America",
+    "shape": "rosette",
+    "temp_c": [
+     0,
+     20
+    ],
+    "moisture": [
+     0.1,
+     0.45
+    ],
+    "biomes": [
+     "STEPPE"
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.15,
+    "soil": {
+     "classes": [
+      "sand",
+      "till",
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#9A8A78",
+    "accent": "#D8C8A8",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       3
+      ],
+      [
+       "button",
+       6
+      ],
+      [
+       "cap",
+       30
+      ],
+      [
+       "spent",
+       90
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Disciseda bovista, Agaricaceae: a small stemless puffball of steppe, semi-desert and dry grassland on sandy soil in Eurasia and North America; develops inverted in the soil and blows loose when mature — Index Fungorum; Kreisel, Die Lycoperdaceae der DDR; Kuo, MushroomExpert.com",
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#9a8a78",
+      "secondary": "#c8b898",
+      "form": "flattened ball 2-5 cm with a sand-crusted cup on its upper side and a small pore",
+      "size_cm": [
+       2,
+       5
+      ],
+      "texture": "papery",
+      "gloss": 0.05,
+      "notes": "develops half-buried and upside down; the sandy outer layer flakes away leaving a smooth grey-brown papery sac that breaks loose and rolls across the steppe"
+     },
+     "underside": {
+      "colour": "#7a6a58",
+      "type": "none: spores puff from a pore"
+     },
+     "stipe": {
+      "colour": "#9a8a78",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "scattered on bare sandy and loess soil between grass clumps",
+     "seasonal": "matures in late summer and autumn; dry sacs persist and roll through winter",
+     "silhouette": "grey pebble-like balls scattered on bare steppe soil",
+     "confidence": "documented",
+     "refs": "Index Fungorum; Kreisel 1962; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.3,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "grey pebble-like balls scattered on bare steppe soil"
    }
   ],
   "epiphyte": []
@@ -1571,8 +3326,8 @@
     "Steppe spiraea"
    ],
    "ground": [
-    "Steppe tulip",
-    "Crested wheatgrass"
+    "Crested wheatgrass",
+    "June grass"
    ],
    "catalogue": [],
    "cover": 0.4,
@@ -1583,17 +3338,15 @@
    "realm": "central_asia",
    "where": "dry flats and south slopes with thin stony soil, grazed",
    "dominant": [
-    "Krylov needlegrass",
     "Steppe wormwood"
    ],
    "companion": [],
    "ground": [
     "Crested wheatgrass",
-    "Valais fescue"
+    "Valais fescue",
+    "June grass"
    ],
-   "catalogue": [
-    "Soapweed yucca"
-   ],
+   "catalogue": [],
    "cover": 0.25,
    "source": "Hilbig 1995 Vegetation of Mongolia; Lavrenko 1956"
   },
@@ -1606,7 +3359,8 @@
    ],
    "companion": [
     "Siberian pea shrub",
-    "Steppe spiraea"
+    "Steppe spiraea",
+    "Russian olive"
    ],
    "ground": [
     "Feather grass"
@@ -1624,11 +3378,12 @@
    ],
    "companion": [
     "Steppe spiraea",
-    "Steppe wormwood"
+    "Steppe wormwood",
+    "Dwarf almond"
    ],
    "ground": [
-    "Krylov needlegrass",
-    "Valais fescue"
+    "Valais fescue",
+    "June grass"
    ],
    "catalogue": [],
    "cover": 0.35,
@@ -1639,8 +3394,7 @@
    "realm": "neotropic",
    "where": "windswept plateaus and dry slopes of Patagonia, gravelly soil",
    "dominant": [
-    "Coiron",
-    "Neneo"
+    "Feather grass"
    ],
    "companion": [],
    "ground": [],

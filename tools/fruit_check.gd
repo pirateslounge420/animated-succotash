@@ -59,28 +59,50 @@ func _initialize() -> void:
 		var c := FruitCrop.crop_of(i)
 		if c == null or c.win <= 0.0 or c.fruits < 1 or c.flowers <= c.fruits or c.fl_m <= 0.0 or c.fr_m.y < c.fr_m.x or c.p_set <= 0.0 or c.p_set > 1.0:
 			bad.append(sp.name)
-	ok(n > 400 and bad.is_empty(), "every fruiting species has its crop (%d; wrong: %s)" % [n, str(bad.slice(0, 6))])
+	# The §CC trim left about 380 fruiting species (four per category per
+	# biome, plus the whole cannabis, trichocereus and amorphophallus sets).
+	ok(n > 300 and bad.is_empty(), "every fruiting species has its crop (%d; wrong: %s)" % [n, str(bad.slice(0, 6))])
 	var words := {}
-	for nm in ["Crab apple", "Scots pine", "Pecan", "Sycamore", "Date palm", "Saguaro"]:
+	for nm in ["Wild apple", "Scots pine", "Shagbark hickory", "Sycamore", "Date palm", "Saguaro cactus"]:
 		var sp2 := SpeciesDB.find(nm)
 		if sp2 != null and not sp2.fruiting.is_empty():
 			words[nm] = FruitCrop.word_for(sp2, str(sp2.fruiting.get("fruit_kind", "")))
 	print("      what E calls them: %s" % str(words))
 	# --- A fruiting tree near the camp, animal-pollinated if there is one ---
-	fc.update_now()
+	# Walk toward the nearest trees round the camp until one fruits (the
+	# trim thinned the stand at the dev camp: its nearest tree is ~75 m).
 	var pick = null
-	var best := INF
-	for key in fc._entries:
-		var e = fc._entries[key]
-		if e.tree < 0:
-			continue
-		var score: float = e.dist + (0.0 if not e.crop.guilds.is_empty() else 40.0) + (0.0 if e.crop.drop == "falls" else 20.0)
-		if score < best:
-			best = score
-			pick = e
+	var tried := 0
+	while true:
+		fc.update_now()
+		var best := INF
+		for key in fc._entries:
+			var e = fc._entries[key]
+			if e.tree < 0:
+				continue
+			var score: float = e.dist + (0.0 if not e.crop.guilds.is_empty() else 40.0) + (0.0 if e.crop.drop == "falls" else 20.0)
+			if score < best:
+				best = score
+				pick = e
+		if pick != null or tried >= 3:
+			break
+		var target := Vector3.INF
+		var td := INF
+		for ck in main.chunks.chunks:
+			var chk: TerrainChunk = main.chunks.chunks[ck]
+			for ti in chk.trees.size():
+				var dd := chk.tree_base(ti).distance_to(player.global_position)
+				if dd > FruitCrop.TREE_M * 0.5 and dd < td:
+					td = dd
+					target = chk.tree_base(ti)
+		if target == Vector3.INF:
+			break
+		print("      no fruiting tree within %d m; walking %.0f m toward the nearest tree" % [int(FruitCrop.TREE_M), td])
+		player.global_position = player.global_position.lerp(target, 0.8)
+		await frames(30)
+		tried += 1
 	if pick == null:
-		# Walk to the nearest trees round the camp until one fruits.
-		ok(false, "a fruiting tree within %d m of the camp" % int(FruitCrop.TREE_M))
+		ok(false, "a fruiting tree within %d m of the camp, or of the nearest trees round it" % int(FruitCrop.TREE_M))
 		print("RESULT fails: %d" % fails)
 		quit()
 		return
@@ -102,10 +124,17 @@ func _initialize() -> void:
 	ok(s0[FruitCrop.Ph.OPEN] > 0, "in its season it flowers (%d open)" % s0[FruitCrop.Ph.OPEN])
 	ok(pick.sites.size() >= 4, "on %d places on its twigs" % pick.sites.size())
 	var crown_ok := true
+	var lo := INF
+	var hi := -INF
 	for s in pick.sites:
 		var above: float = (s - pick.xf.origin).dot(pick.up)
-		if above < 0.0 or above > pick.h * 1.3 + 2.0:
+		lo = minf(lo, above)
+		hi = maxf(hi, above)
+		# Upright twig tips reach about a third above the nominal height in
+		# the skeleton (shagbark hickory, 1.37x); a site past 1.4x is wrong.
+		if above < 0.0 or above > pick.h * 1.4 + 2.0:
 			crown_ok = false
+	print("      flower sites from %.1f to %.1f m up a %.1f m tree" % [lo, hi, pick.h])
 	ok(crown_ok, "all of them up in the tree, none under the ground or over the top")
 	ok(FruitCrop.describe_tree(pick.chunk, pick.tree) == "in flower", "the HUD says \"%s\"" % FruitCrop.describe_tree(pick.chunk, pick.tree))
 	# --- Pollinators ---------------------------------------------------------

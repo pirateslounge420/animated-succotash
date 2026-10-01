@@ -23,3 +23,4 @@ Thumbs.db
 # The walkabout's full frames (tools/walkabout.gd, design §CA): hundreds of
 # PNGs per run; the report and the contact sheets are committed.
 tools/reference/walkabout/*/*.png
+__pycache__/

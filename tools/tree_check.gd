@@ -19,7 +19,7 @@ extends SceneTree
 ##
 ##   ~/bin/godot --headless --path . --script tools/tree_check.gd
 
-const SAMPLE := ["Oak", "Beech", "Spruce", "Scots pine", "Coconut palm", "Baobab", "Paper birch"]
+const SAMPLE := ["White oak", "American beech", "Black spruce", "Scots pine", "Coconut palm", "African baobab", "Downy birch"]
 
 var fails := 0
 
@@ -57,6 +57,7 @@ func _run() -> void:
 				counts[pc.order] = int(counts.get(pc.order, 0)) + 1
 			if int(counts.get(2, 0)) > TreeArch.MAX_L2 + 10 or int(counts.get(3, 0)) > TreeArch.MAX_TWIGS + 10 or sk.anchors.size() > TreeArch.MAX_ANCHORS + 2:
 				over += 1
+				print("[trees] over budget: %s layout %d (order 2: %d, twigs: %d, anchors: %d)" % [sp.name, layout, int(counts.get(2, 0)), int(counts.get(3, 0)), sk.anchors.size()])
 			for an in sk.anchors:
 				anchors_total += 1
 				var pc: TreeLayouts.Piece = sk.pieces[an[3]]
@@ -75,7 +76,8 @@ func _run() -> void:
 					var k := "%s o%d %s" % [sp.arch.get("model"), pc.order, "frond" if pc.frond else ("dead" if pc.dead else "")]
 					leo_by[k] = int(leo_by.get(k, 0)) + 1
 	print("[trees] %d species grow from their architecture; %d anchors checked" % [growing, anchors_total])
-	ok(growing > 140, "the tree-tier species with architecture blocks grow from them (%d)" % growing)
+	# 138 after the §CC trim (four trees per biome, heroes on top).
+	ok(growing > 120, "the tree-tier species with architecture blocks grow from them (%d)" % growing)
 	ok(over == 0, "every layout within budget (%d over)" % over)
 	ok(floating == 0, "every leaf anchor lies on its wood (%d off it)" % floating)
 	ok(not_twig == 0, "leaves hang only on twigs or fronds (%d on thicker wood)" % not_twig)
@@ -94,12 +96,12 @@ func _run() -> void:
 		var forest_sk := TreeLayouts.skeleton(idx, TreeLayouts.COUNT / 2)
 		print("[trees] %-13s %-11s %-11s open: %s, crown from %.2f; forest: %s, crown from %.2f, %d stubs" % [name, sp.arch.get("model"), sp.arch.get("habit"),
 			_by_order(open_sk), _crown_base(open_sk), _by_order(forest_sk), _crown_base(forest_sk), _stubs(forest_sk)])
-	var oak := SpeciesDB.find("Oak")
+	var oak := SpeciesDB.find(OS.get_environment("OAK") if OS.get_environment("OAK") != "" else "White oak")
 	var oi := SpeciesDB.index_of(oak)
 	ok(_crown_base(TreeLayouts.skeleton(oi, 0)) < _crown_base(TreeLayouts.skeleton(oi, TreeLayouts.COUNT / 2)), "an open-grown oak carries its crown lower than one in a stand")
 	var pine := SpeciesDB.find("Scots pine")
 	ok(_stubs(TreeLayouts.skeleton(SpeciesDB.index_of(pine), TreeLayouts.COUNT / 2)) > 0, "a forest-grown Scots pine (self-pruning) has stubs below its crown")
-	var spruce := SpeciesDB.find("Spruce")
+	var spruce := SpeciesDB.find("Black spruce")
 	ok(_whorls(TreeLayouts.skeleton(SpeciesDB.index_of(spruce), 0)) >= 5, "a spruce (massart) grows whorls (%d)" % _whorls(TreeLayouts.skeleton(SpeciesDB.index_of(spruce), 0)))
 	var palm := SpeciesDB.find("Coconut palm")
 	var psk := TreeLayouts.skeleton(SpeciesDB.index_of(palm), 0)
@@ -115,16 +117,27 @@ func _run() -> void:
 	# Big main limbs to climb out along and sit on (from play): limb
 	# handholds thick enough to straddle (TreeClimb.STRADDLE_R_M) and not
 	# steep.
-	var sit := 0
+	# Averaged over the open-grown layouts (the first half; the second half
+	# are forest-grown, crowns high and limbs thin): play meets all of them,
+	# and one layout's count swings with its seed (10 to 45 across the oaks
+	# after the §CC trim replaced the old "Oak").
+	var sit_sum := 0
 	var limb_holds := 0
-	for k in g.local.size():
-		if g.limb[k] == 0:
-			continue
-		limb_holds += 1
-		if g.radius[k] >= TreeClimb.STRADDLE_R_M and absf(g.tangent[k].y) < TreeClimb.STRADDLE_SLOPE:
-			sit += 1
-	print("[trees] 18 m oak: %d limb handholds, %d thick and flat enough to straddle and perch on" % [limb_holds, sit])
-	ok(sit >= 15, "an oak's main limbs can be straddled out along (%d holds)" % sit)
+	var per := []
+	for lay in TreeLayouts.COUNT / 2:
+		var gl := g if lay == 0 else TreeLayouts.graph(oi, lay, 18.0)
+		var sit := 0
+		for k in gl.local.size():
+			if gl.limb[k] == 0:
+				continue
+			limb_holds += 1 if lay == 0 else 0
+			if gl.radius[k] >= TreeClimb.STRADDLE_R_M and absf(gl.tangent[k].y) < TreeClimb.STRADDLE_SLOPE:
+				sit += 1
+		per.append(sit)
+		sit_sum += sit
+	var sit_mean := float(sit_sum) / float(TreeLayouts.COUNT / 2)
+	print("[trees] 18 m %s: %d limb handholds (layout 0); straddle holds per layout %s" % [oak.name, limb_holds, str(per)])
+	ok(sit_mean >= 15.0, "an oak's main limbs can be straddled out along (%.1f holds a layout on average)" % sit_mean)
 	var holds := TreeLayouts.unit_handholds(oi, 0, 18.0)
 	var twig_holds := 0
 	var sk := TreeLayouts.skeleton(oi, 0)

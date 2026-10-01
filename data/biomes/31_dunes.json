@@ -20,286 +20,47 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Dune pine",
-    "genus": "Pinus",
-    "species": "contorta",
-    "origin": "Western North America",
-    "shape": "conifer",
-    "temp_c": [
-     3,
-     12
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "height_m": [
-     5,
-     15
-    ],
-    "density": 0.3,
-    "soil": "sand",
-    "color": "#2F7A35",
-    "accent": "#6E5A48",
-    "source": "Pinus contorta subsp. contorta (shore pine), Pacific NW dunes Alaska-California, wind-stunted 5-15 m — Wikipedia / USDA",
-    "traits": {
-     "genus": "Pinus",
-     "species": "contorta",
-     "native_range": "Pinus contorta subsp",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
-     "height_m": [
-      5,
-      15
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "pine",
-    "leaf_type": "needle",
-    "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "fascicled",
-     "fascicle": 2,
-     "size_cm": [
-      3,
-      7
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "furrowed",
-     "orientation": "vertical",
-     "depth": 0.5,
-     "scale_cm": 3,
-     "color": "#5A4A40",
-     "color_2": "#8A6A50",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "shore pine: dark brown to grey, thick, furrowed into small scaly plates"
-    },
-    "canopy": {
-     "form": "irregular",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 2,
-     "sat": 0.8,
-     "val": 0.8,
-     "underside": 0.05
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "excurrent",
-     "orders": 5,
-     "branch_angle_deg": [
-      50,
-      75
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.6,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 35,
-     "live_crown_ratio": [
-      0.7,
-      0.4
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.35,
-     "root_flare": true,
-     "spacing_m": 0.6,
-     "confidence": "documented"
-    },
-    "silhouette": "short twisted dark pine leaning downwind",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
-     ],
-     "height_years": [
-      25,
-      50
-     ],
-     "first_seed_years": 8,
-     "lifespan_years": [
-      150,
-      400
-     ],
-     "shade": "very_intolerant",
-     "juvenile": "cone",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal seedling with 3-6 cotyledons and a tuft of single primary needles, then short, twisted, paired needles. Young trees are dense, narrow cones with regular whorls. Open-grown shore pines become bushy, crooked and flat-topped; inland trees become slim, straight poles. Serotinous cones stay closed on the branches for decades.",
-     "confidence": "documented",
-     "source": "USDA Silvics (Lotan & Critchfield): viable seed commonly at 5-10 years; ~3.6 m at 20 years on medium sites; germination peaks in the 2 weeks after snowmelt; very intolerant of shade; shore pine small and short-lived; ages commonly 150-200+, old high-elevation trees to 400+"
-    },
-    "fruiting": {
-     "flower_months": [
-      5,
-      7
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 1.2,
-     "flower_colour": "#8a2f5a",
-     "flower_form": "cone",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      2,
-      5
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.7,
-     "fruit_kind": "cone",
-     "fruit_shape": "ovoid",
-     "fruit_size_cm": [
-      2,
-      6
-     ],
-     "unripe_colour": "#5f6a3a",
-     "ripe_colour": "#b08850",
-     "ripen_days": [
-      450,
-      520
-     ],
-     "hang_days": [
-      365,
-      1500
-     ],
-     "drop": "persists",
-     "rot_days": [
-      700,
-      2500
-     ],
-     "crop_per_tree": [
-      50,
-      1500
-     ],
-     "edible": "no",
-     "confidence": "documented",
-     "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
-    }
-   },
-   {
     "name": "Scots pine",
     "genus": "Pinus",
     "species": "sylvestris",
-    "origin": "Europe and Siberia",
+    "origin": "Northern Europe and Siberia",
+    "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
-     -2,
+     -4,
      14
     ],
     "moisture": [
-     0.25,
-     0.6
+     0.35,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     2600
+    ],
+    "biomes": [
+     "DUNES"
     ],
     "height_m": [
-     15,
-     35
+     20.0,
+     35.0
     ],
-    "density": 0.3,
-    "soil": "sand",
-    "color": "#2E6E35",
-    "accent": "#C07A48",
-    "source": "Pinus sylvestris, Eurasia, planted and native on stabilised dunes (Baltic, Dutch coast), 15-35 m — Wikipedia",
-    "traits": {
-     "genus": "Pinus",
-     "species": "sylvestris",
-     "native_range": "Pinus sylvestris, Eurasia, planted and native on stabilised dunes (Baltic, Dutch coast), 15-35 m — Wikipedia",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
-     "height_m": [
-      15,
-      35
+    "density": 1.0,
+    "soil": {
+     "classes": [
+      "sand",
+      "till",
+      "granite",
+      "clay_peat"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
     },
-    "bark_type": "pine",
-    "leaf_type": "needle",
-    "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "fascicled",
-     "fascicle": 2,
-     "size_cm": [
-      3,
-      7
-     ],
-     "compound": null,
-     "texture": "waxy_glaucous",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "plated",
-     "orientation": "vertical",
-     "depth": 0.55,
-     "scale_cm": 6,
-     "color": "#C27442",
-     "color_2": "#5E3E32",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "orange-red flaking upper trunk over grey-brown plated lower bark"
-    },
-    "canopy": {
-     "form": "umbrella",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": -10,
-     "sat": 0.8,
-     "val": 0.85,
-     "underside": 0.1
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "rauh",
-     "habit": "umbrella",
-     "orders": 5,
-     "branch_angle_deg": [
-      50,
-      75
-     ],
-     "taper_exponent": 1.4,
-     "sinuosity": 0.4,
-     "fork_height_frac": null,
-     "buttress": "none",
-     "lean_max_deg": 15,
-     "live_crown_ratio": [
-      0.5,
-      0.3
-     ],
-     "self_prune": true,
-     "dead_limbs": 0.35,
-     "root_flare": true,
-     "spacing_m": 0.6,
-     "confidence": "documented"
-    },
-    "silhouette": "flat-topped umbrella on an orange-barked trunk",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#C87A50",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -321,6 +82,168 @@
      "juvenile_note": "Epigeal seedling with 5-7 cotyledons; in its first year it has single, flat, finely serrated primary needles 2-3 cm long, then short, twisted, blue-green paired needles. Young trees are regular, bushy cones; later the lower branches drop and the crown becomes flat or rounded above a tall trunk whose upper bark is orange and flaky.",
      "confidence": "documented",
      "source": "Wikipedia (to 35 m, over 45 m on the best sites; normally lives 150-300 years, over 760 in Lapland; first-year seedlings have single serrated leaves 2-3 cm; seeds released 22-24 months after pollination); growth and first cones from European yield tables"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Eurasia, Scotland to Siberia; 20–35 m. Orange upper bark; the boreal and heath pine. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Pinus",
+     "species": "sylvestris",
+     "native_range": "Eurasia, Scotland to Siberia",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      35.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#e0733a",
+      "secondary": "#7a4a3a",
+      "feature_cm": 12,
+      "roughness": 0.6,
+      "notes": "upper trunk and limbs flaky salmon-orange papery plates; lower trunk thick dark red-brown fissured plates with orange in the cracks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4f7f5a",
+      "underside": "#6e8f78",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4f7f5a",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       7
+      ],
+      "notes": "blue-green needles in pairs, twisted; short and stiff; tufted at branch ends"
+     },
+     "flower": {
+      "colour": "#e8c43a",
+      "secondary": "#c8404a",
+      "form": "yellow pollen cone clusters at shoot bases; tiny red female cones at tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a4a",
+      "form": "small ovoid cones 3-7 cm, grey-brown, scales with a small flat pyramid; green when young"
+     },
+     "seasonal": "evergreen; old needles shed yellowish in autumn; none visible from range",
+     "silhouette": "tall bare orange trunk with a flat-topped, irregular, rounded crown of dark blue-green clumps held high; young trees conical",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus sylvestris; Flora of Britain; Kew POWO"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.55,
+     "scale_cm": 4,
+     "color": "#D4824A",
+     "color_2": "#6E4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.4,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
     },
     "fruiting": {
      "flower_months": [
@@ -370,42 +293,40 @@
      "confidence": "documented",
      "source": "Wikipedia (pollen released mid to late spring; first-year conelets globose, 4-8 mm; mature cones 3-7.5 cm, green then grey-green to yellow-brown; seeds released 22-24 months after pollination); crop and decay estimated"
     }
-   }
-  ],
-  "shrub": [
+   },
    {
-    "name": "Bayberry",
-    "genus": "Morella",
-    "species": "pensylvanica",
-    "origin": "Northeastern North America",
-    "shape": "shrub",
+    "name": "Wind-shaped live oak",
+    "genus": "Quercus",
+    "species": "virginiana",
+    "origin": "Southeastern United States",
+    "shape": "gnarled",
     "temp_c": [
-     5,
-     15
+     14,
+     22
     ],
     "moisture": [
-     0.3,
-     0.7
+     0.5,
+     0.9
     ],
     "height_m": [
-     1,
-     3
+     8,
+     20
     ],
-    "density": 0.5,
+    "density": 1.0,
     "soil": "sand",
-    "color": "#3E8E3A",
-    "accent": "#7A6A50",
-    "source": "Morella pensylvanica, NE North American Atlantic dunes, aromatic thicket shrub 1-3 m — Wikipedia / USDA",
+    "color": "#2F7A35",
+    "accent": "#5A4A38",
+    "source": "Quercus virginiana, southern live oak, US Atlantic & Gulf coastal plain, dominant of barrier-island maritime forest, salt-sheared canopy 8-20 m — USDA Plants / Wikipedia",
     "traits": {
-     "genus": "Morella",
-     "species": "pensylvanica",
-     "native_range": "Morella pensylvanica, NE North American Atlantic dunes, aromatic thicket shrub 1-3 m — Wikipedia / USDA",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
+     "genus": "Quercus",
+     "species": "virginiana",
+     "native_range": "Quercus virginiana, southern live oak, US Atlantic & Gulf coastal plain, dominant of barrier-island maritime forest, sal",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
      "petiole": "short petiole",
      "height_m": [
-      1,
-      3
+      8,
+      20
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -413,12 +334,12 @@
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
+    "bark_type": "oak",
     "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "obovate",
-     "aspect": 2.8,
+     "outline": "elliptic",
+     "aspect": 2.5,
      "base": "cuneate",
      "apex": "obtuse",
      "margin": "entire",
@@ -433,34 +354,715 @@
      "confidence": "documented"
     },
     "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#5A5450",
+     "color_2": "#3A3430",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 35,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "documented"
+    },
+    "silhouette": "sloping wind-sheared dome of dark leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      12,
+      50
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      200,
+      500
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Hypogeal: the acorn sprouts soon after falling, and seedlings can grow 1.2 m in the first year. Young shoots and sprouts often have larger leaves with a few sharp, holly-like teeth, while adult leaves are small, entire and rolled under. Saplings are slender whips; root and collar sprouts make thickets, and later the crown spreads wide and low.",
+     "confidence": "documented",
+     "source": "USDA Silvics (flowers Mar-May; acorns ripen in Sep of the first year and fall before Dec; annual crops; 776 sound acorns/kg; intermediate shade tolerance; open-grown trunks to 200 cm dbh, crowns to 46 m); USDA FEIS (seedlings can grow 1.2 m in the first year; sprouts 0.3 m tall can bear acorns); lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 6,
+     "flower_colour": "#c8be66",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "nut",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7f9a52",
+     "ripe_colour": "#2e231c",
+     "ripen_days": [
+      150,
+      180
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      45,
+      240
+     ],
+     "crop_per_tree": [
+      2000,
+      30000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Silvics and FEIS Quercus virginiana (pollen shed in the first 2 weeks of April; acorns long, tapered, dark brown to black, mature in Sep of the first year and fall before Dec; crops annual, often abundant; 776 sound acorns/kg); NC State Extension (acorns 1.9-2.5 cm on long stalks, Sep-Nov); per-tree crop estimated"
+    },
+    "biomes": [
+     "DUNES",
+     "MARITIME_FOREST"
+    ]
+   },
+   {
+    "name": "Sand pine",
+    "genus": "Pinus",
+    "species": "clausa",
+    "origin": "Florida and the Alabama Gulf coast",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     19,
+     23
+    ],
+    "moisture": [
+     0.25,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     60
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sand"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#3A6E3E",
+    "accent": "#6A5A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      70
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with a whorl of cotyledons and single blue-green primary needles, then soft paired needles 5-9 cm. Saplings grow fast into bushy, narrow cones, branched to the ground; they keep their dead lower limbs, and by 30-40 years they are crooked, often forked, flat-topped little trees.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 1 (Brendemuehl, Pinus clausa): cones from about age 5; Ocala variety serotinous, Choctawhatchee variety opens its cones at maturity; very intolerant; stands break up after 50-70 years"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Pinus clausa, sand pine: deep white sands of Florida and the Alabama coast, the Choctawhatchee variety on old coastal dunes of the Gulf; small crooked pine 5-21 m with paired needles 5-9 cm, keeping its dead lower limbs — USDA Silvics of North America vol. 1 (Brendemuehl); Kew POWO; Gymnosperm Database.",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#6a5a50",
+      "secondary": "#8a5a40",
+      "feature_cm": 4,
+      "roughness": 0.5,
+      "notes": "smooth grey on the upper stem and branches; reddish-brown flat plates at the base of old trunks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#3a6e3e",
+      "underside": "#3a6e3e",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#3a6e3e",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       9
+      ],
+      "notes": "slender, soft, slightly twisted dark green needles in pairs"
+     },
+     "flower": {
+      "colour": "#c0a060",
+      "secondary": "#8a4a5a",
+      "form": "small yellow pollen cones; purplish seed conelets",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a7050",
+      "form": "small ovoid cones 3-8 cm, often staying closed on the branches for years"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "scraggly flat-topped small pine with dead lower limbs",
+     "confidence": "documented",
+     "refs": "USDA Silvics of North America vol. 1; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      5,
+      9
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 4,
+     "color": "#6A5A50",
+     "color_2": "#8A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.45,
+     "fork_height_frac": [
+      0.2,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": true,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
+    },
+    "silhouette": "scraggly flat-topped small pine with dead lower limbs",
+    "fruiting": {
+     "flower_months": [
+      12,
+      2
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#8a4a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      8
+     ],
+     "unripe_colour": "#5f6a3a",
+     "ripe_colour": "#9a7a50",
+     "ripen_days": [
+      600,
+      660
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      30,
+      500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (Brendemuehl): flowers in winter, cones mature in autumn of the second year; Ocala cones serotinous and held for years, Choctawhatchee cones open at maturity; crop and decay estimated"
+    }
+   },
+   {
+    "name": "Pitch pine",
+    "genus": "Pinus",
+    "species": "rigida",
+    "origin": "Northeastern United States",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1400
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     5.0,
+     25.0
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "sand",
+      "sandstone",
+      "granite",
+      "till"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#4A7A3E",
+    "accent": "#7A5038",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      45
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      90,
+      450
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 3-8 cotyledons and single primary needles, then stiff yellow-green needles in threes. Seedlings bend over and root at the crook, and a young plant cut or burned to the ground sprouts again from buds at its root collar; saplings are open, irregular cones that already carry small cones at 3-4 years.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 1 (Little & Garrett, Pinus rigida): cones as early as age 3; sprouts from the root collar and dormant trunk buds after fire or cutting; few live past 200 years, the oldest about 450"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Pinus rigida, pitch pine: dry sands of the Atlantic coastal plain, the dunes and pine barrens of Cape Cod, Long Island and New Jersey, inland to the Appalachians; 6-25 m (stunted on dunes), stiff needles in threes 7-13 cm and tufts of needles sprouting straight from the trunk — USDA Silvics of North America vol. 1; Kew POWO.",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#4e4038",
+      "secondary": "#8a5a40",
+      "feature_cm": 6,
+      "roughness": 0.7,
+      "notes": "thick, dark grey-brown, broken by deep furrows into irregular reddish-brown plates; tufts of needles on the trunk"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#5a8a40",
+      "underside": "#5a8a40",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#5a8a40",
+      "margin": "entire",
+      "size_cm": [
+       7,
+       13
+      ],
+      "notes": "stiff, often twisted yellow-green needles in bundles of three"
+     },
+     "flower": {
+      "colour": "#c8a850",
+      "secondary": "#b0506a",
+      "form": "yellow pollen-cone clusters; reddish seed conelets",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#a07a50",
+      "form": "ovoid prickly cones 3-9 cm, often held closed on the branches for years"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "rugged irregular pine with tufted trunk and open crown",
+     "confidence": "documented",
+     "refs": "USDA Silvics of North America vol. 1; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 3,
+     "size_cm": [
+      7,
+      13
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 6,
+     "color": "#4E4038",
+     "color_2": "#8A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      80
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.3,
+      0.6
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.4
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
+    },
+    "silhouette": "rugged irregular pine with tufted trunk and open crown",
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#b0506a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      9
+     ],
+     "unripe_colour": "#6a7a3a",
+     "ripe_colour": "#a07a50",
+     "ripen_days": [
+      480,
+      540
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      3000
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (Little & Garrett): flowers April-May, cones ripen in autumn of the second year; many cones stay closed (serotinous) on the trees for years in the pine barrens; crop and decay estimated"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Wax myrtle",
+    "genus": "Morella",
+    "species": "cerifera",
+    "origin": "Southeastern US and Caribbean",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#3E8E3A",
+    "accent": "#7A6A50",
+    "source": "Morella cerifera, SE US Atlantic/Gulf coasts, back-beach thickets, evergreen shrub 2-8 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Morella",
+     "species": "cerifera",
+     "native_range": "Morella cerifera, SE US Atlantic/Gulf coasts, back-beach thickets, evergreen shrub 2-8 m — Wikipedia / USDA",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
      "pattern": "smooth",
      "orientation": "none",
      "depth": 0.1,
      "scale_cm": 1,
-     "color": "#7A7A70",
-     "color_2": "#5E5A52",
+     "color": "#8A8A80",
+     "color_2": "#6E6A60",
      "lenticels": "dots",
      "confidence": "documented",
-     "note": "smooth grey bark with small lenticels"
+     "note": "thin smooth grey bark with pale lenticel dots"
     },
     "canopy": {
      "form": "rounded",
      "gap": 0.3,
      "layering": "clumped",
-     "droop": 0.1
+     "droop": 0.15
     },
     "tint": {
-     "hue_shift": 2,
-     "sat": 0.85,
+     "hue_shift": 4,
+     "sat": 0.8,
      "val": 0.85,
-     "underside": 0.2,
-     "autumn": "#A88A48",
-     "drop": true
+     "underside": 0.2
     },
     "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 11.0,
-     "response": "leaf_drop"
+     "mode": "neutral"
     },
     "architecture": {
      "model": "rauh",
@@ -488,7 +1090,7 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded glossy bush",
+    "silhouette": "dense rounded olive-green multi-stem bush",
     "growth": {
      "life": "perennial",
      "germination_days": [
@@ -497,29 +1099,29 @@
      ],
      "height_years": [
       3,
-      8
+      10
      ],
      "first_seed_years": 4,
      "lifespan_years": [
       20,
-      40
+      50
      ],
-     "shade": "intolerant",
+     "shade": "intermediate",
      "juvenile": "multi_stem",
      "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal seedling with small cotyledons, then oblong, aromatic, dull green leaves sparsely toothed near the tip and resin-dotted, like the adult's. It branches low into a stiff, rounded, grey-twigged bush and sends up root suckers, so on dunes and old fields single plants become dense, flat-topped colonies; root nodules fix nitrogen in poor sand.",
+     "juvenile_note": "Epigeal seedling with small oval cotyledons, then narrow, aromatic, olive-green leaves toothed near the tip and dotted with tiny amber resin glands, as in the adult. It soon branches from the base into a dense, twiggy evergreen bush; nitrogen-fixing root nodules let it grow fast (often ~1 m a year) on poor sand, and it spreads by root sprouts into thickets.",
      "confidence": "estimated",
-     "source": "Wikipedia (to 4.5 m; catkins 3-18 mm, green to red; fruit 3-5.5 mm with pale blue-purple wax, key winter food of yellow-rumped warblers; nitrogen-fixing nodules); USDA Woody Plant Seed Manual Myrica (2-8 ft shrub; waxy drupes persist over winter); ages estimated"
+     "source": "Wikipedia (to 14 m; dioecious catkins late winter-spring; waxy globular fruit in late summer-fall; birds strip the wax, needed for germination); USDA Woody Plant Seed Manual Myrica (small waxy dry drupes persisting over winter; no endosperm); growth and ages estimated"
     },
     "fruiting": {
      "flower_months": [
-      4,
-      5
+      2,
+      4
      ],
      "hemisphere": "north",
      "flower_days": 7,
-     "flower_size_cm": 1.2,
-     "flower_colour": "#a8704a",
+     "flower_size_cm": 1.5,
+     "flower_colour": "#b7a65a",
      "flower_form": "catkin",
      "flower_position": "twigs",
      "flowers_per_cluster": [
@@ -533,18 +1135,18 @@
      "fruit_kind": "drupe",
      "fruit_shape": "round",
      "fruit_size_cm": [
-      0.3,
-      0.55
+      0.2,
+      0.4
      ],
-     "unripe_colour": "#98ab78",
-     "ripe_colour": "#c4c8cf",
+     "unripe_colour": "#8fa870",
+     "ripe_colour": "#b7c1c6",
      "ripen_days": [
-      120,
-      160
+      150,
+      210
      ],
      "hang_days": [
-      120,
-      210
+      90,
+      200
      ],
      "drop": "persists",
      "rot_days": [
@@ -552,482 +1154,220 @@
       365
      ],
      "crop_per_tree": [
-      500,
-      10000
+      2000,
+      30000
      ],
      "edible": "no",
      "confidence": "documented",
-     "source": "Wikipedia (catkins 3-18 mm, green to red; fruit 3-5.5 mm with a pale blue-grey waxy coat, eaten through winter by yellow-rumped warblers and tree swallows); USDA Woody Plant Seed Manual Myrica (mostly dioecious, dry waxy drupes persisting over winter); wind pollination; months, set and crop estimated"
-    }
+     "source": "Wikipedia (dioecious, wind-pollinated catkins late winter-spring; fruit ripe late summer-fall, globular with a pale blue-grey wax coat, used for bayberry candles); USDA Woody Plant Seed Manual Myrica (tiny dry waxy drupes that persist on the shrub over winter); set and crop estimated"
+    },
+    "biomes": [
+     "DUNES",
+     "ESTUARY",
+     "MARITIME_FOREST",
+     "SALT_MARSH"
+    ]
    },
    {
-    "name": "Coastal juniper",
-    "genus": "Juniperus",
-    "species": "communis",
-    "origin": "Circumboreal Northern Hemisphere",
+    "name": "Beach plum",
+    "genus": "Prunus",
+    "species": "maritima",
+    "origin": "Atlantic coast, Maine to Maryland",
+    "family": "Rosaceae",
     "shape": "shrub",
     "temp_c": [
-     -2,
+     6,
      14
     ],
     "moisture": [
      0.2,
-     0.6
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     30
+    ],
+    "biomes": [
+     "DUNES"
     ],
     "height_m": [
-     0.5,
-     4
+     1.0,
+     2.5
     ],
-    "density": 0.3,
-    "soil": "sand",
-    "color": "#3B6E3A",
-    "accent": "#6A5A4A",
-    "source": "Juniperus communis, circumboreal, common on stabilised European and North American dunes, prostrate to 4 m — Wikipedia",
-    "traits": {
-     "genus": "Juniperus",
-     "species": "communis",
-     "native_range": "Juniperus communis, circumboreal, common on stabilised European and North American dunes, prostrate to 4 m — Wikipedia",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.5,
-      4
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "sand"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.05,
+     "salinity": "tolerant"
     },
-    "bark_type": "fibrous",
-    "leaf_type": "broadleaf",
+    "needs": [],
+    "color": "#4E7A40",
+    "accent": "#F4F0F0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The stone needs a winter of cold, moist sand before it sprouts. The seedling is a slender reddish twig with small, finely toothed, downy oval leaves. It branches low and suckers from the roots, so in a few years it is a low, dense, twiggy dune thicket that is white with blossom before the leaves.",
+     "confidence": "estimated",
+     "source": "Uva 2003 HortTechnology (beach plum: cold-moist stratification of the stones, fruiting from about the third year, suckering); USDA NRCS Plant Guide; lifespan estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ]
+    },
+    "source": "Prunus maritima, beach plum: coastal dunes and sandy shores from New Brunswick and Maine to Maryland, low suckering shrub 1-2 m (to 3 m) with finely toothed, downy-backed leaves, white flowers before the leaves and purple plums with a waxy bloom — Kew POWO; USDA NRCS Plant Guide; Uva 2003 HortTechnology 13: 388-391.",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#4e4440",
+      "secondary": "#7a6a5e",
+      "feature_cm": 1,
+      "roughness": 0.2,
+      "notes": "dark grey-brown, smooth with pale horizontal lenticels, like a small cherry"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "elliptic",
+      "colour": "#4e7a40",
+      "underside": "#8aa080",
+      "gloss": 0.15,
+      "veins": "pinnate",
+      "vein_colour": "#3e6a34",
+      "margin": "serrate",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "dull green, finely and sharply toothed, softly downy beneath"
+     },
+     "flower": {
+      "colour": "#f6f4f0",
+      "secondary": "#e8d860",
+      "form": "white five-petalled flowers 1-1.5 cm in clusters of 2-3, before the leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4a2a5a",
+      "form": "round plums 1.2-2.5 cm, purple to blue-black with a waxy bloom"
+     },
+     "seasonal": "deciduous; white blossom in May, red-orange leaves in autumn",
+     "silhouette": "low dense twiggy dune thicket, white in spring",
+     "confidence": "documented",
+     "refs": "Uva 2003; USDA NRCS Plant Guide; Kew POWO"
+    },
     "leaf": {
-     "type": "needle",
-     "venation": "none",
-     "arrangement": "whorled",
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      0.8,
-      2.0
+      3.0,
+      7.0
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
+     "texture": "matte",
      "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "stringy",
-     "orientation": "none",
-     "depth": 0.4,
-     "scale_cm": 1.5,
-     "color": "#7A5A48",
-     "color_2": "#A08060",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "thin red-brown bark shredding in long strips"
     },
     "canopy": {
      "form": "mound",
      "gap": 0.3,
-     "layering": "even",
-     "droop": 0.05
+     "layering": "clumped",
+     "droop": 0.1
     },
     "tint": {
-     "hue_shift": -8,
-     "sat": 0.65,
-     "val": 0.85,
-     "underside": 0.1
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.3,
+     "autumn": "#C8703A",
+     "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
-    },
-    "architecture": {
-     "model": "attims",
-     "habit": "shrub",
-     "orders": 4,
-     "branch_angle_deg": [
-      60,
-      100
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.8,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 40,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.4,
-     "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "documented"
-    },
-    "silhouette": "low prickly blue-green mound",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      150,
-      730
-     ],
-     "height_years": [
-      15,
-      40
-     ],
-     "first_seed_years": 10,
-     "lifespan_years": [
-      120,
-      1600
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal: 2 (up to 6) slender cotyledons, then whorls of three sharp, needle-like leaves with a white band above - the same prickly needles the adult keeps all its life (it never makes scale leaves). Seedlings are tiny, slow, prickly sprigs that build over decades into a dense, spreading grey-green shrub, a low mat, or a narrow column.",
-     "confidence": "documented",
-     "source": "USDA Woody Plant Seed Manual (Juniperus: J. communis flowers Apr-May, cones take 2-3 seasons, green to bluish-black glaucous, persist; 1-3 seeds; bears from 10-20 yr, heavy crops every 2-5 yr; deep dormancy; 2-6 cotyledons); Wikipedia (ripens in 18 months, cones 4-12 mm, a Lapland plant aged 1,647 yr). Growth rate estimated."
-    },
-    "fruiting": {
-     "flower_months": [
-      4,
-      5
-     ],
-     "hemisphere": "north",
-     "flower_days": 7,
-     "flower_size_cm": 0.3,
-     "flower_colour": "#8fa070",
-     "flower_form": "cone",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      2
-     ],
-     "pollinators": [
-      "wind"
-     ],
-     "fruit_set": 0.5,
-     "fruit_kind": "cone",
-     "fruit_shape": "round",
-     "fruit_size_cm": [
-      0.4,
-      1.2
-     ],
-     "unripe_colour": "#6f8f5a",
-     "ripe_colour": "#3c4a6e",
-     "ripen_days": [
-      480,
-      900
-     ],
-     "hang_days": [
-      90,
-      365
-     ],
-     "drop": "persists",
-     "rot_days": [
-      60,
-      365
-     ],
-     "crop_per_tree": [
-      200,
-      5000
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "Wikipedia (dioecious, wind-pollinated; berry-like cones 4-12 mm, green ripening in ~18 months to purple-black with a blue bloom; too bitter raw, dried as spice and for gin); USDA WPSM (2-3 seasons to ripen, cones persist). Set, crop and rot estimated."
-    }
-   },
-   {
-    "name": "Coastal wattle",
-    "genus": "Acacia",
-    "species": "longifolia",
-    "origin": "Southeastern Australia",
-    "shape": "shrub",
-    "temp_c": [
-     13,
-     22
-    ],
-    "moisture": [
-     0.3,
-     0.7
-    ],
-    "height_m": [
-     1.5,
-     6
-    ],
-    "density": 0.4,
-    "soil": "sand",
-    "color": "#5A9A40",
-    "accent": "#E8D040",
-    "source": "Acacia longifolia subsp. sophorae, SE Australian dunes (invasive in S Africa/Portugal), sprawling 1.5-6 m — Wikipedia",
-    "traits": {
-     "genus": "Acacia",
-     "species": "longifolia",
-     "native_range": "Acacia longifolia subsp",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      1.5,
-      6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "peeling",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 3.5,
-     "base": "attenuate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "alternate",
-     "size_cm": [
-      5,
-      12
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented",
-     "note": "phyllodes with 2-4 longitudinal nerves"
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
     },
     "bark": {
      "pattern": "smooth",
      "orientation": "none",
      "depth": 0.15,
      "scale_cm": 1,
-     "color": "#8A8478",
-     "color_2": "#6E685E",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "smooth grey to grey-brown, finely fissured only on old trunks"
-    },
-    "canopy": {
-     "form": "spreading",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": 2,
-     "sat": 0.85,
-     "val": 0.9,
-     "underside": 0.1
-    },
-    "photoperiod": {
-     "mode": "neutral"
+     "color": "#4E4440",
+     "color_2": "#7A6A5E",
+     "lenticels": "horizontal_bands",
+     "confidence": "documented"
     },
     "architecture": {
      "model": "troll",
      "habit": "multi_stem",
      "orders": 4,
      "branch_angle_deg": [
-      40,
-      75
+      35,
+      65
      ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.6,
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
      "fork_height_frac": [
       0.0,
-      0.1
+      0.15
      ],
      "buttress": "none",
-     "lean_max_deg": 30,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.3,
-     "root_flare": false,
-     "spacing_m": 0.2,
-     "confidence": "estimated"
-    },
-    "silhouette": "spreading multi-stem shrub with yellow spikes",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      28
-     ],
-     "height_years": [
-      2,
-      6
-     ],
-     "first_seed_years": 2.5,
-     "lifespan_years": [
-      15,
-      50
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "different",
-     "juvenile_note": "Seedling: two cotyledons, then feathery bipinnate juvenile leaves (like a tiny fern frond) for the first season or two, gradually replaced by long, flat, bright-green phyllodes with 2-4 parallel veins. Young plants are fast, bushy, many-branched shrubs that flower by year 2-3. Mass germination follows fire.",
-     "confidence": "documented",
-     "source": "Herbiguide (feathery juvenile leaves for the first season or two; prolific seed at 2-3 yr; lives ~50 yr in native range, often <25 yr elsewhere; seedlings in winter and after fire); IUCN GISD (sexual maturity 2-3 yr; up to 11,500 seeds/tree; seeds viable ~50 yr)"
-    },
-    "fruiting": {
-     "flower_months": [
-      7,
-      9
-     ],
-     "hemisphere": "south",
-     "flower_days": 4,
-     "flower_size_cm": 3.5,
-     "flower_colour": "#f7d31e",
-     "flower_form": "spike",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      1,
-      2
-     ],
-     "pollinators": [
-      "bee",
-      "fly"
-     ],
-     "fruit_set": 0.05,
-     "fruit_kind": "pod",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      5,
-      15
-     ],
-     "unripe_colour": "#7f9a52",
-     "ripe_colour": "#6b4a2e",
-     "ripen_days": [
-      100,
-      150
-     ],
-     "hang_days": [
-      7,
-      40
-     ],
-     "drop": "splits",
-     "rot_days": [
-      60,
-      240
-     ],
-     "crop_per_tree": [
-      500,
-      3000
-     ],
-     "edible": "cooked",
-     "confidence": "documented",
-     "source": "Herbiguide (golden cylindrical spikes 20-50 mm, usually paired in leaf axils, Jun-Oct; pods 50-150 mm, straight or curled, 4-10 seeds); IUCN GISD (flowers Jul-Aug native, Feb-Mar in Portugal with pods formed Mar-Jul; up to 11,500 seeds per tree)"
-    }
-   },
-   {
-    "name": "Creeping willow",
-    "genus": "Salix",
-    "species": "repens",
-    "origin": "Europe and Western Siberia",
-    "shape": "shrub",
-    "temp_c": [
-     2,
-     14
-    ],
-    "moisture": [
-     0.35,
-     0.8
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.6,
-    "soil": "sand",
-    "color": "#7FA07A",
-    "accent": "#8A7050",
-    "source": "Salix repens (incl. var. argentea), European dune slacks and grey dunes, low creeping willow 0.3-1.5 m — Wikipedia",
-    "traits": {
-     "genus": "Salix",
-     "species": "repens",
-     "native_range": "Salix repens (incl",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      1.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "elliptic",
-     "aspect": 2.2,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "entire",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      1,
-      3.5
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented"
-    },
-    "bark": {
-     "pattern": "smooth",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 1,
-     "color": "#7A6E60",
-     "color_2": "#5E5448",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "slender creeping grey-brown stems, smooth"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.2
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.4,
-     "autumn": "#C8A848",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 11.0,
-     "response": "leaf_drop"
-    },
-    "architecture": {
-     "model": "champagnat",
-     "habit": "shrub",
-     "orders": 3,
-     "branch_angle_deg": [
-      60,
-      100
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.7,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 45,
+     "lean_max_deg": 20,
      "live_crown_ratio": [
       0.9,
       0.7
@@ -1035,230 +1375,358 @@
      "self_prune": false,
      "dead_limbs": 0.2,
      "root_flare": false,
-     "spacing_m": 0.1,
-     "confidence": "documented"
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     },
-    "silhouette": "low grey-green creeping mound",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      1,
-      3
-     ],
-     "height_years": [
-      4,
-      12
-     ],
-     "first_seed_years": 3,
-     "lifespan_years": [
-      30,
-      80
-     ],
-     "shade": "intolerant",
-     "juvenile": "sprig",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny seedling with 2 round cotyledons, then small oval leaves silvery-silky beneath. Stems creep underground and turn up as slender, ascending shoots 20-100 cm tall, so a young plant becomes a low, loose, silvery-grey patch; on dunes it keeps growing up through blown sand.",
-     "confidence": "estimated",
-     "source": "Stace, New Flora of the British Isles, and Meikle (BSBI) for form (creeping underground stems, 0.3-1.5 m) and phenology; USDA Woody Plant Seed Manual Salix (fast germination, no dormancy); growth rate, first seed and lifespan estimated"
-    },
+    "silhouette": "low dense twiggy dune thicket, white in spring",
     "fruiting": {
      "flower_months": [
-      4,
+      5,
       5
      ],
      "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 1.5,
-     "flower_colour": "#d9c86a",
-     "flower_form": "catkin",
+     "flower_days": 10,
+     "flower_size_cm": 1.3,
+     "flower_colour": "#f6f4f0",
+     "flower_form": "cup",
      "flower_position": "twigs",
      "flowers_per_cluster": [
-      15,
-      40
+      2,
+      3
      ],
      "pollinators": [
       "bee",
-      "bumblebee",
-      "fly",
-      "wind"
+      "fly"
      ],
-     "fruit_set": 0.5,
-     "fruit_kind": "capsule",
-     "fruit_shape": "ovoid",
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
      "fruit_size_cm": [
-      0.3,
-      0.5
+      1.2,
+      2.5
      ],
-     "unripe_colour": "#a8b375",
-     "ripe_colour": "#bfae88",
+     "unripe_colour": "#6a8a4a",
+     "ripe_colour": "#4a2a5a",
      "ripen_days": [
-      30,
-      50
+      90,
+      110
      ],
      "hang_days": [
-      5,
+      10,
       30
      ],
-     "drop": "splits",
+     "drop": "falls",
      "rot_days": [
-      20,
-      90
+      14,
+      40
      ],
      "crop_per_tree": [
       200,
-      10000
+      3000
      ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "Stace and Meikle (BSBI): small catkins 1-2.5 cm just before the leaves in Apr-May, capsules hairy ~3-5 mm; visited by early bees and bumblebees; ripening, set and crop estimated"
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Uva 2003 (white flowers in mid-May before the leaves, insect-pollinated, largely self-incompatible; fruits 1.2-2.5 cm, purple to blue-black, rarely red or yellow, ripe mid-August to September); set, crop and decay estimated"
     }
-   }
-  ],
-  "ground": [
+   },
    {
-    "name": "American beachgrass",
-    "genus": "Ammophila",
-    "species": "breviligulata",
-    "origin": "Northeastern North America",
-    "shape": "tussock",
+    "name": "Sand cherry",
+    "genus": "Prunus",
+    "species": "pumila",
+    "origin": "Great Lakes and NE North America",
+    "family": "Rosaceae",
+    "shape": "shrub",
     "temp_c": [
      2,
-     18
+     12
     ],
     "moisture": [
-     0.15,
-     0.5
+     0.2,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "biomes": [
+     "DUNES"
     ],
     "height_m": [
-     0.6,
-     1.0
+     0.3,
+     2.0
     ],
-    "density": 0.8,
-    "soil": "sand",
-    "color": "#9EB870",
-    "accent": "#C8B060",
-    "source": "Ammophila breviligulata, Great Lakes and NE Atlantic dunes, rhizomatous foredune grass 0.6-1 m — USDA Plants",
-    "traits": {
-     "genus": "Ammophila",
-     "species": "breviligulata",
-     "native_range": "Ammophila breviligulata, Great Lakes and NE Atlantic dunes, rhizomatous foredune grass 0",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.6,
-      1.0
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sand",
+      "sandstone"
      ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "none"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
+    "needs": [],
+    "color": "#4E7A4A",
+    "accent": "#F4F2EC",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      90,
+      240
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After a winter's cold stratification the stone sends up a thin red-brown shoot with narrow leaves, toothed toward the tip and pale beneath. Buried by blowing sand it roots along its stems and sends up new shoots, so a young plant becomes a loose, sprawling clump of wiry stems on the open dune.",
+     "confidence": "estimated",
+     "source": "USDA Woody Plant Seed Manual (Prunus: cold stratification 90-150 days); Flora of North America vol. 9 (P. pumila on dunes and sandy shores); first fruiting and lifespan estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ]
+    },
+    "source": "Prunus pumila, sand cherry: open dunes, beaches and sandy shores of the Great Lakes (var. pumila) and sandy or rocky ground of northeastern North America; sprawling to upright shrub 0.3-2 m, narrow leaves toothed toward the tip and pale beneath, white flowers and small purple-black cherries — Kew POWO; Flora of North America vol. 9 (Rosaceae).",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#5a3e34",
+      "secondary": "#8a6a5a",
+      "feature_cm": 0.5,
+      "roughness": 0.15,
+      "notes": "dark reddish-brown to grey, smooth, with pale lenticels"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.5
+     },
+     "leaf": {
+      "form": "oblanceolate",
+      "colour": "#4e7a4a",
+      "underside": "#a8b8a8",
+      "gloss": 0.25,
+      "veins": "pinnate",
+      "vein_colour": "#3e6a3a",
+      "margin": "serrate",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "narrow, widest above the middle, toothed only toward the tip, whitened beneath"
+     },
+     "flower": {
+      "colour": "#f6f4ee",
+      "secondary": "#e8d870",
+      "form": "white five-petalled flowers 1-1.5 cm in clusters of 2-4",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#2a1a24",
+      "form": "round cherries 0.8-1.5 cm, red ripening purple-black"
+     },
+     "seasonal": "deciduous; red autumn leaves",
+     "silhouette": "low sprawling clump of wiry stems on open sand",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 9; Kew POWO"
+    },
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 60,
-     "base": "truncate",
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "cuneate",
      "apex": "acute",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      30,
-      80
+      3.0,
+      7.0
      ],
      "compound": null,
      "texture": "matte",
      "confidence": "documented"
     },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 8,
-     "color": "#7A9A58",
-     "color_2": "#A8A880",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "tillers from deep rhizomes; pale sheath bases"
-    },
     "canopy": {
-     "form": "tussock",
+     "form": "mound",
      "gap": 0.35,
-     "layering": "even",
-     "droop": 0.4
+     "layering": "sparse",
+     "droop": 0.1
     },
     "tint": {
-     "hue_shift": 4,
-     "sat": 0.8,
-     "val": 1.0,
-     "underside": 0.1,
-     "autumn": "#C8B060",
-     "drop": false
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.45,
+     "autumn": "#B04030",
+     "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "leaf_drop"
     },
-    "silhouette": "upright grass tufts in lines",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      7,
-      21
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#5A3E34",
+     "color_2": "#8A6A5A",
+     "lenticels": "horizontal_bands",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
      ],
-     "height_years": [
-      1,
-      2.5
+     "taper_exponent": 1.6,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
      ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      8,
-      20
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.95,
+      0.8
      ],
-     "shade": "very_intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are uncommon (only 21-48% of florets set seed); most plants start as a rhizome piece or a planted culm that sends up a tuft of stiff, rolled, grey-green blades and 35-40 new culms in its first season. Rhizomes run 1-3.5 m a year under the sand, lining up new tufts; tufts thicken under burial and from year 2 send up tight, spike-like, straw-coloured panicles.",
-     "confidence": "estimated",
-     "source": "USDA NRCS plant guide (Ammophila breviligulata): >90% germination after cold stratification; 21-48% of florets set viable seed; one culm yields ~35-40 culms per season; rhizomes spread 1.2-3.5 m/yr, over 12 m from the parent; 0.3-1.5 m tall; tolerates ~30 cm of sand a year; seed heads late Jul-Aug. First seed and lifespan (decline on stable sand) estimated."
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "low sprawling clump of wiry stems on open sand",
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#f6f4ee",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      4
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#7a9a4a",
+     "ripe_colour": "#2a1a24",
+     "ripen_days": [
+      70,
+      100
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Flora of North America vol. 9 (flowers May-June with the leaves, in umbels of 2-4; drupes purple-black, 8-15 mm, ripe July-September); set, crop and decay estimated"
     }
    },
    {
-    "name": "Dune evening primrose",
-    "genus": "Oenothera",
-    "species": "drummondii",
-    "origin": "Gulf of Mexico coast",
-    "shape": "rosette",
+    "name": "Coastal rosemary",
+    "genus": "Westringia",
+    "species": "fruticosa",
+    "origin": "New South Wales, Australia",
+    "shape": "shrub",
     "temp_c": [
-     15,
-     26
+     14,
+     22
     ],
     "moisture": [
-     0.15,
-     0.5
-    ],
-    "height_m": [
-     0.2,
+     0.3,
      0.6
     ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
     "density": 0.3,
-    "soil": "sand",
-    "color": "#5AB040",
-    "accent": "#F0D040",
-    "source": "Oenothera drummondii, Gulf of Mexico dunes (widely naturalised), yellow-flowered sprawling herb 20-60 cm — Wikipedia",
+    "soil": "thin",
+    "color": "#8AA890",
+    "accent": "#E0E0F0",
+    "source": "Westringia fruticosa, New South Wales sea cliffs and headlands, grey-leaved rounded shrub 0.5-2 m — Wikipedia",
     "traits": {
-     "genus": "Oenothera",
-     "species": "drummondii",
-     "native_range": "Oenothera drummondii, Gulf of Mexico dunes (widely naturalised), yellow-flowered sprawling herb 20-60 cm — Wikipedia",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
+     "genus": "Westringia",
+     "species": "fruticosa",
+     "native_range": "Westringia fruticosa, New South Wales sea cliffs and headlands, grey-leaved rounded shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
      "height_m": [
-      0.2,
-      0.6
+      0.5,
+      2
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1270,71 +1738,149 @@
     "leaf_type": "broadleaf",
     "leaf": {
      "type": "simple",
-     "outline": "obovate",
-     "aspect": 3.5,
-     "base": "attenuate",
-     "apex": "obtuse",
+     "outline": "elliptic",
+     "aspect": 5.0,
+     "base": "cuneate",
+     "apex": "acute",
      "margin": "entire",
      "venation": "pinnate",
-     "arrangement": "alternate",
+     "arrangement": "whorled",
      "size_cm": [
-      2,
-      8
+      1,
+      2.5
      ],
      "compound": null,
      "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.1,
-     "scale_cm": 3,
-     "color": "#7A9A68",
-     "color_2": "#A0A088",
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.2,
+     "scale_cm": 0.8,
+     "color": "#8A8478",
+     "color_2": "#6A6458",
      "lenticels": "none",
-     "confidence": "documented",
-     "note": "decumbent grey-hairy stems"
+     "confidence": "estimated",
+     "note": "grey-brown finely fissured woody stems"
     },
     "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.2
+     "form": "rounded",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.05
     },
     "tint": {
-     "hue_shift": -3,
-     "sat": 0.65,
+     "hue_shift": -6,
+     "sat": 0.55,
      "val": 1.05,
-     "underside": 0.1
+     "underside": 0.4
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "grey-hairy sprawling mound",
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "compact grey-green rounded bush",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      7,
-      21
+      21,
+      60
      ],
      "height_years": [
-      0.3,
-      0.8
-     ],
-     "first_seed_years": 0.4,
-     "lifespan_years": [
       1.5,
       4
      ],
-     "shade": "very_intolerant",
-     "juvenile": "rosette",
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
      "juvenile_leaves": "same",
-     "juvenile_note": "Starts as a small rosette of soft, grey-silky, oblong leaves with a few shallow teeth; within weeks it sends out sprawling, hairy stems that lie along the sand with upturned tips, making a low grey-green mound. Large lemon-yellow flowers open at dusk and wilt orange by midday; the stems catch blowing sand, so the plant rides up with the dune.",
+     "juvenile_note": "The seedling is one upright stem with narrow, grey-green, rosemary-like leaves in whorls of four, felted white underneath with rolled-under edges. It branches freely from low down, so by its second year it is already a dense, rounded, grey-green bun of stiff leafy stems that flowers while still small.",
      "confidence": "estimated",
-     "source": "Estimated from Flora of North America (O. drummondii: annual or short-lived perennial of Gulf coast dunes, decumbent grey-strigose stems, yellow vespertine flowers) and invasive-range reports (flowers within its first season, spreads along coastal dunes)"
+     "source": "Wikipedia (Westringia fruticosa): coastal New South Wales shrub with white, hairy, two-lipped flowers spotted orange to purple, flowering all year. Size and fast growth from horticultural descriptions; germination (usually grown from cuttings), first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 4,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#f4f0f4",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.15,
+      0.25
+     ],
+     "unripe_colour": "#9aab70",
+     "ripe_colour": "#6a5238",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      7,
+      45
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (Westringia fruticosa, Westringia): white hairy flowers with a two-lobed upper lip and orange-to-purple spots, two fertile stamens, flowering all year. Flower size, fruit (four tiny nutlets held in the calyx), pollinators, timings and crop estimated from the genus and the mint family."
     }
-   },
+   }
+  ],
+  "ground": [
    {
     "name": "Lyme grass",
     "genus": "Leymus",
@@ -1444,7 +1990,11 @@
      "juvenile_note": "Seedlings are stiff, broad, blue-grey grass tufts on bare sand. They send out long rhizomes that throw up new tufts and grow up through burial by blowing sand, building low dunes of coarse, glaucous blue leaves topped by thick, wheat-like flower spikes up to about 1.5 m.",
      "confidence": "estimated",
      "source": "Wikipedia (Leymus arenarius: dune-building grass, notably in Iceland after volcanic events; salt-tolerant germination; nitrogen boosts growth and seed yield; mycorrhizae aid seedling survival); growth and ages estimated from dune-grass ecology."
-    }
+    },
+    "biomes": [
+     "DUNES",
+     "VOLCANIC_FIELD"
+    ]
    },
    {
     "name": "Marram grass",
@@ -1553,41 +2103,425 @@
      "juvenile_note": "Seedlings are rare (low seed viability and survival): a thin bright green blade in a damp dune slack, becoming a small tuft of in-rolled, sharp-tipped grey-green leaves. Most new plants grow from buried rhizome pieces. Tufts climb up through accreting sand, lengthening their leaves when buried, and become stiff, dense, spiky clumps of wiry rolled leaves up to 1.2 m.",
      "confidence": "estimated",
      "source": "Wikipedia (Ammophila arenaria: stems to 1.2 m; rhizomes grow 2 m sideways in 6 months; one clump makes ~100 new shoots a year; seeds ripen by September and germinate the next spring, low viability and seedling survival; flowers May-Aug, panicle to 30 cm; survives burial >1 yr). Clump growth, first flowering and lifespan estimated."
-    }
+    },
+    "biomes": [
+     "DUNES"
+    ]
    },
    {
-    "name": "Sand sedge",
-    "genus": "Carex",
-    "species": "arenaria",
-    "origin": "Europe and North Africa coasts",
-    "shape": "grass",
+    "name": "Bee orchid",
+    "genus": "Ophrys",
+    "species": "apifera",
+    "origin": "Europe and the Mediterranean",
+    "family": "Orchidaceae",
+    "shape": "rosette",
     "temp_c": [
-     3,
-     15
+     8,
+     17
     ],
     "moisture": [
-     0.2,
-     0.6
+     0.35,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "DUNES",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      0.1,
      0.4
     ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#5AA040",
-    "accent": "#C8B060",
-    "source": "Carex arenaria, European dunes, runs in straight lines from long rhizomes across bare sand, 10-40 cm — Wikipedia",
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4A8A4A",
+    "accent": "#D080A0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seed germinates only with a Tulasnella fungus, forming a tiny underground protocorm fed by the fungus for months to years. The first visible plant is a small rosette of 2-5 grey-green, oval-lance leaves that appears in autumn and grows slowly through winter; after several years a 20-40 cm stem rises in early summer with up to 12 flowers whose furry brown lip mimics a bee.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ophrys apifera (rosettes appear in autumn and grow through winter; flowers mid-April in S Europe, June-July in UK; 1-12 flowers; mostly self-pollinating in the north, Eucera bees in the Mediterranean; germination needs Tulasnella and may take months or years underground); Wells & Cox population studies (short-lived, often flowers once or twice)"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "dust seed by wind; germinates only where its fungus lives (reads mycorrhizal presence); most species need one specific pollinator"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mediterranean and W European grassland on lime. Mimics a bee; on chalk and limestone. Kew POWO.",
+    "orchid": {
+     "mycoheterotroph": false,
+     "specific_pollinator": true
+    },
     "traits": {
-     "genus": "Carex",
-     "species": "arenaria",
-     "native_range": "Carex arenaria, European dunes, runs in straight lines from long rhizomes across bare sand, 10-40 cm — Wikipedia",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
-     "petiole": "sheath",
+     "genus": "Ophrys",
+     "species": "apifera",
+     "native_range": "Mediterranean and W European grassland on lime",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
      "height_m": [
       0.1,
       0.4
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#7aa860",
+      "underside": "#7aa860",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#7aa860",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       10
+      ],
+      "notes": "small basal rosette of grey-green leaves, withered by flowering"
+     },
+     "flower": {
+      "colour": "#e888b8",
+      "secondary": "#5a3a20",
+      "form": "3-10 flowers up a 30 cm stem: pink sepals, furry brown-maroon lip with yellow markings like a bee",
+      "scent": "none"
+     },
+     "seasonal": "winter rosette, spring flower, summer dormant",
+     "silhouette": "thin pink-and-brown stem in short grass",
+     "confidence": "documented",
+     "refs": "Wikipedia Ophrys apifera, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA860",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Bracken",
+    "genus": "Pteridium",
+    "species": "aquilinum",
+    "origin": "Worldwide (cosmopolitan)",
+    "family": "Dennstaedtiaceae",
+    "shape": "fern",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     3000
+    ],
+    "biomes": [
+     "DUNES",
+     "JUNGLE",
+     "MARITIME_FOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS",
+     "VOLCANIC_FIELD"
+    ],
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A3A",
+    "accent": "#8A6A40",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      42,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      25,
+      72
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants appear 6-7 weeks after spores land on burnt or disturbed bare soil: the first fronds are small, simple and lobed, becoming finely divided and adult-like after about 18 weeks. After up to 10 fronds a rhizome starts, which may grow 2 m in the first year; by year two the patch can be about 2 m across, sending up single, triangular, much-divided fronds from underground.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pteridium aquilinum (young plants 6-7 weeks after spores shed; adult-like fronds after 18 weeks; rhizome to 217 cm in year 1; spores usually in the 3rd-4th season; cover under 5% below 25% of full sun); Wikipedia (individual rhizomes live up to 72 yr; colonies 650 to over 1,400 yr old)."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Every continent but Antarctica; dry hillsides, heath, burns — the first thing back after fire; toxic to browsers. Kew POWO.",
+    "cannot_be_browsed": true,
+    "traits": {
+     "genus": "Pteridium",
+     "species": "aquilinum",
+     "native_range": "Every continent but Antarctica",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.5,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#6aa848",
+      "underside": "#6aa848",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#6aa848",
+      "margin": "toothed",
+      "size_cm": [
+       50,
+       200
+      ],
+      "notes": "large triangular tripinnate fronds on tall wiry stems, held horizontally; whole colonies"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#7a6a3a",
+      "markings": "#7a6a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stiff brown-green stipe 1 m"
+     },
+     "seasonal": "deciduous: turns rust-orange then brown in autumn and stands dead through winter",
+     "silhouette": "knee-high to head-high green (autumn orange-brown) mass covering whole hillsides",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "tripinnate",
+      "leaflets": [
+       12,
+       24
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      50,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#B8702A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6A8A3A",
+     "color_2": "#3A2A1A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "American beachgrass",
+    "genus": "Ammophila",
+    "species": "breviligulata",
+    "origin": "Northeastern North America",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     0.6,
+     1.0
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#9EB870",
+    "accent": "#C8B060",
+    "source": "Ammophila breviligulata, Great Lakes and NE Atlantic dunes, rhizomatous foredune grass 0.6-1 m — USDA Plants",
+    "traits": {
+     "genus": "Ammophila",
+     "species": "breviligulata",
+     "native_range": "Ammophila breviligulata, Great Lakes and NE Atlantic dunes, rhizomatous foredune grass 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.6,
+      1.0
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1607,8 +2541,8 @@
      "venation": "parallel",
      "arrangement": "basal",
      "size_cm": [
-      10,
-      30
+      30,
+      80
      ],
      "compound": null,
      "texture": "matte",
@@ -1618,85 +2552,93 @@
      "pattern": "green_stem",
      "orientation": "none",
      "depth": 0.1,
-     "scale_cm": 5,
-     "color": "#7AA050",
-     "color_2": "#A8A070",
+     "scale_cm": 8,
+     "color": "#7A9A58",
+     "color_2": "#A8A880",
      "lenticels": "none",
      "confidence": "documented",
-     "note": "tufts in straight lines along a long rhizome; brown sheath bases"
+     "note": "tillers from deep rhizomes; pale sheath bases"
     },
     "canopy": {
      "form": "tussock",
-     "gap": 0.4,
-     "layering": "sparse",
-     "droop": 0.3
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.4
     },
     "tint": {
-     "hue_shift": 6,
-     "sat": 0.85,
+     "hue_shift": 4,
+     "sat": 0.8,
      "val": 1.0,
-     "underside": 0.05
+     "underside": 0.1,
+     "autumn": "#C8B060",
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "small tufts in straight lines",
+    "silhouette": "upright grass tufts in lines",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      10,
-      40
+      7,
+      21
      ],
      "height_years": [
       1,
-      2
+      2.5
      ],
      "first_seed_years": 2,
      "lifespan_years": [
-      2,
-      5
+      8,
+      20
      ],
      "shade": "very_intolerant",
      "juvenile": "tuft",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings are small tufts of narrow, channelled grey-green leaves and are rare in the wild. Established plants run a long straight rhizome just under the sand, sending up a small leafy shoot every few nodes, so the plant shows as neat straight lines of short tufts marching across dunes.",
+     "juvenile_note": "Seedlings are uncommon (only 21-48% of florets set seed); most plants start as a rhizome piece or a planted culm that sends up a tuft of stiff, rolled, grey-green blades and 35-40 new culms in its first season. Rhizomes run 1-3.5 m a year under the sand, lining up new tufts; tufts thicken under burial and from year 2 send up tight, spike-like, straw-coloured panicles.",
      "confidence": "estimated",
-     "source": "Noble, Bell & Harper 1979 J. Ecol. (clonal structure, straight rhizome lines with shoots at intervals); Wildlife Trusts / BSBI atlas (dune pioneer, open sand, 10-40 cm); germination from Schutz 2000 review of Carex; shoot lifespan estimated from genus"
-    }
+     "source": "USDA NRCS plant guide (Ammophila breviligulata): >90% germination after cold stratification; 21-48% of florets set viable seed; one culm yields ~35-40 culms per season; rhizomes spread 1.2-3.5 m/yr, over 12 m from the parent; 0.3-1.5 m tall; tolerates ~30 cm of sand a year; seed heads late Jul-Aug. First seed and lifespan (decline on stable sand) estimated."
+    },
+    "biomes": [
+     "DUNES"
+    ]
    },
    {
-    "name": "Sea oats",
-    "genus": "Uniola",
-    "species": "paniculata",
-    "origin": "Southeastern US and Caribbean",
+    "name": "Sand dropseed",
+    "genus": "Sporobolus",
+    "species": "cryptandrus",
+    "origin": "North America, Canada to Mexico",
     "shape": "tussock",
     "temp_c": [
-     16,
-     26
+     4,
+     22
     ],
     "moisture": [
-     0.15,
-     0.5
+     0.1,
+     0.35
+    ],
+    "biomes": [
+     "DUNES"
     ],
     "height_m": [
-     1,
-     2
+     0.3,
+     1
     ],
-    "density": 0.9,
+    "density": 0.5,
     "soil": "sand",
-    "color": "#B8B868",
+    "color": "#9AB070",
     "accent": "#C8B060",
-    "source": "Uniola paniculata, SE US Atlantic/Gulf and Caribbean foredunes, tall nodding seed heads 1-2 m — Wikipedia / USDA",
+    "source": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS",
     "traits": {
-     "genus": "Uniola",
-     "species": "paniculata",
-     "native_range": "Uniola paniculata, SE US Atlantic/Gulf and Caribbean foredunes, tall nodding seed heads 1-2 m — Wikipedia / USDA",
+     "genus": "Sporobolus",
+     "species": "cryptandrus",
+     "native_range": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS",
      "leaf_shape": "narrow grass blades in a dense tussock",
      "trunk": "none",
      "petiole": "sheath",
      "height_m": [
-      1,
-      2
+      0.3,
+      1
      ],
      "growth_rate": "medium",
      "reproduction": "",
@@ -1709,70 +2651,887 @@
     "leaf": {
      "type": "strap",
      "outline": "linear",
-     "aspect": 45,
+     "aspect": 40,
      "base": "truncate",
-     "apex": "acute",
+     "apex": "acuminate",
      "margin": "entire",
      "venation": "parallel",
-     "arrangement": "basal",
+     "arrangement": "distichous",
      "size_cm": [
-      20,
-      60
+      8,
+      25
      ],
      "compound": null,
      "texture": "matte",
      "confidence": "documented"
     },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 12,
-     "color": "#9AA860",
-     "color_2": "#C8B878",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "tall culms with straw-coloured nodes and nodding seed heads"
-    },
     "canopy": {
      "form": "tussock",
-     "gap": 0.4,
-     "layering": "clumped",
+     "gap": 0.5,
+     "layering": "even",
      "droop": 0.4
     },
     "tint": {
-     "hue_shift": 8,
-     "sat": 0.7,
-     "val": 1.05,
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 1.0,
      "underside": 0.05,
-     "autumn": "#C8B060",
+     "autumn": "#C8B878",
      "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall tufts with nodding golden heads",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#8AA070",
+     "color_2": "#C0B080",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "open tussock with fine loose seed heads",
     "growth": {
      "life": "perennial",
      "germination_days": [
       7,
-      28
+      30
      ],
      "height_years": [
       1,
-      3
+      2.5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      6,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a very thin single shoot with narrow flat leaves; slow and weak at first (low vigour), tillering into a small bunch during its first seasons. Mature: an open tuft of leafy stems with a fringe of white hairs at each leaf collar and pale, reddish or lead-coloured panicles that stay partly wrapped in the upper leaf sheath.",
+     "confidence": "documented",
+     "source": "USDA NRCS Plant Guide (hard seed coat, ~50% dormant, needs overwintering or scarification; low seedling vigour, defer grazing 2 yr; long-lived perennial bunchgrass 0.3-1 m); Utah State Univ. range plants (no rhizomes, seeds mature Jun-Aug)"
+    }
+   },
+   {
+    "name": "Sand-hill screw-moss",
+    "genus": "Syntrichia",
+    "species": "ruraliformis",
+    "origin": "Europe and North Africa, coastal dunes",
+    "family": "Pottiaceae",
+    "shape": "moss",
+    "temp_c": [
+     2,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 0.8,
+    "soil": {
+     "classes": [
+      "sand",
+      "karst"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#8A9A48",
+    "accent": "#C8C8B0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
      ],
      "first_seed_years": 2,
      "lifespan_years": [
-      10,
+      5,
       30
      ],
      "shade": "very_intolerant",
-     "juvenile": "tuft",
+     "juvenile": "mat",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedlings come up in spring on bare foredune sand as a single narrow grass shoot with thin, rolled leaves and deep roots. By the end of the first season it is a small tuft; in the second it tillers heavily and sends rhizomes 0.6-1.8 m a year, new shoots pushing up through blown sand. The tall arching culms with flat golden spikelets come later.",
+     "juvenile_note": "New patches start from spores or broken shoots lodged in loose sand: a green protonemal film, then tiny upright shoots. They grow up through sand as it is buried, 1-4 cm tall, forming loose golden-green carpets; each shoot is a star of recurved, hair-pointed leaves when wet and a tight silvery twist when dry.",
+     "confidence": "estimated",
+     "source": "Atherton, Bosanquet & Lawley 2010 Mosses and Liverworts of Britain and Ireland: a field guide (Syntrichia ruraliformis: yellowish-green patches on mobile and semi-fixed dunes, leaves recurved when moist with long hyaline hair-points, twisted when dry); establishment, growth and age estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Syntrichia ruraliformis (syn. Tortula ruraliformis), sand-hill screw-moss: the moss of mobile and grey dunes in Atlantic and Baltic Europe, binding the sand between marram tufts; shoots 1-4 cm in loose golden-green carpets, leaves with long silvery hair-points, twisting when dry — Atherton et al. 2010 (British Bryological Society field guide); EU habitat 2130.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "carpet",
+      "colour": "#8a9a48",
+      "underside": "#c8c8b0",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#8a9a48",
+      "margin": "entire",
+      "size_cm": [
+       0.2,
+       0.4
+      ],
+      "notes": "golden-green stars of recurved leaves with silvery hair-points when wet; tight silvery-brown twists when dry"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       4
+      ],
+      "texture": "carpet"
+     },
+     "seasonal": "golden-green wet, silvery-brown dry",
+     "silhouette": "golden-green moss carpets between marram tufts",
      "confidence": "documented",
-     "source": "USDA FEIS (Uniola paniculata): 30 days cold-moist at 4 C then 78-89% germination at alternating temperatures; seedlings establish in the first season and tiller extensively by the second; lateral spread 0.6-1.8 m a year; sand burial stimulates growth; flowers Jun-Nov; about 30% of ovaries set seed. Wikipedia: 1-2 m. First flowering and clump lifespan estimated."
+     "refs": "Atherton et al. 2010; British Bryological Society"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.2,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Dune cup lichen",
+    "genus": "Cladonia",
+    "species": "foliacea",
+    "origin": "Europe and North Africa, grey dunes",
+    "family": "Cladoniaceae",
+    "shape": "moss",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.1,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "sand",
+      "karst",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#C8CC8A",
+    "accent": "#F0F0E4",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts from a scrap of squamule blown or kicked onto open, stable dune sand: a few tiny yellow-green scales. They lengthen into narrow, forked, strap-like squamules up to 1.5 cm that curl inward when dry to show white undersides, slowly knitting into loose pale carpets between the grasses.",
+     "confidence": "estimated",
+     "source": "Smith et al. 2009 The Lichens of Great Britain and Ireland (Cladonia foliacea: squamules to 1.5 cm, yellow-green above, white below, inrolled when dry; on dunes and dry sandy or calcareous grassland); growth and ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores (which must meet their alga again) and, far more often, thallus fragments broken off and carried by wind, water and trampling; no flowers; grows only while wet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cladonia foliacea: lichen of grey (fixed) dunes and dry open sandy and calcareous grassland in Europe and North Africa; narrow forked squamules to 1.5 cm, yellow-green above and white below, curling up when dry into pale carpets; a character species of grey dunes — Smith et al. 2009 The Lichens of Great Britain and Ireland; EU Habitats Directive 2130.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "squamules",
+      "colour": "#c8cc8a",
+      "underside": "#f0f0e4",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#c8cc8a",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       1.5
+      ],
+      "notes": "narrow forked strap-like scales, yellow-green above and white below, curling inward when dry"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       2
+      ],
+      "texture": "curled squamules"
+     },
+     "seasonal": "white and curled when dry, greener and flatter when wet",
+     "silhouette": "pale yellow-white curled carpets on grey-dune sand",
+     "confidence": "documented",
+     "refs": "Smith et al. 2009; British Lichen Society"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.45,
+     "val": 1.2,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Heath reindeer lichen",
+    "genus": "Cladonia",
+    "species": "portentosa",
+    "origin": "Atlantic Europe and North America",
+    "family": "Cladoniaceae",
+    "shape": "cushion",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "biomes": [
+     "BOG",
+     "DUNES"
+    ],
+    "height_m": [
+     0.03,
+     0.08
+    ],
+    "density": 0.8,
+    "soil": {
+     "classes": [
+      "sand",
+      "granite",
+      "sandstone",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#D0D4C4",
+    "accent": "#B8BCA8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      10,
+      25
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A new patch starts from a broken fragment lodged in open heath or dune sand: a few pale, hollow, branching stalks a centimetre tall. Growing a few millimetres a year at the tips and dying at the base, they build dense, springy, pale grey-yellow cushions 3-8 cm deep, branching mostly in threes, the tips pointing every way.",
+     "confidence": "estimated",
+     "source": "Smith et al. 2009 The Lichens of Great Britain and Ireland (Cladonia portentosa: dense cushions to 8 cm, branching mostly in threes, tips not turned one way; dune heath and lowland heath); growth rate taken from reindeer lichens, ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores (which must meet their alga again) and, far more often, thallus fragments broken off and carried by wind, water and trampling; no flowers; grows only while wet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cladonia portentosa: the reindeer lichen of Atlantic lowland and dune heaths of Europe and coastal north-eastern (and, subsp. pacifica, north-western) North America; pale grey-yellow cushions 3-8 cm of hollow stalks branching mostly in threes, tips spreading every way (unlike C. rangiferina) — Smith et al. 2009; Brodo, Sharnoff & Sharnoff 2001 Lichens of North America.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#d4d8c4",
+      "underside": "#b8bca8",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#d4d8c4",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "pale grey-yellow, densely branched hollow stalks in springy cushions, tips spreading every way"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       8
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen; crisp and paler when dry",
+     "silhouette": "pale grey-yellow spongy cushions on heath sand",
+     "confidence": "documented",
+     "refs": "Smith et al. 2009; Brodo et al. 2001"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.3,
+     "val": 1.35,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Grey dune lichen",
+    "genus": "Cetraria",
+    "species": "aculeata",
+    "origin": "Europe, North America and the Arctic",
+    "family": "Parmeliaceae",
+    "shape": "cushion",
+    "temp_c": [
+     -10,
+     16
+    ],
+    "moisture": [
+     0.1,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.5,
+    "soil": {
+     "classes": [
+      "sand",
+      "granite",
+      "sandstone",
+      "till"
+     ],
+     "drainage": "sharp",
+     "ph": "acid",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#5A3E2E",
+    "accent": "#8A6A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts from a broken spiny fragment caught in bare, stable sand: a few stiff dark brown threads. These branch again and again into prickly, shiny, almost black tufts 1-5 cm tall that loosely cover the sand between the grasses, crunchy when dry and olive-brown when wet.",
+     "confidence": "estimated",
+     "source": "Smith et al. 2009 The Lichens of Great Britain and Ireland (Cetraria aculeata, syn. Cornicularia aculeata: shrubby, dark brown, spiny-branched tufts to 5 cm on sandy heaths and dunes); growth and ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores (which must meet their alga again) and, far more often, thallus fragments broken off and carried by wind, water and trampling; no flowers; grows only while wet"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cetraria aculeata (syn. Cornicularia aculeata), spiny heath lichen: fruticose lichen of grey dunes, sandy heaths and fell-fields, bipolar (Europe, North America, the Arctic and Antarctic); stiff, shiny dark brown spiny-branched tufts 1-5 cm — Smith et al. 2009; Index Fungorum; Brodo et al. 2001.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "spiny tufts",
+      "colour": "#5a3e2e",
+      "underside": "#4a3226",
+      "gloss": 0.35,
+      "veins": "none",
+      "vein_colour": "#5a3e2e",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       2
+      ],
+      "notes": "stiff, round, shiny dark brown to blackish branches bristling with tiny spines"
+     },
+     "mat": {
+      "height_cm": [
+       1,
+       5
+      ],
+      "texture": "spiny tufts"
+     },
+     "seasonal": "dark and crisp when dry, olive-brown when wet",
+     "silhouette": "dark brown prickly tufts on pale dune sand",
+     "confidence": "documented",
+     "refs": "Smith et al. 2009; Brodo et al. 2001"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.4,
+     "val": 0.55,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Dune stinkhorn",
+    "genus": "Phallus",
+    "species": "hadriani",
+    "origin": "Europe and North America, sandy ground",
+    "kingdom": "Fungi",
+    "family": "Phallaceae",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     22
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "biomes": [
+     "DUNES"
+    ],
+    "height_m": [
+     0.1,
+     0.2
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "sand"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.0,
+     "salinity": "tolerant"
+    },
+    "needs": [],
+    "color": "#F2EEE6",
+    "accent": "#5A5030",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.8
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium lives in the dune sand on buried plant debris; the fruiting body hatches from a pinkish-violet egg in hours and lasts a day or two. Flies carry the spores away in the slime; 'wind' stands in for the flies, 'rhizome' for the mycelium in the sand."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Phallus hadriani, dune stinkhorn: saprotroph of coastal sand dunes and sandy soils in Europe and North America; hatches from a pinkish-violet egg 3-6 cm into a white spongy stem 10-20 cm with an olive-brown slime-covered honeycombed head — Pegler, Laessoe & Spooner 1995 British Puffballs, Earthstars and Stinkhorns; Index Fungorum.",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#5a5030",
+      "secondary": "#f2eee6",
+      "form": "conical honeycombed head 3-5 cm under olive-brown spore slime, on a tall white spongy stem rising from a pinkish-violet egg",
+      "size_cm": [
+       3,
+       5
+      ],
+      "texture": "slimy honeycomb",
+      "gloss": 0.6,
+      "notes": "the egg's violet skin is left as a cup at the base"
+     },
+     "underside": {
+      "colour": "#f2eee6",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#f4f0e8",
+      "height_cm": [
+       10,
+       20
+      ]
+     },
+     "habit": "single or scattered in dune sand among marram",
+     "seasonal": "summer and autumn after rain; collapses in a day or two",
+     "silhouette": "tall white spongy column with a dark tip on sand",
+     "confidence": "documented",
+     "refs": "Pegler, Laessoe & Spooner 1995; First Nature (Phallus hadriani)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.35,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -1788,73 +3547,33 @@
    "where": "mobile yellow dunes facing the sea, bare drifting sand",
    "dominant": [
     "Marram grass",
-    "Sea oats"
+    "American beachgrass"
    ],
    "companion": [
-    "Bayberry"
+    "Wax myrtle",
+    "Beach plum",
+    "Sand cherry"
    ],
    "ground": [
     "Marram grass",
     "Lyme grass",
-    "Sea oats",
-    "American beachgrass",
-    "Dune evening primrose"
+    "American beachgrass"
    ],
    "catalogue": [],
    "cover": 0.3,
    "source": "Ammophila/Uniola mobile dune (Rodwell 2000 SD6; Ellenberg 1988 Ammophilion)"
   },
   {
-   "name": "Sand sedge grey dune",
-   "realm": "palearctic",
-   "where": "stabilised inland dunes, thin humus over sand, dry",
-   "dominant": [
-    "Sand sedge"
-   ],
-   "companion": [
-    "Creeping willow",
-    "Bayberry"
-   ],
-   "ground": [
-    "Sand sedge",
-    "Dune evening primrose",
-    "Lyme grass"
-   ],
-   "catalogue": [],
-   "cover": 0.4,
-   "source": "Carex arenaria fixed dune grassland (Rodwell 2000 SD10/SD11; Koelerion)"
-  },
-  {
-   "name": "Creeping willow dune slack",
-   "realm": "palearctic",
-   "where": "wet hollows between dunes reaching the water table",
-   "dominant": [
-    "Creeping willow"
-   ],
-   "companion": [],
-   "ground": [
-    "Sand sedge",
-    "Marram grass"
-   ],
-   "catalogue": [],
-   "cover": 0.5,
-   "source": "Salix repens dune slack (Rodwell 2000 SD15/SD16; Ranwell 1972)"
-  },
-  {
    "name": "Pine-juniper dune wood",
    "realm": "palearctic",
    "where": "old stabilised dune ridges far from the sea, dry poor sand",
    "dominant": [
-    "Scots pine",
-    "Dune pine"
+    "Scots pine"
    ],
-   "companion": [
-    "Coastal juniper",
-    "Creeping willow"
-   ],
+   "companion": [],
    "ground": [
-    "Sand sedge",
-    "Lyme grass"
+    "Lyme grass",
+    "Heath reindeer lichen"
    ],
    "catalogue": [],
    "cover": 0.65,
@@ -1865,12 +3584,11 @@
    "realm": "australasia",
    "where": "sheltered lee slopes and back dunes of Australian foredunes, sandy",
    "dominant": [
-    "Coastal wattle"
+    "Coastal rosemary"
    ],
    "companion": [],
    "ground": [
-    "Marram grass",
-    "Dune evening primrose"
+    "Marram grass"
    ],
    "catalogue": [],
    "cover": 0.5,

@@ -208,7 +208,11 @@
      "edible": "no",
      "confidence": "documented",
      "source": "European Atlas (male catkins 5-10 cm in clusters of 3-4; female catkins 1-2 cm in clusters of 2-6; flowering late Feb-May before the leaves; seeds ripen and disperse Sep-Nov) and Wikipedia (mature female cones ~1.5 x 1 cm in late autumn; seeds 1-2 mm, narrowly winged). Crop and rot times estimated."
-    }
+    },
+    "biomes": [
+     "FEN",
+     "FRESHWATER"
+    ]
    },
    {
     "name": "Northern white cedar",
@@ -387,7 +391,10 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA Silvics and FEIS (pollen late Apr-Jun; cones full grown mid-Aug, ripen Aug-Sep, open 7-10 days later; pale cinnamon brown, 8-13 mm; one tree ~9 L of cones = 60,000-260,000 seeds; good crops every 2-5 yr); Gymnosperm Database (cones 9-14 mm with 8 seeds; pollen cones 1-2 mm, reddish). Empty-cone persistence estimated."
-    }
+    },
+    "biomes": [
+     "FEN"
+    ]
    },
    {
     "name": "Tamarack",
@@ -568,6 +575,264 @@
      "edible": "no",
      "confidence": "documented",
      "source": "USDA Silvics (flowers late Apr-early May; cones ripen Aug-Sep, brown, oblong-ovoid, 13-19 mm; seed shed Sep through spring; vigorous open-grown trees up to 20,000 cones a year). Young-cone colour, set and persistence estimated."
+    },
+    "biomes": [
+     "BOG",
+     "FEN",
+     "TAIGA"
+    ]
+   },
+   {
+    "name": "Black ash",
+    "genus": "Fraxinus",
+    "species": "nigra",
+    "origin": "Northeastern North America",
+    "family": "Oleaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     -1,
+     10
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     12.0,
+     20.0
+    ],
+    "density": 0.35,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A48",
+    "accent": "#6E6A60",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      300,
+      700
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The winged seed has an immature embryo and a deep dormancy, so it usually comes up in the second spring: two narrow cotyledons, then opposite leaves of a few sessile, toothed leaflets. The sapling is a slender grey whip with stout opposite buds, growing slowly on wet muck; stump and root-collar sprouts are common after cutting.",
+     "confidence": "estimated",
+     "source": "Silvics of North America vol. 2 (Fraxinus nigra: medium-sized tree of swamps, bogs and poorly drained peaty bottoms; seed with an immature embryo, mostly germinating the second spring; sprouts from stumps); height curve, first seed, shade class and lifespan estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Fraxinus nigra, black ash, Newfoundland to Manitoba south to Iowa and Virginia, 12-20 m tree of swamps, rich fens and peaty bottoms — Silvics of North America vol. 2; Flora of North America; Kew POWO (accepted)",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a847a",
+      "secondary": "#6a645a",
+      "feature_cm": 1.5,
+      "roughness": 0.4,
+      "notes": "ash-grey, soft and corky, in fine scaly plates that rub off under the hand"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.25,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "compound",
+      "colour": "#5a8a48",
+      "underside": "#8aa878",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#7a9a68",
+      "margin": "serrate",
+      "size_cm": [
+       25,
+       40
+      ],
+      "notes": "opposite pinnate leaves of 7-11 oblong-lanceolate toothed leaflets, the side leaflets stalkless, rusty tufts at their bases beneath"
+     },
+     "flower": {
+      "colour": "#5a3a4a",
+      "secondary": "#8a7a50",
+      "form": "tiny purplish petal-less flowers in loose clusters before the leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#b09060",
+      "form": "flat oblong samaras 2.5-4 cm, winged all round, in hanging clusters"
+     },
+     "seasonal": "deciduous; leafs out late and drops early, dull yellow-brown in autumn",
+     "silhouette": "slender leaning trunk, narrow open crown of upright branches",
+     "confidence": "documented",
+     "refs": "Silvics of North America vol. 2; Flora of North America"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      25,
+      40
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 3.5,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "lateral leaflets sessile, finely serrate, long-acuminate"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 1.5,
+     "color": "#8A847A",
+     "color_2": "#6A645A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "soft corky scaly ash-grey bark"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#b89a50",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "leaf_drop"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 4,
+     "branch_angle_deg": [
+      25,
+      50
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.3,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.6,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#5a3a4a",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      100
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      2.5,
+      4.0
+     ],
+     "unripe_colour": "#9aaa60",
+     "ripe_colour": "#b09060",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      700
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Silvics of North America vol. 2 and Flora of North America (flowers before the leaves in spring, wind-pollinated; samaras 2.5-4 cm, winged all round, ripen late summer and fall through autumn and winter); months, set and crop estimated"
     }
    }
   ],
@@ -758,198 +1023,11 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Flora of North America (Betula pumila: catkins with the leaves in spring, infructescences 1-2.5 cm); genus pattern of wind pollination and catkins shattering on the twig in autumn and winter; counts are catkins, estimated."
-    }
-   },
-   {
-    "name": "Fen willow",
-    "genus": "Salix",
-    "species": "cinerea",
-    "origin": "Europe and Western Asia",
-    "shape": "shrub",
-    "temp_c": [
-     -4,
-     8
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     2,
-     6
-    ],
-    "density": 0.6,
-    "soil": "wet",
-    "color": "#7AA070",
-    "accent": "#8A7A5A",
-    "source": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
-    "traits": {
-     "genus": "Salix",
-     "species": "cinerea",
-     "native_range": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      2,
-      6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "oak",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "obovate",
-     "aspect": 2.8,
-     "base": "cuneate",
-     "apex": "acute",
-     "margin": "undulate",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      3,
-      9
-     ],
-     "compound": null,
-     "texture": "hairy_tomentose",
-     "confidence": "documented",
-     "note": "obovate to oblanceolate, dull green above, grey-tomentose beneath, margin entire to sinuate"
-    },
-    "canopy": {
-     "form": "mound",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.15
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.7,
-     "val": 0.9,
-     "underside": 0.5,
-     "autumn": "#c0b048",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "short_day",
-     "threshold_h": 12.0,
-     "response": "leaf_drop"
-    },
-    "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.35,
-     "scale_cm": 2,
-     "color": "#7A7670",
-     "color_2": "#5A544E",
-     "lenticels": "dots",
-     "confidence": "documented",
-     "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
-    },
-    "architecture": {
-     "model": "champagnat",
-     "habit": "shrub",
-     "orders": 4,
-     "branch_angle_deg": [
-      20,
-      50
-     ],
-     "taper_exponent": 1.5,
-     "sinuosity": 0.6,
-     "fork_height_frac": [
-      0.0,
-      0.1
-     ],
-     "buttress": "none",
-     "lean_max_deg": 20,
-     "live_crown_ratio": [
-      0.9,
-      0.7
-     ],
-     "self_prune": false,
-     "dead_limbs": 0.3,
-     "root_flare": false,
-     "spacing_m": 0.2,
-     "confidence": "documented"
-    },
-    "silhouette": "grey-green rounded bush of many stems",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      1,
-      2
-     ],
-     "height_years": [
-      4,
-      12
-     ],
-     "first_seed_years": 4,
-     "lifespan_years": [
-      30,
-      60
-     ],
-     "shade": "intolerant",
-     "juvenile": "multi_stem",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
-     "confidence": "estimated",
-     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
-    },
-    "fruiting": {
-     "flower_months": [
-      3,
-      4
-     ],
-     "hemisphere": "north",
-     "flower_days": 5,
-     "flower_size_cm": 2.5,
-     "flower_colour": "#dcd06a",
-     "flower_form": "catkin",
-     "flower_position": "twigs",
-     "flowers_per_cluster": [
-      30,
-      80
-     ],
-     "pollinators": [
-      "bee",
-      "bumblebee",
-      "fly",
-      "wind"
-     ],
-     "fruit_set": 0.6,
-     "fruit_kind": "capsule",
-     "fruit_shape": "elongated",
-     "fruit_size_cm": [
-      0.6,
-      1.0
-     ],
-     "unripe_colour": "#a9b77a",
-     "ripe_colour": "#c2b28e",
-     "ripen_days": [
-      40,
-      60
-     ],
-     "hang_days": [
-      3,
-      21
-     ],
-     "drop": "splits",
-     "rot_days": [
-      20,
-      60
-     ],
-     "crop_per_tree": [
-      20000,
-      400000
-     ],
-     "edible": "no",
-     "confidence": "estimated",
-     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
-    }
+    "biomes": [
+     "FEN",
+     "WET_MEADOW"
+    ]
    },
    {
     "name": "Shrubby cinquefoil",
@@ -1144,235 +1222,512 @@
      "edible": "no",
      "confidence": "estimated",
      "source": "Wikipedia (flowers 2-3 cm, pale to bright yellow, 5 petals, 15-25 stamens, early-late summer; fruit a cluster of long-haired achenes). Fruit size is the achene head in its persistent calyx; pollinator guilds, timing, set and crop estimated from Potentilla ecology."
-    }
-   }
-  ],
-  "ground": [
+    },
+    "biomes": [
+     "FEN",
+     "HOT_SPRING"
+    ]
+   },
    {
-    "name": "Black bog-rush",
-    "genus": "Schoenus",
-    "species": "nigricans",
-    "origin": "Europe, N Africa and W Asia",
-    "shape": "tussock",
+    "name": "Alder-leaved buckthorn",
+    "genus": "Rhamnus",
+    "species": "alnifolia",
+    "origin": "Northern North America",
+    "family": "Rhamnaceae",
+    "shape": "shrub",
     "temp_c": [
-     -2,
-     8
+     -4,
+     10
     ],
     "moisture": [
-     0.7,
-     1
+     0.65,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
     ],
     "height_m": [
-     0.2,
-     0.6
+     0.5,
+     1.5
     ],
-    "density": 0.6,
-    "soil": "peat",
-    "color": "#6A9A48",
-    "accent": "#2A2A2A",
-    "source": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 cm",
-    "traits": {
-     "genus": "Schoenus",
-     "species": "nigricans",
-     "native_range": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 c",
-     "leaf_shape": "narrow grass blades in a dense tussock",
-     "trunk": "none",
-     "petiole": "sheath",
-     "height_m": [
-      0.2,
-      0.6
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
-    "leaf": {
-     "type": "simple",
-     "outline": "linear",
-     "aspect": 60.0,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
-     "size_cm": [
-      15,
-      45
-     ],
-     "compound": null,
-     "texture": "matte",
-     "confidence": "documented",
-     "note": "wiry inrolled dark green basal leaves 1-2 mm wide (true aspect > 100) from shiny blackish sheaths"
-    },
-    "canopy": {
-     "form": "tussock",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.3
-    },
-    "tint": {
-     "hue_shift": -4,
-     "sat": 0.8,
-     "val": 0.75,
-     "underside": 0.0
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.3,
-     "scale_cm": 5,
-     "color": "#5A8A48",
-     "color_2": "#2A2020",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "wiry culms rising from glossy black-brown basal sheaths"
-    },
-    "silhouette": "wiry dark tussock with black bases",
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [],
+    "color": "#4A7A3A",
+    "accent": "#1E1418",
     "growth": {
      "life": "perennial",
      "germination_days": [
-      14,
-      42
+      60,
+      300
      ],
      "height_years": [
       3,
       8
      ],
-     "first_seed_years": 3,
+     "first_seed_years": 4,
      "lifespan_years": [
       15,
-      50
+      40
      ],
-     "shade": "intolerant",
-     "juvenile": "tuft",
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
      "juvenile_leaves": "same",
-     "juvenile_note": "Seedling a tiny tuft of thread-like leaves. Builds slowly into a dense, hard tussock of wiry, grey-green, rush-like leaves with glossy black-brown leaf bases; stiff flowering stems carry a small, flattened, blackish head with a longer leaf-like bract.",
+     "juvenile_note": "A bird-sown stone germinates after a winter in wet peat: a small shoot with oval, finely round-toothed leaves with strong parallel side veins. It branches from the base into a low, spreading, thornless shrub of a few grey-brown stems, with tiny greenish flowers in the leaf axils and red berries ripening to black.",
      "confidence": "estimated",
-     "source": "Sparling 1968, Biological Flora of the British Isles: Schoenus nigricans (tussock sedge of calcareous fens, dune slacks and bogs; slow establishment, long-lived tussocks); Stace; timings and ages estimated"
-    }
-   },
-   {
-    "name": "Bottle sedge",
-    "genus": "Carex",
-    "species": "rostrata",
-    "origin": "Circumboreal (N Hemisphere)",
-    "shape": "grass",
-    "temp_c": [
-     -7,
-     8
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 1.0,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
-    ],
-    "color": "#6AA850",
-    "accent": "#A8A050",
-    "source": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
-    "traits": {
-     "genus": "Carex",
-     "species": "rostrata",
-     "native_range": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
-     "leaf_shape": "narrow blades",
-     "trunk": "hollow jointed culms",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      1
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+     "source": "Flora of North America vol. 12 (Rhamnus alnifolia: shrubs to 1.5 m, thornless; leaves elliptic, crenate-serrate, 6-8 vein pairs; fens, swamps, wet thickets, calcareous); germination and ages estimated"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "grass",
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Rhamnus alnifolia, alder-leaved buckthorn, Newfoundland to British Columbia south to the Great Lakes and Rockies, thornless shrub to 1.5 m of rich fens, cedar swamps and wet calcareous thickets — Flora of North America vol. 12; Kew POWO (accepted)",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6a5e50",
+      "secondary": "#4a4038",
+      "feature_cm": 1,
+      "roughness": 0.15,
+      "notes": "smooth grey-brown stems with pale lenticels"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.4,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a7a3a",
+      "underside": "#7a9a68",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#6a8a58",
+      "margin": "crenate",
+      "size_cm": [
+       5,
+       10
+      ],
+      "notes": "elliptic, alder-like, finely round-toothed, with 6-8 straight parallel vein pairs"
+     },
+     "flower": {
+      "colour": "#c8d080",
+      "secondary": "#a0a860",
+      "form": "tiny petal-less greenish-yellow flowers, one to three in the leaf axils",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#1e1418",
+      "form": "round berry-like drupes 6-8 mm, red turning black"
+     },
+     "seasonal": "deciduous; yellowish in autumn",
+     "silhouette": "low spreading leafy shrub under tamarack and cedar",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 12; Go Botany Rhamnus alnifolia"
+    },
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 50.0,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "entire",
-     "venation": "parallel",
-     "arrangement": "basal",
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
      "size_cm": [
-      30,
-      90
+      5,
+      10
      ],
      "compound": null,
-     "texture": "waxy_glaucous",
+     "texture": "matte",
      "confidence": "documented",
-     "note": "glaucous channelled blades 2-7 mm wide, ascending, longer than the culms, in rhizomatous lawns"
+     "note": "elliptic, crenate-serrate, 6-8 pairs of prominent straight lateral veins"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6A5E50",
+     "color_2": "#4A4038",
+     "lenticels": "dots",
+     "confidence": "estimated"
     },
     "canopy": {
-     "form": "fastigiate",
+     "form": "mound",
      "gap": 0.4,
-     "layering": "even",
-     "droop": 0.3
+     "layering": "clumped",
+     "droop": 0.1
     },
     "tint": {
-     "hue_shift": -8,
-     "sat": 0.7,
-     "val": 1.0,
-     "underside": 0.05,
-     "autumn": "#c0a868",
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.25,
+     "autumn": "#a8a040",
      "drop": true
     },
     "photoperiod": {
-     "mode": "neutral"
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
     },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 10,
-     "color": "#7AA068",
-     "color_2": "#9A7A58",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "bluntly triangular culms with brown basal sheaths"
-    },
-    "silhouette": "upright glaucous sedge lawn",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      10,
-      40
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      55
      ],
-     "height_years": [
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#c8d080",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
       1,
       3
      ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      2,
-      5
+     "pollinators": [
+      "bee",
+      "fly"
      ],
-     "shade": "intolerant",
-     "juvenile": "tuft",
-     "juvenile_leaves": "same",
-     "juvenile_note": "A small tuft of narrow, glaucous, spongy-based leaves. Long rhizomes then run through the mud of pond and lake margins sending up upright shoots, forming extensive open swards in shallow water; fertile stems carry fat cylindrical female spikes of bottle-shaped beaked perigynia.",
+     "fruit_set": 0.4,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      0.8
+     ],
+     "unripe_colour": "#a83a2a",
+     "ripe_colour": "#1e1418",
+     "ripen_days": [
+      50,
+      80
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      50,
+      500
+     ],
+     "edible": "toxic",
      "confidence": "estimated",
-     "source": "Schutz 2000 Flora (Carex germination needs light and fluctuating temperatures); Flora of North America / BSBI (strongly rhizomatous, 30-120 cm, shallow water); shoot lifespan estimated from FEIS Carex utriculata/aquatilis accounts"
+     "source": "Flora of North America vol. 12 (flowers apetalous, 1-3 in axils, May-June; drupes black, 3-seeded); Rhamnus fruit purgative; set and crop estimated"
     }
    },
+   {
+    "name": "Autumn willow",
+    "genus": "Salix",
+    "species": "serissima",
+    "origin": "Northern North America",
+    "family": "Salicaceae",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     9
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     1.0,
+     4.0
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [],
+    "color": "#3E6A38",
+    "accent": "#D8D8A0",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The latest willow to shed its seed: cottony seed released in late summer and autumn germinates within a day or two on wet open marl or peat. The seedling is a slender shoot with glossy, finely toothed, lance-shaped leaves; it branches from the base into an upright clump of glossy yellow-brown to olive stems.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 7 (Salix serissima: shrubs 1-4 m; flowering as leaves emerge in late spring, capsules maturing late summer to autumn; calcareous fens, marly shores, swamps); willow seed short-lived and quick to germinate (USDA Woody Plant Seed Manual); ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Salix serissima, autumn willow, Newfoundland to Alberta south to the Great Lakes, shrub 1-4 m of calcareous fens and marly shores, capsules ripe in late summer and autumn — Flora of North America vol. 7; Kew POWO (accepted)",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7a6a50",
+      "secondary": "#5a4a38",
+      "feature_cm": 1,
+      "roughness": 0.15,
+      "notes": "smooth grey-brown; twigs glossy yellow-brown to olive"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.4,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e6a38",
+      "underside": "#a8b8a0",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a50",
+      "margin": "serrate",
+      "size_cm": [
+       4,
+       10
+      ],
+      "notes": "elliptic-lanceolate, finely gland-toothed, very glossy dark green above, pale and glaucous beneath"
+     },
+     "flower": {
+      "colour": "#d8d8a0",
+      "secondary": "#e6d870",
+      "form": "catkins 2-4 cm on short leafy shoots as the leaves open",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#b8a88a",
+      "form": "slender capsules splitting in late summer and autumn to release cottony seed"
+     },
+     "seasonal": "deciduous; cottony seed in autumn",
+     "silhouette": "upright glossy-leaved willow clump in the fen",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 7; Go Botany Salix serissima"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "elliptic to lanceolate, glandular-serrulate, glossy above, glaucous beneath"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7A6A50",
+     "color_2": "#5A4A38",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.9,
+     "val": 0.75,
+     "underside": 0.4,
+     "autumn": "#b8a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 3.0,
+     "flower_colour": "#d8d8a0",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.7,
+      1.2
+     ],
+     "unripe_colour": "#9aaa6a",
+     "ripe_colour": "#b8a88a",
+     "ripen_days": [
+      70,
+      110
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      10000,
+      200000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 7 (catkins on leafy branchlets, flowering late May-June; capsules 7-12 mm maturing July-October, the latest of the region's willows); set and crop estimated"
+    }
+   }
+  ],
+  "ground": [
    {
     "name": "Brown moss",
     "genus": "Scorpidium",
@@ -1475,230 +1830,10 @@
      "juvenile_note": "From a spore or, far more often, a broken shoot fragment: green protonema threads, then upright shoots. Shoots are thick and turgid, 5-20 cm long in water, with plump, concave leaves whose tips curve over like a scorpion's tail; green when submerged, turning glossy red-brown to purplish-black in sun. Forms loose, sprawling or floating mats in rich-fen pools.",
      "confidence": "estimated",
      "source": "Smith, The Moss Flora of Britain and Ireland, and BBS Field Guide (rich-fen brown moss, turgid falcate leaves, reddish-purple to blackish, capsules rare, spreads by fragments); fen moss growth studies (a few cm of shoot a year); spread and ages estimated"
-    }
-   },
-   {
-    "name": "Grass of Parnassus",
-    "genus": "Parnassia",
-    "species": "palustris",
-    "origin": "Circumboreal (N Hemisphere)",
-    "shape": "rosette",
-    "temp_c": [
-     -7,
-     6
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.3,
-    "soil": "peat",
-    "color": "#4A9A45",
-    "accent": "#F8F8F0",
-    "source": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
-    "traits": {
-     "genus": "Parnassia",
-     "species": "palustris",
-     "native_range": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.1,
-      0.3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "cordate",
-     "aspect": 1.2,
-     "base": "cordate",
-     "apex": "obtuse",
-     "margin": "entire",
-     "venation": "palmate",
-     "arrangement": "basal",
-     "size_cm": [
-      1,
-      4
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented",
-     "note": "long-stalked ovate-cordate basal leaves with 5-7 radiating veins; one clasping stem leaf"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.0
-    },
-    "tint": {
-     "hue_shift": 4,
-     "sat": 0.9,
-     "val": 0.9,
-     "underside": 0.15,
-     "autumn": "#b0a048",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.15,
-     "scale_cm": 3,
-     "color": "#6A9A50",
-     "color_2": "#8A8A60",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "single slender flower stem"
-    },
-    "silhouette": "small heart-leaf rosette with one white flower",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      14,
-      60
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2.5,
-     "lifespan_years": [
-      5,
-      15
-     ],
-     "shade": "intolerant",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Tiny seedlings with round cotyledons form a small rosette of long-stalked, heart-shaped, hairless, glossy leaves. The adult keeps this low rosette and sends up stiff stems, each with one clasping leaf and a single white cup flower with green veins and a ring of fringed, yellow-knobbed false stamens.",
-     "confidence": "estimated",
-     "source": "Estimated from the species' biology (tiny wind-dispersed seeds needing winter chilling, slow-developing rosettes of fens and wet dune slacks, short-lived perennial) as summarised in British and Nordic floras"
-    }
-   },
-   {
-    "name": "Marsh marigold",
-    "genus": "Caltha",
-    "species": "palustris",
-    "origin": "Circumboreal (N Hemisphere)",
-    "shape": "rosette",
-    "temp_c": [
-     -7,
-     8
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.15,
-     0.5
-    ],
-    "density": 0.5,
-    "soil": "wet",
-    "color": "#3F8A3A",
-    "accent": "#F0C020",
-    "source": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
-    "traits": {
-     "genus": "Caltha",
-     "species": "palustris",
-     "native_range": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
-     "leaf_shape": "leaves in a ground rosette",
-     "trunk": "none — stemless",
-     "petiole": "short or none",
-     "height_m": [
-      0.15,
-      0.5
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "broadleaf",
-    "leaf": {
-     "type": "simple",
-     "outline": "reniform",
-     "aspect": 0.8,
-     "base": "cordate",
-     "apex": "rounded",
-     "margin": "crenate",
-     "venation": "palmate",
-     "arrangement": "basal",
-     "size_cm": [
-      4,
-      12
-     ],
-     "compound": null,
-     "texture": "glossy",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "rosette",
-     "gap": 0.3,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 0,
-     "sat": 1.0,
-     "val": 0.8,
-     "underside": 0.2,
-     "autumn": "#b0a040",
-     "drop": true
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "green_stem",
-     "orientation": "none",
-     "depth": 0.2,
-     "scale_cm": 5,
-     "color": "#5A8A40",
-     "color_2": "#8A6A50",
-     "lenticels": "none",
-     "confidence": "documented",
-     "note": "hollow succulent stems, brownish at the base"
-    },
-    "silhouette": "low mound of glossy round leaves",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      21,
-      60
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      10,
-      30
-     ],
-     "shade": "intermediate",
-     "juvenile": "rosette",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then long-stalked round to kidney-shaped glossy leaves with scalloped edges, a small version of the adult. It builds a low leafy rosette/clump from a short thick rootstock over 1-2 years and flowers (bright yellow cups) from about the second or third spring; clumps widen slowly by branching of the rootstock.",
-     "confidence": "estimated",
-     "source": "Jelitto seed (germinates in 3-4 weeks at ~20C); SDSU Native Plant propagation (60-day cold-moist treatment or fall sowing; low germination; sun to shade); Wikipedia/MBG (10-80 cm, marshes and wet woodland, dies back in winter); time to flower and lifespan estimated from growers and growth form"
-    }
+    "biomes": [
+     "FEN"
+    ]
    },
    {
     "name": "Saw sedge",
@@ -1811,6 +1946,1625 @@
      "juvenile_note": "Seedlings are rare: a small tuft of narrow keeled leaves. Established plants spread by stout rhizomes into dense stands of big grey-green leaf fans; the long stiff leaves have saw-toothed edges and keels that can cut skin. Each shoot grows several years, flowers once with a tall branched brown panicle, then dies, leaving a mass of dead leaves.",
      "confidence": "estimated",
      "source": "Conway 1942 J. Ecol. (Cladium mariscus biology: shoots grow 2-4 yr then flower once and die, seedlings rare, clonal stands in fens) as summarised in BSBI and Wildlife Trust accounts; germination needs light and fluctuating temperature; values estimated"
+    },
+    "biomes": [
+     "FEN"
+    ]
+   },
+   {
+    "name": "Royal fern",
+    "genus": "Osmunda",
+    "species": "regalis",
+    "origin": "Europe, Africa and the Americas",
+    "family": "Osmundaceae",
+    "shape": "fern",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "FEN",
+     "FRESHWATER",
+     "SWAMP"
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#5A9A4A",
+    "accent": "#8A5A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      45,
+      120
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Short-lived green spores germinate within 1-3 days into heart-shaped prothalli on wet mud; the first fronds are tiny, fan-shaped and lobed, then once-pinnate. Over several years it builds a tufted crown of tall, bipinnate, pale-green fronds with oblong leaflets; new fronds unroll coppery-red and woolly, and fertile tips carry rust-brown, flower-like spore clusters.",
+     "confidence": "estimated",
+     "source": "SANBI PlantZAfrica (green spores germinate within a day; grows in shade or full sun if wet; 1.5 m, to 3.3 m in Europe); Illinois Wildflowers (spreads slowly, crowns live to ~100 years); years to full size and first fertile fronds estimated from Osmundaceae cultivation"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bogs, fen carr and swamp edges worldwide; the biggest European fern. Kew POWO.",
+    "water_depth_m": [
+     0.05,
+     0.3
+    ],
+    "traits": {
+     "genus": "Osmunda",
+     "species": "regalis",
+     "native_range": "Bogs, fen carr and swamp edges worldwide",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#5aa858",
+      "underside": "#5aa858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#5aa858",
+      "margin": "toothed",
+      "size_cm": [
+       100,
+       200
+      ],
+      "notes": "large bipinnate fronds with oval separate leaflets; rusty brown fertile tassels at the frond tips"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a6a4a",
+      "markings": "#8a6a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stipe pinkish-brown when young"
+     },
+     "seasonal": "deciduous: yellow-brown in autumn",
+     "silhouette": "big rounded 1.5 m clump with brown flower-like tassels",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       10,
+       18
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.5,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#C8A040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7AA858",
+     "color_2": "#8A5A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Lady fern",
+    "genus": "Athyrium",
+    "species": "filix-femina",
+    "origin": "Circumboreal (northern hemisphere)",
+    "family": "Athyriaceae",
+    "shape": "fern",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "biomes": [
+     "FEN",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "height_m": [
+     0.4,
+     1.2
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A9A4A",
+    "accent": "#6A5A3A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout in 10-15 days into heart-shaped prothalli on damp soil; about 3 months later the first tiny fronds unroll, simple and fan-lobed, then pinnate. A one-year plant is a loose shuttlecock of soft, lacy, pale-green twice-pinnate fronds 30-45 cm long, often on reddish stalks, from an upright crown; it dies back each autumn.",
+     "confidence": "documented",
+     "source": "Univ. Washington ESRM 412 propagation protocol (spores germinate in 10-15 d, sporophytes ~3 months, 45 cm plant with 7 fronds in 1 yr, spore-bearing fronds 2 yr after germination); NC State Extension; Minnesota Wildflowers; lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Circumboreal damp woods and streamsides; lacy, deciduous. Kew POWO.",
+    "traits": {
+     "genus": "Athyrium",
+     "species": "filix-femina",
+     "native_range": "Circumboreal damp woods and streamsides",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.4,
+      1.2
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#7ab848",
+      "margin": "toothed",
+      "size_cm": [
+       30,
+       100
+      ],
+      "notes": "lacy finely bipinnate light green fronds in an arching shuttlecock; delicate"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a5a4a",
+      "markings": "#8a5a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stipe reddish at base"
+     },
+     "seasonal": "deciduous: yellows and browns in autumn",
+     "silhouette": "soft light green lacy tufts by streams",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       40,
+       80
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 4,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      100
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#C8A83A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA848",
+     "color_2": "#7A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
+   },
+   {
+    "name": "Cattail",
+    "genus": "Typha",
+    "species": "latifolia",
+    "origin": "Northern Hemisphere (circumboreal)",
+    "shape": "reed",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     1.5,
+     3
+    ],
+    "density": 1.2,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#6AB048",
+    "accent": "#6A4A2A",
+    "source": "Typha latifolia, N Hemisphere lake and pond margins (T. domingensis pantropical), brown sausage heads 1.5-3 m — Wikipedia",
+    "traits": {
+     "genus": "Typha",
+     "species": "latifolia",
+     "native_range": "Typha latifolia, N Hemisphere lake and pond margins (T",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      100,
+      250
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "flat spongy grey-green blades 1-2.5 cm wide, 1-3 m long, two-ranked from the base (true aspect ~100)"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 30,
+     "color": "#7AA860",
+     "color_2": "#A8A878",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "round green flower culm inside the leaf fans"
+    },
+    "silhouette": "flat sword-leaf fans with brown sausage heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      0.3,
+      1.2
+     ],
+     "first_seed_years": 1.1,
+     "lifespan_years": [
+      1,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germinates on wet mud or in shallow water: a hair-like shoot, then 2-4 tiny leaves and 2-6 ribbon leaves floating flat on the water before stiff, erect, flat grey-green leaves rise. By the end of its first summer a seedling is 60-85 cm tall and has sent rhizomes out into a clump up to 3 m across. Each shoot lives about a year; the clone persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Typha latifolia): germinates best at 25-30 C in high light; 2-4 small then 2-6 floating leaves before erect ones; seedlings 60-85 cm after 84 d; flowers early in 2nd year; ramets die within a year, rhizomes live about 2 yr; one seedling's rhizomes spread 3 m in a season; shade intolerant."
+    },
+    "biomes": [
+     "FEN",
+     "FRESHWATER",
+     "FRESHWATER_MARSH",
+     "HOT_SPRING",
+     "SWAMP"
+    ]
+   },
+   {
+    "name": "Hair sedge",
+    "genus": "Carex",
+    "species": "capillaris",
+    "origin": "Circumboreal and Arctic-alpine",
+    "family": "Cyperaceae",
+    "shape": "grass",
+    "temp_c": [
+     -10,
+     10
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.05,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#6A9A50",
+    "accent": "#8A6A40",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small dense tuft of short, flat, bright green leaves on wet, base-rich ground. It stays tufted, without running rhizomes; thread-thin stems lift a small male spike and a few tiny female spikes that hang on hair-fine stalks.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 23 and Stace (Carex capillaris: densely tufted, 5-40 cm; female spikes pendulous on capillary peduncles; calcareous fens, flushes, wet tundra and mountain grassland); ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "water",
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Carex capillaris, hair sedge, circumboreal and arctic-alpine, dense tufts 5-40 cm of calcareous fens, flushes and wet base-rich grassland with nodding spikes on hair-thin stalks — Flora of North America vol. 23; Stace; Kew POWO (accepted)",
+    "appearance": {
+     "leaf": {
+      "form": "strap",
+      "colour": "#6a9a50",
+      "underside": "#7aaa60",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#6a9a50",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       15
+      ],
+      "notes": "short flat bright green blades 1-3 mm wide in a dense tuft"
+     },
+     "flower": {
+      "colour": "#8a6a40",
+      "secondary": "#c8b890",
+      "form": "tiny brown female spikes nodding on hair-fine stalks below a small male spike",
+      "scent": "none"
+     },
+     "seasonal": "summer-green; straw in autumn",
+     "silhouette": "small bright tuft with dangling brown spikes",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 23; Stace, New Flora of the British Isles"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "flat, 1-3 mm wide, shorter than the stems"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#7AAA60",
+     "color_2": "#8A6A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thread-slender stems"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#b09060",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 15.0,
+     "response": "flower"
+    }
+   },
+   {
+    "name": "Inland sedge",
+    "genus": "Carex",
+    "species": "interior",
+    "origin": "North America",
+    "family": "Cyperaceae",
+    "shape": "grass",
+    "temp_c": [
+     -5,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.15,
+     0.7
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [],
+    "color": "#6A9A48",
+    "accent": "#9A8A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small, dense tuft of very narrow green leaves on wet peat or marl. It stays tufted; slender stems carry three or four small, rounded, star-like spikelets spaced along the top, their beaked seed sacs spreading outward like little burrs.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 23 (Carex interior: densely cespitose, 15-70 cm, spikes 3-4 with spreading perigynia (sect. Stellulatae); fens, sedge meadows, swamps, calcareous seeps); ages estimated"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "water",
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Carex interior, inland sedge (Mike's fen sedge), North America, dense tufts 15-70 cm of rich fens, sedge meadows and cedar swamps with small star-like spikes — Flora of North America vol. 23; Kew POWO (accepted)",
+    "appearance": {
+     "leaf": {
+      "form": "strap",
+      "colour": "#6a9a48",
+      "underside": "#7aa858",
+      "gloss": 0.15,
+      "veins": "parallel",
+      "vein_colour": "#6a9a48",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       30
+      ],
+      "notes": "very narrow blades 1-2.5 mm wide in a dense tuft"
+     },
+     "flower": {
+      "colour": "#9a8a50",
+      "secondary": "#6a5a30",
+      "form": "three or four small round spikes with spreading beaked seed sacs, star-like",
+      "scent": "none"
+     },
+     "seasonal": "summer-green; straw-brown in autumn",
+     "silhouette": "fine-leaved tuft with little starry heads",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 23; Go Botany Carex interior"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "narrow, 1-2.5 mm wide"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#7AA058",
+     "color_2": "#8A7A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "slender three-angled stems"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#b8a060",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
+   },
+   {
+    "name": "Golden fuzzy fen moss",
+    "genus": "Tomentypnum",
+    "species": "nitens",
+    "origin": "Circumboreal (N Hemisphere)",
+    "family": "Brachytheciaceae",
+    "shape": "moss",
+    "temp_c": [
+     -10,
+     8
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.04,
+     0.12
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [],
+    "color": "#A8902E",
+    "accent": "#6A4A28",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Mostly from shoot fragments on wet, base-rich peat: upright, little-branched shoots whose stems are felted with rusty-brown rhizoids, clothed in narrow, glossy, lengthwise-pleated golden-green leaves. Shoots pack into firm golden turfs and low hummocks that the next fen plants root into.",
+     "confidence": "estimated",
+     "source": "Flora of North America vol. 28 and the BBS Field Guide (Tomentypnum nitens: stems densely tomentose, leaves plicate, golden-green, glossy; rich fens and wet calcareous flushes, circumboreal); growth and ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tomentypnum nitens, golden fuzzy fen moss (woolly feather-moss), circumboreal, glossy golden turfs on felted brown stems in rich fens — Flora of North America vol. 28; BBS Field Guide",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "upright",
+      "colour": "#a8902e",
+      "underside": "#c0a848",
+      "gloss": 0.5,
+      "veins": "none",
+      "vein_colour": "#a8902e",
+      "margin": "entire",
+      "size_cm": [
+       0.25,
+       0.45
+      ],
+      "notes": "narrow, lengthwise-pleated, glossy golden-green leaves on stems thickly felted with rusty-brown hairs"
+     },
+     "mat": {
+      "height_cm": [
+       4,
+       12
+      ],
+      "texture": "upright"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "glossy golden turf on the fen",
+     "confidence": "documented",
+     "refs": "Flora of North America vol. 28; BBS Field Guide"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.25,
+      0.45
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "lanceolate, strongly plicate, erect; costa single (drawn without veins at this scale)"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Yellow starry feather-moss",
+    "genus": "Campylium",
+    "species": "stellatum",
+    "origin": "Circumboreal (N Hemisphere)",
+    "family": "Amblystegiaceae",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [],
+    "color": "#A8A038",
+    "accent": "#8A7A30",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "From a spore or a broken shoot: green protonema threads on wet base-rich peat or mud, then erect to sprawling shoots whose leaves stand out at right angles from a broad base into a long fine point, so each shoot tip looks like a little star from above. Shoots knit into loose, glossy yellow-green to golden-brown patches among sedges.",
+     "confidence": "estimated",
+     "source": "Smith, The Moss Flora of Britain and Ireland, and the BBS Field Guide (Campylium stellatum: base-rich fens, flushes and wet calcareous grassland; leaves squarrose from an erect base, golden); growth rate and ages estimated"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "self",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Campylium stellatum, yellow starry feather-moss, circumboreal, golden-green patches in rich fens, flushes and base-rich wet meadows — Smith, Moss Flora of Britain and Ireland; BBS Field Guide",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "star",
+      "colour": "#a8a038",
+      "underside": "#c0b050",
+      "gloss": 0.4,
+      "veins": "none",
+      "vein_colour": "#a8a038",
+      "margin": "entire",
+      "size_cm": [
+       0.15,
+       0.3
+      ],
+      "notes": "leaves spreading at right angles from a broad clasping base into a long channelled point; shoot tips star-like; golden-green and glossy"
+     },
+     "mat": {
+      "height_cm": [
+       2,
+       8
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "glossy golden-green starry patches among sedges",
+     "confidence": "documented",
+     "refs": "BBS Field Guide; Smith, Moss Flora of Britain and Ireland"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 4.0,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.15,
+      0.3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "broad cordate-ovate base narrowed to a long squarrose acumen; costa short or absent"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "biomes": [
+     "FEN",
+     "WET_MEADOW"
+    ]
+   },
+   {
+    "name": "Honey waxcap",
+    "genus": "Hygrocybe",
+    "species": "reidii",
+    "origin": "Europe",
+    "kingdom": "Fungi",
+    "family": "Hygrophoraceae",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#E86A28",
+    "accent": "#F0C060",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.4
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the fruiting body lasts days to weeks. 'rhizome' here = the mycelium spreading through soil, moss or wood; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Hygrocybe reidii, honey waxcap, Europe, unimproved grassland including damp mown meadows and fen grassland; cap 1-4 cm orange, honey smell — Index Fungorum; Phillips, Mushrooms",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e86a28",
+      "secondary": "#f0a040",
+      "form": "small convex to flat cap, dry, orange to orange-scarlet",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "smooth-dry",
+      "gloss": 0.2,
+      "notes": "smells of honey as it dries"
+     },
+     "underside": {
+      "colour": "#f0c060",
+      "type": "waxy pale yellow to orange gills, adnate to slightly decurrent"
+     },
+     "stipe": {
+      "colour": "#e88a40",
+      "height_cm": [
+       2,
+       5
+      ]
+     },
+     "habit": "scattered in old unfertilised turf, damp mown meadows and mossy fen grassland",
+     "seasonal": "fruits in autumn",
+     "silhouette": "little orange buttons in mossy turf",
+     "confidence": "documented",
+     "refs": "Index Fungorum; Phillips, Mushrooms; First Nature (Hygrocybe reidii)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.25,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Olive earthtongue",
+    "genus": "Microglossum",
+    "species": "olivaceum",
+    "origin": "Europe and North America",
+    "kingdom": "Fungi",
+    "family": "Leotiaceae",
+    "shape": "rosette",
+    "temp_c": [
+     0,
+     16
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#7A7A40",
+    "accent": "#A89A60",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      8
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.4
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the fruiting body lasts days to weeks. 'rhizome' here = the mycelium spreading through soil, moss or wood; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Microglossum olivaceum, olive earthtongue, Europe and North America, among moss in calcareous fens and unimproved grassland; club 2-6 cm olive-brown — Index Fungorum; Phillips, Mushrooms",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#7a7a40",
+      "secondary": "#a89a60",
+      "form": "olive-brown to olive-green flattened club, the head often grooved, on a paler smooth stem",
+      "size_cm": [
+       2,
+       6
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "the head is a darker, laterally compressed tongue"
+     },
+     "underside": {
+      "colour": "#7a7a40",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#a89a60",
+      "height_cm": [
+       1,
+       4
+      ]
+     },
+     "habit": "scattered among moss in calcareous fen and old unimproved grassland",
+     "seasonal": "fruits late summer to autumn",
+     "silhouette": "small olive tongues in the fen moss",
+     "confidence": "documented",
+     "refs": "Index Fungorum; Phillips, Mushrooms; First Nature (Microglossum olivaceum)"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.7,
+     "val": 0.7,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Alder bracket",
+    "genus": "Mensularia",
+    "species": "radiata",
+    "origin": "Europe, Asia and North America",
+    "kingdom": "Fungi",
+    "family": "Hymenochaetaceae",
+    "shape": "rosette",
+    "temp_c": [
+     -4,
+     14
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "biomes": [
+     "FEN"
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#8A5A28",
+    "accent": "#E0B040",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      10
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.5
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the fruiting body lasts days to weeks. 'rhizome' here = the mycelium spreading through soil, moss or wood; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Mensularia radiata (Mike's Inonotus radiatus, the older name), alder bracket, Europe, Asia and North America, tiered brackets 2-8 cm on dead and dying alder and other hardwoods in wet woods and fen carr — Index Fungorum; Phillips, Mushrooms",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a5a28",
+      "secondary": "#e0b040",
+      "form": "thin shelf brackets in overlapping tiers, rusty to dark brown, radially wrinkled, with a bright yellowish growing margin",
+      "size_cm": [
+       2,
+       8
+      ],
+      "texture": "velvety",
+      "gloss": 0.2,
+      "notes": "fresh brackets ochre-rust and zoned; old ones blackish and cracked"
+     },
+     "underside": {
+      "colour": "#b08050",
+      "type": "fine pores, pale grey-brown with a silvery sheen"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "tiers of brackets on dead and dying alder trunks and branches",
+     "seasonal": "fruits late summer to autumn; old brackets persist",
+     "silhouette": "rusty tiered shelves up an alder trunk",
+     "confidence": "documented",
+     "refs": "Index Fungorum (Mensularia radiata, syn. Inonotus radiatus); Phillips, Mushrooms; First Nature"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.1,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.1,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -1825,11 +3579,10 @@
     "Saw sedge"
    ],
    "companion": [
-    "Fen willow"
+    "Grey alder"
    ],
    "ground": [
     "Saw sedge",
-    "Marsh marigold",
     "Brown moss"
    ],
    "catalogue": [],
@@ -1841,16 +3594,15 @@
    "realm": "palearctic",
    "where": "spring-fed seepage slopes and flushes, marl, base-rich",
    "dominant": [
-    "Black bog-rush"
+    "Hair sedge"
    ],
    "companion": [
     "Shrubby cinquefoil"
    ],
    "ground": [
-    "Black bog-rush",
+    "Hair sedge",
     "Brown moss",
-    "Grass of Parnassus",
-    "Bottle sedge"
+    "Yellow starry feather-moss"
    ],
    "catalogue": [],
    "cover": 0.4,
@@ -1864,16 +3616,14 @@
    ],
    "where": "lake margins and quaking mats, neutral peat, permanently wet",
    "dominant": [
-    "Bottle sedge",
     "Brown moss"
    ],
    "companion": [
     "Bog birch"
    ],
    "ground": [
-    "Bottle sedge",
-    "Brown moss",
-    "Marsh marigold"
+    "Inland sedge",
+    "Brown moss"
    ],
    "catalogue": [],
    "cover": 0.45,
@@ -1889,12 +3639,15 @@
    ],
    "companion": [
     "Bog birch",
-    "Shrubby cinquefoil"
+    "Shrubby cinquefoil",
+    "Black ash",
+    "Alder-leaved buckthorn",
+    "Autumn willow"
    ],
    "ground": [
-    "Bottle sedge",
-    "Marsh marigold",
-    "Brown moss"
+    "Inland sedge",
+    "Brown moss",
+    "Golden fuzzy fen moss"
    ],
    "catalogue": [],
    "cover": 0.7,
@@ -1905,15 +3658,13 @@
    "realm": "palearctic",
    "where": "stream-side fen and drainage lines, wet mineral-rich peat",
    "dominant": [
-    "Grey alder",
-    "Fen willow"
+    "Grey alder"
    ],
    "companion": [
     "Bog birch"
    ],
    "ground": [
-    "Bottle sedge",
-    "Marsh marigold",
+    "Royal fern",
     "Saw sedge"
    ],
    "catalogue": [],

@@ -1,0 +1,2171 @@
+{
+ "key": "MEDITERRANEAN_SCRUB",
+ "name": "Mediterranean scrub",
+ "archived": "2026-10-01 §CC trim",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Coast live oak",
+    "genus": "Quercus",
+    "species": "agrifolia",
+    "origin": "Coastal California and Baja California",
+    "shape": "broadleaf",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#2F6A35",
+    "accent": "#5A5045",
+    "source": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora",
+    "traits": {
+     "genus": "Quercus",
+     "species": "agrifolia",
+     "native_range": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.6,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      7
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6E6660",
+     "color_2": "#4A4038",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 1.2,
+     "confidence": "documented"
+    },
+    "silhouette": "broad dark dome on short forked trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      50
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the soil and first drives down a taproot (about 70 cm in 2 months). The shoot is a thin, reddish, downy stem with small, cupped, glossy, spiny-toothed evergreen leaves. Seedlings grow slowly in the shade of shrubs or grass for years, then form a slender sapling before spreading into a broad dome; it resprouts strongly after fire.",
+     "confidence": "documented",
+     "source": "USDA FEIS Quercus agrifolia (acorns germinate 15-50 d after falling, no dormancy; taproot ~70 cm in 2 months; slow natural top growth; recruitment best in shade; shade tolerant throughout life; 6-25 m; trees may live over 250 yr); first acorn age estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 6,
+     "flower_colour": "#c9bf6a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "nut",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2.5,
+      3.8
+     ],
+     "unripe_colour": "#8aa35a",
+     "ripe_colour": "#7a4e2a",
+     "ripen_days": [
+      170,
+      220
+     ],
+     "hang_days": [
+      10,
+      150
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS Quercus agrifolia (catkins Mar-Apr, wind-pollinated; acorns 2.5-3.8 cm, the only California black oak maturing in 1 year, ripen Sep-Oct; most drop in fall, some hang until spring; crop failures ~half of years; scrub jays cache ~5,000 acorns each); acorn meal was leached and cooked"
+    }
+   },
+   {
+    "name": "Stone pine",
+    "genus": "Pinus",
+    "species": "pinea",
+    "origin": "Mediterranean coasts",
+    "shape": "umbrella",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     12,
+     25
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#3F8038",
+    "accent": "#A07050",
+    "source": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pinus",
+     "species": "pinea",
+     "native_range": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      12,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 8,
+     "color": "#9A7A66",
+     "color_2": "#B8683A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "umbrella",
+     "orders": 5,
+     "branch_angle_deg": [
+      55,
+      80
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.35,
+     "fork_height_frac": [
+      0.3,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.35,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
+    },
+    "silhouette": "flat umbrella disc on bare pink trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      350
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings have 10-13 cotyledons and for 5-10 years carry juvenile foliage: single, soft, silvery blue-green needles 2-4 cm long, making a bushy, rounded, bluish globe rather than a cone. Adult paired, stiff green needles gradually take over by about age 10; the tree then lifts into a flat umbrella crown on a bare trunk.",
+     "confidence": "documented",
+     "source": "Wikipedia (juvenile leaves for 5-10 years, fully adult by ~10; a bushy globe in youth, an umbrella in mid-age; 12-20 m typical, to 25+; cones take 36 months to mature, longest of any pine); first cones and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#7a6a4a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#8a4e28",
+     "ripen_days": [
+      850,
+      1000
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      1000,
+      3000
+     ],
+     "crop_per_tree": [
+      20,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (broad ovoid cones 8-15 cm that take 36 months to mature, longer than any other pine; edible nuts 2 cm long with a rudimentary wing); about 29-33 months from spring pollination to ripe cone in the third autumn; crop and decay estimated"
+    }
+   },
+   {
+    "name": "Mediterranean cypress",
+    "genus": "Cupressus",
+    "species": "sempervirens",
+    "origin": "Eastern Mediterranean",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      40
+     ],
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      400,
+      1500
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal, with slender cotyledons; the first shoots bear small, spreading needle-like juvenile leaves before the dark green, appressed scale leaves take over. Fast-growing when young: a dense, narrow cone of upswept branches (a slim column in the fastigiate form, which is what most planted trees are; wild trees spread horizontally).",
+     "confidence": "documented",
+     "source": "conifers.org (20-30 m, fast-growing when young, seeds from its tenth year, up to 1000 yr; cones 2-3 cm, 8-14 scales, serotinous); Wikipedia (to 35 m, >1000 yr, Sarv-e Abarkuh estimated ~4000 yr); USDA Woody Plant Seed Manual (cones ripen second year, 64-280 seeds, 28-d germination test)"
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Mediterranean hills; the dark column of graveyards and ruins. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "cypress",
+    "traits": {
+     "genus": "Cupressus",
+     "species": "sempervirens",
+     "native_range": "E Mediterranean hills",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.05,
+      0.1
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.65,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 1.5,
+     "color": "#7A7268",
+     "color_2": "#5A4E44",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "columnar",
+     "orders": 6,
+     "branch_angle_deg": [
+      15,
+      30
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "silhouette": "narrow dark green pencil spire",
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#9aa35f",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      4
+     ],
+     "unripe_colour": "#6f8a4d",
+     "ripe_colour": "#8a7762",
+     "ripen_days": [
+      600,
+      730
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1800
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (seed cones ovoid-oblong 25-40 mm, 10-14 scales, green maturing brown 20-24 months after pollination, serotinous, can stay sealed for years; pollen cones 3-5 mm shed late winter); conifers.org (glossy brown-grey cones, 8-20 seeds per scale). Set, crop and decay estimated."
+    }
+   },
+   {
+    "name": "Cork oak",
+    "genus": "Quercus",
+    "species": "suber",
+    "origin": "Western Mediterranean",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#3A7A40",
+    "accent": "#8A6A50",
+    "source": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Quercus",
+     "species": "suber",
+     "native_range": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 1.0,
+     "scale_cm": 5,
+     "color": "#8A8478",
+     "color_2": "#B05A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 1.2,
+     "confidence": "documented"
+    },
+    "silhouette": "wide rounded crown over thick corky trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      20,
+      65
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the soil; a slender stem appears with small, toothed, dark evergreen leaves, grey-felted beneath. Within a few years the bark begins thickening into pale, spongy, deeply fissured cork. Saplings grow best sheltered by shrubs but need more light later; the first 'virgin' cork is stripped when the tree is about 25 years old.",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (Quercus suber: usually 20 m, to 25 m; slow-growing; about 200 yr or more); Wikipedia (10-15 m typical; first cork harvest at ~25 yr, then every 9-12 yr; trees can live over 400 yr); growth curve, shade and first acorns estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 5,
+     "flower_colour": "#cdbb62",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "nut",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2,
+      4.5
+     ],
+     "unripe_colour": "#8aa35a",
+     "ripe_colour": "#8a4a2a",
+     "ripen_days": [
+      180,
+      540
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2500,
+      7500
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (flowers from April through summer; both annual and biennial acorns, 2-3 cm, fairly deep cup with long scales); Wikipedia (acorns 2-4.5 cm, bare, smooth, shiny brownish-red; 15-30 kg of acorns per tree per year)"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Bigberry manzanita",
+    "genus": "Arctostaphylos",
+    "species": "glauca",
+    "origin": "S California and Baja California",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#7A9A80",
+    "accent": "#8A2A20",
+    "source": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora",
+    "traits": {
+     "genus": "Arctostaphylos",
+     "species": "glauca",
+     "native_range": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.7,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2.5,
+      5
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#7A2E22",
+     "color_2": "#C8A070",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "koriba",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.85,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "silhouette": "open grey-green shrub on red twisting stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      70,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After a fire, seedlings come up en masse with the first winter rains: two small round cotyledons, then stiff, pale blue-grey, round-oval leaves held edge-on to the sun on a single reddish stem. It branches into a bushy rounded shrub, and the smooth red-purple bark and twisting limbs of the adult show within a few years. It has no burl, so fire kills it.",
+     "confidence": "documented",
+     "source": "Wikipedia (Arctostaphylos glauca: shrub 1 to over 6 m; seeds need fire to germinate; long-lived, 100+ yr, but does not fruit until about 20 yr old; reproduces by seed and layering). Chaparral seedling ecology from USDA FEIS (Arctostaphylos glandulosa). Germination days and height-age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#f5eeee",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.5
+     ],
+     "unripe_colour": "#9ab070",
+     "ripe_colour": "#b0603c",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (hanging clusters of narrow urn-shaped white flowers; drupe 12-15 mm, light red, thick pulp in a tough sticky coat, 3-6 nutlets fused into one stone; eaten and made into cider). Winter flowering months, pollinators (bees, hummingbirds), timings and crop estimated from Jepson as recalled and FEIS manzanita accounts."
+    }
+   },
+   {
+    "name": "Chamise",
+    "genus": "Adenostoma",
+    "species": "fasciculatum",
+    "origin": "California and Baja California",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A7A40",
+    "accent": "#6A5040",
+    "source": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora",
+    "traits": {
+     "genus": "Adenostoma",
+     "species": "fasciculatum",
+     "native_range": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 5,
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 0.5,
+     "color": "#7A6A5A",
+     "color_2": "#9A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      15,
+      40
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense dark wiry shrub, many upright stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in the first rains after a fire: a thin stem with tiny needle-like leaves in little bundles. By year 2 a small woody lignotuber forms at the root crown. Most young plants seen are resprouts instead: dozens (up to 500) of straight, wand-like green shoots from the burned burl, about 50 cm tall after one season.",
+     "confidence": "documented",
+     "source": "USDA FEIS Adenostoma fasciculatum (heat- and charate-stimulated germination in the first rainy season after fire; ~90% first-year seedling mortality; seed by ~3 yr; sprouts 50 cm yr 1, 85 cm yr 5, 1 m yr 20; lives 100-200 yr; shade intolerant)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f3efe2",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      400
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.3
+     ],
+     "unripe_colour": "#9aa06a",
+     "ripe_colour": "#8b4e2e",
+     "ripen_days": [
+      35,
+      70
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      720
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Adenostoma fasciculatum (white flowers in showy 2.5-10 cm terminal clusters on current growth in June; fruit develops in July; ripening and dispersal complete by August; achenes; seed output rises with shrub age); pollinators estimated (generalist insects)"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Asphodel",
+    "genus": "Asphodelus",
+    "species": "ramosus",
+    "origin": "Mediterranean basin",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0F0F0",
+    "source": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0.5-1.5 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Asphodelus",
+     "species": "ramosus",
+     "native_range": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.65,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C0AA70",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#7A9A6A",
+     "color_2": "#A0A080",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "grey strap rosette with tall branched flower spike",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Three-angled black seeds sprout after the autumn rains. The seedling shows one grass-like leaf, then a small tuft of flat, keeled, narrowly triangular grey-green leaves over a cluster of swelling spindle-shaped root tubers. Leaves wither in the summer drought and regrow each autumn; after 2-4 years the clump sends up a branched spike of white, brown-veined star flowers.",
+     "confidence": "estimated",
+     "source": "Useful Temperate Plants (theferns.info): seed germinates in 1-3 months at 15 C, rosettes of leaves to 40 cm, flowering stems to 1.2 m, dry rocky hills; Pacific Bulb Society (Asphodelus); age at first flowering and lifespan estimated for a tuberous-rooted geophyte."
+    }
+   },
+   {
+    "name": "Common thyme",
+    "genus": "Thymus",
+    "species": "vulgaris",
+    "origin": "Western Mediterranean",
+    "shape": "cushion",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.22,
+     0.45
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#7A9A78",
+    "accent": "#C080C0",
+    "source": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Thymus",
+     "species": "vulgaris",
+     "native_range": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.3,
+      0.8
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.5,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.3,
+     "color": "#8A7A68",
+     "color_2": "#B0A898",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "low grey-green woody cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny rounded cotyledons, then minute paired grey-green leaves on a thread-thin square stem. It branches from the base within months into a small aromatic sprig and in 2-3 years becomes a dense, woody, grey-green cushion of wiry stems with tiny rolled-edged leaves, covered in whorls of pale pink to mauve flowers in late spring.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thymus vulgaris (15-30 cm tall, ~40 cm wide; purple or pink flowers in early summer; western Mediterranean to S Italy); NC State Extension (15-30 cm x 15-40 cm, blooms May-Jul, full sun, bees and butterflies, uneven seed germination). Germination days, first flowering and lifespan estimated from herb growers."
+    }
+   },
+   {
+    "name": "French lavender",
+    "genus": "Lavandula",
+    "species": "stoechas",
+    "origin": "Mediterranean basin",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8A9A80",
+    "accent": "#8040A0",
+    "source": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Lavandula",
+     "species": "stoechas",
+     "native_range": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.5,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 0.4,
+     "color": "#8A8070",
+     "color_2": "#B0A898",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.05,
+     "confidence": "estimated"
+    },
+    "silhouette": "grey mound topped with purple tufts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small round cotyledons, then narrow, grey-green, finely hairy, aromatic leaves in opposite pairs on a single square stem. It branches quickly into a small, rounded, silvery-grey bush; from its first or second spring it carries chunky dark-purple flower spikes topped by 'rabbit-ear' purple bracts.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lavandula stoechas: evergreen shrub 30-100 cm, flowers from March through late spring-early summer, hot dry sunny sites, may be short-lived); germination and ages estimated from horticultural sowing of Lavandula."
+    }
+   },
+   {
+    "name": "Sugarbush protea",
+    "genus": "Protea",
+    "species": "repens",
+    "origin": "Cape region of South Africa",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7A9A78",
+    "accent": "#E06080",
+    "source": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica",
+    "traits": {
+     "genus": "Protea",
+     "species": "repens",
+     "native_range": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 6.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1.5,
+     "color": "#7A7268",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "upright shrub with big cone-shaped flowerheads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      30
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      25,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up with the first autumn-winter rains after a fire, in even-aged crowds. Epigeal: two fleshy, oval cotyledons, then a single upright stem with narrow, hairless, bright green leaves; it branches after a year or two into a dense, upright shrub. Adults are killed by fire and restock only from seed held in the old, closed brown flowerheads.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (1-4.5 m; germinates 3-4 weeks after sowing in autumn; first flowers about 4-5 yr from seed; semi-serotinous; ~20% of flowers set seed; bird and beetle pollinated; fires every 10-30 yr); Wikipedia (reseeder killed by fire). Lifespan estimated."
+    }
+   },
+   {
+    "name": "Truffle",
+    "genus": "Tuber",
+    "species": "melanosporum",
+    "origin": "Southern Europe (France, Spain, Italy)",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     10,
+     18
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.1,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A2020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Mediterranean oak and hazel, limestone; Underground; pigs and dogs find it by scent — the camp's most valued trade good.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Tuber",
+     "species": "melanosporum",
+     "native_range": "Mediterranean oak and hazel, limestone",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#2a1a18",
+      "secondary": "#4a3a30",
+      "form": "irregular warty black lump 3-10 cm, underground",
+      "size_cm": [
+       3,
+       10
+      ],
+      "texture": "warty-pyramidal",
+      "gloss": 0.3,
+      "notes": "black knobbly lump with pyramidal warts; interior black marbled with white veins"
+     },
+     "underside": {
+      "colour": "#3a2a28",
+      "type": "none; marbled black-white interior"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "underground beneath oak and hazel",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "invisible: bare patch (brule) under an oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.41,
+     "val": 0.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Death cap",
+    "genus": "Amanita",
+    "species": "phalloides",
+    "origin": "Europe",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB"
+    ],
+    "height_m": [
+     0.05,
+     0.12
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#9AA870",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "deadly",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Eurasian oak and beech, spread worldwide; Under oaks; the deadliest mushroom. Camp folk with the knowledge warn of it.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Amanita",
+     "species": "phalloides",
+     "native_range": "Eurasian oak and beech, spread worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a8b868",
+      "secondary": "#e8e8d8",
+      "form": "convex to flat cap, olive-yellow-green with faint radial fibres, satiny",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "satiny-smooth",
+      "gloss": 0.3,
+      "notes": "sickly olive-green to yellow-green cap, white gills, white stem with skirt ring and a sac-like volva at the base"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white, free"
+     },
+     "stipe": {
+      "colour": "#f0ecdc",
+      "height_cm": [
+       8,
+       15
+      ]
+     },
+     "habit": "solitary under oak and beech",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "greenish-capped white mushroom under an oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.57,
+     "val": 1.22,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   },
+   {
+    "name": "Beefsteak fungus",
+    "genus": "Fistulina",
+    "species": "hepatica",
+    "origin": "Europe and eastern North America",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB"
+    ],
+    "height_m": [
+     0.1,
+     0.25
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#A02020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate oak and chestnut; Bleeds red when cut; on old oaks.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fistulina",
+     "species": "hepatica",
+     "native_range": "temperate oak and chestnut",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a82828",
+      "secondary": "#d84a48",
+      "form": "tongue-shaped fleshy bracket, blood-red to liver-brown, rough top",
+      "size_cm": [
+       10,
+       25
+      ],
+      "texture": "rough-moist",
+      "gloss": 0.3,
+      "notes": "red-brown liver-like slab, oozes red juice; pale pinkish pore surface"
+     },
+     "underside": {
+      "colour": "#e8c8a0",
+      "type": "pores pale yellow-pink, separate tubes"
+     },
+     "stipe": {
+      "colour": "#a82828",
+      "height_cm": [
+       0,
+       5
+      ]
+     },
+     "habit": "single bracket at oak base in autumn",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "red tongue jutting from an oak base",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.38,
+     "val": 1.16,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
+   }
+  ],
+  "epiphyte": []
+ }
+}
