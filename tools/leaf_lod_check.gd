@@ -75,8 +75,8 @@ func _initialize() -> void:
 		var card_set: Texture2D = mat.get_shader_parameter("look_tex_leaf_card")
 		var cut := cards > 0 and card_set != null and card_alpha and (not tiled or tile_alpha)
 		cut_all = cut_all and (cut or cards == 0)
-		print("[tree %d] %s %.0f m: chunk LOD %s, mesh LOD %s layout %d, %d leaf cards, tiled %s, leaf tile %s, card tex %s -> cutout %s" % [
-			k, sp.name, d, _lod_name(lod), _lod_name(mesh_lod), TreeLayouts.layout_of(pick) if pick >= 0 else -1, cards, tiled,
+		print("[tree %d] %s (%s, %.0f m tall) %.0f m: chunk LOD %s, mesh LOD %s layout %d, %d leaf cards, tiled %s, leaf tile %s, card tex %s -> cutout %s" % [
+			k, sp.name, PlantSpecies.Shape.keys()[sp.shape] if sp.shape < PlantSpecies.Shape.keys().size() else str(sp.shape), float(t[1]), d, _lod_name(lod), _lod_name(mesh_lod), TreeLayouts.layout_of(pick) if pick >= 0 else -1, cards, tiled,
 			("alpha" if tile_alpha else ("opaque" if leaf_tile != null else "missing")), ("set" if card_set != null else "MISSING"), cut])
 	ok(near.size() >= 5, "five trees stand within the loaded chunks (%d)" % near.size())
 	ok(cut_all, "every near tree's leaf cards cut out (texture set, alpha present)")
