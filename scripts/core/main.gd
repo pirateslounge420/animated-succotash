@@ -40,6 +40,8 @@ var dread: Dread
 var sound_bed: SoundBed
 var water_sounds: WaterSounds
 var road_props: RoadProps
+var camp_sim: CampSim
+var player_fires: PlayerFires
 var travellers: Travellers
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
@@ -174,14 +176,24 @@ func _on_planet_ready() -> void:
 	player.chunks = chunks
 	sky.vis_player = player
 	add_child(player)
+	camp_sim = CampSim.new()
+	camp_sim.name = "CampSim"
+	add_child(camp_sim)
+	WorldSave.open(world.world_seed)
+	camp_sim.setup(world, chunks)
+	Coppice.load_saved()
+	player_fires = PlayerFires.new()
+	player_fires.name = "PlayerFires"
+	add_child(player_fires)
+	player_fires.setup(world, chunks, player)
 	camp = Encampment.new()
 	root.add_child(camp)
 	camp.build(world, chunks, spawn_dir)
 	# The world's kept things (WorldSave: the hearth, the log), and the
 	# first hearth: the opening camp (design 30 Sept §AY).
-	WorldSave.open(world.world_seed)
 	Hearth.setup(camp.site)
 	GameLog.load_saved()
+	GameLog.add_once("people:opening", "The %s live here." % Peoples.name_of(Peoples.get_people(camp.people_id)).to_lower(), "camp_found")
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
 	# Waking on the mat, facing the fire; the camera looks down over a
@@ -368,6 +380,7 @@ func _process(delta: float) -> void:
 	Torch.weather = weather
 	Torch.remake_bundles(world, chunks, world.days)
 	FireStore.tick(get_tree(), delta, player.global_position)
+	VegetationPlacer.NOW_DAYS = world.days
 	WorldSave.flush(delta)
 	player.typing = log_panel.visible
 	dread.update_dread(delta)
@@ -386,6 +399,29 @@ func _process(delta: float) -> void:
 		prompt = "%s: take the arrow back" % Controls.interact_word()
 	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
 		prompt = "%s: take your things back" % Controls.interact_word()
+	elif _headman_in_reach() != null:
+		prompt = "%s: the headman" % Controls.interact_word()
+	elif not _ladder_in_reach().is_empty():
+		prompt = "%s: %s the rope ladder" % [Controls.interact_word(), "climb" if bool(_ladder_in_reach()[1]) else "climb down"]
+	elif _ember_lay_ok():
+		prompt = "%s: lay a fire from the ember" % Controls.interact_word()
+	elif _lamp_place_ok():
+		prompt = "%s: set the lamp down" % Controls.interact_word()
+	elif _stool_in_reach() != null and Coppice.ready(_stool_in_reach()):
+		prompt = "%s: cut the stool's poles" % Controls.interact_word()
+	elif _coppice_tree_ok():
+		prompt = "%s: cut it to the stool" % Controls.interact_word()
+	elif _resin_tree_ok():
+		prompt = "%s: dip the torch in the pitch" % Controls.interact_word()
+	elif _pole_make_ok():
+		prompt = "%s: cut a pole and twist a line" % Controls.interact_word()
+	elif _ember_take_ok():
+		prompt = "%s: take an ember" % Controls.interact_word()
+	elif _lamp_take_ok():
+		prompt = "%s: take a fat lamp" % Controls.interact_word()
+	elif not _store_in_reach().is_empty() and _store_item() >= 0:
+		var sn: Node3D = _store_in_reach()[0]
+		prompt = "%s: put the %s %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_store_item()]).to_lower(), "on the woodpile" if sn.name == "Woodpile" else "in the store"]
 	elif _fire_in_reach() != null and player.inventory.has_kind("fuel"):
 		prompt = "%s: put the %s on the fire" % [Controls.interact_word(), Inventory.title(player.inventory.carried[player.inventory.slot_of("fuel")]).to_lower()]
 	elif player.torch.can_light():
@@ -555,7 +591,38 @@ func _unhandled_input(event: InputEvent) -> void:
 		var spent := true
 		var planted := PlantedTorch.in_reach(player.reach_from(), float(Tuning.section("torch", "planted").get("pickup_reach_m", 2.0)))
 		var fire := _fire_in_reach()
-		if fire != null and player.inventory.has_kind("fuel"):
+		var store := _store_in_reach()
+		var headman := _headman_in_reach()
+		var ladder := _ladder_in_reach()
+		if headman != null:
+			_meet_headman(headman)
+		elif not ladder.is_empty():
+			_climb_ladder(ladder[0], bool(ladder[1]))
+		elif _ember_lay_ok():
+			_lay_from_ember()
+		elif _lamp_place_ok():
+			_place_lamp()
+		elif _stool_in_reach() != null and Coppice.ready(_stool_in_reach()):
+			Coppice.harvest(_stool_in_reach(), world, world.days)
+			_say_note("You cut the poles.")
+		elif _coppice_tree_ok():
+			var ta := player.tree_ahead(player.global_basis.z * -1.0)
+			Coppice.cut(ta[0], ta[1], world, world.days)
+			_say_note("You cut it to the stool.")
+		elif _resin_tree_ok():
+			player.torch.item()["resin"] = true
+			GameLog.add("Dipped the torch in pine pitch.", "technique")
+			_say_note("You dip the torch in the pitch.")
+		elif _pole_make_ok():
+			_make_pole()
+		elif _ember_take_ok():
+			_take_ember(fire)
+		elif _lamp_take_ok():
+			_take_lamp()
+		elif not store.is_empty() and _store_item() >= 0:
+			# The player's gathering goes into the camp's store (§BL).
+			_give_to_store(store)
+		elif fire != null and player.inventory.has_kind("fuel"):
 			# Fuel onto the fire (§AX): the first piece in the pack.
 			var fi := player.inventory.slot_of("fuel")
 			var fuel: Dictionary = player.inventory.carried[fi]
@@ -740,6 +807,256 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		lying.pick_up()
 	elif say:
 		_say_note("Your hands are full.")
+
+
+# --- Techniques (design 30 Sept §BN, §BP) ---------------------------------------------
+
+## The headman within reach (a camp's marked figure), or null.
+func _headman_in_reach() -> Node3D:
+	var pos := player.reach_from()
+	for key in camps._camps:
+		var cn: Node3D = camps._camps[key]
+		for s in cn.get_meta("sitters", []):
+			if (s as Node3D).get_meta("role", "") == "headman" and (s as Node3D).global_position.distance_to(pos) < 2.6:
+				return s
+	return null
+
+
+## A canopy camp's rope ladder (§BT), shown once the headman has met you,
+## with the player at one end: [ladder, going_up] or [].
+func _ladder_in_reach() -> Array:
+	if player.on_ladder():
+		return []
+	var pos := player.reach_from()
+	for key in camps._camps:
+		var cn: Node3D = camps._camps[key]
+		if not cn.has_meta("ladder"):
+			continue
+		var lad: Node3D = cn.get_meta("ladder")
+		if not is_instance_valid(lad) or not lad.visible:
+			continue
+		var foot: Vector3 = lad.to_global(lad.get_meta("foot_local", Vector3.ZERO))
+		var top: Vector3 = lad.to_global(lad.get_meta("top_local", Vector3.ZERO))
+		if pos.distance_to(foot) < 2.4:
+			return [lad, true]
+		if pos.distance_to(top) < 2.4:
+			return [lad, false]
+	return []
+
+
+func _climb_ladder(lad: Node3D, going_up: bool) -> void:
+	var foot: Vector3 = lad.to_global(lad.get_meta("foot_local", Vector3.ZERO))
+	var top: Vector3 = lad.to_global(lad.get_meta("top_local", Vector3.ZERO))
+	var up: Vector3 = world.dir_of(top)
+	player.start_ladder(player.global_position, (top + up * 0.15) if going_up else (foot + up * 0.1))
+
+
+## The headman bestows the people's technique (§BN): a flag kept per
+## world and a line in the log; mute. Met: the canopy folk's ladders
+## come down (§BT).
+func _meet_headman(h: Node3D) -> void:
+	var cn := h.get_parent() as Node3D
+	var key := str(cn.get_meta("key", ""))
+	var people := Peoples.get_people(str(cn.get_meta("people", "")))
+	var st := camp_sim.state_of(key)
+	if not st.is_empty():
+		st.met_headman = true
+		WorldSave.mark_dirty()
+	var tid := str((people.get("specialists", {}) as Dictionary).get("headman_teaches", ""))
+	if Techniques.learn(tid, people):
+		_say_note("The headman shows you %s." % Techniques.name_of(tid).to_lower())
+	else:
+		_say_note("The headman nods.")
+
+
+func _item_slot(kind: String) -> int:
+	return player.inventory.slot_of(kind)
+
+
+## An ember in hand (live), ground to lay a fire on.
+func _ember_lay_ok() -> bool:
+	var i := _item_slot("ember")
+	if i < 0 or player.in_hand() != "hands" or player.torch.can_plant():
+		return false
+	var it: Dictionary = player.inventory.carried[i]
+	return world.days < float(it.get("until", 0.0)) and not player.torch.plant_spot().is_empty() and _fire_in_reach() == null
+
+
+func _lay_from_ember() -> void:
+	var i := _item_slot("ember")
+	var it: Dictionary = player.inventory.take(i)
+	var spot := player.torch.plant_spot()
+	var d: Vector3 = world.dir_of(spot.pos)
+	player_fires.lay_fire(d, int(Techniques.params("ember_carrier").get("fire_units", 2)))
+	GameLog.add("Laid a fire from the ember.", "fire_lit")
+	_say_note("You lay a fire from the coal.")
+
+
+## Take a live coal from a lit fire (the technique known, hands empty).
+func _ember_take_ok() -> bool:
+	var fire := _fire_in_reach()
+	return fire != null and FireStore.is_lit(fire) and Techniques.knows("ember_carrier") and player.in_hand() == "hands" and _item_slot("ember") < 0 and not player.inventory.has_kind("fuel")
+
+
+func _take_ember(fire: Node3D) -> void:
+	var hours := float(Techniques.params("ember_carrier").get("ember_game_h", 26.0))
+	var it := Inventory.make("ember", {"until": world.days + hours / 24.0, "title": "Ember carrier"})
+	if player.inventory.add(it):
+		GameLog.add("Wrapped a coal in bark to carry.", "technique")
+		_say_note("You wrap a live coal in bark.")
+	else:
+		_say_note("Your hands are full.")
+
+
+## A fat lamp from a camp's food store (the technique known): a food
+## unit of fat.
+func _lamp_take_ok() -> bool:
+	var found := _store_in_reach()
+	return Techniques.knows("fat_lamp") and not found.is_empty() and (found[0] as Node3D).name == "FoodStore" and _store_item() < 0 and _item_slot("fat_lamp") < 0
+
+
+func _take_lamp() -> void:
+	var found := _store_in_reach()
+	var camp_node: Node = found[1]
+	var key := "opening" if camp_node == camp else str((camp_node as Node3D).get_meta("key", ""))
+	var st := camp_sim.state_of(key)
+	var cost := float(Techniques.params("fat_lamp").get("costs_food_units", 1.0))
+	if st.is_empty() or float(st.food) < cost:
+		_say_note("There is no fat to spare.")
+		return
+	if player.inventory.add(Inventory.make("fat_lamp", {"title": "Fat lamp"})):
+		st.food = float(st.food) - cost
+		WorldSave.mark_dirty()
+		_say_note("You fill a stone bowl with their fat and set a moss wick.")
+	else:
+		_say_note("Your hands are full.")
+
+
+func _lamp_place_ok() -> bool:
+	return _item_slot("fat_lamp") >= 0 and player.in_hand() == "hands" and not player.torch.plant_spot().is_empty() and _fire_in_reach() == null and _store_in_reach().is_empty()
+
+
+func _place_lamp() -> void:
+	player.inventory.take(_item_slot("fat_lamp"))
+	var spot := player.torch.plant_spot()
+	player_fires.place_lamp(world.dir_of(spot.pos), float(Techniques.params("fat_lamp").get("burn_game_h", 8.0)))
+	GameLog.add("Set the fat lamp down, lit.", "technique")
+	_say_note("You set the lamp down.")
+
+
+## A pole and line from a branch and a twist of grass or reed, at the
+## water (the technique known).
+func _pole_make_ok() -> bool:
+	if not Techniques.knows("fishing_line") or player.inventory.has_kind("pole"):
+		return false
+	var branch := false
+	var fibre := false
+	for it in player.inventory.carried:
+		if it is Dictionary and str(it.get("kind", "")) == "fuel":
+			if str(it.get("fuel", "")) == "branch":
+				branch = true
+			elif str(it.get("fuel", "")) in ["grass_bundle", "reeds"]:
+				fibre = true
+	return branch and fibre and player.fishing_line.cast_point() != Vector3.ZERO
+
+
+func _make_pole() -> void:
+	var bi := -1
+	var fi := -1
+	for i in player.inventory.carried.size():
+		var it = player.inventory.carried[i]
+		if it is Dictionary and str(it.get("kind", "")) == "fuel":
+			if bi < 0 and str(it.get("fuel", "")) == "branch":
+				bi = i
+			elif fi < 0 and str(it.get("fuel", "")) in ["grass_bundle", "reeds"]:
+				fi = i
+	player.inventory.take(maxi(bi, fi))
+	player.inventory.take(mini(bi, fi))
+	player.inventory.add(Inventory.make("pole", {"title": "Pole and line"}))
+	if player.in_hand() == "hands":
+		player.weapon = "pole"
+	GameLog.add("Cut a pole and twisted a line.", "technique")
+	_say_note("You cut a pole and twist a line.")
+
+
+## The tree ahead can be coppiced (the technique known, hands empty).
+func _coppice_tree_ok() -> bool:
+	if not Techniques.knows("coppice") or player.in_hand() != "hands" or player.climbing:
+		return false
+	var ta := player.tree_ahead(player.global_basis.z * -1.0)
+	return not ta.is_empty() and Coppice.coppiceable((ta[0] as TerrainChunk).tree_species(ta[1]))
+
+
+func _stool_in_reach() -> Node3D:
+	return Coppice.in_reach(player.reach_from(), 2.4) if Techniques.knows("coppice") else null
+
+
+## An unlit torch in hand against a conifer (the technique known).
+func _resin_tree_ok() -> bool:
+	if not Techniques.knows("resin_torch") or not player.torch.in_hand() or player.torch.lit() or bool(player.torch.item().get("resin", false)):
+		return false
+	var ta := player.tree_ahead(player.global_basis.z * -1.0)
+	if ta.is_empty():
+		return false
+	var sp := (ta[0] as TerrainChunk).tree_species(ta[1])
+	var p := Techniques.params("resin_torch")
+	for g in p.get("conifer_genera", []):
+		if sp.genus == str(g):
+			return true
+	return bool(p.get("needle_leaf", true)) and sp.leaf_type.find("needle") >= 0
+
+
+## A camp's woodpile or food store within reach: [store node, camp node]
+## (the opening camp's too), or [].
+func _store_in_reach() -> Array:
+	var r := float(Tuning.table("torch").get("lighting_reach_m", 2.2)) + 0.8
+	var found := camps.store_in_reach(player.reach_from(), r)
+	if not found.is_empty():
+		return found
+	for n in [camp.woodpile, camp.food_store]:
+		if n != null and is_instance_valid(n) and (n as Node3D).global_position.distance_to(player.reach_from()) < r:
+			return [n, camp]
+	return []
+
+
+## The carry slot of the first thing the store would take (fuel on the
+## woodpile; fruit, fish, a mushroom, herbs or seeds in the store), or -1.
+func _store_item() -> int:
+	var found := _store_in_reach()
+	if found.is_empty():
+		return -1
+	var wood: bool = (found[0] as Node3D).name == "Woodpile"
+	for i in player.inventory.carried.size():
+		var it = player.inventory.carried[i]
+		if not it is Dictionary:
+			continue
+		if wood and CampSim.wood_units(it) > 0.0:
+			return i
+		if not wood and (CampSim.food_units(it) > 0.0 or CampSim.is_seed(it)):
+			return i
+	return -1
+
+
+func _give_to_store(found: Array) -> void:
+	var i := _store_item()
+	if i < 0:
+		return
+	var it: Dictionary = player.inventory.take(i)
+	var camp_node: Node = found[1]
+	var key := "opening" if camp_node == camp else str((camp_node as Node3D).get_meta("key", ""))
+	var st := camp_sim.state_of(key)
+	if st.is_empty():
+		return
+	var title := Inventory.title(it).to_lower()
+	if (found[0] as Node3D).name == "Woodpile":
+		camp_sim.add_wood(st, CampSim.wood_units(it))
+		_say_note("You put the %s on their woodpile." % title)
+	elif CampSim.is_seed(it):
+		camp_sim.add_seeds(st, int(it.get("species", -1)))
+		_say_note("You put the %s in their store." % title)
+	else:
+		camp_sim.add_food(st, CampSim.food_units(it))
+		_say_note("You put the %s in their store." % title)
 
 
 ## The campfire within reach of the hands (lit or not), or null.

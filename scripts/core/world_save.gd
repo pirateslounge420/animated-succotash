@@ -12,7 +12,10 @@ static var _timer := 0.0
 
 
 static func open(seed_value: int) -> void:
-	path = "user://worlds/%d.json" % seed_value
+	var want := "user://worlds/%d.json" % seed_value
+	if path == want:
+		return
+	path = want
 	data = {}
 	if FileAccess.file_exists(path):
 		var f := FileAccess.open(path, FileAccess.READ)

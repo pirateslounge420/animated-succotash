@@ -87,6 +87,15 @@ var _wild := {} # Vector3i -> site dict or {}
 var _cliff := {} # Vector3i -> site dict or {}
 ## The tribe's cloth family of the camp being built (CloakedFigure).
 var _family := 0
+## The sim's folk entry for the sitter being built ({} when none): sex,
+## stage, role.
+var _sitter_info := {}
+## The people of the camp being built (design 30 Sept §BO): its palette
+## colours and the folk kind's rig scale (Peoples).
+## Canopy camps rebuilt waiting on their giants, by key (§BT).
+var _canopy_tries := {}
+var _people_pal: Array = []
+var _folk_scale := 1.0
 ## Fires placed for a wake-up where no camp was near (wanderers()):
 ## key -> site dict.
 var _wanderers := {}
@@ -277,9 +286,13 @@ func update_camps(delta: float) -> void:
 	var pp := player.global_position
 	for key in _camps:
 		_animate(_camps[key], delta, pp)
+		_live(_camps[key], delta, pp)
 		# Found (design 30 Sept §AZ): the first time you come to its fire.
 		if (_camps[key] as Node3D).global_position.distance_to(pp) < 30.0:
-			GameLog.add_once("camp:" + str(key), "Found a camp, folk at the fire.", "camp_found")
+			var people := Peoples.get_people(str((_camps[key] as Node3D).get_meta("people", "")))
+			GameLog.add_once("camp:" + str(key), "Found a camp: the %s live here." % Peoples.name_of(people).to_lower(), "camp_found")
+			if (_camps[key] as Node3D).has_meta("canopy"):
+				GameLog.add_once("canopy:" + str(key), "They live up in the giants. No ladder comes down for a stranger.", "camp_found")
 
 
 ## Build the camps in reach now, not at the next half-second refresh
@@ -330,10 +343,21 @@ func _refresh() -> void:
 		var spot: Vector3 = world.to_scene(wsd.dir, PlanetConst.RADIUS_M + chunks.ground_height(wsd.dir))
 		if spot.distance_to(pp) < BUILD_M:
 			want[key] = [spot, wsd.folk, wsd.seed]
+	# Camps that walked away from a fire and rebuilt a valley over (§BL
+	# wildfire): the sim's "moved:" states, built where they went.
+	if CampSim.instance != null:
+		for mk in CampSim.instance.states:
+			if not str(mk).begins_with("moved:"):
+				continue
+			var ms: Dictionary = CampSim.instance.states[mk]
+			var md: Vector3 = CampSim.instance._dir(ms)
+			var spot: Vector3 = world.to_scene(md, PlanetConst.RADIUS_M + chunks.ground_height(md))
+			if spot.distance_to(pp) < BUILD_M:
+				want[str(mk)] = [spot, "tribal", int(ms.seed)]
 	for key in want:
 		if not _camps.has(key):
 			var w: Array = want[key]
-			_camps[key] = _build(w[0], w[1], w[2])
+			_camps[key] = _build(w[0], w[1], w[2], str(key))
 			if w.size() > 3:
 				_overhang(_camps[key], w[3])
 	for key in _camps.keys():
@@ -344,36 +368,91 @@ func _refresh() -> void:
 
 
 ## A camp at scene position `at`: the fire, seats, and folk facing it.
-func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
+## `key` names the camp (ruin:<cell>, cliff:<cell>, ...): it picks the
+## people who live here (design 30 Sept §BO, Peoples.pick: the site's
+## rules, then the biome) and the sim's state (CampSim).
+func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	# The camp's tribe: which dyed-cloth family its folk mostly wear.
 	_family = CloakedFigure.tribe_family(seed_value)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var d: Vector3 = world.dir_of(at)
+	# The people (§BO): the way of life the site lives, dressed by the
+	# biome: palette, shelter, props, the folk kind's build.
+	var people_id := Peoples.pick(map, chunks.rivers, d, "cliff" if key.begins_with("cliff") else "ruin")
+	var people := Peoples.get_people(people_id)
+	var biome_key := FireStore.biome_key(world, d)
+	_people_pal = Peoples.palette(people, biome_key)
+	var kind := Peoples.folk_kind(people, seed_value)
+	_folk_scale = Peoples.folk_scale(kind)
 	var root := Node3D.new()
 	root.name = "Camp"
 	_root.add_child(root)
 	root.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(d), d), at)
+	root.set_meta("people", people_id)
+	root.set_meta("kind", kind)
+	root.set_meta("biome", biome_key)
+	root.set_meta("key", key)
+	var body := PropCollision.body(root)
+	# The canopy folk (§BT, CanopyVillage): the village up in the stand's
+	# giants, the fire in a hearth box on the first deck. With no three
+	# giants in the loaded chunks yet the camp waits on the ground and is
+	# built again when they are (canopy_wait, _live).
+	var canopy := {}
+	if people_id == "canopy":
+		canopy = CanopyVillage.build(root, world, chunks, at, _people_pal, rng, biome_key, body)
+		if canopy.is_empty():
+			root.set_meta("canopy_wait", true)
+		else:
+			root.set_meta("canopy", true)
+			root.set_meta("ladder", canopy.ladder)
 	var fire := Campfire.build(root, world, chunks, d, false)
 	fire.global_position = at
+	if not canopy.is_empty():
+		fire.global_position = root.to_global(canopy.fire_pos)
 	root.set_meta("fire", fire)
 	# A camp's fire can be made your hearth (design 30 Sept §AY).
 	fire.set_meta("hearth_ok", true)
 	# What a camp has (design 30 Sept §AW): a bundle of unlit torches by
 	# the fire, in the ambient profile.
-	if Tuning.profile() == "ambient":
+	if Tuning.profile() == "ambient" and canopy.is_empty():
 		Torch.lay_bundle(world, chunks, fire)
 	root.set_meta("folk", folk)
 	root.set_meta("talked", false)
-	var count := rng.randi_range(2, 4)
+	# Who sits here: the sim's folk (design 30 Sept §BM: men and women,
+	# children by the fire, the headman, the plantkeeper and the maker
+	# marked) when the camp has a state, else the old roll.
+	var st_folk: Array = []
+	if CampSim.instance != null and key != "":
+		var pre := CampSim.instance.ensure(key, d, people_id, biome_key, seed_value)
+		CampSim.instance.inherit(pre, people)
+		st_folk = pre.folk
+		root.set_meta("folk_stamp", _folk_stamp(pre))
+		if str(pre.get("state", "living")) != "living":
+			# An empty camp (§BL): no folk; the needful things left by the
+			# fire, blood where the dark took them, the forest taking it.
+			_empty_camp(root, pre, d, body)
+			root.set_meta("sitters", [] as Array[Node3D])
+			root.set_meta("guards", [] as Array[Node3D])
+			return root
+	var count := rng.randi_range(2, 4) if st_folk.is_empty() else mini(st_folk.size(), 8)
+	if not canopy.is_empty():
+		count = mini(count, (canopy.seats as Array).size())
 	var a0 := rng.randf() * TAU
 	var sitters: Array[Node3D] = []
-	var body := PropCollision.body(root)
 	for i in count:
+		_sitter_info = st_folk[i] if i < st_folk.size() else {}
 		var a := a0 + TAU * i / count + rng.randf_range(-0.25, 0.25)
 		var seat_pos := Vector3(cos(a), 0, sin(a)) * SEAT_R
-		# Seat: a log across, a flat stone among the dead; small folk squat.
-		if folk == "small_folk":
+		var face := -seat_pos.normalized()
+		if not canopy.is_empty():
+			# Up on the decks: round the hearth box, the rest at the back
+			# of their own platforms, turned to it.
+			seat_pos = (canopy.seats[i] as Dictionary).pos
+			face = (canopy.seats[i] as Dictionary).face
+		# Seat: a log across, a flat stone among the dead; small folk squat;
+		# the canopy folk sit on the deck.
+		if folk == "small_folk" or not canopy.is_empty():
 			pass
 		elif folk == "dead":
 			var stone := CreatureBodies.box(root, Vector3(0.6, 0.4, 0.5), seat_pos + Vector3(0, 0.2, 0), Color(0.42, 0.42, 0.44))
@@ -387,13 +466,13 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 		var holder := _sitter(root, folk, i, rng)
 		holder.position = seat_pos
 		# Face the fire.
-		holder.basis = Basis.looking_at(-seat_pos.normalized(), Vector3.UP)
+		holder.basis = Basis.looking_at(face, Vector3.UP)
 		holder.set_meta("base_yaw", holder.rotation.y)
 		holder.set_meta("phase", rng.randf() * TAU)
 		sitters.append(holder)
 		# Tribal and northern folk keep their weapons at hand: a spear
 		# leaning on the log, or a bow laid by it.
-		if folk == "tribal" or folk == "north":
+		if (folk == "tribal" or folk == "north") and canopy.is_empty():
 			var side := Vector3(-sin(a), 0, cos(a)) * 0.75
 			if i % 3 == 2:
 				var bow := BowMesh.build(1.2)
@@ -406,7 +485,7 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	# Guards: tribal and northern camps post one or two on their feet at
 	# the edge of the firelight, spear or bow in hand, watching the dark.
 	var guards: Array[Node3D] = []
-	if folk == "tribal" or folk == "north":
+	if (folk == "tribal" or folk == "north") and canopy.is_empty():
 		for g in rng.randi_range(1, 2):
 			var a := a0 + TAU * (g + 0.5) / count + PI / count
 			var at_pos := Vector3(cos(a), 0, sin(a)) * rng.randf_range(4.5, 5.5)
@@ -418,6 +497,31 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 			guard.set_meta("phase", rng.randf() * TAU)
 			guards.append(guard)
 	root.set_meta("guards", guards)
+	_dress(root, people, rng, a0, body)
+	# The camp's life (design 30 Sept §BL, CampSim): its state, made now
+	# if new and caught up; the store as props that scale with contents.
+	if CampSim.instance != null and key != "":
+		var st := CampSim.instance.ensure(key, d, people_id, biome_key, seed_value)
+		var wa := a0 + 1.1
+		var wp := CampProps.woodpile(root, float(st.wood), body)
+		wp.position = Vector3(cos(wa), 0, sin(wa)) * 3.6
+		wp.basis = Basis.looking_at(-wp.position.normalized(), Vector3.UP)
+		var fa := a0 - 1.1
+		var fs := CampProps.food_store(root, float(st.food), _people_pal, body)
+		fs.position = Vector3(cos(fa), 0, sin(fa)) * 3.8
+		fs.basis = Basis.looking_at(-fs.position.normalized(), Vector3.UP)
+		if not canopy.is_empty():
+			# A bundle under the eaves: the store on the hearth deck, small.
+			wp.position = canopy.store_pos
+			wp.scale = Vector3.ONE * 0.6
+			wp.basis = Basis.looking_at(((canopy.hearth as Vector3) - (canopy.store_pos as Vector3)).slide(Vector3.UP).normalized(), Vector3.UP)
+			fs.position = canopy.food_pos
+			fs.scale = Vector3.ONE * 0.6
+			fs.basis = Basis.looking_at(((canopy.hearth as Vector3) - (canopy.food_pos as Vector3)).slide(Vector3.UP).normalized(), Vector3.UP)
+		root.set_meta("woodpile", wp)
+		root.set_meta("food_store", fs)
+		root.set_meta("store_t", 0.0)
+		root.set_meta("walk_t", rng.randf_range(4.0, 12.0))
 	# Their talk: among the seated folk, at head height.
 	var chatter := Audio3D.make("camp_chatter", root, "Chatter")
 	chatter.position = Vector3(0, 0.9, 0)
@@ -426,9 +530,42 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	return root
 
 
+## The camp's dressing (design 30 Sept §BO, CampProps): the people's
+## shelter across the fire from the seats' gap, and a few of its props
+## round the firelight, each turned to the fire.
+func _dress(root: Node3D, people: Dictionary, rng: RandomNumberGenerator, a0: float, body: StaticBody3D) -> void:
+	var shelter := CampProps.shelter(root, people, _people_pal, rng, body)
+	var sa := a0 + PI + rng.randf_range(-0.4, 0.4)
+	shelter.position = Vector3(cos(sa), 0, sin(sa)) * rng.randf_range(7.5, 9.0)
+	shelter.basis = Basis.looking_at(-shelter.position.normalized(), Vector3.UP)
+	var props: Array = (people.get("aesthetic", {}) as Dictionary).get("props", [])
+	var picked: Array = []
+	for pr in props:
+		var s := str(pr).to_lower()
+		if s.find("ladder") >= 0 or s.find("bridge") >= 0 or s.find("hearth box") >= 0 or s.find("ceiling") >= 0:
+			continue
+		picked.append(str(pr))
+	picked.shuffle()
+	var count := mini(picked.size(), rng.randi_range(3, 4))
+	var placed: Array = []
+	for i in count:
+		var n := CampProps.prop(root, picked[i], _people_pal, rng, body)
+		n.set_meta("what", picked[i])
+		var a := a0 + TAU * (i + 0.5) / count + rng.randf_range(-0.3, 0.3)
+		var r := rng.randf_range(4.2, 6.5)
+		var pos := Vector3(cos(a), 0, sin(a)) * r
+		# Not on the shelter.
+		if pos.distance_to(shelter.position) < 4.0:
+			pos = Vector3(cos(a), 0, sin(a)) * 3.6
+		n.position = pos
+		n.basis = Basis.looking_at(-pos.normalized(), Vector3.UP)
+		placed.append(n)
+	root.set_meta("props", placed)
+
+
 ## The folk of `camp` murmur (a line of chatter is up), from `at` (scene
 ## position; default among them).
-func _murmur(camp: Node3D, at = null) -> void:
+func _murmur(camp: Node3D, at = null, who: Node3D = null) -> void:
 	var v: AudioStreamPlayer3D = camp.get_meta("chatter", null)
 	if v == null:
 		return
@@ -437,8 +574,33 @@ func _murmur(camp: Node3D, at = null) -> void:
 	else:
 		v.position = Vector3(0, 0.9, 0)
 	v.stream = SoundSynth.stream("murmur", randi() % MURMURS)
-	v.pitch_scale = randf_range(0.95, 1.05)
+	v.pitch_scale = randf_range(0.95, 1.05) * _voice_pitch(camp, who)
 	Audio3D.play(v)
+
+
+## The voice reads the speaker at silhouette distance (§BM): a woman's
+## higher, a child's and a teen's higher still, the folk kind's build
+## (an orc low, the small folk and goblins high).
+func _voice_pitch(camp: Node3D, who: Node3D) -> float:
+	var p := 1.0
+	if who != null:
+		if str(who.get_meta("sex", "m")) == "f":
+			p *= 1.12
+		match str(who.get_meta("stage", "adult")):
+			"child":
+				p *= 1.3
+			"teen":
+				p *= 1.15
+	match str(camp.get_meta("kind", "human")):
+		"orc":
+			p *= 0.85
+		"goblin":
+			p *= 1.1
+		"fae":
+			p *= 1.08
+		"small_folk":
+			p *= 1.25
+	return p
 
 
 ## A spear leaning out from `base` (camp space) along `lean`, `length` m,
@@ -456,8 +618,8 @@ func _spear(parent: Node3D, base: Vector3, lean: Vector3, length: float, body: S
 ## A standing guard: a hunter with a spear or an archer with a bow.
 func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -> Node3D:
 	# A cloaked figure standing watch, a bow on the back of every other.
-	var pal := CloakedFigure.roll_palette(rng, _family)
-	var b := CloakedFigure.build(rng.randf_range(1.66, 1.8), pal[0], pal[1])
+	var pal := _folk_palette(rng, i)
+	var b := CloakedFigure.build(rng.randf_range(1.66, 1.8) * _folk_scale, pal[0], pal[1])
 	var holder := Node3D.new()
 	holder.name = "Guard"
 	parent.add_child(holder)
@@ -550,12 +712,40 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 		BlobShadow.make(holder, 0.3 * sp.size_m, 0.4 * sp.size_m).position.z = -0.12 * sp.size_m
 		return holder
 	var small := folk == "small_folk"
-	var pal := CloakedFigure.roll_palette(rng, _family)
-	var h := rng.randf_range(0.9, 1.08) if small else rng.randf_range(1.6, 1.78)
+	var pal := _folk_palette(rng, i)
+	var info := _sitter_info
+	var sex := str(info.get("sex", "m" if i % 2 == 0 else "f"))
+	var stage := CampSim.stage_of(info) if not info.is_empty() else "adult"
+	var role := str(info.get("role", ""))
+	# Men and women read at silhouette distance: build and height; the
+	# stages (§BM: child, teen, adult) at sim.births.stages rig_scale.
+	var h := rng.randf_range(0.9, 1.08) if small else rng.randf_range(1.6, 1.78) * _folk_scale * (0.94 if sex == "f" else 1.0)
+	h *= float((CampSim.stages().get(stage, {}) as Dictionary).get("rig_scale", 1.0))
+	match role:
+		"headman":
+			pal[0] = (pal[0] as Color).darkened(0.25)
+			pal[1] = Color(0.92, 0.9, 0.8)
+		"plantkeeper":
+			pal[0] = (pal[0] as Color).lerp(Color(0.3, 0.45, 0.25), 0.5)
+		"maker":
+			pal[0] = (pal[0] as Color).lerp(Color(0.5, 0.3, 0.2), 0.4)
 	var b := CloakedFigure.build(h, pal[0], pal[1], true)
 	var body: PlayerBody = b.root
 	body.name = "Body"
 	holder.add_child(body)
+	holder.set_meta("sex", sex)
+	holder.set_meta("role", role)
+	holder.set_meta("stage", stage)
+	if role == "headman":
+		# The staff: the headman's mark.
+		var staff := CreatureBodies.cone(holder, 0.03, 0.025, 1.9 * _folk_scale, Vector3(0.32, 0.95 * _folk_scale, 0.1), Color(0.45, 0.32, 0.2), 0.0, 6)
+		staff.rotation.z = -0.08
+		holder.name = "Headman"
+	elif role == "plantkeeper":
+		CreatureBodies.box(holder, Vector3(0.18, 0.14, 0.1), Vector3(-0.3, 0.5 * _folk_scale, 0.12), Color(0.5, 0.42, 0.25))
+		holder.name = "Plantkeeper"
+	elif role == "maker":
+		holder.name = "Maker"
 	if small:
 		# Squatting on the ground, knees up, with a lantern.
 		body.position.y = -PlayerBody.SHIN_M * body.scale.y * 0.9
@@ -567,6 +757,16 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 	var blob := BlobShadow.make(holder, 0.3 * h, 0.4 * h)
 	blob.position.z = -0.12 * h
 	return holder
+
+
+## A folk's cloak: the tribe's roll, pulled toward the people's palette
+## (design §BO: the biome dresses the life).
+func _folk_palette(rng: RandomNumberGenerator, i: int) -> Array:
+	var pal := CloakedFigure.roll_palette(rng, _family)
+	if not _people_pal.is_empty():
+		var pc: Color = _people_pal[i % _people_pal.size()]
+		pal[0] = (pal[0] as Color).lerp(pc, 0.45)
+	return pal
 
 
 ## Idle life: the fire flickers; the folk look round at each other and the
@@ -611,7 +811,235 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var lines: Array = FOLK[folk].lines
 		var s0: Node3D = sitters[0]
 		hud.say(s0.get_meta("speaker"), lines[randi() % lines.size()], 0.2, 4.0)
-		_murmur(camp)
+		_murmur(camp, null, s0)
+
+
+## The camp's living (§BL): the store props follow the sim's state, and
+## by day one of the folk now and then walks out to the woods or the
+## water and back to the store with what they gathered (a figure that
+## goes and comes; the seated folk keep the fire).
+func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
+	if CampSim.instance == null or not camp.has_meta("woodpile"):
+		return
+	var st := CampSim.instance.state_of(str(camp.get_meta("key", "")))
+	if st.is_empty():
+		return
+	var t: float = camp.get_meta("store_t", 0.0) - delta
+	if t <= 0.0:
+		t = 1.5
+		# Folk born, grown, gone, given a role: the camp is built again
+		# with them (out of the player's sight, at the next refresh).
+		if str(camp.get_meta("folk_stamp", "")) != _folk_stamp(st) and camp.global_position.distance_to(pp) > 40.0:
+			var key := str(camp.get_meta("key", ""))
+			NodeRelease.free_later(camp)
+			_camps.erase(key)
+			return
+		# The canopy folk waiting on their giants (§BT): once the chunk's
+		# trees are in, the village goes up (a few tries, out of sight).
+		if bool(camp.get_meta("canopy_wait", false)) and camp.global_position.distance_to(pp) > 40.0:
+			var key := str(camp.get_meta("key", ""))
+			var tries := int(_canopy_tries.get(key, 0))
+			if tries < 3 and CanopyVillage.giants_near(chunks, camp.global_position, CanopyVillage.SEARCH_M).size() >= CanopyVillage.MIN_GIANTS:
+				_canopy_tries[key] = tries + 1
+				NodeRelease.free_later(camp)
+				_camps.erase(key)
+				return
+		# Their rope ladder comes down once the headman has met you.
+		if camp.has_meta("ladder"):
+			var lad: Node3D = camp.get_meta("ladder")
+			if is_instance_valid(lad):
+				lad.visible = bool(st.get("met_headman", false))
+		# The fundamentals' props: the plot and the weir (§BM).
+		if bool(st.get("plot", false)) and not camp.has_meta("plot"):
+			camp.set_meta("plot", _plot(camp, st))
+		if bool(st.get("weir", false)) and not camp.has_meta("weir"):
+			camp.set_meta("weir", _weir(camp, st))
+		var wp: Node3D = camp.get_meta("woodpile")
+		if absf(float(wp.get_meta("units", -1.0)) - float(st.wood)) >= 0.5:
+			CampProps.refresh_woodpile(wp, float(st.wood))
+		var fs: Node3D = camp.get_meta("food_store")
+		if absf(float(fs.get_meta("units", -1.0)) - float(st.food)) >= 1.0:
+			CampProps.refresh_food_store(fs, float(st.food))
+	camp.set_meta("store_t", t)
+	# The loop's walker.
+	var walker: Node3D = camp.get_meta("walker", null)
+	if walker != null and is_instance_valid(walker):
+		_walk(camp, walker, delta)
+		return
+	if str(st.state) != "living" or camp.has_meta("canopy"):
+		return # the canopy folk never come down (§BT): no walker
+	var wt: float = camp.get_meta("walk_t", 8.0) - delta
+	camp.set_meta("walk_t", wt)
+	if wt > 0.0 or camp.global_position.distance_to(pp) > 120.0:
+		return
+	var loop: Dictionary = CampSim.SIM.get("loop", {})
+	var gh = loop.get("gather_hours", [7, 17])
+	var h := CampSim.instance.clock_h(st, world.days)
+	if h < float(gh[0]) or h >= float(gh[1]) or CampSim.instance.gatherers(st) <= 0:
+		camp.set_meta("walk_t", 10.0)
+		return
+	# Out to a point walk_out_m away, then back to the store.
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	var wo = loop.get("walk_out_m", [15, 35])
+	var d0: Vector3 = world.dir_of(camp.global_position)
+	var out := CreatureSpawner._offset(d0, rng.randf() * TAU, rng.randf_range(float(wo[0]), float(wo[1])))
+	var pal := _folk_palette(rng, rng.randi() % 4)
+	var b := CloakedFigure.build(rng.randf_range(1.62, 1.78) * Peoples.folk_scale(str(camp.get_meta("kind", "human"))), pal[0], pal[1])
+	var holder := Node3D.new()
+	holder.name = "Walker"
+	camp.add_child(holder)
+	holder.add_child(b.root)
+	holder.set_meta("body", b.root)
+	holder.set_meta("from", d0)
+	holder.set_meta("to", out)
+	holder.set_meta("t", 0.0)
+	holder.set_meta("leg", 0) # 0 out, 1 pause, 2 back
+	holder.global_position = camp.global_position
+	camp.set_meta("walker", holder)
+	camp.set_meta("walk_t", rng.randf_range(25.0, 60.0))
+
+
+func _walk(camp: Node3D, holder: Node3D, delta: float) -> void:
+	var leg: int = holder.get_meta("leg")
+	var t: float = holder.get_meta("t") + delta
+	var from: Vector3 = holder.get_meta("from")
+	var to: Vector3 = holder.get_meta("to")
+	var len_m := CubeSphere.surface_distance_m(from, to)
+	var speed := 1.3
+	var body: Node3D = holder.get_meta("body")
+	if leg == 1:
+		if t > 4.0:
+			holder.set_meta("leg", 2)
+			holder.set_meta("t", 0.0)
+		else:
+			holder.set_meta("t", t)
+			if body.has_method("set_motion"):
+				body.call("set_motion", 0.0, delta)
+		return
+	var k := clampf(t * speed / maxf(len_m, 0.1), 0.0, 1.0)
+	var a := from if leg == 0 else to
+	var b := to if leg == 0 else from
+	var at := a.slerp(b, k)
+	var ahead := a.slerp(b, minf(k + 0.02, 1.0))
+	holder.global_position = world.to_scene(at, PlanetConst.RADIUS_M + chunks.ground_height(at))
+	var fwd := ahead - at
+	fwd = (fwd - at * fwd.dot(at))
+	if fwd.length() > 1e-9:
+		holder.global_basis = Basis.looking_at(fwd.normalized(), at)
+	if body.has_method("set_motion"):
+		body.call("set_motion", 0.7, delta)
+	holder.set_meta("t", t)
+	if k >= 1.0:
+		if leg == 0:
+			holder.set_meta("leg", 1)
+			holder.set_meta("t", 0.0)
+		else:
+			# Home: what they carried is on the store (the sim did the
+			# accounting); the figure is done.
+			holder.queue_free()
+			camp.remove_meta("walker")
+
+
+## An empty camp (§BL abandon): the fire as it is (embers or out), the
+## needful things left (a fuel pile, a torch bundle; the pot waits on the
+## potter), a dark stain by the fire where the dark took them, the props
+## sinking as the forest takes it back.
+func _empty_camp(root: Node3D, st: Dictionary, d: Vector3, body: StaticBody3D) -> void:
+	var reclaim := CampSim.instance.reclaim(st)
+	root.set_meta("empty", true)
+	for it in (CampSim.SIM.get("abandon", {}) as Dictionary).get("needful_things_left", []):
+		match str(it):
+			"fuel_pile":
+				if reclaim < 0.8:
+					var off := CreatureSpawner._offset(d, 1.0, 2.6)
+					WorldItem.drop(Inventory.make("fuel", {"fuel": "branch", "title": "Branch", "carry_items": 1}), world, off, chunks.ground_height(off))
+			"torch_bundle":
+				if reclaim < 0.6 and Tuning.profile() == "ambient":
+					Torch.lay_bundle(world, chunks, root.get_meta("fire"))
+	if bool(st.get("blood", false)) and reclaim < 0.5:
+		var stain := CreatureBodies.ball(root, Vector3(1.2, 0.03, 0.9), Vector3(1.6, 0.02, 0.4), Color(0.25, 0.05, 0.04))
+		stain.rotation.y = 0.6
+	for n in root.get_meta("props", []):
+		(n as Node3D).position.y -= 0.5 * reclaim
+		(n as Node3D).rotation.z += 0.25 * reclaim
+
+
+## The sim's folk as a stamp (count, children, roles): a change rebuilds.
+static func _folk_stamp(st: Dictionary) -> String:
+	var s := ""
+	for f in st.get("folk", []):
+		s += "%s%s%s," % [str(f.get("sex", "")), CampSim.stage_of(f), str(f.get("role", ""))]
+	return s
+
+
+## A garden plot near the fire (§BM crop): rows of the crop in a hurdle
+## fence, the seeds' own species where one took.
+func _plot(camp: Node3D, st: Dictionary) -> Node3D:
+	var n := Node3D.new()
+	n.name = "Plot"
+	camp.add_child(n)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([str(st.key), "plot"])
+	var a := rng.randf() * TAU
+	n.position = Vector3(cos(a), 0, sin(a)) * rng.randf_range(11.0, 14.0)
+	n.basis = Basis.looking_at(-n.position.normalized(), Vector3.UP)
+	var col := Color(0.35, 0.55, 0.25)
+	var sp_idx := int(st.get("plot_species", -1))
+	if sp_idx >= 0 and sp_idx < SpeciesDB.all().size():
+		col = (SpeciesDB.all()[sp_idx] as PlantSpecies).color
+	for r in 3:
+		for c in 5:
+			var h := rng.randf_range(0.3, 0.6)
+			CreatureBodies.cone(n, 0.16, 0.02, h, Vector3(-1.6 + c * 0.8, h * 0.5, -1.2 + r * 1.2), col.darkened(rng.randf() * 0.15), 0.0, 6)
+	for i in 12:
+		var ang := i * TAU / 12.0
+		var p := CreatureBodies.cone(n, 0.035, 0.025, 0.9, Vector3(cos(ang) * 2.8, 0.45, sin(ang) * 2.4), CampProps.POLE, 0.0, 5)
+		p.rotation.x = rng.randf_range(-0.1, 0.1)
+	return n
+
+
+## The weir (§BM fish_run): a V of stakes at the nearest water within
+## reach of the camp (the shore, the river bank), or nothing yet if no
+## water is loaded near.
+func _weir(camp: Node3D, st: Dictionary) -> Node3D:
+	var d0: Vector3 = world.dir_of(camp.global_position)
+	var best := Vector3.ZERO
+	var best_m := INF
+	for k in 16:
+		for r in [40.0, 80.0, 140.0, 220.0, 300.0]:
+			var p := CreatureSpawner._offset(d0, k * TAU / 16.0, r)
+			if chunks.water_level_at(p) > chunks.ground_height(p) + 0.3 and r < best_m:
+				best_m = r
+				best = p
+	if best == Vector3.ZERO:
+		return null
+	var n := Node3D.new()
+	n.name = "Weir"
+	camp.add_child(n)
+	n.global_position = world.to_scene(best, PlanetConst.RADIUS_M + chunks.water_level_at(best))
+	n.global_basis = Basis.looking_at(CubeSphere.north(best), best)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([str(st.key), "weir"])
+	for side in [-1.0, 1.0]:
+		for i in 7:
+			var x: float = float(side) * i * 0.9
+			var z: float = -i * 1.1
+			var stake := CreatureBodies.cone(n, 0.05, 0.03, 1.4, Vector3(x, 0.3, z), CampProps.POLE.darkened(0.2), 0.0, 5)
+			stake.rotation = Vector3(rng.randf_range(-0.1, 0.1), 0, rng.randf_range(-0.1, 0.1))
+	return n
+
+
+## The camp's store node within reach of `pos` (the woodpile or the food
+## store), and its camp: [store, camp] or [].
+func store_in_reach(pos: Vector3, radius: float) -> Array:
+	for key in _camps:
+		var camp: Node3D = _camps[key]
+		for m in ["woodpile", "food_store"]:
+			var n: Node3D = camp.get_meta(m, null)
+			if n != null and is_instance_valid(n) and n.global_position.distance_to(pos) < radius:
+				return [n, camp]
+	return []
 
 
 ## The folk's hitboxes (CreatureHitboxes) in the physics space only while
@@ -639,4 +1067,4 @@ func shot_at(folk: Node3D) -> void:
 	hud.say(folk.get_meta("speaker", "?"), lines[randi() % lines.size()], 0.0, 3.0)
 	var camp := folk.get_parent() as Node3D
 	if camp and camp.has_meta("chatter"):
-		_murmur(camp, folk.global_position + world.dir_of(folk.global_position) * 0.9)
+		_murmur(camp, folk.global_position + world.dir_of(folk.global_position) * 0.9, folk)

@@ -5,7 +5,8 @@
   "wake_random": "true: after a death you wake at a RANDOM inhabited ruin's fire within wake_radius_m of where you died, a different one each time; false: the nearest.",
   "wake_radius_m": "How far from where you died the fire can be. If no inhabited ruin lies within it the search widens (x2, up to widen_steps times); failing that you wake at the opening camp.",
   "wake_at_home": "Design 30 Sept §AY: true (ambient profile) - after a death you wake at your HEARTH: the opening camp until you make another camp's fire your hearth (right click it). Overrides wake_random. false: the 29 Sept rule.",
-  "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24 for now, Mike). births: need a man and a woman, a surplus, a slow clock; folk have three life stages, child -> teen -> adult (Mike): a child does not gather, a teen gathers at half rate and cannot be a specialist, an adult does both; stage lengths in game days. collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three."
+  "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24 for now, Mike). births: need a man and a woman, a surplus, a slow clock; folk have three life stages, child -> teen -> adult (Mike): a child does not gather, a teen gathers at half rate and cannot be a specialist, an adult does both; stage lengths in game days. collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three.",
+  "sim_first_guesses": "Added by Claude Code on 30 Sept as first guesses to wire the engine (tune by play): loop.wood_per_gatherer_h and food_per_gatherer_h (units a gatherer brings back per gather hour), loop.walk_out_m (how far the visible loop walks), store.feed_units_per_tick and feed_fire_below_units (folk feed the fire from the woodpile when it drops below this), restraint.woods_units_in_reach (the wood within reach when untouched), regrow_per_game_day (share of it that grows back a day), reach_grow_per_stripped_day_m (the walk lengthens as the woods strip), population.child_eats (share of an adult), fundamental_food_scale and crop_food_scale (what a fundamental or a crop multiplies the food take by), ladder_gates (what moves a camp up a rung), wildfire.fire_prone_biomes, lightning_chance_per_storm_h, spread_m (the burn's reach, by wind and fuel), scar_lasts_game_days, dry_rain_mm_h (less rain than this in a tick keeps the dry spell counting). Retuned 1 Oct after the first sim run: a woodpile unit is one branch's worth of burning whatever the people burn; the folk split their gather hours by what the fire burns and what they eat (not half and half), so a camp of three keeps its fire and a camp of five banks a surplus; the woods in reach regrow slower once stripped. Teens gather at stages.gather_rate; a teen eats as an adult (no number for it yet). population.specialist_gather_rate: a headman, plantkeeper or maker still gathers, at this share of a gatherer (a role, not a job); without it a camp of three with two specialists let its fire die."
  },
  "only_at_ruins": true,
  "wake_random": true,
@@ -20,7 +21,9 @@
    "food_days_target": 7.0,
    "food_units_per_folk_day": 1.0,
    "wood_units_per_night": 4.0,
-   "visible": true
+   "visible": true,
+   "feed_units_per_tick": 2.0,
+   "feed_fire_below_units": 3.0
   },
   "loop": {
    "gather_reach_m": 300.0,
@@ -29,7 +32,13 @@
     7,
     17
    ],
-   "player_gather_counts": true
+   "player_gather_counts": true,
+   "wood_per_gatherer_h": 1.0,
+   "food_per_gatherer_h": 0.3,
+   "walk_out_m": [
+    15,
+    35
+   ]
   },
   "population": {
    "start": [
@@ -39,7 +48,11 @@
    "forage_cap": 6,
    "fundamental_adds": 6,
    "crop_adds": 4,
-   "village_cap": 24
+   "village_cap": 24,
+   "child_eats": 0.5,
+   "fundamental_food_scale": 1.6,
+   "crop_food_scale": 1.4,
+   "specialist_gather_rate": 0.5
   },
   "births": {
    "needs_both_sexes": true,
@@ -92,7 +105,10 @@
    ]
   },
   "restraint": {
-   "take_vs_regrow_max": 1.0
+   "take_vs_regrow_max": 1.0,
+   "woods_units_in_reach": 150.0,
+   "regrow_per_game_day": 0.06,
+   "reach_grow_per_stripped_day_m": 25.0
   },
   "ladder": [
    "fire",
@@ -126,7 +142,35 @@
     "dropped_torch"
    ],
    "camp_response": "walk_away",
-   "fire_followers_bloom": true
+   "fire_followers_bloom": true,
+   "fire_prone_biomes": [
+    "TALLGRASS_PRAIRIE",
+    "SHORTGRASS_PRAIRIE",
+    "STEPPE",
+    "SAGEBRUSH",
+    "MEDITERRANEAN_SCRUB",
+    "THORN_SCRUB",
+    "SAVANNA",
+    "TROPICAL_DRY_FOREST",
+    "TAIGA",
+    "KRUMMHOLZ",
+    "COLD_DESERT",
+    "HOT_DESERT",
+    "BADLANDS"
+   ],
+   "lightning_chance_per_storm_h": 0.02,
+   "spread_m": [
+    150,
+    600
+   ],
+   "scar_lasts_game_days": 365,
+   "dry_rain_mm_h": 0.2
+  },
+  "ladder_gates": {
+   "food_days_for_food": 1.0,
+   "surplus_days_for_storage": 10,
+   "folk_for_specialist": 8,
+   "neighbour_km_for_exchange": 15.0
   }
  }
 }

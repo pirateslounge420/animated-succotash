@@ -119,25 +119,36 @@ static func tick(tree: SceneTree, delta: float, near: Vector3) -> void:
 		if st.is_empty():
 			continue
 		var before := str(st.state)
-		var units: Array = st.units
-		if not units.is_empty() and before != "out":
-			var rate := float(F.get("burn_scale", 1.0)) * (float(F.get("tended_burn_scale", 0.35)) if bool(st.get("tended", true)) else 1.0)
-			units[0][1] = float(units[0][1]) - delta / 60.0 * rate
-			if float(units[0][1]) <= 0.0:
-				units.pop_front()
-			if units.is_empty():
-				st.state = "embers"
-				st.embers_min = float(F.get("embers_min", 20.0))
-			else:
-				st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
-		elif before == "embers":
-			st.embers_min = float(st.embers_min) - delta / 60.0
-			if float(st.embers_min) <= 0.0:
-				st.state = "out"
+		burn(st, delta / 60.0)
 		if str(st.state) != before:
 			apply(fire)
 			if fire.global_position.distance_to(near) < 40.0:
 				_log_state(fire.get_meta("fuel_key"), str(st.state))
+
+
+## Burn a store down by `minutes` of real time (the scene tick each
+## frame; CampSim for a camp's fire while it is unloaded).
+static func burn(st: Dictionary, minutes: float) -> void:
+	var units: Array = st.units
+	var state := str(st.state)
+	if not units.is_empty() and state != "out":
+		var rate := float(F.get("burn_scale", 1.0)) * (float(F.get("tended_burn_scale", 0.35)) if bool(st.get("tended", true)) else 1.0)
+		var left := minutes * rate
+		while left > 0.0 and not units.is_empty():
+			var take := minf(left, float(units[0][1]))
+			units[0][1] = float(units[0][1]) - take
+			left -= take
+			if float(units[0][1]) <= 0.0:
+				units.pop_front()
+		if units.is_empty():
+			st.state = "embers"
+			st.embers_min = float(F.get("embers_min", 20.0))
+		else:
+			st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
+	elif state == "embers":
+		st.embers_min = float(st.embers_min) - minutes
+		if float(st.embers_min) <= 0.0:
+			st.state = "out"
 
 
 static func _log_state(key: String, state: String) -> void:
