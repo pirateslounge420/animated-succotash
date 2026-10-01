@@ -572,6 +572,21 @@ and it is cheaper. Measured against the reference frames (day luma 0.31 / sat 0.
 0.53 / 0.009 / 0.000. The gap is texture, the floor and saturation — not darkness. Night is
 one colour (collapse toward the floor's blue, never grey); water is the brightest thing.
 
+Four calls Mike made on the frames (30 Sept, 21:00):
+- **Days are vivid, not dark.** Where the sun hits, the ground is bright saturated green
+  under a blazing cobalt sky; shade stays deep navy. This softens §C's "dark day" to:
+  *dark where the sun doesn't reach, vivid where it does.* Target day luma ~0.31 at
+  saturation ~0.64 (the frames), not mids pulled down everywhere.
+- **The pixels come from the 480p screen AND the textures.** §Y stands; the §AG tiles go on
+  top. More PS1 than GameCube at the edges, and cheapest.
+- **Water: glowier, but biome-matched.** Every water is brighter and more saturated than
+  its surroundings (a scrolling caustic tile, white-blue waterfall sheets), but its base hue
+  follows the biome: electric blue for clear mountain and karst water, tea-brown glow for a
+  floodplain river, green-blue for a lake, black-green with a blue highlight in a swamp,
+  turquoise on a reef. `look.json → water.by_family` (first guesses).
+- **Grass cards near, the tile far.** Blades/flecks within `ranges.grass_m`, denser than
+  now, fading to the ground tile; the texel noise carries the distance.
+
 ## BT. Canopy folk — the seventeenth life — LOCKED
 
 Mike: a village that lives in the trees in really old growth, never comes down, harvests

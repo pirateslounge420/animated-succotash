@@ -34,7 +34,7 @@
   "ambient_energy": 0.42,
   "exposure": 1.0,
   "mids": 1.22,
-  "saturation": 1.35,
+  "saturation": 1.5,
   "teal": 0.6,
   "shadow_tint": [
    0.55,
@@ -207,5 +207,122 @@
    "canopy_dark_reads_same": true
   },
   "apply_order": "shadow*dapple*canopy_dark*ambient, then max(floor*visibility)"
- }
+ },
+ "water": {
+  "_help": "Design 30 Sept §BU (Mike): water is glowier than its surroundings but biome-matched. by_family: base colour and highlight per water family; glow: how much brighter than the scene it reads (1.0 = same); caustic_tile_m: the scrolling caustic tile repeat; waterfall: the sheet's colours and streak scroll. First guesses, tune by eye.",
+  "glow": 1.35,
+  "caustic_tile_m": 1.5,
+  "caustic_scroll_mps": 0.25,
+  "by_family": {
+   "clear": {
+    "biomes": [
+     "ALPINE_MEADOW",
+     "ALPINE_TUNDRA",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "CAVES",
+     "HOT_SPRING",
+     "TEMPERATE_RAINFOREST"
+    ],
+    "base": "#1848E0",
+    "highlight": "#8FD0FF",
+    "note": "mountain, karst and spring water: the electric blue of the frames"
+   },
+   "river": {
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TALLGRASS_PRAIRIE",
+     "SAVANNA",
+     "TROPICAL_DRY_FOREST",
+     "STEPPE"
+    ],
+    "base": "#2A58C8",
+    "highlight": "#9FD8FF",
+    "note": "a lowland river: still blue, a little tea in it"
+   },
+   "lake": {
+    "biomes": [
+     "FRESHWATER",
+     "LAGOON",
+     "WET_MEADOW"
+    ],
+    "base": "#1E6AC0",
+    "highlight": "#A8E4FF",
+    "note": "green-blue, glassy"
+   },
+   "swamp": {
+    "biomes": [
+     "SWAMP",
+     "BOG",
+     "FEN",
+     "FRESHWATER_MARSH",
+     "MANGROVE"
+    ],
+    "base": "#0E2A30",
+    "highlight": "#4FA0FF",
+    "note": "black-green with a blue highlight; the moonlit water Mike liked"
+   },
+   "sea": {
+    "biomes": [
+     "BEACH",
+     "ROCKY_SHORE",
+     "DUNES",
+     "ESTUARY",
+     "SALT_MARSH",
+     "MARITIME_FOREST",
+     "SHELF_SEA",
+     "DEEP_OCEAN",
+     "KELP_FOREST"
+    ],
+    "base": "#0C3A9A",
+    "highlight": "#7CC8FF",
+    "note": "deep cobalt"
+   },
+   "reef": {
+    "biomes": [
+     "CORAL_REEF"
+    ],
+    "base": "#16A0C8",
+    "highlight": "#C8FFFF",
+    "note": "turquoise"
+   },
+   "desert": {
+    "biomes": [
+     "OASIS",
+     "HOT_DESERT",
+     "COLD_DESERT",
+     "CANYON",
+     "SALT_FLAT",
+     "BADLANDS"
+    ],
+    "base": "#1E78C0",
+    "highlight": "#B0F0FF",
+    "note": "an oasis pool: bright, a little green"
+   },
+   "tropics": {
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
+    ],
+    "base": "#1A5AB0",
+    "highlight": "#9ADFFF",
+    "note": "jungle river, blue with a brown floor"
+   }
+  },
+  "default_family": "river",
+  "waterfall": {
+   "sheet": "#B8E8FF",
+   "shadow": "#4A8AE0",
+   "streak_tile_m": 0.6,
+   "streak_scroll_mps": 2.5,
+   "foam": "#F0FFFF"
+  },
+  "night": {
+   "glow": 1.6,
+   "note": "at night water is the most saturated surface in the frame"
+  }
+ },
+ "_help_day_vivid": "30 Sept §BU: days are vivid where the sun hits (target luma ~0.31, saturation ~0.64 measured on the frames); shade stays deep navy. day.saturation raised 1.35 -> 1.5; the floor rule (§BD) keeps shade from going black."
 }
