@@ -83,6 +83,8 @@ static var STAND := Tuning.table("stand")
 ## in salad_biomes. The understory tiers follow with their own dominant in
 ## the same stand cell.
 static var DOM: Dictionary = STAND.get("dominance", {})
+## The world clock as the placer sees it (main sets it: burn scars age).
+static var NOW_DAYS := 0.0
 ## The trail's strip (roads.json trail): understory kept clear this far
 ## either side of the tread, a tree within tree_at_bend_m of each bend.
 static var ROAD_TRAIL: Dictionary = Tuning.section("roads", "trail")
@@ -223,6 +225,20 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var shade_f := 1.0
 			if tier == T.GROUND:
 				shade_f = 1.0 - 0.7 * clampf(ctx.shade_at(gx, gy), 0.0, 1.0)
+			# A burn scar (design 30 Sept §BL wildfire, CampSim.scars): the
+			# first season nothing stands in the understory and the ground
+			# tier blooms with fire-followers; trees stand dead (bare) for
+			# as long as the scar lasts. A fertility mark (§BQ black earth,
+			# a midden) grows the understory thicker (SoilMarks).
+			var scar := CampSim.scar_at(site.dir, VegetationPlacer.NOW_DAYS) if not CampSim.scars.is_empty() else 0.0
+			if scar > 0.0:
+				if tier == T.SHRUB and scar > 0.5:
+					continue
+				if tier == T.GROUND:
+					fill_scale *= 1.0 + 1.5 * scar
+			var fert := SoilMarks.fertility_at(site.dir)
+			if fert > 1.0 and tier >= T.SHRUB:
+				fill_scale *= fert
 			var p_max := clump * 1.0 * float(FILL[tier]) * fill_scale
 			if tier == T.GROUND:
 				p_max *= shade_f
@@ -249,6 +265,7 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var sp: PlantSpecies = candidates[chosen]
 			var rolled := _roll_tree(ctx.rng, sp, tier)
 			var height: float = float(rolled[0]) * float(SIZE_SCALE[tier])
+			var burnt := scar > 0.0 and (tier == T.EMERGENT or tier == T.CANOPY)
 			var stage: int = PlantGrowth.Stage.MATURE
 			if rolled[1] and not sp.growth.is_empty():
 				# The young cohort: saplings and young trees in their own form
@@ -277,6 +294,10 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				if DeadWood.is_dead(ctx.map, site.dir, sp):
 					leaf = 0.0
 					vines *= 0.3
+				# A burn scar: the trees stand dead (bare) while it lasts.
+				if burnt:
+					leaf = 0.0
+					vines *= 0.2
 			var lean := _lean(ctx, sp, site.dir) if TreeArch.grows(sp) else Vector2.INF
 			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf, lean, stage)
 			if tier == T.EMERGENT or tier == T.CANOPY:

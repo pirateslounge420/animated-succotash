@@ -145,6 +145,19 @@ func _attach_ruins() -> void:
 	_root.add_child(node)
 	node.global_transform = RuinBuilder.placement(item[1], world)
 	_ruins[c] = node
+	# Ruins remember (design 30 Sept §BQ): the people who lived here left
+	# their craft's signatures; a squatting camp's ladder makes them
+	# legible (RuinMarks).
+	var site: Dictionary = node.get_meta("site", {})
+	if not site.is_empty():
+		var pid := Peoples.pick(map, chunks.rivers, site.dir, "ruin")
+		var rung := -1
+		if CampSim.instance != null:
+			var st := CampSim.instance.state_of("ruin:%s" % str(c))
+			if not st.is_empty() and str(st.get("state", "")) == "living":
+				rung = int(st.get("rung", 0))
+		RuinMarks.dress(node, site, world, chunks, Peoples.get_people(pid), rung)
+		node.set_meta("marks_rung", rung)
 
 
 ## Build the ruin around surface direction `d` now, if there is one and
