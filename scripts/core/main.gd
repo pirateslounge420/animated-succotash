@@ -135,7 +135,7 @@ func _on_planet_ready() -> void:
 	# camps (a different one each game); plants keep clear of it.
 	# The world's save first: it remembers where this world's first camp is.
 	WorldSave.open(world.world_seed)
-	var spawn_dir: Vector3 = world.pick_spawn_site()
+	var spawn_dir := _opening_site()
 	Encampment.set_active(spawn_dir)
 	# Start in the afternoon (design 30 Sept night §BX, roads.json
 	# opening_road.spawn): real_min_before_dusk real minutes before dusk
@@ -556,6 +556,13 @@ func _on_player_died() -> void:
 	# camps.json wake_at_home), wherever you died.
 	if Tuning.profile() == "ambient" and bool(Tuning.table("camps").get("wake_at_home", true)) and Hearth.dir != Vector3.ZERO:
 		fire = Hearth.dir
+		# Never wake at no fire: a hearth that is neither the opening
+		# camp's nor a ruin camp's (a camp that moved, a fire long gone)
+		# wakes you at the opening camp.
+		if CubeSphere.surface_distance_m(fire, camp.site) > 30.0 and not camps.fire_at(fire):
+			fire = camp.site
+			Hearth.set_home(camp.site, false)
+			GameLog.add("Your hearth was gone; you woke at the camp.", "hearth_gone")
 	# Lying a couple of metres from the fire, feet to it.
 	var d: Vector3 = CreatureSpawner._offset(fire, CubeSphere.longitude(death_dir) * 7.0, 2.4)
 	if fire == camp.site:
@@ -794,6 +801,53 @@ var _gifts: Array = []
 ## the people's camp it leads to (RoadNetwork.opening), or Vector3.ZERO
 ## when this world has none (the dev frame) or the road would not route.
 const OPENING_LOOK_M := 60.0
+
+## Where this world's opening camp stands (design 1 Oct, Mike's Mac): a
+## kept world rebuilds it where it first was (WorldSave "opening_site");
+## only a brand-new world picks one (World.pick_spawn_site), and keeps it.
+## A save from before 1 Oct has no opening_site: its saved hearth, when it
+## is not a ruin camp's fire, was the opening camp, and is kept as it.
+## The dev frame (spawn_choice >= 0) always picks, and never keeps.
+func _opening_site() -> Vector3:
+	if world.spawn_choice >= 0:
+		return world.pick_spawn_site()
+	var kept := _vec(WorldSave.data.get("opening_site", null))
+	if kept == Vector3.ZERO:
+		var hearth := _vec(WorldSave.data.get("hearth", null))
+		if hearth != Vector3.ZERO and not _at_ruin_camp(hearth):
+			kept = hearth
+			print("[world] an older save: its hearth is the opening camp (%s)" % str(hearth))
+	if kept != Vector3.ZERO:
+		var site: Vector3 = world.restore_spawn_site(kept, str(WorldSave.data.get("first_camp_kind", "")))
+		_keep_opening(site)
+		return site
+	var site: Vector3 = world.pick_spawn_site()
+	_keep_opening(site)
+	return site
+
+
+func _keep_opening(site: Vector3) -> void:
+	WorldSave.data["opening_site"] = [site.x, site.y, site.z]
+	WorldSave.data["first_camp_kind"] = world.first_camp_kind
+	WorldSave.mark_dirty()
+
+
+## A saved [x, y, z] as a direction (ZERO when absent).
+static func _vec(v) -> Vector3:
+	if v is Array and (v as Array).size() == 3:
+		return Vector3(float(v[0]), float(v[1]), float(v[2])).normalized()
+	return Vector3.ZERO
+
+
+## Is `d` a ruin camp's fire (an inhabited ruin within RUIN_FIRE_M)?
+const RUIN_FIRE_M := 250.0
+
+func _at_ruin_camp(d: Vector3) -> bool:
+	for r in Ruins.near(world.planet, d, RUIN_FIRE_M):
+		if Ruins.inhabited(r):
+			return true
+	return false
+
 
 func _opening_road_ahead(site: Vector3) -> Vector3:
 	if world.opening.is_empty() or chunks.roads == null:

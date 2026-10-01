@@ -110,6 +110,44 @@ func _initialize() -> void:
 	ok(hud.readouts.clock_rect().position.y >= hud.part_rect("position").end.y, "the clock sits below the right column (clock y %.0f, column bottom %.0f)" % [hud.readouts.clock_rect().position.y, hud.part_rect("position").end.y])
 	var left_gap: float = hud.part_rect("moon").position.y - hud.part_rect("time").end.y
 	ok(left_gap >= 0.0 and left_gap <= 4.0, "one line per part, stacked with the old line spacing (%.0f px)" % left_gap)
+	# Every line fits its half of the internal frame at every pixel preset
+	# (Mike's Mac, 1 Oct: the wind's direction was cut off): wrapped at a
+	# break if it must be, never cut and never an ellipsis, every word of
+	# the readout there.
+	var had_preset = Settings.get_value("display.preset") if Settings.has("display.preset") else null
+	print("   the HUD font: %s (%s)" % [HudText.loaded_from, ThemeDB.fallback_font.get_font_name()])
+	ok(HudText.loaded_from in ["import", "disk"] and ThemeDB.fallback_font.get_font_name() == "VT323", "the HUD's face is VT323, never a system font (%s)" % HudText.loaded_from)
+	for pname in Display.presets():
+		Settings.set_value("display.preset", pname)
+		Display.apply()
+		await frames(3)
+		var vw: float = hud.get_viewport().get_visible_rect().size.x
+		var cap: float = hud.column_cap()
+		var bad: Array = []
+		for id in Hud.PARTS:
+			if not hud._parts.has(id):
+				continue
+			var l: Label = hud._parts[id]
+			var font := l.get_theme_font("font")
+			var fpx := l.get_theme_font_size("font_size")
+			for line in l.text.split("\n"):
+				if font.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, fpx).x > cap + 0.5:
+					bad.append("%s too wide: %s" % [id, line])
+			if l.text.contains("…"):
+				bad.append("%s cut: %s" % [id, l.text])
+			for word in str(hud._part_text[id]).replace(" · ", " ").split(" "):
+				if word != "" and not l.text.contains(word):
+					bad.append("%s lost '%s'" % [id, word])
+			var r := hud.part_rect(id)
+			if r.position.x < -0.5 or r.end.x > vw + 0.5:
+				bad.append("%s off the frame: %s" % [id, r])
+		ok(bad.is_empty(), "preset %s (%.0f px wide): every HUD line fits its half of the frame, whole%s" % [pname, vw, "" if bad.is_empty() else ": %s" % [bad]])
+	if had_preset == null:
+		Settings.erase("display.preset")
+	else:
+		Settings.set_value("display.preset", had_preset)
+	Display.apply()
+	await frames(2)
 	act("toggle_hud")
 	ok(not hud.full and not hud.is_shown("wind"), "H again: the pinned parts only")
 

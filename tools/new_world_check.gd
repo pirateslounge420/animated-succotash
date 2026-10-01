@@ -90,6 +90,69 @@ func _run() -> void:
 	main = await _boot()
 	var c := _describe(main, world)
 	ok(c.seed == b.seed and c.cell == b.cell, "Continue boots into the last world at the same camp")
+	# A world keeps its camp (1 Oct, Mike's Mac): change what a seed would
+	# pick (the first-camp weights: this kind out), Continue from the file,
+	# and the camp is where it was.
+	var site_c: Vector3 = main.camp.site
+	WorldSave.flush(0.0, true)
+	ok(WorldSave.data.has("opening_site"), "the save keeps the opening camp's site (opening_site)")
+	var kinds: Dictionary = Encampment.FC.get("kinds", {})
+	var old_w := {}
+	for k in kinds:
+		old_w[k] = (kinds[k] as Dictionary).get("weight", 1)
+		(kinds[k] as Dictionary)["weight"] = 0.0 if str(k) == c.kind else 5.0
+	main.queue_free()
+	await process_frame
+	await process_frame
+	WorldSave.path = ""
+	main = await _boot()
+	var dm := CubeSphere.surface_distance_m(main.camp.site, site_c)
+	ok(world.world_seed == c.seed and dm < 1.0, "with the weights changed, Continue rebuilds the camp where it was (%.1f m off; kind '%s')" % [dm, world.first_camp_kind])
+	for k in kinds:
+		(kinds[k] as Dictionary)["weight"] = old_w[k]
+	# A save from before the camp was kept (pre-d690997): no opening_site,
+	# a hearth that is no ruin camp's fire. That hearth was the opening camp.
+	var old_site := site_c
+	for k in 24:
+		var q := CreatureSpawner._offset(site_c, k * TAU / 24.0, 2600.0)
+		if world.planet.water[world.planet.cell_at(q)] == PlanetData.Water.NONE and world.planet.terrain.elevation(q, true) > 2.0 and not main._at_ruin_camp(q):
+			old_site = q
+			break
+	WorldSave.data.erase("opening_site")
+	WorldSave.data.erase("first_camp_kind")
+	WorldSave.data["hearth"] = [old_site.x, old_site.y, old_site.z]
+	WorldSave.mark_dirty()
+	WorldSave.flush(0.0, true)
+	main.queue_free()
+	await process_frame
+	await process_frame
+	WorldSave.path = ""
+	main = await _boot()
+	dm = CubeSphere.surface_distance_m(main.camp.site, old_site)
+	ok(dm < 1.0, "an older save: the camp is rebuilt at its hearth (%.1f m off)" % dm)
+	var op: Dictionary = RoadNetwork.opening
+	var node: Vector3 = op.get("node", Vector3.ZERO)
+	var road_on := false
+	for l in main.chunks.roads.links_near(node, 400.0):
+		if bool(l.get("opening", false)):
+			road_on = true
+	ok(node != Vector3.ZERO and CubeSphere.surface_distance_m(node, old_site) < 40.0 and road_on, "and its opening road starts there (node %.0f m from the fire, road %s to a people's camp %.1f km off)" % [CubeSphere.surface_distance_m(node, old_site), "routed" if road_on else "missing", float(op.get("camp_m", INF)) / 1000.0])
+	ok(WorldSave.data.has("opening_site"), "the migrated site is kept from now on")
+	# Never wake at no fire: a hearth where no fire stands wakes you at the
+	# opening camp, with a line in the log.
+	if Tuning.profile() == "ambient":
+		var nowhere := CreatureSpawner._offset(main.camp.site, 2.0, 3300.0)
+		Hearth.dir = nowhere
+		Hearth.key = FireStore.key_of(nowhere)
+		main._on_player_died()
+		for i in 600:
+			await process_frame
+		var woke := CubeSphere.surface_distance_m(main.player.surface_dir, main.camp.site)
+		var said := false
+		for e in GameLog.entries:
+			if str(e.get("text", "")) == "Your hearth was gone; you woke at the camp.":
+				said = true
+		ok(woke < 30.0 and said and CubeSphere.surface_distance_m(Hearth.dir, main.camp.site) < 1.0, "a hearth with no fire: you wake at the camp (%.0f m from it), the log says so (%s), and the camp is your hearth again" % [woke, said])
 	# Clean up what this check made; the player's own pointer is put back.
 	for sd in made:
 		var path := ProjectSettings.globalize_path("user://worlds/%d.json" % sd)

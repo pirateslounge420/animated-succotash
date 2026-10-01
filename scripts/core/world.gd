@@ -431,32 +431,83 @@ func _first_camp_of(kind: String, cells: PackedVector3Array, rng: RandomNumberGe
 		var site := Encampment.fire_site(planet, rivers, d, kind)
 		if site == Vector3.ZERO:
 			continue
-		var camps: Array = []
-		for r in Ruins.near(planet, site, hint_m * 1.6):
-			if not Ruins.inhabited(r):
-				continue
-			var dm := CubeSphere.surface_distance_m(site, r.dir)
-			if dm < 1500.0:
-				continue
-			camps.append([absf(dm - target), r.dir, dm])
-		camps.sort_custom(func(x, y): return x[0] < y[0])
+		var camps := _people_camps_toward(site, hint_m, target)
 		options.append([camps[0][0] if not camps.is_empty() else INF, site, camps])
 	if options.is_empty():
 		return {}
 	options.sort_custom(func(x, y): return x[0] < y[0])
 	for o in options:
-		var camps: Array = o[2]
-		for ci in mini(camps.size(), 3):
-			var ruin: Vector3 = camps[ci][1]
-			var node := _road_node_by(o[1], ruin)
-			if RoadNetwork.can_route(planet, rivers, node, ruin):
-				var alts: Array = []
-				for k in range(ci + 1, mini(camps.size(), ci + 4)):
-					alts.append(camps[k][1])
-				return {"site": o[1], "node": node, "ruin": ruin, "alts": alts, "camp_m": camps[ci][2]}
+		var pick := _road_from(o[1], o[2], rivers)
+		if not pick.is_empty():
+			return pick
 	push_warning("World: no %s first camp's people's camp could be reached by road on seed %d; the camp stands on the network alone" % [kind, world_seed])
 	var best: Vector3 = options[0][1]
 	return {"site": best, "node": best, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF}
+
+
+## The people's camps (inhabited ruins) round `site` within 1.6 x the
+## opening road's hint and at least 1.5 km off, best first: [|distance -
+## target|, dir, distance].
+func _people_camps_toward(site: Vector3, hint_m: float, target: float) -> Array:
+	var camps: Array = []
+	for r in Ruins.near(planet, site, hint_m * 1.6):
+		if not Ruins.inhabited(r):
+			continue
+		var dm := CubeSphere.surface_distance_m(site, r.dir)
+		if dm < 1500.0:
+			continue
+		camps.append([absf(dm - target), r.dir, dm])
+	camps.sort_custom(func(x, y): return x[0] < y[0])
+	return camps
+
+
+## The opening road from `site` to the first of its best three people's
+## `camps` a road reaches ({} when none does): the road node, the camp and
+## the next ones as alternatives.
+func _road_from(site: Vector3, camps: Array, rivers: RiverNetwork) -> Dictionary:
+	for ci in mini(camps.size(), 3):
+		var ruin: Vector3 = camps[ci][1]
+		var node := _road_node_by(site, ruin)
+		if RoadNetwork.can_route(planet, rivers, node, ruin):
+			var alts: Array = []
+			for k in range(ci + 1, mini(camps.size(), ci + 4)):
+				alts.append(camps[k][1])
+			return {"site": site, "node": node, "ruin": ruin, "alts": alts, "camp_m": camps[ci][2]}
+	return {}
+
+
+## A kept world's opening camp (design 1 Oct, Mike's Mac: the camp moved
+## when the roads pass changed what a seed picks): rebuilt exactly where
+## the world first put it (WorldSave "opening_site"), its opening road
+## routed from there to the best people's camp the road reaches.
+## pick_spawn_site is for a brand-new world only.
+func restore_spawn_site(site: Vector3, kind: String) -> Vector3:
+	first_camp_kind = kind
+	var hint_m := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2)) * 1000.0
+	var camps := _people_camps_toward(site, hint_m, hint_m / ROAD_WINDING)
+	var rivers := Encampment.rivers_for(planet)
+	var pick := _road_from(site, camps, rivers)
+	if pick.is_empty():
+		# A camp kept from an older world may stand where no people's camp
+		# lies at the hint's distance: the nearest ones a road reaches, up to
+		# the network's longest link.
+		var near: Array = []
+		var max_m := float(Tuning.section("roads", "network").get("link_max_km", 15.0)) * 1000.0
+		for r in Ruins.near(planet, site, max_m):
+			if Ruins.inhabited(r):
+				var dm := CubeSphere.surface_distance_m(site, r.dir)
+				near.append([dm, r.dir, dm])
+		near.sort_custom(func(x, y): return x[0] < y[0])
+		for k in mini(near.size(), 6):
+			pick = _road_from(site, [near[k]], rivers)
+			if not pick.is_empty():
+				break
+	if pick.is_empty():
+		push_warning("World: the kept opening camp at %s has no people's camp a road reaches" % str(site))
+		pick = {"site": site, "node": site, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF}
+	opening = pick
+	RoadNetwork.opening = pick
+	return site
 
 
 ## The opening camp's road node: beside its fire, ROAD_OFF_M toward the

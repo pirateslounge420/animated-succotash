@@ -202,6 +202,31 @@ func wake_fire(d: Vector3, search_m: float, place_m: float, opening: Vector3) ->
 ## random inhabited ruin within wake_radius_m of where you died (the
 ## nearest, if wake_random is off), the search widening if there's none;
 ## the opening camp as the last resort.
+## Does a camp's fire stand at `d` (within `within_m`): a people's camp at
+## a ruin (its fire, ruin_fire_dir), a wild or cliff camp, or a wandering
+## group's? (Main: never wake at a hearth whose fire is gone.)
+func fire_at(d: Vector3, within_m := 30.0) -> bool:
+	for r in Ruins.near(map, d, 400.0):
+		if Ruins.inhabited(r) and CubeSphere.surface_distance_m(ruin_fire_dir(map, r), d) <= within_m:
+			return true
+	for c in CreatureSpawner._cells_around(d, within_m, WILD_CELL_M):
+		if not _wild.has(c):
+			_wild[c] = wild_site(map, c)
+		var ws: Dictionary = _wild[c]
+		if not ws.is_empty() and CubeSphere.surface_distance_m(ws.dir, d) <= within_m:
+			return true
+	for c in CreatureSpawner._cells_around(d, within_m, CLIFF_CELL_M):
+		if not _cliff.has(c):
+			_cliff[c] = cliff_site(map, c)
+		var cs: Dictionary = _cliff[c]
+		if not cs.is_empty() and CubeSphere.surface_distance_m(cs.dir, d) <= within_m:
+			return true
+	for key in _wanderers:
+		if CubeSphere.surface_distance_m(_wanderers[key].dir, d) <= within_m:
+			return true
+	return false
+
+
 func _ruin_wake_fire(d: Vector3, opening: Vector3) -> Vector3:
 	var radius := float(RULES.get("wake_radius_m", 12000.0))
 	var sites: Array = []

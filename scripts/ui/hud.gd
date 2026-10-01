@@ -196,24 +196,57 @@ func _add_part(id: String, box: VBoxContainer) -> void:
 
 
 ## A column line no wider than its half of the frame (Mike, 1 Oct: at
-## 30 px the season line ran into the temperature line): the last " · "
-## part is dropped until it fits, then characters.
+## 30 px the season line ran into the temperature line; on his Mac the
+## wind's direction was cut off): too wide, it wraps onto a second line at
+## a " · " break, else at a space, never inside a word and never with an
+## ellipsis — every readout is shown whole.
 func _fit(l: Label, text: String) -> String:
-	var cap := get_viewport().get_visible_rect().size.x * 0.5 - MARGIN - 6.0
-	var font := l.get_theme_font("font")
-	var px := l.get_theme_font_size("font_size")
-	var t := text
-	while font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x > cap:
-		var cut := t.rfind(" · ")
-		if cut > 0:
-			t = t.substr(0, cut)
-		elif t.length() > 4:
-			t = t.substr(0, t.length() - 2).strip_edges() + "…"
-			if t.length() <= 4:
-				break
-		else:
-			break
-	return t
+	return fit_lines(l.get_theme_font("font"), l.get_theme_font_size("font_size"), text, column_cap())
+
+
+## The widest a column line may be: half the internal frame, less the
+## margin and a little air.
+func column_cap() -> float:
+	return get_viewport().get_visible_rect().size.x * 0.5 - MARGIN - 6.0
+
+
+## `text` broken into lines no wider than `cap` at `px`: greedy, the
+## " · " breaks first, then spaces; a single word wider than the cap
+## stays whole on its own line (none is, at any preset).
+static func fit_lines(font: Font, px: int, text: String, cap: float) -> String:
+	var out: Array[String] = []
+	for para0 in text.split("\n"):
+		# The leading pad (the pin mark's room) stays on the first line.
+		var para := para0.strip_edges(true, false)
+		var lead := para0.substr(0, para0.length() - para.length())
+		var line := lead
+		for piece in _pieces(font, px, para, cap):
+			var tryl: String = line + piece
+			if line.strip_edges() != "" and font.get_string_size(tryl, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x > cap:
+				out.append(line.strip_edges(false, true))
+				line = piece.strip_edges(true, false).trim_prefix("· ")
+			else:
+				line = tryl
+		out.append(line.strip_edges(false, true))
+	return "\n".join(out)
+
+
+## A line's break points, each piece carrying the separator before it:
+## its " · " groups, and a group wider than the cap by itself split into
+## its words.
+static func _pieces(font: Font, px: int, t: String, cap: float) -> Array[String]:
+	var out: Array[String] = []
+	var groups := t.split(" · ")
+	for gi in groups.size():
+		var g: String = groups[gi]
+		var sep := " · " if gi > 0 else ""
+		if font.get_string_size(g, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x <= cap:
+			out.append(sep + g)
+			continue
+		var words := g.split(" ")
+		for wi in words.size():
+			out.append((sep if wi == 0 else " ") + words[wi])
+	return out
 
 
 ## The gap between lines in one Label (the theme's line_spacing).

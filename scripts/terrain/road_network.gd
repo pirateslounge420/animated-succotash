@@ -75,6 +75,11 @@ func _init(p_map: PlanetData, p_rivers: RiverNetwork) -> void:
 	map = p_map
 	rivers = p_rivers
 	instance = self
+	# Sized from the planet now, not when the class first loaded: loaded
+	# before PlanetConst was set up (some boot orders, 1 Oct), REGION_M
+	# came out 0 and no road was ever built.
+	REGION_M = minf(16000.0, PlanetConst.CIRCUMFERENCE_M / 8.0)
+	MARGIN_M = minf(9000.0, PlanetConst.CIRCUMFERENCE_M / 12.0)
 
 
 # --- Regions ---------------------------------------------------------------------
@@ -329,6 +334,8 @@ func _find_nodes(centre: Vector3, reach: float) -> Array:
 			var lived := kinds.has("camp") and Ruins.inhabited(site)
 			if lived or kinds.has("ruin"):
 				out.append({"dir": site.dir, "kind": "camp" if lived else "ruin", "key": "ruin:%s" % str(c)})
+	if DEBUG:
+		print("[roads] find nodes at %s: opening %s" % [str(centre), "none" if opening.is_empty() else "%.0f m off" % CubeSphere.surface_distance_m(opening.get("node", Vector3.ZERO), centre)])
 	if kinds.has("camp") and not opening.is_empty():
 		var od: Vector3 = opening.get("node", Vector3.ZERO)
 		if od != Vector3.ZERO and CubeSphere.surface_distance_m(od, centre) <= reach:
