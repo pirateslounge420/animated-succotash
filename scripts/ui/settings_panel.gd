@@ -30,10 +30,10 @@ const ITEMS := [
 	["hud.subtitles", "Subtitles", "bool"],
 	["", "Display", "head"],
 	["display.render_chunks", "Render distance", "chunks"],
-	["display.lines", "Internal lines", "lines"],
+	["display.preset", "Pixel size", "preset"],
 	["display.aspect", "Aspect", "aspect"],
 	["display.integer", "Integer scaling", "bool"],
-	["display.day_shadows", "Sun shadows by day", "bool"],
+	["display.day_shadows", "Shadows: near hard cast (off: blobs only)", "bool"],
 	["", "Audio", "head"],
 	["audio.master", "Volume", "slider"],
 	["audio.footsteps", "Footsteps", "slider"],
@@ -121,9 +121,9 @@ func _switch(item: Array, left := false) -> void:
 			var n := ChunkManager.render_chunks() + (-1 if left else 1)
 			Settings.set_value(key, clampi(n, ChunkManager.RENDER_MIN, ChunkManager.RENDER_MAX))
 			return
-		"lines":
-			var i := Display.LINE_CHOICES.find(Display.lines())
-			Settings.set_value(key, Display.LINE_CHOICES[(i + 1) % Display.LINE_CHOICES.size()])
+		"preset":
+			Display.cycle_preset(left)
+			return
 		"aspect":
 			var j := Display.ASPECTS.find(Display.aspect())
 			Settings.set_value(key, Display.ASPECTS[(j + 1) % Display.ASPECTS.size()])
@@ -143,8 +143,8 @@ func _on(item: Array) -> bool:
 
 func _shown(item: Array) -> String:
 	match str(item[2]):
-		"lines":
-			return "%s: %d" % [item[1], Display.lines()]
+		"preset":
+			return "< %s: %s >" % [item[1], Display.preset_label()]
 		"aspect":
 			return "%s: %s" % [item[1], Display.aspect()]
 		"chunks":

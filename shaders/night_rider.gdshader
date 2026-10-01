@@ -47,7 +47,7 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_fur : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_fur : filter_nearest_mipmap, repeat_enable;
 // Texture tiles per unit of the body's height.
 uniform float fur_scale = 1.3;
 uniform float grain_scale = 5.0;

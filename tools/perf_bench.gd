@@ -48,6 +48,18 @@ func _run() -> void:
 		get_root().content_scale_size = Vector2i(int(round(h * 16.0 / 9.0)), h)
 	var vp := get_root().get_viewport_rid()
 	RenderingServer.viewport_set_measure_render_time(vp, true)
+	# PRESETS=1 (design §BU): the frame time at each pixel-size preset
+	# (look.json render.presets), the sun's shadows as set, then quit.
+	if OS.get_environment("PRESETS") == "1":
+		for pname in Display.presets():
+			Settings.set_value("display.preset", pname)
+			Settings.set_value("display.lines", 0)
+			Display.apply()
+			await _measure(vp, mini(60, WARM))
+			var r := await _measure(vp, MEASURE)
+			print("[perf] preset %s %s: frame %.1f ms (%.0f fps), scripts %.1f, cpu %.1f, gpu %.1f ms" % [pname, Display.internal_size(), r.frame, 1000.0 / maxf(r.frame, 0.01), r.proc, r.cpu, r.gpu])
+		quit(0)
+		return
 	var sun: DirectionalLight3D = main.sky.sun
 	var on := await _measure(vp, WARM)
 	on = await _measure(vp, MEASURE)

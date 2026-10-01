@@ -71,7 +71,7 @@ uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the su
 // shading, B streak density; u azimuth from east, v elevation. Stars:
 // R brightness, G warmth, B milky band; equirectangular, celestial frame.
 uniform sampler2D cloud_pano : filter_nearest, repeat_enable;
-uniform sampler2D star_pano : filter_linear, repeat_enable;
+uniform sampler2D star_pano : filter_nearest, repeat_enable;
 uniform float cloud_scroll = 0.0; // turns; the near clouds drift round
 uniform float cloud_scroll_far = 0.0; // turns; the far layer
 uniform float far_scale = 2.2; // the far layer's features, this many times smaller

@@ -14,8 +14,11 @@ class_name Display
 ## nearest.
 ##
 ## The player's settings (SettingsPanel) override the file:
-## "display.lines" (480 / 720), "display.aspect" ("16:9" / "4:3"),
-## "display.integer" (on / off). apply() re-reads them.
+## "display.preset" (a name from render.presets: chunky 360 / default 480
+## / half_hd 540 / fine 720, design §BU; an older "display.lines" still
+## counts while no preset is chosen), "display.aspect" ("16:9" / "4:3"),
+## "display.integer" (on / off). apply() re-reads them. A dev key (F11,
+## dev_pixel) cycles the presets live.
 
 const LINE_CHOICES := [480, 720]
 const ASPECTS := ["16:9", "4:3"]
@@ -35,11 +38,42 @@ static func render() -> Dictionary:
 	return Tuning.section("look", "render")
 
 
-## Internal lines now (the setting, clamped to the file's max).
+## The pixel-size presets (render.presets), in the file's order.
+static func presets() -> Dictionary:
+	return render().get("presets", {"default": 480})
+
+
+## The active preset's name: the setting, else the file's render.preset.
+static func preset() -> String:
+	var p := str(Settings.get_value("display.preset", str(render().get("preset", "default"))))
+	return p if presets().has(p) else "default"
+
+
+## Internal lines now: the preset's (an older "display.lines" setting
+## wins while no preset is chosen), clamped to the file's max.
 static func lines() -> int:
 	var r := render()
-	var v := int(Settings.get_value("display.lines", int(r.get("internal_lines", 480))))
+	var v := int(presets().get(preset(), int(r.get("internal_lines", 480))))
+	if str(Settings.get_value("display.preset", "")) == "" and int(Settings.get_value("display.lines", 0)) != 0:
+		v = int(Settings.get_value("display.lines", v))
 	return clampi(v, 240, int(r.get("max_internal_lines", 720)))
+
+
+## The next preset in the file's order (the settings panel, the dev key).
+static func cycle_preset(left := false) -> String:
+	var names := presets().keys()
+	var i := names.find(preset())
+	var n: String = names[(i + (names.size() - 1 if left else 1)) % names.size()]
+	Settings.set_value("display.preset", n)
+	Settings.set_value("display.lines", 0)
+	apply()
+	return n
+
+
+## "chunky (640x360)" for the panel and the dev key's note.
+static func preset_label() -> String:
+	var s := internal_size()
+	return "%s (%dx%d)" % [preset(), s.x, s.y]
 
 
 static func aspect() -> String:

@@ -54,6 +54,8 @@ const DEFAULTS := {
 	"dev_items": [KEY_F9],
 	# Dev: the frame-time readout (design §W, PerfReadout).
 	"dev_perf": [KEY_F2],
+	# F11 cycles the pixel-size presets live (design §BU).
+	"dev_pixel": [KEY_F11],
 }
 
 ## Mouse buttons per action.

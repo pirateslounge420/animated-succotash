@@ -23,7 +23,7 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_weave : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_weave : filter_nearest_mipmap, repeat_enable;
 uniform vec3 hollow_color = vec3(0.0042, 0.0048, 0.028);
 uniform bool cloth = false;
 // A cloaked figure other than the player (CloakedFigure; the Falcon /

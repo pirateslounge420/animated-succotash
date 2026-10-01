@@ -31,8 +31,8 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_stone : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_dirt : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_dirt : filter_nearest_mipmap, repeat_enable;
 uniform vec3 body_color = vec3(0.1, 0.12, 0.35);
 uniform vec3 pale_color = vec3(0.2, 0.24, 0.5);
 // 0-1+: how strongly the texture shows.

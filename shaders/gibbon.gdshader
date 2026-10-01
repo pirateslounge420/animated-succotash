@@ -32,7 +32,7 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_fur : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_fur : filter_nearest_mipmap, repeat_enable;
 // Linear colors. The night ones are albedos tuned by rendering at night
 // (the moon, the ultramarine ambient and the night grade shift them).
 uniform vec3 coat_color = vec3(0.07, 0.035, 0.02);
