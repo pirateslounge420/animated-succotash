@@ -501,7 +501,7 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	_part_text["season"] = "%s · day %d of the season" % [Seasons.label(world.days, lat).replace("→", "->"), int(Seasons.at(world.days, lat).day_of_season) + 1]
 
 	if debug_visible:
-		_debug.text = debug_text(world, player_dir, weather)
+		_debug.text = debug_text(world, player_dir, weather) + plant_lod_text(player_dir)
 
 	var c := map.cell_at(player_dir)
 	var now_c: float = weather.get("temp_c", NAN)
@@ -529,6 +529,26 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 ## and the eased cloud cover; then the calendar at this latitude: day of
 ## the year, the sun's declination, hours of daylight (the 24-hour clock)
 ## and today's minutes of day, dusk, night and dawn here.
+## The trees' detail under the player (1 Oct, bug 1 triage): the detail
+## ring the profile runs and the plant level of the chunk you stand in
+## (hero / near: leaf cards; far: the pictures).
+static func plant_lod_text(player_dir: Vector3) -> String:
+	var cm := ChunkManager.instance
+	if cm == null:
+		return ""
+	var c: TerrainChunk = cm.chunks.get(TerrainChunk.key_at(player_dir), null)
+	var lod := "none"
+	if c != null:
+		match c.plant_lod(c):
+			PlantMeshes.LOD_HERO:
+				lod = "hero (leaf cards)"
+			PlantMeshes.LOD_NEAR:
+				lod = "near (leaf cards)"
+			_:
+				lod = "far (pictures)"
+	return "\nTrees: detail ring %d of %d chunks · this chunk %s" % [cm.detail_radius_chunks, cm.view_radius_chunks, lod]
+
+
 static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) -> String:
 	var lon := CubeSphere.longitude(player_dir)
 	var lat := CubeSphere.latitude(player_dir)

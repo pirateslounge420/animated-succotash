@@ -99,6 +99,17 @@ func _run() -> void:
 		player.spawn_at(d, look)
 		for i in 30:
 			await process_frame
+	# WAIT_DETAIL=1: hold the frame until the camp's chunk draws its trees
+	# at the near level (leaf cards, not the far pictures), as play does
+	# within a few seconds on a GPU; the software renderer takes longer.
+	if OS.get_environment("WAIT_DETAIL") == "1":
+		var ck: Vector3i = TerrainChunk.key_at(main.camp.site)
+		for i in 4000:
+			var c: TerrainChunk = main.chunks.chunks.get(ck, null)
+			if c != null and c.plant_lod(c) != PlantMeshes.LOD_FAR:
+				print("[dev_view] detail in after %d frames" % i)
+				break
+			await process_frame
 	player.set_physics_process(false)
 	# HUD=1 keeps the HUD (speedometer, clock); SPEED (m/s) and METER (0-1)
 	# light the readouts up (the player's physics is held still).

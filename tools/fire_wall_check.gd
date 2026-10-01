@@ -58,6 +58,10 @@ func _initialize() -> void:
 		var camp: Node3D = null
 		for i in 300:
 			await frames(30)
+			if i % 10 == 9:
+				# The chunks have streamed in by now: stand on the ground.
+				_put(best.dir, 0.0, 70.0)
+				print("[fire] waiting: %d chunks, %d ruins built, %d camps" % [main.chunks.chunks.size(), main.landmarks.built_ruins().size(), main.camps._camps.size()])
 			var nearest_m := INF
 			for key in main.camps._camps:
 				var cn: Node3D = main.camps._camps[key]

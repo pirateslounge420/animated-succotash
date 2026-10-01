@@ -61,6 +61,9 @@ var rivers: RiverNetwork
 ## The trail network (design 30 Sept §BC), laid before plants.
 var roads: RoadNetwork
 var chunks := {} # Vector3i -> TerrainChunk
+## The one chunk manager (the F3 overlay reads the detail ring and the
+## plant level under the player from it).
+static var instance: ChunkManager
 
 var _pending := {} # Vector3i -> task id (base)
 var _pending_detail := {} # Vector3i -> task id
@@ -93,6 +96,7 @@ var _graph_timer := 0.0
 
 
 func setup(p_world: Node) -> void:
+	instance = self
 	world = p_world
 	map = world.planet
 	rivers = RiverNetwork.new(map)
