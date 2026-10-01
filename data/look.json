@@ -27,7 +27,13 @@
   "shadow_normal_bias": 2.5,
   "blob_shadows": false,
   "rake_max_deg": 38.0,
-  "rake_bias": 0.45
+  "rake_bias": 0.45,
+  "day_shadows_near": {
+   "enabled": true,
+   "max_m": 35.0,
+   "hard": true,
+   "note": "30 Sept §BU: the pixel filter sells a hard cast shadow (the reference frame has them); near-only, no PCF, pixel-edged by the 480p frame. A/B toggle in Settings > Display > Shadows; §AG 6's blob-only mode stays as the other setting."
+  }
  },
  "day": {
   "ambient_color": "#2448D0",
@@ -78,7 +84,14 @@
   "aspect": "16:9",
   "upscale": "nearest",
   "integer_scale": true,
-  "hud_in_internal": true
+  "hud_in_internal": true,
+  "presets": {
+   "chunky": 360,
+   "default": 480,
+   "fine": 720
+  },
+  "preset": "default",
+  "_help_presets": "30 Sept §BU (Mike: 'let's move to this pixel style and see how it looks'): three internal heights to compare in play — Settings > Display > Pixel size, and a dev key cycles them. Everything (fog, grade, water, HUD) renders at the internal height before the nearest upscale; nothing bilinear anywhere."
  },
  "retro": {
   "tile_px": {
