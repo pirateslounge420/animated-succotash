@@ -326,8 +326,20 @@
  },
  "water": {
   "_help": "Design 30 Sept §BU (Mike): water is glowier than its surroundings but biome-matched. by_family: base colour and highlight per water family; glow: how much brighter than the scene it reads (1.0 = same); caustic_tile_m: the scrolling caustic tile repeat; waterfall: the sheet's colours and streak scroll. First guesses, tune by eye.",
+  "_help_tune": "1 Oct look pass (Mike's on-screen targets after the grade: base #0819F2, glints #74F9FD, calm ponds #061462). base / calm: the shared day body (scene sRGB) of moving and of calm water, blended toward the chunk's family base by biome_tint (0-1; calm toward the family base dimmed to calm's brightness). calm_share: how far still fresh water (ponds, lakes, pools; not rivers, not the sea) goes to calm. self_lit: share of the day body that is emitted rather than lit by the sun (0 = plain Lambert), so water holds its glow as the land darkens; glow multiplies both. body_mottle: how strongly the two scrolling band layers mottle the body (0-1). Glints: two scrolling layers of nearest value noise (caustic_tile_m, the second 1.25x it, turned; caustic_scroll_mps, multiples of 0.25 keep the hourly loop); where their product passes glint_cover (glint_cover_calm on calm water: fewer) the water flares to glint (blended toward the family highlight by biome_tint) x glint_hdr, over 1.0 so it blooms; glint_night scales them at night. Checked by pushing the colours through post_grade's day preset (Linear tonemap, exposure 0.9).",
   "glow": 1.35,
-  "caustic_tile_m": 1.5,
+  "self_lit": 0.6,
+  "base": "#2A349E",
+  "calm": "#00284C",
+  "calm_share": 1.0,
+  "biome_tint": 0.25,
+  "body_mottle": 0.6,
+  "glint": "#8EFCFF",
+  "glint_hdr": 1.5,
+  "glint_cover": 0.6,
+  "glint_cover_calm": 0.78,
+  "glint_night": 0.8,
+  "caustic_tile_m": 3.0,
   "caustic_scroll_mps": 0.25,
   "by_family": {
    "clear": {
@@ -429,11 +441,24 @@
   },
   "default_family": "river",
   "waterfall": {
-   "sheet": "#B8E8FF",
-   "shadow": "#4A8AE0",
-   "streak_tile_m": 0.6,
+   "_help": "1 Oct: shadow is the sheet's body between streaks, sheet the streaks (the glint noise stretched streak_stretch times taller than wide, two layers scrolling down at streak_scroll_mps), foam the crest and the foot; lit and self-lit like the water (self_lit, glow). streak_hdr: extra emission in the streaks' cores, over 1.0 so they bloom. mist: camera-facing low-res cards at the plunge pool (soft, never a wall): cards per fall, size_m per card (grows with the fall), alpha at a card's heart, each rises rise_m and fades over period_s, px texels across a card, gone within near_fade_m of the eye.",
+   "sheet": "#A8F0FF",
+   "shadow": "#2F4CC8",
+   "streak_tile_m": 1.6,
+   "streak_stretch": 7.5,
    "streak_scroll_mps": 2.5,
-   "foam": "#F0FFFF"
+   "streak_hdr": 0.6,
+   "foam": "#E8FCFF",
+   "mist": {
+    "cards": 3,
+    "size_m": 4.0,
+    "alpha": 0.32,
+    "color": "#B0DCFF",
+    "rise_m": 2.5,
+    "period_s": 7.0,
+    "px": 12,
+    "near_fade_m": 5.0
+   }
   },
   "night": {
    "glow": 1.6,

@@ -748,13 +748,13 @@ static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork
 
 static var _terrain_mat: ShaderMaterial
 static var _fall_mat: ShaderMaterial
-static var _mist_mesh: QuadMesh
+static var _mist_mat: ShaderMaterial
 static var _salt_mat: ShaderMaterial
 static var _fresh_mat: ShaderMaterial
 ## Day water: the reference's deep navy (data/look.json retro.colors.water,
 ## design §AG). Sea and fresh water share it: two blues met in a hard 16 m
 ## staircase at every river mouth.
-static var WATER := WaterLook.base_color("sea") # the far sea (§BU: water by family, WaterLook)
+static var WATER := WaterLook.far_sea_color() # the far sea: the near sea's day body under the noon sun (WaterLook)
 
 
 static func materials() -> void:
@@ -783,9 +783,17 @@ static func terrain_material() -> ShaderMaterial:
 	return _terrain_mat
 
 
-## [salt water, fresh water] materials (StormFX sets rain on them).
+## [salt water, fresh water] materials (StormFX sets rain on them). The
+## water is drawn with WaterLook's family materials, so what StormFX set
+## on these last is passed on to every one of them (a frame late).
 static func water_materials() -> Array[ShaderMaterial]:
 	materials()
+	for m in WaterLook.all_materials():
+		var from := _salt_mat if m.get_meta("salt", false) else _fresh_mat
+		for k in ["storm_flow", "rain_drops", "water_rise"]:
+			var v = from.get_shader_parameter(k)
+			if v != null:
+				m.set_shader_parameter(k, v)
 	return [_salt_mat, _fresh_mat]
 
 
@@ -1589,6 +1597,7 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 	var uv2 := PackedVector2Array()
 	var idx := PackedInt32Array()
 	var rows := 6
+	var mist := {"v": PackedVector3Array(), "n": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array()}
 	for f in falls:
 		var top_r: float = f[2]
 		var bot_r: float = f[3] - 0.4
@@ -1612,7 +1621,10 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 		for r in rows:
 			var i := base + r * 2
 			idx.append_array([i, i + 2, i + 1, i + 1, i + 2, i + 3])
-		_mist(world.to_scene_relative(mid_dir, bot_r + 0.6, anchor), mid_dir, w, h)
+		# The mist cards over the plunge pool, where the sheet lands.
+		var across: Vector3 = world.to_scene_relative(f[1], f[3], anchor) - world.to_scene_relative(f[0], f[3], anchor)
+		_mist_cards(mist, world.to_scene_relative(mid_dir, float(f[3]) + 0.3, anchor) + down * (3.0 + minf(h, 20.0) * 0.12),
+			mid_dir, across, w, h, hash(mid_dir))
 	var normals := PackedVector3Array()
 	normals.resize(v.size())
 	normals.fill(Vector3.ZERO)
@@ -1637,6 +1649,7 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 	mi.material_override = _fall_mat
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mi)
+	_mist_mesh(mist)
 	# Each fall's roar, at its plunge pool: a source you can walk to
 	# (design 30 Sept §BG, audio.json "waterfall"), louder for a taller,
 	# wider fall.
@@ -1650,51 +1663,57 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 		roar.play(randf() * 2.0)
 
 
-## Spray drifting up (along `up`, the local vertical) from a plunge pool.
-func _mist(at: Vector3, up: Vector3, w: float, h: float) -> void:
-	if _mist_mesh == null:
-		_mist_mesh = QuadMesh.new()
-		_mist_mesh.size = Vector2(1.0, 1.0)
-		var m := StandardMaterial3D.new()
-		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
-		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		m.vertex_color_use_as_albedo = true
-		m.albedo_color = Color(0.85, 0.93, 1.0, 0.3)
-		# Soft round puffs, not squares.
-		var g := Gradient.new()
-		g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
-		var tex := GradientTexture2D.new()
-		tex.gradient = g
-		tex.fill = GradientTexture2D.FILL_RADIAL
-		tex.fill_from = Vector2(0.5, 0.5)
-		tex.fill_to = Vector2(1.0, 0.5)
-		tex.width = 32
-		tex.height = 32
-		m.albedo_texture = tex
-		_mist_mesh.material = m
-	var p := CPUParticles3D.new()
-	p.name = "Mist"
-	p.mesh = _mist_mesh
-	p.amount = clampi(int(w * 2.0), 12, 60)
-	p.lifetime = 3.0
-	p.preprocess = 3.0
-	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
-	p.emission_box_extents = Vector3(w * 0.5, 0.3, w * 0.5)
-	p.direction = Vector3.UP
-	p.spread = 35.0
-	p.gravity = Vector3.ZERO
-	p.initial_velocity_min = 0.3
-	p.initial_velocity_max = 0.6 + h * 0.05
-	p.scale_amount_min = 2.5
-	p.scale_amount_max = 4.0 + minf(h, 20.0) * 0.2
-	var ramp := Gradient.new()
-	ramp.colors = PackedColorArray([Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
-	ramp.offsets = PackedFloat32Array([0.0, 0.3, 1.0])
-	p.color_ramp = ramp
-	var x := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
-	p.transform = Transform3D(Basis(x, up, x.cross(up)), at)
-	add_child(p)
+## Mist at a plunge pool (look.json water.waterfall.mist): a few soft,
+## low-res, camera-facing cards spread across the pool where the sheet
+## lands, each rising and fading on its own phase (shaders/
+## waterfall_mist.gdshader turns them to the camera). Appended to `mist`
+## (vertex: the card's centre, normal: the local up, uv: the corner, uv2:
+## size and phase), drawn as one mesh per chunk by _mist_mesh.
+static func _mist_cards(mist: Dictionary, at: Vector3, up: Vector3, across: Vector3, w: float, h: float, jitter: int) -> void:
+	var md := WaterLook.mist()
+	var n := int(md.get("cards", 3))
+	var size := float(md.get("size_m", 4.0)) * clampf(0.5 + w / 16.0 + minf(h, 20.0) / 40.0, 0.6, 1.8)
+	for i in n:
+		var c := at + across * (((i + 0.5) / n - 0.5) * 0.8)
+		var phase := fposmod(float(i) / n + float(posmod(jitter + i * 7919, 1000)) / 3000.0, 1.0)
+		for corner in [Vector2(0, 0), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)]:
+			mist.v.append(c)
+			mist.n.append(up)
+			mist.uv.append(corner)
+			mist.uv2.append(Vector2(size, phase))
+
+
+func _mist_mesh(mist: Dictionary) -> void:
+	var v: PackedVector3Array = mist.v
+	if v.is_empty():
+		return
+	var md := WaterLook.mist()
+	if _mist_mat == null:
+		_mist_mat = ShaderMaterial.new()
+		_mist_mat.shader = preload("res://shaders/waterfall_mist.gdshader")
+		_mist_mat.set_shader_parameter("mist_color", Color(str(md.get("color", "#B0DCFF"))))
+		_mist_mat.set_shader_parameter("mist_alpha", float(md.get("alpha", 0.32)))
+		_mist_mat.set_shader_parameter("rise_m", float(md.get("rise_m", 2.5)))
+		_mist_mat.set_shader_parameter("period_s", float(md.get("period_s", 7.0)))
+		_mist_mat.set_shader_parameter("px", float(md.get("px", 12)))
+		_mist_mat.set_shader_parameter("near_fade_m", float(md.get("near_fade_m", 5.0)))
+		_mist_mat.set_shader_parameter("glint_tex", WaterLook.glint_texture())
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = v
+	arrays[Mesh.ARRAY_NORMAL] = mist.n
+	arrays[Mesh.ARRAY_TEX_UV] = mist.uv
+	arrays[Mesh.ARRAY_TEX_UV2] = mist.uv2
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mi := MeshInstance3D.new()
+	mi.name = "Mist"
+	mi.mesh = mesh
+	mi.material_override = _mist_mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# The cards spread from their centres in the shader: widen the bounds.
+	mi.extra_cull_margin = float(md.get("size_m", 4.0)) * 1.8 * 1.3 + float(md.get("rise_m", 2.5))
+	add_child(mi)
 
 
 func _water_mesh(data: Dictionary, mat: ShaderMaterial, node_name: String) -> void:

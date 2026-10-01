@@ -4,19 +4,24 @@
 // map. It's a bright, saturated blue under the same vertex-lit Lambert as
 // everything else, slightly see-through looking straight down.
 //
-// The surface is Look's water texture (red: soft mottled body; green: soft
-// highlight blobs), linear-filtered with mipmaps, in two layers at
-// different scales, angles and speeds. Still water drifts slowly; on
-// river ribbons (UV2.y = the ribbon's half width) both layers run
-// downstream (UV.y is meters downstream) and the ribbon's edges fade into
-// the still pool filling the rest of the channel. Highlights show where
-// the two layers' blobs overlap, so they shift and swell instead of
-// sliding by as one sheet. Rapids and the churn below falls (UV2.x)
-// streak white foam racing downstream. Rain pocks it with flickering pale
+// The body is mottled by Look's water texture (the §AG tile's bands),
+// nearest-filtered with mipmaps, in two layers at different scales,
+// angles and speeds. Still water drifts slowly; on river ribbons (UV2.y =
+// the ribbon's half width) both layers run downstream (UV.y is meters
+// downstream) and the ribbon's edges fade into the still pool filling the
+// rest of the channel. Rapids and the churn below falls (UV2.x) streak
+// white foam racing downstream. Rain pocks it with flickering pale
 // dots (StormFX).
 //
+// By day it glows (1 Oct look pass, look.json water): a deep electric
+// blue body, part lit and part self-lit (self_lit), so it stays brighter
+// than the land as the sun drops; calm still fresh water is a darker navy
+// (calm_color, calm_share). Glints are emissive noise, never specular: two
+// scrolling layers of nearest value noise (glint_tex), and where their
+// product passes glint_cover the water flares cyan over 1.0 (it blooms).
+//
 // At night the water is near self-lit: it glows ultramarine #1B3CFF with
-// #7FB0FF highlights (R1a), whatever the moonlight does. At glow ponds and
+// the glints for highlights (R1a), whatever the moonlight does. At glow ponds and
 // other magical sites it also emits Look's teal/cobalt glow, bright enough
 // to light the banks (Landmarks adds lights there too).
 //
@@ -68,8 +73,21 @@ uniform float night_glow = 0.6;
 // water reads by day and at night, and the scrolling caustic tile.
 uniform float glow_day = 1.35;
 uniform float glow_night = 1.6;
-uniform float caustic_tile_m = 1.5;
+uniform float caustic_tile_m = 3.0; // the glint noise's repeat (m)
 uniform float caustic_scroll = 0.25;
+// 1 Oct look pass (look.json water): calm still water, the self-lit share
+// of the day body, the band mottling, and the glints.
+uniform vec3 calm_color : source_color = vec3(0.0, 0.021, 0.072);
+uniform float calm_share = 0.0; // TerrainChunk/WaterLook: still fresh water
+uniform float self_lit = 0.6;
+uniform float body_mottle = 0.6;
+uniform vec3 glint_color : source_color = vec3(0.27, 0.97, 1.0);
+uniform float glint_hdr = 1.5;
+uniform float glint_cover = 0.6;
+uniform float glint_cover_calm = 0.78;
+uniform float glint_night = 0.8;
+// Value noise spread evenly over 0-1 (WaterLook.glint_texture).
+uniform sampler2D glint_tex : filter_nearest_mipmap, repeat_enable;
 // Storms (StormFX): how soaked the land is (0-1; unused here now: a
 // changing speed would make the scrolling lurch) and rain falling on the
 // surface now (0-1: drops pock it).
@@ -121,8 +139,6 @@ void fragment() {
 	vec2 lb = retro_tile(look_tex_water, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * (UV - drift_b * TIME) / TILE_B).rg;
 	// Mottled body: -1..1, darker and lighter blue, never grey.
 	float body = (la.r + lb.r) - 1.0;
-	// Soft highlights: strongest where both layers' blobs meet.
-	float hl = clamp(la.g * lb.g * 2.0 + 0.3 * max(la.g, lb.g), 0.0, 1.0);
 
 	// Ripples near the camera (RippleSim): `swing` +1 on a ring's crest ..
 	// -1 in its trough (`swing_w` how fast it changes across a pixel),
@@ -166,17 +182,23 @@ void fragment() {
 	// Under painted rings the water's own mottling and sparkle calm, so
 	// the bands read as bands.
 	body *= 1.0 - ripple_ring.z * ring;
-	hl *= 1.0 - ripple_ring.z * ring;
 
-	ALBEDO = water_color * (1.0 + 0.28 * body);
-	ALBEDO = mix(ALBEDO, highlight_color, hl * 0.5);
-	// The caustic net: the tile's bright lines scrolling slowly, crisp.
-	float caus = retro_tile(look_tex_water, (UV - vec2(caustic_scroll * 0.6, caustic_scroll) * TIME) / caustic_tile_m).g;
-	ALBEDO = mix(ALBEDO, highlight_color, smoothstep(0.55, 0.8, caus) * 0.45);
-	// Glowier than its surroundings (the brightest thing in the frame).
-	ALBEDO *= glow_day;
+	// Calm: still fresh water away from any white water (not rivers, not
+	// the sea: calm_share is 0 on salt water).
+	float calm = calm_share * (1.0 - river) * (1.0 - smoothstep(0.0, 0.3, white));
+	ALBEDO = mix(water_color, calm_color, calm) * (1.0 + body_mottle * body);
+	// Glints: two layers of the noise, scrolling apart (downstream on
+	// rivers); where both are high the water flares. Each layer's drift
+	// times 3600 s is a whole number of its repeats at 0.25 m/s steps.
+	vec2 ga = mix(vec2(0.6, 0.8), vec2(0.0, 2.0), river) * caustic_scroll;
+	vec2 gb = mix(vec2(0.8, -0.6), vec2(0.0, 3.0), river) * caustic_scroll;
+	float na = retro_tex(glint_tex, (UV - ga * TIME) / caustic_tile_m).r;
+	float nb = retro_tex(glint_tex, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * (UV - gb * TIME) / (caustic_tile_m * 1.25)).r;
+	float cover = mix(glint_cover, glint_cover_calm, calm);
+	float glint = smoothstep(cover, cover + 0.08, na * nb) * (1.0 - ripple_ring.z * ring);
+	// The night body (the glints are added over it below; the §AG tile's
+	// two-tone bands made the old highlight blend cover most of the water).
 	vec3 glow = night_color * (1.0 + 0.22 * body);
-	glow = mix(glow, night_highlight * 1.45, hl); // lands near #7FB0FF at the peaks
 
 	if (rain_drops > 0.01) {
 		// Raindrops: small pale pocks flickering on a 25 cm grid.
@@ -222,16 +244,22 @@ void fragment() {
 		foam = max(foam, 0.2 * white);
 		ALBEDO = mix(ALBEDO, foam_color, foam);
 		glow = mix(glow, night_highlight * 1.15, foam);
+		glint *= 1.0 - foam;
 		ALPHA = mix(ALPHA, 0.98, foam);
 	}
 
-	// Near self-lit at night: the lit albedo fades back so the glow sets
-	// the color.
-	ALBEDO *= 1.0 - 0.8 * look_night;
+	// By day the body is glow_day x its colour, self_lit of it emitted
+	// (it holds its glow as the land darkens) and the rest lit; near
+	// self-lit at night: the lit albedo fades back so the glow sets the
+	// color. Glints are emission over the body, at any hour.
+	vec3 body_col = ALBEDO * glow_day;
+	ALBEDO = body_col * (1.0 - self_lit) * (1.0 - 0.8 * look_night) * (1.0 - glint);
 	ROUGHNESS = 1.0;
 	METALLIC = 0.0;
 	SPECULAR = 0.0;
-	EMISSION = glow * look_night * night_glow * glow_night;
+	EMISSION = glow * look_night * night_glow * glow_night
+		+ body_col * self_lit * (1.0 - look_night) * (1.0 - glint)
+		+ glint_color * glint_hdr * glint * mix(1.0, glint_night, look_night);
 	float site = look_site_glow(world_pos, 1.0);
 	// Lit from within at magical sites, rippling with the texture.
 	EMISSION += look_glow_emission(world_pos, site * (1.0 + 0.4 * body));
