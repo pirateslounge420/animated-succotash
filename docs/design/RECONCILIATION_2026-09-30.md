@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA: `data/habitat.json`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1`.
 
 ---
 
@@ -787,7 +787,31 @@ head, computed from the stick's transform, not a hand-tuned offset (the §BZ car
 base-anchored and floated above the stick); and the §BX afternoon spawn is built
 (`main.gd` still starts the clock at dusk — data was in, code was not).
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §CA on purpose — it is the to-do)
+## CB. Every new world is a new world — LOCKED (1 Oct, Mike)
+
+Mike: *the last couple of patches I always spawn in at this broken savanna.* Because
+`data/dev.json` is committed with `dev_mode: true`, `seed: 42`, `spawn_choice: 0`: every
+world is seed 42 and the single best-scored camp cell, and since saves are per seed
+(`user://worlds/42.json`), every patch reloads the same world at the same day. The random
+spawn (§P, §AO: "a different one each game") was built and never allowed to run.
+
+- **A new world rolls a fresh seed and a random first camp** among
+  `Encampment.candidates` (the 12 best cells, 20 km apart). The seed is the world's name:
+  the log's first line (§AZ) reads "World 7731 — day 1", so a world can be revisited or
+  shared by number.
+- **Continue loads the last world; New world rolls another.** The game boots into the
+  last world played (a `user://worlds/last` pointer); "New world" is an entry in the
+  settings panel and a dev key, and asks once ("start a new world? the old one stays").
+  Old worlds stay in `user://worlds/` by seed; nothing is deleted.
+- **The dev pins are for the dev tools.** `dev.json` `seed` / `spawn_choice` apply in play
+  only with `pin_in_play` true or `DEV_PIN=1`; `tools/dev_view.gd` and the checks set them
+  themselves. `dev_mode` and its keys stay on for the designer.
+- The candidate score still prefers mild and green, 2 km from a coast, ~20° latitude
+  (`Encampment.candidates`), so the variety is in *place*, not climate — open question
+  for the designer whether the first camp's *kind* (forest, coast, river valley,
+  grassland, savanna) should roll too.
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §CB on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
@@ -810,4 +834,4 @@ Data is in; all first guesses.
 and the walkabout check, the `biomes` fill of the catalogues (parallel agents), the aroid
 and giant-herb hulls to leaf cards, the torch flame on the stick, the afternoon spawn. A
 world where the wrong plants grow is not a world yet; nothing visual is "done" until the
-walkabout passes.
+walkabout passes. **§CB (a new world is a new world) goes first of all** — it is small and it changes what the designer sees on the next boot.

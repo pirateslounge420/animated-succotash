@@ -2,7 +2,7 @@
  "dev_mode": true,
  "day_length_min": 144,
  "seed": 42,
- "spawn_choice": 0,
+ "spawn_choice": -1,
  "postage_stamp": false,
  "stamp": {
   "circumference_km": 40,
@@ -75,6 +75,8 @@
  },
  "stall_log": false,
  "_help": {
-  "stall_log": "true: when the unstick rule frees you, print what was in the way (the blocking colliders' node paths and shape sizes). STALL_LOG=1 in the environment does the same."
- }
+  "stall_log": "true: when the unstick rule frees you, print what was in the way (the blocking colliders' node paths and shape sizes). STALL_LOG=1 in the environment does the same.",
+  "seed_and_spawn": "Design 1 Oct §CB (Mike: every new world should spawn somewhere else). seed and spawn_choice are the DEV TOOLS' pins (tools/dev_view.gd and the checks need the same frame every time: seed 42, spawn 0). They apply in play only when pin_in_play is true or DEV_PIN=1 is in the environment; otherwise a new world rolls a fresh seed and a random first camp among Encampment.candidates. spawn_choice -1: random (the §P / §AO rule, 'a different one each game'); 0..11: that candidate, best first. Until 1 Oct these were pinned at 42 / 0 and every 'new world' was the same cell — the savanna in Mike's screenshots."
+ },
+ "pin_in_play": false
 }
