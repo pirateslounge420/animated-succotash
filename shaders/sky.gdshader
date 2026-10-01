@@ -6,14 +6,17 @@
 //
 // A painted panoramic skybox in the manner of 2001-2004 console games
 // (docs/WORLD_SYSTEMS_SPEC.md R1/R1a, design §AG): a three-stop gradient,
-// zenith -> mid -> horizon (by day the reference's deep blue, #0810B8
-// overhead through #3560D0 to #7A90E0 at the horizon, data/look.json
-// retro.colors; around sunset the sunset bands; bright ultramarine at
-// night, #0A14A0 to #1B2ED8), haze hugging the horizon in the ground fog's
-// color (fog_color, the horizon's own: no white band) and a warm glow on
-// the sun's side. The sun is a big soft disc (sun_disc_deg across, 8 by
-// default) fading out radially, not a point: no bloom does it. SkySystem sends these already corrected for the exposure
-// and adjustment, so they read true on screen.
+// zenith -> mid -> horizon measured against the viewer's local up (by day
+// nearly pure blue, #0000C4 overhead to #2350F0 low on screen after the
+// grade, data/look.json retro.colors; around sunset the sunset bands; at
+// night the same palette darker, #050938, up to #0000C0 under a full
+// moon), a thin haze hugging the lowest degrees in the fog's color
+// (fog_color: what distance fades to, a step lighter than the sky's
+// horizon, so far ridges melt into it) and a warm glow on the sun's side.
+// No physical sky. The sun is a big soft disc (sun_disc_deg across, 8 by
+// default) fading out radially, not a point: no bloom does it. SkySystem
+// sends these already corrected for the exposure and adjustment, so they
+// read true on screen before the post grade.
 // Over it, two panoramas:
 //   * clouds, in the viewer's sky: the §AG hand-painted cloud tile
 //     (512 x 128, nearest-filtered so it bands with the dither; SkyPaint
@@ -41,6 +44,7 @@ uniform vec3 horizon_color : source_color = vec3(0.6, 0.85, 1.0);
 uniform vec3 ground_color : source_color = vec3(0.2, 0.22, 0.25);
 uniform float horizon_sharpness = 2.5;
 uniform vec3 fog_color : source_color = vec3(0.6, 0.8, 1.0);
+uniform float horizon_haze = 0.06; // sine of the elevation the horizon haze reaches (~3.5 degrees)
 
 uniform vec3 sun_dir = vec3(0.0, 1.0, 0.0);
 uniform vec3 sun_color : source_color = vec3(1.0, 0.95, 0.85);
@@ -174,14 +178,16 @@ void sky() {
 		float t = pow(h, 1.0 / horizon_sharpness);
 		col = t < 0.5 ? mix(horizon_color, mid_color, smoothstep(0.0, 1.0, t * 2.0))
 			: mix(mid_color, zenith_color, smoothstep(0.0, 1.0, t * 2.0 - 1.0));
-		// Soft haze hugging the horizon, the same color as the ground fog.
-		col = mix(col, fog_color, (1.0 - smoothstep(0.0, 0.12, h)) * 0.85);
+		// Thin haze hugging the lowest few degrees, the same color as the
+		// ground fog (so far ridges melt into it); above it the horizon blue.
+		col = mix(col, fog_color, (1.0 - smoothstep(0.0, horizon_haze, h)) * 0.85);
 		// Warm glow low on the sun's side (strongest near sunrise/sunset).
 		vec3 flat_d = normalize(d - up_dir * h + up_dir * 1e-4);
 		vec3 flat_sun = normalize(sun_dir - up_dir * dot(sun_dir, up_dir) + up_dir * 1e-4);
 		float side = max(dot(flat_d, flat_sun), 0.0);
 		float low_sun = 1.0 - smoothstep(0.0, 0.5, abs(dot(sun_dir, up_dir)));
-		col += sun_color * sun_visible * pow(side, 3.0) * (1.0 - smoothstep(0.0, 0.35, h)) * (0.08 + 0.22 * low_sun);
+		// (Faint with the sun high, so the day sky stays nearly pure blue.)
+		col += sun_color * sun_visible * pow(side, 3.0) * (1.0 - smoothstep(0.0, 0.35, h)) * (0.04 + 0.26 * low_sun);
 	} else {
 		col = mix(horizon_color, ground_color, clamp(-h * 4.0, 0.0, 1.0));
 	}

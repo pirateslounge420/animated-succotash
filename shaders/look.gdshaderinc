@@ -8,8 +8,12 @@
 // gloss; the blue of the shadows is the ambient's, and the grade's.
 //
 // Fog is done here rather than by the Environment: smooth distance haze
-// that thins with altitude, and valleys and low ground fill with extra
-// mist, most of all at night. Writing FOG replaces the Environment's fog for the material.
+// that eases in past a clear zone and thins with altitude, and a low mist
+// that pools in valleys and under the canopy, measured by altitude above
+// the planet (the world is a sphere: world Y means nothing), thickest at
+// night. Both take the sky's colour for the hour (aerial perspective:
+// distance goes lighter and bluer, never darker). No volumes, no walls.
+// Writing FOG replaces the Environment's fog for the material.
 //
 // Glow is the bioluminescent night palette: at magical places (ruins,
 // glow ponds, mythical territories) water, moss and plant tips emit a
@@ -30,10 +34,16 @@ global uniform vec3 look_up; // viewer's local up
 global uniform vec3 look_planet_center;
 global uniform float look_planet_radius;
 const float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
-global uniform float look_mist; // 0-1 extra ground mist
-// Valley fog (§AG, look.json retro.fog): below the local ground mean
-// (look_ground_m, its height above the planet radius) the air thickens,
-// reaching look_height_density per metre look_height_m below it.
+// The haze's clear zone, metres (look.json retro.fog.start_m): the haze
+// eases in over about this distance. (The global keeps its old name, the
+// 0-1 ground mist it used to be; renaming it means project.godot.)
+global uniform float look_mist;
+// Low mist (look.json "mist"): look_height_density per metre at and below
+// the local ground mean (look_ground_m, its height above the planet
+// radius: main samples a 250 m ring round the player), thinning above it
+// with scale height look_height_m. Valleys sit below the mean, so they
+// fill; flat forest floor sits at it, so the trunks stand in a low layer;
+// hills and peaks rise out of it.
 global uniform float look_ground_m;
 global uniform float look_height_density;
 global uniform float look_height_m;
@@ -85,23 +95,40 @@ float look_band(float f) {
 	return f;
 }
 
+// The mist's mean density (0-1 of full) along a ray whose altitude above
+// the ground mean runs evenly from a0 to a1 (over a few hundred metres the
+// chord's sag on the planet is centimetres): full below 0, exp(-a / h)
+// above, integrated exactly.
+float look_mist_share(float a0, float a1, float h) {
+	h = max(h, 0.1);
+	float lo = min(a0, a1);
+	float hi = max(a0, a1);
+	float span = hi - lo;
+	if (span < 0.01) {
+		return exp(-max(lo, 0.0) / h);
+	}
+	float below = clamp(-lo / span, 0.0, 1.0);
+	float above = h * (exp(-max(lo, 0.0) / h) - exp(-max(hi, 0.0) / h)) / span;
+	return below + above;
+}
+
 vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
-	vec3 rel = world_pos - cam_pos;
-	float dist = length(rel);
-	// Ground below eye level sits in mist; peaks rise out of it.
-	float height = dot(rel, look_up);
-	float mist = look_mist * exp(-max(height + 4.0, 0.0) / 14.0);
-	// Haze along the ray through air that thins with height: sea-level
-	// density times the mean of exp(-altitude / H) between the two ends.
+	float dist = distance(world_pos, cam_pos);
+	// Altitudes above the planet (the eye's, the point's).
 	float hc = max(length(cam_pos - look_planet_center) - look_planet_radius, 0.0);
 	float hp = length(world_pos - look_planet_center) - look_planet_radius;
+	// Haze along the ray through air that thins with height: sea-level
+	// density times the mean of exp(-altitude / H) between the two ends.
 	float k = (hp - hc) / look_haze_height;
 	float thin = exp(-hc / look_haze_height) * (abs(k) < 1e-3 ? 1.0 : (1.0 - exp(-k)) / k);
-	// Valley fog: how deep the ray's two ends lie below the local ground
-	// mean, averaged, as a share of look_height_m.
-	float below = clamp((look_ground_m - (hc + hp) * 0.5) / max(look_height_m, 1.0), 0.0, 1.0);
-	float f = 1.0 - exp(-dist * (look_fog_density * min(thin, 1.5) * (1.0 + 2.5 * mist) + look_height_density * below));
-	f = min(look_band(f), look_fog_max);
+	// The clear zone: the haze's depth grows as dist^2 / (2 s) near the eye
+	// and as dist - s far off, smoothly (no ring where it starts).
+	float s = max(look_mist, 1.0);
+	float haze_d = dist - s * (1.0 - exp(-dist / s));
+	// Low mist: full at and below the ground mean, thinning above it.
+	float mist = look_mist_share(hc - look_ground_m, hp - look_ground_m, look_height_m);
+	float tau = haze_d * look_fog_density * min(thin, 1.5) + dist * look_height_density * mist;
+	float f = min(look_band(1.0 - exp(-tau)), look_fog_max);
 	return vec4(look_fog_color, f);
 }
 

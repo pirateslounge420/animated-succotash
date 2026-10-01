@@ -159,10 +159,18 @@
   "grain": 0.025,
   "colors": {
    "_measured": "dominant colours measured from docs/references/batch3 (tools/look/measure_look.py); daylight frames 2-4",
-   "sky_zenith": "#0810B8",
-   "sky_mid": "#3560D0",
-   "sky_horizon": "#7A90E0",
-   "far_hills": "#5A92D8",
+   "_help_sky": "1 Oct look pass (sky, distance, mist): the sky and fog entries are no longer measured colours but what the frame must show BEFORE the post grade so that, through the grade (day/night presets, the floor, the night pull), it lands on Mike's on-screen targets: day top #0000C4, horizon #2350F0, far mountains #4F98EF; night #050938 deep, up to #0000C0 moonlit, mist #153695. sky_*: the day gradient (zenith, mid, horizon). far_hills: what distance and mist fade to by day (lighter and bluer than the sky's horizon). night_* / moon_*: the night gradient with no moon / under a full moon high up (moonlight blends between them); these sky stops are multiplied by ambient_floor.night.sky_gain (2.2) on the way to the screen. night_fog: what distance and mist fade to at night (not multiplied).",
+   "sky_zenith": "#00087A",
+   "sky_mid": "#1A2888",
+   "sky_horizon": "#4966C1",
+   "far_hills": "#76A2D4",
+   "night_zenith": "#020E24",
+   "night_mid": "#0A1122",
+   "night_horizon": "#0F1A29",
+   "moon_zenith": "#000061",
+   "moon_mid": "#050A62",
+   "moon_horizon": "#162144",
+   "night_fog": "#2A5068",
    "water": "#04087A",
    "grass_deep": "#10270A",
    "grass": "#224A18",
@@ -194,12 +202,18 @@
    "far": {
     "scale": 2.2,
     "turn_min": 40
-   }
+   },
+   "_help_colors": "1 Oct look pass: the painted clouds' tones before the grade (like retro.colors' sky entries). lit / shade: a fair day's lit tops and bellies (on screen about #B0BCEC and #909EDA, a cool off-white ~#A8B4E6 overall). night_lit / night_shade: the same under a full moon / with no moon (on screen about #2A3A90 / #0C1858); moonlight blends them. The weather's cloud decks (CloudLayers) take the same tones.",
+   "lit": "#B8BFD9",
+   "shade": "#9FA7C9",
+   "night_lit": "#425267",
+   "night_shade": "#24344A"
   },
   "fog": {
-   "day_density": 0.0035,
-   "height_density": 0.01,
-   "height_m": 60
+   "_help": "1 Oct look pass: distance haze in the far_hills (day) / night_fog colour, thinning with altitude. day_density / night_density: per metre past the clear zone (the day one scaled by the render distance, ChunkManager.fog_scale). start_m: the clear zone: the haze eases in over about this distance (a point start_m away gets a third of a flat haze's depth), so the near world stays clear and the view stays long. The valley fog that was here (height_density, height_m) is now the 'mist' section.",
+   "day_density": 0.0032,
+   "night_density": 0.0025,
+   "start_m": 200
   },
   "shadows_day": false,
   "blob_shadows": true,
@@ -295,6 +309,14 @@
  },
  "dapple": {
   "mode": "stamped"
+ },
+ "mist": {
+  "_help": "1 Oct look pass: low mist that pools in valleys and lies under the canopy, by altitude above the planet (not world Y): full density at and below the local ground mean (main samples a 250 m ring round the player), thinning above it with scale_m. It takes the fog's colour (far_hills by day, night_fog at night: a luminous blue, brighter than the dark trunks). day_density / night_density: per metre inside the mist; fog_density: added per unit of the place's fog likelihood (cloud forests, coasts); storm_density: added in a storm. scale_m: how thick the layer is (it thins to a third every scale_m above the ground mean).",
+  "day_density": 0.0006,
+  "night_density": 0.005,
+  "fog_density": 0.006,
+  "storm_density": 0.003,
+  "scale_m": 6.0
  },
  "ambient_floor": {
   "_help": "Design 30 Sept §BD. Ambient at a point = the hour's sky ambient x that point's sky visibility (0-1, from the dapple stamp plus enclosure), never below the floor while any sky is visible. Applied AFTER the darkening stack (shadow map x dapple x canopy_dark x ambient). Night is one colour (§BU, 1 Oct): the post grade pulls every dark pixel's hue to the floor's blue at its own brightness (pull_to_floor, below pull_below_luma), saturation kept; the floor itself is applied after the grade's contrast and before the dither wherever the player is not enclosed, so nothing outdoors quantises to black (the darkest 5 % of a frame lands near the floor's luma: day ~0.05, the look pass's #020A39 deep shade, night ~0.02). enclosed (ruin interiors, caves): sky visibility 0, so black unless a torch.",
