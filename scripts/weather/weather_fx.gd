@@ -120,10 +120,11 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary, sheltered 
 
 	for p in [rain, snow]:
 		p.global_transform = Transform3D(basis, origin)
-	var active: GPUParticles3D = snow if cold else rain
-	var idle: GPUParticles3D = rain if cold else snow
-	idle.emitting = false
-	active.emitting = intensity > 0.05
+	# Rain is drawn as streaks in the internal frame now (RainOverlay, §BU
+	# step 5); the particles only snow.
+	var active: GPUParticles3D = snow
+	rain.emitting = false
+	active.emitting = cold and intensity > 0.05
 	# Under cover the canopy or roof catches most of what falls around you.
 	active.amount_ratio = intensity * (0.3 if sheltered else 1.0)
 
