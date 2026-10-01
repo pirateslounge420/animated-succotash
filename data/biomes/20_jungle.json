@@ -1965,6 +1965,272 @@
      "confidence": "documented",
      "source": "Wikipedia (culms 10-20 m, 4-10 cm thick; flowering uncommon, whole populations bloom at intervals of several decades, no seed due to irregular meiosis; spread by culm and branch cuttings; clump usually survives); culm lifespan and times estimated. germination_days = cutting to shoot."
     }
+   },
+   {
+    "name": "Giant bamboo",
+    "genus": "Dendrocalamus",
+    "species": "giganteus",
+    "origin": "Myanmar and Thailand",
+    "shape": "bamboo",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Dendrocalamus giganteus, giant bamboo, monsoon forest of Burma/Thailand/S China, clumps 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dendrocalamus",
+     "species": "giganteus",
+     "native_range": "Dendrocalamus giganteus, giant bamboo, monsoon forest of Burma/Thailand/S China, clumps 15-30 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 35,
+     "color": "#7A9A60",
+     "color_2": "#C8C8A8",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 2,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "huge clump of thick arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      25
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 100,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      10,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a grassy tuft of thin leafy shoots. Each rainy season the young clump sends up stouter culms than the year before, reaching full-size culms (up to ~30 m tall, 20-28 cm thick) after roughly a decade. New shoots are fat conical spears wrapped in large brown hairy sheaths that elongate up to 40 cm a day; culm branches and leaves appear only after the culm reaches full height.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrocalamus giganteus (to 30 m, record 42 m; culms to 28 cm thick; up to 40 cm/day, record 46 cm in 24 h at Peradeniya; dense clumps). Culm elongation time (~3-4 months), culm lifespan, clump build-up and gregarious flowering interval (reported ~40 yr) estimated from bamboo literature."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
+   },
+   {
+    "name": "Bamboo thicket",
+    "genus": "Bambusa",
+    "species": "bambos",
+    "origin": "India and Southeast Asia",
+    "shape": "bamboo",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.5,
+     0.75
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#7AB840",
+    "accent": "#B0A040",
+    "source": "Bambusa bambos, giant thorny bamboo, dense impenetrable thickets in Indian/SE Asian jungle, 10-25 m — Wikipedia",
+    "traits": {
+     "genus": "Bambusa",
+     "species": "bambos",
+     "native_range": "Bambusa bambos, giant thorny bamboo, dense impenetrable thickets in Indian/SE Asian jungle, 10-25 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 10.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 30,
+     "color": "#8AA050",
+     "color_2": "#C8C090",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 2,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "dense thorny clump of arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 90,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After a gregarious flowering, masses of grain-like seeds sprout within 1-3 weeks. The seedling is a grassy tuft of thin leafy shoots; each monsoon it sends up thicker, taller culms from a knot of short rhizomes until, after 5-8 years, full-size culms rise in about 3 months, zigzagging and armed with curved thorny branch clusters at the lower nodes.",
+     "confidence": "documented",
+     "source": "Wikipedia (culms 10-35 m, 3-20 cm thick, curved spines, up to 50 cm growth per night, 90 cm in 24 h at Kew 1855); Janzen 1976 Annu. Rev. Ecol. Syst. (gregarious flowering every ~32-45 yr, clumps die after seeding); culm lifespan and clump maturity estimated. lifespan_years is the culm."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "ground": [
@@ -4464,6 +4730,352 @@
      "lenticels": "none",
      "confidence": "estimated"
     }
+   },
+   {
+    "name": "Passion vine",
+    "genus": "Passiflora",
+    "species": "edulis",
+    "origin": "Brazil, Paraguay and Argentina",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "height_m": [
+     3,
+     15
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#9A5AC0",
+    "source": "Passiflora edulis, passionfruit, tendril climber of S American moist forest edges, to 15 m — Wikipedia",
+    "traits": {
+     "genus": "Passiflora",
+     "species": "edulis",
+     "native_range": "Passiflora edulis, passionfruit, tendril climber of S American moist forest edges, to 15 m — Wikipedia",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "lobes": 3,
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      7,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.45,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "tendril vine with three-lobed leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 1.2,
+     "lifespan_years": [
+      6,
+      12
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal seedling with oval cotyledons; the first leaves are simple, unlobed, finely toothed ovals, and only after several nodes does it make the glossy, deeply three-lobed adult leaves. The green, grooved stem climbs fast with long coiling tendrils from each leaf axil and can cover a small tree within a season or two.",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers 5-7.5 cm; fruit 4-7.5 cm, purple or yellow; carpenter bees the main pollinators); Morton, Fruits of Warm Climates (seedlings bear in about 12-18 months, fruit ripens 70-80 days after pollination and falls, vines productive about 5-7 years)"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      3
+     ],
+     "hemisphere": "south",
+     "flower_days": 0.6,
+     "flower_size_cm": 6,
+     "flower_colour": "#e8e0ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.35,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      4,
+      8
+     ],
+     "unripe_colour": "#5d8f3a",
+     "ripe_colour": "#4a2440",
+     "ripen_days": [
+      70,
+      90
+     ],
+     "hang_days": [
+      1,
+      7
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      100,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (white petals with a purple-banded corona; fruit dark purple with fine white specks, ~250 seeds; carpenter-bee pollination, purple form self-compatible); Morton (single-day flowers, fruit ripe 70-80 days after pollination and drops); crop from 10-20 kg per vine at ~35-50 g"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
+   },
+   {
+    "name": "Rattan vine",
+    "genus": "Calamus",
+    "species": "rotang",
+    "origin": "India and Sri Lanka",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "height_m": [
+     5,
+     30
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8A8A50",
+    "source": "Calamus rotang, common rattan, spiny climbing palm forming tangles in Indian/Sri Lankan jungle, stems to 30 m — Wikipedia",
+    "traits": {
+     "genus": "Calamus",
+     "species": "rotang",
+     "native_range": "Calamus rotang, common rattan, spiny climbing palm forming tangles in Indian/Sri Lankan jungle, stems to 30 m — Wikipedi",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       40,
+       80
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 20.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 2,
+     "color": "#8A9A50",
+     "color_2": "#4A3A28",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 1,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 2.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "thin spiny cane snaking through canopy",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      6,
+      14
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seeds sprout in 1-3 months; the first leaves are bifid 'fishtail' eophylls, then a small spiny rosette of pinnate leaves that suckers into a clump. After a year or two slender stems a few centimetres thick begin to climb, hooking into trees with spiny whip-like flagella and scrambling on for tens of metres.",
+     "confidence": "estimated",
+     "source": "Wikipedia (clustering, dioecious; stems a few cm thick climb ~10 m then run 200 m or more; fruits top-shaped with shiny reddish-brown scales, edible); germination and rosette stage from rattan culture; first flowering and lifespan estimated. lifespan_years is a stem."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#e4dcb6",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      200,
+      2000
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2
+     ],
+     "unripe_colour": "#8c8f55",
+     "ripe_colour": "#b0703e",
+     "ripen_days": [
+      240,
+      330
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      300,
+      3000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious; inflorescences in spiny spathes; fruits top-shaped, covered with shiny reddish-brown overlapping scales, edible); flowering season, ripening time and counts estimated from Indian rattans."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ]
  },

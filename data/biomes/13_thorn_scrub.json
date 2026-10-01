@@ -918,6 +918,295 @@
      "confidence": "documented",
      "refs": "Kew POWO; Flora of North America vol. 11; USDA plant guide"
     }
+   },
+   {
+    "name": "Camel thorn",
+    "genus": "Vachellia",
+    "species": "erioloba",
+    "origin": "Kalahari, southern Africa",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "HOT_DESERT"
+    ],
+    "height_m": [
+     8.0,
+     16.0
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "sand",
+      "alluvium"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      42
+     ],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal, with two thick oval cotyledons and grey-green feathery bipinnate leaves on a zigzag stem armed with pairs of large, swollen-based, white spines. The seedling pours its effort into a taproot that heads down toward groundwater (in old trees it may reach tens of metres) while the shoot grows slowly, so young plants are sparse, very spiny, grey-green bushes for years.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (Vachellia erioloba): 2 m shrub to 16 m tree, slow-growing, starts flowering at about 10 years, seeds take 4-6 weeks to germinate after a boiling-water soak, taproot can reach 60 m; ICRAF Agroforestree: flowers at about 10 yr, regular pod crops by 20 yr, crown to 18 m. Height curve and lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Kalahari. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted.",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "erioloba",
+     "native_range": "Kalahari",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      8.0,
+      16.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#5a4a40",
+      "secondary": "#3a3028",
+      "feature_cm": 3,
+      "roughness": 0.7,
+      "notes": "grey to blackish-brown, deeply furrowed; young stems shiny red-brown; paired straight whitish spines with swollen bases to 6 cm"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.4,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#4e8a48",
+      "underside": "#5e9a58",
+      "gloss": 0.25,
+      "veins": "none",
+      "vein_colour": "#4e8a48",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       5
+      ],
+      "notes": "bipinnate, 2-5 pairs of pinnae with 8-18 pairs of small leaflets; denser and darker green than tortilis"
+     },
+     "flower": {
+      "colour": "#f0c830",
+      "secondary": "#e8b820",
+      "form": "bright golden-yellow ball flowers, late winter to summer",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b0a890",
+      "form": "large thick half-moon / kidney pods to 13 x 5 cm covered in velvety grey hairs; do not split"
+     },
+     "seasonal": "semi-deciduous; briefly bare in late dry season",
+     "silhouette": "wide spreading rounded to flat umbrella crown on a stout dark trunk; the lone big tree of the Kalahari dunes",
+     "confidence": "documented",
+     "refs": "PlantZAfrica Vachellia erioloba; Wikipedia; Kew POWO"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       60,
+       360
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.12,
+     "autumn": "#b09a58",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.7,
+     "scale_cm": 3,
+     "color": "#5A4A40",
+     "color_2": "#3A3028",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "umbrella",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.55,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.6,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f2c318",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.02,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      6,
+      13
+     ],
+     "unripe_colour": "#8f9d7a",
+     "ripe_colour": "#a39c8e",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      25,
+      1200
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia erioloba): fragrant golden-yellow balls mainly Aug-Oct (winter into summer), insect-pollinated; half-moon pods 6-13 x 1.8-6.5 cm, 1.3-2.5 cm thick, dense grey hairs, 7-30 g, 25-1200 pods per tree a year; PlantZAfrica: pods never open and fall in winter. Seeds reportedly roasted as a coffee substitute; ripening and rot times estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "shrub": [

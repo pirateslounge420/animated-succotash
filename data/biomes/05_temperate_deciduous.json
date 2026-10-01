@@ -3529,6 +3529,139 @@
     "biomes": [
      "TEMPERATE_DECIDUOUS"
     ]
+   },
+   {
+    "name": "Moso bamboo",
+    "genus": "Phyllostachys",
+    "species": "edulis",
+    "origin": "Southern China and Taiwan",
+    "shape": "bamboo",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#A8B860",
+    "source": "Phyllostachys edulis, moso bamboo, native to China (Taiwan), naturalised Japan, warm-temperate hill forest, culms 10-20 m — Wikipedia / Flora of China",
+    "traits": {
+     "genus": "Phyllostachys",
+     "species": "edulis",
+     "native_range": "Phyllostachys edulis, moso bamboo, native to China (Taiwan), naturalised Japan, warm-temperate hill forest, culms 10-20 ",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      4,
+      11
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 25,
+     "color": "#93A552",
+     "color_2": "#556B36",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "tall grey-green culms with arching plume tops",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      7,
+      15
+     ],
+     "culm_days": 50,
+     "first_seed_years": 67,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings look like a tiny grass: the first culm is only about 10 cm tall and 2 mm thick with a few narrow leaves. Each spring the young clump sends up bigger culms and, after several years, running rhizomes. Mature shoots emerge as fat, hairy, brown-sheathed spears that reach 15-20 m in about two months, then leaf out into feathery crowns.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 28 m; shoots grow up to 119 cm in 24 h; a culm never grows again after its first season; flowers about every half century; seeds germinate within weeks; first seedling culm ~10 cm x 2 mm); ~67-year flowering interval recorded in Japan; culm lifespan and grove maturity estimated"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "ground": [
@@ -6347,9 +6480,329 @@
      "response": "flower"
     },
     "silhouette": "arching clumps hung with flat dangling spikelets"
+   },
+   {
+    "name": "Kuma bamboo grass",
+    "genus": "Sasa",
+    "species": "veitchii",
+    "origin": "Japan",
+    "shape": "bamboo",
+    "temp_c": [
+     8,
+     17
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#E0D8A8",
+    "source": "Sasa veitchii, kuma-zasa, Japan, dwarf bamboo carpet under temperate deciduous forest, 0.5-1.5 m, leaves edged white in winter — Wikipedia / Flora of Japan",
+    "traits": {
+     "genus": "Sasa",
+     "species": "veitchii",
+     "native_range": "Sasa veitchii, kuma-zasa, Japan, dwarf bamboo carpet under temperate deciduous forest, 0",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 4,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 15,
+     "color": "#6E9A48",
+     "color_2": "#4A6A30",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "silhouette": "knee-high broad-leaved bamboo thicket",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "culm_days": 40,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings (rare) are grass-like tufts of thin culms with small leaves; a spreading rhizome then fills in a dense, knee-to-waist-high thicket. Culms carry a few broad leaves 10-25 cm long at the top; in autumn and winter the leaf edges wither to a pale straw-white margin, so the bamboo looks variegated.",
+     "confidence": "estimated",
+     "source": "Flora of China/Japan and RHS Sasa veitchii (culms 0.5-1.5 m, broad leaves with withered white margins in winter, rarely flowers); Sasa genus biology (gregarious, largely monocarpic flowering at long intervals; Makita 1992); interval and ages estimated"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
-  "epiphyte": []
+  "epiphyte": [
+   {
+    "name": "Ivy",
+    "genus": "Hedera",
+    "species": "helix",
+    "origin": "Europe and western Asia",
+    "shape": "liana",
+    "temp_c": [
+     7,
+     17
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     2,
+     25
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#5A4A38",
+    "source": "Hedera helix, common ivy, Europe & W Asia, climbs trunks of oak/ash woodland up to 25 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Hedera",
+     "species": "helix",
+     "native_range": "Hedera helix, common ivy, Europe & W Asia, climbs trunks of oak/ash woodland up to 25 m — Wikipedia / Kew POWO",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      2,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "lobes": 5,
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A7062",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 60,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "silhouette": "dark glossy sheet climbing trunks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      60
+     ],
+     "height_years": [
+      18,
+      40
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      70,
+      400
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two oval cotyledons, then glossy dark green 3-5-lobed leaves with pale veins on a creeping purplish stem that roots along the ground and climbs with rows of tiny aerial roots, carpeting deep shade. Only shoots that reach bright light high up (after ~10+ yr) turn 'adult': bushy, rootless, with unlobed oval leaves, flowers and berries.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (Hedera helix): 60-100% germination within ~15 days once pulp is removed; 3-5-lobed juvenile leaves with aerial roots vs unlobed adult leaves; ~30-40 yr to reach tree canopies, adult phase after ~10+ yr at 15-20 m; stems 50-66+ yr documented, one of 433 yr; legendary shade tolerance."
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#c2c35a",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      8,
+      20
+     ],
+     "pollinators": [
+      "wasp",
+      "fly",
+      "bee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      0.9
+     ],
+     "unripe_colour": "#5f7a44",
+     "ripe_colour": "#1f1a2a",
+     "ripen_days": [
+      100,
+      150
+     ],
+     "hang_days": [
+      30,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      10,
+      40
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "USDA FEIS and Wikipedia (Hedera helix: protandrous yellow-green flowers in globose umbels of 8-20, 3-5 cm across, late summer to late autumn, visited by >70 insect species, flies and wasps important late; berries 6-9 mm, black, 2-5 seeds, ripen Dec-May; bird-dispersed; somewhat poisonous). Fruit set, rot, crop estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
+   }
+  ]
  },
  "associations": [
   {

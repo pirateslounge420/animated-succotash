@@ -1857,6 +1857,139 @@
      "confidence": "documented",
      "source": "USDA Silvics of North America vol. 2 (flowers May-June in axillary clusters; dark blue drupes about 1 cm ripen September-October, eaten by birds); set, crop and decay estimated"
     }
+   },
+   {
+    "name": "Kuril bamboo",
+    "genus": "Sasa",
+    "species": "kurilensis",
+    "origin": "Hokkaido, Kurils and Sakhalin",
+    "shape": "bamboo",
+    "temp_c": [
+     4,
+     10
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Sasa kurilensis, chishima-zasa, Hokkaido/Kuril/Sakhalin coastal and montane forest understory, 1-3 m — Wikipedia / Flora of Japan",
+    "traits": {
+     "genus": "Sasa",
+     "species": "kurilensis",
+     "native_range": "Sasa kurilensis, chishima-zasa, Hokkaido/Kuril/Sakhalin coastal and montane forest understory, 1-3 m — Wikipedia / Flora",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 4.5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 15,
+     "color": "#78A050",
+     "color_2": "#4A6A30",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "silhouette": "dense low leafy bamboo thicket",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "culm_days": 50,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      5,
+      10
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings appear only after a rare mass flowering: grass-like tufts of a few thin culms 10-20 cm tall with small leaves; each year the clump sends up taller culms from spreading rhizomes. Mature culms 1-3 m, arching at the base under snow, with big oblong leaves crowded at the top; each new culm reaches full height in about 2 months of early summer.",
+     "confidence": "estimated",
+     "source": "Makita 1992 Ecological Research (Sasa kurilensis is monocarpic: after mass flowering the stand dies and regrows from seedlings over one to two decades); Japanese bamboo literature (culms 1-3 m, shoots May-June, edible 'nemagari-dake'); flowering interval not known, estimated as many decades"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "ground": [
@@ -3297,6 +3430,193 @@
      "source": "Pleopeltis polypodioides: poikilohydric, desiccation-tolerant; in drought the fronds roll inward and show the grey-brown, densely scaled underside, and can lose up to ~97 % of their water; rehydrated by rain they flatten and turn green within hours, fully within about a day (USDA Forest Service / university extension accounts; Stuart 1968; Muslin & Homann 1992)",
      "_note": "Design 1 Oct §CD (Mike: it behaves as it does in real life). wet_rain_mm_h: local rain (WeatherSim.local_weather) at or above this counts as wetting. Dry: after curl_starts_game_h without rain the fronds begin to roll; by dry_after_game_days they are fully rolled (dry_curl 0-1) and dry_color with the scaly underside showing (dry_underside_shows). Rain: unfurling starts within unfurl_starts_game_h and the plant is flat and green by green_after_game_h. humidity_slows: fog and high humidity stretch the drying. dormant_when_dry: no growth while dry. First guesses on real timings; the designer tunes."
     }
+   },
+   {
+    "name": "Muscadine grape",
+    "genus": "Vitis",
+    "species": "rotundifolia",
+    "origin": "Southeastern United States",
+    "shape": "liana",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#5A3A5A",
+    "source": "Vitis rotundifolia, muscadine, southeastern USA, climbs maritime forest canopy to 20 m, bronze-purple fruit — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Vitis",
+     "species": "rotundifolia",
+     "native_range": "Vitis rotundifolia, muscadine, southeastern USA, climbs maritime forest canopy to 20 m, bronze-purple fruit — USDA Plant",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A6A58",
+     "color_2": "#A89A88",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2,
+     "autumn": "#d8b838",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      60,
+      100
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 60,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "silhouette": "leafy tangle high in host trees",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      60,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two oval cotyledons, then small, glossy, round to heart-shaped leaves with coarse blunt teeth on a thin stem. The seedling trails along the forest floor for a year or more, rooting where it touches, with simple unbranched tendrils; once it reaches a trunk it climbs fast. Its bark stays tight and smooth with pale lenticels instead of shredding like other grapes.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Vitis rotundifolia): crops can start in 3-5 years; NC State Extension plant toolbox: rapid growth, full sun to part shade. Lifespan from the roughly 400-year-old Mother Vine on Roanoke Island, NC; germination and height curve estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#d6dca4",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      2.5
+     ],
+     "unripe_colour": "#8ba35a",
+     "ripe_colour": "#3a1e36",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      25
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "NC State Extension plant toolbox (Vitis rotundifolia): small greenish-white flowers May-Jun in axillary panicles; berries 1/2-1 inch, dark purple or bronze, borne singly or in small groups, not large clusters, ripe Aug-Oct; Wikipedia: many cultivars pistillate, a few perfect-flowered. Ripe berries drop one by one; pollinators, fruit set and crop estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ]
  },

@@ -2633,6 +2633,169 @@
      "lenticels": "none",
      "confidence": "documented"
     }
+   },
+   {
+    "name": "Beach morning glory",
+    "genus": "Ipomoea",
+    "species": "pes-caprae",
+    "origin": "Pantropical beaches worldwide",
+    "shape": "grass",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#C860B0",
+    "source": "Ipomoea pes-caprae, pantropical beach pioneer vine (goat's foot), creeping over open sand, 0.1-0.3 m tall — Wikipedia",
+    "traits": {
+     "genus": "Ipomoea",
+     "species": "pes-caprae",
+     "native_range": "Ipomoea pes-caprae, pantropical beach pioneer vine (goat's foot), creeping over open sand, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 0.95,
+     "base": "truncate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 10,
+     "color": "#7A8A50",
+     "color_2": "#8A4A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "long creeping stems, green flushed purple-red, rooting at the nodes"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "silhouette": "sprawling runners with round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two broad, deeply notched, butterfly-shaped cotyledons, then thick, glossy, two-lobed 'goat's-foot' leaves on a trailing stem. The seedling runs straight out over the sand as a cord-like runner that roots at the nodes and branches, spreading many metres into a net of runners and leathery leaves across the upper beach and foredune.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (flowers pink-violet, open one morning, bees main pollinators, capsule 12-17 mm, seeds need scarification); ANPSA (flowers 20-25 mm wide, last one day, any time of year, fast spreading); Wikipedia (runners several m, rarely 30 m, floating hairy seeds). Plant lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 0.5,
+     "flower_size_cm": 4,
+     "flower_colour": "#c4509c",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.7
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#7a5a38",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (funnel flowers 30-60 mm long, pink to violet, one-day, bees plus butterflies and moths, spherical capsule 12-17 mm with 4 floating hairy seeds); ANPSA (flowers year-round in the tropics). Fruit set, ripening, hang, rot and crop estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "epiphyte": []

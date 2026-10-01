@@ -2014,6 +2014,272 @@
      "spacing_m": 0.1,
      "confidence": "documented"
     }
+   },
+   {
+    "name": "Colihue",
+    "genus": "Chusquea",
+    "species": "culeou",
+    "origin": "Southern Chile and Argentina",
+    "shape": "bamboo",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     3,
+     6
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Chusquea culeou, colihue, Valdivian rainforest understory of Chile/Argentina, clumping bamboo 3-6 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Chusquea",
+     "species": "culeou",
+     "native_range": "Chusquea culeou, colihue, Valdivian rainforest understory of Chile/Argentina, clumping bamboo 3-6 m — Wikipedia / Kew PO",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      3,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 20,
+     "color": "#A8A860",
+     "color_2": "#6A6A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "fountain of arching solid canes",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      5,
+      12
+     ],
+     "culm_days": 90,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      10,
+      20
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings after a mass flowering look like thin grass. The young clump makes new culms each season, at first thread-thin and short, each generation thicker and taller, and dense bunches of whiskery branchlets grow at every node. Colihue culms are solid, pale, erect and closely packed, to ~6 m.",
+     "confidence": "documented",
+     "source": "Wikipedia Chusquea culeou (culms to 6 m, solid; flowers after variable periods up to ~60 yr, then the plant dies after seeding); Pearson et al. 1994 and Marchesini et al. 2009 (2001 mass flowering in Patagonia, seedling recruitment); culm lifespan and culm_days estimated"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
+   },
+   {
+    "name": "Kuril bamboo",
+    "genus": "Sasa",
+    "species": "kurilensis",
+    "origin": "Northern Japan, Kurils and Sakhalin",
+    "shape": "bamboo",
+    "temp_c": [
+     2,
+     10
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Sasa kurilensis, chishima-zasa, Hokkaido, Kurils, Sakhalin & N Honshu, dense dwarf-bamboo understory of cool wet forest, 1-3 m — Wikipedia / Flora of Japan",
+    "traits": {
+     "genus": "Sasa",
+     "species": "kurilensis",
+     "native_range": "Sasa kurilensis, chishima-zasa, Hokkaido, Kurils, Sakhalin & N Honshu, dense dwarf-bamboo understory of cool wet forest,",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 4.5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 15,
+     "color": "#78A050",
+     "color_2": "#4A6A30",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "silhouette": "dense waist-high bamboo thicket",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "culm_days": 50,
+     "first_seed_years": 60,
+     "lifespan_years": [
+      5,
+      10
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings appear only after a rare mass flowering: grass-like tufts of a few thin culms 10-20 cm tall with small leaves; each year the clump sends up taller culms from spreading rhizomes. Mature culms 1-3 m, arching at the base under snow, with big oblong leaves crowded at the top; each new culm reaches full height in about 2 months of early summer.",
+     "confidence": "estimated",
+     "source": "Makita 1992 Ecological Research (Sasa kurilensis is monocarpic: after mass flowering the stand dies and regrows from seedlings over one to two decades); Japanese bamboo literature (culms 1-3 m, shoots May-June, edible 'nemagari-dake'); flowering interval not known, estimated as many decades"
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "ground": [

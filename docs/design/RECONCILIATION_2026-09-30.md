@@ -903,6 +903,11 @@ Trichocereus, Acacia, bamboo, vines* — and *vines should also grow over surfac
 - **Entries sharing a binomial roll as one species**: the 64 landraces are one plant,
   *Cannabis sativa*; the landrace you meet is the one nearest in climate and realm.
 - **Vine is the tenth trim category** (climbers and creepers).
+- **The §CC trim ran (`a9f00ff`) before this rule** and cut 21 of these: four acacias
+  (fever tree, camel thorn, whitethorn, coastal wattle), seven bamboos (giant, thicket,
+  moso, colihue, Kuril, kuma, savanna) and ten vines (ivy, Virginia creeper, both wild
+  grapes, passion vine, both rattans, the liana, beach morning glory, fire lily). All
+  restored to the biomes that listed them that morning, leaf tiles rebuilt (998 species).
 
 **Vines climb and cover** (`data/vines.json`): the biome's vine species grow over the
 world's surfaces, not only as plants of their own — up trunks, over **ruin walls and

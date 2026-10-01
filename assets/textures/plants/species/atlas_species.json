@@ -3881,6 +3881,18 @@
    "bark": "taxodium_distichum_bark.png",
    "bark_tile_m": 0.4
   },
+  "Bamboo thicket": {
+   "key": "bambusa_bambos",
+   "genus": "Bambusa",
+   "leaf_type": "strap",
+   "bark_pattern": "ringed",
+   "leaf": "bambusa_bambos_leaf.png",
+   "leaf_color": "#3D8239",
+   "leaves": "bambusa_bambos_leaves.png",
+   "litter": "bambusa_bambos_litter.png",
+   "bark": "bambusa_bambos_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Banyan": {
    "key": "ficus_benghalensis",
    "genus": "Ficus",
@@ -3915,6 +3927,18 @@
    "leaves": "suriana_maritima_leaves.png",
    "litter": "suriana_maritima_litter.png",
    "bark": "suriana_maritima_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Beach morning glory": {
+   "key": "ipomoea_pes_caprae",
+   "genus": "Ipomoea",
+   "leaf_type": "simple",
+   "bark_pattern": "green_stem",
+   "leaf": "ipomoea_pes_caprae_leaf.png",
+   "leaf_color": "#3F7B37",
+   "leaves": "ipomoea_pes_caprae_leaves.png",
+   "litter": "ipomoea_pes_caprae_litter.png",
+   "bark": "ipomoea_pes_caprae_bark.png",
    "bark_tile_m": 0.4
   },
   "Beach naupaka": {
@@ -4710,6 +4734,19 @@
    "leaf_type": "none",
    "bark_pattern": "none",
    "bark": null
+  },
+  "Camel thorn": {
+   "key": "vachellia_erioloba",
+   "genus": "Vachellia",
+   "leaf_type": "compound",
+   "bark_pattern": "furrowed",
+   "leaf": "vachellia_erioloba_leaf.png",
+   "leaf_color": "#3C6E31",
+   "leaf_autumn": "vachellia_erioloba_leaf_autumn.png",
+   "leaves": "vachellia_erioloba_leaves.png",
+   "litter": "vachellia_erioloba_litter.png",
+   "bark": "vachellia_erioloba_bark.png",
+   "bark_tile_m": 0.4
   },
   "Camelthorn": {
    "key": "alhagi_maurorum",
@@ -5719,6 +5756,18 @@
    "bark": "westringia_fruticosa_bark.png",
    "bark_tile_m": 0.4
   },
+  "Coastal wattle": {
+   "key": "acacia_longifolia",
+   "genus": "Acacia",
+   "leaf_type": "simple",
+   "bark_pattern": "smooth",
+   "leaf": "acacia_longifolia_leaf.png",
+   "leaf_color": "#3E7537",
+   "leaves": "acacia_longifolia_leaves.png",
+   "litter": "acacia_longifolia_litter.png",
+   "bark": "acacia_longifolia_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Cocobolo": {
    "key": "dalbergia_retusa",
    "genus": "Dalbergia",
@@ -5754,6 +5803,18 @@
    "leaves": "imperata_cylindrica_leaves.png",
    "litter": "imperata_cylindrica_litter.png",
    "bark": "imperata_cylindrica_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Colihue": {
+   "key": "chusquea_culeou",
+   "genus": "Chusquea",
+   "leaf_type": "simple",
+   "bark_pattern": "ringed",
+   "leaf": "chusquea_culeou_leaf.png",
+   "leaf_color": "#3C7537",
+   "leaves": "chusquea_culeou_leaves.png",
+   "litter": "chusquea_culeou_litter.png",
+   "bark": "chusquea_culeou_bark.png",
    "bark_tile_m": 0.4
   },
   "Common bamboo": {
@@ -6490,6 +6551,19 @@
    "litter": "sphagnum_cuspidatum_litter.png",
    "bark": null
   },
+  "Fever tree": {
+   "key": "vachellia_xanthophloea",
+   "genus": "Vachellia",
+   "leaf_type": "compound",
+   "bark_pattern": "papery",
+   "leaf": "vachellia_xanthophloea_leaf.png",
+   "leaf_color": "#427B3A",
+   "leaf_autumn": "vachellia_xanthophloea_leaf_autumn.png",
+   "leaves": "vachellia_xanthophloea_leaves.png",
+   "litter": "vachellia_xanthophloea_litter.png",
+   "bark": "vachellia_xanthophloea_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Field dog-lichen": {
    "key": "peltigera_rufescens",
    "genus": "Peltigera",
@@ -6521,6 +6595,19 @@
    "leaves": "hymenophyllum_polyanthos_leaves.png",
    "litter": "hymenophyllum_polyanthos_litter.png",
    "bark": "hymenophyllum_polyanthos_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Fire lily": {
+   "key": "gloriosa_superba",
+   "genus": "Gloriosa",
+   "leaf_type": "simple",
+   "bark_pattern": "green_stem",
+   "leaf": "gloriosa_superba_leaf.png",
+   "leaf_color": "#3C8235",
+   "leaf_autumn": "gloriosa_superba_leaf_autumn.png",
+   "leaves": "gloriosa_superba_leaves.png",
+   "litter": "gloriosa_superba_litter.png",
+   "bark": "gloriosa_superba_bark.png",
    "bark_tile_m": 0.4
   },
   "Floating crystalwort": {
@@ -6727,6 +6814,18 @@
    "leaf_type": "none",
    "bark_pattern": "green_stem",
    "bark": "dendrophylax_lindenii_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Giant bamboo": {
+   "key": "dendrocalamus_giganteus",
+   "genus": "Dendrocalamus",
+   "leaf_type": "strap",
+   "bark_pattern": "ringed",
+   "leaf": "dendrocalamus_giganteus_leaf.png",
+   "leaf_color": "#3B8239",
+   "leaves": "dendrocalamus_giganteus_leaves.png",
+   "litter": "dendrocalamus_giganteus_litter.png",
+   "bark": "dendrocalamus_giganteus_bark.png",
    "bark_tile_m": 0.4
   },
   "Giant cutgrass": {
@@ -7007,7 +7106,7 @@
    "genus": "Guadua",
    "leaf_type": "strap",
    "bark_pattern": "ringed",
-   "leaf": "guadua_angustifolia_leaf.png",
+   "leaf": "bambusa_bambos_leaf.png",
    "leaf_color": "#408239",
    "leaves": "guadua_angustifolia_leaves.png",
    "litter": "guadua_angustifolia_litter.png",
@@ -7428,6 +7527,18 @@
    "bark": "allenrolfea_occidentalis_bark.png",
    "bark_tile_m": 0.4
   },
+  "Ivy": {
+   "key": "hedera_helix",
+   "genus": "Hedera",
+   "leaf_type": "simple",
+   "bark_pattern": "fissured",
+   "leaf": "hedera_helix_leaf.png",
+   "leaf_color": "#39612E",
+   "leaves": "hedera_helix_leaves.png",
+   "litter": "hedera_helix_litter.png",
+   "bark": "hedera_helix_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Jack pine": {
    "key": "pinus_banksiana",
    "genus": "Pinus",
@@ -7602,6 +7713,30 @@
    "bark": "empetrum_nigrum_bark.png",
    "bark_tile_m": 0.4
   },
+  "Kuma bamboo grass": {
+   "key": "sasa_veitchii",
+   "genus": "Sasa",
+   "leaf_type": "simple",
+   "bark_pattern": "ringed",
+   "leaf": "sasa_veitchii_leaf.png",
+   "leaf_color": "#3C6E31",
+   "leaves": "sasa_veitchii_leaves.png",
+   "litter": "sasa_veitchii_litter.png",
+   "bark": "sasa_veitchii_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Kuril bamboo": {
+   "key": "sasa_kurilensis",
+   "genus": "Sasa",
+   "leaf_type": "simple",
+   "bark_pattern": "ringed",
+   "leaf": "sasa_kurilensis_leaf.png",
+   "leaf_color": "#3C6E31",
+   "leaves": "sasa_kurilensis_leaves.png",
+   "litter": "sasa_kurilensis_litter.png",
+   "bark": "sasa_kurilensis_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Labrador tea": {
    "key": "rhododendron_groenlandicum",
    "genus": "Rhododendron",
@@ -7699,6 +7834,18 @@
    "leaves": "ansellia_africana_leaves.png",
    "litter": "ansellia_africana_litter.png",
    "bark": "ansellia_africana_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Liana": {
+   "key": "bauhinia_guianensis",
+   "genus": "Bauhinia",
+   "leaf_type": "simple",
+   "bark_pattern": "smooth",
+   "leaf": "bauhinia_guianensis_leaf.png",
+   "leaf_color": "#427B3A",
+   "leaves": "bauhinia_guianensis_leaves.png",
+   "litter": "bauhinia_guianensis_litter.png",
+   "bark": "bauhinia_guianensis_bark.png",
    "bark_tile_m": 0.4
   },
   "Licorice fern": {
@@ -8209,6 +8356,18 @@
    "bark": "mauritia_flexuosa_bark.png",
    "bark_tile_m": 0.4
   },
+  "Moso bamboo": {
+   "key": "phyllostachys_edulis",
+   "genus": "Phyllostachys",
+   "leaf_type": "simple",
+   "bark_pattern": "ringed",
+   "leaf": "phyllostachys_edulis_leaf.png",
+   "leaf_color": "#3B8239",
+   "leaves": "phyllostachys_edulis_leaves.png",
+   "litter": "phyllostachys_edulis_litter.png",
+   "bark": "phyllostachys_edulis_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Mosquito fern": {
    "key": "azolla_filiculoides",
    "genus": "Azolla",
@@ -8261,7 +8420,7 @@
    "genus": "Yushania",
    "leaf_type": "simple",
    "bark_pattern": "ringed",
-   "leaf": "yushania_alpina_leaf.png",
+   "leaf": "chusquea_culeou_leaf.png",
    "leaf_color": "#3C7537",
    "leaves": "yushania_alpina_leaves.png",
    "litter": "yushania_alpina_litter.png",
@@ -8333,6 +8492,19 @@
    "leaves": "acacia_aneura_leaves.png",
    "litter": "acacia_aneura_litter.png",
    "bark": "acacia_aneura_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Muscadine grape": {
+   "key": "vitis_rotundifolia",
+   "genus": "Vitis",
+   "leaf_type": "simple",
+   "bark_pattern": "smooth",
+   "leaf": "vitis_rotundifolia_leaf.png",
+   "leaf_color": "#3F7B37",
+   "leaf_autumn": "vitis_rotundifolia_leaf_autumn.png",
+   "leaves": "vitis_rotundifolia_leaves.png",
+   "litter": "vitis_rotundifolia_litter.png",
+   "bark": "vitis_rotundifolia_bark.png",
    "bark_tile_m": 0.4
   },
   "Mustard yellow polypore": {
@@ -8666,6 +8838,18 @@
    "leaf_type": "none",
    "bark_pattern": "none",
    "bark": null
+  },
+  "Passion vine": {
+   "key": "passiflora_edulis",
+   "genus": "Passiflora",
+   "leaf_type": "simple",
+   "bark_pattern": "green_stem",
+   "leaf": "passiflora_edulis_leaf.png",
+   "leaf_color": "#387530",
+   "leaves": "passiflora_edulis_leaves.png",
+   "litter": "passiflora_edulis_litter.png",
+   "bark": "passiflora_edulis_bark.png",
+   "bark_tile_m": 0.4
   },
   "Pennsylvania sedge": {
    "key": "carex_pensylvanica",
@@ -9026,6 +9210,30 @@
    "bark": "brachypodium_retusum_bark.png",
    "bark_tile_m": 0.4
   },
+  "Rattan palm": {
+   "key": "calamus_manan",
+   "genus": "Calamus",
+   "leaf_type": "frond",
+   "bark_pattern": "spiny",
+   "leaf": "calamus_manan_leaf.png",
+   "leaf_color": "#3D8239",
+   "leaves": "calamus_manan_leaves.png",
+   "litter": "calamus_manan_litter.png",
+   "bark": "calamus_manan_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Rattan vine": {
+   "key": "calamus_rotang",
+   "genus": "Calamus",
+   "leaf_type": "frond",
+   "bark_pattern": "spiny",
+   "leaf": "calamus_rotang_leaf.png",
+   "leaf_color": "#3D8239",
+   "leaves": "calamus_rotang_leaves.png",
+   "litter": "calamus_rotang_litter.png",
+   "bark": "calamus_rotang_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Red bay": {
    "key": "persea_borbonia",
    "genus": "Persea",
@@ -9162,13 +9370,12 @@
    "key": "pleopeltis_polypodioides",
    "genus": "Pleopeltis",
    "leaf_type": "frond",
-   "bark_pattern": "green_stem",
+   "bark_pattern": "none",
    "leaf": "pleopeltis_polypodioides_leaf.png",
-   "leaf_color": "#3B7534",
+   "leaf_color": "#457B3E",
    "leaves": "pleopeltis_polypodioides_leaves.png",
    "litter": "pleopeltis_polypodioides_litter.png",
-   "bark": "pleopeltis_polypodioides_bark.png",
-   "bark_tile_m": 0.4
+   "bark": null
   },
   "Rice cutgrass": {
    "key": "leersia_oryzoides",
@@ -9218,6 +9425,19 @@
    "leaves": "chasmanthium_latifolium_leaves.png",
    "litter": "chasmanthium_latifolium_litter.png",
    "bark": "chasmanthium_latifolium_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Riverbank grape": {
+   "key": "vitis_riparia",
+   "genus": "Vitis",
+   "leaf_type": "simple",
+   "bark_pattern": "stringy",
+   "leaf": "vitis_riparia_leaf.png",
+   "leaf_color": "#398235",
+   "leaf_autumn": "vitis_riparia_leaf_autumn.png",
+   "leaves": "vitis_riparia_leaves.png",
+   "litter": "vitis_riparia_litter.png",
+   "bark": "vitis_riparia_bark.png",
    "bark_tile_m": 0.4
   },
   "Rock lichen": {
@@ -9566,6 +9786,18 @@
    "leaves": "kigelia_africana_leaves.png",
    "litter": "kigelia_africana_litter.png",
    "bark": "kigelia_africana_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Savanna bamboo": {
+   "key": "oxytenanthera_abyssinica",
+   "genus": "Oxytenanthera",
+   "leaf_type": "strap",
+   "bark_pattern": "ringed",
+   "leaf": "oxytenanthera_abyssinica_leaf.png",
+   "leaf_color": "#41823D",
+   "leaves": "oxytenanthera_abyssinica_leaves.png",
+   "litter": "oxytenanthera_abyssinica_litter.png",
+   "bark": "oxytenanthera_abyssinica_bark.png",
    "bark_tile_m": 0.4
   },
   "Savanna grass": {
@@ -11207,6 +11439,19 @@
    "bark": "salix_arctica_bark.png",
    "bark_tile_m": 0.4
   },
+  "Virginia creeper": {
+   "key": "parthenocissus_quinquefolia",
+   "genus": "Parthenocissus",
+   "leaf_type": "compound",
+   "bark_pattern": "fissured",
+   "leaf": "parthenocissus_quinquefolia_leaf.png",
+   "leaf_color": "#3A6E31",
+   "leaf_autumn": "parthenocissus_quinquefolia_leaf_autumn.png",
+   "leaves": "parthenocissus_quinquefolia_leaves.png",
+   "litter": "parthenocissus_quinquefolia_litter.png",
+   "bark": "parthenocissus_quinquefolia_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Virginia wild rye": {
    "key": "elymus_virginicus",
    "genus": "Elymus",
@@ -11435,6 +11680,19 @@
    "leaves": "pinus_albicaulis_leaves.png",
    "litter": "pinus_albicaulis_litter.png",
    "bark": "pinus_albicaulis_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Whitethorn acacia": {
+   "key": "vachellia_constricta",
+   "genus": "Vachellia",
+   "leaf_type": "compound",
+   "bark_pattern": "spiny",
+   "leaf": "vachellia_constricta_leaf.png",
+   "leaf_color": "#427B3A",
+   "leaf_autumn": "vachellia_constricta_leaf_autumn.png",
+   "leaves": "vachellia_constricta_leaves.png",
+   "litter": "vachellia_constricta_litter.png",
+   "bark": "vachellia_constricta_bark.png",
    "bark_tile_m": 0.4
   },
   "Widgeongrass": {

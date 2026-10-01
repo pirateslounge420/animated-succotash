@@ -1182,6 +1182,203 @@
      "confidence": "estimated",
      "source": "Henderson et al. 1995 (inflorescences below the crownshaft, cream flowers, beetle-pollinated; ellipsoid fruit 2-3.5 cm, yellowish-brown when ripe, eaten by mammals and birds). Phenology and counts estimated."
     }
+   },
+   {
+    "name": "Rattan palm",
+    "genus": "Calamus",
+    "species": "manan",
+    "origin": "Malay Peninsula and Sumatra",
+    "shape": "liana",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.4,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#5AB040",
+    "accent": "#8A8A50",
+    "source": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+    "traits": {
+     "genus": "Calamus",
+     "species": "manan",
+     "native_range": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      300,
+      600
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       100
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 20.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 2,
+     "color": "#8A9A50",
+     "color_2": "#4A3A28",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 1,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 2.0,
+     "confidence": "estimated"
+    },
+    "silhouette": "spiny climbing cane trailing through canopy",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      70
+     ],
+     "height_years": [
+      12,
+      20
+     ],
+     "trunk_years": 3,
+     "first_seed_years": 12,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seeds sprout in 1-2 months; the first leaf is a bifid 'fishtail' eophyll, followed by a slowly enlarging rosette of pinnate leaves on very spiny sheaths. After 2-3 years the single stem begins to elongate, and the thick cane climbs by long whip-like leaf tips armed with backward hooks, shedding its lower leaves.",
+     "confidence": "estimated",
+     "source": "Wikipedia (solitary, dioecious, cane to 8 cm thick and over 100 m long, grows 1-3 m a year, up to 7 m/yr in Sabah; fruit to 2.8 x 2 cm with 15 rows of yellowish scales); PROSEA-style rattan culture for germination and rosette stage; first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      8
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e8dfb8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      200,
+      2000
+     ],
+     "pollinators": [
+      "bee",
+      "beetle",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      2.8
+     ],
+     "unripe_colour": "#8a8a52",
+     "ripe_colour": "#c2a061",
+     "ripen_days": [
+      270,
+      365
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious; fruit rounded to ovoid, to 2.8 x 2 cm, covered in 15 rows of yellowish scales with blackish-brown margins); rattan fruits take ~1 yr to ripen and their sour sarcotesta is eaten; phenology and counts estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "shrub": [
@@ -3028,6 +3225,149 @@
       0.6
      ]
     }
+   },
+   {
+    "name": "Giant bamboo",
+    "genus": "Dendrocalamus",
+    "species": "giganteus",
+    "origin": "Myanmar and Thailand",
+    "shape": "bamboo",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dendrocalamus",
+     "species": "giganteus",
+     "native_range": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 35,
+     "color": "#7A9A60",
+     "color_2": "#C8C8A8",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 2,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
+    },
+    "silhouette": "huge clump of thick arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      25
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 100,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      10,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a grassy tuft of thin leafy shoots. Each rainy season the young clump sends up stouter culms than the year before, reaching full-size culms (up to ~30 m tall, 20-28 cm thick) after roughly a decade. New shoots are fat conical spears wrapped in large brown hairy sheaths that elongate up to 40 cm a day; culm branches and leaves appear only after the culm reaches full height.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrocalamus giganteus (to 30 m, record 42 m; culms to 28 cm thick; up to 40 cm/day, record 46 cm in 24 h at Peradeniya; dense clumps). Culm elongation time (~3-4 months), culm lifespan, clump build-up and gregarious flowering interval (reported ~40 yr) estimated from bamboo literature."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ],
   "ground": [
@@ -6657,6 +6997,199 @@
       0.7
      ]
     }
+   },
+   {
+    "name": "Liana",
+    "genus": "Bauhinia",
+    "species": "guianensis",
+    "origin": "Amazon Basin",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#7A6A50",
+    "source": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Bauhinia",
+     "species": "guianensis",
+     "native_range": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "emarginate",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "lobes": 2
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 4,
+     "color": "#7A6E5E",
+     "color_2": "#5A4E44",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 1.5,
+     "confidence": "estimated"
+    },
+    "silhouette": "flat wavy ribbon stem ladder up trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout with two thick, rounded cotyledons, then the typical two-lobed 'cow-hoof' leaves. The seedling is a self-supporting whip that soon becomes a searching shoot with paired coiled tendrils. Young stems are round; only older climbing stems flatten and fold into the wavy, ribbon-like 'monkey ladder' that hangs from the canopy.",
+     "confidence": "estimated",
+     "source": "Estimated from the genus (Bauhinia/Schnella lianas: bilobed leaves, paired tendrils, flattened undulate 'monkey ladder' stems, liana growth of 1-3 m/yr to the canopy); no species growth data found."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 2,
+     "flower_colour": "#f5f1e2",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      6,
+      12
+     ],
+     "unripe_colour": "#7a9a50",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from Schnella/Bauhinia lianas: small white 5-petalled flowers in dense racemes on canopy branch tips, visited by bees and butterflies; flat woody pods that twist open explosively; timings and counts estimated."
+    },
+    "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
    }
   ]
  },
