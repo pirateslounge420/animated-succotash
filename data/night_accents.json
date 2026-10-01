@@ -1,0 +1,30 @@
+{
+ "_help": {
+  "about": "Design 30 Sept §BU step 6 (Claude Code, 1 Oct, as a feel call; the designer owns it from here): two emissive ambient props drawn only at night and only where they belong, both cold light (the fire stays the only warm light). NightAccents builds them round the player and frees them by day. Restart after editing.",
+  "glow_moss": "Glowing moss hanging from the named genera in the named biomes: strands (count range) of length_m hung under the crown, colour with a slow flicker; range_m: how far from the player they are built; shows_below_daylight: built once the sky's daylight is under this.",
+  "blue_butterflies": "A drifting swarm at ruins in the named biomes (at: ruins): count small glowing quads flapping on their own paths within radius_m of the ruin, height_m above the ground, speed_mps; like the fireflies swarm but blue."
+ },
+ "shows_below_daylight": 0.35,
+ "glow_moss": {
+  "biomes": ["SWAMP", "BOG"],
+  "genera": ["Salix"],
+  "color": "#5CF0C8",
+  "strands": [6, 12],
+  "length_m": [0.6, 2.4],
+  "range_m": 60.0,
+  "flicker": 0.2,
+  "energy": 1.4
+ },
+ "blue_butterflies": {
+  "biomes": ["TEMPERATE_DECIDUOUS", "TEMPERATE_RAINFOREST"],
+  "at": "ruins",
+  "count": 24,
+  "color": "#3C64FF",
+  "radius_m": 9.0,
+  "height_m": [0.8, 4.0],
+  "range_m": 90.0,
+  "speed_mps": 0.6,
+  "size_m": 0.14,
+  "energy": 1.8
+ }
+}
