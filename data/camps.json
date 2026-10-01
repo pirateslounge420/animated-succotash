@@ -7,7 +7,8 @@
   "wake_at_home": "Design 30 Sept §AY: true (ambient profile) - after a death you wake at your HEARTH: the opening camp until you make another camp's fire your hearth (right click it). Overrides wake_random. false: the 29 Sept rule.",
   "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24 for now, Mike). births: need a man and a woman, a surplus, a slow clock; folk have three life stages, child -> teen -> adult (Mike): a child does not gather, a teen gathers at half rate and cannot be a specialist, an adult does both; stage lengths in game days. collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three.",
   "sim_first_guesses": "Added by Claude Code on 30 Sept as first guesses to wire the engine (tune by play): loop.wood_per_gatherer_h and food_per_gatherer_h (units a gatherer brings back per gather hour), loop.walk_out_m (how far the visible loop walks), store.feed_units_per_tick and feed_fire_below_units (folk feed the fire from the woodpile when it drops below this), restraint.woods_units_in_reach (the wood within reach when untouched), regrow_per_game_day (share of it that grows back a day), reach_grow_per_stripped_day_m (the walk lengthens as the woods strip), population.child_eats (share of an adult), fundamental_food_scale and crop_food_scale (what a fundamental or a crop multiplies the food take by), ladder_gates (what moves a camp up a rung), wildfire.fire_prone_biomes, lightning_chance_per_storm_h, spread_m (the burn's reach, by wind and fuel), scar_lasts_game_days, dry_rain_mm_h (less rain than this in a tick keeps the dry spell counting). Retuned 1 Oct after the first sim run: a woodpile unit is one branch's worth of burning whatever the people burn; the folk split their gather hours by what the fire burns and what they eat (not half and half), so a camp of three keeps its fire and a camp of five banks a surplus; the woods in reach regrow slower once stripped. Teens gather at stages.gather_rate; a teen eats as an adult (no number for it yet). population.specialist_gather_rate: a headman, plantkeeper or maker still gathers, at this share of a gatherer (a role, not a job); without it a camp of three with two specialists let its fire die.",
-  "opening_jobs_pieces": "Design 30 Sept night §BV–§BW (pushed 1 Oct). opening: the opening camp starts with start_folk (4-5, Mike; the elder and the hunter of encampment.gd stay as two of them, the rest are drawn from the people) and the jobs they are seen doing at the spawn. jobs: every folk near the player is in a visible job loop the player can watch complete; the sim's accounting is unchanged, the jobs are that accounting made visible. max_at_once: how many folk work at once at a camp (not one walker per camp); near_player_m: the loops only run within this of the player (unloaded camps tick as numbers). gather.target real_source: a gatherer walks to a real tree with deadfall / a real food plant / the water within loop.gather_reach_m, never a random point, and comes back carrying a visible load (carry_visible) that lands on the store as one piece (trip_adds_piece). feed_fire: takes a piece OFF the woodpile and drops it on the fire when the store is below store.feed_fire_below_units. work_at_hearth: sits by the fire with a prop (the maker's job before there is a maker). child: orbits, follows, never gathers. restore_ruin: at a camp sitting in a ruin, hauls one stone a trip from the heap to the signature (§BQ legibility by hand). store.pieces: EVERY trip adds one visible piece (Mike) — refresh_woodpile adds/removes pieces instead of redrawing from a number; wood_tint source_species: a log takes the bark/wood tint of the species it was gathered from, so the pile is the wood of the place; food_by_life: the food piece each way of life stacks (from each people file's food.preserve), vocabulary in food_pieces. First guesses; the designer owns them."
+  "opening_jobs_pieces": "Design 30 Sept night §BV–§BW (pushed 1 Oct). opening: the opening camp starts with start_folk (4-5, Mike; the elder and the hunter of encampment.gd stay as two of them, the rest are drawn from the people) and the jobs they are seen doing at the spawn. jobs: every folk near the player is in a visible job loop the player can watch complete; the sim's accounting is unchanged, the jobs are that accounting made visible. max_at_once: how many folk work at once at a camp (not one walker per camp); near_player_m: the loops only run within this of the player (unloaded camps tick as numbers). gather.target real_source: a gatherer walks to a real tree with deadfall / a real food plant / the water within loop.gather_reach_m, never a random point, and comes back carrying a visible load (carry_visible) that lands on the store as one piece (trip_adds_piece). feed_fire: takes a piece OFF the woodpile and drops it on the fire when the store is below store.feed_fire_below_units. work_at_hearth: sits by the fire with a prop (the maker's job before there is a maker). child: orbits, follows, never gathers. restore_ruin: at a camp sitting in a ruin, hauls one stone a trip from the heap to the signature (§BQ legibility by hand). store.pieces: EVERY trip adds one visible piece (Mike) — refresh_woodpile adds/removes pieces instead of redrawing from a number; wood_tint source_species: a log takes the bark/wood tint of the species it was gathered from, so the pile is the wood of the place; food_by_life: the food piece each way of life stacks (from each people file's food.preserve), vocabulary in food_pieces. First guesses; the designer owns them.",
+  "first_camp": "Design 1 Oct §CB (Mike: the first camp's KIND should change too, not only its place). Encampment.candidates scored every land cell on one taste (mild, green, 2 km from a coast, ~20 deg latitude) so the 12 best were all the same kind of place. Now: a new world first ROLLS A KIND (kinds, by weight), then picks a random cell among that kind's candidates_per_kind best cells (at least min_separation_m apart). A kind is a set of biome keys and a water rule (near: river / sea / lake / water, within within_m: a camp needs water, §BL). Every candidate must sit in a biome that offers fuel (fuel.json biomes, needs_fuel), inside temp_c (not lethal), slope under slope_max, elevation inside elevation_m, never in never. Within a kind the score is the old one minus the latitude term: water near, moisture, level ground, a mild mean. The kind also decides the opening camp's people (Peoples.pick by site) and so its fuel, food, store pieces (§BW). A taiga or cold-shore first camp is a harder night one by design. First guesses; the designer owns them."
  },
  "only_at_ruins": true,
  "wake_random": true,
@@ -288,6 +289,136 @@
      "to": "signature",
      "trip_adds_piece": 1
     }
+   }
+  }
+ },
+ "first_camp": {
+  "roll_kind": true,
+  "candidates_per_kind": 6,
+  "min_separation_m": 20000.0,
+  "needs_fuel": true,
+  "temp_c": [
+   -4,
+   31
+  ],
+  "slope_max": 0.15,
+  "elevation_m": [
+   5,
+   400
+  ],
+  "never": [
+   "ICE_SHEET",
+   "TUNDRA",
+   "ALPINE_TUNDRA",
+   "GLACIER",
+   "SEA_ICE",
+   "HOT_DESERT",
+   "COLD_DESERT",
+   "SALT_FLAT",
+   "BADLANDS",
+   "SWAMP",
+   "FRESHWATER_MARSH",
+   "SALT_MARSH",
+   "BOG",
+   "FEN",
+   "WET_MEADOW",
+   "MANGROVE",
+   "ESTUARY",
+   "LAGOON",
+   "CAVES",
+   "TEPUI",
+   "VOLCANIC_FIELD"
+  ],
+  "kinds": {
+   "forest": {
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST",
+     "CLOUD_FOREST"
+    ],
+    "near": "water",
+    "within_m": 600.0,
+    "weight": 3
+   },
+   "river_valley": {
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TROPICAL_DRY_FOREST",
+     "TALLGRASS_PRAIRIE",
+     "SAVANNA"
+    ],
+    "near": "river",
+    "within_m": 300.0,
+    "weight": 3
+   },
+   "coast": {
+    "biomes": [
+     "MARITIME_FOREST",
+     "ROCKY_SHORE",
+     "BEACH",
+     "DUNES"
+    ],
+    "near": "sea",
+    "within_m": 1500.0,
+    "weight": 2
+   },
+   "cold_shore": {
+    "biomes": [
+     "TAIGA",
+     "KRUMMHOLZ"
+    ],
+    "near": "water",
+    "within_m": 1500.0,
+    "weight": 1
+   },
+   "grassland": {
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE"
+    ],
+    "near": "river",
+    "within_m": 1500.0,
+    "weight": 2
+   },
+   "savanna": {
+    "biomes": [
+     "SAVANNA",
+     "TROPICAL_DRY_FOREST",
+     "THORN_SCRUB"
+    ],
+    "near": "river",
+    "within_m": 1500.0,
+    "weight": 2
+   },
+   "tropical_forest": {
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
+    "near": "river",
+    "within_m": 800.0,
+    "weight": 2
+   },
+   "scrub": {
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "SAGEBRUSH"
+    ],
+    "near": "water",
+    "within_m": 1500.0,
+    "weight": 1
+   },
+   "highland": {
+    "biomes": [
+     "ALPINE_MEADOW",
+     "PARAMO",
+     "PUNA"
+    ],
+    "near": "lake",
+    "within_m": 1500.0,
+    "weight": 1
    }
   }
  }

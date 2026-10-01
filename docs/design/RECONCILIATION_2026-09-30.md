@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`.
 
 ---
 
@@ -806,10 +806,17 @@ spawn (§P, §AO: "a different one each game") was built and never allowed to ru
 - **The dev pins are for the dev tools.** `dev.json` `seed` / `spawn_choice` apply in play
   only with `pin_in_play` true or `DEV_PIN=1`; `tools/dev_view.gd` and the checks set them
   themselves. `dev_mode` and its keys stay on for the designer.
-- The candidate score still prefers mild and green, 2 km from a coast, ~20° latitude
-  (`Encampment.candidates`), so the variety is in *place*, not climate — open question
-  for the designer whether the first camp's *kind* (forest, coast, river valley,
-  grassland, savanna) should roll too.
+- **The first camp's kind rolls too** (Mike, 1 Oct, 11:39). `Encampment.candidates`
+  scored every cell on one taste (mild, green, 2 km from a coast, ~20° latitude), so the
+  twelve best were the same kind of place every time. Now `camps.json → first_camp`: a
+  new world **rolls a kind by weight** — forest, river valley, coast, cold shore,
+  grassland, savanna, tropical forest, scrub, highland — then a random cell among that
+  kind's best few, 20 km apart. A kind is a set of biomes plus a water rule (a camp needs
+  water within reach); every candidate must sit in a biome that offers fuel
+  (`fuel.json`), inside a non-lethal mean temperature, on level ground, never in a
+  wetland, desert, ice or the special biomes. The kind decides the opening camp's people
+  and so what it burns, eats and stacks (§BO, §BW). A cold-shore or taiga first camp is a
+  harder night one on purpose. Weights are first guesses; the designer owns them.
 
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CB on purpose — it is the to-do)
 
