@@ -2583,13 +2583,6 @@
      "TEMPERATE_DECIDUOUS",
      "TROPICAL_DRY_FOREST"
     ],
-    "biomes": [
-     "MARITIME_FOREST",
-     "SWAMP",
-     "FLOODPLAIN_FOREST",
-     "TEMPERATE_DECIDUOUS",
-     "TROPICAL_DRY_FOREST"
-    ],
     "height_m": [
      0.05,
      0.2
