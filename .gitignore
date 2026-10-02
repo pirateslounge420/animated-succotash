@@ -24,3 +24,9 @@ Thumbs.db
 # PNGs per run; the report and the contact sheets are committed.
 tools/reference/walkabout/*/*.png
 __pycache__/
+
+# Walkabout output (tools/reference/walkabout/run.sh): frames, sheets and the log stay local
+/tools/reference/walkabout/*/
+/tools/reference/walkabout/sheet_*.png
+/tools/reference/walkabout/sheet_*.png.import
+/tools/reference/walkabout/walkabout.txt

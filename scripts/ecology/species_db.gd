@@ -281,7 +281,17 @@ static func _load_catalogue(path: String, by_name: Dictionary) -> void:
 			if listed.is_empty() and not had and bool(HAB.get("catalogue_needs_biomes", true)) and not sp.biomes.has(UNLISTED):
 				sp.biomes.append(UNLISTED)
 			# The catalogue's shared needs (its own came with _add_entry).
+			# The entry's own biome list (§CA) wins over a shared
+			# forest_floor: a savanna aroid listed in SAVANNA is not held
+			# to a forest (forest_floor is a biome test, VegetationPlacer).
+			var open_land := false
+			for b in listed:
+				var bid := BiomeTemplates.id_of_key(str(b))
+				if bid >= 0 and not VegetationPlacer.FORESTS.has(bid):
+					open_land = true
 			for need in (shared_needs if not had else []):
+				if need == "forest_floor" and open_land:
+					continue
 				if NEEDS.has(need) and not sp.needs.has(NEEDS[need]):
 					sp.needs.append(NEEDS[need])
 				elif not NEEDS.has(need):

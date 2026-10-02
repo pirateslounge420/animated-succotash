@@ -113,6 +113,46 @@ static var NOW_DAYS := 0.0
 ## either side of the tread, a tree within tree_at_bend_m of each bend.
 static var ROAD_TRAIL: Dictionary = Tuning.section("roads", "trail")
 static var SALAD := PackedInt32Array(Array(DOM.get("salad_biomes", [])).map(func(k): return BiomeTemplates.id_of_key(str(k))))
+## The named plants are always in the game (design 1 Oct §CE;
+## habitat.json always_present): a member of a group (Musa,
+## Amorphophallus, Cannabis, Trichocereus, Acacia s.l., bamboo, vines; by
+## genus, shape or name) that fits the site is always an associate in the
+## stand roll, never an accent, and each group present gets at least
+## min_share of its tier's stems, split among its fitting members; entries
+## sharing a binomial roll as one species (one_roll_per_binomial: the 64
+## cannabis landraces are Cannabis sativa, the one nearest in climate here).
+static var PRESENT: Dictionary = Tuning.table("habitat").get("always_present", {})
+static var PRESENT_MIN := float(PRESENT.get("min_share", 0.06))
+static var _groups := PackedStringArray()
+static var _groups_mutex := Mutex.new()
+
+
+## The always_present group of every species (index -> group key, "" for
+## none), built once.
+static func presence_group(sp: PlantSpecies) -> String:
+	var idx := SpeciesDB.index_of(sp)
+	_groups_mutex.lock()
+	if _groups.is_empty():
+		var all := SpeciesDB.all()
+		_groups.resize(all.size())
+		var defs: Dictionary = PRESENT.get("groups", {})
+		for i in all.size():
+			var s: PlantSpecies = all[i]
+			var shape_key := str(PlantSpecies.Shape.keys()[s.shape]).to_lower() if s.shape < PlantSpecies.Shape.keys().size() else ""
+			var lname := s.name.to_lower()
+			for g in defs:
+				var d: Dictionary = defs[g]
+				var hit := (d.get("genera", []) as Array).has(s.genus) or (d.get("shapes", []) as Array).has(shape_key)
+				if not hit:
+					for frag in d.get("names_contain", []):
+						if lname.contains(str(frag)):
+							hit = true
+				if hit:
+					_groups[i] = str(g)
+					break
+	var out := _groups[idx] if idx >= 0 and idx < _groups.size() else ""
+	_groups_mutex.unlock()
+	return out
 const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
@@ -303,7 +343,15 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			# Wet sites mossy, wet and warm ones hung with vines (0-1 each,
 			# per plant; the foliage shader shows them).
 			var moss := smoothstep(0.45, 0.85, site.m)
-			var vines := smoothstep(0.62, 0.92, site.m) * smoothstep(4.0, 16.0, site.t)
+			# Vines on the trunk (design 1 Oct §CE, data/vines.json): where
+			# the biome has a vine that fits, surfaces.trunk's cover share x
+			# the climate of the trees carry one, up their climb_share of
+			# strands (by the spot's hash, so no other roll shifts); none
+			# where it has none.
+			var vines := 0.0
+			var has_vine := (tier == T.EMERGENT or tier == T.CANOPY) and VineCover.species_at(site.dir, site.biome, site.t, site.m, site.h, site.rock) != null
+			if has_vine:
+				vines = VineCover.on_surface("trunk", site.dir, site.m, site.t, 0.5)
 			# How much leaf a tree carries (its growth, how dry its site is):
 			# the foliage shader thins its leaf clusters by it.
 			var leaf := 1.0
@@ -317,7 +365,10 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				# placement doesn't shift.
 				if DeadWood.is_dead(ctx.map, site.dir, sp):
 					leaf = 0.0
-					vines *= 0.3
+					# Dead wood wears the logs' mat (the world's dead wood
+					# stands; vines.json surfaces.log).
+					if has_vine:
+						vines = VineCover.on_surface("log", site.dir, site.m, site.t, 0.5)
 				# A burn scar: the trees stand dead (bare) while it lasts.
 				if burnt:
 					leaf = 0.0
@@ -1106,8 +1157,30 @@ class _Context:
 				list.append(sp)
 				var v := VegetationPlacer._dominance_noise[SpeciesDB.index_of(sp)].get_noise_3dv(center * PlanetConst.RADIUS_M)
 				dominance[sp] = 0.35 + 1.3 * smoothstep(-0.2, 0.5, v)
+			if bool(VegetationPlacer.PRESENT.get("one_roll_per_binomial", true)):
+				list = _one_per_binomial(list, mid)
 			_species[tier] = _local_assemblage(list)
 			_apply_dominance(tier, mid)
+
+	## Entries sharing a binomial (genus and species) roll as one species:
+	## the one that fits this chunk's middle best (its climate; the realm
+	## gate already chose the realm), the others dropped here.
+	func _one_per_binomial(list: Array[PlantSpecies], mid: _Site) -> Array[PlantSpecies]:
+		var best := {}
+		var best_f := {}
+		for sp in list:
+			if sp.genus == "" or sp.species == "":
+				continue
+			var b := sp.genus + " " + sp.species
+			var f := sp.suitability(mid.t, mid.m, mid.h, mid.rock)
+			if not best.has(b) or f > float(best_f[b]):
+				best[b] = sp
+				best_f[b] = f
+		var out: Array[PlantSpecies] = []
+		for sp in list:
+			if sp.genus == "" or sp.species == "" or best[sp.genus + " " + sp.species] == sp:
+				out.append(sp)
+		return out
 
 	## Stand dominance (design 30 Sept §BH): the stand this chunk's middle
 	## is in (a cell of stand_m across, its size drawn per coarse cell)
@@ -1147,6 +1220,15 @@ class _Context:
 		var asc = dom.get("associates", [1, 3])
 		var n_assoc := list.size() - 1 if salad else mini(rng2.randi_range(int(asc[0]), int(asc[1])), list.size() - 1)
 		var picks: Array = []
+		# The named plants that fit here are associates whatever the roll
+		# (§CE): added after the rolled picks (unless the roll made one the
+		# dominant or an associate already).
+		var forced: Array = []
+		if bool(VegetationPlacer.PRESENT.get("associate_when_fit", true)):
+			for i in range(pool.size() - 1, -1, -1):
+				var psp: PlantSpecies = pool[i]
+				if psp.suitability(mid.t, mid.m, mid.h, mid.rock) > 0.0 and VegetationPlacer.presence_group(psp) != "":
+					forced.append(psp)
 		for k in 1 + n_assoc:
 			var total := 0.0
 			for w in pool_w:
@@ -1161,18 +1243,51 @@ class _Context:
 			picks.append(pool[idx])
 			pool.remove_at(idx)
 			pool_w.remove_at(idx)
+		for f in forced:
+			if not picks.has(f):
+				picks.append(f)
 		var accent := float(dom.get("accent_share", 0.03))
 		var rest := list.size() - picks.size()
-		var assoc_share := (1.0 - share - (accent if rest > 0 else 0.0)) / maxf(n_assoc, 1.0)
+		var assoc_share := (1.0 - share - (accent if rest > 0 else 0.0)) / maxf(picks.size() - 1, 1.0)
+		var targets := {}
 		for sp in list:
-			var target: float
 			if sp == picks[0]:
-				target = share
+				targets[sp] = share
 			elif picks.has(sp):
-				target = assoc_share
+				targets[sp] = assoc_share
 			else:
-				target = accent / rest
-			dominance[sp] = target / float(fit[sp])
+				targets[sp] = accent / rest
+		# Each named group here at least min_share of the tier's stems,
+		# split among its fitting members; the rest scaled to make room.
+		var groups := {}
+		for sp in forced:
+			var g := VegetationPlacer.presence_group(sp)
+			if not groups.has(g):
+				groups[g] = []
+			groups[g].append(sp)
+		if not groups.is_empty():
+			var lifted := 0.0
+			for g in groups:
+				var members: Array = groups[g]
+				var have := 0.0
+				for sp in members:
+					have += float(targets[sp])
+				if have < VegetationPlacer.PRESENT_MIN:
+					for sp in members:
+						targets[sp] = VegetationPlacer.PRESENT_MIN / members.size()
+				for sp in members:
+					lifted += float(targets[sp])
+			var others := 0.0
+			for sp in list:
+				if not forced.has(sp):
+					others += float(targets[sp])
+			var room := maxf(1.0 - lifted, 0.05)
+			if others > 0.0:
+				for sp in list:
+					if not forced.has(sp):
+						targets[sp] = float(targets[sp]) * room / others
+		for sp in list:
+			dominance[sp] = float(targets[sp]) / float(fit[sp])
 
 	## A place holds only a few species of one big catalogue genus (246
 	## Amorphophallus could all fit a tropical Asian forest by climate):

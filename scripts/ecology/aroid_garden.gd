@@ -169,7 +169,8 @@ func _scan() -> void:
 			continue
 		for ch in chunk.detail_node.get_children():
 			var mmi := ch as MultiMeshInstance3D
-			if mmi == null or not mmi.has_meta("species") or _entries.has(mmi.get_instance_id()):
+			# (Not a vine species' patches over cliffs and ground, VineCover.)
+			if mmi == null or not mmi.has_meta("species") or mmi.has_meta("vine") or _entries.has(mmi.get_instance_id()):
 				continue
 			var sp: PlantSpecies = SpeciesDB.all()[int(mmi.get_meta("species"))]
 			if sp.cycle.is_empty() or mmi.multimesh == null or mmi.multimesh.instance_count == 0:
@@ -277,6 +278,15 @@ func _step(budget_us: int) -> void:
 			_work = _begin(e)
 		var w := _work
 		var we: Dictionary = w.e
+		# Its chunk unloaded mid-pass (the pass runs over several frames):
+		# drop the rest of it.
+		if not is_instance_valid(we.mmi) or not is_instance_valid(we.holder):
+			_work = {}
+			for id in _entries.keys():
+				if is_same(_entries[id], we):
+					_drop(id)
+					break
+			continue
 		if int(w.i) >= int(we.n):
 			_commit(w)
 			_work = {}

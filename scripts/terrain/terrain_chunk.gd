@@ -1449,7 +1449,7 @@ func setup_bands(parent: Node = null) -> void:
 		var mmi := ch as MultiMeshInstance3D
 		var sp_idx: int = ch.get_meta("species")
 		var sp: PlantSpecies = all[sp_idx]
-		if ch.has_meta("young"):
+		if ch.has_meta("young") or ch.has_meta("vine"):
 			var ymm := mmi.multimesh
 			# Its node's visibility range is the reach plus the chunk's
 			# reach (VegetationPlacer._instance); per plant, the reach.

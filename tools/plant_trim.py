@@ -9,9 +9,14 @@
                                                  # biome's species after the trim, by category
     python3 tools/plant_trim.py sync-tags        # every biome-file entry's `biomes` = the union of
                                                  # the biome files that list it (the §CA gate)
+    python3 tools/plant_trim.py check-keep       # re-run the trim's choice (plan) on every biome file
+                                                 # and assert it keeps every always_keep member
+                                                 # (design 1 Oct §CE), the 21 restored ones by name
 
 Categories (trim.categories): tree, shrub, grass, moss, orchid, aroid, fern, cacti,
-fungi, or "none". category_of(entry, file) maps an entry from its tier, shape, leaf
+fungi, vine (§CE: climbers and creepers, the tenth), or "none". The always_keep groups
+(habitat.json trim.always_keep, matched as always_present.groups lists them: genus,
+shape, name) are never trimmed, whatever the per-category cap (§CE). category_of(entry, file) maps an entry from its tier, shape, leaf
 type, genus, family and name, following trim.category_of in habitat.json; the mapping
 is deterministic and prints a reason, so the designer can see what went where. Entries
 that fit no category (vines, kelp, cushion plants, herbs, bromeliads, carnivorous
@@ -29,6 +34,32 @@ TRIM = HAB.get("trim", {})
 CATS = TRIM.get("categories", ["tree", "shrub", "grass", "moss", "orchid", "aroid", "fern", "cacti", "fungi"])
 KEEP_WHOLE = set(TRIM.get("keep_whole", ["cannabis.json", "trichocereus.json", "amorphophallus.json"]))
 PER = int(TRIM.get("per_biome_per_category", 4))
+# The named plants (design 1 Oct §CE): never trimmed.
+GROUPS = (HAB.get("always_present", {}) or {}).get("groups", {})
+ALWAYS_KEEP = [g for g in TRIM.get("always_keep", []) if g in GROUPS]
+# The 21 the §CC trim cut before §CE, restored in b8c1809.
+RESTORED_21 = ["Fever tree", "Camel thorn", "Whitethorn acacia", "Coastal wattle",
+               "Giant bamboo", "Bamboo thicket", "Moso bamboo", "Colihue", "Kuril bamboo",
+               "Kuma bamboo grass", "Savanna bamboo", "Ivy", "Virginia creeper", "Riverbank grape",
+               "Muscadine grape", "Passion vine", "Rattan vine", "Rattan palm", "Liana",
+               "Beach morning glory", "Fire lily"]
+
+
+def group_of(e, cat=None):
+    """The always_present group an entry belongs to ("" for none), matched as the
+    placer matches it (VegetationPlacer.presence_group): genus, shape, name, or the
+    trim category a group names."""
+    genus = str(e.get("genus", "") or "")
+    shape = str(e.get("shape", "") or "").lower()
+    name = str(e.get("name", "")).lower()
+    for g, d in GROUPS.items():
+        if genus in d.get("genera", []) or shape in d.get("shapes", []):
+            return g
+        if any(str(f) in name for f in d.get("names_contain", [])):
+            return g
+        if cat is not None and d.get("category") and cat == d.get("category"):
+            return g
+    return ""
 TIERS = ("emergent", "canopy", "shrub", "ground", "epiphyte")
 
 AROID_GENERA = {"Alocasia", "Colocasia", "Philodendron", "Monstera", "Bucephalandra", "Epipremnum", "Anthurium",
@@ -122,6 +153,9 @@ def category_of(e, tier, fname):
         return "aroid", "an aroid (genus %s)" % (genus or "by name")
     if genus in ORCHID_GENERA or family == "Orchidaceae" or has_word(name, ORCHID_WORDS):
         return "orchid", "an orchid"
+    vine_genera = set((GROUPS.get("vines", {}) or {}).get("genera", [])) - AROID_GENERA
+    if shape == "liana" or genus in vine_genera:
+        return "vine", "a climber or creeper (shape %s, genus %s): the tenth category (§CE)" % (shape, genus or "?")
     if genus in CARNIVORE_GENERA or family in ("Sarraceniaceae", "Nepenthaceae", "Droseraceae", "Lentibulariaceae") or has_word(name, ("pitcher", "sundew", "flytrap", "butterwort", "bladderwort")):
         return "none", "a carnivorous plant: no category"
     if genus in ("Lycopodium", "Diphasiastrum", "Huperzia", "Lycopodiella", "Spinulum", "Dendrolycopodium", "Phlegmariurus"):
@@ -227,6 +261,10 @@ def survivors():
     heroes = {}
     nspecies = set()
     n = 0
+    keep_names = set()
+    for fname, key, tier, e, d in rows:
+        if key and group_of(e, category_of(e, tier, fname)[0]) in ALWAYS_KEEP:
+            keep_names.add(e.get("name"))
     for fname, key, tier, e, d in rows:
         if not key:
             continue
@@ -246,7 +284,7 @@ def survivors():
         for c in CATS:
             # Heroes always survive and sit on top of the four (§CC: the
             # seed list takes the four first).
-            n_slot = len([x for x in per[key].get(c, []) if x not in heroes.get(key, set())])
+            n_slot = len([x for x in per[key].get(c, []) if x not in heroes.get(key, set()) and x not in keep_names])
             if n_slot > PER:
                 over.append("%s %s %d (+%d heroes)" % (key, c, n_slot, len(per[key][c]) - n_slot))
         if not per[key].get("tree"):
@@ -265,6 +303,64 @@ def survivors():
     print("Biomes with no tree: %s" % ", ".join(none_tree))
     print("Biomes with no grass: %s" % ", ".join(none_grass))
     return 1 if over else 0
+
+
+def plan(d, fname):
+    """The trim's choice for one biome file, re-run: per category the heroes and every
+    always_keep member (§CE), then the first `PER` others in the file's order (the seed
+    list's picks were written first). -> (kept names, cut names)."""
+    heroes = set(d.get("hero_species") or [])
+    kept, cut = [], []
+    slots = {}
+    for tier in TIERS:
+        for e in (d.get("plants") or {}).get(tier, []) or []:
+            if not isinstance(e, dict):
+                continue
+            cat, _ = category_of(e, tier, fname)
+            name = e.get("name")
+            if name in heroes or group_of(e, cat) in ALWAYS_KEEP:
+                kept.append(name)
+                continue
+            if cat == "none":
+                cut.append(name)
+                continue
+            slots[cat] = slots.get(cat, 0) + 1
+            (kept if slots[cat] <= PER else cut).append(name)
+    return kept, cut
+
+
+def check_keep():
+    """Re-run the trim's choice on every biome file and assert it keeps every
+    always_keep member, the 21 restored ones by name. Exit 1 on a miss."""
+    fails = 0
+    members = {}
+    seen21 = set()
+    for f in sorted(glob.glob(os.path.join(ROOT, "data", "biomes", "*.json"))):
+        d = json.load(open(f))
+        fname = os.path.basename(f)
+        kept, cut = plan(d, fname)
+        kept_set = set(kept)
+        for tier in TIERS:
+            for e in (d.get("plants") or {}).get(tier, []) or []:
+                if not isinstance(e, dict):
+                    continue
+                g = group_of(e, category_of(e, tier, fname)[0])
+                if g not in ALWAYS_KEEP:
+                    continue
+                members.setdefault(g, set()).add(e.get("name"))
+                if e.get("name") in RESTORED_21:
+                    seen21.add(e.get("name"))
+                if e.get("name") not in kept_set:
+                    print("FAIL  %s: %s (%s) would be trimmed" % (fname, e.get("name"), g))
+                    fails += 1
+    for g in ALWAYS_KEEP:
+        print("  %-14s %3d species in the biome files: %s" % (g, len(members.get(g, ())), ", ".join(sorted(members.get(g, ())))[:200]))
+    missing = [n for n in RESTORED_21 if n not in seen21]
+    print(("PASS  " if not missing else "FAIL  ") + "the 21 restored species are in the biome files (%d of 21%s)" % (21 - len(missing), "; missing " + ", ".join(missing) if missing else ""))
+    fails += len(missing)
+    print(("PASS  " if fails == 0 else "FAIL  ") + "a re-run of the trim keeps every always_keep member (%d groups)" % len(ALWAYS_KEEP))
+    print("RESULT fails: %d" % fails)
+    return 1 if fails else 0
 
 
 def result():
@@ -344,6 +440,8 @@ if __name__ == "__main__":
         sys.exit(survivors())
     elif cmd == "sync-tags":
         sync_tags()
+    elif cmd == "check-keep":
+        sys.exit(check_keep())
     elif cmd == "result":
         path = os.path.join(ROOT, TRIM.get("archive_dir", "docs/plant_archive"), "TRIM_RESULT_2026-10-01.md")
         open(path, "w", encoding="utf-8").write(result())

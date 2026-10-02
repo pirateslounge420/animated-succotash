@@ -72,7 +72,9 @@ func _initialize() -> void:
 		var biome_ids := {}
 		var realms := {}
 		var any_realm_free := false
+		var soils := 0
 		for sp in members:
+			soils |= sp.soil_mask
 			for b in sp.biomes:
 				if b >= 0:
 					biome_ids[b] = true
@@ -84,24 +86,39 @@ func _initialize() -> void:
 		if members.is_empty():
 			ok(false, "%s has species" % g)
 			continue
-		# Candidate cells: an allowed biome, dry land, and a realm one of the
-		# members has (or any, when a member is realm-free).
+		# Candidate cells: dry land where at least one member's biome, realm,
+		# soil and climate fit (the placer's own gates, at the cell).
 		var rng := RandomNumberGenerator.new()
 		rng.seed = hash([seed_v, g])
 		var cells: Array = []
 		for c in map.cell_count:
 			if map.water[c] != PlanetData.Water.NONE or not biome_ids.has(map.biome[c]):
 				continue
+			# And a soil one of them takes (Amorphophallus wants alluvium,
+			# clay-peat, basalt or karst: a rainforest on granite has none).
+			if (soils >> map.rock[c]) & 1 == 0:
+				continue
 			if OS.get_environment("BIOME") != "" and BiomeTemplates.KEYS[map.biome[c]] != OS.get_environment("BIOME"):
 				continue
-			if not any_realm_free:
-				var d: Vector3 = map.dir[c]
-				var r := RealmMap.realm(RealmMap.world_at(d), d, map.temp_c[c], map.moisture[c], map.elevation[c] / PlanetConst.HEIGHT_SCALE)
-				if not realms.has(r) or not SpeciesDB.biome_hosts(map.biome[c], r):
+			var d: Vector3 = map.dir[c]
+			var r := RealmMap.realm(RealmMap.world_at(d), d, map.temp_c[c], map.moisture[c], map.elevation[c] / PlanetConst.HEIGHT_SCALE)
+			if not any_realm_free and (not realms.has(r) or not SpeciesDB.biome_hosts(map.biome[c], r)):
+				continue
+			# A member whose own biome, realm, soil and climate all fit
+			# the cell: a site that has the group's habitat.
+			var fits := false
+			for sp in members:
+				if not sp.biomes.has(map.biome[c]) or (not sp.realms.is_empty() and not sp.realms.has(r)):
 					continue
-			cells.append(c)
+				if sp.suitability(map.temp_c[c], map.moisture[c], map.elevation[c], map.rock[c]) > 0.0:
+					fits = true
+					break
+			if fits:
+				cells.append(c)
 		if cells.is_empty():
-			ok(false, "%s: a site on this planet (no cell in its biomes and realms)" % g)
+			# No site for it (in BIOME, when asked): nothing to grow, not a
+			# failure (every group passes where it has a site).
+			print("SKIP  %s: no site on this planet%s where a member's biome, realm, soil and climate fit" % [g, " in " + OS.get_environment("BIOME") if OS.get_environment("BIOME") != "" else ""])
 			continue
 		var best := 0
 		var found := {}

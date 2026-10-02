@@ -101,6 +101,11 @@ uniform sampler2D sp_leaf : filter_nearest_mipmap, repeat_disable;
 uniform sampler2D sp_leaf_autumn : filter_nearest_mipmap, repeat_disable;
 uniform sampler2D sp_leaves : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D sp_bark : filter_nearest_mipmap, repeat_enable;
+// The vines on this tree (material 3 strands; design 1 Oct §CE): the vine
+// species' own leafy tile and leaf colour (PlantMeshes.material_for).
+uniform bool sp_vine_on = false;
+uniform sampler2D sp_vine_leaves : filter_nearest_mipmap, repeat_enable;
+uniform vec3 sp_vine_color = vec3(0.24, 0.42, 0.18);
 uniform vec3 sp_leaf_color = vec3(0.24, 0.51, 0.2);
 uniform vec3 sp_autumn_color = vec3(0.69, 0.54, 0.23);
 uniform float sp_bark_tile_m = 0.4; // the bark tile's square, m
@@ -504,8 +509,10 @@ void fragment() {
 		float node = fract(obj_pos.y / 0.35);
 		tex.rgb *= 1.0 - 0.45 * step(0.94, node) + 0.18 * step(0.86, node) * step(node, 0.94);
 	} else if (mat_id > 2.5) {
-		// Vines: the leafy texture running down the strand.
-		tex = retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y);
+		// Vines: the leafy texture running down the strand (the vine
+		// species' own tile when the tree has one, §CE).
+		vec2 vuv = vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y;
+		tex = sp_vine_on ? texture(sp_vine_leaves, vuv) : retro_tile(look_tex_leaves, vuv);
 	} else if (mat_id > 1.5) {
 		tex = retro_tex(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
@@ -518,6 +525,9 @@ void fragment() {
 	// Palette: leaves toward the canopy green (§AG), bark toward the warm
 	// brown.
 	vec3 base = COLOR.rgb;
+	if (sp_vine_on && mat_id > 2.5 && mat_id < 3.5) {
+		base = sp_vine_color;
+	}
 	float gw = pal_greenness(base);
 	float nk = look_night;
 	if (mat_id < 0.5) {

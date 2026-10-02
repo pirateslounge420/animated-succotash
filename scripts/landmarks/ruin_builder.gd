@@ -119,6 +119,10 @@ static var JAMB := float(CAVITY.get("ruin_jamb", 0.4))
 ## Lights inside tombs: [local position, color, range m, energy]
 ## (make_node() adds an OmniLight3D for each).
 var _lights: Array = []
+## Ivy strand tops [top, out, length] (local), for the vine species' cards.
+var _vine_anchors: Array = []
+## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
+var _boulder_anchors: Array = []
 ## Collision triangles: plain boxes and thin slabs behind covers, much
 ## cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
@@ -195,7 +199,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -649,6 +653,12 @@ func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Colo
 ## outline is round, not faceted), smooth shaded, mossy on top. Its
 ## collision is boulder_hull().
 func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: float) -> void:
+	# A vine species may drape it (§CE, surfaces.boulder): from its top
+	# down its side, recorded only (no roll, so the ruin builds the same).
+	var top_y := absf(basis.y.y) * radii.y + absf(basis.x.y) * radii.x + absf(basis.z.y) * radii.z
+	var drape := Vector3(basis.x.x, 0.0, basis.x.z)
+	drape = drape.normalized() if drape.length() > 0.01 else Vector3.RIGHT
+	_boulder_anchors.append([center + Vector3(0.0, top_y * 0.9, 0.0) + drape * maxf(radii.x, radii.z) * 0.3, drape, top_y * 1.6])
 	var sphere: Array = PlantMeshes.icosphere(2)
 	var verts: PackedVector3Array = sphere[0]
 	var faces: PackedInt32Array = sphere[1]
@@ -760,6 +770,10 @@ func ivy(top: Vector3, out: Vector3, length: float) -> void:
 
 
 func _ivy_strand(top: Vector3, out: Vector3, length: float) -> void:
+	# Where a vine species climbs too (§CE): VineCover hangs its leaf
+	# cards from the same tops near the player. Recorded only, so the
+	# ruin's own rolls (and its geometry) never change.
+	_vine_anchors.append([top, out, length])
 	var side := Vector3.UP.cross(out).normalized() * rng.randf_range(0.25, 0.45)
 	var o := out.normalized() * 0.08
 	var steps := maxi(1, int(length / 0.8))

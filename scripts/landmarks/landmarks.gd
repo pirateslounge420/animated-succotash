@@ -158,6 +158,41 @@ func _attach_ruins() -> void:
 				rung = int(st.get("rung", 0))
 		RuinMarks.dress(node, site, world, chunks, Peoples.get_people(pid), rung)
 		node.set_meta("marks_rung", rung)
+	_dress_vines(node, c, item[1])
+
+
+## A vine species over the ruin's walls and heaps (§CE), hung from the ivy
+## strands' tops (RuinBuilder's vine_anchors), and draped over its tumbled
+## boulders (boulder_anchors, surfaces.boulder): as much as the climate
+## and the ruin's age allow. A camp living in it cuts them back as its ladder
+## clears the heap (legibility: rung 1 half, rung 2 bare); an abandoned
+## camp is taken back as the forest takes it (CampSim.reclaim).
+func _dress_vines(node: Node3D, c: Vector3i, data: Dictionary) -> void:
+	var site: Dictionary = data.get("site", {})
+	var anchors: Array = data.get("vine_anchors", [])
+	var rocks: Array = data.get("boulder_anchors", [])
+	if site.is_empty() or (anchors.is_empty() and rocks.is_empty()):
+		return
+	var d: Vector3 = site.dir
+	var t := map.sample(map.temp_c, d)
+	var m := map.sample(map.moisture, d)
+	var h := map.terrain.elevation(d, true)
+	var sp := VineCover.species_at(d, map.biome[map.cell_at(d)], t, m, h, map.soil_at(d))
+	if sp == null:
+		return
+	var full := float((VineCover.D.get("ruins", {}) as Dictionary).get("full_after_years", 40.0))
+	var age := full
+	var legibility := 0
+	if CampSim.instance != null:
+		var st := CampSim.instance.state_of("ruin:%s" % str(c))
+		if not st.is_empty():
+			if str(st.get("state", "")) == "living":
+				var rung := int(st.get("rung", 0))
+				legibility = 0 if rung < 1 else (1 if rung < 2 else 2)
+			else:
+				age = full * CampSim.instance.reclaim(st)
+	VineCover.ruin_patches(node, anchors, sp, m, t, age, legibility)
+	VineCover.ruin_patches(node, rocks, sp, m, t, age, legibility, "boulder")
 
 
 ## Build the ruin around surface direction `d` now, if there is one and
@@ -190,6 +225,7 @@ func build_ruin_at(d: Vector3) -> void:
 		_root.add_child(node)
 		node.global_transform = RuinBuilder.placement(data, world)
 		_ruins[c] = node
+		_dress_vines(node, c, data)
 
 
 ## Collision for ruins the player is near (COLLIDE_M), a piece a frame

@@ -75,6 +75,14 @@ static func material_for(sp: PlantSpecies) -> ShaderMaterial:
 	# A leaf cell on the near cards: the leaf's own length, but never so
 	# small that it's below a few pixels a few meters off.
 	m.set_shader_parameter("sp_leaf_m", maxf(sp.leaf_m * 1.3, 0.12))
+	# The vines hung on this tree (material 3 strands) in the vine species'
+	# own leafy tile (design 1 Oct §CE): the vine that shares most of this
+	# species' biomes (VineCover.vine_for_tree).
+	var vine := VineCover.vine_for_tree(sp)
+	if vine != null and vine.tiles.has("leaves"):
+		m.set_shader_parameter("sp_vine_leaves", tile(vine.tiles.get("leaves", "")))
+		m.set_shader_parameter("sp_vine_color", vine.leaf_color)
+		m.set_shader_parameter("sp_vine_on", true)
 	_materials[idx] = m
 	return m
 
@@ -378,6 +386,51 @@ static func warm_layouts(prepared: Dictionary) -> void:
 		for l in (entry[3] as Dictionary):
 			if int(l) >= TreeLayouts.COUNT:
 				arrays_for(sp, LOD_NEAR, int(l))
+
+
+## A vine patch (design 1 Oct §CE, data/vines.json): the vine species'
+## strands with its leaf cards lying flat along them (the species' own leaf
+## tile and cutout through the foliage shader, material 5), one metre
+## square in the unit frame. `form` "hang": strands hanging from the
+## origin down to y = -1 in the x-y plane, cards facing +z a hair off the
+## surface (a wall, a cliff, a boulder's side); "creep": the same lying in
+## the x-z plane round the origin, cards facing up (open ground, a log's
+## top). Main thread; cached.
+static var _vine_cache := {}
+
+static func vine_patch_mesh(sp: PlantSpecies, form: String) -> ArrayMesh:
+	var key := "%d:%s" % [SpeciesDB.index_of(sp), form]
+	if _vine_cache.has(key):
+		return _vine_cache[key]
+	var b := _Builder.new()
+	b.wood = sp.accent
+	b.rng.seed = hash([SpeciesDB.index_of(sp), form, "vine"])
+	var hang := form != "creep"
+	var strands := 3
+	for k in strands:
+		var x := (float(k) + 0.5) / strands - 0.5 + b.rng.randf_range(-0.08, 0.08)
+		var pts: Array = []
+		var cards: Array = []
+		var steps := 5
+		for i in steps + 1:
+			var t := float(i) / steps
+			var wob := sin(t * 5.0 + k * 1.7) * 0.06
+			var p := Vector3(x + wob, -t, 0.025) if hang else Vector3(x + wob, 0.02, t - 0.5)
+			pts.append([p, 0.007 * (1.0 - 0.5 * t), 0.0])
+			if i > 0:
+				cards.append(p)
+		b.tube(pts, 3, b.wood)
+		var along := Vector3(0, -1, 0) if hang else Vector3(0, 0, 1)
+		var side := Vector3(1, 0, 0)
+		for c in cards:
+			for j in 2:
+				var off := side * (0.07 if j == 0 else -0.07) + along * b.rng.randf_range(-0.05, 0.05)
+				var tone := sp.leaf_color.lerp(sp.color, b.rng.randf() * 0.4)
+				b.frond_card(c + off, along.rotated(Vector3(0, 0, 1) if hang else Vector3.UP, b.rng.randf_range(-0.5, 0.5)), side, b.rng.randf_range(0.07, 0.1), tone, 0.15, 0.02)
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, b.commit_arrays(), [], {}, FORMAT)
+	_vine_cache[key] = mesh
+	return mesh
 
 
 ## An understory young plant's mesh (design §AR; `code`:

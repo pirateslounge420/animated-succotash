@@ -356,6 +356,9 @@ func _compute_base(key: Vector3i) -> void:
 	TerrainChunk.set_anchor(data)
 	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r, trees.hosts, key, map.terrain.world_seed)
 	TerrainChunk.bake_canopy_shade(data, trees.hosts)
+	# Where a vine patch lies, the ground greens (seen past its cards'
+	# near_m; design 1 Oct §CE).
+	VineCover.green(map, data)
 	data["dapple"] = CanopyDapple.bake(data.center, data.plants)
 	TerrainChunk.prepare_meshes(data)
 	data["hosts"] = trees.hosts
@@ -373,11 +376,15 @@ func _compute_detail(key: Vector3i, data: Dictionary, hosts: Array) -> void:
 	var skip := _abandoned_detail.has(key)
 	_mutex.unlock()
 	var plants := {}
+	var vines := {}
 	if not skip:
 		plants = VegetationPlacer.prepare(VegetationPlacer.compute_detail(key, map, data, hosts), data.center, data.anchor_r)
 		PlantMeshes.warm(plants.keys())
+		# Vines over cliff faces and open ground (design 1 Oct §CE).
+		var cols: PackedColorArray = data.get("colors", PackedColorArray())
+		vines = VineCover.chunk_patches(map, data, func(i: int) -> float: return 1.0 - cols[i].a if i < cols.size() else 0.0)
 	_mutex.lock()
-	_done_detail.append([key, plants, skip])
+	_done_detail.append([key, plants, skip, vines])
 	_mutex.unlock()
 
 
@@ -439,6 +446,8 @@ func _attach_detail(limit: int) -> void:
 		chunk.detail_node.name = "Undergrowth"
 		chunk.add_child(chunk.detail_node)
 		VegetationPlacer.build_nodes(chunk.detail_node, chunk, item[1])
+		if item.size() > 3 and not (item[3] as Dictionary).is_empty():
+			VineCover.build_nodes(chunk.detail_node, item[3])
 		chunk.setup_bands(chunk.detail_node)
 		if _band_dir != Vector3.ZERO:
 			chunk.band_trees(chunk.local_of(_band_dir, _band_r))

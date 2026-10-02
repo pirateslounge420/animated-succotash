@@ -37973,8 +37973,8 @@
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
-     23,
-     28
+     14,
+     21
     ],
     "moisture": [
      0.7,
@@ -38058,7 +38058,7 @@
       0.7
      ]
     },
-    "source": "Kew POWO accepted name. Gunung Kerinci, Jambi, Sumatra, 1770 m forest. Slender green peduncle spotted pale green; dingy violet pale-spotted incurved boat spathe 11 cm, tiny 3 cm appendix (Aroidpedia protologue extracts).",
+    "source": "Kew POWO accepted name. Gunung Kerinci, Jambi, Sumatra, 1770 m forest. Slender green peduncle spotted pale green; dingy violet pale-spotted incurved boat spathe 11 cm, tiny 3 cm appendix (Aroidpedia protologue extracts). Climate fixed 1 Oct (§CE): the band was 23-28 C, a lowland Sumatran value, but its one known site is montane forest at 1,770 m on Gunung Kerinci. Lowland Sumatra (Jambi) averages about 27 C a year; at the standard lapse of 0.6 C per 100 m its own altitude band, 1,000-2,200 m, spans about 21 to 14 C, so 14-21 C (Kerinci at 1,770 m about 16-17 C), which is the cloud forest it is listed in.",
     "traits": {
      "genus": "Amorphophallus",
      "species": "incurvatus",

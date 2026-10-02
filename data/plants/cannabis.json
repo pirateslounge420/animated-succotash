@@ -2097,8 +2097,8 @@
      15
     ],
     "moisture": [
-     0.2,
-     0.45
+     0.45,
+     0.68
     ],
     "altitude_m": [
      1400,
@@ -2204,7 +2204,7 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kashmir valley; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. High-valley population; among the coldest-adapted drug types.",
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kashmir valley; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. High-valley population; among the coldest-adapted drug types. Moisture fixed 1 Oct (§CE): the band was 0.2-0.45 (semi-arid), but the Kashmir valley is subhumid. Srinagar (1,585 m) normals: about 13.4 C mean and about 700 mm of rain a year (India Meteorological Department), which this game's moisture index (precip / (250 + 55 x T), squashed r / (r + 0.6)) puts at about 0.53; the wetter, cooler upper valleys to 2,600 m (900-1,000 mm, 9-10 C) at about 0.65. The plant grows as a ruderal on valley floors, field edges and river banks, the temperate deciduous and floodplain forests it is listed in.",
     "traits": {
      "genus": "Cannabis",
      "species": "sativa",
