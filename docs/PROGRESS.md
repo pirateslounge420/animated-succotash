@@ -25,6 +25,93 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - §CJ dungeons: every ruin is a delve, with Skyrim's shape and Morrowind's aesthetic in the favourites' colour, a type per ruin kind, and the dark as the danger.
 - **`docs/references/project_sheets.md`:** the 80 Project screenshots described in words. They now sit in the Project as four numbered contact sheets; six of them are favourites.
 
+## 2026-10-02 — §CK tier 1: camps live at the land's own places, and a ruin is what a camp leaves; §CM nest plants; §CL the sacred fig (design 1 Oct §CK–§CM; `landforms.json`, `uniques.json`)
+- **The sites pass** (`Nests`, new): a pure, cached function of the planet and its rivers, like Ruins. Each tier-1 kind is placed by its cause, never a biome name, one candidate per rarity cell (common about 4 km, uncommon 12 km, rare 40 km), only where the cause holds.
+  - **Cave mouth:** a karst or sandstone cliff of 8 m or more (an escarpment face, or the wall of a ravine with a dry floor), level ground before it, and water within 1.5 km.
+  - **Grotto:** wet karst (2–21 °C, moisture 0.5 or more) at a cliff.
+  - **Cenote:** warm karst lowland, flat, with no river within 3 km. Variants: the **doline** in cool karst (4–18 °C), and the **blue hole**, karst under reef or lagoon shallows (look only: a dark disc of water).
+  - **Slot canyon:** the ravine layer in dry sandstone.
+  - **Waterfall:** the tallest fall (RiverNetwork) in its cell.
+  - **Ravine:** a stretch of a ravine's floor.
+  - **Escarpment:** a stretch of the escarpment foot. On open grass it is the **buffalo jump**.
+  - **Bioluminescent bay:** a warm lagoon or estuary cell, salt or brackish, by mangrove, with few open-sea neighbours.
+  - A nest gives way to an earlier kind within 180 m, and to a monument's footprint.
+- **Water, from the data's own notes.** On the full planet a blueprint cell is about 10 km across, so rivers are 10 km reaches and "water within 1.5 km" rarely holds at a cliff. Following the data's own notes, cave mouths on an escarpment face get a spring at the foot ("a spring or seep within ~500 m does instead"), as do escarpments ("springs along the foot") and a ravine stretch with no river ("a spring the stamp adds at a widening"). Each spring is a small pool with mossed stones.
+- **The camp loop** (`camp_loop`):
+  - Each nest is untouched, lived in or holds remains, by its own roll. start_budget's "best first" is a weighted roll: 0.36 where the nest gives roof and water, 0.20 water only, 0.15 roof only; half of the rest hold remains. These are implementation numbers, tuned to land on the budget.
+  - Measured on the four report seeds: 25 %, 28 %, 29 % and 29 % of the nests that give roof or water hold a living camp (start_budget: about one in four).
+  - A camp lives only where the nest gives roof or water, fuel.json gives its biome fuel, and there is a hearth spot clear of the hazard.
+  - Living camps are built at the hearth by Camps (key `nest:<kind>:<cell>`, the nest's people) and are road "camp" nodes (RoadNetwork).
+  - Remains are that people's §BQ signatures that the nest's `remains` list allows, laid within a few paces of the hearth (RuinMarks). Where the people have none on the list, the list's own signatures are used.
+  - The monuments, and the camps at them, stand as built. The wake and hearth rules are unchanged; `Camps.fire_at` knows nest camps, so a nest camp's fire can be your hearth.
+- **Who lives there** (`Peoples.pick` reads the nest first, `nest_pick`):
+  - It is a seeded draw over the nest's `people` list, likeliest first (weights 1, ½, ⅓ …). The life biome_map gives the biome counts twice, a life dressed for the biome half again, and one dressed for neither a quarter. Karst folk never live off karst, and shelter folk never without a roof.
+  - The site rules after it now read real nests. The karst rule needs a cave mouth, grotto or cenote within 200 m (it was a coin flip on karst rock with no cave or sinkhole). The rock-shelter rule takes a roofed nest within 40 m.
+  - So a karst cave is karst folk's or shelter folk's (it was always shelter folk's), and an escarpment on the steppe is mostly the steppe folk's, in savanna about a third the herders' (it was always shelter folk's).
+  - Across the four seeds' windows: **shelter folk 495 camps, karst folk 47** (both had none).
+  - Not touched: the lake rule taking salt-flat and oasis camps, which is tier 2.
+  - Side effect: a karst opening camp now needs a real cave or sinkhole nearby, so there are fewer karst first camps than under the coin flip.
+- **Anything with a roof is a mesh** (`NestBuilder`, on RuinBuilder's rock, collision and far LOD):
+  - **Cave mouth:** a rock roof 3–6.5 m up overhanging 5–9 m, side walls closing a first chamber, a dark low passage at the back (Phase 3 digs behind it), wet stones along the drip line. The fire sits 2.5 m in from the lip.
+  - **Grotto:** RuinBuilder's barrow passage in raw rock. A rock mound out from the cliff, a low arched mouth, a dry front room where the fire is, a passage narrowing back to a chamber with its drip pool and a faint teal glow.
+  - **Cenote:** the undercut lip (rock slabs round the rim leaning over the drop) and fallen blocks down the slope.
+  - **Escarpment:** an overhang slab and two boulders, the fire 2 m in from the drip line. The buffalo jump gets two lanes of cairns on the plateau narrowing to the lip.
+  - **Slot canyon:** drift logs jammed across the slot near the top.
+  - **The old cliff-shelter fire** (`Camps._overhang`) now sits 1.5 m in from the drip line; it was at the drip line.
+- **Stamps** (`Nests.stamp`, in `TerrainField.elevation` with detail; the sites passes, Ruins included, read the ground without stamps).
+  - **The cenote:** a sheer round shaft 15–60 m across, down to a pool at the water table. The pool is standing water, so the chunks draw it and you can swim it. A slope of fallen blocks (36°, about 50° of the shaft) cuts the rim and heaps inside: the way down.
+  - **The doline:** a bowl 3.5–7 m deep, half of them holding a pond.
+  - **Slot canyons:** a ravine through dry sandstone pinches to a slot, blended over the sandstone cells so it narrows over a few kilometres, with a sandy bed in the ground colour. The ground's 4 m grid can't make the data's 1–4 m floor: the narrowest is about 4.5 m (nest_check: 9.9 m deep, floor 4.5 m).
+- **The glowing bay** (MagicSites kind 0.2; `look_bay_glow`; `water.gdshader`): the water stays dark until stirred. Every ripple ring, splash (the ripple sim) and raindrop lights blue-green (HDR 2.2, so it blooms), faint by day. The shader compiles under Forward+. No frame was taken: the nearest bay to a checked camp was 376 km off.
+- **Nest plants** (§CM, `VegetationPlacer._place_nest_plants`): each landform's `plants.add` grows at its own spots, each species inside its own temperature and soil bands, with the spot's moisture standing in for the seep or spray's:
+  - a grotto's mouth and drip pool (seed 90210: 22 plants of maidenhair, hart's-tongue, filmy fern and bird's-nest fern);
+  - a waterfall's spray on both banks (seed 7731: 38 and 21 filmy fern and maidenhair);
+  - a slot canyon's seep (seed 7731: 6 maidenhair).
+  - The mesa alcove and the wadi wait for those nests (tier 2).
+- **The sacred fig** (§CL, `Uniques`), one per world:
+  - **Where:** in the first biome of its list the world has, on a level low rise clear of monuments.
+  - **The tree:** a *Ficus religiosa* 12 % past the top of its band (33.6 m; uniques.json says "past the top of the species' band: about 30 m", and the band ends at 30 m).
+  - **Around it:** swept earth in a 17 m ring with the trees kept back, and a few flat stones.
+  - **Beneath it:** on the east side of the trunk, facing east, a figure on the shared cloaked rig in the ochre robe (#CC7722, edge #A8601C), seated cross-legged in a new rig pose (`PlayerBody.pose = "meditate"`) and still but for the breath.
+  - **The log:** within 25 m it writes "Someone sits beneath the old fig, very still." No name.
+  - **How it's drawn:** the tree is drawn by the fig's own node with its species' hero tree. Through the placer, a lone tree past its band was in the draw buffers at the right place but didn't show in the frames.
+  - **Not built:** the faint path in from a road, the roots on old stone, the leaves' own flutter, and the hood down (the rig has no bare head yet).
+- **F3:** a new line lists the nearest three nests within 3 km, with distance, compass bearing, stage and people.
+- **Data:** the `[NOT WIRED YET]` prefixes in `landforms.json` (now "tier 1 wired") and `uniques.json` (the fig wired, its open pieces named) are updated. No design value changed.
+- **Checks (full planet, headless unless said):**
+  - `landforms_check.py --strict`: 0 errors. `plant_schema_check --strict`: 0 errors.
+  - `tools/nest_report.sh` (new: 28 windows of 22 km a seed) — every seed's run passes:
+
+    | seed | cave mouth | grotto | cenote / doline | slot | waterfall | ravine | escarpment / buffalo jump | bay | lived | remains | shelter folk | karst folk |
+    |---|---|---|---|---|---|---|---|---|---|---|---|---|
+    | 7731 | 329 | 2 | 24 / 56 | 87 | 8 | 75 | 731 / 76 | 2 | 323 | 524 (953 signatures) | 92 | 10 |
+    | 467606063 | 239 | 10 | 8 / 37 | 26 | 72 | 152 | 735 / 61 | 0 | 359 | 489 (859) | 142 | 9 |
+    | 1378252316 | 266 | 2 | 5 / 8 | 82 | 16 | 61 | 771 / 20 | 2 | 328 | 452 (720) | 89 | 3 |
+    | 90210 | 424 | 9 | 82 / 84 | 76 | 5 | 100 | 823 / 108 | 2 | 460 | 627 (1,330) | 172 | 25 |
+
+    Every living camp has a hearth and a people, and no hearth sits in a shaft or a slot's bed.
+  - `tools/nest_check.gd` (new), 0 fails on 7731, 1378252316 and 90210. It stood at a nest of each kind and checked:
+    - the set pieces are built and collide;
+    - the cave-mouth and overhang hearths are under the roof;
+    - living camps have the nest's people (a waterfall's rainforest folk, a steppe escarpment, savanna herders);
+    - remains are laid (weir_line at a waterfall; cliff_dwelling under an escarpment; ochre_wall, ash_hearth and drip_wall in a grotto);
+    - the cenote's pool is standing water at 7.8 m over a floor at 4.8 m, the wall stands 22.3 m over the pool, and the hearth is on the rim;
+    - the slot is 9.9 m deep;
+    - the nest plants grow;
+    - F3 names each nest;
+    - the sacred fig is 34 m tall with the figure seated and the log line written.
+  - `road_reach_check` on 7731 and 467606063: 0 fails (every ruin and inhabited ruin on the network, the opening road to a people's camp).
+  - `new_world_check` (DEV_PIN=0): 0 fails. Headless boot: clean.
+- **Harness frames** (`tools/walkabout.gd`, `SITES=opening_camp,nests,fig`, QUICK; seed 90210, full planet; first person at the eye; the cloud machine's lavapipe software Vulkan, Forward+, 1280×720; import cache present; 14 h overcast): the opening camp; a cave mouth in a cold-desert ravine (the roof, the side walls, the dark passage at the back, the drip stones); a grotto in temperate deciduous forest; a cenote in hot desert (the shaft, the blue pool, the lip stones, the slope down); an escarpment overhang with its spring; the sacred fig in tropical dry forest. 0 species standing outside its biome. The grotto's ferns are counted as the nest's own (§CM), and the walkabout now knows that rule.
+  - New: `SITES=nests` and `SITES=fig`, and a site can face what it shows. Viewpoints: in front of a shelter looking in, just outside a grotto's mouth, on a cenote's rim, 24 m east of the fig.
+- **Fixed in passing:**
+  - `Camps._live` read the walker with `get_meta(…, null)`, which errors in Godot 4.3 when the key is missing (25–48 lines a run in earlier logs too).
+  - `Ruins.site_name` now names a nest.
+  - RuinBuilder skips an empty mesh (nests with nothing to build).
+- **For Mike:**
+  - `camps.json`'s `only_at_ruins` help still says camps exist only at ruins; nests now hold camps too. That is chat-owned data and needs a new line.
+  - Waterfalls are rare on the full planet (5–72 per seed's windows), because the river network is 10 km reaches.
+
 ## 2026-10-02 — §CG: the game no longer needs the import cache; Day 1 and one clock; every frame labelled (design 1 Oct §CG)
 - **Nothing at runtime depends on the import cache** (`ResFiles`, `Look.texture`, `SkySystem._cloud_pano`, `ModelLibrary._scene`, `HudText`):
   - Each world tile is read from its PNG on disk (`FileAccess.get_file_as_bytes`, `Image.load_png_from_buffer`), then `fix_alpha_edges()` (the importer's `fix_alpha_border`) and mipmaps, as the importer does.

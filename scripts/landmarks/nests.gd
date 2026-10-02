@@ -259,7 +259,8 @@ static func _stamp_one(n: Dictionary, d: Vector3, e: float) -> float:
 	var h := lerpf(floor_e, e, smoothstep(big_r - 1.5, big_r + 1.0, r))
 	var off := _bearing(n.dir, d) - float(n.ramp)
 	off = absf(wrapf(off, -PI, PI))
-	var wa := smoothstep(0.42, 0.24, off) if r > 1.0 else 0.0
+	# A talus of fallen blocks, broad (about 50 degrees of the shaft).
+	var wa := smoothstep(0.62, 0.36, off) if r > 1.0 else 0.0
 	if wa > 0.0:
 		var start := big_r * 0.45
 		var hr := float(n.pool_m) + 0.3 + (r - start) * tan(deg_to_rad(36.0))

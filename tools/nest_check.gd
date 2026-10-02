@@ -253,17 +253,12 @@ func _fig_check() -> void:
 	await _go(f.figure, CreatureSpawner._offset(f.figure, PI * 0.5, 20.0))
 	for i in 60:
 		await process_frame
-	var ck: Vector3i = TerrainChunk.key_at(f.dir)
-	var ch: TerrainChunk = main.chunks.chunks.get(ck, null)
-	var tall := 0.0
-	var fig_sp := Uniques.fig_tree(world.planet, ck)
-	if ch != null and not fig_sp.is_empty():
-		for i in ch.trees.size():
-			var t: Array = ch.trees[i]
-			if int(t[2]) == int(fig_sp[0]) and CubeSphere.surface_distance_m(world.dir_of(ch.tree_base(i)), f.dir) < 3.0:
-				tall = maxf(tall, float(t[1]))
+	var node0: Node3D = main.landmarks.fig_node()
+	var tree: MultiMeshInstance3D = node0.get_node_or_null("Tree") if node0 != null else null
+	var fig_sp := Uniques.fig_tree(world.planet, TerrainChunk.key_at(f.dir))
 	var sp: PlantSpecies = SpeciesDB.all()[int(fig_sp[0])] if not fig_sp.is_empty() else null
-	ok(sp != null and tall > sp.height_m.y, "the sacred fig stands there, %.0f m tall, past its species' band (to %.0f m; %s)" % [tall, sp.height_m.y if sp else 0.0, sp.binomial() if sp else "no species"])
+	var tall := float(fig_sp[2]) if not fig_sp.is_empty() else 0.0
+	ok(tree != null and tree.multimesh.mesh != null and sp != null and tall > sp.height_m.y, "the sacred fig stands there, %.0f m tall, past its species' band (to %.0f m; %s)" % [tall, sp.height_m.y if sp else 0.0, sp.binomial() if sp else "no species"])
 	var node: Node3D = main.landmarks.fig_node()
 	var body: PlayerBody = node.get_node("Seated/Figure") if node != null and node.has_node("Seated/Figure") else null
 	ok(body != null and body.pose == "meditate", "the figure sits beneath it in meditation")

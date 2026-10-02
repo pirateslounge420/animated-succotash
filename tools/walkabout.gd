@@ -17,7 +17,8 @@ extends SceneTree
 ## with its files, and PASS/FAIL. A species standing in a biome that does
 ## not list it FAILS the site (unlisted_species_allowed). The opening
 ## camp's first frame must be afternoon (the sun above the dusk band).
-## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK).
+## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
+## SITES=fig the sacred fig (§CL).
 ## SITES=opening_camp,random_biome keeps a subset; QUICK=1 one facing and
 ## the first hour (a smoke run). DEV_PIN=0 boots a fresh random world (no
 ## SEED; its frames go under the seed it rolled) and leaves no save:
@@ -112,10 +113,21 @@ func _run() -> void:
 		kinds = kinds.filter(func(k): return only.has(k))
 		if only.has("nests"):
 			kinds.append("nests")
+		if only.has("fig"):
+			kinds.append("fig")
 	for kind in kinds:
 		match str(kind):
 			"nests":
 				sites.append_array(_nest_sites(camp_d))
+			"fig":
+				# The sacred fig (design 1 Oct §CL), seen from the east, 24 m
+				# from the trunk, the figure facing you.
+				var fig := Uniques.sacred_fig(world.planet)
+				if fig.is_empty():
+					lines.append("-- fig: none of its biomes on this planet")
+				else:
+					sites.append({"name": "sacred_fig", "dir": CreatureSpawner._offset(fig.dir, PI * 0.5, 24.0), "look": fig.dir,
+						"note": "the sacred fig in %s, %.0f km from the camp" % [str(fig.biome).to_lower(), CubeSphere.surface_distance_m(fig.dir, camp_d) / 1000.0]})
 			"opening_camp":
 				sites.append({"name": "opening_camp", "dir": camp_d, "spawn_hour": true})
 			"first_road_1km":
@@ -259,8 +271,12 @@ func _nest_sites(camp: Vector3) -> Array:
 		var stand := f
 		var look := f
 		match kind:
-			"cave_mouth", "grotto", "escarpment":
-				stand = CreatureSpawner._offset(f, float(best.toward) + PI, float(best.get("passage_m", best.get("overhang_m", 6.0))) + 14.0)
+			"cave_mouth", "escarpment":
+				# Out on the floor before the shelter, looking in under the roof.
+				stand = CreatureSpawner._offset(f, float(best.toward) + PI, float(best.get("overhang_m", 6.0)) + 5.0)
+			"grotto":
+				# Just outside the mouth, inside its clearing.
+				stand = CreatureSpawner._offset(f, float(best.toward) + PI, float(best.get("passage_m", 14.0)) + 3.5)
 			"cenote", "waterfall", "bioluminescent_bay":
 				if (best.hearth as Vector3) != Vector3.ZERO:
 					stand = best.hearth
@@ -326,10 +342,12 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		var listed := stray == 0
 		if not listed:
 			unlisted += 1
-		var across := listed and not sp.biomes.has(map.biome[cell])
+		var nest_own: int = found[n][3] if (found[n] as Array).size() > 3 else 0
+		var across := listed and nest_own < count and not sp.biomes.has(map.biome[cell])
 		if across:
 			other[n] = true
-		lines.append("   %s%s x%d [%s, %s]%s" % ["" if listed else "UNLISTED HERE: ", n, count, PlantSpecies.Tier.keys()[sp.tier].to_lower(), ", ".join(sp.files), (" (%d of them outside its biomes)" % stray) if stray > 0 else (" (across the boundary, in its own biome)" if across else "")])
+		var at_nest: int = found[n][3] if (found[n] as Array).size() > 3 else 0
+		lines.append("   %s%s x%d [%s, %s]%s%s" % ["" if listed else "UNLISTED HERE: ", n, count, PlantSpecies.Tier.keys()[sp.tier].to_lower(), ", ".join(sp.files), (" (%d of them outside its biomes)" % stray) if stray > 0 else (" (across the boundary, in its own biome)" if across else ""), (" (%d a nest's own, §CM)" % at_nest) if at_nest > 0 else ""])
 	ok(unlisted <= int(W.get("unlisted_species_allowed", 0)), "%s (%s): %d species within %.0f m, %d in a biome that does not list them%s" % [site.name, biome_key, names.size(), within, unlisted, (" (%d across a boundary, in their own biome)" % other.size()) if not other.is_empty() else ""])
 	# The hours and facings.
 	var lon := CubeSphere.longitude(d)
@@ -408,5 +426,25 @@ func _count(out: Dictionary, sp: PlantSpecies, at: Vector3) -> void:
 		out[sp.name] = [sp, 0, 0]
 	out[sp.name][1] += 1
 	var map: PlanetData = world.planet
-	if not sp.biomes.has(map.biome[map.cell_at(world.dir_of(at))]):
-		out[sp.name][2] += 1
+	var d: Vector3 = world.dir_of(at)
+	if not sp.biomes.has(map.biome[map.cell_at(d)]):
+		# A nest's own plant at its spot (design 1 Oct §CM: it grows there
+		# even where the biome's list lacks it) is where it belongs.
+		if _nest_plant(sp, d):
+			if out[sp.name].size() < 4:
+				out[sp.name].append(0)
+			out[sp.name][3] += 1
+		else:
+			out[sp.name][2] += 1
+
+
+## Is `sp` one of a nest's own plants (landforms.json plants.add) at one of
+## its spots, within reach of `d`?
+func _nest_plant(sp: PlantSpecies, d: Vector3) -> bool:
+	for n in Nests.near(d, 40.0):
+		if not (Nests.entry(str(n.kind)).get("plants", {}) as Dictionary).get("add", []).has(sp.binomial()):
+			continue
+		for spot in Nests.plant_spots(n):
+			if CubeSphere.surface_distance_m(spot[0], d) <= float(spot[1]) + 1.5:
+				return true
+	return false

@@ -312,7 +312,7 @@ func _cenote_lip() -> void:
 		var a := TAU * (i + 0.5) / segs
 		# The slope runs down along local -z (the site's heading).
 		var off := absf(wrapf(a - PI * 1.5, -PI, PI))
-		if off < 0.5:
+		if off < 0.65:
 			continue
 		var dir := Vector3(cos(a), 0.0, sin(a))
 		var p := dir * (r - 0.4)
@@ -324,7 +324,7 @@ func _cenote_lip() -> void:
 	for k in 6:
 		var t := float(k) / 5.0
 		var z := -lerpf(r * 0.5, r + float(nest.get("ramp_out_m", 6.0)) * 0.6, t)
-		var x := rng.randf_range(-1.6, 1.6)
+		var x := rng.randf_range(-3.0, 3.0)
 		var s := Vector3(rng.randf_range(0.5, 1.0), rng.randf_range(0.35, 0.6), rng.randf_range(0.5, 0.9))
 		_rock(Vector3(x, ground(x, z) + s.y * 0.35, z), s, Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, 0.0)), 0.05, 0.5)
 

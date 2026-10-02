@@ -245,7 +245,6 @@ static func compute_base(key: Vector3i, map: PlanetData, data: Dictionary) -> Di
 	_place_tier(ctx, T.EMERGENT, plants, hosts)
 	_place_tier(ctx, T.CANOPY, plants, hosts)
 	_place_road_trees(ctx, plants, hosts)
-	_place_sacred_fig(ctx, plants, hosts)
 	# Each tree's light from the crowns over it: its leaf size.
 	_light_pass(plants, _Light.new(data.center, hosts), true)
 	return {"plants": plants, "hosts": hosts}
@@ -267,21 +266,6 @@ static func compute_detail(key: Vector3i, map: PlanetData, data: Dictionary, hos
 	_place_young(ctx, plants, light)
 	_light_pass(plants, light, false)
 	return plants
-
-
-## The sacred fig (design 1 Oct §CL, Uniques): one tree in the world, past
-## the top of its species' band, in the middle of its own clearing.
-static func _place_sacred_fig(ctx: _Context, out: Dictionary, hosts: Array) -> void:
-	var fig := Uniques.fig_tree(ctx.map, ctx.key)
-	if fig.is_empty():
-		return
-	var d: Vector3 = fig[1]
-	var site := ctx.site_at(d)
-	var rng := RandomNumberGenerator.new()
-	rng.seed = hash([d, "sacred_fig"])
-	var h: float = fig[2]
-	_emit(out, int(fig[0]), site.dir, PlanetConst.RADIUS_M + site.h, rng, h, 0.02, 0.2)
-	hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, h, int(fig[0]), site.depth, 1.0, PlantGrowth.Stage.MATURE])
 
 
 ## A nest's own plants (design 1 Oct §CM, landforms.json plants.add): at

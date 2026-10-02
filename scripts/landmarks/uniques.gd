@@ -1,8 +1,9 @@
 class_name Uniques
 ## One-of-a-kind places (design 1 Oct §CL, data/uniques.json): each appears
 ## exactly once in a world. Built so far: the sacred fig, an ancient Ficus
-## religiosa past the top of its species' band (VegetationPlacer grows it,
-## the trees round it kept back), a ring of swept earth under it
+## religiosa past the top of its species' band (drawn by this node with its
+## species' hero tree; VegetationPlacer keeps the trees round it back), a
+## ring of swept earth under it
 ## (TerrainChunk's ground colour), a few flat stones, and beneath it on the
 ## east side of the trunk, facing east, a figure on the shared cloaked rig
 ## (§0) seated cross-legged in meditation in an ochre robe (#CC7722),
@@ -153,6 +154,27 @@ static func build(world: Node, chunks: ChunkManager, f: Dictionary) -> Node3D:
 	# Facing east, away from the trunk (north is local -z here; east +x).
 	holder.basis = Basis.looking_at(Vector3(1.0, 0.0, 0.0), Vector3.UP)
 	BlobShadow.make(holder, 0.5, 0.5)
+	# The tree itself, drawn by this node (one hero-mesh instance at the
+	# trunk, the placer's own tree drawing kept for the stands).
+	var tree := fig_tree(world.planet, TerrainChunk.key_at(f.dir))
+	if not tree.is_empty():
+		var sp: PlantSpecies = SpeciesDB.all()[int(tree[0])]
+		var h: float = tree[2]
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.use_custom_data = true
+		mm.use_colors = true
+		mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, 0)
+		mm.instance_count = 1
+		var tp: Vector3 = inv * world.to_scene(f.dir, PlanetConst.RADIUS_M + chunks.ground_height(f.dir) - 0.3)
+		mm.set_instance_transform(0, Transform3D(Basis.from_scale(Vector3(h, h, h)), tp))
+		mm.set_instance_color(0, Color(1, 1, 1, 1))
+		mm.set_instance_custom_data(0, Color(0.2, 0.0, 0.0, 0.0))
+		var mmi := MultiMeshInstance3D.new()
+		mmi.name = "Tree"
+		mmi.multimesh = mm
+		mmi.material_override = PlantMeshes.material_for(sp)
+		root.add_child(mmi)
 	# A few flat stones on the swept earth.
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([fd, "fig_stones"])
