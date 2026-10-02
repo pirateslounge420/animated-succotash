@@ -123,6 +123,16 @@ static func lit_at(w: Node, d: Vector3, within_m := 30.0) -> bool:
 	return false
 
 
+## The key of the kept old hearth within `within_m` of `d` ("" none).
+static func key_near(d: Vector3, within_m: float) -> String:
+	var saved: Dictionary = WorldSave.data.get("old_hearths", {})
+	for key in saved:
+		var a: Array = (FireStore.stores.get(key, saved[key]) as Dictionary).get("dir", [])
+		if a.size() == 3 and CubeSphere.surface_distance_m(Vector3(float(a[0]), float(a[1]), float(a[2])).normalized(), d) <= within_m:
+			return str(key)
+	return ""
+
+
 ## The old hearths near surface direction `pd`: [dir, kind ("ruin" or
 ## "nest"), ruin node or null] for each uninhabited ruin built now and
 ## each nest holding remains.

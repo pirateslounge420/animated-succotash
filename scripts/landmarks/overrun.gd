@@ -155,6 +155,29 @@ static func clear(site: Dictionary, days: float) -> void:
 	GameLog.add(str(LOG.get("heart_lit", "The fire at the heart caught. Whatever held this place has gone.")), "delve")
 
 
+## The ruin site a saved den id names ({} for a nest's den, or not found).
+static func site_of(map: PlanetData, id: String, e: Dictionary) -> Dictionary:
+	if not id.is_valid_int() or map == null:
+		return {}
+	var a: Array = e.get("dir", [])
+	if a.size() != 3:
+		return {}
+	var d := Vector3(float(a[0]), float(a[1]), float(a[2])).normalized()
+	for s in Ruins.near(map, d, 600.0):
+		if int(s.seed) == int(id):
+			return s
+	return {}
+
+
+## The camp key Camps gives the ruin `site` ("ruin:<its grid cell>").
+static func camp_key(map: PlanetData, site: Dictionary) -> String:
+	for c in CreatureSpawner._cells_around(site.dir, 10.0, Ruins.CELL_M):
+		var r := Ruins.find(map, c)
+		if not r.is_empty() and int(r.seed) == int(site.seed):
+			return "ruin:%s" % str(c)
+	return ""
+
+
 ## Dread fills this many times as fast at `pos` (Dread, at night on the
 ## surface): within night_surface.radius_m of an overrun ruin.
 static func dread_scale(pos: Vector3) -> float:

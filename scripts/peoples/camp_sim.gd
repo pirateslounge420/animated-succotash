@@ -67,6 +67,14 @@ func ensure(key: String, d: Vector3, people_id: String, biome_key: String, seed_
 		# Men and women: the first two one of each, then the roll.
 		var sex := "m" if i == 0 else ("f" if i == 1 else ("m" if rng.randf() < 0.5 else "f"))
 		folk.append({"sex": sex, "stage": "adult", "born": 0.0, "role": "", "seed": rng.randi()})
+	var st := _new_state(key, d, people_id, biome_key, seed_value, folk, n)
+	states[key] = st
+	_seed_fire(st)
+	catch_up(st)
+	return st
+
+
+func _new_state(key: String, d: Vector3, people_id: String, biome_key: String, seed_value: int, folk: Array, n: int) -> Dictionary:
 	var store: Dictionary = SIM.get("store", {})
 	var st := {
 		"key": key, "dir": [d.x, d.y, d.z], "people": people_id, "biome": biome_key, "seed": seed_value,
@@ -77,9 +85,6 @@ func ensure(key: String, d: Vector3, people_id: String, biome_key: String, seed_
 		"met_headman": false, "dry_days": 0.0, "scar": false, "inherits": [], "fire_key": FireStore.key_of(d),
 		"reach_m": float((SIM.get("loop", {}) as Dictionary).get("gather_reach_m", 300.0)), "log": [],
 	}
-	states[key] = st
-	_seed_fire(st)
-	catch_up(st)
 	return st
 
 
@@ -138,6 +143,7 @@ func _process(delta: float) -> void:
 	_time_acc = 0.0
 	for k in states:
 		catch_up(states[k])
+	settlers(world.days)
 
 
 ## Resolve every tick the camp missed up to now.
@@ -638,6 +644,162 @@ func _abandon(st: Dictionary, days: float, why: String) -> void:
 	st.why = why
 	st.folk = []
 	WorldSave.mark_dirty()
+
+
+## Folk come back to a cleared ruin (design 2 Oct §CN, sim.overrun
+## settlers): once the den is cleared (Overrun) and the ruin's surface
+## hearth has burnt for arrive_after_game_h, its survivors come back if it
+## fell within survivors_if_fell_within_game_days (from the camp they fled
+## to), else a few folk walk over from the nearest living camp within
+## else_from_nearest_camp.within_km at camp_at_share_of_cap of its cap or
+## more. Then it is a living camp again (the sim, §BL), its ruin restored
+## (§BQ) and a hearth you can take (§AY); if it goes dark again it is
+## overrun again (relapse).
+func settlers(days: float) -> void:
+	var sv := Overrun.saved()
+	var map: PlanetData = world.get("planet") if world != null else null
+	var sets: Dictionary = Overrun.CAMPS_SIM.get("settlers", {})
+	for id in sv.keys():
+		var e: Dictionary = sv[id]
+		if str(e.get("state", "")) != "cleared":
+			continue
+		var site := Overrun.site_of(map, str(id), e)
+		var key := str(e.get("key", ""))
+		if key == "" and not site.is_empty():
+			key = Overrun.camp_key(map, site)
+			e["key"] = key
+		if key == "":
+			continue
+		# The surface hearth burning: the camp's own fire, or the ruin's
+		# old hearth.
+		var lit := false
+		if states.has(key):
+			var fst: Dictionary = FireStore.stores.get(str(states[key].fire_key), {})
+			lit = str(fst.get("state", "")) in ["flames", "low"]
+		if not lit and not site.is_empty():
+			if not e.has("fire_dir"):
+				var fd := Camps.ruin_fire_dir(map, site)
+				e["fire_dir"] = [fd.x, fd.y, fd.z]
+			var fa: Array = e.fire_dir
+			lit = OldHearths.lit_at(world, Vector3(float(fa[0]), float(fa[1]), float(fa[2])).normalized(), 30.0)
+		if not lit:
+			e.erase("lit_since")
+			continue
+		if not e.has("lit_since"):
+			e["lit_since"] = maxf(days, float(e.get("day", days)))
+			continue
+		if (days - float(e.lit_since)) * 24.0 < float(sets.get("arrive_after_game_h", 12.0)):
+			continue
+		var got := _settlers_for(e, days, str(id))
+		if (got.folk as Array).is_empty():
+			continue
+		var fa2: Array = e.get("fire_dir", e.get("dir", []))
+		var d := Vector3(float(fa2[0]), float(fa2[1]), float(fa2[2])).normalized() if fa2.size() == 3 else _dir_of_den(e)
+		# The hearth that was lit for them is the camp's fire: its own
+		# store, at its own place.
+		var hk := OldHearths.key_near(d, 30.0)
+		if hk != "":
+			var ha: Array = (FireStore.stores.get(hk, (WorldSave.data.get("old_hearths", {}) as Dictionary).get(hk, {})) as Dictionary).get("dir", [])
+			if ha.size() == 3:
+				d = Vector3(float(ha[0]), float(ha[1]), float(ha[2])).normalized()
+		settle(key, d, str(got.people), FireStore.biome_key(world, d), int(id) if str(id).is_valid_int() else hash(id), got.folk, days)
+		e["state"] = "settled"
+		e["settled_day"] = days
+		e.erase("lit_since")
+		WorldSave.mark_dirty()
+		_note_near(d, str(Overrun.LOG.get("settled", "Folk have come to the fire.")), 250.0)
+
+
+func _dir_of_den(e: Dictionary) -> Vector3:
+	var a: Array = e.get("dir", [0, 1, 0])
+	return Vector3(float(a[0]), float(a[1]), float(a[2])).normalized()
+
+
+## Who comes: {"folk": [...], "people"}. Survivors from where they fled,
+## if it fell lately and they are still there; else 2-4 from the nearest
+## camp near its ceiling; else nobody yet.
+func _settlers_for(e: Dictionary, days: float, id: String) -> Dictionary:
+	var sets: Dictionary = Overrun.CAMPS_SIM.get("settlers", {})
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([id, int(days), "settlers"])
+	var fell := float(e.get("fell", -1.0))
+	if fell >= 0.0 and days - fell <= float(sets.get("survivors_if_fell_within_game_days", 30)):
+		var src: Dictionary = states.get(str(e.get("went_to", "")), {})
+		if not src.is_empty() and str(src.get("state", "")) == "living":
+			var n := mini(int(e.get("survivors", 0)), (src.folk as Array).size() - 1)
+			if n > 0:
+				return {"folk": _take_folk(src, n), "people": str(e.get("people", src.people))}
+	var near: Dictionary = sets.get("else_from_nearest_camp", {})
+	var d := _dir_of_den(e)
+	var best := {}
+	var best_m := float(near.get("within_km", 40)) * 1000.0
+	for k in states:
+		var o: Dictionary = states[k]
+		if str(o.get("state", "")) != "living":
+			continue
+		if float(folk_count(o)) < float(near.get("camp_at_share_of_cap", 0.6)) * float(cap(o)):
+			continue
+		var dm := CubeSphere.surface_distance_m(d, _dir(o))
+		if dm < best_m:
+			best_m = dm
+			best = o
+	if best.is_empty():
+		return {"folk": [], "people": ""}
+	var fb = near.get("folk", [2, 4])
+	var n2 := mini(rng.randi_range(int(fb[0]), int(fb[1])), folk_count(best) - 1)
+	return {"folk": _take_folk(best, n2) if n2 > 0 else [], "people": str(best.people)}
+
+
+## `n` folk leave camp `src` (adults first).
+func _take_folk(src: Dictionary, n: int) -> Array:
+	var out: Array = []
+	var folk: Array = src.folk
+	for i in range(folk.size() - 1, -1, -1):
+		if out.size() >= n:
+			break
+		if is_adult(folk[i]):
+			out.append(folk[i])
+			folk.remove_at(i)
+	for f in out:
+		f.role = ""
+	return out
+
+
+## A camp begun now by `folk` at `key` (§CN: folk come back): a living
+## state timed from today (not caught up from the world's start), its fire
+## the hearth that was lit for them, tended now.
+func settle(key: String, d: Vector3, people_id: String, biome_key: String, seed_value: int, folk: Array, days: float) -> Dictionary:
+	var st: Dictionary = states.get(key, {})
+	if st.is_empty():
+		st = _new_state(key, d, people_id, biome_key, seed_value, folk, folk.size())
+		st.born_day = days
+		st.last_birth = days
+		states[key] = st
+	st.folk = folk
+	st.people = people_id
+	st.state = "living"
+	st.blood = false
+	st.why = ""
+	st.overrun = false
+	st.fire_low_nights = 0
+	st.food_short_days = 0.0
+	st.food = maxf(float(st.get("food", 0.0)), float(folk.size()) * 2.0)
+	st.wood = maxf(float(st.get("wood", 0.0)), 4.0)
+	st.last_tick = days
+	st.erase("abandoned_day")
+	var fst: Dictionary = FireStore.stores.get(str(st.fire_key), {})
+	if not fst.is_empty():
+		fst["tended"] = true
+	WorldSave.mark_dirty()
+	return st
+
+
+func _note_near(d: Vector3, text: String, within_m: float) -> void:
+	if world == null or Torch.instance == null or not is_instance_valid(Torch.instance) or Torch.instance.player == null:
+		return
+	var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + world.surface_elevation(d))
+	if at.distance_to(Torch.instance.player.global_position) < within_m:
+		GameLog.add(text, "camp")
 
 
 ## Survivors may come back to a relit fire: an abandoned camp whose fire

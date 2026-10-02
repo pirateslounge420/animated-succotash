@@ -343,7 +343,8 @@ func _refresh() -> void:
 	for c in ruins:
 		var node: Node3D = ruins[c]
 		var site: Dictionary = node.get_meta("site")
-		if not Ruins.inhabited(site):
+		# (A cleared ruin folk have come back to is lived in: §CN.)
+		if not Ruins.inhabited(site) and not Overrun.settled(site):
 			continue
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
 		if spot.distance_to(pp) < BUILD_M:
@@ -422,6 +423,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	# biome: palette, shelter, props, the folk kind's build.
 	var nest := Nests.by_key(key)
 	var people_id := str(nest.get("people", "")) if not nest.is_empty() else Peoples.pick(map, chunks.rivers, d, "cliff" if key.begins_with("cliff") else "ruin")
+	# Folk who came to a cleared ruin (§CN) are who they are.
+	if CampSim.instance != null and CampSim.instance.states.has(key) and str(CampSim.instance.states[key].get("people", "")) != "":
+		people_id = str(CampSim.instance.states[key].people)
 	if people_id == "":
 		people_id = Peoples.pick(map, chunks.rivers, d, "nest", nest)
 	var people := Peoples.get_people(people_id)
