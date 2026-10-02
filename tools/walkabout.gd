@@ -239,14 +239,22 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	var unlisted := 0
 	var names: Array = found.keys()
 	names.sort()
+	var other := {}
 	for n in names:
 		var sp: PlantSpecies = found[n][0]
 		var count: int = found[n][1]
-		var listed := sp.biomes.has(map.biome[cell])
+		var stray: int = found[n][2]
+		# Unlisted: standing in a cell whose biome does not list it. Listed
+		# where it stands but not in your own cell's biome: the next
+		# biome over, within reach across the boundary.
+		var listed := stray == 0
 		if not listed:
 			unlisted += 1
-		lines.append("   %s%s x%d [%s, %s]" % ["" if listed else "UNLISTED HERE: ", n, count, PlantSpecies.Tier.keys()[sp.tier].to_lower(), ", ".join(sp.files)])
-	ok(unlisted <= int(W.get("unlisted_species_allowed", 0)), "%s (%s): %d species within %.0f m, %d in a biome that does not list them" % [site.name, biome_key, names.size(), within, unlisted])
+		var across := listed and not sp.biomes.has(map.biome[cell])
+		if across:
+			other[n] = true
+		lines.append("   %s%s x%d [%s, %s]%s" % ["" if listed else "UNLISTED HERE: ", n, count, PlantSpecies.Tier.keys()[sp.tier].to_lower(), ", ".join(sp.files), (" (%d of them outside its biomes)" % stray) if stray > 0 else (" (across the boundary, in its own biome)" if across else "")])
+	ok(unlisted <= int(W.get("unlisted_species_allowed", 0)), "%s (%s): %d species within %.0f m, %d in a biome that does not list them%s" % [site.name, biome_key, names.size(), within, unlisted, (" (%d across a boundary, in their own biome)" % other.size()) if not other.is_empty() else ""])
 	# The hours and facings.
 	var lon := CubeSphere.longitude(d)
 	var lat := CubeSphere.latitude(d)
@@ -291,8 +299,9 @@ func _species_within(center: Vector3, r: float) -> Dictionary:
 		if chunk.global_position.distance_to(center) > r + 400.0:
 			continue
 		for i in chunk.trees.size():
-			if chunk.tree_base(i).distance_to(center) <= r:
-				_count(out, all[int(chunk.trees[i][2])])
+			var tb := chunk.tree_base(i)
+			if tb.distance_to(center) <= r:
+				_count(out, all[int(chunk.trees[i][2])], tb)
 		if chunk.detail_node == null:
 			continue
 		for n in chunk.detail_node.get_children():
@@ -308,13 +317,20 @@ func _species_within(center: Vector3, r: float) -> Dictionary:
 					break
 				var base := mmi.global_transform * Vector3(buf[j + 3], buf[j + 7], buf[j + 11])
 				if base.distance_to(center) <= r:
-					_count(out, sp)
+					_count(out, sp, base)
 
 
 	return out
 
 
-func _count(out: Dictionary, sp: PlantSpecies) -> void:
+## Counts a plant, and whether it stands where its biome is: the gate
+## judges each plant by its own cell (VegetationPlacer: a site's biome is
+## its cell's), so near a boundary the 30 m round you holds both biomes'
+## plants. [species, count, count outside a biome that lists it].
+func _count(out: Dictionary, sp: PlantSpecies, at: Vector3) -> void:
 	if not out.has(sp.name):
-		out[sp.name] = [sp, 0]
+		out[sp.name] = [sp, 0, 0]
 	out[sp.name][1] += 1
+	var map: PlanetData = world.planet
+	if not sp.biomes.has(map.biome[map.cell_at(world.dir_of(at))]):
+		out[sp.name][2] += 1
