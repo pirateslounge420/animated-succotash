@@ -127,6 +127,9 @@ var _lamps: Array = []
 ## frame and this one (base_e - the layout's base_e), for make_node.
 var _delve: Dictionary = {}
 var _delve_off := 0.0
+## The delve's inside, vertices [_delve_from, _delve_to): drawn per pixel.
+var _delve_from := -1
+var _delve_to := -1
 ## Ivy strand tops [top, out, length] (local), for the vine species' cards.
 var _vine_anchors: Array = []
 ## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
@@ -160,6 +163,22 @@ static func material() -> ShaderMaterial:
 		_material.shader = preload("res://shaders/ruin.gdshader")
 		Look.register(_material)
 	return _material
+
+
+## The same stone lit per pixel, for a delve's insides (design 1 Oct §CJ):
+## lit only by your torch and a hearth, its big slabs would get the light
+## only at their corners with the ruins' vertex lighting.
+static var _material_lit: ShaderMaterial = null
+
+
+static func material_lit() -> ShaderMaterial:
+	if _material_lit == null:
+		var sh := Shader.new()
+		sh.code = (preload("res://shaders/ruin.gdshader") as Shader).code.replace("vertex_lighting, ", "")
+		_material_lit = ShaderMaterial.new()
+		_material_lit.shader = sh
+		Look.register(_material_lit)
+	return _material_lit
 
 
 ## Build a ruin's geometry. Pure and thread-safe (reads the planet data
@@ -207,7 +226,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -256,8 +275,39 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	arrays[Mesh.ARRAY_NORMAL] = data.n
 	arrays[Mesh.ARRAY_COLOR] = data.c
 	arrays[Mesh.ARRAY_TEX_UV] = data.m
+	# A delve's inside (§CJ) goes into a mesh of its own, lit per pixel.
+	var d0 := int(data.get("delve_from", -1))
+	var d1 := int(data.get("delve_to", -1))
+	if d0 >= 0 and d1 > d0:
+		var sub := []
+		sub.resize(Mesh.ARRAY_MAX)
+		sub[Mesh.ARRAY_VERTEX] = (data.v as PackedVector3Array).slice(d0, d1)
+		sub[Mesh.ARRAY_NORMAL] = (data.n as PackedVector3Array).slice(d0, d1)
+		sub[Mesh.ARRAY_COLOR] = (data.c as PackedColorArray).slice(d0, d1)
+		sub[Mesh.ARRAY_TEX_UV] = (data.m as PackedVector2Array).slice(d0, d1)
+		var dm := ArrayMesh.new()
+		dm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, sub)
+		var dmi := MeshInstance3D.new()
+		dmi.name = "Delve"
+		dmi.mesh = dm
+		dmi.material_override = material_lit()
+		dmi.visibility_range_end = LOD_M
+		dmi.visibility_range_end_margin = LOD_MARGIN_M
+		root.add_child(dmi)
+		var v2 := (data.v as PackedVector3Array).slice(0, d0)
+		v2.append_array((data.v as PackedVector3Array).slice(d1))
+		var n2 := (data.n as PackedVector3Array).slice(0, d0)
+		n2.append_array((data.n as PackedVector3Array).slice(d1))
+		var c2 := (data.c as PackedColorArray).slice(0, d0)
+		c2.append_array((data.c as PackedColorArray).slice(d1))
+		var m2 := (data.m as PackedVector2Array).slice(0, d0)
+		m2.append_array((data.m as PackedVector2Array).slice(d1))
+		arrays[Mesh.ARRAY_VERTEX] = v2
+		arrays[Mesh.ARRAY_NORMAL] = n2
+		arrays[Mesh.ARRAY_COLOR] = c2
+		arrays[Mesh.ARRAY_TEX_UV] = m2
 	# (A nest with nothing to build, a waterfall or a bay, has no mesh.)
-	if not (data.v as PackedVector3Array).is_empty():
+	if not (arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array).is_empty():
 		var mesh := ArrayMesh.new()
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		var mi := MeshInstance3D.new()
@@ -2782,8 +2832,10 @@ func _delve_build() -> void:
 	while zz < zb:
 		_shelters.append([Vector3(0.0, ground(0.0, zz), zz), 1.2, 2.2])
 		zz += 1.6
-	# Below.
-	shade = 0.3
+	# Below: no baked shade (the dark is the light's absence there; the
+	# torch should find the stone, not a stone painted dark).
+	shade = 0.0
+	_delve_from = _v.size()
 	var pieces: Array = lay.pieces
 	var s2: float = lay.s2
 	for i in pieces.size():
@@ -2803,6 +2855,7 @@ func _delve_build() -> void:
 					opens.append(_opening(pc, nxt.c, float(nxt.half)))
 				_delve_room(pc, off, opens)
 	_delve_dress(lay, off)
+	_delve_to = _v.size()
 	if not (lay.cairn as Dictionary).is_empty():
 		_cairn(lay, off)
 	shade = 0.0
@@ -2933,19 +2986,33 @@ func _pave_piece(pc: Dictionary, off: float) -> void:
 ## Flagstones over `r` (x/z), their tops at `y` (NAN: on the ground at
 ## each), with collision.
 func _pave(r: Rect2, y: float) -> void:
-	var nx := maxi(1, int(ceil(r.size.x / 1.3)))
-	var nz := maxi(1, int(ceil(r.size.y / 1.3)))
+	var nx := maxi(1, int(ceil(r.size.x / 1.1)))
+	var nz := maxi(1, int(ceil(r.size.y / 1.1)))
 	var sx := r.size.x / nx
 	var sz := r.size.y / nz
 	var was := shade
-	shade = maxf(shade, 0.35)
+	shade = maxf(shade, 0.1)
 	for j in nz:
 		for i in nx:
 			var cx := r.position.x + (i + 0.5) * sx
 			var cz := r.position.y + (j + 0.5) * sz
-			var top := y if not is_nan(y) else ground(cx, cz) + 0.03
-			var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.05, 0.2))
-			box(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.02, 0.02)), Vector3(cx, top - 0.15, cz)), Vector3(sx + 0.02, 0.3, sz + 0.02), col, _growth(0.05), 0.04, 0.02)
+			var top := y
+			var depth := 0.3
+			if is_nan(y):
+				# On the ground: the flag's top at its patch's highest point,
+				# deep enough to meet its lowest (the ground never shows
+				# through, nor a gap under it).
+				var hi := -INF
+				var lo := INF
+				for dx: float in [-0.5, 0.0, 0.5]:
+					for dz: float in [-0.5, 0.0, 0.5]:
+						var g := ground(cx + dx * sx, cz + dz * sz)
+						hi = maxf(hi, g)
+						lo = minf(lo, g)
+				top = hi + 0.04
+				depth = top - lo + 0.25
+			var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.0, 0.12))
+			box(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.02, 0.02)), Vector3(cx, top - depth * 0.5, cz)), Vector3(sx + 0.02, depth, sz + 0.02), col, _growth(0.05), 0.04, 0.02)
 	shade = was
 
 
