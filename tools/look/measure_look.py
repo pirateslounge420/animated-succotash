@@ -11,6 +11,11 @@ PASS/CHECK against the band. Also the sky share of the whole frame (blue sky or 
 cloud pixels): the §AJ 4 see-through test, on a frame looking straight up
 through a crown (tools/species_row.gd UP=1), should read canopy.gap ± 0.1. Run it on the batch3 frames to see what the targets came from:
     python3 tools/look/measure_look.py --day docs/references/batch3/*.jpg
+--fav also places the frame among Mike's 20 favourite reference frames (docs/references/batch4,
+measured into its measurements.json with this same code): each number against the favourites'
+range and median for the band, the frame's blue / green / warm shares (saturated pixels by hue),
+and the nearest favourite to open side by side. The current targets are untouched by it:
+    python3 tools/look/measure_look.py --fav --day my_frame.png
 """
 import json, os, re, sys
 import numpy as np
@@ -18,6 +23,43 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TARGETS = json.load(open(os.path.join(ROOT, "data", "look.json")))["retro"]["targets"]
+FAV_PATH = os.path.join(ROOT, "docs", "references", "batch4", "measurements.json")
+
+
+def hue_shares(a):
+    """Shares of the frame that are saturated (HSV saturation over 0.35) blue (hue 195-265),
+    green (75-195) and warm (330-60): the favourites' frames are about a third blue, a third
+    green and a tenth warm by day, and 84 % blue at night (docs/design/LOOK_REFERENCE.md)."""
+    a = a.reshape(-1, 3)
+    r, g, b = a[:, 0], a[:, 1], a[:, 2]
+    mx, mn = a.max(-1), a.min(-1)
+    d = np.maximum(mx - mn, 1e-6)
+    h = np.where(mx == r, ((g - b) / d) % 6, np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) * 60
+    s = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0) > 0.35
+    return (float(((h >= 195) & (h <= 265) & s).mean()), float(((h >= 75) & (h < 195) & s).mean()),
+            float((((h <= 60) | (h >= 330)) & s).mean()))
+
+
+def fav_report(which, vals):
+    """Where this frame sits among the favourites of its band, and the nearest one."""
+    if not os.path.exists(FAV_PATH):
+        print("  (no %s)" % os.path.relpath(FAV_PATH, ROOT))
+        return
+    rows = [r for r in json.load(open(FAV_PATH))["rows"] if r["band"] == which]
+    if not rows:
+        return
+    print("  vs the favourites (%s: %d frames, docs/references/batch4)" % (which, len(rows)))
+    for k, label in (("mean_luma", "mean luma"), ("mean_saturation", "mean saturation"),
+                     ("texel_detail", "texel detail"), ("darkest_5pct_luma", "darkest 5% luma"),
+                     ("share_blue", "blue share"), ("share_green", "green share"), ("share_warm", "warm share")):
+        fv = sorted(r[k] for r in rows)
+        v = vals[k]
+        print("    %-16s %.3f  favourites %.3f-%.3f, median %.3f; higher than %d of %d"
+              % (label, v, fv[0], fv[-1], float(np.median(fv)), sum(1 for x in fv if x < v), len(fv)))
+    keys = ("mean_luma", "mean_saturation", "darkest_5pct_luma", "share_blue", "share_green", "share_warm")
+    sd = {k: max(float(np.std([r[k] for r in rows])), 1e-3) for k in keys}
+    best = min(rows, key=lambda r: sum(((r[k] - vals[k]) / sd[k]) ** 2 for k in keys))
+    print("    nearest favourite: %s (open it side by side)" % best["file"])
 
 
 def band_for(path, forced):
@@ -53,10 +95,13 @@ def band(v, lo_hi):
 
 
 forced = None
+fav = False
 args = []
 for arg in sys.argv[1:]:
     if arg in ("--day", "--night"):
         forced = arg[2:]
+    elif arg == "--fav":
+        fav = True
     else:
         args.append(arg)
 for path in args:
@@ -90,3 +135,7 @@ for path in args:
     print("  ground (low 38%%) %s" % dom(a[int(H * 0.62):]))
     if green.sum() > 500:
         print("  grass pixels     %s" % dom(lower[green]))
+    if fav:
+        sb, sg, sw = hue_shares(a)
+        fav_report(which, {"mean_luma": ml, "mean_saturation": ms, "texel_detail": tex, "darkest_5pct_luma": dl,
+                           "share_blue": sb, "share_green": sg, "share_warm": sw})

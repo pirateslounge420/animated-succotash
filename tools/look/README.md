@@ -10,6 +10,9 @@
 - `measure_look.py` — frame statistics of any screenshot against `look.retro.targets`
   (mean luma, saturation, navy-not-black shadows, grass share, dominant colours). The
   targets were measured from `docs/references/batch3/`; run it on those to see why.
+  `--fav` also places the frame among Mike's 20 favourites (`docs/references/batch4/`,
+  measured into its `measurements.json` with this same code) and names the nearest one to
+  open side by side; `docs/design/LOOK_REFERENCE.md` says what the numbers mean.
 
 - `make_plant_tiles.py` — per-species leaf cutout, autumn variant, foliage mass, bark tile
   and (Amorphophallus) petiole, rendered from each entry's `leaf` / `bark` / `tint` / `aroid`

@@ -918,6 +918,39 @@ legibility return together, and an abandoned camp is taken back the same way. Dr
 leaf cards on strands with the species' own tile (no blobs, §CA), following the surface,
 never floating; at distance the surface's own texture greens by its cover.
 
+## CF. The twenty favourites are the look's reference — FINDINGS (1 Oct, evening; five calls open for Mike)
+
+Mike picked twenty favourite frames while honing the look. They're
+`docs/references/batch4/`. What they show, measured, is in `docs/design/LOOK_REFERENCE.md`:
+the eye test for his next play, ten rules with the frames and numbers behind them, the
+composition rules for the landmark and road pass, the favourites against
+`retro.targets`, what the 1 Oct look pass built and what's still open. **Not locked:** the
+look pass already built most of it, and where the favourites and §BU disagree, §BU stands
+until Mike answers.
+
+What the favourites add to §BU and the look pass:
+- **The shot is the biggest gap.** In 14 of the 18 landscapes, a path or water runs
+  straight to a landmark on the skyline, between walls of trees or slopes. The rules for
+  placing ruins, camps and stones along the roads are under "Composition" in
+  LOOK_REFERENCE.
+- **Darker by day than §BU's target.** Day luma median 0.21 (7 of 8 frames under 0.26) at
+  saturation 0.68. Night luma 0.17 at saturation 0.80, up to 0.87, so the game's night
+  saturation (0.87) is inside them.
+- **Clean edges, big texels.** Silhouettes against the sky are smooth. The blockiness is on
+  the surfaces, at roughly 10–27 texels a metre (the look pass set 16).
+- **Shade takes the scene's colour.** Olive in the green day frames (4 of 8), navy in the
+  blue ones, black only under a closed crown at night.
+
+The open calls (listed in LOOK_REFERENCE):
+1. Day brightness: ~0.22 vs §BU's ~0.31.
+2. The night band to ~0.88, with the night palette kept rather than greyed.
+3. 480 vs 540 lines, now that the tiles are 16 a metre.
+4. Olive darks taken out of the day gate's blue/red test.
+5. A one-pixel sharpen for the dark rim against the sky.
+
+The tool: `tools/look/measure_look.py --fav` places a frame among the favourites and names
+the nearest one. `retro.targets` is unchanged.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,

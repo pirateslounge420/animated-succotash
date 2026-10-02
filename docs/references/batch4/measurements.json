@@ -1,0 +1,727 @@
+{
+ "_about": "Mike's 20 favourite reference frames (1 Oct 2026), measured with tools/look/measure_look.py's own formulas (mean_luma Rec.601, mean_saturation (max-min)/max, texel_detail, the darkest 5 %, the grass share of the lower half, the sky share) plus hue_shares (saturated blue / green / warm). Each frame is measured on a crop that also drops what Instagram draws over the video (the header, the side icons); the committed .jpg files are the whole video frame. band: day, night, or character (interiors and figures, kept out of the bands). vs_current_targets compares with data/look.json retro.targets as they stood at commit df01e39 (in / below / above). summary: min, median and max per band. `measure_look.py --fav` reads this file. Read docs/design/LOOK_REFERENCE.md for what the numbers mean.",
+ "rows": [
+  {
+   "n": 1,
+   "file": "1_chapel_wheat_path.jpg",
+   "source": "IMG_4874",
+   "band": "day",
+   "mean_luma": 0.369,
+   "mean_saturation": 0.745,
+   "texel_detail": 0.0191,
+   "darkest_5pct_luma": 0.079,
+   "darkest_5pct_colour": "#0301A3",
+   "darkest_5pct_blue_over_red": 62.1,
+   "grass_share_of_lower_half": 0.08,
+   "sky_share": 0.29,
+   "darkest_15pct_colour": "#0000D7",
+   "brightest_10pct_colour": "#E49447",
+   "share_blue": 0.314,
+   "share_green": 0.054,
+   "share_warm": 0.559,
+   "sky_top_dominant": "#0000E3(42%) #0000C8(36%) #3E59DA(20%)",
+   "ground_low_dominant": "#6E501F(42%) #A06D2F(29%) #D18840(27%)",
+   "vs_current_targets": {
+    "mean_luma": "above",
+    "mean_saturation": "above",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "below"
+   }
+  },
+  {
+   "n": 2,
+   "file": "2_stone_gate_meadow_circle.jpg",
+   "source": "IMG_4894",
+   "band": "day",
+   "mean_luma": 0.246,
+   "mean_saturation": 0.721,
+   "texel_detail": 0.0138,
+   "darkest_5pct_luma": 0.067,
+   "darkest_5pct_colour": "#010481",
+   "darkest_5pct_blue_over_red": 128.8,
+   "grass_share_of_lower_half": 0.79,
+   "sky_share": 0.31,
+   "darkest_15pct_colour": "#010095",
+   "brightest_10pct_colour": "#5F8FEC",
+   "share_blue": 0.393,
+   "share_green": 0.514,
+   "share_warm": 0.034,
+   "sky_top_dominant": "#0000B6(40%) #0D1ED8(34%) #4172D7(24%)",
+   "ground_low_dominant": "#1A3B14(44%) #305218(33%) #3E6527(21%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "above",
+    "texel_detail": "below",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 3,
+   "file": "3_cottage_on_hill_path.jpg",
+   "source": "IMG_4897",
+   "band": "day",
+   "mean_luma": 0.229,
+   "mean_saturation": 0.598,
+   "texel_detail": 0.015,
+   "darkest_5pct_luma": 0.036,
+   "darkest_5pct_colour": "#090A08",
+   "darkest_5pct_blue_over_red": 1.0,
+   "grass_share_of_lower_half": 0.44,
+   "sky_share": 0.21,
+   "darkest_15pct_colour": "#0A1008",
+   "brightest_10pct_colour": "#6F94E0",
+   "share_blue": 0.396,
+   "share_green": 0.382,
+   "share_warm": 0.1,
+   "sky_top_dominant": "#4662C8(47%) #1D2B8B(29%) #7E92E0(22%)",
+   "ground_low_dominant": "#182311(43%) #293E18(36%) #4A5D2F(19%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "below",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 4,
+   "file": "4_graveyard_pond_valley.jpg",
+   "source": "IMG_4892",
+   "band": "day",
+   "mean_luma": 0.201,
+   "mean_saturation": 0.691,
+   "texel_detail": 0.0195,
+   "darkest_5pct_luma": 0.058,
+   "darkest_5pct_colour": "#020852",
+   "darkest_5pct_blue_over_red": 40.0,
+   "grass_share_of_lower_half": 0.43,
+   "sky_share": 0.17,
+   "darkest_15pct_colour": "#030D4F",
+   "brightest_10pct_colour": "#5075D5",
+   "share_blue": 0.58,
+   "share_green": 0.362,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#07148D(48%) #5B81DD(26%) #2147A3(24%)",
+   "ground_low_dominant": "#1F4127(50%) #0E1F41(31%) #355F3C(18%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 5,
+   "file": "5_castle_forest_path.jpg",
+   "source": "IMG_4917",
+   "band": "day",
+   "mean_luma": 0.193,
+   "mean_saturation": 0.62,
+   "texel_detail": 0.014,
+   "darkest_5pct_luma": 0.056,
+   "darkest_5pct_colour": "#0D0E13",
+   "darkest_5pct_blue_over_red": 1.5,
+   "grass_share_of_lower_half": 0.26,
+   "sky_share": 0.18,
+   "darkest_15pct_colour": "#0A1116",
+   "brightest_10pct_colour": "#4282C7",
+   "share_blue": 0.313,
+   "share_green": 0.393,
+   "share_warm": 0.165,
+   "sky_top_dominant": "#163770(38%) #3F8ACE(31%) #050C79(30%)",
+   "ground_low_dominant": "#1E231F(44%) #323C29(34%) #455E38(21%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "below",
+    "grass_share_of_lower_half": "below"
+   }
+  },
+  {
+   "n": 6,
+   "file": "6_jungle_canal_bridge_troll.jpg",
+   "source": "IMG_4918",
+   "band": "day",
+   "mean_luma": 0.184,
+   "mean_saturation": 0.66,
+   "texel_detail": 0.0183,
+   "darkest_5pct_luma": 0.046,
+   "darkest_5pct_colour": "#0B0C09",
+   "darkest_5pct_blue_over_red": 0.8,
+   "grass_share_of_lower_half": 0.39,
+   "sky_share": 0.02,
+   "darkest_15pct_colour": "#0E130A",
+   "brightest_10pct_colour": "#487640",
+   "share_blue": 0.24,
+   "share_green": 0.52,
+   "share_warm": 0.08,
+   "sky_top_dominant": "#121D12(47%) #214528(35%) #417461(17%)",
+   "ground_low_dominant": "#1A3A47(44%) #0F2734(36%) #395D3E(19%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "below",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 7,
+   "file": "7_waterfall_grotto_pool.jpg",
+   "source": "IMG_4891",
+   "band": "day",
+   "mean_luma": 0.18,
+   "mean_saturation": 0.754,
+   "texel_detail": 0.016,
+   "darkest_5pct_luma": 0.052,
+   "darkest_5pct_colour": "#020B37",
+   "darkest_5pct_blue_over_red": 22.7,
+   "grass_share_of_lower_half": 0.09,
+   "sky_share": 0.17,
+   "darkest_15pct_colour": "#030F24",
+   "brightest_10pct_colour": "#3A7D92",
+   "share_blue": 0.684,
+   "share_green": 0.314,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#091D2F(49%) #14334A(27%) #29577A(22%)",
+   "ground_low_dominant": "#040E7D(43%) #133163(35%) #316D6C(20%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "above",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "below"
+   }
+  },
+  {
+   "n": 8,
+   "file": "8_lizard_cook_campfire.jpg",
+   "source": "IMG_4893",
+   "band": "day",
+   "mean_luma": 0.226,
+   "mean_saturation": 0.614,
+   "texel_detail": 0.0226,
+   "darkest_5pct_luma": 0.039,
+   "darkest_5pct_colour": "#0F070C",
+   "darkest_5pct_blue_over_red": 0.8,
+   "grass_share_of_lower_half": 0.17,
+   "sky_share": 0.0,
+   "darkest_15pct_colour": "#120E0C",
+   "brightest_10pct_colour": "#A68E47",
+   "share_blue": 0.017,
+   "share_green": 0.285,
+   "share_warm": 0.553,
+   "sky_top_dominant": "#191C12(43%) #25341E(39%) #435B32(17%)",
+   "ground_low_dominant": "#271D10(49%) #4F4B1C(26%) #887E3B(23%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "below",
+    "grass_share_of_lower_half": "below"
+   }
+  },
+  {
+   "n": 9,
+   "file": "9_moonlit_rotunda_on_hill.jpg",
+   "source": "IMG_4877",
+   "band": "night",
+   "mean_luma": 0.19,
+   "mean_saturation": 0.811,
+   "texel_detail": 0.0099,
+   "darkest_5pct_luma": 0.075,
+   "darkest_5pct_colour": "#02087C",
+   "darkest_5pct_blue_over_red": 65.7,
+   "grass_share_of_lower_half": 0.11,
+   "sky_share": 0.41,
+   "darkest_15pct_colour": "#0000BC",
+   "brightest_10pct_colour": "#3D78E5",
+   "share_blue": 0.735,
+   "share_green": 0.264,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#0000E2(47%) #0000C0(43%) #263CD3(9%)",
+   "ground_low_dominant": "#173C3B(52%) #24517A(27%) #12313F(20%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "above",
+    "texel_detail": "below",
+    "darkest_5pct_luma": "above",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 10,
+   "file": "10_river_to_stone_doorway.jpg",
+   "source": "IMG_4875",
+   "band": "night",
+   "mean_luma": 0.288,
+   "mean_saturation": 0.727,
+   "texel_detail": 0.0108,
+   "darkest_5pct_luma": 0.057,
+   "darkest_5pct_colour": "#041219",
+   "darkest_5pct_blue_over_red": 6.1,
+   "grass_share_of_lower_half": 0.01,
+   "sky_share": 0.39,
+   "darkest_15pct_colour": "#06171C",
+   "brightest_10pct_colour": "#64D4F9",
+   "share_blue": 0.563,
+   "share_green": 0.432,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#06171A(47%) #0C2325(31%) #18383D(20%)",
+   "ground_low_dominant": "#122DC3(44%) #3A80E3(31%) #5FCEF8(23%)",
+   "vs_current_targets": {
+    "mean_luma": "above",
+    "mean_saturation": "in",
+    "texel_detail": "below",
+    "darkest_5pct_luma": "above",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 11,
+   "file": "11_night_forest_river_corridor.jpg",
+   "source": "IMG_4928",
+   "band": "night",
+   "mean_luma": 0.156,
+   "mean_saturation": 0.872,
+   "texel_detail": 0.0085,
+   "darkest_5pct_luma": 0.046,
+   "darkest_5pct_colour": "#020B29",
+   "darkest_5pct_blue_over_red": 17.7,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.35,
+   "darkest_15pct_colour": "#030F30",
+   "brightest_10pct_colour": "#2452EE",
+   "share_blue": 0.987,
+   "share_green": 0.013,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#0B1F58(58%) #1F46A2(23%) #02096B(17%)",
+   "ground_low_dominant": "#102A85(47%) #05119E(34%) #1E479F(17%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "above",
+    "texel_detail": "below",
+    "darkest_5pct_luma": "above",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 12,
+   "file": "12_gnarled_forest_glowing_river.jpg",
+   "source": "IMG_4906",
+   "band": "night",
+   "mean_luma": 0.132,
+   "mean_saturation": 0.717,
+   "texel_detail": 0.0103,
+   "darkest_5pct_luma": 0.016,
+   "darkest_5pct_colour": "#01040A",
+   "darkest_5pct_blue_over_red": 10.5,
+   "grass_share_of_lower_half": 0.22,
+   "sky_share": 0.08,
+   "darkest_15pct_colour": "#020A0E",
+   "brightest_10pct_colour": "#224DA0",
+   "share_blue": 0.461,
+   "share_green": 0.534,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#061427(46%) #0F2834(30%) #1D4344(22%)",
+   "ground_low_dominant": "#132A1D(42%) #091912(41%) #1F423D(15%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "in",
+    "texel_detail": "below",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 13,
+   "file": "13_giant_trees_lit_path_stream.jpg",
+   "source": "IMG_4915",
+   "band": "night",
+   "mean_luma": 0.127,
+   "mean_saturation": 0.636,
+   "texel_detail": 0.0222,
+   "darkest_5pct_luma": 0.0,
+   "darkest_5pct_colour": "#000000",
+   "darkest_5pct_blue_over_red": 0.2,
+   "grass_share_of_lower_half": 0.02,
+   "sky_share": 0.05,
+   "darkest_15pct_colour": "#000100",
+   "brightest_10pct_colour": "#5D6A92",
+   "share_blue": 0.399,
+   "share_green": 0.255,
+   "share_warm": 0.118,
+   "sky_top_dominant": "#010305(50%) #0C141A(29%) #2C364B(19%)",
+   "ground_low_dominant": "#0D130C(46%) #2B3225(34%) #647383(18%)",
+   "vs_current_targets": {
+    "mean_luma": "below",
+    "mean_saturation": "below",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "below",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 14,
+   "file": "14_blue_falls_bridges_moon.jpg",
+   "source": "IMG_4878",
+   "band": "night",
+   "mean_luma": 0.153,
+   "mean_saturation": 0.799,
+   "texel_detail": 0.0301,
+   "darkest_5pct_luma": 0.006,
+   "darkest_5pct_colour": "#010108",
+   "darkest_5pct_blue_over_red": 7.8,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.18,
+   "darkest_15pct_colour": "#000019",
+   "brightest_10pct_colour": "#5D88E0",
+   "share_blue": 0.961,
+   "share_green": 0.008,
+   "share_warm": 0.003,
+   "sky_top_dominant": "#000024(48%) #000032(25%) #0C1769(25%)",
+   "ground_low_dominant": "#071036(47%) #26407C(28%) #5D88D0(24%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 15,
+   "file": "15_frozen_falls_castle_bridge.jpg",
+   "source": "IMG_4916",
+   "band": "night",
+   "mean_luma": 0.215,
+   "mean_saturation": 0.696,
+   "texel_detail": 0.025,
+   "darkest_5pct_luma": 0.013,
+   "darkest_5pct_colour": "#010213",
+   "darkest_5pct_blue_over_red": 17.3,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.37,
+   "darkest_15pct_colour": "#040520",
+   "brightest_10pct_colour": "#7278F3",
+   "share_blue": 0.99,
+   "share_green": 0.001,
+   "share_warm": 0.0,
+   "sky_top_dominant": "#0F0D3E(41%) #18184D(37%) #24256A(21%)",
+   "ground_low_dominant": "#252A76(38%) #545BD6(35%) #757CEF(26%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "in",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 16,
+   "file": "16_gothic_church_candles.jpg",
+   "source": "IMG_4920",
+   "band": "night",
+   "mean_luma": 0.244,
+   "mean_saturation": 0.81,
+   "texel_detail": 0.015,
+   "darkest_5pct_luma": 0.081,
+   "darkest_5pct_colour": "#01049D",
+   "darkest_5pct_blue_over_red": 128.6,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.46,
+   "darkest_15pct_colour": "#06196A",
+   "brightest_10pct_colour": "#4675BF",
+   "share_blue": 0.978,
+   "share_green": 0.0,
+   "share_warm": 0.002,
+   "sky_top_dominant": "#122E79(55%) #1E438F(23%) #061387(20%)",
+   "ground_low_dominant": "#183987(43%) #2855A6(38%) #507AB5(18%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "above",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "above",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 17,
+   "file": "17_blue_courtyard_glowing_flowers.jpg",
+   "source": "IMG_4914",
+   "band": "night",
+   "mean_luma": 0.154,
+   "mean_saturation": 0.823,
+   "texel_detail": 0.0237,
+   "darkest_5pct_luma": 0.008,
+   "darkest_5pct_colour": "#010109",
+   "darkest_5pct_blue_over_red": 8.9,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.23,
+   "darkest_15pct_colour": "#010414",
+   "brightest_10pct_colour": "#3768E2",
+   "share_blue": 0.95,
+   "share_green": 0.034,
+   "share_warm": 0.003,
+   "sky_top_dominant": "#030931(40%) #071556(39%) #14297F(20%)",
+   "ground_low_dominant": "#0B1944(43%) #204293(30%) #376BD5(25%)",
+   "vs_current_targets": {
+    "mean_luma": "in",
+    "mean_saturation": "above",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "below",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 18,
+   "file": "18_desert_mission_star_sky.jpg",
+   "source": "IMG_4887",
+   "band": "night",
+   "mean_luma": 0.293,
+   "mean_saturation": 0.852,
+   "texel_detail": 0.0249,
+   "darkest_5pct_luma": 0.021,
+   "darkest_5pct_colour": "#04021A",
+   "darkest_5pct_blue_over_red": 6.9,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.06,
+   "darkest_15pct_colour": "#020433",
+   "brightest_10pct_colour": "#E59225",
+   "share_blue": 0.348,
+   "share_green": 0.006,
+   "share_warm": 0.564,
+   "sky_top_dominant": "#040533(52%) #080D3C(29%) #4E497F(17%)",
+   "ground_low_dominant": "#B06512(42%) #65350B(35%) #C7812A(22%)",
+   "vs_current_targets": {
+    "mean_luma": "above",
+    "mean_saturation": "above",
+    "texel_detail": "in",
+    "darkest_5pct_luma": "in",
+    "darkest_5pct_blue_over_red": "in",
+    "grass_share_of_lower_half": "in"
+   }
+  },
+  {
+   "n": 19,
+   "file": "19_goblin_blue_corridor.jpg",
+   "source": "IMG_4885",
+   "band": "character",
+   "mean_luma": 0.078,
+   "mean_saturation": 0.616,
+   "texel_detail": 0.0097,
+   "darkest_5pct_luma": 0.0,
+   "darkest_5pct_colour": "#000000",
+   "darkest_5pct_blue_over_red": 0.0,
+   "grass_share_of_lower_half": 0.09,
+   "sky_share": 0.01,
+   "darkest_15pct_colour": "#000000",
+   "brightest_10pct_colour": "#3C4529",
+   "share_blue": 0.337,
+   "share_green": 0.366,
+   "share_warm": 0.061,
+   "sky_top_dominant": "#000101(53%) #102340(23%) #050E0F(23%)",
+   "ground_low_dominant": "#020303(51%) #151D13(28%) #414628(20%)"
+  },
+  {
+   "n": 20,
+   "file": "20_pale_reader_blue_throne.jpg",
+   "source": "IMG_4898",
+   "band": "character",
+   "mean_luma": 0.141,
+   "mean_saturation": 0.47,
+   "texel_detail": 0.0078,
+   "darkest_5pct_luma": 0.021,
+   "darkest_5pct_colour": "#060509",
+   "darkest_5pct_blue_over_red": 1.4,
+   "grass_share_of_lower_half": 0.0,
+   "sky_share": 0.05,
+   "darkest_15pct_colour": "#080708",
+   "brightest_10pct_colour": "#435453",
+   "share_blue": 0.406,
+   "share_green": 0.054,
+   "share_warm": 0.08,
+   "sky_top_dominant": "#161A1B(58%) #060A5F(32%) #4B5148(8%)",
+   "ground_low_dominant": "#090912(47%) #1C2536(27%) #303E3E(24%)"
+  }
+ ],
+ "summary": {
+  "day": {
+   "mean_luma": {
+    "min": 0.18,
+    "median": 0.214,
+    "max": 0.369
+   },
+   "mean_saturation": {
+    "min": 0.598,
+    "median": 0.675,
+    "max": 0.754
+   },
+   "texel_detail": {
+    "min": 0.014,
+    "median": 0.017,
+    "max": 0.023
+   },
+   "darkest_5pct_luma": {
+    "min": 0.036,
+    "median": 0.054,
+    "max": 0.079
+   },
+   "darkest_5pct_blue_over_red": {
+    "min": 0.8,
+    "median": 12.1,
+    "max": 128.8
+   },
+   "grass_share_of_lower_half": {
+    "min": 0.08,
+    "median": 0.325,
+    "max": 0.79
+   },
+   "sky_share": {
+    "min": 0.0,
+    "median": 0.175,
+    "max": 0.31
+   },
+   "share_blue": {
+    "min": 0.017,
+    "median": 0.354,
+    "max": 0.684
+   },
+   "share_green": {
+    "min": 0.054,
+    "median": 0.372,
+    "max": 0.52
+   },
+   "share_warm": {
+    "min": 0.0,
+    "median": 0.09,
+    "max": 0.559
+   },
+   "current_targets": {
+    "mean_luma": [
+     0.26,
+     0.36
+    ],
+    "mean_saturation": [
+     0.58,
+     0.7
+    ],
+    "texel_detail": [
+     0.014,
+     0.08
+    ],
+    "darkest_5pct_luma": [
+     0.05,
+     0.1
+    ],
+    "darkest_5pct_blue_over_red": [
+     2,
+     999
+    ],
+    "grass_share_of_lower_half": [
+     0.3,
+     0.85
+    ]
+   }
+  },
+  "night": {
+   "mean_luma": {
+    "min": 0.127,
+    "median": 0.173,
+    "max": 0.293
+   },
+   "mean_saturation": {
+    "min": 0.636,
+    "median": 0.804,
+    "max": 0.872
+   },
+   "texel_detail": {
+    "min": 0.009,
+    "median": 0.019,
+    "max": 0.03
+   },
+   "darkest_5pct_luma": {
+    "min": 0.0,
+    "median": 0.019,
+    "max": 0.081
+   },
+   "darkest_5pct_blue_over_red": {
+    "min": 0.2,
+    "median": 9.7,
+    "max": 128.6
+   },
+   "grass_share_of_lower_half": {
+    "min": 0.0,
+    "median": 0.0,
+    "max": 0.22
+   },
+   "sky_share": {
+    "min": 0.05,
+    "median": 0.29,
+    "max": 0.46
+   },
+   "share_blue": {
+    "min": 0.348,
+    "median": 0.843,
+    "max": 0.99
+   },
+   "share_green": {
+    "min": 0.0,
+    "median": 0.024,
+    "max": 0.534
+   },
+   "share_warm": {
+    "min": 0.0,
+    "median": 0.001,
+    "max": 0.564
+   },
+   "current_targets": {
+    "mean_luma": [
+     0.15,
+     0.25
+    ],
+    "mean_saturation": [
+     0.67,
+     0.8
+    ],
+    "texel_detail": [
+     0.011,
+     0.08
+    ],
+    "darkest_5pct_luma": [
+     0.015,
+     0.035
+    ],
+    "darkest_5pct_blue_over_red": [
+     2,
+     999
+    ],
+    "grass_share_of_lower_half": [
+     0.0,
+     0.85
+    ]
+   }
+  }
+ }
+}
