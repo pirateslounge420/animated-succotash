@@ -537,6 +537,9 @@ func _into_delve(site: Dictionary) -> void:
 		y = main.chunks.ground_height(world.dir_of(node.global_transform * Vector3(st.x, 0.0, st.z))) - (world.radius_of(node.global_position) - PlanetConst.RADIUS_M) + 0.03
 	player.global_position = node.global_transform * Vector3(st.x, y + 0.02, st.z)
 	player.velocity = Vector3.ZERO
+	# (A few frames first, so Delves knows you are inside before the torch
+	# is lit: in play you walk down and it always does.)
+	await _frames(5)
 	if bool(site.get("torch", false)):
 		player.inventory.add(Inventory.make("torch"))
 		player.weapon = "torch"
