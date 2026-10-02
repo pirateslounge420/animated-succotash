@@ -18,6 +18,52 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - the 30 % of old delve ruins that start overrun;
   - adding the plants the fill found missing: birch in four biomes, Arctic white heather, Spanish moss in the swamp, yucca.
 
+## 2026-10-02 (evening) — §CN built: the swing passes the flame, a cold fire needs kindling, overrun ruins, folk come back (Mike, 2 Oct, locked)
+- **1. The swing** (`Torch`):
+  - Left click with the torch in hand swings it, on the bare hand's arc and timing (`Fists.STRIKE_S`).
+  - When the swing ends, the flame passes within `torch.json swing.reach_m` (2.2 m), either way:
+    - an unlit torch catches from a lit fire, a fire-holder or a planted torch;
+    - a lit torch lights a laid cold fire, embers, a fire-holder or a planted torch gone out.
+  - It costs no burn time. It lights nothing else (no wildfire from a swing; that stays a dropped torch in dry grass) and does nothing to a creature.
+  - The right-click lighting is gone, the old hearths' included. Right click is plain interact. The prompt now says "Left click: swing the torch …".
+- **2. Kindling** (`Kindling`, `FireStore`):
+  - Embers are as before. A fire that is fully out must be laid: one kindling and at least one unit of fuel. An old hearth's charred branches count as fuel.
+  - Lay kindling with right click, then swing. The flame takes after `2 s × (1 − catch)`; dead twigs take 0.5 s.
+  - Wet kindling that isn't `wet_ok` smokes and the fire stays cold. Wet birch bark, fatwood and pitchwood catch. Kindling with no fuel flares for its `burn_s` and goes out.
+  - Gathering is right click:
+    - the biome's ground kinds from the ground at your feet (crouch if you hold a lit torch: standing, the right click plants it);
+    - plant kinds from a plant or tree of the kind's genus under the crosshair (a birch gives birch bark; after three kindling things in the pack, right click goes back to taking samples).
+  - Grass and reeds are the fuel items themselves. Rain outside a roof wets what you gather or carry for `wet.dry_h_game` (6) game hours.
+- **3. Overrun ruins** (`Overrun`; the heart's fire-holder in `OldHearths`):
+  - **Which:**
+    - a camp the dark took (blood, not hunger) with a delve or a nest's first chamber is marked overrun when it goes to ruin;
+    - on a new world, 30 % of the old delve barrows start overrun (21 of 68 within 150 km on 7731);
+    - the sim never resettles one.
+  - **The den:** the biome's hunter holds about half the dens, the night roster the rest (the dark itself where none fits). They stand in the dark rooms at any hour and never within a lit fire's radius. Down there, the dread's hunter is what holds the den.
+  - **The surface:** at night within 120 m, outside a fire, dread fills 1.5× as fast. By day the sound bed goes quiet. There are bones and scat at the barrow's door. At night a shape stands in the doorway and the hunter calls.
+  - **Fire-holders:** the first room keeps its old hearth (as built). The heart has a cold ring of ash: empty, holds 3 units, lights and keeps 8 m (`Campfire` `safe_m` and `range_m`).
+  - **Clearing:** laid and lit, the heart's holder clears the ruin. The log says "The fire at the heart caught. Whatever held this place has gone." The holders walk out by the cairn and the door signs go. The surface hearth doesn't clear it.
+- **4. Folk come back** (`CampSim.settlers`, `settle`):
+  - About 12 game hours after a cleared ruin's surface hearth starts burning, folk come. Survivors come back from the camp they fled to if it fell within 30 days; otherwise 2–4 come from the nearest living camp within 40 km at 60 % of its cap or more.
+  - The camp is begun from today, on that hearth's own fire. Camps builds it with its own people; it is a hearth you can take. Taken again, it is overrun again.
+- **Checks** (all 0 fails on 7731):
+  - `swing_check` (16);
+  - `old_hearth_check` (also 90210), now with the kindling cases;
+  - `overrun_check`;
+  - `settle_check`;
+  - re-run after the changes: `delve_check`, `dread_check`.
+  - The walkabout `SITES=delve` now walks the nearest overrun barrow and lights its heart's fire.
+- **Data:** the `[NOT WIRED YET — design §CN]` prefixes are off `torch.json swing`, `fuel.json kindling`, `delves.json` and `camps.json sim_overrun` (Claude Code, as wired). `Tuning` now reads `data/delves.json`.
+- **For Mike (contradictions and choices, not silently picked):**
+  - *Survivors can't come back as written.* A camp is overrun only when it goes to ruin (`abandon.ruin_after_game_days` = 60), but survivors come back only if it fell within 30 days. Reading "fell" as the day the dark took it, they never would. **Built:** "fell" is the day it was marked overrun. Say if you meant otherwise, or shorten the ruin clock.
+  - *A barrow's delve has two rooms*, so its only new fire-holder is the heart's. Braziers and sconces wait for castle and tower delves (none built).
+  - *A nest's den* (cave mouth, grotto) is marked overrun and never resettled, but it has no fire-holder to clear it yet: **not built**. Which fire should clear a nest's den?
+  - *The first room's old hearth* keeps its 14 m safe radius and its charred branches, as built. The holders' 8 m applies to the new ones.
+  - Carried kindling gets wet in rain (the design's open question), so on a wet night only birch bark, fatwood and pitchwood light a new fire.
+- **Data asks for Claude (chat):**
+  - an `items.json` kind `kindling` (name, icon, colour; the code's fallback stands in);
+  - the night roster still needs `creatures.json` `active` labels (all "any" today, so dens fall back to predators that fit the climate, or the dark itself).
+
 ## 2026-10-02 — Old hearths, tomb lamps, the barrow's delve (§CJ) and the dusk shift change (§CH) (Mike: "sounds good get to work"; his 2 Oct answers on the §CJ audit)
 - **Old hearths** (`OldHearths`): a cold hearth at every ruin with no camp and every nest holding remains (§CK). Rekindle it with a lit torch and feed it; lit, it holds the dark off and can be your hearth. It is kept in the save and burns down while you are away. **Torch only:** Mike's flint-and-steel idea clashes with the locked "fire is never made" (30 Sept §BP). Asked, he said "sounds good" to keeping the torch only, so that is what is built; Claude in chat to record it.
 - **Tomb lamps:** the barrow's, desert pyramid's, mastaba's and mausoleum's lamp-gold lights are now stone lamps, dark until the ruin's hearth burns (Mike: "light … that activate after the main hearth is rekindled"). The teal moss glows stay on.

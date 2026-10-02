@@ -19,9 +19,11 @@ extends SceneTree
 ## camp's first frame must be afternoon (the sun above the dusk band).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
-## SITES=delve the nearest barrow with a delve (§CJ): from outside, its
-## stairhead, the first room and the heart by torchlight at noon (it must
-## be dark but for the torch), and the cairn the way out comes up in.
+## SITES=delve the nearest overrun barrow (§CN; else the nearest with a
+## delve, §CJ): from outside (bones at its door), its stairhead, the first
+## room and the heart by torchlight at noon (it must be dark but for the
+## torch), the heart's fire-holder laid and lit (clearing it), and the
+## cairn the way out comes up in.
 ## SITES=opening_camp,random_biome keeps a subset; QUICK=1 one facing and
 ## the first hour (a smoke run). DEV_PIN=0 boots a fresh random world (no
 ## SEED; its frames go under the seed it rolled) and leaves no save:
@@ -463,18 +465,23 @@ func _nest_plant(sp: PlantSpecies, d: Vector3) -> bool:
 	return false
 
 
-## The nearest barrow with a delve (design 1 Oct §CJ) within 150 km: from
-## outside, at the stairhead, in the first room and in the heart (by
-## torchlight), and at the cairn's door.
+## The nearest overrun barrow (design 2 Oct §CN; else the nearest barrow
+## with a delve, §CJ) within 150 km: from outside (the bones at its door),
+## at the stairhead, in the first room and in the heart by torchlight,
+## where its fire-holder is laid and lit and the ruin cleared, and at the
+## cairn's door.
 func _delve_sites(camp: Vector3) -> Array:
 	var map: PlanetData = world.planet
 	var site := {}
 	var bd := INF
-	for r in [40000.0, 150000.0]:
-		for s in Ruins.near(map, camp, r):
-			if Delves.has_delve(s) and CubeSphere.surface_distance_m(s.dir, camp) < bd:
-				bd = CubeSphere.surface_distance_m(s.dir, camp)
-				site = s
+	for want_over in [true, false]:
+		for r in [40000.0, 150000.0]:
+			for s in Ruins.near(map, camp, r):
+				if Delves.has_delve(s) and (not want_over or Overrun.is_overrun(s)) and CubeSphere.surface_distance_m(s.dir, camp) < bd:
+					bd = CubeSphere.surface_distance_m(s.dir, camp)
+					site = s
+			if not site.is_empty():
+				break
 		if not site.is_empty():
 			break
 	if site.is_empty():
@@ -483,7 +490,7 @@ func _delve_sites(camp: Vector3) -> Array:
 	var lay := Delves.layout(map, site)
 	var fr := Delves.frame(map, site)
 	var l: float = site.half_l
-	var note := "the barrow %.1f km from the camp" % (bd / 1000.0)
+	var note := "the %sbarrow %.1f km from the camp" % ["overrun " if Overrun.is_overrun(site) else "", bd / 1000.0]
 	var out: Array = []
 	out.append({"name": "delve_barrow", "dir": Delves.to_dir(fr, 0.0, -l - 14.0), "look": site.dir, "note": note + ", its facade", "delve_hours": true})
 	var zc: float = lay.zc
@@ -495,8 +502,10 @@ func _delve_sites(camp: Vector3) -> Array:
 		"delve_seed": int(site.seed), "delve_stand": Vector3(rc.x, float(room.y0), rc.y + 0.6), "delve_look": Vector3(rc.x, float(room.y0), rc.y + 4.0), "torch": true})
 	var heart: Dictionary = lay.pieces[3]
 	var hc: Vector2 = heart.c
-	out.append({"name": "delve_heart", "dir": Delves.to_dir(fr, hc.x, hc.y + 0.8), "look": Delves.to_dir(fr, hc.x, hc.y + 20.0), "note": "the heart: the dead and the %s" % lay.find_kind,
-		"delve_seed": int(site.seed), "delve_stand": Vector3(hc.x, float(heart.y0), hc.y + 0.8), "delve_look": Vector3(hc.x, float(heart.y0), hc.y + 5.0), "torch": true})
+	var s2 := float(lay.get("s2", 1.0))
+	var lh := float(heart.len)
+	out.append({"name": "delve_heart", "dir": Delves.to_dir(fr, s2 * 1.7, hc.y + lh * 0.85), "look": Delves.to_dir(fr, -s2 * 1.8, hc.y - 6.0), "note": "the heart: the dead and the %s, looking back at its fire-holder" % lay.find_kind,
+		"delve_seed": int(site.seed), "delve_stand": Vector3(s2 * 1.7, float(heart.y0), hc.y + lh * 0.85), "delve_look": Vector3(-s2 * 1.8, float(heart.y0) + 0.2, hc.y + 1.0), "torch": true, "light_heart": true})
 	var cairn: Dictionary = lay.cairn
 	if not cairn.is_empty():
 		var o: Vector2 = cairn.o
@@ -548,6 +557,31 @@ func _into_delve(site: Dictionary) -> void:
 	for i in 30:
 		player.torch.update_torch(1.0 / 60.0)
 		await process_frame
+	if bool(site.get("light_heart", false)):
+		# The heart's fire-holder (§CN): laid with kindling and fuel, lit by
+		# the swing's rule; an overrun ruin is cleared by it.
+		main.old_hearths.refresh_now()
+		var holder: Node3D = null
+		for f in get_nodes_in_group(Campfire.GROUP):
+			if (f as Node3D).has_meta("heart_of") and int((f as Node3D).get_meta("heart_of")) == int(site.delve_seed):
+				holder = f
+		if holder == null:
+			site["note"] = str(site.get("note", "")) + " · no fire-holder"
+		else:
+			var was := Overrun.is_overrun(node.get_meta("site"))
+			FireStore.lay_kindling(holder, Kindling.make("dry_twigs"), world.days)
+			for k in 3:
+				FireStore.add_fuel(holder, Inventory.make("fuel", {"fuel": "branch"}), world.days)
+			FireStore.swing_light(holder, world.days)
+			for i in 120:
+				player.torch.update_torch(1.0 / 60.0)
+				await process_frame
+				if FireStore.is_lit(holder):
+					break
+			for i in 40:
+				player.torch.update_torch(1.0 / 60.0)
+				await process_frame
+			site["note"] = str(site.get("note", "")) + " · its fire-holder %s%s" % ["lit" if FireStore.is_lit(holder) else "NOT lit", (", the ruin %s" % Overrun.state_of(node.get_meta("site"))) if was else ""]
 	var lp := node.global_transform * Vector3(lk.x, (lk.y - off) if not is_nan(lk.y) else y, lk.z)
 	var to := lp - player.global_position
 	site["note"] = str(site.get("note", "")) + (" · inside (%s)" % ("underground" if Delves.underground > 0.5 else "at ground level"))

@@ -2233,6 +2233,47 @@ the player's shoulder so the fire is in view.
 - Checks: `tools/old_hearth_check.gd`, `tools/delve_check.gd`; the walkabout's
   `SITES=delve`.
 
+## The swing, kindling, overrun ruins and folk coming back (design 2 Oct §CN)
+
+- **The swing** (`Torch._update_swing`, `swing_target`, `pass_flame`): left click with the torch in hand starts a swing of `Fists.STRIKE_S`. The view lerps out and back on the fist's curve. When the swing ends the flame passes between the torch and whatever is within `torch.json swing.reach_m` of the swing point (chest, 0.4 m ahead):
+  - an unlit torch catches from a lit fire or a planted torch (`flame_near`);
+  - a lit torch lights a cold fire (`FireStore.swing_light`) or a planted torch gone out (`PlantedTorch.unlit_near`, `relight`).
+  The swing costs no burn time and makes no hit query, so a creature in reach is untouched. The right click no longer lights anything. Main shows `Torch.note` and a "Left click:" prompt (`Controls.shoot_word`).
+- **Kindling** (`scripts/ecology/kindling.gd`, `fuel.json kindling`):
+  - Items are `kind: kindling` with the kind id in `kindling`. Grass and reeds are the fuel items themselves (`fuel_kind`). Kinds come from `kindling.biomes` (likeliest first), with the core list as the fallback.
+  - Ground kinds are gathered with right click when nothing else wants it (`Main._ground_kindling`; crouched with a lit torch). Plant, fungus and lichen kinds come from the plant or tree under the crosshair whose genus the kind lists (`_plant_kindling`). The look now reports a tree's species index too. Past `Kindling.KEEP` carried, right click takes samples again.
+  - Rain outside a roof (`Main._under_roof`: a ruin's shelter or a delve) wets carried kindling (`wet`, `wet_days`), which dries after `wet.dry_h_game`.
+- **Laying and lighting** (`FireStore`):
+  - `lay_kindling` stores `{kind, wet, wet_days}` in an out fire's store; `wants_kindling` and `is_laid` read it.
+  - `swing_light` checks, in order:
+    - embers relight with fuel;
+    - out with no kindling is `not_laid`;
+    - wet kindling that isn't `wet_ok` is `wet`;
+    - kindling with no fuel is `flare` (state `flare` for `burn_s`, lit);
+    - otherwise `catching` for `catch.time_s_max × (1 − catch)`, then lit (`_take` in `tick`; `burn` skips both states).
+  - A store may carry its own `max_units` (`FireStore.max_units`). `relight` stays the bare primitive the checks use.
+- **Overrun** (`scripts/landmarks/overrun.gd`):
+  - **Save:** `WorldSave "overrun"` maps a den id (a ruin's seed or a nest's key) to its state: `overrun`, `cleared` or `settled`.
+  - **Overrun:** `worldgen(site)` rolls `worldgen_share` for old delve barrows. `CampSim._tick_empty` calls `camp_fell` when a camp the dark took (blood, why taken or fled) goes to ruin with a den. The resettle branch skips `overrun` camps.
+  - **The den:**
+    - one hunter (`hunter_share`, seeded) or two night-roster creatures (night or dusk species whose `temp_c` fits `map.temp_c`, else a predator, else a cloaked shape);
+    - they hold the heart's deep end and the first room's near end, skipping any spot inside a lit fire's reach and snapping out of one;
+    - `Dread.den_entry` makes the dread's hunter the same creature while you're inside.
+  - **Tells:**
+    - `Overrun.quiet` (the sound bed, by day within 120 m);
+    - seven `DenSign` props at the barrow's front;
+    - at night, a `DoorShape` beyond 12 m and a call every 30–70 s;
+    - `dread_scale` (×1.5 at the surface within 120 m).
+- **Fire-holders:** `Delves.layout` gives `heart_hearth`. OldHearths builds it as kind `holder` (`FireHolder`):
+  - empty (`fire_holders.start_units`), `max_units` = `holds_units`;
+  - metas `fire_holder`, `heart_of`, `safe_m` and `range_m` = `light_radius_m`.
+  `Campfire.lit_near` caps the asked radius at a fire's `safe_m`, so the dread (and anything else that asks) treats it as an 8 m fire. `Overrun._check_heart` clears the ruin when the heart's holder is lit (`hold_clear` holds it off for checks): the log line, the holders walking to the cairn, the props freed.
+- **Settlers** (`CampSim.settlers`, run each half-second after the catch-ups):
+  - For each `cleared` entry, find the ruin (`Overrun.site_of`) and its camp key (`Overrun.camp_key`: `ruin:<grid cell>`, as Camps keys ruins).
+  - The surface hearth counts as burning if the camp state's fire store is lit or `OldHearths.lit_at` is true at `Camps.ruin_fire_dir`. `lit_since` starts at the first sighting; after `arrive_after_game_h` the folk arrive (`_settlers_for`): survivors from `went_to` if it fell within the window, else 2–4 adults from the nearest living camp within range at the cap share.
+  - `settle` starts or revives the state from today (no catch-up from the epoch), on the old hearth's own store (`OldHearths.key_near`), tended.
+  - Camps then builds uninhabited ruins that are `settled` with the state's people; OldHearths skips them. A relapse goes through `camp_fell` again.
+
 ## UI
 
 - **HUD:**
