@@ -104,6 +104,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - `new_world_check` (DEV_PIN=0): 0 fails. Headless boot: clean.
 - **Harness frames** (`tools/walkabout.gd`, `SITES=opening_camp,nests,fig`, QUICK; seed 90210, full planet; first person at the eye; the cloud machine's lavapipe software Vulkan, Forward+, 1280×720; import cache present; 14 h overcast): the opening camp; a cave mouth in a cold-desert ravine (the roof, the side walls, the dark passage at the back, the drip stones); a grotto in temperate deciduous forest; a cenote in hot desert (the shaft, the blue pool, the lip stones, the slope down); an escarpment overhang with its spring; the sacred fig in tropical dry forest. 0 species standing outside its biome. The grotto's ferns are counted as the nest's own (§CM), and the walkabout now knows that rule.
   - New: `SITES=nests` and `SITES=fig`, and a site can face what it shows. Viewpoints: in front of a shelter looking in, just outside a grotto's mouth, on a cenote's rim, 24 m east of the fig.
+- **What the frames show:**
+  - The cave mouth, the escarpment overhang, the cenote and the fig read as built.
+  - The grotto, from just outside its mouth in overcast light, is a dark rock mound with the passage's teal glow showing through the low arch. Its shape doesn't read from there; a sunlit angle would show it better.
+- **One run went wrong:** an earlier try of the same final walkabout printed "Unicode parsing error" lines (float data printed as text) from the escarpment site on, until the log filled the disk (14.7 GB). The rerun of the same sites, and the two runs before it, printed none. It came on top of the MultiMesh buffer-size errors every walkabout prints (about 2,900 a run over these six sites; seen before this pass). It looks like the same engine-side trouble and is worth chasing with them.
 - **Fixed in passing:**
   - `Camps._live` read the walker with `get_meta(…, null)`, which errors in Godot 4.3 when the key is missing (25–48 lines a run in earlier logs too).
   - `Ruins.site_name` now names a nest.
