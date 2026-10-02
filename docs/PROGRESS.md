@@ -25,6 +25,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - Underground, the torch went out as if under the sea: its douse test read the sea's level, and a delve can lie below it.
   - Slits between the stairs' stepped ceiling slabs let the sky show through; the slabs are now thick enough to overlap.
   - `delve_check` now also checks that no ray from inside escapes to the sky and that a lit torch stays lit down there.
+  - The torch didn't light the delve's stone: the walls showed only as outlines. The cause was Godot's face convention. The builder winds faces the opposite way to Godot's "front", and in a mesh lit per pixel, Godot turns a "back" face's normal round, so every face you looked at faced away from your torch. The delve's own mesh now has its winding reversed (`RuinBuilder._flip_winding`). The ruins above ground are vertex-lit and never had the problem.
 - **Also:** `PlayerFires` flickers every frame (it was once a second). The `get_meta(…, null)` trap in the new code was fixed (Godot 4.3 treats a null default as none).
 - **Checks re-run:** `road_reach_check` 7731 and `new_world_check` 0 fails; a headless boot showed no script errors; the walkabout `SITES=delve` on 7731 (frames on this machine under `tools/reference/walkabout/7731/delve_*`; not kept in the repo).
 

@@ -261,6 +261,22 @@ static func rock_hull(size: Vector3, p_seed: int) -> PackedVector3Array:
 	return boulder_hull(Vector3.ZERO, size * 0.5, Basis(), _bump_phase(r))
 
 
+## Reverse every triangle's winding in mesh arrays (vertex, normal, colour,
+## UV), normals unchanged. The builder winds its faces counter-clockwise
+## seen from the side their normal points to; Godot calls clockwise the
+## front, and lit per pixel with cull_disabled it turns a "back" face's
+## normal round, so every face you look at would face away from your torch
+## (the vertex-lit ruins never take that turn). For the delve's own mesh.
+static func _flip_winding(arrays: Array) -> void:
+	for a in [Mesh.ARRAY_VERTEX, Mesh.ARRAY_NORMAL, Mesh.ARRAY_COLOR, Mesh.ARRAY_TEX_UV]:
+		var p = arrays[a]
+		for k in range(0, p.size() - 2, 3):
+			var t = p[k + 1]
+			p[k + 1] = p[k + 2]
+			p[k + 2] = t
+		arrays[a] = p
+
+
 ## Main thread: mesh and collision (see placement()).
 static func make_node(data: Dictionary, world: Node) -> Node3D:
 	var site: Dictionary = data.site
@@ -285,6 +301,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		sub[Mesh.ARRAY_NORMAL] = (data.n as PackedVector3Array).slice(d0, d1)
 		sub[Mesh.ARRAY_COLOR] = (data.c as PackedColorArray).slice(d0, d1)
 		sub[Mesh.ARRAY_TEX_UV] = (data.m as PackedVector2Array).slice(d0, d1)
+		_flip_winding(sub)
 		var dm := ArrayMesh.new()
 		dm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, sub)
 		var dmi := MeshInstance3D.new()
