@@ -10,6 +10,10 @@ extends SceneTree
 ##    it meets the barrow, the cairn or a flagstone, never nothing;
 ##  - you can walk it: along every piece a floor under you (within 0.35 m
 ##    of the layout's) and headroom of 2 m or more over it;
+##  - it is shut: from inside the rooms and stairs (not the stairhead or
+##    the cairn), no ray up or out escapes to the sky (a slit between two
+##    ceiling slabs would show it);
+##  - a lit torch stays lit down there (it is not under the sea);
 ##  - at noon, in the heart: inside a delve, underground, no sun or moon,
 ##    the dread counts it night, and the ground's safety net leaves you
 ##    there;
@@ -85,6 +89,7 @@ func _run() -> void:
 		RuinBuilder.build_collision_part(node)
 	await _roof_check(map, site, lay, node, label)
 	await _walk_check(lay, node, label)
+	_leak_check(lay, node, label)
 	await _dark_check(lay, node, label)
 	await _hearth_check(lay, node, label)
 	await _find_check(lay, node, label, int(site.seed))
@@ -257,6 +262,12 @@ func _dark_check(lay: Dictionary, node: Node3D, label: String) -> void:
 	ok(main.sky.sun.light_energy < 0.001 and main.sky.moon.light_energy < 0.001, "%s: no sun or moon reaches (sun %.3f)" % [label, main.sky.sun.light_energy])
 	ok(main.dread.is_night(), "%s: the dread counts it night at noon" % label)
 	ok(not player.swimming, "%s: not swimming below the sea's level" % label)
+	player.inventory.add(Inventory.make("torch"))
+	player.weapon = "torch"
+	player.torch.light()
+	for i in 120:
+		await physics_frame
+	ok(player.torch.lit(), "%s: a lit torch stays lit down there" % label)
 
 
 func _hearth_check(lay: Dictionary, node: Node3D, label: String) -> void:
@@ -307,3 +318,46 @@ func _door_check(lay: Dictionary, node: Node3D, label: String) -> void:
 	ok(not bool(door.get_meta("open", false)), "%s: from outside it won't move (\"%s\")" % [label, msg])
 	msg = dv.push(door, player.global_position)
 	ok(bool(door.get_meta("open", false)), "%s: from inside it opens (\"%s\")" % [label, msg])
+
+
+## No way out to the sky from inside the shut pieces: rays from each, up
+## and outward, all meet stone within 60 m.
+func _leak_check(lay: Dictionary, node: Node3D, label: String) -> void:
+	var off := float(node.get_meta("delve_off", 0.0))
+	var space: PhysicsDirectSpaceState3D = player.get_world_3d().direct_space_state
+	var xf := node.global_transform
+	var leaks := 0
+	var rays := 0
+	var first := ""
+	var pieces: Array = lay.pieces
+	for k in pieces.size():
+		var pc: Dictionary = pieces[k]
+		if str(pc.kind) == "cairn":
+			continue
+		var length := float(pc.len)
+		var from_a := 7.0 if k == 0 else 0.5
+		var to_a := length - (6.0 if str(pc.kind) == "exit" and k == pieces.size() - 2 else 0.5)
+		var a := from_a
+		while a <= to_a:
+			var p2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * a
+			var at: Vector3 = xf * Vector3(p2.x, Delves.floor_of(pc, a) - off + 1.5, p2.y)
+			for i in 12:
+				var yaw := TAU * i / 12.0
+				for pitch: float in [0.0, 0.6, 1.2]:
+					var dl := Vector3(cos(yaw) * cos(pitch), sin(pitch), sin(yaw) * cos(pitch))
+					var dw: Vector3 = xf.basis * dl
+					rays += 1
+					var hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(at, at + dw.normalized() * 60.0))
+					if hit.is_empty():
+						leaks += 1
+						if first == "":
+							first = "%s at %.1f, yaw %.0f pitch %.1f" % [pc.kind, a, rad_to_deg(yaw), pitch]
+			var up_hit := space.intersect_ray(PhysicsRayQueryParameters3D.create(at, at + xf.basis.y.normalized() * 60.0))
+			rays += 1
+			if up_hit.is_empty():
+				leaks += 1
+				if first == "":
+					first = "%s at %.1f, straight up" % [pc.kind, a]
+			a += 2.0
+	ok(leaks == 0, "%s: shut, no way out to the sky (%d of %d rays escape%s)" % [label, leaks, rays, "; " + first if first != "" else ""])
+

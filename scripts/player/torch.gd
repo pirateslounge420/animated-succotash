@@ -295,7 +295,8 @@ func update_torch(delta: float) -> void:
 		# Water: swimming, or wading past the douse depth.
 		var water := player.chunks.water_level_at(player.surface_dir)
 		var depth: float = (PlanetConst.RADIUS_M + water) - player.world.radius_of(player.global_position)
-		if player.swimming or depth > float(D.get("douse_depth_m", 0.6)):
+		# (In a delve, §CJ, you are under the ground, not under the sea.)
+		if player.swimming or (depth > float(D.get("douse_depth_m", 0.6)) and not Delves.inside):
 			put_out("doused")
 			return
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0

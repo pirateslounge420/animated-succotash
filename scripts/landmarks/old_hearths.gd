@@ -244,7 +244,7 @@ func nearest(pos: Vector3, radius: float) -> Node3D:
 func ruin_lit(ruin: Node3D) -> bool:
 	for key in _built:
 		var n: Node3D = _built[key]
-		if is_instance_valid(n) and n.get_meta("ruin", null) == ruin:
+		if is_instance_valid(n) and n.has_meta("ruin") and n.get_meta("ruin") == ruin:
 			return FireStore.is_lit(n)
 	return false
 
@@ -258,7 +258,7 @@ func hearth_of_ruin(c, ruin: Node3D) -> Node3D:
 			return camp.get_meta("fire")
 	for key in _built:
 		var n: Node3D = _built[key]
-		if is_instance_valid(n) and n.get_meta("ruin", null) == ruin:
+		if is_instance_valid(n) and n.has_meta("ruin") and n.get_meta("ruin") == ruin:
 			return n
 	return null
 

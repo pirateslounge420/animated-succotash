@@ -2202,6 +2202,37 @@ wordless murmur from the speaker (`Encampment.talk`, 3D, heard to
 ~25 m). The camera opens over
 the player's shoulder so the fire is in view.
 
+## Old hearths, tomb lamps and delves (design 1 Oct §CJ; Mike, 2 Oct)
+
+`scripts/landmarks/old_hearths.gd`, `scripts/landmarks/delves.gd`
+
+- **Old hearths** (`OldHearths`). A cold `Campfire` stands at the camp spot of every
+  uninhabited ruin and at the hearth of every nest holding remains (§CK), and in a
+  delve's first room. Its `FireStore` store starts `out` with two charred branches
+  (`fuel.json fire.old_hearth_units` if present, else 2), untended. A lit torch relights
+  it (`FireStore.relight`); once lit, its store goes into `WorldSave "old_hearths"` and
+  is burnt down on the clock while you are away (`catch_up`). It counts as any fire for
+  dread and as a hearth (`hearth_ok`), except in a delve (you'd wake on the ground above).
+- **Tomb lamps.** `RuinBuilder._lamp` builds a stone lamp (stand and dish) and records a
+  light; `make_node` makes the light and a flame, dark. `OldHearths.update_lamps` fades
+  them on while the ruin's hearth (its camp's fire, or its old hearth) burns.
+- **Delves.** `Delves.layout(map, site)` (pure, cached per site) lays a barrow's delve as
+  straight pieces in its own frame: stair, room, stair, heart, a level run if needed,
+  the stair up, the cairn's chamber. The ground is a heightfield in 4 m quads, so the
+  delve reaches it only through holes (`Delves.holes`, `chunk_holes` →
+  `TerrainChunk.mesh_arrays` leaves the quads out of the near mesh and its collision)
+  under the barrow's chamber and the cairn, which cover them; delve barrows are turned
+  to the ground's grid (`grid_heading`) and broadened. Everything else lies at least
+  `COVER_M` under the ground. `RuinBuilder._delve_build` builds it all (paved floors with
+  collision, walls, ceiling slabs, steps over ramps, the cairn's shell, facade and
+  forecourt). In play `Delves` tracks `inside` and `underground` (SkySystem: no sun,
+  moon, mist; StormFX: no lightning; SoundBed: the delve loop; Dread: night, its shapes
+  on the delve's floors; PlanetPlayer: no ground safety net or swimming), the cairn's
+  slab (opens from inside only, `WorldSave "delve_doors"`) and the find
+  (`WorldSave "delve_finds"`). `DELVE_DEBUG=1` prints why a way out was refused.
+- Checks: `tools/old_hearth_check.gd`, `tools/delve_check.gd`; the walkabout's
+  `SITES=delve`.
+
 ## UI
 
 - **HUD:**

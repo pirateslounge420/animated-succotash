@@ -2968,7 +2968,7 @@ func _delve_stair(pc: Dictionary, off: float, first: bool, open_to: float, floor
 		var fb := lerpf(y0, y1, b / length)
 		var lo := minf(fa, fb)
 		var hi := maxf(fa, fb)
-		var top := hi + h + Delves.SLAB
+		var top := hi + h + Delves.SLAB + absf(fb - fa) + 0.3
 		var open := first and b <= open_to
 		if first and a < open_to:
 			top = minf(top, floor_top - off + 0.04)
@@ -2979,7 +2979,10 @@ func _delve_stair(pc: Dictionary, off: float, first: bool, open_to: float, floor
 			var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
 			var pv := Delves.perp(pc.dir)
 			var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
-			box(Transform3D(bs, Vector3(mid.x, hi + h + Delves.SLAB * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, Delves.SLAB, b - a + 0.06), (palette[rng.randi() % palette.size()] as Color).darkened(0.1), 0.0, 0.08, 0.03)
+			# Thick enough to overlap the next step's slab (no slit to the
+			# void between them).
+			var thick := Delves.SLAB + absf(fb - fa) + 0.3
+			box(Transform3D(bs, Vector3(mid.x, hi + h + thick * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, thick, b - a + 0.06), (palette[rng.randi() % palette.size()] as Color).darkened(0.1), 0.0, 0.08, 0.03)
 		a = b
 	# The steps (drawn) and the ramp under them (walked on).
 	var rise := absf(y1 - y0)

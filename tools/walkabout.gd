@@ -19,6 +19,9 @@ extends SceneTree
 ## camp's first frame must be afternoon (the sun above the dusk band).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
+## SITES=delve the nearest barrow with a delve (§CJ): from outside, its
+## stairhead, the first room and the heart by torchlight at noon (it must
+## be dark but for the torch), and the cairn the way out comes up in.
 ## SITES=opening_camp,random_biome keeps a subset; QUICK=1 one facing and
 ## the first hour (a smoke run). DEV_PIN=0 boots a fresh random world (no
 ## SEED; its frames go under the seed it rolled) and leaves no save:
@@ -115,6 +118,8 @@ func _run() -> void:
 			kinds.append("nests")
 		if only.has("fig"):
 			kinds.append("fig")
+		if only.has("delve"):
+			kinds.append("delve")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -128,6 +133,8 @@ func _run() -> void:
 				else:
 					sites.append({"name": "sacred_fig", "dir": CreatureSpawner._offset(fig.dir, PI * 0.5, 24.0), "look": fig.dir,
 						"note": "the sacred fig in %s, %.0f km from the camp" % [str(fig.biome).to_lower(), CubeSphere.surface_distance_m(fig.dir, camp_d) / 1000.0]})
+			"delve":
+				sites.append_array(_delve_sites(camp_d))
 			"opening_camp":
 				sites.append({"name": "opening_camp", "dir": camp_d, "spawn_hour": true})
 			"first_road_1km":
@@ -308,6 +315,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	main.chunks.load_blocking(d)
 	player.spawn_at(d, site.get("look", CreatureSpawner._offset(d, 0.0, 30.0)))
 	await _frames(20)
+	if site.has("delve_stand"):
+		await _into_delve(site)
 	# Wait for the chunk's near plants (the leaf cards, not the far
 	# pictures), as play has them within seconds on a GPU.
 	# Bounded by the clock, not frames: the software renderer draws about
@@ -354,6 +363,10 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	var lat := CubeSphere.latitude(d)
 	var base: float = floor(spawn_days) + 1.0
 	var first := true
+	if site.has("delve_stand") or site.has("delve_hours"):
+		# Down there it is dark at noon but for the torch (§CJ).
+		hours = [{"solar_h": 13.0, "weather": "clear"}]
+		facings = 1
 	for h in hours:
 		var hour := float(h.get("solar_h", 14.0))
 		var overcast := str(h.get("weather", "clear")) == "overcast"
@@ -448,3 +461,93 @@ func _nest_plant(sp: PlantSpecies, d: Vector3) -> bool:
 			if CubeSphere.surface_distance_m(spot[0], d) <= float(spot[1]) + 1.5:
 				return true
 	return false
+
+
+## The nearest barrow with a delve (design 1 Oct §CJ) within 150 km: from
+## outside, at the stairhead, in the first room and in the heart (by
+## torchlight), and at the cairn's door.
+func _delve_sites(camp: Vector3) -> Array:
+	var map: PlanetData = world.planet
+	var site := {}
+	var bd := INF
+	for r in [40000.0, 150000.0]:
+		for s in Ruins.near(map, camp, r):
+			if Delves.has_delve(s) and CubeSphere.surface_distance_m(s.dir, camp) < bd:
+				bd = CubeSphere.surface_distance_m(s.dir, camp)
+				site = s
+		if not site.is_empty():
+			break
+	if site.is_empty():
+		lines.append("-- delve: no barrow with a delve within 150 km")
+		return []
+	var lay := Delves.layout(map, site)
+	var fr := Delves.frame(map, site)
+	var l: float = site.half_l
+	var note := "the barrow %.1f km from the camp" % (bd / 1000.0)
+	var out: Array = []
+	out.append({"name": "delve_barrow", "dir": Delves.to_dir(fr, 0.0, -l - 14.0), "look": site.dir, "note": note + ", its facade", "delve_hours": true})
+	var zc: float = lay.zc
+	out.append({"name": "delve_stairhead", "dir": Delves.to_dir(fr, 0.0, zc - 1.6), "look": Delves.to_dir(fr, 0.0, zc + 20.0), "note": note + ", the chamber and the stair down",
+		"delve_seed": int(site.seed), "delve_stand": Vector3(0.0, NAN, zc - 1.6), "delve_look": Vector3(0.0, -1.5, zc + 3.0)})
+	var room: Dictionary = lay.pieces[1]
+	var rc: Vector2 = room.c
+	out.append({"name": "delve_room", "dir": Delves.to_dir(fr, rc.x, rc.y + 0.6), "look": Delves.to_dir(fr, rc.x, rc.y + 20.0), "note": "the first room (%s), its old hearth cold" % lay.feature,
+		"delve_seed": int(site.seed), "delve_stand": Vector3(rc.x, float(room.y0), rc.y + 0.6), "delve_look": Vector3(rc.x, float(room.y0), rc.y + 4.0), "torch": true})
+	var heart: Dictionary = lay.pieces[3]
+	var hc: Vector2 = heart.c
+	out.append({"name": "delve_heart", "dir": Delves.to_dir(fr, hc.x, hc.y + 0.8), "look": Delves.to_dir(fr, hc.x, hc.y + 20.0), "note": "the heart: the dead and the %s" % lay.find_kind,
+		"delve_seed": int(site.seed), "delve_stand": Vector3(hc.x, float(heart.y0), hc.y + 0.8), "delve_look": Vector3(hc.x, float(heart.y0), hc.y + 5.0), "torch": true})
+	var cairn: Dictionary = lay.cairn
+	if not cairn.is_empty():
+		var o: Vector2 = cairn.o
+		var dv: Vector2 = cairn.dir
+		var at: Vector2 = o + dv * 9.0
+		out.append({"name": "delve_cairn", "dir": Delves.to_dir(fr, at.x, at.y), "look": Delves.to_dir(fr, o.x, o.y), "note": "the cairn the way out comes up in, its slab shut", "delve_hours": true})
+	return out
+
+
+## Stand inside a delve: the barrow built and solid, the player on the
+## piece's floor (layout coordinates, NAN y: the ground), a lit torch in
+## hand if the site asks for one.
+func _into_delve(site: Dictionary) -> void:
+	var node: Node3D = null
+	var t0 := Time.get_ticks_msec()
+	while node == null and Time.get_ticks_msec() - t0 < 60000:
+		main.landmarks.build_ruin_at(site.dir)
+		var ruins: Dictionary = main.landmarks.built_ruins()
+		for c in ruins:
+			var n: Node3D = ruins[c]
+			if is_instance_valid(n) and int((n.get_meta("site", {}) as Dictionary).get("seed", 0)) == int(site.delve_seed):
+				node = n
+		await process_frame
+	if node == null:
+		site["note"] = str(site.get("note", "")) + " · the barrow did not build"
+		return
+	for i in 400:
+		if not RuinBuilder.wants_collision(node):
+			break
+		RuinBuilder.build_collision_part(node)
+	var off := float(node.get_meta("delve_off", 0.0))
+	var st: Vector3 = site.delve_stand
+	var lk: Vector3 = site.delve_look
+	# The floor (layout y; NAN: the paving on the ground), the player's
+	# feet on it (physics is off in the walkabout: no settling).
+	var y: float = st.y - off
+	if is_nan(st.y):
+		y = main.chunks.ground_height(world.dir_of(node.global_transform * Vector3(st.x, 0.0, st.z))) - (world.radius_of(node.global_position) - PlanetConst.RADIUS_M) + 0.03
+	player.global_position = node.global_transform * Vector3(st.x, y + 0.02, st.z)
+	player.velocity = Vector3.ZERO
+	if bool(site.get("torch", false)):
+		player.inventory.add(Inventory.make("torch"))
+		player.weapon = "torch"
+		player.torch.light()
+	# (Physics is off here, and the torch's light is set from it.)
+	for i in 30:
+		player.torch.update_torch(1.0 / 60.0)
+		await process_frame
+	var lp := node.global_transform * Vector3(lk.x, (lk.y - off) if not is_nan(lk.y) else y, lk.z)
+	var to := lp - player.global_position
+	site["note"] = str(site.get("note", "")) + (" · inside (%s)" % ("underground" if Delves.underground > 0.5 else "at ground level"))
+	if to.length() > 0.1:
+		player.set_view(clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)), -0.8, 0.8), 0.0)
+

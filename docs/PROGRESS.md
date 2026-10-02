@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — Old hearths, tomb lamps, the barrow's delve (§CJ) and the dusk shift change (§CH) (Mike: "sounds good get to work"; his 2 Oct answers on the §CJ audit)
+- **Old hearths** (`OldHearths`): a cold hearth at every ruin with no camp and every nest holding remains (§CK). Rekindle it with a lit torch and feed it; lit, it holds the dark off and can be your hearth. It is kept in the save and burns down while you are away. **Torch only:** Mike's flint-and-steel idea clashes with the locked "fire is never made" (30 Sept §BP). Asked, he said "sounds good" to keeping the torch only, so that is what is built; Claude in chat to record it.
+- **Tomb lamps:** the barrow's, desert pyramid's, mastaba's and mausoleum's lamp-gold lights are now stone lamps, dark until the ruin's hearth burns (Mike: "light … that activate after the main hearth is rekindled"). The teal moss glows stay on.
+- **§CJ, the first delve** (`Delves`, `RuinBuilder._delve_build`): every barrow in stone or snow country leads down.
+  - The stairhead is in the end chamber. A 32° stair goes down under the mound to the first room, which has the old hearth (the one safe room) and bone niches or a fallen slab. A second stair leads to the heart: the dead, ochre on the ceiling, a moss glow, and a spear or bow taken once. A stair up (with a level run if the ground dips) comes out in a small long cairn, whose slab opens only from inside. No traps or puzzle doors.
+  - Delve barrows are a little broader than before and turned to the ground's grid.
+  - The ground (4 m quads) opens only under the chamber and the cairn, which cover it. Inside: no sun, moon, mist or lightning; a drone and drips; dread as at night, its shapes on the delve's floors.
+  - `tools/delve_check.gd`: 0 fails on seeds 7731, 90210 and 101. `old_hearth_check` (lamps at a graveyard, a barrow, a desert pyramid): 0 fails.
+- **§CH, the shift change:** a "dusk" species is out in the twilight only. At the end of its hours each animal goes at its own moment and walks off to bed (ground animals) rather than vanishing; arrivals never pop up in plain sight.
+  - The bed follows the sun: day cicadas (new loop, by biome group, in the warm) fade, then the night insects (their voices differ by biome group), then the frogs; dawn runs backwards.
+  - `tools/shift_check.gd`: 0 fails. Every animal near the 7731 camp is an "any" species, so the roster swap only shows once the data is relabelled.
+- **For Claude in chat (data, additive):**
+  - honest `active` values in `creatures.json`, with `dusk` for the crepuscular;
+  - a microbat, an owl and a rodent;
+  - `audio.json bed`: `cicadas` in `by_group`/`layers` (the code's defaults stand in), and the dusk timings if the sun bands (cicadas −2..6°, night insects 2..−6°, frogs −3..−10°) want changing;
+  - `fuel.json fire.old_hearth_units` (code default 2);
+  - a future `delves.json` for room counts, finds and log lines (now in code).
+- **Found by the walkabout and fixed:**
+  - Underground, the torch went out as if under the sea: its douse test read the sea's level, and a delve can lie below it.
+  - Slits between the stairs' stepped ceiling slabs let the sky show through; the slabs are now thick enough to overlap.
+  - `delve_check` now also checks that no ray from inside escapes to the sky and that a lit torch stays lit down there.
+- **Also:** `PlayerFires` flickers every frame (it was once a second). The `get_meta(…, null)` trap in the new code was fixed (Godot 4.3 treats a null default as none).
+- **Checks re-run:** `road_reach_check` 7731 and `new_world_check` 0 fails; a headless boot showed no script errors; the walkabout `SITES=delve` on 7731 (frames on this machine under `tools/reference/walkabout/7731/delve_*`; not kept in the repo).
+
 ## 2026-10-02 — Docs and comments caught up with the full planet, the ambient keys and Godot only (no behaviour change; design §CH–§CJ's docs pass, §CI)
 - **HOW_TO_RUN §4**: play is on the full 4,000 km planet; `dev.json` has `postage_stamp` false and `spawn_choice` -1; the 40 km stamp is only for the checks and renders (`STAMP=1`). The dev pins hold in play only with `pin_in_play` or `DEV_PIN=1`.
 - **HOW_TO_RUN §5**: the keys as they work now in the ambient profile come first. Wall jump, bounce, cling, catch-and-swing, ninja roll, fast drop, super meter and V/F5 third person moved to a short "shinobi profile only" table. The gamepad list lost its unbound right-shoulder wall jump. "Press E" became right click.
