@@ -175,6 +175,7 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	home = d
 	_rng.seed = seed_value
 	lod_phase = seed_value & 3
+	shift_jitter = float((seed_value >> 4) & 255) / 255.0 * 0.3 - 0.15
 	name = sp.name.replace(" ", "_")
 	heading = CubeSphere.north(d).rotated(d, _rng.randf() * TAU)
 	_parts = CreatureBodies.build(sp)
@@ -227,6 +228,41 @@ func set_host(h: Dictionary) -> void:
 ## Fade out and free itself (walked out of range, or its time of day ended).
 func leave() -> void:
 	leaving = true
+
+
+## The shift change (design 1 Oct §CH): its hours are over and it goes to
+## bed, not out like a light. Each animal has its own moment
+## (shift_jitter, a share of daylight), so a dusk empties over minutes. A
+## ground animal walks off away from you toward its bed and only goes once
+## it is well off (BED_M) or a while has passed; the rest settle out of
+## sight a few seconds later.
+const BED_M := 28.0
+var bedding := false
+var shift_jitter := 0.0
+var _bed_t := 0.0
+
+
+func bed_down(player_dir: Vector3) -> void:
+	if bedding or leaving or dead:
+		return
+	bedding = true
+	_bed_t = 0.0
+	if species.role == "ground":
+		var away := -_tangent_to(player_dir)
+		goal = (dir + away * _rng.randf_range(40.0, 60.0) / PlanetConst.RADIUS_M).normalized()
+		mode = "walk"
+		_timer = 0.0
+
+
+func _bedding(delta: float, to_player: float) -> void:
+	_bed_t += delta
+	var gone := to_player > BED_M or _bed_t > 30.0
+	if species.role != "ground":
+		gone = _bed_t > 3.0 + float(lod_phase) * 2.0
+	if gone:
+		leave()
+	elif species.role == "ground" and mode != "flee":
+		mode = "walk"
 
 
 ## Show or hide the body (mythical creatures are heard before they're seen).
@@ -324,6 +360,8 @@ func tick(delta: float, ctx: Dictionary) -> void:
 			_attack(delta, ctx, to_player)
 			_place(delta)
 			return
+	if bedding and not leaving:
+		_bedding(delta, to_player)
 	match species.role:
 		"ground":
 			_ground(delta, player_dir, to_player, shy)

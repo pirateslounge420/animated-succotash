@@ -113,6 +113,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _fire_hiss_loop(rng)
 		"delve_loop":
 			samples = _delve_loop(rng)
+		"cicadas_loop":
+			samples = _cicadas_loop(rng)
 		"fire_snap":
 			samples = _fire_snap(rng)
 		"fire_crackle":
@@ -473,6 +475,30 @@ static func _insects_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 			tr = pow(tr, 6.0)
 			acc += sin(TAU * float(v[0]) * t) * tr * float(v[3]) * (0.7 + 0.3 * sin(t * 0.8 + float(v[2])))
 		raw[i] = acc * 0.25 + rng.randf_range(-1, 1) * 0.02
+	return _loopify(raw, n, fade)
+
+
+## Cicadas in the heat of the day (design 1 Oct §CH): a few singers, each
+## a fast tymbal buzz (clicks a hundred-odd times a second on a high
+## ringing band) that swells and falls over a few seconds, out of step
+## with the others (8 s loop).
+static func _cicadas_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(8.0 * RATE)
+	var fade := int(0.6 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var singers := []
+	for k in 4:
+		singers.append([rng.randf_range(4200.0, 6800.0), rng.randf_range(110.0, 190.0), rng.randf_range(2.5, 5.0), rng.randf() * TAU, rng.randf_range(0.5, 1.0)])
+	for i in raw.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for sg in singers:
+			var swell := 0.5 + 0.5 * sin(TAU * t / float(sg[2]) + float(sg[3]))
+			swell = pow(swell, 2.0)
+			var click := pow(0.5 + 0.5 * sin(TAU * float(sg[1]) * t), 8.0)
+			acc += sin(TAU * float(sg[0]) * t + 2.0 * sin(TAU * 37.0 * t)) * click * swell * float(sg[4])
+		raw[i] = acc * 0.35 + rng.randf_range(-1, 1) * 0.015
 	return _loopify(raw, n, fade)
 
 

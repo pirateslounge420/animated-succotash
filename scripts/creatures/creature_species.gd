@@ -227,12 +227,19 @@ func climate_ok(t_c: float, m: float, elevation_m: float) -> bool:
 
 
 ## Is this species out and about at this light level (0 night .. 1 day)?
+## "dusk" (crepuscular, design 1 Oct §CH): out in the twilight, dawn and
+## dusk, between DUSK_BAND of daylight; asleep in full day and deep night.
+const DUSK_BAND := Vector2(0.04, 0.6)
+
+
 func active_now(daylight: float) -> bool:
 	match active:
 		"day":
 			return daylight > 0.3
 		"night":
 			return daylight < 0.3
+		"dusk":
+			return daylight > DUSK_BAND.x and daylight < DUSK_BAND.y
 		"full_moon":
 			# Only on the nights round the full moon.
 			return daylight < 0.3 and moon_full > 0.85

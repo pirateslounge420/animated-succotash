@@ -12,7 +12,22 @@ extends Node
 ## walk to (Audio3D).
 
 const BUS := "Bed"
-const LAYERS := ["wind", "insects", "birds_far", "frogs"]
+const LAYERS := ["wind", "insects", "birds_far", "frogs", "cicadas"]
+## The sound keeps the clock (design 1 Oct §CH): by the sun, not the
+## clock's hour, each layer comes and goes over its own band of the sun's
+## elevation (degrees): cicadas fade out as the sun goes down, then the
+## first night insects, then the frogs' chorus; dawn the same backwards.
+## [below, above]: silent below `below`, full above `above` (cicadas); the
+## night layers the other way round.
+const CICADA_SUN := Vector2(-2.0, 6.0)
+const NIGHT_INSECT_SUN := Vector2(-6.0, 2.0)
+const FROG_SUN := Vector2(-10.0, -3.0)
+## Where cicadas sing, by the bed's biome group (audio.json bed.by_group's
+## "cicadas", when it has them, wins), and how warm it must be.
+const CICADA_GROUPS := {"forest": 0.9, "open": 1.0, "wetland": 0.5, "desert": 0.6, "cold": 0.0, "coast": 0.2}
+const CICADA_WARM_C := Vector2(14.0, 22.0)
+## The night insects differ by biome (§CH): each group its own voices.
+const INSECT_VARIANT := {"forest": 1, "open": 2, "wetland": 3, "desert": 4, "coast": 5}
 
 static var D: Dictionary = Audio3D.table().get("bed", {})
 
@@ -74,7 +89,16 @@ static func _group_of(biome_key: String) -> String:
 	return "open"
 
 
-static func _hour_word(clock_h: float) -> String:
+static func _hour_word(clock_h: float, sun_deg: float = NAN) -> String:
+	# By the sun when we know it (§CH): twilight is the sun within 10
+	# degrees of the horizon (day_cycle.json twilight_deg), dawn before
+	# noon and dusk after.
+	if not is_nan(sun_deg):
+		if sun_deg > 10.0:
+			return "day"
+		if sun_deg < -10.0:
+			return "night"
+		return "dawn" if clock_h < 12.0 else "dusk"
 	if clock_h >= 4.5 and clock_h < 7.5:
 		return "dawn"
 	if clock_h >= 7.5 and clock_h < 17.5:
@@ -107,7 +131,7 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground)
 		if layer == "wind":
 			g *= lerpf(1.0, float(canopy.get("wind_gain", 0.45)), _canopy)
-		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", 0.0))
+		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", -18.0 if layer == "cicadas" else 0.0))
 		p.volume_db = lerpf(p.volume_db, want_db, minf(delta * 1.5, 1.0))
 	if _delve != null:
 		_delve.volume_db = lerpf(_delve.volume_db, linear_to_db(maxf(Delves.underground, 0.0005)) + float((D.get("layers", {}) as Dictionary).get("delve", {}).get("db", -12.0)), minf(delta * 1.5, 1.0))
@@ -121,7 +145,8 @@ func _retarget(weather: Dictionary, clock_h: float) -> void:
 	var by_group: Dictionary = (D.get("by_group", {}) as Dictionary).get(group, {})
 	var by_hour: Dictionary = D.get("by_hour", {})
 	var by_season: Dictionary = D.get("by_season", {})
-	var hour := _hour_word(clock_h)
+	var sun := sky.sun_elevation_deg if sky != null else NAN
+	var hour := _hour_word(clock_h, sun)
 	var lat := CubeSphere.latitude(pd)
 	var season := str(Seasons.at(world.days, lat).get("name", "summer"))
 	var temp := float(weather.get("temp_c", 15.0))
@@ -130,17 +155,35 @@ func _retarget(weather: Dictionary, clock_h: float) -> void:
 	var water_km := 99.0
 	if map != null and not map.water_dist_km.is_empty():
 		water_km = map.water_dist_km[map.cell_at(pd)]
+	# The night insects' voices for this country.
+	var iv := int(INSECT_VARIANT.get(group, 0))
+	var ip: AudioStreamPlayer = _players["insects"]
+	if int(ip.get_meta("variant", 0)) != iv:
+		ip.set_meta("variant", iv)
+		ip.stream = SoundSynth.stream("insects_loop", iv)
+		ip.play(randf() * 3.0)
 	for layer in LAYERS:
-		var g := float(by_group.get(layer, 0.0))
+		var g := float(by_group.get(layer, CICADA_GROUPS.get(group, 0.0) if layer == "cicadas" else 0.0))
 		if by_hour.has(layer):
 			g *= float((by_hour[layer] as Dictionary).get(hour, 1.0))
 		if by_season.has(layer):
 			g *= float((by_season[layer] as Dictionary).get(season, 1.0))
+		elif layer == "cicadas" and by_season.has("insects"):
+			g *= float((by_season["insects"] as Dictionary).get(season, 1.0))
+		# The handover, by the sun (§CH).
+		if not is_nan(sun):
+			match layer:
+				"cicadas":
+					g *= smoothstep(CICADA_SUN.x, CICADA_SUN.y, sun) * smoothstep(CICADA_WARM_C.x, CICADA_WARM_C.y, temp)
+				"insects":
+					g *= 1.0 - smoothstep(NIGHT_INSECT_SUN.x, NIGHT_INSECT_SUN.y, sun)
+				"frogs":
+					g *= 1.0 - smoothstep(FROG_SUN.x, FROG_SUN.y, sun)
 		match layer:
 			"wind":
 				var w: Dictionary = D.get("wind", {})
 				g = clampf(g * 0.3 + wind_v.length() * float(w.get("gain_per_mps", 0.08)), 0.0, float(w.get("max_gain", 1.0)))
-			"insects", "frogs":
+			"insects", "frogs", "cicadas":
 				g *= smoothstep(float(D.get("cold_c_silence", 4.0)), float(D.get("cold_c_silence", 4.0)) + 8.0, temp)
 				g *= 1.0 - 0.7 * smoothstep(0.5, 4.0, rain)
 			"birds_far":

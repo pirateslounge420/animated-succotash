@@ -182,8 +182,12 @@ func update_creatures(delta: float, daylight: float) -> void:
 	for key in _ambient.keys():
 		var c: Creature = _ambient[key]
 		var dist := c.distance_to(pd)
-		if not c.leaving and (dist > DESPAWN_RADIUS_M or not c.species.active_now(daylight)):
+		if not c.leaving and dist > DESPAWN_RADIUS_M:
 			c.leave()
+		elif not c.leaving and not c.species.active_now(clampf(daylight + c.shift_jitter, 0.0, 1.0)):
+			# Its hours are over (design 1 Oct §CH): to bed, each at its own
+			# moment.
+			c.bed_down(pd)
 		c.lod_delta += delta
 		var stride := 1
 		if dist > LOD_NEAR_M and c.angry <= 0.0 and c.mode != "flee" and c.mode != "hop" and not c.fly_off:
@@ -294,6 +298,11 @@ func _refresh_ambient(sp_idx: int, pd: Vector3) -> void:
 		var info: Dictionary = _checked[key]
 		if info.is_empty():
 			continue
+		# Arrivals come from out of sight (design 1 Oct §CH: a different
+		# cast comes out as the light goes): never pops up in front of you
+		# within ARRIVE_UNSEEN_M.
+		if _in_plain_sight(info.dir):
+			continue
 		var cr := Creature.new()
 		_root.add_child(cr)
 		cr.setup(sp, world, chunks, self, info.dir, hash(key))
@@ -301,6 +310,20 @@ func _refresh_ambient(sp_idx: int, pd: Vector3) -> void:
 			cr.set_host(info.host)
 		cr.finished.connect(_on_ambient_finished.bind(key))
 		_ambient[key] = cr
+
+
+const ARRIVE_UNSEEN_M := 40.0
+
+
+func _in_plain_sight(d: Vector3) -> bool:
+	var cam := player.get_viewport().get_camera_3d() if player.is_inside_tree() else null
+	if cam == null:
+		return false
+	var p: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
+	var to := p - cam.global_position
+	if to.length() > ARRIVE_UNSEEN_M:
+		return false
+	return to.normalized().dot(-cam.global_basis.z) > 0.35
 
 
 func _on_ambient_finished(c: Creature, key: Vector4i) -> void:
