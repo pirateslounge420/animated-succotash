@@ -1,0 +1,43 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §CL] One-of-a-kind places: each appears exactly once in a world. The sites pass (§CK) places it where its `where` holds, off a road like the §BC landmarks (40-120 m from the trail and out of sight of it, with a faint path in), built to the composition rules (LOOK_REFERENCE: a straight last approach, walls either side, an apron in front). It is never a camp and never a ruin. Restart after editing.",
+  "fields": "name · count_per_world (always 1) · where (biomes in order of preference; the first the world has wins; other: plain words) · tree (the species and how this one specimen differs from the wild ones) · figure (who is there: the shared cloaked rig, pose, colours, behaviour) · ground (the clearing) · sound · log (the line written the first time you come within reach) · open (calls still with the designer).",
+  "rig": "Every figure uses the player's cloaked rig (one rig, §0); a figure here is a pose and a palette, never a new body. The player's indigo-and-rust is reserved for the player."
+ },
+ "uniques": {
+  "sacred_fig": {
+   "name": "The sacred fig",
+   "count_per_world": 1,
+   "where": {
+    "biomes": ["TROPICAL_DRY_FOREST", "JUNGLE", "SAVANNA"],
+    "other": "A level clearing on a low rise in tropical dry forest (else monsoon jungle, else savanna woodland), off a road, not in a wetland or on a slope; the oldest tree for kilometres. If old stone is near (a ruin wall, a boulder), the tree grows out of it."
+   },
+   "tree": {
+    "genus": "Ficus",
+    "species": "religiosa",
+    "entry": "data/biomes/21_tropical_dry_forest.json → plants.canopy → \"Sacred fig\" (also in 20_jungle.json)",
+    "size": "Past the top of the species' band: about 30 m tall, the crown 35-45 m across, the trunk a fused mass of old grey stems several metres round.",
+    "notes": "Heart-shaped leaves with a long drip-tip tail on long, slender stalks, so they tremble in still air (the wind shader has no per-species flutter yet: §CL asks for one here). Smooth pale grey bark. Roots gripping stone where it started on a wall. Purple-black figs in pairs in the leaf axils in season; birds and bats in the crown."
+   },
+   "figure": {
+    "rig": "the cloaked figure, folk scale (~1.7 m standing)",
+    "pose": "seated in meditation under the crown on the east side of the trunk, facing east: legs crossed, hands resting together in the lap, back straight, eyes closed, hood down",
+    "robe": {
+     "colour": "#CC7722",
+     "edge": "#A8601C",
+     "notes": "an ochre robe; one shade throughout, no pattern"
+    },
+    "moves": "never, but to breathe; nothing the player does changes that",
+    "speaks": false,
+    "name_in_play": null
+   },
+   "ground": "Bare swept earth in a ring under the crown, fallen leaves at its edge; a few flat stones; no fire, no tools, no store.",
+   "sound": "The leaves' dry rustle over everything; birds in the crown by day.",
+   "log": "Someone sits beneath the old fig, very still.",
+   "open": [
+    "Naming (Mike): Mike asked for the Buddha meditating beneath it. Play names nobody (§BO keeps real names out of play), so the default is no name and the image speaks for itself; say if the log or a label should name him.",
+    "Night (Mike): does the dark keep away from this place, a still circle with no fire? Default: no special rule until Mike decides."
+   ]
+  }
+ }
+}

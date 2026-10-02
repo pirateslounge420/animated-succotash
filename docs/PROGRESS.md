@@ -4,6 +4,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — Nests (§CK), the sacred fig (§CL), ferns, rhododendron forests and mad honey (§CM): design and data only (design chat; Mike's 1 Oct evening; lettered after the other session's §CH–§CJ)
+- **`data/landforms.json`**: 35 nests in seven families (cave mouth to beaver pond), each with its cause, the biomes it dresses into, variants, what it gives a camp, the hearth spot, peoples, remains (§BQ signature ids), build/tier/status and checked real-world sources. Filled by six parallel agents, one family each; **`tools/landforms_check.py --strict`: 35 landforms, 0 errors, 0 warnings.** All `[NOT WIRED YET — design §CK]`.
+- **`data/uniques.json`**: the one sacred fig with its meditating figure (§CL), not wired.
+- **Plant data** (`plant_schema_check --strict` on the eight edited biome files: 212 entries, 0 errors): Sacred fig (*Ficus religiosa*) in tropical dry forest and jungle; Pontic rhododendron and yellow azalea (*R. ponticum*, *R. luteum*) in temperate deciduous and temperate rainforest; wavy cloak fern and spiny cliffbrake (*Astrolepis sinuata*, *Pellaea truncata*) in hot desert, canyon and thorn scrub. New associations: the Himalayan rhododendron forest (cloud forest), the beech-rhododendron mad-honey forest (temperate deciduous); the ferns join the wash, slope and Tamaulipan associations. The new species are hero species in their files so the trim keeps them. **These load and grow with no code change.**
+- **`habitat.json`**: the rhododendron group joins `always_present` and `trim.always_keep` (§CM, live on restart). **`items.json → mad_honey`**, not wired.
+- **Docs:** §CK–§CM in RECONCILIATION_2026-09-30 (with the engine gaps the fill found, and two spec contradictions noted), a §BR order line, and two §CK notes in WORLD_SYSTEMS_SPEC (ruins hold; cave mouths before Phase 3).
+- **Open for Mike:** the meditating figure's name in play and whether the dark spares his circle (§CL); whether "the kind of place, not Earth's map" loosens the realm gate (§CM).
+
 ## 2026-10-02 — The docs brought in line with the ambient cut: CLAUDE.md, 1/10 Earth everywhere, Godot only; night life and dungeons designed (design chat; Mike, 1 Oct 22:16–23:01; design §CH, §CI, §CJ)
 - **New `CLAUDE.md`:** the brief Claude Code loads every session (it imports `WORKING_AGREEMENT.md`). It covers the ambient game, the scale, the two games, the sources of truth in order, the look in short, and how we work (no screenshots per step).
 - **Sources of truth reordered:** the 30 Sept doc first (§BR is the order of work), then the 27 Sept doc, `LOOK_REFERENCE`, `PLANT_SCHEMA`, the spec. Updated in `WORKING_AGREEMENT`, the README, the spec's header and Part C, and `DESIGN.md`'s banner. `docs/OVERVIEW.md` is rewritten for the ambient game; it still pitched the shinobi game. The README is rewritten, with the keys left to `HOW_TO_RUN.md`.

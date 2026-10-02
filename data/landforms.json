@@ -1,0 +1,3697 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §CK] Nests: the landforms the world generator places as the places camps live, and where an emptied camp leaves its remains (Mike, 1 Oct: a ruin is the remains of a camp, which can sit at any of these features). Real peoples chose THIS overhang, THIS plunge pool, THIS sinkhole rim, not 'a forest'. One entry per landform kind under `landforms`; `camp_loop` says how camps use them; tools/landforms_check.py is the gate (0 errors before commit). Restart after editing.",
+  "cause_not_biome": "A landform follows its CAUSE (rock, water, ice, fire, wind, relief, climate), never a biome name; the biome only dresses it. A limestone cave mouth appears wherever a limestone cliff meets water, so it shows up in rainforest, oak wood, maquis and desert alike, and people lived in all of them. The same cause in another climate often makes a different landform: those are `variants` (karst: a cenote in warm lowland, a doline in cool country, a blue hole drowned in a reef).",
+  "fields": "name · family (a key of `families`) · scale · build[] · status · tier · rarity · when (a plain-language test for the sites pass, like biome_map site_rules) · cause (machine hints, keys in `vocab.cause_keys`; ranges are [min, max], null = open) · biomes (BiomeTemplates keys where it shows up, the dressings) · variants[] (same cause, other climate: id, name, when, cause, biomes, note) · size_m / depth_m (optional, first guesses) · shape (what it looks like, for the builder) · gives[] (vocab.gives) · hearth_spot (exactly where a camp sits relative to the feature) · hazard (optional) · seasonal (optional: when a camp lives there; empty the rest of the year) · people[] (data/peoples ids, likeliest first) · remains[] (data/peoples ruin signature ids that suit this nest) · links (optional: roads, rooms, threshold, gate, magic, audio) · plants (optional: ferns and the like the nest itself grows) · real_world[] (analogue, region, note, source URL) · notes (optional).",
+  "units": "Temperatures are mean annual °C at the site; moisture is PlanetData effective moisture 0-1 (~0.1 hyper-arid, ~0.3 semi-arid, ~0.5 subhumid, ~0.7 humid); elevation_m, relief_m and depth_m are Earth-equivalent metres like plant data (the game multiplies by PlanetConst.HEIGHT_SCALE, 1/10); size_m is real walking-scale metres; slope is rise over run (1 = 45°).",
+  "scale": "set_piece: a walkable scene, tens to a few hundred metres. line: a linear feature kilometres long (ravine, esker, levee, wadi, escarpment). region: reshapes the terrain over many kilometres (fjord coast, tower karst, mesa country, caldera, atoll, dune sea).",
+  "build": "How the engine makes it. existing: the engine already generates it (waterfalls, ravines, escarpments). biome: it exists as a biome; the nest is a spot in it. stamp: a walking-scale carve or raise in the ground, like the ravines. mesh: a set piece with a roof, placed on the ground (see roof_rule). region: a TerrainField / blueprint change. look: water, shader or glow only. sound: an audio point source (§BG).",
+  "roof_rule": "The ground is a heightfield and cannot overhang. Anything with a roof (an overhang, a cave mouth, a grotto, a lava tube, a cenote's undercut lip, a sea cave, an arch) is a mesh set piece placed on the terrain, like camps.gd's cliff slab and RuinBuilder's barrow passage. The entrance plus a first chamber only; the volumetric caves behind them are Phase 3 (WORLD_SYSTEMS_SPEC).",
+  "status": "built: the engine makes it today. partial: something close exists and needs keying or finishing. new: nothing yet.",
+  "tier": "Build order (§CK): 1 = already half-built, and brings back the two peoples who have no home today (shelter folk, karst folk); 2 = walkable stamps and set pieces; 3 = region reshapes.",
+  "rarity": "First guesses for the sites pass, tune by walking: common = about one every 3-5 km where its cause holds; uncommon = one every 10-15 km; rare = a handful per region, 40 km or more apart.",
+  "gives": "What a nest offers a camp (vocab.gives). roof: a ceiling nobody built. water: drinkable water at the hearth spot or a short walk. food: food the feature itself gathers (fish below a fall, shellfish in pools, game funnelled). fuel: fuel the feature gathers (driftwood at a fjord head, peat at a bog). lookout: a view over the approaches. defence: one way in. lee: out of the wind. crossing: a ford, natural bridge or dry line over bad ground. landing: a place to pull a boat up. road: the feature is itself a route. pasture: grazing it holds. toolstone: obsidian, flint, chert. salt. warmth: warm ground or water. glow: light at night. landmark: seen from far, a waymark.",
+  "people": "Ids from data/peoples (biome_map lives). The site rules still pick the people (§BO); this list says which lives this nest suits, likeliest first. A new site rule per nest kind is Claude Code's, in Peoples.pick.",
+  "remains": "Signature ids from data/peoples → ruin.signatures (§BQ). An emptied camp leaves the signatures of the people who lived there, laid at the hearth spot; this list says which ones suit this nest, so the remains read right for the place (ash and ochre under the overhang, cenote steps on the rim, a bone bed under the jump).",
+  "real_world": "Real places and peoples this is drawn from, cited (a page that was checked). Written with respect: these are living cultures and their ancestors (§BO).",
+  "check": "python3 tools/landforms_check.py [--strict] [--fragment FILE]: biome keys, people ids, signature ids, soil names and vocab; --strict also fails on missing sources and empty optional lists.",
+  "sizes": "size_m, depth_m and every height in `shape` are what gets built at walking scale (first guesses), sized to read next to the player and the 1/10 mountains, as the escarpments (about 14 m) and ravines (about 12 m) already are. Small landforms (towers, necks, pingos, moraines, eskers, arches, kopjes) would vanish at 1/10, so they are not scaled; only geography (mountains, plateaus, calderas, fjord depths) takes HEIGHT_SCALE. The numbers in `cause` stay Earth-equivalent (units).",
+  "plants": "Optional. A nest is its own small habitat inside the biome (§CM, Mike: grottos should have ferns, washes as well): `add` lists binomials that grow AT the nest, where `where` says, even when the biome's own list lacks them, but each only inside its own temperature, moisture and soil bands. A seep grows maidenhair; spray grows filmy fern; a shaded wash bank grows rock ferns. The species must exist in the plant data (the check says if not).",
+  "monuments": "The stone architecture stays (§CK, Mike 1 Oct 20:23): the abandoned castles, aqueducts, crenellated towers, headstone graveyards, pyramids and barrows that Ruins places. They are the monuments of whoever built the roads (§BC), not camps. A monument is a nest too: roof under its vaults and towers, water at its well or aqueduct; a camp may live at one, as today. Every monument is also a delve (§CJ); a nest's cave mouth is the door of a natural-cave delve once Phase 3 digs behind it, and keeps the clock (§CH)."
+ },
+ "camp_loop": {
+  "_help": "How camps use nests (§CK). Read with camps.json (only_at_ruins, wake rules) and the camp sim (§BL).",
+  "states": [
+   "untouched",
+   "lived",
+   "remains"
+  ],
+  "loop": "untouched → a camp settles at the hearth spot → the camp empties (fuel, food or the dark, §BL) → its remains are the ruin (§BQ signatures of the people who lived there) → a new camp moves in and restores them (§BQ inheritance). Any nest may be found at any stage.",
+  "any_nest": "A camp can live at any nest whose gives include roof or water and that has fuel within reach (fuel.json). Nests that give neither (a slot canyon's bed, a dune field, a salt flat's middle) are passages and landmarks, with their hearth spot at the edge.",
+  "start_budget": "[first guess, tune by play] The camps at monuments stay as built (the hearth before the delve, §BX, §CJ). The nests add their own: about one nest in four that gives roof or water holds a living camp, the best first (roof and water both, then water, then roof), and about half of the rest hold an old camp's remains; the rest are untouched. Monuments keep their own grid and count.",
+  "never_inside": "The hearth spot is beside the feature, never in its hazard: never in a slot canyon's bed, on a bog's open surface, in the middle of a salt flat, in a wadi's channel, or in a fall's spray."
+ },
+ "families": {
+  "rock_and_caves": "Karst, sandstone, basalt and granite: caves, shelters, sinkholes, towers, arches, kopjes.",
+  "running_water": "What rivers cut and leave: falls, ravines, escarpment springs, oxbows, dry washes.",
+  "coast_and_sea": "Where land meets sea: coves, tide pools, shell mounds, glowing bays, fjords, atolls, sea caves.",
+  "ice": "What ice made, past or present: cirques, moraines, eskers, pingos, the floe edge.",
+  "fire": "What volcanoes made: calderas, obsidian flows, volcanic necks.",
+  "dry_and_wind": "Dry country and the wind: mesas, dunes, salt flats, oases.",
+  "wet_ground": "Flat wet country: bogs and fens, levees and cheniers, beaver ponds."
+ },
+ "vocab": {
+  "scale": [
+   "set_piece",
+   "line",
+   "region"
+  ],
+  "build": [
+   "existing",
+   "biome",
+   "stamp",
+   "mesh",
+   "region",
+   "look",
+   "sound"
+  ],
+  "status": [
+   "built",
+   "partial",
+   "new"
+  ],
+  "rarity": [
+   "common",
+   "uncommon",
+   "rare"
+  ],
+  "seasonal": [
+   "summer",
+   "winter",
+   "spring",
+   "autumn",
+   "dry_season",
+   "wet_season"
+  ],
+  "gives": [
+   "roof",
+   "water",
+   "food",
+   "fuel",
+   "lookout",
+   "defence",
+   "lee",
+   "crossing",
+   "landing",
+   "road",
+   "pasture",
+   "toolstone",
+   "salt",
+   "warmth",
+   "glow",
+   "landmark"
+  ],
+  "cause_keys": {
+   "rock": "soil names (PlanetData.SOIL_NAMES): granite, basalt, karst, sandstone, alluvium, sand, clay_peat, till",
+   "temp_c": "[min, max] mean annual °C",
+   "moisture": "[min, max] 0-1",
+   "elevation_m": "[min, max] Earth-equivalent metres",
+   "abs_lat_deg": "[min, max] degrees from the equator",
+   "slope": "[min, max] rise over run at the site",
+   "relief_m": "[min, max] Earth-equivalent local relief within ~1 km",
+   "water": "list: ocean, lake, river, none (the water at or beside the site)",
+   "salinity": "list: fresh, brackish, salt",
+   "coast_km": "[min, max] distance to the sea",
+   "river_km": "[min, max] distance to a river",
+   "discharge": "big (the floodplain threshold in BiomePass) or any",
+   "hotspot": "core, flank, old or sea: where it sits relative to a TerrainField volcano hotspot",
+   "wind": "steady: needs a strong steady mean wind (PlanetData.wind_avg)",
+   "depth_m": "[min, max] sea depth, Earth-equivalent",
+   "ice": "present (glacier now) or past (cold ground, till, above the old glacier line)",
+   "near": "list of features that must be close (escarpment, cliff, river_fall, ravine, ...)",
+   "other": "anything else, in plain words"
+  }
+ },
+ "landforms": {
+  "cave_mouth": {
+   "name": "Cave mouth / rock shelter",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "mesh"
+   ],
+   "status": "partial",
+   "tier": 1,
+   "rarity": "common",
+   "when": "A limestone or sandstone cliff (an escarpment face or a ravine wall, 8 m or more) with water within a short walk: at its foot the rock is undercut into an overhang or a cave opens, over a flat, dry floor above the flood, looking out over the valley below.",
+   "cause": {
+    "rock": [
+     "karst",
+     "sandstone"
+    ],
+    "temp_c": [
+     0,
+     35
+    ],
+    "moisture": [
+     0,
+     0.9
+    ],
+    "river_km": [
+     0,
+     1.5
+    ],
+    "near": [
+     "cliff"
+    ],
+    "other": "In dry country a spring or seep within ~500 m of the cliff foot does instead of the river. The mouth faces away from the prevailing wind (wind_avg)."
+   },
+   "biomes": [
+    "TEMPERATE_DECIDUOUS",
+    "MEDITERRANEAN_SCRUB",
+    "SAVANNA",
+    "TROPICAL_DRY_FOREST",
+    "CANYON",
+    "HOT_DESERT"
+   ],
+   "size_m": [
+    8,
+    30
+   ],
+   "shape": "A recess at the cliff foot, 8-30 m wide along the cliff (size_m): a rock roof 3-8 m up that overhangs 4-12 m (walking-scale), smoke-black near the lip; a dry, level floor of dust and ash under it; a drip line of wet stones and ferns where the rain falls off the lip (a pale stain in dry country); sometimes a low, dark passage at the back (Phase 3).",
+   "gives": [
+    "roof",
+    "water",
+    "lee",
+    "lookout"
+   ],
+   "hearth_spot": "Under the roof on the dry floor, 2-3 m back from the drip line and clear of the back wall: dry in rain, and near enough the lip that the smoke rolls out under it. Beds go at the back; a low stone windbreak can close the drip line on the wind side.",
+   "hazard": "Rock can fall from the lip; in a ravine the floor must stand above the flood line.",
+   "people": [
+    "rock_shelter",
+    "karst",
+    "desert"
+   ],
+   "remains": [
+    "ash_hearth",
+    "ochre_wall",
+    "drip_wall",
+    "knapping_floor",
+    "grinding_stone",
+    "soot_cave",
+    "rock_art"
+   ],
+   "links": {
+    "roads": "a camp or ruin node",
+    "rooms": "one feature: the shelter, with the cliff as a wall"
+   },
+   "real_world": [
+    {
+     "analogue": "Prehistoric hunters of the Vézère",
+     "region": "Vézère valley, Dordogne, France",
+     "note": "More than 150 prehistoric sites, 25 of them decorated caves, lie along the valley, lived in over nearly 400,000 years, most likely because game was so plentiful there.",
+     "source": "https://en.wikipedia.org/wiki/Prehistoric_Sites_and_Decorated_Caves_of_the_V%C3%A9z%C3%A8re_Valley"
+    },
+    {
+     "analogue": "Hunter-gatherers of Bhimbetka",
+     "region": "Vindhyan foothills, central India",
+     "note": "Five clusters of rock shelters in massive sandstone outcrops above dense forest were painted from the Mesolithic into historical times, and the customs of the 21 villages beside them still resemble the paintings.",
+     "source": "https://whc.unesco.org/en/list/925/"
+    },
+    {
+     "analogue": "Tassili n'Ajjer shelters",
+     "region": "Tassili n'Ajjer plateau, south-east Algeria",
+     "note": "A sandstone plateau of rock forests and shelter-like recesses holds more than 15,000 drawings and engravings from about 6000 BC to the first centuries AD, among them hippos from a wetter Sahara.",
+     "source": "https://whc.unesco.org/en/list/179"
+    }
+   ],
+   "notes": "The rock_shelter site rule (biome_map: an overhang, a cliff foot with a recess, or a cave mouth at the site) is this nest. camps.gd's cliff_site already finds the spot (a wall of 8 m or more within 7 m, flat ground at its foot) and _overhang lays the slab, switched off while camps live only at ruins; key it to karst or sandstone with water near. The wolf den (CreatureSpawner._den_prop: two boulders and a lintel on a steep, cold slope) is a cave-mouth prop too, until Phase 3. Granite overhangs are the kopje's."
+  },
+  "grotto": {
+   "name": "Grotto",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "mesh"
+   ],
+   "status": "partial",
+   "tier": 1,
+   "rarity": "uncommon",
+   "when": "Wet limestone country where water comes out of the rock: in a cliff or on a rocky shore, a small cave whose mouth is dry enough to sleep in and whose back holds a seep, a drip pool or a little stream.",
+   "cause": {
+    "rock": [
+     "karst"
+    ],
+    "temp_c": [
+     2,
+     21
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "near": [
+     "cliff"
+    ],
+    "other": "A seep line, spring or cave stream at the back of the cave."
+   },
+   "biomes": [
+    "TEMPERATE_RAINFOREST",
+    "CLOUD_FOREST",
+    "TEMPERATE_DECIDUOUS",
+    "ROCKY_SHORE"
+   ],
+   "size_m": [
+    10,
+    40
+   ],
+   "shape": "A low, arched mouth 3-6 m wide in a mossy cliff, ferns round it and a trickle running out over the lip; a dry, level floor just inside where daylight reaches; then a passage narrowing back into the dark, 10-40 m from the mouth (size_m), to a small chamber with a pool or a dripping wall. RuinBuilder's barrow passage (passage, side cells, end chamber) in raw rock instead of slabs.",
+   "gives": [
+    "roof",
+    "water",
+    "lee"
+   ],
+   "hearth_spot": "Just inside the mouth on the dry floor, where daylight still reaches, against a side wall so the smoke runs out along the roof; never in the back chamber, where the pool is and the paintings go.",
+   "hazard": "The back is wet and slippery, and its pool can rise into a stream after heavy rain; the passage past the chamber is the closed dark (Phase 3).",
+   "people": [
+    "rock_shelter",
+    "karst"
+   ],
+   "remains": [
+    "ochre_wall",
+    "ash_hearth",
+    "drip_wall",
+    "soot_cave"
+   ],
+   "links": {
+    "roads": "a node, like a spring: the seep is its water",
+    "rooms": "one feature",
+    "magic": "the back pool can be one of the glow ponds (MagicSites)",
+    "audio": "water_flow, quiet: the drip and the trickle at the back"
+   },
+   "real_world": [
+    {
+     "analogue": "Solutrean and Magdalenian people of Altamira",
+     "region": "Cantabria, northern Spain",
+     "note": "People lived in the entrance vestibule, and most of the paintings are in a low side chamber where the painters worked crouched under a roof 1.2 to 2.7 m high.",
+     "source": "https://www.britannica.com/place/Altamira"
+    }
+   ],
+   "notes": "Unlike the cave mouth, the grotto goes back: a mouth to live in, a short passage, a dark chamber. The mesh is RuinBuilder's barrow passage-and-chamber in raw rock; the caves beyond it are Phase 3 (roof_rule). Its mouth matches the rock_shelter site rule, and the karst rule after it.",
+   "plants": {
+    "add": [
+     "Adiantum capillus-veneris",
+     "Asplenium scolopendrium",
+     "Hymenophyllum polyanthos",
+     "Asplenium nidus"
+    ],
+    "where": "Ferns on the dripping walls and round the shaded mouth: maidenhair where the seep keeps warm limestone wet, hart's-tongue on cool limestone, filmy fern where spray or fog never stops, bird's-nest fern on wet tropical rock. Moss over everything wet. Each fern only where its own temperature band allows."
+   }
+  },
+  "cenote": {
+   "name": "Cenote",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "mesh"
+   ],
+   "status": "new",
+   "tier": 1,
+   "rarity": "uncommon",
+   "when": "Limestone karst in warm lowland where the rock swallows the rain, so there is no river within ~3 km and the water is underground: on flat ground, a round shaft has collapsed through to the water table.",
+   "cause": {
+    "rock": [
+     "karst"
+    ],
+    "temp_c": [
+     18,
+     33
+    ],
+    "moisture": [
+     0.15,
+     0.65
+    ],
+    "elevation_m": [
+     0,
+     400
+    ],
+    "slope": [
+     0,
+     0.1
+    ],
+    "river_km": [
+     3,
+     null
+    ]
+   },
+   "biomes": [
+    "TROPICAL_DRY_FOREST",
+    "JUNGLE",
+    "THORN_SCRUB",
+    "SAVANNA"
+   ],
+   "variants": [
+    {
+     "id": "doline",
+     "name": "Doline",
+     "when": "The same karst in cool or temperate country: a bowl-shaped sinkhole, dry or holding a pond, its floor gathering the soil the slopes lose.",
+     "cause": {
+      "rock": [
+       "karst"
+      ],
+      "temp_c": [
+       4,
+       18
+      ]
+     },
+     "biomes": [
+      "MEDITERRANEAN_SCRUB",
+      "TEMPERATE_DECIDUOUS",
+      "STEPPE"
+     ],
+     "note": "People garden the floor: walled plots where the soil collects."
+    },
+    {
+     "id": "blue_hole",
+     "name": "Blue hole",
+     "when": "Karst drowned by the sea inside a reef or lagoon: a deep round hole, dark blue in turquoise shallows.",
+     "cause": {
+      "rock": [
+       "karst"
+      ],
+      "water": [
+       "ocean"
+      ],
+      "depth_m": [
+       2,
+       30
+      ]
+     },
+     "biomes": [
+      "CORAL_REEF",
+      "LAGOON",
+      "SHELF_SEA"
+     ],
+     "note": "A landmark from a height or a boat, not a camp site."
+    }
+   ],
+   "size_m": [
+    15,
+    60
+   ],
+   "depth_m": [
+    5,
+    25
+   ],
+   "shape": "A round shaft with sheer to undercut walls and a pool of clear blue-green water at the bottom, at the local water table; roots and vines hang down the walls; a slope of fallen blocks on one side is the way down.",
+   "gives": [
+    "water",
+    "landmark"
+   ],
+   "hearth_spot": "On the rim above the fallen-block slope, a few metres back from the edge and upwind of it.",
+   "hazard": "The drop: a sheer fall to the water; the way down is the block slope or a ladder.",
+   "people": [
+    "karst"
+   ],
+   "remains": [
+    "cenote_steps",
+    "chultun_cistern",
+    "wall_network",
+    "lime_kiln_ring"
+   ],
+   "links": {
+    "roads": "a node, like a spring",
+    "rooms": "one feature",
+    "magic": "the pool can be one of the glow ponds (MagicSites)"
+   },
+   "real_world": [
+    {
+     "analogue": "Maya of the northern Yucatán",
+     "region": "Yucatán Peninsula, Mexico",
+     "note": "A land with almost no rivers on the surface, where towns grew up around cenotes; the Sacred Cenote at Chichén Itzá received offerings.",
+     "source": "https://en.wikipedia.org/wiki/Sacred_Cenote"
+    },
+    {
+     "analogue": "Dinaric karst farmers",
+     "region": "the Balkans' limestone country",
+     "note": "Dolines cultivated because soil collects on their floors.",
+     "source": "https://www.researchgate.net/figure/Natural-doline-a-cultural-cultivated-doline-b-and-degraded-waste-filled-doline_fig1_326870759"
+    },
+    {
+     "analogue": "The Great Blue Hole",
+     "region": "Lighthouse Reef, Belize",
+     "note": "A marine sinkhole about 300 m across, drowned when the sea rose after the last ice age.",
+     "source": "https://science.nasa.gov/earth/earth-observatory/lighthouse-reef-and-the-great-blue-hole-147158/"
+    }
+   ],
+   "notes": "Karst folk's site rule (biome_map) needs 'a cave or sinkhole within 200 m': this is the sinkhole. The shaft is a stamp; the undercut lip is a mesh (roof_rule)."
+  },
+  "karst_towers": {
+   "name": "Karst towers",
+   "family": "rock_and_caves",
+   "scale": "region",
+   "build": [
+    "region",
+    "mesh"
+   ],
+   "status": "new",
+   "tier": 3,
+   "rarity": "rare",
+   "when": "Limestone in hot, wet lowland, dissolved for so long that only steep towers are left, standing apart on a flat plain of river silt, with rivers winding between them and caves opening at their feet.",
+   "cause": {
+    "rock": [
+     "karst"
+    ],
+    "temp_c": [
+     19,
+     33
+    ],
+    "moisture": [
+     0.54,
+     1
+    ],
+    "elevation_m": [
+     0,
+     600
+    ]
+   },
+   "biomes": [
+    "TROPICAL_RAINFOREST",
+    "JUNGLE"
+   ],
+   "variants": [
+    {
+     "id": "drowned_towers",
+     "name": "Drowned tower karst",
+     "when": "The same towers where the sea has come in over the plain: steep limestone islands rising from shallow, sheltered water, with caves in their walls just above the water.",
+     "cause": {
+      "rock": [
+       "karst"
+      ],
+      "water": [
+       "ocean"
+      ],
+      "depth_m": [
+       0,
+       30
+      ],
+      "temp_c": [
+       18,
+       33
+      ],
+      "other": "GeologyPass marks the sea floor sand or basalt, so test the karst noise there, not the rock."
+     },
+     "biomes": [
+      "SHELF_SEA",
+      "LAGOON",
+      "CORAL_REEF"
+     ],
+     "note": "A seascape from the shore or a boat; people lived on the islands and in their caves (Hạ Long Bay)."
+    },
+    {
+     "id": "limestone_pavement",
+     "name": "Limestone pavement",
+     "when": "The same limestone in cool, wet country that old ice scraped bare: flat grey slabs (clints) split by deep cracks (grikes), ferns and flowers down in the cracks, little soil on top.",
+     "cause": {
+      "rock": [
+       "karst"
+      ],
+      "temp_c": [
+       4,
+       14
+      ],
+      "moisture": [
+       0.55,
+       1
+      ]
+     },
+     "biomes": [
+      "TEMPERATE_DECIDUOUS",
+      "TEMPERATE_RAINFOREST"
+     ],
+     "note": "Open stone to cross, not to live on: a high, bare place for a tomb (Poulnabrone)."
+    }
+   ],
+   "shape": "Steep-sided limestone towers, standing alone or in clusters on a flat floor of silt, each less than one and a half times as wide at the base as it is tall: 30-80 m high on the real Guilin plain (Earth-equivalent; see notes), up to ~300 m where they crowd into cone hills. Grey faces streaked black, jungle on every ledge and on top; a river winding between; caves at the foot where the plain meets the wall.",
+   "gives": [
+    "roof",
+    "water",
+    "lookout",
+    "landmark"
+   ],
+   "hearth_spot": "In a cave at the foot of a tower, just inside the mouth, a little above the plain's flood level and facing the river; the tower's shoulder above is the lookout, not the home.",
+   "hazard": "Sheer walls: a tower is climbed by one crack or ledge path, and a fall is long. The plain between can flood after heavy rain.",
+   "people": [
+    "karst",
+    "rock_shelter",
+    "tropical_forest"
+   ],
+   "remains": [
+    "soot_cave",
+    "ash_hearth",
+    "pot_sherds",
+    "ochre_wall",
+    "canoe_landing"
+   ],
+   "links": {
+    "roads": "follow the river through the plain between the towers (rivers_are_roads); a foot cave is a camp node",
+    "rooms": "the plain between close towers is a room walled by rock; a foot cave is its one feature"
+   },
+   "real_world": [
+    {
+     "analogue": "Early potters of Zengpiyan Cave",
+     "region": "Guilin, Guangxi, southern China",
+     "note": "A cave on the edge of Dushan Mountain in the karst, only about a metre above the plain, lived in from about 10,000 to 5000 BC by people who ate freshwater snails and made some of China's oldest pottery.",
+     "source": "https://en.wikipedia.org/wiki/Zengpiyan"
+    },
+    {
+     "analogue": "Soi Nhụ hunter-gatherers",
+     "region": "Hạ Long Bay, Vietnam",
+     "note": "About 18,000 to 7,000 years ago, people of the Soi Nhụ culture lived on the bay's limestone islands and in its coastal caves, hunting, gathering fruit and catching freshwater molluscs.",
+     "source": "https://halongbay.com.vn/en/p/68-gia-tri-van-hoa-lich-su"
+    },
+    {
+     "analogue": "Neolithic people of the Burren",
+     "region": "the Burren, County Clare, Ireland",
+     "note": "The Poulnabrone portal tomb stands on limestone pavement of clints and grikes and was in use for about 600 years, between 5,800 and 5,200 years ago.",
+     "source": "https://www.burrengeopark.ie/discover-explore/geosites-discovery-points/poulnabrone/"
+    }
+   ],
+   "notes": "A region reshape and a surface landform; what lies behind the cave mouths is Phase 3. At HEIGHT_SCALE (1/10) a 30-80 m tower would stand 3-8 m and read as a boulder, so the towers likely want walking-scale height like the escarpments. The foot caves are cave_mouth meshes. biome_map tries the rock_shelter rule before karst's, so a foot cave goes to shelter folk unless that order changes."
+  },
+  "slot_canyon": {
+   "name": "Slot canyon",
+   "family": "rock_and_caves",
+   "scale": "line",
+   "build": [
+    "existing",
+    "stamp"
+   ],
+   "status": "partial",
+   "tier": 1,
+   "rarity": "uncommon",
+   "when": "Where a ravine crosses sandstone in dry country: the walls close in until the floor is a few metres wide or less and the walls stand many times taller than it is wide; a dry bed of sand and stone between floods, below a catchment the rain runs off.",
+   "cause": {
+    "rock": [
+     "sandstone"
+    ],
+    "moisture": [
+     0,
+     0.35
+    ],
+    "near": [
+     "ravine"
+    ],
+    "other": "A catchment upstream (flow_accum): the rain there, not here, floods the slot."
+   },
+   "biomes": [
+    "CANYON",
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "SAGEBRUSH",
+    "BADLANDS"
+   ],
+   "size_m": [
+    1,
+    4
+   ],
+   "shape": "A crack in the rock you can walk: a floor of sand and gravel 1-4 m wide (size_m) between the ravine's ~12 m walls (walking-scale), smooth, curved and fluted by floods, banded red, orange and cream; light comes down in shafts; round potholes in the bedrock floor hold rainwater after a storm; drift logs jammed between the walls far overhead show how high the water rises. At each end it opens into a sandy wash, where the walls step back into alcoves.",
+   "gives": [
+    "road"
+   ],
+   "hearth_spot": "Outside the slot, at a mouth where the walls open out: in an alcove or under an overhang in the side wall, on a ledge above the drift line of old floods, never on the sand of the bed.",
+   "hazard": "The flash flood: rain on the catchment upstream, even out of sight, sends a wall of water down the slot in minutes; the floor is the channel and the walls give no way up.",
+   "people": [
+    "desert",
+    "rock_shelter"
+   ],
+   "remains": [
+    "rock_art",
+    "cliff_dwelling",
+    "ash_hearth",
+    "grinding_stone"
+   ],
+   "links": {
+    "gate": "ravine (roads.forks.one_way_gates): a pour-off you can drop down but not climb back up",
+    "audio": "water_flow: a roar growing upstream before the water comes",
+    "roads": "the road keeps to the rim; the slot is a shortcut you choose"
+   },
+   "real_world": [
+    {
+     "analogue": "Antelope Canyon",
+     "region": "Navajo Nation, near Page, Arizona",
+     "note": "A slot cut in Navajo Sandstone by flash floods, where in August 1997 a storm about 11 km upstream sent down a flood that killed eleven people, though little rain fell at the canyon itself.",
+     "source": "https://en.wikipedia.org/wiki/Antelope_Canyon"
+    },
+    {
+     "analogue": "Potholes (ephemeral pools)",
+     "region": "Natural Bridges National Monument, Utah",
+     "note": "Natural basins in the sandstone, from millimetres to a few metres deep, catch rainwater and sediment, and fill and dry with the irregular desert rain.",
+     "source": "https://www.nps.gov/nabr/learn/nature/pools.htm"
+    },
+    {
+     "analogue": "Ancestral Puebloans of Grand Gulch",
+     "region": "Cedar Mesa, south-east Utah",
+     "note": "A network of winding canyons totalling more than 300 km, with alcoves in their walls, holds cliff dwellings, walled fireplaces, rock art and kivas from about AD 200 to 1300.",
+     "source": "https://www.blm.gov/programs/national-conservation-lands/utah/grand-gulch-isa"
+    }
+   ],
+   "notes": "Built from the ravines (TerrainField RAVINE_M, ~12 m deep): where one crosses sandstone in dry country, pinch the floor to slot width. Rivers already cut gorges through ravines, so a slot belongs on a dry side branch. The flood is weather dressing (§BS): rain on the catchment in the weather sim raises the water in the slot; the rock never changes. gives leaves out water, as camp_loop.any_nest has it: the potholes are a drink after rain for someone passing through, not a camp's supply. camp_loop.never_inside keeps the hearth out of the bed.",
+   "plants": {
+    "add": [
+     "Adiantum capillus-veneris"
+    ],
+    "where": "Maidenhair at a seep on a shaded wall, a small hanging garden; nothing on the flood-scoured floor."
+   }
+  },
+  "lava_tube": {
+   "name": "Lava tube",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "mesh"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "On a volcano's flanks, in basalt, along an old tongue of lava that ran downhill: the flow crusted over and drained, leaving a tunnel under the ground, and where its roof fell in, a pit of broken rock opens into it.",
+   "cause": {
+    "rock": [
+     "basalt"
+    ],
+    "hotspot": "flank",
+    "other": "Downslope of the crater, on the bare lava field or the dressed slopes below it; the tube follows the fall line."
+   },
+   "biomes": [
+    "VOLCANIC_FIELD",
+    "TROPICAL_RAINFOREST",
+    "SAGEBRUSH",
+    "TUNDRA"
+   ],
+   "variants": [
+    {
+     "id": "ice_cave",
+     "name": "Ice cave",
+     "when": "The same tube in cold-winter country, dipping down from a mouth with few other openings: winter's cold air sinks in and stays, so ice floors and ice columns last through the summer.",
+     "cause": {
+      "rock": [
+       "basalt"
+      ],
+      "hotspot": "flank",
+      "temp_c": [
+       -12,
+       10
+      ]
+     },
+     "biomes": [
+      "SAGEBRUSH",
+      "TUNDRA",
+      "VOLCANIC_FIELD"
+     ],
+     "note": "Water in dry country: chip the ice and melt it at the fire, as the Modoc did."
+    }
+   ],
+   "size_m": [
+    10,
+    30
+   ],
+   "shape": "A collapse pit 10-30 m across (size_m) of tumbled black blocks, its lip ringed with ferns and moss in wet country, sage and grass in dry; at one or both ends a round tunnel mouth 3-10 m wide (walking-scale) under a smooth arched roof, cool air flowing out of it; inside, a floor of ropy, frozen lava, drips and pale mineral crust on the ceiling, and further on a shaft of daylight where a skylight broke through.",
+   "gives": [
+    "roof",
+    "water",
+    "lee",
+    "defence"
+   ],
+   "hearth_spot": "On the flat floor of the collapse pit at the tube mouth, just under the solid edge of the roof where daylight and air still reach, clear of the block slope; the drip pool or the ice is a short walk in, and the fire never goes deep inside where the smoke would pool.",
+   "hazard": "The block slope down into the pit is loose, and past the daylight the tube is black and its floor broken.",
+   "people": [
+    "rock_shelter",
+    "mountain"
+   ],
+   "remains": [
+    "ash_hearth",
+    "drip_wall",
+    "knapping_floor",
+    "fallen_walls"
+   ],
+   "links": {
+    "rooms": "the collapse pit is a room, the tube mouth its one feature",
+    "audio": "water_flow, very quiet: the drip inside the mouth"
+   },
+   "real_world": [
+    {
+     "analogue": "Native Hawaiians and Kīlauea's lava tubes",
+     "region": "Hawaiʻi Volcanoes National Park, Hawaiʻi",
+     "note": "Lava has run in active tubes on Kīlauea, seen through skylights in their roofs, and Hawaiians sheltered in old tubes and caught the drip water from the ceilings in gourd bowls.",
+     "source": "https://www.nps.gov/havo/learn/nature/lava-tubes.htm"
+    },
+    {
+     "analogue": "The Modoc in the Lava Beds",
+     "region": "Lava Beds National Monument, northern California",
+     "note": "In the Modoc War of 1872-73, after slipping out of their stronghold to the Schonchin lava flow, the Modoc drew water for 160 people from the ice caves nearby.",
+     "source": "https://npshistory.com/publications/labe/brochures/modoc-war.pdf"
+    },
+    {
+     "analogue": "Surtshellir",
+     "region": "Hallmundarhraun lava field, west Iceland",
+     "note": "A lava tube about 1.6 km long, formed around AD 900, whose lowest part holds ice all year; animal bones inside show it was used for Viking Age rituals.",
+     "source": "https://en.wikipedia.org/wiki/Surtshellir"
+    }
+   ],
+   "notes": "Like the cenote: a stamp (the collapse pit) plus a mesh (the tube mouth and the first stretch of roof, roof_rule); the tube beyond is Phase 3. GeologyPass lays basalt within 1.2 cone radii of each hotspot; the inner 0.45 is the bare VOLCANIC_FIELD (HOT_SPRING when wet) and the rest wears its ordinary biome, so the tubes cross both."
+  },
+  "kopje": {
+   "name": "Kopje / inselberg",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "mesh"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Granite country, flat or gently rolling and dry for part of the year: a bare dome or a pile of huge rounded boulders stands up out of the grass, alone or in a loose chain, with hollows on top that catch the rain and overhangs among the boulders at its foot.",
+   "cause": {
+    "rock": [
+     "granite"
+    ],
+    "temp_c": [
+     -2,
+     33
+    ],
+    "moisture": [
+     0.16,
+     0.58
+    ],
+    "slope": [
+     0,
+     0.08
+    ],
+    "other": "GeologyPass turns dry ground (moisture < 0.3) to sandstone before it reaches granite, so in thorn scrub and dry steppe the kopje's stamp lays its own granite."
+   },
+   "biomes": [
+    "SAVANNA",
+    "THORN_SCRUB",
+    "STEPPE",
+    "TROPICAL_DRY_FOREST"
+   ],
+   "size_m": [
+    40,
+    300
+   ],
+   "shape": "A rounded granite dome or a heap of huge rounded boulders, 10-40 m high (walking-scale) and 40-300 m across (size_m), rising sharply from flat grass; bare pink-grey rock with dark rain streaks and lichen, trees and shrubs rooted in the cracks, greener than the plain; shallow pans and deeper pit-holes on top that hold rainwater, some with a flat slab across; overhangs and gaps between the boulders at the foot.",
+   "gives": [
+    "roof",
+    "water",
+    "lookout",
+    "landmark",
+    "lee"
+   ],
+   "hearth_spot": "At the foot of the kopje on its lee side, under the largest boulder overhang, on the flat ground where rock meets grass; the rock pools are a short scramble up, the lookout a climb to the top.",
+   "hazard": "Big cats lie up in the shade high among the boulders; the bare dome is steep and slick after rain.",
+   "people": [
+    "rock_shelter",
+    "savanna_herders",
+    "steppe"
+   ],
+   "remains": [
+    "ochre_wall",
+    "ash_hearth",
+    "grinding_stone",
+    "bedrock_mortars",
+    "lined_waterhole",
+    "tent_rings"
+   ],
+   "links": {
+    "roads": "a node, like a spring: the rock pools",
+    "threshold": "boulder_gap: the way in to the foot is between two boulders",
+    "rooms": "the ring of boulders at the foot is a room, the overhang its one feature"
+   },
+   "real_world": [
+    {
+     "analogue": "Hunter-gatherer painters of the Matobo Hills",
+     "region": "Matobo Hills, near Bulawayo, Zimbabwe",
+     "note": "Some 800 painted shelters lie among these granite domes, painted by hunter-gatherers from about 13,000 to 1,500 years ago in the fine-line style of San rock art.",
+     "source": "https://www.mdpi.com/2076-0752/14/1/15"
+    },
+    {
+     "analogue": "Noongar gnamma holes",
+     "region": "south coast of Western Australia",
+     "note": "Gnamma holes in granite outcrops collected rainwater, and most were covered by a flat granite rock to keep the water clean and drinkable.",
+     "source": "https://southcoastnrm.com.au/wp-content/uploads/2025/06/HERITAGE-FLIP-GUIDE-Part-1-2020-Edition.pdf"
+    },
+    {
+     "analogue": "Aboriginal rock-holes of the Gawler Ranges",
+     "region": "Gawler Ranges, South Australia",
+     "note": "Deep, pit-shaped rock-holes on the granite domes often hold water for months, and Aboriginal people capped them with larger rocks to slow evaporation and keep animals away.",
+     "source": "https://www.waterconnect.sa.gov.au/Content/Publications/DEW/dwlbc_2009_08_GawlerRangesReport_5Feb.pdf"
+    }
+   ],
+   "notes": "The rock pools are small stamped hollows on top: shallow pans dry in weeks, deep pits hold water for months, and a slab across a pit says someone kept it. Granite overhangs at the foot are this nest's shelter; limestone and sandstone ones are the cave mouth's."
+  },
+  "natural_arch": {
+   "name": "Natural arch / bridge",
+   "family": "rock_and_caves",
+   "scale": "set_piece",
+   "build": [
+    "mesh"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Sandstone or limestone in dry country, broken by parallel cracks into thin walls (fins): weathering wears a hole through a fin and leaves a span of rock standing, often beside others only half made.",
+   "cause": {
+    "rock": [
+     "sandstone",
+     "karst"
+    ],
+    "moisture": [
+     0,
+     0.56
+    ],
+    "other": "Fin country: the edge of a plateau behind an escarpment, where the rock breaks into parallel walls."
+   },
+   "biomes": [
+    "CANYON",
+    "BADLANDS",
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "SAGEBRUSH",
+    "MEDITERRANEAN_SCRUB"
+   ],
+   "variants": [
+    {
+     "id": "natural_bridge",
+     "name": "Natural bridge",
+     "when": "The same rock where a stream loops round a thin neck: floods wear through the neck, the stream takes the short way under a span of rock, and its old loop runs dry.",
+     "cause": {
+      "rock": [
+       "sandstone",
+       "karst"
+      ],
+      "water": [
+       "river"
+      ]
+     },
+     "biomes": [
+      "CANYON",
+      "MEDITERRANEAN_SCRUB",
+      "TEMPERATE_DECIDUOUS"
+     ],
+     "note": "The bridge that is never out: the road crosses on top, the river path runs under it."
+    }
+   ],
+   "size_m": [
+    5,
+    40
+   ],
+   "shape": "A span of bare rock over an opening 5-40 m across (size_m, walking-scale), the span often thinner than it looks, its underside smooth and paler where slabs fell; parallel fins stand nearby, some solid, some with holes just starting. Red and banded with dark desert varnish in sandstone; grey and pitted in limestone, with scrub on top.",
+   "gives": [
+    "landmark",
+    "crossing"
+   ],
+   "hearth_spot": "Not under the span: in sight of it, in the nearest alcove or overhang along the fin wall, or, below a natural bridge, on the bank above the flood line beside the stream.",
+   "hazard": "Loose slabs under the span; the top of a bridge is narrow, with a drop on both sides.",
+   "people": [
+    "desert",
+    "rock_shelter"
+   ],
+   "remains": [
+    "rock_art",
+    "ash_hearth",
+    "cliff_dwelling"
+   ],
+   "links": {
+    "threshold": "arch (rooms.threshold.kinds): the road passes under the span",
+    "roads": "a natural bridge carries the road over a gorge and is never out",
+    "rooms": "the view through the span can be the reveal"
+   },
+   "real_world": [
+    {
+     "analogue": "Arches National Park",
+     "region": "eastern Utah",
+     "note": "Salt bulging up from below cracked the sandstone into parallel walls, and rainwater dissolving its cement, with winter frost, wore them into fins and then holed them, leaving more than 2,000 arches.",
+     "source": "https://www.nps.gov/arch/learn/nature/geologicformations.htm"
+    },
+    {
+     "analogue": "Rainbow Bridge (Nonnezoshe)",
+     "region": "southern Utah, by Lake Powell",
+     "note": "One of the world's largest natural arches, 84 m across and 88 m high, called Nonnezoshe, rainbow turned to stone, by the Navajo and long held sacred by the peoples around it.",
+     "source": "https://en.wikipedia.org/wiki/Rainbow_Bridge_National_Monument"
+    },
+    {
+     "analogue": "Pont d'Arc and the Chauvet cave",
+     "region": "Ardèche gorges, southern France",
+     "note": "The Ardèche cut through a meander neck and left this limestone arch more than 100,000 years ago, long before people came to the Chauvet cave above it, for whom it was a landmark they could not miss.",
+     "source": "https://www.nature.com/articles/s41598-021-88240-5"
+    }
+   ],
+   "notes": "Mostly a landmark and a threshold. rooms.threshold.kinds already lists 'arch', but RoadProps._threshold sets two boulders for every kind today; this is the arch in rock, a mesh (roof_rule). A natural bridge is the one bridge never out: roads.decay.bridge_out_share applies to built bridges only."
+  },
+  "waterfall": {
+   "name": "Waterfall",
+   "family": "running_water",
+   "scale": "set_piece",
+   "build": [
+    "existing",
+    "sound"
+   ],
+   "status": "built",
+   "tier": 1,
+   "rarity": "common",
+   "when": "Anywhere a river crosses relief, in any climate it runs through: the river drops 4 m or more at once over a lip into a plunge pool (RiverNetwork.falls), on a hill stream, at a gorge head, where a tributary meets a lower river, or where a river meets the sea at a cliff. The nest is a fall with dry, level ground beside its pool; best is the first fall up a big river from the sea or a lake, where fish running upstream stack up below it.",
+   "cause": {
+    "water": [
+     "river"
+    ],
+    "other": "a drop of 4 m or more between two samples of the river's water profile (FALL_MIN_M), as RiverNetwork.falls finds it; a river fed from wetter hills keeps its falls through dry country"
+   },
+   "biomes": [
+    "CLOUD_FOREST",
+    "TEMPERATE_RAINFOREST",
+    "TAIGA",
+    "CANYON",
+    "TROPICAL_RAINFOREST",
+    "TEMPERATE_DECIDUOUS",
+    "SAGEBRUSH",
+    "TUNDRA",
+    "ROCKY_SHORE"
+   ],
+   "variants": [
+    {
+     "id": "tinaja",
+     "name": "Pour-off and tinaja",
+     "when": "In dry country the same drop sits in a wash that runs only after storms: a pale lip of bare rock and, below it, a basin the floods scoured into the bedrock that holds rainwater long after the wash is dry.",
+     "cause": {
+      "moisture": [
+       0,
+       0.35
+      ],
+      "water": [
+       "none"
+      ],
+      "near": [
+       "wadi"
+      ],
+      "other": "where a wadi's bed steps down over rock (an escarpment line, a ledge)"
+     },
+     "biomes": [
+      "HOT_DESERT",
+      "COLD_DESERT",
+      "CANYON",
+      "THORN_SCRUB"
+     ],
+     "note": "Water to travel by, not a home: camps sit on the bench above the pour-off, out of the wash; a pool with smooth walls drowns the animals that come to drink."
+    }
+   ],
+   "size_m": [
+    20,
+    150
+   ],
+   "shape": "A lip of hard rock the river pours over in one sheet or a chain of short drops, 4 to 45 m as the engine draws them. Below, a round plunge pool churning white under hanging mist, with a roar heard before the fall is seen; the river leaves by the pool's tail over rapids, through a short gorge where a tall fall has cut back into the slope. Wet rock ledges ring the pool; the spray soaks the ground downwind.",
+   "gives": [
+    "water",
+    "food",
+    "landmark"
+   ],
+   "hearth_spot": "On the first dry, level bench beside the pool's tail, 20 to 40 m downstream of the plunge, out of the drifting spray and a metre or more above the high-water mark; where the pool lies in a gorge, on the level ground at the gorge mouth. The fishing ledges are on the wet rock at the pool's edge, away from the fire.",
+   "hazard": "The lip and the pool: carried over the lip you fall, and the fall hurts (§BE current); the churn below the plunge throws a swimmer about; the ledges are wet and slick.",
+   "people": [
+    "river",
+    "tropical_forest",
+    "taiga",
+    "tundra"
+   ],
+   "remains": [
+    "weir_line",
+    "canoe_landing",
+    "store_posts",
+    "stone_cache"
+   ],
+   "links": {
+    "roads": "a node, like a ford: the trail comes to the pool's tail, and a portage path climbs beside the fall",
+    "rooms": "one feature; it is heard before it is seen, so the reveal comes by ear first",
+    "threshold": "stairs: the portage path up the rock beside the fall",
+    "gate": "river_fast: a swimmer carried over the lip cannot come back up",
+    "audio": "already roars from its plunge pool (audio.json waterfall)"
+   },
+   "real_world": [
+    {
+     "analogue": "Celilo Falls (Wyam)",
+     "region": "Columbia River, on the Oregon-Washington border",
+     "note": "For over ten thousand years people took salmon there from wooden platforms with dip nets and spears and traded at the heart of a network across the plateau, until The Dalles Dam drowned the falls in 1957.",
+     "source": "https://en.wikipedia.org/wiki/Celilo_Falls"
+    },
+    {
+     "analogue": "Wagenya fishers at Boyoma Falls",
+     "region": "near Kisangani, Democratic Republic of the Congo",
+     "note": "For centuries they have fished the rapids from tripods of poles set in holes the current wore in the rock, lowering big basket traps into the white water.",
+     "source": "https://en.wikipedia.org/wiki/Wagenya"
+    },
+    {
+     "analogue": "Tinajas",
+     "region": "deserts of the American Southwest",
+     "note": "Rock basins below falls and in dry washes, carved by seeps or scoured by sand and gravel where streams run only at times, were a valuable water source for Native Americans travelling the desert.",
+     "source": "https://en.wikipedia.org/wiki/Tinaja"
+    }
+   ],
+   "notes": "Built and checked (§BE): the stamp world makes 903 falls on 202 of its 344 river segments, each with its sheet, mist and roar; the crest still reads weakly from the lip (a known look miss). Falls are common, so the nest is a fall with fish stopped below it and level ground at the tail; a tall fall on one of the biggest rivers is the rare meeting place where camps from far off come for the fish run and to trade (the exchange rung). The fishing platforms and basket tripods are camp props at the pool's edge. The tinaja needs the wadi stamp: a pour-off where a wadi steps down over rock. The brief's fjord walls: no FJORD biome exists, so falls off a fjord's hanging valleys come with the fjord landform (coast_and_sea) and are dressed as ROCKY_SHORE, TEMPERATE_RAINFOREST or TAIGA.",
+   "plants": {
+    "add": [
+     "Hymenophyllum polyanthos",
+     "Adiantum capillus-veneris"
+    ],
+    "where": "In the spray zone at the foot and on the wet rock beside the fall: filmy fern where the mist never stops, maidenhair on warm wet limestone, moss on every ledge."
+   }
+  },
+  "ravine": {
+   "name": "Ravine / gorge / coulee",
+   "family": "running_water",
+   "scale": "line",
+   "build": [
+    "existing"
+   ],
+   "status": "built",
+   "tier": 1,
+   "rarity": "uncommon",
+   "when": "Hill country inland, off dry sandstone: the ravine layer's narrow cut, about 12 m deep with a flat floor, winding for kilometres. The nest is a stretch where the floor widens, water runs or rises on it, and trees grow; on open grass it is the only shelter and the only wood for miles.",
+   "cause": {
+    "rock": [
+     "granite",
+     "basalt",
+     "karst",
+     "till",
+     "alluvium"
+    ],
+    "temp_c": [
+     -2,
+     19
+    ],
+    "moisture": [
+     0.18,
+     1
+    ],
+    "elevation_m": [
+     140,
+     null
+    ],
+    "other": "TerrainField's ravine layer (masked hill country, inland); not on sandstone, where the same cut is a slot canyon; the nest stretch has water on the floor: a river through it (a gorge) or a spring at a side gully"
+   },
+   "biomes": [
+    "TALLGRASS_PRAIRIE",
+    "SHORTGRASS_PRAIRIE",
+    "STEPPE",
+    "SAGEBRUSH",
+    "TEMPERATE_DECIDUOUS",
+    "TAIGA"
+   ],
+   "size_m": [
+    15,
+    60
+   ],
+   "depth_m": [
+    8,
+    12
+   ],
+   "shape": "A steep-walled cut 8 to 12 m deep and 15 to 60 m from rim to rim, with a flat floor, winding for kilometres; where a river runs through it, a gorge with the river on its floor. Side gullies break the walls here and there: the ways in and out. On grass a line of trees grows along the floor and at the foot of the walls, their crowns just showing above the rim, a dark line across the plain seen from far off.",
+   "gives": [
+    "lee",
+    "fuel",
+    "water"
+   ],
+   "hearth_spot": "On the floor where the ravine widens into a flat, among its trees, a few metres out from the foot of the wall that faces the sun (the poleward wall, which takes the low winter sun) and a metre or more above the stream; never in a narrows, where a flood runs deepest.",
+   "hazard": "The rim: a 12 m drop, and no way back up except at the ends or a side gully; after heavy rain the stream on the floor rises.",
+   "people": [
+    "steppe",
+    "taiga",
+    "old_growth",
+    "river"
+   ],
+   "remains": [
+    "tent_rings",
+    "lined_spring",
+    "hearth_ring",
+    "bark_stripped_pine",
+    "house_hollows",
+    "weir_line"
+   ],
+   "links": {
+    "roads": "a river through a gorge is a road (rivers_are_roads); a trail follows a wide floor and leaves by a side gully",
+    "rooms": "a widening is a room: rock and trees for walls, open up and down the floor",
+    "gate": "ravine: one of roads.json's one-way gates; drop in from the rim, out only at the ends or a side gully",
+    "audio": "the bed's wind should drop on the floor: the lee is why you came"
+   },
+   "real_world": [
+    {
+     "analogue": "Blackfoot winter camps",
+     "region": "northern Great Plains, southern Alberta and Montana",
+     "note": "In the cold months the Blackfoot moved their camps into sheltered coulees, river valleys and foothills, near water and with wood enough for the tipi fires.",
+     "source": "https://www.glenbow.org/blackfoot/EN/html/wintering_ground.htm"
+    },
+    {
+     "analogue": "Weasel Fat Bottom",
+     "region": "Oldman River, southern Alberta",
+     "note": "Sheltered river bottoms like this one, with trees against the wind and water, cottonwood and grazing close by, were the best places to start and end the Blackfoot year of moving camp.",
+     "source": "https://albertashistoricplaces.com/2021/03/31/reciprocity-and-renewal-the-blackfoot-seasonal-round/"
+    },
+    {
+     "analogue": "Coulees",
+     "region": "sagebrush steppe of the northwestern United States and southwestern Canada",
+     "note": "Coulees give shelter from the wind and gather water, so trees grow along their streams and at the foot of their walls in otherwise dry, open country.",
+     "source": "https://en.wikipedia.org/wiki/Coulee"
+    }
+   ],
+   "notes": "Built: TerrainField's ravine layer (RAVINE_M 12 m, masked hill country inland, full depth from about 140 m Earth-equivalent; TerrainChunk forces river beds through it as gorges). The ravines are dry unless a river crosses one, so the nest is a stretch with water: a river through it, or a spring the stamp adds at a widening. On grass it is the steppe folk's winter camp (they summer out on the open plain), so a ravine camp there can stand empty in summer; in forest, and for river folk at a gorge, a camp lives there all year. On grass, the floor's trees are dressing the placer must add (a stand along the floor). On dry sandstone the same cut is the slot canyon (slot_canyon); this entry is the rest."
+  },
+  "escarpment": {
+   "name": "Escarpment",
+   "family": "running_water",
+   "scale": "line",
+   "build": [
+    "existing",
+    "mesh"
+   ],
+   "status": "built",
+   "tier": 1,
+   "rarity": "common",
+   "when": "Inland, in any climate, where the land steps up along a winding cliff with a plateau behind it (the escarpment layer). Rain soaks into the plateau and comes out as springs along the foot. The nest is a stretch of foot with an overhang or recess, level ground before it, and a spring or stream within a short walk.",
+   "cause": {
+    "other": "TerrainField's escarpment layer (masked inland regions); a face of 8 m or more within 7 m and level ground for the fire, as camps.gd cliff_site already tests"
+   },
+   "biomes": [
+    "SAVANNA",
+    "THORN_SCRUB",
+    "TROPICAL_DRY_FOREST",
+    "TEMPERATE_DECIDUOUS",
+    "MEDITERRANEAN_SCRUB",
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "STEPPE",
+    "SHORTGRASS_PRAIRIE",
+    "TALLGRASS_PRAIRIE",
+    "SAGEBRUSH",
+    "TAIGA",
+    "TEMPERATE_RAINFOREST",
+    "TROPICAL_RAINFOREST",
+    "JUNGLE"
+   ],
+   "variants": [
+    {
+     "id": "buffalo_jump",
+     "name": "Buffalo jump",
+     "when": "The same cliff on open grass at the edge of a basin where a herd grazes: lines of stones on the plateau narrow toward the lip, the herd is driven down them and over, and it is butchered at the foot.",
+     "cause": {
+      "temp_c": [
+       -2,
+       19
+      ],
+      "moisture": [
+       0.18,
+       0.55
+      ],
+      "other": "a herd's grazing basin on the plateau behind the lip"
+     },
+     "biomes": [
+      "SHORTGRASS_PRAIRIE",
+      "TALLGRASS_PRAIRIE",
+      "STEPPE",
+      "SAGEBRUSH"
+     ],
+     "note": "A kill site, not a home: the camp stands on the flat below, by the butchering ground, and the bone bed at the foot is the ruin (steppe: bone_bed)."
+    },
+    {
+     "id": "honey_cliff",
+     "name": "Honey cliff",
+     "when": "A sheer cliff with deep overhangs above a rhododendron forest: wild giant honey bees hang their combs under the overhangs, and honey made in the spring bloom is mad honey (§CM).",
+     "cause": {
+      "elevation_m": [
+       1200,
+       3600
+      ],
+      "other": "a rhododendron stand (§CM associations) within ~1 km below the cliff"
+     },
+     "biomes": [
+      "CLOUD_FOREST",
+      "KRUMMHOLZ",
+      "TEMPERATE_DECIDUOUS",
+      "TEMPERATE_RAINFOREST"
+     ],
+     "note": "A seasonal find, not a home: honey hunters work the combs from rope ladders with long poles and smoke (the Gurung honey hunters of Nepal); the camp sits below, at the cliff foot."
+    }
+   ],
+   "shape": "A cliff 8 to 14 m high (as built) winding for kilometres, with a plateau behind it and a scree apron at its foot. Here and there the face is undercut into a recess or an overhang. In places a spring comes out at the foot: a wet stain on the rock, a green patch and a line of trees below it.",
+   "gives": [
+    "roof",
+    "water",
+    "lee",
+    "lookout"
+   ],
+   "hearth_spot": "Under the overhang, a pace or two back from the drip line, on the level ground at the cliff's foot; the spring a short walk along the foot. Where there is no overhang, on the level ground at the foot with the cliff between the fire and the prevailing wind, clear of the scree under any loose stretch.",
+   "hazard": "The lip above: a fall of up to 14 m from the top; loose rock comes down onto the scree.",
+   "people": [
+    "rock_shelter",
+    "desert",
+    "savanna_herders",
+    "steppe"
+   ],
+   "remains": [
+    "ash_hearth",
+    "ochre_wall",
+    "cliff_dwelling",
+    "lined_waterhole",
+    "bone_bed"
+   ],
+   "links": {
+    "roads": "a spring node at the foot; trails run along the foot and climb the face only at a break (a pass)",
+    "rooms": "the shelter is a room with one wall of rock; the clifftop is a reveal (rooms.json)",
+    "threshold": "stairs: the one way up, a break in the face stepped with fallen blocks",
+    "gate": "cliff: a one-way gate; you can drop off the top, and it hurts, but not climb back"
+   },
+   "real_world": [
+    {
+     "analogue": "Dogon of the Bandiagara cliff",
+     "region": "Bandiagara Escarpment, Mali",
+     "note": "In the Land of the Dogons the most striking settlements, with their houses, granaries and shrines, sit in hollows of the sandstone cliff or on scree fallen from its rim.",
+     "source": "https://worldheritageoutlook.iucn.org/explore-sites/cliff-bandiagara-land-dogons"
+    },
+    {
+     "analogue": "Head-Smashed-In Buffalo Jump",
+     "region": "southwestern Alberta, Canada",
+     "note": "Plains peoples drove bison along lanes marked with stones and over a 10 m cliff from about 5,800 years ago until 1850, leaving many layers of bone at the foot and butchering camps below.",
+     "source": "https://whc.unesco.org/document/216243"
+    },
+    {
+     "analogue": "San Marcos Springs",
+     "region": "Balcones Escarpment, central Texas",
+     "note": "Springs rise where the Balcones Escarpment fractured the rock, and people have lived beside them for more than 13,000 years.",
+     "source": "https://exhibits.library.txstate.edu/s/archives/page/prehistory"
+    }
+   ],
+   "notes": "Built: TerrainField's escarpment layer (ESCARP_M 14 m over about 10 m, plateaus behind, masked inland regions). camps.gd already places a rock-shelter camp at the foot under an overhang slab with a boulder either side (cliff_site: a face of 8 m or more within 7 m, level ground for the fire); it is switched off while camps live only at ruins, and is this nest's first build. Its slab spans about 0.2 to 6.2 m cliffward of the fire, so today the fire sits at the drip line; a pace or two further in keeps it dry. The spring at the foot is new: a spring node where the plateau's water comes out. In desert the foot spring is an oasis (oasis); stepped into tables, escarpments become mesa country (mesa). The jump needs a herd on the plateau (the herd is built last); its ruin is the steppe folk's bone_bed, whose lines of small cairns run to the lip as the drive lanes."
+  },
+  "oxbow_lake": {
+   "name": "Oxbow lake",
+   "family": "running_water",
+   "scale": "set_piece",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "Beside a big river (the floodplain threshold) winding across a flat: an old loop the river cut off and left as a crescent of still water a few hundred metres from the channel, refilled when the river floods. Still water beside running water: fish left behind by the falling flood, and wildfowl.",
+   "cause": {
+    "water": [
+     "river"
+    ],
+    "discharge": "big",
+    "slope": [
+     0,
+     0.035
+    ],
+    "temp_c": [
+     3,
+     33
+    ],
+    "moisture": [
+     0.26,
+     1
+    ],
+    "other": "flat floodplain ground within a few hundred metres (walking scale) of a big reach"
+   },
+   "biomes": [
+    "FLOODPLAIN_FOREST",
+    "SWAMP",
+    "FRESHWATER_MARSH",
+    "TROPICAL_RAINFOREST",
+    "TALLGRASS_PRAIRIE",
+    "SAVANNA"
+   ],
+   "size_m": [
+    150,
+    800
+   ],
+   "depth_m": [
+    1,
+    4
+   ],
+   "shape": "A crescent of still water about as wide as the river that made it and 150 to 800 m along its curve, its two horns pointing back at the channel. Reeds and lilies along the shallow edges; older ones half silted into marsh, the oldest only a curved line of different plants. The old river bank runs along the outer curve as a low ridge; inside the curve, low curved ridges show where the loop once moved.",
+   "gives": [
+    "water",
+    "food"
+   ],
+   "hearth_spot": "On the old river bank along the oxbow's outer curve, the highest ground there, a few metres back from the shore and above the flood mark, near one horn so the river is a short walk away.",
+   "hazard": "The flood: when the river rises the flat goes under and the oxbow joins the river again; the shore is soft silt.",
+   "people": [
+    "river",
+    "lake",
+    "tropical_forest",
+    "marsh"
+   ],
+   "remains": [
+    "mound",
+    "clay_pit_pond",
+    "canoe_landing",
+    "reed_hummock",
+    "house_islands"
+   ],
+   "links": {
+    "roads": "beside the river road (rivers_are_roads); the trail runs along the old bank",
+    "rooms": "one feature: the still water; the lake shore is a reveal (rooms.json)",
+    "magic": "the oxbow can be one of the glow ponds (MagicSites); its still water shows every ripple"
+   },
+   "real_world": [
+    {
+     "analogue": "Horseshoe Lake beside Cahokia",
+     "region": "Mississippi River floodplain, Illinois",
+     "note": "An oxbow of the Mississippi cut off about 1,800 years ago lies beside Cahokia, and its sediments record the lake changing as farming grew around the town, about 600 to 1200 CE.",
+     "source": "https://link.springer.com/article/10.1007/s10933-018-0033-0"
+    },
+    {
+     "analogue": "Várzea lake fisheries",
+     "region": "Amazon River floodplain, Brazil",
+     "note": "As the water falls in the dry season, fish crowd into the floodplain lakes, which are fished in every month of the year.",
+     "source": "https://en.aguasamazonicas.org/fisheries/fishing/floodplain-or-varzea"
+    },
+    {
+     "analogue": "Billabongs",
+     "region": "Australia",
+     "note": "A billabong is often a cut-off river loop left as a crescent pond; many matter culturally to Aboriginal and Torres Strait Islander peoples, who draw fresh water and other resources from them.",
+     "source": "https://en.wikipedia.org/wiki/Billabong"
+    }
+   ],
+   "notes": "New. The engine's rivers are straight segments between blueprint cells, with no meanders at walking scale, so the stamp carries the river's history: a crescent on flat ground beside a big reach, horns toward the channel, the old bank as its dry line. Its water is a still, walking-scale lake set at the river's level. A big river's flat can hold several, from open water to silted marsh."
+  },
+  "wadi": {
+   "name": "Wadi / arroyo",
+   "family": "running_water",
+   "scale": "line",
+   "build": [
+    "stamp",
+    "look"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "Dry country, along a drainage line that carries too little water to be a river: a dry bed of sand and gravel between low cut banks that runs only after storms. Water often stays under the sand after the flood has gone, and a hole dug in the bed can find it.",
+   "cause": {
+    "moisture": [
+     0,
+     0.32
+    ],
+    "temp_c": [
+     -2,
+     35
+    ],
+    "water": [
+     "none"
+    ],
+    "other": "the blueprint's flow_to lines in dry cells, where flow_accum is below the river threshold but the catchment is wide enough to flood"
+   },
+   "biomes": [
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "THORN_SCRUB",
+    "SAGEBRUSH"
+   ],
+   "size_m": [
+    8,
+    60
+   ],
+   "depth_m": [
+    1,
+    4
+   ],
+   "shape": "A flat bed of pale sand and gravel 8 to 60 m wide between cut banks 1 to 4 m high, winding downhill for kilometres and branching upstream into smaller washes. Thorny trees and shrubs line the banks, greener than the land around, where the water under the sand reaches their roots; boulders lie in the bed, and a drift line of sticks caught in the bank bushes marks how high the last flood came.",
+   "gives": [
+    "road",
+    "water",
+    "pasture"
+   ],
+   "hearth_spot": "On the bank top, on a terrace above the drift line the last flood left, a few metres back from the edge; the soak is dug in the bed below the camp. Never in the bed.",
+   "hazard": "The flash flood: rain upstream, even out of sight, sends a flood down the bed from bank to bank with little warning.",
+   "people": [
+    "desert",
+    "savanna_herders",
+    "steppe"
+   ],
+   "remains": [
+    "soak_camp",
+    "rock_art",
+    "canal_line",
+    "lined_waterhole",
+    "tent_rings"
+   ],
+   "links": {
+    "roads": "a road kind: the bed is itself the way through broken country, walked when it is dry",
+    "rooms": "a bend with a soak and a tree is a room; the cut banks are its walls",
+    "audio": "the flood should be heard before it is seen: a roar coming down the bed"
+   },
+   "real_world": [
+    {
+     "analogue": "Wadi Hammamat",
+     "region": "Eastern Desert, Egypt",
+     "note": "A dry riverbed halfway between the Nile and the Red Sea that gave its name to the road from Qift to Al-Qusayr; its rocks carry carvings from before the first dynasties onward, among them reed boats dated to about 4000 BCE.",
+     "source": "https://en.wikipedia.org/wiki/Wadi_Hammamat"
+    },
+    {
+     "analogue": "Turkana herders",
+     "region": "Turkana, northwestern Kenya",
+     "note": "Once the rivers stop running, Turkana herders dig open wells into the dry beds for their livestock and for themselves.",
+     "source": "https://en.wikipedia.org/wiki/Turkana_people"
+    },
+    {
+     "analogue": "Tohono O'odham ak-chin fields",
+     "region": "Sonoran Desert, Arizona and Sonora",
+     "note": "Ak-chin, the mouth of the wash, names their way of farming: fields sown as the summer storms broke, the runoff channelled onto them, and summer homes on the alluvial plains.",
+     "source": "https://en.wikipedia.org/wiki/Tohono_O%CA%BCodham"
+    }
+   ],
+   "notes": "New. Only the 3.5 % of land cells with the most discharge carry rivers (HydrologyPass), so dry country has almost none; the wadi is the drainage line below that threshold, cut as a stamp along flow_to in dry cells. Rain upstream in the weather sim should run it for a few hours (water dressing; the land itself never changes, §BS). Where it steps down over rock, a pour-off with a tinaja below (waterfall, variant tinaja). The desert folk's check dam and channel (desert.json techniques) belong at its mouth, where it spreads onto the flat. On dry sandstone the narrow cuts are slot canyons (slot_canyon); a wadi is broad and shallow.",
+   "plants": {
+    "add": [
+     "Astrolepis sinuata",
+     "Pellaea truncata",
+     "Adiantum capillus-veneris"
+    ],
+    "where": "Rock ferns in the shaded cracks of the banks and under boulders, never in the sandy bed: wavy cloak fern and spiny cliffbrake, curled and dull in drought, green after rain. Maidenhair only at a seep or a tinaja that holds water."
+   }
+  },
+  "cove": {
+   "name": "Cove",
+   "family": "coast_and_sea",
+   "scale": "set_piece",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "A rocky coast where the sea has worn a band of softer rock back between two headlands of harder rock, or broken through a hard rim into soft ground behind it: a small round bay with a narrow mouth, steep sides, and a beach at the back where a stream comes down.",
+   "cause": {
+    "rock": [
+     "granite",
+     "sandstone",
+     "karst",
+     "basalt",
+     "till"
+    ],
+    "temp_c": [
+     -5,
+     33
+    ],
+    "relief_m": [
+     30,
+     null
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "coast_km": [
+     0,
+     0.3
+    ],
+    "other": "A rocky coast (ROCKY_SHORE) with a stream or spring coming down to the back of the bay; a big river's brackish mouth makes an estuary instead."
+   },
+   "biomes": [
+    "ROCKY_SHORE",
+    "BEACH",
+    "MARITIME_FOREST",
+    "TEMPERATE_RAINFOREST",
+    "MEDITERRANEAN_SCRUB",
+    "KELP_FOREST"
+   ],
+   "variants": [
+    {
+     "id": "calanque",
+     "name": "Calanque",
+     "when": "The same inlet cut in limestone on a warm, dry coast: long and narrow between sheer pale walls, a valley that a stream or a fallen cave roof made before the sea rose into it, with a pebble beach at its head.",
+     "cause": {
+      "rock": [
+       "karst"
+      ],
+      "temp_c": [
+       11,
+       19
+      ],
+      "moisture": [
+       0.28,
+       0.56
+      ]
+     },
+     "biomes": [
+      "MEDITERRANEAN_SCRUB",
+      "ROCKY_SHORE"
+     ],
+     "note": "Deep, clear water to the foot of the walls; the beach at the head is the only landing."
+    }
+   ],
+   "size_m": [
+    60,
+    500
+   ],
+   "shape": "A round or oval bay behind a narrow mouth between two rocky headlands. Cliffs or steep slopes down both sides; a curved beach of sand or shingle at the back, where the stream runs out across it. Calm water inside while the swell breaks white on the headlands.",
+   "gives": [
+    "landing",
+    "lee",
+    "water",
+    "fuel"
+   ],
+   "hearth_spot": "At the back of the beach, above the line of storm-thrown weed and driftwood, in the lee of the side cliff and a few steps from the stream; the boats are pulled up on the sand in front of it.",
+   "hazard": "The headlands take the swell and the mouth is rough in a storm; storm waves run up to the back of the beach, so the camp sits above the drift line.",
+   "people": [
+    "coast"
+   ],
+   "remains": [
+    "house_pits",
+    "shell_midden",
+    "weir_stakes",
+    "salt_pans"
+   ],
+   "links": {
+    "roads": "the coast path comes down beside the stream to the back of the beach",
+    "threshold": "stairs: the path cut down the side cliff to the sand",
+    "audio": "surf on the headlands, quiet lapping inside"
+   },
+   "real_world": [
+    {
+     "analogue": "Lulworth Cove",
+     "region": "Dorset, England",
+     "note": "A band of hard limestone less than 30 m wide forms the shore with 300 to 500 m of soft clays and greensands behind it, and the sea came in through a narrow gap and wore the soft rock out into a wide, curved bay.",
+     "source": "https://en.wikipedia.org/wiki/Lulworth_Cove"
+    },
+    {
+     "analogue": "Northwest Coast Indigenous peoples",
+     "region": "Pacific coast of British Columbia",
+     "note": "Villages always stood close to navigable water with the houses in a row along the beach facing the water, and the coast's inlets and islands gave many sheltered places to put them.",
+     "source": "https://thecanadianencyclopedia.ca/index.php/en/article/aboriginal-people-northwest-coast"
+    },
+    {
+     "analogue": "The calanques and Cosquer Cave",
+     "region": "Provence coast near Marseille, southern France",
+     "note": "Narrow, steep-walled limestone inlets of the Mediterranean coast, valleys cut by streams or by fallen cave roofs and then partly drowned by the rising sea; in the Calanque de Morgiou, Cosquer Cave, its entrance now 37 m under water, holds paintings and engravings from 27,000 to 19,000 BC.",
+     "source": "https://en.wikipedia.org/wiki/Calanque"
+    }
+   ],
+   "notes": "On a cliff coast the cove is the one place to pull a boat up, so the camp tucks in behind its beach. The game has no hard and soft rock side by side, so the stamp does the geology: on a rocky coast it carves the bay, keeps the two headlands, lays the beach and brings a stream down to it (a blueprint river reaching the sea is brackish and makes an estuary, so the cove's stream is a small walking-scale one). No tide yet, so the beach is a landing at any hour."
+  },
+  "tide_pools": {
+   "name": "Tide pools",
+   "family": "coast_and_sea",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "look"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "A rocky shore with a shelf of bare rock lying flat at the waterline, cut level by the waves; pools stay in its hollows and cracks when the water drops.",
+   "cause": {
+    "rock": [
+     "granite",
+     "basalt",
+     "sandstone",
+     "karst"
+    ],
+    "temp_c": [
+     -1,
+     33
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "coast_km": [
+     0,
+     0.1
+    ],
+    "other": "A rocky shore (ROCKY_SHORE), not sand or mud; a stream or seep within a short walk for the camp above it."
+   },
+   "biomes": [
+    "ROCKY_SHORE",
+    "KELP_FOREST"
+   ],
+   "variants": [
+    {
+     "id": "reef_flat",
+     "name": "Reef flat",
+     "when": "The same shelf on a warm coast with coral offshore: a broad, flat pavement of old coral just awash inside the surf line, with sand pools, sea grass and coral heads.",
+     "cause": {
+      "temp_c": [
+       23,
+       32
+      ],
+      "water": [
+       "ocean"
+      ],
+      "depth_m": [
+       0,
+       2
+      ]
+     },
+     "biomes": [
+      "CORAL_REEF",
+      "LAGOON",
+      "BEACH"
+     ],
+     "note": "Gleaned on foot for shellfish, trochus and sea cucumbers, as women still do on Pacific reefs."
+    }
+   ],
+   "size_m": [
+    20,
+    200
+   ],
+   "shape": "A flat or stepped shelf of bare rock at the waterline, below a low cliff or a bank of boulders. Pools from ankle-deep to waist-deep sit in its hollows and cracks, rimmed with weed; mussels, limpets and snails crowd the rock; the swell breaks on the outer edge.",
+   "gives": [
+    "food",
+    "water"
+   ],
+   "hearth_spot": "At the top of the shore behind the shelf, above the storm line and beside the nearest stream or seep; the shelf is a short walk down and is worked on foot.",
+   "hazard": "The seaward edge: a big swell washes over the outer rock and can knock a gatherer off, and the weed is slippery.",
+   "people": [
+    "coast"
+   ],
+   "remains": [
+    "shell_midden",
+    "salt_pans"
+   ],
+   "links": {
+    "rooms": "one feature: the shelf at the foot of the cliff path",
+    "audio": "the swell on the outer edge, water gurgling in the cracks"
+   },
+   "real_world": [
+    {
+     "analogue": "Middle Stone Age foragers at Pinnacle Point Cave 13B",
+     "region": "Western Cape, South Africa",
+     "note": "Brown mussels are in the cave's oldest layers, 164,000 years old, and the excavator argues the trips to the shore were timed to the spring low tides, the only time that rocky shore could be worked safely and well.",
+     "source": "https://www.scientificamerican.com/article/when-the-sea-saved-humanity-2012-12-07/"
+    },
+    {
+     "analogue": "Reef gleaning",
+     "region": "Vanuatu and other Pacific Islands",
+     "note": "In coastal Vanuatu, women's main fishing is gleaning on the reef and mudflats for chitons, turban shells and other shellfish, trochus, sea cucumbers and mud crabs.",
+     "source": "https://www.fao.org/4/x0195e/x0195e03.htm"
+    },
+    {
+     "analogue": "Rock pools",
+     "region": "rocky shores worldwide",
+     "note": "Rock pools are shallow pools of seawater on rocky shores between the tides, where snails, mussels, barnacles, urchins, crabs, octopus, small fish and seaweed live.",
+     "source": "https://en.wikipedia.org/wiki/Tide_pool"
+    }
+   ],
+   "notes": "Food gathered by hand, no spear: the player wades and picks. No tides in the game yet, so for now the shelf sits just above the still sea with its pools always full; the moon's 29.5-day cycle is already in the sky, and a tide driven by it would bare the shelf at each low water, most at the spring lows near new and full moon."
+  },
+  "shell_mound": {
+   "name": "Shell mound",
+   "family": "coast_and_sea",
+   "scale": "set_piece",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Flat, low tidal country in a warm climate (a mangrove, estuary or lagoon shore) with rich shellfish beds and no natural high ground: people heaped their shells over centuries into a dry hill beside a channel, with fresh water a short walk away.",
+   "cause": {
+    "rock": [
+     "alluvium",
+     "sand"
+    ],
+    "temp_c": [
+     18,
+     33
+    ],
+    "moisture": [
+     0.3,
+     1
+    ],
+    "elevation_m": [
+     0,
+     10
+    ],
+    "slope": [
+     0,
+     0.08
+    ],
+    "water": [
+     "ocean",
+     "river"
+    ],
+    "salinity": [
+     "brackish",
+     "salt"
+    ],
+    "coast_km": [
+     0,
+     2
+    ],
+    "other": "Oysters on roots and reefs, cockles and clams in the mud; fresh water within a short walk (a river arm above the salt, or a seep on the landward side)."
+   },
+   "biomes": [
+    "MANGROVE",
+    "ESTUARY",
+    "LAGOON"
+   ],
+   "variants": [
+    {
+     "id": "kitchen_midden",
+     "name": "Kitchen midden",
+     "when": "The same heaping on a cool or temperate shore: oyster, mussel or cockle shell piled along the bank of a tidal river or above a salt marsh, a long low bank rather than an island, where people came back season after season to feast.",
+     "cause": {
+      "temp_c": [
+       3,
+       21
+      ],
+      "water": [
+       "ocean",
+       "river"
+      ],
+      "salinity": [
+       "brackish",
+       "salt"
+      ]
+     },
+     "biomes": [
+      "SALT_MARSH",
+      "ESTUARY",
+      "MARITIME_FOREST"
+     ],
+     "note": "A seasonal camp: at Damariscotta the oyster feasts came in late winter and spring, when other food ran short."
+    }
+   ],
+   "size_m": [
+    20,
+    500
+   ],
+   "shape": "A long, low hill of pale shell on the flat, a few metres to about ten metres high and tens to hundreds of metres long, flat enough on top for houses. Lime-loving trees and scrub grow on it where the mud around grows only mangrove or marsh grass. A channel runs along one side, with a landing at its foot.",
+   "gives": [
+    "water",
+    "food",
+    "landing",
+    "lookout",
+    "landmark"
+   ],
+   "hearth_spot": "On the flat top of the mound at the end nearest the channel, above the highest water; the canoe landing is at the foot of the mound on the channel side.",
+   "hazard": "The flats round the mound: deep, soft mud, and shell edges that cut feet.",
+   "people": [
+    "mangrove",
+    "coast"
+   ],
+   "remains": [
+    "shell_midden",
+    "pond_bunds",
+    "canoe_landing",
+    "house_pits",
+    "weir_stakes"
+   ],
+   "links": {
+    "roads": "a node: the dry ground where the canoe channels and the shore path meet",
+    "rooms": "one feature: the pale mound seen across the flats"
+   },
+   "real_world": [
+    {
+     "analogue": "Calusa (Mound Key)",
+     "region": "Estero Bay, south-west Florida",
+     "note": "An island of shell, fish bone and pottery heaped up by the Calusa, rising more than 9 m above the bay, with mounds, water courts and canals; most experts take it for their capital, Calos.",
+     "source": "https://en.wikipedia.org/wiki/Mound_Key_Archaeological_State_Park"
+    },
+    {
+     "analogue": "Damariscotta River oyster middens (ancestors of the Wabanaki)",
+     "region": "Maine, USA",
+     "note": "Ancestors of the Wabanaki gathered, feasted and lived here seasonally, heaping up oyster shell from about 2,200 years ago, with the feasts in late winter and spring when other food was scarce.",
+     "source": "https://seagrant.umaine.edu/2017/09/22/gather-and-feast-past-and-present/"
+    },
+    {
+     "analogue": "Saloum Delta shell mounds",
+     "region": "Senegal",
+     "note": "Among the delta's mangroves, 218 shell mounds, some hundreds of metres long, were built up over two thousand years of gathering shellfish, and 28 of them carry burial tumuli.",
+     "source": "https://whc.unesco.org/en/list/1359"
+    }
+   ],
+   "notes": "The coast and mangrove folk's shell_midden signature is this heap at camp size (RuinMarks, and SoilMarks already grows the ground on it differently); the nest is the same heap grown into a hill over centuries, a walking-scale raise of the ground baked at generation. The pond_bunds signature reads well here: the Calusa walled fish-holding pens on Mound Key."
+  },
+  "bioluminescent_bay": {
+   "name": "Bioluminescent bay",
+   "family": "coast_and_sea",
+   "scale": "set_piece",
+   "build": [
+    "look"
+   ],
+   "status": "partial",
+   "tier": 1,
+   "rarity": "rare",
+   "when": "A warm, shallow lagoon ringed by mangrove and joined to the sea by one narrow mouth, with no big river flushing through it: the water stays in, and the glowing plankton with it.",
+   "cause": {
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.48,
+     1
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt",
+     "brackish"
+    ],
+    "depth_m": [
+     0,
+     15
+    ],
+    "other": "A LAGOON cell (shallow sea mostly wrapped by land) with MANGROVE on its shores and a single narrow gap to the open sea; tropics only."
+   },
+   "biomes": [
+    "LAGOON",
+    "MANGROVE",
+    "ESTUARY"
+   ],
+   "size_m": [
+    150,
+    800
+   ],
+   "shape": "A shallow, still bay ringed by mangrove, its mouth to the sea one narrow gap. By day, dark tea-coloured water over mud. At night it is black until something moves in it: every paddle stroke, fish and raindrop lights up blue-green and fades.",
+   "gives": [
+    "glow",
+    "landmark"
+   ],
+   "hearth_spot": "Beside the narrow mouth, on the first firm ground above the highest water (the beach at the mouth, or a shell bank just inside the mangrove fringe), near a fresh seep, with the canoe landing on the bay side; the bay itself is reached by canoe at night.",
+   "people": [
+    "mangrove",
+    "coast"
+   ],
+   "remains": [
+    "canoe_landing",
+    "shell_midden",
+    "pile_stumps"
+   ],
+   "links": {
+    "magic": "a MagicSites kind of its own: salt water, dark until stirred, lit blue-green where the ripple sim shows disturbance (a paddle, a fish, a footstep, rain); seen best at new moon",
+    "rooms": "one feature: the bay seen from the beach at its mouth"
+   },
+   "real_world": [
+    {
+     "analogue": "Mosquito Bay (Puerto Mosquito)",
+     "region": "Vieques, Puerto Rico",
+     "note": "Recorded in 2006 as the brightest bioluminescent bay, with up to 700,000 dinoflagellates a gallon that light blue-green when disturbed; its narrow mouth keeps them from washing out to sea, and decaying mangroves feed them.",
+     "source": "https://www.guinnessworldrecords.com/world-records/brightest-bioluminescent-bay"
+    },
+    {
+     "analogue": "Mangrove Lagoon",
+     "region": "St. Croix, U.S. Virgin Islands",
+     "note": "A glowing lagoon joined to the bay outside by a narrow channel that limits exchange, where matter leached from dying mangrove leaves, more than added nutrients alone, is a plausible reason the dinoflagellates dominate.",
+     "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13485223/"
+    },
+    {
+     "analogue": "Mosquito Bay's dinoflagellates",
+     "region": "Vieques, Puerto Rico",
+     "note": "The glow is Pyrodinium bahamense, which shines blue when the water is stirred, in a bay ringed by red mangrove; it shows best on nights with little or no moon.",
+     "source": "https://en.wikipedia.org/wiki/Puerto_Mosquito"
+    }
+   ],
+   "notes": "Close to free: MagicSites already lights about a third of fresh lakes and wetland cells as glow ponds, and the ripple sim already tracks disturbance on water. This kind is salt water and stays dark until stirred, so the water shader lights the ripple rings, not the whole surface."
+  },
+  "fjord": {
+   "name": "Fjord",
+   "family": "coast_and_sea",
+   "scale": "region",
+   "build": [
+    "region"
+   ],
+   "status": "new",
+   "tier": 3,
+   "rarity": "rare",
+   "when": "A mountainous coast in cool or cold country that ice once covered: long, narrow arms of deep sea run far inland between steep walls, side valleys hang high above the water and pour in as waterfalls, and a river comes in at the head over a flat delta.",
+   "cause": {
+    "ice": "past",
+    "rock": [
+     "granite",
+     "till"
+    ],
+    "temp_c": [
+     -12,
+     14
+    ],
+    "relief_m": [
+     400,
+     null
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt",
+     "brackish"
+    ],
+    "other": "The region pass cuts the arms along the valleys of a mountainous cold coast, deepest inside, with a shallow sill at the mouth."
+   },
+   "biomes": [
+    "TAIGA",
+    "TEMPERATE_RAINFOREST",
+    "MARITIME_FOREST",
+    "TEMPERATE_DECIDUOUS",
+    "TUNDRA",
+    "ROCKY_SHORE"
+   ],
+   "variants": [
+    {
+     "id": "icefjord",
+     "name": "Icefjord",
+     "when": "The same fjord in colder country where the glacier still reaches the sea: an ice front at the head instead of a river, and the bergs it calves crowding the water out to the sill.",
+     "cause": {
+      "ice": "present",
+      "temp_c": [
+       -20,
+       -2
+      ]
+     },
+     "biomes": [
+      "GLACIER",
+      "TUNDRA",
+      "SEA_ICE"
+     ],
+     "note": "The ice front sheds bergs that roll and break, so camps keep well back from it, out toward open water."
+    }
+   ],
+   "shape": "A long, narrow arm of deep, still sea between steep rock walls hundreds of metres high, running far inland and bending with the old valley. Side valleys hang high on the walls and pour off them as waterfalls. At the head, a river comes in over a flat green delta with a gravel beach; at the mouth, islands and a shallow sill.",
+   "gives": [
+    "water",
+    "food",
+    "fuel",
+    "lee",
+    "landing"
+   ],
+   "hearth_spot": "At the head of the fjord, on the high back edge of the river's delta flat, above the spate line and back from the foot of the walls, a short walk from where the fish run in; the boats are drawn up on the delta beach.",
+   "hazard": "Stonefall at the foot of the walls; deep, cold water straight off the rock; the river in spate floods the low edge of the delta.",
+   "people": [
+    "coast",
+    "river",
+    "tundra"
+   ],
+   "remains": [
+    "house_pits",
+    "weir_stakes",
+    "weir_line",
+    "shell_midden",
+    "sod_house_pit"
+   ],
+   "links": {
+    "roads": "the water is the road; on foot the way inland is the river valley at the head",
+    "gate": "cliff: the walls; the only ways up are the paths of the hanging valleys",
+    "audio": "the waterfalls off the walls (kinds.waterfall)"
+   },
+   "real_world": [
+    {
+     "analogue": "West Norwegian Fjords (Geirangerfjord and Nærøyfjord)",
+     "region": "western Norway",
+     "note": "Glacier-cut fjords whose rock walls rise up to 1,400 m from the sea and reach 500 m below it, with many waterfalls and hanging valleys and the remains of old farms, now mostly abandoned.",
+     "source": "https://whc.unesco.org/en/list/1195/"
+    },
+    {
+     "analogue": "Norse Greenland (the Eastern Settlement)",
+     "region": "south-west Greenland",
+     "note": "Norse farmers settled at the heads of long fjords from about 985, and some 500 farm ruins and 16 church ruins remain there.",
+     "source": "https://en.wikipedia.org/wiki/Eastern_Settlement"
+    },
+    {
+     "analogue": "Nuxalk",
+     "region": "Bella Coola, at the head of North Bentinck Arm, British Columbia",
+     "note": "The Nuxalk homeland runs along inlets and valleys of the central coast, and their main village, Q'umk'uts (Bella Coola), stands near the mouth of the Bella Coola River, up which millions of eulachon once ran.",
+     "source": "https://www.amnh.org/exhibitions/permanent/northwest-coast/nuxalk"
+    }
+   ],
+   "notes": "Region reshape: TerrainField cuts the arms into the coast and deepens them inland. RiverNetwork already ends rivers in falls where they meet the sea at a cliff, so the falls off the walls come close to free."
+  },
+  "atoll": {
+   "name": "Atoll",
+   "family": "coast_and_sea",
+   "scale": "region",
+   "build": [
+    "region",
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 3,
+   "rarity": "rare",
+   "when": "One of the nine volcanoes stands in warm tropical sea: the cone has sunk, and the reef that fringed it kept growing up, so a ring of reef and low sand islets is left round a lagoon.",
+   "cause": {
+    "hotspot": "sea",
+    "temp_c": [
+     23,
+     32
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "other": "A hotspot cone whose centre falls in open sea warm enough for CORAL_REEF: the region pass drowns the cone instead of raising it and leaves the reef ring at sea level."
+   },
+   "biomes": [
+    "CORAL_REEF",
+    "LAGOON",
+    "BEACH"
+   ],
+   "shape": "A ring of reef round a calm, pale-turquoise lagoon, the surf breaking white on its outer edge. Low islets of coral sand and rubble, a few metres high at most, are strung along the ring under coconut palms and pandanus; gaps in the ring let the sea in. In each islet's middle, sunken pits of dark composted soil grow taro (pulaka in Tuvalu, babai in Kiribati).",
+   "gives": [
+    "water",
+    "food",
+    "landing",
+    "fuel"
+   ],
+   "hearth_spot": "On the lagoon side of the widest islet, in the shade of the palms above the beach and back from the ocean shore, where storm waves wash over; the well and the taro pits lie inland in the islet's middle, where the fresh lens is thickest.",
+   "hazard": "Storm waves wash over the low islets and salt the wells and the taro pits; the outer edge of the reef takes the full surf.",
+   "people": [
+    "coast",
+    "mangrove"
+   ],
+   "remains": [
+    "weir_stakes",
+    "canoe_landing",
+    "shell_midden"
+   ],
+   "links": {
+    "rooms": "one feature: the lagoon beach under the palms",
+    "audio": "surf on the outer reef, heard across the islet"
+   },
+   "real_world": [
+    {
+     "analogue": "Coral atolls",
+     "region": "tropical seas",
+     "note": "A reef fringing a volcanic island grows upward as the island sinks, and when the island is gone a ring of reef is left round a lagoon, as Darwin proposed and drilling later confirmed.",
+     "source": "https://www.usgs.gov/media/images/atoll-development"
+    },
+    {
+     "analogue": "Tuvaluans: pulaka pits and the coconut",
+     "region": "Tuvalu",
+     "note": "Pulaka taro grows in pits dug down to the water table and composted for generations, the thin fresh lens on the coral rock is drawn from wells, and the coconut is the staple food and drink.",
+     "source": "https://whc.unesco.org/en/tentativelists/6707/"
+    },
+    {
+     "analogue": "I-Kiribati coral fish traps (te ma)",
+     "region": "Kiribati",
+     "note": "Heart-shaped walls of stacked broken coral in the shallows, some stretching over 100 m along the shore and kept up by the community, lead fish in by one lane and hold them as the tide goes out.",
+     "source": "https://www.aucklandartgallery.com/explore-art-and-ideas/artwork/38606"
+    }
+   ],
+   "notes": "Region reshape: a hotspot cone that falls in warm sea is drowned, not raised; the reef ring sits about where its shore would have been and the lagoon fills the rest. Two passes need overriding there: GeologyPass makes everything within 1.2 cone radii basalt (the islets are coral sand), and BiomePass would make the islets volcanic field near the centre or mangrove on flat, warm, wet shore (they are BEACH under coconut and pandanus). The taro pits are a stamp of sunken plots in each islet's middle; the fish trap is the coast folk's weir_stakes, built of stacked coral."
+  },
+  "sea_cave": {
+   "name": "Sea cave and stack",
+   "family": "coast_and_sea",
+   "scale": "set_piece",
+   "build": [
+    "mesh",
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "A cliff coast open to the swell, where waves have worked into a crack or a soft bed at the cliff foot and hollowed a cave; where a headland juts out, caves meet through it as an arch, arches fall, and stacks are left standing offshore.",
+   "cause": {
+    "rock": [
+     "karst",
+     "sandstone",
+     "basalt",
+     "granite"
+    ],
+    "temp_c": [
+     -1,
+     33
+    ],
+    "slope": [
+     0.22,
+     null
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "coast_km": [
+     0,
+     0.1
+    ],
+    "other": "A cliff coast (ROCKY_SHORE) facing open sea, not inside a lagoon or a fjord; a cave people live in has a floor above the storm wash and a stream or seep within a short walk."
+   },
+   "biomes": [
+    "ROCKY_SHORE",
+    "KELP_FOREST",
+    "MEDITERRANEAN_SCRUB"
+   ],
+   "size_m": [
+    8,
+    60
+   ],
+   "shape": "A dark mouth in the foot of a sea cliff, a few metres to tens of metres high, opening on a rock bench or a shingle beach. Inside, a floor of sand and shell rises back above the reach of the waves. Along the headland stands an arch where caves met; offshore, one or more stacks, pillars of the same rock in the surf, white with seabirds, and the stump of a fallen one awash beside them.",
+   "gives": [
+    "roof",
+    "lee",
+    "food",
+    "landmark"
+   ],
+   "hearth_spot": "On the cave's raised floor just inside the mouth, a few metres back from the drip line and above the highest storm wash; the rock bench with its mussel beds lies below the door.",
+   "hazard": "Storm waves: a cave at the waterline fills and blows out with every big swell, so only a floor above the storm wash is safe; stonefall from the cliff and the arches.",
+   "people": [
+    "rock_shelter",
+    "coast"
+   ],
+   "remains": [
+    "shell_midden",
+    "ash_hearth",
+    "knapping_floor",
+    "drip_wall",
+    "ochre_wall"
+   ],
+   "links": {
+    "threshold": "arch: where caves from both sides of a headland meet",
+    "rooms": "one feature: the cave mouth over the rock bench",
+    "audio": "the swell booming in the cave"
+   },
+   "real_world": [
+    {
+     "analogue": "Middle Stone Age people at Klasies River main site",
+     "region": "southern coast of South Africa",
+     "note": "Caves cut into the coastal cliff when the sea stood higher were lived in from about 110,000 years ago; brown mussels from beds like those on the rocks below were gathered on a scale that left midden heaps, and seals and penguins gave fat.",
+     "source": "https://academic.sun.ac.za/archaeology/KRguide2001.PDF"
+    },
+    {
+     "analogue": "Neanderthals at Gorham's and Vanguard Caves",
+     "region": "Gibraltar",
+     "note": "Neanderthals used these caves on Gibraltar's eastern shore for about 100,000 years, collecting limpets and taking birds and dolphins, but until 10,000 years ago a sandy plain up to 5 km wide lay between the caves and the sea.",
+     "source": "https://www.gorhamscave.gi/gorhams-cave-complex/the-site"
+    },
+    {
+     "analogue": "Stac Lee and the St Kildan fowlers",
+     "region": "St Kilda, Scotland",
+     "note": "A sea stack 172 m high off Boreray, crowded with gannet nests, which St Kildan fowlers reached by lassoing an iron peg and jumping across on the swell, and where they kept a small bothy.",
+     "source": "https://en.wikipedia.org/wiki/Stac_Lee"
+    }
+   ],
+   "notes": "The cave is a mesh set piece at the cliff foot (roof_rule), like camps.gd's cliff-shelter slab and RuinBuilder's barrow passage: the mouth and a first chamber only. The stacks are stamps, columns raised from the shallow sea floor off the cliff: landmarks from the water and the seabirds' ledges."
+  },
+  "cirque": {
+   "name": "Cirque and tarn",
+   "family": "ice",
+   "scale": "set_piece",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "High mountains above the old glacier line: a bowl the ice dug out under a peak, where a mountain glacier began, on the side that faces poleward and away from the mean wind. Walled on three sides, with a small lake on its floor behind a rock lip or moraine.",
+   "cause": {
+    "ice": "past",
+    "temp_c": [
+     -8,
+     6
+    ],
+    "moisture": [
+     0.25,
+     1
+    ],
+    "elevation_m": [
+     900,
+     5000
+    ],
+    "relief_m": [
+     200,
+     null
+    ],
+    "other": "the bowl faces poleward and away from the mean wind (wind_avg): the side where snow drifted in and the sun was weakest, so the ice lasted there"
+   },
+   "biomes": [
+    "ALPINE_TUNDRA",
+    "ALPINE_MEADOW",
+    "KRUMMHOLZ",
+    "PARAMO"
+   ],
+   "variants": [
+    {
+     "id": "cirque_glacier",
+     "name": "Cirque glacier",
+     "when": "The same bowl higher up, above the snow line: it still holds its glacier, the ice spilling over the lip onto a fresh moraine. No tarn and no camp.",
+     "cause": {
+      "ice": "present",
+      "temp_c": [
+       -30,
+       -6
+      ],
+      "elevation_m": [
+       2200,
+       null
+      ]
+     },
+     "biomes": [
+      "GLACIER"
+     ],
+     "note": "A landmark and a cold wind down the valley; the nearest camp is in the valley below the moraine."
+    }
+   ],
+   "size_m": [
+    150,
+    500
+   ],
+   "depth_m": [
+    100,
+    400
+   ],
+   "shape": "A round bowl bitten into the mountainside below a peak. Steep rock walls on three sides, scree fanning out at their foot, a flat floor holding a small, cold lake (the tarn), and a lip of bare rock or moraine on the open side where the tarn spills out as a stream. Grass and low shrub on the floor and the lip; snow lies late under the walls.",
+   "gives": [
+    "water",
+    "pasture",
+    "lee"
+   ],
+   "hearth_spot": "Just inside the lip of the bowl, beside the tarn's outlet stream, on a dry, level shelf a few metres above the water: the walls far behind, the valley in view over the lip. The herd's fold sits on the grass of the floor. Never under the walls.",
+   "hazard": "Rockfall and late snow sliding off the walls; the tarn is deep and ice-cold.",
+   "seasonal": "summer",
+   "people": [
+    "mountain",
+    "highland",
+    "taiga"
+   ],
+   "remains": [
+    "fold_ring",
+    "fallen_walls",
+    "house_stubs",
+    "corral_ring",
+    "reindeer_fence"
+   ],
+   "links": {
+    "rooms": "a room of its own: rock walls on three sides, the tarn its one feature, the lip its door",
+    "threshold": "boulder_gap on the lip: the tarn stays hidden until you top it",
+    "magic": "the tarn can be one of the glow ponds (MagicSites)"
+   },
+   "real_world": [
+    {
+     "analogue": "Pyrénées – Mont Perdu",
+     "region": "central Pyrenees, France and Spain",
+     "note": "Three great cirque walls stand on the steep French side, and a transhumance system still kept by seven communities uses high pastures such as Gaulis and Ossoue.",
+     "source": "https://whc.unesco.org/en/list/773/"
+    },
+    {
+     "analogue": "Seter and støl summer farms",
+     "region": "Norway",
+     "note": "Herds go from the home farm to summer farms in the mountains and forests from about June to August or September for milk, a practice traced back at least to about 600 CE.",
+     "source": "https://www.immateriellkulturarv.no/en/bidrag/summer-dairy-farming-at-seter-and-stol/"
+    },
+    {
+     "analogue": "Alpine transhumance",
+     "region": "the Alps",
+     "note": "Herds go up to the high pastures for the summer and come down at the end of September, and evidence of this in the Alps goes back to the later Neolithic, about 3000 BC.",
+     "source": "https://en.wikipedia.org/wiki/Alpine_transhumance"
+    }
+   ],
+   "notes": "The tarn is too small for the blueprint's lake fill (~1 km cells): the stamp carries its own water level, like a wetland pool. depth_m is the height of the walls above the floor (Earth-equivalent). Taiga folk's KRUMMHOLZ dressing already takes char from the tarns."
+  },
+  "moraine": {
+   "name": "Moraine",
+   "family": "ice",
+   "scale": "line",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Lowland the old ice sheets covered, toward the poles: a long ridge of rubble where the ice front stood still, often holding back a lake. Big boulders the ice dropped lie on it and on the land beyond it.",
+   "cause": {
+    "ice": "past",
+    "temp_c": [
+     -12,
+     13
+    ],
+    "moisture": [
+     0.2,
+     1
+    ],
+    "abs_lat_deg": [
+     40,
+     null
+    ],
+    "other": "the belt the old ice sheets reached: today's till on cold ground, and in milder country a mask for where the ice once stood"
+   },
+   "biomes": [
+    "TUNDRA",
+    "TAIGA",
+    "TEMPERATE_DECIDUOUS",
+    "STEPPE"
+   ],
+   "variants": [
+    {
+     "id": "valley_moraine",
+     "name": "Valley moraine",
+     "when": "In mountains: sharp-crested ridges a valley glacier left along its sides and across its end, below the cirques. Bare and loose where the glacier still lives, grassed or wooded where it is long gone; the end ridge often holds a lake.",
+     "cause": {
+      "elevation_m": [
+       900,
+       6000
+      ],
+      "relief_m": [
+       150,
+       null
+      ],
+      "temp_c": [
+       -30,
+       6
+      ]
+     },
+     "biomes": [
+      "GLACIER",
+      "ALPINE_TUNDRA",
+      "ALPINE_MEADOW",
+      "KRUMMHOLZ"
+     ],
+     "note": "At a living glacier's snout the ridge is a landmark, not a camp; on an old one the camp sits on its lee side above the lake it holds."
+    }
+   ],
+   "size_m": [
+    100,
+    1000
+   ],
+   "shape": "A long ridge of jumbled rubble, clay to boulders, winding for kilometres where the ice front stood; real ones stand a few metres to tens of metres high. Often a hummocky belt of knolls and hollows with small ponds, and a lake held behind it. Big boulders lie on the crest, and some stand alone on the open land beyond, foreign to the rock around them. Drier than the flats around it, and often wooded where the flats are bog or grass.",
+   "gives": [
+    "water",
+    "crossing",
+    "lookout",
+    "landmark",
+    "lee"
+   ],
+   "hearth_spot": "On the lee side of the crest, a few metres below the top on dry gravel, beside a big boulder where there is one. The lake it holds back, or a spring at its foot, is a short walk down.",
+   "hazard": "Bog and lake edge on either side; on a young ridge by a living glacier, loose boulders on the steep ice-side face.",
+   "people": [
+    "taiga",
+    "tundra",
+    "lake",
+    "steppe",
+    "old_growth",
+    "mountain"
+   ],
+   "remains": [
+    "hearth_ring",
+    "tent_ring",
+    "inuksuk",
+    "canoe_landing",
+    "tent_rings",
+    "house_hollows",
+    "fold_ring"
+   ],
+   "links": {
+    "roads": "the road layer can keep to the crest: the dry line through wet country",
+    "threshold": "boulder_gap: two erratics where a trail tops the ridge"
+   },
+   "real_world": [
+    {
+     "analogue": "Big Rock, the Okotoks erratic, and the Blackfoot",
+     "region": "near Okotoks, southern Alberta, Canada; a living people",
+     "note": "A 16,500-tonne boulder carried on the ice from the upper Athabasca valley, it was the Blackfoot's landmark for a crossing of the Sheep River, bears pictographs, and has long been held a medicine rock.",
+     "source": "https://en.wikipedia.org/wiki/Okotoks_Erratic"
+    },
+    {
+     "analogue": "End moraines of the Great Lakes ice lobes",
+     "region": "Michigan, USA",
+     "note": "Rolling ridges of till stand above the country around them with drier soils, and many are still wooded because their slopes are too steep to plough for long.",
+     "source": "https://project.geo.msu.edu/geogmich/moraines.html"
+    },
+    {
+     "analogue": "Moraine-dammed lakes",
+     "region": "Lake Zurich, Switzerland; Pukaki and Tekapo, New Zealand",
+     "note": "As a glacier retreats, the end moraine it left often holds its meltwater back as a lake.",
+     "source": "https://en.wikipedia.org/wiki/Moraine-dammed_lake"
+    }
+   ],
+   "notes": "size_m is the ridge's width; it runs for kilometres. Erratics are boulder props (RuinBuilder.rock_mesh): on the crest, and alone on the plain beyond it as waymarks."
+  },
+  "esker": {
+   "name": "Esker and kettle lake",
+   "family": "ice",
+   "scale": "line",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Flat lowland the old ice sheets covered: a narrow, winding ridge of gravel left by a river that ran in a tunnel under the ice. It crosses bog, forest and lake alike, with round ponds beside it where buried blocks of ice melted.",
+   "cause": {
+    "ice": "past",
+    "temp_c": [
+     -12,
+     13
+    ],
+    "moisture": [
+     0.25,
+     1
+    ],
+    "elevation_m": [
+     0,
+     900
+    ],
+    "slope": [
+     0,
+     0.1
+    ],
+    "abs_lat_deg": [
+     40,
+     null
+    ],
+    "other": "the same belt as the moraines; it holds its course across the lie of the land, over low rises and through bogs and lakes"
+   },
+   "biomes": [
+    "TAIGA",
+    "TUNDRA",
+    "KRUMMHOLZ",
+    "TEMPERATE_DECIDUOUS",
+    "BOG"
+   ],
+   "size_m": [
+    20,
+    200
+   ],
+   "shape": "A narrow, winding ridge of rounded sand and gravel, like a railway embankment: steep-sided, with a sharp or flat crest, running for kilometres, sometimes as a chain of humps with gaps; real ones stand a few metres to tens of metres high. Round ponds and small lakes (kettles) lie in hollows along its sides. Dry and sandy: open pine and lichen on top in the taiga (the taiga's 'Scots pine lichen woodland' stand), heath on the tundra, bog or wetter forest on either side.",
+   "gives": [
+    "road",
+    "crossing",
+    "water"
+   ],
+   "hearth_spot": "On a level shoulder where the ridge widens, on its lee side a few metres below the crest trail, among the pines, with a kettle pond a short walk down the slope.",
+   "hazard": "Loose gravel on the steep sides; soft bog at its foot.",
+   "people": [
+    "taiga",
+    "tundra",
+    "lake",
+    "marsh",
+    "old_growth"
+   ],
+   "remains": [
+    "bark_stripped_pine",
+    "hearth_ring",
+    "tent_ring",
+    "inuksuk",
+    "canoe_landing",
+    "peat_cuttings",
+    "house_hollows"
+   ],
+   "links": {
+    "roads": "a road kind for the road layer: the trail runs along the crest, as the Slí Mhór ran along the Esker Riada",
+    "magic": "a kettle pond can be one of the glow ponds (MagicSites)"
+   },
+   "real_world": [
+    {
+     "analogue": "Esker Riada and the Slí Mhór",
+     "region": "the Irish midlands, between Dublin and Galway",
+     "note": "A chain of eskers gave the Great Way (Slí Mhór) a dry route through the midland bogs, and the main Dublin–Galway road still runs close along it.",
+     "source": "https://en.wikipedia.org/wiki/Esker_Riada"
+    },
+    {
+     "analogue": "Punkaharju",
+     "region": "Lake Saimaa, south-eastern Finland",
+     "note": "A pine-crowned esker, left as the ice withdrew some 11,000 years ago, runs between two basins of Lake Saimaa, with a road along the ridge and suppa hollows (kettles) beside it.",
+     "source": "https://classic.nationalparks.fi/punkaharju/nature"
+    },
+    {
+     "analogue": "Barrenland eskers",
+     "region": "Northwest Territories, Canada",
+     "note": "Wolves, foxes and grizzly bears den in eskers and caribou graze their thick lichen, and Indigenous peoples have traditionally used them as burial sites.",
+     "source": "https://www.gov.nt.ca/sites/ecc/files/resources/eskers.pdf"
+    }
+   ],
+   "notes": "size_m is the ridge's width; it runs for kilometres. Wolves den in eskers, so the wolf den props (CreatureSpawner) could sit in its sandy flank. The kettle ponds are too small for the blueprint lake fill: the stamp carries their water level."
+  },
+  "pingo": {
+   "name": "Pingo",
+   "family": "ice",
+   "scale": "set_piece",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Flat, wet tundra over permafrost, often near a coast or a delta: a lone, round hill pushed up by a core of ice in the bed of a lake that drained.",
+   "cause": {
+    "temp_c": [
+     -12,
+     -2
+    ],
+    "moisture": [
+     0.35,
+     1
+    ],
+    "elevation_m": [
+     0,
+     400
+    ],
+    "slope": [
+     0,
+     0.03
+    ],
+    "relief_m": [
+     0,
+     30
+    ],
+    "other": "permafrost under flat, poorly drained ground: a plain of shallow lakes, where one has drained"
+   },
+   "biomes": [
+    "TUNDRA"
+   ],
+   "variants": [
+    {
+     "id": "palsa",
+     "name": "Palsa",
+     "when": "The warm edge of the permafrost, where it comes in patches and the mean is just below freezing: in a bog or fen, low mounds of peat with a frozen core rise in groups, with wet hollows and pools between.",
+     "cause": {
+      "rock": [
+       "clay_peat"
+      ],
+      "temp_c": [
+       -5,
+       0
+      ]
+     },
+     "biomes": [
+      "BOG",
+      "FEN"
+     ],
+     "note": "Lower than a pingo and in groups, not alone: dry footing in the mire rather than a landmark (palsa is Finnish for a hummock with an ice core rising out of a bog)."
+    }
+   ],
+   "size_m": [
+    30,
+    400
+   ],
+   "shape": "A lone, steep, round hill rising out of flat, wet tundra like a small volcano; real ones are 3 to 70 m high. Turf and dwarf shrub on its flanks; around it the flat bed of the drained lake, with ponds and sedge. An old one is split at the top into a crater with a pond in it, white ice showing in the crack.",
+   "gives": [
+    "lookout",
+    "landmark",
+    "lee"
+   ],
+   "hearth_spot": "No camp on the top: the tents stand at its foot on the lee side, where the slope meets the old lake bed, with a pond close by. People climb the hill to look out for caribou on the land and for seals and whales at sea.",
+   "hazard": "On an old pingo the summit splits into a crater with ice in its walls and a pond in the bottom; the sides are steep and slick when wet.",
+   "people": [
+    "tundra"
+   ],
+   "remains": [
+    "inuksuk",
+    "tent_ring",
+    "stone_cache"
+   ],
+   "links": {
+    "roads": "a landmark node, like a standing stone: trails steer by it"
+   },
+   "real_world": [
+    {
+     "analogue": "Inuvialuit: nakataq and nasisaqturvik",
+     "region": "Tuktoyaktuk Peninsula, Northwest Territories, Canada; a living people",
+     "note": "The Inuvialuit and their Thule ancestors have known the pingos for at least seven centuries, steering by them as landmarks (nakataq) and using them as lookouts (nasisaqturvik).",
+     "source": "https://parks.canada.ca/lhn-nhs/nt/pingo/gestion-management/initiation-101"
+    },
+    {
+     "analogue": "Ibyuk Pingo",
+     "region": "Pingo Canadian Landmark, near Tuktoyaktuk",
+     "note": "The peninsula holds about 1,350 pingos, the most anywhere; Ibyuk, the tallest there at 49 m, is at least 1,000 years old and still grows about 2 cm a year.",
+     "source": "https://en.wikipedia.org/wiki/Pingo_Canadian_Landmark"
+    },
+    {
+     "analogue": "Pingos of the Arctic coastal plains",
+     "region": "Alaska and the Canadian Arctic",
+     "note": "As a pingo ages a crack opens in its summit, part of the ice core melts, and a crater pond forms in its top.",
+     "source": "https://www.gi.alaska.edu/alaska-science-forum/pingos"
+    }
+   ],
+   "notes": "Each pingo stands alone, but they come in districts: the Pingo Canadian Landmark protects eight within about 16 km². Heights here are Earth-equivalent: at 1/10 a 40 m pingo is a 4 m bump, so it may need building at walking scale, like the ravines and escarpments. The crater pond is a stamp detail with its own water level."
+  },
+  "floe_edge": {
+   "name": "Floe edge and polynya",
+   "family": "ice",
+   "scale": "line",
+   "build": [
+    "biome",
+    "look",
+    "sound"
+   ],
+   "status": "partial",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Where the ice fixed to a tundra shore (fast ice) ends at open sea, within a day's walk of that shore: the line where SEA_ICE meets open water.",
+   "cause": {
+    "temp_c": [
+     -30,
+     -1.5
+    ],
+    "water": [
+     "ocean"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "other": "the line where SEA_ICE meets open sea within a day's walk of a tundra shore; fast ice holds to the shore and the shallows (grounded ridges, islands), so its edge often lies where the sea deepens"
+   },
+   "biomes": [
+    "SEA_ICE",
+    "TUNDRA"
+   ],
+   "variants": [
+    {
+     "id": "polynya",
+     "name": "Polynya",
+     "when": "A patch of open sea held open inside the ice, where a steady wind drives the new ice away or warmer water wells up from below. Some are small; the North Water is as big as a sea. Some open in the same place every year.",
+     "cause": {
+      "temp_c": [
+       -30,
+       -1.5
+      ],
+      "water": [
+       "ocean"
+      ],
+      "salinity": [
+       "salt"
+      ],
+      "wind": "steady"
+     },
+     "biomes": [
+      "SEA_ICE"
+     ],
+     "note": "Some stay open through the winter; people have lived beside the North Water for at least 5,000 years, the Thule among them, and the Inughuit there are their descendants."
+    }
+   ],
+   "shape": "Flat white fast ice running out from the shore, ridged with piled blocks where it grinds, ending in a low, sharp edge over dark open water with loose floes drifting in it. Seals lie out on the ice; whale blows and seabirds over the water. From far off the edge shows as a dark band under the clouds, where the open water darkens the sky above it.",
+   "gives": [
+    "food",
+    "fuel"
+   ],
+   "hearth_spot": "On land, on a dry rise just back from the shore with the fast ice in sight; hunters walk out over the ice and back. A hunting tent may stand on the ice for a night, well back from the edge and on the shore side of every crack, never at the edge itself.",
+   "hazard": "The edge itself: ice that can break away and drift off, cracks (leads) that open behind it, and water cold enough to kill.",
+   "seasonal": "spring",
+   "people": [
+    "tundra"
+   ],
+   "remains": [
+    "tent_ring",
+    "whale_rib",
+    "stone_cache",
+    "sod_house_pit"
+   ],
+   "links": {
+    "audio": "a source at the edge: water slapping the ice, whale blows, seabirds; the ice groans behind (tundra.json sounds)"
+   },
+   "real_world": [
+    {
+     "analogue": "Inuit floe-edge hunting (the sinaaq)",
+     "region": "Pond Inlet, north Baffin Island, Nunavut, Canada; a living people",
+     "note": "In May and June seals, narwhal, beluga and bowhead whales gather where the fast ice meets open water; Inuit and their ancestors have hunted there for millennia, and the camp stays back on the land side of the open cracks.",
+     "source": "https://canadiangeographic.ca/articles/life-at-the-arctic-floe-edge/"
+    },
+    {
+     "analogue": "The North Water Polynya",
+     "region": "northern Baffin Bay, between Greenland and Canada",
+     "note": "The Arctic's largest polynya, kept open by wind, tides and an ice bridge at its northern edge, is a refuge for narwhal, beluga, walrus and bowhead whales and millions of seabirds, and people have lived around it for at least 5,000 years.",
+     "source": "https://en.wikipedia.org/wiki/North_Water_Polynya"
+    },
+    {
+     "analogue": "Thule culture and the Inughuit",
+     "region": "the Thule region (Avanersuaq), north-west Greenland; a living people",
+     "note": "From about 1200 to 1400 CE the Thule at the North Water lived on bowhead whale, walrus and seals, and the Inughuit there today are their descendants.",
+     "source": "https://link.springer.com/article/10.1007/s13280-018-1030-2"
+    }
+   ],
+   "notes": "SEA_ICE cells exist (BiomePass: sea below −1.5 °C) and the player's traction reads them as ice, but they are drawn and swum as open sea: the ice surface (drawn white and made solid) and its edge are new. The seal's fat is the fuel, for the lamp (tundra.json); fuel.json has no kind for it yet."
+  },
+  "caldera": {
+   "name": "Caldera",
+   "family": "fire",
+   "scale": "region",
+   "build": [
+    "region"
+   ],
+   "status": "partial",
+   "tier": 3,
+   "rarity": "rare",
+   "when": "At the top of one of the few hotspot cones picked for it: the summit has fallen in, leaving a bowl many kilometres wide with a steep wall all round and a flat floor well below the rim. The floor is dry enough to live on where a stream drains it out through a gap in the rim, or where the country is dry enough that the lake on the floor stays small: grass, swamp and a lake at the lowest point.",
+   "cause": {
+    "hotspot": "core",
+    "other": "a few of the nine land cones, the taller ones, picked by seed; the floor cut well below the rim, with a notch in the rim where a stream drains it"
+   },
+   "biomes": [
+    "VOLCANIC_FIELD",
+    "HOT_SPRING",
+    "SAVANNA",
+    "TALLGRASS_PRAIRIE",
+    "TEMPERATE_DECIDUOUS",
+    "ALPINE_MEADOW",
+    "TAIGA"
+   ],
+   "variants": [
+    {
+     "id": "crater_lake",
+     "name": "Crater lake",
+     "when": "The same bowl with its rim whole, in country wet enough to fill it: rain and snow raise a deep, still lake to the rim's lowest point, and there is no floor to live on.",
+     "cause": {
+      "hotspot": "core",
+      "water": [
+       "lake"
+      ],
+      "moisture": [
+       0.45,
+       1
+      ]
+     },
+     "biomes": [
+      "FRESHWATER",
+      "TAIGA",
+      "KRUMMHOLZ",
+      "VOLCANIC_FIELD"
+     ],
+     "note": "A landmark with a story, not a camp site: camps sit outside on the lower slopes, and the lake is seen from the rim."
+    }
+   ],
+   "size_m": [
+    8000,
+    25000
+   ],
+   "depth_m": [
+    300,
+    600
+   ],
+   "shape": "A ring wall of cliffs and steep slopes, bare rock or wooded, closing a flat floor; the wall dips on one side where the stream leaves through a notch. On the floor: open grass, a lake or swamp at the lowest point, steam where hot springs rise at the foot of the wall, and a wood where the springs run. From the rim the whole floor is in view; from the floor the wall is the horizon all round.",
+   "gives": [
+    "water",
+    "pasture",
+    "food",
+    "lee",
+    "warmth",
+    "landmark"
+   ],
+   "hearth_spot": "On the floor, on the side the prevailing wind comes from so the near wall breaks it, 100-200 m out from the foot of the wall (clear of its rockfall), beside a spring-fed stream; not on the hot ground round the vents and not on the soft lake edge.",
+   "hazard": "The inner wall: cliffs and loose scree, passable only at the notch and a few slide paths. On the floor, scalding pools and thin crust round the hot springs.",
+   "people": [
+    "savanna_herders",
+    "mountain"
+   ],
+   "remains": [
+    "kraal_midden",
+    "scorched_line",
+    "lined_waterhole",
+    "knapping_floor",
+    "fold_ring"
+   ],
+   "links": {
+    "roads": "a pass node where the trail crosses the rim and drops in; a hot_spring node on the floor",
+    "rooms": "the rim is a clifftop reveal: the whole floor at once",
+    "gate": "the inner wall is a one-way cliff, except at the pass and the stream's notch",
+    "magic": "the floor's lake or swamp can be a glow pond"
+   },
+   "real_world": [
+    {
+     "analogue": "Maasai herders in Ngorongoro Crater",
+     "region": "Ngorongoro Conservation Area, northern Tanzania",
+     "note": "Maasai herders are thought to have lived in the crater from the mid-1800s until they and their livestock were moved out in 1974; their grazing and burning kept the grass short on a floor of about 264 km², inside walls that rise some 500 m.",
+     "source": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0212530"
+    },
+    {
+     "analogue": "The Klamath and Crater Lake",
+     "region": "Crater Lake, Oregon",
+     "note": "The Klamath, descendants of the Makalak who lived southeast of Mount Mazama, tell of the battle between Llao, Chief of the Below World, and Skell, Chief of the Above World, that ended with the mountain fallen in and the hole filled by rain: the eruption their ancestors saw 7,700 years ago.",
+     "source": "https://www.klamathtribesnews.org/2024/04/01/crater-lake-and-its-origins/"
+    },
+    {
+     "analogue": "Valles Caldera",
+     "region": "Jemez Mountains, New Mexico",
+     "note": "A collapse bowl about 22 km across, with grassland valleys between forested domes and many hot springs, used by American Indian peoples for thousands of years to hunt, fish, gather plants for food, medicine and ceremony, and collect obsidian.",
+     "source": "https://home.nps.gov/articles/nps-geodiversity-atlas-valles-caldera-national-preserve-new-mexico.htm"
+    }
+   ],
+   "notes": "Generator: TerrainField's crater lowers the summit but never below its own edge (the centre stands at 0.88 of the cone's height, the edge at 0.845), so the top is a flattened dome, not a bowl, and holds no water; it is also only about one blueprint cell across (0.7-1.4 km geographic against cells of about 1 km). HydrologyPass fills every closed basin to its spill level whatever the rain (only hot, dry basins go salt), so a closed caldera becomes the crater_lake variant; a floor to live on needs a notch in the rim that drains it, or a lake level set lower by hand in dry country. BiomePass makes every land cell within 0.45 of a cone's radius HOT_SPRING or VOLCANIC_FIELD; the caldera floor should take its climate's grass or forest, with HOT_SPRING only at the vents. In cold, high country the floor is a summer place (the Valles Caldera's warm-season camps), and an obsidian_flow can sit on it."
+  },
+  "obsidian_flow": {
+   "name": "Obsidian flow",
+   "family": "fire",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "look"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "rare",
+   "when": "On the upper slopes of a land volcano or on a caldera's floor, where a late, thick, silica-rich lava cooled too fast to grow crystals: a short, steep-fronted flow of black glass.",
+   "cause": {
+    "rock": [
+     "basalt"
+    ],
+    "hotspot": "core",
+    "other": "land cones only, never a sea hotspot; one or two flows on a few cones, by seed"
+   },
+   "biomes": [
+    "VOLCANIC_FIELD",
+    "HOT_SPRING",
+    "ALPINE_MEADOW",
+    "TAIGA",
+    "STEPPE"
+   ],
+   "size_m": [
+    100,
+    600
+   ],
+   "shape": "A thick tongue of lava ending in a steep front a few storeys high, built of black and banded glass blocks; its top a jumble of glassy boulders and ridges. At the foot, a fan of broken glass that glitters in low sun. Nothing grows on the fresh glass; lichen and a few pines on the older edges.",
+   "gives": [
+    "toolstone",
+    "landmark"
+   ],
+   "hearth_spot": "Off the glass, on flat ground 30-50 m from the foot of the flow front, beside the nearest spring or stream; the knapping floor lies between the hearth and the glass fan, where blocks are carried to be worked.",
+   "hazard": "Glass: blocks and fan have razor edges and slide underfoot; a fall on the flow cuts.",
+   "people": [
+    "mountain",
+    "rock_shelter",
+    "desert"
+   ],
+   "remains": [
+    "knapping_floor"
+   ],
+   "links": {
+    "roads": "a node like a spring: trails from far camps lead to it, and toolstone walks out along them (the exchange rung)",
+    "audio": "footsteps on the glass fan clink"
+   },
+   "real_world": [
+    {
+     "analogue": "Obsidian Cliff",
+     "region": "Yellowstone, Wyoming",
+     "note": "Quarried for toolmaking for more than 11,000 years, its glass is found along old trade routes from western Canada to the Great Lakes and Ohio.",
+     "source": "https://www.nps.gov/yell/learn/historyculture/obsidiancliff.htm"
+    },
+    {
+     "analogue": "The Hopewell culture",
+     "region": "Scioto River valley, Ohio",
+     "note": "Obsidian from Obsidian Cliff and from Idaho, more than 2,400 km from the nearest volcano, was shaped into large ceremonial spear points, probably carried in by people who travelled to the source or by visitors coming to the ceremonies.",
+     "source": "https://www.nps.gov/articles/000/hopewell-culture-obsidian.htm"
+    },
+    {
+     "analogue": "Valles Caldera obsidian",
+     "region": "Jemez Mountains, New Mexico",
+     "note": "Hunting, gathering plants and collecting obsidian for stone tools were the main reasons people came up for short warm-season stays, over nearly eight thousand years.",
+     "source": "https://www.fs.usda.gov/rm/pubs/rmrs_gtr196/rmrs_gtr196_001_010.pdf"
+    }
+   ],
+   "notes": "Obsidian comes from silica-rich lava (rhyolite), not basalt; the engine's volcanic rock is all basalt, so the flow is a seeded set piece on the cone, not a rock type. Inside the cone core BiomePass only makes VOLCANIC_FIELD or HOT_SPRING; on a caldera floor the flow takes the floor's dressing (the Valles Caldera's obsidian lies on the flanks of its forested domes, above grass valleys). Mountain, desert and shelter folk teach obsidian_knapping (techniques.json); the knapping floor is its ruin."
+  },
+  "volcanic_neck": {
+   "name": "Volcanic neck",
+   "family": "fire",
+   "scale": "set_piece",
+   "build": [
+    "mesh",
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "rare",
+   "when": "On flat, dry, open country far from the live cones: where an old volcano's throat of hard rock outlasted the soft rock around it, a lone tower stands up from the plain.",
+   "cause": {
+    "rock": [
+     "sandstone",
+     "granite"
+    ],
+    "hotspot": "old",
+    "temp_c": [
+     -2,
+     35
+    ],
+    "moisture": [
+     0,
+     0.45
+    ],
+    "slope": [
+     0,
+     0.1
+    ]
+   },
+   "biomes": [
+    "STEPPE",
+    "SHORTGRASS_PRAIRIE",
+    "SAGEBRUSH",
+    "COLD_DESERT",
+    "HOT_DESERT"
+   ],
+   "size_m": [
+    30,
+    120
+   ],
+   "shape": "A lone tower or crag of dark rock, sheer-walled or in tall columns, 20-50 m high in the game (200-500 m Earth-equivalent) and narrower at the top than at the foot; a skirt of fallen blocks round its base; low, straight walls of the same dark rock (dikes) running out across the plain from it for hundreds of metres. The footprint is kept narrow for its height so it reads as a tower, not a mound. On this planet (radius about 637 km) a 20-50 m tower drops below the horizon beyond about 6.5-9.5 km for someone standing on flat ground, and shows further from a hill: the tallest thing on that skyline.",
+   "gives": [
+    "landmark",
+    "lee"
+   ],
+   "hearth_spot": "Not on the tower: at the nearest spring or creek within sight of it, in the lee of a dike or of the tower's downwind foot, at least 100 m out from the fallen blocks.",
+   "hazard": "Rockfall: blocks and columns break off the sheer walls into the skirt at the foot.",
+   "people": [
+    "steppe",
+    "desert"
+   ],
+   "remains": [
+    "tent_rings",
+    "lined_spring",
+    "rock_art"
+   ],
+   "links": {
+    "roads": "a landmark the trails steer by, like a standing stone",
+    "rooms": "framed in a reveal from a ridge or valley edge"
+   },
+   "real_world": [
+    {
+     "analogue": "Shiprock (Tsé Bitʼaʼí)",
+     "region": "Navajo Nation, Four Corners region, New Mexico",
+     "note": "The eroded throat of a volcano, about 480 m high with wall-like dikes radiating from it, it holds a large place in Navajo religion and tradition, and its name, rock with wings, recalls the great bird that brought the Navajo from the north.",
+     "source": "https://en.wikipedia.org/wiki/Shiprock"
+    },
+    {
+     "analogue": "Devils Tower (Bear Lodge)",
+     "region": "northeast Wyoming",
+     "note": "More than two dozen tribes are tied to the Tower, which they know as Bear Lodge, Bear's Tipi and other names: a sacred place of winter camps, vision quests and summer ceremonies, where prayer cloths still hang in the trees.",
+     "source": "https://www.nps.gov/deto/learn/historyculture/americanindians.htm"
+    },
+    {
+     "analogue": "How Devils Tower formed",
+     "region": "northeast Wyoming",
+     "note": "Magma that cooled about 1.6 to 3.2 km underground some 50 million years ago began to be laid bare by erosion 5 to 10 million years ago, and geologists still debate whether it fed a volcano or never reached the surface.",
+     "source": "https://www.nps.gov/deto/learn/nature/tower-formation.htm"
+    }
+   ],
+   "notes": "The engine has only the nine live cones; a neck is the root of an old one worn away, so it is a seeded tower on open plains with no cone around it (hotspot old). Shiprock is a true neck; Devils Tower's origin is still debated (a plug, a laccolith, a stock or a diatreme), but both are hard igneous rock left standing by erosion. Both are sacred to the peoples around them, and the Navajo Nation has banned climbing on Shiprock since 1970: the tower is for the long view, not for climbing. To be seen past the walking chunks it needs a far form (FarShell or a vista impostor)."
+  },
+  "mesa": {
+   "name": "Mesa and butte",
+   "family": "dry_and_wind",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "mesh"
+   ],
+   "status": "partial",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Dry sandstone country where the escarpment lines close into islands: the ground inside stands as a flat table above the flats, in two or three cliff steps, and rain soaking down through the top seeps out at the foot of the caprock.",
+   "cause": {
+    "rock": [
+     "sandstone"
+    ],
+    "temp_c": [
+     -2,
+     35
+    ],
+    "moisture": [
+     0,
+     0.3
+    ],
+    "slope": [
+     0,
+     0.15
+    ],
+    "near": [
+     "escarpment"
+    ],
+    "other": "inside the escarpment mask (TerrainField), where a cliff line closes into an island"
+   },
+   "biomes": [
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "SAGEBRUSH",
+    "SHORTGRASS_PRAIRIE",
+    "BADLANDS",
+    "CANYON"
+   ],
+   "variants": [
+    {
+     "id": "tepui",
+     "name": "Tepui",
+     "when": "The same table of hard, flat-lying rock in hot, wet country, raised far higher: sheer cliffs on every side, a cool summit wet with cloud, waterfalls pouring off the rim. Phase 2: nothing is classified TEPUI until this landform exists.",
+     "cause": {
+      "rock": [
+       "sandstone"
+      ],
+      "temp_c": [
+       8,
+       16
+      ],
+      "moisture": [
+       0.8,
+       1
+      ],
+      "elevation_m": [
+       1500,
+       3000
+      ]
+     },
+     "biomes": [
+      "TEPUI"
+     ],
+     "note": "A landmark more than a home. WORLD_SYSTEMS_SPEC puts it on sandstone, which GeologyPass makes only below moisture 0.3, so the tepui needs its own rock rule."
+    }
+   ],
+   "size_m": [
+    30,
+    600
+   ],
+   "shape": "A flat-topped table of rock, wider than tall, with sheer sides over a skirt of fallen blocks. A hard caprock makes the rim, softer banded rock lies below; two or three cliff steps of escarpment height (about 14 m each) with ledges between. Shallow arched alcoves open at the foot of the caprock where water seeps out. Worn further, a table becomes buttes, taller than wide, and then thin spires, standing apart on the flats.",
+   "gives": [
+    "roof",
+    "water",
+    "lookout",
+    "defence",
+    "landmark"
+   ],
+   "hearth_spot": "In a seep alcove at the foot of the caprock: the fire on the dry front of the alcove floor, a few metres inside the drip line, with the seep and its basin against the back wall. A camp on top sits at least 10 m back from the rim, at the head of the one trail.",
+   "hazard": "The rim and the ledge edges: a sheer drop of a full cliff step; blocks fall from the caprock onto the talus below.",
+   "people": [
+    "desert",
+    "rock_shelter",
+    "steppe"
+   ],
+   "remains": [
+    "cliff_dwelling",
+    "pueblo_stubs",
+    "rock_art",
+    "ash_hearth",
+    "drip_wall",
+    "tent_rings"
+   ],
+   "links": {
+    "roads": "the seep is a node, like a spring; the one trail up is the only road onto the top",
+    "threshold": "stairs: the one way up, steps cut in the rock, then footholds",
+    "gate": "cliff: off the rim is one way; the trail is the only way back up",
+    "rooms": "the alcove is a roofed room with one feature, the seep"
+   },
+   "real_world": [
+    {
+     "analogue": "Acoma Pueblo (Sky City)",
+     "region": "about 97 km west of Albuquerque, New Mexico, USA",
+     "note": "Acoma Pueblo stands on a mesa about 110 m high that has sheltered its people for centuries; in 1540 the only way up was a hand-built stair and then footholds in the rock, and cisterns on top caught snow and rain.",
+     "source": "https://en.wikipedia.org/wiki/Acoma_Pueblo"
+    },
+    {
+     "analogue": "Ancestral Pueblo cliff dwellings",
+     "region": "Mesa Verde, Colorado, USA",
+     "note": "Water soaks down through the sandstone to the shale below and seeps out along it, where damp and frost carve the alcoves; with no permanent streams on the mesa, the Ancestral Pueblo people drew water from these seeps, cutting small basins in the shale to pool it.",
+     "source": "https://www.nps.gov/meve/learn/nature/seeps-springs-alcoves.htm"
+    },
+    {
+     "analogue": "The tepuis of Canaima National Park",
+     "region": "south-eastern Venezuela",
+     "note": "Table mountains cover about two thirds of the park, with sheer cliffs and waterfalls, among them the world's highest at about 1,000 m.",
+     "source": "https://whc.unesco.org/en/list/701/"
+    }
+   ],
+   "notes": "The escarpment noise already lifts some closed islands by ESCARP_M (TerrainField._cliffs): in dry sandstone, key those as mesas, add a second and third step at higher noise levels, and let the smallest islands stand as buttes and spires. The alcove is a mesh on the cliff face (roof_rule), like camps.gd's cliff slab. Sandstone exists only below moisture 0.3 (GeologyPass), so shortgrass gets mesas only at its dry edge. Peoples.pick gives every cliff site to shelter folk, but Mesa Verde's alcoves were farmers' homes (rock_shelter.json says so too): a mesa rule should put desert folk first. Mesa country, many tables together, is the region version.",
+   "plants": {
+    "add": [
+     "Adiantum capillus-veneris"
+    ],
+    "where": "The hanging garden: maidenhair along the wet seep line at the back of an alcove."
+   }
+  },
+  "dunes": {
+   "name": "Dunes, barchan and booming",
+   "family": "dry_and_wind",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "sound"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Dry country with loose sand on a flat floor and one steady wind (a strong mean wind in the cell), inland or on a dry coast: crescent dunes stand apart on the bare floor, horns pointing downwind.",
+   "cause": {
+    "rock": [
+     "sandstone",
+     "sand"
+    ],
+    "temp_c": [
+     -2,
+     35
+    ],
+    "moisture": [
+     0,
+     0.3
+    ],
+    "slope": [
+     0,
+     0.08
+    ],
+    "wind": "steady",
+    "other": "loose sand on a hard, flat floor; the horns point down the cell's mean wind (wind_avg)"
+   },
+   "biomes": [
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "DUNES"
+   ],
+   "variants": [
+    {
+     "id": "parabolic_dunes",
+     "name": "Parabolic dunes",
+     "when": "The same sand and steady onshore wind on a coast damp enough for grass: the grass pins the dunes' arms, so they become U-shapes with the arms trailing upwind, behind a grassy foredune along the beach.",
+     "cause": {
+      "rock": [
+       "sand"
+      ],
+      "temp_c": [
+       0,
+       33
+      ],
+      "moisture": [
+       0.3,
+       0.8
+      ],
+      "coast_km": [
+       0,
+       3
+      ],
+      "wind": "steady"
+     },
+     "biomes": [
+      "DUNES"
+     ],
+     "note": "Coast folk camp dug into the lee of the foredune, out of the onshore wind, with the beach in front for food."
+    }
+   ],
+   "size_m": [
+    40,
+    400
+   ],
+   "shape": "Crescents of bare sand standing apart on a hard, flat floor, each wider than long: a gentle windward back with ripples, a steep slip face (about 30-35°) in the hollow of the crescent, and two horns reaching downwind. Up to about 30 m high. Where sand is plentiful they join into long ridges across the wind.",
+   "gives": [
+    "landmark"
+   ],
+   "hearth_spot": "Off the sand: on the hard floor just upwind of the field, a short walk from the gentle back of the first crescent, never under a slip face. Where a spring rises in a deep hollow among the dunes, on the hollow's floor well out from the slopes (that is the oasis nest).",
+   "hazard": "Losing the way: every crest looks alike and no road crosses; the slip face slides underfoot.",
+   "people": [
+    "desert",
+    "coast"
+   ],
+   "remains": [
+    "soak_camp",
+    "shell_midden"
+   ],
+   "links": {
+    "audio": "the booming dune, a new SOURCE kind (§BG): a loud droning hum, near 450 Hz, for as long as its slip face slides, set off by the wind or by walking the crest; loud enough to walk toward, silent when wet",
+    "roads": "roads skirt a dune field rather than cross it"
+   },
+   "real_world": [
+    {
+     "analogue": "Mingsha Shan (Echo Sand Mountain) and Crescent Lake",
+     "region": "Dunhuang oasis, Gansu, China",
+     "note": "Mingsha is known as the singing dunes for the noise the wind makes in its sand, and its dunes surround the 100 m long Crescent Lake near Dunhuang, the oasis where the Silk Roads split around the Taklamakan.",
+     "source": "https://idp.bl.uk/discover/learning/dunhuang/dunhuang-articles/introducing-dunhuang/dunhuang-the-site-and-its-surroundings/"
+    },
+    {
+     "analogue": "Singing (booming) sand",
+     "region": "about 35 desert sites worldwide, among them Mingsha Shan, the Namib and the Kelso Dunes in California",
+     "note": "Round, dry silica sand avalanching down a dune, set off by the wind or by someone walking near the crest, can boom at up to 105 dB for several minutes, while wet sand is usually silent.",
+     "source": "https://en.wikipedia.org/wiki/Singing_sand"
+    },
+    {
+     "analogue": "Crescentic dunes (barchans) and parabolic dunes",
+     "region": "deserts and sandy coasts on Earth; Mars",
+     "note": "Crescent dunes, the commonest dune on Earth and Mars, form under wind from one direction with the slip face in the hollow of the crescent, while parabolic dunes, well known in coastal deserts, have arms that trail upwind because plants hold them while the bulk of the sand moves on.",
+     "source": "https://pubs.usgs.gov/gip/deserts/dunes/"
+    }
+   ],
+   "notes": "Aim each crescent by wind_avg at its cell: the slip face and horns face down the mean wind. Baked at generation (§BS): the dunes never move in play. One dune per field, the tallest and driest, booms (links.audio). A spring in a hollow among the dunes is the oasis nest, as at Crescent Lake. Inland there is no sand soil (dry country is sandstone, GeologyPass), so the field is a stamp. BiomePass makes DUNES only on a coast with moisture under 0.3, though the DUNES template runs 0.2-0.8; the parabolic variant needs that rule widened. A whole sand sea (erg) is the region version."
+  },
+  "salt_flat": {
+   "name": "Salt flat",
+   "family": "dry_and_wind",
+   "scale": "set_piece",
+   "build": [
+    "biome",
+    "look"
+   ],
+   "status": "partial",
+   "tier": 2,
+   "rarity": "rare",
+   "when": "A closed basin in dry country that loses more water to the sun than it gets, so its lake has dried to a salt crust (a SALT_FLAT cell); the nest is the spot on its rim where a spring or stream brings fresh water in.",
+   "cause": {
+    "temp_c": [
+     -3,
+     35
+    ],
+    "moisture": [
+     0,
+     0.3
+    ],
+    "water": [
+     "lake"
+    ],
+    "salinity": [
+     "salt"
+    ],
+    "other": "a closed basin that evaporates more than it gets (today: a salt lake under 350 mm of rain and above 8 °C); the nest is where a spring or stream reaches the rim"
+   },
+   "biomes": [
+    "SALT_FLAT",
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "PUNA"
+   ],
+   "shape": "A dead-flat white crust kilometres across on the floor of a closed basin, cracked into raised-rim polygons a few metres across. At the rim, where a spring or stream comes in, a green fringe of saltgrass and glasswort and a shallow run of fresh water fading into the salt; bare desert slopes all round. After rain, a thin film of still water lies on it and mirrors the sky.",
+   "gives": [
+    "salt",
+    "water",
+    "road",
+    "landmark"
+   ],
+   "hearth_spot": "On firm ground at the rim, just above the wet-season water line, beside the spring or stream where fresh water comes in; the salt workings lie out on the crust in front of it.",
+   "hazard": "Out on the crust: no water, no fuel, no shade and a white glare; after rain the mirror hides the way.",
+   "people": [
+    "desert",
+    "highland"
+   ],
+   "remains": [
+    "soak_camp",
+    "lined_spring",
+    "corral_ring"
+   ],
+   "links": {
+    "roads": "the dry crust is itself a road across the basin, closed when it floods; the rim spring is a node, like a spring",
+    "magic": "never a glow pond: MagicSites skips salt lakes"
+   },
+   "real_world": [
+    {
+     "analogue": "Salar de Uyuni",
+     "region": "Potosí, Bolivian Altiplano, 3,656 m",
+     "note": "The world's largest salt flat, about 10,600 km², is mined by the salt workers of the Colchani cooperative and is a main route across the Altiplano except when the wet season floods it; after rain, a thin film of still water makes it a mirror 129 km across.",
+     "source": "https://en.wikipedia.org/wiki/Salar_de_Uyuni"
+    },
+    {
+     "analogue": "Quechua llama salt caravans",
+     "region": "Potosí, Bolivia",
+     "note": "Each year Quechua herders of the high puna carried salt from the salares of Uyuni and Coipasa down to the valleys by llama caravan and bartered it for maize, chili, wood and coca.",
+     "source": "https://www.academia.edu/11723596/Caravanes_de_lamas_sel_et_%C3%A9changes_dans_une_communaut%C3%A9_de_Potosi_en_Bolivie_LLama_caravans_salt_and_barter_in_quechua_community_of_Potosi_IFEA_1987_"
+    },
+    {
+     "analogue": "Taoudenni salt mine and its caravans",
+     "region": "Taoudenni, northern Mali (Sahara)",
+     "note": "Miners cut slabs of salt of about 30 kg from the bed of an ancient salt lake, and camel caravans carry four or five slabs per camel some three weeks south to Timbuktu.",
+     "source": "https://en.wikipedia.org/wiki/Taoudenni"
+    }
+   ],
+   "notes": "Today a SALT_FLAT cell is drawn as a salt lake (open water). The flat wants a dry white crust with polygon cracks most of the year (a look), and the mirror film only after rain, read from the weather (dressing only, §BS). The salt-lake rule needs a basin mean above 8 °C (hydrology_pass SALT_LAKE_MIN_TEMP_C), so no salt lake forms in the puna band (-3 to 5 °C) or the colder half of the cold desert; lower it to give the puna its salars. Peoples.pick: the lake site rule takes any lake shore, salt ones too, so a rim camp gets lake folk unless this nest gets its own rule ahead of it. Salt is desert folk's exchange rung (the last step of their ladder: salt out on the road, pots, grain and fish back), and their salt_pan technique is the work done here. Desert folk have no ruin signature for old salt workings yet (cut-block pits, a stack of salt cakes); coast's salt_pans are cut in shore rock."
+  },
+  "oasis": {
+   "name": "Oasis",
+   "family": "dry_and_wind",
+   "scale": "set_piece",
+   "build": [
+    "biome",
+    "stamp"
+   ],
+   "status": "partial",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Desert or thorn scrub where groundwater reaches the surface: a spring at the foot of an escarpment, or a pool in a hollow deep enough to reach the water table (today's OASIS: a fresh lake where moisture is under 0.25).",
+   "cause": {
+    "temp_c": [
+     -2,
+     35
+    ],
+    "moisture": [
+     0,
+     0.3
+    ],
+    "salinity": [
+     "fresh"
+    ],
+    "other": "groundwater at the surface: a spring at an escarpment's foot, a pool in a deep hollow (among dunes too), or a fresh lake in desert (today's OASIS cells)"
+   },
+   "biomes": [
+    "OASIS",
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "THORN_SCRUB"
+   ],
+   "size_m": [
+    40,
+    600
+   ],
+   "shape": "A spring or pool where groundwater comes up at the foot of a cliff or in the floor of a deep hollow, ringed by date palms, tamarisk, reeds and sedge: a dark green island in bare sand or stone. Lived in, it becomes a three-storey garden: palms on top, fruit trees under them, vegetables and grain below a metre, watered by channels from the spring into small basins.",
+   "gives": [
+    "water",
+    "food",
+    "fuel",
+    "landmark"
+   ],
+   "hearth_spot": "Beside the spring head, on dry, stony ground just off the watered land, in the shade of the outer palms; the channels run from the spring past the camp down to the plots.",
+   "people": [
+    "desert",
+    "savanna_herders"
+   ],
+   "remains": [
+    "canal_line",
+    "qanat_shafts",
+    "pueblo_stubs",
+    "lined_waterhole"
+   ],
+   "links": {
+    "roads": "a node, like a spring; caravan roads run oasis to oasis",
+    "rooms": "one feature: the spring head under the palms",
+    "magic": "the pool can be one of the glow ponds (MagicSites: fresh lakes)",
+    "audio": "water_flow at the spring head and in the channels"
+   },
+   "real_world": [
+    {
+     "analogue": "Siwa Oasis gardens (Siwans)",
+     "region": "Siwa, Western Desert, Egypt",
+     "note": "The Siwans, of Berber ancestry, water their gardens from natural springs by gravity in small basins, and the garden grows in three storeys: date palms on top, fruit trees in the middle and other crops under a metre high.",
+     "source": "https://www.fao.org/giahs/giahs-around-the-world/egypt-siwa-oasis-dates-system/en"
+    },
+    {
+     "analogue": "The Kaouar oases",
+     "region": "Kaouar escarpment, north-east Niger",
+     "note": "Ten oases are strung along 75 km on the lee side of a 100 m escarpment, where groundwater is easy to reach, famous for salt and dates and once a stop on the Bornu to Fezzan caravan trail.",
+     "source": "https://en.wikipedia.org/wiki/Kaouar"
+    },
+    {
+     "analogue": "Qanat (foggara)",
+     "region": "Iran, spread across Asia and North Africa",
+     "note": "Developed in ancient Iran about 3,000 years ago and called foggara in Algeria, a qanat is a gently sloping tunnel, reached by a line of vertical shafts, that leads groundwater out to the surface far away with little lost to the sun.",
+     "source": "https://en.wikipedia.org/wiki/Qanat"
+    }
+   ],
+   "notes": "Today an OASIS cell is any fresh lake where moisture is under 0.25 (BiomePass). New: the spring at the foot of an escarpment that crosses desert (a road node, the OASIS dressing around it), and the pool in a hollow among dunes (Crescent Lake, see dunes). Where the water lies far off under the hills, a qanat taps it and leads it out to the garden: desert folk's technique, not the player's, and its line of shafts is the ruin (qanat_shafts). Peoples.pick: the lake site rule takes any lake shore, so an oasis lake gets lake folk unless this nest gets its own rule ahead of it."
+  },
+  "bog_and_fen": {
+   "name": "Bog and fen",
+   "family": "wet_ground",
+   "scale": "set_piece",
+   "build": [
+    "biome",
+    "stamp"
+   ],
+   "status": "partial",
+   "tier": 2,
+   "rarity": "uncommon",
+   "when": "Flat, waterlogged, cool ground where dead plants pile up as peat because the water keeps them from rotting. A bog is fed by rain alone: acid, spongy, sphagnum moss, no stream in. A fen is fed by groundwater and streams: richer water, sedge and reed, alder at its rim. Nobody lives on it: the nest is the first firm rise at its edge, or an island built in its open water (a crannóg).",
+   "cause": {
+    "rock": [
+     "clay_peat",
+     "alluvium"
+    ],
+    "temp_c": [
+     -7,
+     14
+    ],
+    "moisture": [
+     0.66,
+     1
+    ],
+    "slope": [
+     0,
+     0.035
+    ]
+   },
+   "biomes": [
+    "BOG",
+    "FEN",
+    "WET_MEADOW",
+    "FRESHWATER_MARSH"
+   ],
+   "variants": [
+    {
+     "id": "reed_island",
+     "name": "Reed island",
+     "when": "The same flat, waterlogged ground in warm country, where the game lays no peat (above 14 °C): reed marsh or swamp. The island is still built, of reed and mud, and the boat is the road.",
+     "cause": {
+      "temp_c": [
+       14,
+       32
+      ],
+      "moisture": [
+       0.66,
+       1
+      ],
+      "slope": [
+       0,
+       0.035
+      ]
+     },
+     "biomes": [
+      "SWAMP",
+      "FRESHWATER_MARSH"
+     ],
+     "note": "Marsh folk's house islands: new reed laid on the old mound."
+    }
+   ],
+   "size_m": [
+    8,
+    80
+   ],
+   "shape": "A wide, flat sheet of moss and sedge with dark pools, cottongrass and a few stunted pines (bog), or a tall sea of reed and sedge with alder thickets round it (fen). At the edge, a low knoll or ridge of firm ground. Out in open water, a small round island 8-25 m across, built up of timber, brush, clay, peat and stone inside a ring of piles: the crannóg, reached by log boat or a causeway. A trackway of planks on crossed pegs runs out from the edge across the wet.",
+   "gives": [
+    "fuel",
+    "food",
+    "water",
+    "defence",
+    "crossing"
+   ],
+   "hearth_spot": "On the first firm rise of mineral ground at the edge (a till knoll, a sand ridge or an old river terrace), 20-50 m back from where the peat begins, at the landward end of the trackway; or in the middle of a built island, on a hearth of clay and flat stones laid over the timber.",
+   "hazard": "The open bog: quaking moss over deep, water-filled peat that swallows a leg, and pools that look like ground. Off the trackway, nobody walks on it.",
+   "people": [
+    "marsh",
+    "lake"
+   ],
+   "remains": [
+    "house_islands",
+    "trackway_timbers",
+    "peat_cuttings",
+    "pile_stumps",
+    "slag_mound"
+   ],
+   "links": {
+    "roads": "a new road kind, the trackway: planks on crossed pegs from the edge to the island or across to the next dry ground (marsh folk's trackway technique)",
+    "threshold": "the trackway's landward end, read as a bridge",
+    "magic": "bog and fen pools are among MagicSites' glow ponds"
+   },
+   "real_world": [
+    {
+     "analogue": "The Sweet Track",
+     "region": "Somerset Levels, England",
+     "note": "In 3807 BC, by tree-ring date, people laid about 1,800 m of oak planks on crossed poles across the marsh between an island at Westhay and the high ground at Shapwick, and used it for about ten years.",
+     "source": "https://en.wikipedia.org/wiki/Sweet_Track"
+    },
+    {
+     "analogue": "Crannogs",
+     "region": "lochs, lakes and bogs of Ireland and Scotland",
+     "note": "Partly or wholly artificial islands, often ringed with timber piles and built up of clay, peat, stone, timber or brush, lived on over five thousand years, from the Neolithic to the 1600s or early 1700s.",
+     "source": "https://en.wikipedia.org/wiki/Crannog"
+    },
+    {
+     "analogue": "Marsh Arabs (Maʻdān)",
+     "region": "the Tigris–Euphrates marshes, southern Iraq; a living people",
+     "note": "Houses stood at the water's edge or on islands of piled reed (kibasha), or, to last longer, of layered reed and mud (dibin).",
+     "source": "https://en.wikipedia.org/wiki/Marsh_Arabs"
+    }
+   ],
+   "notes": "Generator: BiomePass splits them by water, FEN beside a river or lake and BOG away from both; GeologyPass's alluvium rule comes before clay_peat, so every fen sits on alluvium, and clay_peat lies under bogs and other flat, wet, cool ground away from water. The game's BOG and FEN (-7 to 5 °C) are colder than the Somerset Levels or the Irish bogs; there the same cause, flat waterlogged peat, lands in WET_MEADOW or FRESHWATER_MARSH (peat below 14 °C), so those are dressings too. The Sweet Track is the second-oldest timber trackway found in the British Isles."
+  },
+  "levee_and_chenier": {
+   "name": "Natural levee and chenier",
+   "family": "wet_ground",
+   "scale": "line",
+   "build": [
+    "stamp"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "Along a big, silty river winding across a flat floodplain: each flood drops its coarsest silt where it spills over the bank, building a low ridge along both banks, higher and drier than the swamp behind. In flat, wet country it is the one dry line.",
+   "cause": {
+    "rock": [
+     "alluvium"
+    ],
+    "slope": [
+     0,
+     0.035
+    ],
+    "river_km": [
+     0,
+     0.3
+    ],
+    "discharge": "big"
+   },
+   "biomes": [
+    "FLOODPLAIN_FOREST",
+    "SWAMP",
+    "FRESHWATER_MARSH",
+    "ESTUARY",
+    "SAVANNA",
+    "HOT_DESERT"
+   ],
+   "variants": [
+    {
+     "id": "chenier",
+     "name": "Chenier",
+     "when": "On a flat, muddy coast where waves once heaped shell and sand into a beach ridge and the shore then built out in mud in front of it: an old beach ridge stranded in the marsh, running parallel to the shore, under live oaks in Louisiana, among the coastal swamps between the Amazon and the Orinoco.",
+     "cause": {
+      "coast_km": [
+       0,
+       10
+      ],
+      "salinity": [
+       "salt",
+       "brackish"
+      ],
+      "slope": [
+       0,
+       0.035
+      ]
+     },
+     "biomes": [
+      "SALT_MARSH",
+      "ESTUARY",
+      "MARITIME_FOREST",
+      "MANGROVE"
+     ],
+     "note": "The same one dry line in salt country, built on first because it stands above the floods."
+    }
+   ],
+   "size_m": [
+    20,
+    200
+   ],
+   "shape": "A low, broad bank along each side of the river, highest at the water's edge (1-3 m above the swamp behind it) and sloping gently away into the backswamp. Firm, well-drained silt, so it carries the big trees and the trail while the land behind stays wet. Where a flood broke through, a fan of sand spreads out into the swamp.",
+   "gives": [
+    "water",
+    "road",
+    "crossing",
+    "landing"
+   ],
+   "hearth_spot": "On the levee's crest, the highest strip, 10-30 m back from the river's cut bank (which can slump), with the boats pulled up on the bank below and the backswamp behind; the houses string out along the crest, not across it.",
+   "hazard": "A big flood can top the levee or break through it and fill the backswamp; the cut bank slumps into the channel.",
+   "people": [
+    "river",
+    "marsh",
+    "coast",
+    "savanna_herders"
+   ],
+   "remains": [
+    "kiln_hump",
+    "clay_pit_pond",
+    "mound",
+    "weir_line",
+    "shell_midden",
+    "kraal_midden"
+   ],
+   "links": {
+    "roads": "the crest is the road along the river (roads.json follow_rivers), and camps string out along it",
+    "rooms": "the rooms at bends and confluences sit on it"
+   },
+   "real_world": [
+    {
+     "analogue": "The Louisiana chenier plain",
+     "region": "Gulf Coast of Louisiana, from Sabine Lake to Vermilion Bay",
+     "note": "Cheniers are sandy or shelly beach ridges between mudflats and marsh, named for their groves of live oak, and when the region was settled they were built on by preference because their height kept them above the floods.",
+     "source": "https://en.wikipedia.org/wiki/Chenier"
+    },
+    {
+     "analogue": "Eridu's canals, Sumer",
+     "region": "southern Mesopotamia, Iraq",
+     "note": "High levees along the Euphrates let water flow by gravity to the fields around, and breaks in them (crevasse splays) spread it over the floodplain.",
+     "source": "https://www.durham.ac.uk/departments/academic/archaeology/archaeology-news/archaeologists-discover-ancient-irrigation-network-in-mesopotamia--/"
+    },
+    {
+     "analogue": "Nuer cattle herders",
+     "region": "Greater Upper Nile, South Sudan, and Gambella, Ethiopia; a living people",
+     "note": "When the heavy rains come they move their cattle up to the higher ground, in part to keep them from hoof disease.",
+     "source": "https://en.wikipedia.org/wiki/Nuer_people"
+    }
+   ],
+   "notes": "Two twins of one nest: the levee, from river silt, and the chenier, an old beach ridge (the variant). BiomePass already finds the big-river flat (FLOODPLAIN_FOREST: flat, beside a river above the big-river discharge, moisture over 0.5); in drier country the same flat dresses as SAVANNA or HOT_DESERT. The levee is a walking-scale raise along that river's banks. River folk already build on the natural levee above the flood (river.json dressing). Where no levee is high enough, people built their own high ground: the river folk's mound."
+  },
+  "beaver_pond": {
+   "name": "Beaver pond",
+   "family": "wet_ground",
+   "scale": "set_piece",
+   "build": [
+    "stamp",
+    "mesh",
+    "look"
+   ],
+   "status": "new",
+   "tier": 2,
+   "rarity": "common",
+   "when": "On a small stream in a gentle, wooded valley with willow, aspen, birch or alder on the banks: beavers dam the stream with sticks and mud, and the water backs up over the valley floor. When the trees run out or the pond silts up they leave; the dam breaks and the pond drains to a meadow.",
+   "cause": {
+    "water": [
+     "river"
+    ],
+    "river_km": [
+     0,
+     0.1
+    ],
+    "slope": [
+     0,
+     0.06
+    ],
+    "temp_c": [
+     -2,
+     19
+    ],
+    "moisture": [
+     0.38,
+     1
+    ],
+    "other": "a small stream, not a big river, with trees beavers eat on its banks"
+   },
+   "biomes": [
+    "TAIGA",
+    "TEMPERATE_DECIDUOUS",
+    "TEMPERATE_RAINFOREST",
+    "WET_MEADOW"
+   ],
+   "size_m": [
+    30,
+    300
+   ],
+   "shape": "Active: a curved dam of sticks, mud and stones across the stream, a metre or two high and from a few metres to about 100 m long; behind it a still pond over the valley floor, drowned trees standing grey in it, a domed lodge of sticks out in the water, chewed stumps and felled trunks along the banks, and channels dug out into the wood. Abandoned: the dam breached, the pond drained to a flat meadow of grass and sedge with the stream winding through it and the grey snags still standing.",
+   "gives": [
+    "water",
+    "food",
+    "fuel",
+    "crossing",
+    "pasture"
+   ],
+   "hearth_spot": "On firm, higher ground at one end of the dam, a few metres above the pond and out of the stream bed below it; the dam is the camp's footbridge. Abandoned: at the meadow's edge, under the first trees.",
+   "hazard": "Soft, sucking mud and drowned logs at the pond's edge, and the stream bed below the dam, which takes the water if the dam goes.",
+   "people": [
+    "taiga",
+    "old_growth",
+    "marsh"
+   ],
+   "remains": [
+    "hearth_ring",
+    "store_posts",
+    "house_hollows"
+   ],
+   "links": {
+    "roads": "the dam is a ford node",
+    "rooms": "the pond is a room's one feature, open sky over drowned trees",
+    "audio": "water_flow at the dam: a trickle through the sticks"
+   },
+   "real_world": [
+    {
+     "analogue": "Beaver clearings in the eastern forests",
+     "region": "eastern North America",
+     "note": "Beaver ponds opened clearings in the forest whose fish, waterfowl and big game drew Native American and early colonial hunters, and before the fur trade there were perhaps 100 to 200 million beavers, against 10 to 15 million today.",
+     "source": "https://en.wikipedia.org/wiki/North_American_beaver"
+    },
+    {
+     "analogue": "The beaver-pond cycle",
+     "region": "North America",
+     "note": "When a pond silts up or the trees run out the beavers leave, the dam is breached and drains, and the wetland left behind can become a meadow; each cycle adds a layer of soil to the valley floor and widens it.",
+     "source": "https://en.wikipedia.org/wiki/Beaver_dam"
+    },
+    {
+     "analogue": "Innu",
+     "region": "Nitassinan, the Labrador Peninsula; a living people",
+     "note": "They hunted beaver alongside caribou, moose, bear and fish, and the fur trade, the focus of their dealings with Europeans for two centuries, did them great harm, because trapping left no room to follow the caribou.",
+     "source": "https://thecanadianencyclopedia.ca/en/article/innu-montagnais-naskapi"
+    }
+   ],
+   "notes": "Two states, baked at generation (§BS) and picked by seed: active (dam whole, pond full, fresh-cut stumps, the lodge) and abandoned (dam breached, meadow, grey snags). No live change: nothing rebuilds the dam during play. Generator: only the top few percent of discharge becomes a river and RiverNetwork draws them 7-55 m wide, while beavers dam small streams, so the pond goes on the narrowest headwater reaches or on a side stream drawn just for it. The pond is a walking-scale water plane, like the plunge pools, not a blueprint lake."
+  }
+ }
+}

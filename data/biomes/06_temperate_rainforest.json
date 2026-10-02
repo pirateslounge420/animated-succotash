@@ -2280,6 +2280,580 @@
      "source": "Makita 1992 Ecological Research (Sasa kurilensis is monocarpic: after mass flowering the stand dies and regrows from seedlings over one to two decades); Japanese bamboo literature (culms 1-3 m, shoots May-June, edible 'nemagari-dake'); flowering interval not known, estimated as many decades"
     },
     "restored_note": "1 Oct §CE (Mike: these plants must be in the game): restored after the §CC trim, which ran before the always_keep rule existed."
+   },
+   {
+    "name": "Pontic rhododendron",
+    "genus": "Rhododendron",
+    "species": "ponticum",
+    "origin": "Northern Turkey and the Caucasus",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST"
+    ],
+    "height_m": [
+     2.0,
+     8.0
+    ],
+    "density": 1.0,
+    "soil": {
+     "classes": [
+      "granite",
+      "basalt",
+      "sandstone",
+      "till",
+      "clay_peat",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#24503A",
+    "accent": "#A46CB4",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seed sprouts in light on moss, rotting wood, bare peat or scuffed acid soil that stays damp. The seedling is a tiny pair of seed leaves, then a thin sprig crowned with a few small dark leaves; slow for its first years, it thickens into a crooked, many-stemmed bush whose low branches root where they touch the ground, so one plant becomes a dark, dome-shaped thicket.",
+     "confidence": "estimated",
+     "source": "Cross 1975, Biological Flora of the British Isles: Rhododendron ponticum (J. Ecol.), and the British and Irish invasion literature: dust-fine, wind-blown seed germinates in light on moss, bare peat or disturbed acid soil that stays damp; seedlings grow slowly at first; the plant layers where branches touch the ground, resprouts from the base when cut and casts shade dense enough to suppress the ground flora. Germination time, growth curve, first flowering and age estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "low branches root where they touch the ground (layering), which here plays the sucker's part: neighbouring stems of a thicket are often one clone; cut stems resprout from the base"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Rhododendron ponticum L., Pontic rhododendron: evergreen shrub or small tree 2-8 m that forms dense thickets in the understory of the humid Euxine-Colchic forests (oriental beech, oriental spruce) on the Black Sea slopes of northern Turkey and the Caucasus, west to Strandzha, with relict populations in southwest Iberia (subsp. baeticum) and Lebanon; acid soils only, shade-tolerant; naturalised and invasive in Britain and Ireland. Every part carries grayanotoxins: with R. luteum it is the nectar source of the Black Sea's mad honey (deli bal). Kew POWO for the name; Flora Europaea; Flora of Turkey (Davis); Cross 1975, Biological Flora of the British Isles (J. Ecol.).",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ponticum",
+     "native_range": "Black Sea forests of northern Turkey and the western Caucasus; relicts in southwest Iberia and Lebanon",
+     "leaf_shape": "long leathery glossy leaves crowded at the shoot tips",
+     "trunk": "crooked, multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2.0,
+      8.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by layering",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "note": "written for this species (the mad-honey rhododendrons)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#7a6a5e",
+      "secondary": "#8a5440",
+      "feature_cm": 1,
+      "roughness": 0.35,
+      "notes": "grey-brown to red-brown, thin, smooth on young stems and finely flaking on old ones; crooked stems that root where they touch the ground"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.35
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#24503a",
+      "underside": "#8aa080",
+      "gloss": 0.65,
+      "veins": "pinnate",
+      "vein_colour": "#9aae74",
+      "margin": "entire",
+      "size_cm": [
+       6,
+       18
+      ],
+      "notes": "leathery, glossy, dark green, elliptic to oblanceolate leaves, paler and hairless beneath, alternate but crowded in loose whorls at the shoot tips; leaves, flowers and nectar carry grayanotoxins, and goats and sheep that browse it are poisoned"
+     },
+     "flower": {
+      "colour": "#a46cb4",
+      "secondary": "#b8c060",
+      "form": "rounded trusses of broad funnel-bells at the shoot tips, pale mauve to purple, the upper lobe freckled greenish-yellow, May-June",
+      "scent": "none",
+      "notes": "Mad honey: the nectar carries grayanotoxins (chiefly grayanotoxin I and III). Honeybees working these trusses in the Black Sea forests of Turkey and Georgia make deli bal, a dark, bitter honey taken by the spoonful as a folk tonic; more brings dizziness, a slow heart and low blood pressure (mad honey poisoning), rarely fatal. Xenophon's Anabasis (IV.8) tells of the Greek army felled by it near Trapezus (Trabzon) about 400 BC. R. luteum's nectar goes into the same honey."
+     },
+     "fruit": {
+      "colour": "#6b4a2e",
+      "form": "woody brown capsules about 2 cm, clustered on the old truss, splitting from the top to shed dust-fine seed through the winter"
+     },
+     "seasonal": "evergreen; the new shoots flush after flowering",
+     "silhouette": "dark glossy domed thickets under beech, mauve in late spring",
+     "confidence": "documented",
+     "refs": "Flora Europaea; Flora of Turkey (Davis); Kew POWO; Cross 1975, Biological Flora of the British Isles: Rhododendron ponticum (J. Ecol.); Jansen et al. 2012, Grayanotoxin poisoning: 'mad honey disease' and beyond (Cardiovasc. Toxicol.); Xenophon, Anabasis IV.8"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.3,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      6,
+      18
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A6A5E",
+     "color_2": "#8A5440",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.15,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.72,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      65
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#a46cb4",
+     "flower_form": "bell",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      10,
+      15
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7a8a4a",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      3000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Flora Europaea; Flora of Turkey (Davis); Cross 1975: terminal trusses of broad funnel-bell flowers, pale mauve to purple with greenish-yellow spotting on the upper lobe, in late spring; a woody capsule that ripens in autumn and sheds dust-fine seed through the winter. Bumblebees are its main pollinators where it is naturalised in Britain and Ireland; honeybee visits carry the grayanotoxin nectar into mad honey. Truss size, capsule size, ripening time, set, crop and decay estimated."
+    }
+   },
+   {
+    "name": "Yellow azalea",
+    "genus": "Rhododendron",
+    "species": "luteum",
+    "origin": "Caucasus, Turkey and eastern Europe",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2200
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST"
+    ],
+    "height_m": [
+     1.5,
+     4.0
+    ],
+    "density": 0.7,
+    "soil": {
+     "classes": [
+      "granite",
+      "basalt",
+      "sandstone",
+      "till",
+      "clay_peat",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.15,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5A8A44",
+    "accent": "#F2C12E",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      6,
+      15
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seed sprouts in light on bare or mossy acid ground. The seedling is a tiny sprig of soft, hairy leaves that falls bare each autumn; within a few years it branches low into a twiggy little bush of upright grey-brown stems, the young shoots sticky with glandular hairs.",
+     "confidence": "estimated",
+     "source": "Flora Europaea; Flora of Turkey (Davis): a deciduous shrub of forest edges, clearings and open woodland. Seed as for the genus: dust-fine, germinating on the surface in light. Germination time, growth curve, first flowering, age and suckering estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "spreads into clumps and thickets by shoots from the base (estimated)"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Rhododendron luteum Sweet (syn. Azalea pontica L., R. flavum G.Don), yellow or Pontic azalea: deciduous shrub 1.5-4 m of forest edges, clearings and open woodland in the Caucasus and northern Turkey, with relict outliers in eastern Europe (Poland, Belarus, Ukraine, Slovenia), the northern ones in open pine and oak woods on acid sandy soil; very fragrant, sticky, bright yellow funnel flowers in spring before or with the leaves; hairy leaves that turn crimson and orange in autumn. Every part carries grayanotoxins: with R. ponticum it is the nectar source of the Black Sea's mad honey (deli bal). Kew POWO for the name; Flora Europaea; Flora of Turkey (Davis).",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "luteum",
+     "native_range": "Caucasus and northern Turkey; relict outliers in Poland, Belarus, Ukraine and Slovenia",
+     "leaf_shape": "soft hairy oblong leaves clustered toward the twig tips",
+     "trunk": "several upright stems from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.5,
+      4.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "gravity"
+     ],
+     "note": "written for this species (the mad-honey rhododendrons)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7a7064",
+      "secondary": "#5e5246",
+      "feature_cm": 0.5,
+      "roughness": 0.2,
+      "notes": "thin grey-brown stems; the young twigs, buds and flower stalks sticky with glandular hairs"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#5a8a44",
+      "underside": "#8fae78",
+      "gloss": 0.15,
+      "veins": "pinnate",
+      "vein_colour": "#6e9a58",
+      "margin": "ciliate",
+      "size_cm": [
+       5,
+       12
+      ],
+      "notes": "soft, oblong-lanceolate, softly hairy leaves fringed with bristly hairs, alternate and crowded toward the shoot tips; crimson and orange in autumn before they fall; leaves and flowers carry grayanotoxins"
+     },
+     "flower": {
+      "colour": "#f2c12e",
+      "secondary": "#e08a1e",
+      "form": "clusters of bright yellow funnel flowers with a deeper orange-yellow blotch and long curving stamens, at the ends of bare or just-leafing shoots in spring; tube and stalks sticky with glands",
+      "scent": "sweet",
+      "notes": "Mad honey: the nectar carries grayanotoxins. With R. ponticum this azalea is the plant behind deli bal, the Black Sea's mad honey from the forests of Turkey and Georgia: a spoonful is a folk tonic, more brings dizziness, a slow heart and low blood pressure (mad honey poisoning), rarely fatal. The whole plant is poisonous."
+     },
+     "fruit": {
+      "colour": "#6b4a2e",
+      "form": "glandular-hairy, oblong brown capsules about 2 cm, splitting from the top to shed dust-fine seed"
+     },
+     "seasonal": "deciduous; flowers on bare or leafing shoots in spring; crimson and orange in autumn",
+     "silhouette": "open twiggy bush blazing yellow at the forest edge",
+     "confidence": "documented",
+     "refs": "Flora Europaea; Flora of Turkey (Davis); Kew POWO (syn. Azalea pontica L., R. flavum G.Don); RHS; Jansen et al. 2012, Grayanotoxin poisoning: 'mad honey disease' and beyond (Cardiovasc. Toxicol.)"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#7A7064",
+     "color_2": "#5E5246",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#c8442a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      25,
+      50
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.35,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.75
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#f2c12e",
+     "flower_form": "tube",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      7,
+      12
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7e8f4a",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      800
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Flora Europaea; Flora of Turkey (Davis): clusters of very fragrant, glandular-sticky, bright yellow funnel-shaped flowers with long protruding stamens at the shoot tips, before or with the leaves in spring; an oblong capsule. Flowering runs from April in the lowlands to June in the mountains; honeybee visits carry the grayanotoxin nectar into mad honey. Cluster size, capsule size, ripening time, set, crop and decay estimated."
+    }
    }
   ],
   "ground": [
@@ -4543,5 +5117,8 @@
    "source": "Wardle 1991 Vegetation of New Zealand"
   }
  ],
- "hero_species": []
+ "hero_species": [
+  "Pontic rhododendron",
+  "Yellow azalea"
+ ]
 }

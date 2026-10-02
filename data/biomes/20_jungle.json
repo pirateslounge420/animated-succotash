@@ -841,6 +841,267 @@
       0.6
      ]
     }
+   },
+   {
+    "name": "Sacred fig",
+    "genus": "Ficus",
+    "species": "religiosa",
+    "family": "Moraceae",
+    "origin": "Indian subcontinent to Indochina",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     34
+    ],
+    "moisture": [
+     0.35,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "JUNGLE"
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.05,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite",
+      "sandstone",
+      "karst"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A8A36",
+    "accent": "#ADAAA1",
+    "source": "Ficus religiosa L., sacred fig, peepal (pipal) or bodhi tree, a big fig of tropical dry and moist deciduous forest in the Indian subcontinent and Indochina, 20-30 m tall, from sea level to about 1,500 m. It has a broad spreading crown, smooth pale grey bark, and heart-shaped leaves drawn out into a long drip tip on long slender stalks that tremble in the faintest air. It often starts as a hemi-epiphyte on walls, temples or another tree, its roots gripping the stone, and is very long-lived: the Jaya Sri Maha Bodhi at Anuradhapura, Sri Lanka, was planted in 288 BC (Kew POWO: native Indian subcontinent to Indochina; Flora of China vol. 5; Brandis 1906 Indian Trees; Troup 1921 Silviculture of Indian Trees)",
+    "silhouette": "broad open dome of trembling leaves on pale grey limbs",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#adaaa1",
+      "secondary": "#8b8579",
+      "feature_cm": 8,
+      "roughness": 0.2,
+      "notes": "smooth pale grey bark, faintly mottled darker; old trunks are massive, fluted and low-buttressed, often looking like several stems and roots grown together; unlike the banyan it does not drop pillar roots from its limbs"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "cordate",
+      "colour": "#4a8a36",
+      "underside": "#86a870",
+      "gloss": 0.55,
+      "veins": "pinnate",
+      "vein_colour": "#c8d6a8",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       17
+      ],
+      "notes": "Broad, heart-shaped, leathery blades, shining above, with the base truncate to shallowly cordate. Each blade is drawn out into a long, narrow drip-tip tail, roughly a quarter of its length, with a pale midrib and looping side veins. Each hangs on a long, slender, flexible stalk (6-10 cm), so the blades flutter and tremble in the faintest air and the crown shimmers on a still day. New leaves flush pink to copper-red."
+     },
+     "flower": {
+      "colour": "#8daa55",
+      "secondary": "#c4d08e",
+      "form": "hidden inside the figs (syconia), in pairs in the leaf axils",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#3e1f3c",
+      "form": "small depressed-round figs 1-1.5 cm, stalkless, in pairs in the leaf axils, green ripening dark purple to purple-black"
+     },
+     "seasonal": "Nearly evergreen. Late in the dry season it changes its leaves: the old leaves yellow and fall, leaving it briefly bare in the driest places. A flush of pink-copper new leaves follows and turns glossy green.",
+     "silhouette": "broad open dome of trembling leaves on pale grey limbs",
+     "confidence": "documented",
+     "refs": "Kew POWO Ficus religiosa; Flora of China vol. 5 (2003); Brandis 1906 Indian Trees; Troup 1921; Wikipedia Ficus religiosa"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.4,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      17
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 3,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 8,
+     "color": "#ADAAA1",
+     "color_2": "#8B8579",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "low",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      12,
+      45
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      300,
+      2300
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Usually starts where a bird, bat or monkey drops the seed: a crack in a wall, temple, well or rock, or the fork of a host tree. It begins as a small leafy sprig of heart-shaped, long-tailed leaves, pink-copper when new. The sprig sends pale roots down over the surface and into the cracks, gripping the stone and in time prising it apart. Once a root reaches the soil it thickens and the plant grows away as a tree, sometimes enclosing its host tree. On open ground it comes up as an ordinary seedling. Saplings grow fast, slim and open-crowned.",
+     "confidence": "estimated",
+     "source": "Hemi-epiphyte that often starts on walls, temples, wells and other trees, its roots gripping and splitting the stone (Wikipedia Ficus religiosa; Brandis 1906 Indian Trees; Troup 1921 Silviculture of Indian Trees). Lifespan: the Jaya Sri Maha Bodhi at Anuradhapura, Sri Lanka, was planted in 288 BC by the chronicles' date (Mahavamsa) and is said to be the oldest living human-planted tree with a known planting date. Germination, growth rates, shade tolerance, first fruiting and typical lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#8daa55",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "fig_wasp"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "fig",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1,
+      1.5
+     ],
+     "unripe_colour": "#7e9e48",
+     "ripe_colour": "#3e1f3c",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      2,
+      10
+     ],
+     "drop": "falls",
+     "rot_days": [
+      4,
+      15
+     ],
+     "crop_per_tree": [
+      10000,
+      300000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia Ficus religiosa (figs 1-1.5 cm, green ripening purple); Flora of China vol. 5 (figs stalkless, paired in the leaf axils). Pollinated by its own fig wasp, Platyscapa quadraticeps (long known as Blastophaga quadraticeps). Figs are eaten by birds, bats and monkeys, which spread the seed. Estimated: the fig season (mainly with the spring leaf flush, ripening in the hot season, though some trees crop at other times), receptive days, ripening time, fruit set and crop."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    }
    }
   ],
   "shrub": [
@@ -5175,5 +5436,7 @@
    "source": "Whitmore 1984; Champion & Seth 1968 (tropical semi-evergreen and riverine forest)"
   }
  ],
- "hero_species": []
+ "hero_species": [
+  "Sacred fig"
+ ]
 }

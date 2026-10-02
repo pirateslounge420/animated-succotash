@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`.
 
 ---
 
@@ -1120,6 +1120,161 @@ glow, doorways as voids (LOOK_REFERENCE R1–R10).
 **Open for Mike:** puzzle doors and traps the Skyrim way (claw doors, pillar puzzles,
 pressure plates), or only the ruin's own decay.
 
+## CK. Nests: camps live at the land's features, and a ruin is what a camp leaves — LOCKED (1 Oct, evening, Mike)
+
+Mike (19:13–19:40): a list of landforms for the world terrain builder, *so the generator
+has more landmark places to build environments and camps around, as you would really find
+in human history — tribal peoples using the openings of cave mouths, waterfalls, ravines
+etc. to make "nests"*; the same formations *could show up in different biomes, where it
+makes sense from a real-life historical standpoint*; *when I said "ruins" I really meant
+the remains of a camp, which could technically be built at any of the geographical
+features' locations*; and every addition Claude suggested.
+
+**The rules** (`data/landforms.json`; gate `tools/landforms_check.py`, 0 errors):
+- **A landform follows its cause, not the biome.** Rock, water, ice, fire, wind, relief and
+  climate place it; the biome only dresses it. A limestone cave mouth shows up in
+  rainforest, oak wood, maquis and desert alike, because people lived in it in all of them.
+  The same cause in another climate makes another landform, a `variant`: karst is a cenote
+  in warm lowland, a doline in cool country, a blue hole drowned in a reef.
+- **Thirty-five nests in seven families.** Rock and caves: cave mouth, grotto, cenote, karst
+  towers, slot canyon, lava tube, kopje, natural arch. Running water: waterfall, ravine,
+  escarpment, oxbow lake, wadi. Coast and sea: cove, tide pools, shell mound, bioluminescent
+  bay, fjord, atoll, sea cave. Ice: cirque, moraine, esker, pingo, floe edge. Fire:
+  caldera, obsidian flow, volcanic neck. Dry country: mesa, dunes, salt flat, oasis. Wet
+  ground: bog and fen, levee and chenier, beaver pond. Each entry says what the nest gives a
+  camp (roof, water, food, lookout, crossing …), exactly where the hearth sits, which
+  peoples it suits, which of their §BQ signatures its remains show, and the real places it
+  is drawn from (sources checked by the fill agents, one family each).
+- **The camp loop.** Untouched → a camp settles at the hearth spot → it empties (fuel, food
+  or the dark, §BL) → **its remains are the ruin**: the §BQ signatures of the people who
+  lived there (ash and ochre under the overhang, cenote steps on the rim, a bone bed under
+  the buffalo jump) → a new camp moves in and restores them. Any nest may be found at any
+  stage. A camp lives only where the nest gives roof or water and fuel is in reach; a nest
+  that gives neither (a slot canyon's bed, a dune field, the middle of a salt flat) is a
+  passage or a landmark, with its hearth spot at the edge. **The hearth is never in the
+  hazard.**
+- **The stone architecture stays — LOCKED (Mike, 20:23: *I like the idea of abandoned
+  castle ruins, aqueducts and crenellated towers — and headstones*).** Ruins keeps placing
+  its castles, aqueducts, crenellated towers, headstone graveyards, pyramids and barrows on
+  its own grid. They are the monuments of whoever built the roads (§BC), the ladder run past
+  the ceiling (§BL), not camps. A monument is a nest too (a roof under its vaults, water at
+  its well or aqueduct), and a camp may live at one as today, as people really did: the
+  Arles amphitheatre held a walled town through the Middle Ages.
+- **Density, first guess:** the camps at monuments stay as built (the hearth before the
+  delve, §BX, §CJ), and the nests add their own: about one nest in four that gives roof or
+  water holds a living camp, the best first (roof and water both), and about half of the
+  rest hold an old camp's remains. Tune by play.
+- **Anything with a roof is a mesh.** The ground is a heightfield and cannot overhang, so
+  overhangs, cave mouths, grottos, lava tubes, a cenote's lip, sea caves and arches are set
+  pieces on the terrain, like the cliff slab and the barrow passage: the mouth and a first
+  chamber now. Phase 3 adds the caves behind them and retires the wolf-den props.
+- **It fits night life and the delves.** A nest's cave mouth keeps the clock (§CH: empty by
+  day, something denned up in it at night) and is the door of a natural-cave delve once
+  Phase 3 digs behind it (§CJ); a camp's remains are §CJ's "people's ruin", whose delve is
+  the old workings of its craft. Every monument stays a delve (§CJ).
+- **Sizes are walking-scale.** Small landforms (towers, necks, pingos, moraines, eskers,
+  arches, kopjes) would vanish at 1/10 height, so they are built at sizes that read next to
+  the player, as the 14 m escarpments and 12 m ravines already are; only geography
+  (mountains, plateaus, calderas, fjord depths) takes HEIGHT_SCALE.
+- **Build order:** tier 1 is half-built already (cave mouth and grotto as meshes, cenote,
+  slot canyon from the ravines, waterfall, ravine, escarpment, the bioluminescent bay on the
+  glow ponds) and brings back the two peoples who have no home today; tier 2 is the walkable
+  stamps and set pieces; tier 3 the region reshapes (fjords, tower karst, calderas, atolls).
+
+**What the fill found in the engine** (each is also in its entry's notes):
+- **Two peoples can't appear.** Shelter folk need a cliff camp or the CAVES biome: cliff
+  camps are off while camps live only at ruins, and nothing is classified CAVES. Karst folk
+  come on a coin flip on karst rock with no cave or sinkhole there. `Peoples.pick` should
+  read the nest's `people` first: today shelter folk win every karst cave, the lake rule
+  takes salt-flat and oasis camps, and every cliff site goes to shelter folk, though Mesa
+  Verde's alcoves were farmers' homes.
+- **Waterfalls generate** (§BE's check: 903 falls on 202 of 344 river reaches on the stamp,
+  PROGRESS 30 Sept).
+- Rivers are straight reaches between cells, so an oxbow draws its own old loop, a wadi is a
+  new stamp down the dry drainage lines, and a beaver pond wants the narrowest headwaters.
+- Salt lakes need a basin mean over 8 °C, so the puna's salars can't form; salt flats draw
+  as open water, not a white crust.
+- Sandstone exists only below moisture 0.3 and sand only on the coast: a kopje lays its own
+  granite in dry country, desert dunes are a stamp on sandstone, and the DUNES biome is
+  coast-only today.
+- A volcano's crater never holds water and is about one blueprint cell wide (the caldera
+  widens it and notches the rim, or the lake fill floods it). An atoll needs the geology and
+  biome passes overridden and its reef ring raised: the cones don't reach the surface from
+  deep water.
+- Tarns and kettle ponds are smaller than the blueprint's lakes, so their stamp carries its
+  own water level. SEA_ICE draws and swims as open sea (the floe edge needs walkable ice);
+  seal fat has no fuel kind.
+- New pieces: a booming-dune sound, a rock-arch mesh (every threshold is two boulders today),
+  and the cliff-shelter hearth moved a pace or two in from the drip line, where it sits now.
+
+**Contradictions noted:** `WORLD_SYSTEMS_SPEC` says ruins "stay as they are": the monuments
+do; camps move onto nests (§CK wins for camps). Phase 3 says the only cave mouths are
+wolf-den props until then: §CK builds mouths and first chambers first, as set pieces.
+
+## CL. One sacred fig, and someone sitting beneath it — LOCKED (1 Oct, 20:55, Mike)
+
+Mike: *it would also be cool to have one ficus religiosa with Buddha meditating underneath,
+wearing an ochre-coloured robe.*
+
+- **Exactly one per world** (`data/uniques.json`, the first one-of-a-kind place): an ancient
+  sacred fig (*Ficus religiosa*) in tropical dry forest (else monsoon jungle, else savanna
+  woodland), off a road like a §BC landmark, on a low rise, built to the composition rules
+  (LOOK_REFERENCE). The oldest tree for kilometres, its crown 35–45 m across, roots gripping
+  old stone if there is any. The species is in the plant data now (`21_tropical_dry_forest`,
+  `20_jungle`: rare wild sacred figs too, as in life); this one is past the top of its band.
+- **Beneath it, a figure in meditation:** the shared cloaked rig (§0), seated cross-legged
+  on the east side of the trunk facing east, hands together in the lap, eyes closed, hood
+  down, in an ochre robe (#CC7722). Never moves but to breathe, never speaks, and nothing
+  the player does changes that. Swept earth in a ring under the crown; no fire, no store,
+  never a camp.
+- **What makes the tree read:** heart-shaped leaves with a long drip-tip tail on long
+  stalks, so they tremble in still air. The wind shader has no per-species flutter yet;
+  this tree is the reason to add one.
+- **Real world:** the Jaya Sri Maha Bodhi at Anuradhapura, Sri Lanka, said to be grown from
+  a cutting of the fig at Bodh Gaya and planted in 288 BC, is the oldest planted tree with
+  a known date.
+- **Open (Mike):** whether play names him (§BO keeps real names out of play, so the default
+  is no name; the log says only *Someone sits beneath the old fig, very still*), and whether
+  the dark keeps away from this one circle without a fire.
+
+## CM. Ferns in the wet places, rhododendron forests and mad honey; the kind of place, not Earth's map — LOCKED (1 Oct, 20:55, Mike)
+
+Mike: *grottos should have ferns, washes as well. It's fine for biomes to have various
+species which might not be found there on Earth as long as the ecosystem makes sense — there
+shouldn't be a magnolia in a savanna. There should also be rhododendron forests, where mad
+honey comes from.*
+
+- **A nest is its own small habitat** (`landforms.json → plants`): it grows its own plants,
+  each still inside its own temperature, moisture and soil bands. A seep grows maidenhair;
+  spray grows filmy fern; a shaded wash bank grows rock ferns. **Grottos:** maidenhair,
+  hart's-tongue, filmy fern, bird's-nest fern. **Washes (wadis):** wavy cloak fern and spiny
+  cliffbrake in the shaded cracks of the banks, curled in drought and green after rain,
+  never in the sandy bed; maidenhair only at a seep or a tinaja. The same seep rule holds at
+  a waterfall's spray, a slot canyon's seep and a mesa alcove's hanging garden. New in the
+  plant data: *Astrolepis sinuata* and *Pellaea truncata* (hot desert, canyon, thorn scrub;
+  in the wash and slope associations too).
+- **Rhododendron forests** (the genus joins §CE's always-present groups): the **Himalayan
+  rhododendron forest** in cloud forest (tree rhododendron, red in the spring bloom, mossed
+  to the twigs) and the **beech-rhododendron forest** in temperate deciduous country (a dense
+  evergreen *Rhododendron ponticum* understory with yellow azalea, *R. luteum*, at the
+  edges: the Black Sea's mad-honey forest). *R. ponticum* and *R. luteum* are new in the
+  plant data (temperate deciduous and temperate rainforest). The beech stand uses the file's
+  American beech until a fill adds oriental beech.
+- **Mad honey** (`items.json → mad_honey`, not wired): honey from rhododendron nectar
+  carries grayanotoxin. Real: the Black Sea's *deli bal* from those two rhododendrons; the
+  cliff honey of the Himalayan giant honey bee, which Gurung honey hunters in Nepal take
+  from rope ladders; Xenophon's soldiers fell sick from it near Trabzon in 401 BC. Found in
+  wild combs in a rhododendron forest in the spring bloom, and at the **honey cliff** (an
+  escarpment variant: combs under the overhangs above a rhododendron forest). First-guess
+  effect: a little and the world swims and the heart slows for a few game hours; more and
+  you sit down where you are, which at night is the dark's chance. The designer tunes it.
+- **The kind of place, not Earth's map** (§CA restated): a biome may grow species that
+  aren't found in it on Earth, as long as the ecosystem makes sense; a magnolia still never
+  grows in a savanna. Fills tag a species' `biomes` by the kind of place it fits, not only
+  by its Earth range. **Open (Mike):** whether this loosens the realm gate (§AA: one
+  region's flora per landmass) too. Plant entries carry no realm of their own today (only
+  associations do), so the new species grow wherever their biome and bands fit.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1181,3 +1336,13 @@ Still queued, with Mike's prompts setting the order:
 - §BI, trade.
 
 §CH and §CJ are to be audited first, as above.
+
+**Added 2 Oct (§CK–§CM):** the data is in (`landforms.json`, `uniques.json`, the
+new species and associations, `items.json → mad_honey`). The rhododendron forests, the new
+ferns and the sacred fig's wild trees need no code: they grow when the data loads. The
+engine order: **tier-1 nests and the camp move** (a sites pass reading `landforms.json`;
+camps and their remains at nests, monuments kept; `Peoples.pick` reading the nest first;
+the cliff-shelter hearth off the drip line; cave mouth and grotto as meshes; the cenote;
+slot canyons from the ravines; the glowing bay on the glow ponds) → nest plants (§CM) → the
+sacred fig and its figure (§CL) → tier 2 → tier 3. Mad honey waits for the item and food
+systems. Where this sits against §CH and §CJ's audits is Mike's call.

@@ -129,6 +129,12 @@
    "icon": "lamp",
    "color": "#8a8a8a",
    "_note": "technique fat_lamp: a stone bowl of rendered fat with a moss wick"
+  },
+  "mad_honey": {
+   "name": "Mad honey",
+   "icon": "honey",
+   "color": "#8a3a1c",
+   "_note": "[NOT WIRED YET \u2014 design \u00a7CM] Dark red-brown honey from rhododendron nectar, found in wild combs in a rhododendron forest and at a honey cliff in the spring bloom. Its grayanotoxin works like the real thing: a little and the world swims and the heart slows for a few game hours; more and you sit down where you are. First guesses; the designer tunes it."
   }
  },
  "sample_part": {
