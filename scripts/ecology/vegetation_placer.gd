@@ -121,9 +121,15 @@ static var SALAD := PackedInt32Array(Array(DOM.get("salad_biomes", [])).map(func
 ## min_share of its tier's stems, split among its fitting members; entries
 ## sharing a binomial roll as one species (one_roll_per_binomial: the 64
 ## cannabis landraces are Cannabis sativa, the one nearest in climate here).
+## A group with no_terpene_evidence "accent_only" keeps a member whose entry
+## says there is no evidence of terpene relevance (cannabis.terpene_evidence
+## "none": Japanese hemp, Mike 2 Oct) to the accents: never lifted, never a
+## stand's dominant or associate.
 static var PRESENT: Dictionary = Tuning.table("habitat").get("always_present", {})
 static var PRESENT_MIN := float(PRESENT.get("min_share", 0.06))
 static var _groups := PackedStringArray()
+## 1 for a member its group keeps to the accents (no_terpene_evidence).
+static var _accent_only := PackedByteArray()
 static var _groups_mutex := Mutex.new()
 
 
@@ -133,26 +139,49 @@ static func presence_group(sp: PlantSpecies) -> String:
 	var idx := SpeciesDB.index_of(sp)
 	_groups_mutex.lock()
 	if _groups.is_empty():
-		var all := SpeciesDB.all()
-		_groups.resize(all.size())
-		var defs: Dictionary = PRESENT.get("groups", {})
-		for i in all.size():
-			var s: PlantSpecies = all[i]
-			var shape_key := str(PlantSpecies.Shape.keys()[s.shape]).to_lower() if s.shape < PlantSpecies.Shape.keys().size() else ""
-			var lname := s.name.to_lower()
-			for g in defs:
-				var d: Dictionary = defs[g]
-				var hit := (d.get("genera", []) as Array).has(s.genus) or (d.get("shapes", []) as Array).has(shape_key)
-				if not hit:
-					for frag in d.get("names_contain", []):
-						if lname.contains(str(frag)):
-							hit = true
-				if hit:
-					_groups[i] = str(g)
-					break
+		_build_groups()
 	var out := _groups[idx] if idx >= 0 and idx < _groups.size() else ""
 	_groups_mutex.unlock()
 	return out
+
+
+## A member with no evidence of terpene relevance whose group keeps it to
+## the accents (Mike, 2 Oct: Japanese hemp): never lifted, never a stand's
+## dominant or associate.
+static func accent_only(sp: PlantSpecies) -> bool:
+	var idx := SpeciesDB.index_of(sp)
+	_groups_mutex.lock()
+	if _groups.is_empty():
+		_build_groups()
+	var out := idx >= 0 and idx < _accent_only.size() and _accent_only[idx] == 1
+	_groups_mutex.unlock()
+	return out
+
+
+## (The caller holds _groups_mutex.)
+static func _build_groups() -> void:
+	var all := SpeciesDB.all()
+	_groups.resize(all.size())
+	_accent_only.resize(all.size())
+	_accent_only.fill(0)
+	var defs: Dictionary = PRESENT.get("groups", {})
+	for i in all.size():
+		var s: PlantSpecies = all[i]
+		var shape_key := str(PlantSpecies.Shape.keys()[s.shape]).to_lower() if s.shape < PlantSpecies.Shape.keys().size() else ""
+		var lname := s.name.to_lower()
+		for g in defs:
+			var d: Dictionary = defs[g]
+			var hit := (d.get("genera", []) as Array).has(s.genus) or (d.get("shapes", []) as Array).has(shape_key)
+			if not hit:
+				for frag in d.get("names_contain", []):
+					if lname.contains(str(frag)):
+						hit = true
+			if hit:
+				if str(d.get("no_terpene_evidence", "")) == "accent_only" and s.terpene_evidence == "none":
+					_accent_only[i] = 1
+					break
+				_groups[i] = str(g)
+				break
 const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
@@ -1212,8 +1241,14 @@ class _Context:
 		for sp in list:
 			var f := maxf(sp.suitability(mid.t, mid.m, mid.h, mid.rock), 0.02)
 			fit[sp] = f
+			# No evidence of terpene relevance (Mike, 2 Oct: Japanese hemp):
+			# never the dominant nor an associate, an accent only.
+			if VegetationPlacer.accent_only(sp):
+				continue
 			pool.append(sp)
 			pool_w.append(f * float(dominance.get(sp, 1.0)))
+		if pool.is_empty():
+			return
 		var salad := VegetationPlacer.SALAD.has(mid.biome)
 		var ds = dom.get("dominant_share", [0.6, 0.85])
 		var share := float(dom.get("salad_dominant_share", 0.25)) if salad else rng2.randf_range(float(ds[0]), float(ds[1]))
@@ -1229,7 +1264,7 @@ class _Context:
 				var psp: PlantSpecies = pool[i]
 				if psp.suitability(mid.t, mid.m, mid.h, mid.rock) > 0.0 and VegetationPlacer.presence_group(psp) != "":
 					forced.append(psp)
-		for k in 1 + n_assoc:
+		for k in mini(1 + n_assoc, pool.size()):
 			var total := 0.0
 			for w in pool_w:
 				total += float(w)
@@ -1250,6 +1285,10 @@ class _Context:
 		var rest := list.size() - picks.size()
 		var assoc_share := (1.0 - share - (accent if rest > 0 else 0.0)) / maxf(picks.size() - 1, 1.0)
 		var targets := {}
+		# Alone in the pool (the rest kept to the accents), the dominant
+		# takes all but the accents' share.
+		if picks.size() == 1:
+			share = 1.0 - (accent if rest > 0 else 0.0)
 		for sp in list:
 			if sp == picks[0]:
 				targets[sp] = share

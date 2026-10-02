@@ -133,14 +133,26 @@ func _initialize() -> void:
 			await frames(240)
 			var count := 0
 			var names := {}
+			# How much of its layer the group is: its stems over every
+			# plant's of the same tier loaded here.
+			var tier_all := {}
+			var tier_group := {}
 			for n in _plants(get_root()):
 				var idx := int(n.get_meta("species"))
-				if idx < 0 or idx >= all.size() or not in_group(g, all[idx]):
+				if idx < 0 or idx >= all.size():
 					continue
 				var inst: int = (n as MultiMeshInstance3D).multimesh.instance_count if n is MultiMeshInstance3D else 1
+				var tier: int = all[idx].tier
+				tier_all[tier] = int(tier_all.get(tier, 0)) + inst
+				if not in_group(g, all[idx]):
+					continue
+				tier_group[tier] = int(tier_group.get(tier, 0)) + inst
 				count += inst
 				names[all[idx].name] = int(names.get(all[idx].name, 0)) + inst
-			print("[presence]   site %d: %s, %s — %d plants %s" % [k + 1, BiomeTemplates.name_of(map.biome[c]), str(d), count, str(names)])
+			var shares: Array = []
+			for tier in tier_group:
+				shares.append("%.1f %% of the %s layer" % [100.0 * int(tier_group[tier]) / maxf(int(tier_all[tier]), 1.0), str(PlantSpecies.Tier.keys()[tier]).to_lower()])
+			print("[presence]   site %d: %s, %s — %d plants %s%s" % [k + 1, BiomeTemplates.name_of(map.biome[c]), str(d), count, str(names), (" (" + ", ".join(shares) + ")") if not shares.is_empty() else ""])
 			best = maxi(best, count)
 			found.merge(names)
 		ok(best > 0, "%s grows in the game (%d species seen: %s)" % [g, found.size(), str(found.keys().slice(0, 8))])

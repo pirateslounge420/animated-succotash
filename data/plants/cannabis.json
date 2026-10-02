@@ -17207,7 +17207,9 @@
       "smoke"
      ],
      "camp_follower": true,
-     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed",
+     "terpene_evidence": "none",
+     "terpene_note": "Mike, 2 Oct 2026: no evidence of terpene relevance, so not that much of it: an accent only, never lifted nor a stand's dominant or associate (habitat.json always_present.groups.cannabis.no_terpene_evidence)."
     },
     "repro": {
      "mode": "seed",

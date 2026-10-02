@@ -54,6 +54,10 @@ var source := "" # research note / citation from DESIGN.md
 ## Middle East"): the entry's `origin`, else the first clause of its
 ## `source` / `traits.native_range` (origin_from_source()).
 var origin := ""
+## A cannabis landrace's terpene evidence (its entry's
+## cannabis.terpene_evidence): "none" where there is no evidence of terpene
+## relevance (always_present does not lift it); "" where none is recorded.
+var terpene_evidence := ""
 ## How leafy its crown is, 0-1 (`leaf_density` in the table; -1: the
 ## shape's default, leaf_density_of()): how many leaf clusters a branchy
 ## tree carries along its limbs (PlantMeshes).

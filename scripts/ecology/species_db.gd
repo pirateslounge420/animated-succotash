@@ -257,6 +257,11 @@ static func _load_catalogue(path: String, by_name: Dictionary) -> void:
 			var sp: PlantSpecies = by_name[entry.name]
 			if not sp.files.has(path.get_file()):
 				sp.files.append(path.get_file())
+			# A cannabis landrace's terpene evidence (always_present lifts
+			# none without it, habitat.json lift_needs_terpene_evidence).
+			var cb = entry.get("cannabis", {})
+			if cb is Dictionary and cb.has("terpene_evidence"):
+				sp.terpene_evidence = str(cb.terpene_evidence)
 			sp.from_catalogue = sp.from_catalogue or not had
 			var realms := _realm_list(entry.get("realm", ""))
 			for r in realms:
