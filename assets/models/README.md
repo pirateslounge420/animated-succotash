@@ -43,9 +43,10 @@ procedural body. No code changes needed.
 - `yaw_deg`: glTF models face +Z, and the game walks along -Z, so the
   default is 180. Use 0 if your model comes in backwards.
 
-## Summer Engine workflow
+## Making a model
 
-1. Generate the model from reference art (image-to-3D).
+1. Make it from reference art in any tool that exports `.glb` (modelled by hand, or
+   image-to-3D).
 2. If you can, rig it and add clips named idle, walk, run, crouch, jump,
    swim, climb and sit. Unrigged models work too; they just don't animate.
 3. Export `.glb`. Aim for about 2,000-6,000 triangles for the player and

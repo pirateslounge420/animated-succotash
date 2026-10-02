@@ -1002,6 +1002,124 @@ The rules:
   designer's machine had it: import cache hidden, first person, a fresh random world at
   the afternoon spawn. A pass isn't judged done on frames his machine wouldn't draw.
 
+## CH. Night life — a shift change at dusk; places that keep the clock — LOCKED (1 Oct, night, Mike)
+
+Decided by voice on the evening of 1 Oct; written up and pushed that night. Mike: things you
+**stumble upon** — *"there might be an old bridge or something, or an old cave"* — and
+*"different types of creatures and beings which might only come out at night… you have day
+creatures which sleep at night and night creatures which sleep during the day… it really
+feels like a switch kind of flips."* Builds on 27 Sept §AF (bats), §BA (the dark), §BG (the
+sound bed) and Phase 3 (caves). Not built.
+
+- **Two rosters and a shift change.** Every creature keeps its real hours: `active` in
+  `creatures.json` is `day`, `night` or `dusk` (crepuscular: out at dawn and dusk), and `any`
+  stays only where it is true. By day the night roster sleeps — dens, roosts, burrows, hollow
+  snags, under bridges; by night the day roster does. **Dusk is the handover**, not just a
+  lighting change: the day animals bed down, and as the light goes blue a different cast
+  wakes and comes out (dawn runs it backwards). The world doesn't just get darker; it gets
+  repopulated. The mythical hunters (§BA) are the far end of the night roster, so the magic
+  and the danger arrive together, and the night has things you only see by being out in it.
+- **Places keep the clock** (Mike: "let's go ahead and lock that in"). An old cave is
+  something you stumble upon off the road (§BC's finds); an old bridge is one you come to on
+  it (half the bridges still stand, `roads.json bridge_out_share`). **By day it is empty and still; at night something
+  has denned up inside or under it** — whatever the biome's night roster sends, an ordinary
+  night animal most often, the hunter rarely. Same place, a different feeling depending on
+  when you come.
+- **Bats breathe the cave** (Mike; extends §AF): microbats roost in caves and **under
+  bridges** (`roost` gains `bridge`); at dusk the swarm pours out all at once, at dawn it
+  streams back. Between, they **hunt by echolocation** — fast, erratic flight snapping up the
+  night insects, so they gather where the insects are thick: over water, a meadow, a torch.
+  Where the bats pour out at sunset is how you find a cave.
+- **The sound keeps the clock and the place** (Mike; extends §BG's bed): **cicadas by day** in
+  the places they live; **night insects that differ by biome**; a **frog chorus** where frogs
+  are found (the bed's `frogs` layer becomes a night chorus); **owls** as point sources you
+  can walk toward. The handover is audible: the cicadas stop, the first cricket, a frog, then
+  the chorus. Silence is still the §BA tell.
+- **The food web seen running:** an owl **swooping on a rodent** at night; bats over a pond.
+  Rare, never staged for the player.
+- **Proposed order (designer to confirm):** audit what exists (`creatures.json` `active` on
+  1 Oct: 33 `any`, 12 `night`, 9 `day`, 1 `full_moon`, and the night rider and pond crawler
+  have none; the proximity spawner against the
+  Phase 7 ledger; `SoundBed`; §AF is designed, not built) → the roster swap and the sound by
+  phase (cheapest, most felt) → bats under the standing bridges (caves wait for Phase 3) →
+  places by the clock → the owl.
+
+## CI. Godot only — Summer Engine is gone — LOCKED (1 Oct, 22:16, Mike)
+
+Mike: *"it's not built in Summer Engine anymore… I'm opening straight in Godot."* The project
+is plain **Godot 4.3** (the standard build, GDScript only, no plugins; `addons/` is empty):
+open `project.godot` in the Godot editor (`docs/HOW_TO_RUN.md`). Every mention of Summer
+Engine comes out — the docs with this section; code comments are Claude Code's
+(`scripts/core/model_library.gd`). Models come from any tool that exports `.glb`
+(`assets/models/README.md`).
+
+## CJ. Dungeons — every ruin is a delve: Skyrim's shape, Morrowind's look — LOCKED (1 Oct, 22:34–23:00, Mike)
+
+Mike: *"there should also be dungeons in the game"*; asked whether they are the underground of
+the ruins or natural caves, and whether the danger inside is the dark rather than fights:
+*"yea the dungeons ideas you mentioned sounds good — different types of dungeons indeed"*;
+then *"each ruin should feel almost like a Skyrim dungeon"*, and *"with more of a Morrowind
+style, however higher contrast colors like the screenshots"* — *"Morrowind style aesthetic"* —
+*"not necessarily the architecture for the dungeons, but I'm sure they would serve good
+inspiration."* Not built.
+
+**Locked:** dungeons exist; **both kinds** — the underground of the ruins (crypts, cisterns,
+old workings, entered by torchlight) and natural caves that go deep; **many types**; **every
+ruin has one**; and **the danger inside is the dark** and what lives in it, held back by your
+light, never a health-bar fight (§BA: if the danger is a fight, it is the ninja game).
+
+**The look: Morrowind, in the favourites' colour.** Skyrim gives the shape (below); the aesthetic
+is Morrowind's, which sits inside the era lock (2002, §0): the mood, the strangeness that makes a
+place feel foreign, detail painted into big-texel textures, a hand-built feel. **The
+architecture is our own**, from each ruin's kind and people (the types below). Morrowind's
+dungeons are inspiration, not a template.
+The colour is not Morrowind's brown-green murk but the screenshots': high contrast, dark but
+saturated, blue owning the frame, the torch the one warm light, water and fungi the only
+glow, doorways as voids (LOOK_REFERENCE R1–R10).
+
+**What "almost like a Skyrim dungeon" means here** (first pass, designer to correct):
+1. **The entrance is the shot** (LOOK_REFERENCE R10, §BX): the ruin on its rise at the end of a
+   path, its door a void. Often a camp sits outside, restoring the surface (§BX, §BQ): the
+   hearth before the delve. The folk keep to the surface.
+2. **A descent through a chain of rooms** — §BB's recipe indoors: a corridor, a threshold, a
+   room with one feature, the next threshold. Older and stranger the deeper it goes.
+3. **The heart at the bottom:** the deepest room holds the reason the place was built (the
+   tomb, the spring, the seam) and the find — the rare things of §AW (a spear, a bow, rarer
+   things later) lying where someone left them. No chests, no random loot.
+4. **A way out from the heart** — Skyrim's loop: a passage, a shaft to daylight, a door that
+   opens only from inside, or a collapse you can climb brings you out near the entrance or on
+   the far side of the hill. You never walk the whole thing back.
+5. **Full dark, and the light you carry is the clock** (§BD: inside, torch or nothing). Dread
+   accumulates as at night (§BA); things den there (§CH; bats roost in ruin vaults, §AF). A
+   torch burns about a night (§AW), so a small delve fits in one torch and a deep one wants
+   spares or the fat lamp (§BP). First guess: an old hearth inside that you can relight with
+   your torch is the delve's one safe room.
+6. **The ruin falling apart is the obstacle:** collapses, flooded stretches with current
+   (§BE), drops, rot.
+7. **It tells its story without words** (§BQ): its people's signature, what they left (bones
+   laid out, ochre on the ceiling, the ash of the last fire); a log line when you reach the
+   heart; the ending stays unnamed.
+8. **Generated, never hand-placed** (spec A2): assembled from the seed out of a kit of rooms
+   per type, sized by the ruin.
+
+**Types — the delve follows the ruin** (first list; `Ruins.Kind` and §BQ):
+- **barrow, graveyard mausoleum, tomb** → the crypt: burial passages, niches, the chamber (the
+  purest Skyrim type);
+- **pyramid** → passages to the burial chamber, by regional style (§AE); the desert pyramid's
+  chamber can already be walked into;
+- **castle** → the undercroft: cellars, cells, a cistern, the well shaft;
+- **tower** → the stair: down to a vault, or up a broken stair to the top;
+- **aqueduct** → the waterworks: channels, a cistern, a qanat run; water is the path (§BE);
+- **a people's ruin** (§BQ) → the old workings of its craft: flint galleries under a knapping
+  floor, salt workings, an ochre cave, clay pits and peat cuttings gone to pools;
+- **natural caves** (Phase 3) → the wild kind: karst systems with underground rivers, lava
+  tubes, sea caves, ice caves; they keep the clock (§CH);
+- **igloo, treehouse, boardwalk** (ice and wood, which do not last, §BQ) → designer to choose:
+  an ice cave below, the canopy above, a sunken causeway out in the marsh.
+
+**Open for Mike:** puzzle doors and traps the Skyrim way (claw doors, pillar puzzles,
+pressure plates), or only the ruin's own decay.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1038,3 +1156,28 @@ and the walkabout. Then §BV–§BW the working camp, §BX the opening road, §B
 local midnight, frames labelled, and the end-of-pass check run as the designer's machine
 has it. It takes over the Mac-GPU pass's Day 1 and null-texture items; the F9 foliage views
 and the derivative item stay queued (not the cause of the grey boxes).
+
+**Added 1 Oct, night (§CH, §CJ):** audit before building — both lean on systems that do not
+exist yet (the Phase 7 ledger, Phase 3 caves). Proposed: §CH's roster swap and the sound by
+phase first; then the first delve type on a ruin that can already be walked into (the barrow
+or the desert pyramid), with its loop back out; the cave types after Phase 3.
+
+**Status 2 Oct, 01:45 (from PROGRESS):** built since 13:10:
+- §CG, the game without the import cache, Day 1 and one clock, every frame labelled;
+- §CC, the trim;
+- §CE, the named plants and vines;
+- the §CA walkabout;
+- §BC and §BX, roads to every camp and the opening road;
+- §BL–§BT, the camps alive (the store and the loop, the ladder, the headman's techniques,
+  collapse, wildfire, the canopy folk);
+- the 1 Oct look pass and the Mac fixes;
+- §CF, the favourites measured.
+
+Still queued, with Mike's prompts setting the order:
+- §BV–§BW, the working camp (no code reads `sim.opening`, `sim.jobs` or `store.pieces` yet);
+- §BY, the desire lines and the lost-and-found stretches;
+- the epiphyte pass (§CD);
+- the herd and the managed burn;
+- §BI, trade.
+
+§CH and §CJ are to be audited first, as above.

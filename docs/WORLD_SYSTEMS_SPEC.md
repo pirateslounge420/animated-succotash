@@ -1,6 +1,6 @@
 # WORLD SYSTEMS SPEC — v4 (Godot project; v3 was aligned to commit `fe6ee3e`)
 
-**Read this whole file before touching code.** Where it conflicts with `DESIGN.md`, `README.md`, or anything in the repo, this file wins — **except `docs/design/RECONCILIATION_2026-09-27.md` and `docs/design/PLANT_SCHEMA.md`, which are the locked design and override this file wherever they differ** (scale, time, controls, tools, look, plants; read them first). Then read `docs/PROGRESS.md` to find the current phase, and work on that phase only.
+**Read this whole file before touching code.** Where it conflicts with `DESIGN.md`, `README.md`, or anything in the repo, this file wins — **except the locked design, which overrides this file wherever they differ: `docs/design/RECONCILIATION_2026-09-30.md` (the ambient cut, §AT onward; it wins over the 27 Sept doc), `docs/design/RECONCILIATION_2026-09-27.md` and `docs/design/PLANT_SCHEMA.md`, with `docs/design/LOOK_REFERENCE.md` as the look's reference (findings; a locked section wins where they differ)** (scale, time, controls, tools, look, plants; read them first). Then read `docs/PROGRESS.md`. Since 30 Sept the order of work is §BR of the 30 Sept doc plus whatever Mike's prompt lists, not this file's "current phase".
 
 Ordered the way it is *used*: how to work → where the project is → what to do now → architecture → one card per phase → reference tables at the back.
 
@@ -44,14 +44,14 @@ Ordered the way it is *used*: how to work → where the project is → what to d
 1. Paste the phase's **Prompt A**. Claude Code audits, proposes, waits.
 2. Say *"Go. Show me [the deliverable] when done."*
 Look at the evidence. Right → *"Sign off Phase N."* Wrong → describe it in plain words and "Go" again. Never approve on a description.
-- **Done-when evidence** is the designer playing the build on the stamp, or a screenshot or a measured number from a headless tool. A card's "done when" names what to look at, not a video.
+- **Done-when evidence** is the designer playing the build on the full planet, or a measured number from a headless tool, or, for anything visual, the walkabout at the end of the pass (§CA; no screenshots per step). A card's "done when" names what to look at, not a video.
 - **No recordings unless asked.** Claude Code records a clip only when the designer asks for one.
 - **Verification stays under 10% of build time.** Prefer one screenshot or one headless number over a long render; if a check would cost more, say so and let the designer play it.
 
 ### A4. Dev settings (always on during development; one file, `data/dev.json` or project settings)
 - `DEV_DAY_LENGTH`: from `data/dev.json` (currently the full 144 min; shorten there for tests). The real day is 144 real minutes, phases derived from tilt and latitude (design §F).
-- `DEV_SEED` fixed, so before/after is apples to apples.
-- `DEV_POSTAGE_STAMP`: a fixed-seed mini-planet that contains one of every major biome band, generating in seconds. Full planet (4,000 km, 1/10 Earth — design §I) for milestone checks only.
+- `DEV_SEED`: `seed` / `spawn_choice` in `data/dev.json` are the dev tools' pins, so before/after is apples to apples; in play every new world rolls its own seed and first camp (§CB).
+- `DEV_POSTAGE_STAMP`: a 40 km mini-planet that contains one of every major biome band, generating in seconds — **for the headless checks only** (`STAMP=1`). Play has run on the full planet (4,000 km, 1/10 Earth — design §I) since 29 Sept.
 - Debug overlays on hotkeys: time/moon, temperature, moisture, biome, pressure + wind arrows, creature population per region, camp food/population. The existing **Map overlay** already shows biome/elevation/temperature/rainfall/live weather — extend it rather than building new.
 
 ---
@@ -80,6 +80,8 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 ---
 
 # PART C — What to do now
+
+> **1 Oct 2026, after the ambient cut.** The order of work is §BR of `docs/design/RECONCILIATION_2026-09-30.md` plus Mike's prompts; the "current phase" below is history. Phase 1's player feel now means the ambient profile (§AU: walk, sneak, a slow climb, first person, §AV); its momentum and catch-and-swing items belong to the separate ninja game (§AT) and stay switched off, while the bow and spear code stays live for finds in ruins (§AW). Dungeons (§CJ: every ruin is a delve) start on a ruin that can already be walked into, and bats start under the standing bridges (§CH, §BR); only the natural caves and their dens wait for Phase 3. Phase 3's card predates §BD and §CJ: underground is full dark (torch or nothing) and things den there, so where the card says "never black" or "do not build cave creatures", §BD and §CJ win. The planet is 1/10 Earth (4,000 km) everywhere. Done-when is Mike's play on the full planet, a headless number, or the walkabout (§CA) for anything visual.
 
 ## Current phase: **Phase 1 — Player feel, hitboxes, audio** (card in Part E)
 
@@ -138,7 +140,7 @@ Each field has exactly one owner: the only code that writes it; everything else 
 | water | `World.planet`: `water`, `water_level`, `flow_to`, `flow_order`, `flow_accum`, `salinity`, `coast_dist_km`, `water_dist_km` | hydrology pass, once | u8, f32, i32, i32, f32, u8, f32, f32 |
 | climate | `World.planet`: `temp_c`, `temp_swing_c`, `precip_mm`, `moisture`, `fog`, `wind_avg` | climate pass (from WeatherSim spin-up averages), once | f32 ×5, vec3 |
 | biome | `World.planet`: `biome` | biome pass, once | i32 (BiomeTemplates id) |
-| live weather | `World.weather` (WeatherSim, its own grid of 6×10×10 = 600 cells, ~10 km on the full planet): `pressure`, `temp`, `humidity`, `wind`, `precip_rate`, `rel_humidity`, `storm`, `storm_level`, `synoptic`, `clear`; `avg_*` from spin-up | WeatherSim, each in-game quarter hour | |
+| live weather | `World.weather` (WeatherSim, its own grid of 6×10×10 = 600 cells, ~10 km on the 400 km layout, so ~100 km on the ground of the 4,000 km planet): `pressure`, `temp`, `humidity`, `wind`, `precip_rate`, `rel_humidity`, `storm`, `storm_level`, `synoptic`, `clear`; `avg_*` from spin-up | WeatherSim, each in-game quarter hour | |
 | eased local weather | `main._weather_eased` | main.gd, each frame | ⚑ not on World |
 | clock | `World.days` (days since start; the fraction is time of day), `World.day_length_s` | World (`_process`); length from DayCycle / `data/dev.json` | warp driven by astronomy: tilt, latitude, day of year (design §F2; `tools/reference/daylight_reference.py`) |
 | sky | SkySystem: `sun_dir`, `moon_dir`, `sun_elevation_deg`, `moon_elevation_deg`, `daylight`, `moonlight`, `cloud_light_dir`, `magic` | SkySystem, each frame | ⚑ a node under main, not on World |
@@ -179,14 +181,14 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 
 | | Regions | Ledger memory |
 |---|---|---|
-| Full planet, A (cells, ~1 km) | 55,296 | ~225 MB |
-| Full planet, B k=2 (~2 km) | 13,824 | ~57 MB |
-| Full planet, B k=4 (~4 km) | 3,456 | ~14 MB |
+| Full planet, A (cells: ~1 km on the 400 km layout, ~10 km on the ground at 4,000 km) | 55,296 | ~225 MB |
+| Full planet, B k=2 (~2 km layout, ~20 km ground) | 13,824 | ~57 MB |
+| Full planet, B k=4 (~4 km layout, ~40 km ground) | 3,456 | ~14 MB |
 | Stamp, A (cells, ~208 m) | 13,824 | ~57 MB |
 | Stamp, B k=4 (~830 m) | 864 | ~3.5 MB |
-| 10× planet with ~1 km cells, B k=4 | 345,600 | ~1.4 GB dense (see ⚑) |
+| 4,000 km planet with ~1 km cells on the ground (not built), B k=4 | 345,600 | ~1.4 GB dense (see ⚑) |
 
-Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm start affordable: 50–200 years of `tick_region` over 3,456 regions is 16× less work than over 55,296. Rules work in densities per km², so the region size can change later without retuning. (At 10× the planet PlanetData itself is ~660 MB at ~1 km cells, so a bigger planet also means coarser cells.)
+Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm start affordable: 50–200 years of `tick_region` over 3,456 regions is 16× less work than over 55,296. Rules work in densities per km², so the region size can change later without retuning. (At 4,000 km with ~1 km cells on the ground PlanetData itself would be ~660 MB, which is why the built planet keeps 96 cells a face edge, ~10 km on the ground: the planet is 1/10 Earth, the cells got coarser.)
 
 ⚑ Unsure / flagged:
 - Sky and eased weather are not on World today (a SkySystem node and main.gd). Proposed: publish read-only copies as `World.sky` and `World.weather_local` so systems never reach into main.

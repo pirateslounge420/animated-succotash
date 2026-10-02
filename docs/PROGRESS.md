@@ -4,6 +4,19 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — The docs brought in line with the ambient cut: CLAUDE.md, 1/10 Earth everywhere, Godot only; night life and dungeons designed (design chat; Mike, 1 Oct 22:16–23:01; design §CH, §CI, §CJ)
+- **New `CLAUDE.md`:** the brief Claude Code loads every session (it imports `WORKING_AGREEMENT.md`). It covers the ambient game, the scale, the two games, the sources of truth in order, the look in short, and how we work (no screenshots per step).
+- **Sources of truth reordered:** the 30 Sept doc first (§BR is the order of work), then the 27 Sept doc, `LOOK_REFERENCE`, `PLANT_SCHEMA`, the spec. Updated in `WORKING_AGREEMENT`, the README, the spec's header and Part C, and `DESIGN.md`'s banner. `docs/OVERVIEW.md` is rewritten for the ambient game; it still pitched the shinobi game. The README is rewritten, with the keys left to `HOW_TO_RUN.md`.
+- **1/10 Earth everywhere** (Mike: "the map should be 1/10th the size of earth not 1/100th"). `DESIGN.md`'s biome sizing is restated at 1/10 with the measured `biome_scale` numbers. These now say 4,000 km, with 400 km only as the layout map (`GEO_SCALE`):
+  - the spec's weather grid and ledger table;
+  - the 27 Sept doc's status rows;
+  - `implementation-notes.md`'s planet size and horizon (Claude Code's file, edited here at Mike's request).
+- **Godot only (§CI):** the docs say plain Godot 4.3, and `assets/models/README.md`'s model workflow no longer names a tool. Two code comments are left for Claude Code: the old engine in `scripts/core/model_library.gd`, and `world.gd`'s "~64 km radius" (the planet is ~637 km).
+- **Designed, not built (audit first, §BR):**
+  - §CH night life: two rosters and the dusk shift change, caves and bridges by the clock, bats, the sound by phase and biome, and owls;
+  - §CJ dungeons: every ruin is a delve, with Skyrim's shape and Morrowind's aesthetic in the favourites' colour, a type per ruin kind, and the dark as the danger.
+- **`docs/references/project_sheets.md`:** the 80 Project screenshots described in words. They now sit in the Project as four numbered contact sheets; six of them are favourites.
+
 ## 2026-10-02 — §CG: the game no longer needs the import cache; Day 1 and one clock; every frame labelled (design 1 Oct §CG)
 - **Nothing at runtime depends on the import cache** (`ResFiles`, `Look.texture`, `SkySystem._cloud_pano`, `ModelLibrary._scene`, `HudText`):
   - Each world tile is read from its PNG on disk (`FileAccess.get_file_as_bytes`, `Image.load_png_from_buffer`), then `fix_alpha_edges()` (the importer's `fix_alpha_border`) and mipmaps, as the importer does.

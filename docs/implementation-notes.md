@@ -33,15 +33,17 @@ Going back to a place rebuilds it identically.
 
 `scripts/planet/`
 
-- **Size.** Circumference 400 km, radius 63.66 km (`PlanetConst`). Y is
-  the spin axis.
+- **Size.** Circumference 4,000 km, radius ~637 km: 1/10 Earth
+  (`PlanetConst.FULL_CIRCUMFERENCE_M`, design §I, since 29 Sept). The
+  geography is laid out on a 400 km map (`GEO_CIRCUMFERENCE_M`, radius
+  63.66 km) and built ten times wider (`GEO_SCALE`). Y is the spin axis.
 - **Cube-sphere addressing** (`CubeSphere`). Six faces with a tangent warp
   (u, v → tan(u·π/4)), so cells are close to equal in area. It also
   provides latitude/longitude, local east/north frames and great-circle
   distance.
 - **Vertical scale** (`PlanetConst.HEIGHT_SCALE`, 1/10). Heights are a
   tenth of Earth's (Everest would be ~900 m; this world's peaks reach
-  about 490 m), distances a hundredth. Rules and data keep real-world
+  about 490 m), distances a tenth too. Rules and data keep real-world
   numbers and multiply them by the scale: biome and geology thresholds,
   species and creature altitude bands (data files stay in real meters),
   cloud altitudes, the haze height. The lapse rate is Earth's per
@@ -130,7 +132,8 @@ existed).
   10 km from equator to pole, about 1.7 hours on foot, so bands are a
   short walk apart. Slopes are ten times steeper than at full size
   (mountains keep their height over a tenth of the width) and the
-  horizon is closer (~160 m for a standing player instead of ~500 m).
+  horizon is closer (~160 m for a standing player instead of ~1.6 km on
+  the full planet).
   The first camp still comes from the same candidate scoring. The
   planet map (M) draws relief against the geography's full-size radius,
   so the stamp's globe reads like the full planet's rather than a lumpy

@@ -1,7 +1,7 @@
 # Design reconciliation — 27 Sept 2026
 
-> **30 Sept 2026: superseded in part by `RECONCILIATION_2026-09-30.md` (§AT–§BK, "the
-> ambient cut").** The momentum kit, momentum combat, the shinobi and the starting kit now
+> **30 Sept 2026: superseded in part by `RECONCILIATION_2026-09-30.md` ("the ambient cut",
+> §AT onward).** The momentum kit, momentum combat, the shinobi and the starting kit now
 > belong to a separate ninja game; this repo is the slow, first-person, empty-handed
 > ambient world. Where the two docs disagree, the 30 Sept doc wins.
 
@@ -329,12 +329,12 @@ shows anything else (§P).
 | Decision | Where it lives | Status / action |
 |---|---|---|
 | Day/night cycle | `data/sky/day_cycle.json`, `scripts/sky/day_cycle.gd`, `sky_system.gd` | **Values changed to 144 / 60-18-48-18 in this commit.** No code change. |
-| Cube-sphere, 1/10 height | `scripts/planet/planet_const.gd` (`HEIGHT_SCALE` 0.1; circumference 400 km until §I's change to 4,000 km lands) | Done; scale change pending (§I). |
+| Cube-sphere, 1/10 height | `scripts/planet/planet_const.gd` (`HEIGHT_SCALE` 0.1; circumference **4,000 km**, 1/10 Earth, since 29 Sept — §I; the geography is laid out at 400 km and built 10×, `GEO_SCALE`) | Done; §I landed 29 Sept. |
 | Whittaker biomes, all 52 | `scripts/planet/passes/biome_pass.gd`, `data/biomes/00…51` | Done. `tepui` is registered but never assigned. |
 | Rivers, waterfalls, storm swell | `scripts/terrain/river_network.gd` | Done. Gap: no current direction affecting travel (§3). |
 | Plants with temp/moisture tolerances | `data/plants/*` (~1,031 species incl. biome lists), `scripts/ecology/species_db.gd`, `vegetation_placer.gd` | Done. Cleanup: 36 plant names clash between catalogues and biome files (loader keeps the biome copy); `docs/plant_archive/` (66 lists) is unused. |
 | LOD / VisibilityRange | Plants `visibility_range_end` 300, fade 40; creatures LOD 40/90 m; also ruins and blob shadows | Done. The blueprint's LOD paragraph is a duplicate — ignore it. |
-| Live wind + water cycle | `scripts/weather/weather_sim.gd` (~10 km grid, pressure-driven wind capped 28 m/s, evaporation/condensation, 11 travelling systems, orographic lift, sea breeze), `weather_fx`, `storm_fx` | **Done.** The "not simulating live weather yet" note in older design docs is stale. |
+| Live wind + water cycle | `scripts/weather/weather_sim.gd` (~10 km grid on the 400 km layout, ~100 km on the ground at 4,000 km, pressure-driven wind capped 28 m/s, evaporation/condensation, 11 travelling systems, orographic lift, sea breeze), `weather_fx`, `storm_fx` | **Done.** The "not simulating live weather yet" note in older design docs is stale. |
 | Vertex lighting, no bloom/sharpen, grain + dither | `shaders/look.gdshaderinc`, `post_grade.gdshader` (grain 0.025, 4×4 Bayer 0.25), `project.godot` scale 0.8 | Mostly done. Two era tweaks pending: texture sampling is `filter_linear_mipmap` → try `filter_nearest_mipmap`; consider render scale 0.5–0.6. Do one at a time with a screenshot. |
 | Werewolf on full moon | `creature_species.gd`, `moon_cycle_days` 29.5 | Done. |
 | Spear, bow, hitboxes | `scripts/player/bow.gd`, `spear.gd`, `data/combat.json` (placeholder numbers) | Done. `README.md` still says "no combat" — stale. |

@@ -1,165 +1,126 @@
-# Low-Poly Exploration Prototype
+# animated-succotash — an ambient open world
 
-> **The locked design lives in `docs/design/RECONCILIATION_2026-09-27.md` (thesis, decisions §0–V) and `docs/design/PLANT_SCHEMA.md`. They override this README, `DESIGN.md` and `docs/WORLD_SYSTEMS_SPEC.md` wherever they differ.**
+> **Start with [`CLAUDE.md`](./CLAUDE.md), the brief.** The current design is
+> [`docs/design/RECONCILIATION_2026-09-30.md`](./docs/design/RECONCILIATION_2026-09-30.md)
+> (the ambient cut, §AT onward; it wins over the 27 Sept doc). The look is in
+> [`docs/design/LOOK_REFERENCE.md`](./docs/design/LOOK_REFERENCE.md), and who owns what is in
+> [`docs/WORKING_AGREEMENT.md`](./docs/WORKING_AGREEMENT.md). The shareable summary is
+> [`docs/OVERVIEW.md`](./docs/OVERVIEW.md), and how to play is in
+> [`docs/HOW_TO_RUN.md`](./docs/HOW_TO_RUN.md). They override this README.
 
-An ambient open-world exploration game in a smooth-shaded GameCube style,
-set on a walkable, procedurally generated cube-sphere planet — 4,000 km around, one tenth of Earth (design §I; the code
-4,000 km around) — at a tribal, pre-firearm tech level.
-No quests and no crafting: three tools for the whole game (spear, bow, fishing
-pole), momentum-based movement that is the point of the game, and you
-wander, watch the weather roll in, and find what lives where.
-
-- [`DESIGN.md`](./DESIGN.md) is the design spec.
-- [`docs/implementation-notes.md`](./docs/implementation-notes.md) explains
-  how the code implements it, file by file, and what's still missing.
-- [`data/biomes/README.md`](./data/biomes/README.md): how to add plants.
-- [`data/creatures/README.md`](./data/creatures/README.md): how to add
-  creatures.
+A slow, first-person walk across a procedural cube-sphere planet: **4,000 km around, one
+tenth of Earth**, with heights and time at the same 1/10. Old, overgrown roads lead between
+ruins and living camps. You wake with nothing; the torch is the first tool, and fire is
+carried, never made. The dark is the only enemy, and every ruin is designed to go down into
+it (§CJ, not built yet). There's no crafting: the camps' makers work what you bring. You
+wander, watch the weather roll in, find what lives where, and get back to a fire before
+night. The look is early-2000s console 3D (1999–2004),
+pixelated and saturated. The momentum movement and the bow-and-spear combat have moved to a
+separate ninja game. Their code stays here, switched off (`data/movement.json` →
+`profile`); the bow and spear code stays live for when they turn up as finds.
 
 ## Engine
 
-**Godot 4.3+** (GDScript only, no plugins). Open the repo root
-(`project.godot`) in the Godot editor or in **Summer Engine** and press
-Play. The main scene is `scenes/main.tscn`.
+**Godot 4.3**, the standard build: GDScript only, no plugins. Open `project.godot` in the
+Godot editor and press Play (F5). The main scene is `scenes/main.tscn`. The step-by-step
+guide, with download links, is [`docs/HOW_TO_RUN.md`](./docs/HOW_TO_RUN.md).
 
 ## Playing
 
-The planet is generated when the game starts (about 6-8 seconds behind a
-loading screen), then you wake by a campfire in a small tribal camp on a
-temperate or tropical coast (a different one each game).
+The game boots into the last world you played. Settings (O) → World → New world rolls a new
+one with its own seed and its own kind of first camp, and the seed is the world's name. You
+wake in the afternoon beside a road, at a camp. **The keys and everything you can do are in
+`docs/HOW_TO_RUN.md`**, which Claude Code keeps true to the game as built.
 
-| Key | Action |
-|---|---|
-| WASD / arrows, left stick | Walk (5.5 m/s; W twice and hold to sprint) |
-| W twice and hold, left stick click | Sprint, while forward stays held (loud: wildlife notices you sooner) |
-| Shift, B | Crouch (hold): slow and nearly silent |
-| Space, A | Jump (hold to keep jumping); hold to swim up |
-| Mouse, right stick | Look (click the window to capture the mouse, Esc frees it; while it's free, click a readout to pin it to the screen, anywhere else to carry on) |
-| Left mouse (hold, release), right trigger | Draw the bow and loose an arrow: the longer you hold (up to a second), the farther and harder it flies |
-| V or F5, right stick click | First / third person |
-| E, X | Interact: turn over a fallen log, take a sample, pick things up; today it also starts a climb (changing to hold-right-click cling + move, design §V) |
-| Right mouse | The tech button: wall jump / cling / catch-and-swing (see docs/HOW_TO_RUN.md) |
-| Tab (or I) | Inventory |
-| Q | Cycle bow / spear / fishing pole |
-| M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
-| H | The full HUD (every readout); H again: just the pinned ones (at first the speedometer and the clock) |
-| F3 | Debug overlay: clock, day phase (dawn / day / dusk / night and how far into it), sky speed, sun and moon elevation, moon age and phase, mansion |
+One in-game day is **144 real minutes**, exactly one tenth of a real day, so the whole
+calendar runs at 10× and a game hour is 6 real minutes. The planet has an **axial tilt of
+23.5°**, so day and night lengths come from latitude and the day of the year (with true polar
+night and midnight sun). The equator-at-equinox reference is 60 / 18 / 48 / 18 real minutes
+of day / dusk / night / dawn. A year is 365 game days (36.5 real days) with four seasons, and
+the moon's cycle is 29.5 days. The numbers are in `data/sky/day_cycle.json`, the reference
+maths in `tools/reference/daylight_reference.py`, and the design in
+`docs/design/RECONCILIATION_2026-09-27.md` §F. Temperatures everywhere are in **°C**.
 
-One in-game day is **144 real minutes** — exactly one tenth of a real day, so the
-whole calendar runs at 10× and a game hour is 6 real minutes. The planet has an
-**axial tilt of 23.5°**, so day and night lengths derive from latitude and the day
-of the year (true polar night and midnight sun); 60 / 18 / 48 / 18 real minutes of
-day / dusk / night / dawn is the equator-at-equinox reference. A year is 365 game
-days (36.5 real days) with four seasons and ~20-day transitions. The moon's cycle
-is 29.5 days. Numbers: `data/sky/day_cycle.json`, reference maths:
-`tools/reference/daylight_reference.py`, design: `docs/design/RECONCILIATION_2026-09-27.md` §F.
-
-**Dev settings.** While `data/dev.json` has `"dev_mode": true` the game
-uses its settings instead: the day length set there (currently the full 144 min), seed 42 and always the same
-first camp (`spawn_choice` 0), so before/after screenshots match. Set
-`dev_mode` to false (or delete the file) for the game's own settings.
-`tools/p0_timelapse.gd` checks the day cycle for snapping and renders a
-time-lapse contact sheet (how to run it is at the top of the file).
-
-**Postage stamp.** With `"postage_stamp": true` (on while developing)
-the dev game runs on a small scale model of the planet instead of the
-full 4,000 km one: 40 km around, so the equator is 10 km from the pole and
-every climate band (rainforest, savanna, desert, temperate rainforest and
-forest, grassland, scrub, taiga, tundra, alpine, plus sea, coast, rivers
-and lakes) is a short walk from the next. It's the same seed and the same
-world-building rules with the geography shrunk; the ground underfoot,
-plants, animals and ruins keep their real size. It builds in about 3 s
-instead of 6. Set it to false (or leave it out) for the full planet, for
-milestone checks. The `"stamp"` block sets its size (`circumference_km`)
-and blueprint detail (`grid_res`), and lists the bands it must contain.
-`tools/stamp_check.gd` checks that they're all there and draws the
-stamp's map and a ground view at the first camp (how to run it is at the
-top of the file).
-Temperatures everywhere (HUD, map, data files) are in **°C**.
+**Dev settings.** `data/dev.json` holds them:
+- **`dev_mode`** turns on the dev keys.
+- **`seed` and `spawn_choice`** are the dev tools' pins. They apply in play only with
+  `pin_in_play` true or `DEV_PIN=1` (§CB).
+- **`postage_stamp`** is false, so play runs on the full planet. The 40 km postage stamp (every
+  climate band a short walk apart, the same rules with the geography shrunk) is for the
+  headless checks, which turn it on with `STAMP=1`.
 
 ## How the world is built
 
-Only the planet's coarse ~1 km **blueprint** is built for the whole
-planet at once, because the weather and rivers need it: terrain, oceans,
-lakes and rivers, a running weather simulation, climate averages, rock
-types, and one of the 52 biome templates per cell. Everything you can walk
-on, see up close or meet is **spawned around you** and dropped as you
+Only the planet's coarse **blueprint** is built for the whole planet at once, because the
+weather and the rivers need it. It is 96 cells along each cube face: about 1 km a cell on the
+400 km map the geography is laid out on, and about 10 km on the 4,000 km planet, which is that
+map built ten times wider. The blueprint holds:
+- terrain, oceans, lakes and rivers;
+- a running weather simulation and climate averages;
+- rock and soil;
+- one of the biome templates per cell.
+
+Everything you can walk on, see up close or meet is **spawned around you** and dropped as you
 move on:
+- terrain chunks of about 260 m, out to the render distance you set (Settings → Display);
+- plants on those chunks, with distant trees drawn as flat pictures;
+- the old road network;
+- camps, ruins and creatures;
+- a coarse far shell for the distant mountains and sea.
 
-- terrain chunks (~260 m, smooth shaded; 4 m quads near you, 8 m beyond)
-  within ~800 m, with rivers that pour over waterfalls in the mountains;
-- trees on those chunks (mossy and vine-hung where it's wet), undergrowth
-  only within ~400 m;
-- a coarse far shell draws distant mountains and sea;
-- wildlife within ~140 m, wolf packs near their dens, mythical creatures
-  heard from ~1 km and seen from ~220 m;
-- ruins (crumbling towers, castles on hills, aqueducts, and now and then
-  a pyramid, a graveyard or a barrow; tombs, mausoleums and the desert
-  pyramid's burial chamber can be walked into) from ~2.6 km,
-  so their silhouettes rise out of the fog before you reach them; about
-  a third hold a survivors' camp of tepees and lean-tos. At night they,
-  some lakes and wetlands, and mythical territories glow teal and cobalt.
-
-Wildlife hears you: crouched you can creep close, sprinting sends it
-running from far off, and a startled animal calms down if you keep still.
-Trees block your way and can be climbed; their crowns (and camp
-shelters) keep the rain off. Storms bring lightning and thunder, and
-heavy rain swells the rivers.
-
-Near you, anything that touches the water rings it: your steps and the
-wake you drag as you wade, swimming strokes, animals' legs, arrows and
-rain. The rings are painted as soft light and dark bands; their reach,
-sizes and look are in `data/water/ripples.json`. `tools/ripple_demo.gd`
-records them at night (how to run it is at the top of the file).
-
-The floating origin keeps the player near (0,0,0), so precision holds
-anywhere on the planet.
+The floating origin keeps the player near (0,0,0), so precision holds anywhere on the planet.
+File-by-file detail and the numbers are in
+[`docs/implementation-notes.md`](./docs/implementation-notes.md).
 
 ## Project structure
 
 ```
 project.godot              Project file; World autoload, main scene
-DESIGN.md                  Design spec
-docs/implementation-notes.md
+CLAUDE.md                  The brief: read first
+DESIGN.md                  The original design spec (superseded in part; see its banner)
+docs/
+  design/                  The locked design (RECONCILIATION_*), the look reference,
+                           the plant schema, ecology and tree references
+  references/              Reference frames (internal art direction only)
+  OVERVIEW.md              Shareable summary
+  WORKING_AGREEMENT.md     Who owns what
+  WORLD_SYSTEMS_SPEC.md    Architecture and phase cards
+  PROGRESS.md              The log, newest on top
+  HOW_TO_RUN.md            How to open and play (keys)
+  implementation-notes.md  How the code works, file by file
 scenes/main.tscn           Game entry point
-data/
-  biomes/                  52 biome files: plant lists per biome (edit these)
-  creatures/creatures.json Creature species (edit this)
-  water/ripples.json       Water ripples: reach, sizes, rain, look (edit this)
+data/                      Everything tunable: biomes/, plants/, habitat.json, creatures/,
+                           peoples/, techniques.json, camps.json, roads.json, look.json,
+                           movement.json, sky/, water/, dev.json (each explains itself)
 scripts/
-  core/                    World autoload (planet, clock, weather, floating
-                           origin), main orchestrator, input actions
-  planet/                  Cube-sphere math, terrain field, blueprint data,
-                           generator and its passes
-  weather/                 Weather simulation; rain/snow/wind effects
-  biomes/                  The 52 biome templates (names, colors, sizes)
-  sky/                     Sun, Earth-like moon, 28 lunar mansions, sky
-  terrain/                 Chunk streaming, rivers, far shell
-  water/                   Ripples on the water near the camera
-  ecology/                 Plant species, placement rules, meshes
-  creatures/               Creature species, spawner, territories, bodies,
-                           synthesized sounds
-  landmarks/               Ruins (towers, castles, aqueducts) and the
-                           glowing places of the bioluminescent night
-  player/                  Third-person explorer with planet gravity
-  ui/                      HUD, planet map, night post-grade
-shaders/                   Sky, water, terrain, foliage, far terrain, ruins,
-                           grade; look.gdshaderinc holds the shared banded
-                           fog, mist and glow
-assets/                    Empty placeholders for models/textures/audio
+  core/                    World autoload (planet, clock, weather, floating origin),
+                           main orchestrator, input
+  planet/                  Cube-sphere maths, terrain field, blueprint and its passes
+  weather/                 Weather simulation; rain, snow and wind effects
+  biomes/                  The biome templates
+  sky/                     Sun, moon, mansions, sky, seasons
+  terrain/                 Chunk streaming, rivers, roads, far shell
+  water/                   Ripples and water sound
+  ecology/                 Plant species, placement, meshes, growth
+  creatures/               Species, spawner, bodies, synthesized sounds
+  landmarks/               Ruins, camps, road props
+  peoples/                 The camp simulation and peoples
+  player/                  First-person explorer with planet gravity (third person kept
+                           for the ninja profile)
+  ui/                      HUD, map, log, settings, post-grade
+shaders/                   Sky, water, terrain, foliage, fire, grade; look.gdshaderinc
+assets/                    Fonts, plant textures, retro tiles, models (see their READMEs)
+tools/                     Headless checks (*.gd), Python validators and reference maths
 ```
 
 ## Adding content
 
-- **Plants:** add entries to a biome file in `data/biomes/`. A name is
-  enough; the plant then grows anywhere on the planet whose climate
-  matches that biome's. See `data/biomes/README.md` for size, shape,
-  color, soil and special needs.
-- **Day cycle:** phase lengths, day length, moon cycle and transition
-  timings in `data/sky/day_cycle.json`. See `data/sky/README.md`.
-- **Creatures:** add entries to `data/creatures/creatures.json`: habitat
-  role, climate range, density, activity time, needs, looks and sound.
-  See `data/creatures/README.md`.
-- **Biomes:** there are 52 template slots (51 surface + caves) matching
-  DESIGN.md. Many biome files are still `placeholder` or `empty`; their
-  status field says which.
+- **Plants:** add entries to a biome file in `data/biomes/`, or to a catalogue in
+  `data/plants/` with its `biomes` list. A species grows only in the biomes that list it, with
+  climate, soil and realm applying inside them (§CA). See `data/biomes/README.md` and
+  `docs/design/PLANT_SCHEMA.md`, and run `python3 tools/plant_schema_check.py --strict`.
+- **Creatures:** add entries to `data/creatures/creatures.json`. See
+  `data/creatures/README.md`.
+- **Peoples and techniques:** `data/peoples/` (the README there is the schema) and
+  `data/techniques.json`.
+- **Day cycle:** `data/sky/day_cycle.json`. See `data/sky/README.md`.

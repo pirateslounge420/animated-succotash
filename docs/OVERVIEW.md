@@ -1,178 +1,196 @@
-# Project Overview — an ambient open world you cross like a shinobi
+# Project Overview — an ambient open world of forgotten roads
 
-*Working title: "animated-succotash". Solo project by Mike Flow, built in Summer Engine
-(Godot 4) with two AI collaborators. This overview is for sharing: what the game is, how
-its systems fit, and where it stands. Feedback wanted on anything.*
+*Working title: "animated-succotash". A solo project by Mike Flow, built in Godot 4 with two AI
+collaborators. This overview is for sharing: what the game is, how its systems fit, and where
+it stands. Feedback is welcome on anything. Updated 1 Oct 2026, after the ambient cut.*
 
 ---
 
 ## The one-sentence version
 
-A dark, moody, early-2000s-console-looking planet — one tenth the size of Earth, real
-biomes, real seasons, real ecology — that you explore with a movement system built to
-feel like an anime ninja: wall jumps, branch swings, landing rolls, momentum you build and
-can lose, and three tools that never change.
+A slow, first-person walk across a planet one tenth the size of Earth, with real biomes, real
+seasons and real plants. Old roads lead between ruins and living camps. Fire is something you
+carry, never make. Every ruin goes down into the dark, and the dark is the only enemy.
 
 ## The thesis
 
-**The game is about the fundamentals: a world, and exploring it through movement that
-feels good.** Every feature has to pass one test — does it make moving through the world
-feel better, or make the world worth moving through? If neither, it doesn't go in. That's
-why there is no crafting, no tool tiers, no quest log, and no levels. Progression is your
-hands.
+**A world, and moving through it slowly enough to see it.** Roads, bridges and ruins that
+someone once looked after are being rediscovered, overgrown and crumbling. A fire is the
+reason the group exists, and the dark is dangerous. Every feature has to pass one test: does
+it make the world feel older, quieter, more alive, or more worth walking? If not, it doesn't
+go in.
+
+The feeling Mike is after is the internet of 1997–2010, the web before the index: you got
+somewhere because someone's dead page linked to it, and everything felt like discovery. Other
+touchstones are the backrooms, places that are alive but forgotten, a hearth like Virtual
+Villagers', and waking with nothing like Minecraft.
+
+## Two games
+
+The momentum movement has split off into a **separate ninja game**: wall jumps, chains, rolls,
+120 km/h, bow-and-spear combat and the shinobi. Its code stays in this repo, switched off,
+for that game to lift later. This is the ambient one. The bow and the spear only turn up here
+as rare finds in ruins.
 
 ## The look
 
-- **Era:** 1999–2004 (Dreamcast, GameCube, PS2). Detail lives in textures, not in
-  lighting. No normal maps, no bloom, no soft shadows. Reference points: *Phantasy Star
-  Online*, *Melee*, *F-Zero GX*, *Wind Waker*.
-- **Mood:** dark and moody at every hour. The sun is the only real light; ambient is low
-  and blue; shadows are deep and hard-edged. Skies are saturated cobalt with painted
-  clouds by day, indigo with baked stars by night.
-- **Characters:** everything intelligent is a **cloaked figure** on one shared rig —
-  small folk at 1 m, tribal folk at 1.7 m, trolls scaled up — distinguished by size,
-  timing and cloak colour, the way Captain Falcon and Ganondorf share a moveset. The
-  player's indigo cloak with a rust hem is reserved. Beasts (wolves, werewolves, yeti,
-  the night rider) keep their own bodies.
-- **Plants** are being rebuilt from real botanical vocabulary — leaf outline, margin,
-  venation, arrangement, canopy form — into procedurally generated leaf cards, so a
-  species is recognisable by silhouette at 64 px and the far horizon never becomes a
-  green blob.
+- **In one line (Mike):** "almost like Minecraft, except not in boxes, and everything flows
+  better."
+- **Era:** 1999–2004, from the Dreamcast to the GameCube, PS2 and Xbox. The touchstones are
+  *Phantasy Star Online* Ep I & II, *F-Zero GX* and *Melee*, plus @ozavry_'s AI videos of
+  imagined early-2000s games. Twenty favourite frames, measured, are the reference
+  every render is judged against (`docs/design/LOOK_REFERENCE.md`).
+- **Pixels:** the game draws a 480-line frame and scales it up with nearest-neighbour. Every
+  surface has 16 texels a metre, silhouettes stay clean, and there are no normal maps and no
+  sheen.
+- **Colour:** dark but saturated, with blue owning the frame. The sun is the one light. Shade
+  goes navy (olive in green scenes), never grey, and distance gets lighter and bluer. Water
+  is the brightest thing in view and fire the one warm accent. Night is one moonlit blue
+  world.
+- **The shot:** a path or a river runs straight to a landmark against the sky, with walls of
+  trees or slopes on both sides. Places read as outdoor rooms: a corridor, a threshold, then
+  the reveal.
+- **Figures:** every intelligent being is a cloaked figure on one shared rig, told apart by
+  size, timing and colour. Goblins, orcs and fae are dressings on a way of life, and all of
+  them are friendly.
 
 ## The world
 
-- **Scale:** a walkable cube-sphere planet **4,000 km around (1/10 Earth)**, with terrain
-  height, time and biomes all at the same 1/10 ratio. Nothing is generated until you
-  get near it; the horizon is drawn as one low mesh; performance depends on what's in
-  view, not on how big the world is.
-- **Time:** a day is **144 real minutes** — exactly one tenth of a real day, so a game hour
-  is six real minutes and the whole calendar runs at 10×. A year is 365 game days
-  (36.5 real days) with four seasons and generous transitions.
-- **Tilt and seasons:** 23.5° axial tilt, so day and night lengths depend on latitude and
-  date: midnight sun and true polar night exist. Deciduous trees turn and drop; evergreens
-  don't. Short-day plants (cannabis, chrysanthemum) flower when the days shorten — because
-  the days actually shorten.
-- **Biomes:** all 52 real-world biomes (Whittaker temperature × rainfall, plus altitude,
-  coasts, wetlands, caves), at real 1/10-Earth extents, blending through microclimates.
-  Plants spawn by three co-equal gates: temperature, rainfall, and **soil type**, which
-  the terrain marks explicitly (basalt, sand, alluvium, peat, till, karst…).
-- **Weather:** a live global wind and water cycle — pressure-driven wind, evaporation,
-  storms that travel, rain shadows behind mountains. Creature scents ride the wind.
-- **Geology:** plate tectonics are baked at world generation; their boundaries decide
-  where earthquakes, volcanoes, hot springs and tsunamis can happen.
-- **Rivers** are long, navigable, with waterfalls and storm swell; dead wood, snags and
-  fallen logs are real objects that fungi and insects break down and that owls and
-  woodpeckers live in.
-- **Amorphophallus** (the designer grows them) are a showcase genus: 246 species whose
-  petiole patterns are generated from the real taxonomic descriptions, each tuber rolling
-  its own mottling, blooming when the tuber is mature enough — and stinking on the wind
-  to pull in carrion flies.
+- **Scale:** a walkable cube-sphere planet **4,000 km around (1/10 Earth)**, with heights at
+  1/10 too (Everest would stand about 900 m). The continents are laid out on a 400 km map and
+  built ten times wider. A biome region runs from tens to hundreds of kilometres across, and
+  walking around the planet would take about 260 hours.
+- **Time:** a day lasts **144 real minutes**, one tenth of a real day, so a game hour is six
+  real minutes. The 23.5° tilt gives real day lengths by latitude and season, with polar
+  night and midnight sun. A 365-day year passes in 36.5 real days.
+- **Biomes and plants:** real biomes come from temperature, rainfall, altitude, coasts and
+  wetlands. A species grows only in the kind of place it belongs and on the soils it grows
+  on. Each place keeps its few archetypal species, and Mike's named plants are always
+  somewhere: bananas, *Amorphophallus*, the cannabis landraces, *Trichocereus*, acacias,
+  bamboo and vines.
+- **How plants behave:** vines climb trees and ruin walls, and plants grow at their real
+  rates on the 10× clock. The resurrection fern is designed to curl up in drought and green
+  after rain (§CD, not built yet).
+- **Forests:** every stand is old growth, and most woods are one dominant species, as they
+  are in life.
+- **Weather and water:** a live global wind and water cycle moves storms, rain shadows and
+  river stages. Rivers have current: downstream is free, and upstream on a fast reach is a
+  wall. The land itself was shaped at world generation; the weather only dresses it.
+- **Roads:** an old network, laid down at world generation, links ruins, camps, springs and
+  fords. Nobody keeps it: half the bridges are out, and the finds are just off the trail. The
+  road gets you somewhere known. Designed but not built yet (§BY): trails that fade under fern
+  and pick up again at cairns and notched trees, and desire lines worn by folk and the player.
 
-## Movement — the heart of it
+## Waking, the fire and the dark
 
-- **One rule for the air:** once you leave a surface your velocity is fixed until you
-  touch something. Your **body** is free to turn — spin 180° mid-jump (it reads as a
-  moonwalk), shoot backwards at a pursuer, turn back for the landing.
-- **Every contact re-aims your momentum to where you're looking** — landing, wall jump,
-  branch bounce, swing release. How much momentum survives falls off with how far you
-  turn: a nudge is free, a right angle costs half, a full reversal costs nearly all.
-  No technique beats the geometry.
-- **The tech button (right mouse):** tap on a wall = wall jump; hold = cling; on a
-  branch or vine too thin to kick = catch and swing; land on top of a branch and tap =
-  bounce. Chained perfect inputs keep or build speed; clinging is the safe, slower
-  bail-out. Timing windows are Melee-tight (14 frames at a locked 60 fps).
-- **Landing roll:** tap crouch on touchdown from height and the fall becomes forward
-  speed and does no damage. Miss it and the fall hurts — at speed, it kills.
-- **Asymmetric gravity:** you jump like an Earth-strength body on a small planet (a bound
-  carries tens of metres) but fall at Earth gravity or stronger — a shark-fin arc, no
-  floating.
-- **The ceiling is 120 km/h**, and it isn't a wall: it's where trees stop reading as
-  objects and any mistake is lethal. Risk is the governor, not a cap.
-- **Handholds have material:** each plant species has a break speed, a flexibility and a
-  snapback. Green giant bamboo is unbreakable and springs you out — a grove is a launch
-  corridor. Dead wood is brittle and cracks. You can hang as long as you like; what you're
-  holding decides if it holds you.
-- **Climbing** is holding the cling and moving. Every tree has a top, and at the top you
-  can **perch**.
-- **The body sells it:** ninja-run lean, arms trailing back, alternating feet on every
-  landing, the cloak doing most of the animation; the hood turns before the torso so
-  you can read where a figure is about to go. First person shows only what's in your
-  hands and never tumbles.
+- **Waking:** you wake with nothing, in the afternoon, beside a road, at a camp. The road
+  leads on to the next one.
+- **The torch is the first tool.** It lights at a fire, burns about one night, and can be
+  planted in the ground.
+- **Fire is never made, only carried.** Fires burn fuel gathered from the world: wood, brush,
+  dung, peat, whatever the biome offers. Embers can be saved, but a dead fire needs a flame
+  brought to it.
+- **Death:** you wake at your hearth, and any camp can be made home. What you carried stays
+  where you fell.
+- **The dark:** away from light at night, the dark closes in, in stages you hear before you
+  see. It's never a health-bar fight. Each biome is to get its own creature with its own
+  approach; the werewolf is the first one built (§BA).
+- **The log:** Enter opens a record of what happened, stamped in game time, with causes of
+  death and your own notes.
 
-## Tools and combat — three tools, forever
+## Night life *(locked 1 Oct; not built yet)*
 
-- **Spear, and a bow with a quiver of twenty.** You wake empty-handed with the two lying
-  beside you, the folk's gift; there is nothing else to find or make. Bare hands can
-  still fight: a jab, or a wound-up haymaker. (The fishing pole is shelved for a separate
-  fishing game; the spear fishes.) Left mouse holds to charge (draw, raise, wind up);
-  release to act. **Charging never slows you** — the only difficulty is doing two things
-  at once with two buttons at speed.
-- **Momentum is the weapon:** arrows inherit your velocity; a spear thrust at speed is
-  an impact strike that can kill outright; the same physics kills you if you miss a
-  trunk.
-- **Super meter:** perfect techs and landed hits fill it. Hold a charge past full and
-  the shot becomes a **super shot** — a critical, triple damage, faster and farther,
-  with a red tracer — and the meter empties. The pole's version is a grapple.
-- Arrows stick in whatever they hit and carry the shooter's cloak colour in the fletching.
-- **Q cycles the two** (whichever you have) **and bare hands.** The spear spear-fishes. Fishing itself (bites, species
-  by water temperature, cooking) comes with the camp-life phase.
+- **A shift change at dusk:** the day animals bed down, and a different cast wakes and comes
+  out.
+- **Places that keep the clock:** an old cave or an old bridge is empty by day and has
+  something denned up in it at night.
+- **Bats:** they pour out of caves and from under bridges at dusk and hunt by echolocation.
+- **Sound:** a soundscape by place and hour, with cicadas by day and crickets, frogs and owls
+  by night. Owls take rodents in the dark.
 
-## Death, camps and the enemy
+## Dungeons: every ruin is a delve *(locked 1 Oct; not built yet)*
 
-- **Camps are safe zones.** A lit fire keeps hostile creatures off; you heal by resting
-  near it and eating. Camp folk are cloaked figures in their tribe's colours.
-- **Death is diegetic.** You wake by the nearest fire because tribal folk found you and
-  carried you in, and they've left you a new bow and spear. Your body —
-  everything you had — is still where you fell, marker-free; you retrace your route,
-  and scavengers circling it help you find it.
-- **The opening is the same scene.** You come to by a fire; **enemy shinobi**, already
-  at speed, are leaving through the canopy above you; the folk explain they were coming
-  for your body but the village's own shinobi always get there first. No quest text.
-- **The enemy camp is real.** It's 50–70 km away in a fixed direction; a determined
-  player can follow the bearing and the signs through a whole night and reach it by
-  dawn. It's a creepy place, and a safe zone for nobody.
-- **Master shinobi** are the standing threat: cloaked figures that play by exactly the
-  same physics, kite you at the ceiling, and hit with aimbot precision — and can die
-  the same way you can. Beating one is the game's unspoken mastery test.
+- **The shape is Skyrim's:** a ruin's door leads down through a chain of rooms to a heart at
+  the bottom, where the rare finds lie where someone left them. A way out from the heart loops
+  you back to the surface.
+- **The aesthetic is Morrowind's**, in the favourites' high-contrast colour. The architecture
+  is our own, following each ruin's kind and people: crypts under barrows and tombs,
+  undercrofts under castles, waterworks under aqueducts, the old flint and salt workings of a
+  craft. Natural caves go deep too.
+- **The danger:** inside is full dark. The light you carry is the clock, and the danger is
+  the dark and what dens there. No fights.
+
+## Camps and peoples
+
+- **Camps are alive.** Each has a woodpile and a food store you can see, and folk who gather
+  by day, feed the fire and raise children. A camp grows while you're away, up to about 24
+  people.
+- **The ladder:** fire → food → storage → specialist → exchange. It stops there on purpose:
+  no chiefs, walls or war. The four ways to stay put are crop, fish run, herd and the managed
+  burn, and the land decides which a camp can take.
+- **Three faces:** at a grown camp, the headman teaches you the site's technique. Camps give
+  verbs, not tools: a fishing line, coppicing, the resin torch, the ember carrier, the fat
+  lamp. **You never craft.** The plantkeeper (who knows the local plants) and the maker (who
+  works materials you bring) are designed but not built yet (§BN).
+- **Peoples are ways of life drawn from the site.** There are seventeen of them, including
+  the canopy folk who live in the giant trees and never come down. They're our own folklore,
+  mute but for a line in the log, and real peoples are cited as sources.
+- **Endings:** camps die only from the dark or hunger. Their ruins are the part of a craft
+  that doesn't rot, and a new camp that moves in restores them until you can read them.
+- **Travellers:** cloaked figures walk the roads. They never speak, and their hoods follow
+  you as you pass.
+- **Wildfire:** rare. It needs lightning or a dropped torch in a dry spell, and wildflowers
+  bloom in the scar.
 
 ## Interface
 
-- Almost none. A small **speedometer** (mph and km/h) that brightens as you go faster; a
-  **railway pocket watch** (steel case and crown, white dial, black 1-12 and red
-  13-24, a red seconds hand); a slim health bar; the super meter as a ring on the charge
-  gauge. Typewriter-style font. Map on M (biome, height, temperature, rainfall,
-  weather layers) — it never marks your corpse or the enemy.
+First person only, with nothing in view but what's in your hand. Text is set in a pixel font
+inside the low-res frame. Readouts are few and pinnable: a railway pocket watch for the time,
+a map on M, the log on Enter, and settings on O.
 
-## Where it stands (28 Sept 2026)
+## Where it stands (1 Oct 2026)
 
-Built and playable: the planet, all 52 biomes, rivers and water, ~1,400 plant species
-with climate and soil bands, 28 creatures with behaviours, live weather, the day/night
-cycle, the player rig and cloak, wall jump / cling / swing / roll, vines and handhold
-materials, bow and spear with body-part hitboxes, death and waking by a fire, camps with
-folk, ruins. The dark-daylight lighting pass just landed. The designer's verdict from
-the last play: "lowkey already getting fun."
+**Built and playable** (`docs/PROGRESS.md` has the detail):
+- the full 4,000 km planet, where every new world gets its own seed and its own kind of first
+  camp, and opens on Day 1;
+- the same picture on every machine, with no dependence on the editor's import cache;
+- the slow first-person walk, the torch, fuel and the hearth, the dark, and the log;
+- roads to every camp, including the opening road;
+- camps that are alive, with their peoples and techniques, collapse, wildfire and the canopy
+  folk;
+- the one-card pixel fire;
+- plants held to their habitats, with the catalogue trimmed and the named plants and vines
+  always present;
+- the look pass (navy grade, cobalt sky, electric water, 16-texel tiles), with the twenty
+  favourites measured.
 
-In progress: derived day/night from tilt, seasons, head-look, soil as a hard gate, the
-HUD readouts, asymmetric gravity and the momentum ceiling, branch bounce, the fishing
-pole, the leaf-card plant builder (schema locked, 135 species filled so far).
-
-Later: ecology food web and populations, camp life and cooking, the opening scene with
-fleeing shinobi, master shinobi AI, the enemy camp, lore and rumour, persistence.
-Multiplayer is a someday.
+**Next and open:**
+- the working camp: four or five folk at their jobs, each trip adding a piece to the store
+  (§BV–§BW);
+- the roads' desire lines and lost-and-found stretches (§BY);
+- the landmark-and-road composition pass, so the world frames like the favourites;
+- the epiphyte pass;
+- the night-life pass;
+- dungeons, and caves (Phase 3);
+- the herd and the managed burn;
+- wordless trade.
 
 ## How it's being built
 
-By one designer directing two AI agents on the same repository: one in the engine
-(code, shaders, screenshots, feel), one in design, data and reference maths (design
-document, plant data via parallel research agents, astronomy tables the engine must
-match). A locked design document is the source of truth; a working agreement says who
-owns what. Everything is procedural and rule-based on purpose — the goal is a world
+The game is built in Godot 4 with GDScript, and Mike opens it straight in the Godot editor.
+One designer directs two AI agents on one repository:
+- **Claude Code** works in the engine: code, shaders, feel and checks.
+- **Claude in chat** works on design, data and reference maths: the design docs, plant and
+  people data filled by parallel research agents, and validators.
+
+The locked design lives in dated documents with lettered sections, and a working agreement
+says who owns what. Everything is procedural and rule-based on purpose. The goal is a world
 that surprises its own creator.
 
-## Questions we'd love opinions on
+## Open calls
 
-1. Does "three tools, forever" feel like freedom or like a ceiling?
-2. Is a 120 km/h ceiling with lethal misses exciting or punishing for a newcomer?
-3. Would you chase the shinobi through the night? What would make you?
-4. Is a 36-real-day year (with ~9-day seasons) a feature or too slow to notice?
-5. The grapple as an overcharge only — too rare, or exactly right?
+1. **Day brightness.** Mike's favourites are darker by day than today's target. Should the
+   day come down?
+2. **Dungeon puzzles and traps.** Should there be puzzle doors and traps in the Skyrim way, or
+   only the ruin falling apart?
+3. **Music.** Room tone carries the game for now. Is there ever a score?

@@ -1,17 +1,28 @@
-> **Superseded in part.** This is the original design spec (Sept 2026). The locked, current
-> design is `docs/design/RECONCILIATION_2026-09-27.md` (thesis, §0–V) and
-> `docs/design/PLANT_SCHEMA.md`; they override this file wherever they differ — in particular:
-> the whole game is **dark and moody by day as well as night** (no Frutiger Aero day);
-> the planet and its biomes are **1/10 Earth (4,000 km)**; the day is **144 real minutes**
-> with **23.5° tilt** and derived seasons; there are **no goblins** (all intelligent
-> creatures are cloaked figures at different scales); **three tools, no crafting**; and
-> movement (momentum, wall jumps, swings, rolls) is the point of the game.
+> **Superseded in part.** This is the original design spec (Sept 2026), kept for its biome,
+> vegetation, creature and weather reference. The current design is
+> `docs/design/RECONCILIATION_2026-09-30.md` (the ambient cut, §AT onward), then
+> `RECONCILIATION_2026-09-27.md`, `LOOK_REFERENCE.md` and `PLANT_SCHEMA.md`. They override this
+> file wherever they differ, in particular:
+> - **Scale and time:** the planet is **1/10 Earth** in distance, height and time: 4,000 km
+>   around, Everest ~900 m, a 144-minute day with 23.5° tilt (§I). The old 1/100 sizing
+>   (400 km) is gone.
+> - **The game:** slow, first person and empty-handed. The momentum kit, bow and spear and
+>   the shinobi went to a separate ninja game (§AT). You start with nothing and the torch is
+>   the first tool (§AW).
+> - **Camps and ruins:** camps are alive and peoples are ways of life (§BL–§BT). Every ruin is
+>   a delve into the dark (§CJ).
+> - **The look:** days are vivid where the sun hits and dark where it doesn't (§BU), with the
+>   twenty favourites as the reference.
+> - **Folk:** every intelligent being is a cloaked figure; goblins, orcs and fae are friendly
+>   dressings on a way of life (§BO).
+> - **Plants:** a species grows only in the biomes that list it (§CA).
+> - **Engine:** plain Godot 4.3 (§CI).
 
 # Low-Poly Exploration Game — Design Notes
 
 ## Overview
 
-An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet 1/10 of Earth's size (\~4,000 km around; design §I, locked 2026-09-29), with heights at 1/10th of Earth's (Everest would stand \~900 m) and time at 1/10 too: the day-night cycle runs 144 real minutes per in-game day (one in-game hour is 6 real minutes; day 60 / dusk 18 / night 48 / dawn 18 at the equator and equinox, varying with latitude and season (docs/WORLD_SYSTEMS_SPEC.md, which wins over this file). Long, slow dawns and dusks give the day-to-night palette shift room to play out.
+An ambient open-world exploration game built in Godot 4. No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet 1/10 of Earth's size (\~4,000 km around; design §I, locked 2026-09-29), with heights at 1/10th of Earth's (Everest would stand \~900 m) and time at 1/10 too: the day-night cycle runs 144 real minutes per in-game day (one in-game hour is 6 real minutes; day 60 / dusk 18 / night 48 / dawn 18 at the equator and equinox, varying with latitude and season (docs/WORLD_SYSTEMS_SPEC.md, which wins over this file). Long, slow dawns and dusks give the day-to-night palette shift room to play out.
 
 ## Visual & Tone References
 
@@ -204,15 +215,33 @@ This brings the \~59 real-world biomes down to about 52 actual proc-gen content 
 
 ## Biome Sizing
 
-**Superseded (design §I):** the planet and its biomes are now 1/10 of Earth (about 4,000 km around); the numbers below are the old 1/100 sizing and are kept only for the record. Each biome's typical real-world area is scaled down by that factor and treated as a rough circle to get a walk-across time at the game's walking pace of 6 kilometers per hour (a brisk hike). This makes biome size and rarity fall out of real geography for free: biomes that are vast on Earth stay vast and common, and biomes that are naturally rare and small on Earth become rare, small landmarks in-game.
+The planet and its biomes are **1/10 of Earth** (design §I, locked 27 Sept, in the code since
+29 Sept): about 4,000 km around. Each biome's typical real-world extent is scaled by 1/10 in
+each direction (1/100 in area) and treated as a rough circle to get a walk-across time at the
+reference pace of 6 km an hour (a brisk hike; the ambient walk, §AU, is 4.3 m/s). Biome size
+and rarity fall out of real geography for free. Biomes that are vast on Earth stay vast and
+common, and biomes that are naturally rare and small on Earth become rare, small landmarks in
+the game.
 
-Vast biomes, about four to seven hours to walk across: taiga, hot desert, tropical rainforest, tundra, and savanna.
+Vast biomes, about 40 to 70 hours to walk across: taiga, hot desert, tropical rainforest,
+tundra, and savanna.
 
-Mid-size biomes, roughly two and a quarter to three hours: temperate deciduous and mixed forest, ice sheet and polar desert, cold desert, and prairie and steppe.
+Mid-size biomes, roughly 22 to 30 hours: temperate deciduous and mixed forest, ice sheet and
+polar desert, cold desert, and prairie and steppe.
 
-Small specialty pockets, under thirty minutes and many under four: sagebrush shrubland, Mediterranean scrub, cloud and montane forest, krummholz, alpine meadow, swamp and bayou, páramo and puna, mangrove, freshwater marsh, bog and fen, badlands, salt marsh, salt flats, karst and cave regions, volcanic fields, dune fields, beaches, oases, and hot springs.
+Small specialty pockets, under five hours and many under forty minutes: sagebrush shrubland,
+Mediterranean scrub, cloud and montane forest, krummholz, alpine meadow, swamp and bayou,
+páramo and puna, mangrove, freshwater marsh, bog and fen, badlands, salt marsh, salt flats,
+karst and cave regions, volcanic fields, dune fields, beaches, oases, and hot springs.
 
-For scale (old 1/100 numbers): circling on foot nonstop was ~67 hours. At 1/10 it is ~200 hours at a walk, ~33 at the momentum ceiling (design §I).
+What the generator actually builds (`tools/biome_scale.gd`, seeds 42 and 7, 29 Sept): the
+largest single region of a band is 45 to 370 km across, and a straight walk stays 10 to 43 km
+in one biome. Every band has a region of at least 1,600 km². The geography is laid out on a
+400 km map and built ten times wider (`PlanetConst.GEO_SCALE`), so continents are big, not
+many.
+
+For scale: circling the planet on foot nonstop is about 670 hours at 6 km an hour, or about
+260 hours at the ambient walk.
 
 ## Creature Spawning
 
