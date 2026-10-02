@@ -24,6 +24,9 @@ static var STAGES: Array = D.get("stages", [])
 static var RULES: Dictionary = D.get("rules", {})
 ## 1 normally; falls to 0 at stage 1 (Creature: the calls stop).
 static var bed_gain := 1.0
+## Inside an overrun delve (design 2 Oct §CN, Overrun): what holds it, the
+## hunter this dread brings ({} elsewhere).
+static var den_entry := {}
 static var instance: Dread = null
 
 var world: Node
@@ -145,6 +148,9 @@ func update_dread(delta: float) -> void:
 		rate = float(M.get("fill_per_min_moon", 0.14))
 	else:
 		rate = float(M.get("fill_per_min_dark", 0.2))
+	# Near an overrun ruin at night, outside a fire, it fills faster (§CN).
+	if rate > 0.0:
+		rate *= Overrun.dread_scale(player.global_position)
 	meter = clampf(meter + rate * delta / 60.0, 0.0, 1.0)
 	# The stage: the highest whose level the meter has reached.
 	var want := 0
@@ -283,12 +289,14 @@ func _take() -> void:
 func _ensure_hunter() -> void:
 	if _hunter != null:
 		return
-	_hunter_entry = _entry_for(FireStore.biome_key(world, player.surface_dir))
+	_hunter_entry = den_entry if not den_entry.is_empty() else _entry_for(FireStore.biome_key(world, player.surface_dir))
 	_hunter = Node3D.new()
 	_hunter.name = "Dread"
 	world.world_root.add_child(_hunter)
 	var body: Node3D = null
-	var sp := CreatureSpecies.find("Werewolf") if str(_hunter_entry.get("creature", "")) == "Werewolf" else null
+	# The werewolf, or in an overrun delve whatever holds it (§CN).
+	var cname := str(_hunter_entry.get("creature", "")) if _hunter_entry.get("creature") != null else ""
+	var sp := CreatureSpecies.find(cname) if cname == "Werewolf" or (not den_entry.is_empty() and cname != "") else null
 	if sp != null:
 		var b := CreatureBodies.build(sp)
 		body = b.root
@@ -302,6 +310,12 @@ func _ensure_hunter() -> void:
 
 
 func _entry_for(biome: String) -> Dictionary:
+	return entry_for(biome)
+
+
+## The dread.json hunter for `biome`: the werewolf in its forests (built,
+## `first`), else the fallback (the dark itself).
+static func entry_for(biome: String) -> Dictionary:
 	var fallback := {}
 	for h in D.get("hunters", []):
 		if not h is Dictionary:

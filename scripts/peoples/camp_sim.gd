@@ -595,6 +595,9 @@ func _walk_away(st: Dictionary, days: float, fled: bool, rng: RandomNumberGenera
 				f.role = ""
 				arrived.append(f)
 		(dest.folk as Array).append_array(arrived)
+		# Where they went, for coming back (§CN part 4).
+		st.went_to = str(dest.get("key", ""))
+		st.survivors = arrived.size()
 		# What they carry: a share of the store goes with them.
 		dest.wood = float(dest.wood) + float(st.wood) * 0.3
 		dest.food = float(dest.food) + float(st.food) * 0.5
@@ -645,7 +648,8 @@ func _tick_empty(st: Dictionary, days: float) -> void:
 	var since := days - float(st.get("abandoned_day", days))
 	if str(st.state) == "abandoned":
 		var fst: Dictionary = FireStore.stores.get(str(st.fire_key), {})
-		if not fst.is_empty() and str(fst.get("state", "")) in ["flames", "low"] and since < 10.0 and str(st.get("why", "")) != "burnt":
+		# (Never one the dark holds: §CN, sim.overrun sim_resettles false.)
+		if not fst.is_empty() and str(fst.get("state", "")) in ["flames", "low"] and since < 10.0 and str(st.get("why", "")) != "burnt" and not bool(st.get("overrun", false)):
 			var src := _nearest_lit(st)
 			if not src.is_empty() and (src.folk as Array).size() >= 4:
 				var back: Array = []
@@ -660,6 +664,9 @@ func _tick_empty(st: Dictionary, days: float) -> void:
 				return
 		if since >= float(ab.get("ruin_after_game_days", 60)):
 			st.state = "ruin"
+			# A camp the dark took, with a den: the dark moves in (§CN).
+			if world != null and Overrun.camp_fell(world.get("planet"), st, days):
+				st.overrun = true
 	elif str(st.state) == "ruin":
 		if since >= float(ab.get("forest_takes_game_days", 365)):
 			st.state = "gone"

@@ -49,6 +49,7 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var old_hearths: OldHearths
+var overrun: Overrun
 var delves: Delves
 var post: PostGrade
 var rain_overlay: RainOverlay
@@ -306,6 +307,11 @@ func _on_planet_ready() -> void:
 	old_hearths.name = "OldHearths"
 	add_child(old_hearths)
 	old_hearths.setup(world, chunks, player, landmarks, camps)
+	# Overrun ruins (design 2 Oct §CN): the dens, their tells, the clearing.
+	overrun = Overrun.new()
+	overrun.name = "Overrun"
+	add_child(overrun)
+	overrun.setup(world, chunks, player, landmarks, sky)
 	# The delves under the barrows (design 1 Oct §CJ): who is in one, the
 	# cairn doors, the finds.
 	delves = Delves.new()

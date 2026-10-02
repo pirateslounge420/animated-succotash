@@ -244,6 +244,10 @@ static func _make_layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	# The find (§AW: a spear, a bow, rarer things later) by the dead.
 	lay.find_kind = "spear" if rng.randf() < 0.6 else "bow"
 	lay.find = Vector3(1.5, y_h, float(heart.c.y) + len_h * 0.62 - 1.0)
+	# The heart's fire-holder (design 2 Oct §CN, delves.json fire_holders:
+	# the ash of the last fire, a hearth ring): by the way in, across from
+	# where the stair lands, clear of the grave goods.
+	lay.heart_hearth = Vector3(-s2 * 1.8, y_h, float(heart.c.y) + 1.0)
 	lay.s2 = s2
 	return lay
 

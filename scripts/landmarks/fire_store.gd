@@ -105,7 +105,13 @@ static func units_now(st: Dictionary) -> float:
 
 
 static func share(st: Dictionary) -> float:
-	return units_now(st) / maxf(float(F.get("store_max_units", 12)), 1.0)
+	return units_now(st) / maxf(max_units(st), 1.0)
+
+
+## What a store holds at most: its own max_units (a delve's fire-holder,
+## delves.json fire_holders.holds_units), else fire.store_max_units.
+static func max_units(st: Dictionary) -> float:
+	return float(st.get("max_units", F.get("store_max_units", 12)))
 
 
 static func is_lit(fire: Node3D) -> bool:
@@ -201,7 +207,7 @@ static func add_fuel(fire: Node3D, it: Dictionary, days: float) -> String:
 	var st := store_of(fire)
 	if st.is_empty():
 		return "full"
-	if units_now(st) > float(F.get("store_max_units", 12)) - 0.999:
+	if units_now(st) > max_units(st) - 0.999:
 		return "full"
 	var kind := str(it.get("fuel", "branch"))
 	var wet: Dictionary = D.get("wet", {})
@@ -306,7 +312,7 @@ static func swing_light(fire: Node3D, days: float) -> String:
 				st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
 				how = "ok"
 	apply(fire)
-	if how in ["ok", "catching"] and fire.has_meta("old_hearth"):
+	if how in ["ok", "catching"] and fire.has_meta("old_hearth") and not fire.has_meta("fire_holder"):
 		GameLog.add("Rekindled an old hearth.", "hearth_rekindled")
 	return how
 
@@ -315,6 +321,8 @@ static func swing_light(fire: Node3D, days: float) -> String:
 static func swing_words(fire: Node3D, how: String) -> String:
 	match how:
 		"ok", "catching":
+			if fire.has_meta("fire_holder"):
+				return "The ash of the last fire catches from the torch."
 			return "The old hearth catches from the torch." if fire.has_meta("old_hearth") else "The fire catches from the torch."
 		"not_laid":
 			return str(SWING_LOG.get("not_laid", "Cold ash. It needs kindling."))

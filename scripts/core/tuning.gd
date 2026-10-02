@@ -5,7 +5,7 @@ class_name Tuning
 ## reads one number; a key missing from the file is warned about once and
 ## reads as 0, so a typo shows up at once instead of hiding.
 
-const FILES := {"movement": "res://data/movement.json", "combat": "res://data/combat.json", "look": "res://data/look.json", "hud": "res://data/hud.json", "litter": "res://data/litter.json", "stand": "res://data/stand.json", "camps": "res://data/camps.json", "torch": "res://data/torch.json", "fuel": "res://data/fuel.json", "dread": "res://data/dread.json", "current": "res://data/water/current.json", "roads": "res://data/roads.json", "rooms": "res://data/rooms.json", "travellers": "res://data/travellers.json", "audio": "res://data/audio.json", "habitat": "res://data/habitat.json", "vines": "res://data/vines.json"}
+const FILES := {"movement": "res://data/movement.json", "combat": "res://data/combat.json", "look": "res://data/look.json", "hud": "res://data/hud.json", "litter": "res://data/litter.json", "stand": "res://data/stand.json", "camps": "res://data/camps.json", "torch": "res://data/torch.json", "fuel": "res://data/fuel.json", "dread": "res://data/dread.json", "current": "res://data/water/current.json", "roads": "res://data/roads.json", "rooms": "res://data/rooms.json", "travellers": "res://data/travellers.json", "audio": "res://data/audio.json", "habitat": "res://data/habitat.json", "vines": "res://data/vines.json", "delves": "res://data/delves.json"}
 
 static var _tables := {}
 static var _warned := {}

@@ -22,6 +22,8 @@ extends Node
 ## again or asked about).
 
 const BUILD_M := 220.0
+## A delve's fire-holders (design 2 Oct §CN, delves.json fire_holders).
+static var HOLDERS: Dictionary = Tuning.table("delves").get("fire_holders", {})
 const DROP_M := 280.0
 
 static var instance: OldHearths = null
@@ -68,7 +70,7 @@ static func _min_per_day(w: Node) -> float:
 
 ## The store for the old hearth at `d` (made cold if new), caught up to
 ## now. Shared with FireStore.stores and, once lit, the save.
-static func store_at(w: Node, d: Vector3) -> Dictionary:
+static func store_at(w: Node, d: Vector3, holder := false) -> Dictionary:
 	var key := FireStore.key_of(d)
 	var st: Dictionary = FireStore.stores.get(key, {})
 	if st.is_empty():
@@ -76,9 +78,13 @@ static func store_at(w: Node, d: Vector3) -> Dictionary:
 		st = saved.get(key, {})
 		if st.is_empty():
 			var units: Array = []
-			for i in start_units():
+			# A delve's fire-holder (§CN) starts cold and empty (fire_holders
+			# start_units) and holds only holds_units.
+			for i in (int(HOLDERS.get("start_units", 0)) if holder else start_units()):
 				units.append(["branch", FireStore.burn_min("branch") * 0.6])
 			st = {"units": units, "embers_min": 0.0, "state": "out", "tended": false}
+			if holder:
+				st["max_units"] = float(HOLDERS.get("holds_units", 3))
 		FireStore.stores[key] = st
 	st["dir"] = [d.x, d.y, d.z]
 	catch_up(w, st)
@@ -138,7 +144,15 @@ func _wanted(pd: Vector3) -> Dictionary:
 				var hd: Vector3 = world.dir_of(hp)
 				if CubeSphere.surface_distance_m(hd, pd) < BUILD_M:
 					want[FireStore.key_of(hd)] = [hd, "delve", node, local]
-		if site.is_empty() or Ruins.inhabited(site) or not node.has_meta("camp_spot"):
+			# Every room after it has its fire-holder (§CN): in a barrow the
+			# heart's hearth ring, the ash of the last fire.
+			var hh: Vector3 = lay.get("heart_hearth", Vector3.INF)
+			if hh != Vector3.INF:
+				var hlocal := hh - Vector3(0.0, float(node.get_meta("delve_off", 0.0)), 0.0)
+				var hhd: Vector3 = world.dir_of(node.global_transform * hlocal)
+				if CubeSphere.surface_distance_m(hhd, pd) < BUILD_M:
+					want[FireStore.key_of(hhd)] = [hhd, "holder", node, hlocal]
+		if site.is_empty() or Ruins.inhabited(site) or Overrun.settled(site) or not node.has_meta("camp_spot"):
 			continue
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
 		var sd: Vector3 = world.dir_of(spot)
@@ -155,7 +169,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 
 
 func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Node3D:
-	var st := store_at(world, d)
+	var st := store_at(world, d, kind == "holder")
 	var fire := Campfire.build(_root, world, chunks, d, false)
 	# Campfire.build registers a tended store only when there is none; this
 	# one is the old hearth's own, untended.
@@ -166,12 +180,20 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 	fire.set_meta("old_kind", kind)
 	# Lit, it can be your hearth (§AY), like a camp's.
 	fire.set_meta("hearth_ok", true)
-	if ruin != null and kind == "delve":
+	if ruin != null and kind in ["delve", "holder"]:
 		# Down on the delve's paved floor, not on the ground above it.
 		fire.set_meta("delve_hearth", ruin)
 		fire.global_position = ruin.global_transform * local
 		# Not one to wake at: you'd wake on the ground above it.
 		fire.set_meta("hearth_ok", false)
+		if kind == "holder":
+			# The heart's fire-holder (§CN): lighting it clears an overrun
+			# ruin (Overrun); a fire's radius of its own, light_radius_m.
+			fire.name = "FireHolder"
+			fire.set_meta("fire_holder", "heart")
+			fire.set_meta("heart_of", int((ruin.get_meta("site") as Dictionary).seed))
+			fire.set_meta("safe_m", float(HOLDERS.get("light_radius_m", 8.0)))
+			fire.set_meta("range_m", float(HOLDERS.get("light_radius_m", 8.0)))
 	elif ruin != null:
 		fire.set_meta("ruin", ruin)
 		# A stone ruin's camp spot stands on its floor, not the ground.

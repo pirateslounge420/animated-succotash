@@ -128,7 +128,7 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 		_lpf.cutoff_hz = lerpf(float(canopy.get("cutoff_hz_open", 20000.0)), float(canopy.get("cutoff_hz_canopy", 1800.0)), _canopy)
 	for layer in LAYERS:
 		var p: AudioStreamPlayer = _players[layer]
-		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground)
+		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground) * (1.0 - Overrun.quiet)
 		if layer == "wind":
 			g *= lerpf(1.0, float(canopy.get("wind_gain", 0.45)), _canopy)
 		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", -18.0 if layer == "cicadas" else 0.0))

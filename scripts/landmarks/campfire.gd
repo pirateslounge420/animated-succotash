@@ -273,7 +273,10 @@ static func _ember_node(count: int, size: float, phase: float) -> MultiMeshInsta
 static func lit_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 	for f in tree.get_nodes_in_group(GROUP):
 		var fire := f as Node3D
-		if fire and fire.is_inside_tree() and fire.get_meta("lit", true) and fire.global_position.distance_to(pos) < radius:
+		# A fire with its own reach (a delve's fire-holder, meta safe_m:
+		# design 2 Oct §CN) holds only that far, whatever was asked.
+		var r := minf(radius, float(fire.get_meta("safe_m"))) if fire and fire.has_meta("safe_m") else radius
+		if fire and fire.is_inside_tree() and fire.get_meta("lit", true) and fire.global_position.distance_to(pos) < r:
 			return true
 	return false
 
@@ -318,7 +321,7 @@ static func flicker(camp: Node3D, time: float) -> void:
 	var light := camp.get_node_or_null("Light") as OmniLight3D
 	if light:
 		light.light_energy = LIGHT_ENERGY * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
-		light.omni_range = RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night)
+		light.omni_range = (float(camp.get_meta("range_m")) if camp.has_meta("range_m") else RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night))
 		var jm := float(fk.get("position_jitter_m", 0.06))
 		light.position = Vector3(0, 1.0, 0) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
 	# The pool on the ground swells with the light.
