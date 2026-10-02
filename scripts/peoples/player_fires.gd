@@ -92,6 +92,12 @@ func _build_lamp(rec: Dictionary) -> Node3D:
 func _process(delta: float) -> void:
 	if world == null:
 		return
+	# Flicker the lamps and the player's fires every frame (Campfire.flicker).
+	var t := Time.get_ticks_msec() / 1000.0
+	for k in _built:
+		var fn: Node3D = _built[k]
+		if is_instance_valid(fn) and fn.has_node("Flames"):
+			Campfire.flicker(fn, t)
 	_timer -= delta
 	if _timer > 0.0:
 		return
@@ -126,10 +132,3 @@ func _process(delta: float) -> void:
 		elif not near and _built.has(k):
 			NodeRelease.free_later(_built[k])
 			_built.erase(k)
-	# Flicker the lamps and the player's fires.
-	for k in _built:
-		var n: Node3D = _built[k]
-		if not is_instance_valid(n):
-			continue
-		if n.has_node("Flames"):
-			Campfire.flicker(n, Time.get_ticks_msec() / 1000.0)

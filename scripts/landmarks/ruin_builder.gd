@@ -1138,10 +1138,9 @@ func _camp(kind: int) -> void:
 	var beside := Vector2(0.0, 2.8 * (1.0 if s0.y <= 0.0 else -1.0)) if kind == Ruins.Kind.AQUEDUCT else Vector2(-s0.y, s0.x).normalized() * 3.0
 	var fire := s0 + beside
 	_camp_spot = Vector3(fire.x, maxf(ground(fire.x, fire.y), floor_y), fire.y)
-	# An inhabited ruin gets a burning fire there (Camps); otherwise the
-	# old ring of stones round cold ash.
-	if not Ruins.inhabited(site):
-		fire_ring(fire, floor_y)
+	# An inhabited ruin gets a burning fire there (Camps); otherwise an
+	# old hearth, a ring of stones round cold ash you can rekindle
+	# (OldHearths builds it at the camp spot).
 
 
 ## Half the width a tepee's collision leaves open at its door, m: the

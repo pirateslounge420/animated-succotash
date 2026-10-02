@@ -48,6 +48,7 @@ var mythics: Mythics
 var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
+var old_hearths: OldHearths
 var post: PostGrade
 var rain_overlay: RainOverlay
 var night_accents: NightAccents
@@ -299,6 +300,11 @@ func _on_planet_ready() -> void:
 	camps.name = "Camps"
 	add_child(camps)
 	camps.setup(world, chunks, player, landmarks, hud)
+	# The cold hearths at empty ruins and old camps' remains (Mike, 2 Oct).
+	old_hearths = OldHearths.new()
+	old_hearths.name = "OldHearths"
+	add_child(old_hearths)
+	old_hearths.setup(world, chunks, player, landmarks)
 	player.spawner = creatures
 	player.camps = camps
 	player.died.connect(_on_player_died)
@@ -498,7 +504,7 @@ func _process(delta: float) -> void:
 	elif player.torch.can_light():
 		prompt = "%s: light the torch" % Controls.interact_word()
 	elif _fire_in_reach() != null and player.torch.lit() and not FireStore.is_lit(_fire_in_reach()):
-		prompt = "%s: light the fire" % Controls.interact_word()
+		prompt = "%s: %s" % [Controls.interact_word(), "rekindle the old hearth" if _fire_in_reach().has_meta("old_hearth") else "light the fire"]
 	elif Hearth.can_set(_fire_in_reach()):
 		prompt = "%s: make this your hearth" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
@@ -578,7 +584,7 @@ func _on_player_died() -> void:
 		# Never wake at no fire: a hearth that is neither the opening
 		# camp's nor a ruin camp's (a camp that moved, a fire long gone)
 		# wakes you at the opening camp.
-		if CubeSphere.surface_distance_m(fire, camp.site) > 30.0 and not camps.fire_at(fire):
+		if CubeSphere.surface_distance_m(fire, camp.site) > 30.0 and not camps.fire_at(fire) and not OldHearths.lit_at(world, fire):
 			fire = camp.site
 			Hearth.set_home(camp.site, false)
 			GameLog.add("Your hearth was gone; you woke at the camp.", "hearth_gone")
@@ -596,6 +602,7 @@ func _on_player_died() -> void:
 	player.spawn_at(d, fire)
 	_lay_gifts()
 	camps.refresh_now()
+	old_hearths.refresh_now()
 	player.set_view(-0.3, 0.0)
 	player.weapon = "hands"
 	player.revive()
@@ -740,7 +747,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				"no_fuel":
 					_say_note("There is nothing left to burn. It needs fuel.")
 				_:
-					_say_note("You light the fire from the torch.")
+					if fire.has_meta("old_hearth"):
+						_say_note("The old hearth catches from the torch.")
+						GameLog.add("Rekindled an old hearth.", "hearth_rekindled")
+					else:
+						_say_note("You light the fire from the torch.")
 		elif Hearth.can_set(fire):
 			# This fire is home now: you wake here when you die (§AY).
 			Hearth.set_home(world.dir_of(fire.global_position))
