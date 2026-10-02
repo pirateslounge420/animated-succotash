@@ -951,6 +951,54 @@ The open calls (listed in LOOK_REFERENCE):
 The tool: `tools/look/measure_look.py --fav` places a frame among the favourites and names
 the nearest one. `retro.targets` is unchanged.
 
+## CG. Day 1, and the game draws the same on every machine — LOCKED (1 Oct, 23:14, Mike)
+
+Mike, from his 23:11 play (a jungle, first person): *we need to fix the gray box for plants
+and their leaves … we also need to be spawning on day 1 instead of 14*, and: *can you
+verify if your screenshots were from actual gameplay or just a harness?* Causes found and
+reproduced the same night (evidence: PROGRESS, 2 Oct, "Mike's 1 Oct 23:11 play").
+
+What was wrong:
+- **The grey boxes are empty textures.** Since `df993d6` (28 Sept) the world's tiles (leaf
+  card, leaves, bark, grass, dirt, sand, stone, water) load through Godot's import cache
+  (`.godot/imported`), which only the editor writes and git never carries. Where the cache
+  lacks them, `Look.texture()` errors and hands every world material nothing. Godot reads
+  an empty texture as plain opaque white: the leaf cutout never cuts (solid cards), the
+  plants' tile-times-two colour washes out pale, the ground loses its 16-texel tiles. What
+  the shaders draw themselves survives (the bamboo's node rings), which is exactly the
+  23:11 frame. Same cause as the Courier font of the 15:30 play; the font was fixed by
+  reading its file from disk, the tiles never were.
+- **No frame shown so far was play.** Every in-game frame came from a harness
+  (`tools/dev_view.gd`, `walkabout.gd`, `species_row.gd`) on Claude Code's cloud machine:
+  Linux, a software GPU, a fixed seed and camera (the dev frame: seed 42, the first camp,
+  third person, weather held clear), and a complete import cache. That machine could not
+  show this bug.
+- **Day 14.** The world clock starts at `World.START_DAYS` 13.62, picked so the first night
+  has a near-full moon, and the HUD prints that count; the log's first line says "day 1".
+  The HUD's day also turns over at midnight at longitude 0, not where you stand: at the
+  23:11 spawn (12.7°N, 140.1°W) it read "Day 14 · 13:43" on waking and "Day 15 · 14:40"
+  five real minutes later, the log's stamps a minute after.
+
+The rules:
+- **Every new world opens on Day 1**, in §BX's afternoon. The day number counts your local
+  days since the world began and goes up by one at local midnight where you stand (the
+  clock face's 00:00). The HUD's time line, every log stamp and the log's first line show
+  the same number. **The sky keeps its clock:** the first night stays near full moon
+  (§BU's moonlit night) and the season stays where it is (spring, about day 40 of it).
+  Day 1 is the count, not the calendar; starting the year over would put a new moon on
+  the first night. A world saved before this counts from its own first day.
+- **The game looks the same whether or not the editor has imported anything.** Nothing
+  drawn or printed at runtime depends on the import cache: the world tiles, the cloud
+  panorama, the fonts and any model are read from their own files on disk when the
+  import isn't there, as the species tiles and the font already are, and painted only if
+  the file is unreadable. No material is ever handed an empty texture. A missing import
+  is one warning line naming the file, never a silent white.
+- **Every frame says where it came from.** An in-game frame shown to the designer says
+  whether it is a harness frame (which tool, seed and camera, the cloud GPU, the import
+  cache present or hidden) or his own play. The end-of-pass look check also runs as the
+  designer's machine had it: import cache hidden, first person, a fresh random world at
+  the afternoon spawn. A pass isn't judged done on frames his machine wouldn't draw.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -982,3 +1030,8 @@ the trim (with the seed list), then §CA the gate, no blobs, the torch flame on 
 and the walkabout. Then §BV–§BW the working camp, §BX the opening road, §BY the roads.
 
 **Status 1 Oct, 13:10:** §CA's gate, the catalogue tags, no lobe hulls and the torch flame — built (`9dd1c23`; its walkabout waits for §CC). Queue: the Mac-GPU pass (Day 1, the F9 foliage views, derivative and null-texture fixes) → §CC the trim → the epiphyte pass (real branches, a shape per kind, §CD the resurrection).
+
+**Status 1 Oct, 23:40:** §CG goes first of all: the tiles off the import cache, Day 1 and the
+local midnight, frames labelled, and the end-of-pass check run as the designer's machine
+has it. It takes over the Mac-GPU pass's Day 1 and null-texture items; the F9 foliage views
+and the derivative item stay queued (not the cause of the grey boxes).
