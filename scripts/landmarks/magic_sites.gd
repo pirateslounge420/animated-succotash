@@ -6,12 +6,18 @@ class_name MagicSites
 ##   mythical     every mythical creature's territory
 ##   glow ponds   about a third of fresh lakes and wetland cells: the water
 ##                itself shines teal/cobalt and lights the banks
+##   glowing bays the bioluminescent bays (design 1 Oct §CK, Nests): salt
+##                water, dark until stirred; the water shader lights it only
+##                where the ripple sim shows a disturbance (BAY_KIND)
 ##
 ## Pure functions of the planet data. Each site: {"dir", "radius_m",
 ## "kind" (1 = ruins/mythical: ground, moss and plants glow; POND_KIND =
 ## mostly the water), "type"}.
 
 const POND_KIND := 0.4
+## A bioluminescent bay (look.gdshaderinc look_bay_glow): kept out of the
+## ordinary glow, lit only where stirred.
+const BAY_KIND := 0.2
 const POND_SHARE := 35 # percent of eligible cells
 const POND_RADIUS_M := 900.0
 const RUIN_MARGIN_M := 45.0
@@ -30,6 +36,9 @@ static func near(map: PlanetData, d: Vector3, radius: float, ruins = null) -> Ar
 		var t := Territories.find(map, c)
 		if not t.is_empty() and CubeSphere.surface_distance_m(t.dir, d) < radius + MYTHIC_RADIUS_M:
 			out.append({"dir": t.dir, "radius_m": MYTHIC_RADIUS_M, "kind": 1.0, "type": "mythical"})
+	if Nests.terrain != null and Nests.terrain == map.terrain:
+		for b in Nests.near(d, radius, ["bioluminescent_bay"]):
+			out.append({"dir": b.dir, "radius_m": float(b.radius_m) * 1.3, "kind": BAY_KIND, "type": "bay"})
 	# A pond glows over about its own blueprint cell (smaller cells on the
 	# dev postage stamp).
 	var pond_r := POND_RADIUS_M * map.cell_scale() * PlanetConst.GEO_SCALE

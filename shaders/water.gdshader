@@ -93,6 +93,9 @@ uniform sampler2D glint_tex : filter_nearest_mipmap, repeat_enable;
 // surface now (0-1: drops pock it).
 uniform float storm_flow = 0.0;
 uniform float rain_drops = 0.0;
+// A bioluminescent bay's stirred water (design 1 Oct §CK): HDR, so it
+// blooms (retro.bloom takes only HDR above 1).
+uniform float bay_hdr = 2.2;
 uniform sampler2D look_tex_water : filter_nearest_mipmap, repeat_enable; // §AG: a nearest tile, 2 mips, no anisotropy
 
 // Ripples (RippleSim sets these): the buffer (ripple_view.gdshader: R
@@ -200,6 +203,7 @@ void fragment() {
 	// two-tone bands made the old highlight blend cover most of the water).
 	vec3 glow = night_color * (1.0 + 0.22 * body);
 
+	float bay_drop = 0.0;
 	if (rain_drops > 0.01) {
 		// Raindrops: small pale pocks flickering on a 25 cm grid.
 		vec2 cell = floor(UV * 4.0);
@@ -209,6 +213,7 @@ void fragment() {
 		float drop = hit * (1.0 - smoothstep(0.12, 0.24, dot_r)) * 0.6;
 		ALBEDO = mix(ALBEDO, highlight_color, drop);
 		glow = mix(glow, night_highlight, drop);
+		bay_drop = drop;
 	}
 	if (ring > 0.0 || churn > 0.0) {
 		// Each ring's two bands, within the water's own blues: the light
@@ -263,6 +268,14 @@ void fragment() {
 	float site = look_site_glow(world_pos, 1.0);
 	// Lit from within at magical sites, rippling with the texture.
 	EMISSION += look_glow_emission(world_pos, site * (1.0 + 0.4 * body));
+	// A bioluminescent bay (design 1 Oct §CK): dark until stirred; every
+	// ripple ring, splash and raindrop lights blue-green and fades with it
+	// (the ripple sim), brightest at night.
+	float bay = look_bay_glow(world_pos);
+	if (bay > 0.0) {
+		float stirred = clamp(ring * 1.6 + churn * 2.0 + bay_drop * 1.5, 0.0, 1.0);
+		EMISSION += vec3(0.25, 1.0, 0.75) * bay_hdr * stirred * bay * mix(0.15, 1.0, look_night);
+	}
 	ALPHA = mix(ALPHA, 0.92, site * look_glow) * fade;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

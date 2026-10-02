@@ -24,7 +24,7 @@ static func legibility(level_word: String) -> int:
 ## Dress a ruin node with its people's signatures. `rung` is the squatting
 ## camp's ladder rung (-1: no camp): heap under 1, cleared at 1, restored
 ## at 2 and up.
-static func dress(ruin: Node3D, site: Dictionary, world: Node, chunks: ChunkManager, people: Dictionary, rung: int) -> void:
+static func dress(ruin: Node3D, site: Dictionary, world: Node, chunks: ChunkManager, people: Dictionary, rung: int, spread := 10.0) -> void:
 	var sigs: Array = (people.get("ruin", {}) as Dictionary).get("signatures", [])
 	if sigs.is_empty():
 		return
@@ -44,7 +44,7 @@ static func dress(ruin: Node3D, site: Dictionary, world: Node, chunks: ChunkMana
 		n.name = "Sig_" + str(sig.get("id", i))
 		marks.add_child(n)
 		var a := rng.randf() * TAU
-		var r := rng.randf_range(foot * 0.5, foot * 0.5 + 10.0)
+		var r := rng.randf_range(foot * 0.5, foot * 0.5 + spread)
 		n.position = Vector3(cos(a), 0, sin(a)) * r
 		n.basis = Basis.looking_at(-n.position.normalized(), Vector3.UP)
 		_signature(n, sig, level, rng, body)

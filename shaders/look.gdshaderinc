@@ -155,7 +155,32 @@ float look_site_glow(vec3 world_pos, float kind_weight) {
 		}
 		vec4 s = sites[i];
 		float k = mix(step(0.99, kinds[i]), 1.0, kind_weight);
+		// A bioluminescent bay (kind 0.2, design 1 Oct §CK) is not lit
+		// like the others: look_bay_glow, where the water is stirred.
+		k *= 1.0 - step(abs(kinds[i] - 0.2), 0.05);
 		g = max(g, smoothstep(s.w, s.w * 0.35, distance(world_pos, s.xyz)) * k);
+	}
+	return g;
+}
+
+// 0-1 inside a bioluminescent bay (kind 0.2): the water shader lights it
+// blue-green only where the ripples show it stirred.
+float look_bay_glow(vec3 world_pos) {
+	if (look_site_count <= 0) {
+		return 0.0;
+	}
+	vec4 sites[8] = vec4[8](look_site_0, look_site_1, look_site_2, look_site_3, look_site_4, look_site_5, look_site_6, look_site_7);
+	float kinds[8] = float[8](look_site_kind_a.x, look_site_kind_a.y, look_site_kind_a.z, look_site_kind_a.w,
+		look_site_kind_b.x, look_site_kind_b.y, look_site_kind_b.z, look_site_kind_b.w);
+	float g = 0.0;
+	for (int i = 0; i < 8; i++) {
+		if (i >= look_site_count) {
+			break;
+		}
+		if (abs(kinds[i] - 0.2) < 0.05) {
+			vec4 s = sites[i];
+			g = max(g, smoothstep(s.w, s.w * 0.6, distance(world_pos, s.xyz)));
+		}
 	}
 	return g;
 }

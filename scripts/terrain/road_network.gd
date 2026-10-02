@@ -349,6 +349,12 @@ func _find_nodes(centre: Vector3, reach: float) -> Array:
 			var lived := kinds.has("camp") and Ruins.inhabited(site)
 			if lived or kinds.has("ruin"):
 				out.append({"dir": site.dir, "kind": "camp" if lived else "ruin", "key": "ruin:%s" % str(c)})
+	# The living camps at nests (design 1 Oct §CK: a nest's camp is a road
+	# node, landforms.json links.roads), at their hearths.
+	if kinds.has("camp") and Nests.terrain != null and Nests.terrain == map.terrain:
+		for n in Nests.near(centre, reach):
+			if str(n.state) == "lived" and CubeSphere.surface_distance_m(n.hearth, centre) <= reach:
+				out.append({"dir": n.hearth, "kind": "camp", "key": str(n.key)})
 	if DEBUG:
 		print("[roads] find nodes at %s: opening %s" % [str(centre), "none" if opening.is_empty() else "%.0f m off" % CubeSphere.surface_distance_m(opening.get("node", Vector3.ZERO), centre)])
 	if kinds.has("camp") and not opening.is_empty():

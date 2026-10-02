@@ -401,6 +401,11 @@ static func _smooth_normals(center: Vector3, pd: PackedVector3Array, ph: PackedF
 ## local dips become pools; everywhere else it's the sea, which only shows
 ## where the ground dips below sea level.
 static func _standing_water(map: PlanetData, d: Vector3) -> Vector2:
+	# A cenote's pool or a doline's pond (design 1 Oct §CK, Nests).
+	if Nests.terrain == map.terrain:
+		var pool := Nests.pool_at(d)
+		if not is_nan(pool):
+			return Vector2(pool, 0.0)
 	var cell := map.cell_at(d)
 	var lake := _lake_level_near(map, cell)
 	if not is_nan(lake):
@@ -434,6 +439,14 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 		col = col.lerp(SAND, _sand_from(e, map.sample_w(map.coast_dist_km, w)) if e < 3.0 else 0.0)
 		if e < 0.0:
 			col = col.lerp(SEABED, smoothstep(0.0, -8.0, e))
+		# The swept earth under the sacred fig (design 1 Oct §CL).
+		var swept := Uniques.swept_at(map, dir)
+		if swept > 0.0:
+			col = col.lerp(PATH.darkened(0.1), swept * 0.85)
+		# A slot canyon's bed of sand and gravel (design 1 Oct §CK).
+		var bed := map.terrain.slot_floor(dir)
+		if bed > 0.0:
+			col = col.lerp(SAND.darkened(0.12), bed)
 		# Bare rock on steep ground (not under snow).
 		var steep := 1.0 - normals[i].dot(dir)
 		col = col.lerp(ROCK, smoothstep(0.3, 0.5, steep) * (1.0 - smoothstep(0.85, 0.95, col.b)))

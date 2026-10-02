@@ -60,24 +60,33 @@ static func get_people(id: String) -> Dictionary:
 	return _files[id]
 
 
-## The way of life a site lives (biome_map.json site_rules, in order,
-## then by_biome). `site_kind`: "cliff" for a rock-shelter camp, "ruin",
-## "opening", "" otherwise.
-static func pick(map: PlanetData, rivers: RiverNetwork, d: Vector3, site_kind := "") -> String:
+## The way of life a site lives. At a nest (design 1 Oct §CK, Nests) its
+## own people list first (landforms.json `people`, likeliest first; nest_pick),
+## then biome_map.json's site_rules in order, then by_biome. `site_kind`:
+## "cliff" for a rock-shelter camp, "ruin", "opening", "nest", "" otherwise.
+static func pick(map: PlanetData, rivers: RiverNetwork, d: Vector3, site_kind := "", nest: Dictionary = {}) -> String:
 	if map == null or map.biome.is_empty():
 		return "old_growth"
 	var cell := map.cell_at(d)
 	var biome: int = map.biome[cell]
 	var key: String = BiomeTemplates.KEYS[biome] if biome >= 0 and biome < BiomeTemplates.KEYS.size() else ""
 	var md := map_data()
+	if not nest.is_empty():
+		var at_nest := nest_pick(map, cell, key, nest)
+		if at_nest != "":
+			return at_nest
 	for rule in md.get("site_rules", []):
 		var id := str(rule.get("id", ""))
 		var ok := false
 		match id:
 			"rock_shelter":
-				ok = site_kind == "cliff" or key == "CAVES"
+				# An overhang, a cliff foot with a recess or a cave mouth at
+				# the site (§CK: the nests that give a roof).
+				ok = site_kind == "cliff" or key == "CAVES" or _has_nest(d, nest, ["cave_mouth", "grotto", "escarpment"], 40.0, true)
 			"karst":
-				ok = int(map.rock[cell]) == PlanetData.Rock.LIMESTONE_KARST and _unit(d, "karst") < 0.5
+				# Karst rock and a cave or sinkhole within 200 m (§CK: was a
+				# coin flip on karst rock, with no cave or sinkhole there).
+				ok = int(map.rock[cell]) == PlanetData.Rock.LIMESTONE_KARST and _has_nest(d, nest, ["cave_mouth", "grotto", "cenote"], 200.0, false)
 			"canopy":
 				ok = key in ["TEMPERATE_RAINFOREST", "TROPICAL_RAINFOREST", "JUNGLE", "CLOUD_FOREST", "TEMPERATE_DECIDUOUS"] and _unit(d, "canopy") < 1.0 / 6.0
 			"mangrove":
@@ -102,6 +111,77 @@ static func pick(map: PlanetData, rivers: RiverNetwork, d: Vector3, site_kind :=
 			return str(by)
 		return people
 	return "old_growth"
+
+
+## Who lives at a nest (§CK): a seeded draw over the nest's people list,
+## likeliest first (weight 1, 1/2, 1/3 ...), each weighed by the place:
+## twice for the life biome_map gives this biome, half again for a life
+## dressed for it, a quarter for one dressed for neither; never karst folk
+## off karst, never shelter folk without a roof. So a karst cave is karst
+## folk's or shelter folk's, an escarpment on the steppe is the steppe
+## folk's, and a cliff isn't always shelter folk's (§CK: Mesa Verde's
+## alcoves were farmers' homes). "" when nobody on the list fits.
+static func nest_pick(map: PlanetData, cell: int, key: String, nest: Dictionary) -> String:
+	var list: Array = Nests.entry(str(nest.get("kind", ""))).get("people", [])
+	if list.is_empty():
+		return ""
+	var home = (map_data().get("by_biome", {}) as Dictionary).get(key, null)
+	var gives: Array = nest.get("gives", [])
+	var weights := PackedFloat32Array()
+	var total := 0.0
+	for i in list.size():
+		var id := str(list[i])
+		var w := 1.0 / float(i + 1)
+		if id == "karst" and int(map.rock[cell]) != PlanetData.Rock.LIMESTONE_KARST:
+			w = 0.0
+		if id == "rock_shelter" and not gives.has("roof"):
+			w = 0.0
+		var dressed := not dressing(get_people(id), key).is_empty()
+		if home != null and str(home) == id:
+			w *= 2.0 * (1.5 if dressed else 1.0)
+		elif dressed:
+			w *= 1.5
+		else:
+			w *= 0.25
+		weights.append(w)
+		total += w
+	if total <= 0.0:
+		return ""
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([int(nest.get("seed", 0)), "people"])
+	var pick_w := rng.randf() * total
+	var last := ""
+	for i in list.size():
+		if weights[i] <= 0.0:
+			continue
+		last = str(list[i])
+		pick_w -= weights[i]
+		if pick_w <= 0.0:
+			return last
+	return last
+
+
+## A §BQ ruin signature by id from any people file ({} if none).
+static func signature(id: String) -> Dictionary:
+	for pid in ids():
+		for sig in (get_people(str(pid)).get("ruin", {}) as Dictionary).get("signatures", []):
+			if str(sig.get("id", "")) == id:
+				return sig
+	return {}
+
+
+## Is one of these nest kinds at the site (§CK)? For a nest's own pick,
+## the nest itself (never a lookup: Nests is still settling it); else
+## Nests within `within_m`. `roof`: only nests that give a roof.
+static func _has_nest(d: Vector3, nest: Dictionary, kinds: Array, within_m: float, roof: bool) -> bool:
+	if not nest.is_empty():
+		return kinds.has(str(nest.get("kind", ""))) and (not roof or (nest.get("gives", []) as Array).has("roof"))
+	if Nests.terrain == null:
+		return false
+	for n in Nests.near(d, within_m, kinds):
+		if CubeSphere.surface_distance_m(n.dir, d) <= within_m + 20.0 and (not roof or (n.gives as Array).has("roof")):
+			return true
+	return false
 
 
 static func _unit(d: Vector3, salt: String) -> float:

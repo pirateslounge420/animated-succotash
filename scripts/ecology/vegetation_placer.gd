@@ -245,6 +245,7 @@ static func compute_base(key: Vector3i, map: PlanetData, data: Dictionary) -> Di
 	_place_tier(ctx, T.EMERGENT, plants, hosts)
 	_place_tier(ctx, T.CANOPY, plants, hosts)
 	_place_road_trees(ctx, plants, hosts)
+	_place_sacred_fig(ctx, plants, hosts)
 	# Each tree's light from the crowns over it: its leaf size.
 	_light_pass(plants, _Light.new(data.center, hosts), true)
 	return {"plants": plants, "hosts": hosts}
@@ -257,6 +258,7 @@ static func compute_detail(key: Vector3i, map: PlanetData, data: Dictionary, hos
 	var unused: Array = []
 	_place_tier(ctx, T.SHRUB, plants, unused)
 	_place_tier(ctx, T.GROUND, plants, unused)
+	_place_nest_plants(ctx, plants)
 	_place_epiphytes(ctx, plants, hosts)
 	_place_knees(ctx, plants, hosts)
 	# The stand's own young on the floor (after the rest, so they don't
@@ -265,6 +267,73 @@ static func compute_detail(key: Vector3i, map: PlanetData, data: Dictionary, hos
 	_place_young(ctx, plants, light)
 	_light_pass(plants, light, false)
 	return plants
+
+
+## The sacred fig (design 1 Oct §CL, Uniques): one tree in the world, past
+## the top of its species' band, in the middle of its own clearing.
+static func _place_sacred_fig(ctx: _Context, out: Dictionary, hosts: Array) -> void:
+	var fig := Uniques.fig_tree(ctx.map, ctx.key)
+	if fig.is_empty():
+		return
+	var d: Vector3 = fig[1]
+	var site := ctx.site_at(d)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([d, "sacred_fig"])
+	var h: float = fig[2]
+	_emit(out, int(fig[0]), site.dir, PlanetConst.RADIUS_M + site.h, rng, h, 0.02, 0.2)
+	hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, h, int(fig[0]), site.depth, 1.0, PlantGrowth.Stage.MATURE])
+
+
+## A nest's own plants (design 1 Oct §CM, landforms.json plants.add): at
+## its wet spots (Nests.plant_spots: a grotto's mouth and drip pool, a
+## waterfall's spray, a slot canyon's seep) the listed species grow even
+## where the biome's own list lacks them, each only inside its own
+## temperature and soil bands, the spot's moisture the seep's or spray's.
+## Its own draws (the nest's seed), so nothing else here moves.
+static func _place_nest_plants(ctx: _Context, out: Dictionary) -> void:
+	if Nests.terrain == null or Nests.terrain != ctx.map.terrain:
+		return
+	for n in Nests.near(ctx.data.center, ctx.chunk_m * 0.75):
+		var adds: Array = (Nests.entry(str(n.kind)).get("plants", {}) as Dictionary).get("add", [])
+		if adds.is_empty():
+			continue
+		var species: Array[PlantSpecies] = []
+		for b in adds:
+			var sp := Nests.species_of(str(b))
+			if sp != null:
+				species.append(sp)
+		if species.is_empty():
+			continue
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([int(n.seed), "nest_plants", ctx.key])
+		for spot in Nests.plant_spots(n):
+			var c: Vector3 = spot[0]
+			for k in int(spot[2]):
+				var d := CreatureSpawner._offset(c, rng.randf() * TAU, sqrt(rng.randf()) * float(spot[1]))
+				if TerrainChunk.key_at(d) != ctx.key:
+					continue
+				var site := ctx.site_at(d)
+				if site.depth > -WATERLINE_M:
+					continue
+				var moist := maxf(site.m, float(spot[3]))
+				var total := 0.0
+				var ws := PackedFloat32Array()
+				for sp in species:
+					var w := sp.suitability(site.t, moist, site.h, site.rock)
+					ws.append(w)
+					total += w
+				if total <= 0.0:
+					continue
+				var pick := rng.randf() * total
+				var chosen := 0
+				for i in species.size():
+					pick -= ws[i]
+					if pick <= 0.0:
+						chosen = i
+						break
+				var sp: PlantSpecies = species[chosen]
+				var height := rng.randf_range(sp.height_m.x, sp.height_m.y) * float(SIZE_SCALE[int(sp.tier)])
+				_emit(out, SpeciesDB.index_of(sp), site.dir, PlanetConst.RADIUS_M + site.h, rng, height, 0.09, smoothstep(0.45, 0.85, moist))
 
 
 static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array) -> void:
@@ -1084,6 +1153,11 @@ class _Context:
 			_clearings.append([camp, Territories.CLEARING_M])
 		_clearings.append_array(Ruins.clearings_near(map, data.center, chunk_m * 0.75))
 		_clearings.append_array(Encampment.clearings_near(data.center, chunk_m * 0.75))
+		# The nests' floors, shafts and hearths (design 1 Oct §CK), and the
+		# sacred fig's ring (§CL).
+		if Nests.terrain != null and Nests.terrain == map.terrain:
+			_clearings.append_array(Nests.clearings_near(data.center, chunk_m * 0.75))
+			_clearings.append_array(Uniques.clearings_near(map, data.center, chunk_m * 0.75))
 		world = RealmMap.world_at(data.center)
 		if RoadNetwork.instance != null:
 			var reach := chunk_m * 0.75 + 20.0

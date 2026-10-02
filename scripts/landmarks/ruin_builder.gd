@@ -248,27 +248,30 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	arrays[Mesh.ARRAY_NORMAL] = data.n
 	arrays[Mesh.ARRAY_COLOR] = data.c
 	arrays[Mesh.ARRAY_TEX_UV] = data.m
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.mesh = mesh
-	mi.material_override = material()
-	mi.visibility_range_end = LOD_M
-	mi.visibility_range_end_margin = LOD_MARGIN_M
-	root.add_child(mi)
-	arrays[Mesh.ARRAY_VERTEX] = data.lv
-	arrays[Mesh.ARRAY_NORMAL] = data.ln
-	arrays[Mesh.ARRAY_COLOR] = data.lc
-	arrays[Mesh.ARRAY_TEX_UV] = data.lm
-	var far_mesh := ArrayMesh.new()
-	far_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var far := MeshInstance3D.new()
-	far.name = "FarLOD"
-	far.mesh = far_mesh
-	far.material_override = material()
-	far.visibility_range_begin = LOD_M
-	far.visibility_range_begin_margin = LOD_MARGIN_M
-	root.add_child(far)
+	# (A nest with nothing to build, a waterfall or a bay, has no mesh.)
+	if not (data.v as PackedVector3Array).is_empty():
+		var mesh := ArrayMesh.new()
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var mi := MeshInstance3D.new()
+		mi.mesh = mesh
+		mi.material_override = material()
+		mi.visibility_range_end = LOD_M
+		mi.visibility_range_end_margin = LOD_MARGIN_M
+		root.add_child(mi)
+	if not (data.lv as PackedVector3Array).is_empty():
+		arrays[Mesh.ARRAY_VERTEX] = data.lv
+		arrays[Mesh.ARRAY_NORMAL] = data.ln
+		arrays[Mesh.ARRAY_COLOR] = data.lc
+		arrays[Mesh.ARRAY_TEX_UV] = data.lm
+		var far_mesh := ArrayMesh.new()
+		far_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var far := MeshInstance3D.new()
+		far.name = "FarLOD"
+		far.mesh = far_mesh
+		far.material_override = material()
+		far.visibility_range_begin = LOD_M
+		far.visibility_range_begin_margin = LOD_MARGIN_M
+		root.add_child(far)
 	for l in data.get("lights", []):
 		var o := OmniLight3D.new()
 		o.position = l[0]

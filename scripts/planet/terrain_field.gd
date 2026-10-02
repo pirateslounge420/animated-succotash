@@ -25,8 +25,13 @@ extends RefCounted
 ##   escarpments- in some inland regions, long winding cliff lines where
 ##                the land steps up ESCARP_M over ~10 m: cliff faces,
 ##                plateaus, rock shelters at their feet (Camps).
-##   ravines    - in some hill country, narrow slot canyons RAVINE_M deep
-##                with steep walls and a flat floor, meandering for km.
+##   ravines    - in some hill country, narrow cuts RAVINE_M deep with
+##                steep walls and a flat floor, meandering for km. Where
+##                one crosses dry sandstone it pinches to a slot canyon a
+##                few metres wide (design 1 Oct §CK, Nests.slot_at).
+##   nests      - the cenote and doline stamps (design 1 Oct §CK,
+##                Nests.stamp): a round shaft or bowl cut into karst, added
+##                with `detail` unless `stamps` is false.
 ##                Escarpments and ravines are walking-scale detail too (a
 ##                1 km blueprint cell can't hold them): rivers cut through
 ##                them (TerrainChunk forces their beds), as gorges.
@@ -148,8 +153,10 @@ func landness(dir: Vector3) -> float:
 
 
 ## `roll` false leaves out the walking-scale roll layer (Ruins uses that to
-## pick sites, so ruins don't move with 2 m of noise).
-func elevation(dir: Vector3, detail := false, roll := true) -> float:
+## pick sites, so ruins don't move with 2 m of noise). `stamps` false
+## leaves out the nests' stamps (design 1 Oct §CK): the sites passes (Ruins,
+## Nests) read the ground as it was before any was cut.
+func elevation(dir: Vector3, detail := false, roll := true, stamps := true) -> float:
 	var p := dir * PlanetConst.GEO_RADIUS_M
 	var x := _continent.get_noise_3dv(p) - sea_threshold
 	var e: float
@@ -176,14 +183,16 @@ func elevation(dir: Vector3, detail := false, roll := true) -> float:
 		if roll:
 			e += _roll.get_noise_3dv(pw) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
 		if x > 0.06:
-			e += _cliffs(p, pw, x, e)
+			e += _cliffs(dir, p, pw, x, e)
+		if stamps and Nests.terrain == self:
+			e = Nests.stamp(dir, e)
 	return e
 
 
 ## Escarpments and ravines (see the class notes): the height to add at
 ## `p` (geographic point on the sphere) / `pw` (walking-scale point), `x`
 ## inland-ness, `e` so far.
-func _cliffs(p: Vector3, pw: Vector3, x: float, e: float) -> float:
+func _cliffs(dir: Vector3, p: Vector3, pw: Vector3, x: float, e: float) -> float:
 	var inland := smoothstep(0.06, 0.2, x)
 	var add := 0.0
 	var em := smoothstep(0.1, 0.35, _escarp_mask.get_noise_3dv(p)) * inland
@@ -192,9 +201,62 @@ func _cliffs(p: Vector3, pw: Vector3, x: float, e: float) -> float:
 	var rm := smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e)
 	if rm > 0.0:
 		var n := absf(_ravine.get_noise_3dv(pw))
-		if n < 0.012:
-			add -= minf(RAVINE_M, e - 3.0) * rm * smoothstep(0.0105, 0.0065, n)
+		if n < RAVINE_RIM_N:
+			# Through dry sandstone the cut pinches to a slot (design 1 Oct
+			# §CK slot_canyon): the floor a few metres wide, the walls near
+			# sheer. Elsewhere the same profile as before.
+			var slot := Nests.slot_at(dir) if Nests.terrain == self else 0.0
+			var rim_n := lerpf(RAVINE_RIM_N, SLOT_RIM_N, slot)
+			if n < rim_n:
+				add -= minf(RAVINE_M, e - 3.0) * rm * smoothstep(rim_n, lerpf(RAVINE_FLOOR_N, SLOT_FLOOR_N, slot), n)
 	return add
+
+
+## The ravine layer's profile in its noise (|n|): full depth inside the
+## floor value, the rim at the rim value; a slot canyon's narrower.
+const RAVINE_RIM_N := 0.0105
+const RAVINE_FLOOR_N := 0.0065
+const SLOT_RIM_N := 0.0030
+const SLOT_FLOOR_N := 0.0010
+
+
+## 0-1 a slot canyon's sandy bed at `dir` (design 1 Oct §CK slot_canyon:
+## "a floor of sand and gravel"), for the ground's colour; wide enough to
+## show on the 8 m colour grid (the walls go to rock on their slope).
+func slot_floor(dir: Vector3) -> float:
+	if Nests.terrain != self:
+		return 0.0
+	var n := absf(line_noise(dir, "ravine"))
+	if n >= SLOT_RIM_N * 1.5:
+		return 0.0
+	var s := Nests.slot_at(dir)
+	if s <= 0.0:
+		return 0.0
+	return s * smoothstep(SLOT_RIM_N * 1.5, SLOT_FLOOR_N * 2.0, n) * smoothstep(0.3, 0.6, line_mask(dir, "ravine"))
+
+
+## The walking-scale line noise at `dir` for the sites pass (Nests): the
+## escarpment's ("escarp": its face where it crosses 0, the plateau on the
+## + side) or the ravine's ("ravine": its floor's middle where it crosses
+## 0, signed).
+func line_noise(dir: Vector3, which: String) -> float:
+	var pw := dir * PlanetConst.RADIUS_M
+	return _escarp.get_noise_3dv(pw) if which == "escarp" else _ravine.get_noise_3dv(pw)
+
+
+## How much of the escarpment's height (0-1, times ESCARP_M) or of the
+## ravine's depth (times RAVINE_M) stands at `dir`: the regional masks
+## _cliffs() applies, without the line itself.
+func line_mask(dir: Vector3, which: String) -> float:
+	var p := dir * PlanetConst.GEO_RADIUS_M
+	var x := _continent.get_noise_3dv(p) - sea_threshold
+	if x <= 0.06:
+		return 0.0
+	var inland := smoothstep(0.06, 0.2, x)
+	if which == "escarp":
+		return smoothstep(0.1, 0.35, _escarp_mask.get_noise_3dv(p)) * inland
+	var e := elevation(dir, false)
+	return smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e) * clampf((e - 3.0) / RAVINE_M, 0.0, 1.0)
 
 
 func _hotspot_height(dir: Vector3) -> float:

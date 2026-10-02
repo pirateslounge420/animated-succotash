@@ -201,6 +201,10 @@ var _wind := Vector3.ZERO
 var is_player := true
 ## Sitting (camp folk): hips on a seat, thighs forward, shins down.
 var seated := false
+## A pose of its own (design 1 Oct §CL): "meditate", seated cross-legged
+## on the ground, back straight, head a little bowed, hands toward the
+## lap, still but for its breath. "" otherwise.
+var pose := ""
 ## Stride length as a share of the player's: bigger figures take longer,
 ## slower strides, smaller ones quicker, shorter ones (set to the scale).
 var stride_scale := 1.0
@@ -484,6 +488,23 @@ func _pose(delta: float) -> void:
 	_plant_lean = move_toward(_plant_lean, 0.0, delta * 0.35)
 	_plant_hem = move_toward(_plant_hem, 0.0, delta * 0.7)
 	_hips.rotation = Vector3(0.0, _plant_hem * 0.25, _turn_lean + _plant_lean)
+	if pose == "meditate":
+		# Cross-legged on the ground: thighs out to the sides, shins folded
+		# under; the only movement is the breath, a slow rise of the chest.
+		var breath := sin(_time * TAU / 5.5)
+		_hips.position = Vector3(0.0, 0.14, 0.0)
+		_torso.rotation = Vector3(0.02 + 0.015 * breath, 0.0, 0.0)
+		_torso.scale = Vector3(1.0 + 0.008 * breath, 1.0 + 0.012 * breath, 1.0 + 0.01 * breath)
+		head.rotation = Vector3(0.22, 0.0, 0.0)
+		for s in 2:
+			var sx := -1.0 if s == 0 else 1.0
+			_legs[s].rotation = Vector3(1.45, 0.0, 1.05 * sx)
+			_knees[s].rotation = Vector3(-2.7, 0.0, 0.0)
+			_ankles[s].rotation = Vector3(0.0, 0.0, 0.0)
+		_pose_arms_rest(0.0)
+		for s in 2:
+			_elbows[s].rotation = Vector3(-1.25, 0.0, 0.35 * (1.0 if s == 0 else -1.0))
+		return
 	if seated:
 		# On a seat at knee height: thighs forward, shins down, a little
 		# hunched toward the fire.

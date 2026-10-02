@@ -95,6 +95,9 @@ static func pyramid_style(map: PlanetData, p: Vector3, land: String) -> String:
 
 ## A ruin's name (the glowing site's label).
 static func site_name(site: Dictionary) -> String:
+	if site.kind is String:
+		# A nest (design 1 Oct §CK) built with the ruins' machinery.
+		return Nests.name_of(site)
 	match int(site.kind):
 		Kind.PYRAMID:
 			return PYRAMID_NAMES[site.style]
@@ -154,7 +157,7 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 	var best_score := -INF
 	for i in 18:
 		var p := CreatureSpawner._offset(center, rng.randf() * TAU, sqrt(rng.randf()) * CELL_M * 0.35)
-		var e := map.terrain.elevation(p, true, false)
+		var e := map.terrain.elevation(p, true, false, false)
 		var cell := map.cell_at(p)
 		if e < (1.0 if land == "marsh" else 6.0) or map.water[cell] != PlanetData.Water.NONE:
 			continue
@@ -163,10 +166,10 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		# Prominence: height above the ground 200 m around.
 		var ring := 0.0
 		for k in 6:
-			ring += map.terrain.elevation(CreatureSpawner._offset(p, k * TAU / 6.0, 200.0), true, false)
+			ring += map.terrain.elevation(CreatureSpawner._offset(p, k * TAU / 6.0, 200.0), true, false, false)
 		var prominence := e - ring / 6.0
 		# Too steep to build on?
-		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 15.0), true, false) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 15.0), true, false)) / 30.0
+		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 15.0), true, false, false) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 15.0), true, false, false)) / 30.0
 		if slope > (0.1 if style != "" else (0.15 if land != "" or tomb != "" else 0.4)):
 			continue
 		# Stone ruins on the most prominent rise; the rest on the flattest.

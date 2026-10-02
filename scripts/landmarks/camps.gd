@@ -10,7 +10,11 @@ extends Node
 ##   * in the wild: flat, dry ground beside a river or lake, one in a few
 ##     grid cells;
 ##   * in rock shelters: at the foot of a cliff (TerrainField escarpments),
-##     under a great slab of rock jutting out overhead.
+##     under a great slab of rock jutting out overhead;
+##   * at nests (design 1 Oct §CK, Nests): the cave mouths, grottos,
+##     cenote rims, waterfalls, ravines, escarpments and glowing bays whose
+##     camp loop holds a living camp, at the nest's hearth spot, the nest's
+##     own people (Peoples.pick reads the nest first).
 ## Who sits there depends on the place (Ruins.camp_folk(), country()):
 ## tribal folk in most land, fur-clad northerners in snow, hooded marsh
 ## folk, small folk squatting round the fire with their lanterns (some rock
@@ -209,6 +213,9 @@ func fire_at(d: Vector3, within_m := 30.0) -> bool:
 	for r in Ruins.near(map, d, 400.0):
 		if Ruins.inhabited(r) and CubeSphere.surface_distance_m(ruin_fire_dir(map, r), d) <= within_m:
 			return true
+	for n in Nests.near(d, within_m + 60.0):
+		if str(n.state) == "lived" and CubeSphere.surface_distance_m(n.hearth, d) <= within_m:
+			return true
 	for c in CreatureSpawner._cells_around(d, within_m, WILD_CELL_M):
 		if not _wild.has(c):
 			_wild[c] = wild_site(map, c)
@@ -341,6 +348,15 @@ func _refresh() -> void:
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
 		if spot.distance_to(pp) < BUILD_M:
 			want["ruin:%s" % str(c)] = [spot, Ruins.camp_folk(site), site.seed]
+	# Living camps at nests (design 1 Oct §CK camp_loop).
+	for n in Nests.near(pd, BUILD_M):
+		if str(n.state) != "lived":
+			continue
+		var hd: Vector3 = n.hearth
+		var nspot: Vector3 = world.to_scene(hd, PlanetConst.RADIUS_M + chunks.ground_height(hd))
+		if nspot.distance_to(pp) < BUILD_M:
+			var nland := Ruins.country(map, hd)
+			want[str(n.key)] = [nspot, "north" if nland == "snow" else ("marsh" if nland == "marsh" else "tribal"), int(n.seed)]
 	var only_ruins := bool(RULES.get("only_at_ruins", true))
 	# Wild camps near water.
 	for c in CreatureSpawner._cells_around(pd, BUILD_M, WILD_CELL_M) if not only_ruins else []:
@@ -404,7 +420,10 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	var d: Vector3 = world.dir_of(at)
 	# The people (§BO): the way of life the site lives, dressed by the
 	# biome: palette, shelter, props, the folk kind's build.
-	var people_id := Peoples.pick(map, chunks.rivers, d, "cliff" if key.begins_with("cliff") else "ruin")
+	var nest := Nests.by_key(key)
+	var people_id := str(nest.get("people", "")) if not nest.is_empty() else Peoples.pick(map, chunks.rivers, d, "cliff" if key.begins_with("cliff") else "ruin")
+	if people_id == "":
+		people_id = Peoples.pick(map, chunks.rivers, d, "nest", nest)
 	var people := Peoples.get_people(people_id)
 	var biome_key := FireStore.biome_key(world, d)
 	_people_pal = Peoples.palette(people, biome_key)
@@ -685,7 +704,10 @@ func _overhang(camp: Node3D, cs: Dictionary) -> void:
 	slab.mesh = RuinBuilder.rock_mesh(slab_size, cs.seed, col)
 	slab.material_override = RuinBuilder.material()
 	camp.add_child(slab)
-	slab.global_transform = Transform3D(Basis(along, up, -toward).rotated(along, 0.12), at + toward * 3.2 + up * (h * 0.8))
+	# The slab spans 1.5 m outward of the fire to 4.5 m in: the fire sits a
+	# pace and a half in from the drip line, dry in rain (design 1 Oct §CK;
+	# it sat at the drip line).
+	slab.global_transform = Transform3D(Basis(along, up, -toward).rotated(along, 0.12), at + toward * 1.5 + up * (h * 0.8))
 	PropCollision.hull(PropCollision.body(slab), RuinBuilder.rock_hull(slab_size, cs.seed))
 	for s in [-1.0, 1.0]:
 		var rock := MeshInstance3D.new()
@@ -887,7 +909,8 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 			CampProps.refresh_food_store(fs, float(st.food))
 	camp.set_meta("store_t", t)
 	# The loop's walker.
-	var walker: Node3D = camp.get_meta("walker", null)
+	# (get_meta with a null default still errors when the key is missing.)
+	var walker = camp.get_meta("walker") if camp.has_meta("walker") else null
 	if walker != null and is_instance_valid(walker):
 		_walk(camp, walker, delta)
 		return
@@ -963,7 +986,8 @@ func _walk(camp: Node3D, holder: Node3D, delta: float) -> void:
 			# Home: what they carried is on the store (the sim did the
 			# accounting); the figure is done.
 			holder.queue_free()
-			camp.remove_meta("walker")
+			if camp.has_meta("walker"):
+				camp.remove_meta("walker")
 
 
 ## An empty camp (§BL abandon): the fire as it is (embers or out), the

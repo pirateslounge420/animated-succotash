@@ -17,6 +17,7 @@ extends SceneTree
 ## with its files, and PASS/FAIL. A species standing in a biome that does
 ## not list it FAILS the site (unlisted_species_allowed). The opening
 ## camp's first frame must be afternoon (the sun above the dusk band).
+## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK).
 ## SITES=opening_camp,random_biome keeps a subset; QUICK=1 one facing and
 ## the first hour (a smoke run). DEV_PIN=0 boots a fresh random world (no
 ## SEED; its frames go under the seed it rolled) and leaves no save:
@@ -105,10 +106,16 @@ func _run() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([sd, "walkabout"])
 	var random_i := 0
-	for kind in W.get("sites_per_seed", ["opening_camp", "first_road_1km", "random_biome", "random_biome", "random_biome"]):
-		if not only.is_empty() and not only.has(kind):
-			continue
+	var kinds: Array = W.get("sites_per_seed", ["opening_camp", "first_road_1km", "random_biome", "random_biome", "random_biome"])
+	if not only.is_empty():
+		# SITES picks from these and from "nests" (design 1 Oct §CK).
+		kinds = kinds.filter(func(k): return only.has(k))
+		if only.has("nests"):
+			kinds.append("nests")
+	for kind in kinds:
 		match str(kind):
+			"nests":
+				sites.append_array(_nest_sites(camp_d))
 			"opening_camp":
 				sites.append({"name": "opening_camp", "dir": camp_d, "spawn_hour": true})
 			"first_road_1km":
@@ -222,6 +229,50 @@ func _down_the_road(d: Vector3, m: float) -> Dictionary:
 	return {"dir": p, "note": note}
 
 
+## The nests near the opening camp (design 1 Oct §CK): the nearest of up
+## to four kinds with something to see (a cave mouth, a grotto, a cenote, an
+## escarpment overhang, a waterfall, a slot canyon, a glowing bay), within
+## 150 km, each seen from where you'd stand: out before a cliff's shelter
+## looking in, on a cenote's rim, at a fall's pool tail, in a slot's bed
+## looking along it.
+func _nest_sites(camp: Vector3) -> Array:
+	var out: Array = []
+	for kind in ["cave_mouth", "grotto", "cenote", "escarpment", "waterfall", "slot_canyon", "bioluminescent_bay"]:
+		if out.size() >= 4:
+			break
+		var best := {}
+		var bd := INF
+		for r in [40000.0, 150000.0]:
+			for n in Nests.near(camp, r, [kind]):
+				if kind == "cenote" and str(n.variant) != "":
+					continue
+				var dd := CubeSphere.surface_distance_m(n.dir, camp)
+				if dd < bd:
+					bd = dd
+					best = n
+			if not best.is_empty():
+				break
+		if best.is_empty():
+			lines.append("-- nest %s: none within 150 km of the camp" % kind)
+			continue
+		var f: Vector3 = best.dir
+		var stand := f
+		var look := f
+		match kind:
+			"cave_mouth", "grotto", "escarpment":
+				stand = CreatureSpawner._offset(f, float(best.toward) + PI, float(best.get("passage_m", best.get("overhang_m", 6.0))) + 14.0)
+			"cenote", "waterfall", "bioluminescent_bay":
+				if (best.hearth as Vector3) != Vector3.ZERO:
+					stand = best.hearth
+				else:
+					stand = CreatureSpawner._offset(f, float(best.facing) + PI, 35.0)
+			"slot_canyon":
+				look = CreatureSpawner._offset(f, float(best.facing) + PI * 0.5, 30.0)
+		out.append({"name": "nest_%s" % kind, "dir": stand, "look": look,
+			"note": "%s %.1f km from the camp, %s%s" % [Nests.name_of(best).to_lower(), bd / 1000.0, best.state, (", " + Peoples.name_of(Peoples.get_people(str(best.people))).to_lower()) if best.has("people") else ""]})
+	return out
+
+
 ## Dry land: a cell with no water on it and ground above the sea.
 func _dry(d: Vector3) -> bool:
 	var map: PlanetData = world.planet
@@ -239,7 +290,7 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	world.rebase(off)
 	player.global_position -= off
 	main.chunks.load_blocking(d)
-	player.spawn_at(d, CreatureSpawner._offset(d, 0.0, 30.0))
+	player.spawn_at(d, site.get("look", CreatureSpawner._offset(d, 0.0, 30.0)))
 	await _frames(20)
 	# Wait for the chunk's near plants (the leaf cards, not the far
 	# pictures), as play has them within seconds on a GPU.

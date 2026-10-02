@@ -81,6 +81,10 @@ static func rivers_for(map: PlanetData) -> RiverNetwork:
 	if not _rivers_cache.has(id):
 		_rivers_cache.clear()
 		_rivers_cache[id] = RiverNetwork.new(map)
+		# The nests (design 1 Oct §CK) read the planet and its rivers.
+		Nests.setup(map, _rivers_cache[id])
+		# The one-of-a-kind places (§CL): found once, before any chunk.
+		Uniques.sacred_fig(map)
 	return _rivers_cache[id]
 
 

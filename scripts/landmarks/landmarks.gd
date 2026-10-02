@@ -6,6 +6,10 @@ extends Node
 ##   terrain chunks, so their silhouettes rise out of the fog bands ahead
 ##   and draw the wanderer toward them. Geometry is computed on worker
 ##   threads and dropped again beyond DROP_M.
+## * Nests (design 1 Oct §CK, Nests, NestBuilder): the cave mouths,
+##   grottos, cenote lips, overhangs, cairn lanes and springs, built within
+##   NEST_BUILD_M the same way, with an old camp's remains (§BQ signatures,
+##   RuinMarks) laid at the hearth of a nest that holds them.
 ## * The bioluminescent night palette (MagicSites): the nearest glowing
 ##   sites go to every world shader (Look: look_sites), which light up
 ##   water, moss and plant tips there after dark; a small pool of teal and
@@ -34,7 +38,15 @@ var magic := 0.0
 var nearby := ""
 
 var _root: Node3D
+## Nests are built nearer than ruins: their pieces are small.
+const NEST_BUILD_M := 900.0
+const NEST_DROP_M := 1100.0
 var _ruin_cells := {} # Vector3i -> site dict or {}
+var _nests := {} # nest key -> Node3D
+## The sacred fig's figure and stones (design 1 Oct §CL), built near it.
+var _fig_node: Node3D = null
+const FIG_BUILD_M := 600.0
+var _nest_sites := {} # nest key -> nest dict
 var _ruins := {} # Vector3i -> Node3D
 var _pending := {} # Vector3i -> task id
 var _done: Array = []
@@ -78,6 +90,8 @@ func update_landmarks(delta: float, daylight: float) -> void:
 	if _timer <= 0.0:
 		_timer = 0.5
 		_refresh_ruins(pd)
+		_refresh_nests(pd)
+		_refresh_fig(pd)
 		_refresh_sites(pd)
 	_attach_ruins()
 	_build_ruin_collision(pd)
@@ -122,11 +136,76 @@ func _refresh_ruins(pd: Vector3) -> void:
 			_ruins.erase(c)
 
 
-func _compute(c: Vector3i, site: Dictionary) -> void:
-	var data := RuinBuilder.compute(map, site)
+func _compute(c, site: Dictionary) -> void:
+	var data := NestBuilder.compute_nest(map, site) if c is String else RuinBuilder.compute(map, site)
 	_mutex.lock()
 	_done.append([c, data])
 	_mutex.unlock()
+
+
+# --- The sacred fig (§CL) ----------------------------------------------------
+
+func _refresh_fig(pd: Vector3) -> void:
+	var f := Uniques.sacred_fig(map)
+	if f.is_empty():
+		return
+	var dist := CubeSphere.surface_distance_m(f.dir, pd)
+	if _fig_node == null and dist < FIG_BUILD_M:
+		_fig_node = Uniques.build(world, chunks, f)
+		_root.add_child(_fig_node)
+		# Placed again after entering the tree (the floating origin).
+		var fd: Vector3 = f.figure
+		_fig_node.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(fd), fd), world.to_scene(fd, PlanetConst.RADIUS_M + chunks.ground_height(fd)))
+	elif _fig_node != null and dist > FIG_BUILD_M + 200.0:
+		NodeRelease.free_later(_fig_node)
+		_fig_node = null
+	if dist < 25.0:
+		GameLog.add_once("sacred_fig", str(Uniques.fig_entry().get("log", "Someone sits beneath the old fig, very still.")), "found")
+
+
+## The sacred fig's node (the figure and stones) if built.
+func fig_node() -> Node3D:
+	return _fig_node
+
+
+# --- Nests (§CK) -------------------------------------------------------------
+
+func _refresh_nests(pd: Vector3) -> void:
+	for n in Nests.near(pd, NEST_BUILD_M):
+		var key: String = n.key
+		_nest_sites[key] = n
+		if _nests.has(key) or _pending.has(key):
+			continue
+		if CubeSphere.surface_distance_m(n.dir, pd) < NEST_BUILD_M:
+			_pending[key] = WorkerThreadPool.add_task(_compute.bind(key, n))
+	for key in _nests.keys():
+		var n: Dictionary = _nest_sites[key]
+		if CubeSphere.surface_distance_m(n.dir, pd) > NEST_DROP_M:
+			NodeRelease.free_later(_nests[key])
+			_nests.erase(key)
+
+
+## A nest's node attached: its remains, if it holds an old camp's (the
+## §BQ signatures of the people who lived there, laid at the hearth spot),
+## and vines over its rock (§CE).
+func _attach_nest(key: String, data: Dictionary) -> void:
+	var node := NestBuilder.make_nest(data, world)
+	_root.add_child(node)
+	node.global_transform = RuinBuilder.placement(data, world)
+	_nests[key] = node
+	var nest: Dictionary = data.nest
+	if str(nest.get("state", "")) == "remains":
+		var sigs := Nests.remains_signatures(nest)
+		if not sigs.is_empty():
+			var at := {"dir": nest.hearth, "seed": nest.seed, "footprint_m": 4.0}
+			# Laid round the hearth spot, within a few paces of it.
+			RuinMarks.dress(node, at, world, chunks, {"ruin": {"signatures": sigs}}, -1, 3.5)
+	_dress_vines(node, Vector3i.ZERO, data, key)
+
+
+## The nests built right now: key -> node (meta "nest").
+func built_nests() -> Dictionary:
+	return _nests
 
 
 func _attach_ruins() -> void:
@@ -134,6 +213,14 @@ func _attach_ruins() -> void:
 	var item = _done.pop_front() if not _done.is_empty() else null
 	_mutex.unlock()
 	if item == null:
+		return
+	if item[0] is String:
+		var nk: String = item[0]
+		if _pending.has(nk):
+			WorkerThreadPool.wait_for_task_completion(_pending[nk])
+			_pending.erase(nk)
+		if not _nests.has(nk):
+			_attach_nest(nk, item[1])
 		return
 	var c: Vector3i = item[0]
 	if _pending.has(c):
@@ -167,7 +254,7 @@ func _attach_ruins() -> void:
 ## and the ruin's age allow. A camp living in it cuts them back as its ladder
 ## clears the heap (legibility: rung 1 half, rung 2 bare); an abandoned
 ## camp is taken back as the forest takes it (CampSim.reclaim).
-func _dress_vines(node: Node3D, c: Vector3i, data: Dictionary) -> void:
+func _dress_vines(node: Node3D, c: Vector3i, data: Dictionary, nest_key := "") -> void:
 	var site: Dictionary = data.get("site", {})
 	var anchors: Array = data.get("vine_anchors", [])
 	var rocks: Array = data.get("boulder_anchors", [])
@@ -184,7 +271,7 @@ func _dress_vines(node: Node3D, c: Vector3i, data: Dictionary) -> void:
 	var age := full
 	var legibility := 0
 	if CampSim.instance != null:
-		var st := CampSim.instance.state_of("ruin:%s" % str(c))
+		var st := CampSim.instance.state_of(nest_key if nest_key != "" else "ruin:%s" % str(c))
 		if not st.is_empty():
 			if str(st.get("state", "")) == "living":
 				var rung := int(st.get("rung", 0))
@@ -234,14 +321,15 @@ const COLLIDE_M := 400.0
 
 
 func _build_ruin_collision(pd: Vector3) -> void:
-	for c in _ruins:
-		var node: Node3D = _ruins[c]
-		if not RuinBuilder.wants_collision(node):
-			continue
-		var site: Dictionary = node.get_meta("site")
-		if CubeSphere.surface_distance_m(site.dir, pd) < COLLIDE_M + float(site.footprint_m):
-			RuinBuilder.build_collision_part(node)
-			return
+	for group in [_ruins, _nests]:
+		for c in group:
+			var node: Node3D = group[c]
+			if not RuinBuilder.wants_collision(node):
+				continue
+			var site: Dictionary = node.get_meta("site")
+			if CubeSphere.surface_distance_m(site.dir, pd) < COLLIDE_M + float(site.footprint_m):
+				RuinBuilder.build_collision_part(node)
+				return
 
 
 ## The ruins built right now: grid cell -> node (meta "site",
@@ -253,8 +341,7 @@ func built_ruins() -> Dictionary:
 ## Inside a camp shelter (a tepee or under a lean-to, RuinBuilder._camp)
 ## at scene position `pos`? Keeps the rain off.
 func sheltered_at(pos: Vector3) -> bool:
-	for c in _ruins:
-		var node: Node3D = _ruins[c]
+	for node: Node3D in _ruins.values() + _nests.values():
 		var shelters: Array = node.get_meta("shelters", [])
 		if shelters.is_empty():
 			continue
