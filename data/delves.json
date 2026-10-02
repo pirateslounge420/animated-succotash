@@ -1,0 +1,56 @@
+{
+ "_help": {
+  "about": "[§CN blocks NOT WIRED YET — design §CN] Delves (design §CJ): the underground of the ruins. Room counts, finds and log lines still live in code (Delves, RuinBuilder) and can move here when Claude Code next touches them (PROGRESS 2 Oct asked for this file). This first version holds §CN's fire-holders and overrun dens. Restart after editing.",
+  "fire_holders": "Every delve room except the stairs (skip) has one old, cold fire-holder (per_room). The first room's is its existing old hearth (first_room, OldHearths, as built). The others suit the ruin (by_ruin; default when the kind isn't listed): a hearth ring, a brazier in a castle's undercroft, a wall sconce in a tower. The heart holds the ash of the last fire (heart; §CJ.7). They start cold and empty (start_units 0): each must be laid (fuel.json kindling: kindling, then fuel) and lit with the torch's swing (torch.json swing). Lit, it is a fire like any other for its fuel (holds_units at most): a fire's radius nothing enters (§BA), light_radius_m. First guesses.",
+  "overrun": "An overrun delve (camps.json sim.overrun). Below, it is always night (below_always_night): what holds it is there whatever the hour. The biome's hunter (dread.json hunters) holds hunter_share of overrun delves; the rest are the biome's night roster (§CH; at an ordinary den the hunter is rare). At night they also come up: within night_surface.radius_m of the ruin, outside a fire's radius, dread fills dread_scale times as fast; by day the surface is quiet. tells: what gives it away, read in the world (no UI). When the heart's fire is lit, whatever held it leaves by the delve's way out (§CJ.4). First guesses.",
+  "log": "Lines for the log (§AZ)."
+ },
+ "fire_holders": {
+  "per_room": 1,
+  "skip": [
+   "stair"
+  ],
+  "first_room": "old_hearth",
+  "by_ruin": {
+   "barrow": "hearth_ring",
+   "peoples_ruin": "hearth_ring",
+   "tomb": "hearth_ring",
+   "mausoleum": "hearth_ring",
+   "pyramid": "hearth_ring",
+   "castle": "brazier",
+   "tower": "sconce",
+   "aqueduct": "brazier",
+   "default": "hearth_ring"
+  },
+  "heart": "hearth_ring",
+  "start_units": 0,
+  "holds_units": 3,
+  "light_radius_m": 8.0
+ },
+ "overrun": {
+  "below_always_night": true,
+  "hunter_share": 0.5,
+  "others": "night_roster",
+  "night_surface": {
+   "radius_m": 120,
+   "dread_scale": 1.5,
+   "outside_fire_radius_only": true
+  },
+  "tells": {
+   "day": [
+    "sound_bed_quiet",
+    "bones_at_door",
+    "scat_at_door"
+   ],
+   "night": [
+    "shapes_in_doorway",
+    "hunter_call"
+   ]
+  },
+  "cleared_leave_by": "way_out"
+ },
+ "log": {
+  "heart_lit": "The fire at the heart caught. Whatever held this place has gone.",
+  "settled": "Folk have come to the fire."
+ }
+}

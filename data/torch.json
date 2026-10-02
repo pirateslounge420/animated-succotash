@@ -9,7 +9,8 @@
   "lighting_reach_m": "How close to a flame the torch must be held to light.",
   "bundle": "Unlit torches by a camp's fire (\u00a7AW): how many, and how many game hours until the folk have made more.",
   "climb": "Starting a climb with a lit torch plants it if there is ground to plant it in, otherwise it goes out (stowing puts it out; relight at a flame).",
-  "resin": "The resin torch's block (technique resin_torch): see resin._note."
+  "resin": "The resin torch's block (technique resin_torch): see resin._note.",
+  "swing": "[NOT WIRED YET \u2014 design \u00a7CN] The swing passes the flame. Left click (button: the item-in-hand action, \"shoot\") with the torch in hand swings it: the bare-hand swing's arc and timing (fists.gd, use_fist_arc), with the torch in the hand. At the end of the arc the flame passes between whatever it touches within reach_m (the same as lighting_reach_m), lit to unlit, either way (passes_flame): a lit torch lights a laid fire (fuel.json kindling), embers, a laid delve fire-holder (delves.json) or a planted torch (lights); an unlit torch swung through a lit fire, a lit fire-holder or a planted torch catches (takes_from). Sharing a flame costs the torch nothing (share_cost_min 0): its own burn is still the clock. It never lights the ground, standing grass, camp structures, folk or creatures (never_lights): wildfire's ignition stays a torch dropped in dry grass (\u00a7BL). A swing at a creature does nothing (creature_effect none): they answer to fire, not to the swing (\u00a7BA). Supersedes \u00a7AW's lighting ritual and the old hearths' right click (right_click_lights false): right click goes back to plain interact. log: the lines it adds to the log (\u00a7AZ)."
  },
  "burn_min": 50.0,
  "gutter_share": 0.12,
@@ -48,5 +49,37 @@
   "rain_immune": true,
   "storm_burn_scale": 0.7,
   "_note": "Design 30 Sept \u00a7BP resin torch (technique resin_torch): dipped in pine pitch it burns burn_scale times as long, energy_scale as bright, shrugs off drizzle (rain_immune) and only a storm shortens it. First guesses by Claude Code 1 Oct; the designer owns them."
+ },
+ "swing": {
+  "button": "shoot",
+  "use_fist_arc": true,
+  "reach_m": 2.2,
+  "passes_flame": "both_ways",
+  "lights": [
+   "laid_fire",
+   "embers",
+   "laid_fire_holder",
+   "planted_torch"
+  ],
+  "takes_from": [
+   "lit_fire",
+   "lit_fire_holder",
+   "planted_torch"
+  ],
+  "never_lights": [
+   "ground",
+   "standing_grass",
+   "camp_structures",
+   "folk",
+   "creatures"
+  ],
+  "share_cost_min": 0.0,
+  "creature_effect": "none",
+  "right_click_lights": false,
+  "log": {
+   "fire_caught": "The fire caught.",
+   "kindling_wet": "The kindling smokes and won't catch.",
+   "not_laid": "Cold ash. It needs kindling."
+  }
  }
 }

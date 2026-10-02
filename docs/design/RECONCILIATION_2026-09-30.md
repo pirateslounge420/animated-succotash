@@ -1275,6 +1275,137 @@ honey comes from.*
   region's flora per landmass) too. Plant entries carry no realm of their own today (only
   associations do), so the new species grow wherever their biome and bands fit.
 
+## CN. Overrun ruins — cleared means lit; the swing passes the flame; a cold fire needs kindling — LOCKED (2 Oct, 11:56–13:38, Mike)
+
+Mike (11:56): *"maybe some ruins can be 'overrun' with beasts at night and then to restore the camp
+you have to go clear it out before restoring the hearth."* Asked whether "clear it out" meant a
+fight (it would cross §BA) or light: *"we can keep the light as a way to fend off evil beasts for
+now instead of opening back up the weapons thing — it would be cool kind of like in Minecraft how
+having an item in hand while clicking basically 'slings' the item like a fist — this interaction
+when holding a torch could be the way to light things"* (12:56); then *"also should have to gather
+dry grass or some kind of kindling in order to light the out hearth"* (13:16); the four parts
+below locked together: *"yes indeed!"* (13:38). Builds on §AW, §AX, §BA, §BL, §CH, §CJ, §CK and
+what Claude Code built on 2 Oct (old hearths, the barrow's delve). Not built.
+
+**No fight.** §BA stands: the dark is the only antagonist and light is the answer. The weapons
+stay shut (Mike); a found spear still only fishes.
+
+**1. The swing passes the flame** (`torch.json → swing`). Left click with the torch in hand
+swings it: Minecraft's hand swing with a torch in it (the bare-hand swing's arc, `fists.gd`). At
+the end of the arc the flame passes between whatever it touches, lit to unlit, either way: a lit
+torch lights a laid fire, embers, a laid fire-holder or a planted torch; an unlit torch swung
+through a lit fire catches. One verb for every flame.
+- **Sharing costs the torch nothing**, as in life. Its own burn is still the clock (§CJ.5).
+- **It never lights the land, a camp, folk or creatures.** Wildfire's ignition stays a torch
+  dropped in dry grass (§BL). Later, the burn in season (§BP) could be the technique that lets the
+  swing light old grass; not locked.
+- **A swing at a beast does nothing.** They answer to fire, not to the swing: a torch slows them,
+  a fire keeps them out (§BA).
+- **Supersedes §AW's lighting ritual** (right click the fire with the torch in hand) and the old
+  hearths' right click. Right click goes back to plain interact: feed a fire, lay kindling, make
+  it your hearth (§AY), plant or take a torch, gather, climb. Right click on a fire had three jobs;
+  flame now has its own button.
+
+**2. A cold fire needs kindling** (`fuel.json → kindling`; adds a step to §AX).
+- **Embers stay as §AX has them:** an armful of dry fuel brings them back. Reaching a dying camp
+  in time stays the easy save.
+- **A fire that is fully out** (a campfire, an old hearth, a delve's fire-holder) must be **laid**
+  before the swing lights it: kindling, then at least one unit of fuel. An old hearth's charred
+  branches (`fire.old_hearth_units`) count as its fuel. Lay it with right click, the way fuel is
+  fed. Arriving late costs a trip to gather.
+- **Kindling is whatever is fine and dry where you are**, real for each biome. It is gathered by
+  hand and carried (burden applies): litter from the ground, or a part of a plant of the right
+  genus (a birch gives birch bark), and only where that plant grows (§CA). The existing dry grass
+  and reeds are the same items. Kindling with no fuel flares and goes out.
+- **Rain makes it a skill.** Kindling gathered or carried in rain is wet until it has dried
+  (`fuel.json wet.dry_h_game`; under a roof it stays dry). Dry kindling always catches. Wet kindling
+  catches only if it is one of the few that burn damp (`wet_ok`: birch bark, fatwood, Douglas-fir
+  pitchwood); otherwise it smokes and the fire stays cold. No dice roll, nothing to mash. How fast
+  the flame takes follows the material.
+- **Torch only.** No flint and steel: a cold fire takes a borrowed flame or nothing (§BP). Mike
+  said so to Claude Code on 2 Oct, and it is recorded here as PROGRESS asked.
+
+**3. Overrun ruins: cleared means lit** (`camps.json → sim.overrun`, new `data/delves.json`).
+- **Which ruins.** The camps the dark took. §BL already leaves two readable kinds of empty camp,
+  "no woodpile and blood" or "just left". A taken camp that has a den (a delve, §CJ, or a nest's
+  first chamber, §CK) stays **overrun**: the dark moved in where it won. A camp left for hunger is
+  resettled by the sim as now. **On a new world** nothing has been taken yet, so a seeded share of
+  the old ruins with a delve start overrun. That names nothing about how their people ended
+  (§BQ): the dark moved into an empty place.
+- **Where they den: the delve.** Below, it is always night: whatever holds an overrun delve is
+  there at any hour. In about half it is the biome's hunter (at an ordinary den the hunter is rare,
+  §CH); in the rest, its night roster. At night they also come up and own the surface: near an
+  overrun ruin, outside a fire's radius, dread fills faster. By day the surface is quiet. An
+  ordinary den (§CH) is a night animal's bed, empty by day; an overrun delve is the dark's.
+- **Tells, no UI:** by day the sound bed goes quiet near it (§BG), with bones and scat at the door;
+  at night, shapes in the doorway and the hunter's call.
+- **Clearing.** You go down with your borrowed flame, kindling and fuel, and light the delve's old
+  **fire-holders** room by room. The first room's is its old hearth (as built); each room after has
+  a hearth ring, a brazier or a wall sconce as suits the ruin; the heart holds **the ash of the
+  last fire** (§CJ.7). Each one you light is a fire's radius nothing enters (§BA) for as long as
+  its fuel lasts, and you carry what you can (burden), so you choose which rooms to hold.
+  **Lighting the heart's fire clears the ruin.** Whatever held it leaves by the delve's way out
+  (§CJ.4), and the log says so. Lose your light below and you are taken by the dark and wake at
+  your hearth (§AY). It is like lighting up a cave in Minecraft, except that here a lit fire keeps
+  them out entirely. This amends §CJ.5's first guess of one safe room: in an overrun delve, every
+  lit fire-holder holds its room.
+- **The surface hearth** can be lit any time. By day that is the smart play, a safe base (§CJ.1,
+  the hearth before the delve). But folk won't settle over a den, so it does not clear the ruin.
+
+**4. Then folk come back.** Once a ruin is cleared and its surface hearth burns, folk arrive.
+Survivors come back if it fell recently (§BL); otherwise a few walk over from the nearest camp
+near its ceiling. The camp sim takes over (§BL), restoring the ruin reveals it (§BQ), and it can
+be made your hearth (§AY): a foothold far out. If that camp later goes dark, it is overrun again.
+
+**First guesses** (in the data; Mike tunes by play): 30 % of old ruins with a delve start overrun;
+the hunter holds half the overrun delves; at night, within 120 m of one, dread fills 1.5 times as
+fast; a fire-holder holds 3 units and lights 8 m; folk arrive after 12 game hours, survivors if it
+fell within 30 game days, otherwise 2–4 from a camp within 40 km at 60 % or more of its cap; a laid
+fire is 1 kindling and 1 unit of fuel; the flame takes in at most 2 s.
+
+**Open for Mike:** whether kindling you carry stays dry in rain, as in a tinder pouch. As written,
+carried kindling gets wet, so a wet night is only beaten by the damp-burning kinds.
+
+**What the kindling fill found** (2 Oct; seven biome families by parallel agents, one each, every
+kind with its sources; merged into one block, `tools/kindling_check.py --strict`: 33 kinds, 52
+biomes, 0 errors; the tropical forests carry a stop-gap of twigs, leaves and grass until their
+own fill lands):
+- **Rain-day kindling is rare, as in life.** Only birch bark, fatwood and Douglas-fir pitchwood
+  burn damp. In 25 of the 42 biomes that offer fuel none of their trees grows in the game, so
+  there a wet night means no new fire: the tundra, alpine tundra, páramo, puna and tepui; the
+  temperate deciduous and floodplain forests; the prairies, steppe, savanna and thorn scrub; the
+  hot desert and oasis; the swamp, marsh and fen; the beach, mangrove, estuary and lagoon; and
+  every tropical forest for now.
+- **The real local tinder comes from plants the game lacks there:**
+  - birch: the taiga has only the shrub resin birch; birch is missing altogether from the
+    temperate deciduous and floodplain forests, krummholz and the bog;
+  - Arctic white heather (*Cassiope*, which burns wet): tundra and alpine tundra;
+  - Spanish moss (*Tillandsia*): swamp and maritime forest;
+  - cattail and common reed: estuary;
+  - cottonwood: canyon and oasis;
+  - yucca: missing everywhere;
+  - tinder fungus (*Fomes*): taiga and temperate deciduous forest;
+  - also slippery elm, basswood, goldenrod and milkweed.
+  Adding them would give those places their real kindling, and a few their rain-day one. That is
+  a plant-data job, Mike's call.
+- **Weakest-sourced kinds** (kept, and their notes say so): rockrose twigs, dead palm leaves (the
+  sources show fronds burned as fuel, not named as tinder), tola twigs, tulip-tree bark.
+- **Merged where families met:** one shredded cedar or juniper bark, one seed down, one dry moss,
+  one puffball. Where values differed, the cautious one was kept.
+
+**Supersedes or amends:**
+- §AW's right-click lighting ritual: lighting is now the swing.
+- §AX's "a dead fire needs a lit torch": it now needs a laid fire, kindling and fuel, lit by the
+  swing.
+- §CJ.5's one safe room: in an overrun delve, every lit fire-holder holds its room.
+- The camp loop of §BL and §CK: the sim skips overrun ruins until they are cleared.
+- §CH's "the hunter rarely": in an overrun delve, the hunter is common.
+- The built old hearths gain the kindling step and lose their right click.
+
+**Proposed order (designer to confirm):** the swing → the laid fire and kindling (the core kinds
+first, then the biome lists) → overrun ruins on the built barrow delve (fire-holders, the den,
+clearing) → folk coming back. The tropical fill is data only.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1346,3 +1477,9 @@ the cliff-shelter hearth off the drip line; cave mouth and grotto as meshes; the
 slot canyons from the ravines; the glowing bay on the glow ponds) → nest plants (§CM) → the
 sacred fig and its figure (§CL) → tier 2 → tier 3. Mad honey waits for the item and food
 systems. Where this sits against §CH and §CJ's audits is Mike's call.
+
+**Added 2 Oct, afternoon (§CN):** the data is in (`torch.json → swing`, `fuel.json → kindling` with
+33 kinds over 52 biomes, `camps.json → sim.overrun`, the new `delves.json`), none of it wired. The
+engine order: **the swing** (left click passes the flame; right click stops lighting) → **the laid
+fire and kindling** → **overrun ruins on the built barrow delve** (fire-holders, the den,
+clearing) → **folk coming back**. Mike's Claude Code prompt of 2 Oct, 14:25 carries the same spec.

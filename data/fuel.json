@@ -1,10 +1,11 @@
 {
  "_help": {
   "about": "Fire is fuel (design 30 Sept §AX). Every campfire has a store that burns down: flames -> low -> embers -> out. Fuel is gathered from the world (dead wood, brush, reeds, dung, peat, driftwood) and dropped on the fire. What a biome offers decides whether a camp there can live. Restart after editing.",
-  "fire": "store_max_units: the most a fire holds. burn_scale: units burnt per real minute at full flame is 1/kind.burn_min, times this. low_share: below this share of store the fire reads 'low'. embers_min: real minutes the embers stay relightable after the store hits zero. tended_burn_scale: burn rate while folk are alive at the fire; the camp loop (§BL, CampSim) feeds it from the woodpile. Note from Mike's play on 30 Sept: before the loop existed every camp fire was out by day 14 and no flame was left in the world to light a torch at — a save from before the loop stays dark; start a new world. A dead tended fire is relit by its folk at dawn from the woodpile (they keep an ember). relight: how a dead fire comes back. light_radius_m: the safe / dread-draining radius (§BA).",
+  "fire": "store_max_units: the most a fire holds. burn_scale: units burnt per real minute at full flame is 1/kind.burn_min, times this. low_share: below this share of store the fire reads 'low'. embers_min: real minutes the embers stay relightable after the store hits zero. tended_burn_scale: burn rate while folk are alive at the fire; the camp loop (§BL, CampSim) feeds it from the woodpile. Note from Mike's play on 30 Sept: before the loop existed every camp fire was out by day 14 and no flame was left in the world to light a torch at — a save from before the loop stays dark; start a new world. A dead tended fire is relit by its folk at dawn from the woodpile (they keep an ember). relight: how a dead fire comes back. light_radius_m: the safe / dread-draining radius (§BA). old_hearth_units: the charred branches left in a cold old hearth (OldHearths; Claude Code's default 2, written here 2 Oct as PROGRESS asked). Design §CN: they count as the hearth's fuel, but it still needs kindling laid before the torch's swing lights it.",
   "wet": "Fuel gathered in rain or from soaked ground: burn-time multiplier and the chance it lights at all.",
   "kinds": "burn_min: real minutes one unit burns at full flame. heat: warmth/light scale (brush burns hot and fast). smoke: visual smoke scale. carry_items: burden slots one unit takes.",
-  "biomes": "Per biome key (BiomeTemplates names): fuel kinds on offer with an abundance 0-1 that scales how much the gather pass places. An empty block means nothing burns there: a camp there dies."
+  "biomes": "Per biome key (BiomeTemplates names): fuel kinds on offer with an abundance 0-1 that scales how much the gather pass places. An empty block means nothing burns there: a camp there dies.",
+  "kindling": "[NOT WIRED YET — design §CN] A cold fire needs kindling. Embers still come back with an armful of dry fuel (§AX; embers_need_kindling false). A fire that is fully out (a campfire, an old hearth, a delve's brazier in delves.json fire_holders) must be laid before the torch's swing (torch.json swing) will light it: laid_fire.kindling_items of kindling and at least laid_fire.fuel_units_min of fuel; an old hearth's charred branches (fire.old_hearth_units) count as its fuel. Lay it with right click (lay: interact), the way fuel is fed (§AX). catch: a swing lights a laid fire when its kindling is dry. Kindling gathered or left out in rain is wet until it dries (fuel.json wet.dry_h_game; under a roof it stays dry), and wet kindling takes only if its kind is wet_ok (catch_wet >= wet_threshold): otherwise it smokes and stays cold. No dice roll, nothing to mash. How fast the flame takes: time_s_max x (1 - catch_dry or catch_wet). Kindling with no fuel flares for its burn_s and goes out. kinds: real materials only, each with its sources; an id that is also a fuel kind (grass_bundle, reeds) is that same carried item (fuel_kind true). gather: litter (picked up), plant / fungus / lichen (taken from a living or dead one of its genera), ground, animal. biomes: what is fine and dry where you are, likeliest first; filled per biome family by parallel agents on 2 Oct. A kind tied to genera is listed only where those genera grow in the biome's plant file (§CA). Gate: tools/kindling_check.py (0 errors before commit). _stopgap: biomes whose lists are only core kinds until their family's fill lands (the tropical forests, 2 Oct)."
  },
  "fire": {
   "store_max_units": 12,
@@ -18,7 +19,8 @@
    "friction": false
   },
   "light_radius_m": 14.0,
-  "starts_with_units": 8
+  "starts_with_units": 8,
+  "old_hearth_units": 2
  },
  "wet": {
   "burn_scale": 0.4,
@@ -311,5 +313,1024 @@
    "brush": 0.3,
    "branch": 0.2
   }
+ },
+ "kindling": {
+  "out_fire_needs_kindling": true,
+  "embers_need_kindling": false,
+  "laid_fire": {
+   "kindling_items": 1,
+   "fuel_units_min": 1,
+   "old_hearth_units_count": true
+  },
+  "lay": "interact",
+  "catch": {
+   "wet_threshold": 0.5,
+   "time_s_max": 2.0,
+   "dry_under_roof": true
+  },
+  "flare_without_fuel": true,
+  "kinds": {
+   "grass_bundle": {
+    "fuel_kind": true,
+    "name": "Dry grass",
+    "from": "Dead grass pulled by the armful; standing dead stems are the driest.",
+    "gather": "litter",
+    "genera": [],
+    "catch_dry": 0.95,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 20,
+    "carry_items": 1,
+    "notes": "The tinder of open country everywhere. Useless once rained on.",
+    "sources": [
+     "Wikipedia, 'Tinder' (natural tinders: dry grass, leaves, pine needles, dead branches, birch bark, pitchwood, seed fluff, chaga): https://en.wikipedia.org/wiki/Tinder",
+     "FM 21-76 US Army Survival Manual (1992), ch. 7 Firecraft, 'Fire material selection' (tinder, kindling, fuel): https://dn790002.ca.archive.org/0/items/Fm21-76SurvivalManual/FM21-76_SurvivalManual.pdf",
+     "Smokey Bear campfire safety guide (USDA Forest Service): tinder is 'small twigs and dry leaves, grass, and needles': https://smokeybear.com/campfire-safety",
+     "Wikipedia (es), 'Stipa ichu' (ichu, the puna bunchgrass, is used for roof thatch and 'también es empleado como combustible'): https://es.wikipedia.org/wiki/Stipa_ichu",
+     "Meriwether Lewis, journal, 23 August 1805 (Shoshone fire-making: when the wood dust takes fire 'some dry grass or doated wood is added'): https://lewisandclarkjournals.unl.edu/item/lc.jrn.1805-08-23",
+     "S. A. Barrett and E. W. Gifford (1933), 'Miwok Material Culture', Fire (tinder 'was usually rotten buckeye wood, dry pine needles, shredded cedar bark, or finely shredded grass'): https://www.yosemite.ca.us/library/miwok_material_culture/fire.html",
+     "Hough, W. (1890) 'Fire-making apparatus in the U. S. National Museum', Smithsonian Institution (Project Gutenberg ebook 53531), Apache: 'For tinder they use dry grass or bark fiber'; Moki (Hopi): 'They use tinder of fungus or dried grass rubbed between the hands': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Gould, R.A. (1969) Yiwara: Foragers of the Australian Desert (Scribner's): Western Desert men saw fire into dry kangaroo dung, then blow on it, 'adding bits of dry grass to it as tinder'; quoted in D. Baugh, 'Fire-by-friction methods of the Australian Aborigines': https://www.primitiveways.com/pt-firesaw.html",
+     "Paleoforaging (2023) 'Fire-starting methods and species used': fine dry grass as tinder among the Apache and Navajo, from the ethnographic record: https://paleoforaging.com/2023/09/03/fire-starting-methods-and-species-used/",
+     "US Navy, Aircrew Survival Equipmentman 1 & C training manual, ch. 5 'Kindling and Fuel' (kindling: 'palm leaves', 'twigs', 'wood shavings', 'dead, upright grass straw'; tinder: 'the shredded pith of a dead palm frond'): https://navyaviation.tpub.com/10330/css/Kindling-And-Fuel-123.htm"
+    ]
+   },
+   "reeds": {
+    "fuel_kind": true,
+    "name": "Dry reeds",
+    "from": "Last year's dead reed stems, snapped at the water's edge.",
+    "gather": "litter",
+    "genera": [],
+    "catch_dry": 0.9,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 25,
+    "carry_items": 1,
+    "notes": "A quick, hot flash: good to start a fire, gone in moments.",
+    "sources": [
+     "Wikipedia, 'Tinder' (natural tinders: dry grass, leaves, pine needles, dead branches, birch bark, pitchwood, seed fluff, chaga): https://en.wikipedia.org/wiki/Tinder",
+     "FM 21-76 US Army Survival Manual (1992), ch. 7 Firecraft, 'Fire material selection' (tinder, kindling, fuel): https://dn790002.ca.archive.org/0/items/Fm21-76SurvivalManual/FM21-76_SurvivalManual.pdf",
+     "Adamant, A. (2024) '17+ best natural firestarters for camping', Practical Self Reliance: Phragmites (common reed) as a natural firestarter, 'highly flammable': https://practicalselfreliance.com/natural-firestarters/",
+     "Woodland Ways bushcraft blog (Jay), 'Tinder bundles part 3: blowing into flame' (common reed, Phragmites: dried dead reed leaves make the tinder bundle and the reed stems the first kindling): https://blog.woodland-ways.co.uk/fire/tinder-bundles-part-3-blowing-into-flame/",
+     "Kevin F. Duffy, 'The incredible cattail', Backwoods Home Magazine (of cattail: 'The seed heads and dried leaves can be used as tinder'): https://www.backwoodshome.com/the-incredible-cattail/"
+    ]
+   },
+   "dry_twigs": {
+    "name": "Dead twigs",
+    "from": "Pencil-thin dead twigs snapped off low branches; if they snap cleanly they are dry.",
+    "gather": "litter",
+    "genera": [],
+    "catch_dry": 0.75,
+    "catch_wet": 0.25,
+    "wet_ok": false,
+    "burn_s": 60,
+    "carry_items": 1,
+    "notes": "Slower to catch than bark or grass, but it carries the flame up into the fuel.",
+    "sources": [
+     "Wikipedia, 'Tinder' (natural tinders: dry grass, leaves, pine needles, dead branches, birch bark, pitchwood, seed fluff, chaga): https://en.wikipedia.org/wiki/Tinder",
+     "FM 21-76 US Army Survival Manual (1992), ch. 7 Firecraft, 'Fire material selection' (tinder, kindling, fuel): https://dn790002.ca.archive.org/0/items/Fm21-76SurvivalManual/FM21-76_SurvivalManual.pdf",
+     "Aiken, S.G. et al. (2007), Flora of the Canadian Arctic Archipelago (NRC Research Press, Ottawa; online at the Canadian Museum of Nature), Betula glandulosa (dwarf birch: 'Birch was also used as firewood and was a nice flavouring when drying meat'): https://nature.ca/aaflora/data/www/bebegl.htm",
+     "Wikipedia, 'Salix arctica' ('Twigs are used as fuel'): https://en.wikipedia.org/wiki/Salix_arctica",
+     "Kephart, Horace, Camping and Woodcraft (1916 two-volume ed.), vol. I, ch. XIII 'The Camp Fire' ('gather a small armful of sound, dry twigs from the size of a lead pencil to that of your finger. Take no twig that lies flat on the ground, for such are generally damp or rotten'): https://bookdome.com/outdoors/Camping-Woodcraft/Chapter-XIII-The-Camp-Fire.html",
+     "US Navy, Aircrew Survival Equipmentman 1 & C training manual, ch. 5 'Kindling and Fuel' (kindling: 'palm leaves', 'twigs', 'wood shavings', 'dead, upright grass straw'; tinder: 'the shredded pith of a dead palm frond'): https://navyaviation.tpub.com/10330/css/Kindling-And-Fuel-123.htm",
+     "PROSEA, 'Casuarina equisetifolia': on Asian coasts 'the small branch litter is often collected for domestic fuel': https://prosea.prota4u.org/view.aspx?id=2993"
+    ]
+   },
+   "dead_leaves": {
+    "name": "Dry leaves",
+    "from": "Crisp dead leaves from under broadleaf trees, taken from the top of the litter where it is driest.",
+    "gather": "litter",
+    "genera": [],
+    "catch_dry": 0.85,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 12,
+    "carry_items": 1,
+    "notes": "Catches fast and burns out faster; a damp leaf only smokes.",
+    "sources": [
+     "Wikipedia, 'Tinder' (natural tinders: dry grass, leaves, pine needles, dead branches, birch bark, pitchwood, seed fluff, chaga): https://en.wikipedia.org/wiki/Tinder",
+     "FM 21-76 US Army Survival Manual (1992), ch. 7 Firecraft, 'Fire material selection' (tinder, kindling, fuel): https://dn790002.ca.archive.org/0/items/Fm21-76SurvivalManual/FM21-76_SurvivalManual.pdf",
+     "Hough, Walter (1890), 'Fire-making Apparatus in the U.S. National Museum', Report of the U.S. National Museum for 1888, pp. 531-587 -- p. 547, quoting Beverley (1705) on the Virginia Indians' fire drill: 'to this they put sometimes also rotten Wood and dry leaves to hasten the Work': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm"
+    ]
+   },
+   "conifer_needles": {
+    "name": "Dead conifer needles",
+    "from": "Brown needles gathered from under pines and other conifers, or from dead lower twigs.",
+    "gather": "litter",
+    "genera": [
+     "Pinus",
+     "Picea",
+     "Abies",
+     "Larix",
+     "Pseudotsuga",
+     "Tsuga",
+     "Cedrus"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.2,
+    "wet_ok": false,
+    "burn_s": 25,
+    "carry_items": 1,
+    "notes": "Resin in the needles makes them flare. Found only where conifers grow.",
+    "sources": [
+     "Wikipedia, 'Tinder' (natural tinders: dry grass, leaves, pine needles, dead branches, birch bark, pitchwood, seed fluff, chaga): https://en.wikipedia.org/wiki/Tinder",
+     "FM 21-76 US Army Survival Manual (1992), ch. 7 Firecraft, 'Fire material selection' (tinder, kindling, fuel): https://dn790002.ca.archive.org/0/items/Fm21-76SurvivalManual/FM21-76_SurvivalManual.pdf",
+     "Kochanski, Mors L., Northern Bushcraft (Lone Pine Publishing, 1988), ch. 1 Firecraft ('In pine country, where fine twigs are uncommon, dead pine needles are a passable substitute for birch bark'; they are waterproof while still attached to a branch)",
+     "Smokey Bear campfire safety guide (USDA Forest Service): tinder is 'small twigs and dry leaves, grass, and needles': https://smokeybear.com/campfire-safety",
+     "Woodland Woman, '7 Natural Tinders and How to Use Them' (fatwood 'isn't vulnerable to dampness and wind'; usnea too damp fresh off the tree, dries fast inside clothing; plant down 'will burn too fast to ignite your kindling'; pine needles 'burn longer than grass'): https://woodlandwoman.ca/natural-tinders/"
+    ]
+   },
+   "birch_bark": {
+    "name": "Birch bark",
+    "from": "Peeled in curls from dead birch logs, or the loose curls on living trees, then shredded fine.",
+    "gather": "plant",
+    "genera": [
+     "Betula"
+    ],
+    "catch_dry": 0.95,
+    "catch_wet": 0.8,
+    "wet_ok": true,
+    "burn_s": 45,
+    "carry_items": 1,
+    "notes": "Its oils keep water out: it lights even when damp, and wet bark wipes dry.",
+    "sources": [
+     "Kirtley, Paul (2015), 'Northern Forest Fire Lighting Fundamentals' ('Birch bark contains oils which not only make it flammable but also act as a waterproofing agent'): https://paulkirtley.co.uk/2015/northern-forest-fire-lighting-fundamentals/",
+     "Kochanski, Mors L., Northern Bushcraft (Lone Pine Publishing, 1988), ch. 1 Firecraft (birch bark: 'Fine shreds are easily ignited by a flame')",
+     "Karst, Amanda (2010), Conservation Value of the North American Boreal Forest from an Ethnobotanical Perspective (Convention on Biological Diversity), p. 24 (Betula papyrifera: 'bark as tinder'): https://www.cbd.int/doc/external/report-ethnobotany-en.pdf",
+     "Wikipedia, 'Birch bark' ('Outer birch bark also makes an outstanding tinder, as it does not soak up water'): https://en.wikipedia.org/wiki/Birch_bark",
+     "Wildway Bushcraft, 'Natural Tinder' (birch bark oils 'ignite easily, even when damp'; 'downy flower heads such as thistle seed heads, or willow seed heads'): https://www.wildwaybushcraft.co.uk/natural-tinder/",
+     "Wikipedia, 'Birch bark': 'Outer birch bark also makes an outstanding tinder, as it does not soak up water': https://en.wikipedia.org/wiki/Birch_bark",
+     "Adamant, A. (2024) '17+ best natural firestarters for camping', Practical Self Reliance: birch bark 'works even when it's wet' (betulin): https://practicalselfreliance.com/natural-firestarters/",
+     "Wikipedia, 'Tinder' (birch bark among the natural tinders): https://en.wikipedia.org/wiki/Tinder"
+    ]
+   },
+   "bogwood_splinters": {
+    "name": "Bog-wood splinters",
+    "from": "Old pine roots and trunks dug out of the peat while cutting turf, dried and split into thin splinters.",
+    "gather": "ground",
+    "genera": [],
+    "catch_dry": 0.9,
+    "catch_wet": 0.4,
+    "wet_ok": false,
+    "burn_s": 75,
+    "carry_items": 1,
+    "notes": "Old pine kept in the peat and still full of resin; people dried the splinters by the fire and burned them for light.",
+    "sources": [
+     "Michael Viney, 'Another Life: Connacht's bog-deal - a gift of fierce fuel?', The Irish Times, 5 Nov 2022 (splinters dried over the fire and lit for light; bog-deal 'set a blaze at the heart of reluctant turf fires'): https://www.irishtimes.com/environment/2022/11/05/another-life-connachts-bog-deal-a-gift-of-fierce-fuel/",
+     "Dictionaries of the Scots Language, SND 'Fir' (fir-candles: 'thin splinters of bog-fir'; 'pieces of bog-fir laid on the fire'): https://www.dsl.ac.uk/entry/snd/fir"
+    ]
+   },
+   "casuarina_needles": {
+    "name": "Casuarina needles",
+    "from": "The fallen, needle-like twiglets that carpet the sand under ironwood (she-oak) trees, raked up by the handful.",
+    "gather": "litter",
+    "genera": [
+     "Casuarina"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.15,
+    "wet_ok": false,
+    "burn_s": 20,
+    "carry_items": 1,
+    "notes": "Not a pine, but its litter is raked up for cooking fires along Asian coasts.",
+    "sources": [
+     "PROSEA (Plant Resources of South-East Asia), 'Casuarina equisetifolia' ('The small branch litter is often collected for domestic fuel'; up to 4 t/ha of litter and twigs harvested for fuel): https://prosea.prota4u.org/view.aspx?id=2993",
+     "World Agroforestry (ICRAF) AgroForestryTree Database, 'Casuarina equisetifolia' (leaf litter removed as fuel in Asia; the wood 'ignites readily even when green'): https://apps.worldagroforestry.org/treedb2/speciesprofile.php?Spid=477",
+     "Winrock International, 'Casuarina equisetifolia: An Old-timer with a New Future' ('People in China and India use stumps and even litter for fuel'): https://winrock.org/casuarina-equisetifolia-an-old-timer-with-a-new-future/"
+    ]
+   },
+   "cattail_down": {
+    "name": "Cattail down",
+    "from": "Pulled from a ripe cattail head, which breaks open into a big wad of fluff.",
+    "gather": "plant",
+    "genera": [
+     "Typha"
+    ],
+    "catch_dry": 0.98,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 5,
+    "carry_items": 1,
+    "season": "autumn to spring",
+    "notes": "Flashes almost at once; feed it grass or reeds straight away or the flame dies.",
+    "sources": [
+     "Rathbone, E. (2010) 'Cattails: a wetland favorite's useful history', Adirondack Almanack: 'The seed fluff was used as tinder': https://www.adirondackalmanack.com/2010/07/cattails-a-wetland-favorites-useful-history.html",
+     "Duffy, K.F., 'The incredible cattail', Backwoods Home Magazine: 'The seed heads and dried leaves can be used as tinder': https://www.backwoodshome.com/the-incredible-cattail/",
+     "Wikipedia, 'Typha' ('The seed hairs were used by some indigenous peoples of the Americas as tinder for starting fires'): https://en.wikipedia.org/wiki/Typha",
+     "USDA NRCS Plant Guide, Southern cattail (Typha domingensis) ('The fluff can also be used as tinder'): https://plants.sc.egov.usda.gov/DocumentLibrary/plantguide/pdf/pg_tydo.pdf",
+     "Jack Raven Bushcraft, 'Downy flower heads' (downy heads such as cattail only flash briefly alone, but come into their own inside a tinder bundle): https://www.jackravenbushcraft.co.uk/downy-flower-heads/"
+    ]
+   },
+   "cedar_bark": {
+    "name": "Shredded cedar or juniper bark",
+    "from": "Stringy bark torn from juniper, cypress or redcedar trunks, then rubbed between the palms into a loose nest.",
+    "gather": "plant",
+    "genera": [
+     "Juniperus",
+     "Thuja",
+     "Cupressus"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.3,
+    "wet_ok": false,
+    "burn_s": 35,
+    "carry_items": 1,
+    "notes": "The classic tinder of the dry American West and the Pacific coast. It shreds fine but drinks rain.",
+    "sources": [
+     "Wikipedia, 'Juniperus monosperma' (Zuni: 'The shredded, fibrous bark was specifically used as tinder to ignite the fire sticks used for the New Year fire'): https://en.wikipedia.org/wiki/Juniperus_monosperma",
+     "'Understanding and mitigating wilderness therapy impacts: the Grand Staircase-Escalante National Monument case study' (2018), fig. 1 caption: 'The bark from juniper trees is flammable and makes an excellent fire starter... only a very small amount of the bark is needed': https://www.researchgate.net/figure/The-bark-from-juniper-trees-is-flammable-and-makes-an-excellent-fire-starter-when-a-bow_fig1_327351231",
+     "BushcraftUK forum, 'Trying out juniper as tinder' (Juniperus communis: fine shavings of the inner bark and crushed outer bark lit readily from sparks, helped by the wood's oils): https://bushcraftuk.com/community/threads/trying-out-juniper-as-tinder.5668/",
+     "Hough, Walter (1890), 'Fire-making Apparatus in the U.S. National Museum', Report of the U.S. National Museum for 1888, pp. 531-587 -- p. 534, Sitka: 'For tinder, the bark of the arbor vitae was used. It is finely frayed'; Bella Bella: 'The tinder is of frayed cedar bark'; pp. 534-535, Quinaielt: 'The slow-match is of frayed cedar bark': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Gunther, Erna (1945), Ethnobotany of Western Washington, as quoted in Earle, C.J., The Gymnosperm Database, 'Thuja plicata' ('Wads of shredded cedar bark are used as tinder for fires and also carried in a slow torch on journeys'): https://www.conifers.org/cu/Thuja_plicata.php",
+     "Tkaczyk, Filip, 'The Best Types of Evergreen Trees for Wilderness Survival', Alderleaf Wilderness College (Monroe, Washington) -- western red cedar: 'Even when it is raining, you can collect the bark and then scrape the inner part of it back and forth with a knife or stone so that it forms a fluffy bundle of fibers': https://www.wildernesscollege.com/types-of-evergreen-trees.html",
+     "D. E. McHenry (1934), 'Indian Uses of Juniper in the Grand Canyon Region', Grand Canyon Nature Notes 9(1) (Havasupai 'rubbed dry juniper bark for tinder'; at Hano 'the bark is in daily use as tinder and kindling material'; Yavapai slow-match of juniper bark): https://npshistory.com/nature_notes/grca/vol9-1c.htm",
+     "Utah State University Extension (2011), Utah Forest Facts 018, 'Native American Uses of Utah Forest Trees' ('Juniper bark worked well as a torch or for tinder to start fires'): https://extension.usu.edu/forestry/publications/utah-forest-facts/018-native-american-uses-of-utah-forest-trees",
+     "Walter Hough (1890), 'Fire-making Apparatus in the U. S. National Museum' (Smithsonian Institution), Sitka section: 'For tinder, the bark of the arbor vitae was used. It is finely frayed': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "McHenry, D.E. (1934) 'Indian uses of juniper in the Grand Canyon region', Grand Canyon Nature Notes 9(1): Havasupai fire drill 'using rubbed dry juniper bark for tinder'; at Hano 'the bark is in daily use as tinder and kindling material'; Havasupai and Yavapai slow matches of juniper bark: https://npshistory.com/nature_notes/grca/vol9-1c.htm",
+     "Utah State University Extension (2011) 'Native American uses of Utah forest trees', Utah Forest Facts 018: 'Juniper bark worked well as a torch or for tinder to start fires': https://extension.usu.edu/forestry/publications/utah-forest-facts/018-native-american-uses-of-utah-forest-trees",
+     "Plants For A Future, 'Juniperus osteosperma': 'The bark is employed as a tinder and is also made into a slow match ... Fire could be carried in this fashion for several hours': https://pfaf.org/user/Plant.aspx?LatinName=Juniperus+osteosperma",
+     "Paleoforaging, 'Fire-starting methods and species used' (2023): juniper ('cedar') bark as tinder among the Lipan Apache (Banta 1911), Iroquois (Waugh 1916) and Navajo (Elmore 1944): https://paleoforaging.com/2023/09/03/fire-starting-methods-and-species-used/",
+     "Sensible Survival, 'Flint and steel equipment part 3: tinder' (2011) (of juniper, locally called cedar: 'the bark works fine as tinder'): https://sensiblesurvival.org/2011/08/23/flint-and-steel-equipment-part-3-tinder/",
+     "Gymnosperm Database, 'Thuja occidentalis' (bark 'fibrous, fissured, coming away in long, thin strips'): https://www.conifers.org/cu/Thuja_occidentalis.php"
+    ]
+   },
+   "chaga": {
+    "name": "Chaga",
+    "from": "Broken from the black, cracked growths on birch trunks; the black crust is knocked off and the brown inside is what takes fire.",
+    "gather": "fungus",
+    "genera": [
+     "Inonotus"
+    ],
+    "catch_dry": 0.55,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 10,
+    "carry_items": 1,
+    "notes": "Scored as flame kindling: it takes a spark or ember well but a flame poorly, and flames only briefly. Once lit it smoulders slowly and holds its ember, which is why it was used to carry fire.",
+    "sources": [
+     "Karst, Amanda (2010), Conservation Value of the North American Boreal Forest from an Ethnobotanical Perspective (Convention on Biological Diversity), p. 25 (Inonotus obliquus, cinder conk: 'Tinder for transporting fire'): https://www.cbd.int/doc/external/report-ethnobotany-en.pdf",
+     "Wikipedia, 'Inonotus obliquus' (Potawatomi shkitagen: an ember 'will not go out but smolders slowly in the fungal matrix', after Kimmerer, Braiding Sweetgrass, 2013): https://en.wikipedia.org/wiki/Inonotus_obliquus",
+     "Beaver Bushcraft, 'FIRE - Chaga truly a great tinder fungus' (black outer layer removed; the dried inside 'will readily catch a spark, and then hold it as a stable ember'): https://www.beaverbushcraft.co.uk/page_4140656.html"
+    ]
+   },
+   "coconut_husk": {
+    "name": "Coconut husk fibre",
+    "from": "Torn from the dry brown husk of an old fallen coconut and teased into a loose nest of fibres.",
+    "gather": "litter",
+    "genera": [
+     "Cocos"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 40,
+    "carry_items": 1,
+    "notes": "The tinder of tropical shores. A smouldering husk keeps mosquitoes away.",
+    "sources": [
+     "FM 21-76 US Army Survival Manual (1992), Appendix B, 'Coconut': 'Dried husk fiber is an excellent tinder. A smoldering husk helps to repel mosquitoes.' (as reproduced at https://www.wilderness-survival.net/Appb.php)",
+     "Te Papa (Museum of New Zealand) blog, 'Hika ahi - making fire' (2014): a Samoan fire-plough demonstration lights coconut husk as the starter: https://blog.tepapa.govt.nz/2014/08/27/hika-ahi-making-fire/",
+     "US National Park Service, National Park of American Samoa, 'Coconut' (the husk 'can be burned as fuel'): https://home.nps.gov/npsa/learn/historyculture/coconut.htm"
+    ]
+   },
+   "cottonwood_bark": {
+    "name": "Cottonwood inner bark",
+    "from": "Stringy inner bark pulled from dead and fallen cottonwoods, then rubbed into a loose nest.",
+    "gather": "plant",
+    "genera": [
+     "Populus"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.15,
+    "wet_ok": false,
+    "burn_s": 30,
+    "carry_items": 1,
+    "notes": "Dead and fallen cottonwoods are common along rivers, so it is easy to find. The Northern Cheyenne also used dry, rotted cottonwood wood as tinder.",
+    "sources": [
+     "Brown, Tom III (2020), 'Fire Starting 101', Anchored Outdoors (the inner bark of 'cottonwood, basswood, cedar, maple and poplar' 'can be shredded and made into great tinder'): https://anchoredoutdoors.com/fire-starting-tom-brown/",
+     "BushcraftUSA forum, 'What type of bark makes a good tinder bundle?' (Stone: 'Inner cottonwood bark is my \"go to\" tinder ... very easy to gather from dead and downed trees'): https://bushcraftusa.com/threads/what-type-of-bark-makes-a-good-tinder-bundle.192725/",
+     "Hart, Jeffrey A. (1981), 'The Ethnobotany of the Northern Cheyenne Indians of Montana', Journal of Ethnopharmacology 4: 1-55, p. 37, as quoted in Paleoforaging, 'Populus deltoides / Eastern cottonwood' (2023) ('The dry-rotted wood was used by the Northern Cheyenne as tinder for fire-starting'): https://paleoforaging.com/2023/08/23/populus-deltoides-eastern-cottonwood/"
+    ]
+   },
+   "dead_bracken": {
+    "name": "Dead bracken",
+    "from": "Brown dead fronds snapped from last year's bracken; fronds still standing are the driest.",
+    "gather": "plant",
+    "genera": [
+     "Pteridium"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 15,
+    "carry_items": 1,
+    "season": "late autumn to spring, once the fronds have died brown",
+    "notes": "Dead bracken stands dry through winter and is a known fire hazard; once rained on it is as useless as wet grass.",
+    "sources": [
+     "Jack Raven Bushcraft, 'Other natural tinders' ('Dead, dry bracken works well as a tinder and will light with a fire steel'): https://www.jackravenbushcraft.co.uk/other-natural-tinders/",
+     "Green Unfolding, 'How to restore our relationship with bracken (Pteridium aquilinum)' ('Dried bracken is an excellent material for tinder. It can be harvested in winter when it is dying off'): https://greenunfolding.com/restoring-relationship-with-bracken-pteridium-aquilinum-with-seven-modern-day-uses/",
+     "Wild Flower Finder, 'Bracken' ('The over-wintering undergrowth can become a fire hazard when tinder dry'): https://wildflowerfinder.org.uk/Flowers/B/Bracken/Bracken.htm",
+     "Woodland Ways bushcraft blog (2015), 'Bracken': 'The dry, dead fronds make a reasonable tinder to make tinder bundles': https://blog.woodland-ways.co.uk/hedgerow-medicines/bracken/",
+     "Jack Raven Bushcraft, 'Natural tinders you can easily find in the British countryside': 'Dried bracken will take a spark and also works as a tinder bundle': https://www.jackravenbushcraft.co.uk/tinders/"
+    ]
+   },
+   "dead_gorse": {
+    "name": "Dead gorse",
+    "from": "Dry dead spiny twigs pulled from the hollow heart of an old gorse bush.",
+    "gather": "plant",
+    "genera": [
+     "Ulex"
+    ],
+    "catch_dry": 0.95,
+    "catch_wet": 0.35,
+    "wet_ok": false,
+    "burn_s": 30,
+    "carry_items": 1,
+    "season": "all year; driest in late summer",
+    "notes": "Waxy, oily spines flare hot. Bundles of furze once fired farmhouse bread ovens.",
+    "sources": [
+     "eFlora, 'Ulex europaeus - Gorse' ('Burns very well, it was much used in the past for kindling, heating bakers ovens'; old bushes 'accumulate dry dead spines at their centre'): https://eflora.info/Ulexeuropaeus.php",
+     "Wikipedia, 'Ulex' (highly flammable; bundles of gorse fired bread ovens; gorse and bracken were cut, dried and stored as fuel for furze ovens): https://en.wikipedia.org/wiki/Ulex",
+     "Gorse Action Group, 'Gorse and fire risk' (waxy foliage holding oils that ignite easily and burn hot): https://gorseactiongroup.org/gorse-fire-risk/"
+    ]
+   },
+   "dead_palm_leaves": {
+    "name": "Dead palm leaves",
+    "from": "Brown, papery leaflets stripped from dead palm fronds, or dead fronds pulled from under the crown.",
+    "gather": "litter",
+    "genera": [
+     "Phoenix",
+     "Hyphaene",
+     "Cocos",
+     "Sabal",
+     "Serenoa",
+     "Nypa"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 25,
+    "carry_items": 1,
+    "notes": "Fast and hot once dry; a green frond only smokes.",
+    "sources": [
+     "The Living Museum (AlUla, Saudi Arabia), 'Dates: the tree of life': locals recall 'collecting palm fronds as fuel for fire': https://www.livingmuseum.com/en/deepdivehistories/dates",
+     "Wikipedia, 'Date palm' (dried leaf petioles used for fuel; leaves for mats, screens and huts): https://en.wikipedia.org/wiki/Date_palm",
+     "Ghori, W., Saba, N., Jawaid, M. & Asim, M. (2018) 'A review on date palm (Phoenix dactylifera) fibers and its polymer composites', IOP Conf. Ser.: Mater. Sci. Eng. 368: 012009, Table 6 (leaf base and fruit stalks used as fuel): https://iopscience.iop.org/article/10.1088/1757-899X/368/1/012009/pdf",
+     "POLLEX-Online (Greenhill & Clark), entry KAU-LAMA 'Dried coconut leaves used as torch' (Samoan 'aulama 'bundle of dry coconut leaves, esp. used as a flare'; Tokelau, Tuvalu, Pukapuka kaulama): https://pollex.eva.mpg.de/entry/kau-lama/",
+     "US Navy, Aircrew Survival Equipmentman 1 & C training manual, ch. 5 'Kindling and Fuel' (kindling: 'palm leaves', 'twigs', 'wood shavings', 'dead, upright grass straw'; tinder: 'the shredded pith of a dead palm frond'): https://navyaviation.tpub.com/10330/css/Kindling-And-Fuel-123.htm"
+    ]
+   },
+   "driftwood_shavings": {
+    "name": "Driftwood shavings",
+    "from": "Curls and splinters scraped from sun-dried driftwood lying above the high-tide line.",
+    "gather": "litter",
+    "genera": [],
+    "catch_dry": 0.85,
+    "catch_wet": 0.15,
+    "wet_ok": false,
+    "burn_s": 40,
+    "carry_items": 1,
+    "notes": "Inuit saved the dry scrapings from working driftwood to start fires all year.",
+    "sources": [
+     "Wikipedia, 'Driftwood' (Inuit collected and stored dry driftwood scrapings to start fires year-round; driftwood is still used as kindling): https://en.wikipedia.org/wiki/Driftwood",
+     "'Inuit knowledge and use of wood resources on the west coast of Nunavik, Canada', Études/Inuit/Studies 37(1), 2013 (the study Wikipedia cites for the scrapings): https://www.erudit.org/en/journals/etudinuit/2013-v37-n1-etudinuit01423/1025259ar.pdf",
+     "Fenton, A. (1978) The Northern Isles: Orkney and Shetland, quoted by Orkney Seaweed Stories, 'Fire': shore kelp kilns were lit 'with straw or driftwood', then dried seaweed was added: https://orkneyseaweedstories.wordpress.com/fire/"
+    ]
+   },
+   "dry_moss": {
+    "name": "Dry moss",
+    "from": "Pulled from the top of a moss hummock, mat or log after dry weather, then rubbed fluffy.",
+    "gather": "plant",
+    "genera": [
+     "Sphagnum",
+     "Racomitrium",
+     "Polytrichum",
+     "Pleurozium",
+     "Hylocomium",
+     "Hypnum",
+     "Leucobryum",
+     "Thuidium"
+    ],
+    "catch_dry": 0.8,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 30,
+    "carry_items": 1,
+    "notes": "Only after a dry spell: moss drinks rain and fog.",
+    "sources": [
+     "Hough, Walter, 'Fire-making Apparatus in the U. S. National Museum' (Smithsonian Institution; Project Gutenberg ed.) -- East Greenland (Angmagsalik): the ember is put 'into dried moss (sphagnum)', blown, 'and soon get a blaze': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Wikipedia, 'Qulliq' (lamp wick of cottongrass and/or 'dry moss rubbed between the hands until it is quite inflammable'): https://en.wikipedia.org/wiki/Qulliq",
+     "Karst, Amanda (2010), Conservation Value of the North American Boreal Forest from an Ethnobotanical Perspective (Convention on Biological Diversity), p. 25 (Sphagnum: 'Fuel for smoking hides, meat'): https://www.cbd.int/doc/external/report-ethnobotany-en.pdf",
+     "Wikipedia, 'Qulliq' (Inuit lamp wick 'composed of dry moss rubbed between the hands until it is quite inflammable'): https://en.wikipedia.org/wiki/Qulliq",
+     "University of Reading blog, '#AdventBotany Day 21: The qulliq brings light and heat to Canada's Inuit Nunangat in the dark winter' (suputit gathered from fluffy, mature arctic willow flowers in late summer, mixed with lamp moss): https://blogs.reading.ac.uk/crg/qulliq/",
+     "Hough, Walter (1890), 'Fire-making Apparatus in the U.S. National Museum', Report of the U.S. National Museum for 1888, pp. 531-587 -- pp. 547-548, Cherokee: 'The tinder was of a fungus or dried moss'; p. 558, East Greenland: the ember is put 'into dried moss (sphagnum)', blown, 'and soon get a blaze': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Jack Raven Bushcraft, 'Other natural tinders' (mosses: 'Dried out, however they can make a useful tinder'): https://www.jackravenbushcraft.co.uk/other-natural-tinders/"
+    ]
+   },
+   "dry_sedge": {
+    "name": "Dry saw-sedge",
+    "from": "Saw-sedge cut in the fen and left to dry; mind the leaf edges, they cut like saws.",
+    "gather": "plant",
+    "genera": [
+     "Cladium"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.1,
+    "wet_ok": false,
+    "burn_s": 25,
+    "carry_items": 1,
+    "season": "cut in early spring, then dried",
+    "notes": "Cut at Wicken Fen since at least 1414, for thatch and also as fuel and kindling.",
+    "sources": [
+     "National Trust, 'The history of Wicken Fen' ('In early spring, sedge was harvested and dried for use in thatching, but also as a fuel and for kindling'): https://www.nationaltrust.org.uk/visit/cambridgeshire/wicken-fen-national-nature-reserve/history-of-wicken-fen",
+     "Wikipedia, 'Wicken Fen' (the sedge cut there, first recorded in 1414, is Cladium mariscus): https://en.wikipedia.org/wiki/Wicken_Fen"
+    ]
+   },
+   "fatwood_shavings": {
+    "name": "Fatwood shavings",
+    "from": "Shaved from the resin-soaked stump of a dead pine, or from the base of its dead lower branches.",
+    "gather": "plant",
+    "genera": [
+     "Pinus"
+    ],
+    "catch_dry": 0.95,
+    "catch_wet": 0.85,
+    "wet_ok": true,
+    "burn_s": 60,
+    "carry_items": 1,
+    "notes": "Soaked with resin, it lights even when wet and burns long and hot.",
+    "sources": [
+     "Wikipedia, 'Fatwood' (resin-saturated pine heartwood; 'It lights quickly even when wet'): https://en.wikipedia.org/wiki/Fatwood",
+     "Kochanski, Mors L., Northern Bushcraft (Lone Pine Publishing, 1988), ch. 1 Firecraft ('The wood at the base of the dead lower branches of pines is usually saturated with resin'; conifer resin is 'the most important fire-lighting material to use with matches in the Northern Forests')",
+     "Kirtley, Paul (2019), 'Tactics For Fire-lighting In The Damp, Cold Months' (fatwood is 'similarly moisture-resistant and exceptionally energy-dense'): https://paulkirtley.co.uk/2019/tactics-for-fire-lighting-in-the-damp-cold-months/",
+     "Wikipedia, 'Fatwood' (pine heartwood; 'lights quickly even when wet, is very wind resistant'): https://en.wikipedia.org/wiki/Fatwood",
+     "Wikipedia, 'Tinder' (pitchwood is 'the resinous wood which decays last from dead conifers'): https://en.wikipedia.org/wiki/Tinder",
+     "Woodland Woman, '7 Natural Tinders and How to Use Them' (fatwood 'isn't vulnerable to dampness and wind'; usnea too damp fresh off the tree, dries fast inside clothing; plant down 'will burn too fast to ignite your kindling'; pine needles 'burn longer than grass'): https://woodlandwoman.ca/natural-tinders/",
+     "Wikipedia, 'Fatwood' (resin-impregnated heartwood of pine stumps; 'It lights quickly even when wet'): https://en.wikipedia.org/wiki/Fatwood",
+     "Wikipedia, 'Tinder' (natural tinders include seed fluff from milkweed, dandelions and cottonwood; dead standing goldenrod; pitchwood, which does not absorb water and stays easy to ignite in any weather): https://en.wikipedia.org/wiki/Tinder",
+     "Wikipedia, 'Fatwood': 'It lights quickly even when wet, is very wind resistant, and burns hot enough to light larger pieces of wood': https://en.wikipedia.org/wiki/Fatwood",
+     "Adamant, A. (2024) '17+ best natural firestarters for camping', Practical Self Reliance: pine fatwood is full of flammable terpene, 'resistant to wind, and burns hot and long': https://practicalselfreliance.com/natural-firestarters/",
+     "Wikipedia, 'Fatwood' (resin-impregnated pine heartwood, mostly from old stumps; 'It lights quickly even when wet, is very wind resistant'): https://en.wikipedia.org/wiki/Fatwood",
+     "Wikipedia, 'Fatwood' (heartwood of pine stumps, taproots and limb joints; 'lights quickly even when wet'; tied to longleaf pine in the southeastern US): https://en.wikipedia.org/wiki/Fatwood",
+     "Paul Kirtley (2025) 'Fatwood: What It Is, How to Find It, and Why It's a Top Natural Firestarter' ('All pines can produce it'; resin repels water so it stays usable when other tinder is damp): https://paulkirtley.co.uk/2025/fatwood/",
+     "Todd Walker (2015) 'Resin-Rich Fat Lighter'd: Nature's Most Prized Fire-starter' ('Even if wet, it catches fire quickly'): https://www.hhhistory.com/2015/11/resin-rich-fat-lighterd-natures-most.html"
+    ]
+   },
+   "fir_pitchwood": {
+    "name": "Douglas-fir pitchwood",
+    "from": "Chopped and shaved from the pitch-soaked heart of old Douglas-fir stumps and rotted logs.",
+    "gather": "plant",
+    "genera": [
+     "Pseudotsuga"
+    ],
+    "catch_dry": 0.95,
+    "catch_wet": 0.85,
+    "wet_ok": true,
+    "burn_s": 60,
+    "carry_items": 1,
+    "notes": "The pitch-soaked heartwood is the last part of a dead fir to rot, and it does not take up water, so it lights in rain. It is the rainforest's fatwood.",
+    "sources": [
+     "Moore, William R. (1985), 'Nature's Own Conifer Tree Pitch Fire Starter', Mother Earth News ('Douglas fir produces the richest (that is, the most flammable) pitch'; 'about the only way to find Douglas fir pitch is to chop the heartwood out of rotted stumps or logs'): https://www.motherearthnews.com/sustainable-living/nature-and-environment/conifer-tree-pitch-fire-starter-zmaz85ndzgoe/",
+     "Wikipedia, 'Tinder' ('Pitchwood is the resinous wood which decays last from dead conifers'; it 'does not absorb water, so it remains easy to ignite in any weather'): https://en.wikipedia.org/wiki/Tinder",
+     "Tkaczyk, Filip, 'The Best Types of Evergreen Trees for Wilderness Survival', Alderleaf Wilderness College (Monroe, Washington) -- Douglas fir: 'The pitch of Douglas fir makes for an excellent asset to have when starting fires': https://www.wildernesscollege.com/types-of-evergreen-trees.html"
+    ]
+   },
+   "manuka_bark": {
+    "name": "Mānuka bark",
+    "from": "Papery strips peeled from the loose, flaking bark of mānuka or kānuka (older writers called both mānuka).",
+    "gather": "plant",
+    "genera": [
+     "Leptospermum",
+     "Kunzea"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.3,
+    "wet_ok": false,
+    "burn_s": 40,
+    "carry_items": 1,
+    "notes": "Māori travelling in cold weather tied up a bundle of dry mānuka bark and kindled it at one end.",
+    "sources": [
+     "Best, E. (1924) 'The Polynesian method of generating fire', Journal of the Polynesian Society 33(130): 87-102: 'When travelling in cold weather natives sometimes procured a bundle of dry manuka bark, which they put ties round and kindled at one end': https://www.jps.auckland.ac.nz/document//Volume_33_1924/Volume_33,_No._130/The_Polynesian_method_of_generating_fire,_by_Elsdon_Best,_p_87-102/p1 (full text: https://www.folksong.org.nz/pinepine_te_kura/fire_rituals_full.html)"
+    ]
+   },
+   "palm_fibre": {
+    "name": "Palm fibre",
+    "from": "Fibre pulled from the old leaf bases on a palm trunk, or the brown cloth-like sheath at the crown.",
+    "gather": "plant",
+    "genera": [
+     "Sabal",
+     "Cocos"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.4,
+    "wet_ok": false,
+    "burn_s": 25,
+    "carry_items": 1,
+    "notes": "The leaf bases shelter it, so it is often the driest thing in a wet swamp.",
+    "sources": [
+     "Green Deane, Eat The Weeds, 'Cabbage Palm, Sabal palmetto' ('The boot fiber makes excellent tinder and if one digs some dry tinder can usually be found there even in the rain'): https://www.eattheweeds.com/cabbage-palm-sabal-palmetto/",
+     "Green Deane, Eat The Weeds, 'Cabbage Palm, Sabal palmetto': 'The boot fiber makes excellent tinder and if one digs some dry tinder can usually be found there even in the rain.': https://www.eattheweeds.com/cabbage-palm-sabal-palmetto/",
+     "Brumm, A. (2006) 'Fire-making using a stone strike-a-light in the Soa Basin of Flores, Indonesia', Indo-Pacific Prehistory Association Bulletin 26:168-170 (downy fibre scraped from palm leaf stems and trunks used as tinder in Flores, Borneo, Sarawak and the Moluccas): https://journals.lib.washington.edu/index.php/BIPPA/article/download/12007/10632",
+     "BushcraftUSA forum, 'Coconut fiber tinder' (a Hawaiian member: the dry husk and 'the fabric like brown sheets that grew at the base of each branch' were used for tinder): https://bushcraftusa.com/threads/coconut-fiber-tinder.224440/"
+    ]
+   },
+   "plant_down": {
+    "name": "Seed down",
+    "from": "Seed fluff of cottongrass, willow catkins or cottonwood, plucked from ripe heads or scooped from drifts.",
+    "gather": "plant",
+    "genera": [
+     "Eriophorum",
+     "Salix",
+     "Populus"
+    ],
+    "catch_dry": 0.95,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 5,
+    "carry_items": 1,
+    "season": "summer to autumn, while the white heads last",
+    "notes": "Catches in a blink and is gone as fast: lay twigs on it.",
+    "sources": [
+     "Aiken, S.G. et al. (2007), Flora of the Canadian Arctic Archipelago (NRC Research Press, Ottawa; online at the Canadian Museum of Nature), Eriophorum angustifolium ('The Inuvialuk gathered wild cotton when it was dry and used it to start fires'; flower-heads 'used ... as tinder'): https://nature.ca/aaflora/data/www/cyeram.htm",
+     "Hough, Walter, 'Fire-making Apparatus in the U. S. National Museum' (Smithsonian Institution; Project Gutenberg ed.) -- Point Barrow: 'a bunch of willow twigs, the down of which is used as tinder'; Kodiak: 'tinder made of willow catkins': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Wikipedia, 'Salix arctica' (twigs used as fuel; the decayed flowers, suputiit, mixed with moss as lamp wick): https://en.wikipedia.org/wiki/Salix_arctica",
+     "Wildway Bushcraft, 'Natural Tinder' (birch bark oils 'ignite easily, even when damp'; 'downy flower heads such as thistle seed heads, or willow seed heads'): https://www.wildwaybushcraft.co.uk/natural-tinder/",
+     "Woodland Woman, '7 Natural Tinders and How to Use Them' (fatwood 'isn't vulnerable to dampness and wind'; usnea too damp fresh off the tree, dries fast inside clothing; plant down 'will burn too fast to ignite your kindling'; pine needles 'burn longer than grass'): https://woodlandwoman.ca/natural-tinders/",
+     "University of Reading blog, '#AdventBotany Day 21: The qulliq brings light and heat to Canada's Inuit Nunangat in the dark winter' (suputit gathered from fluffy, mature arctic willow flowers in late summer, mixed with lamp moss): https://blogs.reading.ac.uk/crg/qulliq/",
+     "Wikipedia, 'Tinder' (seed 'fluff' from plants like milkweed, dandelions, Cottonwood): https://en.wikipedia.org/wiki/Tinder",
+     "Hough, Walter (1890), 'Fire-making Apparatus in the U.S. National Museum', Report of the U.S. National Museum for 1888, pp. 531-587 -- p. 562, Point Barrow: 'a bunch of willow twigs, the down of which is used as tinder': https://www.gutenberg.org/files/53531/53531-h/53531-h.htm",
+     "Pine and Lakes Echo Journal (2022), 'Cottonwood fluff poses unprecedented fire danger' (Nisswa fire chief: 'That cotton stuff is more flammable than gasoline'): https://www.pineandlakes.com/news/local/cottonwood-fluff-poses-unprecedented-fire-danger",
+     "Wikipedia, 'Tinder' (natural tinders include seed fluff from milkweed, dandelions and cottonwood; dead standing goldenrod; pitchwood, which does not absorb water and stays easy to ignite in any weather): https://en.wikipedia.org/wiki/Tinder",
+     "The Weekend Woodsman (2013), 'Black poplar (cottonwood) seed fluff as tinder' (caught instantly, burned very quickly; keep a second tinder ready): https://weekendwoodsman.wordpress.com/2013/07/13/black-poplar-cottonwood-seed-fluff-as-tinder/",
+     "Elmore, F.H. (1944) Ethnobotany of the Navajo, p. 37: cottonwood (Populus) seed fluff as tinder, as listed in Paleo Foraging, 'Fire-starting methods and species used' (2023): https://paleoforaging.com/2023/09/03/fire-starting-methods-and-species-used/",
+     "Wikipedia, 'Tinder' (natural tinders include seed 'fluff' from plants like milkweed, dandelions and cottonwood): https://en.wikipedia.org/wiki/Tinder",
+     "Canadian Museum of Nature, Flora of the Canadian Arctic Archipelago, 'Eriophorum angustifolium' ('The Inuvialuk gathered wild cotton when it was dry and used it to start fires'; heads used 'as tinder'; it 'would burn too high and fast'): https://nature.ca/aaflora/data/www/cyeram.htm",
+     "Useful Temperate Plants database (Ken Fern), 'Eriophorum angustifolium' (seed hairs used for candle wicks and 'as a tinder'): https://temperate.theferns.info/plant/Eriophorum+angustifolium",
+     "Legendary Dartmoor, 'Pixie Wool' (cotton grass heads used as tinder for lighting fires): https://www.legendarydartmoor.co.uk/2020/05/31/pixie-wool/"
+    ]
+   },
+   "puffball": {
+    "name": "Dry puffball",
+    "from": "An old puffball dried brown where it grew; break it open for the spongy fibres inside.",
+    "gather": "fungus",
+    "genera": [
+     "Lycoperdon",
+     "Calvatia",
+     "Bovista",
+     "Vascellum",
+     "Disciseda"
+    ],
+    "catch_dry": 0.55,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 10,
+    "carry_items": 1,
+    "season": "late summer to winter",
+    "notes": "It smoulders better than it flames: better at holding a spark than catching a torch.",
+    "sources": [
+     "Burk, W. R. (1983) 'Puffball usages among North American Indians', Journal of Ethnobiology 3(1): 55-62 (Blackfoot: 'puffballs were commonly used as tinder or punk for lighting fires'): https://ethnobiology.org/sites/default/files/pdfs/JoE/3-1/Burk1983.pdf",
+     "Burk, W. R. (1983) 'Puffball usages among North American Indians', Journal of Ethnobiology 3(1): 55-62 (puffballs 'commonly used as tinder or punk for lighting fires', Blackfoot): https://ethnobiology.org/sites/default/files/pdfs/JoE/3-1/Burk1983.pdf",
+     "W. R. Burk (1983), 'Puffball Usages Among North American Indians', Journal of Ethnobiology 3(1): 55-62 ('puffballs were commonly used as tinder or punk for lighting fires'; Blackfoot): https://ethnobiology.org/sites/default/files/pdfs/JoE/3-1/Burk1983.pdf"
+    ]
+   },
+   "reindeer_lichen": {
+    "name": "Reindeer lichen",
+    "from": "Picked from the pale, branching lichen mats on open, dry ground, when they are crisp.",
+    "gather": "lichen",
+    "genera": [
+     "Cladonia"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 15,
+    "carry_items": 1,
+    "notes": "Crisp when dry, spongy when wet. It dries faster than the moss around it, often within a few hours of dew.",
+    "sources": [
+     "Munger, G.T. (2008), 'Cladonia (Cladina) spp.', Fire Effects Information System, USDA Forest Service ('Reindeer lichens dry readily, becoming a highly flammable fuel'): https://www.fs.usda.gov/database/feis/lichens/claspp/all.html",
+     "Green Deane, Eat The Weeds, 'Reindeer Moss' ('It catches fire readily and makes great kindling'): https://www.eattheweeds.com/edible-cladonia-whats-not-to-lichen-2/",
+     "Missouri Dept. of Conservation field guide, 'Gray Reindeer Lichen (Reindeer Moss)' (brittle when dry; 'When dry, shrubby lichens such as these have been used as tinder for starting fires'): https://mdc.mo.gov/discover-nature/field-guide/gray-reindeer-lichen-reindeer-moss",
+     "Missouri Department of Conservation field guide, 'Gray reindeer lichen (reindeer moss)' ('When dry, shrubby lichens such as these have been used as tinder for starting fires'): https://mdc.mo.gov/discover-nature/field-guide/gray-reindeer-lichen-reindeer-moss"
+    ]
+   },
+   "rockrose_twigs": {
+    "name": "Rockrose twigs",
+    "from": "Dead twigs snapped from gum rockrose bushes, whose leaves and stems are sticky with resin.",
+    "gather": "plant",
+    "genera": [
+     "Cistus"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.3,
+    "wet_ok": false,
+    "burn_s": 45,
+    "carry_items": 1,
+    "notes": "Rockroses give off oils that make them burn easily; they are fire plants whose seeds sprout after a blaze.",
+    "sources": [
+     "Wikipedia, 'Cistus' (species emit volatile oils, rendering the plants flammable; pyrophytes whose seeds survive fire): https://en.wikipedia.org/wiki/Cistus",
+     "S. E.-A. Henaoui (2018), 'Flammability and Combustibility of Cistus Plant Groups in Tlemcen Region (Algeria)', International Journal of Ecology and Environmental Sciences 44(4): 383-393 (cited by Wikipedia, 'Cistus')",
+     "Wikipedia, 'Cistus ladanifer' (the whole plant is covered with a sticky, fragrant resin, labdanum): https://en.wikipedia.org/wiki/Cistus_ladanifer"
+    ]
+   },
+   "sagebrush_bark": {
+    "name": "Shredded sagebrush bark",
+    "from": "Pulled in long grey strips from the trunks of old or dead big sagebrush, then rubbed between the hands into a fluffy nest.",
+    "gather": "plant",
+    "genera": [
+     "Artemisia"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.3,
+    "wet_ok": false,
+    "burn_s": 35,
+    "carry_items": 1,
+    "notes": "The Klamath and Modoc bound it tight into torches to carry fire. The shrub's oils make even green sagebrush wood burn well.",
+    "sources": [
+     "S. A. Barrett (1910), 'The Material Culture of the Klamath Lake and Modoc Indians of Northeastern California and Southern Oregon', University of California Publications in American Archaeology and Ethnology 5(4), p. 257: 'the torch made of tightly bound dry sage-brush bark': https://www.craterlakeinstitute.com/online-library/wp-content/uploads/material-culture-klamath-modoc.pdf",
+     "Plants For A Future, 'Artemisia tridentata' (the shredded bark is a fine tinder for starting fires; the wood burns rapidly and well, even when green): https://pfaf.org/user/Plant.aspx?LatinName=Artemisia+tridentata",
+     "Wikipedia, 'Artemisia tridentata' (used as firewood, the wood's oils being particularly flammable): https://en.wikipedia.org/wiki/Artemisia_tridentata",
+     "Plants For A Future, 'Artemisia tridentata': 'The shredded bark is a fine tinder for starting fires': https://pfaf.org/user/Plant.aspx?LatinName=Artemisia+tridentata",
+     "USDA Forest Service, Fire Effects Information System, 'Artemisia tridentata subsp. tridentata': 'Some Native American peoples used the bark of big sagebrush to make ropes and baskets': https://www.fs.usda.gov/database/feis/plants/shrub/arttrit/all.html",
+     "Wikipedia, 'Artemisia tridentata' (used as firewood, 'the wood's oils being particularly flammable'): https://en.wikipedia.org/wiki/Artemisia_tridentata"
+    ]
+   },
+   "spanish_moss": {
+    "name": "Spanish moss",
+    "from": "Grey strands pulled down from bald cypress and other bottomland trees and teased into a loose ball.",
+    "gather": "plant",
+    "genera": [
+     "Tillandsia"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 15,
+    "carry_items": 1,
+    "notes": "Native peoples of the South wrapped dry Spanish moss round arrow shafts and lit it to make fire arrows. It drinks rain, so it must be dry.",
+    "sources": [
+     "Immel, Diana L. (2001), USDA NRCS Plant Guide 'Spanish Moss, Tillandsia usneoides' (Houma and Seminole uses; 'Dry Spanish moss was used for fire arrows. The moss was wrapped around the base of the shaft, lit on fire and then shot from the bow'): https://plants.sc.egov.usda.gov/DocumentLibrary/plantguide/pdf/pg_tius.pdf",
+     "Deane, Green, Eat the Weeds, 'Tillandsia usneoides' ('A bundle of stripped moss also makes excellent tinder'): https://www.eattheweeds.com/tag/tillandsia-usneoides/"
+    ]
+   },
+   "spruce_twigs": {
+    "name": "Dead spruce twigs",
+    "from": "Thin dead twigs snapped from the bare lower trunk of a spruce, under the green crown.",
+    "gather": "plant",
+    "genera": [
+     "Picea"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.35,
+    "wet_ok": false,
+    "burn_s": 45,
+    "carry_items": 1,
+    "notes": "The crown above keeps them dry in rain, and their resin helps them flare: the first place to look in a wet spruce wood.",
+    "sources": [
+     "Kirtley, Paul (2015), 'Northern Forest Fire Lighting Fundamentals' (spruce: 'a mass of small, dead twigs near the base of their trunk'; 'they contain resin and are usually dry due to the protection from dense green foliage above'): https://paulkirtley.co.uk/2015/northern-forest-fire-lighting-fundamentals/",
+     "Kirtley, Paul (2019), 'Tactics For Fire-lighting In The Damp, Cold Months' (dead twigs low on the tree are 'remarkably sheltered from precipitation'): https://paulkirtley.co.uk/2019/tactics-for-fire-lighting-in-the-damp-cold-months/",
+     "Kochanski, Mors L., Northern Bushcraft (Lone Pine Publishing, 1988), ch. 1 Firecraft ('A small handful of dry spruce branches elbow to finger tip long is broken into thirds')"
+    ]
+   },
+   "tola_twigs": {
+    "name": "Dry tola twigs",
+    "from": "Fine twigs and scaly leaf-tips snapped from dead tola bushes, the resinous shrubs of the dry puna.",
+    "gather": "plant",
+    "genera": [
+     "Parastrephia"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.3,
+    "wet_ok": false,
+    "burn_s": 40,
+    "carry_items": 1,
+    "notes": "Tola is the dry puna's firewood. Bolivian bakers and plaster-makers pick it because it burns hot.",
+    "sources": [
+     "Tapia Alejo, C. R. (2022) 'Uso y beneficio de la thola (Parastrephia lepidophylla) en producción sostenible de ecosistemas de altura en Bolivia', Revista de Investigación e Innovación Agropecuaria y de Recursos Naturales 9(2) (a resinous shrub, 0.5-2 m; daily cooking fuel; bakers and plaster kilns (yeseras) prefer supu thola for its stronger burn and heat): http://www.scielo.org.bo/scielo.php?pid=S2409-16182022000200063&script=sci_arttext&tlng=es",
+     "Meinekat, S. A., Milton, E. B. P., Furlotte, B., Zarrillo, S. & Rademaker, K. (2023) 'Fire as high-elevation cold adaptation: an evaluation of fuels and Terminal Pleistocene combustion in the Central Andes', Quaternary Science Reviews 316: 108244 (burn experiments on tola, queñua and yareta): https://www.sciencedirect.com/science/article/abs/pii/S0277379123002925"
+    ]
+   },
+   "tulip_tree_bark": {
+    "name": "Tulip-tree inner bark",
+    "from": "Peeled from dead tulip-tree limbs and rubbed between the hands into fine fibres.",
+    "gather": "plant",
+    "genera": [
+     "Liriodendron"
+    ],
+    "catch_dry": 0.85,
+    "catch_wet": 0.15,
+    "wet_ok": false,
+    "burn_s": 30,
+    "carry_items": 1,
+    "notes": "The inner bark of a dead limb breaks down into fine, hair-like fibres that make a ready tinder nest.",
+    "sources": [
+     "Walker, Todd (2015), 'Tulip Poplar: A Rich Resource for Year-Round Wilderness Self-Reliance', Survival Sherpa ('Process the inner bark into fine hair-like fibers to form a tinder bundle'; from a dead limb): https://survivalsherpa.wordpress.com/2015/04/20/tulip-poplar-a-rich-resource-for-year-round-wilderness-self-reliance/",
+     "Noble, Christian (2013), 'The Tinder Bundle', Master Woodsman (inner-tree bark among tinder materials; its featured bundle is tulip tree / yellow poplar inner bark): https://masterwoodsman.com/2013/tinder-bundle/",
+     "BushcraftUSA forum, 'What type of bark makes a good tinder bundle?' (HP500: 'the inner bark of the tulip poplar breaks down into fine stringy fibers to make a real nice birds nest'): https://bushcraftusa.com/threads/what-type-of-bark-makes-a-good-tinder-bundle.192725/"
+    ]
+   },
+   "usnea": {
+    "name": "Old man's beard lichen",
+    "from": "Pulled in pale grey-green tufts from the branches of conifers.",
+    "gather": "lichen",
+    "genera": [
+     "Usnea"
+    ],
+    "catch_dry": 0.9,
+    "catch_wet": 0.05,
+    "wet_ok": false,
+    "burn_s": 10,
+    "carry_items": 1,
+    "notes": "Damp straight off the tree after fog, but it dries fast if carried inside your clothes.",
+    "sources": [
+     "Wikipedia, 'Usnea' ('When dry, Usnea lichens are flammable and can be used as a fire starter'): https://en.wikipedia.org/wiki/Usnea",
+     "Missouri Dept. of Conservation field guide, 'Beard Lichens (Usnea Lichens)' ('When dry, shrubby lichens such as these have been used as tinder for starting fires'): https://mdc.mo.gov/discover-nature/field-guide/beard-lichens-usnea-lichens",
+     "Woodland Woman, '7 Natural Tinders and How to Use Them' (fatwood 'isn't vulnerable to dampness and wind'; usnea too damp fresh off the tree, dries fast inside clothing; plant down 'will burn too fast to ignite your kindling'; pine needles 'burn longer than grass'): https://woodlandwoman.ca/natural-tinders/",
+     "Missouri Department of Conservation, Field Guide, 'Beard Lichens (Usnea Lichens)' ('When dry, shrubby lichens such as these have been used as tinder for starting fires'; soft, absorbent tissues): https://mdc.mo.gov/discover-nature/field-guide/beard-lichens-usnea-lichens"
+    ]
+   }
+  },
+  "biomes": {
+   "ICE_SHEET": [],
+   "TUNDRA": [
+    "plant_down",
+    "dry_twigs",
+    "dry_moss",
+    "reindeer_lichen"
+   ],
+   "ALPINE_TUNDRA": [
+    "grass_bundle",
+    "dry_twigs",
+    "dry_moss",
+    "plant_down",
+    "puffball"
+   ],
+   "KRUMMHOLZ": [
+    "conifer_needles",
+    "dry_twigs",
+    "usnea",
+    "fatwood_shavings",
+    "cedar_bark"
+   ],
+   "TAIGA": [
+    "spruce_twigs",
+    "birch_bark",
+    "conifer_needles",
+    "fatwood_shavings",
+    "chaga"
+   ],
+   "TEMPERATE_DECIDUOUS": [
+    "dead_leaves",
+    "dry_twigs",
+    "dead_bracken",
+    "tulip_tree_bark",
+    "dry_moss"
+   ],
+   "TEMPERATE_RAINFOREST": [
+    "cedar_bark",
+    "dry_twigs",
+    "fir_pitchwood",
+    "usnea",
+    "conifer_needles"
+   ],
+   "CLOUD_FOREST": [
+    "dry_twigs",
+    "dead_leaves",
+    "usnea",
+    "dry_moss"
+   ],
+   "TALLGRASS_PRAIRIE": [
+    "grass_bundle",
+    "dead_leaves",
+    "cedar_bark",
+    "plant_down",
+    "puffball"
+   ],
+   "SHORTGRASS_PRAIRIE": [
+    "grass_bundle",
+    "dry_twigs",
+    "cedar_bark",
+    "plant_down"
+   ],
+   "STEPPE": [
+    "grass_bundle",
+    "dry_twigs",
+    "plant_down",
+    "puffball"
+   ],
+   "SAGEBRUSH": [
+    "sagebrush_bark",
+    "grass_bundle",
+    "cedar_bark",
+    "conifer_needles",
+    "fatwood_shavings"
+   ],
+   "MEDITERRANEAN_SCRUB": [
+    "dry_twigs",
+    "conifer_needles",
+    "rockrose_twigs",
+    "grass_bundle",
+    "fatwood_shavings"
+   ],
+   "THORN_SCRUB": [
+    "dry_twigs",
+    "grass_bundle",
+    "dead_leaves"
+   ],
+   "PARAMO": [
+    "grass_bundle",
+    "dry_twigs",
+    "dead_leaves"
+   ],
+   "PUNA": [
+    "grass_bundle",
+    "tola_twigs",
+    "dry_twigs"
+   ],
+   "ALPINE_MEADOW": [
+    "grass_bundle",
+    "dry_twigs",
+    "conifer_needles",
+    "birch_bark",
+    "cedar_bark"
+   ],
+   "COLD_DESERT": [
+    "sagebrush_bark",
+    "dry_twigs",
+    "grass_bundle",
+    "cedar_bark",
+    "fatwood_shavings",
+    "plant_down"
+   ],
+   "HOT_DESERT": [
+    "dry_twigs",
+    "grass_bundle",
+    "dead_palm_leaves"
+   ],
+   "TROPICAL_RAINFOREST": [
+    "dry_twigs",
+    "dead_leaves"
+   ],
+   "JUNGLE": [
+    "dry_twigs",
+    "dead_leaves",
+    "dead_bracken"
+   ],
+   "TROPICAL_DRY_FOREST": [
+    "dead_leaves",
+    "dry_twigs",
+    "grass_bundle"
+   ],
+   "SAVANNA": [
+    "grass_bundle",
+    "dry_twigs",
+    "dead_leaves"
+   ],
+   "SWAMP": [
+    "dry_twigs",
+    "cattail_down",
+    "reeds",
+    "palm_fibre"
+   ],
+   "FLOODPLAIN_FOREST": [
+    "dead_leaves",
+    "dry_twigs",
+    "cottonwood_bark",
+    "spanish_moss",
+    "plant_down"
+   ],
+   "FRESHWATER_MARSH": [
+    "reeds",
+    "cattail_down",
+    "grass_bundle",
+    "dry_twigs"
+   ],
+   "WET_MEADOW": [
+    "grass_bundle",
+    "birch_bark",
+    "reeds",
+    "dry_twigs",
+    "puffball"
+   ],
+   "SALT_MARSH": [
+    "reeds",
+    "grass_bundle",
+    "dry_twigs",
+    "conifer_needles",
+    "fatwood_shavings"
+   ],
+   "BOG": [
+    "dry_twigs",
+    "reindeer_lichen",
+    "plant_down",
+    "fatwood_shavings",
+    "bogwood_splinters"
+   ],
+   "FEN": [
+    "dry_sedge",
+    "reeds",
+    "cattail_down",
+    "cedar_bark",
+    "dry_twigs"
+   ],
+   "BEACH": [
+    "grass_bundle",
+    "coconut_husk",
+    "driftwood_shavings",
+    "dead_palm_leaves",
+    "palm_fibre"
+   ],
+   "DUNES": [
+    "grass_bundle",
+    "dry_twigs",
+    "conifer_needles",
+    "dead_bracken",
+    "fatwood_shavings"
+   ],
+   "ROCKY_SHORE": [
+    "driftwood_shavings",
+    "dead_gorse",
+    "grass_bundle",
+    "conifer_needles",
+    "fatwood_shavings"
+   ],
+   "MARITIME_FOREST": [
+    "conifer_needles",
+    "dead_leaves",
+    "dead_palm_leaves",
+    "fatwood_shavings",
+    "palm_fibre"
+   ],
+   "MANGROVE": [
+    "dry_twigs",
+    "coconut_husk",
+    "dead_palm_leaves",
+    "driftwood_shavings"
+   ],
+   "ESTUARY": [
+    "reeds",
+    "grass_bundle",
+    "dry_twigs",
+    "driftwood_shavings"
+   ],
+   "LAGOON": [
+    "coconut_husk",
+    "dead_palm_leaves",
+    "casuarina_needles",
+    "driftwood_shavings",
+    "dry_twigs"
+   ],
+   "FRESHWATER": [],
+   "OASIS": [
+    "dead_palm_leaves",
+    "reeds",
+    "grass_bundle",
+    "dry_twigs"
+   ],
+   "SHELF_SEA": [],
+   "CORAL_REEF": [],
+   "KELP_FOREST": [],
+   "DEEP_OCEAN": [],
+   "SEA_ICE": [],
+   "VOLCANIC_FIELD": [
+    "grass_bundle",
+    "dry_twigs",
+    "dead_bracken",
+    "birch_bark",
+    "conifer_needles"
+   ],
+   "BADLANDS": [
+    "grass_bundle",
+    "dry_twigs",
+    "conifer_needles",
+    "cedar_bark",
+    "fatwood_shavings"
+   ],
+   "CANYON": [
+    "cedar_bark",
+    "dry_twigs",
+    "sagebrush_bark",
+    "grass_bundle",
+    "fatwood_shavings"
+   ],
+   "SALT_FLAT": [],
+   "HOT_SPRING": [
+    "dry_twigs",
+    "conifer_needles",
+    "manuka_bark",
+    "birch_bark",
+    "cattail_down"
+   ],
+   "GLACIER": [],
+   "CAVES": [],
+   "TEPUI": [
+    "dry_twigs",
+    "reindeer_lichen"
+   ]
+  },
+  "_stopgap": [
+   "TROPICAL_RAINFOREST",
+   "JUNGLE",
+   "TROPICAL_DRY_FOREST",
+   "CLOUD_FOREST"
+  ]
  }
 }

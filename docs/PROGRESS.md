@@ -4,6 +4,20 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — §CN overrun ruins, the torch swing and kindling: design and data only (design chat; Mike 11:56–13:38)
+- **§CN** in RECONCILIATION_2026-09-30: ruins the dark took stay overrun and are cleared by light, never a fight (§BA stands). Left click with a torch swings it and passes the flame both ways, replacing §AW's right-click lighting. A fire that is fully out needs kindling laid; embers don't. Folk come back to a cleared ruin. It also records Mike's "torch only, no flint and steel", as asked.
+- **Data, all `[NOT WIRED YET — design §CN]`:**
+  - `torch.json → swing`;
+  - `fuel.json → kindling`: the rules, 33 real kinds with their sources, and a list for each of the 52 biomes. Seven biome families were filled by parallel agents; the tropical forests have a stop-gap until their fill lands;
+  - `camps.json → sim.overrun`;
+  - the new `data/delves.json`: fire-holders, the overrun den, log lines.
+  - `fuel.json fire.old_hearth_units` (2) is written in, as Claude Code asked.
+- **New gate:** `tools/kindling_check.py` (`--strict`: 33 kinds, 52 biomes, 0 errors).
+- **Open for Mike:**
+  - whether carried kindling stays dry in rain;
+  - the 30 % of old delve ruins that start overrun;
+  - adding the plants the fill found missing: birch in four biomes, Arctic white heather, Spanish moss in the swamp, yucca.
+
 ## 2026-10-02 — Old hearths, tomb lamps, the barrow's delve (§CJ) and the dusk shift change (§CH) (Mike: "sounds good get to work"; his 2 Oct answers on the §CJ audit)
 - **Old hearths** (`OldHearths`): a cold hearth at every ruin with no camp and every nest holding remains (§CK). Rekindle it with a lit torch and feed it; lit, it holds the dark off and can be your hearth. It is kept in the save and burns down while you are away. **Torch only:** Mike's flint-and-steel idea clashes with the locked "fire is never made" (30 Sept §BP). Asked, he said "sounds good" to keeping the torch only, so that is what is built; Claude in chat to record it.
 - **Tomb lamps:** the barrow's, desert pyramid's, mastaba's and mausoleum's lamp-gold lights are now stone lamps, dark until the ruin's hearth burns (Mike: "light … that activate after the main hearth is rekindled"). The teal moss glows stay on.
