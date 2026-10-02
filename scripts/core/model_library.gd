@@ -66,9 +66,14 @@ static func _scene(name: String) -> PackedScene:
 	var scene: PackedScene = null
 	for ext: String in [".glb", ".gltf"]:
 		var path := DIR + name + ext
-		if ResourceLoader.exists(path):
+		# The import only when it is really there (ResFiles.imported, §CG):
+		# a .glb whose .import is committed but whose imported data isn't
+		# in .godot/imported is read from the file itself.
+		if ResFiles.imported(path):
 			scene = load(path) as PackedScene
 		elif FileAccess.file_exists(path):
+			if FileAccess.file_exists(path + ".import"):
+				ResFiles.warn_missing(path)
 			scene = _read_raw(path)
 		if scene:
 			break

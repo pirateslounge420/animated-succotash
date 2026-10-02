@@ -1,0 +1,266 @@
+diff --git a/shaders/foliage.gdshader b/shaders/foliage.gdshader
+index aa5cf06..d3718d3 100644
+--- a/shaders/foliage.gdshader
++++ b/shaders/foliage.gdshader
+@@ -345,8 +345,9 @@ float sp_hash(vec2 p) {
+ // One cell of leaves on a near card (§AH: the leaf cutout is the card at
+ // this range): `g` card coordinates in leaf lengths; each cell holds one
+ // leaf, flipped or turned at random, some left empty. The mip comes from
+-// the continuous coordinates, so the cell seams don't pick a blurry one.
+-vec4 sp_leaf_cell(vec2 g, float seed) {
++// the continuous coordinates, so the cell seams don't pick a blurry one
++// (their gradients ggx, ggy, taken at the top of fragment()).
++vec4 sp_leaf_cell(vec2 g, float seed, vec2 ggx, vec2 ggy) {
+ 	vec2 cell = floor(g);
+ 	vec2 f = fract(g);
+ 	float h = sp_hash(cell + seed);
+@@ -359,7 +360,7 @@ vec4 sp_leaf_cell(vec2 g, float seed) {
+ 	if (fract(h * 13.7) > 0.5) {
+ 		f = f.yx;
+ 	}
+-	vec2 dg = max(abs(dFdx(g)), abs(dFdy(g)));
++	vec2 dg = max(abs(ggx), abs(ggy));
+ 	float lod = clamp(log2(max(max(dg.x, dg.y) * 48.0, 1e-4)), 0.0, look_max_mips);
+ 	vec4 c = textureLod(sp_leaf, f, lod);
+ 	vec4 a = textureLod(sp_leaf_autumn, f, lod);
+@@ -384,7 +385,7 @@ float imp_profile(float t, vec4 p) {
+ // they stay put), 3 golden, 4 green form (no dark pigment: stems and
+ // petioles plain green), 5 dark form (purple-black / copper), 6 blue form
+ // (glaucous). The rest are form sports, drawn by the mesh builders.
+-vec3 sport_tint(vec3 c, bool leafy) {
++vec3 sport_tint(vec3 c, bool leafy, vec3 gpx, vec3 gpy) {
+ 	if (v_sport < 0.5) {
+ 		return c;
+ 	}
+@@ -395,8 +396,8 @@ vec3 sport_tint(vec3 c, bool leafy) {
+ 		if (!leafy) {
+ 			return c;
+ 		}
+-		float n = retro_tile(look_tex_leaves, obj_pos.xz * 1.7 + obj_pos.y * 0.6).g;
+-		float edge = retro_tile(look_tex_leaves, obj_pos.zy * 3.1).r;
++		float n = retro_tile_g(look_tex_leaves, obj_pos.xz * 1.7 + obj_pos.y * 0.6, gpx.xz * 1.7 + gpx.y * 0.6, gpy.xz * 1.7 + gpy.y * 0.6).g;
++		float edge = retro_tile_g(look_tex_leaves, obj_pos.zy * 3.1, gpx.zy * 3.1, gpy.zy * 3.1).r;
+ 		float white = smoothstep(0.52, 0.6, n * 0.8 + edge * 0.35);
+ 		return mix(c, vec3(0.93, 0.9, 0.74) * (0.55 + lum * 1.2), white);
+ 	} else if (v_sport < 3.5) {
+@@ -411,7 +412,26 @@ vec3 sport_tint(vec3 c, bool leafy) {
+ 	return c;
+ }
+ 
++// The planar pick of obj_pos the bark, culms and crowns use (by the
++// normal), for a coordinate or, being linear, its screen gradient.
++vec2 pick2(vec3 p, vec3 an) {
++	return an.x > an.z ? p.zy : p.xy;
++}
++vec2 pick3(vec3 p, vec3 an) {
++	return an.y > 0.55 ? p.xz : (an.x > an.z ? p.zy : p.xy);
++}
++
+ void fragment() {
++	// Every screen-space derivative, once, here: before any discard and
++	// outside every branch. Metal leaves dFdx undefined after a discard and
++	// in branches only some pixels of a quad take (Mike's Mac, 1 Oct: leaf
++	// cards drawn as flat grey squares); every sample below takes its mip
++	// from these (retro_tex_g, the chain rule for scaled coordinates).
++	vec2 duv_x = dFdx(UV);
++	vec2 duv_y = dFdy(UV);
++	vec3 dop_x = dFdx(obj_pos);
++	vec3 dop_y = dFdy(obj_pos);
++	float card_px = length(dFdx(world_pos)) + length(dFdy(world_pos));
+ 	// The sun's and moon's shadow maps are drawn with an orthographic
+ 	// projection (the game camera is perspective). There, closed shapes
+ 	// (bark, crowns, bamboo culms) cast from their far faces only, so a
+@@ -428,7 +448,7 @@ void fragment() {
+ 		float x = abs(UV.x - 0.5) * 2.0 * 1.08;
+ 		float cb = v_imp2.x;
+ 		float t = (UV.y - cb) / max(1.0 - cb, 1e-3);
+-		float n = retro_tile(look_tex_leaves, UV * vec2(3.0, 5.0)).g;
++		float n = retro_tile_g(look_tex_leaves, UV * vec2(3.0, 5.0), duv_x * vec2(3.0, 5.0), duv_y * vec2(3.0, 5.0)).g;
+ 		float r = imp_profile(clamp(t, 0.0, 1.0), v_imp);
+ 		float rim = r * (0.78 + 0.44 * n);
+ 		bool crown = t > 0.0 && x < rim;
+@@ -437,7 +457,7 @@ void fragment() {
+ 		// crown keeps only what the leaf-card cutout keeps, in cells that
+ 		// turn with the tree so neighbours differ.
+ 		if (crown && x > rim * 0.45) {
+-			float holes = retro_tex(look_tex_leaf_card, UV * vec2(2.0, 3.0) + vec2(fract(inst * 0.37), fract(inst * 0.61))).a;
++			float holes = retro_tex_g(look_tex_leaf_card, UV * vec2(2.0, 3.0) + vec2(fract(inst * 0.37), fract(inst * 0.61)), duv_x * vec2(2.0, 3.0), duv_y * vec2(2.0, 3.0)).a;
+ 			if (holes < 0.5) {
+ 				crown = false;
+ 			}
+@@ -470,7 +490,7 @@ void fragment() {
+ 			float g = pal_greenness(c);
+ 			c = pal_pull(c, pal_canopy, 0.55 * g);
+ 			c = pal_pull(c, pal_grass_night, 0.7 * nk_i * g);
+-			c = sport_tint(c, true);
++			c = sport_tint(c, true, dop_x, dop_y);
+ 		} else {
+ 			c = pal_bark * 0.5 * (0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
+ 			c = pal_pull(c, pal_bark_night, 0.6 * nk_i);
+@@ -494,33 +514,40 @@ void fragment() {
+ 		}
+ 	}
+ 	vec3 an = abs(obj_normal);
++	// A cluster card's UV, mirrored and turned per cluster so neighbours
++	// don't match, and its gradients (a mirror keeps their length).
++	bool turn = mat_id > 4.5 && fract(cluster_key * 9.7) > 0.5;
++	vec2 cuv = mat_id > 4.5 && fract(cluster_key * 5.3) > 0.5 ? vec2(1.0 - UV.x, UV.y) : UV;
++	cuv = turn ? cuv.yx : cuv;
++	vec2 dcuv_x = turn ? duv_x.yx : duv_x;
++	vec2 dcuv_y = turn ? duv_y.yx : duv_y;
+ 	vec4 tex;
+ 	if (mat_id > 4.5) {
+-		// Leaf-cluster card: the noisy leaf cluster, mirrored and turned
+-		// per cluster so neighbours don't match.
+-		vec2 cuv = fract(cluster_key * 5.3) > 0.5 ? vec2(1.0 - UV.x, UV.y) : UV;
+-		cuv = fract(cluster_key * 9.7) > 0.5 ? cuv.yx : cuv;
+-		tex = retro_tex(look_tex_leaf_card, cuv);
++		// Leaf-cluster card: the noisy leaf cluster.
++		tex = retro_tex_g(look_tex_leaf_card, cuv, dcuv_x, dcuv_y);
+ 	} else if (mat_id > 3.5) {
+ 		// Bamboo culm: smooth, faintly streaked, ringed with a node every
+ 		// ~35 cm (a dark ridge with a pale band under it).
+-		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
+-		tex = retro_tile(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
++		vec2 uv = pick2(obj_pos, an);
++		vec2 k = vec2(3.0, 0.15);
++		tex = retro_tile_g(look_tex_bark, uv * k, pick2(dop_x, an) * k, pick2(dop_y, an) * k) * 0.35 + 0.33;
+ 		float node = fract(obj_pos.y / 0.35);
+ 		tex.rgb *= 1.0 - 0.45 * step(0.94, node) + 0.18 * step(0.86, node) * step(node, 0.94);
+ 	} else if (mat_id > 2.5) {
+ 		// Vines: the leafy texture running down the strand (the vine
+ 		// species' own tile when the tree has one, §CE).
+ 		vec2 vuv = vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y;
+-		tex = sp_vine_on ? texture(sp_vine_leaves, vuv) : retro_tile(look_tex_leaves, vuv);
++		vec2 gvx = vec2(dop_x.x + dop_x.z, dop_x.y) / look_tile_m2.y;
++		vec2 gvy = vec2(dop_y.x + dop_y.z, dop_y.y) / look_tile_m2.y;
++		tex = sp_vine_on ? textureGrad(sp_vine_leaves, vuv, gvx, gvy) : retro_tile_g(look_tex_leaves, vuv, gvx, gvy);
+ 	} else if (mat_id > 1.5) {
+-		tex = retro_tex(look_tex_leaf_card, UV);
++		tex = retro_tex_g(look_tex_leaf_card, UV, duv_x, duv_y);
+ 	} else if (mat_id > 0.5) {
+-		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
+-		tex = retro_tile(look_tex_leaves, uv / (look_tile_m2.y * v_leafs));
++		float s = look_tile_m2.y * v_leafs;
++		tex = retro_tile_g(look_tex_leaves, pick3(obj_pos, an) / s, pick3(dop_x, an) / s, pick3(dop_y, an) / s);
+ 	} else {
+-		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
+-		tex = retro_tile(look_tex_bark, uv / look_tile_m2.x);
++		float s = look_tile_m2.x;
++		tex = retro_tile_g(look_tex_bark, pick2(obj_pos, an) / s, pick2(dop_x, an) / s, pick2(dop_y, an) / s);
+ 	}
+ 	// Palette: leaves toward the canopy green (§AG), bark toward the warm
+ 	// brown.
+@@ -551,8 +578,8 @@ void fragment() {
+ 		vec4 t;
+ 		if (mat_id < 0.5) {
+ 			// Bark, tiled every sp_bark_tile_m.
+-			vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
+-			t = retro_tex(sp_bark, uv / sp_bark_tile_m);
++			float s = sp_bark_tile_m;
++			t = retro_tex_g(sp_bark, pick2(obj_pos, an) / s, pick2(dop_x, an) / s, pick2(dop_y, an) / s);
+ 		} else if (mat_id < 1.5) {
+ 			// A crown's surface (the hull of a tree with no branch layout:
+ 			// the understory tiers, palms, herbs): the foliage mass over
+@@ -560,10 +587,13 @@ void fragment() {
+ 			// read as a flat dark shard at dusk): near, the leaf cutout at
+ 			// the leaf's own size; far, the mass tile's holes, so the hull
+ 			// is a ragged leafy shell with sky through it.
+-			vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
+-			vec4 m = retro_tex(sp_leaves, uv / mass_m);
++			vec2 uv = pick3(obj_pos, an);
++			vec2 gx = pick3(dop_x, an);
++			vec2 gy = pick3(dop_y, an);
++			vec4 m = retro_tex_g(sp_leaves, uv / mass_m, gx / mass_m, gy / mass_m);
+ 			if (distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
+-				vec4 l = sp_leaf_cell(uv / (sp_leaf_m * v_leafs), inst * 3.1 + floor(uv.x / mass_m) * 7.0);
++				float ls = sp_leaf_m * v_leafs;
++				vec4 l = sp_leaf_cell(uv / ls, inst * 3.1 + floor(uv.x / mass_m) * 7.0, gx / ls, gy / ls);
+ 				t = vec4(l.rgb, l.a);
+ 			} else {
+ 				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, step(0.5, m.a));
+@@ -572,19 +602,16 @@ void fragment() {
+ 			// Cards: the ragged cluster outline; inside it, near, the leaf
+ 			// cutout at the leaf's own size; for clumps and far cards, the
+ 			// foliage mass over its own shade.
+-			vec2 cuv = UV;
+-			if (mat_id > 4.5) {
+-				cuv = fract(cluster_key * 5.3) > 0.5 ? vec2(1.0 - UV.x, UV.y) : UV;
+-				cuv = fract(cluster_key * 9.7) > 0.5 ? cuv.yx : cuv;
+-			}
+-			float edge = retro_tex(look_tex_leaf_card, cuv).a;
+-			float card_m = (length(dFdx(world_pos)) + length(dFdy(world_pos))) / max(length(dFdx(UV)) + length(dFdy(UV)), 1e-6);
++			float edge = retro_tex_g(look_tex_leaf_card, cuv, dcuv_x, dcuv_y).a;
++			float card_m = card_px / max(length(duv_x) + length(duv_y), 1e-6);
+ 			card_m = floor(card_m * 10.0 + 0.5) / 10.0;
+ 			if (distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
+-				vec4 l = sp_leaf_cell(cuv * card_m / (sp_leaf_m * v_leafs), inst * 3.1 + cluster_key * 17.0);
++				float ls = card_m / (sp_leaf_m * v_leafs);
++				vec4 l = sp_leaf_cell(cuv * ls, inst * 3.1 + cluster_key * 17.0, dcuv_x * ls, dcuv_y * ls);
+ 				t = vec4(l.rgb, l.a * edge);
+ 			} else {
+-				vec4 m = retro_tex(sp_leaves, cuv * card_m / mass_m);
++				float ms = card_m / mass_m;
++				vec4 m = retro_tex_g(sp_leaves, cuv * ms, dcuv_x * ms, dcuv_y * ms);
+ 				// A branchy tree's cluster keeps the mass tile's holes
+ 				// (cut out to canopy.gap, §AJ 2): sky through every card.
+ 				float a = mat_id > 4.5 ? edge * step(0.5, m.a) : edge;
+@@ -612,7 +639,7 @@ void fragment() {
+ 		ALBEDO = c;
+ 		tex.a = t.a;
+ 	}
+-	ALBEDO = sport_tint(ALBEDO, (mat_id > 0.5 && mat_id < 3.5) || mat_id > 4.5);
++	ALBEDO = sport_tint(ALBEDO, (mat_id > 0.5 && mat_id < 3.5) || mat_id > 4.5, dop_x, dop_y);
+ 	if (v_leafs > 1.01 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+ 		// Shade leaves: more chlorophyll to a leaf, a little darker.
+ 		ALBEDO *= mix(1.0, 0.86, clamp((v_leafs - 1.0) / 0.45, 0.0, 1.0));
+@@ -620,10 +647,12 @@ void fragment() {
+ 	if (mat_id < 0.5 && moss > 0.01) {
+ 		// Moss on the bark: patchy, low down, on faces turned up and to one
+ 		// side (the damp side).
+-		float n = retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
++		vec2 mx = vec2(dop_x.x + dop_x.z, dop_x.y);
++		vec2 my = vec2(dop_y.x + dop_y.z, dop_y.y);
++		float n = retro_tile_g(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7, mx * 0.7, my * 0.7).g;
+ 		float lowness = 1.0 - clamp(obj_pos.y / 5.0, 0.0, 1.0);
+ 		float m = smoothstep(0.45, 0.7, n * 0.9 + 0.3 * lowness + 0.25 * obj_normal.y + 0.15 * obj_normal.z + 0.4 * moss - 0.25);
+-		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
++		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tile_g(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3, mx * 1.3, my * 1.3).rgb * 2.0;
+ 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
+ 	}
+ 	// Cards, cluster cards and a tiled crown hull cut by their alpha.
+diff --git a/shaders/look.gdshaderinc b/shaders/look.gdshaderinc
+index bced8c6..0a9fadc 100644
+--- a/shaders/look.gdshaderinc
++++ b/shaders/look.gdshaderinc
+@@ -170,6 +170,19 @@ vec4 retro_tex(sampler2D tex, vec2 uv) {
+ 	return textureLod(tex, uv, clamp(lod, 0.0, look_max_mips));
+ }
+ 
++// retro_tex with the coordinate's screen gradients given (gx, gy: d uv /
++// d screen x and y), for a shader that takes its derivatives once, before
++// any discard or branch: Metal leaves dFdx undefined after a discard and in
++// branches only some pixels of a quad take (Mike's Mac, 1 Oct: leaf cards
++// drawn as flat grey squares, their mip the 1x1 average).
++vec4 retro_tex_g(sampler2D tex, vec2 uv, vec2 gx, vec2 gy) {
++	vec2 ts = vec2(textureSize(tex, 0));
++	vec2 dx = gx * ts;
++	vec2 dy = gy * ts;
++	float lod = 0.5 * log2(max(max(dot(dx, dx), dot(dy, dy)), 1e-8));
++	return textureLod(tex, uv, clamp(lod, 0.0, look_max_mips));
++}
++
+ // One of Look's mid-grey modulation tiles (grass, dirt, sand, stone, bark,
+ // leaves, water: 0.5 = unchanged), nearest-filtered with at most
+ // look_max_mips mips, its contrast pushed by look_tile_contrast (§AG 1).
+@@ -178,3 +191,10 @@ vec4 retro_tile(sampler2D tex, vec2 uv) {
+ 	c.rgb = 0.5 + (c.rgb - 0.5) * (1.0 + look_tile_contrast);
+ 	return c;
+ }
++
++// retro_tile with the coordinate's screen gradients given (retro_tex_g).
++vec4 retro_tile_g(sampler2D tex, vec2 uv, vec2 gx, vec2 gy) {
++	vec4 c = retro_tex_g(tex, uv, gx, gy);
++	c.rgb = 0.5 + (c.rgb - 0.5) * (1.0 + look_tile_contrast);
++	return c;
++}

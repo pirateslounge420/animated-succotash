@@ -80,6 +80,10 @@ var new_world_requested := false
 ## The kind of first camp this world rolled (camps.json first_camp; "" for
 ## the old single list), for the log's first line.
 var first_camp_kind := ""
+## The local day (Astro.local_clock's index, at the opening camp) the world
+## began on; its save keeps it (WorldSave "first_local_day"). Day 1 is the
+## count, not the calendar: the sky keeps START_DAYS (design §CG).
+var first_local_day := 0.0
 
 ## Scene node whose direct children get shifted on rebase (terrain chunks,
 ## creatures, the far planet shell, ...). Set by the playable scene.
@@ -213,6 +217,21 @@ func reset_world_state() -> void:
 	GameLog.entries.clear()
 	GameLog._once.clear()
 	ready_to_play = false
+
+
+## The day of play and the time at `d` (design 1 Oct §CG): x the day number
+## (1 on the day the world began, up one at local midnight where `d` is),
+## y the sky's hours 0-24. The one clock every readout uses.
+func local_clock(d: Vector3) -> Vector2:
+	var c := Astro.local_clock(days, CubeSphere.longitude(d), CubeSphere.latitude(d))
+	return Vector2(maxf(c.x - first_local_day + 1.0, 1.0), c.y)
+
+
+## "Day 3 · 14:05" at `d` (the HUD line and the log's stamps).
+func clock_text(d: Vector3) -> String:
+	var c := local_clock(d)
+	var m := int(floor(c.y * 60.0))
+	return "Day %d · %02d:%02d" % [int(c.x), (m / 60) % 24, m % 60]
 
 
 func generate(p_seed: int) -> void:

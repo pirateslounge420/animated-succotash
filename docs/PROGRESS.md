@@ -4,6 +4,47 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — §CG: the game no longer needs the import cache; Day 1 and one clock; every frame labelled (design 1 Oct §CG)
+- **Nothing at runtime depends on the import cache** (`ResFiles`, `Look.texture`, `SkySystem._cloud_pano`, `ModelLibrary._scene`, `HudText`):
+  - Each world tile is read from its PNG on disk (`FileAccess.get_file_as_bytes`, `Image.load_png_from_buffer`), then `fix_alpha_edges()` (the importer's `fix_alpha_border`) and mipmaps, as the importer does.
+  - The import is used only when the PNG can't be read and the import is really there (`ResFiles.imported`, the one shared test, moved from `HudText._imported`). Otherwise the tile is painted (`LookTextures`).
+  - `Look.texture()` never returns null and never hands a material an empty texture.
+  - The cloud panorama is read the same way. An un-imported .glb whose `.import` exists now reaches `_read_raw`.
+  - A missing import is one `push_warning` naming the file.
+  - F3 has a new line: "World textures: 9 from disk" (or from import / painted).
+  - **The audit:** the only runtime `load()` calls left on imported types are the font, ModelLibrary and ResFiles, and all three are behind `ResFiles.imported`. No .tscn or .tres references an imported image, font, sound or model. `config/icon` raised nothing with the cache hidden.
+- **Day 1 and one clock** (`Astro.local_clock`, `World.local_clock` / `clock_text`, `main.open_clock`):
+  - One function gives a place's day and time from the sky's clock: the local day is `floor(days + longitude/TAU)`, and the time is the sky's warped solar time. The HUD line, the clock face, the log's stamps and the log's first line all use it.
+  - Every new world opens on Day 1 in §BX's afternoon, and the day goes up at local midnight where you stand. `START_DAYS` stays 13.62, so the sky and the first night's moon are as before.
+  - The world's first local day is stored in its save (`first_local_day`).
+  - **A save from before has none:** the day it wakes on becomes its first day (Day 1), and that is kept from then on.
+  - **Not fixed here: the world clock itself isn't saved** (`WorldSave`: "Phase 12 persistence decides … the world clock"). Every boot restarts it at START_DAYS and takes it to the afternoon where you wake, so a Continue still reads Day 1 or 2, not the days played. Once Phase 12 saves `days`, the stored first day makes Continue count from the world's start; `day_check` already checks that (a save begun three days earlier reads Day 4).
+- **Checks (full planet, harness, the cloud machine):**
+  - `tools/no_import_check.sh` (new; it moves `.godot/imported` aside, keeps the class cache, and always puts it back), headless, DEV_PIN=0, fresh random world 474184050: 0 fails.
+    - Every `look_tex_*` is a real texture: plant 3, terrain 4, salt and fresh water 1 each, ruin 4.
+    - The leaf card has 458 of 1,024 texels clear, the same as the file.
+    - All 9 textures came from disk. 48 species materials carry their leaf tile and 0 lack it. The HUD font is VT323, read from disk.
+    - 0 "Failed loading resource" lines, and nothing in the log beyond the usual quit-time thread warning.
+  - `tools/import_parity_check.gd` (cache present): the 8 tiles are identical from disk and from the import at every mip level (7 levels at 64 px, 6 at 32 px), and the cloud panorama is identical too.
+  - `tools/day_check.sh` (new), 0 fails on each of four seeds:
+    - The camps are 7731 at 156.1°E, 1378252316 at 74.5°E, 90210 at 29.5°W and 31337 at 169.3°W. Each run also checks Mike's 12.7°N 140.1°W on that world's sky.
+    - Each wakes on Day 1 in the afternoon (13:43–13:46). The last Day 1 stamp is 23:58, and Day 2 starts at 00:00.
+    - The HUD line, the face and the log stamp agree to the minute at every reading (51–52 per place).
+    - `world.days` equals START_DAYS taken to the afternoon, as before, and the first night's moon is 98–100 % lit.
+    - A save from before reads Day 1 and keeps its first day; one begun three days earlier reads Day 4.
+  - `new_world_check` with DEV_PIN=0: 0 fails. It now also asserts that a world opens on Day 1 (Day 1 · 13:45), that its save keeps `first_local_day`, and that Continue keeps it.
+  - Headless boot: clean.
+- **The end-of-pass walkabout, with the import cache hidden** (harness frame: `tools/walkabout.gd` via `tools/no_import_check.sh`, QUICK, opening camp; a fresh random world, seed 2134316216, tropical dry forest; first person at the eye; the cloud machine's lavapipe software Vulkan, Forward+, 1280×720; cache hidden): 0 fails.
+  - Afternoon: solar 13.6 h, sun 64.6°.
+  - 13 species within 30 m, all in their own biome. 0 failed loads.
+  - Leaf cards cut out and the ground is tiled: no grey boxes.
+  - The same world rendered with the cache present (same harness, camera and machine) matches it apart from moving things (wind sway, falling leaves, cloud drift).
+  - Walkabout fix: under DEV_PIN=0 it no longer pins its SEED, which play overrode anyway. It now files the frames under the seed it actually booted and leaves no save behind. `no_import_check` also no longer leaves a save.
+- **Frames:** every frame shown or put here is labelled harness or play. `tools/dev_view.gd`'s header no longer calls its world the postage stamp: it is a harness frame (seed 42 unless SEED is set, the full planet).
+- **For an export (out of scope):** an export packs the imported `.ctex` files, not the PNGs. The disk-first reads would then fall back to the import, which is there in an export. To keep the disk reads, the export preset's non-resource include filter needs `assets/textures/retro/*.png`, `assets/fonts/*.ttf` and `assets/textures/plants/species/*` (that folder is `.gdignore`d, so nothing of it is packed without the filter).
+- **Seen in passing, not this pass:** the walkabout prints "p_buffer.size() != instances × stride" MultiMesh errors (690 per run here; 2,509 on seed 303 earlier), the same with the cache present or hidden.
+- **Queued, per §CG:** the foliage-derivative refactor (derivatives taken before any branch) is saved as `docs/parked/foliage_derivatives.patch`, and the F9 foliage views stay queued with it.
+
 ## 2026-10-02 — Mike's 1 Oct 23:11 play: grey-box plants and Day 14 — causes found and reproduced (design chat; design §CG)
 - **The frames shown so far were all harness frames:** `tools/dev_view.gd` (seed 42, the first camp, a fixed third-person camera 9 m south of the fire, weather held clear), `walkabout.gd` and `species_row.gd`, all rendered on the cloud machine (xvfb, lavapipe, Godot 4.3, the import cache complete). None is play on Mike's Mac, and none could show this bug.
 - **The grey boxes, reproduced** (Godot 4.3.stable.official.77dcf97d8 headless, this branch at `34f9d42`, `.godot` built by `--import`): with the import cache present, `Look.texture("leaf_card")` is an ImageTexture with 458 of 1,024 pixels cut out and the plant material holds it. With `.godot/imported` moved aside (the class cache kept), `ResourceLoader.exists` still says true (the committed `.import` file), `load()` fails ("Failed loading resource: res://.godot/imported/leaf_card.png-….ctex. Make sure resources have been imported by opening the project in the editor at least once."), `Look.texture()` stops on "Cannot call method 'get_image' on a null value" and returns null, and the plant material's `look_tex_leaf_card`, `look_tex_leaves` and `look_tex_bark` are all null. The same for grass. Godot samples an unset `sampler2D` as opaque white: alpha 1, so the cards never cut out, and `foliage.gdshader` draws `base × tex × 2`, so they wash out pale. The 23:11 frame, cropped: bamboo culms with their shader-drawn node rings and no bark, leaf cards as flat solid quads, the ground smooth green with no tiles. Every importer-fed texture is empty; every shader-drawn detail is there.

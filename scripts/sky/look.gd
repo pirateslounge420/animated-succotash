@@ -140,18 +140,25 @@ static func finish() -> void:
 		_task = -2
 
 
-## One of the named world textures (see the class notes).
+## One of the named world textures (see the class notes). Never null.
+## A §AG tile is read from its PNG on disk (design 1 Oct §CG: never the
+## import cache, which Mike's Mac lacked: every world material got nothing
+## and drew opaque white), else from the import when it is really there,
+## else painted (LookTextures) so no material is handed an empty texture.
 static func texture(name: String) -> ImageTexture:
 	if _textures.has(name):
 		return _textures[name]
 	var path := _retro_path(name)
 	if path != "":
-		var tile := (load(path) as Texture2D).get_image()
-		tile.decompress()
-		tile.convert(Image.FORMAT_RGBA8)
-		tile.generate_mipmaps()
-		_textures[name] = ImageTexture.create_from_image(tile)
-		return _textures[name]
+		var tile := tile_image(path, "disk")
+		if tile == null:
+			tile = tile_image(path, "import")
+		if tile != null:
+			sources[name] = "disk" if loaded_from(path) == "disk" else "import"
+			_textures[name] = ImageTexture.create_from_image(tile)
+			return _textures[name]
+		push_warning("Look: %s could not be read from disk or its import; painted instead" % path)
+		sources[name] = "painted"
 	finish()
 	var img: Image = _images.get(name)
 	if img == null:
@@ -161,7 +168,50 @@ static func texture(name: String) -> ImageTexture:
 	return tex
 
 
+## Where each file-backed world texture came from: name -> "disk", "import"
+## or "painted" (the §AG tiles and the cloud panorama; Hud's F3 line).
+static var sources := {}
+static var _from := {}
+
+
+static func loaded_from(path: String) -> String:
+	return str(_from.get(path, ""))
+
+
+## A §AG tile's image the way the importer makes it (process/fix_alpha_border
+## is Image.fix_alpha_edges; mipmaps none) and then as the shaders take it
+## (RGBA8, every mip level), from `via` "disk" (the PNG's own bytes) or
+## "import" (the cache, only when it is there). Null if that way fails.
+## tools/no_import_check.gd proves the two identical at every mip.
+static func tile_image(path: String, via: String) -> Image:
+	var img: Image = null
+	if via == "disk":
+		img = ResFiles.disk_image(path)
+		if img != null:
+			img.fix_alpha_edges()
+	else:
+		img = ResFiles.imported_image(path)
+	if img == null:
+		return null
+	img.convert(Image.FORMAT_RGBA8)
+	img.generate_mipmaps()
+	_from[path] = via
+	return img
+
+
+## The counts of sources for the F3 line ("9 disk").
+static func sources_text() -> String:
+	var by := {}
+	for k in sources:
+		by[sources[k]] = int(by.get(sources[k], 0)) + 1
+	var parts: Array[String] = []
+	for k in ["disk", "import", "painted"]:
+		if by.has(k):
+			parts.append("%d %s" % [by[k], "from disk" if k == "disk" else ("from the import" if k == "import" else "painted")])
+	return ", ".join(parts) if not parts.is_empty() else "none yet"
+
+
 ## The §AG retro tile for `name` (res:// path), or "" if there is none.
 static func _retro_path(name: String) -> String:
 	var path := "res://%s/%s.png" % [String(RETRO.get("tiles_dir", "")), name]
-	return path if RETRO.has("tiles_dir") and ResourceLoader.exists(path) else ""
+	return path if RETRO.has("tiles_dir") and (FileAccess.file_exists(path) or FileAccess.file_exists(path + ".import")) else ""

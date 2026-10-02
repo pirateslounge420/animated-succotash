@@ -538,9 +538,7 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	# Solar time: the sky's (warped) clock, so noon is when the sun peaks.
 	var lat := CubeSphere.latitude(player_dir)
 	var days: float = Astro.apparent_days(world.days, lon, lat)
-	var hours := Astro.local_hours(days, lon)
-	var hh := int(hours)
-	var mm := int((hours - hh) * 60.0)
+	var hours: float = world.local_clock(player_dir).y
 	var sun_el := rad_to_deg(Astro.elevation(Astro.sun_dir(days), player_dir))
 	# The four phases: night, dawn and dusk (sun within TWILIGHT_DEG of the
 	# horizon), day.
@@ -552,7 +550,7 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	var mansion := Astro.mansion_index(days)
 	var moon_up := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir)) > 0.0
 	# Each part's line (_apply() puts them on screen, pinned or not).
-	_part_text["time"] = "Day %d · %02d:%02d · %s" % [int(days) + 1, hh, mm, part]
+	_part_text["time"] = "%s · %s" % [world.clock_text(player_dir), part]
 	_part_text["moon"] = "%s (%d%% lit)%s" % [Astro.phase_name(days), int(round(Astro.moon_illumination(days) * 100.0)), " · moon up" if moon_up else ""]
 	_part_text["mansion"] = "Mansion: %s · %s" % [Astro.MANSION_NAMES[mansion], Astro.BEAST_NAMES[Astro.beast_index(mansion)]]
 	# (VT323 has no arrow: "Spring -> Summer 40%", not a taller line in a
@@ -622,7 +620,7 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 	var sun_el := rad_to_deg(Astro.elevation(Astro.sun_dir(days), player_dir))
 	var moon_el := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir))
 	var mansion := Astro.mansion_index(days)
-	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f\nLat %.1f° · year day %d of %d · sun decl %+.1f°\nDaylight %.1f h · day %.0f · dusk %.0f · night %.0f · dawn %.0f min" % [
+	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f\nLat %.1f° · year day %d of %d · sun decl %+.1f°\nDaylight %.1f h · day %.0f · dusk %.0f · night %.0f · dawn %.0f min\nWorld textures: %s" % [
 		" · World %d%s" % [world.world_seed, " · dev mode" if world.dev_mode else ""],
 		_hhmm(clock * 24.0), _hhmm(solar_h), day_min,
 		String(ph.name).capitalize(), float(ph.into) * day_min, float(ph.length) * day_min, DayCycle.turn_rate(clock, lat, decl),
@@ -631,6 +629,7 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 		mansion + 1, Astro.MANSION_NAMES[mansion], float(weather.get("cloud", 0.0)),
 		rad_to_deg(lat), int(Astro.year_day(world.days)) + 1, int(DayCycle.year_days()), rad_to_deg(decl),
 		DayCycle.daylight_hours(lat, decl), float(pm.day) * scale, float(pm.dusk) * scale, float(pm.night) * scale, float(pm.dawn) * scale,
+		Look.sources_text(),
 	] + "\nSoil %s (plants gate on it)" % PlanetData.soil_name(world.planet.soil_at(player_dir)).replace("_", "/") + "\nSeason %s · day %d · %+.1f °C · wet x%.2f" % [
 		Seasons.label(world.days, lat), int(Seasons.at(world.days, lat).day_of_season) + 1,
 		Seasons.temp_offset_c(world.days, lat), Seasons.moisture_mult(world.days, lat),

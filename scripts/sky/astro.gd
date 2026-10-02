@@ -90,6 +90,17 @@ static func declination(days: float) -> float:
 
 ## Local clock at a longitude, as hours 0-24 (noon = 12 when the sun is
 ## highest there).
+## A place's local day and time on the sky's clock (design 1 Oct §CG): x
+## the local day index (it turns at local midnight at `longitude`), y the
+## hours 0-24 where noon is when the sun peaks (DayCycle.warp keeps
+## midnight and noon, so the day turns as the clock face passes 00:00).
+## The HUD line, the clock face and the log's stamps all read this.
+static func local_clock(days: float, longitude: float, latitude: float) -> Vector2:
+	var u := days + longitude / TAU
+	var day := floorf(u)
+	return Vector2(day, DayCycle.warp(u - day, latitude, declination(days)) * 24.0)
+
+
 static func local_hours(days: float, longitude: float) -> float:
 	return fposmod((time_of_day(days) + longitude / TAU) * 24.0, 24.0)
 

@@ -1,6 +1,8 @@
 extends SceneTree
 ## The fixed dev viewpoint: the same frame every time, for judging the
-## look between changes. Seed 42 postage stamp (data/dev.json), the first
+## look between changes (a harness frame, design §CG: label it so, with the
+## tool, seed, camera, the cloud GPU and the import cache present or
+## hidden). Seed 42 (SEED to change it) on the full planet, the first
 ## camp (spawn 0), you waking on the fire's north side (the folk across
 ## it; Encampment.fixed_side) and the random numbers seeded. The camera
 ## stands 9 m south of the fire, 2.4 m up, looking north across it at you

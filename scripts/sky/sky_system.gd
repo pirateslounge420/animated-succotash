@@ -187,6 +187,25 @@ static var GRADE := Tuning.section("look", "grade")
 ## shadows under characters (BlobShadow). The switch is the setting
 ## "display.day_shadows" (the settings panel), default look "light"
 ## shadows; DAY_SHADOWS=0/1 in the environment overrides it (tools).
+## The painted cloud panorama (§AG, retro tiles_dir/cloud_pano.png) from
+## its PNG on disk, processed as its import is (fix_alpha_border, no mips),
+## else from the import when it is really there; null bakes the clouds
+## instead (SkyPaint). Never through a missing import cache (design §CG).
+static func _cloud_pano(path: String) -> Texture2D:
+	var img := ResFiles.disk_image(path)
+	var via := "disk"
+	if img != null:
+		img.fix_alpha_edges()
+	else:
+		img = ResFiles.imported_image(path)
+		via = "import"
+	if img == null:
+		Look.sources["cloud_pano"] = "painted"
+		return null
+	Look.sources["cloud_pano"] = via
+	return ImageTexture.create_from_image(img)
+
+
 static func day_shadows() -> bool:
 	var env := OS.get_environment("DAY_SHADOWS")
 	if env != "":
@@ -227,7 +246,7 @@ func _ready() -> void:
 	paint.name = "SkyPaint"
 	add_child(paint)
 	var tile_path := "res://%s/cloud_pano.png" % str(RETRO.get("tiles_dir", ""))
-	paint.bake(load(tile_path) as Texture2D if RETRO.has("tiles_dir") and ResourceLoader.exists(tile_path) else null)
+	paint.bake(_cloud_pano(tile_path) if RETRO.has("tiles_dir") else null)
 	sky_material.set_shader_parameter("cloud_pano", paint.clouds)
 	sky_material.set_shader_parameter("far_scale", float(CLOUDS.get("far", {}).get("scale", 2.2)))
 	sky_material.set_shader_parameter("star_pano", paint.stars)

@@ -86,14 +86,7 @@ static func install() -> void:
 	ThemeDB.fallback_font_size = px(float(t.get("base_px", 20)))
 
 
-## Is the import of `path` there to load (its .import file and the
-## imported data it points at)? Asked first so a missing import falls to
-## the disk read without the engine's load errors.
+## Is the import of `path` there to load? (ResFiles.imported, the one
+## shared test, design §CG.)
 static func _imported(path: String) -> bool:
-	if not ResourceLoader.exists(path):
-		return false
-	var cfg := ConfigFile.new()
-	if cfg.load(path + ".import") != OK:
-		return true
-	var dest := str(cfg.get_value("remap", "path", ""))
-	return dest == "" or FileAccess.file_exists(dest)
+	return ResFiles.imported(path)

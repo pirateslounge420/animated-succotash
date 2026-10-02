@@ -39,8 +39,8 @@ func _describe(main: Node, world: Node) -> Dictionary:
 	var first := ""
 	if not GameLog.entries.is_empty():
 		first = str(GameLog.entries[0].get("text", ""))
-	var out := {"seed": world.world_seed, "cell": cell, "biome": biome, "kind": world.first_camp_kind, "people": main.camp.people_id, "log": first, "spawn_choice": world.spawn_choice}
-	print("[world] seed %d · cell %d · %s · kind '%s' · people %s · log: %s" % [out.seed, out.cell, out.biome, out.kind, out.people, out.log])
+	var out := {"seed": world.world_seed, "cell": cell, "biome": biome, "kind": world.first_camp_kind, "people": main.camp.people_id, "log": first, "spawn_choice": world.spawn_choice, "now": main._now_text(main.player.surface_dir), "first_day": WorldSave.data.get("first_local_day", null)}
+	print("[world] seed %d · cell %d · %s · kind '%s' · people %s · %s · log: %s" % [out.seed, out.cell, out.biome, out.kind, out.people, out.now, out.log])
 	return out
 
 
@@ -69,6 +69,8 @@ func _run() -> void:
 	ok(a.seed > 0 and a.seed != 42, "a fresh world rolled its own seed (%d)" % a.seed)
 	ok(WorldSave.last_seed() == a.seed, "the last-world pointer names it")
 	ok(a.log.begins_with("World %d" % a.seed), "the log opens with the world's name (%s)" % a.log)
+	ok(str(a.now).begins_with("Day 1 ") and a.log.contains("— day 1"), "a world opens on Day 1 (%s; design 1 Oct §CG)" % a.now)
+	ok(a.first_day != null, "its save keeps its first local day (%s)" % str(a.first_day))
 	WorldSave.flush(0.0, true)
 	ok(WorldSave.exists(a.seed), "its save exists after the flush")
 	# "New world": the scene asks the tool to rebuild it.
@@ -90,6 +92,7 @@ func _run() -> void:
 	main = await _boot()
 	var c := _describe(main, world)
 	ok(c.seed == b.seed and c.cell == b.cell, "Continue boots into the last world at the same camp")
+	ok(b.first_day != null and c.first_day == b.first_day, "Continue keeps the world's first local day (%s; %s)" % [str(c.first_day), c.now])
 	# A world keeps its camp (1 Oct, Mike's Mac): change what a seed would
 	# pick (the first-camp weights: this kind out), Continue from the file,
 	# and the camp is where it was.

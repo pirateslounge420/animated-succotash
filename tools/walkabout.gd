@@ -18,7 +18,9 @@ extends SceneTree
 ## not list it FAILS the site (unlisted_species_allowed). The opening
 ## camp's first frame must be afternoon (the sun above the dusk band).
 ## SITES=opening_camp,random_biome keeps a subset; QUICK=1 one facing and
-## the first hour (a smoke run).
+## the first hour (a smoke run). DEV_PIN=0 boots a fresh random world (no
+## SEED; its frames go under the seed it rolled) and leaves no save:
+##   tools/no_import_check.sh -- env QUICK=1 SITES=opening_camp xvfb-run ...
 
 const OUT_DIR := "res://tools/reference/walkabout"
 var W: Dictionary = Tuning.table("habitat").get("walkabout", {})
@@ -49,23 +51,46 @@ func ok(cond: bool, what: String) -> void:
 
 func _run() -> void:
 	world = get_root().get_node("World")
-	sd = int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 101
-	world.pin(sd, -1)
-	seed(sd)
+	# DEV_PIN=0 (design 1 Oct §CG: tools/no_import_check.sh runs it so): a
+	# fresh random world by play's rule, no pin; the frames and the report
+	# go under the seed it rolled, and its save and the last-world pointer
+	# are put back as they were.
+	var fresh := OS.get_environment("DEV_PIN") == "0"
+	var had_pointer := FileAccess.file_exists(WorldSave.LAST_PATH)
+	var old_pointer := FileAccess.get_file_as_string(WorldSave.LAST_PATH) if had_pointer else ""
+	if fresh:
+		if had_pointer:
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(WorldSave.LAST_PATH))
+	else:
+		sd = int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 101
+		world.pin(sd, -1)
 	Bow.need_capture = false
 	PlanetPlayer.EYE_Y = float(W.get("eye_m", 1.6))
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR.path_join(str(sd))))
 	main = load("res://scenes/main.tscn").instantiate()
 	get_root().add_child(main)
 	while not main._playing:
 		await process_frame
+	sd = world.world_seed
+	seed(sd)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR.path_join(str(sd))))
+	if fresh:
+		var made := ProjectSettings.globalize_path("user://worlds/%d.json" % sd)
+		WorldSave.read_only = true
+		if FileAccess.file_exists(made):
+			DirAccess.remove_absolute(made)
+		if had_pointer:
+			var f := FileAccess.open(WorldSave.LAST_PATH, FileAccess.WRITE)
+			if f:
+				f.store_string(old_pointer)
+		else:
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(WorldSave.LAST_PATH))
 	player = main.player
 	main.hud.visible = false
 	player.set_physics_process(false)
 	player.first_person = true
 	player._apply_view()
 	player.camera().current = true
-	lines.append("== World %d (%s) — first camp: %s camp, %s" % [sd, "postage stamp" if world.postage_stamp else "full planet", world.first_camp_kind if world.first_camp_kind != "" else "old list", BiomeTemplates.KEYS[world.planet.biome[world.planet.cell_at(main.camp.site)]]])
+	lines.append("== World %d (%s%s) — first camp: %s camp, %s" % [sd, "postage stamp" if world.postage_stamp else "full planet", ", a fresh random world (DEV_PIN=0)" if fresh else "", world.first_camp_kind if world.first_camp_kind != "" else "old list", BiomeTemplates.KEYS[world.planet.biome[world.planet.cell_at(main.camp.site)]]])
 	var quick := OS.get_environment("QUICK") == "1"
 	var only: Array = Array(OS.get_environment("SITES").split(",")) if OS.get_environment("SITES") != "" else []
 	var hours: Array = W.get("hours", [{"solar_h": 14.0, "weather": "overcast"}, {"solar_h": 17.5, "weather": "clear"}, {"solar_h": 22.0, "weather": "clear"}])

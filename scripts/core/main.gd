@@ -137,16 +137,7 @@ func _on_planet_ready() -> void:
 	WorldSave.open(world.world_seed)
 	var spawn_dir := _opening_site()
 	Encampment.set_active(spawn_dir)
-	# Start in the afternoon (design 30 Sept night §BX, roads.json
-	# opening_road.spawn): real_min_before_dusk real minutes before dusk
-	# begins here, so a half-hour walk reaches the first camp as the light
-	# goes. (Dusk's hour depends on the latitude and the day of the year.)
-	var spawn_lat := CubeSphere.latitude(spawn_dir)
-	var dusk_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
-	var spawn_rule: Dictionary = Tuning.section("roads", "opening_road").get("spawn", {})
-	var before_min := float(spawn_rule.get("real_min_before_dusk", 22.0))
-	var local_start_h := fposmod(dusk_h - before_min / (world.day_length_s / 60.0) * 24.0, 24.0)
-	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
+	open_clock(spawn_dir)
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
 	chunks = ChunkManager.new()
@@ -209,7 +200,7 @@ func _on_planet_ready() -> void:
 		# with it, and the kind of first camp when the roll says one.
 		GameLog.now_text = _now_text(spawn_dir)
 		var kind_text := " — a %s camp" % str(world.first_camp_kind).replace("_", " ") if world.first_camp_kind != "" else ""
-		GameLog.add("World %d — day 1%s" % [world.world_seed, kind_text], "world")
+		GameLog.add("World %d — day %d%s" % [world.world_seed, int(world.local_clock(spawn_dir).x), kind_text], "world")
 	GameLog.add_once("people:opening", "The %s live here." % Peoples.name_of(Peoples.get_people(camp.people_id)).to_lower(), "camp_found")
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
@@ -337,10 +328,36 @@ func _on_planet_ready() -> void:
 	camp.talk(1, 4.6)
 
 
-## The log's clock stamp at `d` ("Day 15 · 03:40").
+## The world's clock at the opening camp `spawn_dir` (main's boot; also
+## tools/day_check.gd). The sky keeps World.START_DAYS (a near-full moon the
+## first night, design §CG); the hour is §BX's afternoon there; Day 1 is the
+## world's first local day there, kept in its save.
+func open_clock(spawn_dir: Vector3) -> void:
+	world.days = World.START_DAYS
+	# Start in the afternoon (design 30 Sept night §BX, roads.json
+	# opening_road.spawn): real_min_before_dusk real minutes before dusk
+	# begins here, so a half-hour walk reaches the first camp as the light
+	# goes. (Dusk's hour depends on the latitude and the day of the year.)
+	var spawn_lat := CubeSphere.latitude(spawn_dir)
+	var dusk_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
+	var spawn_rule: Dictionary = Tuning.section("roads", "opening_road").get("spawn", {})
+	var before_min := float(spawn_rule.get("real_min_before_dusk", 22.0))
+	var local_start_h := fposmod(dusk_h - before_min / (world.day_length_s / 60.0) * 24.0, 24.0)
+	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
+	# Day 1 (design 1 Oct §CG): the world's first local day, at its opening
+	# camp, kept in its save. A save from before has none: the clock starts
+	# over at START_DAYS on every boot (it isn't saved), so the day it wakes
+	# on is the only first day it has had.
+	var kept_first = WorldSave.data.get("first_local_day", null)
+	world.first_local_day = float(kept_first) if kept_first != null else Astro.local_clock(world.days, CubeSphere.longitude(spawn_dir), spawn_lat).x
+	if kept_first == null:
+		WorldSave.data["first_local_day"] = world.first_local_day
+		WorldSave.mark_dirty()
+
+
+## The log's clock stamp at `d` ("Day 3 · 03:40", World.clock_text).
 func _now_text(d: Vector3) -> String:
-	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
-	return "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
+	return world.clock_text(d)
 
 
 ## Start a new world (design 1 Oct §CB; the settings panel's "New world"
@@ -510,8 +527,10 @@ func _process(delta: float) -> void:
 	hud.set_pinning(_mouse_freed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not player.ui_open and not map_overlay.visible)
 	# The speedometer and the clock face (design §L, §AQ): speed, meter and
 	# the local clock.
-	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
-	GameLog.now_text = "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
+	# One clock (design §CG): the face, the log's stamps and the HUD line
+	# read the sky's time here.
+	var clock_h: float = world.local_clock(d).y
+	GameLog.now_text = world.clock_text(d)
 	sound_bed.update_bed(delta, weather, clock_h)
 	_log_events()
 	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)
