@@ -10,7 +10,11 @@ extends SceneTree
 ##    made your hearth (Hearth.can_set);
 ##  - it is kept: in the save once lit, and while you are away it burns
 ##    down on the clock (OldHearths.lit_at after an in-game hour: still
-##    burning with fuel fed; out after a day untended).
+##    burning with fuel fed; out after a day untended);
+##  - at the nearest uninhabited tomb (barrow, graveyard, desert pyramid
+##    or mastaba) the stone lamps stand dark, come on once its hearth is
+##    rekindled, and go out again when the fire dies (TOMB=barrow,
+##    graveyard or pyramid picks the kind).
 
 var main
 var world
@@ -72,6 +76,7 @@ func _run() -> void:
 		print("SKIP  no nest holding remains within 150 km")
 	else:
 		await _check("nest %s remains (%.1f km)" % [nest.kind, nd / 1000.0], nest.hearth, nest.dir)
+	await _tomb_check(map, camp)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -120,3 +125,70 @@ func _check(label: String, d: Vector3, look: Vector3) -> void:
 	world.days = days0 + 1.0 # a day untended
 	ok(not OldHearths.lit_at(world, world.dir_of(fire.global_position)), "%s: out a day later, untended (%s)" % [label, str(FireStore.store_of(fire).state)])
 	world.days = days0
+
+
+func _tomb_check(map: PlanetData, camp: Vector3) -> void:
+	var tomb := {}
+	for r in [30000.0, 120000.0, 400000.0]:
+		var bd := INF
+		for s in Ruins.near(map, camp, r):
+			var k := int(s.kind)
+			var lamps := k == Ruins.Kind.BARROW or k == Ruins.Kind.GRAVEYARD or (k == Ruins.Kind.PYRAMID and str(s.get("style", "")) == "desert")
+			var want := OS.get_environment("TOMB")
+			if want != "" and str(Ruins.Kind.keys()[k]).to_lower() != want:
+				continue
+			if not lamps or Ruins.inhabited(s):
+				continue
+			var dd := CubeSphere.surface_distance_m(s.dir, camp)
+			if dd < bd:
+				bd = dd
+				tomb = s
+		if not tomb.is_empty():
+			break
+	if tomb.is_empty():
+		print("SKIP  no uninhabited tomb within 400 km")
+		return
+	var label := "tomb %s (%s, %.1f km)" % [str(Ruins.Kind.keys()[int(tomb.kind)]).to_lower(), str(tomb.get("style", "")), CubeSphere.surface_distance_m(tomb.dir, camp) / 1000.0]
+	var fd := Camps.ruin_fire_dir(map, tomb)
+	await _go(fd, tomb.dir)
+	var oh: OldHearths = main.old_hearths
+	var node: Node3D = null
+	var t0 := Time.get_ticks_msec()
+	while node == null and Time.get_ticks_msec() - t0 < 30000:
+		for c in main.landmarks.built_ruins():
+			var n: Node3D = main.landmarks.built_ruins()[c]
+			if is_instance_valid(n) and (n.get_meta("site", {}) as Dictionary).get("seed", 0) == tomb.seed:
+				node = n
+		await process_frame
+	ok(node != null and node.has_meta("lamps"), "%s: built, with %d stone lamps" % [label, (node.get_meta("lamps", []) as Array).size() if node != null else 0])
+	if node == null or not node.has_meta("lamps"):
+		return
+	oh.refresh_now()
+	var fire := oh.hearth_of_ruin(null, node)
+	ok(fire != null, "%s: its old hearth stands" % label)
+	if fire == null:
+		return
+	for i in 10:
+		await process_frame
+	ok(_lamp_energy(node) == 0.0, "%s: the lamps stand dark while the hearth is cold" % label)
+	FireStore.relight(fire)
+	for i in 240:
+		await process_frame
+	ok(_lamp_energy(node) > 0.05, "%s: rekindled, the lamps burn (energy %.2f)" % [label, _lamp_energy(node)])
+	var st := FireStore.store_of(fire)
+	st.units = []
+	st.state = "out"
+	FireStore.apply(fire)
+	for i in 240:
+		await process_frame
+	ok(_lamp_energy(node) == 0.0, "%s: the fire dead, the lamps go out with it" % label)
+
+
+func _lamp_energy(node: Node3D) -> float:
+	var e := 0.0
+	for l in node.get_meta("lamps", []):
+		var light: OmniLight3D = l[0]
+		if light.visible:
+			e += light.light_energy
+	return e
+

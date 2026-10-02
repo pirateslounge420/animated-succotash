@@ -29,16 +29,18 @@ var world: Node
 var chunks: ChunkManager
 var player: Node3D
 var landmarks: Landmarks
+var camps: Camps
 var _root: Node3D
 var _built := {} # fuel key -> Node3D
 var _timer := 0.0
 
 
-func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_landmarks: Landmarks) -> void:
+func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_landmarks: Landmarks, p_camps: Camps = null) -> void:
 	world = p_world
 	chunks = p_chunks
 	player = p_player
 	landmarks = p_landmarks
+	camps = p_camps
 	instance = self
 	_root = Node3D.new()
 	_root.name = "OldHearths"
@@ -180,6 +182,7 @@ func _process(delta: float) -> void:
 		var n: Node3D = _built[key]
 		if is_instance_valid(n) and n.is_inside_tree():
 			Campfire.flicker(n, t)
+	update_lamps(delta)
 
 
 ## Build the hearths in reach now (after waking by a fire), drop the far
@@ -228,3 +231,48 @@ func ruin_lit(ruin: Node3D) -> bool:
 		if is_instance_valid(n) and n.get_meta("ruin", null) == ruin:
 			return FireStore.is_lit(n)
 	return false
+
+
+## The fire that keeps a ruin's lamps: its people's camp fire if it is
+## inhabited (Camps), else its old hearth; null when neither is built.
+func hearth_of_ruin(c, ruin: Node3D) -> Node3D:
+	if camps != null:
+		var camp: Node3D = camps._camps.get("ruin:%s" % str(c), null)
+		if camp != null and is_instance_valid(camp) and camp.has_meta("fire"):
+			return camp.get_meta("fire")
+	for key in _built:
+		var n: Node3D = _built[key]
+		if is_instance_valid(n) and n.get_meta("ruin", null) == ruin:
+			return n
+	return null
+
+
+## Tomb lamps (RuinBuilder._lamp; Mike, 2 Oct): the barrow's, the desert
+## pyramid's, the mastaba's and the mausoleum's stone lamps stand dark
+## until the ruin's hearth burns, then come on (a fade over lamp_fade_s)
+## and stay lit while it does; let the fire die and they go out with it.
+## The first time a ruin's lamps come on, the log says so.
+func update_lamps(delta: float) -> void:
+	if landmarks == null:
+		return
+	var ruins := landmarks.built_ruins()
+	var t := Time.get_ticks_msec() / 1000.0
+	for c in ruins:
+		var node: Node3D = ruins[c]
+		if not is_instance_valid(node) or not node.has_meta("lamps"):
+			continue
+		var fire := hearth_of_ruin(c, node)
+		var want := 1.0 if fire != null and FireStore.is_lit(fire) else 0.0
+		var on := move_toward(float(node.get_meta("lamps_on", 0.0)), want, delta / 2.5)
+		node.set_meta("lamps_on", on)
+		if want > 0.0 and fire != null and fire.global_position.distance_to(player.global_position) < 60.0:
+			GameLog.add_once("tomb_lamps:%s" % str(c), "Lamps burn in the tomb while its hearth is lit.", "tomb_lamps")
+		for l in node.get_meta("lamps"):
+			var light: OmniLight3D = l[0]
+			var flame: Node3D = l[1]
+			light.visible = on > 0.0
+			flame.visible = on > 0.5
+			# A small flicker of its own.
+			var k := 1.0 + 0.12 * sin(t * 7.3 + light.position.x * 3.1) * sin(t * 3.7 + light.position.z)
+			light.light_energy = float(l[2]) * on * k
+

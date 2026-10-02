@@ -119,6 +119,10 @@ static var JAMB := float(CAVITY.get("ruin_jamb", 0.4))
 ## Lights inside tombs: [local position, color, range m, energy]
 ## (make_node() adds an OmniLight3D for each).
 var _lights: Array = []
+## The tomb's lamps (Mike, 2 Oct): stone lamps that stand dark until the
+## ruin's hearth burns (OldHearths.update_lamps): [flame position (local),
+## range m, energy].
+var _lamps: Array = []
 ## Ivy strand tops [top, out, length] (local), for the vine species' cards.
 var _vine_anchors: Array = []
 ## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
@@ -199,7 +203,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -283,6 +287,29 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		o.distance_fade_begin = 50.0
 		o.distance_fade_length = 20.0
 		root.add_child(o)
+	# The lamps: a flame and a light each, dark until the hearth burns.
+	var lamps: Array = []
+	for l in data.get("lamps", []):
+		var o := OmniLight3D.new()
+		o.name = "TombLamp"
+		o.position = (l[0] as Vector3) + Vector3(0.0, 0.35, 0.0)
+		o.light_color = LAMP
+		o.omni_range = l[1]
+		o.light_energy = 0.0
+		o.omni_attenuation = 1.4
+		o.visible = false
+		o.distance_fade_enabled = true
+		o.distance_fade_begin = 50.0
+		o.distance_fade_length = 20.0
+		root.add_child(o)
+		var flame := Torch.flame_node(0.14)
+		flame.position = l[0]
+		flame.visible = false
+		root.add_child(flame)
+		lamps.append([o, flame, float(l[2])])
+	if not lamps.is_empty():
+		root.set_meta("lamps", lamps)
+		root.set_meta("lamps_on", 0.0)
 	# Collision comes later, in pieces, once the player is near
 	# (build_collision_part): a castle's ~18k faces take a trimesh BVH far
 	# too slow to build in one frame, and ruins are built kilometers out.
@@ -2076,7 +2103,8 @@ func _pyramid_chamber(hs: float, h: float, y0: float) -> void:
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + courses * ch + 0.3, -chz + (i + 0.5) * chz * 2.0 / 3.0)), Vector3(chx * 2.0, 0.6, chz * 2.0 / 3.0), palette[rng.randi() % palette.size()], 0.0, 0.06, 0.02)
 	_sarcophagus(Vector3(0.0, y_f, 1.4), 0.0, Color(0.36, 0.3, 0.3))
 	_grave_goods(Vector3(0.0, y_f, -1.2), 1.6, 6)
-	_glow(Vector3(0.0, y_f + 3.0, 0.0), LAMP, 8.0, 0.28)
+	for sx: float in [-1.0, 1.0]:
+		_lamp(Vector3(sx * (chx - 0.9), y_f, chz - 0.9), 8.0, 0.2)
 	_glow(Vector3(0.0, y_f + 2.0, (z_in + z_out) * 0.5), Color(0.45, 0.85, 0.8), 7.0, 0.12)
 	_shelters.append([Vector3(0.0, y_f, 0.0), 3.0, courses * ch])
 	var zs := z_in
@@ -2285,9 +2313,22 @@ func _house_walls(c: Vector3, hx: float, hz: float, courses: int, ch: float, thi
 			ivy(c + Vector3(0.0, courses * ch, 0.0) + dir * rng.randf_range(-length * 0.3, length * 0.3) + out * (half + 0.1), out, rng.randf_range(1.5, 3.0))
 
 
-## A light in a tomb (moss-glow teal, or lamp-gold by the dead's goods).
+## A light in a tomb (the moss-glow teal; always on).
 func _glow(p: Vector3, col: Color, range_m: float, energy: float) -> void:
 	_lights.append([p, col, range_m, energy])
+
+
+## A stone lamp standing on the floor at `p` (local): a squat stand and a
+## dish of fat on it. Its flame and lamp-gold light come on only while the
+## ruin's hearth burns (Mike, 2 Oct: "light in the mausoleum, pyramid,
+## barrow that activates after the main hearth is rekindled").
+func _lamp(p: Vector3, range_m: float, energy: float) -> void:
+	var was := solid
+	solid = false
+	box(Transform3D(Basis.IDENTITY, p + Vector3(0.0, 0.32, 0.0)), Vector3(0.26, 0.64, 0.26), palette[1], 0.0, 0.05, 0.02)
+	box(Transform3D(Basis.IDENTITY, p + Vector3(0.0, 0.69, 0.0)), Vector3(0.44, 0.1, 0.44), palette[0].darkened(0.2), 0.0, 0.03, 0.01)
+	solid = was
+	_lamps.append([p + Vector3(0.0, 0.76, 0.0), range_m, energy])
 
 
 ## Things left with the dead round `c` (on the floor at c.y): clay urns,
@@ -2533,6 +2574,8 @@ func _mausoleum(c: Vector2, hx: float, hz: float) -> void:
 	_sarcophagus(Vector3(c.x, floor_y, c.y + hz * 0.2), 0.0, palette[3])
 	_grave_goods(Vector3(c.x, floor_y, c.y - hz * 0.3), maxf(hx - 1.2, 0.5), 3)
 	_glow(Vector3(c.x, floor_y + 2.0, c.y), Color(0.45, 0.85, 0.8), 6.0, 0.21)
+	for sx: float in [-1.0, 1.0]:
+		_lamp(Vector3(c.x + sx * (hx - 1.0), floor_y, c.y + hz - 1.0), 6.0, 0.18)
 	_shelters.append([Vector3(c.x, floor_y, c.y), minf(hx, hz), courses * ch])
 
 
@@ -2658,7 +2701,8 @@ func _barrow_passage(l: float) -> void:
 	var gc := ground(0.0, ze + 1.6)
 	_sarcophagus(Vector3(0.0, gc - 0.1, ze + 1.9), PI * 0.5, palette[3])
 	_grave_goods(Vector3(0.0, gc, ze + 0.8), 1.2, 4)
-	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), LAMP, 6.5, 0.24)
+	for sx: float in [-1.0, 1.0]:
+		_lamp(Vector3(sx * 1.35, ground(sx * 1.35, ze + 2.8), ze + 2.8), 6.5, 0.17)
 	_glow(Vector3(0.0, ground(0.0, (z0 + ze) * 0.5) + 1.8, (z0 + ze) * 0.5), Color(0.45, 0.85, 0.8), 5.0, 0.12)
 	var zs := z0 + 1.0
 	while zs < ze + 3.0:
@@ -2729,7 +2773,8 @@ func _mastaba() -> void:
 	_sarcophagus(Vector3(0.0, floor_y, hz * 0.25), PI * 0.5, palette[3])
 	for sx: float in [-1.0, 1.0]:
 		_grave_goods(Vector3(sx * (hx - thick) * 0.55, floor_y, -hz * 0.2), 1.2, 3)
-	_glow(Vector3(0.0, floor_y + 2.5, 0.0), LAMP, 7.0, 0.21)
+	for sx: float in [-1.0, 1.0]:
+		_lamp(Vector3(sx * (hx - thick - 0.6), floor_y, hz - thick - 0.7), 7.0, 0.16)
 	_shelters.append([Vector3(0.0, floor_y, 0.0), minf(hx, hz) - thick, h])
 	shade = 0.0
 	for k in 3:

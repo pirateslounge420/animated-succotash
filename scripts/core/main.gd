@@ -304,7 +304,7 @@ func _on_planet_ready() -> void:
 	old_hearths = OldHearths.new()
 	old_hearths.name = "OldHearths"
 	add_child(old_hearths)
-	old_hearths.setup(world, chunks, player, landmarks)
+	old_hearths.setup(world, chunks, player, landmarks, camps)
 	player.spawner = creatures
 	player.camps = camps
 	player.died.connect(_on_player_died)
