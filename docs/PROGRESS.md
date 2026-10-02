@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 — Docs and comments caught up with the full planet, the ambient keys and Godot only (no behaviour change; design §CH–§CJ's docs pass, §CI)
+- **HOW_TO_RUN §4**: play is on the full 4,000 km planet; `dev.json` has `postage_stamp` false and `spawn_choice` -1; the 40 km stamp is only for the checks and renders (`STAMP=1`). The dev pins hold in play only with `pin_in_play` or `DEV_PIN=1`.
+- **HOW_TO_RUN §5**: the keys as they work now in the ambient profile come first. Wall jump, bounce, cling, catch-and-swing, ninja roll, fast drop, super meter and V/F5 third person moved to a short "shinobi profile only" table. The gamepad list lost its unbound right-shoulder wall jump. "Press E" became right click.
+- **Stale comments**: `world.gd` (the radius is ~637 km, not 64; a 144-minute day; spawn_choice -1; STAMP=1), `planet_const.gd` (60/18/48/18 of a 144-minute day, not 45/20/35/20 of 120), `terrain_chunk.gd` (637 km radius), `planet_generator.gd` (~10 km cells, not 7). `model_library.gd` no longer names the old engine; no other tracked file outside `docs/design` and PROGRESS does. `GEO_CIRCUMFERENCE_M`'s 400 km layout stays.
+- **implementation-notes.md**: blueprint cells (1 km of geography, ~10 km of walking), the stamp (checks only), the 144-minute day and its phases, and the dev pins.
+
 ## 2026-10-02 — Nests (§CK), the sacred fig (§CL), ferns, rhododendron forests and mad honey (§CM): design and data only (design chat; Mike's 1 Oct evening; lettered after the other session's §CH–§CJ)
 - **`data/landforms.json`**: 35 nests in seven families (cave mouth to beaver pond), each with its cause, the biomes it dresses into, variants, what it gives a camp, the hearth spot, peoples, remains (§BQ signature ids), build/tier/status and checked real-world sources. Filled by six parallel agents, one family each; **`tools/landforms_check.py --strict`: 35 landforms, 0 errors, 0 warnings.** All `[NOT WIRED YET — design §CK]`.
 - **`data/uniques.json`**: the one sacred fig with its meditating figure (§CL), not wired.

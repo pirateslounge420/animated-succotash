@@ -19,8 +19,9 @@ extends RefCounted
 
 signal progress(step: String, fraction: float)
 
-## Default blueprint resolution: 96 cells per face edge, ~7 km cells on
-## the 4,000 km planet (~1 km on the old 400 km one).
+## Default blueprint resolution: 96 cells per face edge, ~10 km cells on
+## the 4,000 km planet (~1 km on the 400 km geography, and on the old
+## 400 km planet).
 const DEFAULT_RES := 96
 
 var planet: PlanetData

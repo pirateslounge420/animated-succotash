@@ -6,17 +6,19 @@ extends Node
 ## generation_progress for a loading screen. After that:
 ##
 ## * Clock: `days` advances at `day_length_s` real seconds per in-game
-##   day (120 minutes, data/sky/day_cycle.json), always in real time.
+##   day (144 minutes, data/sky/day_cycle.json), always in real time.
 ## * Dev settings: data/dev.json (spec A4). When its "dev_mode" is true,
 ##   its "day_length_min" (144, the real cycle) replaces the game's, and
-##   its "seed" (42) and "spawn_choice" (0: the same first camp) are the
+##   its "seed" (42) and "spawn_choice" (-1: a random first camp; 0..11 that
+##   candidate, which the dev frame and some checks pin) are the
 ##   DEV TOOLS' pins (design 1 Oct §CB): a tool pins itself (pin()), and
 ##   they hold in play only with dev.json "pin_in_play" true or DEV_PIN=1
 ##   in the environment (DEV_PIN=0 forces play's rule even in a tool).
 ##   Otherwise every new world rolls its own seed and first camp, and the
 ##   game boots into the last world played (WorldSave.last_seed).
 ##   A missing file, or dev_mode false, means the game's own settings.
-## * Dev postage stamp (spec A4): in dev mode, "postage_stamp": true builds
+## * Dev postage stamp (spec A4): STAMP=1 in the environment (the checks and
+##   renders; play leaves it off), or in dev mode "postage_stamp": true, builds
 ##   a small scale model of the planet instead of the full 4,000 km one:
 ##   the same seed and passes, with the geography shrunk to
 ##   "stamp"."circumference_km" around on a coarser "grid_res" blueprint,
@@ -26,8 +28,9 @@ extends Node
 ##   when a tool generates before this node's _ready.
 ## * Weather: the same WeatherSim that produced the long-term averages
 ##   keeps running live, one step per in-game quarter hour.
-## * Floating origin: the planet is ~64 km in radius (~6 km for the dev
-##   postage stamp), so the scene keeps the player near (0,0,0) and moves
+## * Floating origin: the planet is ~637 km in radius, 4,000 km around
+##   (~6.4 km for the dev postage stamp; the ~63.7 km GEO_RADIUS_M is the
+##   geography's layout, not the planet built), so the scene keeps the player near (0,0,0) and moves
 ##   the planet instead. The planet's
 ##   center in scene coordinates is held in double precision (GDScript
 ##   floats are 64-bit; Vector3 is only 32-bit), and rebase() shifts

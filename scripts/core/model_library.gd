@@ -1,6 +1,6 @@
 class_name ModelLibrary
-## Hand-made or generated character models (e.g. from Summer Engine's
-## image-to-3D) dropped into assets/models/, used in place of the
+## Hand-made or generated character models (from any modelling tool or
+## image-to-3D service; plain Godot imports them) dropped into assets/models/, used in place of the
 ## procedural bodies:
 ##   player.glb           the player (PlanetPlayer; else the
 ##                        wanderer, PlayerBody)

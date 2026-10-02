@@ -56,7 +56,9 @@ Going back to a place rebuilds it identically.
   - continents calibrated to 62% ocean;
   - ridged mountain belts, continental shelves and 9 volcanic hotspots;
   - a fine detail layer used only by walkable chunks.
-- **Blueprint** (`PlanetData`). 6 × 96² cells of about 1 km each. It is
+- **Blueprint** (`PlanetData`). 6 × 96² cells, about 1 km each on the
+  400 km geography (`cell_km`) and about 10 km of walking on the built
+  planet (`cell_m`). It is
   built by `PlanetGenerator` in order:
   1. `terrain_pass`: elevation and slope.
   2. `hydrology_pass`: ocean basins (connected water areas of 300+
@@ -95,9 +97,10 @@ Going back to a place rebuilds it identically.
 ### Dev postage stamp
 
 Spec A4: a fixed-seed mini-planet with one of every major biome band,
-used while developing (the full planet is for milestone checks). On
-when `data/dev.json` has `"dev_mode": true` and `"postage_stamp": true`
-(`World.use_postage_stamp`); its `"stamp"` block sizes it
+now used only by the checks and renders, which ask for it with `STAMP=1`
+in the environment (play is on the full planet; `data/dev.json` has
+`"postage_stamp": false`, and `true` there would turn it on in play too;
+`World.use_postage_stamp`); its `"stamp"` block sizes it
 (`circumference_km`, default 40; `grid_res`, blueprint cells per face
 edge, default 48). Missing or false: the full planet, unchanged (the
 blueprint, weather and chunk output hash the same as before the stamp
@@ -225,24 +228,27 @@ Verified:
 
 `scripts/sky/`
 
-- **Day length.** One day is 120 real minutes (12x Earth), in four
-  phases at the equator: day 45 minutes, dusk 20, night 35, dawn 20
+- **Day length.** One day is 144 real minutes (10x Earth: 6 real minutes
+  an in-game hour), in four phases at the equator on an equinox: day
+  07-17 60 minutes, dusk 17-20 18, night 20-04 48, dawn 04-07 18
   (dawn and dusk are the sun within 10° of the horizon). All of it is
   data: `data/sky/day_cycle.json`, read by `DayCycle`. The planet turns
   uniformly for the weather; what the viewer sees is warped
   (`Astro.apparent_days`, `DayCycle.warp`): the whole sky, sun, moon and
-  stars together, turns slowly through twilight (0.19x uniform speed),
-  faster by day (1.24x) and fastest at night (1.62x). The speed is
+  stars together, turns slowly through twilight, faster by day and
+  fastest at night. The speed is
   constant within a phase and eases from one to the next over 12 minutes
   centered on each boundary (a smoothstep), so it never jumps; the four
-  speeds are solved so each phase still takes exactly its time (measured
-  45.0 / 20.0 / 35.0 / 20.0 min). `DayCycle.unwarp` is the exact inverse
-  (bisection), so the game still opens at 17:00 solar time at the camp.
-  Toward the poles twilight stretches (24-minute dawns at 50°). The HUD
-  clock is solar time. No axial tilt, so no seasons yet.
+  speeds are solved so each phase still takes exactly its time
+  (`phase_min` in the data). `DayCycle.unwarp` is the exact inverse
+  (bisection), so the game can open at a chosen solar time (the
+  afternoon, §BX). Toward the poles twilight stretches. The HUD clock is
+  solar time. The axial tilt (23.5°) and the year are in the same file.
 - **Dev settings** (`data/dev.json`, read by `World`, spec A4): with
-  `dev_mode` true, a 20-minute day (every phase scales with it), seed 42
-  and the first camp fixed (`spawn_choice` 0). A missing file means the
+  `dev_mode` true, `day_length_min` replaces the day (144, the real one;
+  every phase scales with it), and `seed` 42 and `spawn_choice` -1 are
+  the dev tools' pins, applied in play only with `pin_in_play` or
+  `DEV_PIN=1` (§CB). A missing file means the
   game's own settings. F3 shows a debug overlay (`Hud.debug_text`):
   clock, solar time, phase and minutes into it, sky speed, sun and moon
   elevation, moon age, phase and mansion, eased cloud cover. F4, in dev

@@ -54,8 +54,9 @@ const HEIGHT_SCALE := 0.1
 ## 100 m here cools the air as much as 1 km on Earth.
 const LAPSE_RATE_C_PER_M := 0.0065 / HEIGHT_SCALE
 
-## The day's length and its four phases (day 45, dusk 20, night 35, dawn
-## 20 real minutes of a 120-minute day), the twilight band and the moon's
+## The day's length and its four phases (a 144-minute day, 6 real minutes
+## an in-game hour; at the equator on an equinox: day 07-17 60 minutes,
+## dusk 17-20 18, night 20-04 48, dawn 04-07 18), the twilight band and the moon's
 ## 29.5-day cycle are data: data/sky/day_cycle.json, read by DayCycle.
 ## data/dev.json can shorten the day while developing (World).
 

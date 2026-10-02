@@ -21,7 +21,7 @@ extends Node3D
 ## compute() is a pure function of read-only planet data so it can run on a
 ## worker thread; build_nodes() then turns its result into meshes on the
 ## main thread. Vertex positions are relative to the chunk's own anchor
-## point, which keeps 32-bit float precision on a 64 km planet.
+## point, which keeps 32-bit float precision on a ~637 km radius planet.
 ##
 ## Also carved in here: river channels and water ribbons (RiverNetwork),
 ## lake and sea surfaces, and ground color: the blend of nearby biome
