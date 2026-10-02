@@ -26,6 +26,9 @@ var _bus := -1
 var _lpf: AudioEffectLowPassFilter
 var _timer := 0.0
 var _canopy := 0.0
+## Down in a delve (design 1 Oct §CJ, Delves.underground): the outdoor
+## layers fall away and the delve's own drone and drips come in.
+var _delve: AudioStreamPlayer
 
 
 func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_sky: SkySystem) -> void:
@@ -55,6 +58,12 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_sky: SkySy
 		p.play(randf() * 3.0)
 		_players[layer] = p
 		_gain[layer] = 0.0
+	_delve = AudioStreamPlayer.new()
+	_delve.name = "Delve"
+	_delve.stream = SoundSynth.stream("delve_loop", 0)
+	_delve.volume_db = -60.0
+	add_child(_delve)
+	_delve.play()
 
 
 static func _group_of(biome_key: String) -> String:
@@ -95,11 +104,13 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 		_lpf.cutoff_hz = lerpf(float(canopy.get("cutoff_hz_open", 20000.0)), float(canopy.get("cutoff_hz_canopy", 1800.0)), _canopy)
 	for layer in LAYERS:
 		var p: AudioStreamPlayer = _players[layer]
-		var g: float = _gain[layer] * Dread.bed_gain
+		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground)
 		if layer == "wind":
 			g *= lerpf(1.0, float(canopy.get("wind_gain", 0.45)), _canopy)
 		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", 0.0))
 		p.volume_db = lerpf(p.volume_db, want_db, minf(delta * 1.5, 1.0))
+	if _delve != null:
+		_delve.volume_db = lerpf(_delve.volume_db, linear_to_db(maxf(Delves.underground, 0.0005)) + float((D.get("layers", {}) as Dictionary).get("delve", {}).get("db", -12.0)), minf(delta * 1.5, 1.0))
 
 
 func _retarget(weather: Dictionary, clock_h: float) -> void:

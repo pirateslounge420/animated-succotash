@@ -49,6 +49,7 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var old_hearths: OldHearths
+var delves: Delves
 var post: PostGrade
 var rain_overlay: RainOverlay
 var night_accents: NightAccents
@@ -305,6 +306,12 @@ func _on_planet_ready() -> void:
 	old_hearths.name = "OldHearths"
 	add_child(old_hearths)
 	old_hearths.setup(world, chunks, player, landmarks, camps)
+	# The delves under the barrows (design 1 Oct §CJ): who is in one, the
+	# cairn doors, the finds.
+	delves = Delves.new()
+	delves.name = "Delves"
+	add_child(delves)
+	delves.setup(world, chunks, player, landmarks)
 	player.spawner = creatures
 	player.camps = camps
 	player.died.connect(_on_player_died)
@@ -445,7 +452,7 @@ func _process(delta: float) -> void:
 	# Lit from the sun, turning to the moon as the sun sets (a crossfade).
 	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, weather, cloud_light, sky.cloud_shade, sky.cloud_light_dir)
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
-	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
+	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position) or Delves.inside
 	fx.update_fx(cam.global_position, d, weather, sheltered)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
@@ -496,6 +503,8 @@ func _process(delta: float) -> void:
 		prompt = "%s: take an ember" % Controls.interact_word()
 	elif _lamp_take_ok():
 		prompt = "%s: take a fat lamp" % Controls.interact_word()
+	elif delves != null and delves.door_in_reach(player.global_position) != null and delves.inside_of(delves.door_in_reach(player.global_position), player.global_position):
+		prompt = "%s: push the slab" % Controls.interact_word()
 	elif not _store_in_reach().is_empty() and _store_item() >= 0:
 		var sn: Node3D = _store_in_reach()[0]
 		prompt = "%s: put the %s %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_store_item()]).to_lower(), "on the woodpile" if sn.name == "Woodpile" else "in the store"]
@@ -718,6 +727,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_take_ember(fire)
 		elif _lamp_take_ok():
 			_take_lamp()
+		elif delves.door_in_reach(player.global_position) != null:
+			# A cairn's slab (§CJ): it moves only from inside.
+			_say_note(delves.push(delves.door_in_reach(player.global_position), player.global_position))
 		elif not store.is_empty() and _store_item() >= 0:
 			# The player's gathering goes into the camp's store (§BL).
 			_give_to_store(store)
@@ -970,6 +982,8 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 				_say_note("You have a %s already." % Inventory.title(it).to_lower())
 			return
 		if player.inventory.wear(it):
+			# A delve's find (§CJ) is kept as taken.
+			Delves.took(lying)
 			lying.pick_up()
 			if player.in_hand() == "hands":
 				player.weapon = TOOL_OF[kind]

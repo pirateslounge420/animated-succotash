@@ -241,6 +241,9 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		"water": _water_quads(key, dirs_out, fine_h, level, salt, in_river),
 		"rivers": _river_ribbons(key, center, rivers, segs, falls),
 		"falls": falls,
+		# The fine quads a delve's stairhead or cairn opens (design 1 Oct
+		# §CJ, Delves): left out of the near mesh and its collision.
+		"holes": Delves.chunk_holes(map, center, fine_d, nf),
 	}
 
 
@@ -321,9 +324,12 @@ static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
 		tread = ft
 	var indices := PackedInt32Array()
 	indices.resize(q * q * 6)
+	var holes: PackedByteArray = data.get("holes", PackedByteArray()) if fine else PackedByteArray()
 	var k := 0
 	for jj in q:
 		for ii in q:
+			if not holes.is_empty() and holes[jj * q + ii] != 0:
+				continue
 			var i00 := jj * n + ii
 			var i01 := i00 + n
 			indices[k] = i00
@@ -333,6 +339,7 @@ static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
 			indices[k + 4] = i01
 			indices[k + 5] = i01 + 1
 			k += 6
+	indices.resize(k)
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = local

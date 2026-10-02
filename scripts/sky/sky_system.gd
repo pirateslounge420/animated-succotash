@@ -366,6 +366,10 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
+	# Down in a delve (design 1 Oct §CJ, Delves.underground): full dark,
+	# neither sun nor moon reaches.
+	sun.light_energy *= 1.0 - Delves.underground
+	moon.light_energy *= 1.0 - Delves.underground
 	# Both energies fall smoothly to exactly zero (the smoothsteps above)
 	# before the light is switched off, so switching never shows.
 	sun.visible = sun.light_energy > 0.0
@@ -495,6 +499,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# and lying under the canopy, by altitude above the planet (Look).
 	var mist := lerpf(float(MIST.get("day_density", 0.0006)), float(MIST.get("night_density", 0.005)), night) \
 		+ fog_amount * float(MIST.get("fog_density", 0.006)) + storm * float(MIST.get("storm_density", 0.003))
+	mist *= 1.0 - Delves.underground
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
 	Look.apply({
@@ -715,6 +720,7 @@ static func _sun_color(elev_deg: float) -> Color:
 ## A meteor's flash (SkyEvents): a brief tint of its color over the land,
 ## added to the ambient on top of what update_sky() set this frame.
 func event_flash(amount: float, color: Color) -> void:
+	amount *= 1.0 - Delves.underground
 	if amount > 0.001:
 		environment.ambient_light_color = environment.ambient_light_color.lerp(color, amount * 0.6)
 		environment.ambient_light_energy += amount * 0.5

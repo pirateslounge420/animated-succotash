@@ -231,6 +231,9 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 				clear.append([CreatureSpawner._offset(best.dir, heading + PI * 0.5, length * 0.5 + 3.0), 7.0])
 				clear.append([CreatureSpawner._offset(best.dir, heading + PI * 0.5, -length * 0.5 - 4.0), 5.0])
 			site.clear = clear
+	# A barrow's delve (design 1 Oct §CJ): its cairn's clearing and reach.
+	if Delves.has_delve(site):
+		Delves.decorate(map, site)
 	return site
 
 
@@ -306,6 +309,14 @@ static func _tomb_site(site: Dictionary, style: String, trng: RandomNumberGenera
 	site.half_w = trng.randf_range(6.0, 7.5)
 	site.half_l = trng.randf_range(10.0, 13.0)
 	site.height_m = trng.randf_range(5.0, 6.5)
+	if Delves.has_delve(site):
+		# Over a delve (design 1 Oct §CJ): a little broader, so the mound
+		# hides the ground's open quads round the stairhead, and turned to
+		# the ground's grid (Delves.grid_heading).
+		site.half_w = trng.randf_range(8.5, 10.0)
+		site.half_l = trng.randf_range(11.0, 13.5)
+		site.height_m = trng.randf_range(5.5, 7.0)
+		site.heading = Delves.grid_heading(d, float(site.heading))
 	site.footprint_m = site.half_l + 4.0
 	site.clear = [[d, site.half_l + 4.0], [local_dir(site, site.half_w + 5.0, -site.half_l + 3.0), 7.0]]
 

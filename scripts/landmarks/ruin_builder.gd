@@ -123,6 +123,10 @@ var _lights: Array = []
 ## ruin's hearth burns (OldHearths.update_lamps): [flame position (local),
 ## range m, energy].
 var _lamps: Array = []
+## The delve under a barrow (Delves.layout) and the height between its
+## frame and this one (base_e - the layout's base_e), for make_node.
+var _delve: Dictionary = {}
+var _delve_off := 0.0
 ## Ivy strand tops [top, out, length] (local), for the vine species' cards.
 var _vine_anchors: Array = []
 ## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
@@ -203,7 +207,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -310,6 +314,9 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	if not lamps.is_empty():
 		root.set_meta("lamps", lamps)
 		root.set_meta("lamps_on", 0.0)
+	if not (data.get("delve", {}) as Dictionary).is_empty():
+		root.set_meta("delve", data.delve)
+		root.set_meta("delve_off", data.get("delve_off", 0.0))
 	# Collision comes later, in pieces, once the player is near
 	# (build_collision_part): a castle's ~18k faces take a trimesh BVH far
 	# too slow to build in one frame, and ruins are built kilometers out.
@@ -2663,7 +2670,10 @@ func _barrow() -> void:
 			var hh := rng.randf_range(2.2, 3.6) * (1.0 - 0.25 * k)
 			var tilt := Basis.from_euler(Vector3(rng.randf_range(-0.08, 0.08), rng.randf_range(-0.3, 0.3), rng.randf_range(-0.1, 0.1)))
 			box(Transform3D(tilt, Vector3(x, ground(x, zz) + hh * 0.5 - 0.5, zz)), Vector3(rng.randf_range(0.9, 1.3), hh, rng.randf_range(0.5, 0.8)), palette[rng.randi() % palette.size()], _growth(0.5), 0.2, 0.12)
-	_barrow_passage(l)
+	if Delves.has_delve(site):
+		_delve_build()
+	else:
+		_barrow_passage(l)
 	_camp_spot = Vector3(w + 5.0, ground(w + 5.0, -l + 3.0), -l + 3.0)
 
 
@@ -2709,6 +2719,422 @@ func _barrow_passage(l: float) -> void:
 		_shelters.append([Vector3(0.0, ground(0.0, zs), zs), 1.2, 2.2])
 		zs += 1.6
 	shade = 0.0
+
+
+
+# --- Delves (design 1 Oct §CJ; Delves) ---------------------------------------------
+
+## The inside of a barrow with a delve under it (Delves.layout): the
+## portal's slab passage with one pair of side cells, the end chamber as
+## the stairhead, and below, the stair, the first room, the second stair,
+## the heart, the way up and the cairn it comes out in. Every floor paved.
+func _delve_build() -> void:
+	var lay: Dictionary = Delves.layout(map, site)
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var l: float = site.half_l
+	var t := 0.55
+	var zc: float = lay.zc
+	var zb := zc + 3.4
+	var z_s1: float = lay.z_s1
+	var zs := -l + 2.6
+	var z0 := -l
+	shade = 0.45
+	for sx: float in [-1.0, 1.0]:
+		var wx := 0.8 + t * 0.5
+		_slabs(Vector2(sx * wx, z0), Vector2(sx * wx, zs - 0.8))
+		_slabs(Vector2(sx * wx, zs + 0.8), Vector2(sx * wx, zc - t * 0.5))
+		var bx := sx * (2.8 + t * 0.5)
+		_slabs(Vector2(bx, zs - 0.8 - t), Vector2(bx, zs + 0.8 + t))
+		for sz: float in [-1.0, 1.0]:
+			_slabs(Vector2(sx * (0.8 + t), zs + sz * (0.8 + t * 0.5)), Vector2(bx, zs + sz * (0.8 + t * 0.5)))
+		_capstone(Vector2(sx * 1.8, zs), Vector2(2.9, 2.5))
+		_grave_goods(Vector3(sx * 1.9, ground(sx * 1.9, zs) + 0.03, zs), 0.5, 2)
+		# The chamber's sides, its front walls beside the passage, its back
+		# wall beside the stair.
+		_slabs(Vector2(sx * (1.9 + t * 0.5), zc), Vector2(sx * (1.9 + t * 0.5), zb))
+		_slabs(Vector2(sx * (0.8 + t), zc - t * 0.5), Vector2(sx * (1.9 + t), zc - t * 0.5))
+		_slabs(Vector2(sx * 1.25, zb + t * 0.5), Vector2(sx * (1.9 + t), zb + t * 0.5))
+		_grave_goods(Vector3(sx * 1.4, ground(sx * 1.4, zc + 0.7) + 0.03, zc + 0.7), 0.4, 2)
+		# The lamps (lit while the barrow's hearth burns).
+		_lamp(Vector3(sx * 1.35, ground(sx * 1.35, zb - 0.6) + 0.03, zb - 0.6), 6.5, 0.17)
+	var z := z0 + 0.3
+	while z < zc - 0.6:
+		_capstone(Vector2(0.0, z + 0.65), Vector2(2.9, 1.4))
+		z += 1.3
+	_capstone(Vector2(0.0, zc + 0.85), Vector2(4.8, 1.8))
+	_capstone(Vector2(0.0, zc + 2.55), Vector2(4.8, 1.8))
+	# The back wall's lintel over the stair.
+	var stair1: Dictionary = lay.pieces[0]
+	var a_back := zb + t - z_s1
+	var lint_bot: float = Delves.floor_of(stair1, a_back) + Delves.H_STAIR - off
+	var lint_top := ground(0.0, zb) + 2.2
+	if lint_top > lint_bot + 0.2:
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, (lint_bot + lint_top) * 0.5, zb + t * 0.5)), Vector3(2.6, lint_top - lint_bot, t), palette[2], 0.0, 0.08, 0.03)
+	# The floors: the passage, the cells, the chamber round the stairwell.
+	_pave(Rect2(-0.8, z0 + 0.1, 1.6, zc - z0 - 0.1), NAN)
+	for sx: float in [-1.0, 1.0]:
+		_pave(Rect2(minf(sx * 0.8, sx * 2.8), zs - 0.8, 2.0, 1.6), NAN)
+		_pave(Rect2(minf(sx * 0.85, sx * 1.9), zc, 1.05, zb - zc), NAN)
+	_pave(Rect2(-0.85, zc, 1.7, z_s1 - zc), NAN)
+	var zz := z0 + 1.0
+	while zz < zb:
+		_shelters.append([Vector3(0.0, ground(0.0, zz), zz), 1.2, 2.2])
+		zz += 1.6
+	# Below.
+	shade = 0.3
+	var pieces: Array = lay.pieces
+	var s2: float = lay.s2
+	for i in pieces.size():
+		var pc: Dictionary = pieces[i]
+		var nxt: Dictionary = pieces[i + 1] if i + 1 < pieces.size() else {}
+		match str(pc.kind):
+			"stair":
+				_delve_stair(pc, off, i == 0, a_back, float(lay.y_t))
+			"exit":
+				_delve_stair(pc, off, false, 0.0, 0.0)
+			"room", "heart", "cairn":
+				var opens: Array = []
+				# Where the piece before it comes in, and the next goes out.
+				var prev: Dictionary = pieces[i - 1]
+				opens.append(_opening(pc, Delves.rect_of(prev).get_center() if str(prev.kind) != "stair" else (prev.c as Vector2) + (prev.dir as Vector2) * float(prev.len), float(prev.half)))
+				if not nxt.is_empty():
+					opens.append(_opening(pc, nxt.c, float(nxt.half)))
+				_delve_room(pc, off, opens)
+	_delve_dress(lay, off)
+	if not (lay.cairn as Dictionary).is_empty():
+		_cairn(lay, off)
+	shade = 0.0
+
+
+## Which wall of room `pc` the point `p` (where a joining piece meets it)
+## is on, as [side ("start", "end", "left", "right"), offset along the
+## wall, half width of the gap].
+func _opening(pc: Dictionary, p: Vector2, half: float) -> Array:
+	var aa := Delves.along_across(pc, p)
+	var length := float(pc.len)
+	if aa.x <= 0.2:
+		return ["start", aa.y, half]
+	if aa.x >= length - 0.2:
+		return ["end", aa.y, half]
+	return ["left" if aa.y > 0.0 else "right", aa.x, half]
+
+
+## A point of piece `pc` (along, across) in this frame's x/z.
+static func _pp(pc: Dictionary, along: float, across: float) -> Vector2:
+	return (pc.c as Vector2) + (pc.dir as Vector2) * along + Delves.perp(pc.dir) * across
+
+
+## A run of wall (dry-stone blocks, collision) from a to b (x/z), from
+## y_bot to y_top, `thick` thick.
+func _dwall(a: Vector2, b: Vector2, y_bot: float, y_top: float, thick: float = 0.6) -> void:
+	var along := b - a
+	var length := along.length()
+	if length < 0.15 or y_top <= y_bot + 0.05:
+		return
+	var n := maxi(1, int(ceil(length / 1.3)))
+	var dir := Vector3(along.x, 0.0, along.y) / length
+	var bs := Basis(dir, Vector3.UP, dir.cross(Vector3.UP))
+	for i in n:
+		var p := a + along * (i + 0.5) / n
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.0, 0.1))
+		box(Transform3D(bs, Vector3(p.x, (y_bot + y_top) * 0.5, p.y)), Vector3(length / n + 0.04, y_top - y_bot, thick), col, _growth(0.1), 0.07, 0.04)
+
+
+## A wall with gaps: from along a0 to a1 on a line, leaving [centre,
+## half] gaps (gaps as offsets along the same line).
+func _dwall_gaps(pc: Dictionary, side_across: float, a0: float, a1: float, gaps: Array, y_bot: float, y_top: float, along_axis: bool) -> void:
+	var cuts: Array = [[a0, a1]]
+	for g in gaps:
+		var out: Array = []
+		for c in cuts:
+			var lo: float = c[0]
+			var hi: float = c[1]
+			var g0: float = float(g[0]) - float(g[1])
+			var g1: float = float(g[0]) + float(g[1])
+			if g1 <= lo or g0 >= hi:
+				out.append(c)
+				continue
+			if g0 > lo:
+				out.append([lo, g0])
+			if g1 < hi:
+				out.append([g1, hi])
+		cuts = out
+	for c in cuts:
+		var p0: Vector2
+		var p1: Vector2
+		if along_axis:
+			p0 = _pp(pc, c[0], side_across)
+			p1 = _pp(pc, c[1], side_across)
+		else:
+			p0 = _pp(pc, side_across, c[0])
+			p1 = _pp(pc, side_across, c[1])
+		_dwall(p0, p1, y_bot, y_top)
+
+
+## A room (the first room, the heart, the cairn's chamber): paved floor,
+## four walls with the gaps in `opens`, a ceiling of slabs.
+func _delve_room(pc: Dictionary, off: float, opens: Array) -> void:
+	var y := float(pc.y0) - off
+	var h := float(pc.h)
+	var half := float(pc.half)
+	var length := float(pc.len)
+	var hw := half + Delves.WALL * 0.5
+	var gaps := {"start": [], "end": [], "left": [], "right": []}
+	for o in opens:
+		(gaps[o[0]] as Array).append([o[1], float(o[2]) + 0.05])
+	var top := y + h + Delves.SLAB
+	_dwall_gaps(pc, hw, -Delves.WALL, length + Delves.WALL, gaps.left, y - 0.6, top, true)
+	_dwall_gaps(pc, -hw, -Delves.WALL, length + Delves.WALL, gaps.right, y - 0.6, top, true)
+	_dwall_gaps(pc, -Delves.WALL * 0.5, -half, half, gaps.start, y - 0.6, top, false)
+	_dwall_gaps(pc, length + Delves.WALL * 0.5, -half, half, gaps.end, y - 0.6, top, false)
+	# Lintels over the gaps.
+	for side in gaps:
+		for g in gaps[side]:
+			var c := float(g[0])
+			var gh := float(g[1])
+			var p0: Vector2
+			var p1: Vector2
+			match side:
+				"start":
+					p0 = _pp(pc, -Delves.WALL * 0.5, c - gh)
+					p1 = _pp(pc, -Delves.WALL * 0.5, c + gh)
+				"end":
+					p0 = _pp(pc, length + Delves.WALL * 0.5, c - gh)
+					p1 = _pp(pc, length + Delves.WALL * 0.5, c + gh)
+				_:
+					var sa := hw if side == "left" else -hw
+					p0 = _pp(pc, c - gh, sa)
+					p1 = _pp(pc, c + gh, sa)
+			_dwall(p0, p1, y + Delves.H_STAIR + 0.1, top)
+	# The ceiling (ochre in the heart, §BQ: "ochre on the ceiling").
+	var ochre := str(pc.kind) == "heart"
+	var n := maxi(1, int(ceil(length / 1.5)))
+	for i in n:
+		var a0 := length * i / n
+		var a1 := length * (i + 1) / n
+		var mid := _pp(pc, (a0 + a1) * 0.5, 0.0)
+		var col: Color = palette[rng.randi() % palette.size()]
+		if ochre:
+			col = col.lerp(Color(0.62, 0.3, 0.14), 0.55)
+		var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
+		var bs := Basis(Delves.perp(pc.dir).x * Vector3.RIGHT + Delves.perp(pc.dir).y * Vector3.BACK, Vector3.UP, d3)
+		box(Transform3D(bs.orthonormalized(), Vector3(mid.x, y + h + Delves.SLAB * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, Delves.SLAB, a1 - a0 + 0.05), col.darkened(0.1), 0.0, 0.08, 0.03)
+	_pave_piece(pc, off)
+
+
+## The paving of a flat piece.
+func _pave_piece(pc: Dictionary, off: float) -> void:
+	var r := Delves.rect_of(pc, 0.05)
+	_pave(r, float(pc.y0) - off)
+
+
+## Flagstones over `r` (x/z), their tops at `y` (NAN: on the ground at
+## each), with collision.
+func _pave(r: Rect2, y: float) -> void:
+	var nx := maxi(1, int(ceil(r.size.x / 1.3)))
+	var nz := maxi(1, int(ceil(r.size.y / 1.3)))
+	var sx := r.size.x / nx
+	var sz := r.size.y / nz
+	var was := shade
+	shade = maxf(shade, 0.35)
+	for j in nz:
+		for i in nx:
+			var cx := r.position.x + (i + 0.5) * sx
+			var cz := r.position.y + (j + 0.5) * sz
+			var top := y if not is_nan(y) else ground(cx, cz) + 0.03
+			var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.05, 0.2))
+			box(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.02, 0.02)), Vector3(cx, top - 0.15, cz)), Vector3(sx + 0.02, 0.3, sz + 0.02), col, _growth(0.05), 0.04, 0.02)
+	shade = was
+
+
+## A stair (down into the delve, or the way up): steps over a ramp, walls
+## each side and a stepped ceiling. `first`: the barrow's stairhead, open
+## (no ceiling, low walls) until `open_to` along it where it passes under
+## the chamber's back wall (`floor_top`: the chamber's floor).
+func _delve_stair(pc: Dictionary, off: float, first: bool, open_to: float, floor_top: float) -> void:
+	var length := float(pc.len)
+	var half := float(pc.half)
+	var h := float(pc.h)
+	var y0 := float(pc.y0) - off
+	var y1 := float(pc.y1) - off
+	var hw := half + Delves.WALL * 0.5
+	var seg := 1.2
+	var a := 0.0
+	while a < length - 0.01:
+		var b := minf(a + seg, length)
+		var fa := lerpf(y0, y1, a / length)
+		var fb := lerpf(y0, y1, b / length)
+		var lo := minf(fa, fb)
+		var hi := maxf(fa, fb)
+		var top := hi + h + Delves.SLAB
+		var open := first and b <= open_to
+		if first and a < open_to:
+			top = minf(top, floor_top - off + 0.04)
+		for sd: float in [-1.0, 1.0]:
+			_dwall(_pp(pc, a, sd * hw), _pp(pc, b, sd * hw), lo - 0.6, top)
+		if not open and not (first and a < open_to):
+			var mid := _pp(pc, (a + b) * 0.5, 0.0)
+			var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
+			var pv := Delves.perp(pc.dir)
+			var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
+			box(Transform3D(bs, Vector3(mid.x, hi + h + Delves.SLAB * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, Delves.SLAB, b - a + 0.06), (palette[rng.randi() % palette.size()] as Color).darkened(0.1), 0.0, 0.08, 0.03)
+		a = b
+	# The steps (drawn) and the ramp under them (walked on).
+	var rise := absf(y1 - y0)
+	var steps := maxi(3, int(round(rise / 0.3)))
+	solid = false
+	for k in steps:
+		var a0 := length * k / steps
+		var a1 := length * (k + 1) / steps
+		var ytop := lerpf(y0, y1, (k + (0.0 if y1 < y0 else 1.0)) / steps)
+		var mid := _pp(pc, (a0 + a1) * 0.5, 0.0)
+		var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
+		var pv := Delves.perp(pc.dir)
+		var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.05, 0.2))
+		box(Transform3D(bs, Vector3(mid.x, ytop - 0.25, mid.y)), Vector3(2.0 * half + 0.1, 0.5, a1 - a0 + 0.04), col, _growth(0.05), 0.04, 0.02)
+	solid = true
+	var lo_p := _pp(pc, length if y1 < y0 else 0.0, 0.0)
+	var hi_p := _pp(pc, 0.0 if y1 < y0 else length, 0.0)
+	_dramp(Vector3(lo_p.x, minf(y0, y1), lo_p.y), Vector3(hi_p.x, maxf(y0, y1), hi_p.y), 2.0 * half)
+
+
+## A walkable slope (collision only) from `lo` up to `hi`, `w` wide, in
+## any direction (RuinBuilder._ramp runs only along z).
+func _dramp(lo: Vector3, hi: Vector3, w: float) -> void:
+	var foot := lo - (hi - lo).normalized() * 0.6 - Vector3(0.0, 0.05, 0.0)
+	var dirv := (hi - foot).normalized()
+	var flat := Vector3(dirv.x, 0.0, dirv.z).normalized()
+	var x := flat.cross(Vector3.UP).normalized()
+	var nrm := dirv.cross(x)
+	if nrm.y < 0.0:
+		nrm = -nrm
+		x = -x
+	var length := foot.distance_to(hi)
+	_collision_box(Transform3D(Basis(x, nrm, dirv), (foot + hi) * 0.5 - nrm * 0.5), Vector3(w * 0.5, 0.5, length * 0.5))
+
+
+## What lies in the delve: the first room's feature, the heart's dead and
+## their glow. (The find and the first room's hearth are laid in play:
+## Delves, OldHearths.)
+func _delve_dress(lay: Dictionary, off: float) -> void:
+	var room: Dictionary = lay.pieces[1]
+	var y := float(room.y0) - off
+	var length := float(room.len)
+	if str(lay.feature) == "niches":
+		# Bone niches: shelves in both side walls, the dead's things on them.
+		for sd: float in [-1.0, 1.0]:
+			for k in 2:
+				var a := length * (0.3 + 0.4 * k)
+				var p := _pp(room, a, sd * (float(room.half) - 0.2))
+				box(Transform3D(Basis.IDENTITY, Vector3(p.x, y + 1.05, p.y)), Vector3(0.6, 0.12, 1.1), palette[1], 0.0, 0.03, 0.01)
+				_grave_goods(Vector3(p.x, y + 1.11, p.y), 0.25, 2)
+	else:
+		# A fallen slab and its rubble in a corner (the ceiling above holds).
+		var sd := -float(lay.s2)
+		var p := _pp(room, length * 0.8, sd * (float(room.half) - 0.9))
+		box(Transform3D(Basis.from_euler(Vector3(0.5, 0.3, 0.2)), Vector3(p.x, y + 0.7, p.y)), Vector3(2.2, 0.4, 1.4), palette[2], 0.0, 0.1, 0.06)
+		solid = false
+		for k in 5:
+			boulder(Vector3(p.x + rng.randf_range(-0.8, 0.8), y + 0.15, p.y + rng.randf_range(-0.8, 0.8)), Vector3(0.3, 0.2, 0.25), Basis(Vector3.UP, rng.randf() * TAU), palette[rng.randi() % palette.size()], 0.0)
+		solid = true
+	var heart: Dictionary = lay.pieces[3]
+	var yh := float(heart.y0) - off
+	var lh := float(heart.len)
+	var sc := _pp(heart, lh * 0.62, 0.0)
+	_sarcophagus(Vector3(sc.x, yh, sc.y), PI * 0.5, palette[3])
+	var front := _pp(heart, lh * 0.3, 0.0)
+	_grave_goods(Vector3(front.x, yh, front.y), 1.6, 6)
+	_glow(Vector3(sc.x, yh + 2.6, sc.y - 1.0), Color(0.45, 0.85, 0.8), 7.0, 0.16)
+
+
+## The cairn the way out comes up in: a small long cairn of turf and
+## stone over the chamber and the holes round it, its dry-stone facade
+## with the doorway (the slab is Delves'), and a paved forecourt over the
+## ground's open quads before the door.
+func _cairn(lay: Dictionary, off: float) -> void:
+	var cairn: Dictionary = lay.cairn
+	var o: Vector2 = cairn.o
+	var dir: Vector2 = cairn.dir
+	var pv := Delves.perp(dir)
+	var back := float(cairn.back)
+	var half := float(cairn.half)
+	var h := float(cairn.h)
+	var floor_y := float(cairn.floor) - off
+	var ph := rng.randf() * TAU
+	var at := func(u: float, v: float) -> Vector2:
+		return o - dir * u + pv * v
+	var hf := func(u: float, v: float) -> float:
+		var p: Vector2 = at.call(u, v)
+		var prof := pow(maxf(0.0, 1.0 - (v / half) * (v / half)), 0.6)
+		var along := lerpf(1.0, 0.75, u / back) * sqrt(clampf((back - u) / 3.0, 0.0, 1.0))
+		return ground(p.x, p.y) - 1.0 + ((h + 1.0) + 0.2 * sin(v * 1.3 + ph) * sin(u * 0.8 + ph)) * prof * along
+	var turf := TerrainChunk._biome_blend(map, up).lerp(GRASS, 0.2)
+	if str(site.get("style", "")) == "snow":
+		turf = SNOW
+	var soil := turf.darkened(0.25).lerp(EARTH, 0.35)
+	turf.a = 0.1
+	soil.a = 0.0
+	var was_mat := mat
+	mat = SNOW_M if str(site.get("style", "")) == "snow" else THATCH_M
+	shade = 0.0
+	var nu := 12
+	var nv := 10
+	var pts: Array[Vector3] = []
+	for j in nu + 1:
+		var u := back * j / nu
+		for i in nv + 1:
+			var v := -half + 2.0 * half * i / nv
+			var p2: Vector2 = at.call(u, v)
+			pts.append(Vector3(p2.x, hf.call(u, v), p2.y))
+	var start := _v.size()
+	for j in nu:
+		for i in nv:
+			var a := pts[j * (nv + 1) + i]
+			var b := pts[j * (nv + 1) + i + 1]
+			var c := pts[(j + 1) * (nv + 1) + i + 1]
+			var d := pts[(j + 1) * (nv + 1) + i]
+			var mid := (a + b + c + d) * 0.25
+			_face(a, b, c, d, soil.lerp(turf, 0.7), mid - Vector3(0.0, 3.0, 0.0))
+	_smooth_from(start)
+	_collide_since(start)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+	mat = was_mat
+	# The facade across the cairn's open end, the doorway in it.
+	var cols := int(ceil(2.0 * half / 1.1))
+	var cw := 2.0 * half / cols
+	var fbs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, Vector3(dir.x, 0.0, dir.y)).orthonormalized()
+	for i in cols:
+		var v := -half + (i + 0.5) * cw
+		var fp: Vector2 = at.call(-0.35, v)
+		var g := ground(fp.x, fp.y)
+		var top: float = hf.call(0.0, v) + 0.25
+		var yy := minf(g, floor_y) - 0.6
+		while yy < top - 0.15:
+			var chh := minf(0.55, top - yy)
+			if not (absf(v) < 1.1 and yy + chh * 0.5 < floor_y + 2.35):
+				var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.05))
+				box(Transform3D(fbs, Vector3(fp.x, yy + chh * 0.5, fp.y)), Vector3(cw, chh * 0.97, 0.9), col, _growth(0.3), 0.07, 0.04)
+			yy += chh
+	# Uprights and a lintel at the door.
+	for sv: float in [-1.0, 1.0]:
+		var up_p: Vector2 = at.call(-0.45, sv * 1.25)
+		box(Transform3D(fbs, Vector3(up_p.x, floor_y + 1.0, up_p.y)), Vector3(0.9, 2.9, 1.2), palette[1], _growth(0.4), 0.12, 0.05)
+	var lp: Vector2 = at.call(-0.4, 0.0)
+	box(Transform3D(fbs, Vector3(lp.x, floor_y + 2.7, lp.y)), Vector3(3.6, 0.6, 1.3), palette[2], _growth(0.6), 0.12, 0.05)
+	# The forecourt.
+	shade = 0.0
+	var fu0 := 0.6 # under the facade's foot, no seam
+	var fu1 := Delves.QUAD_PAD + 1.0
+	var c0: Vector2 = at.call(-fu0, -half + 1.0)
+	var c1: Vector2 = at.call(-fu1, half - 1.0)
+	_pave(Rect2(c0, Vector2.ZERO).expand(c1), NAN)
+	_shelters.append([Vector3(o.x - dir.x * 1.8, floor_y, o.y - dir.y * 1.8), 1.6, 2.4])
 
 
 ## Upright slabs from a to b (local xz), up to 2.2 m above the ground

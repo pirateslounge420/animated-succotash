@@ -104,7 +104,20 @@ func light_on_you() -> bool:
 
 
 func is_night() -> bool:
-	return force_dark or sky.daylight < 0.2
+	# Down in a delve it is night whatever the hour (design 1 Oct §CJ: "full
+	# dark; dread accumulates as at night").
+	return force_dark or sky.daylight < 0.2 or Delves.underground > 0.6
+
+
+## Where something of the dark's stands at surface direction `d`: on the
+## ground, or in a delve on its nearest floor (Delves.floor_near), never
+## on the ground over your head.
+func _ground_pos(d: Vector3) -> Vector3:
+	if Delves.inside and Delves.instance != null:
+		var p := Delves.instance.floor_near(world.to_scene(d, world.radius_of(player.global_position)))
+		if p != Vector3.INF:
+			return p
+	return world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
 
 
 func update_dread(delta: float) -> void:
@@ -174,7 +187,7 @@ func _cues(delta: float, by_fire: bool) -> void:
 				var bearing := deg_to_rad(_rand_range(_rng, row.get("bearing_deg"), Vector2(140, 220)))
 				var dist := _rand_range(_rng, row.get("distance_m"), Vector2(12, 25))
 				var d := CreatureSpawner._offset(player.surface_dir, _facing_angle() + bearing, dist)
-				_voice.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d) + 1.0)
+				_voice.global_position = _ground_pos(d) + d * 1.0
 				_voice.stream = SoundSynth.stream(["scuff", "crack", "rustle"][_rng.randi() % 3], _rng.randi())
 				Audio3D.play(_voice)
 	if stage == 3:
@@ -196,7 +209,7 @@ func _cues(delta: float, by_fire: bool) -> void:
 				var dist := _rand_range(_rng, row.get("distance_m"), Vector2(10, 16))
 				var side := 1.0 if _rng.randf() < 0.5 else -1.0
 				var d := CreatureSpawner._offset(player.surface_dir, _facing_angle() + side * deg_to_rad(_rng.randf_range(50.0, 110.0)), dist)
-				if not Campfire.lit_near(get_tree(), world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d)), float(RULES.get("never_within_fire_m", 14.0))):
+				if not Campfire.lit_near(get_tree(), _ground_pos(d), float(RULES.get("never_within_fire_m", 14.0))):
 					_place_hunter(d, true)
 					_hunter.visible = true
 					_glimpse_up = 0.0
@@ -244,10 +257,10 @@ func _follow(delta: float, by_fire: bool) -> void:
 			_keep_m = _rand_range(_rng, pattern.get("keep_m"), Vector2(20, 40))
 		target = CreatureSpawner._offset(pd, _facing_angle() + _side * PI * 0.5, _keep_m)
 	# Never inside a lit fire's radius: hold where it is.
-	var tp: Vector3 = world.to_scene(target, PlanetConst.RADIUS_M + chunks.ground_height(target))
+	var tp: Vector3 = _ground_pos(target)
 	if Campfire.lit_near(get_tree(), tp, float(RULES.get("never_within_fire_m", 14.0))):
 		return
-	var here: Vector3 = world.to_scene(_hunter_dir, PlanetConst.RADIUS_M + chunks.ground_height(_hunter_dir))
+	var here: Vector3 = _ground_pos(_hunter_dir)
 	var gap: Vector3 = tp - here
 	var step := minf(speed * delta, gap.length())
 	if gap.length() > 0.05:
@@ -303,7 +316,7 @@ func _entry_for(biome: String) -> Dictionary:
 
 func _place_hunter(d: Vector3, face_player: bool, along := Vector3.ZERO) -> void:
 	_hunter_dir = d
-	var pos: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
+	var pos: Vector3 = _ground_pos(d)
 	var fwd := along
 	if face_player or fwd.length() < 0.01:
 		fwd = player.global_position - pos

@@ -111,6 +111,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _water_loop(rng, true)
 		"fire_hiss_loop":
 			samples = _fire_hiss_loop(rng)
+		"delve_loop":
+			samples = _delve_loop(rng)
 		"fire_snap":
 			samples = _fire_snap(rng)
 		"fire_crackle":
@@ -471,6 +473,37 @@ static func _insects_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 			tr = pow(tr, 6.0)
 			acc += sin(TAU * float(v[0]) * t) * tr * float(v[3]) * (0.7 + 0.3 * sin(t * 0.8 + float(v[2])))
 		raw[i] = acc * 0.25 + rng.randf_range(-1, 1) * 0.02
+	return _loopify(raw, n, fade)
+
+
+## Down in a delve (design 1 Oct §CJ): the earth's own low rumble, a
+## draught breathing in the passages, and water dripping somewhere off in
+## the dark, now near, now far (9 s loop).
+static func _delve_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(9.0 * RATE)
+	var fade := int(0.6 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var drips := []
+	for k in 7:
+		drips.append([rng.randf_range(0.0, 9.0), rng.randf_range(1400.0, 2600.0), rng.randf_range(0.25, 1.0)])
+	var lo := 0.0
+	var lo2 := 0.0
+	var air := 0.0
+	for i in raw.size():
+		var t := float(i) / RATE
+		# A rumble: brown noise filtered twice, very low.
+		lo = lerpf(lo, rng.randf_range(-1, 1), 0.004)
+		lo2 = lerpf(lo2, lo, 0.01)
+		air = lerpf(air, rng.randf_range(-1, 1), 0.03)
+		var breath := 0.5 + 0.5 * sin(TAU * t / 9.0 * 2.0 + 1.3)
+		var acc := lo2 * 9.0 + air * 0.08 * breath
+		for dp in drips:
+			var dt := fposmod(t - float(dp[0]), 9.0)
+			if dt < 0.25:
+				var f := float(dp[1]) * (1.0 + 0.6 * exp(-dt * 40.0))
+				acc += sin(TAU * f * dt) * exp(-dt * 26.0) * float(dp[2]) * 0.5
+		raw[i] = acc
 	return _loopify(raw, n, fade)
 
 

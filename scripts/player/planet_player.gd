@@ -711,6 +711,9 @@ func _physics_process(delta: float) -> void:
 	var radius: float = world.radius_of(global_position)
 	var water := chunks.water_level_at(surface_dir)
 	var depth := (PlanetConst.RADIUS_M + water) - radius
+	# In a delve (design 1 Oct §CJ) you are under the ground, not the sea.
+	if Delves.inside:
+		depth = 0.0
 	swimming = depth > 1.2
 	# How fast you were coming down (a splash into water).
 	var sink := -velocity.dot(up)
@@ -1004,9 +1007,10 @@ func _physics_process(delta: float) -> void:
 	_unstick(delta, wish, moved)
 	footsteps.step_update(self, moved.length() * delta, is_on_floor(), delta)
 
-	# Safety net: never fall through unloaded ground.
+	# Safety net: never fall through unloaded ground (but in a delve, §CJ,
+	# you are meant to be under it).
 	var ground := chunks.ground_height(surface_dir)
-	if radius < PlanetConst.RADIUS_M + ground - 2.0:
+	if radius < PlanetConst.RADIUS_M + ground - 2.0 and not Delves.inside:
 		global_position = world.to_scene(surface_dir, PlanetConst.RADIUS_M + ground + 0.5)
 		velocity = Vector3.ZERO
 	_water_contacts(delta, water, ground, moved.length(), sink)

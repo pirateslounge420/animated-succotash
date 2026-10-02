@@ -127,6 +127,16 @@ func _wanted(pd: Vector3) -> Dictionary:
 		if not is_instance_valid(node) or not node.is_inside_tree():
 			continue
 		var site: Dictionary = node.get_meta("site", {})
+		# A delve's first room (design 1 Oct §CJ): its one safe room's hearth.
+		if node.has_meta("delve"):
+			var lay: Dictionary = node.get_meta("delve")
+			var hl: Vector3 = lay.get("hearth", Vector3.INF)
+			if hl != Vector3.INF:
+				var local := hl - Vector3(0.0, float(node.get_meta("delve_off", 0.0)), 0.0)
+				var hp: Vector3 = node.global_transform * local
+				var hd: Vector3 = world.dir_of(hp)
+				if CubeSphere.surface_distance_m(hd, pd) < BUILD_M:
+					want[FireStore.key_of(hd)] = [hd, "delve", node, local]
 		if site.is_empty() or Ruins.inhabited(site) or not node.has_meta("camp_spot"):
 			continue
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
@@ -143,7 +153,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 	return want
 
 
-func _build(d: Vector3, kind: String, ruin: Node3D) -> Node3D:
+func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Node3D:
 	var st := store_at(world, d)
 	var fire := Campfire.build(_root, world, chunks, d, false)
 	# Campfire.build registers a tended store only when there is none; this
@@ -155,7 +165,13 @@ func _build(d: Vector3, kind: String, ruin: Node3D) -> Node3D:
 	fire.set_meta("old_kind", kind)
 	# Lit, it can be your hearth (§AY), like a camp's.
 	fire.set_meta("hearth_ok", true)
-	if ruin != null:
+	if ruin != null and kind == "delve":
+		# Down on the delve's paved floor, not on the ground above it.
+		fire.set_meta("delve_hearth", ruin)
+		fire.global_position = ruin.global_transform * local
+		# Not one to wake at: you'd wake on the ground above it.
+		fire.set_meta("hearth_ok", false)
+	elif ruin != null:
 		fire.set_meta("ruin", ruin)
 		# A stone ruin's camp spot stands on its floor, not the ground.
 		var spot: Vector3 = ruin.global_transform * (ruin.get_meta("camp_spot") as Vector3)
@@ -193,7 +209,7 @@ func refresh_now() -> void:
 	for key in want:
 		if not _built.has(key) or not is_instance_valid(_built[key]):
 			var w: Array = want[key]
-			_built[key] = _build(w[0], w[1], w[2])
+			_built[key] = _build(w[0], w[1], w[2], w[3] if w.size() > 3 else Vector3.INF)
 	var saved: Dictionary = WorldSave.data["old_hearths"]
 	for key in _built.keys():
 		var node: Node3D = _built[key]

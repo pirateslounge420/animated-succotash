@@ -125,7 +125,8 @@ func _flicker(delta: float) -> void:
 		_strike_t = -1.0
 	flash = k * clampf(_strike_energy / 2.4, 0.2, 1.0)
 	_light.visible = k > 0.0
-	_light.light_energy = k * _strike_energy
+	# Not down in a delve (design 1 Oct §CJ): thunder only, no flash.
+	_light.light_energy = k * _strike_energy * (1.0 - Delves.underground)
 	if k > 0.0:
 		sky.event_flash(flash * 0.9, FLASH_COLOR)
 		sky.sky_material.set_shader_parameter("lightning", flash)
