@@ -983,7 +983,10 @@ The rules:
 - **Every new world opens on Day 1**, in §BX's afternoon. The day number counts your local
   days since the world began and goes up by one at local midnight where you stand (the
   clock face's 00:00). The HUD's time line, every log stamp and the log's first line show
-  the same number. **The sky keeps its clock:** the first night stays near full moon
+  the same number, and the HUD line, the log stamps and the clock face show the same time:
+  the sky's clock, where noon is when the sun peaks (today the face and the stamps run on
+  the plain uniform clock: 13:35 against the HUD's 13:43 at that spawn). **The sky keeps
+  its clock:** the first night stays near full moon
   (§BU's moonlit night) and the season stays where it is (spring, about day 40 of it).
   Day 1 is the count, not the calendar; starting the year over would put a new moon on
   the first night. A world saved before this counts from its own first day.
