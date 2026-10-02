@@ -92,6 +92,22 @@ static func in_reach(pos: Vector3, radius: float) -> PlantedTorch:
 	return best
 
 
+## A planted torch gone out (not burnt to a stick) within `radius` of
+## `pos`: the swing of a lit torch lights it again (§CN).
+static func unlit_near(pos: Vector3, radius: float) -> PlantedTorch:
+	for p in all:
+		if is_instance_valid(p) and not p.lit() and not bool(p.item.get("burnt", false)) and p.global_position.distance_to(pos) < radius:
+			return p
+	return null
+
+
+func relight() -> void:
+	item["lit"] = true
+	if not item.has("burn_left_min"):
+		item["burn_left_min"] = float(Torch.D.get("burn_min", 50.0))
+	_apply()
+
+
 ## A lit planted torch within `radius` of `pos`?
 static func lit_near(pos: Vector3, radius: float) -> bool:
 	for p in all:

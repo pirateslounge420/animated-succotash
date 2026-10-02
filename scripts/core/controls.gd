@@ -118,3 +118,9 @@ static func ensure() -> void:
 ## back").
 static func interact_word() -> String:
 	return "Right click"
+
+
+## The shoot button's name for prompts ("Left click: swing the torch ...";
+## §CN).
+static func shoot_word() -> String:
+	return "Left click"

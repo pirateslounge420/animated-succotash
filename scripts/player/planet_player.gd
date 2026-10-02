@@ -623,6 +623,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		bow.block_until_release()
 		spear.block_until_release()
 		fists.block_until_release()
+		if torch:
+			torch.block_until_release()
 	elif event.is_action_pressed("weapon_swap"):
 		swap_weapon()
 	elif event.is_action_pressed("release_mouse"):
@@ -2582,6 +2584,8 @@ func swap_weapon() -> void:
 	bow.block_until_release()
 	spear.block_until_release()
 	fists.block_until_release()
+	if torch:
+		torch.block_until_release()
 	weapon = next_tool(weapon)
 
 

@@ -510,10 +510,9 @@ func _process(delta: float) -> void:
 		prompt = "%s: put the %s %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_store_item()]).to_lower(), "on the woodpile" if sn.name == "Woodpile" else "in the store"]
 	elif _fire_in_reach() != null and player.inventory.has_kind("fuel"):
 		prompt = "%s: put the %s on the fire" % [Controls.interact_word(), Inventory.title(player.inventory.carried[player.inventory.slot_of("fuel")]).to_lower()]
-	elif player.torch.can_light():
-		prompt = "%s: light the torch" % Controls.interact_word()
-	elif _fire_in_reach() != null and player.torch.lit() and not FireStore.is_lit(_fire_in_reach()):
-		prompt = "%s: %s" % [Controls.interact_word(), "rekindle the old hearth" if _fire_in_reach().has_meta("old_hearth") else "light the fire"]
+	elif not player.torch.swing_target().is_empty():
+		# The swing passes the flame (§CN): left click, not right.
+		prompt = "%s: %s" % [Controls.shoot_word(), _swing_words(player.torch.swing_target())]
 	elif Hearth.can_set(_fire_in_reach()):
 		prompt = "%s: make this your hearth" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
@@ -529,6 +528,9 @@ func _process(delta: float) -> void:
 		prompt = "%s: take %s" % [Controls.interact_word(), _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))]
 	if prompt == "" and player.torch.can_plant():
 		prompt = "%s: plant the torch" % Controls.interact_word()
+	if player.torch.note != "":
+		_say_note(player.torch.note)
+		player.torch.note = ""
 	if _note_t > 0.0:
 		_note_t -= delta
 		prompt = _note
@@ -749,21 +751,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				_:
 					player.inventory.take(fi)
 					_say_note("You put the %s on the fire." % Inventory.title(fuel).to_lower())
-		elif player.torch.can_light():
-			# The lighting ritual (§AW): the torch in hand held to the flame.
-			player.torch.light()
-			_say_note("You light the torch.")
-		elif fire != null and player.torch.lit() and not FireStore.is_lit(fire):
-			# A lit torch to embers or a dead fire (§AX).
-			match FireStore.relight(fire):
-				"no_fuel":
-					_say_note("There is nothing left to burn. It needs fuel.")
-				_:
-					if fire.has_meta("old_hearth"):
-						_say_note("The old hearth catches from the torch.")
-						GameLog.add("Rekindled an old hearth.", "hearth_rekindled")
-					else:
-						_say_note("You light the fire from the torch.")
 		elif Hearth.can_set(fire):
 			# This fire is home now: you wake here when you die (§AY).
 			Hearth.set_home(world.dir_of(fire.global_position))
@@ -824,6 +811,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			spent = false
 		if spent:
 			player.interact_spent_ms = Time.get_ticks_msec()
+
+
+## What a swing of the torch would do (Torch.swing_target), for the prompt.
+func _swing_words(t: Array) -> String:
+	match str(t[0]):
+		"torch":
+			return "swing the torch through the flame"
+		"planted":
+			return "swing the torch to light the planted one"
+	var fire: Node3D = t[1]
+	return "swing the torch to rekindle the old hearth" if fire.has_meta("old_hearth") else "swing the torch to light the fire"
 
 
 ## The tools a WorldItem of this kind puts in hand.

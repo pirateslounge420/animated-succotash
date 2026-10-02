@@ -207,6 +207,26 @@ static func relight(fire: Node3D) -> String:
 	return "ok"
 
 
+## The swing of a lit torch through a cold fire (design 2 Oct §CN):
+## embers or a dead fire with something to burn catch. Returns "ok",
+## "no_fuel" or "lit" (as relight). `days` is the world clock.
+static func swing_light(fire: Node3D, _days: float) -> String:
+	var how := relight(fire)
+	if how == "ok" and fire.has_meta("old_hearth"):
+		GameLog.add("Rekindled an old hearth.", "hearth_rekindled")
+	return how
+
+
+## The line for what a swing at `fire` did (swing_light's result).
+static func swing_words(fire: Node3D, how: String) -> String:
+	match how:
+		"ok":
+			return "The old hearth catches from the torch." if fire.has_meta("old_hearth") else "The fire catches from the torch."
+		"no_fuel":
+			return "There is nothing here to burn. It needs fuel."
+	return ""
+
+
 ## The burn level 0-1 the fire draws at (Campfire.flicker), and "lit".
 static func apply(fire: Node3D) -> void:
 	var st := store_of(fire)

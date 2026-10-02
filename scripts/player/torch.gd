@@ -3,12 +3,21 @@ extends Node3D
 ## The torch (design 30 Sept §AW, data/torch.json): the first tool. A
 ## carried thing (`kind` torch, Inventory: burden applies) held in one
 ## hand (PlanetPlayer.weapon "torch"; Q cycles to it while you carry one),
-## drawn in first person like the bow. Unlit until held to a flame: right
-## click a lit campfire or a planted torch with it in hand (can_light /
-## light). Burns burn_min real minutes, rain and storms shorten that, then
-## gutters (the last gutter_share: dimmer, a harder flicker) and goes out:
-## a stick (`burnt`). Water past douse_depth_m puts it out (relight it at
-## a flame); so does stowing it (Q away from it) and starting a climb with
+## drawn in first person like the bow. The swing passes the flame (design
+## 2 Oct §CN, superseding §AW's right click): left click (`shoot`) swings
+## it on the bare hand's arc and timing (Fists.STRIKE_S), and at the end
+## of the arc the flame passes between it and whatever it touches within
+## swing.lighting_reach_m, from lit to unlit, either way: a lit torch
+## lights a laid fire, embers, a delve's fire-holder or a planted torch
+## (FireStore.swing_light); an unlit one swung through a lit fire, holder
+## or planted torch catches (light). Sharing costs the torch nothing. The
+## swing lights nothing else (never the ground, grass, a camp, folk or a
+## creature: wildfire stays a dropped torch, §BL) and does nothing to a
+## creature (no damage, knockback or flinch; §BA unchanged). Burns
+## burn_min real minutes, rain and storms shorten that, then gutters (the
+## last gutter_share: dimmer, a harder flicker) and goes out: a stick
+## (`burnt`). Water past douse_depth_m puts it out (relight it at a
+## flame); so does stowing it (Q away from it) and starting a climb with
 ## no ground to plant it in; with ground there, a climb plants it. Right
 ## click the ground with it lit to plant it (PlantedTorch); a dropped lit
 ## torch lies burning. The light: a point light with the data's falloff
@@ -34,6 +43,15 @@ var _light: OmniLight3D
 var _voice: AudioStreamPlayer3D
 var _t := 0.0
 var _last_state := ""
+## The swing (§CN): 1 .. 0 while one is under way.
+var _swing := 0.0
+var _down := false
+var _blocked := false
+## Swings made, and what the last one passed ("" nothing; tests).
+var swings := 0
+var last_pass := ""
+## A line for the player (main shows it and clears it).
+var note := ""
 
 
 func setup(p: PlanetPlayer) -> void:
@@ -128,11 +146,77 @@ static func flame_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 	return Campfire.lit_near(tree, pos, radius) or PlantedTorch.lit_near(pos, radius)
 
 
-func can_light() -> bool:
+## How far the flame passes on the swing (torch.json swing, §CN).
+static func reach_m() -> float:
+	return float((D.get("swing", {}) as Dictionary).get("lighting_reach_m", D.get("lighting_reach_m", 2.2)))
+
+
+## Where the swing's flame passes: the torch's head at the end of the arc,
+## a little ahead of your chest.
+func swing_point() -> Vector3:
+	return player.reach_from() - player.global_basis.z * 0.4
+
+
+## What a swing now would pass the flame to: [kind, node] with kind
+## "torch" (an unlit torch catches), "fire" (a cold fire or holder),
+## "planted" (a planted torch gone out), or [] for nothing.
+func swing_target() -> Array:
 	var it := item()
-	if not in_hand() or bool(it.get("lit", false)) or bool(it.get("burnt", false)):
-		return false
-	return flame_near(get_tree(), player.reach_from(), float(D.get("lighting_reach_m", 2.2)))
+	if not in_hand() or bool(it.get("burnt", false)):
+		return []
+	var at := swing_point()
+	var r := reach_m()
+	if not bool(it.get("lit", false)):
+		return ["torch", null] if flame_near(get_tree(), at, r) else []
+	var fire := FireStore.nearest(get_tree(), at, r)
+	if fire != null and not FireStore.is_lit(fire):
+		return ["fire", fire]
+	var pt := PlantedTorch.unlit_near(at, r)
+	if pt != null:
+		return ["planted", pt]
+	return []
+
+
+## Swing it (left click with it in hand). The flame passes at the end of
+## the arc (pass_flame).
+func swing() -> void:
+	if _swing > 0.0 or not in_hand():
+		return
+	_swing = 1.0
+	swings += 1
+	player.make_noise(Fists.NOISE * 0.5)
+	_voice.stream = SoundSynth.stream("whip", randi())
+	_voice.pitch_scale = randf_range(0.7, 0.8)
+	_voice.play()
+
+
+func block_until_release() -> void:
+	_blocked = true
+
+
+## The end of the arc: the flame passes, lit to unlit, either way. Returns
+## and keeps (last_pass) what it did: "torch" (this torch caught),
+## "fire:<FireStore result>", "planted", or "" (nothing in reach).
+func pass_flame() -> String:
+	var t := swing_target()
+	last_pass = ""
+	if t.is_empty():
+		return last_pass
+	match str(t[0]):
+		"torch":
+			light()
+			note = "The torch catches."
+			last_pass = "torch"
+		"planted":
+			(t[1] as PlantedTorch).relight()
+			note = "The planted torch catches."
+			last_pass = "planted"
+		"fire":
+			var fire: Node3D = t[1]
+			var how := FireStore.swing_light(fire, player.world.days)
+			last_pass = "fire:" + how
+			note = FireStore.swing_words(fire, how)
+	return last_pass
 
 
 func light() -> void:
@@ -143,7 +227,7 @@ func light() -> void:
 	if not it.has("burn_left_min"):
 		it["burn_left_min"] = float(D.get("burn_min", 50.0))
 	_play("torch_light")
-	GameLog.add("Lit a torch at the fire.", "torch")
+	GameLog.add("Lit a torch from a flame.", "torch")
 	_apply(true)
 
 
@@ -280,6 +364,7 @@ static func energy_now(it: Dictionary, t: float, motion: float) -> float:
 
 func update_torch(delta: float) -> void:
 	_t += delta
+	_update_swing(delta)
 	var it := item()
 	# Stowed (not in hand) but still lit: it goes out.
 	if not it.is_empty() and bool(it.get("lit", false)) and player.weapon != "torch":
@@ -309,6 +394,25 @@ func _apply(on: bool) -> void:
 	_view.visible = in_hand() and player.first_person and not player.climbing
 	_view_flame.visible = _view.visible and on
 	_light.visible = on and not player.climbing
+	# The swing's arc, the fist's (Fists._carry): out along the aim and back.
+	var s := sin(_swing * PI) if _swing > 0.0 else 0.0
+	_view.position = Vector3(0.34, -0.3, -0.56).lerp(Vector3(0.1, -0.16, -0.86), s)
+	_view.rotation = Vector3(-0.9 * s, 0.35 * s, 0.0)
+
+
+## Left click with the torch in hand (§CN): one swing a press; the flame
+## passes as the arc ends.
+func _update_swing(delta: float) -> void:
+	var down := Input.is_action_pressed("shoot") and (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or not Bow.need_capture)
+	if not down:
+		_blocked = false
+	if down and not _down and not _blocked and in_hand() and not player.dead and not player.climbing and not player.swimming and not player.ui_open:
+		swing()
+	_down = down
+	if _swing > 0.0:
+		_swing = maxf(_swing - delta / maxf(Fists.STRIKE_S, 0.05), 0.0)
+		if _swing <= 0.0:
+			pass_flame()
 
 
 func _play(kind: String) -> void:
