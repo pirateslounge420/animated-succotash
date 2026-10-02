@@ -453,6 +453,10 @@ func _process(delta: float) -> void:
 	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, weather, cloud_light, sky.cloud_shade, sky.cloud_light_dir)
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position) or Delves.inside
+	# Rain on what you carry (§CN): kindling is wet until it dries; under
+	# a roof (a ruin's, a delve's; not a canopy) it stays dry.
+	if float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 and not _under_roof():
+		Kindling.rain_on(player.inventory, world.days)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
@@ -508,6 +512,8 @@ func _process(delta: float) -> void:
 	elif not _store_in_reach().is_empty() and _store_item() >= 0:
 		var sn: Node3D = _store_in_reach()[0]
 		prompt = "%s: put the %s %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_store_item()]).to_lower(), "on the woodpile" if sn.name == "Woodpile" else "in the store"]
+	elif _fire_in_reach() != null and FireStore.wants_kindling(_fire_in_reach()) and Kindling.best_slot(player.inventory, world.days) >= 0:
+		prompt = "%s: lay the %s in the cold %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[Kindling.best_slot(player.inventory, world.days)]).to_lower(), "hearth" if _fire_in_reach().has_meta("old_hearth") else "fire"]
 	elif _fire_in_reach() != null and player.inventory.has_kind("fuel"):
 		prompt = "%s: put the %s on the fire" % [Controls.interact_word(), Inventory.title(player.inventory.carried[player.inventory.slot_of("fuel")]).to_lower()]
 	elif not player.torch.swing_target().is_empty():
@@ -523,9 +529,13 @@ func _process(delta: float) -> void:
 		prompt = "%s: take the torch back" % Controls.interact_word()
 	elif not _fruit_in_reach().is_empty():
 		prompt = FruitCrop.prompt_for(_fruit_in_reach())
+	elif _plant_kindling() != "":
+		prompt = "%s: take %s" % [Controls.interact_word(), Kindling.name_of(_plant_kindling()).to_lower()]
 	elif _sample_in_reach() >= 0:
 		var sp_in_reach := _sample_in_reach()
 		prompt = "%s: take %s" % [Controls.interact_word(), _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))]
+	if prompt == "" and _ground_kindling() != "":
+		prompt = "%s: gather %s" % [Controls.interact_word(), Kindling.name_of(_ground_kindling()).to_lower()]
 	if prompt == "" and player.torch.can_plant():
 		prompt = "%s: plant the torch" % Controls.interact_word()
 	if player.torch.note != "":
@@ -735,6 +745,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif not store.is_empty() and _store_item() >= 0:
 			# The player's gathering goes into the camp's store (§BL).
 			_give_to_store(store)
+		elif fire != null and FireStore.wants_kindling(fire) and Kindling.best_slot(player.inventory, world.days) >= 0:
+			# Lay a cold fire (§CN): the kindling first, then fuel.
+			var ki := Kindling.best_slot(player.inventory, world.days)
+			var kit: Dictionary = player.inventory.carried[ki]
+			if FireStore.lay_kindling(fire, kit, world.days) == "laid":
+				player.inventory.take(ki)
+				var need_fuel := not FireStore.is_laid(fire)
+				_say_note("You lay the %s%s.%s" % [Inventory.title(kit).to_lower(), ", wet" if Kindling.is_wet(kit, world.days) else "", " It needs fuel on it." if need_fuel else " Now a flame."])
 		elif fire != null and player.inventory.has_kind("fuel"):
 			# Fuel onto the fire (§AX): the first piece in the pack.
 			var fi := player.inventory.slot_of("fuel")
@@ -747,7 +765,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					_say_note("The wet %s hisses on the embers and won't catch." % Inventory.title(fuel).to_lower())
 				"cold":
 					player.inventory.take(fi)
-					_say_note("You lay the %s on the dead fire. It needs a flame." % Inventory.title(fuel).to_lower())
+					_say_note("You lay the %s on the dead fire. %s" % [Inventory.title(fuel).to_lower(), "It needs kindling, and a flame." if FireStore.wants_kindling(fire) else "Now a flame."])
 				_:
 					player.inventory.take(fi)
 					_say_note("You put the %s on the fire." % Inventory.title(fuel).to_lower())
@@ -788,6 +806,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				_say_note("You pick the %s." % str(FruitCrop.item_for(fi).title).to_lower())
 			else:
 				_say_note("Your hands are full.")
+		elif _plant_kindling() != "":
+			# Kindling from a plant of its genus (§CN): a birch's bark.
+			_gather_kindling(_plant_kindling(), player.look.point)
 		elif plant >= 0:
 			# A cutting, a seed head, a leaf, a cut column or a bundle: it
 			# carries the species (Inventory.plant_sample).
@@ -803,6 +824,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			player.stop_perch()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
+		elif _ground_kindling() != "":
+			# Kindling from the ground at your feet (§CN).
+			_gather_kindling(_ground_kindling(), player.global_position)
 		elif player.torch.can_plant():
 			# Right click the ground with a lit torch: stand it there.
 			player.torch.plant()
@@ -811,6 +835,58 @@ func _unhandled_input(event: InputEvent) -> void:
 			spent = false
 		if spent:
 			player.interact_spent_ms = Time.get_ticks_msec()
+
+
+## Under a roof (a ruin's shelter, a delve): kindling stays dry (§CN).
+func _under_roof() -> bool:
+	return landmarks.sheltered_at(player.global_position) or Delves.inside
+
+
+## The kindling the plant or tree under the crosshair gives (§CN): one
+## of the biome's kinds whose genera hold its genus; "" none, or you
+## carry Kindling.KEEP already (then right click takes a sample again).
+func _plant_kindling() -> String:
+	var l := player.look
+	if l == null or not l.kind in ["plant", "tree"] or l.species_index < 0 or l.point == Vector3.INF:
+		return ""
+	if l.point.distance_to(player.reach_from()) > float(Inventory.data().get("sample_reach_m", 2.2)) + (1.0 if l.kind == "tree" else 0.0):
+		return ""
+	if Kindling.count(player.inventory) >= Kindling.KEEP:
+		return ""
+	var sp: PlantSpecies = SpeciesDB.all()[l.species_index]
+	return Kindling.plant_kind(world, player.surface_dir, sp.genus, world.days)
+
+
+## The kindling at your feet (§CN): the biome's likeliest litter kind,
+## when nothing else wants the right click: on the ground (not climbing,
+## swimming or in a delve), no climb or cling in reach (the player's own
+## prompt), and with a lit torch in hand only crouched (standing, the
+## right click plants it).
+func _ground_kindling() -> String:
+	if player.climbing or player.swimming or player.perched or Delves.inside or not player.is_on_floor():
+		return ""
+	if player.prompt != "" or Kindling.count(player.inventory) >= Kindling.KEEP:
+		return ""
+	if player.torch.lit() and not player.crouching:
+		return ""
+	if chunks.ground_height(player.surface_dir) <= chunks.water_level_at(player.surface_dir) + 0.05:
+		return ""
+	return Kindling.ground_kind(world, player.surface_dir, world.days)
+
+
+## Gather one of `kind` (§CN): wet if it rains on you outside a roof, or
+## the ground is soaked.
+func _gather_kindling(kind: String, at: Vector3) -> void:
+	var it := Kindling.make(kind)
+	var wet := (float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 or player.ground_wet > 0.5) and not _under_roof()
+	if wet:
+		it["wet"] = true
+		it["wet_days"] = world.days
+	if player.inventory.add(it):
+		player.grab_toward(at)
+		_say_note("You gather %s%s." % [Kindling.name_of(kind).to_lower(), ", wet through" if wet else ""])
+	else:
+		_say_note("Your hands are full.")
 
 
 ## What a swing of the torch would do (Torch.swing_target), for the prompt.

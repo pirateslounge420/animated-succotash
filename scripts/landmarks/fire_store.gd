@@ -3,9 +3,14 @@ class_name FireStore
 ## store that burns down: flames -> low -> embers -> out. The store is a
 ## list of fuel units, each a kind (fuel.json kinds) and the real minutes
 ## it has left; the front unit burns first. Empty store: embers, which
-## stay relightable for embers_min, then the fire is out. A dead fire
-## comes back only from a lit torch (relight); embers catch from dry fuel
-## put on them. Folk tending their fire (the camps, the opening camp, the
+## stay relightable for embers_min, then the fire is out. Embers catch
+## from dry fuel put on them, or from a lit torch's swing; a fire fully
+## out must be laid first (design 2 Oct §CN, fuel.json kindling: a
+## kindling thing, lay_kindling, and at least one unit of fuel), then the
+## swing lights it (swing_light): the flame takes after the kindling's
+## catch time ("catching"), or wet kindling that isn't wet_ok smokes and
+## the fire stays cold; kindling with no fuel flares for its burn_s
+## ("flare") and goes out. Folk tending their fire (the camps, the opening camp, the
 ## mythic folk's fires) burn it at tended_burn_scale until §BJ builds real
 ## tending; the player's own fires would burn at full rate.
 ##
@@ -18,6 +23,8 @@ class_name FireStore
 static var D := Tuning.table("fuel")
 static var F: Dictionary = D.get("fire", {})
 static var KINDS: Dictionary = D.get("kinds", {})
+## The swing's log lines (torch.json swing.log, §CN).
+static var SWING_LOG: Dictionary = (Tuning.table("torch").get("swing", {}) as Dictionary).get("log", {})
 ## key -> {"units": [[kind, min_left], ...], "embers_min", "state", "tended"}
 static var stores := {}
 ## Fires to tell the log about, once each: key -> last state logged.
@@ -102,7 +109,7 @@ static func share(st: Dictionary) -> float:
 
 
 static func is_lit(fire: Node3D) -> bool:
-	return state_of(fire) in ["flames", "low"]
+	return state_of(fire) in ["flames", "low", "flare"]
 
 
 ## Burn every fire in the scene down over `delta` seconds. `near` is the
@@ -119,6 +126,7 @@ static func tick(tree: SceneTree, delta: float, near: Vector3) -> void:
 		if st.is_empty():
 			continue
 		var before := str(st.state)
+		_take(st, delta)
 		burn(st, delta / 60.0)
 		if str(st.state) != before:
 			apply(fire)
@@ -131,6 +139,9 @@ static func tick(tree: SceneTree, delta: float, near: Vector3) -> void:
 static func burn(st: Dictionary, minutes: float) -> void:
 	var units: Array = st.units
 	var state := str(st.state)
+	# The flame still taking, or kindling flaring alone: _take's.
+	if state in ["catching", "flare"]:
+		return
 	if not units.is_empty() and state != "out":
 		var rate := float(F.get("burn_scale", 1.0)) * (float(F.get("tended_burn_scale", 0.35)) if bool(st.get("tended", true)) else 1.0)
 		var left := minutes * rate
@@ -149,6 +160,24 @@ static func burn(st: Dictionary, minutes: float) -> void:
 		st.embers_min = float(st.embers_min) - minutes
 		if float(st.embers_min) <= 0.0:
 			st.state = "out"
+
+
+## The flame taking (§CN), per frame over `delta` seconds: a catching
+## fire is lit once its catch time is up; a flare is out when its
+## kindling has burnt.
+static func _take(st: Dictionary, delta: float) -> void:
+	match str(st.state):
+		"catching":
+			st.catch_s = float(st.get("catch_s", 0.0)) - delta
+			if float(st.catch_s) <= 0.0:
+				st.erase("catch_s")
+				st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
+				GameLog.add(str(SWING_LOG.get("fire_caught", "The fire caught.")), "fire_lit")
+		"flare":
+			st.flare_s = float(st.get("flare_s", 0.0)) - delta
+			if float(st.flare_s) <= 0.0:
+				st.erase("flare_s")
+				st.state = "out"
 
 
 static func _log_state(key: String, state: String) -> void:
@@ -207,12 +236,77 @@ static func relight(fire: Node3D) -> String:
 	return "ok"
 
 
-## The swing of a lit torch through a cold fire (design 2 Oct §CN):
-## embers or a dead fire with something to burn catch. Returns "ok",
-## "no_fuel" or "lit" (as relight). `days` is the world clock.
-static func swing_light(fire: Node3D, _days: float) -> String:
-	var how := relight(fire)
-	if how == "ok" and fire.has_meta("old_hearth"):
+## Does this fire need kindling laid before the swing will light it?
+## Fully out, kindling.out_fire_needs_kindling, and none laid yet.
+static func wants_kindling(fire: Node3D) -> bool:
+	var st := store_of(fire)
+	return not st.is_empty() and str(st.state) == "out" and not st.has("kindling") and bool(Kindling.D.get("out_fire_needs_kindling", true))
+
+
+## Lay kindling `it` in a fire that is out (§CN: right click, the way
+## fuel is fed). Returns "laid", "already" (one is laid), or "no" (the
+## fire isn't out: embers need none).
+static func lay_kindling(fire: Node3D, it: Dictionary, days: float) -> String:
+	var st := store_of(fire)
+	if st.is_empty() or str(st.state) != "out":
+		return "no"
+	var need := int((Kindling.D.get("laid_fire", {}) as Dictionary).get("kindling_items", 1))
+	if st.has("kindling") and need <= 1:
+		return "already"
+	st["kindling"] = {"kind": Kindling.kind_of(it), "wet": Kindling.is_wet(it, days), "wet_days": float(it.get("wet_days", days))}
+	return "laid"
+
+
+## Laid: kindling, and at least laid_fire.fuel_units_min of fuel (an old
+## hearth's charred branches count).
+static func is_laid(fire: Node3D) -> bool:
+	var st := store_of(fire)
+	return st.has("kindling") and units_now(st) >= float((Kindling.D.get("laid_fire", {}) as Dictionary).get("fuel_units_min", 1)) - 0.001
+
+
+## The swing of a lit torch through a cold fire (design 2 Oct §CN). Embers
+## with fuel catch at once (§AX). A fire fully out needs its kindling:
+## none laid, "not_laid"; laid wet and not wet_ok, "wet" (it smokes, the
+## kindling stays); laid with no fuel, "flare" (the kindling flares for
+## its burn_s and is gone); else "catching" (the flame takes after the
+## kindling's catch time, FireStore.tick) or "ok" (at once). "no_fuel":
+## embers with nothing to burn; "lit": burning already. `days`: the world
+## clock (kindling dries).
+static func swing_light(fire: Node3D, days: float) -> String:
+	var st := store_of(fire)
+	if st.is_empty() or str(st.state) in ["flames", "low", "flare", "catching"]:
+		return "lit"
+	var how := ""
+	if str(st.state) == "embers" or not bool(Kindling.D.get("out_fire_needs_kindling", true)):
+		how = relight(fire)
+	elif not st.has("kindling"):
+		how = "not_laid"
+	else:
+		var k: Dictionary = st.kindling
+		var kind := str(k.get("kind", ""))
+		var wet := bool(k.get("wet", false)) and (days - float(k.get("wet_days", days))) * 24.0 < float((D.get("wet", {}) as Dictionary).get("dry_h_game", 6.0))
+		if wet and not Kindling.wet_ok(kind):
+			how = "wet"
+		elif units_now(st) < float((Kindling.D.get("laid_fire", {}) as Dictionary).get("fuel_units_min", 1)) - 0.001:
+			st.erase("kindling")
+			if bool(Kindling.D.get("flare_without_fuel", true)):
+				st.state = "flare"
+				st.flare_s = Kindling.burn_s(kind)
+				how = "flare"
+			else:
+				how = "no_fuel"
+		else:
+			st.erase("kindling")
+			var t := Kindling.catch_s(kind, wet)
+			if t > 0.0:
+				st.state = "catching"
+				st.catch_s = t
+				how = "catching"
+			else:
+				st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
+				how = "ok"
+	apply(fire)
+	if how in ["ok", "catching"] and fire.has_meta("old_hearth"):
 		GameLog.add("Rekindled an old hearth.", "hearth_rekindled")
 	return how
 
@@ -220,8 +314,14 @@ static func swing_light(fire: Node3D, _days: float) -> String:
 ## The line for what a swing at `fire` did (swing_light's result).
 static func swing_words(fire: Node3D, how: String) -> String:
 	match how:
-		"ok":
+		"ok", "catching":
 			return "The old hearth catches from the torch." if fire.has_meta("old_hearth") else "The fire catches from the torch."
+		"not_laid":
+			return str(SWING_LOG.get("not_laid", "Cold ash. It needs kindling."))
+		"wet":
+			return str(SWING_LOG.get("kindling_wet", "The kindling smokes and won't catch."))
+		"flare":
+			return "The kindling flares up and dies. It needs fuel."
 		"no_fuel":
 			return "There is nothing here to burn. It needs fuel."
 	return ""
@@ -233,14 +333,14 @@ static func apply(fire: Node3D) -> void:
 	var state := str(st.get("state", "flames"))
 	var burn := 1.0
 	match state:
-		"low":
+		"low", "flare":
 			burn = 0.55
-		"embers":
+		"embers", "catching":
 			burn = 0.12
 		"out":
 			burn = 0.0
 	fire.set_meta("burn", burn)
-	fire.set_meta("lit", state in ["flames", "low"])
+	fire.set_meta("lit", state in ["flames", "low", "flare"])
 	# The flame card goes at embers; the embers themselves keep rising
 	# from the coals while anything glows (Campfire.flicker).
 	var card := fire.get_node_or_null("Flames/Card") as Node3D

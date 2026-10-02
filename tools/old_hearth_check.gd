@@ -5,9 +5,14 @@ extends SceneTree
 ## nest holding remains, and asserts at each:
 ##  - a cold hearth stands there: a fire in the Campfire group, not lit,
 ##    holding no dread back, not yet a hearth you can take;
-##  - a lit torch rekindles it (FireStore.relight, as the right click
-##    does), and lit it holds the dark off (Campfire.lit_near) and can be
-##    made your hearth (Hearth.can_set);
+##  - a cold fire needs kindling (§CN; FireStore.swing_light, what the
+##    torch's swing calls): not laid, it won't light; laid with wet
+##    kindling that isn't wet_ok (dead twigs), it smokes and stays cold;
+##    laid with wet birch bark (wet_ok) it lights; laid with dry kindling
+##    it lights once the flame has taken; kindling with no fuel flares and
+##    goes out; embers come back from dry fuel alone;
+##  - lit, it holds the dark off (Campfire.lit_near) and can be made your
+##    hearth (Hearth.can_set);
 ##  - it is kept: in the save once lit, and while you are away it burns
 ##    down on the clock (OldHearths.lit_at after an in-game hour: still
 ##    burning with fuel fed; out after a day untended);
@@ -108,8 +113,46 @@ func _check(label: String, d: Vector3, look: Vector3) -> void:
 	ok(fire.is_in_group(Campfire.GROUP) and not FireStore.is_lit(fire), "%s: it is a fire, and cold (%s)" % [label, FireStore.state_of(fire)])
 	ok(not Campfire.lit_near(self, fire.global_position, 3.0), "%s: cold, it holds no dread back" % label)
 	ok(not Hearth.can_set(fire), "%s: cold, it can't be made your hearth" % label)
-	var how := FireStore.relight(fire)
-	ok(how == "ok" and FireStore.is_lit(fire), "%s: a lit torch rekindles it (%s, %s)" % [label, how, FireStore.state_of(fire)])
+	var st0 := FireStore.store_of(fire)
+	ok(FireStore.units_now(st0) >= 1.0, "%s: its charred branches count as fuel (%.1f units)" % [label, FireStore.units_now(st0)])
+	var how := FireStore.swing_light(fire, world.days)
+	ok(how == "not_laid" and not FireStore.is_lit(fire), "%s: not laid, the swing won't light it (%s)" % [label, how])
+	var days: float = world.days
+	FireStore.lay_kindling(fire, _wet(Kindling.make("dry_twigs"), days), days)
+	how = FireStore.swing_light(fire, days)
+	ok(how == "wet" and not FireStore.is_lit(fire), "%s: wet dead twigs smoke and it stays cold (%s)" % [label, how])
+	st0.erase("kindling")
+	FireStore.lay_kindling(fire, _wet(Kindling.make("birch_bark"), days), days)
+	how = FireStore.swing_light(fire, days)
+	await _until_lit(fire)
+	ok(how in ["ok", "catching"] and FireStore.is_lit(fire), "%s: wet birch bark catches all the same (%s, %s)" % [label, how, FireStore.state_of(fire)])
+	# Again from cold, with dry kindling.
+	var keep_units: Array = (st0.units as Array).duplicate(true)
+	st0.state = "out"
+	st0.units = keep_units
+	FireStore.apply(fire)
+	FireStore.lay_kindling(fire, Kindling.make("dry_twigs"), days)
+	how = FireStore.swing_light(fire, days)
+	var t_catch := float(st0.get("catch_s", 0.0))
+	await _until_lit(fire)
+	ok(how in ["ok", "catching"] and FireStore.is_lit(fire), "%s: laid with dry twigs, it lights (%s; the flame took in %.2f s)" % [label, how, t_catch])
+	# Kindling alone flares and goes out.
+	var flare := {"units": [], "embers_min": 0.0, "state": "out", "tended": false}
+	FireStore.stores["check_flare"] = flare
+	var probe := Node3D.new()
+	probe.set_meta("fuel_key", "check_flare")
+	FireStore.lay_kindling(probe, Kindling.make("dead_leaves"), days)
+	var fh := FireStore.swing_light(probe, days)
+	var flared := FireStore.is_lit(probe)
+	FireStore._take(flare, Kindling.burn_s("dead_leaves") + 0.1)
+	ok(fh == "flare" and flared and FireStore.state_of(probe) == "out", "kindling with no fuel flares for %.0f s and goes out (%s)" % [Kindling.burn_s("dead_leaves"), fh])
+	# Embers come back from dry fuel alone.
+	flare.state = "embers"
+	flare.embers_min = 10.0
+	var fr := FireStore.add_fuel(probe, Inventory.make("fuel", {"fuel": "branch"}), days)
+	ok(fr == "ok" and FireStore.is_lit(probe), "embers relight from dry fuel alone, no kindling (%s, %s)" % [fr, FireStore.state_of(probe)])
+	FireStore.stores.erase("check_flare")
+	probe.free()
 	ok(Campfire.lit_near(self, fire.global_position, 3.0), "%s: lit, it holds the dark off" % label)
 	ok(Hearth.can_set(fire), "%s: lit, it can be made your hearth" % label)
 	oh.refresh_now()
@@ -125,6 +168,19 @@ func _check(label: String, d: Vector3, look: Vector3) -> void:
 	world.days = days0 + 1.0 # a day untended
 	ok(not OldHearths.lit_at(world, world.dir_of(fire.global_position)), "%s: out a day later, untended (%s)" % [label, str(FireStore.store_of(fire).state)])
 	world.days = days0
+
+
+func _wet(it: Dictionary, days: float) -> Dictionary:
+	it["wet"] = true
+	it["wet_days"] = days
+	return it
+
+
+func _until_lit(fire: Node3D) -> void:
+	for i in 180:
+		if FireStore.is_lit(fire):
+			return
+		await process_frame
 
 
 func _tomb_check(map: PlanetData, camp: Vector3) -> void:

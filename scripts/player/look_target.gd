@@ -127,7 +127,7 @@ func _look() -> Array:
 						# A grown one in flower or fruit says so (FruitCrop).
 						if young_word == "":
 							young_word = FruitCrop.describe_tree(chunk, i)
-						best = [decorate(tsp.hud_name(), int(tr[9]) if tr.size() > 9 else 0, young_word), "tree"]
+						best = [decorate(tsp.hud_name(), int(tr[9]) if tr.size() > 9 else 0, young_word), "tree", int(tr[2]), at]
 	# Plants without colliders, in front of whatever the ray hit: the
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)

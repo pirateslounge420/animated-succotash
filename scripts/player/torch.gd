@@ -7,7 +7,7 @@ extends Node3D
 ## 2 Oct §CN, superseding §AW's right click): left click (`shoot`) swings
 ## it on the bare hand's arc and timing (Fists.STRIKE_S), and at the end
 ## of the arc the flame passes between it and whatever it touches within
-## swing.lighting_reach_m, from lit to unlit, either way: a lit torch
+## swing.reach_m, from lit to unlit, either way: a lit torch
 ## lights a laid fire, embers, a delve's fire-holder or a planted torch
 ## (FireStore.swing_light); an unlit one swung through a lit fire, holder
 ## or planted torch catches (light). Sharing costs the torch nothing. The
@@ -148,7 +148,7 @@ static func flame_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 
 ## How far the flame passes on the swing (torch.json swing, §CN).
 static func reach_m() -> float:
-	return float((D.get("swing", {}) as Dictionary).get("lighting_reach_m", D.get("lighting_reach_m", 2.2)))
+	return float((D.get("swing", {}) as Dictionary).get("reach_m", D.get("lighting_reach_m", 2.2)))
 
 
 ## Where the swing's flame passes: the torch's head at the end of the arc,
@@ -169,7 +169,7 @@ func swing_target() -> Array:
 	if not bool(it.get("lit", false)):
 		return ["torch", null] if flame_near(get_tree(), at, r) else []
 	var fire := FireStore.nearest(get_tree(), at, r)
-	if fire != null and not FireStore.is_lit(fire):
+	if fire != null and not FireStore.is_lit(fire) and FireStore.state_of(fire) != "catching":
 		return ["fire", fire]
 	var pt := PlantedTorch.unlit_near(at, r)
 	if pt != null:

@@ -11,7 +11,10 @@ extends "res://tools/strike_check.gd"
 ##  - right click with a lit torch on a laid cold fire doesn't light it;
 ##  - the swing lights nothing on open ground or in grass, away from any
 ##    fire (no fire, no torch lying, no wildfire scar), and does nothing
-##    to a creature in reach (its health and its place unchanged).
+##    to a creature in reach (its health and its place unchanged);
+##  - crouched with the lit torch, right click on the ground gathers the
+##    biome's kindling (§CN); rain wets it, and it dries after
+##    wet.dry_h_game game hours.
 
 
 func _initialize() -> void:
@@ -52,7 +55,11 @@ func _initialize() -> void:
 	var before := float(player.torch.item().get("burn_left_min", 0.0))
 	await _swing()
 	var after := float(player.torch.item().get("burn_left_min", 0.0))
-	ok(FireStore.is_lit(fire) and player.torch.last_pass.begins_with("fire:ok"), "a lit torch swung through a laid fire lights it (%s, %s)" % [player.torch.last_pass, FireStore.state_of(fire)])
+	for i in 150:
+		if FireStore.is_lit(fire):
+			break
+		await frames(1)
+	ok(FireStore.is_lit(fire) and player.torch.last_pass in ["fire:ok", "fire:catching"], "a lit torch swung through a laid fire lights it (%s, %s)" % [player.torch.last_pass, FireStore.state_of(fire)])
 	ok(before - after < 0.02, "sharing the flame costs the torch nothing (%.4f min, the swing's own time)" % (before - after))
 	# --- Nothing else -----------------------------------------------------
 	var away := CreatureSpawner._offset(player.surface_dir, 1.9, 90.0)
@@ -68,6 +75,25 @@ func _initialize() -> void:
 	await _swing()
 	ok(player.torch.last_pass == "" and get_nodes_in_group(Campfire.GROUP).size() == n_fires and PlantedTorch.all.size() == n_planted, "a swing at the ground lights nothing (%d fires, %d planted)" % [get_nodes_in_group(Campfire.GROUP).size(), PlantedTorch.all.size()])
 	ok(((main.camp_sim.scars as Array).size() if main.camp_sim != null else 0) == n_scars and player.torch.lit(), "no wildfire, and the torch still in hand, lit")
+	# Kindling at your feet (§CN): crouched with the lit torch (standing,
+	# the right click would plant it).
+	await press("crouch")
+	await frames(12)
+	var want: String = main._ground_kindling()
+	var n0 := Kindling.count(player.inventory)
+	await _right_click()
+	await release("crouch")
+	await frames(6)
+	if want == "":
+		print("SKIP  nothing to gather here (%s)" % FireStore.biome_key(world, player.surface_dir))
+	else:
+		ok(Kindling.count(player.inventory) == n0 + 1 and player.torch.lit(), "right click (crouched) gathers %s, the torch still in hand" % Kindling.name_of(want).to_lower())
+		var slot := Kindling.best_slot(player.inventory, world.days)
+		var it: Dictionary = player.inventory.carried[slot]
+		var d0: float = world.days
+		Kindling.rain_on(player.inventory, d0)
+		ok(Kindling.is_wet(it, d0 + 1.0 / 24.0), "rain wets what you carry: wet an hour later")
+		ok(not Kindling.is_wet(it, d0 + 6.5 / 24.0), "and dry again after %s game hours" % str((FireStore.D.get("wet", {}) as Dictionary).get("dry_h_game", 6)))
 	# A creature in reach.
 	var h := -player.global_basis.z
 	var deer := await deer_at(h, 1.2)
@@ -111,10 +137,11 @@ func _right_click() -> void:
 	await frames(2)
 
 
-## Make the fire a laid cold fire: out, with fuel on it (§CN part 2 adds
-## the kindling it needs).
+## Make the fire a laid cold fire: out, with dead twigs and a branch.
 func _lay_cold(fire: Node3D) -> void:
 	var st := FireStore.store_of(fire)
 	st.units = [["branch", FireStore.burn_min("branch")]]
 	st.state = "out"
+	st.erase("kindling")
+	FireStore.lay_kindling(fire, Kindling.make("dry_twigs"), world.days)
 	FireStore.apply(fire)

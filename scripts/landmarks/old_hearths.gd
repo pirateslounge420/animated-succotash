@@ -6,8 +6,9 @@ extends Node
 ## uninhabited ruin's camp spot (RuinBuilder's camp_spot) and each nest
 ## that holds an old camp's remains (Nests, state "remains", §CK) has one:
 ## the ring of stones round cold ash and a couple of charred branches
-## (old_hearth_units). Right click it with a lit torch and it catches;
-## feed it like any fire (§AX). Lit, it is a fire like any other: it holds
+## (old_hearth_units), which count as its fuel. Lay kindling in it with
+## right click and swing a lit torch through it (design 2 Oct §CN) and it
+## catches; feed it like any fire (§AX). Lit, it is a fire like any other: it holds
 ## the dark off (§BA), you can make it your hearth (§AY), and at a tomb it
 ## lights the lamps inside (RuinBuilder tomb lamps, Landmarks). Untended,
 ## it burns at the full rate and goes out when its fuel is gone.
