@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 — The torch's head is the burnt end of the stick, not a ball (Mike, 3 Oct; §CP)
+- Mike: "less like a ball on the end and more like a burned end of a stick: it shouldn't be rounded". The lumpy coal is gone. The head is now the stick's own last few centimetres (`Torch._burnt_end_mesh`). It has six flat sides and is as thick as the stick, narrowing a little to a jagged, broken, slightly sunken tip. Held torches use 6 cm and planted torches 9 cm.
+- `shaders/torch_ember.gdshader` paints it black char with grey ash flecks. Hot cracks show through, more of them toward the tip, and the tip glows most, in the fire's flat colour bands. It still breathes with the torch's light (same `ember_glow` pulse), and its sparks still rise from the tip. Lamps keep their flame.
+- Checked once, by eye, in harness frames on 4.3/lavapipe (held, by night and by day; planted, by night). Nothing else changed.
+- For chat: `torch.json → ember.texels` (7.0) is no longer read. The burnt end reads `texels_m` (texels a metre, default 150) instead. Please swap the key when convenient.
+
 ## 2026-10-03 — §CP the torch's ember head recorded; §CQ every torch is from somewhere, and a carried coal brings a dead torch back: design and data only (design chat; Mike 01:30–02:25)
 - **§CP** records Mike's ember head (built `9e3e7ef`), as asked: `torch.json → ember` holds the code's defaults, and the `light` help says the flicker values are no longer read. Nothing changes on screen.
 - **§CQ**, locked at 02:25; the data is in and none of it is wired:
