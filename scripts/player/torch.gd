@@ -80,10 +80,12 @@ func setup(p: PlanetPlayer) -> void:
 	stick.material_override = sm
 	stick.rotation = Vector3(0.35, 0.0, -0.25)
 	_view.add_child(stick)
-	_view_flame = ember_node(0.03, 0.2)
-	# At the stick's head, wrapping its top end (Mike, 1 Oct: the flame
-	# floated beside it; 3 Oct: an ember, not a flame).
-	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 + 0.005, 0)
+	# The stick's top few centimetres are its burnt end (Mike, 3 Oct: an
+	# ember, the burned end of the stick, not a ball).
+	_view_flame = ember_node(cm.top_radius, 0.06, 0.2)
+	# (The stick ends inside the burnt end's wide lower half, so it never
+	# pokes out where the end narrows to its tip.)
+	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - 0.06 * 0.4, 0)
 	_view_flame.rotation = stick.rotation
 	_view.add_child(_view_flame)
 	_view.position = Vector3(0.34, -0.3, -0.56)
@@ -111,33 +113,30 @@ static func flame_node(size := -1.0) -> Node3D:
 	return n
 
 
-## A torch's head as a glowing ember (Mike, 3 Oct: "instead of the
-## current fire animation, more of a glowing ember"): a small lumpy coal of
-## radius `head_r` m (shaders/torch_ember.gdshader: char with the fire's
-## bands showing through its cracks, crawling slowly, breathing with the
-## light: set_glow) and the fire's few single-pixel sparks rising off it
-## (Campfire's embers, torch.embers of them, at `spark_size` of a
-## campfire's). The held and planted torches use it; the lamps keep their
-## flames.
-static func ember_node(head_r: float, spark_size: float) -> Node3D:
+## A torch's head: the burnt end of the stick, smouldering (Mike, 3 Oct:
+## "more of a glowing ember", then "like a burned end of a stick, not
+## rounded"): the stick's own last `length_m` m, `radius` m thick (the
+## stick's), six-sided, a little thinner toward a jagged broken tip
+## (_burnt_end_mesh), drawn by shaders/torch_ember.gdshader (black char,
+## grey ash, heat in its cracks growing to the glowing tip, breathing with
+## the light: set_glow), and the fire's few single-pixel sparks rising off
+## the tip (Campfire's embers, torch.embers of them, at `spark_size` of a
+## campfire's). Its origin is where the char meets the wood. The held and
+## planted torches use it; the lamps keep their flames.
+static func ember_node(radius: float, length_m: float, spark_size: float) -> Node3D:
 	var n := Node3D.new()
 	n.name = "Ember"
 	var head := MeshInstance3D.new()
 	head.name = "Head"
-	var sm := SphereMesh.new()
-	sm.radius = 0.5
-	sm.height = 1.3
-	sm.radial_segments = 7
-	sm.rings = 4
-	head.mesh = sm
-	head.scale = Vector3.ONE * head_r * 2.0
+	var phase := randf() * 50.0
+	head.mesh = _burnt_end_mesh(radius, length_m, int(phase * 1000.0))
 	head.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var m := ShaderMaterial.new()
 	m.shader = preload("res://shaders/torch_ember.gdshader")
 	m.set_shader_parameter("look_grain_soft", Look.grain())
-	var phase := randf() * 50.0
 	m.set_shader_parameter("phase", phase)
-	m.set_shader_parameter("texels", float(EMBER.get("texels", 7.0)))
+	m.set_shader_parameter("length_m", length_m)
+	m.set_shader_parameter("texels_m", float(EMBER.get("texels_m", 150.0)))
 	m.set_shader_parameter("crawl", float(EMBER.get("crawl", 0.06)))
 	var bands: Array = Campfire.FL.get("bands", ["#FEFC54", "#FCA82C", "#E6552A", "#5A0A00"])
 	var hdr: Array = Campfire.FL.get("hdr", [1.0, 1.0, 1.0, 1.0])
@@ -149,9 +148,61 @@ static func ember_node(head_r: float, spark_size: float) -> Node3D:
 	var count := int(t.get("embers", 2))
 	if count > 0:
 		var sparks := Campfire._ember_node(count, spark_size, phase)
-		sparks.position = Vector3(0, head_r * 1.2, 0)
+		sparks.position = Vector3(0, length_m * 0.95, 0)
 		n.add_child(sparks)
 	return n
+
+
+## The burnt end as a mesh: a six-sided piece of stick from y 0 (where it
+## meets the wood, `radius` thick) to about `length_m`, a little thinner at
+## the top, its top edge broken unevenly and its tip a jagged, sunken cap
+## (no dome). Flat faces, seeded by `seed` so no two match.
+static func _burnt_end_mesh(radius: float, length_m: float, seed: int) -> ArrayMesh:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed
+	const SIDES := 6
+	var bottom: Array[Vector3] = []
+	var mid: Array[Vector3] = []
+	var top: Array[Vector3] = []
+	for i in SIDES:
+		var a := TAU * i / SIDES
+		var dir := Vector3(cos(a), 0.0, sin(a))
+		bottom.append(dir * radius * 1.04)
+		mid.append(dir * radius * rng.randf_range(0.88, 1.0) + Vector3(0, length_m * rng.randf_range(0.45, 0.6), 0))
+		top.append(dir * radius * rng.randf_range(0.62, 0.82) + Vector3(0, length_m * rng.randf_range(0.8, 1.0), 0))
+	var cap := Vector3(rng.randf_range(-0.2, 0.2) * radius, length_m * rng.randf_range(0.72, 0.84), rng.randf_range(-0.2, 0.2) * radius)
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in SIDES:
+		var j := (i + 1) % SIDES
+		_flat_quad(st, bottom[i], bottom[j], mid[j], mid[i])
+		_flat_quad(st, mid[i], mid[j], top[j], top[i])
+		# The broken tip: sunken in the middle, a jagged rim round it.
+		_flat_tri(st, top[i], top[j], cap)
+	return st.commit()
+
+
+static func _flat_quad(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector3) -> void:
+	_flat_tri(st, a, b, c)
+	_flat_tri(st, a, c, d)
+
+
+## One outward-facing triangle with its own flat normal (cap faces point
+## up: the shader's tip glow reads NORMAL.y).
+static func _flat_tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3) -> void:
+	var nrm := (c - a).cross(b - a).normalized()
+	var centre := (a + b + c) / 3.0
+	var out := Vector3(centre.x, 0.0, centre.z)
+	# Outward on the sides, up on the cap (Godot's front is clockwise).
+	var want := out.normalized() if out.length() > 1e-5 and absf(nrm.y) < 0.7 else Vector3.UP
+	if nrm.dot(want) < 0.0:
+		var t := b
+		b = c
+		c = t
+		nrm = -nrm
+	for p in [a, b, c]:
+		st.set_normal(nrm)
+		st.add_vertex(p)
 
 
 ## The ember's glow now (1 full; the light's energy follows it): a slow

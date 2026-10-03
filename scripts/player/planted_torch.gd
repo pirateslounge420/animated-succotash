@@ -47,9 +47,9 @@ func _ready() -> void:
 	stick.position = Vector3(0, h * 0.5 - (0.15 if not lying else 0.0), 0)
 	stick.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(stick)
-	# The head: a glowing ember wrapping the stick's top (Mike, 3 Oct).
-	_flame = Torch.ember_node(0.042, 0.32)
-	_flame.position = Vector3(0, stick.position.y + h * 0.5 + 0.005, 0)
+	# The head: the stick's burnt end, smouldering (Mike, 3 Oct).
+	_flame = Torch.ember_node(cm.top_radius, 0.09, 0.32)
+	_flame.position = Vector3(0, stick.position.y + h * 0.5 - 0.09 * 0.4, 0)
 	add_child(_flame)
 	_light = Torch.light_node()
 	_light.position = Vector3(0, h + 0.05, 0)
