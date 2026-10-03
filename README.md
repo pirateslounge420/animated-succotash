@@ -29,8 +29,9 @@ guide, with download links, is [`docs/HOW_TO_RUN.md`](./docs/HOW_TO_RUN.md).
 
 The game boots into the last world you played. Settings (O) → World → New world rolls a new
 one with its own seed and its own kind of first camp, and the seed is the world's name. You
-wake in the afternoon beside a road, at a camp. **The keys and everything you can do are in
-`docs/HOW_TO_RUN.md`**, which Claude Code keeps true to the game as built.
+wake in the afternoon beside a road, at a camp (design §CY moves this to dawn; not built yet).
+**The keys and everything you can do are in `docs/HOW_TO_RUN.md`**, which Claude Code keeps
+true to the game as built.
 
 One in-game day is **144 real minutes**, exactly one tenth of a real day, so the whole
 calendar runs at 10× and a game hour is 6 real minutes. The planet has an **axial tilt of

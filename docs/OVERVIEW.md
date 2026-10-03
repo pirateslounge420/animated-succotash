@@ -87,6 +87,14 @@ as rare finds in ruins.
 
 - **Waking:** you wake with nothing, in the afternoon, beside a road, at a camp. The road
   leads on to the next one.
+- **Waking at dawn, in the fire circle** *(locked 3 Oct, §CY; not built yet)*: you come to at
+  first light with the camp's folk sitting round the fire on seats the place provides (a log,
+  a rock, driftwood, a cypress knee). One packs a pipe and lights it from the fire, one feeds
+  the fire, one dozes. As the light comes up they rise one at a time and go out to gather.
+  The road reaches the next hearth in about 40 minutes of walking, so you arrive before dusk,
+  or at dusk at the latest, and watch that camp's circle form.
+- **The fire breathes** *(locked 3 Oct, §CZ; not built yet)*: the coals at its foot pulse, and
+  sparks and ash fly up at random, in time with its pops.
 - **The torch is the first tool.** It lights at a fire, burns about one night, and can be
   planted in the ground. Its head glows like a coal.
 - **Every torch is from somewhere** *(locked 3 Oct; not built yet)*: each camp leaves its own

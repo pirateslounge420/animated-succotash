@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (15:45) — §CY you wake at dawn in the fire circle, the next hearth before dusk; §CZ the fire breathes: design and data only (design chat; Mike 15:20–15:35)
+- **§CY.1, the dawn start.** It supersedes §BX's afternoon clock and half-hour road. You wake one minute into dawn. The road to the camp outside the ruin is about 40 minutes of walking at the slope pace (10.3 km if dead flat, about 8.5 km on ordinary land), so you arrive before dusk, or at dusk at the latest.
+  - The reference day: wake 04:10, a straight walk arrives 10:50, dusk begins 17:00 (77 min after waking), full dark 20:00.
+  - On the world's first day, waking to dusk is 76–98 min from 66°S to 66°N, so the walk fits everywhere and the calendar doesn't move (§CG stands).
+  - Data: `roads.json → opening_road.dawn_start` (not wired). The old `opening_road` keys stay until the code reads the new block, so the built game is unchanged.
+- **§CY.2–CY.5, the fire circle.** Outside the gather hours, folk sit in a ring round the fire on seats the place provides.
+  - One seated pose for every cloaked figure, with eight loops on top: watch the fire, warm hands, poke the fire, feed the fire, the pipe, eat from a bowl, hearth work, doze.
+  - The pipe is lit with a brand from the fire. Its smoke is a few square puffs in §CV's hearth-smoke look, drifting with the wind.
+  - Ten seat kinds over 44 biomes; a wood seat needs wood there and takes the bark tint of the stand.
+  - The circle breaks one at a time over dawn and forms again at dusk; one stays awake at night.
+  - Data: `camps.json → sim.fire_circle` (not wired).
+- **§CZ, the fire breathes** (Mike, 15:35). It adds to §BZ; the one flame card stays. The coals at the foot pulse (a slow breath, plus patches on their own clocks), the light breathes with them, and sparks and ash fly up on a random clock, in time with the fire's pops.
+  - Data: `look.json → fire.coals`, `fire.specks`, `fire.light.breath` (not wired). `flame.embers` stays until then.
+- **`tools/fire_circle_check.py`** (new): 0 errors, 0 warnings. It prints the opening day's timetable.
+- **Letters:** these were first written as §CV–§CW and moved to §CY–§CZ before the push, because the 15:00 smoke push had taken §CV–§CX.
+- **For Mike:** what is in the pipe isn't named yet. And §CZ is read as adding to the flame, not replacing it.
+- §BR has the proposed engine order.
+
 ## 2026-10-03 (evening) — §CR the world at 1/100 Earth, §CS plant communities, §CU a few hearths per biome: built (Claude Code)
 - **§CR.1, the planet:** it is now built at `data/world_scale.json` → `planet.circumference_m`: 400 km around, radius 63.7 km, `GEO_SCALE` 1. The layout is built at its own size; heights stay 1/10 (`HEIGHT_SCALE`) and the day stays 144 minutes. Things at walking scale are unchanged. The 40 km dev stamp still works for the checks (`stamp_check` passes) and has no great ranges.
 - **Measured before any tuning** (four seeds, 42, 7, 1234 and 7731, headless; `tools/world_scale_check.gd`):

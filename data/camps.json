@@ -10,7 +10,8 @@
   "opening_jobs_pieces": "Design 30 Sept night §BV–§BW (pushed 1 Oct). opening: the opening camp starts with start_folk (4-5, Mike; the elder and the hunter of encampment.gd stay as two of them, the rest are drawn from the people) and the jobs they are seen doing at the spawn. jobs: every folk near the player is in a visible job loop the player can watch complete; the sim's accounting is unchanged, the jobs are that accounting made visible. max_at_once: how many folk work at once at a camp (not one walker per camp); near_player_m: the loops only run within this of the player (unloaded camps tick as numbers). gather.target real_source: a gatherer walks to a real tree with deadfall / a real food plant / the water within loop.gather_reach_m, never a random point, and comes back carrying a visible load (carry_visible) that lands on the store as one piece (trip_adds_piece). feed_fire: takes a piece OFF the woodpile and drops it on the fire when the store is below store.feed_fire_below_units. work_at_hearth: sits by the fire with a prop (the maker's job before there is a maker). child: orbits, follows, never gathers. restore_ruin: at a camp sitting in a ruin, hauls one stone a trip from the heap to the signature (§BQ legibility by hand). store.pieces: EVERY trip adds one visible piece (Mike) — refresh_woodpile adds/removes pieces instead of redrawing from a number; wood_tint source_species: a log takes the bark/wood tint of the species it was gathered from, so the pile is the wood of the place; food_by_life: the food piece each way of life stacks (from each people file's food.preserve), vocabulary in food_pieces. First guesses; the designer owns them.",
   "first_camp": "Design 1 Oct §CB (Mike: the first camp's KIND should change too, not only its place). Encampment.candidates scored every land cell on one taste (mild, green, 2 km from a coast, ~20 deg latitude) so the 12 best were all the same kind of place. Now: a new world first ROLLS A KIND (kinds, by weight), then picks a random cell among that kind's candidates_per_kind best cells (at least min_separation_m apart). A kind is a set of biome keys and a water rule (near: river / sea / lake / water, within within_m: a camp needs water, §BL). Every candidate must sit in a biome that offers fuel (fuel.json biomes, needs_fuel), inside temp_c (not lethal), slope under slope_max, elevation inside elevation_m, never in never. Within a kind the score is the old one minus the latitude term: water near, moisture, level ground, a mild mean. The kind also decides the opening camp's people (Peoples.pick by site) and so its fuel, food, store pieces (§BW). A taiga or cold-shore first camp is a harder night one by design. First guesses; the designer owns them.",
   "sim_overrun": "(design §CN) Overrun ruins. When the dark empties a camp (its fire out and folk taken: §BL's 'no woodpile and blood', sim.collapse) and it becomes a ruin (sim.abandon), it is overrun if it has a den (needs_den: a delve, §CJ, or a nest's first chamber, §CK). A camp left for hunger is not (from_starving false). On a new world nothing has been taken yet, so a seeded worldgen_share of the old ruins that have a delve start overrun (first guess, Mike to tune); it says nothing about how their people ended (§BQ). The sim never resettles an overrun ruin (sim_resettles false). It is cleared when the fire at its delve's heart is lit (cleared_when; delves.json fire_holders). Lighting the surface hearth gives a safe base but does not clear it (surface_hearth_clears false). Then settlers: after arrive_after_game_h, survivors come back if it fell within survivors_if_fell_within_game_days; otherwise folk (min..max) walk over from the nearest camp within within_km whose population is at least camp_at_share_of_cap of its cap. If that camp later goes dark it is overrun again (relapse). The den itself (who holds it, the night surface, the tells) is delves.json overrun. (design §CO) cleared_when_nest: a nest's den (a cave mouth or grotto the dark took) is cleared by lighting the hearth at its opening, the camp's own gone cold or the old hearth at its remains: the one exception to surface_hearth_clears false, which still holds for delves (Mike, 2 Oct 20:32).",
-  "hearths": "A few hearths in every biome, no two alike (Mike, 3 Oct). Hearths are living camps and the old hearths of ruins together. per_land_biome_min: every land biome holds at least this many. km2_per_hearth: big biomes get more, one per this much of the biome's ground (first guess). never_repeat: the sites pass never gives two hearths the same combination of these; with §CS, hearths in different lands always differ in their plants."
+  "hearths": "A few hearths in every biome, no two alike (Mike, 3 Oct). Hearths are living camps and the old hearths of ruins together. per_land_biome_min: every land biome holds at least this many. km2_per_hearth: big biomes get more, one per this much of the biome's ground (first guess). never_repeat: the sites pass never gives two hearths the same combination of these; with §CS, hearths in different lands always differ in their plants.",
+  "fire_circle": "[NOT WIRED YET — design §CY] The fire circle (Mike, 3 Oct: \"around the campfire when you spawn they could actually be sitting on the biome appropriate seat like a rock or log. might see them packing a pipe and smoking. just chilling out around the fire\"). rest_hours: outside loop.gather_hours every folk who isn't on a job sits in a ring round the fire; this is what a camp does when it isn't working, at every camp, and it is what you wake into at dawn. seats: one seat a person plus spare_seats left empty, in a ring ring_m from the fire, facing it, at least min_gap_m apart; kinds are found things (never built furniture), at most kinds_per_circle of them at one fire; by_biome lists the seats a place can offer, commonest first (an empty list: no camp sits there); wood seats take the bark tint of the stand's dominant species, as the woodpile does (§BW); at_site adds a seat the site itself offers (a fallen block at a ruin camp, the ledge under a cliff shelter) and by_people replaces the list for a people whose fire isn't on the ground (the canopy folk's limb). pose: ONE seated base pose for every cloaked figure (the cloak pools over the seat and hides the legs), with upper-body loops on top; no new rig, no per-species animation (the Falcon/Ganondorf rule): scale and timing do the rest. idles: the loops; who: anyone / adult; weight by phase (dawn, day, dusk, night) is how often a sitter picks it; hold_s how long before picking again; props are small held things; needs is a condition on the camp's real state (an empty food store shows nobody eating; feed_fire is the §BV job and takes a real piece off the pile). pipe: adults only, max_at_once at a fire; the steps in order; it is lit with a brand from the fire, never a spark (§BP: fire is carried, not made); smoke is a few square, posterised puffs on one camera-facing card that rise and drift with the weather's wind at the camp. It is the hearth smoke's family (§CV, smoke.json hearth.look: its colours, flat bands and dither cut-out, pale blue-grey and never a neutral grey), lit by the scene and never glowing; like the column it isn't drawn in the dark beyond the fire's light. The bowl's ember is the one glowing pixel and casts no light. What is in the bowl is not named yet. notice: the hood (only the hood) turns to follow the player inside watch_m, holds, then goes back to the fire; the same values as travellers.json head_look; a dozer doesn't notice. dawn_break: over the last begins_game_h_before_gather game hours before the gather hours begin, the sitters rise one at a time (stretch, stand, take up a basket or bundle, walk out), spread evenly with a little jitter, dozers last; stays_min keep the hearth and the children stay by the fire. dusk_form: from the end of the gather hours, over over_game_h, folk come in carrying, drop the load on the store (the day's last real piece, §BW), sit, and the bowls and the pipe come out. night: keeper_awake stay awake to feed the fire and doze_share of the rest doze where they sit. Nothing here changes a sim tick: it is the camp's rest made visible, as the jobs are its work made visible (§BV). Checked by tools/fire_circle_check.py. First guesses; the designer owns them."
  },
  "only_at_ruins": true,
  "wake_random": true,
@@ -318,6 +319,544 @@
     }
    },
    "relapse": true
+  },
+  "fire_circle": {
+   "rest_hours": "outside_gather_hours",
+   "seats": {
+    "ring_m": [
+     1.6,
+     2.4
+    ],
+    "min_gap_m": 0.9,
+    "face": "fire",
+    "spare_seats": 1,
+    "kinds_per_circle": 2,
+    "kinds": {
+     "log": {
+      "what": "a length of fallen trunk laid on its side; two can share it",
+      "height_m": 0.35,
+      "seats": 2,
+      "tint": "stand_species_bark"
+     },
+     "stump": {
+      "what": "a snapped stump, or a short round of trunk stood on end",
+      "height_m": 0.4,
+      "seats": 1,
+      "tint": "stand_species_bark"
+     },
+     "root": {
+      "what": "a root standing out of the ground: a cypress knee, a buttress flare, a mangrove prop root",
+      "height_m": 0.35,
+      "seats": 1,
+      "tint": "stand_species_bark"
+     },
+     "rock": {
+      "what": "a rounded boulder of the place's own stone",
+      "height_m": 0.4,
+      "seats": 1,
+      "tint": "terrain_stone"
+     },
+     "flat_stone": {
+      "what": "a slab of the place's own stone: a ledge stone, a slate, a lava plate, a salt crust",
+      "height_m": 0.25,
+      "seats": 1,
+      "tint": "terrain_stone"
+     },
+     "driftwood": {
+      "what": "a tide-bleached trunk, pale and barkless; two can share it",
+      "height_m": 0.35,
+      "seats": 2,
+      "tint": "bleached"
+     },
+     "hummock": {
+      "what": "a grass tussock, a sedge or moss hummock, or a cut turf",
+      "height_m": 0.25,
+      "seats": 1,
+      "tint": "ground_cover"
+     },
+     "mat": {
+      "what": "a hide or a woven mat on the bare ground, where there is neither wood nor stone to sit on",
+      "height_m": 0.03,
+      "seats": 1,
+      "tint": "people_cloth"
+     },
+     "ruin_block": {
+      "what": "a fallen dressed block off the ruin's heap",
+      "height_m": 0.4,
+      "seats": 1,
+      "tint": "ruin_stone"
+     },
+     "limb": {
+      "what": "the great limb the platform is built on (the canopy folk never come down)",
+      "height_m": 0.3,
+      "seats": 2,
+      "tint": "stand_species_bark"
+     }
+    },
+    "by_biome": {
+     "ICE_SHEET": [],
+     "TUNDRA": [
+      "hummock",
+      "rock",
+      "mat"
+     ],
+     "ALPINE_TUNDRA": [
+      "rock",
+      "flat_stone",
+      "hummock"
+     ],
+     "KRUMMHOLZ": [
+      "rock",
+      "log"
+     ],
+     "TAIGA": [
+      "log",
+      "stump",
+      "rock"
+     ],
+     "TEMPERATE_DECIDUOUS": [
+      "log",
+      "stump",
+      "rock"
+     ],
+     "TEMPERATE_RAINFOREST": [
+      "log",
+      "stump",
+      "root"
+     ],
+     "CLOUD_FOREST": [
+      "log",
+      "root",
+      "rock"
+     ],
+     "TALLGRASS_PRAIRIE": [
+      "hummock",
+      "mat",
+      "rock"
+     ],
+     "SHORTGRASS_PRAIRIE": [
+      "mat",
+      "hummock",
+      "rock"
+     ],
+     "STEPPE": [
+      "mat",
+      "rock",
+      "hummock"
+     ],
+     "SAGEBRUSH": [
+      "rock",
+      "mat"
+     ],
+     "MEDITERRANEAN_SCRUB": [
+      "rock",
+      "flat_stone",
+      "stump"
+     ],
+     "THORN_SCRUB": [
+      "rock",
+      "log",
+      "mat"
+     ],
+     "PARAMO": [
+      "hummock",
+      "rock"
+     ],
+     "PUNA": [
+      "rock",
+      "flat_stone",
+      "mat"
+     ],
+     "ALPINE_MEADOW": [
+      "rock",
+      "flat_stone",
+      "hummock"
+     ],
+     "COLD_DESERT": [
+      "rock",
+      "mat"
+     ],
+     "HOT_DESERT": [
+      "rock",
+      "mat",
+      "flat_stone"
+     ],
+     "TROPICAL_RAINFOREST": [
+      "root",
+      "log",
+      "stump"
+     ],
+     "JUNGLE": [
+      "log",
+      "root",
+      "stump"
+     ],
+     "TROPICAL_DRY_FOREST": [
+      "log",
+      "stump",
+      "rock"
+     ],
+     "SAVANNA": [
+      "log",
+      "rock",
+      "mat"
+     ],
+     "SWAMP": [
+      "root",
+      "stump",
+      "log"
+     ],
+     "FLOODPLAIN_FOREST": [
+      "log",
+      "stump",
+      "root"
+     ],
+     "FRESHWATER_MARSH": [
+      "hummock",
+      "mat"
+     ],
+     "WET_MEADOW": [
+      "hummock",
+      "mat"
+     ],
+     "SALT_MARSH": [
+      "driftwood",
+      "hummock",
+      "mat"
+     ],
+     "BOG": [
+      "hummock",
+      "stump"
+     ],
+     "FEN": [
+      "hummock",
+      "mat"
+     ],
+     "BEACH": [
+      "driftwood",
+      "rock",
+      "mat"
+     ],
+     "DUNES": [
+      "driftwood",
+      "mat"
+     ],
+     "ROCKY_SHORE": [
+      "rock",
+      "flat_stone",
+      "driftwood"
+     ],
+     "MARITIME_FOREST": [
+      "log",
+      "stump",
+      "rock"
+     ],
+     "MANGROVE": [
+      "root",
+      "driftwood"
+     ],
+     "ESTUARY": [
+      "driftwood",
+      "hummock",
+      "rock"
+     ],
+     "LAGOON": [
+      "driftwood",
+      "rock",
+      "mat"
+     ],
+     "FRESHWATER": [],
+     "OASIS": [
+      "log",
+      "rock",
+      "mat"
+     ],
+     "SHELF_SEA": [],
+     "CORAL_REEF": [],
+     "KELP_FOREST": [],
+     "DEEP_OCEAN": [],
+     "SEA_ICE": [],
+     "VOLCANIC_FIELD": [
+      "rock",
+      "flat_stone"
+     ],
+     "BADLANDS": [
+      "rock",
+      "flat_stone",
+      "mat"
+     ],
+     "CANYON": [
+      "flat_stone",
+      "rock",
+      "driftwood"
+     ],
+     "SALT_FLAT": [
+      "mat",
+      "flat_stone"
+     ],
+     "HOT_SPRING": [
+      "rock",
+      "flat_stone"
+     ],
+     "GLACIER": [],
+     "CAVES": [
+      "flat_stone",
+      "rock"
+     ],
+     "TEPUI": [
+      "rock",
+      "flat_stone"
+     ]
+    },
+    "at_site": {
+     "ruin": [
+      "ruin_block"
+     ],
+     "cliff": [
+      "flat_stone"
+     ]
+    },
+    "by_people": {
+     "canopy": [
+      "limb"
+     ]
+    }
+   },
+   "pose": {
+    "base": "seated",
+    "cloak_pools_over_seat": true,
+    "upper_body_loops_only": true,
+    "one_rig_all_folk": true
+   },
+   "idles": {
+    "watch_fire": {
+     "what": "sits still and looks into the fire: a slow breath in the shoulders, a shift of weight, the hood tipping",
+     "who": "anyone",
+     "props": [],
+     "hold_s": [
+      10,
+      30
+     ],
+     "weight": {
+      "dawn": 3,
+      "day": 1,
+      "dusk": 2,
+      "night": 3
+     }
+    },
+    "warm_hands": {
+     "what": "both hands out to the fire, turned, rubbed together, held out again",
+     "who": "anyone",
+     "props": [],
+     "hold_s": [
+      8,
+      16
+     ],
+     "weight": {
+      "dawn": 3,
+      "day": 0,
+      "dusk": 2,
+      "night": 2
+     }
+    },
+    "poke_fire": {
+     "what": "leans in and stirs the fire with a stick; the fire's own sparks go up",
+     "who": "anyone",
+     "props": [
+      "stick"
+     ],
+     "hold_s": [
+      4,
+      7
+     ],
+     "weight": {
+      "dawn": 2,
+      "day": 1,
+      "dusk": 2,
+      "night": 1
+     }
+    },
+    "feed_fire": {
+     "what": "stands, takes a piece off the woodpile, lays it on the fire, sits back down: the §BV job, done from the circle",
+     "who": "adult",
+     "props": [
+      "store_piece"
+     ],
+     "job": "feed_fire",
+     "needs": "fire_below_feed_units"
+    },
+    "pipe": {
+     "what": "packs a pipe, lights it with a brand from the fire, and smokes",
+     "who": "adult",
+     "max_at_once": 1,
+     "props": [
+      "pipe",
+      "brand"
+     ],
+     "steps": [
+      {
+       "do": "pack",
+       "s": 4.0
+      },
+      {
+       "do": "light_from_fire",
+       "s": 3.0
+      },
+      {
+       "do": "puff",
+       "times": [
+        3,
+        6
+       ],
+       "draw_s": 1.5,
+       "rest_s": [
+        4,
+        9
+       ]
+      },
+      {
+       "do": "tap_out",
+       "s": 2.0
+      }
+     ],
+     "smoke": {
+      "one_card": true,
+      "look_from": "smoke.json hearth.look",
+      "posterised": true,
+      "puffs_per_breath": [
+       2,
+       4
+      ],
+      "texels": [
+       3,
+       6
+      ],
+      "rise_mps": 0.35,
+      "wind_share": 1.0,
+      "life_s": 3.5,
+      "glows": false
+     },
+     "bowl_ember": {
+      "on_draw": true,
+      "casts_light": false
+     },
+     "weight": {
+      "dawn": 2,
+      "day": 0,
+      "dusk": 3,
+      "night": 1
+     }
+    },
+    "eat_bowl": {
+     "what": "a bowl lifted to the hood a few times, then set down on the seat",
+     "who": "anyone",
+     "props": [
+      "bowl"
+     ],
+     "needs": "food_store_not_empty",
+     "hold_s": [
+      12,
+      25
+     ],
+     "weight": {
+      "dawn": 1,
+      "day": 0,
+      "dusk": 4,
+      "night": 0
+     }
+    },
+    "sit_work": {
+     "what": "the hearth-worker's mending and shaping (§BV work_at_hearth, its props), done in the circle",
+     "who": "adult",
+     "props": [
+      "pot_lump",
+      "net",
+      "hide",
+      "basket"
+     ],
+     "job": "work_at_hearth",
+     "hold_s": [
+      20,
+      60
+     ],
+     "weight": {
+      "dawn": 1,
+      "day": 4,
+      "dusk": 2,
+      "night": 0
+     }
+    },
+    "doze": {
+     "what": "the hood sinks and nods, starts, settles again",
+     "who": "anyone",
+     "props": [],
+     "hold_s": [
+      30,
+      90
+     ],
+     "weight": {
+      "dawn": 2,
+      "day": 0,
+      "dusk": 0,
+      "night": 5
+     }
+    }
+   },
+   "transitions": {
+    "sit_down": {
+     "s": 1.6
+    },
+    "stand_up": {
+     "s": 1.4
+    },
+    "stretch": {
+     "s": 3.0,
+     "what": "arms up and out, a roll of the shoulders, on rising"
+    },
+    "take_up_load": {
+     "s": 2.0,
+     "what": "shoulders a basket or a carrying bundle from beside the seat"
+    }
+   },
+   "notice": {
+    "hood_only": true,
+    "head_max_deg": 70.0,
+    "watch_m": 7.0,
+    "hold_s": 2.0,
+    "rate": 6.0,
+    "then": "back_to_fire",
+    "again_after_s": 40.0,
+    "dozers_notice": false
+   },
+   "dawn_break": {
+    "begins_game_h_before_gather": 2.5,
+    "ends": "gather_hours_begin",
+    "one_at_a_time": true,
+    "jitter": 0.3,
+    "steps": [
+     "stretch",
+     "stand_up",
+     "take_up_load",
+     "walk_out"
+    ],
+    "dozers_rise_last": true,
+    "stays_min": 1,
+    "children_stay": true
+   },
+   "dusk_form": {
+    "begins": "gather_hours_end",
+    "over_game_h": 1.5,
+    "steps": [
+     "walk_in_carrying",
+     "drop_piece_on_store",
+     "sit_down"
+    ],
+    "last_load_is_a_real_piece": true
+   },
+   "night": {
+    "keeper_awake": 1,
+    "doze_share": 0.6
+   }
   }
  },
  "first_camp": {

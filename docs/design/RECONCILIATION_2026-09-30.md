@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`).
 
 ---
 
@@ -641,6 +641,9 @@ load; **several folk work at once** (`sim.jobs.max_at_once`), not one walker per
 loop still runs only by day (`loop.gather_hours`) and only within sight of the player;
 unloaded camps keep ticking as numbers (§BL) and nothing here changes a tick.
 
+**3 Oct: outside the gather hours the folk sit in the fire circle (§CY). At the dawn spawn
+they are at rest, and these jobs begin as the circle breaks.**
+
 ## BW. Every trip is a piece — LOCKED (30 Sept, night, Mike)
 
 - **Each gatherer's trip adds one visible piece to the store** (`camps.json →
@@ -664,6 +667,9 @@ unloaded camps keep ticking as numbers (§BL) and nothing here changes a tick.
   as full and rich — that is the ceiling showing, not a bug.
 
 ## BX. The first road — afternoon spawn, the hearth at dusk — LOCKED (30 Sept, night, Mike)
+
+**3 Oct: §CY moves the spawn to dawn and the road to about 40 minutes, reached before dusk.
+The clock and the length below are superseded; the rest of this section stands.**
 
 - **You spawn in the afternoon, beside the road, never in trackless woods** (`roads.json →
   opening_road`). Supersedes §P beat 1's "early dawn or dusk light is preferred" and the
@@ -980,7 +986,7 @@ What was wrong:
   five real minutes later, the log's stamps a minute after.
 
 The rules:
-- **Every new world opens on Day 1**, in §BX's afternoon. The day number counts your local
+- **Every new world opens on Day 1**, in §BX's afternoon (from 3 Oct, §CY's dawn). The day number counts your local
   days since the world began and goes up by one at local midnight where you stand (the
   clock face's 00:00). The HUD's time line, every log stamp and the log's first line show
   the same number, and the HUD line, the log stamps and the clock face show the same time:
@@ -1937,6 +1943,174 @@ entry). Not built.
 - **Shadows under cloud.** Today cloud only dims the sun by up to 55 % and the shadows stay at
   full strength. First guess: under a full deck the shadows fade but keep their hard edge (§C).
 
+## CY. You wake at dawn in the fire circle; the next hearth before dusk — LOCKED (3 Oct, 15:20–15:27, Mike)
+
+Mike: *"around the campfire when you spawn they could actually be sitting on the biome
+appropriate seat like a rock or log. might see them packing a pipe and smoking. just chilling
+out around the fire. perhaps we can actually have it to where the player spawns in at dawn."*
+Then: *"move to dawn and you'll reach another landmark by dusk"*, and: *"or before dusk, but
+hopefully dusk at the latest if spawning in at dawn."* Data: `roads.json →
+opening_road.dawn_start` and `camps.json → sim.fire_circle`, neither wired. Gate:
+`tools/fire_circle_check.py`.
+
+**CY.1 The dawn start.** This supersedes §BX's afternoon clock and its half-hour road. The
+rest of §BX stands: you wake beside the road, the first landmark is a camp outside a ruin,
+its hearth glow is the beacon, and only the opening road is tuned.
+- **You come to in the first minute of dawn** (`spawn.real_min_after_dawn_begins`), while the
+  world is still blue and the fire is the one warm thing in view. It is still Day 1 (§CG), and
+  the sky keeps its clock: `START_DAYS` taken to the dawn at the spawn, so the first night's
+  moon is the same near-full one.
+- **The road to the first landmark is about 40 minutes of straight walking**
+  (`walk_real_min`), measured at the pace you really walk it (§CR.5's slope pace), not in
+  flat kilometres. That is about half of the daylight you wake with. It is 10.3 km if the
+  ground were dead flat (`length_km_hint`) and about 8.5 km on ordinary land, where the swells
+  hold you to about 82 % of the flat speed (`pace_share_typical`).
+- **Smoke marks both ends** (§CV). On a still dawn the camp's own column lies flat over the
+  valley, so on a calm morning it is in your first frame. By day the next hearth's column is the far beacon
+  (its top shows from about 3 km), and at dusk its glow takes over (§BX).
+- **Dusk is the latest, not the target.** The opening day at the reference (equator,
+  equinox; a game hour is 6 real minutes):
+
+  | | game clock | real minutes after waking |
+  |---|---|---|
+  | you wake | 04:10 | 0 |
+  | the circle breaks (CY.5) | 04:30–07:00 | 2 to 17 |
+  | a straight walk arrives | 10:50 | 40 |
+  | dusk begins | 17:00 | 77 |
+  | a walk that spent as long looking as walking arrives | 17:30 | 80 |
+  | full dark | 20:00 | 95 |
+
+  A straight walk reaches a working camp late in the morning (§BV's jobs), and you are there
+  when its circle forms at dusk. A walk that dawdles has all of dusk as its grace, with the
+  glow ahead.
+- **The day fits at every latitude.** On the world's first day (day 13.62 of the year),
+  waking to dusk is between 76 and 98 real minutes everywhere from 66°S to 66°N
+  (`fire_circle_check.py`, on the game's own clock), so a straight walk always has at least 36
+  minutes in hand. The calendar does not move: §CG's moon and season stand. For any other
+  start date the rule is in the data (`slack_before_dusk_min`): where the day is too short,
+  the road is shortened to fit, never the clock moved.
+- **After a death, §P stands:** you wake at "whatever hour it is". Outside the gather hours
+  that is the circle; inside them it is a working camp.
+
+**CY.2 The fire circle: what a camp does when it isn't working.**
+- **Outside the gather hours** (`loop.gather_hours`, 07:00 to 17:00), every folk who isn't on a
+  job sits in a ring round the fire. This is true of every camp, and it is what you wake into.
+  It amends §BV: at the dawn spawn the four or five are at rest, and their jobs begin as the
+  circle breaks.
+- **An idle is a small task with one prop, never standing and breathing.** That is how the
+  figures in Mike's reference sheets are drawn (`docs/references/project_sheets.md`): frame
+  52 is a robed figure sitting on a stone ledge by a campfire, preparing food in its lap;
+  frame 44 sits on a bench with a steaming mug; frame 41 leans over a stone bowl.
+- **One seated pose for every cloaked figure**, with loops for the arms and the hood on top
+  (`pose`). The cloak pools over the seat and hides the legs, so nothing below the waist has
+  to be exact (27 Sept doc: the crouch rule). No new rig and no per-species animation (the
+  Falcon/Ganondorf rule): small folk and big folk play the same loops at their own scale and
+  timing. Children play the resting ones (watch, warm hands, poke, eat, doze) and never the
+  pipe.
+- **The loops** (`idles`, each weighted by the phase of the day):
+  - `watch_fire`: sits still and looks into the fire. The resting state between the others.
+  - `warm_hands`: hands out to the fire, turned, rubbed together.
+  - `poke_fire`: stirs the fire with a stick, and the fire throws specks (§CZ).
+  - `feed_fire`: stands, takes a real piece off the woodpile, lays it on, sits back down.
+    This is §BV's job, done from the circle.
+  - `pipe`: CY.4.
+  - `eat_bowl`: a bowl lifted to the hood. Only when the food store isn't empty.
+  - `sit_work`: §BV's hearth-worker, mending and shaping, by day and at dusk.
+  - `doze`: the hood sinks and nods, starts, settles again.
+- **They notice you** (`notice`): inside 7 m the hood, and only the hood, turns to follow
+  you, holds for a couple of seconds, and goes back to the fire. These are the travellers'
+  head-turn values (`travellers.json → head_look`). A dozer doesn't notice.
+- **One seat is left empty** (`spare_seats`), so there is a place in the ring to step into.
+- **Nothing here changes a sim tick.** It is the camp's rest made visible, as the jobs are
+  its work made visible (§BV).
+
+**CY.3 Seats are found things, and they belong to the place** (`seats`).
+- Ten kinds, none of them built furniture: a log, a stump, a root (a cypress knee, a buttress
+  flare, a mangrove prop root), a rock, a flat stone, driftwood, a hummock, a mat on bare
+  ground, a fallen block at a ruin camp, and the canopy folk's own limb.
+- `by_biome` lists what each of the 44 biomes with a people can offer, commonest first, and a
+  fire has at most two kinds. Examples: taiga has logs and stumps; swamp has cypress knees
+  and stumps; the steppe has mats and rocks; a beach has driftwood; a ruin camp adds fallen
+  blocks.
+- **No seat the place couldn't supply.** A wood seat needs wood in that biome and a
+  driftwood seat needs driftwood (`fuel.json → biomes`); the check enforces it.
+- **A wooden seat is the wood of the place:** it takes the bark tint of the stand's dominant
+  species, as the woodpile does (§BW). Stone seats take the terrain's own stone.
+
+**CY.4 The pipe.**
+- Adults only, and one pipe at a fire (`max_at_once`).
+- In order: pack the bowl, lean in and light it **with a brand from the fire**, puff three to
+  six times with rests between, tap it out on the seat. The flame is borrowed like every
+  other flame (§BP); nobody strikes a spark.
+- **The smoke is a few square puffs** (the look of the steam over the mug in reference frame
+  44) on one camera-facing card, rising and drifting with the weather's wind at the camp. It
+  is the hearth smoke's family (§CV, `smoke.json → hearth.look`): the same pale blue-grey in
+  flat bands with a dither cut-out, never a neutral grey, and never glowing. The bowl's ember
+  is one glowing pixel on the draw, and it casts no light.
+- **Open, for Mike:** what is in the bowl. It is not named anywhere yet.
+
+**CY.5 The circle breaks at dawn and forms at dusk.** The same loops in opposite order
+bracket the day.
+- **Dawn** (`dawn_break`): over the last two and a half game hours before the gather hours
+  begin (15 real minutes), the sitters rise one at a time, dozers last. Each stretches,
+  stands, shoulders a basket or bundle and walks out. One stays to keep the hearth, and the
+  children stay by the fire.
+- **Dusk** (`dusk_form`): from the end of the gather hours, over an hour and a half of game
+  time (9 real minutes), folk come in carrying, drop the load on the store (the day's last
+  real piece, §BW), and sit. The bowls and the pipe come out.
+- **Night** (`night`): one stays awake to feed the fire (§AX) and most of the rest doze where
+  they sit. Shelters stay as they are; nobody is drawn asleep inside one yet.
+- **Nothing speeds the clock** (§CW): the circle breaks and forms in real time, and you can
+  walk away from it at any point.
+
+**Touches:** §BX (clock and length superseded), §CV (pipe smoke takes the hearth smoke's
+look), §CG ("§BX's afternoon" now reads "§CY's dawn"; Day 1 and the sky's clock stand), §BV
+(rest at the spawn, then the jobs), and 27 Sept §P beat 1 (dawn was its first preference).
+All numbers are first guesses; the designer owns them.
+
+## CZ. The fire breathes: coals that pulse, specks thrown at random — LOCKED (3 Oct, 15:35, Mike)
+
+Mike: *"the fire animations should be a bit more embery and pulsating kind of like in real
+life — embers at the base oscillating and pulsating while the specks of ash fly out above
+randomly."* Data: `look.json → fire.coals`, `fire.specks` and `fire.light.breath`, not wired.
+Gate: `tools/fire_circle_check.py`.
+
+**How this is read.** It adds to §BZ and does not replace it: the one camera-facing flame card
+stays, and the fire gains a living bed beneath it and random specks above it. If Mike meant
+the flame to go, as the torch's did (§CP), that is one line to change.
+
+**What is there today** (built, §BZ): the coals are one flat orange shape that never changes,
+and six embers each climb at one steady speed on a loop of their own.
+
+- **The bed pulses** (`fire.coals`). The foot of every fire is a bed of coals on a coarse texel
+  grid: char crust with hot patches in the flame's own colour bands.
+  - The whole bed **breathes** slowly, about once every three seconds.
+  - Each patch of coals **brightens and dims on its own clock**, out of step with its
+    neighbours, while the hot cracks crawl.
+  - **Air feeds it:** a gust of the weather's wind, a poke (§CY's `poke_fire`) or a fresh
+    piece laid on makes the bed flare, then settle.
+- **The light breathes with the bed** (`fire.light.breath`), on top of §BZ's noise flicker,
+  so the pool of light on the ground pulses with the coals.
+- **Specks fly out at random** (`fire.specks`). They replace the steady drift of
+  `flame.embers`.
+  - They leave on a **random clock**, never a loop the eye can learn: sometimes two close
+    together, sometimes a long lull, mostly one to four at a time, and now and then a shower.
+  - **Every pop and snap of the fire's sound throws its burst at the same instant**
+    (`audio.json → fire.pops`), so the ear and the eye agree. Laying a piece on, or poking,
+    throws a big one.
+  - Each speck leaves at its own speed inside a cone, slows as it climbs, curls, and drifts
+    with the wind.
+  - **Seven in ten are sparks:** the flame's orange, cooling to red, then gone.
+  - **Three in ten are ash:** pale flakes in the hearth smoke's blue-grey (§CV; never a
+    neutral grey, LOOK_REFERENCE R3) that do not glow. They show by the fire's own light,
+    last longer and flutter.
+- **A low fire is its bed.** When the fire has burned down to embers there is no flame card
+  (§BZ), so the bed is the whole fire, breathing slower and deeper, with a rare speck. A dead
+  fire throws none.
+- **The torch keeps its burnt end** (§CP). Lamps keep their flames.
+
+All numbers are first guesses; the designer owns them.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -2052,3 +2226,21 @@ play-test prompt of 3 Oct, with the other bugs from that play. The proposed engi
    their delves exist.
 4. **Swifts in the cold stacks**, after §CH's dusk handover.
 5. **The wildfire plume**, if Mike keeps it.
+
+**Added 3 Oct, 15:45 (§CY, §CZ):** the data is in and none of it is wired: `roads.json →
+opening_road.dawn_start`, `camps.json → sim.fire_circle`, and `look.json → fire.coals`,
+`fire.specks` and `fire.light.breath` (`tools/fire_circle_check.py` checks them). The proposed
+engine order:
+1. **The dawn clock and the longer opening road** (§CY.1). It is small. `main.open_clock`, the
+   first camp's road in `world.gd` (picked by walking minutes at the slope pace, not by flat
+   length), and the checks that expect an afternoon and 7.2 km (`day_check.gd`,
+   `walkabout.gd`, `road_reach_check.gd`) move together; the old `opening_road` keys are
+   retired in the same commit.
+2. **The coals and the specks** (§CZ). The most seen.
+3. **Seats and the seated circle with its loops** (§CY.2–CY.3), built on whoever the camp has
+   today.
+4. **The pipe** (§CY.4). Its smoke shares §CV's look, so it follows the hearth column.
+5. **The dawn break and the dusk forming** (§CY.5). These need §BV's gatherers and their loads,
+   so they follow the working camp.
+
+Where this sits against Mike's 14:34 play fixes and §CV's smoke is Mike's call.
