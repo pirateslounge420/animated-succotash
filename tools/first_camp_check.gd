@@ -38,7 +38,7 @@ func _describe(main: Node, world: Node, label: String) -> Dictionary:
 	var cell: int = world.planet.cell_at(d)
 	var biome: String = BiomeTemplates.KEYS[world.planet.biome[cell]]
 	var out := {"seed": world.world_seed, "cell": cell, "biome": biome, "kind": world.first_camp_kind, "people": main.camp.people_id, "fuel": FireStore.best_kind(world, d), "lat": rad_to_deg(world.planet.lat[cell])}
-	var first := str(GameLog.entries[0].get("text", "")) if not GameLog.entries.is_empty() else ""
+	var first := GameLog.world_line()
 	print("[camp] %s: seed %d · kind '%s' · %s · people %s · fuel %s · cell %d (lat %.0f) · log: %s" % [label, out.seed, out.kind, biome, out.people, out.fuel, cell, out.lat, first])
 	var empty := []
 	for k in Encampment.FC.get("kinds", {}):

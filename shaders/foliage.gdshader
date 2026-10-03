@@ -141,31 +141,56 @@ global uniform vec4 spring_b;
 // Cards nearer than this show the leaf cutout, farther the foliage mass.
 const float SP_NEAR_M = 25.0;
 
-// The season on this tree / cluster: (autumn blend, hue drift toward the
-// autumn colour, saturation, value), the hue shift toward yellow (spring,
-// 0-1 of a turn) and the leaf left.
-varying vec4 v_season;
-varying float v_hshift;
-varying float v_leaf;
-varying float v_leafs; // the plant's leaf size (shade leaves bigger)
-varying float sway_w;
-varying float glow_pick;
-varying vec3 world_pos;
-varying vec3 obj_pos; // meters, in the plant's own frame
-varying vec3 obj_normal;
-varying float mat_id;
-varying float moss;
-// A rare sport (PlantGenetics, data/sports.json): its code, packed into the
-// custom data's red with the moss (moss 0-1 + 2 x code). Colour sports are
-// drawn here (sport_tint()); size ones are in the transform already.
-varying flat float v_sport;
-varying float cluster_key;
-varying float dead_v;
-varying float wood_dead; // a dead limb of a living tree (TreeArch: UV2.y 1 on bark)
-varying vec3 genes; // this plant's jitter: a warm/cool and value roll
-varying float inst;
-varying vec4 v_imp; // a far picture's crown profile (CUSTOM0)
-varying vec2 v_imp2; // and its crown base, trunk half-width (shares)
+// What reaches the fragment stage, packed into 8 varying slots (Godot 4.4
+// and later keep 14-15 slots for the Forward+ scene shader and reject a
+// shader past the GPU's limit, 31 on a Mac: 19 slots here made every
+// plant draw grey there; tools/shader_varying_check.py, house limit 12).
+// The names below are kept as #defines so the code reads as before.
+// Flat (the same on every corner of a triangle: per plant, per piece, per
+// leaf cluster or far picture):
+//   f_season  the season on this tree / cluster: (autumn blend, hue drift
+//             toward the autumn colour, saturation, value)
+//   f_a       hue shift toward yellow (spring, 0-1 of a turn), the leaf
+//             left, the plant's leaf size (shade leaves bigger), glow pick
+//   f_b       material id, moss, a rare sport's code (PlantGenetics,
+//             data/sports.json: packed into the custom data's red with the
+//             moss, moss 0-1 + 2 x code; colour sports are drawn here,
+//             sport_tint(), size ones are in the transform), cluster key
+//   f_c       genes (this plant's jitter: a warm/cool and value roll), the
+//             instance
+//   f_d       dead (bare 1), a dead limb of a living tree (TreeArch: UV2.y
+//             1 on bark), a far picture's crown base and trunk half-width
+//   f_imp     a far picture's crown profile (CUSTOM0)
+// Smooth (across a triangle):
+//   s_pos     position in the plant's own frame (meters), the sway weight
+//   s_nrm     the normal in the plant's own frame
+// world_pos is rebuilt in fragment() from VERTEX and INV_VIEW_MATRIX.
+varying flat vec4 f_season;
+varying flat vec4 f_a;
+varying flat vec4 f_b;
+varying flat vec4 f_c;
+varying flat vec4 f_d;
+varying flat vec4 f_imp;
+varying vec4 s_pos;
+varying vec4 s_nrm;
+#define v_season f_season
+#define v_hshift f_a.x
+#define v_leaf f_a.y
+#define v_leafs f_a.z
+#define glow_pick f_a.w
+#define mat_id f_b.x
+#define moss f_b.y
+#define v_sport f_b.z
+#define cluster_key f_b.w
+#define genes f_c.xyz
+#define inst f_c.w
+#define dead_v f_d.x
+#define wood_dead f_d.y
+#define v_imp2 f_d.zw
+#define v_imp f_imp
+#define obj_pos s_pos.xyz
+#define sway_w s_pos.w
+#define obj_normal s_nrm.xyz
 
 // A value eased through the stages: `v` at each stage's start day `st`,
 // held after the last.
@@ -197,6 +222,7 @@ void vertex() {
 	float scale = length(MODEL_MATRIX[1].xyz);
 	obj_pos = (inv * vec4(VERTEX, 1.0)).xyz * scale;
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
+	s_nrm.w = 0.0;
 	mat_id = UV2.x;
 	wood_dead = (UV2.x < 0.5 && UV2.y > 0.5) ? 1.0 : 0.0;
 	v_sport = floor(INSTANCE_CUSTOM.r * 0.5 + 1e-4);
@@ -315,7 +341,7 @@ void vertex() {
 			VERTEX = root;
 		}
 	}
-	world_pos = VERTEX;
+	vec3 world_pos = VERTEX;
 	// Vine strands above this plant's vine amount collapse to a point.
 	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= vines_v) {
 		VERTEX = MODEL_MATRIX[3].xyz;
@@ -412,6 +438,8 @@ vec3 sport_tint(vec3 c, bool leafy) {
 }
 
 void fragment() {
+	// World position, rebuilt here (not a varying: see the slots above).
+	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	// The sun's and moon's shadow maps are drawn with an orthographic
 	// projection (the game camera is perspective). There, closed shapes
 	// (bark, crowns, bamboo culms) cast from their far faces only, so a

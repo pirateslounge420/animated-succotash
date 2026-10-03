@@ -198,7 +198,16 @@ func _on_planet_ready() -> void:
 	# first hearth: the opening camp (design 30 Sept §AY).
 	Hearth.setup(camp.site)
 	GameLog.load_saved()
-	if GameLog.entries.is_empty():
+	# What the game runs on, and whether its shaders built (§CG; Mike's
+	# 22:52 play): the log's first line of each session, F3 and stdout.
+	EngineReport.check_shaders()
+	var engine_line := EngineReport.summary()
+	if not (EngineReport.result.failed as Array).is_empty():
+		engine_line += " · " + EngineReport.shaders_text()
+	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
+	GameLog.now_text = _now_text(spawn_dir)
+	GameLog.add(engine_line, "engine")
+	if GameLog.entries.size() <= 1:
 		# The world's name is its seed (design 1 Oct §CB): the log opens
 		# with it, and the kind of first camp when the roll says one.
 		GameLog.now_text = _now_text(spawn_dir)

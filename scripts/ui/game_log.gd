@@ -47,6 +47,18 @@ static func _save() -> void:
 	WorldSave.mark_dirty()
 
 
+## The world's own first line ("World <seed> — day …"): the first line
+## after the session's engine line (EngineReport), or "".
+static func world_line() -> String:
+	for e in entries:
+		if str(e.get("kind", "")) == "world":
+			return str(e.get("text", ""))
+	for e in entries:
+		if str(e.get("kind", "")) != "engine":
+			return str(e.get("text", ""))
+	return ""
+
+
 ## A line once: the same text again (a biome re-entered) is skipped.
 static var _once := {}
 static func add_once(key: String, text: String, kind := "") -> void:

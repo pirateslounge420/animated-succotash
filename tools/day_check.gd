@@ -43,7 +43,7 @@ func _run() -> void:
 	print("[day] seed %d · camp at %.1f°%s %.1f°%s" % [seed_v, absf(rad_to_deg(CubeSphere.latitude(camp))), "N" if CubeSphere.latitude(camp) >= 0.0 else "S",
 		absf(rad_to_deg(CubeSphere.longitude(camp))), "E" if CubeSphere.longitude(camp) >= 0.0 else "W"])
 	# The log's first line, as the world opened.
-	var first := str(GameLog.entries[0].get("text", "")) if not GameLog.entries.is_empty() else ""
+	var first := GameLog.world_line()
 	ok(first.contains("— day 1"), "the log's first line says day 1 (%s)" % first)
 	await _place("the camp", camp, true)
 	var mike := _dir(12.7, -140.1)

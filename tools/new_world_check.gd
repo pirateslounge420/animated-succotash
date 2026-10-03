@@ -38,7 +38,7 @@ func _describe(main: Node, world: Node) -> Dictionary:
 	var biome: String = BiomeTemplates.KEYS[world.planet.biome[cell]]
 	var first := ""
 	if not GameLog.entries.is_empty():
-		first = str(GameLog.entries[0].get("text", ""))
+		first = GameLog.world_line()
 	var out := {"seed": world.world_seed, "cell": cell, "biome": biome, "kind": world.first_camp_kind, "people": main.camp.people_id, "log": first, "spawn_choice": world.spawn_choice, "now": main._now_text(main.player.surface_dir), "first_day": WorldSave.data.get("first_local_day", null)}
 	print("[world] seed %d · cell %d · %s · kind '%s' · people %s · %s · log: %s" % [out.seed, out.cell, out.biome, out.kind, out.people, out.now, out.log])
 	return out
@@ -84,7 +84,7 @@ func _run() -> void:
 	ok(b.cell != a.cell, "and another first camp cell (%d vs %d)" % [b.cell, a.cell])
 	ok(WorldSave.last_seed() == b.seed, "the pointer moved to the new world")
 	ok(WorldSave.exists(a.seed), "the old world's save stays")
-	ok(not GameLog.entries.is_empty() and str(GameLog.entries[0].get("text", "")).begins_with("World %d" % b.seed), "the new world's log is its own (first line: %s)" % b.log)
+	ok(GameLog.world_line().begins_with("World %d" % b.seed) and str(GameLog.entries[0].get("kind", "")) == "engine", "the new world's log is its own (its world line: %s; the engine line first)" % b.log)
 	# Continue: booting again lands in the last world.
 	main.queue_free()
 	await process_frame
