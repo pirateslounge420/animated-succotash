@@ -35,7 +35,7 @@ class_name FireCircle
 ## bowl's ember, one glowing pixel that casts no light; each breath out
 ## leaves a few square puffs of the hearth smoke's pale blue-grey
 ## (smoke.json hearth.look; never glowing) that rise and drift with the
-## weather's wind.
+## weather's wind. What's in it is a mystery herb (Mike, 3 Oct): never named.
 ##
 ## They notice you (notice): inside watch_m the hood, and only the hood,
 ## turns to follow you (head_max_deg at most); when you leave it holds
@@ -524,6 +524,10 @@ static func _props(s: Node3D, idle: String) -> void:
 		s.set_meta("prop", p)
 
 
+## The brand's glowing end against a campfire's flame (its smoke, §CV).
+const BRAND_SIZE := 0.2
+
+
 ## The pipe's props this frame: the brand in hand only while it's lit from
 ## the fire, the bowl's ember only on a draw.
 static func _pipe_props(s: Node3D, t: float, plan: Dictionary) -> void:
@@ -531,6 +535,10 @@ static func _pipe_props(s: Node3D, t: float, plan: Dictionary) -> void:
 	var brand = s.get_meta("brand") if s.has_meta("brand") else null
 	if brand != null and is_instance_valid(brand):
 		(brand as Node3D).visible = t >= pack and t < pack + float(plan.get("light", 3.0))
+		# Its glowing end smokes, a wisp by its size (§CV; Mike, 3 Oct).
+		var tip := (brand as Node3D).get_node_or_null("Tip") as Node3D
+		if tip != null and (brand as Node3D).visible:
+			Smoke.tick_flame(tip, tip.global_position, s.global_basis.y.normalized(), BRAND_SIZE, "embers")
 	var prop = s.get_meta("prop") if s.has_meta("prop") else null
 	if prop != null and is_instance_valid(prop):
 		var ember := (prop as Node3D).get_node_or_null("Ember") as Node3D

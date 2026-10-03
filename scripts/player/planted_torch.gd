@@ -77,6 +77,7 @@ func _process(delta: float) -> void:
 		return
 	_light.light_energy = Torch.energy_now(item, _t, 1.0)
 	Torch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
+	Torch.smoke_ember(_flame, up)
 
 
 ## The nearest planted torch within `radius` of `pos`, or null.

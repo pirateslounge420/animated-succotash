@@ -11,10 +11,14 @@ class_name Smoke
 ##   flat at calm_pool.at_m on a still dawn, beaten down by rain
 ##   (rain.top_scale, density_scale). At night no column: only its first
 ##   fire_lit_m, lit warm by the fire (smoke gives off no light).
-## - Which fires (hearth.sources): a camp's hearth, a rekindled old
-##   hearth, a nest's hearth, a delve's hearths through their stacks; the
-##   builders mark them (meta "smoke"). Torches, lamps, braziers and
-##   sconces never smoke (they aren't Campfires).
+## - Which fires: every fire smokes, by its flame's size (Mike, 3 Oct;
+##   hearth.by_flame). Every Campfire (camps, rekindled old hearths, nests,
+##   mythic folk's fires, the fires you lay) carries meta "smoke" (its
+##   scale, 1.0; a delve's hearth breathes through its stack at
+##   stack_scale). The small fires (tick_flame()) smoke at their flame's
+##   size against a campfire's, the column size^exponent of the by_state
+##   row: the torch's burnt end and a planted torch (an ember, the embers
+##   row), the tomb lamps and the fat lamp (flames), the pipe's brand.
 ## - Far hearths (far_columns()): the hearths the world keeps (living camps
 ##   at ruins and nests) within hearth.far.seen_to_m that aren't built
 ##   here are drawn from their fire's state in the sim (FireStore's store;
@@ -146,6 +150,8 @@ static func update(col: Node3D, foot: Vector3, up: Vector3, state: String, wind:
 	m.set_shader_parameter("density", sz.z)
 	m.set_shader_parameter("pool", 1.0 if calm_dawn and speed <= float(W.get("calm_below_mps", 1.0)) else 0.0)
 	m.set_shader_parameter("night", 0.0 if draw else night)
+	# The fire lights less of a small fire's smoke (by the flame's size).
+	m.set_shader_parameter("fire_lit_m", float((H.get("night", {}) as Dictionary).get("fire_lit_m", 8.0)) * sqrt(maxf(scale, 0.0)))
 	col.set_meta("top_m", sz.x)
 	col.set_meta("lean", lean)
 
@@ -168,7 +174,7 @@ static var days := 0.0
 
 
 ## A hearth's column, every frame, from Campfire.flicker (meta "smoke" on
-## the fire: its scale; a Campfire without it never smokes).
+## the fire: its scale; Campfire.build gives every fire 1.0).
 static func tick_fire(fire: Node3D) -> void:
 	if not ON or not fire.has_meta("smoke"):
 		return
@@ -208,6 +214,29 @@ static func tick_fire(fire: Node3D) -> void:
 	if fl != null and is_instance_valid(fl):
 		var cold := days - float(store.get("last_warm", -1.0e9)) if not store.is_empty() else 1.0e9
 		fly_swifts(fl, swift_mode(sun_deg, morning, cold if not warm else 0.0, warm), Time.get_ticks_msec() / 1000.0)
+
+
+## A flame's column scale (hearth.by_flame): `size` the flame against a
+## campfire's (1.0), the column size^exponent of the by_state row.
+static func flame_scale(size: float) -> float:
+	return pow(maxf(size, 0.0), float((H.get("by_flame", {}) as Dictionary).get("exponent", 2.0)))
+
+
+## A small fire's column this frame (Mike, 3 Oct: every fire smokes by its
+## flame's size): a torch, a lamp, the pipe's brand. `holder` keeps it (meta
+## "smoke_col"; the column is its child, so it hides with it); its foot at
+## scene `foot`, up `up`; `size` the flame against a campfire's; `state` a
+## by_state row ("out" hides it); `air` more wind (a torch's own motion).
+static func tick_flame(holder: Node3D, foot: Vector3, up: Vector3, size: float, state := "flames", air := Vector3.ZERO) -> void:
+	if not ON:
+		return
+	var col = holder.get_meta("smoke_col") if holder.has_meta("smoke_col") else null
+	if col == null or not is_instance_valid(col):
+		if state == "out":
+			return
+		col = column(holder, "Smoke")
+		holder.set_meta("smoke_col", col)
+	update(col, foot, up, state, wind + air, rain_mm_h, Campfire.night, calm_dawn, flame_scale(size))
 
 
 ## Where a delve's hearth breathes (outlets.by_ruin): the stack form for a

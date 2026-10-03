@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (after midnight) — Mike: every fire smokes by its flame's size (§CV); the pipe holds a mystery herb (§CY.4)
+- **Every fire smokes.** `Campfire.build` now gives every fire its smoke, so the fires you lay and the mythic folk's fires smoke like the camps'. The small fires send up their own column, sized by the flame against a campfire's (`Smoke.tick_flame`, `smoke.json → hearth.by_flame`, the by_state row × size², since a fire's heat goes with its flame's area). A tomb lamp or the fat lamp (flame 0.14 / 0.12) sends up a thread about 1.2 m tall and 8 cm wide. The torch's burnt end, in hand or planted, is an ember, so it takes the embers row at the torch's 0.32: a faint wisp 0.82 m tall, 0.35 solid, that trails behind you as you walk (the hand's motion is added to the wind). The pipe's brand sends up a wisp while it lights the bowl. At night the fire lights √scale of each column (a lamp 1.1 m of its thread). `hearth.never` is emptied and those fires joined `sources`, with the help line citing Mike.
+- **The pipe:** what's in it is a mystery herb, Mike's call; it is never named (comment in `FireCircle`, HOW_TO_RUN).
+- **Checked:** `hearth_smoke_check` gains every fire in the world smoking, a laid fire, the lamp's thread hiding with its flame, the torch's wisp and its trail, the lamp's night foot. Results are in the commit; smoke_check.py and fire_circle_check.py --strict: 0 errors.
+- **For Claude (chat):** Mike's two calls (all fire smokes by flame size; the mystery herb) belong in §CV and §CY.4 of the 30 Sept doc. §CV still says torches and lamps never smoke.
+
 ## 2026-10-03 (late night) — §CY.2–CY.4 the fire circle, its seats and the pipe; §CV smoke from every hearth, stacks, swifts, the wildfire plume (Claude Code)
 - **§CY.2 The fire circle** (`FireCircle`, `camps.json → sim.fire_circle`).
   - Every camp's folk now sit in a ring round the fire, one seat each and a spare. That includes the elder and the hunter at the opening camp, with the spare seat on your side.

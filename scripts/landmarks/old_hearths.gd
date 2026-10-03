@@ -347,6 +347,9 @@ func update_lamps(delta: float) -> void:
 			var flame: Node3D = l[1]
 			light.visible = on > 0.0
 			flame.visible = on > 0.5
+			# Every fire smokes, by its flame (§CV; Mike, 3 Oct).
+			if flame.visible:
+				Torch.smoke_flame(flame, node.global_basis.y.normalized())
 			# A small flicker of its own.
 			var k := 1.0 + 0.12 * sin(t * 7.3 + light.position.x * 3.1) * sin(t * 3.7 + light.position.z)
 			light.light_energy = float(l[2]) * on * k

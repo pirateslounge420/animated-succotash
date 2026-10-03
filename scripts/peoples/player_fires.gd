@@ -98,6 +98,9 @@ func _process(delta: float) -> void:
 		var fn: Node3D = _built[k]
 		if is_instance_valid(fn) and fn.has_node("Flames"):
 			Campfire.flicker(fn, t)
+		elif is_instance_valid(fn) and fn.has_node("Flame"):
+			# The fat lamp's flame smokes by its size (§CV; Mike, 3 Oct).
+			Torch.smoke_flame(fn.get_node("Flame"), fn.global_basis.y.normalized())
 	_timer -= delta
 	if _timer > 0.0:
 		return

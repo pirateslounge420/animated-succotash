@@ -17,7 +17,11 @@ extends SceneTree
 ##    in at night, pouring out at dawn, gone while the hearth burns and
 ##    until it has been cold return_after_cold_game_days;
 ##  - a wildfire's plume stands over a fresh scar, wide, tall and dark, and
-##    is gone once it has burned out.
+##    is gone once it has burned out;
+##  - every fire smokes by its flame's size (Mike, 3 Oct; hearth.by_flame):
+##    every Campfire in the world, a fire you lay, a tomb lamp's thread, the
+##    torch's burnt end's wisp (trailing as you walk), the pipe's brand; the
+##    column the by_state row x size^exponent.
 
 var main
 var world
@@ -94,6 +98,7 @@ func _run() -> void:
 	Smoke.tick_fire(fire)
 	ok(is_equal_approx(float(_p(col, "top_m")), Smoke.size_for("low").x), "in play the column follows the fire's state (low: %.0f m)" % float(_p(col, "top_m")))
 	st["state"] = keep
+	await _small_fires(fire)
 	# Far hearths.
 	var pd: Vector3 = world.dir_of(player.global_position)
 	var t_us := Time.get_ticks_usec()
@@ -233,6 +238,56 @@ func _plume(pd: Vector3) -> void:
 	Smoke.plumes(main, pd)
 	ok(not p.visible, "and is gone once the fire has burned out")
 	CampSim.scars.erase(scar)
+
+
+## Every fire smokes by its flame's size (Mike, 3 Oct).
+func _small_fires(fire: Node3D) -> void:
+	var lacking := 0
+	var fires := get_nodes_in_group(Campfire.GROUP)
+	for f in fires:
+		if not (f as Node).has_meta("smoke"):
+			lacking += 1
+	ok(lacking == 0, "every fire in the world smokes (%d fires, %d without)" % [fires.size(), lacking])
+	var up: Vector3 = fire.global_basis.y.normalized()
+	var d: Vector3 = world.dir_of(fire.global_position + fire.global_basis.x * 6.0)
+	var laid: Node3D = main.player_fires.lay_fire(d, 2)
+	for i in 3:
+		await process_frame
+	var lc = laid.get_meta("smoke_col") if laid.has_meta("smoke_col") else null
+	var ls := Smoke.state_of(laid)
+	ok(lc != null and (lc as Node3D).visible and is_equal_approx(float(_p(lc, "top_m")), Smoke.size_for(ls).x), "a fire you lay smokes like a camp's (%s: %.0f m)" % [ls, float(_p(lc, "top_m")) if lc != null else 0.0])
+	Smoke.calm_dawn = false
+	Smoke.wind = Vector3.ZERO
+	Smoke.rain_mm_h = 0.0
+	Campfire.night = 0.0
+	var ex := float((Smoke.H.get("by_flame", {}) as Dictionary).get("exponent", 2.0))
+	# A tomb lamp's flame (RuinBuilder's, 0.14 of a campfire's).
+	var lamp := Torch.flame_node(0.14)
+	main.add_child(lamp)
+	lamp.global_position = fire.global_position + fire.global_basis.x * 3.0
+	Torch.smoke_flame(lamp, up)
+	var want := Smoke.size_for("flames") * Vector3(pow(0.14, ex), pow(0.14, ex), 1.0)
+	var lcol: Node3D = lamp.get_meta("smoke_col")
+	ok(lcol.visible and is_equal_approx(float(_p(lcol, "top_m")), want.x) and is_equal_approx(float(_p(lcol, "width_m")), want.y), "a lamp sends up a thread %.2f m tall, %.2f m wide" % [float(_p(lcol, "top_m")), float(_p(lcol, "width_m"))])
+	lamp.visible = false
+	ok(not lcol.is_visible_in_tree(), "and it goes with the flame")
+	# The torch's burnt end: a wisp, trailing behind as you walk.
+	var ember := Node3D.new()
+	main.add_child(ember)
+	ember.global_position = fire.global_position + fire.global_basis.x * 4.0 + up
+	var walk := up.cross(Vector3.FORWARD).normalized() * 1.7
+	Torch.smoke_ember(ember, up, -walk)
+	var ecol: Node3D = ember.get_meta("smoke_col")
+	var ts := float((Campfire.FL.get("torch", {}) as Dictionary).get("scale", 0.32))
+	var lean: Vector3 = _p(ecol, "lean")
+	ok(ecol.visible and is_equal_approx(float(_p(ecol, "top_m")), Smoke.size_for("embers").x * pow(ts, ex)) and float(_p(ecol, "top_m")) < 1.5, "the torch's burnt end sends up a wisp %.2f m tall, %.2f solid" % [float(_p(ecol, "top_m")), float(_p(ecol, "density"))])
+	ok(lean.length() > 0.05 and lean.normalized().dot(-walk.normalized()) > 0.99, "walking, the wisp trails behind the torch (%.0f°)" % rad_to_deg(atan(lean.length())))
+	Campfire.night = 1.0
+	Torch.smoke_flame(lamp, up)
+	ok(float(_p(lcol, "fire_lit_m")) < float((Smoke.H.get("night", {}) as Dictionary).get("fire_lit_m", 8.0)) * 0.5, "at night the lamp lights %.2f m of its thread" % float(_p(lcol, "fire_lit_m")))
+	Campfire.night = 0.0
+	lamp.queue_free()
+	ember.queue_free()
 
 
 func _end() -> void:

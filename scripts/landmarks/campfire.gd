@@ -93,6 +93,9 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	# folk), for lit_near(); "lit" until something puts it out.
 	root.add_to_group(GROUP)
 	root.set_meta("lit", true)
+	# Every fire smokes (§CV; Mike, 3 Oct): a campfire's flame is the 1.0
+	# the column is sized against (a delve's hearth resets it to its stack's).
+	root.set_meta("smoke", 1.0)
 	parent.add_child(root)
 	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
 	root.global_basis = Basis.looking_at(CubeSphere.north(d), d)
@@ -521,7 +524,7 @@ static func flicker(camp: Node3D, time: float) -> void:
 		if g:
 			g.scale = Vector3(gs, 1.0, gs)
 	_voice(camp, time, burn, low)
-	# Its smoke, if it is a hearth that smokes (§CV, Smoke).
+	# Its smoke (§CV, Smoke).
 	Smoke.tick_fire(camp)
 
 

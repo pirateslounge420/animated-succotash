@@ -110,7 +110,25 @@ static func flame_node(size := -1.0) -> Node3D:
 	var s := size if size > 0.0 else float(t.get("scale", 0.32))
 	var n := Campfire.flame_node(s, float(t.get("scroll_scale", 0.7)), int(t.get("embers", 2)), randf() * 100.0)
 	n.name = "Flame"
+	# Its smoke is sized by it (Smoke.tick_flame; §CV, Mike 3 Oct).
+	n.set_meta("flame_size", s)
 	return n
+
+
+## A flame's smoke this frame (Smoke.tick_flame): a flame_node at its own
+## size, its foot half the flame up, rising along `up`.
+static func smoke_flame(flame: Node3D, up: Vector3) -> void:
+	var s := float(flame.get_meta("flame_size", 0.32))
+	Smoke.tick_flame(flame, flame.global_position + up * s * float(Campfire.FL.get("height_m", 1.0)) * 0.5, up, s)
+
+
+## The burnt end's smoke (Smoke.tick_flame; every fire smokes by its size,
+## Mike 3 Oct): an ember, so the embers row, at the torch flame's size
+## (look.json fire.flame.torch.scale); `air` the head's own motion through
+## the air, so the wisp trails behind it.
+static func smoke_ember(ember: Node3D, up: Vector3, air := Vector3.ZERO) -> void:
+	var s := float((Campfire.FL.get("torch", {}) as Dictionary).get("scale", 0.32))
+	Smoke.tick_flame(ember, ember.global_position + up * 0.04, up, s, "embers", air)
 
 
 ## A torch's head: the burnt end of the stick, smouldering (Mike, 3 Oct:
@@ -511,6 +529,8 @@ func update_torch(delta: float) -> void:
 		_light.light_energy = energy_now(it, _t, motion)
 		set_glow(_view_flame, ember_glow(it, _t, motion), it)
 	_apply(lit())
+	if lit() and _view_flame.visible:
+		smoke_ember(_view_flame, player.up, -player.velocity)
 
 
 func _apply(on: bool) -> void:
