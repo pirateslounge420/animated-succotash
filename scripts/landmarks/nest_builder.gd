@@ -171,6 +171,25 @@ func _cave_mouth() -> void:
 		var s := Vector3(rng.randf_range(0.3, 0.6), rng.randf_range(0.2, 0.35), rng.randf_range(0.3, 0.5))
 		_rock(Vector3(x3, ground(x3, z3) + s.y * 0.3, z3), s, Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), 0.2, 0.8)
 	_shelters.append([Vector3(0.0, g0, -over * 0.5), minf(w * 0.5, over * 0.55), roof])
+	# The soot the hearth's smoke has left over the mouth (§CV.2), whether
+	# the fire is lit or not.
+	_soot(0.0, g0 + roof - 0.1, 1.5 - (over + 2.5) - 0.05, w * 0.55)
+
+
+## Soot above a nest's mouth (design 3 Oct §CV.2, smoke.json outlets.soot):
+## a navy-black streak streak_m tall on the rock face at `z_face`, from
+## `y0` up, `width` wide, its middle at `x`. It stays when the fire is out.
+func _soot(x: float, y0: float, z_face: float, width: float) -> void:
+	var sd: Dictionary = (Smoke.D.get("outlets", {}) as Dictionary).get("soot", {})
+	var hs := float(sd.get("streak_m", 1.2))
+	var was_shade := shade
+	var was_solid := solid
+	shade = 0.0
+	solid = false
+	box(Transform3D(Basis.IDENTITY, Vector3(x, y0 + hs * 0.5, z_face)), Vector3(width, hs, 0.08), Color(str(sd.get("colour", "#0A0C20"))), 0.0, 0.02, 0.0)
+	box(Transform3D(Basis.IDENTITY, Vector3(x, y0 + hs * 1.2, z_face - 0.01)), Vector3(width * 0.55, hs * 0.5, 0.08), Color(str(sd.get("colour", "#0A0C20"))).lightened(0.08), 0.0, 0.02, 0.0)
+	shade = was_shade
+	solid = was_solid
 
 
 ## An overhang at the escarpment foot: a great slab out from the face and
@@ -256,6 +275,7 @@ func _grotto() -> void:
 		var x := sx * (mouth_w * 0.5 + 1.4)
 		_rock(Vector3(x, ground(x, z_front) + mh * 0.5, z_front + 0.6), Vector3(1.6, mh * 0.75, 1.4), Basis.from_euler(Vector3(0.0, rng.randf_range(-0.2, 0.2), 0.0)), 0.05, 0.6)
 	_rock(Vector3(0.0, ground(0.0, z_front) + mh + 0.6, z_front + 0.8), Vector3(mouth_w * 0.5 + 1.8, 0.9, 1.5), Basis.from_euler(Vector3(0.05, 0.0, rng.randf_range(-0.06, 0.06))), 0.08, 0.7)
+	_soot(0.0, ground(0.0, z_front) + mh - 0.2, z_front - 0.75, mouth_w * 0.8)
 	for sx: float in [-1.0, 1.0]:
 		var xo := sx * (w - 1.0)
 		_rock(Vector3(xo, ground(xo, z_front) + 0.4, z_front + 0.8), Vector3(1.3, 1.1, 1.3), Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), 0.05, 0.6)

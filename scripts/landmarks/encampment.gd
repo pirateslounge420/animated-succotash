@@ -15,9 +15,11 @@ extends Node3D
 ## computed).
 ##
 ## Layout, around the fire: the player's sleeping mat a few meters to one
-## side, facing it; the two NPCs across the fire, turning toward the
-## player when they're close. The fire's stones and logs and the two seat
-## logs collide (PropCollision); the flat mat doesn't. The two people have
+## side, facing it; the two NPCs sitting in the fire circle on the seats
+## the place supplies, the spare seat on the player's side (design 3 Oct
+## §CY.2–CY.3, FireCircle), their hoods turning to the player when they're
+## close. The fire's stones and logs and the seats collide (PropCollision);
+## the flat mat doesn't. The two people have
 ## hitbox parts and a blocker (CreatureHitboxes): the player can't walk
 ## through them, and an arrow glances off them (Arrow, Camps.shot_at()).
 ## When one of them speaks (talk(), with the opening lines' subtitles) a
@@ -28,7 +30,6 @@ const MIN_SEPARATION_M := 20000.0
 const SEARCH_M := 500.0
 const CLEARING_M := 12.0
 const PLAYER_M := 3.3
-const NPC_M := 2.3
 const HIDE := Color(0.55, 0.4, 0.26)
 
 ## [dir, radius_m] circles kept free of plants (the active camp).
@@ -412,6 +413,8 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	name = "Encampment"
 	_fire = Campfire.build(self, world, chunks, site, false)
 	_fire.set_meta("hearth_ok", true)
+	# Its smoke goes up (design 3 Oct §CV, Smoke).
+	_fire.set_meta("smoke", 1.0)
 	# The people who found you (design 30 Sept §BO): the life this site
 	# lives, its shelter and props round the fire (CampProps).
 	people_id = Peoples.pick(world.planet, chunks.rivers, site, "opening")
@@ -457,37 +460,39 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	player_spot = CreatureSpawner._offset(site, side, PLAYER_M)
 	_mat(player_spot)
 	# The elder and the hunter: cloaked figures on the player's own rig
-	# (CloakedFigure), standing by the fire: the elder in ochre yellow, the
-	# hunter in madder red (the designer's pick, every game).
+	# (CloakedFigure), the elder in ochre yellow, the hunter in madder red
+	# (the designer's pick, every game), sitting in the fire circle (design
+	# 3 Oct §CY.2–CY.3, FireCircle) on the seats the place supplies, the
+	# spare seat on the player's side.
 	var names := ["Elder", "Hunter"]
 	var prng := RandomNumberGenerator.new()
 	prng.seed = hash([site, "folk"])
+	var to_player := dress.to_local(world.to_scene(player_spot, PlanetConst.RADIUS_M + chunks.ground_height(player_spot)))
+	var ch := chunks.chunk_at(site)
+	var seats := FireCircle.lay_seats(dress, 2, prng, {"biome": biome_key, "people": people_id, "site": "",
+		"bark": FireCircle.stand_bark(chunks, _fire.global_position), "stones": CreatureSpawner.den_stones(world.planet.rock[world.planet.cell_at(site)]),
+		"ground": ch.ground_color_at(site) if ch != null else Color(0.35, 0.42, 0.22),
+		"cloth": ppal[0] if not ppal.is_empty() else HIDE, "spare_at": atan2(to_player.z, to_player.x)}, dbody)
 	for i in 2:
 		var pal := CloakedFigure.roll_palette(prng, OPENING_FAMILIES[i], true)
 		var height := 1.66 if i == 0 else 1.74
-		# An unscaled holder turns; the scaled body under it breathes.
 		var holder := Node3D.new()
 		holder.name = names[i]
-		add_child(holder)
-		var b := CloakedFigure.build(height, pal[0], pal[1])
+		dress.add_child(holder)
+		var b := CloakedFigure.build(height, pal[0], pal[1], true)
 		var body: Node3D = b.root
 		body.name = "Body"
 		holder.add_child(body)
 		holder.set_meta("speaker", names[i])
 		holder.set_meta("hitboxes", CloakedFigure.hitboxes(holder, b, true))
+		holder.set_meta("arms", b.wings)
+		holder.set_meta("head", (body as PlayerBody).head)
+		holder.set_meta("stage", "adult")
+		holder.set_meta("phase", prng.randf() * TAU)
 		BlobShadow.make(holder, 0.35, 0.35)
-		var at := CreatureSpawner._offset(site, side + PI + (0.75 if i == 0 else -0.75), NPC_M)
-		holder.global_position = world.to_scene(at, PlanetConst.RADIUS_M + chunks.ground_height(at))
-		holder.set_meta("dir", at)
-		holder.set_meta("size", height / CloakedFigure.PLAYER_H)
-		_face(holder, at, site, 1.0)
+		FireCircle.sit(holder, seats[i])
+		holder.set_meta("dir", world.dir_of(holder.global_position))
 		_npcs.append(holder)
-		# A log seat behind each.
-		var seat_at := CreatureSpawner._offset(site, side + PI + (0.75 if i == 0 else -0.75), NPC_M + 0.7)
-		var seat := CreatureBodies.cone(self, 0.16, 0.16, 1.2, Vector3.ZERO, Color(0.36, 0.25, 0.16))
-		seat.global_position = world.to_scene(seat_at, PlanetConst.RADIUS_M + chunks.ground_height(seat_at) + 0.14)
-		seat.global_basis = Basis.looking_at(_tangent(seat_at, site), seat_at) * Basis(Vector3(0, 0, 1), PI * 0.5)
-		PropCollision.capsule(PropCollision.body(seat), Transform3D(), 0.16, 1.2)
 	_voice = Audio3D.make("camp_chatter", self, "Chatter")
 	_voice.volume_db = -8.0
 	for i in 2:
@@ -506,8 +511,9 @@ func talk(who: int, delay: float) -> void:
 		Audio3D.play(_voice))
 
 
-## Per frame: the fire flickers; the NPCs breathe and turn to face the
-## player when they're near, else the fire.
+## Per frame: the fire flickers; the two sit in the fire circle, passing
+## the time in its loops, their hoods turning to the player close by
+## (FireCircle).
 func update_camp(delta: float, player_pos: Vector3) -> void:
 	_store_t -= delta
 	if _store_t <= 0.0 and CampSim.instance != null and woodpile != null:
@@ -520,27 +526,22 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 				CampProps.refresh_food_store(food_store, float(st.food))
 	_time += delta
 	Campfire.flicker(_fire, _time)
-	var player_dir: Vector3 = world.dir_of(player_pos)
 	# Their hitboxes only while someone's near (Hitboxes.wanted_at()).
 	var want := Hitboxes.wanted_at(_fire.global_position, player_pos)
 	if want != _hitboxes_on:
 		_hitboxes_on = want
 		for n in _npcs:
 			Hitboxes.set_active(n.get_meta("hitboxes", []), want)
-	for i in _npcs.size():
-		var n := _npcs[i]
-		var at: Vector3 = n.get_meta("dir")
-		var near := CubeSphere.surface_distance_m(at, player_dir) < 14.0
-		_face(n, at, player_dir if near else site, delta * 2.0)
-		var breathe := 1.0 + 0.012 * sin(_time * 1.6 + i * 1.3)
-		var size: float = n.get_meta("size")
-		(n.get_node("Body") as Node3D).scale = Vector3(size, size * breathe, size)
-
-
-func _face(n: Node3D, at: Vector3, toward: Vector3, rate: float) -> void:
-	var fwd := _tangent(at, toward)
-	var target := Basis.looking_at(fwd, at)
-	n.global_basis = n.global_basis.orthonormalized().slerp(target, clampf(rate, 0.0, 1.0))
+	# The fire circle's loops and the hood's notice (§CY.2, FireCircle).
+	var ctx := {"food_ok": true, "fire_low": false}
+	if CampSim.instance != null:
+		var st2 := CampSim.instance.state_of("opening")
+		if not st2.is_empty():
+			ctx.food_ok = float(st2.get("food", 0.0)) > 0.0
+	var fst := FireStore.store_of(_fire)
+	if not fst.is_empty():
+		ctx.fire_low = FireStore.units_now(fst) < float((CampSim.SIM.get("store", {}) as Dictionary).get("feed_fire_below_units", 3.0))
+	FireCircle.animate(_npcs, _fire, _time, delta, player_pos, FireCircle.phase_name(world.local_clock(site).y, CubeSphere.latitude(site), world.days), ctx)
 
 
 static func _tangent(from: Vector3, to: Vector3) -> Vector3:

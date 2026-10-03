@@ -484,6 +484,16 @@ func _process(delta: float) -> void:
 	post.set_night(1.0 - sky.daylight)
 	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))
 	Campfire.night = 1.0 - sky.daylight
+	# The weather the hearths' smoke reads (§CV, Smoke): the wind and rain
+	# here, and whether it is a still dawn (the smoke pools flat).
+	Smoke.wind = WeatherFX.plant_wind
+	Smoke.rain_mm_h = float(weather.get("rain_mm_h", 0.0))
+	Smoke.calm_dawn = FireCircle.phase_name(world.local_clock(d).y, CubeSphere.latitude(d), world.days) == "dawn" and WeatherFX.plant_wind.length() <= float((Smoke.H.get("wind", {}) as Dictionary).get("calm_below_mps", 1.0))
+	Smoke.sun_deg = sky.sun_elevation_deg
+	Smoke.morning = world.local_clock(d).y < 12.0
+	Smoke.days = world.days
+	Smoke.far_columns(self, d, delta)
+	Smoke.plumes(self, d)
 	creatures.update_creatures(delta, sky.daylight)
 	fruit_crop.daylight = sky.daylight
 	fruit_crop.rain_mm_h = float(weather.get("rain_mm_h", 0.0))

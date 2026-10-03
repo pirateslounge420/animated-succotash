@@ -209,6 +209,32 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 		# A stone ruin's camp spot stands on its floor, not the ground.
 		var spot: Vector3 = ruin.global_transform * (ruin.get_meta("camp_spot") as Vector3)
 		fire.global_position = spot
+	# It smokes when lit (design 3 Oct §CV, Smoke): a ruin's or a nest's
+	# hearth straight up; a delve's through its own stack on the mound
+	# above (smoke.json outlets.per_delve own_stack: the first room's old
+	# hearth and the heart).
+	fire.set_meta("smoke", 1.0)
+	if ruin != null and kind in ["delve", "holder"]:
+		var site_r: Dictionary = ruin.get_meta("site")
+		var rk := str(Ruins.Kind.keys()[int(site_r.kind)]).to_lower() if not (site_r.kind is String) else "default"
+		var form := Smoke.stack_form(rk)
+		var up := d.normalized()
+		var foot: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
+		# On the mound itself, where it stands over the ground.
+		if fire.is_inside_tree():
+			var q := PhysicsRayQueryParameters3D.create(foot + up * 25.0, foot - up * 2.0)
+			var hit := fire.get_world_3d().direct_space_state.intersect_ray(q)
+			if not hit.is_empty():
+				foot = hit.position
+		var wrap := Node3D.new()
+		wrap.name = "Outlet"
+		fire.add_child(wrap)
+		var stk := Smoke.stack(wrap, foot, up, form, hash([d, "stack"]))
+		fire.set_meta("smoke_stack", stk)
+		# Swifts may roost in a cold stack (§CV.5).
+		if Smoke.swifts_roost(world.planet, d, form, site_r):
+			fire.set_meta("swifts", Smoke.swift_flock(stk, hash([d, "flock"])))
+		fire.set_meta("smoke", float((Smoke.H as Dictionary).get("stack_scale", 0.7)))
 	# The logs left in it are charred.
 	for c in fire.get_children():
 		if c is MeshInstance3D and c.name != "Coals" and (c as MeshInstance3D).mesh is CylinderMesh:

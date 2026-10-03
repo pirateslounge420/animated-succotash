@@ -521,6 +521,8 @@ static func flicker(camp: Node3D, time: float) -> void:
 		if g:
 			g.scale = Vector3(gs, 1.0, gs)
 	_voice(camp, time, burn, low)
+	# Its smoke, if it is a hearth that smokes (§CV, Smoke).
+	Smoke.tick_fire(camp)
 
 
 ## The hiss bed and the pops: pops on a random clock (the next one

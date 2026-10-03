@@ -461,6 +461,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	root.set_meta("fire", fire)
 	# A camp's fire can be made your hearth (design 30 Sept §AY).
 	fire.set_meta("hearth_ok", true)
+	# Its smoke goes up (design 3 Oct §CV, Smoke): open to the sky, or out
+	# of a nest's mouth.
+	fire.set_meta("smoke", 1.0)
 	# What a camp has (design 30 Sept §AW): a bundle of unlit torches by
 	# the fire, in the ambient profile.
 	if Tuning.profile() == "ambient" and canopy.is_empty():
@@ -488,6 +491,16 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 		count = mini(count, (canopy.seats as Array).size())
 	var a0 := rng.randf() * TAU
 	var sitters: Array[Node3D] = []
+	# The fire circle (design 3 Oct §CY.2–CY.3, FireCircle): seats the
+	# place supplies, one a sitter and a spare, round the fire.
+	var circle: Array = []
+	if folk != "small_folk" and folk != "dead" and canopy.is_empty():
+		var ch := chunks.chunk_at(d)
+		circle = FireCircle.lay_seats(root, count, rng, {"biome": biome_key, "people": people_id,
+			"site": "ruin" if key.begins_with("ruin") else ("cliff" if key.begins_with("cliff") else ""),
+			"bark": FireCircle.stand_bark(chunks, at), "stones": CreatureSpawner.den_stones(map.rock[map.cell_at(d)]),
+			"ground": ch.ground_color_at(d) if ch != null else Color(0.35, 0.42, 0.22),
+			"cloth": _people_pal[0] if not _people_pal.is_empty() else Color(0.45, 0.3, 0.2)}, body)
 	for i in count:
 		_sitter_info = st_folk[i] if i < st_folk.size() else {}
 		var a := a0 + TAU * i / count + rng.randf_range(-0.25, 0.25)
@@ -500,7 +513,7 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 			face = (canopy.seats[i] as Dictionary).face
 		# Seat: a log across, a flat stone among the dead; small folk squat;
 		# the canopy folk sit on the deck.
-		if folk == "small_folk" or not canopy.is_empty():
+		if folk == "small_folk" or not canopy.is_empty() or not circle.is_empty():
 			pass
 		elif folk == "dead":
 			var stone := CreatureBodies.box(root, Vector3(0.6, 0.4, 0.5), seat_pos + Vector3(0, 0.2, 0), Color(0.42, 0.42, 0.44))
@@ -516,6 +529,10 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 		# Face the fire.
 		holder.basis = Basis.looking_at(face, Vector3.UP)
 		holder.set_meta("base_yaw", holder.rotation.y)
+		if i < circle.size():
+			FireCircle.sit(holder, circle[i])
+			seat_pos = (circle[i] as Dictionary).pos
+			a = atan2(seat_pos.z, seat_pos.x)
 		holder.set_meta("phase", rng.randf() * TAU)
 		sitters.append(holder)
 		# Tribal and northern folk keep their weapons at hand: a spear
@@ -828,8 +845,18 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 	var sitters: Array = camp.get_meta("sitters")
 	var near := camp.global_position.distance_to(pp)
 	_hitboxes(camp, Hitboxes.wanted_at(camp.global_position, pp))
+	# The fire circle's loops and the hood's notice (§CY.2, FireCircle)
+	# for the cloaked folk; the dead keep their old idle.
+	var cloaked: Array = []
+	for s in sitters:
+		if (s as Node3D).has_meta("stage"):
+			cloaked.append(s)
+	if not cloaked.is_empty():
+		FireCircle.animate(cloaked, camp.get_meta("fire"), _time, delta, pp, _circle_phase(camp), _circle_ctx(camp))
 	for i in sitters.size():
 		var s: Node3D = sitters[i]
+		if s.has_meta("stage"):
+			continue
 		var ph: float = s.get_meta("phase")
 		var yaw: float = s.get_meta("base_yaw")
 		var target := yaw + 0.35 * sin(_time * 0.3 + ph)
@@ -863,6 +890,30 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var s0: Node3D = sitters[0]
 		hud.say(s0.get_meta("speaker"), lines[randi() % lines.size()], 0.2, 4.0)
 		_murmur(camp, null, s0)
+
+
+## The phase of the day at `camp` (dawn, day, dusk, night) for the fire
+## circle's loops.
+func _circle_phase(camp: Node3D) -> String:
+	var d: Vector3 = world.dir_of(camp.global_position)
+	var h: float = world.local_clock(d).y
+	return FireCircle.phase_name(h, CubeSphere.latitude(d), world.days)
+
+
+## What the camp has for the circle's loops: food in the store (the bowls
+## come out), the fire below the store's feed line (feed_fire).
+func _circle_ctx(camp: Node3D) -> Dictionary:
+	var out := {"food_ok": true, "fire_low": false}
+	var key := str(camp.get_meta("key", ""))
+	if CampSim.instance != null and key != "":
+		var st := CampSim.instance.state_of(key)
+		if not st.is_empty():
+			out.food_ok = float(st.get("food", 0.0)) > 0.0
+	var fire: Node3D = camp.get_meta("fire")
+	var fst := FireStore.store_of(fire)
+	if not fst.is_empty():
+		out.fire_low = FireStore.units_now(fst) < float((CampSim.SIM.get("store", {}) as Dictionary).get("feed_fire_below_units", 3.0))
+	return out
 
 
 ## The camp's living (§BL): the store props follow the sim's state, and

@@ -4,6 +4,68 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (late night) — §CY.2–CY.4 the fire circle, its seats and the pipe; §CV smoke from every hearth, stacks, swifts, the wildfire plume (Claude Code)
+- **§CY.2 The fire circle** (`FireCircle`, `camps.json → sim.fire_circle`).
+  - Every camp's folk now sit in a ring round the fire, one seat each and a spare. That includes the elder and the hunter at the opening camp, with the spare seat on your side.
+  - One seated pose for every cloaked figure, with loops on the arms and hood, picked by the phase of the day's weights: watch the fire, warm hands, poke the fire (the fire flares and throws a burst of specks, §CZ), feed the fire (when it is below the store's feed line), the pipe, eat (only when the food store has food), hearth work, doze.
+  - Children play only the resting loops. Adults' loops (the jobs, the pipe) aren't a teen's.
+  - **Notice:** inside 7 m the hood, and only the hood, follows you (70° at most). When you leave it holds 2 s and goes back to the fire, and it won't notice you again for 40 s. A dozer doesn't notice.
+  - `tools/circle_check.gd` (seed 7731): 0 fails.
+    - At the opening camp (tropical forest people, rainforest) the seats are a root and a log in the stand's bark.
+    - At the road's camp (taiga people, krummholz, a ruin) they are a fallen block and rocks.
+    - Over ten minutes all seven loops played: 44 changes at the opening camp, 85 at the road's camp.
+- **§CY.3 Seats** come from `seats.by_biome`, with `at_site` on top (a ruin's fallen block, a cliff's ledge) and `by_people` instead for the canopy folk; two kinds at a fire at most.
+  - A log, a piece of driftwood or a limb seats two.
+  - Wooden seats take the bark of the stand's commonest tree within 40 m. Stone seats take the place's own rock; hummocks the ground's colour; mats the people's cloth.
+- **§CY.4 The pipe.** One adult at a fire at a time.
+  - In order: packs the bowl, leans in and lights it with a brand from the fire (a stick with a glowing end, in hand only while lighting; nobody strikes a spark, §BP), draws 3–6 times with rests between, taps it out.
+  - Each draw shows the bowl's ember, one glowing pixel that casts no light. Each breath out leaves 2–4 square puffs in the hearth smoke's pale blue-grey, rising and drifting with the wind; they never glow.
+  - The circle check saw 3–6 draws every time, never two pipes at once, never a child's.
+  - **What is in the bowl is still unnamed.**
+- **§CY.5 is not built:** §BV's jobs (the gatherers with loads) aren't built. A camp still has one figure walking out by day.
+  - So the dawn break, the dusk forming and the night keeper wait.
+  - Until then the folk sit in the circle at every hour, and the opening camp at dawn is the circle you wake into.
+- **§CV.1 The column** (`Smoke`, `shaders/smoke.gdshader`, `smoke.json → hearth`).
+  - Five camera-facing cards round the fire's spine: noise scrolled up, three flat bands on a 16 × 24 texel grid, a 4 × 4 dither cut-out, pale blue-grey, lighter and bluer with distance.
+  - On every camp hearth, the opening camp's, every rekindled old hearth and every nest's; never torches or lamps.
+  - The check passes:
+    - Flames 60 m × 4 m, low 30 m, embers an 8 m wisp, out nothing.
+    - It leans 8° per m/s of the weather's wind up to 70°, and stands straight under 1 m/s.
+    - On a still dawn it stops at 18 m and spreads flat.
+    - Rain over 1 mm/h halves it.
+    - At night only its fire-lit first 8 m shows, warm.
+- **§CV.2 Far hearths.** The living camps the world keeps (inhabited ruins, lived nests) within 3.2 km that aren't built are drawn from their fire's state in the sim (a camp nobody has visited burns, as its sim starts), at least 2 pixels wide.
+  - With about 160 hearths a world there were none within 3.2 km of seed 7731's spawn. From 1.5 km short of the road's camp, its column showed, burning.
+  - The search takes about 8 ms every half second.
+- **§CV.3 Stacks.**
+  - A barrow delve's first-room hearth and its heart each get a stone vent (`mound_vent`) on the mound above: its lip black with soot, its mouth dark, glowing faintly at night while the hearth below burns.
+  - Their smoke leaves from the vent's mouth at 0.7 of an open fire's (42 m); cold, there is none.
+  - Cave mouths and grottos carry a navy-black soot streak over the mouth, lit or not.
+  - Castle and tower stacks wait for their delves.
+- **§CV.5 Swifts** (`smoke.json → swifts`). A vent wide enough, in a climate that suits (8–30 °C, moisture 0.3+), may hold a flock of 12–60 (60 % of them, seeded); never over an overrun delve.
+  - They hunt over the ruin by day. At dusk, between the sun at 2° and −4°, they wheel tighter over the vent, then pour in one by one. They pour out at dawn.
+  - Light the hearth below and they leave at once. They come back after it has been cold 10 game days.
+  - Their chatter isn't built yet.
+- **§CV.6 The wildfire plume:** 400 m tall, 120 m wide, dark indigo, leaning with the wind, its base lit orange at night, seen to 7.5 km.
+  - The sim lays a wildfire's scar at once, so the plume stands over a fresh scar for 6 game hours (`Smoke.PLUME_GAME_H`, a first guess) and thins out.
+- `tools/hearth_smoke_check.gd`: 0 fails. `smoke_check.py --strict` and `fire_circle_check.py --strict`: 0 errors. All 28 world shaders build; `shader_varying_check.py` passes.
+- **Other checks:**
+  - `fire_breath_check` passes.
+  - `camp_check`'s 3 fails are the same before and after this pass.
+  - `hits_check`'s two hit-marker timings ("kill's X holds 0.40 s", sometimes the critical's) wobble between runs, with the smoke and circle on or off (0.30–0.38 s against 0.40). That check counts frames as 1/60 s each. Frames measured the same with `SMOKE=0 CIRCLE=0` as with both on (16.8–16.9 ms).
+  - Two things that would have cost frames were fixed along the way. The circle cached by place and time (DayCycle keeps one latitude's table, and asking it for several places a frame rebuilt it each time). The far-hearth search runs every half second, not every frame.
+- **For Mike to confirm (first guesses):**
+  - Hood notice: follows you inside 7 m; won't notice again for 40 s after you leave.
+  - Bark tint: the commonest tree within 40 m (§BW's per-piece tint isn't built, so "as the woodpile does" had nothing to copy).
+  - Smoke cards: five per column.
+  - Far hearths: at most 12.
+  - The plume's 6 game hours.
+  - The stack's night glow: dim orange.
+  - The puffs' size: 5 cm growing to 22 cm.
+- **Flags:**
+  - The player's own fires (laid from the ember carrier, or laid and lit) don't smoke: §CV's source list doesn't name them.
+  - §CU's ~160 hearths a world make far columns rare. §CV.2 counts on seeing the next hearth's column from about 3 km.
+
 ## 2026-10-03 (evening) — §DA–§DL, Mike's morning voice session written up: the wind you can see, the flare, the moon's two nights and the year, waking, light gives you away, the full-moon werewolf, the goblin band (in part), ruins, hidden places, the sealed scroll, tomes: design and data only (design chat; Mike, "lock it all in", then 17:07: one Claude Code prompt per idea)
 - **Design:** §DA–§DL sit before §BR under a session note (the fan dropped; seven things Claude said in the call that the doc corrects). Written after the afternoon's §CR–§CZ, so: §DA adds to §CV's smoke column (shelter under the crowns, gusts, the maths behind `far.seen_to_m` and `min_px`) and to §CZ's built specks (the gust field); §DF and §DG use §CU's lurker wording; §DE sits on §CY.1's "whatever hour it is" and the circle, and flags its one clash with §CW (the lost days move the clock). §BR gains the order: one idea at a time, the wind first.
 - **Data, none of it wired:** new `wind.json`, `senses.json`, `shrines.json`, `tomes.json`, `day_accents.json`; `look.json → lens_flare, shafts, moon_nights`; `hud.json → calendar, log_more`; `camps.json → wake_found`; `dread.json → full_moon`; `sky/day_cycle.json → full_moon_illumination` (and its README row); `ruins.json → overgrowth, haunt`; `audio.json → ruins`; `items.json → scroll, tome`. Every data file parses.
