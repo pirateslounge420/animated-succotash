@@ -4,6 +4,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 (evening) — §CN data: the tropical forests' kindling (design chat)
+- **`fuel.json → kindling`**: the four tropical forests' stop-gap is replaced with real lists, likeliest first. Rainforest: twigs, kapok seed down, palm leaves, leaves. Jungle: cogon grass, twigs, leaves, bracken. Dry forest: dry-season leaf litter, grass, twigs, kapok. Cloud forest: twigs, leaves, wax-palm leaves, beard lichen. Seed down gains kapok (*Ceiba*, sourced as very flammable); dead palm leaves gain *Mauritia*, *Socratea* and *Ceroxylon*. Nothing that burns damp is sourced there yet: dammar and bamboo were left out for want of a source that could be opened. `kindling_check --strict`: 33 kinds, 52 biomes, 0 errors.
+- **`tools/kindling_check.py`**: a fill fragment may now widen an existing kind's genera (`extend_genera`).
+
 ## 2026-10-02 — §CN overrun ruins, the torch swing and kindling: design and data only (design chat; Mike 11:56–13:38)
 - **§CN** in RECONCILIATION_2026-09-30: ruins the dark took stay overrun and are cleared by light, never a fight (§BA stands). Left click with a torch swings it and passes the flame both ways, replacing §AW's right-click lighting. A fire that is fully out needs kindling laid; embers don't. Folk come back to a cleared ruin. It also records Mike's "torch only, no flint and steel", as asked.
 - **Data, all `[NOT WIRED YET — design §CN]`:**

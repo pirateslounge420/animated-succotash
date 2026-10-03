@@ -23,6 +23,9 @@ What it checks
   Missing genus = warning (error with --strict). Litter kinds tied to genera
   (conifer needles) follow the same rule.
 - merged mode: every fuel.json biome has a kindling list.
+- fragment mode: a fragment reuses existing kinds by id and never redefines one; it may
+  widen an existing kind to more genera with extend_genera {kind id: [genera]}, which the
+  species gate honours (merged into fuel.json by hand, with a source).
 
 Plain Python 3, no packages. Exit code 1 on any error.
 """
@@ -151,6 +154,20 @@ def main():
         biomes = {k: v for k, v in frag.get("biomes", {}).items() if not k.startswith("_")}
         if not biomes:
             errs.append("fragment: 'biomes' is empty")
+        # A fragment may widen an existing kind to new genera (dead palm leaves from a
+        # tropical palm): extend_genera {kind id: [genera]}, merged by hand with a source.
+        ext = frag.get("extend_genera", {})
+        if not isinstance(ext, dict):
+            errs.append("fragment: extend_genera must be an object {kind id: [genera]}")
+            ext = {}
+        for kid, more in ext.items():
+            if kid not in kinds:
+                errs.append(f"extend_genera.{kid}: no such kind")
+                continue
+            if not isinstance(more, list) or not more or not all(isinstance(x, str) and x[:1].isupper() for x in more):
+                errs.append(f"extend_genera.{kid}: must be a non-empty list of capitalised genus names")
+                continue
+            kinds[kid] = {**kinds[kid], "genera": list(kinds[kid].get("genera", [])) + [g for g in more if g not in kinds[kid].get("genera", [])]}
 
     for kid, k in sorted(kinds.items()):
         if a.fragment and kid not in frag_kinds:

@@ -1368,14 +1368,14 @@ carried kindling gets wet, so a wet night is only beaten by the damp-burning kin
 
 **What the kindling fill found** (2 Oct; seven biome families by parallel agents, one each, every
 kind with its sources; merged into one block, `tools/kindling_check.py --strict`: 33 kinds, 52
-biomes, 0 errors; the tropical forests carry a stop-gap of twigs, leaves and grass until their
-own fill lands):
+biomes, 0 errors; the tropical forests were filled by hand that evening from sources that
+could be checked quickly: kapok down, palm leaves, grass and dry-season litter):
 - **Rain-day kindling is rare, as in life.** Only birch bark, fatwood and Douglas-fir pitchwood
   burn damp. In 25 of the 42 biomes that offer fuel none of their trees grows in the game, so
   there a wet night means no new fire: the tundra, alpine tundra, páramo, puna and tepui; the
   temperate deciduous and floodplain forests; the prairies, steppe, savanna and thorn scrub; the
   hot desert and oasis; the swamp, marsh and fen; the beach, mangrove, estuary and lagoon; and
-  every tropical forest for now.
+  every tropical forest (dammar resin or bamboo shavings may change that once a source is found).
 - **The real local tinder comes from plants the game lacks there:**
   - birch: the taiga has only the shrub resin birch; birch is missing altogether from the
     temperate deciduous and floodplain forests, krummholz and the bog;
