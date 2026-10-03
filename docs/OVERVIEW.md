@@ -10,7 +10,7 @@ it stands. Feedback is welcome on anything. Updated 1 Oct 2026, after the ambien
 
 A slow, first-person walk across a planet one tenth the size of Earth, with real biomes, real
 seasons and real plants. Old roads lead between ruins and living camps. Fire is something you
-carry, never make. Every ruin goes down into the dark, and the dark is the only enemy.
+carry, never make. Every ruin goes down into the dark, and what lurks there is the only enemy.
 
 ## The thesis
 
@@ -59,7 +59,9 @@ as rare finds in ruins.
 - **Scale:** a walkable cube-sphere planet **4,000 km around (1/10 Earth)**, with heights at
   1/10 too (Everest would stand about 900 m). The continents are laid out on a 400 km map and
   built ten times wider. A biome region runs from tens to hundreds of kilometres across, and
-  walking around the planet would take about 260 hours.
+  walking around the planet would take about 260 hours. *(Locked 3 Oct, not built yet: the planet
+  moves to **1/100 Earth, 400 km around**, with everything you can stand next to at its real size,
+  heights still 1/10, and climbs that take real time; walking round it takes about 26 hours.)*
 - **Time:** a day lasts **144 real minutes**, one tenth of a real day, so a game hour is six
   real minutes. The 23.5° tilt gives real day lengths by latitude and season, with polar
   night and midnight sun. A 365-day year passes in 36.5 real days.

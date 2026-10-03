@@ -2,7 +2,7 @@
 
 This repo is **the ambient open world**: a slow, first-person walk across a procedural planet
 at 1/10 Earth scale. Old, overgrown roads lead between ruins and living camps; fire is carried,
-never made; the dark is the only enemy; and every ruin is designed to lead down into a delve
+never made; what lurks in the dark is the only enemy (§CU); and every ruin is designed to lead down into a delve
 (§CJ, not built yet). Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.
 
@@ -19,6 +19,10 @@ would be ~900 m), and a **144-minute day** (1/10 of a real day). The geography i
 400 km map (`PlanetConst.GEO_CIRCUMFERENCE_M`) and built ten times wider (`GEO_SCALE`). That
 400 km figure is the layout, not the planet; 1/100 Earth is gone everywhere. Play runs on the
 full planet. The 40 km postage stamp is only for the checks (`STAMP=1`).
+
+**Design §CR (3 Oct) moves the planet to 1/100 Earth: 400 km around**, the layout built at its own
+size (`GEO_SCALE` 1), with things at true size, heights still 1/10, the day still 144 minutes, and
+slopes walked at Tobler's pace. It isn't built yet: until it is, the numbers above are what runs.
 
 ## Two games
 The momentum kit (wall jump, cling, swing, roll, 120 km/h chains), momentum combat, the super

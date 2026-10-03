@@ -5,7 +5,7 @@
  "size": "small",
  "status": "researched",
  "kind": "water",
- "notes": "River and lake margins: willow and alder on banks, cattail/reed/bulrush emergents in the shallows, water lilies and floating plants on still water, and submerged pondweed/water milfoil below. Drawn on temperate Eurasia and North America with tropical lakes (Amazon, African Rift) for lotus and giant water lily; underwater species flagged.",
+ "notes": "River and lake margins: willow and alder on banks, cattail/reed/bulrush emergents in the shallows, water lilies and floating plants on still water, and submerged pondweed/water milfoil below. Drawn on temperate Eurasia and North America; underwater species flagged. Warm, still, shallow, sunny water is the niche of the sacred lotus (on Earth native to Asia and northern Australia, not the Amazon), the giant Victoria water lily (the Amazon) and the water lilies of the Nile and the Maya lowlands; none is in the catalogue now, and under design §CS each land's warm ponds would get their own community.",
  "climate": {
   "temp_c": [
    0,

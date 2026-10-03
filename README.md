@@ -11,8 +11,8 @@
 A slow, first-person walk across a procedural cube-sphere planet: **4,000 km around, one
 tenth of Earth**, with heights and time at the same 1/10. Old, overgrown roads lead between
 ruins and living camps. You wake with nothing; the torch is the first tool, and fire is
-carried, never made. The dark is the only enemy, and every ruin is designed to go down into
-it (§CJ, not built yet). There's no crafting: the camps' makers work what you bring. You
+carried, never made. What lurks in the dark is the only enemy, and every ruin is designed to go down into
+the dark (§CJ, not built yet). There's no crafting: the camps' makers work what you bring. You
 wander, watch the weather roll in, find what lives where, and get back to a fire before
 night. The look is early-2000s console 3D (1999–2004),
 pixelated and saturated. The momentum movement and the bow-and-spear combat have moved to a

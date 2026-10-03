@@ -1457,6 +1457,11 @@ ember."* Claude Code built it that night and asked for it to be recorded here.
 - **Data:** `torch.json → ember` holds the code's own defaults, so nothing changes on screen.
   `light.flicker_hz`, `flicker_amount` and `wind_flicker_scale` are no longer read;
   `sprint_flicker_scale` still is (sprinting feeds the coal air).
+- **Amended the same afternoon (built `b7ebed5`).** Mike: *"less like a ball on the end and more
+  like a burned end of a stick: it shouldn't be rounded."* The coal is gone. The head is now the
+  stick's own last few centimetres: six flat sides, black char with grey ash flecks, and hot
+  cracks that thicken toward the tip, which glows most. It still breathes with the light. In the
+  data, `ember.texels_m` (texels a metre) replaces `ember.texels`.
 
 ## CQ. Every torch is from somewhere; a carried coal brings a dead torch back — LOCKED (3 Oct, 01:30–02:25, Mike)
 
@@ -1566,6 +1571,227 @@ gaps are plant-data jobs and Mike's call, as §CN's were:
 **Proposed order (designer to confirm):** torch kinds and the camps' bundles → the circle in
 the dread meter → the coal relights a torch. Candlenut strings wait for their tree.
 
+## CR. The world at 1/100 Earth: shrink the gaps, not the things — LOCKED (3 Oct, voice to 13:01, Mike)
+
+Mike (voice): *"At one one-hundredth of the size, we could potentially have it be ambitious
+enough for us to actually fill the whole planet, while one tenth, I feel like that might be for
+another game."* *"Just because it's [smaller] doesn't mean everything else should get scaled
+down... while everything will get closer together, the actual size of things should not
+change."* On mountains: *"it shouldn't change... the actual angles that you have to take to get
+to the top. And some mountains might be above the clouds, as in real life."* On biomes:
+*"everything in each biome should still essentially cover its same amount of ground relative to
+how much it does in real life, with maybe the super small niche ones given a little bit more
+extra room."* On time: *"I want it to feel like it takes about one tenth of the time instead of
+one hundredth... I don't want you to just be able to climb a mountain in a snap,"* and *"some are
+sheer walls, but a lot are also climbable."* Locked in text: *"Lock it in, my boy"* (13:01).
+Data: `data/world_scale.json` (new), not wired. Numbers: `tools/reference/world_scale_reference.py`.
+
+**1. The planet is 1/100 Earth: 400 km around** (radius about 63.7 km).
+- 400 km is the size the geography is laid out on (`PlanetConst.GEO_CIRCUMFERENCE_M`). Its
+  continents, mountain belts and climate were tuned at 400 km, and the 1/10 planet stretched
+  them ten times sideways. At 1/100 the layout is built at its own size (`GEO_SCALE` 1).
+- The size is a data value (`world_scale.json → planet.circumference_m`), so the two sizes can
+  be compared in play.
+
+**2. Things stay true size.** Everything you can stand next to keeps its real size: you, the
+folk, creatures, plants, ruins and camps. Only the gaps between things shrink. Walking scale
+already works this way.
+
+**3. Heights stay at 1/10, and the sky with them.** An Everest-class summit is about 885 m.
+Altitude bands, the lapse rate and the cloud layers keep following `HEIGHT_SCALE` as now. The
+low cloud deck sits at 50–200 m (`CloudLayers`), so a great summit stands well above it, and
+mountain weather can still wrap the flanks.
+
+**4. Mountains keep real angles where you climb them, and some faces are sheer.**
+- **The great ranges:** a handful per world (first guess 4–7), with summits of 500–885 m
+  (5,000–8,850 m Earth-equivalent). Each one is an expedition.
+- **A way up:** every great summit, or its high pass, has a walkable route (ridge, valley or
+  switchbacks) averaging about 22° and never steeper than 35°.
+- **Sheer faces:** cliffs of 60° and steeper on part of the flanks (first guess 15%). This game
+  has no wall climbing (§AT), so a cliff is a barrier: it blocks and channels you, which makes
+  the corridor shot (§BB). Ground steeper than 45° can't be walked up.
+- **The one exception to honest shares:** at 1/10 heights on a 1/100 map, real angles need
+  room, so the great ranges may take up to about three times their honest share of ground.
+  Everything else keeps its honest footprint.
+
+**5. Climbing takes time: Tobler's hiking function.** Walking up and down slopes slows the way
+real walkers slow, scaled to the flat walk: factor = exp(−3.5 × |s + 0.05|) / exp(−3.5 × 0.05),
+where s is rise over run, with no downhill boost. Sprinting slows the same way. At the ambient
+walk of 4.3 m/s:
+
+| grade | share of flat speed |
+|---|---|
+| 10° | 54% |
+| 20° | 28% |
+| 30° | 13% |
+
+- An 885 m summit by a 20° route takes about 36 real minutes, which is 6 game hours: leave at
+  first light and you top out around midday. By a 25° route it takes about 7 game hours.
+- A 500 m summit takes about 3.5 game hours.
+- So climbs cost Earth-like game time, a tenth of Earth's real time, as Mike asked. Open flat
+  ground is where the compression lives: 10 km takes about 39 real minutes (6.5 game hours),
+  and walking all the way round the planet takes about 26 real hours.
+
+**6. Biomes keep their honest share of the ground.**
+- Each land biome covers its Earth share of land.
+- A biome that would get fewer than two places gets two, each at least about 1 km² (big enough
+  to walk around in), so the small niche biomes can be found.
+- Order: the engine first reports what the generator makes at 1/100. Then Claude (chat) fills
+  Earth's reference shares, with sources, into `biome_shares.earth_reference`, and the
+  generator is tuned to them.
+
+**7. What it costs: the horizon (flagged for Mike).** On a 400 km planet the ground curves away
+quickly. In the voice session the horizon was described as "a few kilometres". That is only
+true from high ground.
+
+| | 1/100 (this) | 1/10 (built now) | Earth |
+|---|---|---|---|
+| horizon from eye height | 450 m | 1.4 km | 4.5 km |
+| a 30 m tower shows from | 2.4 km | 7.6 km | 24 km |
+| a 100 m hill shows from | 4.0 km | 12.7 km | 40 km |
+| an 885 m summit shows from | 11 km | 35 km | 111 km |
+| the view from that summit | 10.7 km | 33.6 km | 106 km |
+| the ground drops over 1 km | 8 m | 0.8 m | 8 cm |
+
+- Long views still come from heights and toward tall landmarks, and things rise over the curve
+  as you walk toward them.
+- On flat ground, the curve ends the view at a few hundred metres, not fog. That tightens the
+  locked look line "long view distance" on open ground.
+- Mike judges it in play. The size is one data value if it needs to go back.
+
+**Unchanged:**
+- the 144-minute day and the year;
+- everything at walking scale;
+- old growth (§CS);
+- the dev postage stamp (Claude Code's call whether it's still needed).
+
+**Supersedes or amends:**
+- **§I and the 29 Sept lock of 1/10 Earth:** distance goes to 1/100; heights and time stay 1/10.
+- **27 Sept's "biome patch size stays about 10 km":** the patches follow the layout.
+- **The Project brief's "a walkable sphere at 1/10 Earth (4,000 km around)":** Mike edits that
+  line himself.
+- **The look line "long view distance":** see point 7.
+
+## CS. Plants live in communities, and every community has one home — LOCKED (3 Oct, 12:30 and voice, Mike)
+
+Mike (12:30): *"it could be on other parts of our world but only if it mimics the specific micro
+niche of the biome of which it's found."* By voice: *"just because a species could spawn
+anywhere, it doesn't mean it should be scattered all throughout the planet... we should also take
+into consideration their companion plants... so different biomes can be reminiscent of real-life
+biomes, with the same types of plants that grow with each other,"* and *"each of those plants
+before human intervention had their own communities and their own niches, and they weren't found
+anywhere else on the planet."* Data: `habitat.json → communities`, not wired.
+
+**1. Communities, not climate matches.**
+- A plant grows only as a member of a community: an association, with its dominant, companion,
+  ground and catalogue lists. The community places as a group.
+- Each member still sits where its own bands, soil, light, water and nest fit. That is the
+  micro-niche, and it is why a lotus would stand only in the warm, still shallows of its land.
+- Nothing places on its climate numbers alone.
+- **The leak Mike described is real.** Catalogue species (Amorphophallus, Trichocereus,
+  Cannabis and the 1 Oct additions) place today by their own bands, the biome gate and the
+  realm, and only 8 of the 203 associations list catalogue species.
+  - A data fill attaches each one to the communities it really belongs to.
+  - Until the fill lands, an unattached catalogue species keeps its current placement, and the
+    check lists it.
+
+**2. One home per community.**
+- Before the player plants anything (§CT), each community is native to one land of the planet
+  (a `RealmMap` province) and grows nowhere else.
+- Each land's stretch of a biome gets its own community, and no community repeats in two lands.
+  A far land always shows a different forest, desert or pond from the one you came from, and a
+  pine forest isn't sprinkled across the world.
+- The 1/100 planet (§CR) helps, because each biome has only a few stretches ("a couple to a few
+  per biome").
+
+**3. Dealt by niche, not Earth's map.**
+- A community's home is a land where its niche exists: biome, temperature and frost, rain and
+  its season, altitude, soil, sun or shade, water depth and flow for water plants, and its nest.
+  The seed deals the homes.
+- Communities from the same part of Earth are dealt together where they fit, so a land keeps one
+  character (an Andean puna beside Andean cloud forest). Even so, any community can be native to
+  any land whose niche matches.
+- This answers §CM's open question: niche over map.
+- *Keeping lands coherent is Claude's call; Mike may prefer a free mix.*
+
+**4. Short biomes.**
+- When a biome appears in more lands than it has communities, the extra stretch takes the
+  community of the nearest land that has one (it spread across the border) until a fill adds
+  more.
+- The check lists the short biomes, and parallel agents add real Earth communities for them.
+  Earth has plenty: the taiga alone has larch, spruce, pine and stone-birch forests.
+
+**5. Old growth, reaffirmed.** It was locked 28 Sept and is built: `stand.json` mode
+`old_growth` puts 82% of canopy trees in the top 30% of their size band, makes a quarter of
+emergents giants, and keeps a thin young cohort in the gaps. Mike (voice): *"there shouldn't
+necessarily be very very small things all the time... on Earth a lot of these trees are pretty
+new, because all the old growth got cut down."* If small plants still read as too many in play,
+the young share comes down.
+
+**6. The freshwater note** (`37_freshwater.json`) put lotus on "tropical lakes (Amazon, African
+Rift)". That was wrong: the sacred lotus is Asian and northern Australian, and the Amazon's
+pond giant is the Victoria water lily. The note now describes the niche instead.
+
+**Supersedes or amends:**
+- **§AA's realm gate:** the provinces stay; communities are now endemic to one land.
+- **§CA:** the biome gate stays, and the community decides what grows.
+- **§CM's open question:** answered by point 3.
+- **The Project brief's "every species grows only where it really grows":** now "every
+  community lives where its niche is, in one land". Mike edits that line himself.
+
+## CT. The human hand: carry plants and water them — LOCKED as an optional side layer (3 Oct, voice, Mike)
+
+Mike (voice): *"it would be cool... to be able to start molding the world... by being able to
+collect cuttings from the proper plants, which can actually grow from cuttings, and then seeds,
+fruits, vegetables... or a tuber, like an amorphophallus... and potentially try to mimic the
+habitat... maybe you could irrigate some stuff,"* and *"I would like to have the cultivation type
+thing living within it, as a side thing that you can do if you wanted to. Not necessary."*
+
+It builds on 30 Sept (seeds, cuttings and tubers are collected and planted where soil and water
+allow, and plantings persist and grow while you're away) and on §BP's irrigation rule. Data:
+`items.json → carried_plants`, not wired.
+
+- **Optional.** No other system needs it. The player is the human hand of §CS, and planting is
+  the one way a plant lives outside its home.
+- **What you carry:**
+  - seeds, from plants in seed, fruits and vegetables;
+  - cuttings, only from species that really root from cuttings;
+  - tubers and bulbs, such as an Amorphophallus corm or taro.
+
+  A plant-data fill gives each species a `propagation` list (seed, cutting, tuber, bulb,
+  division). Taking a sample is built; planting isn't yet.
+- **A planting lives if the plot fits its niche** (§CS's list) and fails otherwise. The log says
+  why: too cold, frost, too dry, too wet, the soil, or too shady.
+- **Water is the one thing you can change.** Watering counts a plot one moisture band wetter
+  (first guess). It uses §AB's soil water once that's built; until then, §BP's rule applies,
+  and a plot by water or a dug channel counts as watered. Temperature, frost and altitude can't
+  be changed; you choose them by where you plant, such as higher up a slope or in a sheltered
+  hollow.
+- **Open for Mike:** whether a planting spreads on its own (goes wild) from your plot. First
+  guess: no.
+- **Order:** after §AB's soil water, and after §CS.
+
+## CU. A few hearths in every biome, no two alike; the danger is what lurks in the dark — LOCKED (3 Oct, voice, Mike)
+
+**Hearths.** Mike: *"each community should also feel different too. So each hearth should be
+unique... a couple to a few per biome."* Data: `camps.json → hearths`, not wired.
+- Every land biome holds at least two hearths (living camps and the old hearths of ruins
+  together). Big biomes get more, in proportion to their ground (first guess one per 150 km²).
+- The sites pass never gives two hearths the same people, nest, ruin kind and plant community.
+  With §CS, hearths in different lands always differ in their plants.
+
+**The wording of the pillar.** Mike: *"dark necessarily isn't the antagonist. It's the things
+which lurk in the dark."*
+- The pillar now reads: what lurks in the dark is the only antagonist. The dark is where it
+  lives, and light keeps it back.
+- Nothing changes in play. §BA's dread and §CN's overrun ruins stand, and the cloaked shape with
+  no species is a lurker, not the dark itself.
+- Reworded: `CLAUDE.md`, `docs/OVERVIEW.md`, `README.md` and the `dread.json` help. Mike edits
+  the Project brief's line himself.
+
+**Untouched:** "no health-bar fight". Health pips, wounds and the blood trail are still being
+talked through (2–3 Oct) and are not locked.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1653,3 +1879,19 @@ not wired: `torch.json → kinds` and `ember_relight`, `dread.json → torch_cir
 `techniques.json` params (`tools/torch_kinds_check.py` checks them). The engine order: **torch
 kinds and the camps' bundles** → **the circle in the dread meter** → **the coal relights a
 torch**. Candlenut strings wait for their tree.
+
+**Added 3 Oct, afternoon (§CR–§CU):** the data is in and none of it is wired: `world_scale.json`
+(new), `habitat.json → communities`, `camps.json → hearths` and `items.json → carried_plants`.
+The proposed engine order:
+1. **The planet to 1/100**, with `circumference_m` read from data and `GEO_SCALE` 1. Measure
+   before tuning anything: slope shares, the great ranges and their routes, biome shares and
+   the horizon.
+2. **Tobler's pace on slopes.**
+3. **The great ranges:** routes, cliffs and the footprint exception.
+4. **Communities:** the placer draws from the stretch's community, homes are dealt per land,
+   and catalogue species go through communities. This waits on Claude's attach fill, so it is
+   built with the fallback.
+5. **Hearths per biome.**
+6. **Carried plants**, after §AB.
+
+Biome-share tuning waits on Claude's Earth reference fill.

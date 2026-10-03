@@ -8,7 +8,8 @@
   "kinds": "Every kind of item: its name on the screen, the little picture drawn for it (icon), and which equipment slot it's worn in (slot; none = it's carried). color is the picture's main color where the item doesn't bring its own (a plant sample takes its species' colors).",
   "sample_part": "What E on a plant takes, by the plant's shape: a cutting, a seed head, a leaf, or a cut column (a cactus: its own kind of item). Shapes not listed give a cutting.",
   "bundle_genera": "Plants of these genera give a bundle of herbs (cut stems, tied) instead of a sample. It still carries the species.",
-  "starting_kit_ambient": "Design 30 Sept \u00a7AW: what you wake with in the ambient movement profile - nothing worn, nothing laid beside you; by_the_fire is what the camp keeps (a bundle of unlit torches). starting_kit is the shinobi profile's."
+  "starting_kit_ambient": "Design 30 Sept \u00a7AW: what you wake with in the ambient movement profile - nothing worn, nothing laid beside you; by_the_fire is what the camp keeps (a bundle of unlit torches). starting_kit is the shinobi profile's.",
+  "carried_plants": "[NOT WIRED YET \u2014 design \u00a7CT] Carrying plants and watering them, an optional side layer (Mike, 3 Oct): nothing else in the game needs it. kinds: what can be carried and planted: seeds (from plants in seed, fruits and vegetables), cuttings (only from species whose propagation list has cutting), tubers and bulbs (Amorphophallus, taro). propagation_field: the per-species list (seed, cutting, tuber, bulb, division) a plant-data fill adds. A planting lives if the plot fits its niche (habitat.json communities.niche_keys) and fails otherwise (fails_when), with a log line that says why. watered_moisture_bands: watering counts a plot this many moisture bands wetter; it can't change temperature, frost or altitude, which the player picks by where they plant. watering: \u00a7AB's soil water when built; until then \u00a7BP's rule (a plot by water or a dug channel counts as watered). spreads_on_its_own false: a planting stays where it was put (first guess; open for the designer). log: the lines it adds (\u00a7AZ)."
  },
  "carry_slots": 10,
  "sample_reach_m": 2.2,
@@ -172,5 +173,36 @@
     "count": 3
    }
   ]
+ },
+ "carried_plants": {
+  "optional": true,
+  "kinds": [
+   "seed",
+   "cutting",
+   "tuber",
+   "bulb"
+  ],
+  "propagation_field": "propagation",
+  "fails_when": [
+   "temp",
+   "frost",
+   "altitude",
+   "soil",
+   "light",
+   "water"
+  ],
+  "watered_moisture_bands": 1,
+  "watering": "soil_water_when_built",
+  "spreads_on_its_own": false,
+  "log": {
+   "took": "It took.",
+   "too_cold": "Too cold here for it.",
+   "too_hot": "Too hot here for it.",
+   "frost": "The frost killed it.",
+   "too_dry": "The ground is too dry for it.",
+   "too_wet": "The ground is too wet for it.",
+   "wrong_soil": "It doesn't take to this soil.",
+   "too_shady": "Too shady here for it."
+  }
  }
 }

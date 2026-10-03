@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (afternoon) — §CR–§CU: the world at 1/100 Earth, plant communities with one home each, carrying plants, a few hearths per biome: design and data only (design chat; Mike, voice to 13:01)
+- **§CR, the world at 1/100 Earth:** 400 km around. The layout is built at its own size (`GEO_SCALE` 1); things stay true size, heights stay 1/10, and the 144-minute day stays.
+  - A handful of great ranges with walkable routes (about 22° on average, 35° at most) and sheer faces (15%, first guess). They may take up to three times their honest ground.
+  - Tobler's hiking pace on slopes, so an 885 m summit takes about 6 game hours.
+  - Honest biome shares, with a floor of two places for niche biomes.
+  - Data: `data/world_scale.json` (new, not wired). Reference maths: `tools/reference/world_scale_reference.py`.
+  - **For Mike:** the horizon from eye height on the 400 km planet is about 450 m (1.4 km now). It's flagged in §CR.7; the size is one data value if it needs to go back.
+- **§CS, communities:** a plant grows only as a member of its community, and each community is native to one land (a RealmMap province), dealt by niche, not Earth's map.
+  - Catalogue species go through communities. Only 8 of 203 associations list any yet, so a fill comes next.
+  - Old growth reaffirmed (built).
+  - The freshwater note's "Amazon lotus" is fixed.
+  - Data: `habitat.json → communities` (not wired).
+- **§CT, carrying plants and watering them:** optional. Seeds, cuttings (only from species that root from them) and tubers; a planting lives if the plot fits its niche, and watering counts one moisture band wetter. Data: `items.json → carried_plants` (not wired).
+- **§CU, hearths:** at least two per land biome, more by area, no two alike (`camps.json → hearths`, not wired).
+  - The pillar now reads "what lurks in the dark is the only antagonist" (CLAUDE.md, OVERVIEW, README, the `dread.json` help).
+  - CLAUDE.md, WORKING_AGREEMENT, OVERVIEW and DESIGN.md note that 1/100 is designed, not built.
+- **§CP:** the burnt end recorded. `torch.json → ember.texels` swapped for `texels_m` (150), as Claude Code asked.
+
 ## 2026-10-03 — The torch's head is the burnt end of the stick, not a ball (Mike, 3 Oct; §CP)
 - Mike: "less like a ball on the end and more like a burned end of a stick: it shouldn't be rounded". The lumpy coal is gone. The head is now the stick's own last few centimetres (`Torch._burnt_end_mesh`). It has six flat sides and is as thick as the stick, narrowing a little to a jagged, broken, slightly sunken tip. Held torches use 6 cm and planted torches 9 cm.
 - `shaders/torch_ember.gdshader` paints it black char with grey ash flecks. Hot cracks show through, more of them toward the tip, and the tip glows most, in the fire's flat colour bands. It still breathes with the torch's light (same `ember_glow` pulse), and its sparks still rise from the tip. Lamps keep their flame.

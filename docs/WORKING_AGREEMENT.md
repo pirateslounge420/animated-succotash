@@ -8,7 +8,8 @@ Both agents read it at the start of a session: Claude Code gets it automatically
 The designer can change any line.
 
 The project is **plain Godot 4.3** (design 30 Sept doc §CI), and the planet is **1/10 Earth**
-in distance, height and time (4,000 km around; §I).
+in distance, height and time (4,000 km around; §I). Design §CR (3 Oct) moves distance to 1/100
+(400 km around; heights and time stay 1/10); not built yet.
 
 ## Sources of truth, in order
 1. **`docs/design/RECONCILIATION_2026-09-30.md`**: the ambient cut and everything decided

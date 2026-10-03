@@ -5,7 +5,8 @@
 > file wherever they differ, in particular:
 > - **Scale and time:** the planet is **1/10 Earth** in distance, height and time: 4,000 km
 >   around, Everest ~900 m, a 144-minute day with 23.5° tilt (§I). The old 1/100 sizing
->   (400 km) is gone.
+>   (400 km) is gone. *Design §CR (3 Oct) brings 400 km back as the planet (1/100 Earth, heights and
+>   time still 1/10); not built yet.*
 > - **The game:** slow, first person and empty-handed. The momentum kit, bow and spear and
 >   the shinobi went to a separate ninja game (§AT). You start with nothing and the torch is
 >   the first tool (§AW).
