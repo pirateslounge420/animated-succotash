@@ -4,6 +4,43 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 — The plants fit every Godot from 4.3 on; the game says what it runs on; the torch's head is an ember (Mike, 3 Oct)
+- **Plant shader** (`foliage.gdshader`, ahead of §BR as asked; §CG):
+  - Its 19 varying slots are packed into 8: six flat vec4s for the values that are the same on every corner of a triangle (season, leaf, leaf size, glow pick, material, moss, sport, cluster key, genes, instance, dead, dead limb, the far picture's profile and base) and two smooth vec4s (position and normal in the plant's frame, sway).
+  - `world_pos` is rebuilt in `fragment()` from `VERTEX` and `INV_VIEW_MATRIX`. The old names are `#define`s, so the rest of the shader reads as before. `docs/parked/foliage_derivatives.patch` was left out.
+  - `tools/shader_varying_check.py`: exit 0 (foliage 8, every shader within the house limit of 12). It now sits with the walkabout as an end-of-pass check (HOW_TO_RUN).
+- **Proof, lavapipe Forward+, on scratch copies of the repo** (the newer engine never touched the working tree):
+  - **Before, Godot 4.7.2:** `SHADER ERROR: Too many varyings used in shader (33 used, maximum supported is 32)` at `foliage.gdshader`, and every plant drew grey (whole-quad cards).
+    - It was 33, not the 34 expected: on this machine 4.7.2 keeps 14 slots, not 15. The Python check's 4.6/4.7 column assumes 15, so it is one high there, on the safe side.
+  - **After:** no shader errors on 4.3 or 4.7.2, and real leaves in the opening-camp frame on both.
+  - **On 4.3, before against after:** a mean difference of 2.3 levels over the upper frame, with 0.9 % of pixels more than 32 apart (wind and the folk). They match.
+  - **4.7.2 against 4.3 after:** the same scene. The trunks draw a little darker on 4.7.2 (its lighting and shadows).
+  - The labelled harness frames went to Mike in chat. Every lavapipe run ends "signal 11" at shutdown, after the work: that crash was already there and isn't the game's.
+- **What it runs on** (`EngineReport`, new):
+  - F3's last two lines, and the log's first line each session, show the Godot version, renderer, driver and GPU. Seen on lavapipe: "Godot 4.3-stable (official) · Forward+ · Vulkan 1.4.318 · llvmpipe (LLVM 20.1.2, 256 bits)" and the same for 4.7.2. Godot 4.3 can't report its live driver, so it shows the one the project asks for on that OS (Vulkan; on a Mac "Vulkan (MoltenVK)"). 4.4 and later report the driver they actually run (Vulkan or Metal).
+  - At boot, every spatial shader in `res://shaders` that declares uniforms but lists none failed to build: one `push_error` each, and the F3 line "Shaders: all 24 built" or "Shaders: foliage FAILED (Godot 4.7)".
+  - Proved on 4.7.2 with the old plant shader: the push_error, "Shaders: foliage FAILED (Godot 4.7)" on F3, and the same at the end of the log's first line. With the new shader: "all 24 built" on both versions.
+  - The checks that read the world's line in the log now use `GameLog.world_line()`, because the engine line comes first.
+- **Headless checks under 4.7.2** (all 48 `tools/*_check.gd`, SEED=7731, side by side with 4.3; listed, not fixed):
+  - Same on both versions:
+    - 22 give 0 fails on both.
+    - 14 give the same fails on both: `camp`, `climb`, `fire_wall`, `fruit`, `growth`, `nest`, `new_world` (12), `no_import`, `play_fixes` (13), `stand`, `strike`, `super`, `tech` (12) and `tool`. These are old or stale checks; several pin seed 42 and were run here with 7731.
+    - 4 time out on both (`first_camp`, `hits`, `leaf_lod`, `stamp` / `wanderer` print no RESULT line).
+  - **Different on 4.7.2:**
+    - `aroid_world_check`: 4.3 stops on a script error (out-of-bounds index 16); 4.7.2 runs on and fails 1 ("found Amorphophallus growing somewhere tropical").
+    - `growth_world_check`: 4.3 stops on a script error (index 17); 4.7.2 fails 2 (adds "the HUD names it by its stage").
+    - `inventory_check`: 6 fails on 4.7.2 against 5 on 4.3 ("E on a plant took a sample": 0 plants against 1).
+    - `realm_check`: 4.3 stops on a script error (`state` on a Dictionary); 4.7.2 times out after failing "no catalogue plant outside its realm gate" (75 bad).
+  - No check failed on 4.7.2 because of a shader or the renderer.
+- **The torch's head is a glowing ember** (Mike, 3 Oct: "instead of the current fire animation, more of a glowing ember"; `shaders/torch_ember.gdshader`, `Torch.ember_node`):
+  - The held and planted torches carry a small lumpy coal: a char crust with the fire's colour bands in its cracks, on a coarse texel grid, crawling slowly, with the fire's couple of single-pixel sparks.
+  - The light keeps its energy, range and colour but breathes slowly with the ember (`Torch.ember_glow`): brighter sprinting or in wind, lower and slower guttering. The coal's glow follows the same pulse.
+  - The lamps keep their flames.
+  - Harness frames (night held, night planted, day held) went to Mike.
+  - **For Mike:** this replaces §BZ's "one shader, every fire" for torches.
+  - **For Claude (chat):** record it; a `torch.json ember` block (texels, crawl, pulse_hz, pulse_amount, shimmer_hz, shimmer_amount, air_brighten, gutter_glow; the code's defaults stand in); `light.flicker_hz` and `flicker_amount` no longer drive the torch.
+- **Not changed:** the Godot version named in CLAUDE.md, HOW_TO_RUN and §CI (Mike's call, pending).
+
 ## 2026-10-02 (night) — Mike's 22:52 play: the plants are still grey after §CG. The plant shader uses more varying slots than Godot 4.4 and later allow (design chat; §CG; `tools/shader_varying_check.py`)
 - **What the frame shows** (play, Mike's Mac, F3 on, world 1972737865, the same spot as 1 Oct 23:11: Jungle, 12.7°N 140.1°W):
   - §CG works: "World textures: 9 from disk", the ground's tiles are back, and it is Day 1 · 13:49.
