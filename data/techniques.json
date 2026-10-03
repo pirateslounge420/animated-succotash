@@ -2,7 +2,7 @@
  "_help": {
   "about": "Techniques (design 30 Sept \u00a7BO\u2013\u00a7BP): verbs learned from peoples, permanent and weightless. taught_by lists people ids (data/peoples). player_can: the player performs it in the world; otherwise it is a camp thing that raises the camp's ceilings. first_to_build marks the one to implement first. Restart after editing.",
   "category": "light | fire | fuel | food | water | materials | shelter | marks | travel",
-  "params": "Numbers the engine reads for the techniques built as verbs (fishing_line, coppice, resin_torch, ember_carrier, fat_lamp): first guesses by Claude Code 1 Oct, the designer owns them. ember_game_h: a live coal lasts this many game hours in the carrier before it goes cold. fat_lamp burn_game_h: the lamp burns this long once lit."
+  "params": "Numbers the engine reads for the techniques built as verbs (fishing_line, coppice, resin_torch, ember_carrier, fat_lamp): first guesses by Claude Code 1 Oct, the designer owns them. ember_game_h: a live coal lasts this many game hours in the carrier before it goes cold. fat_lamp burn_game_h: the lamp burns this long once lit. kind (fatwood, candlenut): the torch.json kinds entry the technique makes, and genera, where that kind's plant must grow (design \u00a7CQ, not wired). relights_torch (ember_carrier): the coal can be blown into an unlit torch (torch.json ember_relight, \u00a7CQ, not wired)."
  },
  "techniques": [
   {
@@ -40,7 +40,14 @@
    ],
    "verb": "split resin-soaked heartwood out of an old pine stump",
    "unlocks": "fatwood splints: a hot, long-burning torch found not made",
-   "player_can": true
+   "player_can": true,
+   "params": {
+    "kind": "fatwood",
+    "genera": [
+     "Pinus",
+     "Pseudotsuga"
+    ]
+   }
   },
   {
    "id": "ember_carrier",
@@ -52,11 +59,12 @@
     "rock_shelter"
    ],
    "verb": "wrap a live coal in tinder fungus or punk wood and bark",
-   "unlocks": "carry fire for a day or more with no light; lay a new fire from it; it goes cold if neglected (fire is never made, only carried)",
+   "unlocks": "carry fire for a day or more with no light; lay a new fire from it, or blow it into a torch that went out (\u00a7CQ); it goes cold if neglected (fire is never made, only carried)",
    "player_can": true,
    "params": {
     "ember_game_h": 26.0,
-    "fire_units": 2
+    "fire_units": 2,
+    "relights_torch": true
    }
   },
   {
@@ -87,8 +95,14 @@
     "mangrove"
    ],
    "verb": "string oil-rich nuts on a rib; they burn one after another",
-   "unlocks": "a short tropical light source",
-   "player_can": true
+   "unlocks": "a small, slow tropical light: a small circle that burns long (torch.json kinds candlenut, \u00a7CQ)",
+   "player_can": true,
+   "params": {
+    "kind": "candlenut",
+    "genera": [
+     "Aleurites"
+    ]
+   }
   },
   {
    "id": "peat_fuel",

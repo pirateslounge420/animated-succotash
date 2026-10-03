@@ -86,7 +86,12 @@ as rare finds in ruins.
 - **Waking:** you wake with nothing, in the afternoon, beside a road, at a camp. The road
   leads on to the next one.
 - **The torch is the first tool.** It lights at a fire, burns about one night, and can be
-  planted in the ground.
+  planted in the ground. Its head glows like a coal.
+- **Every torch is from somewhere** *(locked 3 Oct; not built yet)*: each camp leaves its own
+  kind by the fire (fatwood among pines, birch bark by the lakes, fir candles in the marsh,
+  ichu grass in the highlands, a plain brand elsewhere). Each trades how far its light reaches
+  against how long it lasts, and a bigger light keeps the dark further back. A coal carried
+  from a hearth can bring a torch that went out back to life.
 - **Fire is never made, only carried.** Fires burn fuel gathered from the world: wood, brush,
   dung, peat, whatever the biome offers. Embers can be saved, but a dead fire needs a flame
   brought to it.

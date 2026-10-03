@@ -1440,6 +1440,132 @@ feel of the game — something long lost and now a potential to be found"* (20:1
 - **Survivors, kept as built.** A camp turns to ruin only after 60 game days, so the survivors'
   30 days count from the day the ruin is marked overrun. That is Claude Code's reading of §CN.
 
+## CP. The torch's head is a glowing ember — RECORDED (3 Oct, Mike to Claude Code; built `9e3e7ef`)
+
+Mike to Claude Code (3 Oct): *"instead of the current fire animation, more of a glowing
+ember."* Claude Code built it that night and asked for it to be recorded here.
+
+- **The held and planted torches carry a coal, not a flame** (`shaders/torch_ember.gdshader`,
+  `Torch.ember_node`): a small lumpy coal with a char crust and the fire's colour bands in its
+  cracks, on a coarse texel grid, crawling slowly, with the fire's couple of single-pixel
+  sparks.
+- **The light keeps its energy, range and colour, but breathes with the coal**
+  (`Torch.ember_glow`): a slow pulse, brighter when you sprint or the wind blows, lower and
+  slower while guttering.
+- **The lamps and every fire keep their flames.** This amends §BZ's one shader for the
+  campfire and the torch: the torch has its own now.
+- **Data:** `torch.json → ember` holds the code's own defaults, so nothing changes on screen.
+  `light.flicker_hz`, `flicker_amount` and `wind_flicker_scale` are no longer read;
+  `sprint_flicker_scale` still is (sprinting feeds the coal air).
+
+## CQ. Every torch is from somewhere; a carried coal brings a dead torch back — LOCKED (3 Oct, 01:30–02:25, Mike)
+
+Mike (01:30): *"maybe we should make consumable ways to respark it?"* Anything that makes a
+spark would break §BP, so what fits is a consumable that carries fire. Then (01:34): *"maybe
+different types of wood torches and techniques to make them burn longer with sap? also, yea
+we can have some sort of limited ember holder."* Put to him: each torch belongs to its place
+(pine country gives fatwood and pitch, long and bright; the Pacific tropics give candlenut
+strings, slow but small; birch country gives bark torches that burn fast but catch in rain);
+the circle against the burn is the trade, and a bigger circle keeps the dark further back; a
+pine camp teaches the pitch dip; the ember holder is one coal that slowly burns down. *"lock
+it in"* (02:25). Builds on §AW, §BA, §BO, §BP, §CA, §CN, §CO and §CP. Not built, except where
+marked.
+
+**No spark, ever.** Flint and steel, a fire drill, or anything else that makes a spark stays
+out (§BP, §CN). The consumable that brings a flame back is a coal carried from a hearth.
+
+**1. Every torch is from somewhere** (`torch.json → kinds`). What you carry depends on where
+you are, because the folk make each camp's bundle (§AW) from what they use and what grows
+there:
+- **First, the camp's own light.** Each people already has one, from the peoples fill
+  (`data/peoples/*.json → light`, §BO): fatwood splints for the taiga and old-growth folk,
+  candlenut strings for the tropical-forest and mangrove folk, the lake folk's birch-bark
+  torch (their fishing torch's bark, a reed twist where no birch grows), dammar for the
+  canopy folk, fir-candle splints in the marsh, ichu grass in the highlands, cane in the
+  karst, rushlights in the mountains, and the herders' fire stick. It is made only where its
+  plant grows (§CA).
+- **Else a torch tree that grows there:** fatwood among pines (Douglas-fir pitchwood in the
+  temperate rainforest, §CN), or birch bark among birches. If both grow, the commonest within
+  the camp's gathering reach (`camps.json sim.loop.gather_reach_m`) wins.
+- **Else a plain brand**, the torch as built. That covers the folk whose light is a lamp or
+  nothing (coast, river, tundra, desert, steppe, rock shelter) where no torch tree grows.
+
+You never craft (§BN): the bundles are the folk's work, and the light techniques (§BP) are
+your own hand at the same kinds. As built, the **pitch dip** (`resin_torch`, taught by the
+taiga and old-growth folk, done at any conifer) turns a brand or a birch-bark torch into a
+resin torch. That is Mike's "a pine camp teaches you to tip a torch in pitch". The other
+light techniques make their kinds once they are built.
+
+**2. The trade is the circle against the burn.** Each kind sets how far its light reaches
+and how long it lasts. First guesses, against the brand's 14 m and 50 minutes (Mike tunes by
+play):
+
+| kind | whose | circle | burn | in rain |
+|---|---|---|---|---|
+| plain brand | anyone's | 14 m | 50 min | shorter, as now |
+| fatwood splints | taiga, old growth; any camp among pines | 16 m | 75 min | unchanged |
+| birch bark | lake; any camp among birches | 17 m | 30 min | unchanged |
+| candlenut string | tropical forest, mangrove | 8 m | 80 min | shorter |
+| dammar | canopy | 15 m | 75 min | shorter |
+| fir candle | marsh | 15 m | 40 min | unchanged |
+| ichu grass | highland | 15 m | 18 min | shorter; a storm eats it |
+| cane | karst; the lake folk where no birch grows | 15 m | 25 min | shorter |
+| rushlight | mountain | 6 m | 60 min | shorter |
+| fire stick | savanna herders | 14 m | 15 min | shorter |
+| resin (the dip, built) | taught by the taiga and old-growth folk | 16 m (new) | 90 min | unchanged |
+
+**The circle is how far the dark keeps back** (`dread.json → torch_circle`). The bigger your
+circle, the slower the dread meter fills (§BA): `fill_per_min_torch` × 14 m ÷ your circle,
+never faster than moonlight. A rushlight barely beats the moon; birch bark buys the most.
+Stage 3's glimpses ("at the edge of the light") stand at the edge of your own circle instead
+of a fixed 10–16 m. A planted torch counts with its own circle.
+
+**3. Rain follows §CN's damp-burners.** The kinds made of them shrug off rain: birch bark,
+fatwood and the marsh's fir candle (bog pine root is fatwood), like the resin torch as built.
+Every other kind burns shorter in rain, as the torch does now. A storm shortens every kind,
+and deep water puts every kind out.
+- **A correction.** At 01:34 Claude called birch "the one exception to the damp-kindling
+  rule". It isn't: §CN and §CO already let three kinds burn damp (birch bark, fatwood and
+  Douglas-fir pitchwood). Nothing there changes, and the torch kinds follow the same three.
+
+**4. A carried coal brings a dead torch back** (`torch.json → ember_relight`,
+`techniques.json → ember_carrier`). Mike's "yes" settles §BP's "designer to confirm it
+counts". As built, the ember carrier holds **one coal at a time**: you take it from a lit fire
+with empty hands, it lasts `ember_game_h` (26 game hours), and a new fire can be laid from it.
+- **New: blow it into a torch.** Hold an unlit torch while carrying a live coal: one press, a
+  breath of about 3 s, and the torch catches. The coal is spent.
+- It works on any torch with burn left: one that went out in water or when you put it away,
+  or a spare from a bundle. A burnt-out torch is a stick and can't be brought back.
+- This is the consumable respark Mike asked for, and it still starts at a hearth.
+- **The key is Claude Code's call**, within §CN's scheme (right click is interact). Planting
+  needs a lit torch, so this doesn't collide with it, and a fire in reach keeps its own
+  interact.
+
+**What the check found** (`tools/torch_kinds_check.py`: 11 kinds, 0 errors, 1 warning). The
+gaps are plant-data jobs and Mike's call, as §CN's were:
+- **Most camps leave something of their own:** fatwood across the taiga, the dry pine west
+  and the pine coasts; fir candles in the marsh; ichu in the highlands; rushlights in the
+  mountains; fire sticks with the herders; birch bark where the lake folk live among birches.
+  Brands are left in the deciduous woods, on the prairies, in the hot desert, on open
+  beaches, by the rivers and in caves.
+- **The candlenut tree (*Aleurites moluccanus*) isn't in the catalogue** (the warning), so
+  the tropical-forest and mangrove folk leave brands until it is added.
+- **Birch grows in 8 biomes, but in the tundra, taiga and fen it is only a shrub birch**, as
+  §CN found for kindling. The tundra's camps would leave bark torches of dwarf birch. A tree
+  birch added to the north, or shrubs left out, would change that.
+- **Dammar's tree (*Shorea*) grows only in the jungle**, so canopy camps in the other forests
+  fall back to a torch tree or a brand.
+
+**Supersedes or amends:**
+- §AW's one torch: every torch now has a kind, and the brand is the torch as built.
+- §BA's single torch rate: the dread meter's torch fill scales with the circle, and stage 3
+  stands at its edge.
+- §BP's ember carrier is confirmed, and it can now relight a torch. §BP's candlenuts are a
+  small, slow light (the techniques list said "short").
+
+**Proposed order (designer to confirm):** torch kinds and the camps' bundles → the circle in
+the dread meter → the coal relights a torch. Candlenut strings wait for their tree.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1521,3 +1647,9 @@ clearing) → **folk coming back**. Mike's Claude Code prompt of 2 Oct, 14:25 ca
 **Added 2 Oct, evening (§CO):** two small follow-ups to §CN, with the data in and not wired. First
 **the pouch keeps kindling dry**: only kindling gathered in rain starts damp, and it dries. Then
 **a cave's or grotto's den is cleared by the hearth at its opening**.
+
+**Added 3 Oct (§CP, §CQ):** §CP records the torch's ember head, already built. §CQ's data is in and
+not wired: `torch.json → kinds` and `ember_relight`, `dread.json → torch_circle`, and the
+`techniques.json` params (`tools/torch_kinds_check.py` checks them). The engine order: **torch
+kinds and the camps' bundles** → **the circle in the dread meter** → **the coal relights a
+torch**. Candlenut strings wait for their tree.

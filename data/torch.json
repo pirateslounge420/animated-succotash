@@ -4,13 +4,16 @@
   "burn_min": "Real minutes a torch burns at full flame (the equatorial night is 48).",
   "gutter_share": "The last share of its life it spends guttering: dimmer, harder flicker, the warning to head for a fire.",
   "rain_burn_scale": "Burn-time multiplier in rain (storm: storm_burn_scale). douse_depth_m: water this deep puts it out.",
-  "light": "range_m / energy / attenuation: the falloff. gutter_energy: energy while guttering. flicker_hz / flicker_amount: the slow flicker; sprinting and wind scale it. shadows false: no shadow map from a torch (\u00a7AG).",
+  "light": "range_m / energy / attenuation: the falloff. gutter_energy: energy while guttering. flicker_hz / flicker_amount / wind_flicker_scale: the old flame's flicker, no longer read since the torch's head became an ember (\u00a7CP, 3 Oct): it breathes with its coal instead (see ember). sprint_flicker_scale is still read: sprinting feeds the coal air (ember.air_brighten). shadows false: no shadow map from a torch (\u00a7AG).",
   "planted": "Right click the ground with a lit torch to stand it up; take it back within pickup_reach_m.",
   "lighting_reach_m": "How close to a flame the torch must be held to light.",
   "bundle": "Unlit torches by a camp's fire (\u00a7AW): how many, and how many game hours until the folk have made more.",
   "climb": "Starting a climb with a lit torch plants it if there is ground to plant it in, otherwise it goes out (stowing puts it out; relight at a flame).",
   "resin": "The resin torch's block (technique resin_torch): see resin._note.",
-  "swing": "(design \u00a7CN) The swing passes the flame. Left click (button: the item-in-hand action, \"shoot\") with the torch in hand swings it: the bare-hand swing's arc and timing (fists.gd, use_fist_arc), with the torch in the hand. At the end of the arc the flame passes between whatever it touches within reach_m (the same as lighting_reach_m), lit to unlit, either way (passes_flame): a lit torch lights a laid fire (fuel.json kindling), embers, a laid delve fire-holder (delves.json) or a planted torch (lights); an unlit torch swung through a lit fire, a lit fire-holder or a planted torch catches (takes_from). Sharing a flame costs the torch nothing (share_cost_min 0): its own burn is still the clock. It never lights the ground, standing grass, camp structures, folk or creatures (never_lights): wildfire's ignition stays a torch dropped in dry grass (\u00a7BL). A swing at a creature does nothing (creature_effect none): they answer to fire, not to the swing (\u00a7BA). Supersedes \u00a7AW's lighting ritual and the old hearths' right click (right_click_lights false): right click goes back to plain interact. log: the lines it adds to the log (\u00a7AZ)."
+  "swing": "(design \u00a7CN) The swing passes the flame. Left click (button: the item-in-hand action, \"shoot\") with the torch in hand swings it: the bare-hand swing's arc and timing (fists.gd, use_fist_arc), with the torch in the hand. At the end of the arc the flame passes between whatever it touches within reach_m (the same as lighting_reach_m), lit to unlit, either way (passes_flame): a lit torch lights a laid fire (fuel.json kindling), embers, a laid delve fire-holder (delves.json) or a planted torch (lights); an unlit torch swung through a lit fire, a lit fire-holder or a planted torch catches (takes_from). Sharing a flame costs the torch nothing (share_cost_min 0): its own burn is still the clock. It never lights the ground, standing grass, camp structures, folk or creatures (never_lights): wildfire's ignition stays a torch dropped in dry grass (\u00a7BL). A swing at a creature does nothing (creature_effect none): they answer to fire, not to the swing (\u00a7BA). Supersedes \u00a7AW's lighting ritual and the old hearths' right click (right_click_lights false): right click goes back to plain interact. log: the lines it adds to the log (\u00a7AZ).",
+  "ember": "(design \u00a7CP, recorded; built 3 Oct, Mike: \"instead of the current fire animation, more of a glowing ember\") The held and planted torches carry a glowing coal, not a flame (shaders/torch_ember.gdshader, Torch.ember_node); the lamps and every fire keep their flames. texels: the coal's texel grid. crawl: how fast its cracks crawl. pulse_hz / pulse_amount: its slow breath, which the light's energy follows (Torch.ember_glow). shimmer_hz / shimmer_amount: a faint quicker shimmer on top. air_brighten: how much sprinting and wind brighten it. gutter_glow: the coal's glow while guttering (cooler). These are the code's own defaults, written down here; the code reads this block.",
+  "kinds": "[NOT WIRED YET \u2014 design \u00a7CQ] Every torch is from somewhere. The folk make each camp's bundle (bundle, \u00a7AW) in tiers (kinds.bundle): first the camp's own people's light (data/peoples/*.json light: the first entry that is a kind's technique and whose genera grow where the camp stands, by the same gate as fuel.json kindling, \u00a7CA; where_no_genus names what that people uses instead, e.g. the lake folk's reed twist where no birch grows); else a torch tree that grows there (tree_kinds; the commonest within camps.json sim.loop.gather_reach_m if more than one, then tree_kinds order); else the plain brand, the torch as built. list: circle_scale scales light.range_m (the circle the dark keeps out of, dread.json torch_circle); burn_scale scales burn_min; energy_scale scales light.energy; rain_immune: rain does not shorten it (only the kinds made of fuel.json kindling's wet_ok kinds, \u00a7CN; rain_why where no genus says so); storm_burn_scale replaces the top-level one for that kind; dip: the resin_torch technique can dip it, and a dipped torch becomes resin, which keeps its numbers in the resin block (numbers_in) and adds only its circle here. technique: the techniques.json id that teaches the kind (a people's light). made: what it is, from the peoples fill. First guesses by Claude (chat), 3 Oct; the designer owns them. Check: tools/torch_kinds_check.py.",
+  "ember_relight": "[NOT WIRED YET \u2014 design \u00a7CQ] A carried coal brings a dead torch back. With an unlit torch in hand (relights: any with burn left, such as one that went out in water or when it was put away, or a spare from a bundle; not a burnt-out stick) and a live coal carried (the ember carrier's ember item, technique ember_carrier, one at a time as built), one press of button blows the coal into the torch: after takes_s it catches with the burn it had left, and the coal is spent (spends_coal). cancel_if: sprinting or swimming stops it. button: Claude Code's call within \u00a7CN's scheme (right click is interact): planting needs a lit torch, so this does not collide with it, and a fire in reach keeps its own interact. log: the line it adds (\u00a7AZ). Fire is never made, only carried: the coal came from a hearth (\u00a7BP)."
  },
  "burn_min": 50.0,
  "gutter_share": 0.12,
@@ -80,6 +83,183 @@
    "fire_caught": "The fire caught.",
    "kindling_wet": "The kindling smokes and won't catch.",
    "not_laid": "Cold ash. It needs kindling."
+  }
+ },
+ "ember": {
+  "texels": 7.0,
+  "crawl": 0.06,
+  "pulse_hz": 0.5,
+  "pulse_amount": 0.14,
+  "shimmer_hz": 2.3,
+  "shimmer_amount": 0.05,
+  "air_brighten": 0.18,
+  "gutter_glow": 0.72
+ },
+ "kinds": {
+  "bundle": {
+   "tiers": [
+    "people_light",
+    "tree_kinds",
+    "else"
+   ],
+   "tree_kinds": [
+    "fatwood",
+    "birch_bark"
+   ],
+   "tie": "commonest_within_gather_reach",
+   "else": "brand"
+  },
+  "list": {
+   "brand": {
+    "name": "Torch",
+    "technique": null,
+    "genera": [],
+    "circle_scale": 1.0,
+    "burn_scale": 1.0,
+    "energy_scale": 1.0,
+    "rain_immune": false,
+    "dip": true,
+    "made": "A brand of the local wood: the torch as built (\u00a7AW). Where no one's light and no torch tree fits, the folk leave these."
+   },
+   "fatwood": {
+    "name": "Fatwood splints",
+    "technique": "fatwood",
+    "genera": [
+     "Pinus",
+     "Pseudotsuga"
+    ],
+    "circle_scale": 1.15,
+    "burn_scale": 1.5,
+    "energy_scale": 1.2,
+    "rain_immune": true,
+    "storm_burn_scale": 0.7,
+    "dip": false,
+    "made": "Resin-soaked heartwood split from an old pine stump (Douglas-fir pitchwood in the temperate rainforest, \u00a7CN): long and bright, and it lights wet. The taiga and old-growth folk's, and any camp's among pines."
+   },
+   "birch_bark": {
+    "name": "Birch-bark torch",
+    "technique": "fishing_torch",
+    "genera": [
+     "Betula"
+    ],
+    "circle_scale": 1.2,
+    "burn_scale": 0.6,
+    "energy_scale": 1.2,
+    "rain_immune": true,
+    "storm_burn_scale": 0.7,
+    "where_no_genus": "cane",
+    "dip": true,
+    "made": "Strips of birch bark wedged in a split pole: a big, smoky, quick flame, and its oils keep water out (\u00a7CN). The lake folk's (their fishing torch, carried), and any camp's among birches."
+   },
+   "candlenut": {
+    "name": "Candlenut string",
+    "technique": "candlenut",
+    "genera": [
+     "Aleurites"
+    ],
+    "circle_scale": 0.55,
+    "burn_scale": 1.6,
+    "energy_scale": 0.6,
+    "rain_immune": false,
+    "dip": false,
+    "made": "Oil-rich nuts strung on a rib, burning one after another: a small, steady light that lasts. The tropical-forest and mangrove folk's. The candlenut tree is not in the catalogue yet (\u00a7CQ), so none are made until it is added."
+   },
+   "dammar": {
+    "name": "Dammar torch",
+    "technique": "dammar_torch",
+    "genera": [
+     "Shorea"
+    ],
+    "circle_scale": 1.1,
+    "burn_scale": 1.5,
+    "energy_scale": 1.15,
+    "rain_immune": false,
+    "dip": false,
+    "made": "Dipterocarp resin pounded and packed into a leaf or bark tube: a slow, bright hand light in the wet forests. The canopy folk's. Rain still shortens it: no source yet shows dammar burning damp (\u00a7CN)."
+   },
+   "fir_candle": {
+    "name": "Fir candle",
+    "technique": "fir_candle",
+    "genera": [],
+    "circle_scale": 1.1,
+    "burn_scale": 0.8,
+    "energy_scale": 1.2,
+    "rain_immune": true,
+    "rain_why": "Bog pine root is fatwood: resin-soaked heartwood that lights wet (fuel.json kindling fatwood_shavings, \u00a7CN).",
+    "storm_burn_scale": 0.7,
+    "dip": false,
+    "made": "Thin splints of resin-black pine root dug from the peat face: hot and bright. The marsh folk's."
+   },
+   "ichu": {
+    "name": "Ichu grass torch",
+    "technique": "ichu_torch",
+    "genera": [],
+    "circle_scale": 1.1,
+    "burn_scale": 0.35,
+    "energy_scale": 1.1,
+    "rain_immune": false,
+    "storm_burn_scale": 0.2,
+    "dip": false,
+    "made": "A tight twist of dry tussock grass bound with grass cord: short and bright, and it dies in the wind. The highland folk's."
+   },
+   "cane": {
+    "name": "Cane torch",
+    "technique": "cane_torch",
+    "genera": [],
+    "circle_scale": 1.1,
+    "burn_scale": 0.5,
+    "energy_scale": 1.1,
+    "rain_immune": false,
+    "dip": false,
+    "made": "Dry cane, reed or bamboo bound in a bundle: bright and fast. The karst folk's, and the lake folk's reed twist where no birch grows."
+   },
+   "rushlight": {
+    "name": "Rushlight",
+    "technique": "rushlight",
+    "genera": [],
+    "circle_scale": 0.45,
+    "burn_scale": 1.2,
+    "energy_scale": 0.5,
+    "rain_immune": false,
+    "dip": false,
+    "made": "A peeled rush drawn through tallow, wedged in a split stick: small, cheap and steady. The mountain folk's."
+   },
+   "fire_stick": {
+    "name": "Fire stick",
+    "technique": "fire_stick",
+    "genera": [],
+    "circle_scale": 1.0,
+    "burn_scale": 0.3,
+    "energy_scale": 1.0,
+    "rain_immune": false,
+    "dip": false,
+    "made": "A twist of cured grass or a dry thorn branch carried burning at arm's length: it burns out in minutes. The savanna herders'."
+   },
+   "resin": {
+    "name": "Resin torch",
+    "technique": "resin_torch",
+    "genera": [],
+    "circle_scale": 1.15,
+    "numbers_in": "resin",
+    "made": "The pitch dip (technique resin_torch, built, \u00a7BP): a brand or a birch-bark torch dipped at a conifer. Its burn, brightness and rain rules stay in the resin block; this adds only its circle."
+   }
+  }
+ },
+ "ember_relight": {
+  "needs_technique": "ember_carrier",
+  "button": "interact",
+  "takes_s": 3.0,
+  "spends_coal": true,
+  "relights": "any_unlit_with_burn_left",
+  "not": [
+   "burnt_out"
+  ],
+  "cancel_if": [
+   "sprint",
+   "swim"
+  ],
+  "log": {
+   "caught": "The torch caught from the coal."
   }
  }
 }

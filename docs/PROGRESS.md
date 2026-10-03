@@ -4,6 +4,16 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 — §CP the torch's ember head recorded; §CQ every torch is from somewhere, and a carried coal brings a dead torch back: design and data only (design chat; Mike 01:30–02:25)
+- **§CP** records Mike's ember head (built `9e3e7ef`), as asked: `torch.json → ember` holds the code's defaults, and the `light` help says the flicker values are no longer read. Nothing changes on screen.
+- **§CQ**, locked at 02:25; the data is in and none of it is wired:
+  - `torch.json → kinds`: eleven kinds (the brand, fatwood, birch bark, candlenut, dammar, fir candle, ichu, cane, rushlight, fire stick, and the resin dip's circle), each with a circle, a burn and a rain rule. A camp's bundle is its people's light where its plant grows, else a torch tree that grows there, else a brand.
+  - `torch.json → ember_relight`: blow the ember carrier's coal into an unlit torch (3 s; the coal is spent).
+  - `dread.json → torch_circle`: the torch's dread fill scales with its circle, and stage 3's glimpses stand at its edge.
+  - `techniques.json`: `ember_carrier` relights torches; `fatwood` and `candlenut` name their kinds and genera.
+- **`tools/torch_kinds_check.py`** (new): 11 kinds, 0 errors, 1 warning (the candlenut tree isn't in the catalogue).
+- **For Mike:** a correction from chat. Birch bark was already one of §CN's three damp-burners, not "the one exception".
+
 ## 2026-10-03 — The plants fit every Godot from 4.3 on; the game says what it runs on; the torch's head is an ember (Mike, 3 Oct)
 - **Plant shader** (`foliage.gdshader`, ahead of §BR as asked; §CG):
   - Its 19 varying slots are packed into 8: six flat vec4s for the values that are the same on every corner of a triangle (season, leaf, leaf size, glow pick, material, moss, sport, cluster key, genes, instance, dead, dead limb, the far picture's profile and base) and two smooth vec4s (position and normal in the plant's frame, sway).
