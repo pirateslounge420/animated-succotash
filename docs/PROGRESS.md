@@ -4,6 +4,36 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 (night) — Mike's 22:52 play: the plants are still grey after §CG. The plant shader uses more varying slots than Godot 4.4 and later allow (design chat; §CG; `tools/shader_varying_check.py`)
+- **What the frame shows** (play, Mike's Mac, F3 on, world 1972737865, the same spot as 1 Oct 23:11: Jungle, 12.7°N 140.1°W):
+  - §CG works: "World textures: 9 from disk", the ground's tiles are back, and it is Day 1 · 13:49.
+  - Every plant drawn by `foliage.gdshader` (trees, bamboo, shrubs, cards) is Godot's grey default material: 0.6 grey, opaque, one-sided. The leaf cards are whole quads, and there is no green in any plant.
+  - The trunks and culms carry fine stripes. That is shadow acne: the foliage shader's own rule that closed shapes cast from their far faces only is gone with the shader.
+  - The fire, the folk, the ground and the stone ruin behind the fire (`ruin.gdshader`; tiered, grey, with dark holes) draw normally.
+- **Why:** Godot gives each `varying` one slot (mat3 3, mat4 4), numbered after the slots its Forward+ scene shader keeps for itself (`base_varying_index`). From 4.4 on it also checks the total and rejects a shader over the GPU's limit, in `ShaderLanguage`: "Too many varyings used in shader (N used, maximum supported is M)." A rejected shader's materials draw with the default material (`RenderForwardClustered::_geometry_instance_add_surface`). Forward+ can't run in this box (no Vulkan driver), so this is read from Godot's own source at each stable tag:
+
+  | Godot | slots kept | checked | `foliage.gdshader` (19 slots) on a Mac (limit 31) |
+  |---|---|---|---|
+  | 4.3 (Claude Code's machine) | 12 | no | 31: fits, with nothing to spare |
+  | 4.4, 4.5 | 14 | yes | 33: rejected |
+  | 4.6, 4.7 | 15 | yes | 34: rejected (32 on desktop Vulkan: rejected there too) |
+
+- **Since when** (commit times, Chicago):
+  - 29 Sept 14:01, `8b95fb2` (far trees as pictures): 17 slots. Godot 4.6 and later reject it on a Mac.
+  - 29 Sept 15:09, `43033e5` (genes and sports): 18 slots. 4.4 and 4.5 reject it on a Mac.
+  - 29 Sept 20:57, `cca09c1` (growth, shade leaves): 19 slots.
+  - Every other shader uses 6 slots or fewer, which is why only the plants break.
+- **Why the cloud frames drew plants:** every harness frame (dev_view, walkabout, the §CG check) ran Godot 4.3, where 19 slots still fit.
+- **What Mike's Mac runs (not confirmed):**
+  - Neither `/Applications` nor `~/Applications` holds a Godot.app.
+  - `/Applications/Summer.app` is installed. Summer Engine ships its own engine binary and "follows Godot 4 upstream", so it is a newer Godot than 4.3.
+  - §CI and `CLAUDE.md` say plain Godot 4.3. Help → About in the app he opens settles it.
+- **What couldn't be reproduced here:**
+  - Headless, both 4.3 and 4.7.2 accept the shader. The dummy renderer never builds the Forward+ scene shader, so the kept slots don't apply.
+  - The OpenGL (Compatibility) renderer keeps different slots. In 4.3 it rejects the shader for another reason: "Uniform instances are not supported in gl_compatibility shaders".
+  - Forward+ on lavapipe needs Claude Code's machine.
+- **New check** (`tools/shader_varying_check.py`): it counts every spatial shader's varying slots by Godot's rule and prints where the last slot lands on each version from 4.3 to 4.7. The house limit is 12 slots. Godot has kept more slots with each release (12, 14, 15), and on a Mac with 4.6 or later more than 16 is rejected. Today `foliage.gdshader` FAILS at 19 slots (`v_season`, `v_hshift`, `v_leaf`, `v_leafs`, `sway_w`, `glow_pick`, `world_pos`, `obj_pos`, `obj_normal`, `mat_id`, `moss`, `v_sport`, `cluster_key`, `dead_v`, `wood_dead`, `genes`, `inst`, `v_imp`, `v_imp2`). The other 24 spatial shaders pass, `litter.gdshader` the highest at 6.
+
 ## 2026-10-02 (evening) — §CO: the dry pouch and the cave's opening hearth (design chat; Mike 20:15–20:32)
 - **§CO** in RECONCILIATION_2026-09-30:
   - Kindling you carry never gets wet. Only kindling gathered in rain starts damp, and it dries after 6 game hours.
