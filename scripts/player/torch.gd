@@ -20,13 +20,19 @@ extends Node3D
 ## flame); so does stowing it (Q away from it) and starting a climb with
 ## no ground to plant it in; with ground there, a climb plants it. Right
 ## click the ground with it lit to plant it (PlantedTorch); a dropped lit
-## torch lies burning. The light: a point light with the data's falloff
-## and flicker, no shadow map; the only warm light in the world is fire.
+## torch lies burning. Its head is a glowing ember, not a flame (Mike,
+## 3 Oct; ember_node): a coal with the fire's colours in its cracks and a
+## couple of sparks. The light: a point light with the data's falloff,
+## breathing slowly with the ember (ember_glow), no shadow map; the only
+## warm light in the world is fire.
 ## Its state (lit, burn_left_min, burnt) lives in the item's own
 ## dictionary, so it comes and goes with the pack.
 
 static var D := Tuning.table("torch")
 static var L: Dictionary = D.get("light", {})
+## The torch's head is a glowing ember (Mike, 3 Oct; ember_node): how it
+## breathes. torch.json "ember" when it lands; these are the defaults.
+static var EMBER: Dictionary = D.get("ember", {})
 ## The weather where the player is (main sets it each frame): rain and
 ## storm shorten the burn, wind flickers the flame.
 static var weather := {}
@@ -74,10 +80,11 @@ func setup(p: PlanetPlayer) -> void:
 	stick.material_override = sm
 	stick.rotation = Vector3(0.35, 0.0, -0.25)
 	_view.add_child(stick)
-	_view_flame = flame_node(0.2)
-	# At the stick's head: its top end, the card's foot a little into the
-	# wood so the flame grows out of it (Mike, 1 Oct: it floated beside it).
-	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - 0.02, 0)
+	_view_flame = ember_node(0.03, 0.2)
+	# At the stick's head, wrapping its top end (Mike, 1 Oct: the flame
+	# floated beside it; 3 Oct: an ember, not a flame).
+	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 + 0.005, 0)
+	_view_flame.rotation = stick.rotation
 	_view.add_child(_view_flame)
 	_view.position = Vector3(0.34, -0.3, -0.56)
 	Bow._no_shadow(_view)
@@ -102,6 +109,75 @@ static func flame_node(size := -1.0) -> Node3D:
 	var n := Campfire.flame_node(s, float(t.get("scroll_scale", 0.7)), int(t.get("embers", 2)), randf() * 100.0)
 	n.name = "Flame"
 	return n
+
+
+## A torch's head as a glowing ember (Mike, 3 Oct: "instead of the
+## current fire animation, more of a glowing ember"): a small lumpy coal of
+## radius `head_r` m (shaders/torch_ember.gdshader: char with the fire's
+## bands showing through its cracks, crawling slowly, breathing with the
+## light: set_glow) and the fire's few single-pixel sparks rising off it
+## (Campfire's embers, torch.embers of them, at `spark_size` of a
+## campfire's). The held and planted torches use it; the lamps keep their
+## flames.
+static func ember_node(head_r: float, spark_size: float) -> Node3D:
+	var n := Node3D.new()
+	n.name = "Ember"
+	var head := MeshInstance3D.new()
+	head.name = "Head"
+	var sm := SphereMesh.new()
+	sm.radius = 0.5
+	sm.height = 1.3
+	sm.radial_segments = 7
+	sm.rings = 4
+	head.mesh = sm
+	head.scale = Vector3.ONE * head_r * 2.0
+	head.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/torch_ember.gdshader")
+	m.set_shader_parameter("look_grain_soft", Look.grain())
+	var phase := randf() * 50.0
+	m.set_shader_parameter("phase", phase)
+	m.set_shader_parameter("texels", float(EMBER.get("texels", 7.0)))
+	m.set_shader_parameter("crawl", float(EMBER.get("crawl", 0.06)))
+	var bands: Array = Campfire.FL.get("bands", ["#FEFC54", "#FCA82C", "#E6552A", "#5A0A00"])
+	var hdr: Array = Campfire.FL.get("hdr", [1.0, 1.0, 1.0, 1.0])
+	for i in 4:
+		m.set_shader_parameter("band%d" % i, Campfire.emissive(bands[mini(i, bands.size() - 1)], float(hdr[i]) if i < hdr.size() else 1.0))
+	head.material_override = m
+	n.add_child(head)
+	var t: Dictionary = Campfire.FL.get("torch", {})
+	var count := int(t.get("embers", 2))
+	if count > 0:
+		var sparks := Campfire._ember_node(count, spark_size, phase)
+		sparks.position = Vector3(0, head_r * 1.2, 0)
+		n.add_child(sparks)
+	return n
+
+
+## The ember's glow now (1 full; the light's energy follows it): a slow
+## breath and a faint shimmer, brighter when the air feeds it (sprinting:
+## `motion`, and the wind), lower and slower guttering.
+static func ember_glow(it: Dictionary, t: float, motion: float) -> float:
+	var hz := float(EMBER.get("pulse_hz", 0.5))
+	var amount := float(EMBER.get("pulse_amount", 0.14))
+	var sh_hz := float(EMBER.get("shimmer_hz", 2.3))
+	var sh := float(EMBER.get("shimmer_amount", 0.05))
+	var wind_v: Vector3 = weather.get("wind", Vector3.ZERO) if weather.get("wind") is Vector3 else Vector3.ZERO
+	var air := (motion - 1.0) * 0.5 + clampf(wind_v.length() * 0.08, 0.0, 1.0)
+	var g := 1.0 + float(EMBER.get("air_brighten", 0.18)) * air
+	if guttering(it):
+		hz *= 0.6
+		amount *= 1.6
+	g *= 1.0 + amount * sin(t * hz * TAU) + sh * sin(t * sh_hz * TAU + 1.3)
+	return g
+
+
+## Set an ember_node's glow (its shader's `glow`; guttering draws it
+## cooler: ember.gutter_glow).
+static func set_glow(ember: Node3D, glow: float, it: Dictionary) -> void:
+	var head := ember.get_node_or_null("Head") as MeshInstance3D
+	if head and head.material_override:
+		(head.material_override as ShaderMaterial).set_shader_parameter("glow", glow * (float(EMBER.get("gutter_glow", 0.72)) if guttering(it) else 1.0))
 
 
 ## The torch's point light from the data: Minecraft-style falloff, warm,
@@ -345,21 +421,17 @@ static func share_now(it: Dictionary) -> float:
 	return float(L.get("gutter_energy", 0.9)) / maxf(float(L.get("energy", 2.2)), 0.01) if guttering(it) else 1.0
 
 
-## The light's energy this instant: the flicker (harder guttering), scaled
-## by `motion` (sprinting doubles it) and the wind.
+## The light's energy this instant: the data's energy (gutter_energy
+## guttering, the resin's scale), breathing with the ember (ember_glow:
+## a slow pulse, not a flame's flicker; Mike, 3 Oct), brighter when the
+## air feeds it (`motion`: sprinting; the wind).
 static func energy_now(it: Dictionary, t: float, motion: float) -> float:
-	var hz := float(L.get("flicker_hz", 9.0))
-	var amount := float(L.get("flicker_amount", 0.18)) * motion
-	var wind_v: Vector3 = weather.get("wind", Vector3.ZERO) if weather.get("wind") is Vector3 else Vector3.ZERO
-	amount *= 1.0 + float(L.get("wind_flicker_scale", 1.5)) * clampf(wind_v.length() * 0.08, 0.0, 1.0)
 	var e := float(L.get("energy", 2.2))
 	if bool(it.get("resin", false)):
 		e *= float((D.get("resin", {}) as Dictionary).get("energy_scale", 1.25))
 	if guttering(it):
 		e = float(L.get("gutter_energy", 0.9))
-		amount *= 2.0
-	var f := 1.0 + amount * (0.6 * sin(t * hz * TAU) + 0.4 * sin(t * hz * 2.3 * TAU + 1.0))
-	return e * f
+	return e * ember_glow(it, t, motion)
 
 
 func update_torch(delta: float) -> void:
@@ -386,7 +458,7 @@ func update_torch(delta: float) -> void:
 			return
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
 		_light.light_energy = energy_now(it, _t, motion)
-		_view_flame.scale = Vector3.ONE * (0.9 + 0.1 * sin(_t * 7.0)) * (0.75 if guttering(it) else 1.0)
+		set_glow(_view_flame, ember_glow(it, _t, motion), it)
 	_apply(lit())
 
 

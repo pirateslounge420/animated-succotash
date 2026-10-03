@@ -2,8 +2,8 @@ class_name PlantedTorch
 extends Node3D
 ## A torch stood in the ground (design 30 Sept §AW: right click the ground
 ## with a lit torch), or dropped lying, burning on where it is: a stick,
-## a flame and a point light, burning down by the same rules as the one in
-## hand (Torch.burn_step); a light source for the dark (§BA) and a flame
+## a glowing ember (Torch.ember_node) and a point light, burning down by the same rules as the one in
+## hand (Torch.burn_step); a light source for the dark (§BA) and an ember
 ## another torch can be lit at. Right click within pickup_reach_m takes it
 ## back (take()). Under World.world_root, so it rides the floating origin.
 
@@ -47,9 +47,9 @@ func _ready() -> void:
 	stick.position = Vector3(0, h * 0.5 - (0.15 if not lying else 0.0), 0)
 	stick.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(stick)
-	_flame = Torch.flame_node()
-	# The card's base a centimetre into the stick's head (design §CA).
-	_flame.position = Vector3(0, stick.position.y + h * 0.5 - 0.01, 0)
+	# The head: a glowing ember wrapping the stick's top (Mike, 3 Oct).
+	_flame = Torch.ember_node(0.042, 0.32)
+	_flame.position = Vector3(0, stick.position.y + h * 0.5 + 0.005, 0)
 	add_child(_flame)
 	_light = Torch.light_node()
 	_light.position = Vector3(0, h + 0.05, 0)
@@ -76,6 +76,7 @@ func _process(delta: float) -> void:
 		_apply()
 		return
 	_light.light_energy = Torch.energy_now(item, _t, 1.0)
+	Torch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
 
 
 ## The nearest planted torch within `radius` of `pos`, or null.
