@@ -228,6 +228,11 @@ func _tomb_check(map: PlanetData, camp: Vector3) -> void:
 	for i in 10:
 		await process_frame
 	ok(_lamp_energy(node) == 0.0, "%s: the lamps stand dark while the hearth is cold" % label)
+	# (Since the hearths pass (§CU) the nearest empty ruin can be this
+	# tomb, its charred branches spent by the checks above: lay fresh ones.)
+	var st_t := FireStore.store_of(fire)
+	if FireStore.units_now(st_t) < 1.0:
+		st_t.units = [["branch", FireStore.burn_min("branch") * 0.6], ["branch", FireStore.burn_min("branch") * 0.6]]
 	FireStore.relight(fire)
 	for i in 240:
 		await process_frame

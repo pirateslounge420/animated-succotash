@@ -4,6 +4,68 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (evening) — §CR the world at 1/100 Earth, §CS plant communities, §CU a few hearths per biome: built (Claude Code)
+- **§CR.1, the planet:** it is now built at `data/world_scale.json` → `planet.circumference_m`: 400 km around, radius 63.7 km, `GEO_SCALE` 1. The layout is built at its own size; heights stay 1/10 (`HEIGHT_SCALE`) and the day stays 144 minutes. Things at walking scale are unchanged. The 40 km dev stamp still works for the checks (`stamp_check` passes) and has no great ranges.
+- **Measured before any tuning** (four seeds, 42, 7, 1234 and 7731, headless; `tools/world_scale_check.gd`):
+  - **Horizon:** from the play eye height (1.26 m) it is 400 m (451 m at 1.6 m). A 30 m tower shows from 2.4 km and a 100 m hill from 4.0 km. The ground drops 7.9 m over 1 km.
+  - **Land:** about 21,000 km² a world, which is 38% of the planet.
+  - **Slopes** (the walking ground, measured over 4 m): steeper than 35° on 0.28–0.39% of the land, 45° on 0.21–0.26%, 60° on 0.03–0.10%. That is all the escarpments and ravines. Ground over 150 m was hardly steeper (0.3–0.4% over 35°).
+  - **Ranges:** none were great. The mountain belts topped out at 481–506 m, as 10–21 high areas over 250 m, and their slopes were under 3° measured over 40 m. They were broad swells laid out on 30 km noise.
+  - **Biomes:** hot desert is 12–20% of the land, ice sheet 8–12% and temperate deciduous 7–9%. Every land biome present had at least two places of 1 km² or more, except puna on seed 1234 (one). Puna is missing from three of the four seeds. Lagoon, freshwater, oasis, salt flat, caves and tepui are never land cells (they come from nests and water).
+- **§CR.4, the great ranges** (`TerrainField.great_ranges`): 4–7 a world (seeded), each 15–25 km long on land, 45 km or more apart. The first is the world's Everest-class one (885 m) and the rest 500–885 m (`summit_m_earth` × 0.1, added on top of what they stand on).
+  - Shape: a crest with one summit and passes, flanks averaging about 24° (steeper near the crest), and spurs and gullies.
+  - Sheer faces: at walking scale, part of each flank steps into 40 m cliff bands, with the crest and gaps left clear.
+  - The ordinary mountain belts were capped at 400 m so they stay below the great ranges.
+  - **After, on the same four seeds:**
+    - 4, 4, 5 and 5 great ranges, with summits 550–894 m.
+    - Every summit has a way up: the quickest walkable route averages 14–17° and is never steeper than 25–30°. It is 0.9–2.5 km long and takes 11–28 real minutes (1.8–4.6 game hours) from the foot.
+    - The flanks average 22°. 13.3–14.3% of them is sheer (60° or more); the design asks about 15%.
+    - The ranges cover 0.5–0.9% of the land. No other ground reaches 500 m.
+    - From the highest summit you see about 10.7 km, and it shows from 11 km away.
+    - Land steeper than 35° rises to 0.43–0.64%, and steeper than 60° to 0.12–0.21%.
+- **§CR.5, Tobler's pace** (`PlanetPlayer.slope_pace`, `world_scale.json` → `pace`):
+  - Walking and sprinting speed is multiplied by exp(−3.5|s+0.05|)/exp(−3.5·0.05) on the grade ahead (capped at 1). A crouch is never faster up a slope than a walk.
+  - The floor's limit is now `walk_max_deg` (45°, was 50°) in the ambient profile.
+  - `tools/pace_check.gd` passes all its checks:
+    - 54/28/13% of the flat speed at 10/20/30°;
+    - an 885 m summit by a 20° route takes 35.9 real minutes (6.0 game hours), and 500 m takes 20.3 minutes;
+    - walking and sprinting up a real 13–14° slope near the camp come within 12% of the pace;
+    - downhill is no faster than the flat;
+    - ordinary land within 20 km of the camp averages 82% of the flat speed, because of the swells.
+- **§CS, plant communities** (`Communities`, `habitat.json` → `communities`):
+  - Each biome file's associations (203) are its communities.
+  - When a world is made, each land's stretch of a biome (a `RealmMap` province's cells) is dealt one community. The biggest stretches go first, and each gets the community whose dominants fit its temperature, moisture, height and soil best, with a bonus where the community's realm is the land's own here (the land's part of Earth) and a little seeded jitter. No community is dealt twice; a stretch left without one takes the nearest land's.
+  - The placer grows only the community's members there, each in its own bands. Members skip the realm gate.
+  - A catalogue species no association lists (310 of 328) keeps its old placement, and so does a biome with no associations (estuary, freshwater, ice sheet).
+  - `tools/community_check.gd` (three seeds) passes:
+    - 176–181 communities dealt over 257–280 stretches, none native to two lands;
+    - in play, every plant stands in its own community.
+  - **On screen:** a stretch now holds far fewer kinds of plant. A tropical dry forest near the 7731 camp went from 16 species (6,294 plants, 4,880 trees in the loaded ring) to 7 (1,501 plants, 2,183 trees): Pochote, slash pine, bluestem, bromelia, jatropha, long-spine acacia and resurrection fern.
+- **§CU, hearths** (`Hearths`, `camps.json` → `hearths`):
+  - The sites pass runs once per new world (8–9 s here, then kept in the save as "hearths").
+  - It keeps max(2, km² / 150) hearths per land biome from its ruins and nests, dealt round the lands in turn, never two with the same people, nest, ruin kind and community. The opening road's camp is always kept.
+  - Ruins it doesn't keep have no living camp and no cold hearth (`Ruins.inhabited`, `OldHearths`). Nests it doesn't keep hold no camp or remains (`Nests._hearth_pass`).
+  - `tools/hearth_check.gd` (three seeds): 1,583 / 1,496 / 1,668 hearths before, 158–160 after, none alike, and nothing dropped still holds one. In play the opening road's camp is kept, 6.7 km off.
+  - Short biomes (too few distinct sites): ice sheet (8–10 of 11–17), swamp, hot spring, puna, oasis and sagebrush (0–1 of 2), and estuary and floodplain forest on some seeds.
+- **Checks** (headless, Godot 4.3, the seeds the checks pin):
+  - **0 fails:** first_camp, overrun, settle, swing, pace, delve, stamp, stand, litter, tree, water, soil, world_scale (its gates), community, and old_hearth (after one fix to the check). That fix: with fewer hearths, the check's nearest empty ruin and its tomb are now the same desert pyramid, so the tomb part lays fresh charred branches before relighting.
+  - **Failing as this morning** (same with communities and hearths off): camp (3), nest (1: the waterfall's ferns), new_world (12 when run without `DEV_PIN=0`; run as its header says it passes all 20, the new world's hearths pass included), play_fixes (12) and inventory (5), which test the ninja kit, and realm (African Amorphophallus in savanna; this morning it stopped on a script error).
+  - **road_check:** 1 fail. Its sample point on the nearest road is an overgrown stretch (tread 0.07). That is the layout, not a code change.
+  - **plant_presence:** Musa and Trichocereus seen nowhere. With communities off it passes, so this is §CS at work (see Mike's flags). fire_wall and growth_world time out as this morning; aroid_world and tech were still running at the push.
+  - `tools/shader_varying_check.py`: exit 0.
+- **For Mike (to decide or play):**
+  - **Horizon:** on flat ground the curve ends the view at about 400 m. Hills and towers rise over it as you walk.
+  - **Fewer plants:** communities thin the plants a lot. Of the 203 communities, 198 name no emergent tree and 186 no epiphyte, so rainforest giants and orchids stop growing until the data lists them. Flagged, not worked around.
+  - **The walkabout** for this pass runs once at the end of the next one (Mike's 14:34 bugs), with `SITES=range` added: a great range from its foot and from its summit.
+  - **Fewer hearths:** hearths drop from about 1,500 to about 160 a world, as §CU's numbers ask. `km2_per_hearth` is the one value to bring more back.
+  - **§CE against §CS:** "the named plants are always in the game" now meets "only in their community". Wild banana grows only where the rainforest-gap community lives.
+- **For Claude (chat):**
+  - `tools/reference/community_report.txt` lists the 310 unattached catalogue species and the short biomes per seed for the fill.
+  - Earth's biome shares can be filled now (the numbers above).
+  - CLAUDE.md's first paragraph still says "at 1/10 Earth scale" (a design line; the Scale section is updated).
+  - The honest share for the great ranges is needed to check `footprint_max`.
+- §CT (carried plants) waits for §AB, as asked.
+
 ## 2026-10-03 (15:00) — Mike's 14:34–14:46 play: a den that looks like a doorway, an Alocasia drawn as a bush, rain from a clear sky, far plants lit from the wrong side: causes found (design chat; §CX)
 All four are read from the code and data, not run: no Godot in the chat's box. Mike's frames are at 12.8–12.9°N, 140.2°W, Jungle, granite soil, Day 1.
 - **1. "A little opening to a shrine … I wasn't able to go inside" (14:22 game time).**

@@ -19,6 +19,8 @@ extends SceneTree
 ## camp's first frame must be afternoon (the sun above the dusk band).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
+## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
+## looking up at its summit, and from the summit, looking along the crest.
 ## SITES=delve the nearest overrun barrow (§CN; else the nearest with a
 ## delve, §CJ): from outside (bones at its door), its stairhead, the first
 ## room and the heart by torchlight at noon (it must be dark but for the
@@ -122,6 +124,8 @@ func _run() -> void:
 			kinds.append("fig")
 		if only.has("delve"):
 			kinds.append("delve")
+		if only.has("range"):
+			kinds.append("range")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -137,6 +141,8 @@ func _run() -> void:
 						"note": "the sacred fig in %s, %.0f km from the camp" % [str(fig.biome).to_lower(), CubeSphere.surface_distance_m(fig.dir, camp_d) / 1000.0]})
 			"delve":
 				sites.append_array(_delve_sites(camp_d))
+			"range":
+				sites.append_array(_range_sites(camp_d))
 			"opening_camp":
 				sites.append({"name": "opening_camp", "dir": camp_d, "spawn_hour": true})
 			"first_road_1km":
@@ -381,10 +387,17 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			world.days = spawn_days
 		else:
 			world.days = Astro.days_at_solar_hour(base, hour, lon, lat)
+		# A site that looks up at something (a great range's summit) tips
+		# the first facing up to it.
+		var pitch0 := 0.0
+		if site.has("pitch_to"):
+			var tp: Vector3 = site.pitch_to
+			var to: Vector3 = world.to_scene(tp, PlanetConst.RADIUS_M + world.planet.terrain.elevation(tp, true)) - player.global_position
+			pitch0 = clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)) * 0.7, -0.8, 0.8)
 		for k in facings:
 			var yaw := TAU * k / facings
 			for i in (12 if k == 0 else 6):
-				player.set_view(0.0, yaw)
+				player.set_view(pitch0 if k == 0 else 0.0, yaw)
 				main.hud._readout_timer = 0.0
 				await process_frame
 			var img := get_root().get_texture().get_image()
@@ -463,6 +476,34 @@ func _nest_plant(sp: PlantSpecies, d: Vector3) -> bool:
 			if CubeSphere.surface_distance_m(spot[0], d) <= float(spot[1]) + 1.5:
 				return true
 	return false
+
+
+## The nearest great range (design 3 Oct §CR, TerrainField.great_ranges):
+## from its foot (out across the flank from the summit, past where the
+## range rises) looking up at the summit, and from the summit looking
+## along the crest.
+func _range_sites(camp: Vector3) -> Array:
+	var t: TerrainField = world.planet.terrain
+	var best := {}
+	var bd := INF
+	for g in t.great_ranges:
+		var dd := CubeSphere.surface_distance_m(g.summit, camp)
+		if dd < bd:
+			bd = dd
+			best = g
+	if best.is_empty():
+		lines.append("-- range: no great range on this planet")
+		return []
+	var top: Vector3 = best.summit
+	var hw := float(best.summit_m) / tan(deg_to_rad(TerrainField.FLANK_DEG))
+	var side: Vector3 = best.side
+	var foot := (top + side * (hw * 1.15) / PlanetConst.GEO_RADIUS_M).normalized()
+	var along: Vector3 = best.axis
+	var note := "the great range %.0f km from the camp, summit %.0f m" % [bd / 1000.0, t.elevation(top, true)]
+	return [
+		{"name": "range_foot", "dir": foot, "look": top, "note": note + ", from its foot", "pitch_to": top},
+		{"name": "range_summit", "dir": CreatureSpawner._offset(top, 0.0, 6.0), "look": (top + along * 3000.0 / PlanetConst.GEO_RADIUS_M).normalized(), "note": note + ", from the top along the crest"},
+	]
 
 
 ## The nearest overrun barrow (design 2 Oct §CN; else the nearest barrow
