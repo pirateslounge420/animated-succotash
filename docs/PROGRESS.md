@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-02 (evening) — §CO: the dry pouch and the cave's opening hearth (design chat; Mike 20:15–20:32)
+- **§CO** in RECONCILIATION_2026-09-30:
+  - Kindling you carry never gets wet. Only kindling gathered in rain starts damp, and it dries after 6 game hours.
+  - A cave mouth's or grotto's den is cleared by lighting the hearth at its opening. It is the one exception to "the surface hearth doesn't clear it".
+  - The survivors' 30 days and the ruins at the start are kept as built.
+- **Data, `[NOT WIRED YET — design §CO]`:** `fuel.json kindling.pouch_keeps_dry`; `camps.json sim.overrun.cleared_when_nest`; `delves.json fire_holders.nest_den`. `kindling_check --strict`: 0 errors.
+
 ## 2026-10-02 (evening) — §CN data: the tropical forests' kindling (design chat)
 - **`fuel.json → kindling`**: the four tropical forests' stop-gap is replaced with real lists, likeliest first. Rainforest: twigs, kapok seed down, palm leaves, leaves. Jungle: cogon grass, twigs, leaves, bracken. Dry forest: dry-season leaf litter, grass, twigs, kapok. Cloud forest: twigs, leaves, wax-palm leaves, beard lichen. Seed down gains kapok (*Ceiba*, sourced as very flammable); dead palm leaves gain *Mauritia*, *Socratea* and *Ceroxylon*. Nothing that burns damp is sourced there yet: dammar and bamboo were left out for want of a source that could be opened. `kindling_check --strict`: 33 kinds, 52 biomes, 0 errors.
 - **`tools/kindling_check.py`**: a fill fragment may now widen an existing kind's genera (`extend_genera`).

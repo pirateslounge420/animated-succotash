@@ -1406,6 +1406,40 @@ could be checked quickly: kapok down, palm leaves, grass and dry-season litter):
 first, then the biome lists) → overrun ruins on the built barrow delve (fire-holders, the den,
 clearing) → folk coming back. The tropical fill is data only.
 
+## CO. The pouch keeps kindling dry; a cave's den is cleared by the hearth at its opening — LOCKED (2 Oct, 20:15–20:32, Mike)
+
+Mike, answering §CN's open question and the notes Claude Code left when it built §CN: *"no — I
+don't want kindling to get wet — if it's in your inventory, it's kind of implied it's in your
+pouch"* (20:15); *"no damp litter should burn — we're overthinking it — it should dry out after a
+certain period of time if collected in rain"* (20:31); and on the nest's den, once it was
+explained: *"even cave mouths should have a hearth at the opening — same as grotto"* (20:32). On
+ruins at the start: *"some camps could spawn in already in ruins because that's the ambience and
+feel of the game — something long lost and now a potential to be found"* (20:15).
+
+- **The pouch keeps kindling dry** (`fuel.json → kindling.pouch_keeps_dry`). Kindling you carry
+  never gets wet. Kindling gathered while it is raining, outside a roof, starts damp. It dries in
+  the pouch after `wet.dry_h_game` (6 game hours, about 36 real minutes). Damp kindling doesn't
+  catch, except the three damp-burners (birch bark, fatwood, Douglas-fir pitchwood; §CN). There is
+  no other rain rule: anything can be gathered in any weather. This supersedes §CN's "gathered or
+  carried in rain is wet" and settles its open question.
+- **A cave's den is cleared by the hearth at its opening** (`camps.json →
+  sim.overrun.cleared_when_nest`, `delves.json → fire_holders.nest_den`). A cave mouth or grotto
+  camp that the dark takes is overrun (§CN). Until Phase 3 digs the caves beyond, its den is the
+  small chamber behind the mouth. Its fire is the hearth at the opening, where the camp kept it
+  (§CK's hearth spot, a pace in from the drip line). Laid and lit with the swing, that hearth
+  clears the den, and whatever held it leaves.
+  - This is the one exception to §CN's "the surface hearth does not clear it". That rule still
+    holds for delves, where the den is deep and the clearing fire is at the heart.
+  - When Phase 3 digs real caves, a deep cave is cleared at its heart, like a barrow.
+  - It fills the gap Claude Code found: a taken cave-mouth camp was marked overrun with no fire
+    that could clear it.
+- **Ruins at the start, kept as built.** The world already opens with places long lost: an old
+  hearth at every ruin with no camp and at every nest holding a camp's remains (§CK), and 30 % of
+  old delve ruins overrun (21 of the 68 barrows within 150 km on seed 7731). Mike's line above is
+  the reason for it. Raise the numbers if the world should open emptier.
+- **Survivors, kept as built.** A camp turns to ruin only after 60 game days, so the survivors'
+  30 days count from the day the ruin is marked overrun. That is Claude Code's reading of §CN.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1483,3 +1517,7 @@ systems. Where this sits against §CH and §CJ's audits is Mike's call.
 engine order: **the swing** (left click passes the flame; right click stops lighting) → **the laid
 fire and kindling** → **overrun ruins on the built barrow delve** (fire-holders, the den,
 clearing) → **folk coming back**. Mike's Claude Code prompt of 2 Oct, 14:25 carries the same spec.
+
+**Added 2 Oct, evening (§CO):** two small follow-ups to §CN, with the data in and not wired. First
+**the pouch keeps kindling dry**: only kindling gathered in rain starts damp, and it dries. Then
+**a cave's or grotto's den is cleared by the hearth at its opening**.
