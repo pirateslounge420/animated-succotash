@@ -657,5 +657,88 @@
   "deck_shade": "#06186C",
   "storm": "#5A1AA0",
   "shadow_fade": 0.7
+ },
+ "lens_flare": {
+  "_help": "[NOT WIRED YET — design §DB] The sun flares when you look at it, the way PSO's forests did (Mike, 3 Oct). Only the sun, only while its disc is in view and nothing stands in front of it (one ray, or the depth at the sun's pixel, each frame), fading in and out over fade_s so a twig flicking past doesn't strobe, and fading toward the frame's edge over edge_fade (share of the frame). Flat 2D sprites drawn into the internal frame (480 lines, nearest, dithered with everything else: part of the picture, not a sharp overlay): a core at the sun, a halo round it, and rings along the line from the sun through the frame's centre, each at its place on that line (at: 0 the sun, 1 the centre, past 1 the far side), sizes in internal pixels. Restraint: strength is low, PSO's soft flare, never a modern streak (no anamorphic bars, no lens dirt). Colour: cool white and pale cyan (look R7 keeps the warm accent for fire); near sunrise and sunset the core takes the sun disc's colour (retro.colors.sunset_sun) and the rings stay cool. The sun may bloom (R8: it emits). through_cloud: the share left through thin cloud; none once §CX's one cover value is over gone_above_cloud. Never the moon (it blooms, R8, no rings), never underground. First guesses by Claude (chat), 3 Oct; the designer tunes by eye.",
+  "strength": 0.6,
+  "fade_s": 0.15,
+  "edge_fade": 0.1,
+  "core_px": 10,
+  "core_color": "#F4F8FF",
+  "halo_px": 28,
+  "halo_color": "#BFE6FF",
+  "halo_alpha": 0.35,
+  "rings": [
+   {
+    "at": 0.55,
+    "px": 9,
+    "color": "#9FD8FF",
+    "alpha": 0.18
+   },
+   {
+    "at": 1.35,
+    "px": 16,
+    "color": "#7FB8FF",
+    "alpha": 0.12
+   }
+  ],
+  "sunset_core": "retro.colors.sunset_sun",
+  "through_cloud": 0.4,
+  "gone_above_cloud": 0.85
+ },
+ "shafts": {
+  "_help": "[NOT WIRED YET — design §DC] Shafts of sunlight only when the air would really show them (Mike, 3 Oct: \"just in the cases where you might actually see it in real life\"). Three things must meet. 1. Direct sun on the place: the sun up, §CX's cover value under max_cloud, the place not under a cloud shadow (wind.json cloud_shadows). 2. Something in the air to catch it: the larger of the weather's fog likelihood, the relative humidity above haze_rh_from (after rain, at dawn), the mist (look.json mist), smoke within smoke_m of a lit hearth (smoke.json), and dust in a ruin's hall. 3. A broken roof over it. kinds: canopy (under broken crowns: §BD's sky visibility between gap_visibility, neither open sky nor a closed roof), ruin (a sunbeam into a dark hall through a broken vault or a window, dust drifting in it), crepuscular (rays fanning from the sun across the open sky, from gaps in broken cloud: cover inside broken_cloud). A low sun makes them stronger and longer (low_sun: [sun elevation deg, scale]). They are brightest when you look toward the sun and faint with it behind you, as real ones are. How: the era's way, long flat see-through shafts of geometry along the sun's direction (cards), hard pixel edges, no soft modern volumetric fog; they waver as the crowns above move in the wind (wind.json). Colour: the sky's light, pale and cool (color), never warm (look R7: a correction to the voice chat, where Claude said 'a warm shaft'); lit air, never blooms (R8). max_per_view: never a forest of them. motes: dust in a shaft, single pixels drifting slowly, only inside the light. First guesses by Claude (chat), 3 Oct.",
+  "max_cloud": 0.75,
+  "haze_rh_from": 0.8,
+  "smoke_m": 40.0,
+  "gap_visibility": [
+   0.15,
+   0.7
+  ],
+  "broken_cloud": [
+   0.3,
+   0.7
+  ],
+  "low_sun": [
+   [
+    2.0,
+    1.0
+   ],
+   [
+    15.0,
+    0.9
+   ],
+   [
+    35.0,
+    0.5
+   ],
+   [
+    60.0,
+    0.2
+   ]
+  ],
+  "color": "#DDF2FF",
+  "alpha_max": 0.22,
+  "length_m": [
+   6.0,
+   30.0
+  ],
+  "width_m": [
+   0.4,
+   2.5
+  ],
+  "max_per_view": 6,
+  "motes": {
+   "count_per_shaft": 12,
+   "px": 1,
+   "drift_mps": 0.05
+  }
+ },
+ "moon_nights": {
+  "_help": "[NOT WIRED YET — design §DD] Full moon against new moon must be obvious, and you can always see (Mike, 3 Oct). Targets for a 02:00 frame outdoors under open sky, measured with tools/look/measure_look.py like retro.targets: full_mean_luma with a full moon high (the favourites' night, §BU), new_mean_luma under a new moon (about half: dark and still readable; the floor keeps the darkest 5 % navy, never black outdoors), first_quarter_mean_luma with a half-lit moon high. The lever is the moon's share of the night's light (SkySystem's moon energy and MOON_FLOOR, ambient_floor.night moon_add, the night sky stops), not the floor, which stays. curve_exponent: the moon's light by lit share = MOON_FLOOR + (1 - MOON_FLOOR) x lit^curve_exponent, steep near full as the real moon's is (a half moon gives about a tenth of a full one's light), so the full-moon nights stand out. A moon below the horizon gives nothing, so a waxing moon lights only the evening and a waning one only the morning (Astro's orbital moon, as built). Under a closed crown at night and inside tombs §BD stands (near black; torch or nothing). First guesses by Claude (chat), 3 Oct; the designer tunes by eye.",
+  "full_mean_luma": 0.2,
+  "first_quarter_mean_luma": 0.13,
+  "new_mean_luma": 0.1,
+  "curve_exponent": 2.5
  }
 }

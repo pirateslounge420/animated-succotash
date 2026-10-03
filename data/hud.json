@@ -121,5 +121,25 @@
  },
  "pins_ambient": [
   "clock"
- ]
+ ],
+ "calendar": {
+  "_help": "[NOT WIRED YET — design §DD] The year joins the day count (Mike, 3 Oct: \"instead of just having day one, day two, we could have like day one of year whatever\"). The time line (parts: time) and the log's stamps read time_format: day is 1-365 within the year and year counts from the world's first day, so a new world opens on Day 1 of Year 1 (§CG) and the day still turns at local midnight where you stand, as built. year_days comes from data/sky/day_cycle.json. A year is 876 hours of play (tools/reference/moon_reference.py), so most worlds stay in Year 1: the year is deep time more than a counter. year_names: how a year is named, 'number' until Mike chooses (he raised the zodiac; the twelve animals, the four beasts of the mansions, or names of our own are the options). The lunar side is built already: the moon line (phase, how much is lit, moon up) and the mansion line (the moon's mansion and its beast, the 28 mansions drawn beside the moon) are parts you can pin (Esc, then click). log_stamp: the log's own stamp (§AZ), shorter.",
+  "time_format": "Day {day} of Year {year}",
+  "log_stamp": "Y{year} D{day} {hh}:{mm}",
+  "year_names": "number"
+ },
+ "log_more": {
+  "_help": "[NOT WIRED YET — design §DE, §DJ, §DK, §DL] What else the log keeps (§AZ: each line stamped, kept per world). found: waking at a fire after you were taken (camps.json wake_found). spoken: a line from one of the few who speak (§DJ). given / asked: what a stranger gave you, or would like fetched. scroll: the sealed scroll taken (shrines.json log); shown: someone who can't read it hands it back; deciphered: the reader's question and then the scroll's whole text, kept whole (keep_deciphered_whole) so you can read it back any time (Mike: \"it should probably be in the log that you could reference back to\"). tome: a tome found; its pages are read from the item while you carry it (§DL). The lines are data where they are fixed (camps.json, shrines.json) and come from the speaker or the scroll where they are not. Never a quest log: no objectives, no markers, no list of things to do.",
+  "events": [
+   "found",
+   "spoken",
+   "given",
+   "asked",
+   "scroll",
+   "shown",
+   "deciphered",
+   "tome"
+  ],
+  "keep_deciphered_whole": true
+ }
 }

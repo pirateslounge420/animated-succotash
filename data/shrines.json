@@ -1,0 +1,66 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §DJ, §DK] The hidden places off the road, and the shrine with the sealed scroll (3 Oct, Mike by voice). First guesses by Claude (chat), 3 Oct; the designer owns them. Restart after editing.",
+  "hidden": "§DJ. Hand-made set pieces that the generator places where they fit (§CJ.8: nothing is hand-placed on a generated planet), never on a road: off_road_m from the nearest one, just far enough that you choose to lose sight of it (§BC). per_km_of_road: about how many to a kilometre of road, on either side. kits: Mike's first three, what each is and what its site needs; more kits later. speakers_share: how many hidden places have one of the few who speak (§DJ): a small figure on the shared rig with a line for the log. A hidden place with a hearth is a hearth like any other for §CU's count and §CV's smoke.",
+  "shrine": "§DK. A new monument kind. An ominous hallway goes down into the ground (or in under a great tree's roots, kits.oak_door), wall torches burning along it in sconces, and at its end an altar with a sealed scroll. Its delve (§CJ: every ruin has one) is shut behind the altar until the sconces are set to the scroll's pattern. A sconce is a torch in a bracket: put out by hand (sconce_snuff: interact, right click smothers it), lit again with your torch's swing (sconce_relight: swing, §CN), with no kindling (laying is for fires). Sconces never smoke (§CV). sconces: how many (a range). pattern: which are lit and which dark, seeded per shrine; never all lit (how you find it) and never all dark. open: what moves when the hall matches the pattern: the wall behind the altar gives way to steps going down. light: what the sconces burn with, open for Mike (ordinary fire someone tends unseen, or a stranger light that isn't fire); either way they are burning when you first come.",
+  "scroll": "§DK. The sealed scroll (items.json scroll). Only some can read its marks and break its seal (readers: open for Mike), somewhere else, down the road or elsewhere in the same biome, reader_far_km from the shrine, never at the shrine. Shown to anyone else it comes back (log.shown). The reader asks first (log.asked_where), then reads it: a passage of old wisdom (public domain, as the tomes, §DL) and the pattern, both kept whole in the log (hud.json log_more). The text never names how the shrine's people ended (§BQ). Guessing the pattern at the door is possible but costly: every sconce you put out is dark you made yourself (§BA), and the hall is long enough that walking to a reader is the better way.",
+  "log": "Lines for the log (§AZ)."
+ },
+ "hidden": {
+  "off_road_m": [
+   150.0,
+   900.0
+  ],
+  "per_km_of_road": 0.25,
+  "speakers_share": 0.3,
+  "kits": [
+   {
+    "id": "earth_homes",
+    "what": "A hidden grove with homes dug into a bank under the turf (Mike's 'hobbit-style homes', built from the real turf-house, earth-lodge and pit-house ways, our own folklore and not Tolkien's, §BO): a small camp under §BL's rules, with its own hearth.",
+    "needs": "a sheltered hollow or bank, water near, woods in reach"
+   },
+   {
+    "id": "oak_door",
+    "what": "A shrine's door under a great gnarled old tree on a rise: its roots grip a stone doorway that goes down.",
+    "needs": "an old broadleaf of that place past the top of its size band (an oak where oaks grow, §CA, §CS), on a rise"
+   },
+   {
+    "id": "burning_shrine",
+    "what": "An abandoned shrine whose torches still burn, going down into the ground (the shrine, below).",
+    "needs": "rock or a slope to go into"
+   }
+  ]
+ },
+ "shrine": {
+  "sconces": [
+   6,
+   8
+  ],
+  "pattern": {
+   "seeded": true,
+   "never_all_lit": true,
+   "never_all_dark": true
+  },
+  "sconce_snuff": "interact",
+  "sconce_relight": "swing",
+  "open": "wall_behind_altar",
+  "light": "open"
+ },
+ "scroll": {
+  "readers": "open",
+  "reader_far_km": [
+   5.0,
+   60.0
+  ],
+  "text": [
+   "passage",
+   "pattern"
+  ]
+ },
+ "log": {
+  "taken": "You took the scroll from the altar. The seal holds, and the marks mean nothing to you.",
+  "shown": "They turn the scroll over and hand it back.",
+  "asked_where": "\"Where did you find this?\"",
+  "opened": "The wall behind the altar gives way. Steps go down."
+ }
+}

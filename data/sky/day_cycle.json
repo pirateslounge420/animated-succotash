@@ -12,6 +12,7 @@
 	"year_days": 365,
 	"year_start_day": 0,
 	"moon_cycle_days": 29.5,
+	"full_moon_illumination": 0.97,
 	"weather_smoothing_s": 5,
 	"cloud_light_band_deg": [
 		-10,

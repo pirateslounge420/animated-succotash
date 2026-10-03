@@ -265,5 +265,88 @@
    },
    "chance": 0.1
   }
+ },
+ "overgrowth": {
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] A ruin wears its place (Mike, 3 Oct by voice: \"different mosses and plants and vines and stuff like overgrowing them\"; \"just dressing for now\"). Dressing only: nothing to clear, no mechanic. What grows on it comes from the plants that really grow there (the community of the place, \u00a7CS; the biome gate \u00a7CA; the vines \u00a7CE; a nest's own plants \u00a7CM): moss on the stones, ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall tops, and lichen painted into the stone's own tile (look R9: detail in the albedo). by_moisture: how much of each by the place's moisture (the climate's 0-1), as rows of the columns; between rows they blend. shade_side_scale: the side away from the sun (north in the northern hemisphere, south in the southern) carries this much more moss and fern, as real walls do. age: older stone carries more (a monument against a camp's remains, \u00a7CK). cold_mean_c: where the year's mean is below this, only lichen and moss. Never a species the place can't grow: a desert ruin is nearly bare, a cloud-forest ruin green to the cornice. With \u00a7BQ's signatures and \u00a7CU's no-two-alike hearths, this is why two ruins of one kind are two places.",
+  "columns": [
+   "moisture",
+   "moss",
+   "fern",
+   "vine",
+   "wall_top",
+   "lichen"
+  ],
+  "by_moisture": [
+   [
+    0.0,
+    0.0,
+    0.0,
+    0.02,
+    0.05,
+    0.25
+   ],
+   [
+    0.3,
+    0.05,
+    0.02,
+    0.08,
+    0.15,
+    0.3
+   ],
+   [
+    0.55,
+    0.25,
+    0.12,
+    0.2,
+    0.3,
+    0.2
+   ],
+   [
+    0.8,
+    0.55,
+    0.3,
+    0.35,
+    0.45,
+    0.1
+   ],
+   [
+    1.0,
+    0.75,
+    0.4,
+    0.45,
+    0.5,
+    0.05
+   ]
+  ],
+  "shade_side_scale": 1.6,
+  "age": {
+   "monument": 1.0,
+   "camp_remains": 0.5
+  },
+  "cold_mean_c": 0.0
+ },
+ "haunt": {
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, \u00a7CJ); share: of those, how many are. A ghost is the shared cloaked rig (\u00a70) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (\u00a7CU): \u00a7BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (\u00a7BQ: the ending stays unnamed).",
+  "kinds": [
+   "GRAVEYARD",
+   "BARROW",
+   "tomb",
+   "mausoleum"
+  ],
+  "share": 0.4,
+  "color": "#C8D8FF",
+  "alpha": 0.55,
+  "low_light_visibility": 0.25,
+  "distance_m": [
+   8.0,
+   20.0
+  ],
+  "occluder_within_m": 1.5,
+  "seen_s": [
+   0.5,
+   2.0
+  ],
+  "per_visit_max": 1,
+  "per_real_hour": 1.0
  }
 }

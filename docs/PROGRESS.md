@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (evening) — §DA–§DL, Mike's morning voice session written up: the wind you can see, the flare, the moon's two nights and the year, waking, light gives you away, the full-moon werewolf, the goblin band (in part), ruins, hidden places, the sealed scroll, tomes: design and data only (design chat; Mike, "lock it all in", then 17:07: one Claude Code prompt per idea)
+- **Design:** §DA–§DL sit before §BR under a session note (the fan dropped; seven things Claude said in the call that the doc corrects). Written after the afternoon's §CR–§CZ, so: §DA adds to §CV's smoke column (shelter under the crowns, gusts, the maths behind `far.seen_to_m` and `min_px`) and to §CZ's built specks (the gust field); §DF and §DG use §CU's lurker wording; §DE sits on §CY.1's "whatever hour it is" and the circle, and flags its one clash with §CW (the lost days move the clock). §BR gains the order: one idea at a time, the wind first.
+- **Data, none of it wired:** new `wind.json`, `senses.json`, `shrines.json`, `tomes.json`, `day_accents.json`; `look.json → lens_flare, shafts, moon_nights`; `hud.json → calendar, log_more`; `camps.json → wake_found`; `dread.json → full_moon`; `sky/day_cycle.json → full_moon_illumination` (and its README row); `ruins.json → overgrowth, haunt`; `audio.json → ruins`; `items.json → scroll, tome`. Every data file parses.
+- **Reference maths:** `tools/reference/beacon_reference.py` (on the 400 km planet the horizon is 451 m from eye height; a 60 m column's top shows from 3.2 km, matching §CV's 3 km; the day haze leaves 8 % contrast at 1 km; a full column is under 2 px past 2.1 km, so `smoke.json far.min_px` carries it to 3.2 km). `tools/reference/moon_reference.py` (a full moon every 70.8 h of play, 7.8 h of it "full" at 0.97; a year is 876 h; nights 1–3 of every new world are werewolf nights as built).
+- **Found in the code (for Claude Code):** each plant sways on its own sine phase and the weather's gusts are minutes long, so nothing travels; `creature_species.gd` gates `full_moon` at 0.85 lit (seven nights) and `dread.gd` boosts the werewolf above moonlight 0.9 (one threshold now: `full_moon_illumination` 0.97).
+- **For Mike:** §DH's four calls (who the band are, what happens if they catch you, whether they raid camps, whether they carry light); §DE against §CW; §DG's first nights; §DD's year names; §DF's stranger; §DK's readers, the sconces' light and what lies deeper; §DI's Minecraft cave sounds.
+
+---
+
 ## 2026-10-03 (night) — Mike's 14:34 play fixed (wood lit from outside, rain only from a drawn raincloud, giant herbs, the den); §CY.1 you wake at dawn; §CZ the fire breathes (Claude Code)
 - **1. Wood lit from the wrong side.** Trunks, limbs, bark cones and bamboo culms had their normals pointing in, so the sunny side read dark. They point out now (`plant_meshes.gd` `tri3` / `_smooth`; bark cones were wound the other way and are fixed too).
   - The shadow pass's "closed shapes cast from their far faces" rule now reads the normal, not the winding (`foliage.gdshader`), so mirrored trees cast the same.

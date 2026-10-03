@@ -1,0 +1,87 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §DF] Your light gives you away (3 Oct, Mike by voice: \"lighting a torch at night or holding it at night actually gives away your position ... so actually, snuffing your flame will become a tactical thing\"; \"different creatures will see you at different distances ... creatures at night are going to have really good night vision\"; \"other things out there that have senses in different ways ... because it smells you\"). What the player gives off, and how each kind of watcher senses it. First guesses by Claude (chat), 3 Oct; the designer tunes by play. Restart after editing.",
+  "player": "What you give off. light: a lit torch, in hand or planted, is seen far beyond its own circle (its circle is how far the lurkers keep back, §CQ; this is how far it is seen). A planted torch is a light like a held one, so whatever comes to the light finds the torch, not you. sound: your footsteps, from noise_events.gd as built (0 silent to 1 sprinting; sneaking quietest). scent: you always give it off, and it rides the wind like every scent (27 Sept §0: pheromones on the wind field): it carries downwind only (wind.json), so a nose upwind of you smells nothing and the werewolf comes from downwind (§DG).",
+  "watchers": "How each kind senses you. sight_day_m: how far it sees you in the open by day. night_vision: its sight at night as a share of by day, and moonlight_adds more of that share under a full moon (§DD: the moon lights you up too). light_sight_m: how far it sees a lit torch at night with a clear line. hearing_m: how far it hears you sprinting (walking half, sneaking a fifth). scent_m: how far it smells you. held_by_light: it keeps out of a torch's circle and a fire's radius (§BA, §CN). drawn_by_light: it comes toward a light it sees. Line of sight always counts: trunks, ruin walls, ridges and the horizon stop sight and light alike (on the 400 km planet the horizon is about 450 m from eye height on level ground, §CR), and hills and walls muffle sound. A light is seen by line of sight long before brightness runs out: a torch on a dark night is a point to anything that can see the place it stands.",
+  "kinds": "lurker: the dread's hunters and the cloaked shape with no species (§BA, §CU: what lurks in the dark is the antagonist): held off by light and drawn to it, so a torch keeps them at its edge but calls them there. night_animal / day_animal: the ordinary rosters (§CH); their creature light_response (creatures.json) stands. werewolf: §DG, by scent. goblin_band: §DH, sees light from far and little else at night; not built until Mike's calls on §DH. stranger: the one who sometimes comes to a light in trouble to help (§DF); what they do is open.",
+  "lose_lock": "§DH, for the band when it is built: it loses you when your light has been out and you have stood still for snuffed_and_still_s, when you are up a tree (in_a_tree), or when it has not seen you for out_of_sight_s.",
+  "interrupt": "Watchers sense each other with the same senses, so a hunter on your trail and a band crossing it can meet and tangle while you slip away. Nothing is staged for you (§CH)."
+ },
+ "player": {
+  "light": {
+   "seen_beyond_circle": true,
+   "planted_counts": true
+  },
+  "sound": {
+   "from": "scripts/player/noise_events.gd"
+  },
+  "scent": {
+   "always": true,
+   "rides_wind": true
+  }
+ },
+ "watchers": {
+  "lurker": {
+   "sight_day_m": 0,
+   "night_vision": 1.0,
+   "light_sight_m": 1500,
+   "hearing_m": 60,
+   "scent_m": 0,
+   "held_by_light": true,
+   "drawn_by_light": true
+  },
+  "night_animal": {
+   "sight_day_m": 80,
+   "night_vision": 0.8,
+   "light_sight_m": 300,
+   "hearing_m": 60,
+   "scent_m": 80,
+   "held_by_light": false,
+   "drawn_by_light": false
+  },
+  "day_animal": {
+   "sight_day_m": 120,
+   "night_vision": 0.15,
+   "light_sight_m": 200,
+   "hearing_m": 50,
+   "scent_m": 60,
+   "held_by_light": false,
+   "drawn_by_light": false
+  },
+  "werewolf": {
+   "sight_day_m": 150,
+   "night_vision": 0.9,
+   "light_sight_m": 0,
+   "hearing_m": 120,
+   "scent_m": 400,
+   "held_by_light": true,
+   "drawn_by_light": false
+  },
+  "goblin_band": {
+   "sight_day_m": 150,
+   "night_vision": 0.1,
+   "light_sight_m": 2500,
+   "hearing_m": 40,
+   "scent_m": 0,
+   "held_by_light": false,
+   "drawn_by_light": true,
+   "built": false
+  },
+  "stranger": {
+   "sight_day_m": 150,
+   "night_vision": 0.3,
+   "light_sight_m": 2500,
+   "hearing_m": 40,
+   "scent_m": 0,
+   "held_by_light": false,
+   "drawn_by_light": true,
+   "built": false
+  }
+ },
+ "moonlight_adds": 0.5,
+ "lose_lock": {
+  "snuffed_and_still_s": 6.0,
+  "in_a_tree": true,
+  "out_of_sight_s": 10.0
+ }
+}

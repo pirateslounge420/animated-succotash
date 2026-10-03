@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`).
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`.
 
 ---
 
@@ -2111,6 +2111,555 @@ and six embers each climb at one steady speed on a loop of their own.
 
 All numbers are first guesses; the designer owns them.
 
+---
+
+# Voice session — 3 Oct 2026, morning: the air moves; the moon sets the night; the lurkers have eyes; a scroll to carry
+
+Talked through by voice on the morning of 3 Oct and written up after Mike's 12:24 message
+(*"please write it up claude"*) and his 17:07 one (one Claude Code prompt per idea). Mike, at the
+end of the call: *"Yep, go ahead and lock it in … I'll prompt you to please lock it all in."*
+Written up after the afternoon's sessions locked §CR–§CZ (the 1/100 planet, the communities, the
+hearths, smoke from every hearth, no waiting, rain from a raincloud, the dawn wake-up, the fire
+that breathes), so where this morning's ideas touch those, the section says how they fit. Where an
+idea touched a locked rule in the call it was flagged there and settled; where Claude only saw a
+clash while writing it up, the section says so and leaves it open. Builds on §AW–§BG, §BL, §BO,
+§BQ, §CG, §CH, §CJ, §CN, §CQ and §CR–§CZ. The data is in and none of it is wired.
+
+**Considered and dropped:** a fan to coax embers and feed a fire (Mike: *"let's forget about
+the fan"*).
+
+**Corrections to the voice call** (things Claude said there that the locked doc doesn't bear
+out; the sections below follow the doc):
+- the hidden folk would be "the only voices in the world": camp folk already have their line
+  (§BF, §BO);
+- "a warm shaft" of sunlight: fire is the one warm accent (LOOK_REFERENCE R7), so shafts are
+  cool;
+- secrets "hand-placed": on a generated planet they are hand-made set pieces placed by rule
+  (§CJ.8);
+- Minecraft's cave groans as a ruin's sound: §BG took untrackable noises out on 30 Sept, so
+  they are not written (open, §DI);
+- "the dark is your antagonist, not the clock": §CU has since reworded the pillar (what lurks
+  in the dark is the antagonist), and who is in a ruin by day still keeps §CH's and §CN's clock;
+- "death-to-hearth" as something new: it is §AY (30 Sept). This session adds where you wake
+  without a home, the lost days and the folk who found you;
+- "smoke signals" as a new idea: smoke from every hearth was locked that afternoon as §CV, so
+  §DA only adds what the wind does to the column.
+
+## DA. The wind you can see: one wind, gusts that travel, and what it does to the smoke — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"whenever I step outside, I might feel a little breeze. I might see the leaves rustling.
+I might hear them. I might hear some cicadas. I might see some like leaves being blown across
+the yard … clouds blowing"*; *"we already have some type of wind weather type system thing, but
+it doesn't necessarily feel too good"*; *"basically where the wind, the directional, you can
+actually see … the wind moving the trees and the plants, blowing leaves across the ground, and
+also like the smoke from the fire, and maybe make it to where … one of the ways you can actually
+find camps far off is by looking for the smoke signals."* Asked whether the wind or the sound
+first: *"Both, but let's focus on the wind first."* Builds on the live wind and water cycle (27
+Sept §0: *"keep"*), §BD, §BG, §BS, §CL, §CV (the smoke column) and §CZ (the fire's specks drift
+with the wind, built). Data: `data/wind.json` (new). Reference:
+`tools/reference/beacon_reference.py`. Not built.
+
+**One wind, and everything answers it.** The weather's wind (`WeatherSim.local_weather`,
+live) is the only source, sampled where each thing stands, with gusts on top. Grass, crowns,
+ground litter, cloaks, water, smoke, the fire's specks, rain, clouds and the rustle all read the
+same wind and the same gusts, so they move together and the air reads as air. (A sphere has no
+single direction for the whole planet: it is the weather's wind where you are.)
+
+**What's wrong today** (found in the code, 3 Oct):
+- Every plant sways on its own sine wave with its own phase (`foliage.gdshader`), so
+  neighbours move out of step and nothing travels across a field or a wood.
+- The weather's own gusts (`local_weather`) are swells about 1.2 and 0.5 game hours long:
+  minutes of real time, a slow freshening, not a gust.
+- Nothing on the ground moves with the wind but autumn's falling leaves. Water ignores it. No
+  fire draws smoke yet (§CV is designed, not built).
+- Plants sway as hard under a closed crown as in the open. Only the bed's wind sound closes
+  under canopy (§BG).
+
+**The fix:**
+1. **Gusts travel.** A gust field in real seconds: patches of stronger and weaker air carried
+   downwind at the wind's speed, which every reader samples at its own position. You see a gust
+   coming: a paler, bowed patch runs over the grass toward you, then the crowns round you toss
+   and their rustle rises, then it's past. Neighbours move together. The strongest gusts are 1.6
+   times the mean, the lulls drop to 0.45, and the direction swings about 10° (`gusts`; real
+   3-second gusts over open ground run 1.4–1.7 times the mean). The weather's slow swell stays
+   underneath as the wind freshening and easing.
+2. **The real thresholds.** Every reader is tuned against the Beaufort land signs
+   (`beaufort`), at the open-ground wind 10 m up, which is what the weather gives: calm, smoke
+   straight up; from 0.3 m/s smoke drifts and shows the way; 1.6 leaves rustle; 3.4 leaves and
+   twigs always moving; 5.5 dust and loose leaves lifted, small branches moving; 8 small trees
+   sway; 10.8 big branches; 13.9 whole trees. Nothing breaks (§BS), so the table stops at the
+   gale.
+3. **Height and shelter.** The wind falls off toward the ground: grass tops get about half the
+   10 m wind, a treetop about 1.1 times it. Under a canopy everything below the crowns is
+   sheltered by §BD's sky visibility, while the crowns take the full wind, so in a closed wood the
+   tops toss and the air at your face is still. One number now does light, rooms and wind. Halls
+   and caves have no wind except at their openings.
+4. **Who answers:**
+   - **grass and herbs** bow from 1.6 m/s, and a sheen runs over a meadow ahead of each gust;
+   - **crowns** move by force (leaves, then twigs, small branches, small trees, big branches,
+     whole trees), each trunk at its own sway period by height, from under a second for a
+     sapling to four or five for a 40 m giant, so a stand of one species sways together;
+   - **flutter:** leaves on long or flattened stalks tremble in any air, like the sacred fig
+     (§CL: "this tree is the reason to add one") and the aspens and poplars;
+   - **litter:** leaves on the ground lift and skate downwind in the gusts from 5.5 m/s,
+     tumbling, then settle, in the colour of the trees they fell from (the per-species tint and
+     the season), so a pine road skates brown needles and a maple road red leaves. Sand streams
+     over dunes, spindrift over fresh snow, dust off dry roads. The shelter rule puts this on
+     roads, clearings and edges, rarely deep in a closed wood;
+   - **cloaks:** every cloaked figure takes the gust (the rig already takes the mean wind);
+   - **water:** cat's paws, patches where the glints break up, sliding downwind with each gust;
+     a mirror below 1 m/s; small crests on lakes from 8 m/s; still the brightest thing in view
+     (R6);
+   - **the fire:** its specks already drift with the wind and its coals already flare on a gust
+     (§CZ, built 3 Oct); both should read the gust field at the fire, and the torch's sparks
+     (§CP) drift the same way. The pipe's puffs at the circle (§CY.4) take the wind at the camp;
+   - **cloud shadows** sail over the land on part-cloudy days at cloud speed (about twice the
+     ground wind), between the clear and the overcast ends of §CX's one cover value. A cloud's
+     shadow is shade: navy or olive (R3), never grey;
+   - **sound:** the bed's wind loop follows the gust at you, and the crowns round you are
+     sources (§BG) whose rustle rises when the gust reaches them: needles hush, broad leaves
+     rustle, palm fronds clatter, dry autumn leaves rattle. The ear gets the gust when the eye
+     does.
+5. **The smoke column is §CV's; the wind adds two things and some maths.** §CV (locked that
+   afternoon) already has which fires smoke and which never do, the column's height by the
+   fire's state, its lean per m/s, the dawn pool, rain, the night rule and how far it is drawn
+   (`smoke.json`). On top of it:
+   - **shelter under the crowns:** a hearth under trees is sheltered like everything below the
+     crowns (3), so its column rises straight up through the trees and takes the wind's lean
+     only once it clears them;
+   - **gusts shred it:** the cards break up over a gust near the fire, and the lean follows the
+     gust field, not only the mean, so the column leans and recovers as the grass does;
+   - **the numbers behind §CV's reach** (`beacon_reference.py`, on the 400 km planet of §CR):
+     the horizon is 451 m from eye height, a full 60 m column's top shows from about 3.2 km at
+     eye height (§CV's "about 3 km"; 6.3 km from a 100 m hill), so a column is seen from a rise
+     or across a valley, and it rises over the curve as you walk toward it. The day haze leaves
+     under 8 % of its contrast by 1 km, past which it reads as a pale mark against the darker
+     sky horizon (R5), which is enough. A full column (about a quarter as wide as it is tall) is
+     under two internal pixels wide past about 2.1 km, a low fire's 30 m column past 1.1 km and
+     the embers' wisp past 0.3 km, so `smoke.json far.min_px` 2 is what carries it the rest of
+     the way to its 3.2 km. By night the column isn't drawn and the fire's glow is the beacon
+     (§CV), which is what keeps §DF fair: what can see your light, you can see in turn.
+6. **Scale guard:** the wind dresses the world, never reshapes it (§BS). Nothing breaks or
+   falls, and wildfire spreads by §BL's rules as before.
+
+**Build order inside the pass** (`wind.json order`): the gust field in the plant and grass
+shaders, with flutter (`foliage.gdshader` uses 8 of the house's 12 varying slots: keep the wind
+in the vertex stage and re-run `tools/shader_varying_check.py`) → the litter → the gust on the
+smoke column and the coals → the sound → the cloaks and the torch's sparks → the water → the
+cloud shadows.
+
+**Supersedes or amends:** the foliage shader's sway as built (one wind now, with travelling gusts
+and shelter). `WORLD_SYSTEMS_SPEC`'s Phase 4 card ("wind into the world") is this section, and
+§CL's per-species flutter is part of it. §CV's column gains the shelter and the gusts.
+
+## DB. The sun flares when you look at it, the PSO way — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"is there any way to implement like cheaply a lens flare type of thing? Kind of how in
+Phantasy Star Online episode one or two … in Forest One and Two, if you look up at the sky with
+the — at the sun, there's kind of like a lens flare"*; then: *"Yeah, we can lock it in."* Data:
+`look.json → lens_flare`. Not built.
+
+- **When the sun's disc is in view and nothing is in front of it** (one ray, or the depth at
+  the sun's pixel, each frame): a bright core at the sun, a soft halo, and one or two faint rings
+  on the line from the sun through the middle of the frame, sliding as you turn and fading as
+  the sun nears the frame's edge.
+- **Flat 2D sprites drawn into the 480-line frame,** nearest and dithered with everything else:
+  part of the picture, not a sharp overlay (§Y, R9). It is the cheapest effect of its era, and it
+  is in the reference.
+- **Restraint:** PSO's soft flare, never a modern streak (no anamorphic bars, no lens dirt). It
+  fades in and out over about 0.15 s so a twig flicking past doesn't strobe. Thin cloud dims it
+  and overcast takes it away, by §CX's one cover value.
+- **Cool, not warm:** white and pale cyan (R7 keeps the warm accent for fire). Near sunrise and
+  sunset the core takes the sun disc's colour and the rings stay cool. The sun may bloom (R8).
+- **The sun only:** the moon blooms (R8) but gets no rings, and nothing flares underground.
+
+## DC. Light through the leaves only when the air would really show it; butterflies — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"in particular areas, maybe in like a dense canopy, in the morning or something, if
+there's like a little bit of mist or fog in the air, how you can see the beams of sunlight
+shining down through the trees"*; *"maybe not all the time, just in the cases where you might
+actually see it in real life … It's more like whenever you see like a certain cloud formation
+or something like that"*; *"maybe we could have like butterflies."* Builds on §BD (sky
+visibility), the 1 Oct mist, §CV, §CX and §DA. Data: `look.json → shafts`,
+`data/day_accents.json` (new). Not built.
+
+- **Shafts only when three real things meet:** direct sun on the place (not overcast, not under
+  a cloud shadow); something in the air to catch it (fog, the damp after rain or at dawn, the
+  mist, a hearth's smoke, dust in a ruin's hall); and a broken roof (gaps in a crown, holes in a
+  vault, a window). A low sun makes them stronger and longer. A wet wood at dawn after a rainy
+  night has shafts; the same wood at a dry noon has none.
+- **Three kinds:** under broken crowns; a sunbeam into a dark ruin hall through its broken vault
+  or a window, with dust drifting in it (the day's companion to §DI's dark halls); and
+  crepuscular rays fanning from the sun across the open sky from gaps in broken cloud, which is
+  Mike's "certain cloud formation".
+- **The era's way:** long, flat, see-through shafts of geometry along the sun's direction, with
+  hard pixel edges, never soft modern volumetric fog. They are brightest looking toward the sun
+  and faint with it behind you, as real ones are, and they waver as the crowns above move in the
+  wind (§DA). Never more than a handful in view.
+- **Cool light** (a correction to the call, where Claude said "a warm shaft"): the sky's light,
+  pale white to pale cyan, never warm (R7). It is lit air, so it never blooms (R8).
+- **Butterflies by day:** a few small flapping pixel sprites dancing round flowers in warm sun,
+  only where the sun reaches; when it blows (from 5.5 m/s, §DA) they sit in the grass. Each
+  land's real species and colours are a later fill (one agent per biome family, as with the
+  plants; each land its own, §CS); the first guesses are by biome family, mostly whites, yellows
+  and blues. Nothing in the day's air glows (R8); the night's blue butterflies at the ruins
+  (`night_accents.json`) stay as they are.
+
+## DD. The moon sets how dark the night is; the year joins the day — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"I really like your idea of having it to where, you know, like the full moon is brighter
+out and with the new moon, it's almost dark. But something I want to note is that you should
+always be able to see … but, you know, the difference between a new moon and a full moon should
+be obviously different"*; and: *"instead of just having like day one, day two, we could have
+like day one of year whatever. And then have it to where it kind of like maps to a lunar cycle.
+Or some type of zodiac thing."* Builds on §BA, §BD, §BU, §CG, §CY.1 and what is built. Data:
+`look.json → moon_nights`, `hud.json → calendar`, `dread.json → full_moon.moon_fill_by_light`.
+Reference: `tools/reference/moon_reference.py`. Not built.
+
+**Already built** (found 3 Oct): a real moon. It runs Earth's 29.5-day month in game days (1/10
+time, like everything else), rises about 49 game minutes later each day, lights the night by its
+phase (never below 5 % of full, `MOON_FLOOR`), and walks the 28 lunar mansions, drawn beside it
+in their four beasts' tints. The HUD has a moon line (phase, how much is lit, moon up) and a
+mansion line (the mansion and its beast), parts you can pin (Esc, then click). A new world's
+first night is near full (§CG; §CY.1 keeps that calendar and only moves the hour to dawn).
+
+1. **Full against new must be obvious, and you can always see.** Outdoors under open sky, a full
+   moon high gives the favourites' night (mean luma about 0.20, §BU) and a new moon about half
+   that: dark but readable, with the floor keeping the darkest 5 % navy, never black. The lever
+   is the moon's share of the night's light, not the floor. Its light rises steeply toward full,
+   as the real moon's does (a half moon gives about a tenth of a full one's light), so the
+   full-moon nights stand out. A waxing moon lights the evening and a waning one the morning, as
+   built. Under a closed crown at night and in tombs §BD stands (*"torch or nothing"*, Mike, 30
+   Sept): "always" means under the open sky. Check it at 02:00 on a full and on a new moon with
+   the measure tool.
+2. **The moon sets how dangerous the night is.** The dread's moonlight rate follows the actual
+   moonlight (the phase, and whether the moon is up) instead of switching on at one brightness
+   as `dread.gd` does today. A bright night fills slower, and the full moon is the werewolf's
+   (§DG).
+3. **The year joins the day count.** The time line reads *Day N of Year Y*: the day runs 1–365
+   within the year, years count from the world's first day (a new world opens on Day 1 of
+   Year 1, §CG), the day still turns at local midnight as built, and the log's stamps carry the
+   year too. The lunar side Mike asked for is the moon and mansion lines, already built.
+
+**Reference maths for Mike** (`moon_reference.py`):
+- A full moon comes round every **70.8 hours of play**, and "full" (the brightest three nights,
+  §DG) lasts about **7.8 hours** of that: 11 % of nights. Within one sitting the phase barely
+  moves (about 3 % in two hours).
+- A year is **876 hours of play**, so most worlds stay in Year 1: the year is deep time more than
+  a counter.
+- A shorter month would bring the full moon round sooner (every 17.7 hours of play at a 7.4-day
+  month) but would break the 1/10 time rule for the moon alone. It isn't proposed; it is noted
+  so the choice is in view.
+
+**Open (Mike):** what a year is called: numbers (as written), the twelve animals, the four
+beasts of the mansions, or names of our own.
+
+## DE. Waking: found by folk, days later, at your hearth or the nearest — LOCKED (3 Oct, by voice, Mike); one clash flagged
+
+Mike: *"if you do end up dying, it should send you back to like your last interacted with
+hearth, or maybe like you can set different hearths as your like home hearth, and if you don't,
+maybe it just like respawns you at the nearest one"*; *"a random amount … between like one and
+three days goes by between every time that like you die. And so whenever you wake up around a
+hearth, there's like other villagers around that like find you and they're basically like, hey,
+we found you passed out, we're glad you're finally awake and that you're okay"*; *"it still
+ticks the days, the day counter."* Builds on §AY (30 Sept: you wake at your hearth), §AZ, §BL,
+§CG and §CY. Data: `camps.json → wake_found`. Not built.
+
+- **Where you wake:** at your hearth, if you made one (§AY: right click its fire) and it still
+  burns with folk at it; **otherwise at the nearest lit fire with folk at it, measured from where
+  you fell.** This amends §AY: the opening camp is no longer your hearth by default, and you wake
+  there only if it is the nearest or you made it home. A home camp that has gone dark or been
+  overrun is skipped.
+- **One to three days pass** (uniform, in game days, so you wake at whatever hour that lands
+  on: §CY.1's "after a death you wake at whatever hour it is", into the fire circle outside the
+  gather hours or a working camp inside them, §CY.2). The world runs those days for real, the
+  way it runs while you are away: the clock, the moon (3–10 % of its month), the season, the
+  weather, every camp's ticks (§BL's catch-up), plantings, the fires you left burning down, your
+  torch where you fell burning out. The day count moves on (§DD). Nothing is faked.
+- **Found by folk:** you come to beside their fire, and after the cause line the log says so:
+  *"Folk found you out cold and carried you to their fire. Two days have passed."* (§BO: folk are
+  mute, plus a line in the log; this is that line.)
+- **The death lines fit being found alive.** "Killed by a werewolf" reads wrong before "we found
+  you", so the creature line becomes *"Struck down by a {creature}"* (first guesses in
+  `wake_found.death_lines_found`); "Taken by the dark" stays as built (§AZ) unless Mike wants it
+  to follow §CU's wording.
+- **What you carried stays where you fell** (§AY stands): the walk back is still the price.
+
+**Flagged for Mike:** §CW, locked that afternoon at 14:49, says the clock never skips and there is
+no wait mechanic. The lost days are the one thing that moves the clock past you, and they are
+this morning's ask, so both are written. The sim skips nothing (the catch-up runs every tick), but
+a player could be taken on purpose to pass a bad night, waking one to three days on with their
+gear left where they fell. Keep both (the lost gear and the lost days are the price), or shorten
+the lost time to the rest of that one night.
+
+## DF. Your light gives you away — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"maybe lighting a torch at night or holding it at night actually gives away your
+position by something that might be lurking out there. So, actually, snuffing your flame will
+become a tactical thing."* Claude flagged that this turns "light keeps the dark back" around,
+and offered the reading that keeps one antagonist: light holds the lurkers off but draws their
+attention. Mike took it: *"It's the things that are lurking in the dark"* (the same words §CU
+locked that afternoon as the pillar). Then: *"different creatures will see you at different
+distances … creatures at night are going to have really good night vision … a torch in the night
+might like give away your position to like some other type of NPC that might see you, and maybe
+either come to help you, kind of like the mysterious stranger in Fallout, or maybe it's like a
+group of goblins"*; *"there also might be other things out there that have senses in different
+types of ways … a werewolf … or maybe because it smells you"*; *"having your torch on versus off
+definitely becomes like a real choice."* Builds on §AW, §BA, §BP, §CH, §CN, §CQ, §CR and §CU.
+Data: `data/senses.json` (new). Not built.
+
+1. **Light holds them off and calls them in.** The lurkers keep out of your circle (§BA, §CQ)
+   and see it from far beyond it. With your torch lit you are safe inside your circle and you
+   have told the night where you are; with it out you are hidden from eyes and the dread fills
+   faster (§BA). Neither is safe, and that is the choice.
+2. **Every watcher has senses** (`senses.json`): sight by day; night vision as a share of that,
+   with moonlight adding to it, so a full moon shows you even with your torch out; how far it
+   sees a lit torch; hearing (your footsteps as built: a sprint is loud, sneaking quiet); and
+   smell, which rides the wind like every scent (27 Sept §0: pheromones on the wind field), so a
+   nose upwind of you smells nothing and the smoke shows which way your scent is going (§DA).
+   **Line of sight counts for sight and light alike:** trunks, walls, ridges and the horizon
+   (451 m from eye height on level ground, §CR) stop both. A torch on a dark night is seen by
+   anything that can see the place it stands, long before its brightness runs out.
+3. **They go to the light, not to you.** A planted torch is a light like a held one (§AW): plant
+   it and walk into the dark, and what comes for the light finds the torch.
+4. **Going dark costs.** Putting your torch away puts it out (§AW), and fire is never made
+   (§BP): it comes back from a flame or from the coal you carry (§CQ.4, one coal at a time). So
+   snuffing to hide spends your coal, or leaves you dark until the next fire. That cost is what
+   makes it a choice.
+5. **Who sees your light at night:** the lurkers (held off, and drawn in); the goblin band
+   (§DH: it sees light from far and little else); sometimes **a stranger who comes to help**
+   (Mike's Fallout stranger), whose help is open; and never the werewolf, which doesn't need it
+   (§DG: it goes by scent).
+6. **They sense each other too.** A hunter on your trail and a band crossing it can meet and
+   tangle while you slip away. Nothing is staged for you (§CH).
+
+**Open (Mike):** what the stranger does when they come: stands with you so the lurkers keep off,
+walks you to a fire, leaves you a coal, or something stranger.
+
+## DG. The full-moon werewolf — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"maybe there's something lurking on you the whole time, which was like a werewolf or
+something, and then those goblins end up like interrupting it … or maybe because it smells
+you"*; then: *"I like that werewolf idea where they only come out on full moons, on the
+brightest nights."* Amends §BA's hunter table. Data: `dread.json → full_moon`,
+`sky/day_cycle.json → full_moon_illumination`, `senses.json → werewolf`. Not built.
+
+- **Only on the brightest nights.** The werewolf hunts only while the moon is at least 97 % lit,
+  about the three nights round full. That is one number (`full_moon_illumination`) for every
+  reader: today the code gates `active: full_moon` at 85 % (about seven nights) and boosts the
+  hunter above a moonlight of 0.9. It keeps §BA's biomes (the temperate deciduous, temperate
+  rain, maritime and floodplain forests) and its pattern and speed: a pacer at 6.5 m/s, ×1.3
+  on the full moon, which you can't outrun, only out-light.
+- **On the other nights its forests fall back to the lurker with no species** (`dread.json`'s
+  creature-null entry, §CU, which the grasslands meet every night). In effect this changes §BA's
+  build order: the werewolf was the first hunter to build and the one you met there every night;
+  now the fallback is what you meet there most nights.
+- **It hunts by scent.** It doesn't need to see you: your torch doesn't give you away to it, and
+  snuffing doesn't hide you from it. It smells you from downwind (§DF), so the wind decides
+  which side it comes from. Light still holds it back like any beast (§BA, §CN: a torch slows
+  them, a fire keeps them out).
+- **The bright night is the dangerous one.** The full moon is the easiest night to see and
+  wander by (§DD), and it is the night the werewolf is out. Mike's dilemma: snuff your torch to
+  slip the goblins' eyes and you have dropped the one thing that kept the werewolf back.
+
+**Open (Mike):** §CG opens every world near full (`World.START_DAYS` 13.62; §CY.1 keeps it), so
+**nights 1, 2 and 3 of every new world are werewolf nights** wherever the werewolf lives (99.4 %,
+99.9 % and 98.2 % lit at midnight). Keep that, or start a world two days earlier: nights 1 and 2
+are still bright (92 % and 96.6 % lit) and the first full moon falls on nights 3 to 5
+(`moon_reference.py`).
+
+## DH. The goblin band — LOCKED in part; four calls open (3 Oct, by voice, Mike)
+
+Mike: *"maybe it's like a group of goblins that move through the woods, and they're like
+bandits, and they like ransack places, and like you might — they might pull up on you because
+they saw your — they might not have the best night vision … but maybe they can like see your
+torchlight from a long way away."* Claude flagged that a band you fight would cross §BA and the
+no-fight line; Mike: *"Yeah, not combat in that sense. They'll definitely be something that you
+try to avoid, like if they see you and you don't snuff your flame in time, they might lock on to
+you, unless like, you know, you snuff your flame and like either like you said stand still or
+climb a tree."* Data: `senses.json → goblin_band, lose_lock`. **Not built until the calls below
+are made.**
+
+**Locked:**
+- A band moving through the woods at night, on the shared rig at small folk's scale (§0).
+  **Never a fight:** something you avoid (§BA; the weapons stay shut, §CN).
+- **They see light, not you:** poor night vision, but they see your torch from a long way off
+  (§DF).
+- **Seen in time, they lock on.** To lose them, snuff your flame and stand still, or climb a
+  tree. §AU keeps tree climbing, and starting a climb plants a lit torch where there is ground
+  (§AW), which leaves them a light to walk to.
+
+**Open:** each of these touches a locked rule, and Claude only saw them in full while writing
+this up.
+1. **Who they are.** §BO names goblins as the friendly tribal folk (*"goblins (already the tribal
+   folk in the repo) … all friendly"*), and §BL says every human light is on the player's side and
+   what lurks in the dark is the only antagonist (§CU). Hostile folk break both. Either (a) they
+   are folk turned bandit, which amends §BL and §BO and wants another name than goblin; or (b)
+   they are lurkers (§CU) that carry no fire and come to yours like moths, which keeps §BL and
+   §BO whole (they can still look small and hooded).
+2. **What happens if they catch you.** In the call Claude suggested they rob you, or fell you and
+   you wake days later (§DE). Not settled.
+3. **"They ransack places."** §BL: camps only go backwards from resources or the dark, and raiding
+   is the rung above exchange that this world doesn't build. Do they raid living camps (amending
+   §BL), or only rummage ruins and empty places?
+4. **Do they carry light?** If they do, you see them coming from far as they see you (§CV's night
+   glow), and (b) above is off.
+
+## DI. Ruins: dark by day, dressed by their place, alive with what lives there, haunted where the dead lie — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"considering, you know, our game is based around the torchlight, we should be able to
+have it to where you can use it during the day, too, like, in ruins wherever sunlight cannot
+reach"*; *"different mosses and plants and vines and stuff, like, overgrowing them"*, and asked
+whether as dressing or something you clear: *"just like dressing for now"*; *"since the ruins are
+going to be such a hot spot … they need to feel alive, so definitely we need to have some ambient
+sounds based off of what type of creatures are lurking there. And also maybe, like, graveyards,
+mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish"*;
+*"if you follow it around the corner … you go around the corner expecting to see where it is, it
+might just have vanished."* Builds on §BD, §BG, §BQ, §CA, §CE, §CH, §CJ, §CM, §CN, §CS, §CU and
+§CV. Data: `ruins.json → overgrowth, haunt`, `audio.json → ruins`. Not built.
+
+1. **The torch is a day tool too.** Wherever sunlight can't reach (a ruin's halls, a vault, a
+   cave past its mouth, every delve) it is dark at noon (§BD: enclosed, sky visibility 0;
+   *"torch or nothing"*). That was already the rule; this is why the torch is never useless by
+   day. Who is inside keeps §CH's clock (an ordinary den is empty by day) and §CN's (an overrun
+   delve is the lurkers' at any hour). A sunbeam through a broken roof (§DC) keeps the dark hall
+   company.
+2. **A ruin wears its place.** It is dressing only, with nothing to clear: moss on the stones,
+   ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall
+   tops, and lichen painted into the stone's own tile (R9), all from the community that grows
+   there (§CS; the gate §CA, the vines §CE, a nest's plants §CM), by the place's moisture. A
+   cloud-forest ruin is green to the cornice, a desert one has a creeper in a crack and lichen,
+   and a cold one only lichen and moss. The side away from the sun is mossier, as real walls
+   are, and old monuments carry more than a camp's remains. With §BQ's signatures and §CU's
+   no-two-alike hearths, this is why two ruins of one kind are two places.
+3. **A ruin sounds like what lives in it,** inside §BG. Its residents are sources, each calling
+   from where it lives at its hours: birds nesting at a tower's top by day, swifts pouring into a
+   cold stack at dusk (§CV.5), bats pouring out of the vault at dusk (§CH), an owl in a broken
+   window at night, something small scrabbling below in the dark, frogs and drips in a cistern,
+   lizards in warm dry stone. The place adds to the bed: wind moaning through gaps, doorways and
+   window holes as the gust passes (§DA), drips, the hush of a closed hall. An overrun ruin's
+   residents are silent by day (§CN's tell).
+4. **Haunted where the dead lie.** Graveyards, barrows, and the tombs and mausoleums of the
+   delves can be haunted (first guess: four in ten). Rarely, a pale figure stands at a corner, a
+   doorway or the edge of your light, 8–20 m off: the shared rig (§0), a little see-through,
+   with no light of its own (R8) and no sound. It steps out of sight, and it is gone the moment
+   it is out of view, so the corner you hurry round is empty. It comes only where the light is
+   low (dusk, night, a dark hall by day), at most once a visit and about once an hour spent in
+   such places, and never twice at one spot. It never harms, never speaks and fills no meter.
+   It is not a lurker (§CU): §BA's stage-3 shape comes with the dread and its warnings, and a
+   ghost comes with none. It tells nothing (§BQ).
+
+**Not written; Mike's call:** Minecraft's cave sounds, which Mike asked about in the call. Their
+groans and swells are unplaceable noises, which is what §BG took out on 30 Sept (*"random noises
+you cannot track down"*). The wind in the stones, the drips and the real residents do the job
+inside §BG. If Mike wants the Minecraft ones in the delves, that is an exception to §BG.
+
+## DJ. Off the road: hidden places, and the few who speak — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"it'd also be interesting if we could reward players who went off the beaten path. While
+it might be more dangerous, you could also find some like hidden groves with maybe like some
+hobbit-style homes, or like, you know, entrances to a secret shrine, or something like that
+underneath like a big oak gnarled tree"*; *"an abandoned shrine which has like torches that are
+going underground, and you want to know how they're going, or like how they're burning, or maybe
+you find like a weird elf creature or like a leprechaun or something and he says something
+mysterious and vague, or maybe he gives you something or hints at something that you could fetch
+for him"*; *"some type of like text-based system where … what the NPCs … might say to you kind of
+like logs in your chat box."* Builds on §AZ, §BC, §BF, §BO, §CJ, §CU and §CV. Data: `shrines.json
+→ hidden`, `hud.json → log_more`. Not built.
+
+1. **Off the road is where the strange things are** (§BC already puts the finds off it). The
+   danger off the road is the distance from a fire when the light goes (§BA) and what is out in
+   the dark (§DF–§DH), never traps.
+2. **Hidden places, hand-made and placed by rule.** Each is a set piece from a small hand-made
+   kit that the generator puts where it fits (§CJ.8), never on a road, 150–900 m off one, about
+   one to every 4 km of road. Mike's first three:
+   - **a hidden grove with homes dug under the turf of a bank** (his "hobbit-style homes", built
+     from the real turf-house, earth-lodge and pit-house ways: our own folklore, not Tolkien's,
+     §BO), a small camp with its own hearth under §BL's rules, a hearth like any other for §CU's
+     count and §CV's smoke;
+   - **a shrine's door under a great gnarled old tree** on a rise, its roots gripping a stone
+     doorway that goes down (an oak where oaks grow, §CA, §CS);
+   - **an abandoned shrine whose torches still burn**, going down into the ground (§DK).
+3. **The few who speak.** Some hidden places hold one of Mike's strange small folk ("a weird elf
+   creature or a leprechaun"): the shared rig at small scale (§0), the fae of our own folklore
+   (§BO). They say something cryptic, sometimes give you a thing, sometimes hint at a thing
+   they'd like fetched, a line in the log each time. **Lines, not dialogue** (§BF cut dialogue
+   systems): one line at a time, no choices, no trees. **No quest log and no markers:** the
+   quest is what you carry and what the log holds (§DK).
+4. **The log carries the words** (§AZ): spoken lines, what a stranger gave or asked for, waking
+   (§DE), a scroll's deciphered text (§DK) and a tome found (§DL), stamped like everything else
+   and kept per world. The road stays mute (§BF), camps say what they say (§BF, §BO), and the
+   strangest words come from the hidden ones.
+
+## DK. The sealed scroll: carried to someone who can read it, and back — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"maybe sometimes these shrines have like a hallway which is ominous, and at the end of
+the hallway there's like a scroll sitting on an altar, and if you get the scroll, there's some
+like unknown transcription written on the scroll, and maybe there's a seal on it that you don't
+even know how to get off, and so maybe only a certain person or being or group of people that you
+might find further down the road, or maybe even in that same biome, might be able to decipher
+what's on it"*; *"the thing I didn't like about Skyrim's quests is that it had … a lot of like
+dialogue type stuff, like, oh, just go talk to this person … but I feel like if you fetch
+something for somebody, or like get them, bring them like a scroll, and like get them to
+transcribe it or something, we can like work in different philosophical elements"*; *"once you
+bring it to somebody who can decipher it, it might give instructions on how to go deeper into
+the shrine … if you light or blow out some of the torches in a particular pattern, another
+secret passageway opens where the scroll was and leads deeper into this shrine … if you bring it
+to someone far away and they're like, where'd you find this, you know, it would give you some
+incentive to go back there"*; and on the pattern: *"It should probably be in the log that you
+could like reference back to."* Builds on §AZ, §BQ, §CJ, §CN and §CV. Data: `data/shrines.json`
+(new), `items.json → scroll`, `hud.json → log_more`. Not built.
+
+1. **The shrine,** a new monument kind: an ominous hallway going down, wall torches burning along
+   it in sconces, and an altar at its end with a sealed scroll on it. Its delve (§CJ) is shut
+   behind the altar. Sconces never smoke (§CV), so a shrine shows no column.
+2. **The scroll:** marks you can't read and a seal you can't break. You carry it like anything
+   else, and it stays where you fall (§AY).
+3. **Few can read it:** someone, some being or some group somewhere else, down the road or
+   elsewhere in the same biome (5–60 km off, first guess), never at the shrine. Show it to anyone
+   else and they hand it back (a line in the log).
+4. **"Where did you find this?"** The reader asks, then reads it: a passage of old wisdom (Mike's
+   philosophy, from public-domain texts like the tomes, §DL) and an instruction, which of the
+   hall's torches to light and which to put out. Both go into the log whole, to read back
+   whenever you like.
+5. **Back at the shrine,** set the hall to the pattern. A sconce is a torch in a bracket: put it
+   out by hand (right click smothers it) and light it with your torch's swing (§CN), with no
+   kindling (laying is for fires). When the hall matches, the wall behind the altar gives way to
+   steps going down, into the shrine's delve.
+6. **Guessing is allowed, and costly.** Every sconce you put out is dark you made yourself (§BA),
+   and with six to eight of them, walking to a reader is the better way.
+7. **What you carry and what the log holds are the whole quest:** no quest log, no objective
+   text, no marker. The reader's curiosity is the waypoint back.
+8. **The text never names how the shrine's people ended** (§BQ).
+9. This answers part of §CJ's open call: there are puzzle doors, of one kind so far, and its
+   answer is always carried in from somewhere else.
+
+**Open (Mike):** who the readers are (a people that kept writing, a lone hermit, a group); what
+lies deeper; the sconces' light, whether ordinary fire someone tends unseen or a stranger light
+that isn't fire (Mike: *"a mysterious type of light, or it could still be like the same light"*);
+and whether a shrine is always one of the hidden places off the road (§DJ) or can also stand as a
+monument on its own grid.
+
+## DL. Tomes: the I Ching first — LOCKED (3 Oct, by voice, Mike)
+
+Mike: *"I would like to add some philosophical texts that you might be able to find randomly.
+For example, the I Ching should be one of the books, or scrolls, or tomes that you can find
+randomly in this game"*; and: *"We might implement some systems based on it later, but we're
+going to wait on that for now."* Builds on §AW, §AZ and §CJ. Data: `data/tomes.json` (new),
+`items.json → tome`. Not built.
+
+- **Real philosophical texts you find and read,** the I Ching first, as *The Book of Changes*.
+  Rare finds live in ruins (§AW): a tome lies where someone left it, most often at a delve's
+  heart (§CJ.3; first guess, about one heart in seven), never in a chest.
+- **Read while you carry it,** opening like the log, in the internal frame and the HUD's font,
+  one hexagram to a page. The log notes the find.
+- **Public-domain text only:** James Legge's translation (*The Sacred Books of the East*,
+  vol. 16, 1882), not Wilhelm's in Cary F. Baynes's English (1950, still in copyright). The text
+  itself is a later data job, filled from a public-domain edition and checked against it. Other
+  texts come later, Mike's choice, each from a public-domain translation.
+- **No systems yet** (Mike). The I Ching coin cast already in the game (`iching.gd`, the
+  rare-event RNG for the night sky) is a separate thing.
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -2244,3 +2793,15 @@ engine order:
    so they follow the working camp.
 
 Where this sits against Mike's 14:34 play fixes and §CV's smoke is Mike's call.
+
+**Added 3 Oct, evening (§DA–§DL, the morning voice session, written up after §CR–§CZ):** the
+data is in and none of it is wired (the files are listed at the top of this doc). Mike's 17:07
+ask: **one Claude Code prompt per idea, built and checked one at a time**, in this order, the wind
+first as he asked: **§DA the wind** (its own order is in `wind.json`: the gust field in the plant
+and grass shaders with flutter → the litter → the gust on the smoke column and the coals → the
+sound → the cloaks and the torch's sparks → the water → the cloud shadows; §CV's column itself is
+its own pass) → **§DB the flare** → **§DD the two nights and the year** → **§DE waking** →
+**§DG the full-moon werewolf** → **§DC shafts and butterflies** → **§DI ruins** (the overgrowth,
+the residents' sounds, the ghost) → **§DF the senses** → **§DJ–§DL** the hidden places, the
+shrine and its scroll, the tomes. **§DH waits for Mike's calls.** Where §DA meets §CV (smoke) and
+§CZ (the fire), the built thing stands and §DA adds to it.

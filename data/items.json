@@ -136,6 +136,18 @@
    "icon": "honey",
    "color": "#8a3a1c",
    "_note": "[NOT WIRED YET \u2014 design \u00a7CM] Dark red-brown honey from rhododendron nectar, found in wild combs in a rhododendron forest and at a honey cliff in the spring bloom. Its grayanotoxin works like the real thing: a little and the world swims and the heart slows for a few game hours; more and you sit down where you are. First guesses; the designer tunes it."
+  },
+  "scroll": {
+   "name": "Sealed scroll",
+   "icon": "scroll",
+   "color": "#d8cfa8",
+   "_note": "[NOT WIRED YET \u2014 design \u00a7DK] Taken from a shrine's altar: marks you can't read and a seal you can't break. Carried like anything else (burden); it stays where you fall if you are taken (\u00a7AY). Once a reader has opened it its name becomes 'Opened scroll' and its text lives in the log (hud.json log_more). data/shrines.json."
+  },
+  "tome": {
+   "name": "Tome",
+   "icon": "book",
+   "color": "#5a4632",
+   "_note": "[NOT WIRED YET \u2014 design \u00a7DL] A real philosophical text, found where someone left it in a ruin (most often at a delve's heart). Its title in play comes from data/tomes.json (the first: The Book of Changes). Read while you carry it, a page at a time."
   }
  },
  "sample_part": {

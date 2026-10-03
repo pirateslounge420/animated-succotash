@@ -479,5 +479,61 @@
   },
   "embers": "hiss_only",
   "hear_before_seen": true
+ },
+ "ruins": {
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] A ruin sounds like what lives in it (Mike, 3 Oct by voice: \"we need to have some ambient sounds based off of what type of creatures are lurking there\"), inside \u00a7BG's two systems. residents are SOURCES, each calling from the part of the ruin it lives in, at its hours (the creature itself comes from the biome's roster, \u00a7CH; these name the place and the kind). The swifts in a cold stack are \u00a7CV.5 (smoke.json swifts.sound). bed: the ruin's own room tone, with no position: wind in the stones (gaps, doorways, window holes and cave mouths moan when the gust at them passes stone_wind_from_mps, wind.json), drips where there is water, and the hush of a closed hall. overrun: an overrun ruin's residents fall silent by day (delves.json overrun tells). The ghost (ruins.json haunt) makes no sound at all. Not written: Minecraft's cave groans, whose unplaceable noises are what \u00a7BG took out on 30 Sept; Mike's call (\u00a7DI, open).",
+  "residents": [
+   {
+    "part": "tower_top",
+    "hours": [
+     "dawn",
+     "day"
+    ],
+    "kind": "nesting birds: the roster's cliff and cavity nesters (jackdaws, rock doves where they live); swifts over a cold stack are \u00a7CV.5"
+   },
+   {
+    "part": "vault",
+    "hours": [
+     "dusk",
+     "dawn"
+    ],
+    "kind": "bats pouring out and streaming back (\u00a7CH)"
+   },
+   {
+    "part": "window",
+    "hours": [
+     "night"
+    ],
+    "kind": "an owl (\u00a7CH)"
+   },
+   {
+    "part": "below",
+    "hours": [
+     "dusk",
+     "night"
+    ],
+    "kind": "something small scrabbling in the dark: the night roster's small ground animals"
+   },
+   {
+    "part": "cistern",
+    "hours": [
+     "any"
+    ],
+    "kind": "frogs where frogs live; dripping"
+   },
+   {
+    "part": "walls",
+    "hours": [
+     "day"
+    ],
+    "kind": "lizards rustling in the dry stones (warm country)"
+   }
+  ],
+  "bed": {
+   "stone_wind_from_mps": 6.0,
+   "drip": true,
+   "enclosed_hush": true
+  },
+  "overrun_quiet_by_day": true
  }
 }

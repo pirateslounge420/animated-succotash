@@ -1,0 +1,112 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §DA] The wind you can see (3 Oct 2026, Mike by voice: \"when I step outside, I might feel a little breeze. I might see the leaves rustling. I might hear them ... leaves being blown across the yard ... clouds blowing\"; \"the wind, the directional, you can actually see\"). One wind: the weather's (WeatherSim.local_weather, already live), sampled where each thing stands, plus gusts that travel. Everything near you answers it: grass, crowns, leaves on the ground, cloaks, water, smoke (smoke.json, §CV), the fire's specks (look.json fire.specks, §CZ, built), rain, clouds, cloud shadows and the rustle. Every number is a first guess by Claude (chat), 3 Oct, written against the real Beaufort land signs (beaufort, below); the designer tunes by play. Reference maths: tools/reference/beacon_reference.py. Restart after editing.",
+  "gusts": "Patches of stronger and weaker air: a noise field carried downwind at the mean wind's speed (frozen turbulence), running in REAL seconds. The weather's own swell in local_weather (periods of about 1.2 and 0.5 game hours, minutes in real time) stays as the slow freshening and easing under it. patch_m: the two noise scales (the big swell, the small puff). intensity: how far a gust rises above the mean and a lull falls under it (turbulence intensity; open ground is about 0.25). factor_max: the strongest gust as a multiple of the mean (real 3-second gusts over open ground run about 1.4-1.7). lull_min: the weakest lull. veer_deg: how far a gust swings the direction. calm_mps: below this mean the gusts fade out (still air). Every reader samples the SAME field at its own position, so a gust is seen coming across the grass, reaches the crowns round you, flares the coals (§CZ's 'a gust of the weather's wind' should read this field), and is heard there in the same moment.",
+  "beaufort": "The tuning table: the real land signs of each Beaufort force (WMO), against the open-ground wind 10 m up, which is what the weather gives. Every threshold in this file is written against it. mps: the force's lower bound. sign: what you would see, paraphrased. Nothing breaks (design §BS: the weather dresses the land, never reshapes it), so the table stops at the gale.",
+  "profile": "Height and shelter. Over open ground the wind falls off toward the ground (the log profile, roughness z0_m by ground kind): grass tops get about half the 10 m wind, head height about 0.7, a treetop about 1.1. Under a canopy, anything below the crowns gets shelter x that wind, where shelter = shelter_floor + (1 - shelter_floor) x sky visibility (design §BD's number, the dapple stamp plus enclosure: one calculation for light, rooms and wind). The crowns themselves always get the full wind, so in a closed wood the tops toss and the air at your face is still. Enclosed (ruin halls, caves, delves): no wind but at the openings.",
+  "grass": "Grass, reeds and herbs. lean_from_mps: they start to bow (Beaufort 2). lean_max: the most a blade leans, as a share of its height. A passing gust is a bowed patch that runs across the field: the cards tip their lit side away, so a paler sheen sweeps over a meadow ahead of the gust, as it does over real grass. flatten_mps: lying nearly flat.",
+  "crowns": "Trees and shrubs, by what moves at each force: leaves from leaves_mps (Beaufort 2), twigs from twigs_mps (3), small branches from small_branches_mps (4), small trees swaying from small_trees_mps (5), large branches from large_branches_mps (6), whole trees from whole_trees_mps (7). sway_period_s: a trunk's own sway period by its height ([height m, seconds]; real trees sway once every one to five seconds, the tall ones slowest), so a stand of one species sways together and a stand of mixed heights does not. Neighbours share the gust field, so a gust moves through a wood tree by tree, not every tree on its own clock.",
+  "flutter": "Leaves on long or flattened stalks tremble in any air, even when nothing else moves (design §CL: the sacred fig, whose tree is the reason the shader needs this; the aspens and poplars, whose flattened leaf stalks make them quake). genera / species: who. from_mps: they start this early. amount: their flutter on top of the crown's.",
+  "litter": "Loose things on the ground lift and skate downwind in the gusts, tumbling end over end, then settle (Beaufort 4: dust and loose leaves lifted). kinds: what lifts, from_mps (the gust at that spot after shelter, so it happens on roads, clearings, edges and open ground, rarely deep in a closed wood), where, and how it looks. Leaves are the colour of the trees they fell from (the per-species tint and the season, data/litter.json), so a pine road skates brown needles and a maple road red leaves. radius_m and count_max: how many at once round you; each is a pixel card or two. settle_s: how long a piece travels before it lies down again.",
+  "cloaks": "Every cloaked figure's cloth takes the same wind and gusts (PlayerBody.set_wind already takes the mean; it should take the gust at the figure).",
+  "water": "Cat's paws: where a gust passes over open water above cats_paws_mps, a patch of the surface roughens (its glints break up and its colour deepens a little) and slides downwind with the gust. Below calm_below_mps the water is a mirror. From whitecaps_mps, small crests on lakes and wide rivers (Beaufort 5). Water stays the brightest thing in view (look R6).",
+  "specks": "The fire's specks already drift with the wind (§CZ, built 3 Oct) and the coals flare on a gust; both should read the gust field at the fire. The torch's sparks (§CP) drift the same way.",
+  "smoke": "The column itself is smoke.json (§CV, locked 3 Oct afternoon: which fires smoke and which never do, its height by fire state, its lean per m/s, the dawn pool, rain, not drawn at night, its look, and how far it is drawn). This block adds only what the wind does to it. shelter_under_crowns: a hearth under trees is sheltered like everything below the crowns (profile), so its column rises straight through the trees and takes the full wind's lean only once it clears them. gusts: a gust shreds the column near the fire (the cards break up over the gust) and the lean follows the gust field, not only the mean, so the column leans and recovers as the grass does. far: the reference maths against smoke.json far.seen_to_m and far.min_px, for Claude Code: on the 400 km planet (§CR) a 60 m column is under two internal pixels wide past about 2.1 km, so smoke.json's min_px 2 is what carries it the rest of the way to 3.2 km; and the day haze leaves under 8 % of its contrast at 1 km, so past that the column reads as a pale mark against the darker sky (look R5), which is enough.",
+  "cloud_shadows": "The clouds' shadows sail over the land with the wind at cloud height. Only on part-cloudy days: between from_cover and to_cover of the one cover value §CX locks (clear has none, overcast is all shade). patch_m: their size on the ground. speed_x: their speed as a multiple of the ground wind (cloud-level wind is faster). A cloud shadow is shade: the sun's direct light is gone and the shade colour holds (navy or olive, look R3; design §BD's floor).",
+  "sound": "The ear gets the gust when the eye does. bed_follows_gust: the bed's wind loop (SoundBed, audio.json bed) follows the gust at your position, not only the mean, and still closes under canopy as built. crowns: the crowns round you are sources (design §BG: a place you can walk to): when the gust reaches a crown within radius_m its rustle rises from where it stands, at most max_sources at once, from from_mps; the voice follows the crown (kinds: needles hush, broad leaves rustle, palm fronds clatter, dry autumn leaves rattle). The ruins' own wind in the stones is design §DI (audio.json ruins).",
+  "order": "Build order inside the pass (design §BR): the gust field in the plant and grass shaders (with flutter) -> the litter -> the gust on the smoke column and the coals -> the sound -> the cloaks and the torch's sparks -> the water -> the cloud shadows."
+ },
+ "gusts": {
+  "patch_m": [40.0, 12.0],
+  "intensity": 0.28,
+  "factor_max": 1.6,
+  "lull_min": 0.45,
+  "veer_deg": 10.0,
+  "calm_mps": 0.5,
+  "time": "real_seconds"
+ },
+ "beaufort": [
+  {"force": 0, "mps": 0.0, "sign": "Calm: smoke rises straight up."},
+  {"force": 1, "mps": 0.3, "sign": "Light air: smoke drifts and shows which way the wind blows; leaves are still."},
+  {"force": 2, "mps": 1.6, "sign": "Light breeze: felt on the face; leaves rustle."},
+  {"force": 3, "mps": 3.4, "sign": "Gentle breeze: leaves and small twigs always moving."},
+  {"force": 4, "mps": 5.5, "sign": "Moderate breeze: dust and loose leaves lifted; small branches move."},
+  {"force": 5, "mps": 8.0, "sign": "Fresh breeze: small trees in leaf sway; crested wavelets on lakes."},
+  {"force": 6, "mps": 10.8, "sign": "Strong breeze: large branches move; the wind whistles."},
+  {"force": 7, "mps": 13.9, "sign": "Near gale: whole trees move; walking into it is hard."},
+  {"force": 8, "mps": 17.2, "sign": "Gale: twigs break off (here nothing breaks, design §BS)."}
+ ],
+ "profile": {
+  "z0_m": {"water": 0.0002, "snow": 0.001, "sand": 0.001, "grass": 0.03, "scrub": 0.1, "forest": 1.0},
+  "reference_height_m": 10.0,
+  "shelter_floor": 0.15,
+  "crowns_get_full_wind": true,
+  "enclosed": 0.0
+ },
+ "grass": {
+  "lean_from_mps": 1.6,
+  "lean_max": 0.55,
+  "flatten_mps": 13.9,
+  "sheen": true
+ },
+ "crowns": {
+  "leaves_mps": 1.6,
+  "twigs_mps": 3.4,
+  "small_branches_mps": 5.5,
+  "small_trees_mps": 8.0,
+  "large_branches_mps": 10.8,
+  "whole_trees_mps": 13.9,
+  "sway_period_s": [[3.0, 0.8], [10.0, 1.7], [20.0, 2.8], [40.0, 4.5], [70.0, 6.0]]
+ },
+ "flutter": {
+  "genera": ["Populus"],
+  "species": ["Ficus religiosa"],
+  "from_mps": 0.1,
+  "amount": 0.08
+ },
+ "litter": {
+  "radius_m": 25.0,
+  "count_max": 40,
+  "settle_s": [2.0, 6.0],
+  "kinds": {
+   "leaves": {"from_mps": 5.5, "where": "where broadleaf litter lies (data/litter.json piles), and everywhere leaves fell in autumn", "look": "the tree's own leaf colour and season; tumbling end over end, skipping along the ground"},
+   "needles": {"from_mps": 9.0, "where": "under conifers", "look": "a few brown needles; they mostly stay put"},
+   "sand": {"from_mps": 6.5, "where": "dunes, beaches, hot desert sand", "look": "a low streaming skin running over the ground, not single pieces"},
+   "snow": {"from_mps": 5.0, "where": "fresh dry snow", "look": "spindrift: low pale streamers"},
+   "dust": {"from_mps": 7.0, "where": "dry bare ground and old roads in dry country", "look": "a low pale puff that thins downwind"}
+  }
+ },
+ "cloaks": {
+  "take_gust": true
+ },
+ "water": {
+  "calm_below_mps": 1.0,
+  "cats_paws_mps": 2.5,
+  "whitecaps_mps": 8.0
+ },
+ "specks": {
+  "read_gust_field": true,
+  "torch_sparks_drift": true
+ },
+ "smoke": {
+  "column": "smoke.json (§CV)",
+  "shelter_under_crowns": true,
+  "gusts": {"shred_near_fire": true, "lean_follows_gust": true},
+  "far": {"two_px_under_km": 2.1, "haze_contrast_left_at_1km": 0.08}
+ },
+ "cloud_shadows": {
+  "from_cover": 0.15,
+  "to_cover": 0.85,
+  "patch_m": [200.0, 800.0],
+  "speed_x": 1.8
+ },
+ "sound": {
+  "bed_follows_gust": true,
+  "crowns": {
+   "radius_m": 40.0,
+   "max_sources": 4,
+   "from_mps": 1.6,
+   "kinds": {"needles": "hush", "broadleaf": "rustle", "palm": "clatter", "dry_leaves": "rattle"}
+  }
+ }
+}

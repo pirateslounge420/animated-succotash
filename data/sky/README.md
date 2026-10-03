@@ -14,6 +14,7 @@ Edit it; changes apply the next time you run the game. While developing,
 | `year_days` | In-game days in a year (365 = 36.5 real days at the 144-minute day). |
 | `year_start_day` | Day of the year at game day 0 (0 = the northern spring equinox, about 91 the June solstice, 182 the September equinox, 274 the December solstice). |
 | `moon_cycle_days` | In-game days from one new moon to the next (Earth: 29.5). The moon also passes through all 28 lunar mansions in this time. |
+| `full_moon_illumination` | [NOT WIRED YET — design §DG] The lit share of the moon's disc (0 new, 1 full) at or above which a night counts as a full-moon night: the werewolf hunts only then. 0.97 is about the three nights round full, a full moon every 70.8 hours of play (`tools/reference/moon_reference.py`). One number for every reader: `creature_species.gd` gates `active: full_moon` at 0.85 today (about seven nights) and `dread.gd` boosts the werewolf above a moonlight of 0.9; both should read this. |
 | `weather_smoothing_s` | Real seconds for the sky, clouds and rain to follow a change in the local weather about two-thirds of the way. The weather updates in steps; this eases them so the light never jumps. |
 | `cloud_light_band_deg` | Sun elevations (degrees, low to high) over which the clouds' lighting turns from the moon's direction to the sun's. |
 | `glyph_fade_s` | Seconds the lunar-mansion glyph takes to fade out (and again to fade back in) when the moon moves into the next mansion. |

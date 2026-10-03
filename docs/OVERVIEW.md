@@ -78,6 +78,12 @@ as rare finds in ruins.
 - **Weather and water:** a live global wind and water cycle moves storms, rain shadows and
   river stages. Rivers have current: downstream is free, and upstream on a fast reach is a
   wall. The land itself was shaped at world generation; the weather only dresses it.
+- **The wind you can see** *(locked 3 Oct; not built yet)*: everything moves with one wind.
+  Gusts cross the grass toward you and reach the trees, leaves skate down the old road, cloaks
+  and water answer it, and every hearth's smoke leans with it, rising straight through the trees
+  and bending above them. Look at the sun and it flares, the way it did in Phantasy Star
+  Online's forests; shafts of light come through the leaves only when the air would really show
+  them.
 - **Roads:** an old network, laid down at world generation, links ruins, camps, springs and
   fords. Nobody keeps it: half the bridges are out, and the finds are just off the trail. The
   road gets you somewhere known. Designed but not built yet (§BY): trails that fade under fern
@@ -105,11 +111,16 @@ as rare finds in ruins.
 - **Fire is never made, only carried.** Fires burn fuel gathered from the world: wood, brush,
   dung, peat, whatever the biome offers. Embers can be saved, but a dead fire needs a flame
   brought to it.
-- **Death:** you wake at your hearth, and any camp can be made home. What you carried stays
-  where you fell.
+- **Death:** you wake at your hearth, and any camp can be made home. Without one, you wake at
+  the nearest fire *(3 Oct)*: one to three days have passed, and folk found you and carried you
+  in. What you carried stays where you fell.
 - **The dark:** away from light at night, the dark closes in, in stages you hear before you
   see. It's never a health-bar fight. Each biome is to get its own creature with its own
-  approach; the werewolf is the first one built (§BA).
+  approach; the werewolf is the first one built (§BA), and now hunts only on the full moon's
+  brightest nights, by scent *(3 Oct)*. Your light keeps the lurkers back but tells the night
+  where you are, so putting it out is a real choice *(3 Oct)*.
+- **The moon sets the night** *(3 Oct)*: a full moon is bright enough to wander by, a new moon
+  dark but readable. The day count runs in years.
 - **The log:** Enter opens a record of what happened, stamped in game time, with causes of
   death and your own notes.
 
@@ -134,6 +145,21 @@ as rare finds in ruins.
   craft. Natural caves go deep too.
 - **The danger:** inside is full dark. The light you carry is the clock, and the danger is
   the dark and what dens there. No fights.
+- **Ruins by day** *(locked 3 Oct; not built yet)*: their halls are dark at noon, so the torch
+  is never useless. Each wears the moss, ferns and vines of its own place, sounds like what
+  lives in it, and the graveyards and tombs are sometimes haunted: a pale figure turns a corner
+  ahead, and the corner is empty when you get there.
+
+## Off the road *(locked 3 Oct; not built yet)*
+
+- **Hidden places:** a grove with homes dug under the turf, a shrine's door under a great old
+  tree, a shrine whose torches still burn going down into the ground. A few strange small folk
+  live in them and say something cryptic, a line in the log.
+- **The sealed scroll:** taken from a shrine's altar, unreadable, sealed. Somewhere down the road
+  someone can read it, asks where you found it, and gives you the pattern of torches that opens
+  the way deeper. No quest log and no markers: the scroll in your hands and the log are the
+  quest.
+- **Tomes:** real philosophical texts to find and read, the I Ching first.
 
 ## Camps and peoples
 
@@ -207,5 +233,5 @@ that surprises its own creator.
 1. **Day brightness.** Mike's favourites are darker by day than today's target. Should the
    day come down?
 2. **Dungeon puzzles and traps.** Should there be puzzle doors and traps in the Skyrim way, or
-   only the ruin falling apart?
+   only the ruin falling apart? (One kind is now locked: the shrine's torch pattern, §DK.)
 3. **Music.** Room tone carries the game for now. Is there ever a score?
