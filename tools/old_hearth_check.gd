@@ -57,7 +57,8 @@ func _run() -> void:
 	for r in [20000.0, 60000.0, 200000.0]:
 		var bd := INF
 		for s in Ruins.near(map, camp, r):
-			if Ruins.inhabited(s):
+			# (Only the ruins the hearths pass keeps have one, design §CU.)
+			if Ruins.inhabited(s) or not Hearths.ruin_kept(s):
 				continue
 			var dd := CubeSphere.surface_distance_m(s.dir, camp)
 			if dd < bd:
@@ -193,7 +194,7 @@ func _tomb_check(map: PlanetData, camp: Vector3) -> void:
 			var want := OS.get_environment("TOMB")
 			if want != "" and str(Ruins.Kind.keys()[k]).to_lower() != want:
 				continue
-			if not lamps or Ruins.inhabited(s):
+			if not lamps or Ruins.inhabited(s) or not Hearths.ruin_kept(s):
 				continue
 			var dd := CubeSphere.surface_distance_m(s.dir, camp)
 			if dd < bd:

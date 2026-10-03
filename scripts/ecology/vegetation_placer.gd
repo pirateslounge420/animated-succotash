@@ -1102,6 +1102,9 @@ class _Context:
 	var dominance := {} # PlantSpecies -> factor for this chunk
 	## This chunk's province (RealmMap.World).
 	var world := 0
+	## The communities dealt to this chunk's biomes in its land (§CS):
+	## biome -> community index (-1: none yet), by the chunk's middle.
+	var _comm_of := {}
 	var _species := {}
 	var _clump := {} # tier -> PackedFloat32Array (CG+1)^2
 	var _shade := PackedFloat32Array() # (G+1)^2
@@ -1178,6 +1181,13 @@ class _Context:
 		var r := RoadNetwork.nearest_seg(_road_segs, d, 60.0)
 		return float((r.link as Dictionary).get("width_m", 2.0)) if not r.is_empty() else 0.0
 
+	## The community dealt to biome `b` in this chunk's land (§CS; -1:
+	## the biome has none yet).
+	func comm_of(b: int) -> int:
+		if not _comm_of.has(b):
+			_comm_of[b] = Communities.at(data.center, b)
+		return int(_comm_of[b])
+
 	## Mythical folk camps (Territories), ruins and the opening encampment
 	## are kept clear of plants.
 	func in_clearing(d: Vector3) -> bool:
@@ -1227,6 +1237,12 @@ class _Context:
 			var cb := site(corner.x, corner.y).biome
 			if not biomes_here.has(cb):
 				biomes_here.append(cb)
+		# The communities here (design 3 Oct §CS): each biome sampled here
+		# has the one community dealt to this land (-1: the biome has none
+		# yet, today's rules).
+		var comms := PackedInt32Array()
+		for b in biomes_here:
+			comms.append(comm_of(b))
 		for tier in [T.EMERGENT, T.CANOPY, T.SHRUB, T.GROUND, T.EPIPHYTE]:
 			var list: Array[PlantSpecies] = []
 			for sp in SpeciesDB.by_tier(tier):
@@ -1234,7 +1250,19 @@ class _Context:
 					continue
 				if sp.altitude_m.y < hmin or sp.altitude_m.x > hmax:
 					continue
-				if not sp.realms.is_empty() and (not sp.realms.has(mid.realm) or not SpeciesDB.biome_hosts(mid.biome, mid.realm)):
+				# A species grows only as a member of a community here (§CS),
+				# or by today's rules where a biome has none yet / it is a
+				# catalogue species no association lists yet.
+				var in_comm := false
+				var admitted := false
+				for ci in comms:
+					if Communities.member(ci, sp):
+						in_comm = true
+					if Communities.admits(ci, sp):
+						admitted = true
+				if not admitted:
+					continue
+				if not in_comm and not sp.realms.is_empty() and (not sp.realms.has(mid.realm) or not SpeciesDB.biome_hosts(mid.biome, mid.realm)):
 					continue
 				# The biome gate (design §CA): the species must be listed
 				# by one of the biomes sampled here (with an ecotone the
@@ -1565,8 +1593,15 @@ class _Context:
 		# Forest floor: under or in the gaps of a forest (a forest biome).
 		if bits & (1 << PlantSpecies.Needs.FOREST_FLOOR) != 0 and not VegetationPlacer.FORESTS.has(s.biome):
 			return 0.0
+		# The community here (design 3 Oct §CS): only its members, or by
+		# today's rules where the biome has none yet or the species is an
+		# unattached catalogue one; its members skip the realm gate (the
+		# community's home was dealt by niche).
+		var ci := comm_of(s.biome)
+		if not Communities.admits(ci, sp):
+			return 0.0
 		# The realm gate (design §AA).
-		if not sp.realms.is_empty() and (not sp.realms.has(s.realm) or not SpeciesDB.biome_hosts(s.biome, s.realm)):
+		if not Communities.member(ci, sp) and not sp.realms.is_empty() and (not sp.realms.has(s.realm) or not SpeciesDB.biome_hosts(s.biome, s.realm)):
 			return 0.0
 		# The biome gate (design §CA): only where a biome lists it; with
 		# an ecotone, a neighbouring cell's biome that lists it will do.

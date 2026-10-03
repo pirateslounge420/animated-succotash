@@ -219,6 +219,9 @@ func reset_world_state() -> void:
 	Hearth.key = ""
 	GameLog.entries.clear()
 	GameLog._once.clear()
+	# The hearths pass is per world (design 3 Oct §CU).
+	Hearths.active = false
+	Hearths.keep.clear()
 	ready_to_play = false
 
 

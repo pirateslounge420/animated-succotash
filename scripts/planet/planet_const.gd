@@ -2,18 +2,28 @@ class_name PlanetConst
 ## Planet-wide constants from DESIGN.md "Overview" and "Biome Sizing".
 ## Distances are meters, temperatures °C, time in real seconds.
 
-## The full planet: 1/10 of Earth's circumference (design §I, LOCKED
-## 2026-09-29: landmass, height (HEIGHT_SCALE 0.1) and time (the 144-min
-## day) all share the one 1/10 ratio; 400 km / 1/100 before).
-const FULL_CIRCUMFERENCE_M := 4000000.0
+## The full planet, read from data/world_scale.json planet.circumference_m
+## (design 3 Oct §CR, LOCKED: 1/100 Earth, 400 km around, the geography's
+## own layout size, so GEO_SCALE is 1; heights stay 1/10 (HEIGHT_SCALE) and
+## time stays 1/10 (the 144-min day). Things at walking scale keep their
+## real size; only the gaps between them shrink. 4,000 km (§I, 29 Sept)
+## before; the size is one data value so the two can be compared in play.
+static var FULL_CIRCUMFERENCE_M := _full_circumference()
+
+
+static func _full_circumference() -> float:
+	var p = Tuning.table("world_scale").get("planet", {})
+	var c := float((p as Dictionary).get("circumference_m", 400000.0)) if p is Dictionary else 400000.0
+	return c if c > 1000.0 else 400000.0
+
 
 ## Geography (continents, mountain belts, volcanoes, rock regions, the
 ## weather grid, the blueprint's distances and slopes) is laid out on a
 ## planet of this size, the one its noise scales, climate and passes were
 ## tuned on. The planet actually built is a scale model of it sideways
-## (GEO_SCALE, heights unchanged): 10x on the full 4,000 km planet, so its
-## continents and biome regions are ten times wider; 0.1x on the dev
-## postage stamp (data/dev.json, World). Everything at walking scale
+## (GEO_SCALE, heights unchanged): 1x on the full planet (§CR: built at the
+## layout's own size), 0.1x on the dev postage stamp (data/dev.json,
+## World); 10x on the 4,000 km planet if world_scale.json asks for it. Everything at walking scale
 ## (ground detail, plants, creatures, the player, ruins) is at its real
 ## size either way. Geographic code measures with GEO_RADIUS_M
 ## (CubeSphere.geo_distance_m); scene and walking code with RADIUS_M.
@@ -28,7 +38,7 @@ const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~63,662 m
 ## vars, not consts, for that reason; nothing else may write them.
 static var CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
 static var RADIUS_M := CIRCUMFERENCE_M / TAU
-## Real meters per geographic meter (10 on the full planet).
+## Real meters per geographic meter (1 on the full planet, §CR).
 static var GEO_SCALE := CIRCUMFERENCE_M / GEO_CIRCUMFERENCE_M
 
 

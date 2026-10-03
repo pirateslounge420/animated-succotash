@@ -113,6 +113,8 @@ func setup(p_world: Node) -> void:
 	# The branchy trees' layouts grow from the world seed.
 	PlantMeshes.use_seed(map.terrain.world_seed)
 	VegetationPlacer.warm(map.terrain.world_seed)
+	# Deal the plant communities to the lands (design 3 Oct §CS).
+	Communities.warm(map)
 
 
 ## Let running worker tasks finish before the scene goes away (they read

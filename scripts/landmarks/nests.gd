@@ -119,16 +119,40 @@ static func find(kind: String, c: Vector3i) -> Dictionary:
 	var hit = _cache.get(key)
 	_mutex.unlock()
 	if hit != null:
+		_hearth_pass(hit)
 		return hit
 	var nest := _find_raw(kind, c)
 	if not nest.is_empty() and _gives_way(nest):
 		nest = {}
 	if not nest.is_empty():
 		_settle(nest)
+	_hearth_pass(nest)
 	_mutex.lock()
 	_cache[key] = nest
 	_mutex.unlock()
 	return nest
+
+
+## The hearths pass (design 3 Oct §CU, Hearths): a nest it doesn't keep
+## holds no camp and no remains ("untouched"); its own roll is kept in
+## "raw_state" (and "raw_people") for the pass to read.
+static func _hearth_pass(nest: Dictionary) -> void:
+	if nest.is_empty() or int(nest.get("hv", 0)) == Hearths.version:
+		return
+	_mutex.lock()
+	if not nest.has("raw_state"):
+		nest["raw_state"] = str(nest.state)
+		nest["raw_people"] = str(nest.get("people", ""))
+	var raw := str(nest.raw_state)
+	if raw != "untouched" and not Hearths.nest_kept(str(nest.key)):
+		nest.state = "untouched"
+		nest.erase("people")
+	else:
+		nest.state = raw
+		if str(nest.raw_people) != "":
+			nest.people = str(nest.raw_people)
+	nest["hv"] = Hearths.version
+	_mutex.unlock()
 
 
 ## Nests of `kinds` whose footprint comes within `radius` m of `d`.

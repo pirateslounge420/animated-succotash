@@ -66,6 +66,12 @@ static func warm(world_seed: int) -> void:
 
 ## The world of the province at unit direction `d`.
 static func world_at(d: Vector3) -> int:
+	return world_of(province_at(d))
+
+
+## The province (0..PROVINCES-1) at unit direction `d`: a land of the
+## planet (design 3 Oct §CS: each plant community is native to one).
+static func province_at(d: Vector3) -> int:
 	var w := Vector3(_warp.get_noise_3dv(d), _warp.get_noise_3dv(d + Vector3(5.3, 0, 0)), _warp.get_noise_3dv(d + Vector3(0, 7.1, 0)))
 	var p := (d + w * 0.35).normalized()
 	var best := 0
@@ -75,7 +81,17 @@ static func world_at(d: Vector3) -> int:
 		if dd > best_dot:
 			best_dot = dd
 			best = i
-	return _worlds[best] if best < _worlds.size() else World.NEW_WORLD
+	return best
+
+
+## The world (World) of province `i`.
+static func world_of(i: int) -> int:
+	return _worlds[i] if i >= 0 and i < _worlds.size() else World.NEW_WORLD
+
+
+## Province `i`'s middle (a unit direction).
+static func province_center(i: int) -> Vector3:
+	return _centers[i] if i >= 0 and i < _centers.size() else Vector3.UP
 
 
 ## The realm at `d` in `world`, for a site at `temp_c` (mean annual),

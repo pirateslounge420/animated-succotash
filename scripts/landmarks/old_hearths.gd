@@ -162,7 +162,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 				var hhd: Vector3 = world.dir_of(node.global_transform * hlocal)
 				if CubeSphere.surface_distance_m(hhd, pd) < BUILD_M:
 					want[FireStore.key_of(hhd)] = [hhd, "holder", node, hlocal]
-		if site.is_empty() or Ruins.inhabited(site) or Overrun.settled(site) or not node.has_meta("camp_spot"):
+		if site.is_empty() or Ruins.inhabited(site) or Overrun.settled(site) or not node.has_meta("camp_spot") or not Hearths.ruin_kept(site):
 			continue
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
 		var sd: Vector3 = world.dir_of(spot)

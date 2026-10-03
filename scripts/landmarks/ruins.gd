@@ -321,12 +321,19 @@ static func _tomb_site(site: Dictionary, style: String, trng: RandomNumberGenera
 	site.clear = [[d, site.half_l + 4.0], [local_dir(site, site.half_w + 5.0, -site.half_l + 3.0), 7.0]]
 
 
-## Share of ruins with a living camp: a fire burning and folk round it
-## (Camps). The rest stand empty.
+## Share of ruins that roll a living camp: a fire burning and folk round it
+## (Camps). The rest stand empty. Since §CU only the ruins the hearths pass
+## keeps (Hearths) have a hearth at all, living or cold.
 const INHABITED := 0.55
 
 
 static func inhabited(site: Dictionary) -> bool:
+	return rolls_inhabited(site) and Hearths.ruin_kept(site)
+
+
+## The ruin's own roll for a living camp, before the hearths pass (design
+## 3 Oct §CU, Hearths) keeps only a few hearths a biome.
+static func rolls_inhabited(site: Dictionary) -> bool:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "living"])
 	return rng.randf() < INHABITED

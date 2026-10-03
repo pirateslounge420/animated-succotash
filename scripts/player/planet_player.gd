@@ -102,6 +102,12 @@ static var BOUNCE := Tuning.section("movement", "bounce")
 static var WALK_SPEED := Tuning.num("movement", "speed", "walk_mps")
 static var SPRINT_SPEED := Tuning.num("movement", "speed", "sprint_mps")
 static var CROUCH_SPEED := Tuning.num("movement", "speed", "sneak_mps")
+## Walking up and down slopes (design 3 Oct §CR.5, data/world_scale.json
+## pace): Tobler's hiking function scaled to the flat walk, on the grade
+## along the way you go; ground steeper than walk_max_deg can't be walked
+## up (the floor's limit, in the ambient profile).
+static var PACE: Dictionary = Tuning.table("world_scale").get("pace", {})
+static var WALK_MAX_DEG := float((Tuning.table("world_scale").get("mountains", {}) as Dictionary).get("walk_max_deg", 45.0))
 ## Creeping with the bow drawn or the spear raised (on the ground).
 static var AIM_SPEED := Tuning.num("movement", "speed", "aim_mps")
 static var SWIM_SPEED := Tuning.num("movement", "speed", "swim_mps")
@@ -470,13 +476,15 @@ var _arm_trail := 0.0
 ## Water contacts (Ripples): in the water last frame, and the swimming
 ## stroke's timer and hand.
 var _in_water := false
+## The slope's share of your speed this frame (§CR.5; 1 on the flat).
+var pace_now := 1.0
 var _stroke_t := 0.0
 var _stroke_hand := 0
 
 
 func _ready() -> void:
 	Hits.on_hit = func(critical: bool) -> void: meter.hit(critical)
-	floor_max_angle = deg_to_rad(50.0)
+	floor_max_angle = deg_to_rad(WALK_MAX_DEG if Tuning.profile() == "ambient" else 50.0)
 	floor_snap_length = 0.6
 	_shape = CapsuleShape3D.new()
 	_shape.radius = 0.35
@@ -745,6 +753,18 @@ func _physics_process(delta: float) -> void:
 		speed = CROUCH_SPEED
 	elif sprinting:
 		speed = SPRINT_SPEED
+	if on_floor and not swimming and wish.length() > 0.1:
+		# Slopes slow you as they slow a walker (§CR.5): walking and
+		# sprinting by Tobler's pace on the grade ahead; crouching is never
+		# faster up a slope than walking.
+		pace_now = slope_pace(slope_ahead(wish.normalized()))
+		var applies: Array = PACE.get("applies_to", ["walk", "sprint"])
+		if crouching:
+			speed = minf(speed, WALK_SPEED * pace_now)
+		elif (sprinting and applies.has("sprint")) or (not sprinting and applies.has("walk")):
+			speed *= pace_now
+	else:
+		pace_now = 1.0
 	if aiming() and on_floor:
 		# Drawing a bow (or raising the spear) on the ground, you creep; in
 		# the air it changes nothing (a jump or wall jump carries on).
@@ -2513,6 +2533,31 @@ func wears(slot: String, kind: String) -> bool:
 
 ## Overburdened (Inventory.over(): carried things past the free handful):
 ## your speed, climbing speed and loudness as shares of normal.
+## The share of the flat speed on ground of grade `s` (rise over run along
+## the way you go, + uphill): Tobler's hiking function scaled to the flat
+## walk, exp(-a |s + b|) / exp(-a b), capped at max_factor (1: no downhill
+## boost) (design 3 Oct §CR.5, world_scale.json pace).
+static func slope_pace(s: float) -> float:
+	if str(PACE.get("model", "tobler")) != "tobler":
+		return 1.0
+	var t: Dictionary = PACE.get("tobler", {})
+	var a := float(t.get("a", 3.5))
+	var b := float(t.get("b", 0.05))
+	return minf(float(t.get("max_factor", 1.0)), exp(-a * absf(s + b)) / exp(-a * b))
+
+
+## The grade of the ground (rise over run) along `way` (a direction along
+## the ground) where you stand, over a stride either side.
+func slope_ahead(way: Vector3) -> float:
+	var w := (way - surface_dir * way.dot(surface_dir)).normalized()
+	if w == Vector3.ZERO:
+		return 0.0
+	var step := 1.0
+	var a := (surface_dir + w * step / PlanetConst.RADIUS_M).normalized()
+	var b := (surface_dir - w * step / PlanetConst.RADIUS_M).normalized()
+	return (chunks.ground_height(a) - chunks.ground_height(b)) / (2.0 * step)
+
+
 func burden_speed() -> float:
 	var b := Tuning.section("movement", "burden")
 	return maxf(1.0 - inventory.over() * float(b.get("slow_per_item", 0.08)), float(b.get("min_speed", 0.6)))

@@ -14,15 +14,15 @@ plain English: what it reads, what it writes, what changes on screen.
   Godot lives are all in `docs/HOW_TO_RUN.md`.
 
 ## Scale
-1/10 Earth in everything: **4,000 km around** (radius ~637 km), **heights 1/10** (Everest
-would be ~900 m), and a **144-minute day** (1/10 of a real day). The geography is laid out on a
-400 km map (`PlanetConst.GEO_CIRCUMFERENCE_M`) and built ten times wider (`GEO_SCALE`). That
-400 km figure is the layout, not the planet; 1/100 Earth is gone everywhere. Play runs on the
-full planet. The 40 km postage stamp is only for the checks (`STAMP=1`).
-
-**Design §CR (3 Oct) moves the planet to 1/100 Earth: 400 km around**, the layout built at its own
-size (`GEO_SCALE` 1), with things at true size, heights still 1/10, the day still 144 minutes, and
-slopes walked at Tobler's pace. It isn't built yet: until it is, the numbers above are what runs.
+**1/100 Earth in distance, 1/10 in height and time** (design §CR, built 3 Oct): **400 km around**
+(radius ~63.7 km, `data/world_scale.json` → `planet.circumference_m`), **heights 1/10** (an
+Everest-class summit is ~885 m; `HEIGHT_SCALE` 0.1), and a **144-minute day** (1/10 of a real day).
+The geography is laid out on a 400 km map (`PlanetConst.GEO_CIRCUMFERENCE_M`) and now built at its
+own size (`GEO_SCALE` 1). Everything at walking scale (you, folk, creatures, plants, ruins, camps)
+is true size; only the gaps between things shrank. A handful of great ranges (4–7, summits
+500–885 m) keep real angles, and slopes are walked at Tobler's pace. From eye height the horizon is
+~400 m on flat ground. Play runs on the full planet. The 40 km postage stamp is only for the checks
+(`STAMP=1`); it has no great ranges.
 
 ## Two games
 The momentum kit (wall jump, cling, swing, roll, 120 km/h chains), momentum combat, the super

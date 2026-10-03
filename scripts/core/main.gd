@@ -139,6 +139,11 @@ func _on_planet_ready() -> void:
 	# The world's save first: it remembers where this world's first camp is.
 	WorldSave.open(world.world_seed)
 	var spawn_dir := _opening_site()
+	# A few hearths in every biome, no two alike (design 3 Oct §CU): the
+	# sites pass, kept in the world's save; the opening road's people's
+	# camp always stays one.
+	var od: Vector3 = world.opening.get("ruin", Vector3.ZERO)
+	Hearths.warm(world, [od] if od != Vector3.ZERO else [])
 	Encampment.set_active(spawn_dir)
 	open_clock(spawn_dir)
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
