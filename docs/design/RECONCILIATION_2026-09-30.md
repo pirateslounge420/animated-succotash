@@ -1792,6 +1792,151 @@ which lurk in the dark."*
 **Untouched:** "no health-bar fight". Health pips, wounds and the blood trail are still being
 talked through (2–3 Oct) and are not locked.
 
+## CV. Smoke from every hearth; in the ruins a stack above each hearth; swifts in the cold ones — LOCKED (3 Oct, 14:28–14:54, Mike)
+
+Mike: *"i like … the hearth smoke"*; then *"smoke from hearths should be locked — which likely
+means that anywhere a hearth is, shouldn't it have a chimney? this way, you can tell from a
+distance which ones are active and which ones may be overran"*; then *"there are some more
+primitive camps on the surface but also the hearths in the various ruins which you have to
+access from an underground tunnel usually — unless the particular hearth is in like a cave
+mouth or something, then it's fine because the smoke has a way to clear out. in ruins, we can
+make a chimney for smoke to escape above each hearth. it could also be a place for chimney
+sweeps to nest in if the hearth is inactive."* (The bird he means is the chimney swift.)
+Not built. Data: `data/smoke.json` (new, not wired); gate `tools/smoke_check.py`.
+
+**Why.** A lit hearth is the one thing in this world worth walking to (§AW, §AX, §BA), and until
+now you could only see it from its own clearing. On the 400 km planet (§CR) the ground curves
+away 450 m from your eye. The top of a 60 m column of smoke still shows from about 3 km.
+
+**1. Every lit hearth sends up smoke.**
+- **Which fires:** a camp's hearth, an old hearth you rekindled (OldHearths), a nest's hearth
+  (§CK) and a delve's hearths through their stacks (3). Torches, planted torches, lamps,
+  braziers and sconces never smoke.
+- **Size follows the fire** (`FireStore`'s own states, §AX): flames give the full column, low
+  about half, embers a thin wisp, out nothing. The wisp is the tell that a fire can still be
+  saved (§BL: embers linger).
+- **It leans with the live wind** at that place (the weather sim's). In still air it stands
+  straight. On a still dawn it stops rising and lies flat over the valley. Rain beats it down.
+- **At night the column isn't drawn.** Smoke gives off no light. The fire lights the first few
+  metres of its own smoke and the canopy above, so a camp shows as a warm glow (§BZ: fire is
+  the one warm accent).
+- **The look** is the flame's family (§BZ): a few camera-facing cards, noise scrolled upward
+  and posterised to two or three flat bands on a coarse texel grid, cut out by dither with no
+  soft alpha. It is pale blue-grey, never a neutral grey (LOOK_REFERENCE R3), and it gets
+  lighter and bluer with distance like everything else.
+- **Far hearths.** A camp that isn't loaded still has a fire state in the sim (§BL: unloaded
+  camps tick as numbers), so its column is drawn from that number. First guess: out to 3.2 km.
+- Under the trees you mostly can't see it, because the sky is a gap (§BB). It pays at the
+  reveal: a ridge, a shore, a clearing.
+
+**2. Surface camps and nests need no chimney.**
+- Camps are tribal and their fire is open: you sit round it and borrow from it, and its light
+  is the safe circle (§AW, §BZ, §BA). The smoke rises free. `peoples/mountain.json` already says
+  "no chimney, the fire in the middle".
+- A cave mouth, grotto or other hearth under rock (§CK, §CO) clears its smoke through the mouth
+  and up the cliff. The soot above the mouth stays when the fire is out.
+
+**3. In the ruins, a stack above each hearth** (Mike).
+- A delve's hearths are underground (§CJ, §CN). Each has a flue up to the surface that ends in
+  a stack. First guess: the first room's old hearth and the heart each get their own; braziers,
+  sconces and the other rooms' rings vent through the nearest one.
+- **The form follows the ruin** (first guesses; `outlets.by_ruin`, the same kinds as
+  `delves.json → fire_holders.by_ruin`):
+
+  | Ruin | Stack |
+  |---|---|
+  | castle | a masonry chimney stack |
+  | tower | a flue in the wall, smoking from the top |
+  | barrow, tomb, a people's ruin | a stone-lined vent on the mound |
+  | mausoleum | a roof vent |
+  | pyramid | a shaft high on the face |
+  | aqueduct | a vent shaft, like a qanat's |
+  | igloo, treehouse, boardwalk | none: an open fire (ice and wood don't last, §BQ) |
+
+- **A ruin's surface old hearth:** in a castle or tower it is a fireplace under a standing
+  stack, open at the front so the swing (§CN), the light and the safe radius work as built.
+  Elsewhere it stays the open ring. First guess.
+- The stack is stone, so it is part of what doesn't rot (§BQ) and is often the last thing
+  standing. Its lip is black with soot, so it reads as a chimney and not a pillar.
+- A flue is never a way in or out (§CJ.4's way out is unchanged).
+- At night a lit hearth below shows as a faint glow and a few sparks at the stack's mouth.
+
+**4. The read from a distance** (no UI):
+
+| What you see | What it tells you |
+|---|---|
+| a column of smoke | lit: a living camp, or a hearth you lit yourself |
+| two columns over one ruin | the heart is lit, so the delve is cleared (§CN) |
+| a thin wisp | embers: get there soon |
+| a stack or a sooted cave mouth, no smoke | a hearth is here and it is cold: empty or overrun. You learn which up close, from §CN's tells, which are unchanged |
+| swifts pouring into the stack at dusk | cold for a while, and nothing burning below (5) |
+
+**5. Swifts take the cold stacks** (Mike).
+- **The real bird.** The chimney swift (*Chaetura pelagica*) nests and roosts in chimneys, old
+  wells and cisterns; before there were chimneys it used caves and the hollow trees of
+  old-growth forest. Its nest is a half-saucer of twigs glued to the wall with saliva. It can't
+  perch: it clings to the wall. At dusk the flock funnels in together, thousands on migration.
+  Vaux's swift does the same in the west. Sources: All About Birds, *Chimney Swift: Life
+  History*; Wikipedia, *Vaux's swift*.
+- **In the game.** A stack whose hearth has been cold a while may hold a flock (first guess:
+  after 10 game days, in 60 % of the stacks wide enough, where the climate suits). By day they
+  hunt insects over the ruin. At dusk they circle and pour down the stack, which makes them
+  part of §CH's handover and the day's mirror of the bats. At dawn they pour back out. Their
+  chatter is a point source at the stack (§BG).
+- **Light the hearth below and they leave at once.** They stay away while it smokes and come
+  back after it has been cold again. A stack shows smoke or birds, never both.
+- **First guess, for Mike to confirm:** no swifts over an overrun delve, because the place
+  goes quiet (§CN). Then a cold stack with no birds at dusk, where the others have them, is
+  the far-off hint that something holds it. It is only a hint: not every empty stack has swifts.
+- **Later:** the same birds in hollow snags (§AF; every stand is old growth), and each land's
+  own swift by realm (§AA, §CS).
+
+**6. A wildfire has its own plume.** Proposed in chat and not objected to; Mike can strike it.
+It is wide, tall and dark, it leans with the wind, and its base is lit orange at night. A
+hearth's column is narrow and pale, so the two are never mistaken. §BL's wildfire rules are
+unchanged.
+
+**Untouched:** fire is still only carried (§BP); the fire's light, sound and safe radius (§BZ,
+§BA); how a delve is cleared (§CN, §CO).
+
+**Open for Mike:** one stack per hearth or one per delve; whether swifts avoid overrun ruins;
+the wildfire plume.
+
+## CW. No waiting, no speed-up — LOCKED (3 Oct, 14:49, Mike)
+
+Asked whether sitting at a lit hearth should let the night pass faster, Mike: *"there should
+be no wait mechanic or speed up."*
+- The clock never skips and never runs faster. There is no sleeping until dawn, no waiting and
+  no time-lapse at a hearth. A night lasts as long as the 144-minute day gives it (48 real
+  minutes at the equinox reference).
+- "Rewarding stillness" (animals coming closer and far sounds carrying when you stop) is liked
+  and still being talked through. It is not locked and has no data.
+
+## CX. Rain falls only from a raincloud you can see — LOCKED as a rule (3 Oct, 14:58, Mike); the colours are open
+
+From Mike's 3 Oct play: the HUD read "Rain" and rain fell from a clear cobalt sky, and
+"Overcast" showed a blue sky with hard shadows. Mike: *"the sky looks clear but it's raining.
+need rainclouds to form for rain to happen."* The causes are in PROGRESS (3 Oct, the play
+entry). Not built.
+
+**The rule.**
+- Rain falls only where a raincloud is overhead and drawn. No visible cloud, no rain.
+- The cloud comes first. It builds, the light under it drops, then the rain starts. The rain
+  stops before the cloud clears.
+- One value drives everything: the drawn cloud, the HUD's word, the rain streaks, the rain
+  sound and how much the sun dims all read the same cover overhead. Today the rain reads a
+  separate field from the clouds.
+- "Overcast" on the HUD means the sky looks overcast.
+
+**Open for Mike (no locked section covers these):**
+- **The colour of an overcast or rain sky.** The look rules still bind it: never grey
+  (LOOK_REFERENCE R3), blue owns the frame, and §BB's "dark days do not mean dark skies".
+  First guess: deep indigo decks with a lighter lit edge (on screen about `#6878C8` lit over
+  `#06186C` shade), and for storms the purple of the spec's R1a (`#5A1AA0`), in two or three
+  flat bands. The code's storm sky is grey today, which breaks R3.
+- **Shadows under cloud.** Today cloud only dims the sun by up to 55 % and the shadows stay at
+  full strength. First guess: under a full deck the shadows fade but keep their hard edge (§C).
+
 ## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
@@ -1895,3 +2040,15 @@ The proposed engine order:
 6. **Carried plants**, after §AB.
 
 Biome-share tuning waits on Claude's Earth reference fill.
+
+**Added 3 Oct, 15:00 (§CV–§CX):** the smoke data is in and not wired (`data/smoke.json`, gate
+`tools/smoke_check.py`). §CW is a rule with nothing to build. §CX is a rule; its fix is in the
+play-test prompt of 3 Oct, with the other bugs from that play. The proposed engine order for §CV:
+1. **The column over a lit hearth**, from `FireStore`'s state, leaning with the weather sim's
+   wind; the night glow instead of a column.
+2. **Far hearths:** the column drawn from the camp sim's fire state for camps that aren't loaded.
+3. **Stacks and vents** on the built barrow delve (a vent over the first room and one over the
+   heart) and the sooted mouth at the cave-mouth and grotto nests; castle and tower stacks when
+   their delves exist.
+4. **Swifts in the cold stacks**, after §CH's dusk handover.
+5. **The wildfire plume**, if Mike keeps it.

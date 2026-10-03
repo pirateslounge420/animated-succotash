@@ -4,6 +4,45 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (15:00) — Mike's 14:34–14:46 play: a den that looks like a doorway, an Alocasia drawn as a bush, rain from a clear sky, far plants lit from the wrong side: causes found (design chat; §CX)
+All four are read from the code and data, not run: no Godot in the chat's box. Mike's frames are at 12.8–12.9°N, 140.2°W, Jungle, granite soil, Day 1.
+- **1. "A little opening to a shrine … I wasn't able to go inside" (14:22 game time).**
+  - It is a pack's den prop, not a ruin: `CreatureSpawner._den_prop` (`creature_spawner.gd:516`), two boulders and a lintel named "WolfDen".
+  - The dark opening is a solid near-black ball (`CreatureBodies.ball`, 3.2 m wide and 2.6 m tall), so it reads as a doorway and was never one.
+  - It is a spotted hyena den in a jungle. `_find_den` gates on temperature only, never moisture, and hyenas are 16–32 °C. The Arctic wolf is ruled out at 27 °C.
+  - A hyena's den is a `burrow` in the data, but `_den_prop` builds the wolf's stone cave mouth for both, with a white snow slab on the lintel in any climate.
+  - **For Mike:** what a den should be is a design call (asked in chat).
+- **2. "Supposed to be an Alocasia, but it looks nothing like one" (14:58).**
+  - The plant is the jungle file's "Elephant ear" (*A. macrorrhizos*). The other jungle Alocasia can't grow at 27.8 °C and 4 m. Its `shape` was "shrub", so it was built as a bush: a ball of 60–95 randomly turned cards (`plant_meshes.gd:796`).
+  - The shader then treats each card as a cluster of small leaves: it repeats the leaf in a grid at real leaf size, flips or turns each one, blanks 22 % of cells and cuts the card with the ragged cluster blob (`foliage.gdshader:375-393`, `:604-613`). A 1–2 m leaf comes out as torn pieces. The "umbrella" giant herbs get this too.
+  - The sagittate tile fills 24 % of its square and leaves stray one-pixel vein lines outside the blade (`tools/look/make_plant_tiles.py`).
+  - The engine reads only `size_cm`, `type`, `texture` and `arrangement` from a `leaf` block. Outline, base, apex, aspect, `canopy.droop` and `appearance.petiole` never reach the builder.
+  - **Every Amorphophallus is caught too.** All 246 carry `shape` "umbrella" and no architecture block, and §CA's placeholder test (`plant_meshes.gd:722`) runs before the aroid test (`:728`), so the titan-arum leaf built on 30 Sept (`_aroid_leaf`) is never reached.
+  - **Data, live on restart:** Elephant ear's `shape` is now "umbrella" (`20_jungle.json`), so it takes the giant-herb placeholder (a few upright cards on stalks) until the engine fix. `plant_schema_check`: 0 errors.
+- **3. "The sky looks clear but it's raining" (15:07).**
+  - The low cloud deck is the only layer that can cover the sky overhead, and at Mike's spot it is under the ground. Its shell's flat panels are 25 km wide on the 637 km planet and sag up to 245 m; the deck is 150 m up (`cloud_layers.gd:39, 62, 106-119`). On the 40 km stamp the sag is 2 m, so the harness frames look right.
+  - Rain doesn't read the clouds. The streaks and sound read `rain_mm_h`; the shower mask is its own noise field (`weather_sim.gd:599-612, 652-676`), so it can rain with cover as low as 0.19.
+  - "Overcast" (cover above 0.65, `hud.gd:652`) never recolours the sky; only `storm` does, to grey, which breaks LOOK_REFERENCE R3.
+  - Mike's rule is now §CX.
+- **4. "Bamboo casts shadows towards the camera but is lit on this side … when approached they would get shadows" (16:33).**
+  - Trunks, limbs and culms carry normals that point inward (`plant_meshes.gd:895`, the builder's winding; checked by re-running its maths: 30 of 30 culm faces, 32 of 32 trunk faces). So the sun brightens the side facing away from it. It is the same face-convention fault the delve had on 2 Oct.
+  - Past 35 m nothing shades a plant: the sun's shadow map fades out from 31.5 to 35 m (`sky_system.gd:350`), and the ground has a stand-in shade past that but plants have none. So far wood glows and turns navy as you walk up.
+  - Bamboo keeps its full mesh to about 520 m and trees to 350 m, so this is real meshes, not the far pictures.
+  - "Overcast" with hard shadows: cloud dims the sun by at most 55 % and never touches shadow strength (`sky_system.gd:362`).
+- **5. A render-distance setting for slower machines:** it exists (29 Sept). O or F10 → Display → Render distance, 1 to 8 chunks, default 3. Mike was told in chat.
+- **Not determined:** which Godot Mike's Mac runs (F3's last lines say); the live cloud and storm values in his frames.
+
+## 2026-10-03 (15:00) — §CV smoke from every hearth, stacks in the ruins and swifts in the cold ones; §CW no waiting; §CX rain needs a raincloud: design and data only (design chat; Mike 14:28–14:58)
+- **§CV, smoke:** every lit hearth sends up a column sized by its fire's state (flames, low, a wisp for embers), leaning with the wind, with a glow at night instead of a column. A 60 m column's top shows from 3.2 km on the 400 km planet.
+  - Surface camps keep the open fire, and a cave mouth clears its own smoke. In the ruins each underground hearth gets a stack, formed by the ruin kind.
+  - A stack with no smoke marks a cold hearth: empty or overrun.
+  - Chimney swifts roost in stacks that have been cold a while and leave when the hearth is lit (sourced).
+  - A wildfire gets its own wide dark plume (proposed, Mike can strike it).
+  - Data: `data/smoke.json` (new, not wired). Gate: `tools/smoke_check.py --strict`, 0 errors.
+- **§CW:** the clock never skips or speeds up. Stillness is liked, not locked.
+- **§CX:** rain falls only from a drawn raincloud; the cloud builds first; one cover value drives the sky, the HUD, the rain and the light. The colours of an overcast sky are open for Mike.
+- §BR has the proposed engine order.
+
 ## 2026-10-03 (afternoon) — §CR–§CU: the world at 1/100 Earth, plant communities with one home each, carrying plants, a few hearths per biome: design and data only (design chat; Mike, voice to 13:01)
 - **§CR, the world at 1/100 Earth:** 400 km around. The layout is built at its own size (`GEO_SCALE` 1); things stay true size, heights stay 1/10, and the 144-minute day stays.
   - A handful of great ranges with walkable routes (about 22° on average, 35° at most) and sheer faces (15%, first guess). They may take up to three times their honest ground.
