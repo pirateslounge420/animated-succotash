@@ -10,9 +10,11 @@ class_name Kindling
 ##     genera under the crosshair (a birch gives birch bark), only where
 ##     the biome lists the kind and in its season.
 ## The dry grass and reeds are the existing fuel items (`fuel_kind`): a
-## bundle of either is kindling as it stands. Kindling gathered or carried
-## in rain is wet until it has been dry for fuel.json wet.dry_h_game game
-## hours; under a roof it stays dry. Dry kindling always catches; wet
+## bundle of either is kindling as it stands. The pouch keeps kindling dry
+## (design 2 Oct §CO, kindling.pouch_keeps_dry, superseding §CN's
+## "gathered or carried in rain"): only kindling gathered while it rains,
+## outside a roof, starts damp, and it dries in the pouch after fuel.json
+## wet.dry_h_game game hours. Anything can be gathered in any weather. Dry kindling always catches; wet
 ## kindling only if its kind is wet_ok (birch bark, fatwood, Douglas-fir
 ## pitchwood), otherwise it smokes and the fire stays cold. No dice. The
 ## flame takes after catch.time_s_max x (1 - catch_dry or catch_wet).
@@ -142,8 +144,11 @@ static func burn_s(kind: String) -> float:
 
 
 ## Rain on what you carry (main, each frame it rains on you outside a
-## roof): every kindling thing is wet from now.
+## roof): with the pouch (§CO, the default) nothing; without it, every
+## kindling thing is wet from now.
 static func rain_on(inv: Inventory, days: float) -> void:
+	if bool(D.get("pouch_keeps_dry", true)):
+		return
 	for it in inv.carried:
 		if kind_of(it) != "":
 			it["wet"] = true
@@ -165,6 +170,16 @@ static func best_slot(inv: Inventory, days: float) -> int:
 			best_v = v
 			best = i
 	return best
+
+
+## Gathered now: damp if it rains on you outside a roof (§CO; soaked
+## ground alone doesn't wet kindling).
+static func gathered(it: Dictionary, raining: bool, under_roof: bool, days: float) -> bool:
+	var wet := raining and not under_roof
+	if wet:
+		it["wet"] = true
+		it["wet_days"] = days
+	return wet
 
 
 static func count(inv: Inventory) -> int:

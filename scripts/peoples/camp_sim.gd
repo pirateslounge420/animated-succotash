@@ -143,6 +143,7 @@ func _process(delta: float) -> void:
 	_time_acc = 0.0
 	for k in states:
 		catch_up(states[k])
+	Overrun.check_nest_dens(self, world.days)
 	settlers(world.days)
 
 

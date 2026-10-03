@@ -459,8 +459,8 @@ func _process(delta: float) -> void:
 	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, weather, cloud_light, sky.cloud_shade, sky.cloud_light_dir)
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position) or Delves.inside
-	# Rain on what you carry (§CN): kindling is wet until it dries; under
-	# a roof (a ruin's, a delve's; not a canopy) it stays dry.
+	# Rain on what you carry: the pouch keeps kindling dry (§CO; rain_on
+	# does nothing unless fuel.json kindling.pouch_keeps_dry is false).
 	if float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 and not _under_roof():
 		Kindling.rain_on(player.inventory, world.days)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
@@ -880,14 +880,11 @@ func _ground_kindling() -> String:
 	return Kindling.ground_kind(world, player.surface_dir, world.days)
 
 
-## Gather one of `kind` (§CN): wet if it rains on you outside a roof, or
-## the ground is soaked.
+## Gather one of `kind` (§CN): damp if it rains on you outside a roof
+## (§CO).
 func _gather_kindling(kind: String, at: Vector3) -> void:
 	var it := Kindling.make(kind)
-	var wet := (float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 or player.ground_wet > 0.5) and not _under_roof()
-	if wet:
-		it["wet"] = true
-		it["wet_days"] = world.days
+	var wet := Kindling.gathered(it, float(_local_weather.get("rain_mm_h", 0.0)) > 0.1, _under_roof(), world.days)
 	if player.inventory.add(it):
 		player.grab_toward(at)
 		_say_note("You gather %s%s." % [Kindling.name_of(kind).to_lower(), ", wet through" if wet else ""])
@@ -1048,6 +1045,10 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		if player.inventory.add(it):
 			lying.pick_up()
 			var wet := float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 or player.ground_wet > 0.5
+			# Dry grass and reeds are kindling too: for them only the rain
+			# counts, and not under a roof (§CO).
+			if Kindling.kind_of(it) != "":
+				wet = float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 and not _under_roof()
 			FuelField.gathered(it, wet, world.days)
 			if say:
 				_say_note("You pick up the %s%s." % [Inventory.title(it).to_lower(), ", wet through" if wet else ""])

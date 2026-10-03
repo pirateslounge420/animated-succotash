@@ -142,17 +142,51 @@ static func camp_fell(map: PlanetData, st: Dictionary, days: float) -> bool:
 
 ## The heart's fire caught: cleared. Whatever held it leaves.
 static func clear(site: Dictionary, days: float) -> void:
-	var id := id_of(site)
+	clear_id(id_of(site), [site.dir.x, site.dir.y, site.dir.z], days, str(LOG.get("heart_lit", "The fire at the heart caught. Whatever held this place has gone.")))
+
+
+static func clear_id(id: String, dir: Array, days: float, line: String) -> void:
 	var s: Dictionary = saved().get(id, {})
 	if str(s.get("state", "overrun")) != "overrun":
 		return
 	if s.is_empty():
-		s = {"fell": -1.0, "dir": [site.dir.x, site.dir.y, site.dir.z]}
+		s = {"fell": -1.0, "dir": dir}
 	s["state"] = "cleared"
 	s["day"] = days
 	saved()[id] = s
 	WorldSave.mark_dirty()
-	GameLog.add(str(LOG.get("heart_lit", "The fire at the heart caught. Whatever held this place has gone.")), "delve")
+	GameLog.add(line, "delve")
+
+
+## A cave's den (design 2 Oct §CO, delves.json fire_holders.nest_den,
+## camps.json sim.overrun.cleared_when_nest): an overrun cave mouth or
+## grotto is only the small chamber behind the mouth until Phase 3 digs
+## the caves beyond, so the hearth at its opening (the camp's own gone
+## cold, or the old hearth at its remains), laid and lit, clears it: the
+## one exception to "the surface hearth doesn't clear it". CampSim calls
+## this with the catch-ups.
+static func check_nest_dens(cs: CampSim, days: float) -> void:
+	var nd: Dictionary = (DV.get("fire_holders", {}) as Dictionary).get("nest_den", {})
+	if str(nd.get("fire", "opening_hearth")) != "opening_hearth" or not bool(nd.get("clears", true)):
+		return
+	if str(CAMPS_SIM.get("cleared_when_nest", "opening_hearth_lit")) != "opening_hearth_lit":
+		return
+	var sv := saved()
+	for id in sv.keys():
+		var e: Dictionary = sv[id]
+		if str(id).is_valid_int() or str(e.get("state", "")) != "overrun":
+			continue
+		var nest := Nests.by_key(str(id))
+		if nest.is_empty():
+			continue
+		var key := str(e.get("key", id))
+		var fk := FireStore.key_of(nest.hearth)
+		if cs != null and cs.states.has(key):
+			fk = str(cs.states[key].get("fire_key", fk))
+		var st: Dictionary = FireStore.stores.get(fk, {})
+		if str(st.get("state", "")) in ["flames", "low"]:
+			var h: Vector3 = nest.hearth
+			clear_id(str(id), [h.x, h.y, h.z], days, "The fire at the cave's mouth caught. Whatever held it has gone.")
 
 
 ## The ruin site a saved den id names ({} for a nest's den, or not found).

@@ -5,11 +5,13 @@ extends SceneTree
 ## Boots the game and asserts:
 ##  - a seeded share of the old delve barrows near the opening camp start
 ##    overrun (worldgen_share; printed);
+##  - a cave-mouth (or grotto) camp the dark took is overrun, and the
+##    hearth at its opening, laid and lit, clears it (§CO);
 ##  - the camp sim marks a camp the dark took, with a delve under it,
 ##    overrun when it goes to ruin; one left for hunger is not; and it
 ##    never resettles an overrun one, its fire relit or not;
 ##  - at the nearest overrun barrow: holders keep its delve; lighting the
-##    surface hearth doesn't clear it; at night near it the dread fills
+##    surface hearth doesn't clear it (a barrow's never does; §CO); at night near it the dread fills
 ##    1.5 times as fast, by day the sound bed goes quiet;
 ##  - the heart's fire-holder, laid and lit with the swing's rule, holds its
 ##    own radius (light_radius_m): no holder and no dread hunter comes
@@ -80,6 +82,7 @@ func _run() -> void:
 		return
 	# --- The sim ------------------------------------------------------------
 	await _sim_checks(map, spare if not spare.is_empty() else target)
+	await _nest_checks(camp)
 	# --- The barrow ---------------------------------------------------------
 	print("[overrun] the nearest overrun barrow: %.1f km, %s" % [bd / 1000.0, FireStore.biome_key(world, target.dir)])
 	var node := await _go_build(map, target)
@@ -102,8 +105,8 @@ func _run() -> void:
 	var surf: Node3D = main.old_hearths.hearth_of_ruin(null, node)
 	if surf != null:
 		FireStore.relight(surf)
-		await frames(10)
-		ok(Overrun.is_overrun(target), "lighting the surface hearth doesn't clear it")
+		await frames(45)
+		ok(FireStore.is_lit(surf) and Overrun.is_overrun(target), "a barrow is still not cleared by its surface hearth, lit (%s)" % Overrun.state_of(target))
 	# The surface by night and day.
 	var door: Vector3 = main.overrun._door_point(node)
 	var u0 := Delves.underground
@@ -242,6 +245,65 @@ func _sim_checks(map: PlanetData, site: Dictionary) -> void:
 		Overrun.saved().erase(id)
 	else:
 		Overrun.saved()[id] = keep
+
+
+## A cave's den (§CO): a cave-mouth (or grotto) camp the dark took is
+## overrun, and lighting the hearth at its opening clears it.
+func _nest_checks(camp: Vector3) -> void:
+	var nest := {}
+	var bd := INF
+	for n in Nests.near(camp, 150000.0, ["cave_mouth", "grotto"]):
+		var dd := CubeSphere.surface_distance_m(n.dir, camp)
+		if dd < bd:
+			bd = dd
+			nest = n
+	if nest.is_empty():
+		print("SKIP  no cave mouth or grotto within 150 km")
+		return
+	var cs: CampSim = CampSim.instance
+	var key := str(nest.key)
+	var hd: Vector3 = nest.hearth
+	var made := not cs.states.has(key)
+	var st := cs.ensure(key, hd, "shelter", FireStore.biome_key(world, hd), int(nest.seed))
+	var keep_st: Dictionary = st.duplicate(true)
+	var fst: Dictionary = FireStore.stores.get(str(st.fire_key), {})
+	var keep_f: Dictionary = fst.duplicate(true)
+	st.state = "abandoned"
+	st.why = "taken"
+	st.blood = true
+	st.folk = []
+	st.abandoned_day = world.days - 61.0
+	fst["units"] = []
+	fst["state"] = "out"
+	fst.erase("kindling")
+	FireStore.stores[str(st.fire_key)] = fst
+	cs._tick_empty(st, world.days)
+	ok(bool(st.get("overrun", false)) and str((Overrun.saved().get(key, {}) as Dictionary).get("state", "")) == "overrun", "a %s camp the dark took is overrun once a ruin (%.1f km)" % [str(nest.kind).replace("_", " "), bd / 1000.0])
+	await frames(40)
+	ok(str((Overrun.saved().get(key, {}) as Dictionary).get("state", "")) == "overrun", "its hearth cold, it stays overrun")
+	# Laid with kindling and fuel, lit with the swing's rule.
+	var probe := Node3D.new()
+	probe.set_meta("fuel_key", str(st.fire_key))
+	FireStore.lay_kindling(probe, Kindling.make("dry_twigs"), world.days)
+	FireStore.add_fuel(probe, Inventory.make("fuel", {"fuel": "branch"}), world.days)
+	var how := FireStore.swing_light(probe, world.days)
+	FireStore._take(fst, 5.0)
+	ok(how in ["ok", "catching"] and FireStore.is_lit(probe), "the hearth at its opening, laid and lit (%s)" % how)
+	var log_n := GameLog.entries.size()
+	await frames(40)
+	var said := false
+	for e in GameLog.entries.slice(log_n):
+		if str(e.get("text", "")).find("cave's mouth") >= 0:
+			said = true
+	ok(str((Overrun.saved().get(key, {}) as Dictionary).get("state", "")) == "cleared" and said, "lighting it clears the den, and the log says so")
+	probe.free()
+	# Put things back.
+	Overrun.saved().erase(key)
+	if made:
+		cs.states.erase(key)
+	else:
+		cs.states[key] = keep_st
+	FireStore.stores[str(st.fire_key)] = keep_f
 
 
 ## Stand by the barrow and build it; returns its node.

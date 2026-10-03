@@ -13,8 +13,9 @@ extends "res://tools/strike_check.gd"
 ##    fire (no fire, no torch lying, no wildfire scar), and does nothing
 ##    to a creature in reach (its health and its place unchanged);
 ##  - crouched with the lit torch, right click on the ground gathers the
-##    biome's kindling (§CN); rain wets it, and it dries after
-##    wet.dry_h_game game hours.
+##    biome's kindling (§CN); the pouch keeps it dry in rain (§CO), but
+##    kindling gathered in the rain starts damp, won't light, and lights
+##    after wet.dry_h_game game hours.
 
 
 func _initialize() -> void:
@@ -91,9 +92,31 @@ func _initialize() -> void:
 		var slot := Kindling.best_slot(player.inventory, world.days)
 		var it: Dictionary = player.inventory.carried[slot]
 		var d0: float = world.days
-		Kindling.rain_on(player.inventory, d0)
-		ok(Kindling.is_wet(it, d0 + 1.0 / 24.0), "rain wets what you carry: wet an hour later")
-		ok(not Kindling.is_wet(it, d0 + 6.5 / 24.0), "and dry again after %s game hours" % str((FireStore.D.get("wet", {}) as Dictionary).get("dry_h_game", 6)))
+		# The pouch keeps it dry (§CO): rain on what you carry wets nothing.
+		for k in 30:
+			Kindling.rain_on(player.inventory, d0 + k / 24.0)
+		ok(not bool(it.get("wet", false)) and not Kindling.is_wet(it, d0 + 1.0), "kindling carried through rain stays dry (the pouch)")
+		# Gathered in the rain, outside a roof, it starts damp (§CO).
+		main._local_weather = {"rain_mm_h": 4.0}
+		var before_n := Kindling.count(player.inventory)
+		main._gather_kindling("dry_twigs", player.global_position)
+		var damp := {}
+		for c in player.inventory.carried:
+			if Kindling.kind_of(c) == "dry_twigs" and bool((c as Dictionary).get("wet", false)):
+				damp = c
+		ok(Kindling.count(player.inventory) == before_n + 1 and not damp.is_empty() and Kindling.is_wet(damp, world.days) and not main._under_roof(), "dead twigs gathered in the rain start damp")
+		if not damp.is_empty():
+			# Laid damp, it won't light; six game hours on, it does.
+			var st := FireStore.store_of(fire)
+			st.units = [["branch", FireStore.burn_min("branch")]]
+			st.state = "out"
+			st.erase("kindling")
+			FireStore.lay_kindling(fire, damp, world.days)
+			var how := FireStore.swing_light(fire, world.days)
+			ok(how == "wet" and not FireStore.is_lit(fire), "laid damp, it smokes and won't light (%s)" % how)
+			var how2 := FireStore.swing_light(fire, world.days + 6.1 / 24.0)
+			FireStore._take(st, 5.0)
+			ok(how2 in ["ok", "catching"] and FireStore.is_lit(fire), "six game hours later it has dried in the pouch and lights (%s)" % how2)
 	# A creature in reach.
 	var h := -player.global_basis.z
 	var deer := await deer_at(h, 1.2)

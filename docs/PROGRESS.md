@@ -29,6 +29,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - the 30 % of old delve ruins that start overrun;
   - adding the plants the fill found missing: birch in four biomes, Arctic white heather, Spanish moss in the swamp, yucca.
 
+## 2026-10-03 — §CO: the pouch keeps kindling dry; a cave's den is cleared by the hearth at its opening (Mike, 2 Oct evening, locked)
+- **1. The pouch** (`Kindling.rain_on`, `Kindling.gathered`, `fuel.json kindling.pouch_keeps_dry`):
+  - Kindling you carry no longer gets wet in rain.
+  - Only kindling gathered while it rains, outside a roof, starts damp, and it dries in the pouch after `wet.dry_h_game` (6) game hours. Soaked ground alone no longer wets it.
+  - Damp kindling won't catch, except birch bark, fatwood and pitchwood, as built.
+  - Dry grass and reeds picked up as fuel follow the same rule, since they are kindling too. Other fuel keeps §AX's rain-or-soaked-ground rule.
+- **2. A cave's den** (`Overrun.check_nest_dens`, `delves.json fire_holders.nest_den`, `camps.json sim.overrun.cleared_when_nest`):
+  - An overrun cave mouth or grotto (a nest camp the dark took) is cleared by the hearth at its opening: the camp's own hearth gone cold, or the old hearth at its remains, laid with kindling and fuel and lit with the swing.
+  - The log says "The fire at the cave's mouth caught. Whatever held it has gone.", and folk can come back as for a cleared ruin (§CN 4).
+  - Barrows are still cleared only at the heart.
+- **Checks** (7731, 0 fails):
+  - `swing_check`: kindling carried through 30 game hours of rain stays dry; dead twigs gathered in the rain start damp, won't light, and light six game hours later.
+  - `overrun_check`: a taken cave-mouth camp 35 km out is overrun, stays overrun while its hearth is cold, and is cleared by its opening hearth; a barrow's lit surface hearth still doesn't clear it.
+  - `settle_check`, `old_hearth_check` and `delve_check` re-run.
+- **Data:** the `[NOT WIRED YET — design §CO]` notes are off `fuel.json`, `camps.json` and `delves.json` (Claude Code, as wired).
+- **Not built, for Mike:** a cave's den has no holders or tells yet (no shapes in the mouth, no bones, no quiet). Those are built for barrows only. The cave mouth's chamber is too small to stand them in until Phase 3 digs the caves.
+- **Data ask for Claude (chat):** a `delves.json log` line for the cave's mouth (the code's own line stands in).
+
 ## 2026-10-02 (evening) — §CN built: the swing passes the flame, a cold fire needs kindling, overrun ruins, folk come back (Mike, 2 Oct, locked)
 - **1. The swing** (`Torch`):
   - Left click with the torch in hand swings it, on the bare hand's arc and timing (`Fists.STRIKE_S`).

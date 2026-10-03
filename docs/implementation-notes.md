@@ -2252,6 +2252,9 @@ the player's shoulder so the fire is in view.
     - kindling with no fuel is `flare` (state `flare` for `burn_s`, lit);
     - otherwise `catching` for `catch.time_s_max × (1 − catch)`, then lit (`_take` in `tick`; `burn` skips both states).
   - A store may carry its own `max_units` (`FireStore.max_units`). `relight` stays the bare primitive the checks use.
+- **§CO (2 Oct, evening):**
+  - `Kindling.rain_on` does nothing while `fuel.json kindling.pouch_keeps_dry` is true (the default). `Kindling.gathered` makes kindling damp only when it rains on you outside a roof; soaked ground no longer counts, and the same goes for grass and reeds picked up as fuel. Fuel otherwise keeps §AX's rule.
+  - `Overrun.check_nest_dens` runs from `CampSim._process` before the settlers. It clears an overrun nest den (the den id is the nest key) when its camp's fire store, or `key_of(nest.hearth)`, is lit. It uses `delves.json fire_holders.nest_den` and `camps.json sim.overrun.cleared_when_nest`, logs "The fire at the cave's mouth caught. Whatever held it has gone.", and `Overrun.clear_id` holds what is shared with `clear`.
 - **Overrun** (`scripts/landmarks/overrun.gd`):
   - **Save:** `WorldSave "overrun"` maps a den id (a ruin's seed or a nest's key) to its state: `overrun`, `cleared` or `settled`.
   - **Overrun:** `worldgen(site)` rolls `worldgen_share` for old delve barrows. `CampSim._tick_empty` calls `camp_fell` when a camp the dark took (blood, why taken or fled) goes to ruin with a den. The resettle branch skips `overrun` camps.
