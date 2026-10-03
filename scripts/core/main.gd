@@ -363,19 +363,17 @@ func _on_planet_ready() -> void:
 
 ## The world's clock at the opening camp `spawn_dir` (main's boot; also
 ## tools/day_check.gd). The sky keeps World.START_DAYS (a near-full moon the
-## first night, design §CG); the hour is §BX's afternoon there; Day 1 is the
+## first night, design §CG); the hour is §CY's dawn there; Day 1 is the
 ## world's first local day there, kept in its save.
 func open_clock(spawn_dir: Vector3) -> void:
 	world.days = World.START_DAYS
-	# Start in the afternoon (design 30 Sept night §BX, roads.json
-	# opening_road.spawn): real_min_before_dusk real minutes before dusk
-	# begins here, so a half-hour walk reaches the first camp as the light
-	# goes. (Dusk's hour depends on the latitude and the day of the year.)
+	# Wake at dawn (design 3 Oct §CY.1, roads.json opening_road.dawn_start;
+	# supersedes §BX's afternoon): real_min_after_dawn_begins real minutes
+	# after dawn begins here, the world still blue and the fire the one warm
+	# thing, with the day ahead to reach the next hearth. (Dawn's hour
+	# depends on the latitude and the day of the year.)
 	var spawn_lat := CubeSphere.latitude(spawn_dir)
-	var dusk_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
-	var spawn_rule: Dictionary = Tuning.section("roads", "opening_road").get("spawn", {})
-	var before_min := float(spawn_rule.get("real_min_before_dusk", 22.0))
-	var local_start_h := fposmod(dusk_h - before_min / (world.day_length_s / 60.0) * 24.0, 24.0)
+	var local_start_h := World.dawn_start_hour(spawn_lat, Astro.declination(world.days), world.day_length_s)
 	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
 	# Day 1 (design 1 Oct §CG): the world's first local day, at its opening
 	# camp, kept in its save. A save from before has none: the clock starts
@@ -442,6 +440,10 @@ func _process(delta: float) -> void:
 		if clouds.above_low(elevation):
 			_above_clouds(_local_weather)
 	WeatherSim.ease_toward(_weather_eased, _local_weather, delta, DayCycle.weather_smoothing_s())
+	# What falls is the rain's rate gated by the eased cover overhead
+	# (design 3 Oct §CX): the cloud builds before the rain, the rain stops
+	# before the cloud clears.
+	_weather_eased["rain_mm_h"] = float(_weather_eased.get("rain_rate", 0.0)) * WeatherSim.rain_gate(float(_weather_eased.get("cloud", 0.0)))
 	var weather := _weather_eased
 	landmarks.update_landmarks(delta, sky.daylight)
 	camps.update_camps(delta)
@@ -594,6 +596,7 @@ func _above_clouds(w: Dictionary) -> void:
 	w["wind"] = (w.get("wind", Vector3.ZERO) as Vector3) * 1.7
 	w["cloud"] = float(w.get("cloud", 0.0)) * 0.35
 	w["rain_mm_h"] = float(w.get("rain_mm_h", 0.0)) * storm
+	w["rain_rate"] = float(w.get("rain_rate", 0.0)) * storm
 	w["above_clouds"] = true
 
 

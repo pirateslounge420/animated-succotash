@@ -16,7 +16,8 @@ extends SceneTree
 ## over): per site the biome, the soil, every species within list_within_m
 ## with its files, and PASS/FAIL. A species standing in a biome that does
 ## not list it FAILS the site (unlisted_species_allowed). The opening
-## camp's first frame must be afternoon (the sun above the dusk band).
+## camp's first frame must be dawn (design 3 Oct §CY.1: within the first
+## minutes after dawn begins).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -405,8 +406,12 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			var fname := "%s_%02dh_f%d.png" % [site.name, int(round(solar)), k]
 			img.save_png(ProjectSettings.globalize_path(OUT_DIR.path_join(str(sd)).path_join(fname)))
 			if site.get("spawn_hour", false) and first and k == 0:
-				var dusk := DayCycle.phase_start_hour("dusk", lat, Astro.declination(world.days))
-				ok(solar >= 12.0 and solar < dusk and main.sky.sun_elevation_deg > 0.0, "the opening camp's first frame is afternoon (solar %.1f h, dusk begins %.1f h, sun %.1f°)" % [solar, dusk, main.sky.sun_elevation_deg])
+				# On the game's own clock (World.local_clock, what the HUD and
+				# DayCycle read), not the frame name's mean solar hour.
+				var dawn := DayCycle.phase_start_hour("dawn", lat, Astro.declination(world.days))
+				var local_h: float = world.local_clock(d).y
+				var into: float = fposmod(local_h - dawn, 24.0) / 24.0 * (world.day_length_s / 60.0)
+				ok(into < 4.0, "the opening camp's first frame is dawn (%.2f h on the clock, dawn begins %.2f h, %.1f real min in, sun %.1f°)" % [local_h, dawn, into, main.sky.sun_elevation_deg])
 		first = false
 
 

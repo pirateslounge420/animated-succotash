@@ -167,14 +167,21 @@ func _initialize() -> void:
 		# 30 m off one road can be on another (a fork, a junction).
 		ok(off_n * 50 <= off.size(), "no tread 30 m off a road, bar junctions (%d of %d samples)" % [off_n, off.size()])
 		ok(stretches == told, "every lost stretch has a tell where the trail resumes (%d of %d)" % [told, stretches])
-	# The opening road (§BX): the forced link from the opening camp to its
-	# people's camp, its length against opening_road.length_km_hint.
-	var hint_km := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2))
+	# The opening road (§BX, §CY.1): the forced link from the opening camp
+	# to its people's camp, timed in walking minutes at the slope pace
+	# against opening_road.dawn_start.walk_real_min (shortened where the
+	# day is short: World.opening_walk_target).
+	var want: Dictionary = world.opening_walk_target(world.opening.get("site", Vector3.UP)) if not world.opening.is_empty() else {"minutes": 40.0, "speed": 4.3, "day_min": 0.0}
 	var opening_m := -1.0
+	var opening_min := -1.0
 	for l in near:
 		if bool(l.get("opening", false)):
 			opening_m = float(l.len_m)
-	print("[reach] the opening road: %s (hint %.1f km)" % ["%.1f km to its people's camp" % (opening_m / 1000.0) if opening_m >= 0.0 else "none", hint_km])
+			opening_min = RoadNetwork.walk_minutes(world.planet, l.pts, float(want.speed))
+	print("[reach] the opening road: %s (want %.0f min; %.0f real min from waking to dusk)" % ["%.1f km to its people's camp, %.0f min of walking at the slope pace" % [opening_m / 1000.0, opening_min] if opening_m >= 0.0 else "none", float(want.minutes), float(want.day_min)])
+	if opening_m >= 0.0:
+		ok(absf(opening_min - float(want.minutes)) <= 0.35 * float(want.minutes), "the opening road is about %.0f minutes of walking (%.0f)" % [float(want.minutes), opening_min])
+		ok(opening_min <= float(want.day_min) - float(world.dawn_rule().get("slack_before_dusk_min", 20.0)) + 0.35 * float(want.minutes), "a straight walk arrives before dusk with slack (%.0f of %.0f min)" % [opening_min, float(want.day_min)])
 	ok(opening_m >= 0.0, "an opening road leads from the camp to a people's camp")
 	# Where the nearest road goes: its two ends' kinds and lengths.
 	if spawn_road_m < INF:

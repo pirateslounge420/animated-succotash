@@ -600,16 +600,30 @@ func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 	var storm_now := clampf(sample(storm_level, d), 0.0, 1.0)
 	var cover := clampf(areal / 2.5 + storm_now * 0.7, 0.06, 1.0)
 	var shower := _shower_mask(d, w, cover)
+	# One cover value overhead (design 3 Oct §CX: rain falls only from a
+	# raincloud you can see): the damp air's cloud, a shower cell's deck
+	# (any shower makes a deck of at least RAIN_COVER.x... up to near full
+	# in a downpour) and a storm's. The drawn deck (CloudLayers), the HUD's
+	# word, the rain and the sun's dimming all read it; the rain is gated
+	# on it (rain_gate), so it starts only once the deck is thick and stops
+	# before it clears.
+	var rate := areal / cover * shower if areal > 0.02 else 0.0
 	var cloud := smoothstep(0.55, 0.95, sample(rel_humidity, d))
+	if rate > 0.0:
+		cloud = maxf(cloud, shower * (0.72 + 0.25 * minf(areal * 2.0, 1.0)))
+	cloud = maxf(cloud, smoothstep(0.0, 0.5, storm_now) * 0.97)
 	return {
 		"wind": w,
-		"rain_mm_h": areal / cover * shower if areal > 0.02 else 0.0,
+		# The rain's own rate under the shower, before the cover's gate;
+		# rain_mm_h is what falls (Main recomputes it from the eased cover).
+		"rain_rate": rate,
+		"rain_mm_h": rate * rain_gate(cloud),
 		"shower": shower,
 		"snow": t_air < 0.0,
 		"temp_c": t_air,
 		"storm": storm_now,
 		"clear": float(clear[c]),
-		"cloud": maxf(cloud, shower * minf(areal * 2.0, 1.0) * 0.95),
+		"cloud": cloud,
 		# The season here, for the climate readers (already in temp_c and
 		# the rain): its name, the change under way, the temperature swing
 		# and how wet it is.
@@ -617,6 +631,17 @@ func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 		"season_temp_c": Seasons.temp_offset_c(season_days, CubeSphere.latitude(d), water_frac[c]) if not is_nan(season_days) else 0.0,
 		"season_moisture": Seasons.moisture_mult(season_days, CubeSphere.latitude(d)) if not is_nan(season_days) else 1.0,
 	}
+
+
+## Rain falls only under a thick deck (design 3 Oct §CX): none below
+## RAIN_COVER.x of cover overhead, all of it from RAIN_COVER.y, so as the
+## cloud builds the rain comes after it, and as it clears the rain stops
+## first.
+const RAIN_COVER := Vector2(0.6, 0.85)
+
+
+static func rain_gate(cover: float) -> float:
+	return smoothstep(RAIN_COVER.x, RAIN_COVER.y, cover)
 
 
 ## Eases a copy of the local weather (`current`, updated in place) toward

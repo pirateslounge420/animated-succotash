@@ -4,6 +4,54 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (night) — Mike's 14:34 play fixed (wood lit from outside, rain only from a drawn raincloud, giant herbs, the den); §CY.1 you wake at dawn; §CZ the fire breathes (Claude Code)
+- **1. Wood lit from the wrong side.** Trunks, limbs, bark cones and bamboo culms had their normals pointing in, so the sunny side read dark. They point out now (`plant_meshes.gd` `tri3` / `_smooth`; bark cones were wound the other way and are fixed too).
+  - The shadow pass's "closed shapes cast from their far faces" rule now reads the normal, not the winding (`foliage.gdshader`), so mirrored trees cast the same.
+  - Past the shadow map's 35 m reach, plants get a stand-in shade like the ground's (wood ×0.62, leaves ×0.8), eased in from 28 m so nothing jumps as you walk up. Back-lit leaves stop glowing there, so a stand against the sun stays a dark silhouette at every distance.
+  - `tools/wood_normals_check.gd`: all 560,706 bark parts and 196 culm parts, over every species and layout, point out.
+- **2. Rain from a clear sky (§CX).**
+  - The cloud decks can't sink under the ground any more: their shell's corners go out so its flat panels never sag below the layer (on the 4,000 km planet the low deck's corners sit 168 m above its 150 m height; 17 m on the 400 km planet, 1.7 m on the 40 km stamp).
+  - One cover value now drives the drawn deck, the HUD word, the rain streaks and sound, and the sun's dimming. Rain is gated by it (none under cover 0.6, full from 0.85). The shower cells raise the cover over them, and a deck fills in over your head where it rains.
+  - `tools/weather_cover_check.gd`: over 19,200 samples it rained only under cover 0.64 or more, and the HUD always said so. In a shower the rain starts 6.1 s after the cloud builds and stops 2.7 s before it clears.
+  - "Overcast" looks overcast: §CX's first-guess colours are now `look.json → overcast` (deck lit `#6878C8` over shade `#06186C`, storm `#5A1AA0`, replacing the grey storm sky), and the shadows fade by `shadow_fade` 0.7 under a full deck, keeping their hard edge.
+- **3. The giant herbs.**
+  - The aroid test now runs before the umbrella placeholder, so every Amorphophallus (246) is its titan-arum leaf again.
+  - Alocasia and Colocasia (`_giant_herb`) are a short base, 3–5 green stalks leaning out, and one blade per stalk. The blade is sized from `leaf.size_cm` against the plant's height and from `aspect`, held tip up (lower the more `canopy.droop`), joined at the notch (a peltate taro's a little inside the blade), and sways with its own stalk.
+  - The leaf card draws its tile once (`foliage.gdshader`, material 2.25): no grid, no flips, no blanked cells, no cluster blob. The aroid's leaflet cards draw the same way.
+  - The tiles (`tools/look/make_plant_tiles.py`): sagittate, cordate and cordate-based peltate leaves fill the tile, with real back lobes and a notch, and record where the leaf sits (`atlas_species.json → leaf_frame`).
+  - Veins no longer add to the outline anywhere, so 398 leaf tiles (and their mass, litter and autumn tiles) lost stray vein pixels outside the blade.
+  - The engine now reads `leaf.outline`, `base`, `apex`, `aspect`, the `size_cm` range and `appearance.petiole.base` (the stalk's green).
+  - `tools/giant_herb_check.gd`: 0 fails.
+- **4. The den that looked like a doorway.**
+  - Dens gate on moisture as well as heat. Over 6,000 cells, 630 hyena dens and 62 wolf dens all sit in their species' heat and wet; the wettest hyena den is at moisture 0.70, its limit.
+  - A hyena's den is a burrow: a low spoil heap of the ground's own earth, a dark hole into it (0.80 m wide, 0.35 m above the ground), a smaller second hole, a few stones of the place's rock, and nothing to bump into.
+  - A wolf's den keeps its stone frame, in the place's own rock, round a hole 0.72 m wide and 0.55 m high, with the snow slab only in snow country.
+  - `tools/den_check.gd`: 0 fails.
+- **§CY.1, the dawn start.**
+  - The clock starts 1 real minute after dawn begins at the spawn (`opening_road.dawn_start`). Day 1 and the near-full first moon stand (§CG).
+  - The first camp is picked by its road to a camp at a ruin, timed in walking minutes at the slope pace (`RoadNetwork.walk_minutes`), the nearest to 40. Where the day is too short to leave 20 minutes before dusk, the target shortens; the clock never moves.
+  - The old afternoon keys are retired from `roads.json`.
+  - `day_check` passes (wakes 05:07 at the camp, 05:23 at Mike's spawn, 1.0 real minute into dawn), and so do `road_reach_check` and `fire_circle_check.py --strict` (0 errors).
+  - **Seed 7731's opening road is 5.8 km, 31 minutes at the slope pace**, against 40 wanted. With §CU's ~160 hearths a world there are few camps at ruins near any spawn. A straight walk still arrives 39 minutes before dusk.
+- **§CZ, the fire breathes.** The flame card stays.
+  - The coals (`shaders/coals.gdshader`) are a bed on a 32-a-metre texel grid: char with hot patches in the flame's bands. It breathes once every 2.9 s, its patches pulse on their own clocks, the hot cracks crawl, and it flares on a gust of the weather's wind, a poke or a piece laid on.
+  - The fire's light breathes with the bed (±12 %), on top of the noise flicker.
+  - Specks (`shaders/specks.gdshader`) replace the campfires' steady embers: thrown on a random clock (waits spread like an exponential) and in a burst on every pop of the fire's sound. 70 % are sparks cooling orange to red, 30 % pale blue-grey ash that doesn't glow, all drifting with the wind.
+  - At embers the bed is the whole fire, breathing every 5 s, with a rare speck; a dead fire throws none. The torch keeps its own sparks (§CP).
+  - `tools/fire_breath_check.gd`: 0 fails. A full fire throws about 244 specks a minute (the data's check reckoned 237), a low one 142, embers 5.
+- **The walkabout** (seed 7731, QUICK, jungle / rainforest / savanna; harness frames): every site passes but one. The camp's first-frame test named its frame by a mean solar hour an hour off the game's clock; it now reads the game's own clock, which `day_check` confirms.
+  - The rainforest site had no plants within 30 m. That is §CS's thinning, flagged last pass.
+- **All 27 world shaders build** on a real renderer (`EngineReport.check_shaders`), and `shader_varying_check.py` passes.
+- **For Mike to confirm (first guesses, all in data or one-line constants):**
+  - Far-plant stand-in shade 0.62 (wood) and 0.8 (leaves) (`look.json → light.plant_far_shade`).
+  - The overcast deck `#6878C8` over `#06186C`, the storm `#5A1AA0`, shadow fade 0.7.
+  - Rain gated between cover 0.6 and 0.85 (`WeatherSim.RAIN_COVER`); a shower lifts the cover over it to at least 0.72; the deck fills in within 1.5–3 km of overhead; "Light rain" from 0.05 mm/h.
+  - Giant herbs: 3–5 stalks; the blade's tilt from 60° (no droop) down to 12° (droop 0.6); stalks from `appearance.petiole.base`, else a darkened leaf green.
+  - Dens: the burrow hole 0.80 × 0.45 m and the cave den's 0.72 × 0.55 m (`DEN_HOLE_BURROW`, `DEN_HOLE_CAVE`); snow slab below −2 °C.
+  - The coals' heat by burn (flames 1, low 0.8, embers 0.55); a gust is a flare when the wind is over about 5 m/s.
+- **For chat:** the giant herbs want `leaf.count` (leaves a plant holds; 3–5 is the stand-in) and `leaf.attachment` (`notch` or `peltate_inside`; read from `outline` for now). Musa and Ensete still use the old paddle cards in the cluster style; they could take the whole-leaf card too.
+- **Flags:** §CU's ~160 hearths a world against §CY.1's 40-minute road (see above). §CY.2 expects four or five folk at the opening camp (§BV); the opening camp still has its two.
+
 ## 2026-10-03 (15:45) — §CY you wake at dawn in the fire circle, the next hearth before dusk; §CZ the fire breathes: design and data only (design chat; Mike 15:20–15:35)
 - **§CY.1, the dawn start.** It supersedes §BX's afternoon clock and half-hour road. You wake one minute into dawn. The road to the camp outside the ruin is about 40 minutes of walking at the slope pace (10.3 km if dead flat, about 8.5 km on ordinary land), so you arrive before dusk, or at dusk at the latest.
   - The reference day: wake 04:10, a straight walk arrives 10:50, dusk begins 17:00 (77 min after waking), full dark 20:00.

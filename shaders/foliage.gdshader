@@ -76,6 +76,10 @@ global uniform vec3 plant_wind;
 // (they still receive shadows); trunks and limbs always cast.
 global uniform vec3 look_eye;
 global uniform float look_leaf_shadow_m;
+// The sun's shadow map's reach and the stand-in shade past it (x wood,
+// y leaves; SkySystem, look.json light.plant_far_shade).
+global uniform float look_shadow_reach_m;
+global uniform vec2 look_plant_far_shade;
 // Ground cover and shrubs are drawn only this near the eye (0: always;
 // design §W, look.json "ranges", set per node by VegetationPlacer): each
 // plant shrinks away into its root over the last tenth.
@@ -222,7 +226,10 @@ void vertex() {
 	float scale = length(MODEL_MATRIX[1].xyz);
 	obj_pos = (inv * vec4(VERTEX, 1.0)).xyz * scale;
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
-	s_nrm.w = 0.0;
+	// Which way the normal faces the camera (in the shadow pass, the
+	// light): the far-face rule below reads it, so a mirrored tree (its
+	// faces wound the other way) casts the same.
+	s_nrm.w = dot(NORMAL, INV_VIEW_MATRIX[2].xyz);
 	mat_id = UV2.x;
 	wood_dead = (UV2.x < 0.5 && UV2.y > 0.5) ? 1.0 : 0.0;
 	v_sport = floor(INSTANCE_CUSTOM.r * 0.5 + 1e-4);
@@ -294,7 +301,9 @@ void vertex() {
 	// clusters they carry with them, so the gaps in the crown open and
 	// close (§AJ 5): the phase in CUSTOM0.w on the twig's wood, in UV2.y on
 	// its clusters.
-	float tw = mat_id > 5.5 ? -1.0 : (mat_id > 4.5 ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0));
+	// A whole leaf (2.25) sways on its stalk's phase, in UV2.y.
+	bool blade_v = abs(mat_id - 2.25) < 0.1;
+	float tw = mat_id > 5.5 ? -1.0 : ((mat_id > 4.5 || blade_v) ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0));
 	if (tw >= 0.0 && sway > 0.0) {
 		float size_k = clamp(length(MODEL_MATRIX[1].xyz) / 15.0, 0.5, 1.5);
 		float amp = (0.06 + 0.12 * clamp(speed * 0.1, 0.0, 1.0)) * size_k * sway / 0.45;
@@ -346,8 +355,8 @@ void vertex() {
 	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= vines_v) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
-	// So do the leaf clusters this tree has shed.
-	if (mat_id > 4.5 && mat_id < 5.5 && CUSTOM0.w >= leaf) {
+	// So do the leaf clusters (and whole leaves) this tree has shed.
+	if (((mat_id > 4.5 && mat_id < 5.5) || blade_v) && CUSTOM0.w >= leaf) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 	// A dead tree (bare 1: DeadWood): no leaves at all, a snag; dead
@@ -444,9 +453,16 @@ void fragment() {
 	// projection (the game camera is perspective). There, closed shapes
 	// (bark, crowns, bamboo culms) cast from their far faces only, so a
 	// lit face never shadows itself (the material is double-sided for the
-	// leaf cards, which still cast from both sides).
-	if (PROJECTION_MATRIX[3][3] == 1.0 && FRONT_FACING && (mat_id < 1.5 || (mat_id > 3.5 && mat_id < 4.5))) {
-		discard;
+	// leaf cards, which still cast from both sides). Since Mike's 3 Oct
+	// play the far faces are told by the normal (s_nrm.w), not FRONT_FACING.
+	// The near faces are told by the normal, not the winding (mirrored
+	// trees): wood's normals point out (bark, culms; Mike's 3 Oct play),
+	// a crown lobe's still point in.
+	if (PROJECTION_MATRIX[3][3] == 1.0) {
+		bool wood = mat_id < 0.5 || (mat_id > 3.5 && mat_id < 4.5);
+		if ((wood && s_nrm.w > 0.0) || (mat_id > 0.5 && mat_id < 1.5 && s_nrm.w < 0.0)) {
+			discard;
+		}
 	}
 	if (mat_id > 5.5) {
 		// A far tree's picture: the crown's outline, ragged by the leafy
@@ -503,10 +519,13 @@ void fragment() {
 			c = pal_bark * 0.5 * (0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
 			c = pal_pull(c, pal_bark_night, 0.6 * nk_i);
 		}
+		// Always past the shadow map: the plants' stand-in shade (below),
+		// and no back-lit glow, so it matches the near trees it replaces.
+		c *= mix(1.0, crown ? look_plant_far_shade.y : look_plant_far_shade.x, (look_shadow_reach_m > 0.0 ? 1.0 : 0.0) * (1.0 - 0.6 * look_night));
 		ALBEDO = c;
 		ALPHA = 1.0;
 		ALPHA_SCISSOR_THRESHOLD = 0.5;
-		BACKLIGHT = c * (crown ? 0.6 : 0.0);
+		BACKLIGHT = c * (crown && look_shadow_reach_m <= 0.0 ? 0.6 : 0.0);
 		ROUGHNESS = 1.0;
 		SPECULAR = 0.0;
 		FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
@@ -515,7 +534,10 @@ void fragment() {
 	// leaves in leaf-sized cells, a hash picking which go first, until at
 	// leaf_season 0 it is bare. (Branchy trees' clusters thin by their own
 	// keys in vertex().)
-	if (v_leaf < 0.999 && mat_id > 0.5 && mat_id < 2.5) {
+	// A whole leaf (2.25, PlantMeshes.leaf_blade) goes whole, by its key,
+	// in vertex().
+	bool blade = abs(mat_id - 2.25) < 0.1;
+	if (v_leaf < 0.999 && mat_id > 0.5 && mat_id < 2.5 && !blade) {
 		vec3 cell = floor(obj_pos / max(sp_leaf_m * v_leafs * 2.0, 0.25));
 		if (sp_hash(cell.xy + cell.z * 17.13) >= v_leaf) {
 			discard;
@@ -541,6 +563,11 @@ void fragment() {
 		// species' own tile when the tree has one, §CE).
 		vec2 vuv = vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y;
 		tex = sp_vine_on ? texture(sp_vine_leaves, vuv) : retro_tile(look_tex_leaves, vuv);
+	} else if (blade) {
+		// A whole leaf with no tile of its own: a plain blade, the oval
+		// inside the leaf's box (the card spans the box).
+		vec2 e = (UV - vec2(0.5)) * 2.0;
+		tex = vec4(vec3(0.5), step(dot(e, e), 0.95));
 	} else if (mat_id > 1.5) {
 		tex = retro_tex(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
@@ -596,6 +623,15 @@ void fragment() {
 			} else {
 				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, step(0.5, m.a));
 			}
+		} else if (blade) {
+			// A whole leaf (Mike's 3 Oct play): the leaf tile once across
+			// the card, near and far; no grid, flips, blanked cells or
+			// cluster outline. The mip from the tile's own texel size.
+			vec2 dg = max(abs(dFdx(UV)), abs(dFdy(UV)));
+			float lod = clamp(log2(max(max(dg.x, dg.y) * 48.0, 1e-4)), 0.0, look_max_mips);
+			vec4 l = textureLod(sp_leaf, UV, lod);
+			vec4 la = textureLod(sp_leaf_autumn, UV, lod);
+			t = vec4(mix(l.rgb, la.rgb, v_season.x), l.a);
 		} else {
 			// Cards: the ragged cluster outline; inside it, near, the leaf
 			// cutout at the leaf's own size; for clumps and far cards, the
@@ -660,7 +696,15 @@ void fragment() {
 	// Leaves are translucent: light shining through from behind lights
 	// them too, so crowns seen from below stay green instead of black.
 	float leafy = max(step(0.5, mat_id) * step(mat_id, 3.5), step(4.5, mat_id));
-	BACKLIGHT = ALBEDO * 0.6 * leafy;
+	// Past the shadow map's reach nothing shades a plant (Mike's 3 Oct
+	// play: far wood glowed, then turned navy as he walked up): a stand-in
+	// shade like the ground's, eased in over the shadow map's last fifth so
+	// the swap doesn't show, and back-lit leaves stop glowing there, so a
+	// stand against the sun stays a dark silhouette at every distance.
+	float far_k = look_shadow_reach_m > 0.0 ? smoothstep(look_shadow_reach_m * 0.8, look_shadow_reach_m, distance(world_pos, CAMERA_POSITION_WORLD)) : 0.0;
+	bool wood_k = mat_id < 0.5 || (mat_id > 3.5 && mat_id < 4.5);
+	ALBEDO *= mix(1.0, wood_k ? look_plant_far_shade.x : look_plant_far_shade.y, far_k * (1.0 - 0.6 * look_night));
+	BACKLIGHT = ALBEDO * 0.6 * leafy * (1.0 - far_k);
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);

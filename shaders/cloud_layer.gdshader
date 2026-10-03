@@ -29,14 +29,22 @@ uniform vec3 light_color : source_color = vec3(1.0);
 uniform vec3 shade_color : source_color = vec3(0.7, 0.75, 0.9);
 uniform float camera_above = 0.0; // 1 when the viewer is above this layer
 uniform vec2 fog_ease_m = vec2(3000.0, 30000.0); // haze eases in over this range
+// The shell's corners go out by this, so its flat panels never sag below
+// `radius` (CloudLayers._min_plane_distance); the pattern stays on the true
+// sphere.
+uniform float chord_k = 1.0;
+// 0-1: how solid the deck is right overhead while rain falls (design 3 Oct
+// §CX: no rain from a gap), within a few km of `viewer_up`.
+uniform float overhead_fill = 0.0;
+uniform vec3 viewer_up = vec3(0.0, 1.0, 0.0); // planet frame
 
 varying vec3 shell_pos;
 varying vec3 world_pos;
 
 void vertex() {
 	// The mesh is a unit sphere; the shell is `radius` meters out.
-	VERTEX *= radius;
-	shell_pos = VERTEX;
+	shell_pos = VERTEX * radius;
+	VERTEX *= radius * chord_k;
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
@@ -87,7 +95,11 @@ void fragment() {
 	vec3 up = normalize(shell_pos);
 	vec3 p = up * radius + drift;
 	vec3 q = p / feature_m;
-	float edge = 1.0 - cover;
+	// Overhead while it rains: the cover rises to full within about 1.5 km
+	// of the zenith (at the low deck's height, most of the sky you see).
+	float ang = acos(clamp(dot(up, normalize(viewer_up)), -1.0, 1.0)) * radius;
+	float fill = overhead_fill * (1.0 - smoothstep(1500.0, 3000.0, ang));
+	float edge = (1.0 - cover) * (1.0 - fill);
 	float n;
 	// The shape's first octave, and the same a little toward the light:
 	// where the cloud thins toward the sun its side faces the sun.

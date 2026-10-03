@@ -220,6 +220,8 @@ static func add_fuel(fire: Node3D, it: Dictionary, days: float) -> String:
 		if bool((F.get("relight", {}) as Dictionary).get("from_dry_fuel_on_embers", true)):
 			st.state = "low"
 	(st.units as Array).append([kind, minutes])
+	# A fresh piece laid on: the bed flares and throws specks (§CZ).
+	Campfire.stir(fire, "feed")
 	if str(st.state) in ["flames", "low"]:
 		st.state = "low" if share(st) < float(F.get("low_share", 0.25)) else "flames"
 	apply(fire)
@@ -358,8 +360,12 @@ static func apply(fire: Node3D) -> void:
 		var g := fire.get_node_or_null(n) as Node3D
 		if g:
 			g.visible = burn > 0.2
+	# The bed of coals (§CZ): its heat by the burn, all char when out.
 	var coals := fire.get_node_or_null("Coals") as MeshInstance3D
-	if coals:
+	if coals and coals.material_override is ShaderMaterial:
+		var heat := 1.0 if burn > 0.6 else (0.8 if burn > Campfire.CARD_BELOW else (0.55 if burn > 0.0 else 0.0))
+		(coals.material_override as ShaderMaterial).set_shader_parameter("heat", heat)
+	elif coals:
 		var m := coals.get_surface_override_material(0) as StandardMaterial3D
 		if m == null:
 			m = coals.material_override as StandardMaterial3D

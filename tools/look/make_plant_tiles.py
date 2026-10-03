@@ -244,7 +244,11 @@ class Canvas:
         self.ds.polygon(pts, fill=int(shade))
 
     def line(self, a, b, width, shade=128, vein=False):
-        self.da.line([a, b], fill=255, width=width)
+        # A vein only darkens the blade under it (to_card clips it to the
+        # blade): it never adds to the outline (Mike's 3 Oct play: stray
+        # one-pixel vein lines stood outside the sagittate blade).
+        if not vein:
+            self.da.line([a, b], fill=255, width=width)
         (self.dv if vein else self.ds).line([a, b], fill=255 if vein else int(shade), width=width)
 
     def to_card(self, size, rgb, rgb_under=None, rim=True):
@@ -253,6 +257,7 @@ class Canvas:
         s = np.asarray(self.shade.resize((size, size), Image.BOX)).astype(float) / 128.0
         v = np.asarray(self.vein.resize((size, size), Image.BOX)).astype(float) / 255.0
         mask = a > 0.5
+        v = np.where(mask, v, 0.0)                            # veins only on the blade
         # shade only counts where there is leaf (BOX mixes in background 128 = neutral)
         s = np.where(mask, s, 1.0)
         s = s * (1.0 - 0.28 * np.clip(v * 1.6, 0, 1))          # veins darker
@@ -263,6 +268,108 @@ class Canvas:
         col = posterise(col)
         out = np.dstack([(col * 255).astype(np.uint8), (mask * 255).astype(np.uint8)])
         return Image.fromarray(out, "RGBA"), mask, s
+
+
+# The broad aroid-style blades (sagittate, cordate, and peltate with a
+# cordate base: Alocasia, Colocasia, Philodendron...), Mike's 3 Oct play:
+# the leaf fills the tile from tip to back lobes, at its own aspect, with
+# real back lobes and a notch. Control points of the right half, x in units
+# of the half-width, y in units of the length from the lobe tips (0) to the
+# apex (1), ending at the notch on the midline; `attach` is where the stalk
+# meets the blade, as a share of the length up from the lobe tips. The same
+# numbers are written into atlas_species.json (leaf_frame) for the engine's
+# giant herbs (plant_meshes.gd, giant_herb), which hang one card per leaf
+# from that point.
+BROAD = {
+    "sagittate": {"pts": [(0.35, 0.86), (0.72, 0.68), (0.95, 0.5), (1.0, 0.38), (0.93, 0.24), (0.8, 0.1),
+                          (0.62, 0.0), (0.45, 0.04), (0.28, 0.16), (0.12, 0.28)], "notch": 0.34, "attach": 0.34},
+    "cordate": {"pts": [(0.4, 0.85), (0.78, 0.62), (0.98, 0.4), (0.95, 0.2), (0.75, 0.05), (0.45, 0.0),
+                        (0.2, 0.04), (0.06, 0.1)], "notch": 0.14, "attach": 0.14},
+    "peltate": {"pts": [(0.4, 0.84), (0.8, 0.6), (1.0, 0.38), (0.95, 0.18), (0.72, 0.04), (0.4, 0.0),
+                        (0.15, 0.03), (0.04, 0.08)], "notch": 0.12, "attach": 0.3},
+}
+
+
+def broad_kind(leaf):
+    """Which BROAD shape a simple leaf block takes, or None."""
+    o = leaf.get("outline", "")
+    if leaf.get("type", "simple") != "simple":
+        return None
+    if o in ("sagittate", "cordate"):
+        return o
+    if o == "peltate" and leaf.get("base") == "cordate":
+        return "peltate"
+    return None
+
+
+def _catmull(pts, k=6):
+    out = []
+    for i in range(len(pts) - 1):
+        p0 = pts[max(i - 1, 0)]; p1 = pts[i]; p2 = pts[i + 1]; p3 = pts[min(i + 2, len(pts) - 1)]
+        for j in range(k):
+            t = j / k
+            t2, t3 = t * t, t * t * t
+            out.append(tuple(0.5 * ((2 * p1[c]) + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2
+                                    + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3) for c in (0, 1)))
+    out.append(pts[-1])
+    return out
+
+
+def broad_frame(leaf):
+    """[u0, v0, u1, v1, v_attach]: the blade's box in the tile (u across, v
+    down from the top, as Godot reads a UV) and where the stalk meets it."""
+    kind = broad_kind(leaf)
+    asp = max(0.6, min(float(leaf.get("aspect", 1.5)), 30.0))
+    m = 0.02
+    span = 1.0 - 2 * m
+    half = 0.5 * span / asp
+    if half > 0.5 - m:
+        half = 0.5 - m
+        span = 2 * half * asp
+    v0 = 0.5 - span / 2
+    attach = BROAD[kind]["attach"]
+    return [round(0.5 - half, 4), round(v0, 4), round(0.5 + half, 4), round(v0 + span, 4), round(v0 + span * (1 - attach), 4)]
+
+
+def draw_broad(cv, leaf, rng):
+    """One broad blade filling the tile (BROAD), its veins clipped to it."""
+    kind = broad_kind(leaf)
+    sh = BROAD[kind]
+    n = cv.n
+    u0, v0, u1, v1, va = broad_frame(leaf)
+    wh = (u1 - u0) * 0.5 * n
+    L = (v1 - v0) * n
+    cx, by = 0.5 * n, v1 * n                       # the lobe tips' line, in pixels (y down)
+    pts = sh["pts"]
+    if leaf.get("apex") == "acuminate":
+        pts = [(x * (0.8 if y > 0.75 else 1.0), y) for x, y in pts]
+    right = _catmull([(0.0, 1.0)] + pts + [(0.0, sh["notch"])])
+    margin = leaf.get("margin", "entire")
+    ph = rng.uniform(0, 6)
+
+    def px(x, y, i):
+        k = 1.0
+        if margin == "undulate":
+            k = 1.0 - 0.045 * (0.5 + 0.5 * math.sin(i * 0.9 + ph))
+        return (cx + x * wh * k, by - y * L)
+
+    rp = [px(x, y, i) for i, (x, y) in enumerate(right)]
+    lp = [(2 * cx - X, Y) for X, Y in rp[::-1]]
+    cv.poly(rp + lp)
+    # Veins: the midrib from the stalk's point to the apex, laterals out to
+    # the margin, and on a lobed blade a vein into each back lobe.
+    wv = max(1, int(SS * 0.9))
+    ax, ay = cx, va * n
+    cv.line((ax, ay), (cx, by - L), wv, vein=True)
+    for i in range(1, 6):
+        t = sh["attach"] + (1 - sh["attach"]) * i / 6.5
+        y = by - t * L
+        for sgn in (-1, 1):
+            cv.line((cx, y), (cx + sgn * wh * 0.95, y + L * 0.12), wv, vein=True)
+    if kind in ("sagittate", "cordate", "peltate"):
+        tip = [p for p in pts if p[1] <= min(q[1] for q in pts) + 1e-6][0]
+        for sgn in (-1, 1):
+            cv.line((ax, ay), (cx + sgn * tip[0] * wh * 0.9, by - tip[1] * L - 0.03 * L), wv, vein=True)
 
 
 def draw_blade(cv, cx, cy, L, W, ang, spec, rng, shade=128):
@@ -363,7 +470,9 @@ def render_leaf(e, rng, size=LEAF_PX):
     cx, cy = n / 2, n * 0.95
     up = -math.pi / 2
     tex = leaf.get("texture", "matte")
-    if t in ("simple", "strap"):
+    if broad_kind(leaf):
+        draw_broad(cv, leaf, rng)
+    elif t in ("simple", "strap"):
         outline = leaf.get("outline", "ovate")
         asp = float(leaf.get("aspect", 2.0))
         asp = max(0.6, min(asp, 30.0))
@@ -868,6 +977,8 @@ def main():
             rgb = leaf_colour(e)
             card, mask, s = cv.to_card(LEAF_PX, rgb)
             rec["leaf"] = save(card, key, "leaf")
+            if broad_kind(e.get("leaf") or {}):
+                rec["leaf_frame"] = broad_frame(e["leaf"])
             rec["leaf_color"] = "#%02X%02X%02X" % tuple(int(c * 255) for c in rgb)
             tint = e.get("tint") or {}
             if tint.get("autumn") and tint.get("drop", True):

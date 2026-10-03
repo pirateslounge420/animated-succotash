@@ -112,6 +112,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "alocasia_odora_leaf.png",
+   "leaf_frame": [
+    0.1308,
+    0.02,
+    0.8692,
+    0.98,
+    0.692
+   ],
    "leaf_color": "#688E6A",
    "leaves": "alocasia_odora_leaves.png",
    "litter": "alocasia_odora_litter.png",
@@ -6404,6 +6411,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "alocasia_macrorrhizos_leaf.png",
+   "leaf_frame": [
+    0.18,
+    0.02,
+    0.82,
+    0.98,
+    0.6536
+   ],
    "leaf_color": "#387B2F",
    "leaves": "alocasia_macrorrhizos_leaves.png",
    "litter": "alocasia_macrorrhizos_litter.png",
@@ -6878,6 +6892,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "alocasia_macrorrhizos_leaf.png",
+   "leaf_frame": [
+    0.18,
+    0.02,
+    0.82,
+    0.98,
+    0.6536
+   ],
    "leaf_color": "#32752C",
    "leaves": "alocasia_macrorrhizos_leaves.png",
    "litter": "alocasia_macrorrhizos_litter.png",
@@ -8500,6 +8521,13 @@
    "leaf_type": "simple",
    "bark_pattern": "smooth",
    "leaf": "vitis_rotundifolia_leaf.png",
+   "leaf_frame": [
+    0.02,
+    0.02,
+    0.98,
+    0.98,
+    0.8456
+   ],
    "leaf_color": "#3F7B37",
    "leaf_autumn": "vitis_rotundifolia_leaf_autumn.png",
    "leaves": "vitis_rotundifolia_leaves.png",
@@ -8882,6 +8910,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "philodendron_hederaceum_leaf.png",
+   "leaf_frame": [
+    0.1,
+    0.02,
+    0.9,
+    0.98,
+    0.8456
+   ],
    "leaf_color": "#336827",
    "leaves": "philodendron_hederaceum_leaves.png",
    "litter": "philodendron_hederaceum_litter.png",
@@ -9049,6 +9084,18 @@
    "leaves": "pinus_ponderosa_leaves.png",
    "litter": "pinus_ponderosa_litter.png",
    "bark": "pinus_ponderosa_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Pontic rhododendron": {
+   "key": "rhododendron_ponticum",
+   "genus": "Rhododendron",
+   "leaf_type": "simple",
+   "bark_pattern": "scaly",
+   "leaf": "rhododendron_ponticum_leaf.png",
+   "leaf_color": "#375D2C",
+   "leaves": "rhododendron_ponticum_leaves.png",
+   "litter": "rhododendron_ponticum_litter.png",
+   "bark": "rhododendron_ponticum_bark.png",
    "bark_tile_m": 0.4
   },
   "Prairie rose": {
@@ -9586,6 +9633,25 @@
    "litter": "sphagnum_fuscum_litter.png",
    "bark": null
   },
+  "Sacred fig": {
+   "key": "ficus_religiosa",
+   "genus": "Ficus",
+   "leaf_type": "simple",
+   "bark_pattern": "smooth",
+   "leaf": "ficus_religiosa_leaf.png",
+   "leaf_frame": [
+    0.1571,
+    0.02,
+    0.8429,
+    0.98,
+    0.8456
+   ],
+   "leaf_color": "#3A7B33",
+   "leaves": "ficus_religiosa_leaves.png",
+   "litter": "ficus_religiosa_litter.png",
+   "bark": "ficus_religiosa_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Saffron milkcap": {
    "key": "lactarius_deliciosus",
    "genus": "Lactarius",
@@ -9935,6 +10001,13 @@
    "leaf_type": "simple",
    "bark_pattern": "fissured",
    "leaf": "talipariti_tiliaceum_leaf.png",
+   "leaf_frame": [
+    0.02,
+    0.02,
+    0.98,
+    0.98,
+    0.8456
+   ],
    "leaf_color": "#3B7534",
    "leaves": "talipariti_tiliaceum_leaves.png",
    "litter": "talipariti_tiliaceum_litter.png",
@@ -10289,7 +10362,7 @@
    "genus": "Bouteloua",
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
-   "leaf": "bouteloua_barbata_leaf.png",
+   "leaf": "agrostis_sandwicensis_leaf.png",
    "leaf_color": "#A0A083",
    "leaves": "bouteloua_barbata_leaves.png",
    "litter": "bouteloua_barbata_litter.png",
@@ -10519,6 +10592,18 @@
    "leaves": "piper_aduncum_leaves.png",
    "litter": "piper_aduncum_litter.png",
    "bark": "piper_aduncum_bark.png",
+   "bark_tile_m": 0.4
+  },
+  "Spiny cliffbrake": {
+   "key": "pellaea_truncata",
+   "genus": "Pellaea",
+   "leaf_type": "frond",
+   "bark_pattern": "green_stem",
+   "leaf": "pellaea_truncata_leaf.png",
+   "leaf_color": "#6B856F",
+   "leaves": "pellaea_truncata_leaves.png",
+   "litter": "pellaea_truncata_litter.png",
+   "bark": "pellaea_truncata_bark.png",
    "bark_tile_m": 0.4
   },
   "Split gill": {
@@ -10848,6 +10933,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "colocasia_esculenta_leaf.png",
+   "leaf_frame": [
+    0.1571,
+    0.02,
+    0.8429,
+    0.98,
+    0.692
+   ],
    "leaf_color": "#38682B",
    "leaves": "colocasia_esculenta_leaves.png",
    "litter": "colocasia_esculenta_litter.png",
@@ -11550,6 +11642,18 @@
    "bark": "avenella_flexuosa_bark.png",
    "bark_tile_m": 0.4
   },
+  "Wavy scaly cloak fern": {
+   "key": "astrolepis_sinuata",
+   "genus": "Astrolepis",
+   "leaf_type": "frond",
+   "bark_pattern": "green_stem",
+   "leaf": "astrolepis_sinuata_leaf.png",
+   "leaf_color": "#4D7546",
+   "leaves": "astrolepis_sinuata_leaves.png",
+   "litter": "astrolepis_sinuata_litter.png",
+   "bark": "astrolepis_sinuata_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Wax myrtle": {
    "key": "morella_cerifera",
    "genus": "Morella",
@@ -11892,6 +11996,19 @@
    "bark": "ilex_vomitoria_bark.png",
    "bark_tile_m": 0.4
   },
+  "Yellow azalea": {
+   "key": "rhododendron_luteum",
+   "genus": "Rhododendron",
+   "leaf_type": "simple",
+   "bark_pattern": "smooth",
+   "leaf": "rhododendron_luteum_leaf.png",
+   "leaf_color": "#3C7B37",
+   "leaf_autumn": "rhododendron_luteum_leaf_autumn.png",
+   "leaves": "rhododendron_luteum_leaves.png",
+   "litter": "rhododendron_luteum_litter.png",
+   "bark": "rhododendron_luteum_bark.png",
+   "bark_tile_m": 0.4
+  },
   "Yellow paloverde": {
    "key": "parkinsonia_microphylla",
    "genus": "Parkinsonia",
@@ -11959,6 +12076,13 @@
    "leaf_type": "simple",
    "bark_pattern": "green_stem",
    "leaf": "alocasia_zebrina_leaf.png",
+   "leaf_frame": [
+    0.2,
+    0.02,
+    0.8,
+    0.98,
+    0.6536
+   ],
    "leaf_color": "#306125",
    "leaves": "alocasia_zebrina_leaves.png",
    "litter": "alocasia_zebrina_litter.png",

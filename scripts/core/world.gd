@@ -375,8 +375,9 @@ var opening := {}
 ## among the kinds with candidates (camps.json first_camp; FIRST_CAMP
 ## forces one), then, among that kind's candidate cells, the fire site
 ## (Encampment.fire_site: inside the kind's biomes, within within_m of its
-## real water) whose people's camp (an inhabited ruin) lies nearest
-## opening_road.length_km_hint away by a road that routes. A kind with no
+## real water) whose road to a people's camp (an inhabited ruin) comes
+## nearest opening_road.dawn_start.walk_real_min of walking at the slope
+## pace (design 3 Oct §CY.1; opening_walk_target()). A kind with no
 ## fire site anywhere is dropped and another rolled; play never falls back
 ## to the old list unless no kind has one at all.
 func pick_spawn_site() -> Vector3:
@@ -434,17 +435,56 @@ func pick_spawn_site() -> Vector3:
 ## The first camp of `kind` among its candidate `cells`: {} when none has
 ## a fire site. Each cell's fire site is scored by how near its nearest
 ## people's camp lies to the opening road's straight-line target (the
-## road's length_km_hint over a winding factor); the best whose road
-## routes wins, else the best site with no camp to lead to.
+## walk's flat length at the typical pace share, over a winding factor);
+## the best few are routed and each road timed in walking minutes at the
+## slope pace (RoadNetwork.walk_minutes), and the one nearest the target
+## minutes wins (design 3 Oct §CY.1), else the best site with no camp to
+## lead to.
 ## Measured 1 Oct on four full-planet seeds: the routed road runs about
 ## 1.05-1.1 times the straight line (it was 1.3, and the roads came out
 ## 5-6 km against the 7.2 km hint).
 const ROAD_WINDING := 1.08
+## How many routed roads a first camp weighs before it picks.
+const OPENING_TRIES := 6
+
+## The local hour the opening clock starts at (§CY.1): dawn_start.spawn's
+## real minutes after dawn begins at latitude `lat` on a day of declination
+## `decl`. (Where there is no dawn, polar day or night, DayCycle gives its
+## equator fallback.)
+static func dawn_start_hour(lat: float, decl: float, day_length_s: float) -> float:
+	var rule: Dictionary = Tuning.section("roads", "opening_road").get("dawn_start", {}).get("spawn", {})
+	var after_min := float(rule.get("real_min_after_dawn_begins", 1.0))
+	return fposmod(DayCycle.phase_start_hour("dawn", lat, decl) + after_min / (day_length_s / 60.0) * 24.0, 24.0)
+
+
+## The opening road's rule (roads.json opening_road.dawn_start, §CY.1).
+static func dawn_rule() -> Dictionary:
+	return Tuning.section("roads", "opening_road").get("dawn_start", {})
+
+
+## The opening walk in real minutes at a place: dawn_start.walk_real_min,
+## shortened where the day there is too short to leave
+## slack_before_dusk_min between a straight walk's arrival and dusk (the
+## clock never moves; §CY.1). Also the most the road may be (its flat
+## length, m) and the straight-line target (m).
+func opening_walk_target(site: Vector3) -> Dictionary:
+	var r := dawn_rule()
+	var want := float(r.get("walk_real_min", 40.0))
+	var speed := float(r.get("walk_speed_mps", 4.3))
+	var slack := float(r.get("slack_before_dusk_min", 20.0))
+	var share := float(r.get("pace_share_typical", 0.82))
+	var lat := CubeSphere.latitude(site)
+	var decl := Astro.declination(START_DAYS)
+	var wake_h := dawn_start_hour(lat, decl, day_length_s)
+	var dusk_h := DayCycle.phase_start_hour("dusk", lat, decl)
+	var day_min := fposmod(dusk_h - wake_h, 24.0) / 24.0 * (day_length_s / 60.0)
+	var minutes := clampf(minf(want, day_min - slack), 5.0, want)
+	var max_m := minutes * 60.0 * speed
+	return {"minutes": minutes, "day_min": day_min, "speed": speed, "max_m": max_m, "target_m": max_m * share / ROAD_WINDING}
+
 
 func _first_camp_of(kind: String, cells: PackedVector3Array, rng: RandomNumberGenerator) -> Dictionary:
 	var rivers := Encampment.rivers_for(planet)
-	var hint_m := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2)) * 1000.0
-	var target := hint_m / ROAD_WINDING
 	var order := Array(cells)
 	for i in range(order.size() - 1, 0, -1):
 		var j := rng.randi_range(0, i)
@@ -456,18 +496,31 @@ func _first_camp_of(kind: String, cells: PackedVector3Array, rng: RandomNumberGe
 		var site := Encampment.fire_site(planet, rivers, d, kind)
 		if site == Vector3.ZERO:
 			continue
-		var camps := _people_camps_toward(site, hint_m, target)
-		options.append([camps[0][0] if not camps.is_empty() else INF, site, camps])
+		var w := opening_walk_target(site)
+		var camps := _people_camps_toward(site, w.max_m, w.target_m)
+		options.append([camps[0][0] if not camps.is_empty() else INF, site, camps, w])
 	if options.is_empty():
 		return {}
 	options.sort_custom(func(x, y): return x[0] < y[0])
+	var best := {}
+	var best_err := INF
+	var tried := 0
 	for o in options:
-		var pick := _road_from(o[1], o[2], rivers)
-		if not pick.is_empty():
-			return pick
+		if tried >= OPENING_TRIES:
+			break
+		var pick := _road_from(o[1], o[2], rivers, o[3])
+		if pick.is_empty():
+			continue
+		tried += 1
+		var err := absf(float(pick.walk_min) - float(o[3].minutes))
+		if err < best_err:
+			best_err = err
+			best = pick
+	if not best.is_empty():
+		return best
 	push_warning("World: no %s first camp's people's camp could be reached by road on seed %d; the camp stands on the network alone" % [kind, world_seed])
-	var best: Vector3 = options[0][1]
-	return {"site": best, "node": best, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF}
+	var lone: Vector3 = options[0][1]
+	return {"site": lone, "node": lone, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF, "walk_min": INF}
 
 
 ## The people's camps (inhabited ruins) round `site` within 1.6 x the
@@ -486,19 +539,35 @@ func _people_camps_toward(site: Vector3, hint_m: float, target: float) -> Array:
 	return camps
 
 
-## The opening road from `site` to the first of its best three people's
-## `camps` a road reaches ({} when none does): the road node, the camp and
-## the next ones as alternatives.
-func _road_from(site: Vector3, camps: Array, rivers: RiverNetwork) -> Dictionary:
+## The opening road from `site` to the people's camp among its best
+## three `camps` whose road comes nearest `walk`'s minutes ({} when none
+## routes): the road node, the camp, the next ones as alternatives, and the
+## road's length (m) and walking minutes (§CY.1). A road longer than
+## walk.max_m (the walk on dead-flat ground) is passed over while a
+## shorter one routes.
+func _road_from(site: Vector3, camps: Array, rivers: RiverNetwork, walk := {}) -> Dictionary:
+	if walk.is_empty():
+		walk = opening_walk_target(site)
+	var best := {}
+	var best_err := INF
 	for ci in mini(camps.size(), 3):
 		var ruin: Vector3 = camps[ci][1]
 		var node := _road_node_by(site, ruin)
-		if RoadNetwork.can_route(planet, rivers, node, ruin):
+		var pts := RoadNetwork.route_pts(planet, rivers, node, ruin)
+		if pts.is_empty():
+			continue
+		var mins := RoadNetwork.walk_minutes(planet, pts, float(walk.speed))
+		var err := absf(mins - float(walk.minutes))
+		if RoadNetwork.length_m(pts) > float(walk.max_m):
+			err += 1000.0
+		if err < best_err:
+			best_err = err
 			var alts: Array = []
 			for k in range(ci + 1, mini(camps.size(), ci + 4)):
 				alts.append(camps[k][1])
-			return {"site": site, "node": node, "ruin": ruin, "alts": alts, "camp_m": camps[ci][2]}
-	return {}
+			best = {"site": site, "node": node, "ruin": ruin, "alts": alts, "camp_m": camps[ci][2],
+				"road_m": RoadNetwork.length_m(pts), "walk_min": mins}
+	return best
 
 
 ## A kept world's opening camp (design 1 Oct, Mike's Mac: the camp moved
@@ -508,10 +577,10 @@ func _road_from(site: Vector3, camps: Array, rivers: RiverNetwork) -> Dictionary
 ## pick_spawn_site is for a brand-new world only.
 func restore_spawn_site(site: Vector3, kind: String) -> Vector3:
 	first_camp_kind = kind
-	var hint_m := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2)) * 1000.0
-	var camps := _people_camps_toward(site, hint_m, hint_m / ROAD_WINDING)
+	var w := opening_walk_target(site)
+	var camps := _people_camps_toward(site, w.max_m, w.target_m)
 	var rivers := Encampment.rivers_for(planet)
-	var pick := _road_from(site, camps, rivers)
+	var pick := _road_from(site, camps, rivers, w)
 	if pick.is_empty():
 		# A camp kept from an older world may stand where no people's camp
 		# lies at the hint's distance: the nearest ones a road reaches, up to
@@ -524,7 +593,7 @@ func restore_spawn_site(site: Vector3, kind: String) -> Vector3:
 				near.append([dm, r.dir, dm])
 		near.sort_custom(func(x, y): return x[0] < y[0])
 		for k in mini(near.size(), 6):
-			pick = _road_from(site, [near[k]], rivers)
+			pick = _road_from(site, [near[k]], rivers, w)
 			if not pick.is_empty():
 				break
 	if pick.is_empty():

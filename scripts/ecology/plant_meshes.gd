@@ -66,7 +66,9 @@ static func material_for(sp: PlantSpecies) -> ShaderMaterial:
 	m.set_shader_parameter("sp_leaf_autumn", tile(sp.tiles.get("leaf_autumn", "")) if sp.tiles.has("leaf_autumn") else leaf)
 	m.set_shader_parameter("sp_leaves", tile(sp.tiles.get("leaves", "")))
 	m.set_shader_parameter("sp_bark", tile(sp.tiles.get("bark", "")))
-	m.set_shader_parameter("sp_has_bark", sp.tiles.has("bark"))
+	# A giant herb's stalks are drawn in its petiole's green (the leaf
+	# block's colour), not the pale stem tile (Mike's 3 Oct play).
+	m.set_shader_parameter("sp_has_bark", sp.tiles.has("bark") and not giant_herb(sp))
 	m.set_shader_parameter("sp_leaf_color", sp.leaf_color)
 	m.set_shader_parameter("sp_autumn_color", sp.autumn_color)
 	# A deciduous species runs the staged season clock (LeafSeason).
@@ -689,15 +691,80 @@ static func _aroid_leaf(b: _Builder, leaf: Color, wood: Color, far: bool) -> voi
 		var d: Vector3 = t[1]
 		var r: float = t[2]
 		var side := d.cross(Vector3.UP).normalized()
-		b.frond_card(p + Vector3.UP * r * 0.15, d, side, r, leaf, 0.9, key)
-		b.frond_card(p + d * r * 0.3, (d + Vector3.UP * 0.9).normalized(), side, r * 0.9, leaf.lightened(0.06), 0.9, key)
-		b.frond_card(p, side, (d + Vector3.UP * 0.6).normalized(), r * 0.85, leaf.darkened(0.05), 0.9, key)
+		# Each card one whole pinnate segment of the leaf tile, from the
+		# twig tip outward (Mike's 3 Oct play: one leaf tile per card, no
+		# grid, flips, blanked cells or cluster blob).
+		var fr := TILE_FRAME
+		b.leaf_blade(p, d, side, r * 2.0, r * 2.0, 0.0, fr, leaf, 0.9, 0.9, -1.0, key)
+		b.leaf_blade(p + d * r * 0.3, (d + Vector3.UP * 0.9).normalized(), side, r * 1.8, r * 1.8, 0.0, fr, leaf.lightened(0.06), 0.9, 0.9, -1.0, key)
+		b.leaf_blade(p, side, (d + Vector3.UP * 0.6).normalized(), r * 1.7, r * 1.7, 0.0, fr, leaf.darkened(0.05), 0.9, 0.9, -1.0, key)
 		key = fmod(key + 0.37, 1.0)
 		if not far:
 			var out := Vector3(p.x, 0, p.z).normalized()
 			for sgn in [-1.0, 1.0]:
 				var sd: Vector3 = out.cross(Vector3.UP) * float(sgn)
 				b.frond(p, (out * 0.6 + sd * 0.5 + Vector3.DOWN * 0.6).normalized(), 0.18, 0.05, leaf, 0.9, 0.4)
+
+
+## A giant herb (Alocasia, Colocasia, the taros): an umbrella-shaped
+## plant with no wood program and no aroid block (_giant_herb()).
+static func giant_herb(sp: PlantSpecies) -> bool:
+	return sp.aroid.is_empty() and sp.shape == S.UMBRELLA and not TreeArch.grows(sp)
+
+
+## Where a whole leaf sits in a leaf tile drawn without a leaf_frame (the
+## compound and ordinary leaves: make_plant_tiles.py draws the leaf's base
+## at 95 % down the tile, centred, and its tip 86 % of the tile above):
+## [u0, v0, u1, v1, v where the stalk meets it], as leaf_frame.
+const TILE_FRAME := [0.0, 0.05, 1.0, 0.95, 0.95]
+
+
+## A giant herb (Mike's 3 Oct play: "supposed to be an Alocasia, but it
+## looks nothing like one"): a short base, a few stalks rising and leaning
+## out from it, and on each stalk one blade, a card that shows the whole
+## leaf tile once. The blade's length and width come from the leaf block
+## (size_cm against the plant's height, and aspect), it points tip up, out
+## and a little up (less the more canopy.droop), and hangs from the stalk
+## at the notch (a peltate taro's a little inside the blade, where its
+## stalk joins under it: leaf_frame). The stalks are green (the species'
+## green-stem tile) and each blade sways with its stalk.
+static func _giant_herb(b: _Builder, sp: PlantSpecies, far: bool) -> void:
+	var hm := maxf((sp.height_m.x + sp.height_m.y) * 0.5, 0.1)
+	var lm := (sp.leaf_size_m.x + sp.leaf_size_m.y) * 0.5 if sp.leaf_size_m.y > 0.0 else sp.leaf_m
+	var length := clampf(lm / hm, 0.2, 0.6)
+	var aspect := sp.leaf_aspect if sp.leaf_aspect > 0.2 else 1.5
+	var width := length / aspect
+	var frame: Array = Array(sp.leaf_frame) if sp.leaf_frame.size() == 5 else TILE_FRAME
+	# The share of the blade below the stalk's point (the back lobes).
+	var below := (float(frame[3]) - float(frame[4])) / maxf(float(frame[3]) - float(frame[1]), 1e-3)
+	var droop := clampf(float(sp.canopy.get("droop", 0.2)), 0.0, 1.0)
+	var pitch := deg_to_rad(lerpf(60.0, 12.0, clampf(droop / 0.6, 0.0, 1.0)))
+	var stalk := sp.petiole_color if sp.petiole_color.a > 0.5 else (sp.accent if sp.accent.g > sp.accent.r else sp.color.darkened(0.15))
+	b.wood = stalk
+	var sides := 4 if far else 6
+	# The base: a short stout stem the stalks rise from.
+	b.cylinder(Vector3.ZERO, 0.05, 0.07, sides, stalk, 0.0, 0.0)
+	var count := 3 if far else b.rng.randi_range(3, 5)
+	var top := 1.0 - (1.0 - below) * length * sin(pitch)
+	var a0 := b.rng.randf() * TAU
+	for k in count:
+		var a := a0 + TAU * k / count + b.rng.randf_range(-0.3, 0.3)
+		var out := Vector3(cos(a), 0.0, sin(a))
+		# The first stalk is the tallest; the rest a little lower, leaning
+		# out more.
+		var h := top * (1.0 if k == 0 else b.rng.randf_range(0.7, 0.95))
+		var tilt := b.rng.randf_range(0.18, 0.3) + 0.12 * (1.0 - h / top)
+		var foot := out * 0.025 + Vector3(0, 0.06, 0)
+		var notch := out * (h * tan(tilt)) + Vector3(0, h, 0)
+		var mid := foot.lerp(notch, 0.5) + out * 0.03
+		var s_n := 0.55 + 0.1 * h
+		b.twig_phase = fmod(0.13 + 0.37 * k + b.rng.randf() * 0.1, 1.0)
+		b.tube([[foot, 0.018, 0.0], [mid, 0.016, s_n * 0.4], [notch, 0.013, s_n]], sides, stalk)
+		var along := (out * cos(pitch) + Vector3.UP * sin(pitch)).normalized()
+		var side := out.cross(Vector3.UP).normalized()
+		var col := sp.color.lightened(b.rng.randf_range(-0.03, 0.05))
+		b.leaf_blade(notch, along, side, length, width, below, frame, col, s_n, s_n + 0.3, b.twig_phase, 0.05 + 0.9 * k / count)
+	b.twig_phase = -1.0
 
 
 static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
@@ -719,18 +786,21 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	b.rng.seed = idx * 7919 + 11
 	if sp.shape == S.CACTUS:
 		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
-	if sp.shape == S.UMBRELLA and not TreeArch.grows(sp):
-		# The "umbrella until the aroid shape exists" placeholder of the
-		# giant herbs (Alocasia, Colocasia, the taros): leaf cards on
-		# stalks, never the umbrella tree's crown (design 1 Oct §CA).
-		b.herb_leaves(3 if far else b.rng.randi_range(3, 6), 0.62, 0.24, 0.3, 0.22, leaf, wood, 0.8)
-		return b.commit_arrays()
+	# The aroid test comes first (Mike's 3 Oct play: every Amorphophallus
+	# carries shape "umbrella", so the giant-herb test below caught them all
+	# and this leaf was never reached).
 	if not sp.aroid.is_empty():
 		# An Amorphophallus leaf (from reference photos of the titan arum):
 		# one mottled petiole, a tree in itself, forking at its top into
 		# three rachises that fork again, each hung with leaflets, a canopy
 		# as wide as the plant is tall. (Was the umbrella tree stand-in.)
 		_aroid_leaf(b, leaf, wood, far)
+		return b.commit_arrays()
+	if giant_herb(sp):
+		# A giant herb (Alocasia, Colocasia, the taros): a short base,
+		# stalks, one whole blade on each (never the umbrella tree's crown,
+		# design 1 Oct §CA; Mike's 3 Oct play: it read as a bush).
+		_giant_herb(b, sp, far)
 		return b.commit_arrays()
 	match sp.shape:
 		S.CONIFER:
@@ -863,7 +933,7 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor)
 	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
 	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
@@ -893,6 +963,13 @@ class _Builder:
 
 	func tri3(a: Vector3, b: Vector3, d: Vector3, ca: Color, cb: Color, cd: Color, sa: float, sb: float, sd: float) -> void:
 		var nrm := (b - a).cross(d - a).normalized()
+		# The builder winds its faces clockwise seen from outside (Godot's
+		# front), so (b - a) x (d - a) points in. Wood (bark, culms) gets the
+		# outward normal (Mike's 3 Oct play: trunks and bamboo were lit on
+		# the side away from the sun); the winding stays, and the shadow
+		# pass's far-face rule reads the normal (foliage.gdshader).
+		if _outward():
+			nrm = -nrm
 		v.append_array([a, b, d])
 		n.append_array([nrm, nrm, nrm])
 		c.append_array([Color(ca, sa), Color(cb, sb), Color(cd, sd)])
@@ -928,6 +1005,46 @@ class _Builder:
 				uv2.append(Vector2(5.0, twig_phase))
 				parts.append(-1)
 				cu.append_array([center.x, center.y, center.z, key])
+
+	## One whole leaf as a card (Mike's 3 Oct play): the leaf tile drawn
+	## once across it, no grid, flips, blanked cells or cluster blob (UV2.x
+	## 2.25, foliage.gdshader). The stalk meets it at `attach`; the blade
+	## runs `along` (its tip `(1 - below) * length` that way, its back
+	## lobes `below * length` back), `width` across `side`. `frame` is
+	## where the leaf sits in its tile ([u0, v0, u1, v1, v of the stalk's
+	## point], PlantSpecies.leaf_frame). It sways `s_attach` at the stalk's
+	## point and its lobes, `s_tip` at its tip, on the stalk's `phase` (-1
+	## none), so it moves with the stalk. `key` thins it whole in autumn.
+	func leaf_blade(attach: Vector3, along: Vector3, side: Vector3, length: float, width: float, below: float, frame: Array,
+			col: Color, s_attach: float, s_tip: float, phase: float, key: float) -> void:
+		var u := along.normalized()
+		var sd := (side - u * side.dot(u)).normalized()
+		if sd.length() < 1e-4:
+			sd = u.cross(Vector3.UP if absf(u.y) < 0.9 else Vector3.RIGHT).normalized()
+		var nrm := sd.cross(u).normalized()
+		if nrm.y < 0.0:
+			nrm = -nrm
+		var lo := attach - u * (below * length)
+		var hi := attach + u * ((1.0 - below) * length)
+		var hw := sd * (width * 0.5)
+		var p := [lo - hw, lo + hw, hi + hw, hi - hw]
+		var u0 := float(frame[0])
+		var v0 := float(frame[1])
+		var u1 := float(frame[2])
+		var v1 := float(frame[3])
+		var q := [Vector2(u0, v1), Vector2(u1, v1), Vector2(u1, v0), Vector2(u0, v0)]
+		var sw := [s_attach, s_attach, s_tip, s_tip]
+		for idx in [[0, 1, 2], [0, 2, 3]]:
+			for jj in idx:
+				v.append(p[jj])
+				n.append(nrm)
+				c.append(Color(col, sw[jj]))
+				uv.append(q[jj])
+				uv2.append(Vector2(2.25, phase))
+				parts.append(-1)
+				# Its stalk's point, so the shader sizes it from there (it
+				# stays on its stalk) and its key.
+				cu.append_array([attach.x, attach.y, attach.z, key])
 
 	## A giant herb (design §CA: an Alocasia is two to six big heart cards
 	## on stalks, a banana its paddles): `count` petioles from the crown of
@@ -999,13 +1116,23 @@ class _Builder:
 			var a1 := TAU * (k + 1) / sides
 			var p0 := base + Vector3(cos(a0), 0, sin(a0)) * r
 			var p1 := base + Vector3(cos(a1), 0, sin(a1)) * r
-			tri(p0, tip, p1, col, s0, s1, s0)
+			# Wound like the other parts ((b - a) x (d - a) in), so a bark
+			# cone's normals come out pointing out (tri3, Mike's 3 Oct play).
+			if is_wood:
+				tri(p1, tip, p0, col, s0, s1, s0)
+			else:
+				tri(p0, tip, p1, col, s0, s1, s0)
 		# The underside is its own flat part (a hard edge at the skirt).
 		part += 1
 		for k in sides:
 			var a0 := TAU * k / sides
 			var a1 := TAU * (k + 1) / sides
-			tri(base + Vector3(cos(a1), 0, sin(a1)) * r, base, base + Vector3(cos(a0), 0, sin(a0)) * r, col.darkened(0.25), s0, s0, s0)
+			var q0 := base + Vector3(cos(a0), 0, sin(a0)) * r
+			var q1 := base + Vector3(cos(a1), 0, sin(a1)) * r
+			if is_wood:
+				tri(q0, base, q1, col.darkened(0.25), s0, s0, s0)
+			else:
+				tri(q1, base, q0, col.darkened(0.25), s0, s0, s0)
 		mat = 1.0
 		if not is_wood:
 			hang_from.append([base + Vector3(0, h * 0.2, 0), Vector3(r, h * 0.2, r)])
@@ -1701,14 +1828,23 @@ class _Builder:
 		arrays[Mesh.ARRAY_CUSTOM0] = cu
 		return arrays
 
+	## Is the material being built wood whose normals point outward (bark
+	## 0, culm 4; see tri3)?
+	func _outward() -> bool:
+		return mat < 0.5 or (mat > 3.5 and mat < 4.5)
+
 	## Smooth shading: every vertex of a part gets the area-weighted mean
-	## of the face normals meeting at its position in that part.
+	## of the face normals meeting at its position in that part (outward
+	## for wood, as tri3).
 	func _smooth() -> void:
 		var acc := {}
 		var keys: Array = []
 		keys.resize(v.size())
 		for t in range(0, v.size(), 3):
 			var fn := (v[t + 1] - v[t]).cross(v[t + 2] - v[t])
+			var m := uv2[t].x
+			if m < 0.5 or (m > 3.5 and m < 4.5):
+				fn = -fn
 			for k in 3:
 				var i := t + k
 				if parts[i] < 0:

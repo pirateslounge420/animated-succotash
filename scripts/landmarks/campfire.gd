@@ -13,9 +13,17 @@ class_name Campfire
 ##   that turns only about its own up axis, noise scrolled up through a
 ##   teardrop mask, posterised to flat bands on a 32x48 texel grid, so it
 ##   is crunchy at any distance; from straight above it thins to a line.
-##   Embers are single-pixel billboards drifting up from the coals
-##   (shaders/ember.gdshader, a MultiMesh). When the store burns low the
-##   card collapses toward a red flicker; at embers, coals only.
+##   When the store burns low the card collapses toward a red flicker; at
+##   embers, coals only.
+## - The fire breathes (design 3 Oct §CZ, look.json fire.coals, specks,
+##   light.breath): the bed of coals (shaders/coals.gdshader) on a coarse
+##   texel grid breathes slowly, its patches on their own clocks, and
+##   flares on a gust of wind, a poke or a fresh piece (stir()); the light
+##   breathes with it, on top of the noise flicker. Specks
+##   (shaders/specks.gdshader) are thrown on a random clock and on every
+##   pop of the fire's sound, sparks and ash, in place of the embers'
+##   steady loop (the torch keeps its own, §CP). At embers the bed is the
+##   whole fire, breathing slower and deeper, with a rare speck.
 ## - The light does not get brighter at night, the world gets darker round
 ##   it: by day it is `day_share` of full; as the sky goes cobalt the
 ##   energy and the range swell (`night_energy_scale`, `night_range_scale`),
@@ -61,6 +69,11 @@ static var RANGE_M := float(L.get("range_m", 14.0))
 static var ATTENUATION := float(L.get("attenuation", 1.1))
 ## audio.json → fire: hiss, pops, low_fire.
 static var A: Dictionary = Tuning.section("audio", "fire")
+## look.json → fire.coals and fire.specks (§CZ).
+static var C: Dictionary = FIRE.get("coals", {})
+static var SP: Dictionary = FIRE.get("specks", {})
+static var _bed_mesh: PlaneMesh
+static var _speck_quad: QuadMesh
 
 ## 0 by day, 1 at night (Main sets it each frame from the sky).
 static var night := 1.0
@@ -94,11 +107,13 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 		var l := CreatureBodies.cone(root, 0.06, 0.06, 0.9, Vector3(0, 0.12, 0), Color(0.3, 0.2, 0.12))
 		l.rotation = Vector3(PI * 0.5, i * TAU / 3.0, 0)
 		PropCollision.capsule(body, l.transform, 0.06, 0.9)
-	var coals := CreatureBodies.ball(root, Vector3(0.3, 0.06, 0.3), Vector3(0, 0.08, 0), COALS, 1.0)
-	coals.name = "Coals"
 	# Its own phase, so fires don't flicker or pop together.
 	var phase := float(posmod(hash(d), 1000)) * 0.37
-	var flames := flame_node(1.0, 1.0, int(FL.get("embers", {}).get("count", 6)), phase)
+	var coals := coal_bed(phase)
+	coals.position = Vector3(0, 0.05, 0)
+	root.add_child(coals)
+	root.add_child(speck_node(phase))
+	var flames := flame_node(1.0, 1.0, 0, phase)
 	flames.name = "Flames"
 	flames.position = Vector3(0, 0.1, 0)
 	root.add_child(flames)
@@ -268,6 +283,179 @@ static func _ember_node(count: int, size: float, phase: float) -> MultiMeshInsta
 	return mi
 
 
+## The bed of coals (§CZ): a flat disc bed_width_m across, drawn by
+## shaders/coals.gdshader; its own material (its breath and flare are set
+## per fire by flicker(), its heat by FireStore.apply).
+static func coal_bed(phase: float) -> MeshInstance3D:
+	var w := float(C.get("bed_width_m", 0.6))
+	if _bed_mesh == null:
+		_bed_mesh = PlaneMesh.new()
+		_bed_mesh.size = Vector2(w, w)
+		_bed_mesh.subdivide_width = 6
+		_bed_mesh.subdivide_depth = 6
+	var mi := MeshInstance3D.new()
+	mi.name = "Coals"
+	mi.mesh = _bed_mesh
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/coals.gdshader")
+	var bands: Array = FL.get("bands", ["#FEFC54", "#FCA82C", "#E6552A", "#5A0A00"])
+	var hdr: Array = FL.get("hdr", [1.0, 1.0, 1.0, 1.0])
+	for i in 4:
+		m.set_shader_parameter("band%d" % i, emissive(bands[mini(i, bands.size() - 1)], float(hdr[i]) if i < hdr.size() else 1.0))
+	m.set_shader_parameter("char_col", emissive(C.get("char", "#1A0C08")))
+	m.set_shader_parameter("texels_m", float(C.get("texels_m", 32.0)))
+	m.set_shader_parameter("width_m", w)
+	var ph: Array = C.get("patch_hz", [0.6, 1.4])
+	m.set_shader_parameter("patch_hz", Vector2(float(ph[0]), float(ph[1])))
+	m.set_shader_parameter("patch_amount", float(C.get("patch_amount", 0.35)))
+	m.set_shader_parameter("crawl", float(C.get("crawl", 0.06)))
+	m.set_shader_parameter("air_brighten", float(C.get("air_brighten", 0.25)))
+	m.set_shader_parameter("phase", phase)
+	mi.material_override = m
+	return mi
+
+
+## The pool of specks a fire throws (§CZ): fire.specks.max_alive slots in
+## a MultiMesh drawn by shaders/specks.gdshader; throw() fills them.
+static func speck_node(phase: float) -> MultiMeshInstance3D:
+	if _speck_quad == null:
+		_speck_quad = QuadMesh.new()
+		_speck_quad.size = Vector2(1.0, 1.0)
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_custom_data = true
+	mm.mesh = _speck_quad
+	mm.instance_count = int(SP.get("max_alive", 24))
+	for i in mm.instance_count:
+		mm.set_instance_transform(i, Transform3D.IDENTITY)
+		mm.set_instance_custom_data(i, Color(-1000.0, 0.0, 0.0, 0.0))
+	var mi := MultiMeshInstance3D.new()
+	mi.name = "Specks"
+	mi.multimesh = mm
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.position = Vector3(0, 0.1, 0)
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/specks.gdshader")
+	var spd: Array = SP.get("speed_mps", [0.5, 2.2])
+	var life: Array = SP.get("life_s", [0.8, 3.5])
+	var spark: Dictionary = SP.get("spark", {})
+	var ash: Dictionary = SP.get("ash", {})
+	m.set_shader_parameter("px", float(SP.get("px", 1)))
+	m.set_shader_parameter("speed_mps", Vector2(float(spd[0]), float(spd[1])))
+	m.set_shader_parameter("cone_deg", float(SP.get("cone_deg", 35.0)))
+	m.set_shader_parameter("drag", float(SP.get("drag", 0.9)))
+	m.set_shader_parameter("curl_m", float(SP.get("curl_m", 0.15)))
+	m.set_shader_parameter("wind_share", float(SP.get("wind_share", 1.0)))
+	m.set_shader_parameter("life_s", Vector2(float(life[0]), float(life[1])))
+	m.set_shader_parameter("height_max_m", float(SP.get("height_max_m", 3.0)))
+	m.set_shader_parameter("ash_life_scale", float(ash.get("life_scale", 1.6)))
+	m.set_shader_parameter("spread_m", float(C.get("bed_width_m", 0.6)) * 0.35)
+	m.set_shader_parameter("spark_col", emissive(spark.get("color", "#FFB020"), float(spark.get("hdr", 2.0))))
+	m.set_shader_parameter("spark_cool", emissive(spark.get("cools_to", "#E6552A")))
+	# Ash doesn't glow: its own colour, never past 1 (no bloom).
+	m.set_shader_parameter("ash_col", Color(str(ash.get("color", "#8FA0C8"))).srgb_to_linear())
+	mi.material_override = m
+	var reach := float(SP.get("height_max_m", 3.0)) + 0.5
+	mi.custom_aabb = AABB(Vector3(-3, -0.2, -3), Vector3(6, reach + 2.0, 6))
+	mi.set_meta("phase", phase)
+	return mi
+
+
+## Throw `n` specks from `camp` at `time` (its flicker clock): each a
+## spark or, ash.share of the time, a flake of ash, into the pool's next
+## slots (the oldest go first).
+static func throw(camp: Node3D, time: float, n: int) -> void:
+	var sp := camp.get_node_or_null("Specks") as MultiMeshInstance3D
+	if sp == null or n <= 0:
+		return
+	var mm := sp.multimesh
+	var slot := int(camp.get_meta("speck_slot", 0))
+	var ash_share := float((SP.get("ash", {}) as Dictionary).get("share", 0.3))
+	for i in mini(n, mm.instance_count):
+		var kind := 1.0 if randf() < ash_share else 0.0
+		mm.set_instance_custom_data(slot, Color(time, randf(), randf(), kind + randf() * 0.49))
+		if kind > 0.5:
+			camp.set_meta("ash_thrown", int(camp.get_meta("ash_thrown", 0)) + 1)
+		slot = (slot + 1) % mm.instance_count
+	camp.set_meta("speck_slot", slot)
+	camp.set_meta("specks_thrown", int(camp.get_meta("specks_thrown", 0)) + mini(n, mm.instance_count))
+
+
+## A burst's size from fire.specks: burst, now and then a big_burst.
+static func burst_size(big := false) -> int:
+	var b: Array = SP.get("big_burst", [6, 12]) if big or randf() < float(SP.get("big_burst_chance", 0.12)) else SP.get("burst", [1, 4])
+	return randi_range(int(b[0]), int(b[1]))
+
+
+## Air on the fire (§CZ): a poke ("poke", §CY's poke_fire) or a fresh
+## piece laid on ("feed", FireStore.add_fuel) makes the bed flare and
+## throws a big burst of specks, at the fire's next flicker.
+static func stir(camp: Node3D, kind := "poke") -> void:
+	if camp == null:
+		return
+	if (kind == "feed" and not bool(SP.get("on_feed", true))) or (kind == "poke" and not bool(SP.get("on_poke", true))):
+		camp.set_meta("stir", "air")
+	else:
+		camp.set_meta("stir", kind)
+
+
+## The bed's slow breath at `time` (-1..1) and how much it breathes, for
+## the coals and the light alike: at embers (burn at or under CARD_BELOW)
+## coals.at_embers' slower, deeper breath.
+static func breath(camp: Node3D, time: float, burn: float) -> Vector2:
+	var at_e: Dictionary = C.get("at_embers", {})
+	var embers := burn <= CARD_BELOW
+	var hz := float(at_e.get("breath_hz", 0.2)) if embers else float(C.get("breath_hz", 0.35))
+	var amount := float(at_e.get("breath_amount", 0.45)) if embers else float(C.get("breath_amount", 0.3))
+	var sd := float(camp.get_meta("flick_seed", 0.0))
+	return Vector2(sin(TAU * hz * time + sd), amount)
+
+
+## How the fire breathes this frame (§CZ): the bed's breath, its flare
+## (a gust, a poke, a piece laid on, settling over air_settle_s), and the
+## specks on their random clock. Returns the breath (-1..1) for the light.
+static func _breathe(camp: Node3D, time: float, burn: float) -> float:
+	var sd := float(camp.get_meta("flick_seed", 0.0))
+	var b := breath(camp, time, burn)
+	var settle := maxf(float(C.get("air_settle_s", 2.5)), 0.1)
+	var stirred := str(camp.get_meta("stir", ""))
+	if stirred != "":
+		camp.remove_meta("stir")
+		camp.set_meta("air_t", time)
+		if stirred != "air" and burn > 0.0:
+			throw(camp, time, burst_size(true))
+	var air := 0.0
+	if camp.has_meta("air_t"):
+		var since := time - float(camp.get_meta("air_t"))
+		air = exp(-maxf(since, 0.0) / settle) if since >= 0.0 else 0.0
+	# A gust of the weather's wind: the wind's strength, now and then.
+	var wind := WeatherFX.plant_wind.length()
+	var gust := smoothstep(0.62, 0.95, _vnoise(time * 0.25, sd + 21.0)) * clampf(wind / 8.0, 0.0, 1.0)
+	air = maxf(air, gust)
+	var coals := camp.get_node_or_null("Coals") as MeshInstance3D
+	if coals and coals.material_override is ShaderMaterial:
+		var m := coals.material_override as ShaderMaterial
+		m.set_shader_parameter("breath", 1.0 + b.y * b.x)
+		m.set_shader_parameter("air", air)
+	var sp := camp.get_node_or_null("Specks") as MultiMeshInstance3D
+	if sp:
+		(sp.material_override as ShaderMaterial).set_shader_parameter("now", time)
+		sp.visible = true
+		# The random clock: an exponential wait (mean_gap_s), longer as the
+		# fire burns down (scale_with_burn), none from a dead fire.
+		if burn > 0.0:
+			var gap := float(SP.get("mean_gap_s", 1.4))
+			if bool(SP.get("scale_with_burn", true)):
+				gap /= maxf(burn, 0.02)
+			if not camp.has_meta("speck_at"):
+				camp.set_meta("speck_at", time - log(maxf(randf(), 1e-4)) * gap)
+			if time >= float(camp.get_meta("speck_at")):
+				throw(camp, time, burst_size() if burn > CARD_BELOW else 1)
+				camp.set_meta("speck_at", time - log(maxf(randf(), 1e-4)) * gap)
+	return b.x * float((L.get("breath", {}) as Dictionary).get("amount", 0.12))
+
+
 ## Is a lit campfire within `radius` m of scene position `pos` (resting
 ## there heals the player: PlanetPlayer)?
 static func lit_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
@@ -303,6 +491,8 @@ static func flicker(camp: Node3D, time: float) -> void:
 	var k := 1.0 + amount * (0.7 * (_vnoise(time * hz, sd) * 2.0 - 1.0) + 0.3 * (_vnoise(time * hz * 2.7, sd + 11.0) * 2.0 - 1.0))
 	var low := lowness(burn)
 	var lowdata: Dictionary = FL.get("low", {})
+	# The bed breathes and the light with it (§CZ, fire.light.breath).
+	k *= 1.0 + _breathe(camp, time, burn)
 	# The flame: one card, collapsing toward the low bands and height.
 	var flames := camp.get_node_or_null("Flames") as Node3D
 	if flames:
@@ -362,6 +552,10 @@ static func _voice(camp: Node3D, time: float, burn: float, low: float) -> void:
 	pops.pitch_scale = _rand_in(P.get("pitch", [0.8, 1.4]))
 	pops.volume_db = _rand_in(P.get("volume_db", [-10.0, -3.0])) + offset
 	Audio3D.play(pops)
+	# Every pop throws its burst at the same instant (§CZ specks.on_pop).
+	camp.set_meta("popped_at", time)
+	if bool(SP.get("on_pop", true)):
+		throw(camp, time, burst_size())
 	camp.set_meta("pop_at", time + _rand_in(P.get("every_s", [0.3, 2.8])) * lerpf(1.0, float(lowf.get("pops_every_scale", 2.5)), low))
 
 

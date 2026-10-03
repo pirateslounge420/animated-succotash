@@ -646,10 +646,12 @@ static func _weather_word(w: Dictionary, fog: float) -> String:
 	var snow: bool = w.get("snow", false)
 	if w.get("storm", 0.0) > 0.5:
 		return "Snowstorm" if snow else "Storm"
-	if rain > 0.3:
+	if rain > 0.05:
 		return ("Snow" if snow else "Rain") if rain > 1.0 else ("Light snow" if snow else "Light rain")
+	# One cover value (design 3 Oct §CX): "Overcast" from where rain can
+	# fall (WeatherSim.RAIN_COVER.x), the deck drawing the same cover.
 	var cloud: float = w.get("cloud", 0.0)
-	var words := "Overcast" if cloud > 0.65 else ("Cloudy" if cloud > 0.3 else "Clear")
+	var words := "Overcast" if cloud >= WeatherSim.RAIN_COVER.x else ("Cloudy" if cloud > 0.3 else "Clear")
 	if fog > 0.5:
 		words += ", misty"
 	return words

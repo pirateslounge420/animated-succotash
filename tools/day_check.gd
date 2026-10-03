@@ -1,13 +1,14 @@
 extends SceneTree
 ## Day 1 and one clock (design 1 Oct §CG), on one world (SEED, pinned) and
 ## at Mike's 23:11 spawn (12.7°N, 140.1°W) on the same world's sky:
-##  - a new world opens on Day 1 in §BX's afternoon;
-##  - Day 1 through the first afternoon and evening, Day 2 just after the
+##  - a new world opens on Day 1 at §CY's dawn;
+##  - Day 1 through the first day and evening, Day 2 just after the
 ##    clock face passes 00:00 where you stand;
 ##  - the HUD line, the clock face and the log's stamp agree to the minute
 ##    (the face read as main feeds it, where the player stands);
 ##  - the sky didn't move: the spawn's world.days is START_DAYS taken to
-##    the afternoon as before, so the first night's moon is unchanged;
+##    the dawn (§CY.1; it was the afternoon), so the first night's moon is
+##    still near full;
 ##  - a save from before (no first_local_day) opens on Day 1 and keeps it;
 ##    a save that began three days earlier reads Day 4.
 ##   SEED=7731 godot --headless --path . --fixed-fps 60 --script tools/day_check.gd
@@ -69,14 +70,18 @@ func _dir(lat_deg: float, lon_deg: float) -> Vector3:
 
 
 ## One place: open the world's clock there as a new world, walk the clock
-## through the first afternoon and evening to just past midnight.
+## through the first day and evening to just past midnight.
 func _place(label: String, d: Vector3, here: bool) -> void:
 	WorldSave.data.erase("first_local_day")
 	var before := Astro.days_at_solar_hour(World.START_DAYS, _start_h(d), CubeSphere.longitude(d), CubeSphere.latitude(d))
 	main.open_clock(d)
-	ok(is_equal_approx(world.days, before), "%s (%.1f°, %.1f°): the sky's clock is START_DAYS taken to the afternoon, as before (%.4f)" % [label, rad_to_deg(CubeSphere.latitude(d)), rad_to_deg(CubeSphere.longitude(d)), world.days])
+	ok(is_equal_approx(world.days, before), "%s (%.1f°, %.1f°): the sky's clock is START_DAYS taken to the dawn (%.4f)" % [label, rad_to_deg(CubeSphere.latitude(d)), rad_to_deg(CubeSphere.longitude(d)), world.days])
 	var c: Vector2 = world.local_clock(d)
-	ok(int(c.x) == 1 and c.y > 12.0 and c.y < 19.0, "%s: wakes on Day 1 in the afternoon (%s)" % [label, world.clock_text(d)])
+	var lat := CubeSphere.latitude(d)
+	var decl := Astro.declination(World.START_DAYS)
+	var dawn_h := DayCycle.phase_start_hour("dawn", lat, decl)
+	var into: float = fposmod(c.y - dawn_h, 24.0) / 24.0 * (world.day_length_s / 60.0)
+	ok(int(c.x) == 1 and into >= 0.0 and into < 3.0, "%s: wakes on Day 1 in the first minutes of dawn (%s, %.1f real min after dawn begins)" % [label, world.clock_text(d), into])
 	var day1_ok := true
 	var agree_ok := true
 	var steps := 0
@@ -103,17 +108,14 @@ func _place(label: String, d: Vector3, here: bool) -> void:
 			continue
 		wrapped = stamp
 		break
-	ok(day1_ok and last.begins_with("Day 1 · 23:"), "%s: Day 1 through the afternoon and evening (last %s)" % [label, last])
+	ok(day1_ok and last.begins_with("Day 1 · 23:"), "%s: Day 1 through the day and evening (last %s)" % [label, last])
 	ok(wrapped.begins_with("Day 2 · 00:0"), "%s: Day 2 just after the face passes 00:00 (%s)" % [label, wrapped])
 	ok(agree_ok, "%s: the HUD line, the clock face and the log stamp agree to the minute (%d readings)" % [label, steps])
 	ok(moon > 0.9, "%s: the first night's moon %d%% lit (near full, as before)" % [label, int(round(moon * 100.0))])
 
 
 func _start_h(d: Vector3) -> float:
-	var lat := CubeSphere.latitude(d)
-	var dusk_h := DayCycle.phase_start_hour("dusk", lat, Astro.declination(World.START_DAYS))
-	var rule: Dictionary = Tuning.section("roads", "opening_road").get("spawn", {})
-	return fposmod(dusk_h - float(rule.get("real_min_before_dusk", 22.0)) / (world.day_length_s / 60.0) * 24.0, 24.0)
+	return world.dawn_start_hour(CubeSphere.latitude(d), Astro.declination(World.START_DAYS), world.day_length_s)
 
 
 ## The HUD's time line at `d`: where the player stands, the one main's

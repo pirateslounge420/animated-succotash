@@ -24,8 +24,9 @@ extends Node
 ##                 (Audio3D: every voice is a 3D player tuned by the
 ##                 falloff table, data/audio.json).
 ##
-## Pack hunters (wolves) are tethered to dens: cave mouths on steep, cold
-## slopes. Packs rest by day, patrol their territory at night, howl in
+## Pack hunters are tethered to dens: the wolves' a hole under rocks on a
+## steep, cold slope, the hyenas' a burrow dug in flat open ground, each
+## in the climate (heat and wet) the species lives in. Packs rest by day, patrol their territory at night, howl in
 ## call-and-response (pack members, then neighboring packs), and close in
 ## around you once they notice you, then drift home when you leave.
 
@@ -479,9 +480,15 @@ func _refresh_dens(pd: Vector3) -> void:
 			_dens.erase(key)
 
 
-## A cave mouth on a steep, cold slope within the cell, or {}.
+## A den in the cell, or {}: a cave mouth on a steep slope, or a burrow
+## in flat ground (pack.den), at a spot whose heat and wet both suit the
+## species (Mike's 3 Oct play: a hyena den in a jungle; the moisture was
+## never read).
 func _find_den(sp: CreatureSpecies, center: Vector3, key: Vector4i) -> Dictionary:
 	if map.sample(map.temp_c, center) > sp.temp_c.y + 15.0:
+		return {}
+	var mc := map.sample(map.moisture, center)
+	if mc < sp.moisture.x - 0.15 or mc > sp.moisture.y + 0.15:
 		return {}
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash(key)
@@ -500,6 +507,9 @@ func _find_den(sp: CreatureSpecies, center: Vector3, key: Vector4i) -> Dictionar
 		var t := _temp_at(p, e)
 		if t < sp.temp_c.x or t > sp.temp_c.y:
 			continue
+		var m := map.sample(map.moisture, p)
+		if m < sp.moisture.x or m > sp.moisture.y:
+			continue
 		var ea := CubeSphere.east(p)
 		var no := CubeSphere.north(p)
 		var gx := (map.terrain.elevation(_offset(p, PI * 0.5, 10.0), true) - map.terrain.elevation(_offset(p, -PI * 0.5, 10.0), true)) / 20.0
@@ -509,40 +519,72 @@ func _find_den(sp: CreatureSpecies, center: Vector3, key: Vector4i) -> Dictionar
 			best_slope = slope
 			var downhill := -(ea * gx + no * gy)
 			var facing := downhill.normalized() if downhill.length() > 1e-4 else ea
-			best = {"species": sp, "dir": p, "facing": facing, "seed": hash(key)}
+			best = {"species": sp, "dir": p, "facing": facing, "seed": hash(key), "burrow": burrow,
+				"snow": t < -2.0, "rock": map.rock[map.cell_at(p)]}
 	return best
+
+
+## The den's stone: the place's own rock (as the nests', NestBuilder),
+## basalt darker.
+static func den_stones(rock: int) -> Array:
+	match rock:
+		PlanetData.Rock.SANDSTONE:
+			return RuinBuilder.SANDSTONE
+		PlanetData.Rock.LIMESTONE_KARST:
+			return RuinBuilder.LIMESTONE
+		PlanetData.Rock.BASALT_VOLCANIC:
+			return RuinBuilder.STONES.map(func(c: Color) -> Color: return c.darkened(0.35))
+	return RuinBuilder.STONES
+
+
+## How big a den's dark hole is (width, height above the ground, m): an
+## animal's way in, never a door (Mike's 3 Oct play: "a little opening to a
+## shrine ... I wasn't able to go inside"; it was 3.2 m wide).
+const DEN_HOLE_CAVE := Vector2(0.72, 0.55)
+const DEN_HOLE_BURROW := Vector2(0.8, 0.45)
 
 
 func _den_prop(den: Dictionary) -> Node3D:
 	var d: Vector3 = den.dir
 	var root := Node3D.new()
-	root.name = "WolfDen"
+	var burrow := bool(den.get("burrow", false))
+	root.name = "Burrow" if burrow else "Den"
 	_root.add_child(root)
-	# Stand on the slope itself (tilted to the ground), bedded in a little.
+	# Stand on the ground itself (tilted to it), bedded in a little.
 	var ea := CubeSphere.east(d)
 	var no := CubeSphere.north(d)
 	var gx := (chunks.ground_height(_offset(d, PI * 0.5, 3.0)) - chunks.ground_height(_offset(d, -PI * 0.5, 3.0))) / 6.0
 	var gy := (chunks.ground_height(_offset(d, 0.0, 3.0)) - chunks.ground_height(_offset(d, PI, 3.0))) / 6.0
 	var normal := (d - ea * gx - no * gy).normalized()
-	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d) - 0.6)
+	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d) - (0.05 if burrow else 0.2))
 	var fwd: Vector3 = den.facing
 	fwd = fwd - normal * fwd.dot(normal)
 	if fwd.length() < 0.1:
 		fwd = no - normal * no.dot(normal)
 	root.global_basis = Basis.looking_at(fwd.normalized(), normal)
-	var rock := Color(0.42, 0.42, 0.45)
-	# Two boulders and a lintel slab framing a dark hole in the slope. They
-	# collide: the boulders as the hulls of their stones, the lintel as a
-	# box.
-	var stones := [[Vector3(1.9, 2.8, 2.2), Vector3(-1.7, 1.0, 0.2), Vector3(0, 0, 0.12), rock, false],
-		[Vector3(1.8, 2.5, 2.2), Vector3(1.7, 0.9, 0.3), Vector3(0, 0, -0.15), rock.darkened(0.1), false],
-		[Vector3(5.0, 1.1, 2.4), Vector3(0, 2.5, 0.4), Vector3(0.1, 0, 0), rock.lightened(0.05), true]]
+	var stones := den_stones(int(den.get("rock", PlanetData.Rock.GRANITE)))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = den.seed
+	var dark := Color(0.03, 0.03, 0.05)
+	if burrow:
+		_burrow_prop(root, d, stones, rng, dark)
+		return root
+	# A hole under rocks in the slope: two boulders of the place's stone and
+	# a lintel over a dark way in no wider than DEN_HOLE_CAVE, the snow slab
+	# on the lintel only in snow country. They collide: the boulders as the
+	# hulls of their stones, the lintel as a box (too low to crawl under).
+	var rock: Color = stones[rng.randi() % stones.size()]
+	var hw := DEN_HOLE_CAVE.x * 0.5
+	var parts := [[Vector3(1.0, 1.1, 1.1), Vector3(-hw - 0.5, 0.55, 0.1), Vector3(0, 0, 0.12), rock, false],
+		[Vector3(1.0, 1.0, 1.1), Vector3(hw + 0.5, 0.5, 0.15), Vector3(0, 0, -0.15), rock.darkened(0.1), false],
+		[Vector3(DEN_HOLE_CAVE.x + 1.8, 0.45, 1.2), Vector3(0, 0.2 + DEN_HOLE_CAVE.y + 0.22, 0.2), Vector3(0.1, 0, 0), rock.lightened(0.05), true]]
 	var body := PropCollision.body(root)
-	for k in stones.size():
-		var st: Array = stones[k]
+	for k in parts.size():
+		var st: Array = parts[k]
 		var mi := MeshInstance3D.new()
 		mi.mesh = RuinBuilder.rock_mesh(st[0], den.seed + k, st[3], st[4])
 		mi.material_override = RuinBuilder.material()
+		mi.set_meta("stone", st[3])
 		mi.position = st[1]
 		mi.rotation = st[2]
 		root.add_child(mi)
@@ -550,9 +592,40 @@ func _den_prop(den: Dictionary) -> Node3D:
 			PropCollision.box(body, mi.transform, st[0])
 		else:
 			PropCollision.hull(body, RuinBuilder.rock_hull(st[0], den.seed + k), mi.transform)
-	CreatureBodies.ball(root, Vector3(1.6, 1.3, 1.2), Vector3(0, 0.9, 0.6), Color(0.03, 0.03, 0.05))
-	CreatureBodies.box(root, Vector3(4.6, 0.25, 1.4), Vector3(0, 3.05, 0.4), Color(0.92, 0.94, 0.98))
+	# The dark way in: its middle at the bedding depth, so what shows above
+	# the ground is DEN_HOLE_CAVE.
+	CreatureBodies.ball(root, Vector3(hw, DEN_HOLE_CAVE.y * 0.5 + 0.1, 0.4), Vector3(0, 0.2 + DEN_HOLE_CAVE.y * 0.5 - 0.1, 0.05), dark).name = "Hole"
+	if bool(den.get("snow", false)):
+		CreatureBodies.box(root, Vector3(DEN_HOLE_CAVE.x + 1.6, 0.12, 1.0), Vector3(0, 0.2 + DEN_HOLE_CAVE.y + 0.5, 0.2), Color(0.92, 0.94, 0.98)).name = "Snow"
 	return root
+
+
+## A burrow (a hyena's): a low spoil heap of the ground's own earth, a
+## dark hole into its front no bigger than DEN_HOLE_BURROW and a smaller
+## second one to the side, a few stones of the place's rock dug out round
+## it. Low enough to step over; nothing collides.
+func _burrow_prop(root: Node3D, d: Vector3, stones: Array, rng: RandomNumberGenerator, dark: Color) -> void:
+	var earth := Color(0.36, 0.29, 0.2)
+	var ch := chunks.chunk_at(d)
+	if ch != null:
+		earth = ch.ground_color_at(d).lerp(Color(0.38, 0.3, 0.2), 0.45)
+	CreatureBodies.ball(root, Vector3(1.5, 0.32, 1.2), Vector3(0, 0.0, -0.2), earth.darkened(0.06))
+	CreatureBodies.ball(root, Vector3(0.9, 0.22, 0.7), Vector3(0.6, 0.0, -0.9), earth)
+	var hw := DEN_HOLE_BURROW.x * 0.5
+	CreatureBodies.ball(root, Vector3(hw, DEN_HOLE_BURROW.y * 0.5, 0.45), Vector3(0, DEN_HOLE_BURROW.y * 0.5 - 0.05, 0.75), dark).name = "Hole"
+	CreatureBodies.ball(root, Vector3(hw * 0.7, DEN_HOLE_BURROW.y * 0.35, 0.35), Vector3(-1.2, DEN_HOLE_BURROW.y * 0.3 - 0.05, -0.3), dark).name = "Hole2"
+	for k in 5:
+		var a := rng.randf() * TAU
+		var r := rng.randf_range(1.2, 2.2)
+		var s := rng.randf_range(0.14, 0.3)
+		var mi := MeshInstance3D.new()
+		var col: Color = stones[rng.randi() % stones.size()]
+		mi.mesh = RuinBuilder.rock_mesh(Vector3(s, s * 0.6, s * 0.9), rng.randi(), col, false)
+		mi.set_meta("stone", col)
+		mi.material_override = RuinBuilder.material()
+		mi.position = Vector3(cos(a) * r, s * 0.15, sin(a) * r)
+		mi.rotation = Vector3(0, rng.randf() * TAU, 0)
+		root.add_child(mi)
 
 
 func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:

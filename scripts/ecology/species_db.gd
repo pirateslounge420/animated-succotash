@@ -324,6 +324,9 @@ static func _load_atlas(by_name: Dictionary) -> void:
 				sp.tiles[kind] = dir + "/" + str(e[kind])
 		sp.leaf_color = Color.from_string(str(e.get("leaf_color", "")), sp.leaf_color)
 		sp.bark_tile_m = float(e.get("bark_tile_m", 0.4))
+		var fr = e.get("leaf_frame")
+		if fr is Array and fr.size() == 5:
+			sp.leaf_frame = PackedFloat32Array(fr)
 		if sp.leaf_type == "":
 			sp.leaf_type = str(e.get("leaf_type", ""))
 
@@ -461,6 +464,12 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 		sp.leaf_type = str(lf.get("type", ""))
 		sp.leaf_texture = str(lf.get("texture", ""))
 		sp.leaf_arrangement = str(lf.get("arrangement", ""))
+		sp.leaf_outline = str(lf.get("outline", ""))
+		sp.leaf_base = str(lf.get("base", ""))
+		sp.leaf_apex = str(lf.get("apex", ""))
+		sp.leaf_aspect = float(lf.get("aspect", 0.0)) if lf.get("aspect") is float or lf.get("aspect") is int else 0.0
+		if size is Array and size.size() == 2:
+			sp.leaf_size_m = Vector2(float(size[0]), float(size[1])) * 0.01
 	var ar = e.get("architecture", {})
 	if ar is Dictionary:
 		sp.arch = ar
@@ -484,6 +493,9 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.aroid = aro if aro is Dictionary else {}
 	var app = e.get("appearance", {})
 	var fl = app.get("flower", {}) if app is Dictionary else {}
+	var pet = app.get("petiole", {}) if app is Dictionary else {}
+	if pet is Dictionary and str(pet.get("base", "")).begins_with("#"):
+		sp.petiole_color = Color.from_string(str(pet.get("base")), Color(0, 0, 0, 0))
 	sp.flower = fl if fl is Dictionary else {}
 	var gn = e.get("genes", {})
 	sp.gene_ranges = gn if gn is Dictionary else {}

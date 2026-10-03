@@ -58,7 +58,14 @@ var _drift := [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
 func build(p_world: Node) -> void:
 	world = p_world
 	position = world.planet_center()
-	var mesh := _unit_sphere(40)
+	var mesh := _unit_sphere(64)
+	# The shell is flat panels between its corners; they would sag under
+	# the layer's altitude (on the 637 km planet up to 245 m, under the
+	# 150 m low deck: Mike's 3 Oct play, rain from a clear sky). The corners
+	# go out by 1 / (the panels' nearest approach to the centre), so every
+	# point of every panel is at or above the layer's altitude, whatever
+	# the planet's size; the pattern is read on the true sphere.
+	var chord_k := 1.0 / _min_plane_distance(mesh)
 	for layer in 3:
 		var mat := ShaderMaterial.new()
 		mat.shader = preload("res://shaders/cloud_layer.gdshader")
@@ -66,6 +73,7 @@ func build(p_world: Node) -> void:
 		mat.set_shader_parameter("feature_m", FEATURE_M[layer] * height_scale)
 		mat.set_shader_parameter("fog_ease_m", FOG_EASE_M * height_scale)
 		mat.set_shader_parameter("max_alpha", MAX_ALPHA[layer])
+		mat.set_shader_parameter("chord_k", chord_k)
 		Look.register(mat)
 		var mi := MeshInstance3D.new()
 		mi.name = ["LowClouds", "MidClouds", "HighClouds"][layer]
@@ -103,9 +111,14 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 	# stay nearly empty; as the weather clouds over they fill in (low
 	# clouds most, the storm's deck); mid and high are patchier and
 	# thinner.
-	var covers := [clampf(0.05 + 0.75 * cloud + 0.3 * storm, 0.0, 0.95),
+	# One cover value (design 3 Oct §CX): the low deck draws the weather's
+	# cover overhead itself (WeatherSim's "cloud", which the HUD, the rain
+	# and the sun read too); mid and high follow it, patchier.
+	var covers := [clampf(cloud, 0.0, 0.97),
 		clampf(0.4 * cloud + 0.2 * storm, 0.0, 0.9),
 		clampf(0.08 + 0.3 * cloud, 0.0, 0.7)]
+	# While rain falls the deck is solid overhead (no rain from a gap).
+	var fill := WeatherSim.rain_gate(cloud) if float(weather.get("rain_rate", 0.0)) > 0.0 else 0.0
 	# Farther layers draw first (they sort as one object at the planet
 	# center, so order them by hand).
 	var order := [0, 1, 2]
@@ -118,6 +131,8 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 		var mat := _mats[layer]
 		mat.set_shader_parameter("radius", PlanetConst.RADIUS_M + altitude(layer))
 		mat.set_shader_parameter("cover", covers[layer])
+		mat.set_shader_parameter("overhead_fill", fill if layer == LOW else 0.0)
+		mat.set_shader_parameter("viewer_up", up)
 		mat.set_shader_parameter("drift", -_drift[layer])
 		mat.set_shader_parameter("wind_axis", dir)
 		mat.set_shader_parameter("light_color", light)
@@ -125,6 +140,20 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 		mat.set_shader_parameter("light_dir", light_dir)
 		mat.set_shader_parameter("camera_above", 1.0 if camera_alt > altitude(layer) else 0.0)
 		mat.render_priority = order.find(layer)
+
+
+## The nearest any triangle's plane comes to the centre of a unit-sphere
+## mesh (its panels' deepest sag is 1 minus this).
+static func _min_plane_distance(mesh: ArrayMesh) -> float:
+	var arr := mesh.surface_get_arrays(0)
+	var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
+	var m := 1.0
+	for t in range(0, idx.size(), 3):
+		var a := v[idx[t]]
+		var n := (v[idx[t + 1]] - a).cross(v[idx[t + 2]] - a).normalized()
+		m = minf(m, absf(n.dot(a)))
+	return maxf(m, 0.5)
 
 
 ## Unit sphere as a cube-sphere of `res` quads per face edge, normals out.

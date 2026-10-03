@@ -137,6 +137,14 @@ look_leaf_shadow_m={
 "type": "float",
 "value": 15.0
 }
+look_shadow_reach_m={
+"type": "float",
+"value": 35.0
+}
+look_plant_far_shade={
+"type": "vec2",
+"value": Vector2(0.62, 0.8)
+}
 
 look_fog_color={
 "type": "vec3",

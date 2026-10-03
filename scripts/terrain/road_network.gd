@@ -483,6 +483,38 @@ static func can_route(p_map: PlanetData, p_rivers: RiverNetwork, a: Vector3, b: 
 	return not net._route(0, 1, centre, reach).is_empty()
 
 
+## The road the network would lay from `a` to `b` (its smoothed points),
+## or empty when none routes (the opening road's probe, World).
+static func route_pts(p_map: PlanetData, p_rivers: RiverNetwork, a: Vector3, b: Vector3) -> PackedVector3Array:
+	var keep := instance
+	var net := RoadNetwork.new(p_map, p_rivers)
+	instance = keep
+	net.nodes = [{"dir": a, "kind": "camp", "key": "probe:a"}, {"dir": b, "kind": "camp", "key": "probe:b"}]
+	var centre := (a + b).normalized()
+	var reach := CubeSphere.surface_distance_m(a, b) * 0.6 + 2500.0
+	var link := net._route(0, 1, centre, reach)
+	return link.get("pts", PackedVector3Array())
+
+
+## Real minutes to walk `pts` at `speed_mps` on the flat, slowed and
+## sped by the slope as the player is (PlanetPlayer.slope_pace, design
+## §CR.5): the opening road's length in walking minutes (§CY.1).
+static func walk_minutes(p_map: PlanetData, pts: PackedVector3Array, speed_mps: float, step_m := 20.0) -> float:
+	var total := length_m(pts)
+	if total <= 0.0 or speed_mps <= 0.0:
+		return 0.0
+	var n := maxi(1, int(ceil(total / step_m)))
+	var seg := total / n
+	var s := 0.0
+	var prev_h := p_map.terrain.elevation(pts[0], true)
+	for i in n:
+		var p := point_at(pts, seg * (i + 1))
+		var h := p_map.terrain.elevation(p, true)
+		s += seg / (speed_mps * maxf(PlanetPlayer.slope_pace((h - prev_h) / seg), 0.05))
+		prev_h = h
+	return s / 60.0
+
+
 # --- Routing ----------------------------------------------------------------------
 
 class _Lattice:

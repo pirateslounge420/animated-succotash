@@ -157,6 +157,12 @@ const MAGIC_DARKEN := 0.6
 ## sun does all the work; ambient is low and deep blue, which is all a
 ## shadow gets, so shadows read blue. Shadows are hard-edged shadow maps.
 static var LIGHT := Tuning.section("look", "light")
+## Overcast and storm decks (design 3 Oct §CX; look.json overcast): on
+## screen, lit over shade, and the storm's purple (R1a).
+static var OVERCAST: Dictionary = Tuning.section("look", "overcast")
+static var OVERCAST_LIT := Color(str(OVERCAST.get("deck_lit", "#6878C8")))
+static var OVERCAST_SHADE := Color(str(OVERCAST.get("deck_shade", "#06186C")))
+static var STORM_SKY := Color(str(OVERCAST.get("storm", "#5A1AA0")))
 ## The ambient floor (design 30 Sept §BD, look.json ambient_floor).
 static var FLOOR := Tuning.section("look", "ambient_floor")
 ## Where the player stands, for the sky's share there (main sets both).
@@ -360,6 +366,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var sun_col := _sun_color(sun_elevation_deg)
 	sun.light_color = sun_col
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
+	# Under a full deck the shadows fade but keep their hard edge (design
+	# 3 Oct §CX; look.json overcast.shadow_fade, Mike judges it).
+	sun.shadow_opacity = 1.0 - float(OVERCAST.get("shadow_fade", 0.7)) * smoothstep(0.65, 1.0, float(weather.get("cloud", 0.0)))
 	# Periwinkle (R1a: moonlit stone and snow read #8FA8FF), paler and
 	# greyer when the moon is low.
 	var moon_col := Color(0.7, 0.72, 0.92).lerp(MOONLIGHT, smoothstep(0.0, 25.0, moon_elevation_deg))
@@ -398,9 +407,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	horizon *= sky_gain
 	var storm := float(weather.get("storm", 0.0))
 	var cloud := float(weather.get("cloud", 0.0))
-	# Storms grey the day sky; at night they deepen it, still blue.
-	zenith = zenith.lerp(Color(0.45, 0.48, 0.55).lerp(Color(0.07, 0.1, 0.4), night), storm * 0.7)
-	mid = mid.lerp(Color(0.5, 0.53, 0.6).lerp(Color(0.08, 0.12, 0.45), night), storm * 0.6)
+	# An overcast sky looks overcast (design 3 Oct §CX), and never grey
+	# (LOOK_REFERENCE R3): under a full deck the dome goes to the deck's
+	# indigo, under a storm to its purple (look.json overcast; first
+	# guesses, Mike judges them); at night they deepen it, still blue.
+	var over := smoothstep(0.5, 0.95, cloud)
+	zenith = zenith.lerp(OVERCAST_SHADE.lerp(Color(0.07, 0.1, 0.4), night), over * 0.55)
+	mid = mid.lerp(OVERCAST_LIT.lerp(Color(0.08, 0.12, 0.45), night), over * 0.45)
+	zenith = zenith.lerp(STORM_SKY.darkened(0.35).lerp(Color(0.07, 0.1, 0.4), night), storm * 0.7)
+	mid = mid.lerp(STORM_SKY.lerp(Color(0.08, 0.12, 0.45), night), storm * 0.6)
 	# Dusk and dawn: the gradient hugs the horizon, so the warm band stays
 	# low and the sky above goes ultramarine.
 	var warm_band := smoothstep(-12.0, -4.0, sun_elevation_deg) * (1.0 - smoothstep(4.0, 12.0, sun_elevation_deg))
@@ -450,9 +465,13 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var painted_lit := CLOUD_NIGHT_SHADE.lerp(CLOUD_NIGHT_LIT, lift).lerp(CLOUD_LIT, daylight)
 	var painted_shade := CLOUD_NIGHT_SHADE.lerp(CLOUD_NIGHT_LIT, lift * 0.35).lerp(CLOUD_SHADE, daylight)
 	painted_lit = painted_lit.lerp(BANDS[0], sunset * 0.9)
-	painted_lit = painted_lit.lerp(Color(0.62, 0.65, 0.72) * (0.3 + 0.7 * daylight), storm * 0.7)
+	# Overcast: the deck's indigo, a lighter lit edge over a deep shade;
+	# storms: their purple (design 3 Oct §CX; never the old grey).
+	painted_lit = painted_lit.lerp(OVERCAST_LIT * (0.3 + 0.7 * daylight), over * 0.8)
+	painted_lit = painted_lit.lerp(OVERCAST_LIT.lerp(STORM_SKY, 0.5) * (0.3 + 0.7 * daylight), storm * 0.7)
 	painted_shade = painted_shade.lerp(BANDS[1].lerp(BANDS[2], 0.5), sunset * 0.85)
-	painted_shade = painted_shade.lerp(Color(0.3, 0.32, 0.38) * (0.3 + 0.7 * daylight), storm * 0.6)
+	painted_shade = painted_shade.lerp(OVERCAST_SHADE * (0.4 + 0.6 * daylight), over * 0.8)
+	painted_shade = painted_shade.lerp(STORM_SKY.darkened(0.45) * (0.4 + 0.6 * daylight), storm * 0.6)
 	cloud_light = _scene_color(painted_lit)
 	cloud_shade = _scene_color(painted_shade)
 	sky_material.set_shader_parameter("cloud_lit", cloud_light)
@@ -504,6 +523,13 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	environment.fog_density = density
 	Look.apply({
 		"look_leaf_shadow_m": float(LIGHT.get("leaf_shadow_m", 1e6)),
+		# Past the sun's shadow map (Mike's 3 Oct play: far wood glowed and
+		# turned navy as he walked up), plants take a stand-in shade like the
+		# ground's: wood and leaves multiplied by these (light.plant_far_shade,
+		# x wood, y leaves; Claude Code's first guess), eased in over the
+		# shadow map's last fifth, and back-lit leaves stop glowing.
+		"look_shadow_reach_m": float((LIGHT.get("day_shadows_near", {}) as Dictionary).get("max_m", LIGHT.get("shadow_max_m", 35.0))) if day_shadows() else 0.0,
+		"look_plant_far_shade": _plant_far_shade(),
 		"look_mist_density": mist,
 		"look_mist_scale_m": float(MIST.get("scale_m", 6.0)),
 		"look_fog_start_m": float(RETRO_FOG.get("start_m", 200.0)),
@@ -700,6 +726,11 @@ static func _rake(dir: Vector3, up: Vector3, north: Vector3) -> Vector3:
 		return dir
 	h = h.normalized()
 	return (h * cos(el2) + up * sin(el2)).normalized()
+
+
+func _plant_far_shade() -> Vector2:
+	var v = LIGHT.get("plant_far_shade", [0.62, 0.8])
+	return Vector2(float(v[0]), float(v[1])) if v is Array and (v as Array).size() >= 2 else Vector2(0.62, 0.8)
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

@@ -97,6 +97,22 @@ var bark_tile_m := 0.4
 var leaf_m := 0.1
 var leaf_type := ""
 var leaf_texture := ""
+## The leaf block's shape (PLANT_SCHEMA §2): outline (ovate, sagittate,
+## cordate, peltate...), base, apex, length over width (aspect) and the
+## size range in meters (size_cm). The giant herbs build their blades from
+## these (PlantMeshes, Mike's 3 Oct play).
+var leaf_outline := ""
+var leaf_base := ""
+var leaf_apex := ""
+var leaf_aspect := 0.0
+var leaf_size_m := Vector2.ZERO
+## Where one whole leaf sits in its leaf tile (atlas_species.json
+## leaf_frame, tools/look/make_plant_tiles.py, the broad blades only):
+## [u0, v0, u1, v1, v where the stalk meets it]; empty for the rest.
+var leaf_frame := PackedFloat32Array()
+## The leaf stalk's colour (appearance.petiole.base), alpha 0 when the
+## entry gives none.
+var petiole_color := Color(0, 0, 0, 0)
 ## Its wood's program (the entry's `architecture` block, PLANT_SCHEMA §8,
 ## TREE_ARCHITECTURE.md §5: model, habit, orders, branch angles, taper,
 ## sinuosity, fork, buttress, lean, live crown ratio, self-pruning, dead
