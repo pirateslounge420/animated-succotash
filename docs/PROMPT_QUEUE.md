@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–31. Next up: 32.
+Built so far: 01–32. Next up: 33.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -61,7 +61,7 @@ Built so far: 01–31. Next up: 32.
 | 29 | §DZ | The hewn temple, found from above | built 40ca950 |
 | 30 | §DT | The hanging gardens | built 74439f5 |
 | 31 | §DU | The ruined abbey | built 40a3af1 |
-| 32 | §DW | The temple park | todo |
+| 32 | §DW | The temple park | built 6de4562 |
 | 33 | §DY | The pillar shrines | todo |
 | 34 | §DV | The old colonnade | todo |
 | 35 | §DX | The columns: columnar basalt as a nest | todo |
@@ -654,7 +654,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 32 — The temple park — §DW
 
-**Status:** todo
+**Status:** built 6de4562
 **Mike sees:** Brick platforms, rows of roofless columns, stupas and ribbed towers, seated figures in niches, and lotus ponds with the towers reflected in them, all under open sky.
 
 ```text
