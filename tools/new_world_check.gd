@@ -69,7 +69,7 @@ func _run() -> void:
 	ok(a.seed > 0 and a.seed != 42, "a fresh world rolled its own seed (%d)" % a.seed)
 	ok(WorldSave.last_seed() == a.seed, "the last-world pointer names it")
 	ok(a.log.begins_with("World %d" % a.seed), "the log opens with the world's name (%s)" % a.log)
-	ok(str(a.now).begins_with("Day 1 ") and a.log.contains("— day 1"), "a world opens on Day 1 (%s; design 1 Oct §CG)" % a.now)
+	ok(str(a.now).begins_with("Y1 D1 ") and a.log.contains("— day 1"), "a world opens on Day 1 (%s; design 1 Oct §CG)" % a.now)
 	ok(a.first_day != null, "its save keeps its first local day (%s)" % str(a.first_day))
 	WorldSave.flush(0.0, true)
 	ok(WorldSave.exists(a.seed), "its save exists after the flush")

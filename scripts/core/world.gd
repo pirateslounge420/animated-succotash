@@ -233,11 +233,41 @@ func local_clock(d: Vector3) -> Vector2:
 	return Vector2(maxf(c.x - first_local_day + 1.0, 1.0), c.y)
 
 
-## "Day 3 · 14:05" at `d` (the HUD line and the log's stamps).
+## The calendar at day count `count` (local_clock's x, 1 on the world's
+## first day): {"day": 1..year_days, "year": 1..} (design 3 Oct §DD,
+## hud.json calendar). Day 365 is the last of Year 1, day 366 Day 1 of
+## Year 2.
+static func calendar(count: int) -> Dictionary:
+	var yd := maxi(int(round(DayCycle.year_days())), 1)
+	var n := maxi(count, 1) - 1
+	return {"day": n % yd + 1, "year": n / yd + 1}
+
+
+## `fmt` (hud.json calendar's time_format or log_stamp) filled in for day
+## count `count` at `hours` (0-24): {day}, {year}, {hh}, {mm}.
+static func calendar_text(fmt: String, count: int, hours: float) -> String:
+	var cal := calendar(count)
+	var m := int(floor(hours * 60.0))
+	return fmt.format({"day": cal.day, "year": cal.year,
+		"hh": "%02d" % ((m / 60) % 24), "mm": "%02d" % (m % 60)})
+
+
+static func _cal_fmt(key: String, fallback: String) -> String:
+	return str((Tuning.section("hud", "calendar") as Dictionary).get(key, fallback))
+
+
+## "Day 3 of Year 1 · 14:05" at `d`: the HUD's time line (hud.json
+## calendar.time_format, then the hour).
 func clock_text(d: Vector3) -> String:
 	var c := local_clock(d)
 	var m := int(floor(c.y * 60.0))
-	return "Day %d · %02d:%02d" % [int(c.x), (m / 60) % 24, m % 60]
+	return "%s · %02d:%02d" % [calendar_text(_cal_fmt("time_format", "Day {day} of Year {year}"), int(c.x), c.y), (m / 60) % 24, m % 60]
+
+
+## "Y1 D3 14:05" at `d`: the log's stamp (hud.json calendar.log_stamp).
+func stamp_text(d: Vector3) -> String:
+	var c := local_clock(d)
+	return calendar_text(_cal_fmt("log_stamp", "Y{year} D{day} {hh}:{mm}"), int(c.x), c.y)
 
 
 func generate(p_seed: int) -> void:

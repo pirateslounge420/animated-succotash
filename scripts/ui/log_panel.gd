@@ -94,10 +94,15 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
-## "Day 3 · 03:40" -> ["Day 3", "03:40"].
+## "Y1 D3 03:40" -> ["Y1 D3", "03:40"] (hud.json calendar.log_stamp,
+## §DD): the day part heads its lines, the time stamps each one. A save's
+## older stamps ("Day 3 · 03:40") split the same way.
 static func _split_stamp(t: String) -> Array:
 	var parts := t.split(" · ")
-	return [parts[0], parts[1]] if parts.size() >= 2 else ["", t]
+	if parts.size() >= 2:
+		return [parts[0], parts[1]]
+	var cut := t.rfind(" ")
+	return [t.substr(0, cut), t.substr(cut + 1)] if cut > 0 else ["", t]
 
 
 func _draw() -> void:

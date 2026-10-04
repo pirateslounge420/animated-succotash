@@ -4,7 +4,7 @@ class_name GameLog
 ## add a line: deaths with their cause, the torch lit / guttering / out, a
 ## fire's states, the hearth set, a camp found, a biome first entered,
 ## dawn and dusk, the player's own notes. `now_text` is set by main each
-## frame ("Day 15 · 03:40"). Persists per world (LogPanel saves it).
+## frame ("Y1 D15 03:40", hud.json calendar.log_stamp, §DD). Persists per world (LogPanel saves it).
 
 static var entries: Array[Dictionary] = []
 static var now_text := ""

@@ -48,6 +48,12 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 @export var moon_max_energy := 1.1
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
+## The moon's light by its lit share (design §DD, look.json moon_nights).
+static var MOON_CURVE := float(Tuning.section("look", "moon_nights").get("curve_exponent", 3.3))
+## How much of the night the moon lifts (its light, the ambient's moon_add
+## and the sky's lift; design §DD, moon_nights.lift_scale): tuned so a
+## 02:00 frame under a full moon high measures full_mean_luma.
+static var MOON_LIFT := float(Tuning.section("look", "moon_nights").get("lift_scale", 1.0))
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
 var magic := 0.0
 
@@ -339,7 +345,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	daylight = smoothstep(-6.0, 10.0, sun_elevation_deg)
 	# Steep, like the real moon (opposition surge): a half moon gives about
 	# a tenth of full moonlight; a floor keeps thin phases faintly lit.
-	moonlight = moon_up * maxf(pow(illumination, 3.3), MOON_FLOOR)
+	# (design §DD: look.json moon_nights.curve_exponent, the one place the
+	# curve lives: MOON_FLOOR + (1 - MOON_FLOOR) x lit^curve_exponent.)
+	moonlight = moon_up * (MOON_FLOOR + (1.0 - MOON_FLOOR) * pow(illumination, MOON_CURVE))
 	var dark_magic := magic * (1.0 - daylight)
 
 	# The day-shadow A/B: applied when it changes, so tools that switch the
@@ -374,7 +382,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var moon_col := Color(0.7, 0.72, 0.92).lerp(MOONLIGHT, smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
-	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
+	moon.light_energy = moon_max_energy * MOON_LIFT * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
 	# Down in a delve (design 1 Oct §CJ, Delves.underground): full dark,
 	# neither sun nor moon reaches.
 	sun.light_energy *= 1.0 - Delves.underground
@@ -391,7 +399,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var mid := _mid.sample(t)
 	var horizon := _horizon.sample(t)
 	var night := 1.0 - daylight
-	var lift := moonlight * night
+	var lift := moonlight * night * MOON_LIFT
 	# A full moon high up lifts the night sky by the moonlit palette's
 	# difference from the moonless one (#050938 toward #0000C0 overhead,
 	# on screen); a thin or low moon by its share (moonlight).

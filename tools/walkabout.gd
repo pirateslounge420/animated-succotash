@@ -22,6 +22,7 @@ extends SceneTree
 ## 1.1 m/s). SEASON=autumn walks in that season (ten days into it).
 ## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
 ## SITES=lake adds the nearest lake's shore, looking over the water.
+## MOON=full (new, first_quarter) walks on the nearest night with that moon.
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -413,6 +414,20 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	var lon := CubeSphere.longitude(d)
 	var lat := CubeSphere.latitude(d)
 	var base: float = floor(spawn_days) + 1.0
+	# MOON=full, new or first_quarter: the night nearest after the spawn with
+	# that moon (design §DD's measured nights).
+	if OS.get_environment("MOON") != "":
+		var want_m := OS.get_environment("MOON")
+		var best_k := 0
+		var best_s := INF
+		for k in 31:
+			var il := Astro.moon_illumination(base + k)
+			var waxing := Astro.moon_illumination(base + k + 0.5) > il
+			var score: float = {"full": 1.0 - il, "new": il}.get(want_m, absf(il - 0.5) + (0.0 if waxing else 1.0))
+			if score < best_s:
+				best_s = score
+				best_k = k
+		base += best_k
 	# SEASON=autumn (or spring, summer, winter): the first day after the
 	# spawn that sits in the middle of that season here (design §DA's
 	# autumn road).

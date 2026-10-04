@@ -102,6 +102,18 @@ func fire_distance() -> float:
 	return best
 
 
+## The meter's fill per minute in the dark, by the moonlight on you (0-1,
+## SkySystem.moonlight: the phase and whether the moon is up): from
+## fill_per_min_dark under no moon to fill_per_min_moon under a full one
+## high (design 3 Oct §DD, dread.json full_moon.moon_fill_by_light).
+static func fill_rate(moonlight: float) -> float:
+	var dark := float(M.get("fill_per_min_dark", 0.2))
+	var moon := float(M.get("fill_per_min_moon", 0.14))
+	if not bool((D.get("full_moon", {}) as Dictionary).get("moon_fill_by_light", true)):
+		return moon if moonlight > 0.3 else dark
+	return lerpf(dark, moon, clampf(moonlight, 0.0, 1.0))
+
+
 func light_on_you() -> bool:
 	return not force_dark and Torch.light_at(player.global_position) > 0.05
 
@@ -144,10 +156,8 @@ func update_dread(delta: float) -> void:
 		rate = 0.0
 	elif light_on_you():
 		rate = float(M.get("fill_per_min_torch", 0.07))
-	elif sky.moonlight > 0.3 and not force_dark:
-		rate = float(M.get("fill_per_min_moon", 0.14))
 	else:
-		rate = float(M.get("fill_per_min_dark", 0.2))
+		rate = fill_rate(0.0 if force_dark else sky.moonlight)
 	# Near an overrun ruin at night, outside a fire, it fills faster (§CN).
 	if rate > 0.0:
 		rate *= Overrun.dread_scale(player.global_position)

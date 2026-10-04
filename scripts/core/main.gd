@@ -403,9 +403,9 @@ func open_clock(spawn_dir: Vector3) -> void:
 		WorldSave.mark_dirty()
 
 
-## The log's clock stamp at `d` ("Day 3 · 03:40", World.clock_text).
+## The log's clock stamp at `d` ("Y1 D3 03:40", World.stamp_text, §DD).
 func _now_text(d: Vector3) -> String:
-	return world.clock_text(d)
+	return world.stamp_text(d)
 
 
 ## Start a new world (design 1 Oct §CB; the settings panel's "New world"
@@ -614,7 +614,7 @@ func _process(delta: float) -> void:
 	# One clock (design §CG): the face, the log's stamps and the HUD line
 	# read the sky's time here.
 	var clock_h: float = world.local_clock(d).y
-	GameLog.now_text = world.clock_text(d)
+	GameLog.now_text = world.stamp_text(d)
 	sound_bed.update_bed(delta, weather, clock_h)
 	_log_events()
 	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)

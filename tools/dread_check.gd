@@ -86,7 +86,7 @@ func _initialize() -> void:
 	key(KEY_ENTER)
 	await frames(2)
 	var last: Dictionary = GameLog.entries[GameLog.entries.size() - 1]
-	ok(last.kind == "note" and last.text == "wet night" and str(last.t).begins_with("Day "), "Enter keeps the note, stamped (%s · %s)" % [last.t, last.text])
+	ok(last.kind == "note" and last.text == "wet night" and str(last.t).begins_with("Y"), "Enter keeps the note, stamped (%s · %s)" % [last.t, last.text])
 	key(KEY_ESCAPE)
 	await frames(2)
 	ok(not main.log_panel.visible and not player.typing, "Esc closes it")
