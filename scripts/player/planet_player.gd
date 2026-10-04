@@ -619,6 +619,10 @@ func shake(amount: float) -> void:
 func set_view(pitch: float, yaw: float) -> void:
 	_pitch = clampf(pitch, -PITCH_MAX, PITCH_MAX)
 	_yaw = yaw
+	# Turn the view now too (the tools hold physics still; in play the
+	# next physics frame sets the same).
+	if _spring != null:
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(_heading.rotated(up, _yaw)), 0.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:

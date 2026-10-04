@@ -111,6 +111,11 @@ func _run() -> void:
 	if quick:
 		hours = [hours[0]]
 	var facings := 1 if quick else int(W.get("facings", 4))
+	# HOURS=9,18.6: clear solar hours instead (design §DB's flare walk).
+	if OS.get_environment("HOURS") != "":
+		hours = []
+		for hs in OS.get_environment("HOURS").split(","):
+			hours.append({"solar_h": float(hs), "weather": "clear"})
 	# The sites.
 	var sites: Array = []
 	var spawn_days: float = world.days
@@ -451,13 +456,36 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			var tp: Vector3 = site.pitch_to
 			var to: Vector3 = world.to_scene(tp, PlanetConst.RADIUS_M + world.planet.terrain.elevation(tp, true)) - player.global_position
 			pitch0 = clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)) * 0.7, -0.8, 0.8)
+		# FACE_SUN=1: the first facing looks at the sun (design §DB).
+		var yaw0 := 0.0
+		if OS.get_environment("FACE_SUN") == "1":
+			for i in 6:
+				await process_frame
+			var sd: Vector3 = main.sky.sun_dir
+			var best := -2.0
+			for j in 36:
+				var yw := TAU * j / 36.0
+				player.set_view(0.0, yw)
+				# (set_view takes on the next frame.)
+				await process_frame
+				var fwd := -player.camera().global_basis.z
+				var flat := (fwd - player.up * fwd.dot(player.up)).normalized()
+				var sflat := (sd - player.up * sd.dot(player.up)).normalized()
+				if flat.dot(sflat) > best:
+					best = flat.dot(sflat)
+					yaw0 = yw
+			pitch0 = clampf(asin(clampf(sd.dot(player.up), -1.0, 1.0)) * 0.85, -0.2, 1.2)
 		for k in facings:
-			var yaw := TAU * k / facings
+			var yaw := TAU * k / facings + yaw0
 			for i in (12 if k == 0 else 6):
 				player.set_view(pitch0 if k == 0 else 0.0, yaw)
 				main.hud._readout_timer = 0.0
 				await process_frame
 			var img := get_root().get_texture().get_image()
+			if OS.get_environment("FACE_SUN") == "1" and k == 0 and main.get("flare") != null:
+				var fl := "%s %02dh: the flare at %.2f%s" % [site.name, int(hour), float(main.flare.alpha), (" (" + str(main.flare.why) + ")") if str(main.flare.why) != "" else ""]
+				print("[flare] " + fl)
+				lines.append("   " + fl)
 			var solar := fposmod(Astro.time_of_day(world.days) + lon / TAU, 1.0) * 24.0
 			var fname := "%s_%02dh_f%d.png" % [site.name, int(round(solar)), k]
 			img.save_png(ProjectSettings.globalize_path(OUT_DIR.path_join(str(sd)).path_join(fname)))

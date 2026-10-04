@@ -32,6 +32,8 @@ var litter: LitterField
 ## (design §DA, Wind II).
 var wind_litter: WindLitter
 var wind_crowns: WindCrowns
+## The sun's flare when you look at it (design §DB).
+var flare: LensFlare
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
@@ -320,6 +322,9 @@ func _on_planet_ready() -> void:
 	landmarks.name = "Landmarks"
 	add_child(landmarks)
 	landmarks.setup(world, chunks, player, sky, post)
+	flare = LensFlare.new()
+	flare.name = "LensFlare"
+	add_child(flare)
 	night_accents = NightAccents.new()
 	night_accents.name = "NightAccents"
 	add_child(night_accents)
@@ -500,6 +505,8 @@ func _process(delta: float) -> void:
 	wind_crowns.update_crowns(delta)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
+	# The sun's flare (§DB): drawn into the frame under the grade.
+	flare.step(cam, sky.sun_dir, sky.sun_elevation_deg, Wind.cover, Wind.cloud_shade(player.global_position), Delves.underground > 0.5, delta)
 	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))
 	Campfire.night = 1.0 - sky.daylight
 	# The weather the hearths' smoke reads (§CV, Smoke): the wind and rain
