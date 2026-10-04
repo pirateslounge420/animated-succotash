@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–35. Next up: 36.
+Built so far: 01–36. Next up: none queued.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -65,6 +65,7 @@ Built so far: 01–35. Next up: 36.
 | 33 | §DY | The pillar shrines | built fc29d06 |
 | 34 | §DV | The old colonnade | built a4711a9 |
 | 35 | §DX | The columns: columnar basalt as a nest | built 21ecf1b |
+| 36 | §EA | Three hits, no bar, "Good night" | built 6c08095 |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -720,7 +721,7 @@ CHECK (tools/basalt_check.gd, headless): on seed 7731 every columnar basalt site
 
 ## 36 — Three hits, no bar, "Good night" — §EA
 
-**Status:** todo
+**Status:** built 6c08095
 **Mike sees:** A creature hits you and the edges of the screen darken; a second hit and your heart pounds; a third and the dark closes in, "Good night" in red, and you wake at a fire with folk.
 
 ```text
