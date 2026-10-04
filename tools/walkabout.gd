@@ -512,6 +512,9 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				main.hud._readout_timer = 0.0
 				await process_frame
 			var img := get_root().get_texture().get_image()
+			if k == 0 and main.get("day_accents") != null:
+				var dac: DayAccents = main.day_accents
+				print("[butterflies] %s %02dh: %d (%s)" % [site.name, int(hour), dac.flies.size(), "on" if bool(dac.gate_state.get("ok", false)) else str(dac.gate_state.get("why", ""))])
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])

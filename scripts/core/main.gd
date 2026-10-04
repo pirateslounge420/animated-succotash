@@ -64,6 +64,7 @@ var delves: Delves
 var post: PostGrade
 var rain_overlay: RainOverlay
 var night_accents: NightAccents
+var day_accents: DayAccents
 ## The local ground mean (m above the planet radius) for the valley fog.
 var _ground_mean := INF
 var _ground_t := 0.0
@@ -338,6 +339,11 @@ func _on_planet_ready() -> void:
 	night_accents.name = "NightAccents"
 	add_child(night_accents)
 	night_accents.setup(world, chunks, landmarks, sky, player)
+	# Butterflies by day (design 3 Oct §DC, data/day_accents.json).
+	day_accents = DayAccents.new()
+	day_accents.name = "DayAccents"
+	world.world_root.add_child(day_accents)
+	day_accents.setup(self)
 	camps = Camps.new()
 	camps.name = "Camps"
 	add_child(camps)

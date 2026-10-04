@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DC part 2: butterflies by day
+- **DayAccents** (`data/day_accents.json butterflies`), the day's counterpart of NightAccents (whose blue butterflies at the ruins stay as they are). Every half second, all must hold:
+  - it is day (daylight at or over night_accents' 0.35);
+  - it is 14–40 °C;
+  - you are not on snow.
+  
+  When they do, the herbs and shrubs within 30 m whose sky visibility is over 0.4 are the flowers. No species has a bloom state yet, so any herb or shrub by day stands in. 2–6 butterflies (more where there are more flowers) circle them 0.3–2.5 m up, each a two-frame pixel card (open, closed), drifting a little downwind. From 5.5 m/s of wind at you they land at their flower and stay still. At dusk, at night and when the gate fails they are freed.
+- **Colours** by the land's family: tropical, dry, cold, or temperate, a first sort by the biome's name until the species fill. Their material is lit by the scene, with no emission, and casts no shadow or light (R8).
+- **Checked:** `tools/day_accents_check.gd`, seed 7731, 0 fails:
+  - meadow cells were tried nearest the camp first; five of them (steppe and alpine meadow) carry no herb or shrub instances at all, and the sixth (alpine meadow, 44.23°N 157.94°E) had 37 flowers in the sun;
+  - there, at noon: 5 butterflies, all within 30 m, all flying;
+  - at 8 m/s: all 5 on the ground and still;
+  - at 02:00: none; under closed crowns (visibility 0.1): none; on a glacier at noon: none (snow);
+  - no emission.
+- **Walkabout** (harness frame, §CG; `SITES=at AT=44.230,157.944 HOURS=12 WIND=1`): five were flying, but at `size_m` 0.08 they don't read at 480 lines from where you stand. Flagged for Mike: `size_m` is the dial. The walkabout now prints `[butterflies]` per site.
+- **Flag:** many grassland cells hold no herb or shrub plants at all (the same gap as the prairie site noted before), so most meadows have no butterflies yet.
+- **Data:** `day_accents.json` is unmarked.
+
 ## 2026-10-04 — §DC part 1: shafts of sunlight, only when the air would show them
 - **The gate** (`ShaftField.gate`, every half second round you): all three must hold.
   - Direct sun: the sun above 2°, §CX's cover under 0.75, and no cloud shadow over you.
