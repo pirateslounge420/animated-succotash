@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–20. Next up: 21.
+Built so far: 01–21. Next up: 22.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -50,7 +50,7 @@ Built so far: 01–20. Next up: 21.
 | 18 | §DR | The temple city: roots over stone | built 1b7eacc |
 | 19 | §DP | The wandering fire: thirteen in the desert | built b545e71 |
 | 20 | §DQ | The old man on his ox | built c0fae2b |
-| 21 | §DS.1 | The long wall | todo |
+| 21 | §DS.1 | The long wall | built 8c59923 |
 | 22 | §DS.2 | The carved cliffs | todo |
 | 23 | §DS.4 | The cliff dwelling | todo |
 | 24 | §DS.6 | The brick city | todo |
@@ -469,7 +469,7 @@ CHECK (tools/ox_rider_check.gd, headless): exactly one rider on seed 7731, on a 
 
 ## 21 — The long wall — §DS.1
 
-**Status:** todo
+**Status:** built 8c59923
 **Mike sees:** A wall running over the ridges for miles with towers at intervals, broken in places, a road along its top.
 
 ```text
