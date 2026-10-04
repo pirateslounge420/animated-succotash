@@ -1,8 +1,8 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET \u2014 design \u00a7AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, \u00a7AA) AND whose spawn.biomes contains the biome key; no match \u2192 no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
+  "about": "[NOT WIRED YET — design §AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, §AA) AND whose spawn.biomes contains the biome key; no match → no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
   "fields": "base_m: side length range. tiers: receding steps (1 = smooth). face_deg: face angle. profile: smooth | step | talud_tablero | rounded_adobe | earth. stairs: number of grand stairs (0 = none). top: none | chapel_at_foot | temple_comb | twin_shrine | hall | shrine | post_circle. interior: none | corridor_chamber | top_room. material: palette key. cluster: single | single+satellite | field | plaza | avenue | terraces (cluster_n = how many). chance: share of that biome's ruins that are this style (replaces PYRAMID_CHANCE).",
-  "climb": "Stair risers are ledges (\u00a70). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants)."
+  "climb": "Stair risers are ledges (§0). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants)."
  },
  "styles": {
   "true_pyramid": {
@@ -264,10 +264,52 @@
     ]
    },
    "chance": 0.1
+  },
+  "lighthouse": {
+   "source": "Pre-glass coastal light towers (Pharos of Alexandria, the Tower of Hercules, medieval Mediterranean fire towers)",
+   "base_m": [
+    6,
+    10
+   ],
+   "height_m": [
+    14,
+    26
+   ],
+   "tiers": 1,
+   "profile": "tapered_tower",
+   "stairs": "spiral_inside",
+   "top": "lantern_room",
+   "interior": "stairwell_den",
+   "material": "local_stone",
+   "cluster": "single+keeper_hut",
+   "spawn": {
+    "realm": [
+     "any"
+    ],
+    "where": "coast_headland",
+    "needs": [
+     "sea_view",
+     "cliff_or_rise"
+    ]
+   },
+   "chance": 0.4,
+   "hearth": {
+    "at": "lantern_room",
+    "kind": "brazier",
+    "beam": "steady",
+    "visible_from_m": 6000,
+    "gust_flicker": true
+   },
+   "den": "stairwell",
+   "approach": "coast_road_clifftop_straight",
+   "restore_brings": [
+    "headland_camp"
+   ],
+   "_help": "[NOT WIRED YET — design §DN] Design 3 Oct §DN (Mike): a lighthouse on the coast. The lamp room is the ruin's hearth, a steady coal-fire brazier (no sweeping beam), one warm point on the headland seen from the far end of the coast road; dark means the stairwell is a den to clear before you can carry fire up and relight it. The §DM straight approach runs along the cliff top."
   }
  },
  "overgrowth": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] A ruin wears its place (Mike, 3 Oct by voice: \"different mosses and plants and vines and stuff like overgrowing them\"; \"just dressing for now\"). Dressing only: nothing to clear, no mechanic. What grows on it comes from the plants that really grow there (the community of the place, \u00a7CS; the biome gate \u00a7CA; the vines \u00a7CE; a nest's own plants \u00a7CM): moss on the stones, ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall tops, and lichen painted into the stone's own tile (look R9: detail in the albedo). by_moisture: how much of each by the place's moisture (the climate's 0-1), as rows of the columns; between rows they blend. shade_side_scale: the side away from the sun (north in the northern hemisphere, south in the southern) carries this much more moss and fern, as real walls do. age: older stone carries more (a monument against a camp's remains, \u00a7CK). cold_mean_c: where the year's mean is below this, only lichen and moss. Never a species the place can't grow: a desert ruin is nearly bare, a cloud-forest ruin green to the cornice. With \u00a7BQ's signatures and \u00a7CU's no-two-alike hearths, this is why two ruins of one kind are two places.",
+  "_help": "[NOT WIRED YET — design §DI] A ruin wears its place (Mike, 3 Oct by voice: \"different mosses and plants and vines and stuff like overgrowing them\"; \"just dressing for now\"). Dressing only: nothing to clear, no mechanic. What grows on it comes from the plants that really grow there (the community of the place, §CS; the biome gate §CA; the vines §CE; a nest's own plants §CM): moss on the stones, ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall tops, and lichen painted into the stone's own tile (look R9: detail in the albedo). by_moisture: how much of each by the place's moisture (the climate's 0-1), as rows of the columns; between rows they blend. shade_side_scale: the side away from the sun (north in the northern hemisphere, south in the southern) carries this much more moss and fern, as real walls do. age: older stone carries more (a monument against a camp's remains, §CK). cold_mean_c: where the year's mean is below this, only lichen and moss. Never a species the place can't grow: a desert ruin is nearly bare, a cloud-forest ruin green to the cornice. With §BQ's signatures and §CU's no-two-alike hearths, this is why two ruins of one kind are two places.",
   "columns": [
    "moisture",
    "moss",
@@ -326,7 +368,7 @@
   "cold_mean_c": 0.0
  },
  "haunt": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, \u00a7CJ); share: of those, how many are. A ghost is the shared cloaked rig (\u00a70) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (\u00a7CU): \u00a7BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (\u00a7BQ: the ending stays unnamed).",
+  "_help": "[NOT WIRED YET — design §DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, §CJ); share: of those, how many are. A ghost is the shared cloaked rig (§0) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (§CU): §BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (§BQ: the ending stays unnamed).",
   "kinds": [
    "GRAVEYARD",
    "BARROW",

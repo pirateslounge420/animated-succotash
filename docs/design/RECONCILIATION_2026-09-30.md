@@ -2885,3 +2885,23 @@ Data: `roads.json → network.hard_max_grade`, `grades`, `holders`, `holloway`, 
 **Engine order:** 1 and 2 first (the bug), then 3–5 on the road's build, then 6 (the packs),
 then 4's milestones and avenues. 7 waits for the cast. 8 is a tuning pass on `fuel.json` against
 the real clock. Mike plays and reports; no screenshots asked.
+
+## DN. The lighthouse: a hearth you can see from the far end of the coast — LOCKED (3 Oct, 19:37–19:40, Mike)
+
+Mike: *"another cool ruin idea i have is a lighthouse on the coast"*; the beam is *"prolly just a
+steady fire."* Builds on §CN (overrun ruins cleared by light), §CU, §CV (hearth visible from afar),
+§DI, §DM.5 (the straight approach). Data: `ruins.json → styles.lighthouse`. Not built.
+
+1. **A coastal ruin type**: a tapered stone tower, 14–26 m, on a headland or cliff with a sea
+   view, a keeper's hut at its foot, a spiral stair inside. Pre-glass: the model is the old
+   fire towers (Pharos, the Tower of Hercules), not a lensed lamp.
+2. **The lamp room is the hearth.** A coal-fire brazier in a lantern room with open sides, a
+   STEADY fire (no sweeping beam), flickering only when the wind gusts through (§DA). Lit, it is
+   one warm point on a dark headland seen from ~6 km along the coast and from the water, so
+   at night it is a mark to steer by and it says somebody keeps it. Dark, it says the opposite.
+3. **The stairwell is the den.** A dark lighthouse is overrun (§CN); the climb up the spiral
+   with your torch is the clearing, and the fire you carry up is what relights the lamp.
+4. **The coast road's approach** (§DM.5) runs straight along the cliff top at it, kerbed, the
+   sea as one wall and the rise as the other.
+5. **Relighting brings the headland back**: a camp forms at the keeper's hut (§BL's rules) once
+   the lamp is lit.
