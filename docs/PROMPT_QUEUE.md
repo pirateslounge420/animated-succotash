@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–17. Next up: 18.
+Built so far: 01–18. Next up: 19.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -47,7 +47,7 @@ Built so far: 01–17. Next up: 18.
 | 15 | §DK | The shrine and the sealed scroll | built 5ef2aa4 |
 | 16 | §DL | Tomes: the I Ching first | built a4e6994 |
 | 17 | §DO | The crag fortress | built 5d88fbe |
-| 18 | §DR | The temple city: roots over stone | todo |
+| 18 | §DR | The temple city: roots over stone | built 1b7eacc |
 | 19 | §DP | The wandering fire: thirteen in the desert | todo |
 | 20 | §DQ | The old man on his ox | todo |
 | 21 | §DS.1 | The long wall | todo |
@@ -422,7 +422,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 18 — The temple city: roots over stone — §DR
 
-**Status:** todo
+**Status:** built 1b7eacc
 **Mike sees:** Galleries of square columns, tiered towers with faces, a moat, courtyards of tumbled blocks, and pale trees standing on the gallery roofs with their roots poured over the doorways.
 
 ```text
