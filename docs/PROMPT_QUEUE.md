@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–28. Next up: 29.
+Built so far: 01–29. Next up: 30.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -58,7 +58,7 @@ Built so far: 01–28. Next up: 29.
 | 26 | §DS.5 | The terraced pueblo | built 373561d |
 | 27 | §DS.7 | The stone circle | built 51dcffb |
 | 28 | §DS | The tower house and the broch | built 0cb81c7 |
-| 29 | §DZ | The hewn temple, found from above | todo |
+| 29 | §DZ | The hewn temple, found from above | built 40ca950 |
 | 30 | §DT | The hanging gardens | todo |
 | 31 | §DU | The ruined abbey | todo |
 | 32 | §DW | The temple park | todo |
@@ -603,7 +603,7 @@ CHECK (tools/northern_styles_check.gd, headless): on seed 7731 every tower house
 
 ## 29 — The hewn temple, found from above — §DZ
 
-**Status:** todo
+**Status:** built 40ca950
 **Mike sees:** The road comes along a hilltop, the ground opens at your feet, and a whole temple stands below you in a pit of living rock, elephants carved round its base, halls dug into the walls.
 
 ```text
