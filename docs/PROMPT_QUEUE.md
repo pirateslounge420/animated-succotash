@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–26. Next up: 27.
+Built so far: 01–27. Next up: 28.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -56,7 +56,7 @@ Built so far: 01–26. Next up: 27.
 | 24 | §DS.6 | The brick city | built 6666f21 |
 | 25 | §DS.3 | The stone heads (and the oceania realm) | built b0965f2 |
 | 26 | §DS.5 | The terraced pueblo | built 373561d |
-| 27 | §DS.7 | The stone circle | todo |
+| 27 | §DS.7 | The stone circle | built 51dcffb |
 | 28 | §DS | The tower house and the broch | todo |
 | 29 | §DZ | The hewn temple, found from above | todo |
 | 30 | §DT | The hanging gardens | todo |
@@ -571,7 +571,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 27 — The stone circle — §DS.7
 
-**Status:** todo
+**Status:** built 51dcffb
 **Mike sees:** A ring of standing stones, some with lintels, on open grass or moor, with a ditch and bank round it.
 
 ```text
