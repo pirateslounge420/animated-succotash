@@ -278,7 +278,14 @@ static func plan(map: PlanetData, site: Dictionary) -> Dictionary:
 ## the way out (§CJ.4) is its door onto the terrace at the top of the
 ## outside stair. Delves.layout's shape, with "climbs" true.
 static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
-	var p := plan(map, site)
+	return shaft_layout(plan(map, site), site)
+
+
+## The climb up a shaft inside rock from plan `p` ({"g_f" the foot's floor,
+## "top_y" the top's, "zs0"/"zs1" the shaft's ends, "front_z" the rock's
+## front at the foot, "base_e"}): the crag fortress's, and the pillar
+## shrines' delve pillar (§DY).
+static func shaft_layout(p: Dictionary, site: Dictionary) -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "crag_delve"])
 	var g_f := float(p.g_f)

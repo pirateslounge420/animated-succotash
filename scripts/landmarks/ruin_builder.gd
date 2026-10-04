@@ -264,6 +264,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._abbey()
 		Ruins.Kind.TEMPLE_PARK:
 			b._temple_park()
+		Ruins.Kind.PILLAR_SHRINES:
+			b._pillar_shrines()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4566,7 +4568,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK, Ruins.Kind.PILLAR_SHRINES] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -6762,3 +6764,231 @@ func _pond(r: Rect2, fig: bool) -> void:
 	if fig:
 		var bank := Vector2(r.end.x + 2.0, c.y)
 		_root_tree_at(Vector3(bank.x, ground(bank.x, bank.y) + 0.1, bank.y), PI * 0.5, 1.2)
+
+
+# --- The pillar shrines (design 3 Oct §DY) ------------------------------------------
+
+const SHRINE_TILE := Color(0.22, 0.24, 0.3)
+const SHRINE_WALL := Color(0.6, 0.55, 0.47)
+const FIG_ROOT := Color(0.58, 0.53, 0.44)
+const PLANK := Color(0.36, 0.28, 0.2)
+
+
+## The pillar shrines (Monuments._pillar_shrines): the delve pillar at the
+## middle (its tiers of rock round the shaft, CragFortress's), the others
+## stacks of rough rock; a shrine on every top; stairs cut round the faces
+## of some (the only way up, §AU); the bridges by their spans; inside the
+## delve pillar the climb to its summit shrine.
+func _pillar_shrines() -> void:
+	palette = CRAG_ROCK
+	var lay: Dictionary = Delves.layout(map, site)
+	var p: Dictionary = lay.plan
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	_lod_m = float(site.footprint_m) + LOD_M
+	_lit_per_pixel = true
+	var north := CubeSphere.north(up)
+	var pole := Vector2(north.dot(ex), north.dot(ez)) * (1.0 if CubeSphere.latitude(up) >= 0.0 else -1.0)
+	pole = pole.normalized()
+	var zs0 := float(p.zs0)
+	var zs1 := float(p.zs1)
+	var g_f := float(p.g_f) - off
+	var top_y := float(p.top_y) - off
+	var tiers: Array = p.tiers
+	for k in tiers.size():
+		var t: Dictionary = tiers[k]
+		_crag_tier(t, float(t.y0) - off, float(t.y1) - off, zs0, zs1, k == 0, g_f, pole)
+	# The summit shrine's roof over the heart.
+	_shrine_roof(Vector3(0.0, top_y + Delves.H_HEART + Delves.SLAB, (zs0 + zs1) * 0.5), Vector2(2.0 * CragFortress.SHAFT_HX + 1.6, zs1 - zs0 + 2.2))
+	var pillars: Array = site.pillars
+	var tops: Array = site.tops
+	for i in range(1, pillars.size()):
+		var q: Array = pillars[i]
+		var c := Vector2(float(q[0]), float(q[1]))
+		var hs := float(q[2])
+		var ty := float(tops[i]) - off
+		_rock_pillar(c, hs, ty)
+		_small_shrine(Vector3(c.x, ty, c.y), hs, rng.randf() * TAU)
+		if bool(q[4]):
+			_cut_stair(c, hs, ty)
+	for b in site.bridges:
+		_pillar_bridge(int(b[0]), int(b[1]), str(b[2]), off)
+	# A camp on the valley floor, before the delve pillar's door.
+	_camp_spot = Vector3(-6.0, ground(-6.0, -PillarShrines.BASE_HS - 12.0), -PillarShrines.BASE_HS - 12.0)
+	shade = 0.0
+	_delve_from = _v.size()
+	plain = true
+	_crag_delve(lay, off)
+	plain = false
+	_delve_to = _v.size()
+	palette = CRAG_ROCK
+
+
+## The half width of pillar `i`'s top along `dir` (to its square's edge).
+func _pillar_reach(i: int, dir: Vector2) -> float:
+	var hs := CragFortress.TOP_HS if i == 0 else float((site.pillars as Array)[i][2])
+	return hs / maxf(absf(dir.x), absf(dir.y))
+
+
+## A pillar of rough rock at `c`, `hs` half wide, its top at `ty`: blocks
+## stacked a dozen metres at a time, a little this way and that, never
+## out past its faces (its stair goes round them).
+func _rock_pillar(c: Vector2, hs: float, ty: float) -> void:
+	var g := INF
+	for k in 5:
+		var q := c + Vector2(cos(k * TAU / 5.0), sin(k * TAU / 5.0)) * hs
+		g = minf(g, ground(q.x, q.y))
+	g = minf(g, ground(c.x, c.y)) - 2.0
+	var y := g
+	var k2 := 0
+	while y < ty - 0.05:
+		var seg := minf(rng.randf_range(9.0, 14.0), ty - y)
+		var sx := hs * 2.0 * rng.randf_range(0.86, 1.0)
+		var sz := hs * 2.0 * rng.randf_range(0.86, 1.0)
+		var j := Vector2(rng.randf_range(-1.0, 1.0) * (hs * 2.0 - sx) * 0.5, rng.randf_range(-1.0, 1.0) * (hs * 2.0 - sz) * 0.5)
+		var moss := 0.15 + 0.6 * float(y + seg > ty - 0.5)
+		_pbox(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.05, 0.05)), Vector3(c.x + j.x, y + seg * 0.5, c.y + j.y)), Vector3(sx, seg + 0.05, sz), CRAG_ROCK[k2 % CRAG_ROCK.size()].darkened(rng.randf_range(0.0, 0.1)), moss)
+		y += seg
+		k2 += 1
+	# The top, level, its turf.
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, ty - 0.3, c.y)), Vector3(hs * 2.0, 0.6, hs * 2.0), CRAG_ROCK[1], 0.85)
+
+
+## A small shrine on a pillar's top at `p`: a stone room, its door, its
+## hearth's place before it, a tiled roof with upturned eaves.
+func _small_shrine(p: Vector3, hs: float, rot: float) -> void:
+	var bs := Basis(Vector3.UP, rot)
+	var w := minf(hs * 0.9, 5.0)
+	var l := minf(hs * 1.1, 6.0)
+	var wh := 2.6
+	for f in 4:
+		var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var span := w if f % 2 == 0 else l
+		var depth := l if f % 2 == 0 else w
+		var c := n2 * (depth * 0.5 - 0.2)
+		var wb := bs * Basis(Vector3.UP, atan2(n2.x, n2.y))
+		if f == 0:
+			for sx: float in [-1.0, 1.0]:
+				var cc := c + Vector2(-n2.y, n2.x) * sx * (span * 0.25 + 0.35)
+				_pbox(Transform3D(wb, p + bs * Vector3(cc.x, wh * 0.5, cc.y)), Vector3(span * 0.5 - 0.7, wh, 0.4), SHRINE_WALL, 0.2)
+			_pbox(Transform3D(wb, p + bs * Vector3(c.x, wh - 0.3, c.y)), Vector3(1.6, 0.6, 0.4), SHRINE_WALL.darkened(0.06), 0.2)
+		else:
+			_pbox(Transform3D(wb, p + bs * Vector3(c.x, wh * 0.5, c.y)), Vector3(span, wh, 0.4), SHRINE_WALL, 0.2)
+	_shrine_roof(p + Vector3(0.0, wh, 0.0), Vector2(w + 1.4, l + 1.4), rot)
+
+
+## A tiled roof at `p` (its eaves' height), `size` (x, z) across: two
+## pitches, a ridge, the eaves' corners turned up.
+func _shrine_roof(p: Vector3, size: Vector2, rot := 0.0) -> void:
+	var bs := Basis(Vector3.UP, rot)
+	var pitch := 0.55
+	var half := size.x * 0.5
+	var rise := half * tan(pitch)
+	for sx: float in [-1.0, 1.0]:
+		var c := p + bs * Vector3(sx * half * 0.5, rise * 0.5, 0.0)
+		_pbox(Transform3D(bs * Basis(Vector3.BACK, -sx * pitch), c), Vector3(half / cos(pitch) + 0.4, 0.3, size.y), SHRINE_TILE, 0.3)
+	_pbox(Transform3D(bs, p + bs * Vector3(0.0, rise + 0.15, 0.0)), Vector3(0.5, 0.4, size.y + 0.6), SHRINE_TILE.darkened(0.15), 0.2)
+	for sx: float in [-1.0, 1.0]:
+		for sz: float in [-1.0, 1.0]:
+			_pbox(Transform3D(bs * Basis(Vector3.BACK, -sx * 0.6), p + bs * Vector3(sx * (half + 0.2), 0.15, sz * size.y * 0.5)), Vector3(0.9, 0.2, 0.4), SHRINE_TILE.darkened(0.1), 0.2)
+
+
+## A stair cut round the faces of the pillar at `c` (`hs` half wide) from
+## its foot to its top `ty`, its treads standing out of the rock, climbing
+## at a walkable grade, turning at each corner (the only way up, §AU).
+func _cut_stair(c: Vector2, hs: float, ty: float) -> void:
+	var r := hs + 0.8
+	var corners := [Vector2(-r, -r), Vector2(r, -r), Vector2(r, r), Vector2(-r, r)]
+	var y := ground(c.x - r, c.y - r)
+	var grade := 0.5
+	var k := 0
+	while y < ty - 0.1 and k < 80:
+		var a: Vector2 = c + corners[k % 4]
+		var b: Vector2 = c + corners[(k + 1) % 4]
+		var seg := a.distance_to(b)
+		var y1 := minf(y + seg * grade, ty)
+		var run := (y1 - y) / grade
+		var b2 := a + (b - a).normalized() * run
+		var dir := (b2 - a).normalized()
+		var bs := Basis(Vector3.UP, atan2(-dir.y, dir.x))
+		var steps := maxi(1, int(ceil((y1 - y) / 0.5)))
+		solid = false
+		for s2 in steps:
+			var t := (s2 + 0.5) / steps
+			var q := a.lerp(b2, t)
+			var sy := lerpf(y, y1, (s2 + 1.0) / steps)
+			_pbox(Transform3D(bs, Vector3(q.x, sy - 0.3, q.y)), Vector3(run / steps + 0.05, 0.6, 1.6), CRAG_ROCK[(s2 + k) % CRAG_ROCK.size()].darkened(0.12), 0.3)
+		solid = true
+		_dramp(Vector3(a.x, y, a.y), Vector3(b2.x, y1, b2.y), 1.6)
+		y = y1
+		k += 1
+
+
+## A bridge from pillar `i` to pillar `j` by its kind: a stone arch; a rope
+## and plank bridge hanging, or only its posts and abutments left; a living
+## root bridge of fig.
+func _pillar_bridge(i: int, j: int, kind: String, off: float) -> void:
+	var pl: Array = site.pillars
+	var ci := Vector2(float(pl[i][0]), float(pl[i][1]))
+	var cj := Vector2(float(pl[j][0]), float(pl[j][1]))
+	var dir := (cj - ci).normalized()
+	var a := ci + dir * _pillar_reach(i, dir)
+	var b := cj - dir * _pillar_reach(j, -dir)
+	var ya := float((site.tops as Array)[i]) - off
+	var yb := float((site.tops as Array)[j]) - off
+	var ln := a.distance_to(b)
+	var yaw := Basis(Vector3.UP, atan2(-dir.y, dir.x))
+	var tilt := atan2(yb - ya, ln)
+	match kind:
+		"arch":
+			var mid := (a + b) * 0.5
+			_pbox(Transform3D(yaw * Basis(Vector3.BACK, tilt), Vector3(mid.x, (ya + yb) * 0.5 - 0.3, mid.y)), Vector3(ln + 1.2, 0.6, 2.2), CRAG_ROCK[2], 0.6)
+			for s2: float in [-1.0, 1.0]:
+				var e := a if s2 < 0.0 else b
+				var ey := ya if s2 < 0.0 else yb
+				var low := Vector3(mid.x, (ya + yb) * 0.5 - ln * 0.3, mid.y)
+				var top3 := Vector3(e.x, ey - 0.6, e.y)
+				var cc := (low + top3) * 0.5
+				var d3 := top3 - low
+				var ang := atan2(d3.y, Vector2(d3.x, d3.z).length()) * (1.0 if s2 > 0.0 else -1.0)
+				_pbox(Transform3D(yaw * Basis(Vector3.BACK, ang), cc), Vector3(Vector2(d3.x, d3.z).length() + 0.5, 0.7, 2.0), CRAG_ROCK[3], 0.4)
+			for s2: float in [-1.0, 1.0]:
+				var pp := mid + Vector2(-dir.y, dir.x) * s2 * 1.0
+				_pbox(Transform3D(yaw * Basis(Vector3.BACK, tilt), Vector3(pp.x, (ya + yb) * 0.5 + 0.25, pp.y)), Vector3(ln, 0.5, 0.25), CRAG_ROCK[1], 0.5)
+		"rope", "rope_out", "root":
+			var standing := kind != "rope_out"
+			var root := kind == "root"
+			# The ends: abutments of stone, two posts each (none for roots).
+			for e2 in [[a, ya, 1.0], [b, yb, -1.0]]:
+				var ep: Vector2 = e2[0]
+				var ey: float = e2[1]
+				if not root:
+					_pbox(Transform3D(yaw, Vector3(ep.x, ey - 0.2, ep.y) + Vector3(-dir.x, 0.0, -dir.y) * float(e2[2]) * 1.0), Vector3(2.0, 0.6, 2.4), CRAG_ROCK[0], 0.5)
+					for s2: float in [-1.0, 1.0]:
+						var pp := ep + Vector2(-dir.y, dir.x) * s2 * 0.9
+						_pbox(Transform3D(yaw, Vector3(pp.x, ey + 0.8, pp.y)), Vector3(0.3, 1.6, 0.3), PLANK.darkened(0.2), 0.3)
+				else:
+					# The roots poured over the edge.
+					for s2: float in [-1.0, 1.0]:
+						var pp := ep + Vector2(-dir.y, dir.x) * s2 * 0.7 - dir * float(e2[2]) * 0.4
+						_pbox(Transform3D(yaw, Vector3(pp.x, ey - 3.0, pp.y)), Vector3(0.6, 6.0, 0.6), FIG_ROOT, 0.4)
+			if not standing:
+				# A frayed rope hanging down from one end.
+				_pbox(Transform3D(yaw, Vector3(a.x, ya - 4.0, a.y) + Vector3(dir.x, 0.0, dir.y) * 0.4), Vector3(0.12, 8.0, 0.12), PLANK.darkened(0.3), 0.0)
+				return
+			var sag := ln * (0.05 if root else 0.07)
+			var n := maxi(3, int(ln / 1.0))
+			for k in n:
+				var t0 := float(k) / n
+				var t1 := float(k + 1) / n
+				var p0 := a.lerp(b, t0)
+				var p1 := a.lerp(b, t1)
+				var y0 := lerpf(ya, yb, t0) - sag * 4.0 * t0 * (1.0 - t0)
+				var y1 := lerpf(ya, yb, t1) - sag * 4.0 * t1 * (1.0 - t1)
+				var mid := (p0 + p1) * 0.5
+				var segt := atan2(y1 - y0, p0.distance_to(p1))
+				_pbox(Transform3D(yaw * Basis(Vector3.BACK, segt), Vector3(mid.x, (y0 + y1) * 0.5 - 0.06, mid.y)), Vector3(p0.distance_to(p1) + 0.04, 0.12 if not root else 0.3, 1.6 if not root else 1.3), (PLANK if not root else FIG_ROOT).darkened(rng.randf_range(0.0, 0.15)), 0.3 if root else 0.1)
+				for s2: float in [-1.0, 1.0]:
+					var rp := mid + Vector2(-dir.y, dir.x) * s2 * (0.85 if not root else 0.75)
+					_pbox(Transform3D(yaw * Basis(Vector3.BACK, segt), Vector3(rp.x, (y0 + y1) * 0.5 + 0.9, rp.y)), Vector3(p0.distance_to(p1) + 0.04, 0.08 if not root else 0.3, 0.08 if not root else 0.3), (PLANK.darkened(0.3) if not root else FIG_ROOT), 0.2)

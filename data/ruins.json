@@ -1184,7 +1184,7 @@
     "fire_holder": "hearth_ring"
    },
    "camp": "canopy folk (\u00a7BT), who grow the root bridges back",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DY] A valley of pillars out of mist, a shrine on each top, bridges between them by span: stone arches stand, rope bridges are gone but for their posts (about one in six still hangs: first guess), living root bridges still grow (\u00a7BT). \u00a7BC's forks in three dimensions: you see the next shrine across a gap with no bridge, and the way is another pillar's stair or round through the mist. Bridges sway in the gust (\u00a7DA)."
+   "_help": "[built \u2014 design \u00a7DY: Monuments._pillar_shrines, PillarShrines, RuinBuilder._pillar_shrines] A valley of pillars, a shrine on each top, bridges between neighbours whose tops are near enough in height, by span: stone arches stand, rope bridges are gone but for their posts (about one in six still hangs: first guess), living root bridges where canopy folk lived (half the valleys). The valley's pillars stand within 12 m of one height (the plateau they were cut from). \u00a7BC's forks in three dimensions: you see the next shrine across a gap with no bridge, and the way is another pillar's cut stair or round through the valley floor. The delve climbs inside the middle pillar (CragFortress's shaft) to its summit shrine. The rope's sway in the gust (\u00a7DA) and the canopy folk's camp (\u00a7BT) are not built yet."
   },
   "hewn_temple": {
    "kind": "own",

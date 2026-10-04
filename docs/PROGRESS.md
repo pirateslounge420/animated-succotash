@@ -4,6 +4,34 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DY: the pillar shrines (prompt 33)
+- **The kind:** `Ruins.Kind.PILLAR_SHRINES`, "Pillar shrines" (`data/ruins.json` → `styles.pillar_shrines`, unmarked), placed by Monuments' sites pass, at most two a world.
+  - **New gate words:** `pillar_valley` (karst or sandstone), `pooled_mist` (a valley: the ground 200 m round stands 3 m or more above it) and `flat` as a never-word.
+  - Where: east_asia_temperate or indomalaya, in cloud forest, temperate rainforest, jungle or monsoon forest.
+- **The valley** (`Monuments._pillar_shrines`, `RuinBuilder._pillar_shrines`):
+  - 6–15 pillars standing within 12 m of one height (the plateau they were cut from, 62–138 m): the middle one the delve's, the rest stacks of rough rock with turf on top.
+  - A small stone shrine on every top: a door, and a tiled roof with upturned eaves.
+  - Stairs cut round the faces of about two in five (`_cut_stair`), treads standing out of the rock at a grade of 0.5, turning at each corner: the only way up.
+- **The bridges**, between each pillar and its two nearest where the tops are close enough in height, by span:
+  - Stone arches up to 15 m stand.
+  - Rope-and-plank bridges up to 60 m: about one in six hangs, sagging, with its rails. The rest are only their abutments and posts, a frayed rope hanging from one.
+  - Living root bridges of fig, 10–40 m, where canopy folk lived (half the valleys), the roots poured over the edges.
+  - From one top you see the next shrine across a gap with no bridge: the fork in the air.
+- **The delve:** the middle pillar is the crag fortress's tiers round a shaft. Its climb is `CragFortress.shaft_layout`, now split out of the crag's layout: in at the foot, 10–18 flights at landings (stores, a cistern), the summit shrine the heart under its tiled roof, out onto the summit.
+- **Also fixed:** `RuinSounds.parts_of` read a climbing delve's `well` (the stairwell record) as a place and errored at the crag fortress and here. It now finds the cistern landing.
+- **Check:** `tools/pillar_shrines_check.gd`, 0 fails on 7731, 8 and 2.
+  - 7731: one in cloud forest on karst, 9 pillars 110–125 m, 5 with stairs, 7 bridges (1 rope still hanging, 6 gone).
+  - Seed 2: two valleys, 13 and 15 pillars, with root bridges where canopy folk lived, and an arch.
+  - Across the three seeds, 2 of 13 rope bridges still hang (the data's share is 0.17). The delve climbs 10–18 flights. 35–47 k triangles against the castle's 78–82 k.
+  - Seed 5 has none.
+- **Walkabout** (`SEED=7731 SITES=pillar_shrines HOURS=8`, harness frame §CG): from the valley floor before the middle pillar's door, looking up. The pillars tower into the sky, one's cut stair zig-zagging up its face; drips and frogs at the cistern.
+- **Flags:**
+  - The pillars read as stacked blocks more than weathered rock. Rounder, more broken masses would read better.
+  - From the floor the shrines and bridges are out of sight, far above.
+  - The rope bridges don't sway in the gust yet (§DA).
+  - A camp here isn't canopy folk yet (§BT).
+  - The mist pooling is the look's own valley mist, not anything of the site's.
+
 ## 2026-10-04 — §DW: the temple park (prompt 32), and the monuments pass no longer runs inside itself
 - **The kind:** `Ruins.Kind.TEMPLE_PARK`, "Temple park" (`data/ruins.json` → `styles.temple_park`, unmarked), placed by Monuments' sites pass, at most two a world.
   - **New gate words:** `still_water` (a lake or a wetland's pools within 1.5 km; not the sea, not a river) and `min_km_from` (spawn.min_km_from: never within 5 km of a temple city).

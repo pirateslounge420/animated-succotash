@@ -134,8 +134,15 @@ static func parts_of(node: Node3D) -> Dictionary:
 	out.vault = vault
 	out.below = vault - Vector3(0.0, 0.5, 0.0)
 	out.cistern = Vector3(cx, 0.3, cz)
-	if lay.has("well"):
+	if lay.get("well") is Vector3:
 		out.cistern = (lay.well as Vector3) + Vector3(0.0, 0.3, 0.0)
+	else:
+		# A climbing delve's cistern landing (§DO; the pillar shrines', §DY):
+		# its "well" is the stairwell into its top, not a place.
+		for l in lay.get("landings", []):
+			if str((l as Dictionary).get("feature", "")) == "cistern":
+				var lc: Vector2 = l.c
+				out.cistern = Vector3(lc.x, float(l.y0) - float(node.get_meta("delve_off", 0.0)) + 0.3, lc.y)
 	# The sunward wall (warm stone): toward the equator.
 	var d: Vector3 = site.get("dir", Vector3.UP)
 	var eq := CubeSphere.north(d) * (-1.0 if CubeSphere.latitude(d) >= 0.0 else 1.0)

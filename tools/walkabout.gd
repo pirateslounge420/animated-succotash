@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=pillar_shrines the nearest pillar shrines (§DY): on the valley's
+## floor before the middle pillar's door, looking up at the tops.
 ## SITES=temple_park the nearest temple park (§DW): on its edge, looking in
 ## across a pond to the great tower.
 ## SITES=abbey the nearest ruined abbey (§DU): inside its nave at the west
@@ -220,6 +222,8 @@ func _run() -> void:
 			kinds.append("abbey")
 		if only.has("temple_park"):
 			kinds.append("temple_park")
+		if only.has("pillar_shrines"):
+			kinds.append("pillar_shrines")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -336,6 +340,18 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"pillar_shrines":
+				var psd := INF
+				var ps0 := {}
+				for psk in Monuments.all_sites(world.planet, "pillar_shrines"):
+					if CubeSphere.surface_distance_m(psk.dir, camp_d) < psd:
+						psd = CubeSphere.surface_distance_m(psk.dir, camp_d)
+						ps0 = psk
+				if ps0.is_empty():
+					lines.append("-- pillar_shrines: none on this world")
+					continue
+				sites.append({"name": "pillar_shrines", "dir": Ruins.local_dir(ps0, -10.0, -PillarShrines.BASE_HS - 55.0), "look": ps0.dir, "pitch_to": ps0.dir, "pitch_add_m": float((ps0.pillars as Array)[0][3]) * 0.55,
+					"note": "the pillar shrines, %d pillars, from the valley floor" % (ps0.pillars as Array).size()})
 			"temple_park":
 				var tpd := INF
 				var tp1 := {}

@@ -117,7 +117,7 @@ static func has_delve(site: Dictionary) -> bool:
 		return true
 	# The abbey's crypt and undercroft under its east end (§DU); the
 	# temple park's relic crypt under its great stupa (§DW).
-	if int(site.kind) in [Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK]:
+	if int(site.kind) in [Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK, Ruins.Kind.PILLAR_SHRINES]:
 		return true
 	# The northern styles (§DS): the tower house's undercroft and pit
 	# prison under its keep, a postern out; the broch's souterrain.
@@ -222,6 +222,9 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	elif int(site.kind) == Ruins.Kind.HEWN_TEMPLE:
 		# Its halls as they stand (design 3 Oct §DZ).
 		lay = HewnTemple.layout(map, site)
+	elif int(site.kind) == Ruins.Kind.PILLAR_SHRINES:
+		# The climb up inside the delve pillar to its summit shrine (§DY).
+		lay = CragFortress.shaft_layout(PillarShrines.plan(map, site), site)
 	elif int(site.kind) == Ruins.Kind.HANGING_GARDENS:
 		# The vaulted galleries under the terraces (§DT).
 		lay = HangingGardens.layout(map, site)

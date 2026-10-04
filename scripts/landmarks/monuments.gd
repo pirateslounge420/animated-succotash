@@ -55,6 +55,11 @@ class_name Monuments
 ##                     (escarp_top);
 ##   dry_plateau       the ground's moisture under DRY_PLATEAU and rolling
 ##                     under FLAT_LOOSE over 60 m.
+##   pillar_valley     karst or sandstone country (the karst towers nest and
+##                     its sandstone variant, §DY);
+##   pooled_mist       a valley: the ground 200 m round stands MIST_VALLEY_M
+##                     or more above it (where look.json's mist pools);
+##   flat              (never) the ground within 60 m rolls under FLAT_LOOSE;
 ##   still_water       standing water (a lake, a wetland's pools; not the
 ##                     sea, not a river) within STILL_M (the temple park,
 ##                     §DW: its ponds are its own);
@@ -66,7 +71,7 @@ class_name Monuments
 ##                     oasis's lake will do).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY, "temple_park": Ruins.Kind.TEMPLE_PARK}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY, "temple_park": Ruins.Kind.TEMPLE_PARK, "pillar_shrines": Ruins.Kind.PILLAR_SHRINES}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -94,6 +99,9 @@ const DRY_PLATEAU := 0.55
 const WATER_SIDE_M := 600.0
 ## "still_water" (the temple park, §DW).
 const STILL_M := 1500.0
+## "pooled_mist" (the pillar shrines, §DY): how far the ground round stands
+## over a valley's floor.
+const MIST_VALLEY_M := 3.0
 ## The hard rocks "basalt" loosens to on a world with no basalt land.
 const HARD_ROCK := [PlanetData.Rock.GRANITE, PlanetData.Rock.BASALT_VOLCANIC, PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
@@ -207,6 +215,12 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = [
 		return "dry"
 	if needs.has("still_water") and still_water(map, p, STILL_M).is_empty():
 		return "no_still_water"
+	if needs.has("pillar_valley") and not (map.rock[cell] in [PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]):
+		return "rock"
+	if never.has("flat") and slope(map, p, 60.0) <= FLAT_LOOSE * 0.5:
+		return "flat"
+	if needs.has("pooled_mist") and CragFortress.prominence(map, p) > -MIST_VALLEY_M:
+		return "no_valley"
 	var keep_off: Dictionary = sp.get("min_km_from", {})
 	for other_key in keep_off:
 		for other in _sites.values():
@@ -655,6 +669,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 				return {}
 		"temple_park":
 			if _temple_park(map, E, d, rng, site).is_empty():
+				return {}
+		"pillar_shrines":
+			if _pillar_shrines(map, E, d, rng, site).is_empty():
 				return {}
 	return site
 
@@ -1452,4 +1469,95 @@ static func _temple_park(map: PlanetData, E: Dictionary, d: Vector3, rng: Random
 	site.pieces = pieces
 	site.footprint_m = across * 0.72
 	site.clear = [[d, across * 0.72]]
+	return site
+
+
+## The pillar shrines (§DY): `pillars` stone pillars round the valley's
+## floor, each [x, z, half (its top's half side), height, stair, shrine]
+## (the first, at the middle, the delve's: PillarShrines.plan builds its
+## tiers round the shaft); the bridges between neighbours whose tops are
+## near enough in height, each [i, j, kind] by its span (bridges block:
+## "arch" stands; "rope" hangs, about one in six; "rope_out" is its posts
+## and abutments; "root" where canopy folk lived, standing and growing).
+## Fills `site`.
+static func _pillar_shrines(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var pc: Array = E.get("pillars", [6, 15])
+	var ph: Array = E.get("pillar_height_m", [50, 150])
+	var n := rng.randi_range(int(pc[0]), int(pc[1]))
+	site.heading = Delves.grid_heading(d, rng.randf() * TAU)
+	site.canopy_folk = rng.randf() < 0.5
+	var fr := Delves.frame(map, site)
+	# The valley's pillars stand near one height (the old plateau they were
+	# cut from), so neighbours' tops can be bridged.
+	var h0 := rng.randf_range(float(ph[0]) + 12.0, float(ph[1]) - 12.0)
+	var pillars: Array = [[0.0, 0.0, CragFortress.TOP_HS, h0, true, true]]
+	var spread := 45.0 + n * 7.0
+	var tries := 0
+	while pillars.size() < n and tries < 400:
+		tries += 1
+		var a := rng.randf() * TAU
+		var r := sqrt(rng.randf()) * spread
+		var x := cos(a) * r
+		var z := sin(a) * r
+		var hs := rng.randf_range(6.0, 11.0)
+		var ok := true
+		for q in pillars:
+			if Vector2(x - float(q[0]), z - float(q[1])).length() < (hs + float(q[2])) * 1.2 + 4.0:
+				ok = false
+				break
+		# Keep the delve's way in clear (its door is on the -z side).
+		if absf(x) < hs + 6.0 and z < 0.0 and z > -CragFortress.TOP_HS - hs - 30.0:
+			ok = false
+		if not ok:
+			continue
+		var q3 := Delves.to_dir(fr, x, z)
+		if map.water[map.cell_at(q3)] != PlanetData.Water.NONE:
+			continue
+		pillars.append([x, z, hs, clampf(h0 + rng.randf_range(-12.0, 12.0), float(ph[0]), float(ph[1])), rng.randf() < 0.4, true])
+	if pillars.size() < int(pc[0]):
+		return {}
+	site.pillars = pillars
+	# The tops' heights (the ground under each, and its height).
+	var tops: Array = []
+	for q in pillars:
+		tops.append(Delves._g0(map, fr, float(q[0]), float(q[1])) + float(q[3]))
+	# (The delve pillar's top from its foot's floor, as its plan has it.)
+	tops[0] = Delves._g0(map, fr, 0.0, -PillarShrines.BASE_HS) + float(pillars[0][3])
+	site.tops = tops
+	# The bridges: each pillar to its two nearest, where the tops are near
+	# enough in height to walk across.
+	var B: Dictionary = E.get("bridges", {})
+	var arch_max := float(((B.get("stone_arch", {}) as Dictionary).get("span_m", [4, 15]) as Array)[1])
+	var rope_max := float(((B.get("rope_and_plank", {}) as Dictionary).get("span_m", [15, 60]) as Array)[1])
+	var root_span: Array = (B.get("living_root", {}) as Dictionary).get("span_m", [10, 40])
+	var standing := float((B.get("rope_and_plank", {}) as Dictionary).get("standing_share", 0.17))
+	var bridges: Array = []
+	var seen := {}
+	for i in pillars.size():
+		var near: Array = []
+		for j in pillars.size():
+			if i != j:
+				near.append([Vector2(float(pillars[i][0]) - float(pillars[j][0]), float(pillars[i][1]) - float(pillars[j][1])).length(), j])
+		near.sort_custom(func(a2, b2): return float(a2[0]) < float(b2[0]))
+		for k in mini(2, near.size()):
+			var j: int = near[k][1]
+			var key := Vector2i(mini(i, j), maxi(i, j))
+			if seen.has(key):
+				continue
+			seen[key] = true
+			var gap := float(near[k][0]) - float(pillars[i][2]) - float(pillars[j][2])
+			var dh := absf(float(tops[i]) - float(tops[j]))
+			if gap < 3.0 or gap > rope_max or dh > gap * 0.5:
+				continue
+			var kind := "rope" if rng.randf() < standing else "rope_out"
+			if gap <= arch_max:
+				kind = "arch"
+			elif bool(site.canopy_folk) and gap >= float(root_span[0]) and gap <= float(root_span[1]) and rng.randf() < 0.5:
+				kind = "root"
+			bridges.append([key.x, key.y, kind])
+	site.bridges = bridges
+	site.footprint_m = spread + 30.0
+	site.clear = [[d, 18.0]]
+	for q in pillars:
+		(site.clear as Array).append([Delves.to_dir(fr, float(q[0]), float(q[1])), float(q[2]) * 1.5 + 3.0])
 	return site

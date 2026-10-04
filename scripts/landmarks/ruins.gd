@@ -43,14 +43,14 @@ class_name Ruins
 ## of the planet data (thread-safe), so every visit finds the same ruin and
 ## vegetation can keep the footprint clear.
 
-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY, LONG_WALL, CARVED_CLIFFS, CLIFF_DWELLING, BRICK_CITY, STONE_HEADS, TERRACED_PUEBLO, STONE_CIRCLE, HEWN_TEMPLE, HANGING_GARDENS, ABBEY, TEMPLE_PARK }
+enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY, LONG_WALL, CARVED_CLIFFS, CLIFF_DWELLING, BRICK_CITY, STONE_HEADS, TERRACED_PUEBLO, STONE_CIRCLE, HEWN_TEMPLE, HANGING_GARDENS, ABBEY, TEMPLE_PARK, PILLAR_SHRINES }
 
 const CELL_M := 3200.0
 const CHANCE := 0.5
 const SALT := 555
 const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
 	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
-	"Barrow tomb", "Crag fortress", "Temple city", "The long wall", "Carved cliffs", "Cliff dwelling", "Brick city", "The stone heads", "Terraced pueblo", "Stone circle", "Hewn temple", "Hanging gardens", "Ruined abbey", "Temple park"]
+	"Barrow tomb", "Crag fortress", "Temple city", "The long wall", "Carved cliffs", "Cliff dwelling", "Brick city", "The stone heads", "Terraced pueblo", "Stone circle", "Hewn temple", "Hanging gardens", "Ruined abbey", "Temple park", "Pillar shrines"]
 const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
 const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
 const SNOW_C := -3.0
