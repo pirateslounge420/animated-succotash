@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–12, 17. Next up: 13.
+Built so far: 01–13, 17. Next up: 14.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -42,7 +42,7 @@ Built so far: 01–12, 17. Next up: 13.
 | 10 | §DI (part 1 of 3) | Ruins wear their place: the overgrowth | built db1ba8b |
 | 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | built 63e9956 |
 | 12 | §DI (part 3 of 3) | The ghost at the corner | built 81ad44d |
-| 13 | §DF | Your light gives you away | todo |
+| 13 | §DF | Your light gives you away | built 8217d38 |
 | 14 | §DJ | Off the road: hidden places, and the few who speak | todo |
 | 15 | §DK | The shrine and the sealed scroll | todo |
 | 16 | §DL | Tomes: the I Ching first | todo |
@@ -320,7 +320,7 @@ CHECK (tools/haunt_check.gd, headless): over 100 simulated ten-minute visits to 
 
 ## 13 — Your light gives you away — §DF
 
-**Status:** todo
+**Status:** built 8217d38
 **Mike sees:** A torch lit at night is seen from far by what lurks; plant it and walk into the dark and the lurker goes to the torch; a werewolf smells you from downwind regardless.
 
 ```text
