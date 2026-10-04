@@ -1152,6 +1152,8 @@ class _Context:
 			var near := RoadNetwork.instance.links_near(data.center, reach + 140.0)
 			_road_segs = RoadNetwork.segments_in(near, data.center, reach)
 			_rooms = RoadNetwork.instance.rooms_near(data.center, reach)
+			# The hidden places off the roads (design 3 Oct §DJ).
+			_clearings.append_array(HiddenPlaces.clearings_near(data.center, chunk_m * 0.75))
 			var limit := cos(reach / PlanetConst.RADIUS_M)
 			for link in near:
 				for b in link.get("bends", PackedVector3Array()):

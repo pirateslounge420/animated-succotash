@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DJ: off the road, hidden places and the few who speak (prompt 14)
+- **HiddenPlaces** (`scripts/landmarks/hidden_places.gd`, under main; reads `shrines.json hidden`):
+  - **Placement:** placed after the roads. Each road link offers `per_km_of_road` (0.25) × its length in places, seeded by its two ends, `off_road_m` (150–900 m) to one side. A place stands only where no road, its own or another, passes within 150 m. The kits take turns in a seeded order, 14 tries each, so one easy kit doesn't take every place. The main thread never places: a worker does, and the place shows on the next refresh.
+  - **earth_homes:** where there is a bank (slope 0.08–0.7), flat ground 9 m in front for the hearth, water within 500 m and a forest biome here or next door. Two to four low doors, each with stone jambs, a lintel, a plank door and a dry-stone face, under a turf mound running back into the bank. In front, a camp of Camps' own (`hidden:<seed>`) under the camp sim: its hearth, folk and smoke like any camp.
+  - **oak_door:** on a rise (2.5 m over the ground 120 m round, slope ≤ 0.3). The place's oak if an oak passes its biome gate, else its tallest broadleaf, at 1.12 × the top of its band, drawn as one hero tree. At its foot, a closed stone door in a stone frame, roots over it.
+  - **burning_shrine:** where there is a slope of 0.22 within 10 m. A stone portal with side walls and a roof slab going into the slope, steps down into the dark, and a torch in a bracket inside with its light.
+  - **Clearings:** the trees and undergrowth keep back round each place (VegetationPlacer reads `clearings_near`).
+- **The few who speak:** `speakers_share` (0.3) of the places have a small cloaked figure (about 1 m) standing 4–6 m off. Right click within 3 m and one line from `hidden.lines` goes into the log as "spoken", once a visit (leave 60 m and come back for another). The prompt reads "the small one". Ten first-guess lines are in `shrines.json hidden.lines` (Mike replaces them).
+- **Checked** (`tools/hidden_check.gd`, seed 7731, 0 fails):
+  - 464 km of road within 24 km of the camp hold 71 places (0.15 a km; ±50 % of 116 is 58–174);
+  - every place 155–883 m from the nearest road;
+  - by kit: 49 burning shrines, 20 oak doors, 2 earth homes (dry country: deserts and scrub);
+  - every oak door's tree passes its biome gate; every earth homes has water within 500 m;
+  - the nearest earth homes (34.73°N 158.96°E): built, its camp's hearth lit, 5 folk;
+  - 28 % have a speaker; two right clicks give one spoken line, and leaving and coming back gives one more.
+  
+  `dread_check` and `senses_check` 0 fails. Headless boot is unchanged (29.0 s with and without).
+- **Walkabout** (harness frames, §CG; new `SITES=hidden`, seed 101's temperate wood): the earth homes (two doors in a bank under green turf, their camp's drying rack and folk by the water), an oak door under a great pale-barked broadleaf, and the burning shrine's portal on a slope at 11:00 and 22:00, its torch glowing inside, a small figure standing by it.
+- **Flags for Mike:**
+  - **Old broadleaf:** the oak door's tree is any broadleaf (leaf type simple or compound) passing the place's biome gate (its biomes, realm, climate and soil), so in the desert it is a mesquite or a palo verde. The understory's community step (`Overgrowth.gate`) turned down every tree, because trees are dealt by stand dominance (§BH).
+  - **§CU's count:** an earth homes' hearth is added on top of §CU's hearth count, not dealt into it. The hearths pass runs once a world over ruins and nests; the roads, and so the hidden places, are built region by region as you go.
+  - **Shrine depth:** the burning shrine's mouth stands on the slope rather than cut into it (its steps go down into a dark back wall). §DK builds the hall behind it.
+- **Data:** the `[NOT WIRED YET]` prefix now names only §DK in `shrines.json` (`hidden` is wired), and §DK and §DL in `hud.json log_more` (spoken is wired). New: `hidden.lines`.
+
 ## 2026-10-04 — §DF: your light gives you away (prompt 13)
 - **Senses** (`scripts/creatures/senses.gd`, reads every `senses.json` watcher row): `can_sense(kind, eye, player)` answers how a watcher senses you, or that it doesn't.
   - **light:** your lit torch from `light_sight_m` at night, on a clear line;

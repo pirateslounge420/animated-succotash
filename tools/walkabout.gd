@@ -25,6 +25,7 @@ extends SceneTree
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
+## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
 ## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
 ## (design §DC's shafts; ShaftField prints its gate per frame).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
@@ -151,6 +152,8 @@ func _run() -> void:
 			kinds.append("ruins")
 		if only.has("haunt"):
 			kinds.append("haunt")
+		if only.has("hidden"):
+			kinds.append("hidden")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -227,6 +230,29 @@ func _run() -> void:
 					continue
 				sites.append({"name": "haunted_graveyard", "dir": CreatureSpawner._offset(hb.dir, 0.3, float(hb.footprint_m) * 0.5 + 12.0), "look": hb.dir,
 					"note": "a haunted graveyard %.1f km from the camp" % (hd / 1000.0)})
+			"hidden":
+				# SITES=hidden: the nearest hidden place of each kit (design 3
+				# Oct §DJ), from 12 m in front of its door, looking at it.
+				var places := HiddenPlaces.near(main.chunks.roads, camp_d, 40000.0, true)
+				for kit in ["earth_homes", "oak_door", "burning_shrine"]:
+					var hb := {}
+					var hd := INF
+					for pl in places:
+						if str(pl.kit) != kit:
+							continue
+						var hdm := CubeSphere.surface_distance_m(pl.dir, camp_d)
+						if hdm < hd:
+							hd = hdm
+							hb = pl
+					if hb.is_empty():
+						lines.append("-- hidden: no %s within 40 km" % kit)
+						continue
+					# The earth homes from the side of their camp, so the fire
+					# doesn't stand between you and the doors.
+					var back := 9.0 if kit == "earth_homes" else 12.0
+					var side := 0.75 if kit == "earth_homes" else 0.0
+					sites.append({"name": "hidden_" + kit, "dir": CreatureSpawner._offset(hb.dir, float(hb.facing) + side, back), "look": hb.dir,
+						"note": "a hidden %s %.1f km from the camp%s" % [kit.replace("_", " "), hd / 1000.0, ", a speaker by it" if bool(hb.speaker) else ""]})
 			"ruins":
 				# SITES=ruins: the wettest and the driest stone ruins of
 				# this world (design 3 Oct §DI: a ruin wears its place),

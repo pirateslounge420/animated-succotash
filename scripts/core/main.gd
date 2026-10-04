@@ -47,6 +47,7 @@ var dread: Dread
 var sound_bed: SoundBed
 var water_sounds: WaterSounds
 var road_props: RoadProps
+var hidden_places: HiddenPlaces
 var camp_sim: CampSim
 var player_fires: PlayerFires
 var travellers: Travellers
@@ -302,6 +303,10 @@ func _on_planet_ready() -> void:
 	road_props.name = "RoadProps"
 	add_child(road_props)
 	road_props.setup(world, chunks, player)
+	hidden_places = HiddenPlaces.new()
+	hidden_places.name = "HiddenPlaces"
+	add_child(hidden_places)
+	hidden_places.setup(world, chunks, player)
 	travellers = Travellers.new()
 	travellers.name = "Travellers"
 	add_child(travellers)
@@ -574,6 +579,8 @@ func _process(delta: float) -> void:
 		prompt = "%s: take your things back" % Controls.interact_word()
 	elif _headman_in_reach() != null:
 		prompt = "%s: the headman" % Controls.interact_word()
+	elif hidden_places != null and not hidden_places.speaker_in_reach(player.global_position).is_empty():
+		prompt = "%s: the small one" % Controls.interact_word()
 	elif not _ladder_in_reach().is_empty():
 		prompt = "%s: %s the rope ladder" % [Controls.interact_word(), "climb" if bool(_ladder_in_reach()[1]) else "climb down"]
 	elif _ember_lay_ok():
@@ -838,8 +845,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		var store := _store_in_reach()
 		var headman := _headman_in_reach()
 		var ladder := _ladder_in_reach()
+		var speaker := hidden_places.speaker_in_reach(player.global_position) if hidden_places != null else {}
 		if headman != null:
 			_meet_headman(headman)
+		elif not speaker.is_empty():
+			# One of the few who speak (§DJ): one line in the log a visit.
+			if not hidden_places.speak(speaker):
+				_say_note("It says nothing more.")
 		elif not ladder.is_empty():
 			_climb_ladder(ladder[0], bool(ladder[1]))
 		elif _ember_lay_ok():

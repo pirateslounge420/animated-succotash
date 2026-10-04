@@ -433,6 +433,14 @@ func _refresh() -> void:
 		if nspot.distance_to(pp) < BUILD_M:
 			var nland := Ruins.country(map, hd)
 			want[str(n.key)] = [nspot, "north" if nland == "snow" else ("marsh" if nland == "marsh" else "tribal"), int(n.seed)]
+	# The earth homes' camps (design 3 Oct §DJ, HiddenPlaces): their hearth
+	# in front of the doors, a hearth like any other.
+	for hp in HiddenPlaces.camps_near(pd, BUILD_M):
+		var hd2: Vector3 = hp.hearth
+		var hspot: Vector3 = world.to_scene(hd2, PlanetConst.RADIUS_M + chunks.ground_height(hd2))
+		if hspot.distance_to(pp) < BUILD_M:
+			var hland := Ruins.country(map, hd2)
+			want[str(hp.key)] = [hspot, "north" if hland == "snow" else ("marsh" if hland == "marsh" else "tribal"), int(hp.seed)]
 	var only_ruins := bool(RULES.get("only_at_ruins", true))
 	# Wild camps near water.
 	for c in CreatureSpawner._cells_around(pd, BUILD_M, WILD_CELL_M) if not only_ruins else []:
