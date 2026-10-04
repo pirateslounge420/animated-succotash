@@ -141,21 +141,23 @@ func _run() -> void:
 			road_on = true
 	ok(node != Vector3.ZERO and CubeSphere.surface_distance_m(node, old_site) < 40.0 and road_on, "and its opening road starts there (node %.0f m from the fire, road %s to a people's camp %.1f km off)" % [CubeSphere.surface_distance_m(node, old_site), "routed" if road_on else "missing", float(op.get("camp_m", INF)) / 1000.0])
 	ok(WorldSave.data.has("opening_site"), "the migrated site is kept from now on")
-	# Never wake at no fire: a hearth where no fire stands wakes you at the
-	# opening camp, with a line in the log.
+	# Never wake at no fire (§DE): a hearth where no camp stands is let go
+	# with a line in the log, and folk carry you to the nearest lit fire
+	# with folk at it (here the opening camp, 3.3 km off).
 	if Tuning.profile() == "ambient":
 		var nowhere := CreatureSpawner._offset(main.camp.site, 2.0, 3300.0)
 		Hearth.dir = nowhere
 		Hearth.key = FireStore.key_of(nowhere)
+		var want: Dictionary = main.camps.found_fire(main.player.surface_dir, main.camp.site)
 		main._on_player_died()
 		for i in 600:
 			await process_frame
-		var woke := CubeSphere.surface_distance_m(main.player.surface_dir, main.camp.site)
+		var woke := CubeSphere.surface_distance_m(main.player.surface_dir, want.get("dir", main.camp.site))
 		var said := false
 		for e in GameLog.entries:
-			if str(e.get("text", "")) == "Your hearth was gone; you woke at the camp.":
+			if str(e.get("text", "")) == "Your hearth was gone; folk carried you to another fire.":
 				said = true
-		ok(woke < 30.0 and said and CubeSphere.surface_distance_m(Hearth.dir, main.camp.site) < 1.0, "a hearth with no fire: you wake at the camp (%.0f m from it), the log says so (%s), and the camp is your hearth again" % [woke, said])
+		ok(woke < 30.0 and said and Hearth.dir == Vector3.ZERO, "a hearth with no camp: you wake at the nearest lit fire with folk (%s, %.0f m from it), the log says so (%s), and the hearth is let go" % [str(want.get("key", "?")), woke, said])
 	# Clean up what this check made; the player's own pointer is put back.
 	for sd in made:
 		var path := ProjectSettings.globalize_path("user://worlds/%d.json" % sd)

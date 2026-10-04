@@ -324,6 +324,22 @@ func _process(delta: float) -> void:
 		_weather_accum_h = 0.0
 
 
+## Step the weather on by `hours` of game time, as _process does, in
+## WEATHER_STEP_H steps (design 3 Oct §DE: the lost days; the clock is
+## moved by the caller).
+func run_weather(hours: float) -> void:
+	if weather == null:
+		return
+	var left := hours + _weather_accum_h
+	var t := days - hours
+	while left >= WEATHER_STEP_H:
+		t += WEATHER_STEP_H / 24.0
+		weather.season_days = t
+		weather.step(WEATHER_STEP_H, Astro.sun_dir(t))
+		left -= WEATHER_STEP_H
+	_weather_accum_h = left
+
+
 # --- Floating origin -------------------------------------------------------
 
 ## Place the planet so the surface point at `dir` sits at the scene origin.

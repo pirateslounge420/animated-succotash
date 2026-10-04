@@ -1,10 +1,10 @@
 extends SceneTree
 ## Run: godot --headless --path . --fixed-fps 60 --script tools/dread_check.gd
 ## The ambient cut (design 30 Sept): the fuel store burns down and
-## relights (§AX), the hearth is the opening camp (§AY), the log opens on
-## Enter and keeps a note (§AZ), and the dark takes you: with no light on
-## you the meter climbs through the stages, the hunter closes, "Taken by
-## the dark" goes in the log and you wake at the hearth (§BA). Runs in
+## relights (§AX), the opening camp's fire made your hearth (§AY, §DE), the
+## log opens on Enter and keeps a note (§AZ), and the dark takes you: with
+## no light on you the meter climbs through the stages, the hunter closes,
+## you wake at the hearth and the log has the dark's line (§BA, §DE). Runs in
 ## the ambient profile (the default).
 var main
 var world
@@ -73,8 +73,10 @@ func _initialize() -> void:
 	ok(full > 0 and FireStore.units_now(FireStore.store_of(fire)) <= float(FireStore.F.get("store_max_units", 12)) + 0.01, "the store caps at store_max_units (%.1f)" % FireStore.units_now(FireStore.store_of(fire)))
 	ok(GameLog.entries.any(func(e): return e.kind == "fire_out"), "the log has the fire going out")
 
-	# --- Hearth (§AY) ---
-	ok(Hearth.key == FireStore.key_of(main.camp.site) and Hearth.is_home(fire), "the first hearth is the opening camp's fire")
+	# --- Hearth (§AY, amended by §DE: none until you make one) ---
+	ok(Hearth.dir == Vector3.ZERO and not Hearth.is_home(fire) and Hearth.can_set(fire), "no hearth until you make one, and the opening camp's lit fire can be made it")
+	Hearth.set_home(world.dir_of(fire.global_position))
+	ok(Hearth.is_home(fire), "made home, it is the hearth")
 
 	# --- The log (§AZ) ---
 	ok(not main.log_panel.visible, "the log is closed")
@@ -116,8 +118,6 @@ func _initialize() -> void:
 		await frames(1)
 		t += 1
 	ok(player.dead, "stage 5 with no light: it closes and takes you (%.1f s)" % (t / 60.0))
-	var death := GameLog.entries.filter(func(e): return e.kind == "death_cause")
-	ok(not death.is_empty() and death[death.size() - 1].text == "Taken by the dark", "the log: Taken by the dark")
 	dread.force_dark = false
 	t = 0
 	while player.dead and t < 900:
@@ -125,6 +125,10 @@ func _initialize() -> void:
 		t += 1
 	await frames(30)
 	ok(not player.dead and player.global_position.distance_to(fire.global_position) < 12.0, "you wake at the hearth (%.1f m from its fire)" % player.global_position.distance_to(fire.global_position))
+	# Found alive (§DE): the cause line is camps.json wake_found's wording.
+	var dark_line := str((LostDays.W.get("death_lines_found", {}) as Dictionary).get("dark", "Taken by the dark"))
+	var death := GameLog.entries.filter(func(e): return e.kind == "death_cause")
+	ok(not death.is_empty() and death[death.size() - 1].text == dark_line, "the log: %s" % (death[death.size() - 1].text if not death.is_empty() else "nothing"))
 	ok(dread.meter == 0.0 and dread.stage == 0 and dread._hunter == null, "the dark is gone: meter 0, no hunter")
 	# By the fire the meter drains.
 	dread.force_dark = true

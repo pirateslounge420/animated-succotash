@@ -202,6 +202,81 @@ func wake_fire(d: Vector3, search_m: float, place_m: float, opening: Vector3) ->
 	return spot
 
 
+## Waking found by folk (design 3 Oct §DE, camps.json wake_found).
+## The camp whose fire stands within `within_m` of `fd`: {"key" (its
+## CampSim key), "dir" (the fire), "site" (the ruin, or {})}, or {}.
+## `opening` is the opening camp's fire.
+func camp_at(fd: Vector3, opening: Vector3, within_m := 30.0) -> Dictionary:
+	if opening != Vector3.ZERO and CubeSphere.surface_distance_m(opening, fd) <= within_m:
+		return {"key": "opening", "dir": opening, "site": {}}
+	for r in Ruins.near(map, fd, 400.0):
+		var rf := ruin_fire_dir(map, r)
+		if CubeSphere.surface_distance_m(rf, fd) <= within_m:
+			return {"key": Overrun.camp_key(map, r), "dir": rf, "site": r}
+	for n in Nests.near(fd, within_m + 60.0):
+		if CubeSphere.surface_distance_m(n.hearth, fd) <= within_m:
+			return {"key": str(n.key), "dir": n.hearth, "site": {}, "nest": n}
+	return {}
+
+
+## Why the camp `c` (camp_at's) is no fire to wake at, or "": "overrun"
+## (§CN; the dark holds its ruin), "abandoned" (nobody lives there: its
+## folk walked, were taken or never came) or "dark" (its fire is not lit:
+## embers or out). A camp you never came upon has been living all along
+## (CampSim), so only what is known counts against it.
+func found_fault(c: Dictionary) -> String:
+	if c.is_empty():
+		return "abandoned"
+	var site: Dictionary = c.get("site", {})
+	if not site.is_empty():
+		if Overrun.is_overrun(site):
+			return "overrun"
+		if not Ruins.inhabited(site) and not Overrun.settled(site):
+			return "abandoned"
+	if c.has("nest") and str((c.nest as Dictionary).get("state", "")) != "lived":
+		return "abandoned"
+	var fk := FireStore.key_of(c.dir)
+	if CampSim.instance != null:
+		var st := CampSim.instance.state_of(str(c.key))
+		if not st.is_empty():
+			if str(st.get("state", "living")) != "living" or (st.get("folk", []) as Array).is_empty():
+				return "abandoned"
+			fk = str(st.get("fire_key", fk))
+	var fst: Dictionary = FireStore.stores.get(fk, {})
+	if not fst.is_empty() and not (str(fst.get("state", "flames")) in ["flames", "low"]):
+		return "dark"
+	return ""
+
+
+## The nearest camp fire lit with folk at it, measured from `d` (where you
+## fell): the opening camp, the people's camps at ruins (never an overrun
+## one) and the lived nests, the search widening from wake_radius_m as
+## _ruin_wake_fire's does. {"key", "dir", "site"}, or {} if none.
+func found_fire(d: Vector3, opening: Vector3) -> Dictionary:
+	var radius := float(RULES.get("wake_radius_m", 12000.0))
+	for step in int(RULES.get("widen_steps", 3)) + 1:
+		var cands: Array = []
+		if opening != Vector3.ZERO and CubeSphere.surface_distance_m(opening, d) <= radius:
+			cands.append({"key": "opening", "dir": opening, "site": {}, "m": CubeSphere.surface_distance_m(opening, d)})
+		for r in Ruins.near(map, d, radius):
+			if Ruins.inhabited(r) or Overrun.settled(r):
+				cands.append({"site": r, "m": CubeSphere.surface_distance_m(r.dir, d)})
+		for n in Nests.near(d, radius):
+			if str(n.state) == "lived":
+				cands.append({"key": str(n.key), "dir": n.hearth, "site": {}, "nest": n, "m": CubeSphere.surface_distance_m(n.hearth, d)})
+		cands.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a.m) < float(b.m))
+		for c in cands:
+			if not c.has("dir"):
+				var r: Dictionary = c.site
+				c["dir"] = ruin_fire_dir(map, r)
+				c["key"] = Overrun.camp_key(map, r)
+			if found_fault(c) == "":
+				c.erase("m")
+				return c
+		radius *= 2.0
+	return {}
+
+
 ## The fire you wake at when camps are only at ruins (data/camps.json): a
 ## random inhabited ruin within wake_radius_m of where you died (the
 ## nearest, if wake_random is off), the search widening if there's none;

@@ -20,6 +20,9 @@ extends Node
 
 static var SIM: Dictionary = Tuning.section("camps", "sim")
 static var instance: CampSim = null
+## True while the lost days run (design 3 Oct §DE, LostDays): every camp's
+## fire burns as if unloaded, the scene's frames not running meanwhile.
+static var away := false
 
 var world: Node
 var chunks: ChunkManager
@@ -342,6 +345,7 @@ func _tick(st: Dictionary, days: float) -> void:
 			(fst.units as Array).append([kind, minf(per, minutes)])
 			minutes -= per
 		st.wood = maxf(float(st.wood) - feed, 0.0)
+		st["wood_fed"] = float(st.get("wood_fed", 0.0)) + feed
 		if str(fst.state) == "embers":
 			fst.state = "low"
 		if str(fst.state) in ["flames", "low"]:
@@ -389,6 +393,7 @@ func _relight_from_ember(st: Dictionary, days: float, _th: float) -> void:
 		(fst.units as Array).append([kind, minf(per, minutes)])
 		minutes -= per
 	st.wood = maxf(float(st.wood) - feed, 0.0)
+	st["wood_fed"] = float(st.get("wood_fed", 0.0)) + feed
 	fst.embers_min = 0.0
 	fst.state = "low" if FireStore.share(fst) < float(FireStore.F.get("low_share", 0.25)) else "flames"
 	_note(st, "They have lit the fire again from an ember.", days)
@@ -975,6 +980,8 @@ func reclaim(st: Dictionary) -> float:
 
 ## Is the camp's fire in the scene (FireStore.tick burns it there)?
 func _fire_loaded(st: Dictionary) -> bool:
+	if away:
+		return false
 	for f in get_tree().get_nodes_in_group(Campfire.GROUP):
 		if (f as Node).get_meta("fuel_key", "") == str(st.fire_key):
 			return true

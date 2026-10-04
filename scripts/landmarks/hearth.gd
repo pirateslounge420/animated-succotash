@@ -1,31 +1,49 @@
 class_name Hearth
 ## Your hearth (design 30 Sept §AY, camps.json wake_at_home): the fire
-## you wake at when you die. The first is the opening camp's; right click
-## the lit fire of any camp you find (Camps marks its fires "hearth_ok")
-## to make it yours. Kept per world (WorldSave). Death costs nothing
-## else: what you carried stays on your body where you fell.
+## you wake at when you die. Right click the lit fire of any camp you find
+## (Camps marks its fires "hearth_ok") to make it yours. Until you do you
+## have none, and folk carry you to the nearest lit fire with folk at it
+## (design 3 Oct §DE amends §AY: the opening camp is no longer your hearth
+## by default). Kept per world (WorldSave). Death costs nothing else: what
+## you carried stays on your body where you fell.
 
 static var dir := Vector3.ZERO
 static var key := ""
 
 
-## At the start of a world: the saved hearth, else the opening camp.
+## At the start of a world: the hearth you made, else none (§DE). A save
+## from before §DE kept the opening camp as its hearth without asking:
+## that one is let go unless you chose it ("hearth_chosen").
 static func setup(opening: Vector3) -> void:
+	dir = Vector3.ZERO
+	key = ""
 	var saved = WorldSave.data.get("hearth", null)
 	if saved is Array and (saved as Array).size() == 3:
-		dir = Vector3(float(saved[0]), float(saved[1]), float(saved[2])).normalized()
-		key = FireStore.key_of(dir)
-	else:
-		set_home(opening, false)
+		var d := Vector3(float(saved[0]), float(saved[1]), float(saved[2])).normalized()
+		var by_default := opening != Vector3.ZERO and CubeSphere.surface_distance_m(d, opening) < 30.0 and not bool(WorldSave.data.get("hearth_chosen", false))
+		if not by_default:
+			dir = d
+			key = FireStore.key_of(dir)
 
 
+## Make the fire at `d` your hearth (right click its lit fire).
 static func set_home(d: Vector3, log := true) -> void:
 	dir = d.normalized()
 	key = FireStore.key_of(dir)
 	WorldSave.data["hearth"] = [dir.x, dir.y, dir.z]
+	WorldSave.data["hearth_chosen"] = true
 	WorldSave.mark_dirty()
 	if log:
 		GameLog.add("Made this fire your hearth.", "hearth_set")
+
+
+## No hearth (its fire is gone from the world).
+static func clear() -> void:
+	dir = Vector3.ZERO
+	key = ""
+	WorldSave.data.erase("hearth")
+	WorldSave.data.erase("hearth_chosen")
+	WorldSave.mark_dirty()
 
 
 ## Is this fire the hearth?

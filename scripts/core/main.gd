@@ -55,6 +55,9 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var old_hearths: OldHearths
+## Where the last waking took you and why (§DE, tools): {"from": "home",
+## "nearest" or "opening", "home_fault", "key"}.
+var last_wake := {}
 var overrun: Overrun
 var delves: Delves
 var post: PostGrade
@@ -213,8 +216,8 @@ func _on_planet_ready() -> void:
 	camp = Encampment.new()
 	root.add_child(camp)
 	camp.build(world, chunks, spawn_dir)
-	# The world's kept things (WorldSave: the hearth, the log), and the
-	# first hearth: the opening camp (design 30 Sept §AY).
+	# The world's kept things (WorldSave: the hearth you made, if any, and
+	# the log; design 30 Sept §AY as amended by 3 Oct §DE).
 	Hearth.setup(camp.site)
 	GameLog.load_saved()
 	# What the game runs on, and whether its shaders built (§CG; Mike's
@@ -635,38 +638,45 @@ func _above_clouds(w: Dictionary) -> void:
 	w["above_clouds"] = true
 
 
-## Dead: a moment on the ground, then you wake again by the camp fire
-## where the game began.
+## Dead: a moment on the ground, then you wake by a fire, found by folk.
 ## Death (design reconciliation): your body stays where you fell with
-## everything you carried and wore (PlayerCorpse; no marker). You wake by
-## the nearest camp fire to where you died, the folk who found you
-## having carried you there (Camps.wake_fire(): a wild or rock-shelter
-## camp, the opening camp, or a wandering group's fire put down near by),
-## lying by it a moment, full health and nothing on you (bare hands: a
-## punch or a shove is all you have till you find your body).
+## everything you carried and wore (PlayerCorpse; no marker). Then, in the
+## ambient game (design 3 Oct §DE, camps.json wake_found): folk find you
+## out cold and carry you to your hearth if you made one and it still
+## burns with folk at it (not gone dark, overrun or abandoned), else to
+## the nearest lit fire with folk at it from where you fell
+## (Camps.found_fire), the opening camp failing everything. One to three
+## days pass (LostDays: the world runs them for real), and you come to by
+## the fire at whatever hour that is, empty-handed. The log: the cause
+## line (worded for one found alive), then the found line, both stamped
+## at the waking. The shinobi game keeps its old wake (Camps.wake_fire).
 func _on_player_died() -> void:
 	hud.show_death()
-	GameLog.add(_death_line(player.death_cause), "death_cause")
+	var cause: String = player.death_cause
 	player.death_cause = ""
 	var death_dir: Vector3 = player.surface_dir
-	PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
+	var found := Tuning.profile() == "ambient" and not (Tuning.table("camps").get("wake_found", {}) as Dictionary).is_empty()
+	if not found:
+		GameLog.add(_death_line(cause), "death_cause")
+	var corpse := PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
 	await get_tree().create_timer(3.5).timeout
 	hud.show_loading("", 0.5)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var dt := Tuning.section("combat", "death")
-	var fire: Vector3 = camps.wake_fire(death_dir, float(dt.get("wake_search_m", 4000.0)), float(dt.get("wake_place_m", 150.0)), camp.site)
-	# The ambient profile wakes you at your hearth (design 30 Sept §AY,
-	# camps.json wake_at_home), wherever you died.
-	if Tuning.profile() == "ambient" and bool(Tuning.table("camps").get("wake_at_home", true)) and Hearth.dir != Vector3.ZERO:
-		fire = Hearth.dir
-		# Never wake at no fire: a hearth that is neither the opening
-		# camp's nor a ruin camp's (a camp that moved, a fire long gone)
-		# wakes you at the opening camp.
-		if CubeSphere.surface_distance_m(fire, camp.site) > 30.0 and not camps.fire_at(fire) and not OldHearths.lit_at(world, fire):
-			fire = camp.site
-			Hearth.set_home(camp.site, false)
-			GameLog.add("Your hearth was gone; you woke at the camp.", "hearth_gone")
+	var fire: Vector3
+	if found:
+		fire = _found_fire(death_dir)
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([world.world_seed, camps.deaths, world.days])
+		camps.deaths += 1
+		var span := LostDays.roll(rng)
+		LostDays.run(self, span, corpse)
+		GameLog.now_text = world.stamp_text(fire)
+		GameLog.add(LostDays.cause_line(cause), "death_cause")
+		GameLog.add(LostDays.found_line(span), "found")
+	else:
+		fire = camps.wake_fire(death_dir, float(dt.get("wake_search_m", 4000.0)), float(dt.get("wake_place_m", 150.0)), camp.site)
 	# Lying a couple of metres from the fire, feet to it.
 	var d: Vector3 = CreatureSpawner._offset(fire, CubeSphere.longitude(death_dir) * 7.0, 2.4)
 	if fire == camp.site:
@@ -689,7 +699,38 @@ func _on_player_died() -> void:
 	hud.hide_death()
 	hud.hide_loading()
 	await get_tree().create_timer(1.2).timeout
-	hud.say("Camp folk", "We found you out there, cold as stone, and carried you to the fire.", 0.0, 4.0)
+	if found:
+		# Folk are mute (§BO): what they did is the log's line, shown.
+		_say_note(LostDays.found_line(float(LostDays.last.get("span", 1.0))))
+	else:
+		hud.say("Camp folk", "We found you out there, cold as stone, and carried you to the fire.", 0.0, 4.0)
+
+
+## Where folk carry you (design 3 Oct §DE, wake_found.where, no_home,
+## skip_home_if): your hearth if you made one and it burns with folk at
+## it; else the nearest lit fire with folk at it from `death_dir`; failing
+## everything, the opening camp. A hearth with no camp left at it is let
+## go, with a line in the log.
+func _found_fire(death_dir: Vector3) -> Vector3:
+	var W: Dictionary = Tuning.table("camps").get("wake_found", {})
+	var skip: Array = W.get("skip_home_if", ["dark", "overrun", "abandoned"])
+	last_wake = {"home_fault": "", "from": "nearest"}
+	if bool(Tuning.table("camps").get("wake_at_home", true)) and Hearth.dir != Vector3.ZERO and str(W.get("where", "home_else_nearest")) == "home_else_nearest":
+		var home := camps.camp_at(Hearth.dir, camp.site)
+		var fault := camps.found_fault(home) if not home.is_empty() else "gone"
+		last_wake.home_fault = fault
+		if fault == "" or (fault != "gone" and not (fault in skip)):
+			last_wake.from = "home"
+			return home.dir if not home.is_empty() else Hearth.dir
+		if fault == "gone":
+			Hearth.clear()
+			GameLog.add("Your hearth was gone; folk carried you to another fire.", "hearth_gone")
+	var near := camps.found_fire(death_dir, camp.site)
+	if not near.is_empty():
+		last_wake.key = str(near.get("key", ""))
+		return near.dir
+	last_wake.from = "opening"
+	return camp.site
 
 
 func _unhandled_input(event: InputEvent) -> void:

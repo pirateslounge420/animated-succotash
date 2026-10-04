@@ -4,6 +4,28 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DE waking: found by folk, days later, at your hearth or the nearest
+- **Where you wake** (`Main._found_fire`, `Camps.camp_at` / `found_fault` / `found_fire`, `camps.json wake_found`): your hearth if you made one and its camp is lit with folk at it. A home that has gone dark (its fire is embers or out), is overrun (§CN) or is abandoned (nobody lives there) is skipped that waking. A hearth with no camp left at it is let go, with a log line. Otherwise you wake at the nearest lit fire with folk at it, measured from where you fell. The candidates are the opening camp, the people's camps at ruins (never an overrun one) and the lived nests, searched from 12 km out and widening. The opening camp is the last resort. **This amends §AY:** a new world has no hearth until you right click a camp's fire. An old save whose hearth was the opening camp by default (never chosen) lets it go.
+- **The lost days** (`LostDays`): a span, uniform between 1 and 3 game days, rolled per death. The world runs it through the paths it already has:
+  - the clock moves (the moon, the season and the plants' growth follow it), and the weather is stepped in its own 15-minute steps (`World.run_weather`);
+  - every camp you know runs its hourly ticks (`CampSim.catch_up`), its fire burning and fed from the woodpile as if unloaded (`CampSim.away`);
+  - old hearths catch up from when they were last seen, and the fires you laid burn down;
+  - planted and dropped torches burn on, and the lit torch on your body burns out.
+  
+  Nothing else moves the clock (§CW; the clash is flagged in §DE).
+- **The log** (§AZ): at the waking, the cause line in `wake_found.death_lines_found`'s wording ("Struck down by a wolf"), then "Folk found you out cold and carried you to their fire. Two days have passed." (`log_one_day` for one day). Both are stamped at the waking. The found line also shows on screen as a note (folk are mute, §BO), in place of the old spoken "Camp folk" line. You wake empty-handed, your gear on your body where you fell (as built). The shinobi profile keeps its old wake.
+- **Checked:** `tools/wake_check.gd`, seed 7731, 0 fails:
+  - dying 3.0 km from the home hearth wakes you 3 m from its fire;
+  - with no hearth, you wake at the nearest lit camp (5.0 km), and none nearer passes;
+  - with the home (a people's camp 9.3 km off) overrun, it is skipped and you wake at the nearest other camp, 4.4 km from the overrun one;
+  - the clock moved by exactly the rolled span (1.1006 days), and 20 rolls run 1.03–2.90;
+  - the log reads "Struck down by a wolf" then the found line, both stamped Y1 D2 06:10;
+  - the body lies where you fell with its gear, and its torch has burnt out;
+  - the camp's fire burnt 9.5 woodpile units in 1.10 days (its daily burn 8.4, so about 9.2).
+  
+  `tools/dread_check.gd`: 0 fails (it now makes the camp's fire home first, and reads the dark's line after the waking). `tools/new_world_check.gd`: its §DE case passes. Its other 12 fails are the same on the commit before this pass (in this container a fresh world always rolls seed 42, so the save and pointer checks fail).
+- **Data:** `camps.json` `wake_found` is unmarked. In `hud.json`, `log_more` keeps its prefix for §DJ/§DK/§DL, and notes that `found` is wired.
+
 ## 2026-10-04 — §DD moon nights: full against new is obvious; the year joins the day count; dread follows the moonlight
 - **The moon's share** (`SkySystem`, `look.json moon_nights`): the moon's light by its lit share is now `MOON_FLOOR + (1 - MOON_FLOOR) × lit^curve_exponent`, with the exponent (3.3) read from the data, so it lives in one place. A new dial, `lift_scale` 0.67, scales the moon's whole share of the night: the moon light's energy, the ambient's `moon_add` and the sky's moonlit lift. The floor is untouched. **Measured** (harness frames, §CG; the open prairie, seed 7731, `tools/moon_nights.sh`): a full moon at 02:00 gives 0.205 (target 0.20; it was 0.25 before the dial). A new moon at 02:00 gives 0.098 (target 0.10). The waxing first quarter at 20:00 gives 0.130 (target 0.13; at 02:00 it has set). The darkest 5 % stays navy: blue/red 8.2 under the full moon and 40.9 under the others.
 - **Dread** (`Dread.fill_rate`): in the dark, out of the torch's reach and away from a fire, the meter now fills at a rate between `fill_per_min_dark` (0.20/min, no moon) and `fill_per_min_moon` (0.14/min, a full moon high), following the moonlight. Before, it switched between the two at a moonlight of 0.3. A delve still counts as no moon.
