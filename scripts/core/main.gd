@@ -34,6 +34,7 @@ var wind_litter: WindLitter
 var wind_crowns: WindCrowns
 ## The sun's flare when you look at it (design §DB).
 var flare: LensFlare
+var shafts: ShaftField
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
@@ -328,6 +329,11 @@ func _on_planet_ready() -> void:
 	flare = LensFlare.new()
 	flare.name = "LensFlare"
 	add_child(flare)
+	# Shafts of sunlight when the air would show them (design 3 Oct §DC).
+	shafts = ShaftField.new()
+	shafts.name = "ShaftField"
+	world.world_root.add_child(shafts)
+	shafts.setup(self)
 	night_accents = NightAccents.new()
 	night_accents.name = "NightAccents"
 	add_child(night_accents)

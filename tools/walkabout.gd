@@ -23,6 +23,8 @@ extends SceneTree
 ## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
 ## SITES=lake adds the nearest lake's shore, looking over the water.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
+## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
+## (design §DC's shafts; ShaftField prints its gate per frame).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -139,6 +141,8 @@ func _run() -> void:
 			kinds.append("lake")
 		if only.has("range"):
 			kinds.append("range")
+		if only.has("at"):
+			kinds.append("at")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -156,6 +160,14 @@ func _run() -> void:
 				sites.append_array(_delve_sites(camp_d))
 			"range":
 				sites.append_array(_range_sites(camp_d))
+			"at":
+				# SITES=at AT=lat,lon: stand there (design §DC: the wood
+				# whose broken crowns shaft_check found).
+				var ll := OS.get_environment("AT").split(",")
+				if ll.size() == 2:
+					var la := deg_to_rad(float(ll[0]))
+					var lo := deg_to_rad(float(ll[1]))
+					sites.append({"name": "at_%s_%s" % [ll[0], ll[1]], "dir": Vector3(cos(la) * sin(lo), sin(la), cos(la) * cos(lo))})
 			"opening_camp":
 				sites.append({"name": "opening_camp", "dir": camp_d, "spawn_hour": true})
 			"first_road_1km":
@@ -456,6 +468,9 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		# shadows, design §DA).
 		if OS.get_environment("CLOUD") != "" and not overcast:
 			wx["cloud"] = float(OS.get_environment("CLOUD"))
+		# RH=0.95: the air's damp (design §DC: a misty dawn's shafts).
+		if OS.get_environment("RH") != "":
+			wx["rh"] = float(OS.get_environment("RH"))
 		main._weather_timer = 1e9
 		main._local_weather = wx
 		main._weather_eased = wx.duplicate()
@@ -497,6 +512,9 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				main.hud._readout_timer = 0.0
 				await process_frame
 			var img := get_root().get_texture().get_image()
+			if k == 0 and main.get("shafts") != null:
+				var sf: ShaftField = main.shafts
+				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])
 			if OS.get_environment("FACE_SUN") == "1" and k == 0 and main.get("flare") != null:
 				var fl := "%s %02dh: the flare at %.2f%s" % [site.name, int(hour), float(main.flare.alpha), (" (" + str(main.flare.why) + ")") if str(main.flare.why) != "" else ""]
 				print("[flare] " + fl)

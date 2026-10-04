@@ -110,7 +110,7 @@ func blocked(cam: Camera3D, eye: Vector3, sun_dir: Vector3) -> bool:
 	if not space.intersect_ray(q).is_empty():
 		return true
 	var to := eye + sun_dir * 60.0
-	return FoliageCover.see_through(eye, to, FoliageCover.clusters_on(space, eye, to)) < 0.5
+	return FoliageCover.see_through(eye, to, FoliageCover.clusters_round(space, eye)) < 0.5
 
 
 func _draw_flare() -> void:

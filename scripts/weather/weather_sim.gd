@@ -624,6 +624,9 @@ func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 		"storm": storm_now,
 		"clear": float(clear[c]),
 		"cloud": cloud,
+		# Relative humidity (0-1): the damp in the air (design 3 Oct §DC's
+		# shafts: haze after rain, at dawn).
+		"rh": clampf(sample(rel_humidity, d), 0.0, 1.5),
 		# The season here, for the climate readers (already in temp_c and
 		# the rain): its name, the change under way, the temperature swing
 		# and how wet it is.

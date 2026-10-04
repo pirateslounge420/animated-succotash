@@ -178,6 +178,9 @@ var vis_chunks: ChunkManager = null
 ## stamp, and 0 enclosed under a roof), eased; the post grade's floor
 ## colour (display space) and the night's desaturation for this frame.
 var sky_visibility := 1.0
+## The low mist's density where you stand (per metre, look.json mist;
+## design §DC's shafts read it).
+var mist_density := 0.0
 var post_floor := Vector3.ZERO
 ## Night is one colour (§BU): how far the darks are pulled to the floor's hue.
 var night_pull := 0.0
@@ -527,6 +530,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var mist := lerpf(float(MIST.get("day_density", 0.0006)), float(MIST.get("night_density", 0.005)), night) \
 		+ fog_amount * float(MIST.get("fog_density", 0.006)) + storm * float(MIST.get("storm_density", 0.003))
 	mist *= 1.0 - Delves.underground
+	mist_density = mist
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
 	Look.apply({

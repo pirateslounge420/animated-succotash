@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DC part 1: shafts of sunlight, only when the air would show them
+- **The gate** (`ShaftField.gate`, every half second round you): all three must hold.
+  - Direct sun: the sun above 2°, §CX's cover under 0.75, and no cloud shadow over you.
+  - Something in the air (`air_of`), the largest of:
+    - the place's fog likelihood;
+    - the damp: rh from 0.8 to 1.0 (the weather now reports `rh`);
+    - the low mist above the day's own (`SkySystem.mist_density`);
+    - a lit hearth's smoke within 40 m;
+    - dust (1) in a ruin's hall.
+  - A broken roof, which sets the kind:
+    - **canopy**: spots within 40 m where the sky visibility is 0.15–0.7 and the line to the sun passes the leaves (`FoliageCover`);
+    - **ruin**: in a hall (SkySystem's enclosure inside a built ruin), floor spots the sun reaches under a roof, with dust motes;
+    - **crepuscular**: three long rays 70–110 m out toward the sun, when the cover is broken (0.3–0.7) and you stand under open sky.
+- **Drawn the era's way:** at most 6 flat quads along the sun's direction, turned about their axis to face you. Each is one flat cool colour (#DDF2FF), unshaded and alpha-blended, at most `alpha_max` 0.22 × air × the low-sun scale × facing (0.15 with the sun behind you, 1 looking into it). So lit air can't bloom (R8), and the frame's grade and dither take it like anything else. They breathe and sway with the gust field. Motes are 12 single-pixel specks drifting at 0.05 m/s inside each canopy and ruin shaft. Everything is freed when the gate fails. The field rides the floating origin under the world root.
+- **Checked:** `tools/shaft_check.gd`, seed 7731, 0 fails:
+  - a jungle spot (13.07°N, 142.03°E) at 07:00, rh 0.95, cover 0.2 has 6 canopy shafts, the strongest at alpha 0.027 (facing away);
+  - the same spot at 13:00, rh 0.5, no fog, mist or hearth: 0;
+  - at cover 0.9: 0;
+  - a ruin hall by day: 5 sunbeams with motes. The hall is a stone room built by the check with one vault strip missing, because RuinBuilder's broken vaults are rare to find by search; the hall gate in play is the enclosure inside a built ruin;
+  - #DDF2FF is cool, and no channel is past the bloom threshold.
+- **Walkabout** (harness frames, §CG; `SITES=at AT=13.07,142.03 FACE_SUN=1`): at 07:00 with `RH=0.95`, six pale hard-edged shafts slant toward the low sun through the broken crowns. At 13:00 with `RH=0.5`, faint streaks remain, because this land's own fog likelihood (0.24) counts as air at any hour. That is as the design reads ("the weather's fog likelihood"), but it means a foggy land keeps faint noon shafts: flagged for Mike.
+- **Also fixed:** the §DB flare's leaf test passed the wrong cluster list to `FoliageCover.see_through` and would have raised script errors under trees. It now uses `clusters_round` round the eye.
+- **Data:** `look.json shafts` is unmarked. Added `crepuscular_length_scale` 3.0 (Claude Code's guess, explained in the help).
+
 ## 2026-10-04 — §DG the werewolf only on the brightest nights, by scent, from downwind
 - **One threshold** (`DayCycle.full_moon_illumination()`, `day_cycle.json` 0.97): `CreatureSpecies.active_now` uses it for `active: full_moon` (it was 0.85, about seven nights; now about three). `Dread.speed_for` gives a hunter its `full_moon_speed_scale` when the moon's lit share is at or above it (it used to be above a moonlight of 0.9).
 - **The werewolf's forests on other nights** (`Dread.entry_for(biome, illumination)`, `dread.json full_moon.only` / `other_nights`): the temperate deciduous, temperate rain, maritime and floodplain forests get the werewolf only while the moon is at least 97 % lit. On every other night they get the fallback row, the lurker with no species (§CU), as the grasslands do every night. The werewolf keeps its pacer pattern, 6.5 m/s and ×1.3 on the full moon.
