@@ -4,6 +4,44 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DR: the temple city, roots over stone (prompt 18)
+- **Monuments** (`scripts/landmarks/monuments.gd`, new): one sites pass for every `ruins.json` style whose kind is "own" (§DS's rule).
+  - **The gate:** realm, biomes, the plain words in needs and never (flat_lowland, water_for_moat, crag, slope).
+  - **The roll and the cap:** a seeded `chance` roll, at most `per_world_max` kept. Where the land exists and no cell wins its roll, the best passer stands, as §DR.5 says one or two a world where the realm exists.
+  - **One line a kind:** `Ruins.find` returns its sites first; a new kind adds its line to `Monuments.KINDS`.
+- **The temple city** (`Ruins.Kind.TEMPLE_CITY`, "Temple city"; `RuinBuilder._temple_city`), built from the entry:
+  - **The moat**, kerbed both sides;
+  - **the causeway** with its crouching guardians (half scowling, dark and bowed; half serene, pale and level), the serpent held as their balustrade, its hood raised at the far end;
+  - **the outer wall**, a gate tower on each side: piers round a dark doorway, tiers, and a face tier with a great calm face on each of its four sides; three-headed elephants with their trunks down at the front gate's corners;
+  - **one or two gallery rings:** square columns, back walls with reliefs of dancers and guardians, mossy roofs, a gopura mid-side, a fifth of the bays fallen into tumbled blocks;
+  - **the courtyards' heaps** of tumbled blocks;
+  - **the sanctum** under a tiered central tower and four lesser towers.
+  
+  Its delve is the barrow kit under the sanctum (stair, room, stair, heart, a way out at a cairn), hearth rings from `delves.json`. Its hearths vent through a vent shaft (`smoke.json`, by its kind's name). Its repeated parts are plain blocks so it fits a castle's budget, and its near detail reaches its own edge. Its front faces dry land (no standing water on its approach), and its approach is kept clear of trees.
+- **Root-trees** (§DR.2, `ruins.json root_trees`):
+  - **What:** the tallest tree of its genera (Ficus; Tetrameles once filled) passing the place's biome gate, one hero tree standing on the roof, its roots seven pale tapering tubes poured down both sides of the wall to the ground.
+  - **Where:** on every third gopura and gallery side of the temple city. Other old monuments in the wet-tropic biomes carry one or two on their highest roof faces; igloos, treehouses, boardwalks and graveyards carry none.
+- **The ochre camp** (§DR.6): a camp at a temple city wears #CC7722.
+- **Checked** (`tools/temple_city_check.gd`, seed 7731, 0 fails):
+  - one temple city at 19.19°N 100.05°E in tropical dry forest, 280 m across, three enclosures;
+  - one cell on this world passed the gate; it lost its roll and stands as the best passer;
+  - its delve has a stair, a room, a stair, the heart and a way out;
+  - 75,170 triangles, against 81,184 for the largest of 12 castles;
+  - 7 root-trees (Ficus religiosa), and an ancient pyramid in tropical dry forest carries one.
+  
+  `crag_fortress_check` and `delve_check` 0 fails.
+- **Walkabout** (harness frames, §CG; new `SITES=temple_city`, `SEED=7731`):
+  - **the head of the causeway:** the face-towered gate and its tiers, rows of guardians, the elephants;
+  - **inside:** the galleries with their columns and mossy roofs, figs on the roofs, the towers beyond.
+  
+  Backlit at 10:00, so the stone reads dark navy.
+- **Flags for Mike:**
+  - **Every own kind** now goes through Monuments. The rest of §DS and §DT–§DZ will add their lines.
+  - **Its delve** is the barrow kit for now, so the way out comes up at a small cairn, not yet a collapsed gallery.
+  - **The faces and reliefs** are blocks at our texel size, no carving detail.
+  - **The moat** is a lit water band at the ground (no carved channel), and from eye height on the approach it is only a thin line.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `styles.temple_city` and `root_trees`; `_help.styles_kinds` and `smoke.json outlets._help_do_ds` name the temple city as wired.
+
 ## 2026-10-04 — §DL: tomes, the I Ching first (prompt 16)
 - **Tomes** (`scripts/player/tomes.gd`, reads `data/tomes.json`):
   - **Where:** `find.share_of_hearts` (0.15) of the delves' hearts hold a tome in place of their spear or bow (Delves' find, seeded per delve), among the tomes whose text is in and that have no `found_at` of their own (the Tao waits for §DQ's gate).

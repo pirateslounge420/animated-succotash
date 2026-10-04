@@ -514,6 +514,13 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	var people := Peoples.get_people(people_id)
 	var biome_key := FireStore.biome_key(world, d)
 	_people_pal = Peoples.palette(people, biome_key)
+	# A camp at a temple city wears ochre (design 3 Oct §DR.6, ruins.json
+	# styles.temple_city.camp.robes; §CL's colour).
+	if key.begins_with("ruin:"):
+		for rs in Ruins.near(map, d, 40.0):
+			if int(rs.kind) == Ruins.Kind.TEMPLE_CITY:
+				var robes := Color(str((Monuments.entry("temple_city").get("camp", {}) as Dictionary).get("robes", "#CC7722")))
+				_people_pal = [robes, robes.darkened(0.18), robes.lightened(0.1), robes.darkened(0.3)]
 	var kind := Peoples.folk_kind(people, seed_value)
 	_folk_scale = Peoples.folk_scale(kind)
 	var root := Node3D.new()

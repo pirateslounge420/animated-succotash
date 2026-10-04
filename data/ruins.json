@@ -3,7 +3,7 @@
   "about": "[NOT WIRED YET \u2014 design \u00a7AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, \u00a7AA) AND whose spawn.biomes contains the biome key; no match \u2192 no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
   "fields": "base_m: side length range. tiers: receding steps (1 = smooth). face_deg: face angle. profile: smooth | step | talud_tablero | rounded_adobe | earth. stairs: number of grand stairs (0 = none). top: none | chapel_at_foot | temple_comb | twin_shrine | hall | shrine | post_circle. interior: none | corridor_chamber | top_room. material: palette key. cluster: single | single+satellite | field | plaza | avenue | terraces (cluster_n = how many). chance: share of that biome's ruins that are this style (replaces PYRAMID_CHANCE).",
   "climb": "Stair risers are ledges (\u00a70). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants).",
-  "styles_kinds": "[NOT WIRED YET \u2014 design \u00a7DR, \u00a7DS; crag_fortress is wired, \u00a7DO: CragFortress, Ruins.Kind.CRAG_FORTRESS] Entries with kind 'own' are new Ruins.Kind values (each 'name_in_play' is its KIND_NAMES entry); entries with kind 'castle' or 'tower' are styles of those kinds, picked like the pyramid styles by spawn.realm and spawn.biomes. spawn.nest names landforms.json nests; needs and never are plain words for the builder. per_world_max caps a kind. delve: direction (up, down, in, inward), rooms, heart, way_out (\u00a7CJ.4), fire_holder (delves.json). Real references live only in source (\u00a7BO). The terrace_platform style gains the fitted polygonal stone wall as its \u00a7BQ signature (\u00a7DS)."
+  "styles_kinds": "[NOT WIRED YET \u2014 design \u00a7DR, \u00a7DS; crag_fortress is wired, \u00a7DO: CragFortress, Ruins.Kind.CRAG_FORTRESS; temple_city is wired, \u00a7DR: Monuments (the shared sites pass for the own kinds), Ruins.Kind.TEMPLE_CITY] Entries with kind 'own' are new Ruins.Kind values (each 'name_in_play' is its KIND_NAMES entry); entries with kind 'castle' or 'tower' are styles of those kinds, picked like the pyramid styles by spawn.realm and spawn.biomes. spawn.nest names landforms.json nests; needs and never are plain words for the builder. per_world_max caps a kind. delve: direction (up, down, in, inward), rooms, heart, way_out (\u00a7CJ.4), fire_holder (delves.json). Real references live only in source (\u00a7BO). The terrace_platform style gains the fitted polygonal stone wall as its \u00a7BQ signature (\u00a7DS)."
  },
  "styles": {
   "true_pyramid": {
@@ -439,13 +439,14 @@
     "robes": "#CC7722",
     "note": "a living camp at the monument wears ochre (\u00a7CL's colour); first guess, Mike's call"
    },
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DR] Mike, 3 Oct, from eight frames of the temple the forest took back. Concentric galleries of square columns, carved gopuras, courtyards of tumbled blocks, tiered towers, a moat; root-trees standing on the gallery roofs with their roots poured over the doorways (the mechanism of \u00a7CL and \u00a7DJ, here the signature). \u00a7BB in stone: galleries corridors, gopuras thresholds, courtyards rooms, doorways voids. Shade olive (R3). The delve walks inward to the central tower and out by a collapsed gallery. Size is a first guess; the real ones are a kilometre.",
+   "_help": "Mike, 3 Oct, from eight frames of the temple the forest took back. Concentric galleries of square columns, carved gopuras, courtyards of tumbled blocks, tiered towers, a moat; root-trees standing on the gallery roofs with their roots poured over the doorways (the mechanism of \u00a7CL and \u00a7DJ, here the signature). \u00a7BB in stone: galleries corridors, gopuras thresholds, courtyards rooms, doorways voids. Shade olive (R3). The delve walks inward to the central tower and out by a collapsed gallery. Size is a first guess; the real ones are a kilometre.",
    "gate": {
     "face_towers": "a great serene face on each of the gate tower's four sides, looking out over the four roads; faces of nobody by name (\u00a7BO)",
     "causeway": "rows of crouching guardians holding a serpent's body as a balustrade over the moat, half scowling and half serene",
     "corners": "a three-headed elephant pulling lotus trunks from the wall",
     "far_tell": "a pale face in the trees at the end of the avenue (R10)"
-   }
+   },
+   "_built": "Built 4 Oct (\u00a7DR): Monuments places it (the gate: realm, biomes, flat_lowland within 60 m and under 60 m up, water within 2.5 km, never a crag); where the land exists and no cell wins its chance roll, the best passer stands (one or two per world where the realm exists). RuinBuilder._temple_city builds it: the moat kerbed both sides, the causeway with its guardians and serpent, the outer wall with a face-towered gate on each side (elephants at the front gate's corners), one or two gallery rings (square columns, back wall with reliefs, mossy roofs, a gopura mid-side, a fifth of the bays fallen), courtyards of tumbled blocks, and the sanctum under the central tower and four lesser towers. Its delve is the barrow kit under the sanctum (stair, room, stair, heart, a way out at a cairn). Root-trees: on every third gopura and gallery side."
   },
   "long_wall": {
    "kind": "own",
@@ -1325,7 +1326,7 @@
   "per_real_hour": 1.0
  },
  "root_trees": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DR] Trees that stand ON a ruin: a trunk on a gallery roof, a gopura or a wall top, its roots poured down over the lintel and the wall to the ground, bark pale against dark stone. The mechanism of \u00a7CL (the fig's roots gripping old stone) and \u00a7DJ (the oak door). species: the place's own (\u00a7CA, \u00a7CS) from genera; the big pale silk-cotton with the cascading roots (Tetrameles nudiflora) is a later one-line data fill for the jungle. by_kind: how many a monument carries: the temple city many (its signature), any other old monument in the listed biomes one or two (first guess, Mike's default). Only in the wet tropics (biomes). age: a camp's remains carry none.",
+  "_help": "Trees that stand ON a ruin: a trunk on a gallery roof, a gopura or a wall top, its roots poured down over the lintel and the wall to the ground, bark pale against dark stone. The mechanism of \u00a7CL (the fig's roots gripping old stone) and \u00a7DJ (the oak door). species: the place's own (\u00a7CA, \u00a7CS) from genera; the big pale silk-cotton with the cascading roots (Tetrameles nudiflora) is a later one-line data fill for the jungle. by_kind: how many a monument carries: the temple city many (its signature), any other old monument in the listed biomes one or two (first guess, Mike's default). Only in the wet tropics (biomes). age: a camp's remains carry none.",
   "genera": [
    "Ficus",
    "Tetrameles"
@@ -1352,6 +1353,7 @@
    ],
    "reach_ground": true,
    "colour": "pale_bark_against_dark_stone"
-  }
+  },
+  "_built": "Built 4 Oct (\u00a7DR, RuinBuilder._root_tree_at, root_species): the species is the tallest tree of root_trees.genera passing the place's biome gate; its roots are seven tapering tubes down both sides of the wall. Other old monuments in root_trees.biomes carry by_kind.default_monument (1-2) on their highest roof faces; igloos, treehouses, boardwalks and graveyards none."
  }
 }

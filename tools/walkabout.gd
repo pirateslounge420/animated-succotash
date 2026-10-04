@@ -26,6 +26,8 @@ extends SceneTree
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
 ## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
+## SITES=temple_city the nearest temple city (§DR), from its straight
+## approach: at the head of its causeway, 4 m out, looking at its gate.
 ## SITES=shrine the nearest shrine (§DK): its court and the way down, the
 ## hall from near its top, and the altar room by torchlight.
 ## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
@@ -158,6 +160,8 @@ func _run() -> void:
 			kinds.append("hidden")
 		if only.has("shrine"):
 			kinds.append("shrine")
+		if only.has("temple_city"):
+			kinds.append("temple_city")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -259,6 +263,21 @@ func _run() -> void:
 						"note": "a hidden %s %.1f km from the camp%s" % [kit.replace("_", " "), hd / 1000.0, ", a speaker by it" if bool(hb.speaker) else ""]})
 			"shrine":
 				sites.append_array(_shrine_sites(camp_d))
+			"temple_city":
+				var tb := {}
+				var tbd := INF
+				for ts in Monuments.all_sites(world.planet, "temple_city"):
+					if CubeSphere.surface_distance_m(ts.dir, camp_d) < tbd:
+						tbd = CubeSphere.surface_distance_m(ts.dir, camp_d)
+						tb = ts
+				if tb.is_empty():
+					lines.append("-- temple_city: none on this world")
+					continue
+				var half := float(tb.across_m) * 0.5
+				sites.append({"name": "temple_city_approach", "dir": Ruins.local_dir(tb, 0.0, -half - 4.0), "look": Ruins.local_dir(tb, 0.0, -half + 14.0),
+					"note": "the temple city %.0f km from the camp, %.0f m across, %d enclosures, from its approach" % [tbd / 1000.0, float(tb.across_m), int(tb.enclosures)]})
+				sites.append({"name": "temple_city_gallery", "dir": Ruins.local_dir(tb, -half * 0.35, -half * 0.42), "look": Ruins.local_dir(tb, 0.0, 0.0),
+					"note": "inside: the galleries, the courtyard's tumbled blocks, the towers"})
 			"ruins":
 				# SITES=ruins: the wettest and the driest stone ruins of
 				# this world (design 3 Oct §DI: a ruin wears its place),

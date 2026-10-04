@@ -242,6 +242,10 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._barrow()
 		Ruins.Kind.CRAG_FORTRESS:
 			b._crag_fortress()
+		Ruins.Kind.TEMPLE_CITY:
+			b._temple_city()
+	# Root-trees on old monuments in the wet tropics (§DR.2).
+	b._root_trees_elsewhere()
 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
 	# ruins: the others are dwellings already.)
 	var camp_rng := RandomNumberGenerator.new()
@@ -257,7 +261,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 	var og_plants := Overgrowth.plants(p_map, p_site, b.og, b._og_spots(), b._og_shade)
 	return {"og": b.og, "og_plants": og_plants, "og_shade": b._og_shade, "ivy_places": b._ivy_places, "ivy_kept": b._ivy_kept, "site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel, "root_trees": b._root_trees}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -412,6 +416,24 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	if not lamps.is_empty():
 		root.set_meta("lamps", lamps)
 		root.set_meta("lamps_on", 0.0)
+	# Root-trees standing on the stone (§DR.2): one hero tree each.
+	for rtr in data.get("root_trees", []):
+		var rsp: PlantSpecies = SpeciesDB.all()[int(rtr[1])]
+		var rh := float(rtr[2])
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.use_custom_data = true
+		mm.use_colors = true
+		mm.mesh = PlantMeshes.mesh_for(rsp, PlantMeshes.LOD_HERO, 0)
+		mm.instance_count = 1
+		mm.set_instance_transform(0, Transform3D(Basis(Vector3.UP, float(hash(rtr[0]) % 628) / 100.0).scaled(Vector3(rh, rh, rh)), rtr[0]))
+		mm.set_instance_color(0, Color(1, 1, 1, 1))
+		mm.set_instance_custom_data(0, Color(0.2, 0.0, 0.0, 0.0))
+		var rmi := MultiMeshInstance3D.new()
+		rmi.name = "RootTree"
+		rmi.multimesh = mm
+		rmi.material_override = PlantMeshes.material_for(rsp)
+		root.add_child(rmi)
 	if not (data.get("delve", {}) as Dictionary).is_empty():
 		root.set_meta("delve", data.delve)
 		root.set_meta("delve_off", data.get("delve_off", 0.0))
@@ -4074,3 +4096,395 @@ func _shrine_hall(lay: Dictionary) -> void:
 	_delve_stair(stair, off, false, 0.0, 0.0)
 	_delve_room(heart, off, [_opening(heart, (stair.c as Vector2) + (stair.dir as Vector2) * float(stair.len), float(stair.half))])
 	_delve_to = _v.size()
+
+
+# --- The temple city (design 3 Oct §DR, ruins.json styles.temple_city) ---------------
+
+const TEMPLE_STONES := [Color(0.42, 0.45, 0.4), Color(0.38, 0.41, 0.36), Color(0.46, 0.47, 0.42), Color(0.36, 0.38, 0.33), Color(0.44, 0.43, 0.38)]
+const LATERITE := Color(0.47, 0.36, 0.28)
+const FACE_STONE := Color(0.58, 0.58, 0.52)
+const ROOT_BARK := Color(0.66, 0.62, 0.54)
+const MOAT := Color(0.34, 0.58, 0.82)
+
+## Root-trees standing on the stone (§DR.2, ruins.json root_trees): [local
+## foot (on the roof), species index, height_m], drawn by make_node.
+var _root_trees: Array = []
+
+
+## A plain block (12 triangles, collision) at `c` (its middle), turned
+## `rot` round up: the temple city's repeated parts, within a castle's
+## budget.
+func _pblock(c: Vector3, size: Vector3, col: Color, moss: float, rot := 0.0) -> void:
+	var was := plain
+	plain = true
+	var ft := foot_y
+	foot_y = c.y - size.y * 0.5
+	box(Transform3D(Basis(Vector3.UP, rot), c), size, col, _growth(moss))
+	foot_y = ft
+	plain = was
+
+
+## The temple city: a moat, a causeway of guardians to the face-towered
+## gate, an outer wall with a gate on each side, one or two rings of
+## galleries (square columns, a back wall, a mossy roof, a gopura in the
+## middle of each side, some bays fallen), courtyards of tumbled blocks,
+## and at the middle a sanctum under five towers of diminishing tiers,
+## its delve going down inside it. Root-trees stand on every third gopura
+## and gallery side.
+func _temple_city() -> void:
+	palette = TEMPLE_STONES
+	var across: float = site.across_m
+	# Its near detail out to its own edge and LOD_M past it (the node's
+	# middle is the city's).
+	_lod_m = across * 0.5 + LOD_M
+	var ro := across * 0.5 - 14.0
+	var rings: Array = [ro * 0.56] if int(site.enclosures) <= 2 else [ro * 0.62, ro * 0.36]
+	var gopuras: Array = []
+	# The moat, a band of water outside the wall, kerbed both sides.
+	var m0 := ro + 4.0
+	var m1 := ro + 10.0
+	for side in 4:
+		var rot := side * PI * 0.5
+		var n := 10
+		for i in n:
+			var t0 := lerpf(-m1, m1, float(i) / n)
+			var t1 := lerpf(-m1, m1, float(i + 1) / n)
+			# The causeway crosses the front band.
+			if side == 0 and t1 > -4.0 and t0 < 4.0:
+				continue
+			var pts: Array = []
+			for q in [[t0, m0], [t1, m0], [t1, m1], [t0, m1]]:
+				var v := Vector2(q[0], -q[1]).rotated(-rot)
+				pts.append(Vector3(v.x, 0.0, v.y))
+			var y := -INF
+			for u in 3:
+				for v in 3:
+					var pa: Vector3 = (pts[0] as Vector3).lerp(pts[1], u * 0.5)
+					var pb: Vector3 = (pts[3] as Vector3).lerp(pts[2], u * 0.5)
+					var pq := pa.lerp(pb, v * 0.5)
+					y = maxf(y, ground(pq.x, pq.z))
+			var w: Array = pts.map(func(p): return Vector3(p.x, y + 0.25, p.z))
+			var mid3: Vector3 = ((w[0] as Vector3) + (w[2] as Vector3)) * 0.5
+			_face(w[0], w[1], w[2], w[3], MOAT, mid3 - Vector3(0.0, 1.0, 0.0))
+			for edge in [m0 - 0.4, m1 + 0.4]:
+				var mid := Vector2((t0 + t1) * 0.5, -edge).rotated(-rot)
+				_pblock(Vector3(mid.x, ground(mid.x, mid.y) + 0.2, mid.y), Vector3(t1 - t0 + 0.1, 0.7, 0.8), LATERITE, 0.3, -rot)
+	# The causeway over the front moat and its guardians with the serpent.
+	var cz0 := -(m1 + 2.0)
+	var cz1 := -(ro - 1.0)
+	_pave(Rect2(-3.0, cz0, 6.0, cz1 - cz0), NAN)
+	for sx: float in [-1.0, 1.0]:
+		var k := 0
+		var z := cz0 + 1.0
+		while z < cz1 - 1.0:
+			var g := ground(sx * 3.7, z)
+			var was := foot_y
+			foot_y = g
+			box(Transform3D(Basis(), Vector3(sx * 3.7, g + 0.45, z)), Vector3(0.6, 0.9, 0.7), TEMPLE_STONES[k % 5], _growth(0.4), 0.12, 0.05)
+			# Half scowling, half serene (§DR.7): the heads tilt down and go
+			# dark, or stay level and pale.
+			var scowl := (k + (1 if sx > 0.0 else 0)) % 2 == 0
+			box(Transform3D(Basis(Vector3.RIGHT, 0.35 if scowl else 0.0), Vector3(sx * 3.7, g + 1.15, z - 0.05)), Vector3(0.48, 0.5, 0.46), FACE_STONE.darkened(0.3 if scowl else 0.0), _growth(0.3), 0.12, 0.04)
+			foot_y = was
+			z += 2.2
+			k += 1
+		# The serpent's body they hold, its hood raised at the far end.
+		var gz := ground(sx * 3.7, (cz0 + cz1) * 0.5)
+		_pblock(Vector3(sx * 3.95, gz + 0.85, (cz0 + cz1) * 0.5), Vector3(0.3, 0.3, cz1 - cz0 - 1.0), TEMPLE_STONES[2], 0.5)
+		for h in 5:
+			var a := (h - 2) * 0.32
+			var hood := Vector3(sx * 3.95 + sin(a) * 0.6, ground(sx * 3.95, cz0) + 1.2 + cos(a) * 0.6, cz0 + 0.4)
+			_pblock(hood, Vector3(0.35, 0.9, 0.25), TEMPLE_STONES[2], 0.4, a)
+	# The outer wall, a gate on each side.
+	for side in 4:
+		var rot := side * PI * 0.5
+		var n := 12
+		for i in n:
+			var t0 := lerpf(-ro, ro, float(i) / n)
+			var t1 := lerpf(-ro, ro, float(i + 1) / n)
+			if t1 > -5.0 and t0 < 5.0:
+				continue
+			var mid := Vector2((t0 + t1) * 0.5, -ro).rotated(-rot)
+			var g := ground(mid.x, mid.y)
+			var h := 3.6 if rng.randf() > 0.15 else rng.randf_range(1.0, 2.4)
+			_pblock(Vector3(mid.x, g + h * 0.5 - 0.3, mid.y), Vector3(t1 - t0 + 0.05, h, 1.0), TEMPLE_STONES[i % 5], 0.6, -rot)
+		var gp := Vector2(0.0, -ro).rotated(-rot)
+		_face_gate(Vector3(gp.x, 0.0, gp.y), rot, side == 0)
+		gopuras.append([Vector3(gp.x, 0.0, gp.y), rot, 9.0])
+	# The gallery rings.
+	for ri in rings.size():
+		var r: float = rings[ri]
+		for side in 4:
+			var rot := side * PI * 0.5
+			var bays := 12
+			for i in bays:
+				var t0 := lerpf(-r, r, float(i) / bays)
+				var t1 := lerpf(-r, r, float(i + 1) / bays)
+				if t1 > -3.5 and t0 < 3.5:
+					continue
+				var mid_out := Vector2((t0 + t1) * 0.5, -r - 1.6).rotated(-rot)
+				var mid_col := Vector2((t0 + t1) * 0.5, -r + 1.6).rotated(-rot)
+				var mid := Vector2((t0 + t1) * 0.5, -r).rotated(-rot)
+				var g := ground(mid.x, mid.y)
+				var fallen := rng.randf() < 0.2
+				# The back wall (outer side), with a relief on some bays.
+				_pblock(Vector3(mid_out.x, g + 1.7, mid_out.y), Vector3(t1 - t0 + 0.05, 3.4, 0.7), TEMPLE_STONES[(i + side) % 5], 0.5, -rot)
+				if i % 3 == 1:
+					_relief(Vector2((t0 + t1) * 0.5, -r - 1.2), rot, g, (i + side) % 2 == 0)
+				if fallen:
+					var rc := Vector2((t0 + t1) * 0.5, -r + 3.5).rotated(-rot)
+					rubble(Vector3(rc.x, 0.0, rc.y), 2.4, 5)
+					continue
+				# The square column and the roof over the bay.
+				_pblock(Vector3(mid_col.x, g + 1.6, mid_col.y), Vector3(0.7, 3.2, 0.7), TEMPLE_STONES[(i + 2) % 5], 0.4, -rot)
+				_pblock(Vector3(mid.x, g + 3.55, mid.y), Vector3(t1 - t0 + 0.1, 0.7, 4.2), TEMPLE_STONES[(i + 1) % 5].darkened(0.05), 0.9, -rot)
+			# The side's gopura.
+			var gp2 := Vector2(0.0, -r).rotated(-rot)
+			_gopura(Vector3(gp2.x, 0.0, gp2.y), rot, 1.0 - ri * 0.2)
+			gopuras.append([Vector3(gp2.x, 0.0, gp2.y), rot, 6.0])
+			# Root-trees on every third gallery side (on its roof).
+			if (side + ri) % 3 == 0:
+				var at := Vector2(r * 0.45 * (1.0 if side % 2 == 0 else -1.0), -r).rotated(-rot)
+				_root_tree_at(Vector3(at.x, ground(at.x, at.y) + 3.9, at.y), rot, 4.0)
+	# The courtyards, knee-deep in tumbled blocks (§CJ.6).
+	for k in 8:
+		var a := rng.randf() * TAU
+		var rr := rng.randf_range(16.0, ro - 6.0)
+		rubble(Vector3(cos(a) * rr, 0.0, sin(a) * rr), rng.randf_range(2.5, 4.5), 7)
+	# The sanctum under the towers, its doorway on the front, the delve's
+	# passage inside.
+	_sanctum()
+	# Root-trees on every third gopura.
+	for i in gopuras.size():
+		if i % 3 == 1:
+			var gpi: Array = gopuras[i]
+			var c: Vector3 = gpi[0]
+			_root_tree_at(Vector3(c.x, ground(c.x, c.z) + float(gpi[2]), c.z), float(gpi[1]), float(gpi[2]))
+	_camp_spot = Vector3(-ro * 0.5, ground(-ro * 0.5, -ro + 8.0), -ro + 8.0)
+
+
+## A gate tower in the outer wall at `c` (local, y ignored), facing out
+## along `rot`: piers and a lintel round a dark doorway, tiers diminishing
+## upward, and on top a great serene face on each of its four sides
+## (§DR.7); the front gate's corners a three-headed elephant.
+func _face_gate(c: Vector3, rot: float, front: bool) -> void:
+	var g := ground(c.x, c.z)
+	var bs := Basis(Vector3.UP, -rot)
+	var at := func(x: float, y: float, z: float) -> Vector3: return c + bs * Vector3(x, 0.0, z) + Vector3(0.0, g + y, 0.0)
+	for sx: float in [-1.0, 1.0]:
+		_pblock(at.call(sx * 3.4, 2.6, 0.0), Vector3(3.2, 5.2, 4.0), LATERITE.lerp(TEMPLE_STONES[0], 0.5), 0.5, -rot)
+	_pblock(at.call(0.0, 5.7, 0.0), Vector3(10.0, 1.0, 4.4), TEMPLE_STONES[1], 0.7, -rot)
+	var y := 6.2
+	var w := 8.4
+	for t in 3:
+		var h := 1.8 - t * 0.3
+		_pblock(at.call(0.0, y + h * 0.5, 0.0), Vector3(w, h, w * 0.5), TEMPLE_STONES[t % 5], 0.8, -rot)
+		y += h
+		w *= 0.72
+	# The face tier: a block, a face on each side.
+	var fs := 3.6
+	_pblock(at.call(0.0, y + fs * 0.5, 0.0), Vector3(fs, fs, fs), FACE_STONE.darkened(0.15), 0.4, -rot)
+	for k in 4:
+		var fb := Basis(Vector3.UP, -rot + k * PI * 0.5)
+		var fc := c + Vector3(0.0, g + y + fs * 0.5, 0.0) + fb * Vector3(0.0, 0.0, -fs * 0.5 - 0.12)
+		box(Transform3D(fb, fc), Vector3(2.4, 2.9, 0.3), FACE_STONE, _growth(0.2), 0.35, 0.05)
+		for ex in [-0.5, 0.5]:
+			box(Transform3D(fb, fc + fb * Vector3(ex, 0.45, -0.16)), Vector3(0.55, 0.14, 0.1), FACE_STONE.darkened(0.45), 0.0, 0.03, 0.0)
+		box(Transform3D(fb, fc + fb * Vector3(0.0, -0.05, -0.2)), Vector3(0.32, 0.7, 0.18), FACE_STONE.lightened(0.05), 0.0, 0.06, 0.0)
+		box(Transform3D(fb, fc + fb * Vector3(0.0, -0.75, -0.16)), Vector3(0.9, 0.16, 0.12), FACE_STONE.darkened(0.3), 0.0, 0.04, 0.0)
+	_pblock(at.call(0.0, y + fs + 0.9, 0.0), Vector3(1.4, 1.8, 1.4), TEMPLE_STONES[2], 0.6, -rot)
+	if front:
+		# The three-headed elephants at the gate's corners, pulling lotus
+		# trunks from the wall.
+		for sx: float in [-1.0, 1.0]:
+			var e: Vector3 = at.call(sx * 5.6, 0.0, -2.4)
+			var eb := Basis(Vector3.UP, -rot)
+			box(Transform3D(eb, e + Vector3(0.0, 1.0, 0.0)), Vector3(1.6, 1.6, 2.2), TEMPLE_STONES[3], _growth(0.4), 0.3, 0.06)
+			for hx in [-0.55, 0.0, 0.55]:
+				var hp: Vector3 = e + eb * Vector3(hx, 1.55, -1.2)
+				box(Transform3D(eb, hp), Vector3(0.55, 0.7, 0.55), TEMPLE_STONES[3].lightened(0.04), _growth(0.3), 0.15, 0.04)
+				var tw := Basis(eb.x, 0.25) * eb
+				box(Transform3D(tw, hp + eb * Vector3(0.0, -0.75, -0.25)), Vector3(0.22, 1.2, 0.22), TEMPLE_STONES[3], _growth(0.4), 0.06, 0.02)
+
+
+## A gallery's gopura at `c` facing out along `rot`, scaled `s`: piers, a
+## lintel over the dark doorway, two tiers.
+func _gopura(c: Vector3, rot: float, s: float) -> void:
+	var g := ground(c.x, c.z)
+	var bs := Basis(Vector3.UP, -rot)
+	for sx: float in [-1.0, 1.0]:
+		_pblock(c + bs * Vector3(sx * 2.4 * s, 0.0, 0.0) + Vector3(0.0, g + 2.0 * s, 0.0), Vector3(2.0 * s, 4.0 * s, 5.0), TEMPLE_STONES[1], 0.5, -rot)
+	_pblock(c + Vector3(0.0, g + 4.4 * s, 0.0), Vector3(6.8 * s, 0.9, 5.4), TEMPLE_STONES[2], 0.8, -rot)
+	_pblock(c + Vector3(0.0, g + 5.4 * s, 0.0), Vector3(4.6 * s, 1.2, 3.6), TEMPLE_STONES[0], 0.9, -rot)
+	_pblock(c + Vector3(0.0, g + 6.5 * s, 0.0), Vector3(2.6 * s, 1.0, 2.0), TEMPLE_STONES[3], 0.9, -rot)
+
+
+## A relief on a gallery wall: a panel and a figure on it, a dancer (arms
+## out) or a guardian (a staff), nobody's god by name (§BO).
+func _relief(at: Vector2, rot: float, g: float, dancer: bool) -> void:
+	var bs := Basis(Vector3.UP, -rot)
+	var r2 := at.rotated(-rot)
+	var c := Vector3(r2.x, 0.0, r2.y)
+	var base := c + Vector3(0.0, g + 1.8, 0.0)
+	box(Transform3D(bs, base), Vector3(1.4, 2.0, 0.12), TEMPLE_STONES[2].lightened(0.05), _growth(0.3), 0.03, 0.01)
+	box(Transform3D(bs, base + bs * Vector3(0.0, -0.1, -0.1)), Vector3(0.3, 1.0, 0.08), TEMPLE_STONES[4].darkened(0.2), 0.0, 0.02, 0.0)
+	box(Transform3D(bs, base + bs * Vector3(0.0, 0.55, -0.1)), Vector3(0.22, 0.24, 0.08), TEMPLE_STONES[4].darkened(0.2), 0.0, 0.02, 0.0)
+	if dancer:
+		box(Transform3D(bs, base + bs * Vector3(0.0, 0.25, -0.1)), Vector3(0.9, 0.1, 0.08), TEMPLE_STONES[4].darkened(0.2), 0.0, 0.02, 0.0)
+	else:
+		box(Transform3D(bs, base + bs * Vector3(0.3, 0.0, -0.1)), Vector3(0.08, 1.5, 0.08), TEMPLE_STONES[4].darkened(0.25), 0.0, 0.02, 0.0)
+
+
+## The sanctum at the middle: four walls round the delve's way in (the
+## barrow kit's passage and chamber, §CJ), a doorway on the front, the
+## floor paved over the ground's hole, a roof, the central tower's tiers
+## over it and four lesser towers at its corners.
+func _sanctum() -> void:
+	var hs := 7.0
+	var h := 5.4
+	var g0 := ground(0.0, 0.0)
+	for side in 4:
+		var rot := side * PI * 0.5
+		var bs := Basis(Vector3.UP, -rot)
+		if side == 0:
+			for sx: float in [-1.0, 1.0]:
+				_pblock(bs * Vector3(sx * (hs + 1.0) * 0.5 + sx * 0.6, 0.0, -hs) + Vector3(0.0, g0 + h * 0.5 - 0.4, 0.0), Vector3(hs - 1.2, h, 0.9), TEMPLE_STONES[1], 0.5, -rot)
+			_pblock(bs * Vector3(0.0, 0.0, -hs) + Vector3(0.0, g0 + h - 0.6, 0.0), Vector3(2.4, 1.2, 0.9), TEMPLE_STONES[2], 0.6, -rot)
+		else:
+			_pblock(bs * Vector3(0.0, 0.0, -hs) + Vector3(0.0, g0 + h * 0.5 - 0.4, 0.0), Vector3(2.0 * hs + 0.9, h, 0.9), TEMPLE_STONES[side % 5], 0.5, -rot)
+	_pblock(Vector3(0.0, g0 + h + 0.1, 0.0), Vector3(2.0 * hs + 1.6, 0.8, 2.0 * hs + 1.6), TEMPLE_STONES[0], 1.0)
+	# The floor over the hole (the passage's own flags lie on it).
+	_pave(Rect2(-hs, -hs, 2.0 * hs, 2.0 * hs), NAN, Rect2(-1.2, -hs, 2.4, 2.0 * hs))
+	# The central tower's tiers, and four lesser towers.
+	var y := g0 + h + 0.5
+	var w := 11.0
+	for t in 5:
+		var th := 2.2 - t * 0.2
+		_pblock(Vector3(0.0, y + th * 0.5, 0.0), Vector3(w, th, w), TEMPLE_STONES[t % 5], 0.9)
+		y += th
+		w *= 0.76
+	_pblock(Vector3(0.0, y + 1.0, 0.0), Vector3(1.2, 2.0, 1.2), TEMPLE_STONES[2], 0.6)
+	for k in 4:
+		var a := PI * 0.25 + k * PI * 0.5
+		var tc := Vector2(cos(a), sin(a)) * (hs + 9.0)
+		var tg := ground(tc.x, tc.y)
+		var ty := tg
+		var tw := 5.2
+		for t in 4:
+			var th := 2.4 - t * 0.3
+			_pblock(Vector3(tc.x, ty + th * 0.5, tc.y), Vector3(tw, th, tw), TEMPLE_STONES[(t + k) % 5], 0.8)
+			ty += th
+			tw *= 0.74
+	# The delve's way in (Delves.layout: the barrow kit under it).
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+## A root-tree standing on the stone at local `foot` (§DR.2): kept for
+## make_node to draw (the place's own fig, else nothing), and its roots
+## poured down both sides of the wall to the ground, pale over the dark
+## stone: a few thick tubes tapering as they go.
+func _root_tree_at(foot: Vector3, rot: float, drop: float) -> void:
+	var sp := root_species(map, site.dir)
+	if sp == null:
+		return
+	_root_trees.append([foot, SpeciesDB.index_of(sp), clampf(sp.height_m.y * 0.75, 14.0, 30.0)])
+	var bs := Basis(Vector3.UP, -rot)
+	var was := solid
+	solid = false
+	for k in 7:
+		var side := -1.0 if k % 2 == 0 else 1.0
+		var spread := rng.randf_range(0.4, 2.6)
+		var p0 := foot + bs * Vector3(rng.randf_range(-0.6, 0.6), 0.0, side * 0.5)
+		var p1 := foot + bs * Vector3(rng.randf_range(-1.5, 1.5), -0.2, side * 2.5)
+		var g := ground(p1.x, p1.z)
+		var p2 := Vector3(p1.x, lerpf(p1.y, g, 0.55), p1.z) + bs * Vector3(rng.randf_range(-spread, spread), 0.0, side * 0.25)
+		var p3 := Vector3(p2.x, ground(p2.x, p2.z) - 0.2, p2.z) + bs * Vector3(rng.randf_range(-0.8, 0.8), 0.0, side * rng.randf_range(0.5, 1.5))
+		_root_tube([p0, p1, p2, p3], rng.randf_range(0.18, 0.32), 0.06, ROOT_BARK.darkened(rng.randf_range(0.0, 0.12)))
+	solid = was
+
+
+## A tapered tube along `pts` (local), five sided, from radius r0 to r1.
+func _root_tube(pts: Array, r0: float, r1: float, col: Color) -> void:
+	var n := pts.size()
+	var rings: Array = []
+	for i in n:
+		var p: Vector3 = pts[i]
+		var dirv: Vector3 = ((pts[mini(i + 1, n - 1)] as Vector3) - (pts[maxi(i - 1, 0)] as Vector3)).normalized()
+		var side := dirv.cross(Vector3.UP)
+		if side.length() < 0.1:
+			side = dirv.cross(Vector3.RIGHT)
+		side = side.normalized()
+		var up2 := side.cross(dirv).normalized()
+		var r := lerpf(r0, r1, float(i) / maxf(n - 1, 1))
+		var ring: Array = []
+		for k in 5:
+			var a := TAU * k / 5.0
+			ring.append(p + (side * cos(a) + up2 * sin(a)) * r)
+		rings.append(ring)
+	for i in n - 1:
+		for k in 5:
+			var a0: Vector3 = rings[i][k]
+			var a1: Vector3 = rings[i][(k + 1) % 5]
+			var b0: Vector3 = rings[i + 1][k]
+			var b1: Vector3 = rings[i + 1][(k + 1) % 5]
+			_face(a0, a1, b1, b0, col, pts[i])
+
+
+## The root-trees' species at `d`: of root_trees.genera (Ficus first; the
+## silk-cotton once filled), the tallest tree passing the place's biome
+## gate (HiddenPlaces.tree_gate), or null.
+static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
+	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
+	var genera: Array = rt.get("genera", ["Ficus"])
+	var best: PlantSpecies = null
+	for sp in SpeciesDB.all():
+		if not sp.tier in [PlantSpecies.Tier.EMERGENT, PlantSpecies.Tier.CANOPY] or not genera.has(sp.genus):
+			continue
+		if not HiddenPlaces.tree_gate(p_map, d, sp):
+			continue
+		if best == null or sp.height_m.y > best.height_m.y:
+			best = sp
+	return best
+
+
+## Root-trees on any other old monument in the wet tropics (ruins.json
+## root_trees: by_kind default_monument, one or two; never a camp's
+## remains): on the highest wall tops the overgrowth found.
+func _root_trees_elsewhere() -> void:
+	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
+	if rt.is_empty() or int(site.kind) == Ruins.Kind.TEMPLE_CITY or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+		return
+	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
+	if not (rt.get("biomes", []) as Array).has(bkey):
+		return
+	# The tops: faces of the built stone pointing up, a man's height or
+	# more over the ground (one in a few, for speed).
+	var tops: Array = []
+	var i := 0
+	while i + 2 < _v.size():
+		if _n[i].y > 0.9:
+			var c := (_v[i] + _v[i + 1] + _v[i + 2]) / 3.0
+			var above := c.y - ground(c.x, c.z)
+			if above > 2.5 and (_v[i] - _v[i + 1]).length() > 0.8:
+				tops.append([above, c, Transform3D()])
+		i += 9
+	if tops.is_empty():
+		return
+	tops.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) > float(b[0]))
+	var want: Array = (rt.get("by_kind", {}) as Dictionary).get("default_monument", [1, 2])
+	var n := rng.randi_range(int(want[0]), int(want[1]))
+	var used: Array = []
+	for t in tops:
+		if used.size() >= n:
+			break
+		var p: Vector3 = t[1]
+		var clash := false
+		for u in used:
+			if (u as Vector3).distance_to(p) < 6.0:
+				clash = true
+		if clash:
+			continue
+		used.append(p)
+		var xf: Transform3D = t[2]
+		_root_tree_at(p, atan2(xf.basis.x.z, xf.basis.x.x), float(t[0]))

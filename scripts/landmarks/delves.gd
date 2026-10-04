@@ -83,6 +83,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# The crag fortress's delve climbs (design 3 Oct §DO).
 	if int(site.kind) == Ruins.Kind.CRAG_FORTRESS:
 		return true
+	# The temple city walks inward to its sanctum (§DR.3: the barrow kit).
+	if int(site.kind) == Ruins.Kind.TEMPLE_CITY:
+		return true
 	return int(site.kind) == Ruins.Kind.BARROW and str(site.get("style", "")) in ["stone", "snow"]
 
 
