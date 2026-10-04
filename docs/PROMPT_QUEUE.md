@@ -21,8 +21,8 @@ doc or the built game, say so to Mike and stop.
 **Claude (chat)** appends new prompts after the ones already here (numbers never change) and
 keeps the table's marks when it regenerates this file.
 
-**Not in this file:** §DM (the road is the stage) and §DN (the lighthouse, built as `dd1349f`)
-were locked in other chats and handed over there. §BR puts §DM's pass between 16 and 17; §DH (the
+**Not in this file:** §DM (the road is the stage, built as `2978fb9` and `053c218`) and §DN (the
+lighthouse, built as `dd1349f`) were locked in other chats, handed over there, and are done. §DH (the
 goblin band) waits for Mike's four calls.
 
 Built so far: 01–10, 17. Next up: 11.
