@@ -9,7 +9,7 @@
 > [`docs/HOW_TO_RUN.md`](./docs/HOW_TO_RUN.md). They override this README.
 
 A slow, first-person walk across a procedural cube-sphere planet: **400 km around, one
-one hundredth of Earth**, with heights and time at 1/10. Old, overgrown roads lead between
+hundredth of Earth**, with heights and time at 1/10. Old, overgrown roads lead between
 ruins and living camps. You wake with nothing; the torch is the first tool, and fire is
 carried, never made. What lurks in the dark is the only enemy, and every ruin is designed to go down into
 the dark (§CJ, not built yet). There's no crafting: the camps' makers work what you bring. You
@@ -53,9 +53,8 @@ maths in `tools/reference/daylight_reference.py`, and the design in
 ## How the world is built
 
 Only the planet's coarse **blueprint** is built for the whole planet at once, because the
-weather and the rivers need it. It is 96 cells along each cube face: about 1 km a cell on the
-400 km map the geography is laid out on, and about 10 km on the 4,000 km planet, which is that
-map built ten times wider. The blueprint holds:
+weather and the rivers need it. It is 96 cells along each cube face, about 1 km a cell on the
+400 km planet. The blueprint holds:
 - terrain, oceans, lakes and rivers;
 - a running weather simulation and climate averages;
 - rock and soil;
