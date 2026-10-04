@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows. With §EA (4 Oct, 12:19): `data/harm.json`.
 
 ---
 
@@ -3356,3 +3356,40 @@ halls). Not built.
 5. **Overgrowth** at §DI's dry row: grass on the hill above, a creeper down the court walls,
    lichen on the towers.
 
+
+## EA. Three hits, no bar: the dark closes in, your heart pounds, "Good night" — LOCKED (4 Oct, 12:19, by voice, Mike)
+
+Mike: *"there could be daytime danger with real teeth"*; *"no health bar and … one or two hits is
+your forgiveness and if you get hit a third time like within a certain … period … whatever was
+attacking you basically got you … kind of like Black Ops 1 zombies … maybe ours be three hits"*;
+*"on the first hit the dark closes in a little bit … on the second hit you hear your heartbeat
+start pumping real fast"*; *"if you get got on that third hit, the dark closes in and there's some
+big red letters that say good night"*; *"lock it in"*. Builds on §AY, §BA, §DE. Data:
+`data/harm.json`. Not built.
+
+**Amends the pillar "no health-bar fight":** there is still no bar, but there is now **daytime
+danger with real teeth**: a creature that stands its ground (the first is a horned mountain goat
+that stamps and rams, talked through 4 Oct and not yet locked as a species) can take you. The
+dark's chase (§BA) is unchanged and still the main threat. Mike edits the Project brief's line.
+
+- **Three hits within a window.** Each hit from a creature (or a ram's knockback landing) counts
+  one. Hit 3 inside the window takes you. Break contact and the count falls back one step at a
+  time (`harm.json → recover`). No HP number reaches the screen in the ambient profile: the
+  existing `PlanetPlayer.hp` meter and `status_hud` bar stay for the ninja game only.
+- **Hit 1, sight:** the frame's edges darken and colour drains a little, sound goes slightly
+  muffled. The dark literally reaching in (R-rules hold: shade stays navy, never grey).
+- **Hit 2, the heart:** a fast heartbeat comes up under everything, the vignette deepens.
+- **Hit 3, taken:** the dark closes the frame to black, and **"Good night"** in big red letters
+  in the 480-line frame (§Y), held, then fade. The one red on screen; fire's warm family.
+- **Recovery mirrors it:** away from danger the heartbeat settles first, then the dark pulls back.
+- **Waking is §DE, unchanged:** home hearth if set and alive, else the nearest lit fire with folk,
+  with the lost days and the "Folk found you out cold" line. Mike's reason for the nearest: a
+  hearth's ground is its folk's territory, so whoever's country you fell in is who ranged out
+  and found you. Death line for this: §DE's `"Struck down by a {creature}"`.
+
+**Talked through the same session, NOT locked:** creatures rarer and warier (flight distance,
+slow walking closes it, running and jumping scatters them, scent on the wind); a signature gait
+per species (hare zig-zag darts, deer and elk floating prance and extra-graceful leaps, the fox
+low and weightless with a big brush trailing a half-beat late like a dragon's body, the goat
+stamping, holding ground, ramming you flying with heavy satisfying sound); a sparser,
+dark-ambient soundscape (cut the constant unplaceable bed; keep single sounds you can turn to).

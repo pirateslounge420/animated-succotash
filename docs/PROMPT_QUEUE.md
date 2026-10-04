@@ -717,3 +717,16 @@ BUILD the nest in its three forms: (1) THE CAUSEWAY on a volcanic coast (rocky s
 
 CHECK (tools/basalt_check.gd, headless): on seed 7731 every columnar basalt site sits on basalt where the gate holds (an old flow at the sea or a river), the three forms each place at least once where their biomes exist; the causeway's hearth spot is above the high-water line; the sea cave's hearth spot is on the clifftop and the cave holds no camp; the sea cave's source plays only inside its max_distance; the hexagon tile reads at 16 texels a metre (the tile is 32 px over 2 m, or the house tile size). Walkabout once: the causeway at low tide, from the coast road.
 ```
+
+## 36 — Three hits, no bar, "Good night" — §EA
+
+**Status:** todo
+**Mike sees:** A creature hits you and the edges of the screen darken; a second hit and your heart pounds; a third and the dark closes in, "Good night" in red, and you wake at a fire with folk.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §EA of docs/design/RECONCILIATION_2026-09-30.md, from data/harm.json. No screenshots after every step: check with a headless tools/harm_check.gd, walkabout once at the end. Prepend a PROGRESS entry, keep HOW_TO_RUN true, remove [NOT WIRED YET] from harm.json, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+BUILD, ambient profile only (the ninja game keeps PlanetPlayer.hp and the status bar untouched): hide the HP meter; count creature hits (knockback counts) within harm.window_s; hit 1 = vignette + slight desaturate + muffle; hit 2 = deeper, plus a fast heartbeat; recovery steps back per harm.recover, heartbeat settling first, then the dark pulling back; hit 3 = close the frame to black, "Good night" big and red inside the 480-line frame, hold, fade, then hand to the existing §DE wake (camps.json wake_found: home hearth else nearest lit fire with folk, lost days, the found line, "Struck down by a {creature}"). Shade stays navy in the vignette, never grey.
+
+CHECK: three hits inside the window take you, three spread past it do not; stage 2 plays the heartbeat, stage 1 does not; after calm the stages fall back in order; the wake lands at §DE's fire. Walkabout once: take two hits and recover.
+```

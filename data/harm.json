@@ -1,0 +1,20 @@
+{
+  "_help": "[NOT WIRED YET] §EA (4 Oct): three hits, no bar, ambient profile only. The ninja game keeps PlanetPlayer.hp and the status bar.",
+  "hits_to_take": 3,
+  "window_s": 20.0,
+  "recover": { "calm_s": 8.0, "step_s": 6.0, "heart_first": true },
+  "stages": {
+    "1": { "vignette": 0.35, "desaturate": 0.25, "muffle_db": -4.0, "heartbeat": false },
+    "2": { "vignette": 0.6, "desaturate": 0.45, "muffle_db": -8.0, "heartbeat": true, "heart_bpm": 150 }
+  },
+  "taken": {
+    "close_s": 1.2,
+    "text": "Good night",
+    "text_color": "#C81E1E",
+    "text_size_px": 40,
+    "hold_s": 2.5,
+    "fade_s": 1.5,
+    "then": "wake_found"
+  },
+  "knockback_counts_as_hit": true
+}
