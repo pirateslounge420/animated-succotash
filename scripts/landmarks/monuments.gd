@@ -33,7 +33,7 @@ class_name Monuments
 ##                     and dry (a river's or lake's cell is no bar here);
 ##   flat              the ground within 60 m rises no more than FLAT_LOOSE;
 ##   coast             the sea within COAST_M (sea_bearing);
-##   dry               the ground's moisture under DRY;
+##   dry               the ground's moisture under DRY (never: over it);
 ##   open_ground       open land: no tree of the catalogue may grow there
 ##                     (treeless) and the ground rolls under FLAT_LOOSE;
 ##   near_water        a river, a lake or the shore within WATER_BELOW_M;
@@ -61,7 +61,7 @@ class_name Monuments
 ##                     oasis's lake will do).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -174,6 +174,8 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = [
 		return "closed"
 	if needs.has("dry") and map.sample(map.moisture, p) >= DRY:
 		return "wet"
+	if never.has("dry") and map.sample(map.moisture, p) < DRY:
+		return "dry"
 	if needs.has("near_water") and HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) > WATER_BELOW_M:
 		return "dry"
 	if needs.has("coast") and is_inf(sea_bearing(map, p)):
@@ -606,6 +608,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 				return {}
 		"hanging_gardens":
 			if _hanging_gardens(map, E, d, rng, site).is_empty():
+				return {}
+		"abbey":
+			if _abbey(map, E, d, rng, site).is_empty():
 				return {}
 	return site
 
@@ -1275,4 +1280,60 @@ static func _hanging_gardens(map: PlanetData, E: Dictionary, d: Vector3, rng: Ra
 	var lay := HangingGardens.layout(map, site)
 	if not bool(lay.get("ok", false)):
 		return {}
+	return site
+
+
+## The abbey (§DU): a church length_m long (west end -z, east end +z),
+## nave_w wide, its walls wall_h high; its tower (tower_h, whole or half) at
+## the west end's north corner; the cloister on its south side (+x). Where
+## water is near (a river's valley floor, a headland over the sea) it stands
+## back from it, else where the pass found it. Its crypt under the east end
+## is the barrow kit: of the frame's four grid headings, the one with a way
+## out whose open hole ends soonest, the kit's passage drawn west till that
+## hole ends inside the east wall. Fills `site` in place; {} where it won't
+## fit.
+static func _abbey(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var lm: Array = E.get("length_m", [40, 90])
+	var length := rng.randf_range(float(lm[0]), float(lm[1]))
+	site.length_m = length
+	site.nave_w = clampf(length * 0.3, 12.0, 24.0)
+	site.wall_h = clampf(length * 0.2, 10.0, 18.0)
+	site.tower_h = float(site.wall_h) * rng.randf_range(1.5, 1.9)
+	site.tower_whole = rng.randf() < 0.5
+	site.ruin_seed = rng.randi()
+	var wp := water_point(map, d, WATER_SIDE_M)
+	var c := d
+	if not wp.is_empty() and float(wp.m) > 0.0:
+		var wd: Vector3 = wp.dir
+		var rel := wd - d * wd.dot(d)
+		var bearing := atan2(rel.dot(CubeSphere.east(d)), rel.dot(CubeSphere.north(d)))
+		var back := CreatureSpawner._offset(wd, bearing + PI, length * 0.75 + 25.0)
+		if map.water[map.cell_at(back)] == PlanetData.Water.NONE and map.terrain.elevation(back, true) > 1.0 and slope(map, back, 60.0) <= FLAT_LOOSE * 1.5:
+			c = back
+			site.by_water = true
+	site.dir = c
+	var h0 := Delves.grid_heading(c, rng.randf() * TAU)
+	var best := INF
+	var half := length * 0.5
+	for k in 4:
+		var trial := site.duplicate()
+		trial.heading = h0 + k * PI * 0.5
+		trial.half_l = 17.0 - half
+		var lay := Delves._make_layout(map, trial)
+		var end_z := ((lay.holes as Array)[0] as Rect2).end.y
+		var score := end_z + (0.0 if not (lay.exit as Dictionary).is_empty() else 100.0)
+		if score < best:
+			best = score
+			site.heading = trial.heading
+	site.half_l = 17.0 - half
+	for it in 2:
+		var end_z := ((Delves._make_layout(map, site).holes as Array)[0] as Rect2).end.y
+		if end_z <= half - 1.5:
+			break
+		site.half_l = float(site.half_l) + end_z - (half - 1.5)
+	if -float(site.half_l) < -half + 4.0:
+		return {}
+	var reach := half + float(site.nave_w)
+	site.footprint_m = reach + 10.0
+	site.clear = [[c, reach + 4.0]]
 	return site

@@ -57,7 +57,7 @@ const OWL_MIN_C := -15.0
 const LIZARD_MIN_C := 18.0
 const LIZARD_MAX_MOISTURE := 0.5
 ## Ruins with a top birds nest in and a vault under them.
-const TOWERED := [Ruins.Kind.TOWER, Ruins.Kind.CASTLE, Ruins.Kind.AQUEDUCT, Ruins.Kind.PYRAMID, Ruins.Kind.CRAG_FORTRESS]
+const TOWERED := [Ruins.Kind.TOWER, Ruins.Kind.CASTLE, Ruins.Kind.AQUEDUCT, Ruins.Kind.PYRAMID, Ruins.Kind.CRAG_FORTRESS, Ruins.Kind.ABBEY]
 
 ## The bed's three, for SoundBed (0-1).
 static var stone_wind := 0.0
@@ -196,6 +196,9 @@ func has_water(node: Node3D) -> bool:
 	var site: Dictionary = node.get_meta("site", {})
 	var d: Vector3 = site.dir
 	if int(site.get("kind", -1)) == Ruins.Kind.BOARDWALK:
+		return true
+	# The hanging gardens' channel (§DT).
+	if int(site.get("kind", -1)) == Ruins.Kind.HANGING_GARDENS:
 		return true
 	if (node.get_meta("delve", {}) as Dictionary).has("well"):
 		return true

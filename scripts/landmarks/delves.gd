@@ -115,6 +115,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# gardens' galleries under their terraces (§DT).
 	if int(site.kind) in [Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS]:
 		return true
+	# The abbey's crypt and undercroft under its east end (§DU).
+	if int(site.kind) == Ruins.Kind.ABBEY:
+		return true
 	# The northern styles (§DS): the tower house's undercroft and pit
 	# prison under its keep, a postern out; the broch's souterrain.
 	if int(site.kind) == Ruins.Kind.CASTLE and str(site.get("style", "")) == "tower_house":

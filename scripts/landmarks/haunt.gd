@@ -75,7 +75,8 @@ static func haunted(site: Dictionary) -> bool:
 	var kinds: Array = D.get("kinds", [])
 	var name := str(Ruins.Kind.keys()[int(site.get("kind", 0))]) if int(site.get("kind", -1)) >= 0 and int(site.get("kind", -1)) < Ruins.Kind.size() else ""
 	var share := float(D.get("share", 0.4))
-	if kinds.has(name):
+	# (The data names the newer kinds by their style keys: "abbey", §DU.)
+	if kinds.has(name) or kinds.has(name.to_lower()):
 		return float(hash([int(site.get("seed", 0)), "haunt"]) & 0xFFFF) / 65535.0 < share
 	return false
 

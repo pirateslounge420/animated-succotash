@@ -4,6 +4,31 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DU: the ruined abbey (prompt 31)
+- **The kind:** `Ruins.Kind.ABBEY`, "Ruined abbey" (`data/ruins.json` → `styles.abbey`, unmarked), placed by Monuments' sites pass, at most two a world.
+  - **Where:** palearctic temperate deciduous, maritime forest, tundra, bog and rocky shore, cool and wet (`cool_wet`), never hot, never dry (`dry` now also works as a never-word).
+  - **Near water:** where water lies within 600 m it stands back from it, on a valley floor or a headland (`by_water`). The design's `where` list is not a gate.
+- **The church** (`RuinBuilder._abbey`), 40–90 m long, west end −z and east end +z:
+  - The aisles' outer walls are lower and broken, a lancet a bay, open to the sky.
+  - The nave's arcades: piers with pointed arches and the clerestory over them, some piers fallen.
+  - The chancel's full-height side walls; the east gable with three tall lancets; the west front with its door and window; the transepts' stumps.
+  - The tower at the west end's north corner, whole or with two walls fallen, ivy up it.
+  - Rubble in the nave. South of it, the cloister and chapter house as foundations in the turf.
+  - The warming house with its chimney stack, its hearth the old hearth (the one fire the monks kept).
+- **The crypt:** the barrow kit under the east end, from a passage in the chancel down to the heart (the crypt's chapel). Of the four grid headings, the site takes the one whose open hole ends soonest, drawn west till it ends inside the east wall. Braziers. Smoke: `chimney_stack`.
+- **The haunt:** `Haunt.haunted` now reads the data's style-key names too, so `haunt.kinds` "abbey" counts. About 40 % of abbeys are haunted.
+- **Residents:** the abbey is a towered ruin in `RuinSounds` (birds in the tower by day, the owl at a window at night).
+  - Also for §DT: the hanging gardens now count as a ruin with water (drips, and frogs where they live).
+- **Check:** `tools/abbey_check.gd`, 0 fails on 7731 and 8.
+  - 161 of 400 abbeys are haunted (share 0.40), and the birds and owl are registered.
+  - 7731: two, 52 and 53 m long, in temperate deciduous and tundra, both towers whole. Seed 8: two, 56 and 64 m, towers half fallen.
+  - Every crypt has a heart and a way out, its hole inside the east wall. 39–43 k triangles against the castle's 78 k.
+- **Walkabout** (`SEED=7731 SITES=abbey HOURS=9`, harness frame §CG): inside the nave at the west end looking east. Walls and the clerestory rising either side, the grass floor and fallen stones, the east gable's openings against the sky. The walkabout counted 6 shafts there at 09:00 and heard birds at 21 m.
+- **Flags:**
+  - The arcades read as heavy blocks more than clean pointed arches. The pointed heads are two leaning stones.
+  - The night stair comes up wherever the kit's exit finds ground, not always in the cloister.
+  - The headland lichen isn't separate from moss.
+
 ## 2026-10-04 — §DT: the hanging gardens (prompt 30)
 - **The kind:** `Ruins.Kind.HANGING_GARDENS`, "Hanging gardens" (`data/ruins.json` → `styles.hanging_gardens`, unmarked), placed by Monuments' sites pass, one a world at most.
   - **New gate word:** `water_one_side`: a river, a lake or the shore within 600 m (`Monuments.water_point`).

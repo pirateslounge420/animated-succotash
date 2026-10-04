@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=abbey the nearest ruined abbey (§DU): inside its nave at the west
+## end, looking east down the arcades to the lancets.
 ## SITES=hanging_gardens the hanging gardens (§DT): off their back corner,
 ## the channel's falls down the terraces in view (SEED=8 has them).
 ## SITES=hewn_temple the nearest hewn temple (§DZ): on the rim of its pit
@@ -212,6 +214,8 @@ func _run() -> void:
 			kinds.append("hewn_temple")
 		if only.has("hanging_gardens"):
 			kinds.append("hanging_gardens")
+		if only.has("abbey"):
+			kinds.append("abbey")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -328,6 +332,19 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"abbey":
+				var abd := INF
+				var ab0 := {}
+				for ab in Monuments.all_sites(world.planet, "abbey"):
+					if CubeSphere.surface_distance_m(ab.dir, camp_d) < abd:
+						abd = CubeSphere.surface_distance_m(ab.dir, camp_d)
+						ab0 = ab
+				if ab0.is_empty():
+					lines.append("-- abbey: none on this world")
+					continue
+				var ahl := float(ab0.length_m) * 0.5
+				sites.append({"name": "abbey", "dir": Ruins.local_dir(ab0, 1.5, -ahl + 5.0), "look": Ruins.local_dir(ab0, 0.0, ahl), "pitch_to": Ruins.local_dir(ab0, 0.0, ahl), "pitch_add_m": float(ab0.wall_h) * 0.5,
+					"note": "the ruined abbey's nave, %.0f m long, looking east" % float(ab0.length_m)})
 			"hanging_gardens":
 				var hgs: Array = Monuments.all_sites(world.planet, "hanging_gardens")
 				if hgs.is_empty():

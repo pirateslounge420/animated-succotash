@@ -260,6 +260,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._hewn_temple()
 		Ruins.Kind.HANGING_GARDENS:
 			b._hanging_gardens()
+		Ruins.Kind.ABBEY:
+			b._abbey()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4562,7 +4564,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -6291,3 +6293,227 @@ func _garden_galleries(lay: Dictionary, off: float) -> void:
 				_delve_stair(pc, off, false, 0.0, 0.0)
 			"exit":
 				_delve_stair_open_top(pc, off, float(lay.exit_open), float(maxf(float(pc.y0), float(pc.y1))) - off + Delves.H_STAIR)
+
+
+# --- The abbey (design 3 Oct §DU) -----------------------------------------------------
+
+## Ashlar: pale grey-buff limestone and sandstone.
+const ASHLAR := [Color(0.57, 0.54, 0.48), Color(0.53, 0.5, 0.45), Color(0.6, 0.56, 0.48), Color(0.5, 0.48, 0.44), Color(0.55, 0.51, 0.44)]
+
+
+## The abbey (Monuments._abbey): its church roofless, the west end -z and
+## the east end +z: the aisles' outer walls broken and lower, the nave's
+## arcades of pointed arches on their piers with the clerestory over them,
+## the gables at both ends with their tall lancets open to the sky, the
+## transepts' stumps, the tower at the west end's north corner (whole, or
+## two of its walls fallen); south of it the cloister and the chapter house
+## as foundations in the turf, and the warming house with its chimney
+## stack. The crypt (the barrow kit) under the east end.
+func _abbey() -> void:
+	palette = ASHLAR
+	var length: float = site.length_m
+	var w: float = site.nave_w
+	var h: float = site.wall_h
+	var half := length * 0.5
+	var hw := w * 0.5
+	var t := 1.2
+	var aisle := w * 0.22
+	_lod_m = half + w + LOD_M
+	_lit_per_pixel = true
+	var rr := RandomNumberGenerator.new()
+	rr.seed = int(site.ruin_seed)
+	# The crossing and the transepts.
+	var zx0 := half - length * 0.3 - w * 0.8
+	var zx1 := zx0 + w * 0.8
+	var te := hw + w * 0.55
+	# The aisles' outer walls: lower, broken, a lancet a bay; open at the
+	# crossing.
+	var bay := 5.0
+	for sx: float in [-1.0, 1.0]:
+		var x := sx * (hw - t * 0.5)
+		for run: Array in [[-half, zx0], [zx1, half - length * 0.3 + 0.0]]:
+			_lancet_wall(Vector2(x, float(run[0])), Vector2(x, float(run[1])), h * 0.55, t, bay, 1.4, rr, 0.35)
+		# The chancel's side walls, full height, a lancet a bay.
+		_lancet_wall(Vector2(x, half - length * 0.3), Vector2(x, half), h, t, bay, 1.4, rr, 0.15)
+		# The transept's end and its two side walls, broken down.
+		_lancet_wall(Vector2(sx * te, zx0), Vector2(sx * te, zx1), h * 0.8, t, 4.0, 1.6, rr, 0.5)
+		for tz: float in [zx0, zx1]:
+			_lancet_wall(Vector2(sx * hw, tz), Vector2(sx * te, tz), h * 0.7, t, 4.0, 1.2, rr, 0.6)
+	# The nave's arcades: piers, pointed arches, the clerestory over them.
+	for sx: float in [-1.0, 1.0]:
+		var x := sx * (hw - aisle)
+		var z := -half + bay
+		var spring := h * 0.42
+		while z < zx0 - 0.5:
+			var g := ground(x, z)
+			var fallen := rr.randf() < 0.18
+			var ph := (spring if not fallen else rr.randf_range(1.0, spring * 0.6))
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(x, g + ph * 0.5 - 0.5, z)), Vector3(1.3, ph + 1.0, 1.3), ASHLAR[0], 0.25)
+			var zn := z + bay
+			if not fallen and zn < zx0 - 0.5 and rr.randf() > 0.15:
+				var gy := g + spring
+				_pointed_arch(Vector3(x, gy, z), Vector3(x, gy, zn), 1.0)
+				# The clerestory over the bay, its lancet open.
+				var top := g + h * rr.randf_range(0.85, 1.0)
+				var ay := gy + bay * 0.55
+				for k in 2:
+					var zz := z + (0.25 + 0.5 * k) * bay
+					_pbox(Transform3D(Basis.IDENTITY, Vector3(x, (ay + top) * 0.5, zz)), Vector3(1.0, top - ay, bay * 0.3), ASHLAR[(k + 1) % 5], 0.2)
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(x, top - 0.6, z + bay * 0.5)), Vector3(1.0, 1.2, bay * 0.42), ASHLAR[2], 0.2)
+			z = zn
+	# The gables: the east end's three tall lancets, the west front's door
+	# and window.
+	_gable(Vector2(-hw, half), Vector2(hw, half), h * 1.25, t, [[-0.3, 0.12, 0.2, 0.85], [0.0, 0.14, 0.15, 0.95], [0.3, 0.12, 0.2, 0.85]])
+	_gable(Vector2(-hw, -half), Vector2(hw, -half), h * 1.15, t, [[0.0, 0.16, 0.0, 0.32], [0.0, 0.2, 0.42, 0.85]])
+	# The tower at the west end's north corner.
+	var ts := clampf(w * 0.55, 7.0, 10.0)
+	var tc := Vector2(-hw - ts * 0.5 + t, -half + ts * 0.5)
+	var th: float = site.tower_h
+	inside_at = Vector3(tc.x, 0.0, tc.y)
+	inside = INSIDE
+	for f in 4:
+		var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var along := Vector2(-n2.y, n2.x)
+		var a := tc + n2 * (ts * 0.5 - t * 0.5) - along * ts * 0.5
+		var b := tc + n2 * (ts * 0.5 - t * 0.5) + along * ts * 0.5
+		var wh := th if bool(site.tower_whole) or f < 2 else th * rr.randf_range(0.3, 0.55)
+		_lancet_wall(a, b, wh, t, ts * 0.5, 0.9, rr, 0.0 if bool(site.tower_whole) or f < 2 else 0.6, true)
+		if wh > th * 0.9:
+			# Its parapet's merlons.
+			for k in 3:
+				var mp := a.lerp(b, (k + 0.5) / 3.0)
+				_pbox(Transform3D(Basis(Vector3.UP, atan2(-along.y, along.x)), Vector3(mp.x, ground(mp.x, mp.y) + wh + 0.5, mp.y)), Vector3(ts * 0.2, 1.0, t), ASHLAR[3], 0.3)
+		if rr.randf() < 0.7:
+			var top3 := Vector3(b.x, ground(b.x, b.y) + wh, b.y) + Vector3(n2.x, 0.0, n2.y) * t * 0.5
+			ivy(top3, Vector3(n2.x, 0.0, n2.y), rr.randf_range(4.0, minf(14.0, wh)))
+	inside = 0.0
+	inside_at = Vector3.INF
+	# Rubble where the roof and the vaults came down.
+	rubble(Vector3(0.0, 0.0, -half * 0.55), w * 0.3, 18)
+	rubble(Vector3(hw * 0.6, 0.0, -half * 0.3), 4.0, 10)
+	# South of the church: the cloister, the chapter house, the warming house.
+	var cx0 := hw + t
+	var cl := clampf(length * 0.45, 18.0, 36.0)
+	var cz0 := -half + 6.0
+	_foundation(Rect2(cx0, cz0, cl, cl), 0.6)
+	_foundation(Rect2(cx0 + 4.0, cz0 + 4.0, cl - 8.0, cl - 8.0), 0.35)
+	_foundation(Rect2(cx0 + cl * 0.2, cz0 + cl, cl * 0.5, cl * 0.45), 0.5)
+	# The warming house on the cloister's south range, its stack standing.
+	var whx := cx0 + cl + 4.5
+	var whz := cz0 + cl * 0.5
+	var wroom := Rect2(whx - 4.0, whz - 5.0, 8.0, 10.0)
+	_foundation(wroom, 2.6)
+	var gs := ground(whx + 3.4, whz)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(whx + 3.4, gs + 4.5, whz)), Vector3(1.6, 9.0, 2.4), ASHLAR[1], 0.3)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(whx + 3.4, gs + 9.2, whz)), Vector3(1.9, 0.5, 2.7), ASHLAR[3].darkened(0.2), 0.2)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(whx + 2.55, gs + 0.8, whz)), Vector3(0.06, 1.4, 1.4), VOID, 0.0)
+	# The warming house's hearth: the one fire the monks kept (OldHearths).
+	_camp_spot = Vector3(whx + 1.2, ground(whx + 1.2, whz), whz)
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+## A wall from `a` to `b` (its line, local x/z), `wh` high and `t` thick,
+## broken into bays of `bay` m each with a lancet `lw` wide open to the sky;
+## `broken` the share of its bays fallen to stumps; `tower` puts the
+## lancets high (belfry openings).
+func _lancet_wall(a: Vector2, b: Vector2, wh: float, t: float, bay: float, lw: float, rr: RandomNumberGenerator, broken: float, tower := false) -> void:
+	var along := b - a
+	var ln := along.length()
+	if ln < 0.5:
+		return
+	var dir := along / ln
+	var bs := Basis(Vector3.UP, atan2(-dir.y, dir.x))
+	var bays := maxi(1, int(round(ln / bay)))
+	var bl := ln / bays
+	for i in bays:
+		var c := a + dir * (i + 0.5) * bl
+		var g := minf(ground(c.x, c.y), minf(ground(c.x - dir.x * bl * 0.5, c.y - dir.y * bl * 0.5), ground(c.x + dir.x * bl * 0.5, c.y + dir.y * bl * 0.5)))
+		var hh := wh
+		if rr.randf() < broken:
+			hh = wh * rr.randf_range(0.1, 0.45)
+		var sill := wh * (0.62 if tower else 0.3)
+		var head := wh * (0.88 if tower else 0.78)
+		var win := hh > head + 0.6 and bl > lw + 1.2
+		var col: Color = ASHLAR[(i + int(c.x * 3.0)) % ASHLAR.size()]
+		if not win:
+			_pbox(Transform3D(bs, Vector3(c.x, g - 0.6 + (hh + 0.6) * 0.5, c.y)), Vector3(bl + 0.02, hh + 0.6, t), col, 0.3)
+			continue
+		# The piers either side of the lancet, the sill under it, the head
+		# over it with its point.
+		var pw := (bl - lw) * 0.5
+		for s2: float in [-1.0, 1.0]:
+			var pc := c + dir * s2 * (lw * 0.5 + pw * 0.5)
+			_pbox(Transform3D(bs, Vector3(pc.x, g - 0.6 + (hh + 0.6) * 0.5, pc.y)), Vector3(pw + 0.02, hh + 0.6, t), col, 0.3)
+		_pbox(Transform3D(bs, Vector3(c.x, g - 0.6 + (sill + 0.6) * 0.5, c.y)), Vector3(lw + 0.04, sill + 0.6, t), col.darkened(0.04), 0.45)
+		_pbox(Transform3D(bs, Vector3(c.x, g + (head + hh) * 0.5, c.y)), Vector3(lw + 0.04, hh - head, t), col, 0.3)
+		for s2: float in [-1.0, 1.0]:
+			var kp := c + dir * s2 * lw * 0.28
+			_pbox(Transform3D(bs * Basis(Vector3.BACK, s2 * 0.75), Vector3(kp.x, g + head - lw * 0.22, kp.y)), Vector3(lw * 0.62, 0.35, t * 0.9), col.lightened(0.04), 0.2)
+
+
+## A pointed arch from pier top `a` to pier top `b` (local), `t` thick:
+## two stones leaning together to its point.
+func _pointed_arch(a: Vector3, b: Vector3, t: float) -> void:
+	var span := a.distance_to(b)
+	var apex := (a + b) * 0.5 + Vector3(0.0, span * 0.55, 0.0)
+	var along := (b - a).normalized()
+	for pair in [[a, apex], [b, apex]]:
+		var p0: Vector3 = pair[0]
+		var p1: Vector3 = pair[1]
+		var mid := (p0 + p1) * 0.5
+		var d := p1 - p0
+		var ang := atan2(d.y, d.dot(along))
+		var bs := Basis(Vector3.UP, atan2(-along.z, along.x)) * Basis(Vector3.BACK, ang)
+		_pbox(Transform3D(bs, mid), Vector3(d.length() + 0.4, 0.7, t), ASHLAR[2], 0.25)
+
+
+## A gable wall from `a` to `b`, `gh` high at its peak, with openings
+## [[at (−0.5..0.5 along), half width (share of its length), sill (share
+## of its height), head (share)]...] open to the sky.
+func _gable(a: Vector2, b: Vector2, gh: float, t: float, holes: Array) -> void:
+	var along := b - a
+	var ln := along.length()
+	var dir := along / ln
+	var bs := Basis(Vector3.UP, atan2(-dir.y, dir.x))
+	var cols := maxi(4, int(ln / 1.4))
+	var cw := ln / cols
+	for i in cols:
+		var u := (i + 0.5) / cols - 0.5
+		var c := a + dir * (u + 0.5) * ln
+		var g := ground(c.x, c.y)
+		var top := gh * (1.0 - absf(u) * 0.9)
+		var spans: Array = [[-0.6, top]]
+		for hl in holes:
+			if absf(u - float(hl[0])) < float(hl[1]):
+				var s0 := gh * float(hl[2])
+				var s1 := gh * float(hl[3]) - (absf(u - float(hl[0])) / float(hl[1])) * gh * 0.08
+				var nsp: Array = []
+				for sp in spans:
+					if float(sp[1]) <= s0 or float(sp[0]) >= s1:
+						nsp.append(sp)
+						continue
+					if float(sp[0]) < s0:
+						nsp.append([float(sp[0]), s0])
+					if float(sp[1]) > s1:
+						nsp.append([s1, float(sp[1])])
+				spans = nsp
+		for sp in spans:
+			if float(sp[1]) - float(sp[0]) < 0.1:
+				continue
+			_pbox(Transform3D(bs, Vector3(c.x, g + (float(sp[0]) + float(sp[1])) * 0.5, c.y)), Vector3(cw + 0.02, float(sp[1]) - float(sp[0]), t), ASHLAR[i % ASHLAR.size()], 0.25)
+
+
+## Foundations in the turf round rectangle `r` (local x/z), `fh` high.
+func _foundation(r: Rect2, fh: float) -> void:
+	var cs := [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	for k in 4:
+		var a: Vector2 = cs[k]
+		var b: Vector2 = cs[(k + 1) % 4]
+		var segs := maxi(1, int(a.distance_to(b) / 3.0))
+		for i in segs:
+			var p := a.lerp(b, (i + 0.5) / segs)
+			var g := ground(p.x, p.y)
+			var hh := fh * rng.randf_range(0.6, 1.1)
+			var dir := (b - a).normalized()
+			_pbox(Transform3D(Basis(Vector3.UP, atan2(-dir.y, dir.x)), Vector3(p.x, g - 0.3 + (hh + 0.3) * 0.5, p.y)), Vector3(a.distance_to(b) / segs + 0.02, hh + 0.3, 0.9), ASHLAR[(i + k) % ASHLAR.size()].darkened(0.06), 0.6)

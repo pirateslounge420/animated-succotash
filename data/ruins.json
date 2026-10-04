@@ -1002,7 +1002,7 @@
    },
    "haunted": true,
    "shafts": "\u00a7DC's ruin kind through the lancets onto the grass",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DU] A great church with its roof gone: walls and arcades standing, lancets framing the sky, one tower, the floor turned to grass, the cloister in the turf, the warming house's chimney stack (smoke.json). Where \u00a7DC's shafts, \u00a7DI's residents and \u00a7DI's haunt meet. On a headland it is a landmark seen from the coast road (\u00a7DN)."
+   "_help": "[built \u2014 design \u00a7DU: Monuments._abbey, RuinBuilder._abbey] A great church with its roof gone: walls and arcades standing, lancets open to the sky, one tower (whole, or two walls fallen), the floor turned to grass, the cloister and chapter house in the turf, the warming house's chimney stack (smoke.json). Where \u00a7DC's shafts, \u00a7DI's residents (RuinSounds: birds in its tower, the owl in a window) and \u00a7DI's haunt (haunt.kinds 'abbey') meet. Where water is within 600 m it stands back from it (a valley floor, a headland); 'where' is otherwise not a gate. Its crypt is the barrow kit under the east end; the night stair (its way out) comes up wherever the ground lets it, not always in the cloister."
   },
   "colonnade": {
    "kind": "own",
