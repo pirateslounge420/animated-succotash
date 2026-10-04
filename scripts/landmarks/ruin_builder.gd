@@ -248,6 +248,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._carved_cliffs()
 		Ruins.Kind.CLIFF_DWELLING:
 			b._cliff_dwelling()
+		Ruins.Kind.BRICK_CITY:
+			b._brick_city()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4462,7 +4464,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -4909,3 +4911,185 @@ func _kiva(c: Vector2, r: float, great: bool) -> void:
 		for k in 2:
 			_pbox(Transform3D(Basis(Vector3.UP, k * PI * 0.25), Vector3(c.x, g + 0.03, c.y)), Vector3(r * 1.55, 0.06, r * 1.55), VOID, 0.0)
 		_ladder(Vector3(c.x, g - 0.5, c.y), Vector3(c.x + 0.3, g + 2.4, c.y + 0.6))
+
+
+# --- The brick city (design 3 Oct §DS.6) -------------------------------------------
+
+const MUDBRICK := [Color(0.62, 0.5, 0.36), Color(0.58, 0.46, 0.33), Color(0.66, 0.53, 0.38), Color(0.55, 0.44, 0.32), Color(0.6, 0.48, 0.34)]
+const MELTED := Color(0.56, 0.47, 0.36)
+## The gate's glaze (ruins.json styles.brick_city.gate.glazed: a saturated
+## blue that never glows, R8) and its reliefs.
+const GLAZE := Color("#1E3FD0")
+const RELIEF := Color(0.86, 0.74, 0.42)
+
+
+## The city (Monuments._brick_city): the tell, a low mound of melted brick
+## with the foundation walls standing in it as a maze; the ziggurat at its
+## middle; the processional way between high buttressed walls to the
+## arched gate on the tell's edge, its face glazed blue with animals in
+## relief; and to one side the palace mound over the vaulted stores (the
+## barrow kit going down from the mound's foot; the way out comes up
+## beyond it).
+func _brick_city() -> void:
+	palette = MUDBRICK
+	var across: float = site.across_m
+	var r := across * 0.5
+	var cc: Vector2 = site.city_c
+	_lod_m = float(site.footprint_m) * 0.5 + LOD_M + r
+	# The tell.
+	var rise := 3.5
+	var rb := r * 0.9
+	var rt := r * 0.72
+	_tell(cc, rb, rt, rise, MELTED)
+	var g0 := ground(cc.x, cc.y) + rise
+	# The maze of foundation walls on its top: a grid of 12 m, each side
+	# standing or gone by its own roll.
+	var mrng := RandomNumberGenerator.new()
+	mrng.seed = int(site.maze_seed)
+	var cell := 12.0
+	var n := int(rt * 0.92 / cell)
+	for i in range(-n, n + 1):
+		for j in range(-n, n + 1):
+			var p := cc + Vector2(i, j) * cell
+			if (p - cc).length() > rt * 0.9 or (p - cc).length() < 34.0:
+				continue
+			for side in 2:
+				if mrng.randf() > 0.55:
+					continue
+				var h := mrng.randf_range(0.9, 1.9)
+				var mid := p + (Vector2(cell * 0.5, 0.0) if side == 0 else Vector2(0.0, cell * 0.5))
+				var gy := ground(mid.x, mid.y) + rise
+				var size := Vector3(cell + 0.8, h, 0.9) if side == 0 else Vector3(0.9, h, cell + 0.8)
+				_pbox(Transform3D(Basis(), Vector3(mid.x, gy + h * 0.5 - 0.3, mid.y)), size, MUDBRICK[(i + j + side) & 3], 0.05)
+	# The ziggurat at the middle: three tiers and a shrine, a stair up the
+	# front.
+	var zb := minf(54.0, rt * 0.6)
+	var y := g0
+	var w := zb
+	for k in 3:
+		var th := 5.5 - k * 0.6
+		_pbox(Transform3D(Basis(), Vector3(cc.x, y + th * 0.5 - 0.2, cc.y)), Vector3(w, th, w), MUDBRICK[k], 0.05)
+		y += th
+		w *= 0.7
+	_pbox(Transform3D(Basis(), Vector3(cc.x, y + 1.6, cc.y)), Vector3(w * 0.6, 3.2, w * 0.6), MUDBRICK[3], 0.05)
+	var steps := int((y - g0) / 0.6)
+	for k in steps:
+		_pbox(Transform3D(Basis(), Vector3(cc.x, g0 + k * 0.6 + 0.3, cc.y - zb * 0.5 - 6.0 + k * (6.0 + zb * 0.5 - w * 0.5) / steps)), Vector3(5.0, 0.6, 1.2), MUDBRICK[4], 0.05)
+	# The gate on the tell's edge, the processional way out from it.
+	var gz := cc.y - rb - 2.0
+	var gx := cc.x
+	_brick_gate(Vector2(gx, gz))
+	var way_len := 70.0
+	var z := gz - 4.0
+	while z > gz - 4.0 - way_len:
+		for sx: float in [-1.0, 1.0]:
+			var wx := gx + sx * 8.0
+			var gw := ground(wx, z)
+			_pbox(Transform3D(Basis(), Vector3(wx, gw + 3.3, z - 3.5)), Vector3(1.8, 7.2, 7.1), MUDBRICK[1], 0.05)
+			# A buttress at each step, a band of glaze along the top.
+			_pbox(Transform3D(Basis(), Vector3(wx - sx * 1.2, gw + 3.5, z - 0.5)), Vector3(0.9, 7.6, 1.4), MUDBRICK[0], 0.05)
+			_pbox(Transform3D(Basis(), Vector3(wx - sx * 0.95, gw + 5.8, z - 3.5)), Vector3(0.08, 0.7, 7.0), GLAZE, 0.0)
+		z -= 7.0
+	_pave(Rect2(gx - 7.0, gz - 4.0 - way_len, 14.0, way_len), NAN)
+	# The palace mound at the origin, its door at its foot over the way down.
+	var pr: float = site.palace_r
+	_tell(Vector2.ZERO, pr, pr * 0.55, 8.5, MELTED.darkened(0.04))
+	var pg := ground(0.0, 0.0) + 8.5
+	for k in 6:
+		var a := k * TAU / 6.0 + 0.3
+		var wp := Vector2(cos(a), sin(a)) * pr * 0.32
+		_pbox(Transform3D(Basis(Vector3.UP, a), Vector3(wp.x, pg + 0.8, wp.y)), Vector3(7.0, 1.8, 0.9), MUDBRICK[k % 5], 0.05)
+	var dz := -pr - 0.5
+	var dg := ground(0.0, dz)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(Basis(), Vector3(sx * 1.6, dg + 1.8, dz)), Vector3(1.0, 3.6, 2.0), MUDBRICK[2], 0.05)
+	_pbox(Transform3D(Basis(), Vector3(0.0, dg + 3.9, dz)), Vector3(4.4, 0.8, 2.0), MUDBRICK[3], 0.05)
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+## A low mound of melted brick at `c`: `rb` across its foot, `rt` across
+## its top, `rise` high, walkable.
+func _tell(c: Vector2, rb: float, rt: float, rise: float, col: Color) -> void:
+	var sides := 16
+	var top_pts: Array = []
+	var bot_pts: Array = []
+	for i in sides:
+		var a := TAU * i / sides + rng.randf_range(-0.05, 0.05)
+		var tr := rt * rng.randf_range(0.94, 1.04)
+		var tp := c + Vector2(cos(a), sin(a)) * tr
+		var bp := c + Vector2(cos(a), sin(a)) * rb
+		top_pts.append(Vector3(tp.x, ground(tp.x, tp.y) + rise, tp.y))
+		bot_pts.append(Vector3(bp.x, ground(bp.x, bp.y) - 0.6, bp.y))
+	var ctr := Vector3(c.x, ground(c.x, c.y) + rise, c.y)
+	var inside := Vector3(c.x, ctr.y - rise * 2.0, c.y)
+	var start := _v.size()
+	for i in sides:
+		var j := (i + 1) % sides
+		_face(ctr, top_pts[j], top_pts[i], top_pts[i], col, inside)
+		_face(top_pts[i], top_pts[j], bot_pts[j], bot_pts[i], col.darkened(0.06), inside)
+	_smooth_from(start)
+	_collide_since(start)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+
+
+## The gate at `c` (facing -z, down the processional way): two towers with
+## pilasters, an arch of brick between them, the face glazed blue with rows
+## of animals in relief: aurochs, lions and a dragon of our own.
+func _brick_gate(c: Vector2) -> void:
+	var g := ground(c.x, c.y)
+	var hw := 7.5
+	var h := 13.0
+	var ow := 2.4
+	var oh := 7.5
+	# The towers either side of the opening, the mass over the arch.
+	for sx: float in [-1.0, 1.0]:
+		var tx := c.x + sx * (ow + (hw - ow) * 0.5)
+		_pbox(Transform3D(Basis(), Vector3(tx, g + h * 0.5 - 0.5, c.y)), Vector3(hw - ow, h + 1.0, 6.0), MUDBRICK[2], 0.05)
+		# Pilasters on the face.
+		for k in 2:
+			var px := c.x + sx * (ow + 1.0 + k * 3.0)
+			_pbox(Transform3D(Basis(), Vector3(px, g + h * 0.5, c.y - 3.25)), Vector3(0.8, h, 0.5), GLAZE.darkened(0.15), 0.0)
+	_pbox(Transform3D(Basis(), Vector3(c.x, g + oh + (h - oh) * 0.5, c.y)), Vector3(ow * 2.0 + 0.2, h - oh, 6.0), MUDBRICK[3], 0.05)
+	# The arch: brick voussoirs round the opening's head.
+	for k in 9:
+		var ang := PI * (k + 0.5) / 9.0
+		var p := Vector3(c.x - cos(ang) * ow, g + oh - ow + sin(ang) * ow, c.y - 3.1)
+		var tangent := Vector3(sin(ang), cos(ang), 0)
+		var basis := Basis(tangent, tangent.cross(Vector3(0, 0, 1)).normalized() * -1.0, Vector3(0, 0, 1)).orthonormalized()
+		_pbox(Transform3D(basis, p), Vector3(0.9, 0.7, 0.6), GLAZE, 0.0)
+	# The glazed face, and the beasts on it: two rows each side.
+	for sx: float in [-1.0, 1.0]:
+		var fx := c.x + sx * (ow + (hw - ow) * 0.5)
+		_pbox(Transform3D(Basis(), Vector3(fx, g + h * 0.5, c.y - 3.08)), Vector3(hw - ow - 0.2, h - 0.6, 0.12), GLAZE, 0.0)
+		for row in 3:
+			var by := g + 2.2 + row * 3.4
+			var kind := row % 3
+			_beast(Vector3(fx, by, c.y - 3.2), sx, kind)
+	_pbox(Transform3D(Basis(), Vector3(c.x, g + h - 0.3, c.y - 3.08)), Vector3(ow * 2.0, 0.6, 0.12), GLAZE, 0.0)
+	# The opening's floor, its dark depth (a void through the gate).
+	_pbox(Transform3D(Basis(), Vector3(c.x, g + (oh - ow) * 0.5, c.y + 2.95)), Vector3(ow * 2.0, oh - ow, 0.06), VOID, 0.0)
+
+
+## A beast in relief on the glazed face at `p`, walking toward `sx` (kind
+## 0 an aurochs, 1 a lion, 2 the dragon: long-necked, scaled, its tail up).
+func _beast(p: Vector3, sx: float, kind: int) -> void:
+	var col := RELIEF if kind != 1 else RELIEF.lightened(0.08)
+	var bl := 2.2 if kind != 2 else 2.0
+	_pbox(Transform3D(Basis(), p + Vector3(0.0, 0.7, 0.0)), Vector3(bl, 0.9, 0.14), col, 0.0)
+	for lx in [-0.8, -0.3, 0.3, 0.8]:
+		_pbox(Transform3D(Basis(), p + Vector3(float(lx) * bl * 0.45, 0.12, 0.0)), Vector3(0.18, 0.62, 0.14), col, 0.0)
+	match kind:
+		0:
+			_pbox(Transform3D(Basis(), p + Vector3(sx * (bl * 0.5 + 0.25), 0.95, 0.0)), Vector3(0.6, 0.55, 0.14), col, 0.0)
+			_pbox(Transform3D(Basis(Vector3.BACK, 0.6 * sx), p + Vector3(sx * (bl * 0.5 + 0.35), 1.35, 0.0)), Vector3(0.12, 0.5, 0.14), col, 0.0)
+		1:
+			_pbox(Transform3D(Basis(), p + Vector3(sx * (bl * 0.5 + 0.2), 1.0, 0.0)), Vector3(0.7, 0.75, 0.14), col.darkened(0.1), 0.0)
+			_pbox(Transform3D(Basis(Vector3.BACK, -0.5 * sx), p + Vector3(-sx * (bl * 0.5 + 0.2), 0.95, 0.0)), Vector3(0.6, 0.1, 0.14), col, 0.0)
+		_:
+			_pbox(Transform3D(Basis(Vector3.BACK, -0.35 * sx), p + Vector3(sx * (bl * 0.5 + 0.2), 1.4, 0.0)), Vector3(0.22, 1.2, 0.14), col, 0.0)
+			_pbox(Transform3D(Basis(), p + Vector3(sx * (bl * 0.5 + 0.45), 2.0, 0.0)), Vector3(0.5, 0.3, 0.14), col, 0.0)
+			_pbox(Transform3D(Basis(Vector3.BACK, 0.7 * sx), p + Vector3(-sx * (bl * 0.5 + 0.2), 1.25, 0.0)), Vector3(0.14, 0.9, 0.14), col, 0.0)

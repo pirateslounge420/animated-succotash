@@ -98,6 +98,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# the alcove's back, a way up to its rim (§DS.4).
 	if int(site.kind) == Ruins.Kind.CLIFF_DWELLING:
 		return true
+	# The brick city: the vaulted stores under the palace mound (§DS.6).
+	if int(site.kind) == Ruins.Kind.BRICK_CITY:
+		return true
 	return int(site.kind) == Ruins.Kind.BARROW and str(site.get("style", "")) in ["stone", "snow"]
 
 

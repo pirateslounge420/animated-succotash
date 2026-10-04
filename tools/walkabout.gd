@@ -35,6 +35,8 @@ extends SceneTree
 ## SITES=cliff_dwelling the nearest cliff dwelling (§DS.4): from its plaza's
 ## approach, 26 m out and to one side (clear of the delve's way out),
 ## looking into the alcove (SEED=8 has one).
+## SITES=brick_city the nearest brick city (§DS.6): down its processional
+## way toward the blue gate (SEED=8 has one).
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -183,6 +185,8 @@ func _run() -> void:
 			kinds.append("carved_cliffs")
 		if only.has("cliff_dwelling"):
 			kinds.append("cliff_dwelling")
+		if only.has("brick_city"):
+			kinds.append("brick_city")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -299,6 +303,20 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"brick_city":
+				var bcs := {}
+				var bcd := INF
+				for bs2 in Monuments.all_sites(world.planet, "brick_city"):
+					if CubeSphere.surface_distance_m(bs2.dir, camp_d) < bcd:
+						bcd = CubeSphere.surface_distance_m(bs2.dir, camp_d)
+						bcs = bs2
+				if bcs.is_empty():
+					lines.append("-- brick_city: none on this world")
+					continue
+				var bcc: Vector2 = bcs.city_c
+				var bgz := bcc.y - float(bcs.across_m) * 0.45 - 2.0
+				sites.append({"name": "brick_city", "dir": Ruins.local_dir(bcs, bcc.x + 2.0, bgz - 58.0), "look": Ruins.local_dir(bcs, bcc.x, bgz), "pitch_to": Ruins.local_dir(bcs, bcc.x, bgz), "pitch_add_m": 6.0,
+					"note": "the brick city's processional way and its gate (%.0f m across)" % float(bcs.across_m)})
 			"cliff_dwelling":
 				var cdw := {}
 				var cdd := INF

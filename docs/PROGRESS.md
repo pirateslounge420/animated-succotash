@@ -4,6 +4,27 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.6: the brick city (prompt 24)
+- **The kind:** `Ruins.Kind.BRICK_CITY`, "Brick city" (`data/ruins.json` → `styles.brick_city`, unmarked), placed by Monuments' sites pass.
+  - **New gate words:**
+    - `desert_river_floodplain`: a river within 1.5 km (60 m or more from its line), or a lake or the shore within 450 m, the ground under 60 m and dry. Only for this word, a river's or lake's map cell (~10 km) is no bar, and 0.3 m over the sea counts as land (the desert rivers here end in lakes and deltas at sea level).
+    - `flat`: 0.1 over 60 m.
+- **The city** (`Monuments._brick_city`, `RuinBuilder._brick_city`), 200–400 m across. The frame's origin is the palace mound; the tell's middle is `city_c`.
+  - **The tell** (`_tell`, walkable) carries the maze of foundation walls (a 12 m grid, each side standing by its own roll, 0.9–1.9 m high) and a stepped three-tier ziggurat with a shrine and a stair.
+  - **The processional way:** 70 m between 7 m buttressed walls, each with a band of glaze along its top, paved.
+  - **The gate** (`_brick_gate`): towers, blue pilasters, an arch of glazed voussoirs, a face glazed #1E3FD0 (no glow, R8), and three rows of beasts each side (`_beast`: aurochs, lion, dragon).
+  - **The palace mound** with fallen walls on top and a doorway at its foot over the delve: the barrow kit under the mound, with a heart and a way out beyond it.
+  - Smoke: `roof_vent`.
+- **Check:** `tools/brick_city_check.gd`, 0 fails on 7731 and 8.
+  - 7731 has none; seed 8 has one at 40.75°N 143.66°W, steppe, palearctic, 245 m across, the palace mound 26 m.
+  - The vaults: stair, room, stair, heart, exit. 69,504 triangles against the castle's 78,733.
+- **Walkabout** (`SEED=8 SITES=brick_city HOURS=10`, harness frame §CG): down the processional way between its buttressed walls to the arched gate, glazed blue with rows of pale beasts.
+- **Flags:**
+  - **It is rare:** one in ten worlds scanned. The gate needed three loosenings to find any (river and lake cells allowed, 0.3 m over the sea, `flat` at 0.1), and they are written in its help.
+  - Its tally on 7731 is dominated by realm (most hot deserts here are afrotropic).
+  - The well shaft to the river bank is the barrow kit's way out, not a well.
+  - The palms over the palace mound aren't placed.
+
 ## 2026-10-04 — §DS.4: the cliff dwelling (prompt 23)
 - **The kind:** `Ruins.Kind.CLIFF_DWELLING`, "Cliff dwelling" (`data/ruins.json` → `styles.cliff_dwelling`, unmarked), placed by Monuments' sites pass.
   - **New gate words:**

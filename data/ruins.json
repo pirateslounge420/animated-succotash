@@ -872,7 +872,7 @@
     "fire_holder": "brazier"
    },
    "smoke": "out the courtyards' roof hatches",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.6] Mike's second batch, 3 Oct 21:27: a city of mud brick on a desert river. What remains is the tell, a mound of melted brick with the foundation walls standing in it as a maze, the processional way between buttressed walls, the arched gate still standing with its blue glazed face (a saturated blue material that never glows, R8), the palace mound above the palms, the existing ziggurat at the centre."
+   "_help": "Built (design \u00a7DS.6; Monuments._brick_city, RuinBuilder._brick_city): a city of mud brick by a desert river or lake. The tell, a low mound of melted brick, carries the foundation walls standing in it as a maze, waist to head high, and the ziggurat at its middle. The processional way runs between high buttressed walls, a band of glaze along their tops, to the arched gate on the tell's edge: its towers and pilasters, its face glazed #1E3FD0 (never glowing, R8) with rows of beasts in relief (aurochs, lions, a dragon of our own). To one side stands the palace mound; the delve is the vaulted stores under it, in at its foot. The gate words: desert_river_floodplain (a river within 1.5 km or a lake or the shore within 450 m, under 60 m, dry: a river's or lake's ~10 km cell is no bar), flat (0.1 over 60 m: the dry country's ground rolls more than flat_lowland allows). Rare: the palearctic and central-Asian deserts reach water on few worlds (seed 8 has one). Restart after editing."
   },
   "hanging_gardens": {
    "kind": "own",

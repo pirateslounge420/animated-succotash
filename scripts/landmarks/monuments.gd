@@ -26,11 +26,16 @@ class_name Monuments
 ##                     or more with level ground before it (alcove_at: the
 ##                     alcove itself is the monument's own mesh, §CK);
 ##   water_below       a river, a lake or the sea within WATER_BELOW_M;
-##   forest            (never) a forest biome.
+##   forest            (never) a forest biome;
+##   desert_river_floodplain  a river within FLOODPLAIN_M (but not in it,
+##                     60 m or more from its line) or a lake or the shore
+##                     within 450 m (the oasis), the ground under LOWLAND_M
+##                     and dry (a river's or lake's cell is no bar here);
+##   flat              the ground within 60 m rises no more than FLAT_LOOSE.
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -42,6 +47,10 @@ const CANYON_M := 400.0
 const CANYON_DEEP_M := 8.0
 const ALCOVE_FACE_M := 9.0
 const WATER_BELOW_M := 2000.0
+const FLOODPLAIN_M := 1500.0
+## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
+## over 60 m in the dry country, so a little looser than flat_lowland's.
+const FLAT_LOOSE := 0.1
 ## The long wall's line (§DS.1): steps along the crest, the turn allowed a
 ## step, and where it gives up (water, a drop steeper than WALL_MAX_GRADE).
 const WALL_STEP_M := 40.0
@@ -73,14 +82,18 @@ static func key_of(kind: int) -> String:
 ## Why `p` can't hold a `kind_key` monument ("" if it can).
 static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 	var cell := map.cell_at(p)
-	if map.water[cell] != PlanetData.Water.NONE:
-		return "water"
 	var sp: Dictionary = entry(kind_key).get("spawn", {})
+	# A floodplain city stands in a river's cell (the cells are ~10 km): only
+	# its own spot must be dry.
+	var by_river := (sp.get("needs", []) as Array).has("desert_river_floodplain") and (map.water[cell] == PlanetData.Water.RIVER or map.water[cell] == PlanetData.Water.LAKE)
+	if map.water[cell] != PlanetData.Water.NONE and not by_river:
+		return "water"
 	var bkey: String = BiomeTemplates.KEYS[map.biome[cell]]
 	if not (sp.get("biomes", []) as Array).is_empty() and not (sp.get("biomes", []) as Array).has(bkey):
 		return "biome"
 	var e := map.terrain.elevation(p, true, false, false)
-	if e < 1.0:
+	# (A floodplain lies low: a hand over the sea will do, dry.)
+	if e < (0.3 if by_river or (sp.get("needs", []) as Array).has("desert_river_floodplain") else 1.0):
 		return "water"
 	var realms: Array = sp.get("realm", [])
 	if not realms.is_empty():
@@ -114,6 +127,13 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "no_alcove"
 	if needs.has("water_below") and HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) > WATER_BELOW_M:
 		return "dry"
+	if needs.has("flat") and slope(map, p, 60.0) > FLAT_LOOSE:
+		return "slope"
+	if needs.has("desert_river_floodplain"):
+		var rv := river_m(map, p)
+		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0
+		if e > LOWLAND_M or not by_water or TerrainChunk._standing_water(map, p).x > e - 0.3:
+			return "no_floodplain"
 	return ""
 
 
@@ -153,6 +173,17 @@ static func alcove_at(map: PlanetData, p: Vector3) -> Dictionary:
 	if Nests._slope(CreatureSpawner._offset(foot, float(cl.toward) + PI, 8.0), 4.0) > 0.18:
 		return {}
 	return cl
+
+
+## The distance from `p` to the nearest river's line (INF with none in its
+## cell's reach).
+static func river_m(map: PlanetData, p: Vector3) -> float:
+	var rivers := Encampment.rivers_for(map)
+	var best := INF
+	if rivers != null:
+		for s in rivers.segments_near(map, map.cell_at(p)):
+			best = minf(best, rivers.closest_dt(s, p).x)
+	return best
 
 
 ## The canyon at `p` (the ravine layer, a slot canyon where it pinches in
@@ -370,6 +401,8 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 			var cd := _cliff_dwelling(map, E, d, rng, site)
 			if cd.is_empty():
 				return {}
+		"brick_city":
+			_brick_city(map, E, d, rng, site)
 	return site
 
 
@@ -719,4 +752,28 @@ static func _cliff_dwelling(map: PlanetData, E: Dictionary, d: Vector3, rng: Ran
 	site.footprint_m = width * 0.5 + 14.0
 	site.clear = [[Ruins.local_dir(site, 0.0, plaza_z * 0.6), width * 0.5 + 6.0]]
 	return site
+
+
+## The brick city (§DS.6): across_m wide round `d`; the frame's origin is
+## the palace mound to one side (its vaults are the delve), the tell's
+## middle (city_c, local) the city's, the processional way coming in from
+## the river side to the gate on the tell's edge. Fills `site`.
+static func _brick_city(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> void:
+	var ac: Array = E.get("across_m", [200, 400])
+	var across := rng.randf_range(float(ac[0]), float(ac[1]))
+	var r := across * 0.5
+	# The palace mound beside the tell, the way in at its foot (the
+	# barrow kit runs +z under it from there).
+	var hd := Delves.grid_heading(d, rng.randf() * TAU)
+	var tmp := {"dir": d, "heading": hd}
+	var palace := Ruins.local_dir(tmp, r * 1.0 + 12.0, 0.0)
+	site.dir = palace
+	site.heading = hd
+	site.across_m = across
+	site.city_c = Vector2(-(r * 1.0 + 12.0), 0.0)
+	site.palace_r = rng.randf_range(24.0, 30.0)
+	site.half_l = float(site.palace_r) + 6.7
+	site.maze_seed = rng.randi()
+	site.footprint_m = r * 2.0 + 30.0
+	site.clear = [[d, r * 0.95], [palace, float(site.palace_r) + 4.0]]
 
