@@ -43,14 +43,14 @@ class_name Ruins
 ## of the planet data (thread-safe), so every visit finds the same ruin and
 ## vegetation can keep the footprint clear.
 
-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW }
+enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS }
 
 const CELL_M := 3200.0
 const CHANCE := 0.5
 const SALT := 555
 const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
 	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
-	"Barrow tomb"]
+	"Barrow tomb", "Crag fortress"]
 const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
 const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
 const SNOW_C := -3.0
@@ -126,6 +126,11 @@ static func local_dir(site: Dictionary, x: float, z: float) -> Vector3:
 ## {"dir", "kind", "seed", "heading" (radians), "footprint_m",
 ##  "length_m" (aqueducts, boardwalks), "clear": [[dir, radius_m], ...]}.
 static func find(map: PlanetData, c: Vector3i) -> Dictionary:
+	# A crag fortress (design 3 Oct §DO) stands in its cell in place of
+	# whatever else would: its own sites pass picks the cells.
+	var crag := CragFortress.site_in(map, c)
+	if not crag.is_empty():
+		return crag.duplicate(true)
 	var key := Vector4i(-2, c.x, c.y, c.z)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash(key)
@@ -367,6 +372,9 @@ static func camp_folk(site: Dictionary) -> String:
 					return "dead" if drng.randf() < 0.5 else "tribal"
 		Kind.GRAVEYARD:
 			return "dead"
+		Kind.CRAG_FORTRESS:
+			# The lime-and-stone mountain folk (§DO.6) live at its foot.
+			return "north"
 		Kind.BARROW:
 			var brng := RandomNumberGenerator.new()
 			brng.seed = hash([site.seed, "folk"])

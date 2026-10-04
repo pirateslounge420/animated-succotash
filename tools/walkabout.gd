@@ -143,6 +143,8 @@ func _run() -> void:
 			kinds.append("range")
 		if only.has("at"):
 			kinds.append("at")
+		if only.has("crag"):
+			kinds.append("crag")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -160,6 +162,46 @@ func _run() -> void:
 				sites.append_array(_delve_sites(camp_d))
 			"range":
 				sites.append_array(_range_sites(camp_d))
+			"crag":
+				# SITES=crag: the nearest crag fortress (design 3 Oct §DO),
+				# from its approach: on the line straight out from its foot,
+				# where its foot can be seen, looking up at it (§DM.5's road isn't built: this
+				# stands where it will run).
+				var best := {}
+				var bd := INF
+				for cs in CragFortress.all_sites(world.planet):
+					var dd := CubeSphere.surface_distance_m(cs.dir, camp_d)
+					if dd < bd:
+						bd = dd
+						best = cs
+				if best.is_empty():
+					lines.append("-- crag: no crag fortress on this planet")
+					continue
+				var pl: Dictionary = CragFortress.plan(world.planet, best)
+				# The nearest point out along the approach (80-300 m) from
+				# which the line of sight to its foot clears the ground.
+				var t: TerrainField = world.planet.terrain
+				var foot_d := Ruins.local_dir(best, 0.0, float(pl.front_z))
+				var aim := t.elevation(foot_d, true) + float(best.rise_m) * 0.15
+				var stand := Ruins.local_dir(best, 0.0, float(pl.front_z) - 160.0)
+				var out_m := 160.0
+				for dm in range(80, 320, 20):
+					var sd := Ruins.local_dir(best, 0.0, float(pl.front_z) - dm)
+					var eye := t.elevation(sd, true) + 1.6
+					var clear := true
+					for k in range(1, 12):
+						var f := k / 12.0
+						var pd := Ruins.local_dir(best, 0.0, float(pl.front_z) - dm * (1.0 - f))
+						if t.elevation(pd, true) > lerpf(eye, aim, f):
+							clear = false
+							break
+					if clear:
+						stand = sd
+						out_m = dm
+						break
+				var top := Ruins.local_dir(best, 0.0, float(pl.zs0))
+				sites.append({"name": "crag_fortress_approach", "dir": stand, "look": best.dir, "pitch_to": top, "pitch_add_m": float(pl.top_y) * 0.6,
+					"note": "a crag fortress %.0f km from the camp, %.0f m high in %d tiers, from %.0f m out on its approach" % [bd / 1000.0, float(best.rise_m), int(best.tiers), out_m]})
 			"at":
 				# SITES=at AT=lat,lon: stand there (design §DC: the wood
 				# whose broken crowns shaft_check found).
@@ -484,7 +526,7 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		var pitch0 := 0.0
 		if site.has("pitch_to"):
 			var tp: Vector3 = site.pitch_to
-			var to: Vector3 = world.to_scene(tp, PlanetConst.RADIUS_M + world.planet.terrain.elevation(tp, true)) - player.global_position
+			var to: Vector3 = world.to_scene(tp, PlanetConst.RADIUS_M + world.planet.terrain.elevation(tp, true) + float(site.get("pitch_add_m", 0.0))) - player.global_position
 			pitch0 = clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)) * 0.7, -0.8, 0.8)
 		# FACE_SUN=1: the first facing looks at the sun (design §DB).
 		var yaw0 := 0.0

@@ -345,7 +345,11 @@ func _refresh() -> void:
 ## Where the barrow's way in meets the ground (its front end), in the scene.
 func _door_point(node: Node3D) -> Vector3:
 	var site: Dictionary = node.get_meta("site")
-	var lp := Vector3(0.0, 0.0, -float(site.half_l) - 0.8)
+	var lp := Vector3(0.0, 0.0, -float(site.get("half_l", 0.0)) - 0.8)
+	var lay: Dictionary = node.get_meta("delve", {})
+	if lay.has("door_out"):
+		# A climbing delve's way in at the rock's foot (§DO).
+		lp = lay.door_out
 	var p := node.global_transform * lp
 	var d: Vector3 = world.dir_of(p)
 	return world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
@@ -358,11 +362,12 @@ func _room_spots(node: Node3D) -> Array:
 	var out: Array = []
 	# The heart's deep end, then the first room's near end (each as far
 	# as it can be from the other room's fire).
-	for k in [3, 1]:
+	var hi := int(lay.get("heart_i", 3))
+	for k in [hi, int(lay.get("room_i", 1))]:
 		if k >= (lay.pieces as Array).size():
 			continue
 		var pc: Dictionary = lay.pieces[k]
-		var c2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * (0.8 if k == 3 else 0.25)
+		var c2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * (0.8 if k == hi else 0.25)
 		out.append(node.global_transform * Vector3(c2.x, float(pc.y0) - off + 0.02, c2.y))
 	return out
 
@@ -466,8 +471,12 @@ func _door_props(node: Node3D) -> Array:
 	rng.seed = hash([int(site.seed), "den_door"])
 	var bone := Color(0.78, 0.74, 0.64)
 	var scat := Color(0.16, 0.12, 0.09)
+	var lay: Dictionary = node.get_meta("delve", {})
+	var door_z := float(site.get("half_l", 0.0))
+	if lay.has("door_out"):
+		door_z = -float((lay.door_out as Vector3).z) - 1.2
 	for i in 7:
-		var lp := Vector3(rng.randf_range(-1.4, 1.4), 0.0, -float(site.half_l) - rng.randf_range(0.6, 2.4))
+		var lp := Vector3(rng.randf_range(-1.4, 1.4), 0.0, -door_z - rng.randf_range(0.6, 2.4))
 		var p := node.global_transform * lp
 		var d: Vector3 = world.dir_of(p)
 		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))

@@ -92,6 +92,14 @@ var palette: Array = STONES
 ## stands in for; grave mounds and tepee poles, which get their own; leaf
 ## crowns; grave goods too small to trip on).
 var solid := true
+## Boxes drawn plain (box()): set for a big build's insides.
+var plain := false
+## Where the near mesh gives way to the far LOD (a big build reaches
+## further: its middle is far from the walls you stand by).
+var _lod_m := LOD_M
+## Draw the near mesh lit per pixel (big walls: one vertex's shade would
+## darken metres of wall).
+var _lit_per_pixel := false
 ## 0-1 darkening for stone that's only ever seen from inside (a barrow's
 ## passage, the pyramid's corridor and chamber): the flat ambient light
 ## reaches in regardless, so the shade is baked into the stone.
@@ -214,6 +222,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._graveyard()
 		Ruins.Kind.BARROW:
 			b._barrow()
+		Ruins.Kind.CRAG_FORTRESS:
+			b._crag_fortress()
 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
 	# ruins: the others are dwellings already.)
 	var camp_rng := RandomNumberGenerator.new()
@@ -226,7 +236,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -308,7 +318,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		dmi.name = "Delve"
 		dmi.mesh = dm
 		dmi.material_override = material_lit()
-		dmi.visibility_range_end = LOD_M
+		dmi.visibility_range_end = float(data.get("lod_m", LOD_M))
 		dmi.visibility_range_end_margin = LOD_MARGIN_M
 		root.add_child(dmi)
 		var v2 := (data.v as PackedVector3Array).slice(0, d0)
@@ -329,8 +339,8 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		var mi := MeshInstance3D.new()
 		mi.mesh = mesh
-		mi.material_override = material()
-		mi.visibility_range_end = LOD_M
+		mi.material_override = material_lit() if bool(data.get("lit_per_pixel", false)) else material()
+		mi.visibility_range_end = float(data.get("lod_m", LOD_M))
 		mi.visibility_range_end_margin = LOD_MARGIN_M
 		root.add_child(mi)
 	if not (data.lv as PackedVector3Array).is_empty():
@@ -344,7 +354,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		far.name = "FarLOD"
 		far.mesh = far_mesh
 		far.material_override = material()
-		far.visibility_range_begin = LOD_M
+		far.visibility_range_begin = float(data.get("lod_m", LOD_M))
 		far.visibility_range_begin_margin = LOD_MARGIN_M
 		root.add_child(far)
 	for l in data.get("lights", []):
@@ -491,6 +501,16 @@ func _face(a: Vector3, b: Vector3, c: Vector3, d: Vector3, col: Color, inside: V
 ## jittered by up to `wear` m.
 func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09, wear := 0.05) -> void:
 	col = col.darkened(shade)
+	if plain:
+		# Plain boxes (12 triangles, no bevels): a big build's insides (the
+		# crag fortress's climb, §DO) within a castle's budget.
+		var pc := col.lerp(MOSS, moss * 0.5)
+		pc.a = moss * 0.4
+		_tri_box(xf, size, pc)
+		if solid:
+			_collision_box(xf, size * 0.5)
+		_lod_box(xf, size * 0.5, pc, pc, pc.darkened(UNDER))
+		return
 	var h := size * 0.5
 	var b := minf(bevel, minf(h.x, minf(h.y, h.z)) * 0.45)
 	var top := col.lerp(MOSS, moss)
@@ -2945,7 +2965,7 @@ func _dwall_gaps(pc: Dictionary, side_across: float, a0: float, a1: float, gaps:
 
 ## A room (the first room, the heart, the cairn's chamber): paved floor,
 ## four walls with the gaps in `opens`, a ceiling of slabs.
-func _delve_room(pc: Dictionary, off: float, opens: Array) -> void:
+func _delve_room(pc: Dictionary, off: float, opens: Array, skip := Rect2()) -> void:
 	var y := float(pc.y0) - off
 	var h := float(pc.h)
 	var half := float(pc.half)
@@ -2991,18 +3011,18 @@ func _delve_room(pc: Dictionary, off: float, opens: Array) -> void:
 		var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
 		var bs := Basis(Delves.perp(pc.dir).x * Vector3.RIGHT + Delves.perp(pc.dir).y * Vector3.BACK, Vector3.UP, d3)
 		box(Transform3D(bs.orthonormalized(), Vector3(mid.x, y + h + Delves.SLAB * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, Delves.SLAB, a1 - a0 + 0.05), col.darkened(0.1), 0.0, 0.08, 0.03)
-	_pave_piece(pc, off)
+	_pave_piece(pc, off, skip)
 
 
 ## The paving of a flat piece.
-func _pave_piece(pc: Dictionary, off: float) -> void:
+func _pave_piece(pc: Dictionary, off: float, skip := Rect2()) -> void:
 	var r := Delves.rect_of(pc, 0.05)
-	_pave(r, float(pc.y0) - off)
+	_pave(r, float(pc.y0) - off, skip)
 
 
 ## Flagstones over `r` (x/z), their tops at `y` (NAN: on the ground at
 ## each), with collision.
-func _pave(r: Rect2, y: float) -> void:
+func _pave(r: Rect2, y: float, skip := Rect2()) -> void:
 	var nx := maxi(1, int(ceil(r.size.x / 1.1)))
 	var nz := maxi(1, int(ceil(r.size.y / 1.1)))
 	var sx := r.size.x / nx
@@ -3013,6 +3033,9 @@ func _pave(r: Rect2, y: float) -> void:
 		for i in nx:
 			var cx := r.position.x + (i + 0.5) * sx
 			var cz := r.position.y + (j + 0.5) * sz
+			# A stairwell left open (the crag's last flight, §DO).
+			if skip.has_area() and skip.has_point(Vector2(cx, cz)):
+				continue
 			var top := y
 			var depth := 0.3
 			if is_nan(y):
@@ -3294,3 +3317,508 @@ func _mastaba() -> void:
 		var a := rng.randf_range(0.3, PI - 0.3)
 		rubble(Vector3(cos(a) * (hx + 2.0), 0.0, sin(a) * (hz + 2.0)), 2.0, 4)
 	_camp_spot = Vector3(hx + 6.0, ground(hx + 6.0, 0.0), 0.0)
+
+
+# --- The crag fortress (design 3 Oct §DO) ----------------------------------------
+
+const CRAG_ROCK := [Color(0.36, 0.33, 0.3), Color(0.4, 0.36, 0.32), Color(0.33, 0.31, 0.29), Color(0.38, 0.35, 0.33)]
+## (Alpha is the ruin shader's moss: 0, these are bare.)
+const LIMEWASH := Color(0.86, 0.85, 0.8, 0.0)
+const LICHEN := Color(0.55, 0.58, 0.38, 0.0)
+const ROOF_EARTH := Color(0.42, 0.38, 0.33, 0.0)
+const WINDOW_DARK := Color(0.035, 0.03, 0.045, 0.0)
+const FRAME_DARK := Color(0.09, 0.07, 0.08, 0.0)
+## The outside stair climbs at this angle (under the steepest walkable).
+const CRAG_STAIR_DEG := 44.0
+const CRAG_STAIR_X := 6.0
+
+
+## A fortress-monastery climbing a rock rise in tiers (ruins.json
+## styles.crag_fortress; CragFortress.plan): the rock itself in rough
+## tiers, the climb's face built over with limewashed battered walls (each
+## leaning in by batter_deg, small dark windows in trapezoid frames, the
+## matte red-brown band under its roofline, a flat roof), the top chapel
+## over the delve's shaft with one matte gilt finial, the one long stair up
+## the front from the foot to the top terrace, and the lesser buildings at
+## the foot round a plaza where a camp may live (§CK). Lichen and a little
+## moss on the rock's shaded (poleward) faces only; no cloth. The delve
+## inside climbs (CragFortress.layout).
+func _crag_fortress() -> void:
+	var E: Dictionary = CragFortress.E
+	var lay := Delves.layout(map, site)
+	var p: Dictionary = lay.plan
+	_lod_m = LOD_M + float(site.get("base_hs", 30.0)) * 2.0 + float(site.get("rise_m", 60.0))
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var tiers: Array = p.tiers
+	var n := tiers.size()
+	var g_f := float(p.g_f) - off
+	var top_y := float(p.top_y) - off
+	var zs0 := float(p.zs0)
+	var zs1 := float(p.zs1)
+	var br: Array = E.get("batter_deg", [5, 8])
+	var batter := deg_to_rad(rng.randf_range(float(br[0]), float(br[1])))
+	var band := Color(str((E.get("band", {}) as Dictionary).get("colour", "#5A2420")))
+	var gilt := Color(str((E.get("finial", {}) as Dictionary).get("colour", "#B08A2E")))
+	band.a = 0.0
+	gilt.a = 0.0
+	# The poleward side is in shade (lichen there, §DO.5).
+	var north := CubeSphere.north(up)
+	var pole := Vector2(north.dot(ex), north.dot(ez)) * (1.0 if CubeSphere.latitude(up) >= 0.0 else -1.0)
+	pole = pole.normalized()
+	palette = CRAG_ROCK
+	# The rock, tier by tier, round the shaft the delve climbs in.
+	for k in n:
+		var t: Dictionary = tiers[k]
+		var y0 := float(t.y0) - off
+		var y1 := float(t.y1) - off
+		_crag_tier(t, y0, y1, zs0, zs1, k == 0, g_f, pole)
+	# The faces built over: from tier 1 up, a battered limewashed wall in
+	# front of each tier's rock (and round the front of its sides), on the
+	# terrace of the tier below.
+	for k in range(1, n):
+		var t: Dictionary = tiers[k]
+		var below: Dictionary = tiers[k - 1]
+		_crag_facade(t, float(below.y1) - off, float(t.y1) - off, batter, band, k, n)
+	# The top chapel over the shaft, its finial.
+	_crag_chapel(zs0, zs1, top_y, batter, band, gilt)
+	# The outside stair, the foot's buildings and the plaza.
+	var top: Dictionary = tiers[n - 1]
+	_crag_stair(CRAG_STAIR_X, float(top.zc) - float(top.sz) + 0.4, top_y, tiers, off)
+	_crag_foot(float(p.front_z), g_f, batter, band)
+	# Inside: the climb.
+	shade = 0.0
+	_delve_from = _v.size()
+	plain = true
+	_crag_delve(lay, off)
+	plain = false
+	_delve_to = _v.size()
+	palette = STONES
+
+
+## One tier of rock: four masses round the shaft (left and right whole,
+## front and back across it), the front one on the bottom tier split round
+## the delve's way in; each broken into a few rough blocks so the outline
+## is crag, not box. Shaded faces take lichen.
+func _crag_tier(t: Dictionary, y0: float, y1: float, zs0: float, zs1: float, bottom: bool, g_f: float, pole: Vector2) -> void:
+	var sx := float(t.sx)
+	var sz := float(t.sz)
+	var zc := float(t.zc)
+	var xc := float(t.get("xc", 0.0))
+	var hx := CragFortress.SHAFT_HX
+	var zf := zc - sz
+	var zb := zc + sz
+	var masses: Array = []
+	# [x0, x1, z0, z1, y0, y1, outward]
+	masses.append([xc - sx, -hx, zf, zb, y0, y1, Vector2(-1, 0)])
+	masses.append([hx, xc + sx, zf, zb, y0, y1, Vector2(1, 0)])
+	masses.append([-hx, hx, zs1, zb, y0, y1, Vector2(0, 1)])
+	if bottom:
+		# Round the way in: a doorway 1.9 m wide, the rock over it.
+		var door_top := g_f + Delves.H_STAIR + Delves.SLAB + 0.2
+		masses.append([-hx, -1.55, zf, zs0, y0, y1, Vector2(0, -1)])
+		masses.append([1.55, hx, zf, zs0, y0, y1, Vector2(0, -1)])
+		masses.append([-1.55, 1.55, zf, zs0, door_top, y1, Vector2(0, -1)])
+		masses.append([-1.55, 1.55, zf, zs0, y0, g_f - 0.4, Vector2(0, -1)])
+	else:
+		masses.append([-hx, hx, zf, zs0, y0, y1, Vector2(0, -1)])
+	for m in masses:
+		var shaded: bool = (m[6] as Vector2).dot(pole) > 0.4
+		var x0: float = m[0]
+		var x1: float = m[1]
+		var z0: float = m[2]
+		var z1: float = m[3]
+		var ya: float = m[4]
+		var yb: float = m[5]
+		if x1 - x0 < 0.2 or z1 - z0 < 0.2 or yb - ya < 0.2:
+			continue
+		var col: Color = (CRAG_ROCK[rng.randi() % CRAG_ROCK.size()] as Color)
+		if shaded:
+			col = col.lerp(LICHEN, 0.22)
+		box(Transform3D(Basis.IDENTITY, Vector3((x0 + x1) * 0.5, (ya + yb) * 0.5, (z0 + z1) * 0.5)), Vector3(x1 - x0, yb - ya, z1 - z0), col, 0.08 if shaded else 0.0, 0.6, 0.25)
+	# Rough blocks on the outer faces (no two tiers alike), never over the
+	# front's middle (the stair and the way in climb there).
+	solid = false
+	for i in 6:
+		var side := rng.randi() % 3
+		var w := rng.randf_range(3.0, 7.0)
+		var h := rng.randf_range(0.4, 0.8) * (y1 - y0)
+		var c: Vector3
+		var outv: Vector2
+		match side:
+			0:
+				c = Vector3(xc - sx - 0.4, y0 + h * 0.5 + rng.randf_range(0.0, y1 - y0 - h), rng.randf_range(zf + w * 0.5, zb - w * 0.5))
+				outv = Vector2(-1, 0)
+			1:
+				c = Vector3(xc + sx + 0.4, y0 + h * 0.5 + rng.randf_range(0.0, y1 - y0 - h), rng.randf_range(zf + w * 0.5, zb - w * 0.5))
+				outv = Vector2(1, 0)
+			_:
+				c = Vector3(xc + rng.randf_range(-sx + w * 0.5, sx - w * 0.5), y0 + h * 0.5 + rng.randf_range(0.0, y1 - y0 - h), zb + 0.4)
+				outv = Vector2(0, 1)
+		var shaded2 := outv.dot(pole) > 0.4
+		var col2: Color = (CRAG_ROCK[rng.randi() % CRAG_ROCK.size()] as Color).darkened(rng.randf_range(0.0, 0.08))
+		if shaded2:
+			col2 = col2.lerp(LICHEN, 0.3)
+		var bs := Basis(Vector3.UP, rng.randf_range(-0.25, 0.25)).rotated(Vector3.RIGHT, rng.randf_range(-0.12, 0.12))
+		box(Transform3D(bs, c), Vector3(w, h, rng.randf_range(1.6, 3.0)), col2, 0.06 if shaded2 else 0.0, 0.5, 0.3)
+	solid = true
+
+
+## A battered prism: its foot the rectangle (x0..x1, z0..z1) at y0, its
+## top at y1 pulled in by `lean` on the sides in `lean_sides` ("front":
+## -z, "back", "left", "right"), drawn in `col`, solid.
+func _battered(x0: float, x1: float, z0: float, z1: float, y0: float, y1: float, lean: float, lean_sides: Array, col: Color) -> void:
+	col.a = 0.0
+	var tx0 := x0 + (lean if lean_sides.has("left") else 0.0)
+	var tx1 := x1 - (lean if lean_sides.has("right") else 0.0)
+	var tz0 := z0 + (lean if lean_sides.has("front") else 0.0)
+	var tz1 := z1 - (lean if lean_sides.has("back") else 0.0)
+	var b := [Vector3(x0, y0, z0), Vector3(x1, y0, z0), Vector3(x1, y0, z1), Vector3(x0, y0, z1)]
+	var t := [Vector3(tx0, y1, tz0), Vector3(tx1, y1, tz0), Vector3(tx1, y1, tz1), Vector3(tx0, y1, tz1)]
+	var mid := Vector3((x0 + x1) * 0.5, (y0 + y1) * 0.5, (z0 + z1) * 0.5)
+	for i in 4:
+		var j := (i + 1) % 4
+		# In cells about 3 m across: the ruins are lit per vertex, and one
+		# big quad's four corners all sit in contact shade (the band over
+		# it, the terrace under it), which would darken the whole wall.
+		var nu := maxi(1, int(ceil(b[i].distance_to(b[j]) / 3.0)))
+		var nv := maxi(1, int(ceil(absf(y1 - y0) / 3.0)))
+		for u in nu:
+			for w in nv:
+				var u0 := float(u) / nu
+				var u1 := float(u + 1) / nu
+				var v0 := float(w) / nv
+				var v1 := float(w + 1) / nv
+				var p00: Vector3 = (b[i] as Vector3).lerp(b[j], u0).lerp((t[i] as Vector3).lerp(t[j], u0), v0)
+				var p10: Vector3 = (b[i] as Vector3).lerp(b[j], u1).lerp((t[i] as Vector3).lerp(t[j], u1), v0)
+				var p11: Vector3 = (b[i] as Vector3).lerp(b[j], u1).lerp((t[i] as Vector3).lerp(t[j], u1), v1)
+				var p01: Vector3 = (b[i] as Vector3).lerp(b[j], u0).lerp((t[i] as Vector3).lerp(t[j], u0), v1)
+				_face(p00, p10, p11, p01, col, mid)
+	_face(t[0], t[1], t[2], t[3], col.lerp(ROOF_EARTH, 0.4), mid)
+	var h := Vector3((tx1 - tx0) * 0.5 + (x1 - x0 - (tx1 - tx0)) * 0.25, (y1 - y0) * 0.5, (tz1 - tz0) * 0.5 + (z1 - z0 - (tz1 - tz0)) * 0.25)
+	var cmid := Vector3((x0 + x1 + tx0 + tx1) * 0.25, mid.y, (z0 + z1 + tz0 + tz1) * 0.25)
+	_collision_box(Transform3D(Basis.IDENTITY, cmid), h)
+	_lod_box(Transform3D(Basis.IDENTITY, cmid), h, col.lerp(ROOF_EARTH, 0.4), col, col.darkened(UNDER))
+
+
+## The red band under a roofline and the flat roof over it: round the
+## top of a battered block (its top rectangle at y_top), 0.9 m deep.
+func _band_and_roof(x0: float, x1: float, z0: float, z1: float, y_top: float, band: Color, sides: Array) -> void:
+	var bh := 1.3
+	var o := 0.12
+	var bx0 := x0 - (o if sides.has("left") else 0.0)
+	var bx1 := x1 + (o if sides.has("right") else 0.0)
+	var bz0 := z0 - (o if sides.has("front") else 0.0)
+	var bz1 := z1 + (o if sides.has("back") else 0.0)
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3((bx0 + bx1) * 0.5, y_top - bh * 0.5 - 0.25, (bz0 + bz1) * 0.5)), Vector3(bx1 - bx0, bh, bz1 - bz0), band)
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3((bx0 + bx1) * 0.5, y_top + 0.05, (bz0 + bz1) * 0.5)), Vector3(bx1 - bx0 + 0.3, 0.3, bz1 - bz0 + 0.3), ROOF_EARTH)
+
+
+## A small dark window in a trapezoid frame on a face: centre `c`, the
+## face's outward normal `out` (local, horizontal), `w` x `h`.
+func _crag_window(c: Vector3, out: Vector3, w: float, h: float) -> void:
+	var along := Vector3.UP.cross(out).normalized()
+	var f := c + out * 0.05
+	var fb := w * 0.8
+	var ft := w * 0.6
+	_face(f - along * fb - Vector3.UP * h * 0.65, f + along * fb - Vector3.UP * h * 0.65, f + along * ft + Vector3.UP * h * 0.65, f - along * ft + Vector3.UP * h * 0.65, FRAME_DARK, c - out)
+	var g := c + out * 0.08
+	_face(g - along * w * 0.5 - Vector3.UP * h * 0.5, g + along * w * 0.5 - Vector3.UP * h * 0.5, g + along * w * 0.5 + Vector3.UP * h * 0.5, g - along * w * 0.5 + Vector3.UP * h * 0.5, WINDOW_DARK, c - out)
+	# Seen from across the valley too (the far LOD keeps them).
+	var xf := Transform3D(Basis(along, Vector3.UP, out), c + out * 0.05)
+	_lod_box(xf, Vector3(w * 0.7, h * 0.6, 0.06), FRAME_DARK, FRAME_DARK, FRAME_DARK)
+
+
+## The limewashed buildings over tier `t`'s rock (tier `k` of `n`): along
+## its front, separate battered blocks of their own widths and heights
+## with the rock showing between them (few low down, close together near
+## the top: the monastery crowns the crag), some taller than the tier and
+## roofed above the terrace behind; a few wrap round onto the sides.
+## Windows in rows, the band and the roof's edge at each top.
+func _crag_facade(t: Dictionary, y0: float, y1: float, batter: float, band: Color, k: int = 1, n: int = 4) -> void:
+	var sx := float(t.sx)
+	var sz := float(t.sz)
+	var zc := float(t.zc)
+	var xc := float(t.get("xc", 0.0))
+	var th := y1 - y0
+	var zf := zc - sz
+	var built := lerpf(0.4, 0.95, float(k) / maxf(n - 1, 1))
+	var x := xc - sx - 1.0
+	while x < xc + sx:
+		var w := rng.randf_range(5.0, 13.0)
+		var x0 := x
+		var x1 := minf(x + w, xc + sx + 1.0)
+		x = x1 + rng.randf_range(1.5, 5.0)
+		# Never over the stair's band.
+		if x1 > CRAG_STAIR_X - 2.4 and x0 < CRAG_STAIR_X + 2.4:
+			if x0 < CRAG_STAIR_X - 2.4 - 3.0:
+				x1 = CRAG_STAIR_X - 2.4
+			else:
+				continue
+		if rng.randf() > built or x1 - x0 < 3.0:
+			continue
+		var h := th * rng.randf_range(0.55, 1.2)
+		var lean := h * tan(batter)
+		var thick := 1.2 + lean + rng.randf_range(0.0, 2.0)
+		var col := LIMEWASH.darkened(rng.randf_range(0.0, 0.07))
+		_battered(x0, x1, zf - thick, zf + 0.5, y0, y0 + h, lean, ["front", "left", "right"], col)
+		_band_and_roof(x0 + lean, x1 - lean, zf - thick + lean, zf + 0.5, y0 + h, band, ["front", "left", "right"])
+		var cols := maxi(1, int((x1 - x0) / 3.4))
+		var rows := maxi(1, int((h - 2.4) / 3.2))
+		for i in cols:
+			for j in rows:
+				if rng.randf() < 0.3:
+					continue
+				var yy := y0 + 2.2 + j * 3.2
+				if yy > y0 + h - 2.0:
+					continue
+				var lz := zf - thick + lean * (yy - y0) / h
+				_crag_window(Vector3(x0 + (i + 0.5) * (x1 - x0) / cols, yy, lz), Vector3(0, 0, -1), 0.7, 1.0)
+	# Now and then a block round a side.
+	for sgn: float in [-1.0, 1.0]:
+		if rng.randf() > built * 0.7:
+			continue
+		var h := th * rng.randf_range(0.6, 1.1)
+		var lean := h * tan(batter)
+		var thick := 1.2 + lean
+		var xa := xc + sgn * sx
+		var xo := xa + sgn * thick
+		var z0 := zf + rng.randf_range(0.0, sz * 0.3)
+		var z1 := z0 + rng.randf_range(6.0, 12.0)
+		var side := "left" if sgn < 0.0 else "right"
+		_battered(minf(xa, xo), maxf(xa, xo), z0, z1, y0, y0 + h, lean, [side, "front", "back"], LIMEWASH.darkened(rng.randf_range(0.02, 0.08)))
+		_band_and_roof(minf(xa, xo) + (lean if sgn < 0.0 else 0.0), maxf(xa, xo) - (0.0 if sgn < 0.0 else lean), z0 + lean, z1 - lean, y0 + h, band, [side, "front", "back"])
+		var yy := y0 + 2.2
+		if yy < y0 + h - 2.0:
+			_crag_window(Vector3(xo - sgn * lean * 2.2 / h, yy, (z0 + z1) * 0.5), Vector3(sgn, 0, 0), 0.7, 1.0)
+
+
+## The top chapel: a battered limewashed shell round the delve's heart (the
+## room is CragFortress.layout's), its door on the front, the band, the
+## flat roof, and the one gilt finial (matte, never a light: R7, R8).
+func _crag_chapel(zs0: float, zs1: float, top_y: float, batter: float, band: Color, gilt: Color) -> void:
+	var hx := CragFortress.SHAFT_HX + 0.7
+	var z0 := zs0 - 0.9
+	var z1 := zs1 + 0.9
+	var h := Delves.H_HEART + Delves.SLAB + 3.6
+	var lean := h * tan(batter) * 0.5
+	var y0 := top_y - 0.3
+	var y1 := top_y + h
+	var t := 0.7
+	var col := LIMEWASH
+	# Four walls (the front split round the door), each a battered slab.
+	_battered(-hx, -hx + t + lean, z0, z1, y0, y1, lean, ["left"], col)
+	_battered(hx - t - lean, hx, z0, z1, y0, y1, lean, ["right"], col)
+	_battered(-hx + t, hx - t, z1 - t - lean, z1, y0, y1, lean, ["back"], col)
+	_battered(-hx + t, -1.0, z0, z0 + t + lean, y0, y1, lean, ["front"], col)
+	_battered(1.0, hx - t, z0, z0 + t + lean, y0, y1, lean, ["front"], col)
+	_battered(-1.0, 1.0, z0, z0 + t + lean, top_y + Delves.H_STAIR + 0.2, y1, lean, ["front"], col)
+	_band_and_roof(-hx + lean, hx - lean, z0 + lean, z1 - lean, y1, band, ["front", "back", "left", "right"])
+	for sx: float in [-1.0, 1.0]:
+		_crag_window(Vector3(sx * 3.0, top_y + 2.6, z0 + lean * 0.5), Vector3(0, 0, -1), 0.6, 0.9)
+	# The finial: a stepped base, a bell, a spire, on the roof's middle.
+	var cz := (z0 + z1) * 0.5
+	var fy := y1 + 0.2
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 0.35, cz)), Vector3(2.4, 0.7, 2.4), gilt.darkened(0.1))
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 1.3, cz)), Vector3(1.8, 1.2, 1.8), gilt)
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 2.5, cz)), Vector3(1.1, 1.2, 1.1), gilt)
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 3.7, cz)), Vector3(0.5, 1.3, 0.5), gilt.lightened(0.05))
+	_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 4.6, cz)), Vector3(0.24, 0.6, 0.24), gilt)
+
+
+## The rock's top at local (x, z): the highest tier whose top covers it,
+## else the ground.
+func _crag_surface(x: float, z: float, tiers: Array, off: float) -> float:
+	var best := ground(x, z)
+	for t in tiers:
+		var sx := float(t.sx)
+		var zc := float(t.zc)
+		var sz := float(t.sz)
+		if absf(x - float(t.get("xc", 0.0))) <= sx and z >= zc - sz and z <= zc + sz:
+			best = maxf(best, float(t.y1) - off)
+	return best
+
+
+## The one long stair up the front at x, climbing toward +z at
+## CRAG_STAIR_DEG to the top terrace's front edge (z_top, y_top), from
+## where it meets the ground: each step a block down to the rock or ground
+## under it, a walkable ramp under them all.
+func _crag_stair(x: float, z_top: float, y_top: float, tiers: Array, off: float) -> void:
+	var tanv := tan(deg_to_rad(CRAG_STAIR_DEG))
+	var z := z_top
+	for i in 2000:
+		z -= 0.25
+		if y_top - (z_top - z) * tanv <= ground(x, z):
+			break
+	var z_start := z
+	var y_start := ground(x, z_start)
+	var rise := y_top - y_start
+	var steps := maxi(4, int(round(rise / 0.5)))
+	var r := rise / steps
+	var run := (z_top - z_start) / steps
+	var w := 2.8
+	solid = false
+	for i in steps:
+		var y_i := y_start + (i + 1) * r
+		var z_i := z_start + i * run
+		var under := _crag_surface(x, z_i + run * 0.5, tiers, off)
+		var bottom := minf(under, y_i - r) - 0.3
+		var col: Color = (CRAG_ROCK[rng.randi() % CRAG_ROCK.size()] as Color).lightened(0.12)
+		_tri_box_lod(Transform3D(Basis.IDENTITY, Vector3(x, (y_i + bottom) * 0.5, z_i + run * 0.5)), Vector3(w, y_i - bottom, run + 0.02), col)
+	solid = true
+	# Low limewashed parapets each side, in long runs.
+	var seg := 8
+	for k in seg:
+		var a := float(k) / seg
+		var b := float(k + 1) / seg
+		for sd: float in [-1.0, 1.0]:
+			var pa := Vector3(x + sd * (w * 0.5 + 0.2), y_start + rise * a + 0.45, z_start + (z_top - z_start) * a)
+			var pb := Vector3(x + sd * (w * 0.5 + 0.2), y_start + rise * b + 0.45, z_start + (z_top - z_start) * b)
+			var dirv := (pb - pa).normalized()
+			var nrm := dirv.cross(Vector3.RIGHT)
+			_tri_box(Transform3D(Basis(Vector3.RIGHT, nrm, dirv), (pa + pb) * 0.5), Vector3(0.4, 0.9, pa.distance_to(pb) + 0.05), LIMEWASH.darkened(0.08))
+	_dramp(Vector3(x, y_start, z_start), Vector3(x, y_top, z_top), w)
+
+
+## The lesser buildings at the foot, round a plaza before the way in where
+## a camp may live (§CK): flat-roofed battered houses with their bands.
+func _crag_foot(front_z: float, g_f: float, batter: float, band: Color) -> void:
+	var count := rng.randi_range(3, 5)
+	var placed: Array = []
+	var hs := float(site.get("base_hs", 30.0))
+	for i in 40:
+		if placed.size() >= count:
+			break
+		var hx := rng.randf_range(2.6, 4.5)
+		var hz := rng.randf_range(2.4, 3.6)
+		var cx := rng.randf_range(-hs * 0.8, hs * 0.8)
+		var cz := front_z - rng.randf_range(9.0, 24.0)
+		# Clear of the stair, the way to the door and the plaza's middle.
+		if absf(cx - CRAG_STAIR_X) < hx + 3.0 or absf(cx) < hx + 2.0:
+			continue
+		if Vector2(cx + 7.0, cz - (front_z - 13.0)).length() < hx + 5.0:
+			continue
+		var clash := false
+		for q in placed:
+			if absf(cx - float(q[0])) < hx + float(q[2]) + 2.0 and absf(cz - float(q[1])) < hz + float(q[3]) + 2.0:
+				clash = true
+		if clash:
+			continue
+		placed.append([cx, cz, hx, hz])
+		var lo := INF
+		for dx: float in [-hx, hx]:
+			for dz: float in [-hz, hz]:
+				lo = minf(lo, ground(cx + dx, cz + dz))
+		var h := rng.randf_range(4.0, 6.5)
+		var lean := h * tan(batter)
+		var y0 := lo - 0.6
+		var y1 := lo + h
+		_battered(cx - hx, cx + hx, cz - hz, cz + hz, y0, y1, lean, ["front", "back", "left", "right"], LIMEWASH.darkened(rng.randf_range(0.0, 0.1)))
+		_band_and_roof(cx - hx + lean, cx + hx - lean, cz - hz + lean, cz + hz - lean, y1, band, ["front", "back", "left", "right"])
+		_crag_window(Vector3(cx + rng.randf_range(-hx * 0.4, hx * 0.4), lo + h * 0.6, cz + hz - lean * 0.6), Vector3(0, 0, 1), 0.6, 0.9)
+		_crag_window(Vector3(cx, lo + 1.0, cz - hz + lean * 0.15), Vector3(0, 0, -1), 0.9, 1.9)
+	# The plaza's camp spot (Camps builds the fire if folk live here).
+	_camp_spot = Vector3(-7.0, ground(-7.0, front_z - 13.0), front_z - 13.0)
+
+
+## The climb inside (CragFortress.layout): the passage, the landings
+## (stores, the cistern, braziers), the flights, the chapel with its
+## stairwell, the way out onto the terrace.
+func _crag_delve(lay: Dictionary, off: float) -> void:
+	var pieces: Array = lay.pieces
+	var well: Dictionary = lay.well
+	var heart_i := int(lay.heart_i)
+	palette = STONES
+	for i in pieces.size():
+		var pc: Dictionary = pieces[i]
+		var prev: Dictionary = pieces[i - 1] if i > 0 else {}
+		var nxt: Dictionary = pieces[i + 1] if i + 1 < pieces.size() else {}
+		match str(pc.kind):
+			"passage":
+				_delve_room(pc, off, [["start", 0.0, 0.95], ["end", 0.0, 0.95]])
+			"room":
+				var opens: Array = []
+				var pend: Vector2 = (prev.c as Vector2) + (prev.dir as Vector2) * float(prev.len)
+				opens.append(_opening(pc, pend, float(prev.half)))
+				if not nxt.is_empty() and str(nxt.kind) == "stair":
+					opens.append(_opening(pc, nxt.c, float(nxt.half)))
+				_delve_room(pc, off, opens)
+				_crag_landing_dress(pc, off)
+			"stair":
+				if i == int(well.piece):
+					_delve_stair_open_top(pc, off, float(well.from), float(pieces[heart_i].y0) - off)
+				else:
+					_delve_stair(pc, off, false, 0.0, 0.0)
+			"heart":
+				var last: Dictionary = pieces[int(well.piece)]
+				var hole := Delves.rect_of(last, 0.15, float(well.from), float(last.len))
+				_delve_room(pc, off, [["start", 0.0, 0.95]], hole)
+				# A low wall round the stairwell (no falling back down it).
+				var yh := float(pc.y0) - off
+				var r := hole.grow(0.25)
+				var sdz := 1.0 if ((last.dir as Vector2).y < 0.0) else -1.0
+				var zf := r.position.y if sdz < 0.0 else r.position.y + r.size.y
+				_dwall(Vector2(r.position.x, zf), Vector2(r.position.x + r.size.x, zf), yh, yh + 0.9, 0.3)
+				_crag_heart_dress(pc, off)
+			"exit":
+				_delve_stair(pc, off, false, 0.0, 0.0)
+	# The landings' braziers (the fire-holders sit in their bowls).
+	for b: Vector3 in lay.get("braziers", []):
+		var p := b - Vector3(0.0, off, 0.0)
+		box(Transform3D(Basis.IDENTITY, p - Vector3(0.0, 0.55, 0.0)), Vector3(0.45, 0.7, 0.45), palette[1], 0.0, 0.06, 0.02)
+		box(Transform3D(Basis.IDENTITY, p - Vector3(0.0, 0.12, 0.0)), Vector3(0.95, 0.24, 0.95), Color(0.12, 0.1, 0.09), 0.0, 0.05, 0.02)
+
+
+## The same stair as _delve_stair, but from `open_from` along it its ceiling
+## is gone and its walls stop at `open_top` (it comes up through a floor).
+func _delve_stair_open_top(pc: Dictionary, off: float, open_from: float, open_top: float) -> void:
+	var lower := pc.duplicate()
+	lower.len = maxf(open_from, 0.5)
+	lower.y1 = Delves.floor_of(pc, lower.len)
+	_delve_stair(lower, off, false, 0.0, 0.0)
+	var upper := pc.duplicate()
+	upper.c = (pc.c as Vector2) + (pc.dir as Vector2) * lower.len
+	upper.len = float(pc.len) - lower.len
+	upper.y0 = lower.y1
+	if upper.len > 0.3:
+		# The walls up to the floor above; steps and the ramp as ever.
+		_delve_stair(upper, off, true, upper.len + 1.0, open_top + off)
+
+
+## A landing's dressing: the stores (clay jars), or the cistern (a sunk
+## basin of dark water), or bare.
+func _crag_landing_dress(pc: Dictionary, off: float) -> void:
+	var y := float(pc.y0) - off
+	var feature := str(pc.get("feature", "landing"))
+	var length := float(pc.len)
+	match feature:
+		"stores":
+			for k in rng.randi_range(4, 7):
+				var a := rng.randf_range(0.6, length * 0.3) if rng.randf() < 0.5 else rng.randf_range(length * 0.7, length - 0.6)
+				var p := _pp(pc, a, rng.randf_range(-0.6, 0.6))
+				var hj := rng.randf_range(0.5, 0.8)
+				box(Transform3D(Basis(Vector3.UP, rng.randf() * TAU), Vector3(p.x, y + hj * 0.5, p.y)), Vector3(0.45, hj, 0.45), CLAY.darkened(rng.randf_range(0.0, 0.2)), 0.0, 0.12, 0.03)
+		"cistern":
+			var p := _pp(pc, length * 0.25, 0.0)
+			solid = true
+			for sd: float in [-1.0, 1.0]:
+				box(Transform3D(Basis.IDENTITY, Vector3(p.x + sd * 0.95, y + 0.3, p.y)), Vector3(0.25, 0.6, 1.9), palette[2], 0.0, 0.05, 0.02)
+				box(Transform3D(Basis.IDENTITY, Vector3(p.x, y + 0.3, p.y + sd * 0.95)), Vector3(1.9, 0.6, 0.25), palette[2], 0.0, 0.05, 0.02)
+			_tri_box(Transform3D(Basis.IDENTITY, Vector3(p.x, y + 0.42, p.y)), Vector3(1.7, 0.02, 1.7), Color(0.07, 0.11, 0.24, 0.0))
+
+
+## The chapel inside: an altar at the far end, offerings before it.
+func _crag_heart_dress(pc: Dictionary, off: float) -> void:
+	var y := float(pc.y0) - off
+	var length := float(pc.len)
+	var a := _pp(pc, length - 1.2, 0.0)
+	box(Transform3D(Basis.IDENTITY, Vector3(a.x, y + 0.55, a.y)), Vector3(2.6, 1.1, 1.0), palette[3], 0.0, 0.06, 0.02)
+	_grave_goods(Vector3(a.x, y + 1.1, a.y), 0.9, 4)
+
+
+## A plain box (12 triangles) that the far LOD keeps too.
+func _tri_box_lod(xf: Transform3D, size: Vector3, col: Color) -> void:
+	col.a = 0.0
+	_tri_box(xf, size, col)
+	_lod_box(xf, size * 0.5, col, col, col.darkened(UNDER))

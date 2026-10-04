@@ -4,6 +4,51 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DO the crag fortress: its own kind, in Tibet-like country, a delve that climbs
+- **The kind:** `Ruins.Kind.CRAG_FORTRESS`, "Crag fortress" in play (`ruins.json styles.crag_fortress`). The reference names stay in the entry's source line only (§BO).
+- **Where** (`CragFortress`, the sites pass):
+  - once per world, every ruin cell is tried at 14 points, and the most prominent point that passes the gate is kept;
+  - the gate: `spawn.biomes`; `spawn.realm` (RealmMap); a crag (prominence ≥ 6 m over the ground 200 m round); altitude ≥ 1500 m real (150 m here); not wet (moisture ≤ 0.55); not warm (annual mean ≤ 14 °C); not on water;
+  - each passing cell rolls `chance` 0.3, and at most `per_world_max` 4 are kept, the most prominent first;
+  - `Ruins.find` returns it in its cell in place of the cell's other ruin.
+  
+  On seed 7731, 5,766 cells give 3 that pass and 1 that wins: andes-realm cold desert/steppe at 22.7°S, 234 m up (2,342 m real), 98 m high in 6 tiers. Turned away: warm 56, wet 41, biome 39, altitude 12, water 11, flat 2, realm 1.
+- **Built** (`RuinBuilder._crag_fortress`, `CragFortress.plan`):
+  - the rise is the builder's own rock, rough tiers each a little to one side round the delve's shaft, its shaded (poleward) faces lichen-tinted with a little moss;
+  - limewashed battered blocks (leaning 5–8°) in front of each tier's rock, sparse low down and close together near the top, some taller than their tier, with small dark windows in trapezoid frames, the matte red-brown band (#5A2420) under every roofline and flat roofs;
+  - the top chapel over the shaft with one matte gilt finial (#B08A2E, no emission: R8);
+  - one long stair at 44° up the front from the ground to the top terrace, on a walkable ramp, with low parapets;
+  - 3–5 lesser houses round a plaza at the foot, with a camp spot there;
+  - no cloth anywhere.
+  
+  It faces the sun's side (the equator) within ±20°, so the climb and windows face the light and the lichen sides are behind. That is my call, not in §DO. Plain boxes and 3 m wall cells keep it to 30,246 triangles (22,096 of them the climb inside), under the largest castle's 78,090. The far view keeps the bands, windows, finial and stair, and switches over further out than a castle's (its size).
+- **The delve climbs** (`CragFortress.layout`, `Delves`, `OldHearths`):
+  - a passage in at the foot to the shaft;
+  - flights of stairs turning at landings at each end, up through the tiers, never steeper than 38°;
+  - the landings are stores (clay jars), one a cistern (a dark basin) or bare, with a brazier on all but the first, whose bowl holds a fire-holder (`delves.json by_ruin`: brazier); the first landing has the old hearth (§CJ's safe room);
+  - the heart is the top chapel, the last flight coming up through a stairwell in its floor, with an altar, offerings, the heart's fire-holder and the find (§AW);
+  - the way out is the chapel's door onto the terrace at the head of the outside stair (§CJ.4).
+  
+  It is full dark inside the rock, light again at the door. The log says "A stair climbs into the dark inside the rock." and "The topmost room, the chapel under the finial." The first room's and the heart's fires vent through a roof vent on the roof above them (`smoke.json by_ruin`: roof_vent). Overrun works as for the barrow (§CN; the den's door is at the foot).
+- **Checked:** `tools/crag_fortress_check.gd`, seed 7731, 0 fails:
+  - the gate holds at every site, at most 4 are kept, and no stray finds turn up in 600 sampled cells;
+  - the way in is at the foot, the heart is 98 m above it, and there is a way out;
+  - 12 flights, the steepest 37.2°; 12 landings (stores ×5, landing ×6, cistern ×1); 11 braziers; the triangles are within one castle;
+  - a camp spot at the foot.
+  
+  `delve_check`, `old_hearth_check` and `overrun_check` still pass with 0 fails.
+- **Walkabout** (harness frames, §CG; `SITES=crag`, from the nearest point on its approach line that sees its foot, 80 m out):
+  - it reads as tiered white blocks with windows, rock between, the long stair, and the chapel and finial on top;
+  - under this tropical sun the north-facing walls get little direct light (sun against front 0.46 at 10:00), and the look's grade puts them in navy shade; at 15:30 in winter only its sunward edges are bright;
+  - flagged for Mike: the limewash may want to be brighter, or the walls more broken up.
+- **Not built / flagged:**
+  - §DM.5's straight road approach isn't built, so the walkabout stands where it will run;
+  - §DO's nests (kopje, volcanic neck, mesa) aren't built, so every fortress stands on its own raised rock;
+  - the realm list leaves out RealmMap's "himalaya" (high Asia over 2000 m real), the most Tibet-like realm in the game: flagged for Mike;
+  - camps at its foot are "north" folk (the mountain folk, §DO.6).
+- **Also fixed:** the vertex alpha the ruin shader reads as moss is now 0 on plain faces, and `RuinBuilder.box` has a plain mode for big builds.
+- **Data:** `ruins.json styles.crag_fortress` is unmarked. The DO/DR/DS notes in `ruins.json _help.styles_kinds`, `smoke.json` and `delves.json` now say the crag part is wired. `Tuning` loads `ruins.json`.
+
 ## 2026-10-04 — docs/PROMPT_QUEUE.md: the Claude Code passes, readable from the repo (Claude, chat)
 - **New:** `docs/PROMPT_QUEUE.md` holds the thirty-five one-idea Claude Code prompts for §DA–§DL, §DO–§DS and §DT–§DZ in §BR's order, with a status table. Mike no longer pastes: "Pull, then read docs/PROMPT_QUEUE.md and do the next prompt marked todo." Claude Code marks a row `built <hash>` when it pushes the pass; Claude (chat) appends new prompts and keeps the marks. 01–09 are marked built from the log; §DM's pass (another chat's hand-off) sits between 16 and 17 and is not in the file.
 

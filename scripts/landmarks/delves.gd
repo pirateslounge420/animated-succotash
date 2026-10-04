@@ -80,6 +80,9 @@ static func setup_world(map: PlanetData, rivers: RiverNetwork = null) -> void:
 static func has_delve(site: Dictionary) -> bool:
 	if site.is_empty() or site.get("kind") is String:
 		return false
+	# The crag fortress's delve climbs (design 3 Oct §DO).
+	if int(site.kind) == Ruins.Kind.CRAG_FORTRESS:
+		return true
 	return int(site.kind) == Ruins.Kind.BARROW and str(site.get("style", "")) in ["stone", "snow"]
 
 
@@ -171,7 +174,7 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	_mutex.unlock()
 	if hit != null:
 		return hit
-	var lay := _make_layout(map, site)
+	var lay := CragFortress.layout(map, site) if int(site.kind) == Ruins.Kind.CRAG_FORTRESS else _make_layout(map, site)
 	_mutex.lock()
 	_layouts[key] = lay
 	_mutex.unlock()
@@ -543,18 +546,38 @@ func _process(delta: float) -> void:
 		# How far below the ground over this spot (the chamber and the cairn
 		# are at the ground: their roofs keep the sky out, not the day).
 		var site: Dictionary = (at.ruin as Node3D).get_meta("site")
-		var g := 0.0
-		if _map != null:
-			g = _g0(_map, frame(_map, site), lp.x, lp.z)
-		want = smoothstep(1.0, 3.5, g - lp.y)
+		if bool((at.lay as Dictionary).get("climbs", false)):
+			# Inside the rock (§DO): dark past the first steps of the way in,
+			# light again at the way out's door.
+			var pk: Dictionary = at.piece
+			var aa := along_across(pk, Vector2(lp.x, lp.z))
+			match str(pk.kind):
+				"passage":
+					want = smoothstep(1.0, 4.0, aa.x)
+				"exit":
+					want = 1.0 - smoothstep(0.3, float(pk.len), aa.x)
+				_:
+					want = 1.0
+		else:
+			var g := 0.0
+			if _map != null:
+				g = _g0(_map, frame(_map, site), lp.x, lp.z)
+			want = smoothstep(1.0, 3.5, g - lp.y)
 		current_ruin = at.ruin
 		current = at.lay
 		var pc: Dictionary = at.piece
 		var seed_v := int(site.seed)
+		var climbs := bool((at.lay as Dictionary).get("climbs", false))
 		if str(pc.kind) == "stair" and want > 0.5:
-			GameLog.add_once("delve_down:%d" % seed_v, "A stair goes down into the dark under the barrow.", "delve")
+			if climbs:
+				GameLog.add_once("delve_up:%d" % seed_v, "A stair climbs into the dark inside the rock.", "delve")
+			else:
+				GameLog.add_once("delve_down:%d" % seed_v, "A stair goes down into the dark under the barrow.", "delve")
 		elif str(pc.kind) == "heart":
-			GameLog.add_once("delve_heart:%d" % seed_v, "The deepest room. The dead lie here with what they were given.", "delve")
+			if climbs:
+				GameLog.add_once("delve_heart:%d" % seed_v, "The topmost room, the chapel under the finial.", "delve")
+			else:
+				GameLog.add_once("delve_heart:%d" % seed_v, "The deepest room. The dead lie here with what they were given.", "delve")
 	else:
 		current_ruin = null
 		current = {}

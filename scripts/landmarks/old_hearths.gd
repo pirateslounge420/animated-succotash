@@ -162,6 +162,13 @@ func _wanted(pd: Vector3) -> Dictionary:
 				var hhd: Vector3 = world.dir_of(node.global_transform * hlocal)
 				if CubeSphere.surface_distance_m(hhd, pd) < BUILD_M:
 					want[FireStore.key_of(hhd)] = [hhd, "holder", node, hlocal]
+			# A climbing delve's landings (design 3 Oct §DO): a brazier on
+			# each, a fire-holder in its bowl (delves.json by_ruin).
+			for bl: Vector3 in lay.get("braziers", []):
+				var blocal := bl - Vector3(0.0, float(node.get_meta("delve_off", 0.0)), 0.0)
+				var bd: Vector3 = world.dir_of(node.global_transform * blocal)
+				if CubeSphere.surface_distance_m(bd, pd) < BUILD_M:
+					want[FireStore.key_of(bd)] = [bd, "brazier", node, blocal]
 		if site.is_empty() or Ruins.inhabited(site) or Overrun.settled(site) or not node.has_meta("camp_spot") or not Hearths.ruin_kept(site):
 			continue
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
@@ -179,7 +186,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 
 
 func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Node3D:
-	var st := store_at(world, d, kind == "holder")
+	var st := store_at(world, d, kind in ["holder", "brazier"])
 	var fire := Campfire.build(_root, world, chunks, d, false)
 	# Campfire.build registers a tended store only when there is none; this
 	# one is the old hearth's own, untended.
@@ -190,12 +197,17 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 	fire.set_meta("old_kind", kind)
 	# Lit, it can be your hearth (§AY), like a camp's.
 	fire.set_meta("hearth_ok", true)
-	if ruin != null and kind in ["delve", "holder"]:
+	if ruin != null and kind in ["delve", "holder", "brazier"]:
 		# Down on the delve's paved floor, not on the ground above it.
 		fire.set_meta("delve_hearth", ruin)
 		fire.global_position = ruin.global_transform * local
 		# Not one to wake at: you'd wake on the ground above it.
 		fire.set_meta("hearth_ok", false)
+		if kind == "brazier":
+			fire.name = "Brazier"
+			fire.set_meta("fire_holder", "landing")
+			fire.set_meta("safe_m", float(HOLDERS.get("light_radius_m", 8.0)))
+			fire.set_meta("range_m", float(HOLDERS.get("light_radius_m", 8.0)))
 		if kind == "holder":
 			# The heart's fire-holder (§CN): lighting it clears an overrun
 			# ruin (Overrun); a fire's radius of its own, light_radius_m.
@@ -220,9 +232,14 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 		var form := Smoke.stack_form(rk)
 		var up := d.normalized()
 		var foot: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
-		# On the mound itself, where it stands over the ground.
+		# On the mound itself, where it stands over the ground; a climbing
+		# delve's on the roof over its fire (design 3 Oct §DO: a roof vent).
+		var reach := 25.0
+		if bool((ruin.get_meta("delve", {}) as Dictionary).get("climbs", false)) and fire.is_inside_tree():
+			foot = fire.global_position
+			reach = 200.0
 		if fire.is_inside_tree():
-			var q := PhysicsRayQueryParameters3D.create(foot + up * 25.0, foot - up * 2.0)
+			var q := PhysicsRayQueryParameters3D.create(foot + up * reach, foot - up * 2.0)
 			var hit := fire.get_world_3d().direct_space_state.intersect_ray(q)
 			if not hit.is_empty():
 				foot = hit.position
