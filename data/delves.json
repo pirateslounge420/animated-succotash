@@ -32,7 +32,13 @@
    "tower_house": "brazier",
    "broch": "hearth_ring",
    "cliff_dwelling": "hearth_ring",
-   "brick_city": "brazier"
+   "brick_city": "brazier",
+   "hanging_gardens": "hearth_ring",
+   "abbey": "brazier",
+   "colonnade": "hearth_ring",
+   "temple_park": "hearth_ring",
+   "pillar_shrines": "hearth_ring",
+   "hewn_temple": "hearth_ring"
   },
   "heart": "hearth_ring",
   "nest_den": {

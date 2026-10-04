@@ -173,7 +173,11 @@ galleries and faces on its gate towers; a wall running over the ridges for miles
 into a sandstone canyon; a town of stone rooms filling a sandstone alcove; a city of melted
 brick on a desert river with its blue gate still standing; a row of stone heads on a treeless
 coast; stepped adobe towns; stone circles; tower houses and brochs on the cold wet coasts. The
-pyramids were already in, by region. Nothing is named after the real place.
+pyramids were already in, by region. Nothing is named after the real place. Later the same
+night: a garden on a desert river that outlived its gardeners, a roofless abbey in cool wet
+country, the columns of a house that burned, an open temple precinct with lotus ponds, shrines on
+the tops of stone pillars joined by bridges, and a temple cut out of a hill that you find from
+above; and the columns of an old lava flow, which look built and aren't, as a nest.
 
 ## Camps and peoples
 

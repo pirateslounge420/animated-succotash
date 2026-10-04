@@ -872,6 +872,372 @@
    },
    "smoke": "out the courtyards' roof hatches",
    "_help": "[NOT WIRED YET \u2014 design \u00a7DS.6] Mike's second batch, 3 Oct 21:27: a city of mud brick on a desert river. What remains is the tell, a mound of melted brick with the foundation walls standing in it as a maze, the processional way between buttressed walls, the arched gate still standing with its blue glazed face (a saturated blue material that never glows, R8), the palace mound above the palms, the existing ziggurat at the centre."
+  },
+  "hanging_gardens": {
+   "kind": "own",
+   "name_in_play": "Hanging gardens",
+   "source": "Babylon's vaulted terraces (the brick vaults the diggers found) and the account of a king who planted mountain trees for a queen who missed her hills; notes only (\u00a7BO)",
+   "height_m": [
+    20,
+    35
+   ],
+   "across_m": [
+    80,
+    150
+   ],
+   "terraces": [
+    4,
+    7
+   ],
+   "profile": "stepped_mound_of_vaulted_brick_with_a_channel_down_it",
+   "material": "sun_dried_brick_vaults_fired_brick_facings",
+   "channel": {
+    "from": "the river, drawn off upstream",
+    "onto": "the top terrace",
+    "still_runs": true,
+    "falls_at_each_wall": true
+   },
+   "garden": {
+    "state": "overgrown_not_tended",
+    "hand_carried": [
+     "Cedrus libani",
+     "Juniperus",
+     "Cupressus sempervirens"
+    ],
+    "local": [
+     "Phoenix dactylifera",
+     "Ficus carica",
+     "Punica granatum",
+     "Tamarix"
+    ],
+    "ground": "seedlings in every crack, moss and ferns where the water runs"
+   },
+   "spawn": {
+    "realm": [
+     "palearctic",
+     "central_asia"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS",
+     "STEPPE"
+    ],
+    "nest": [
+     "levee_and_chenier",
+     "oasis"
+    ],
+    "needs": [
+     "desert_river_floodplain",
+     "flat",
+     "water_one_side"
+    ],
+    "never": [
+     "crag"
+    ]
+   },
+   "chance": 0.5,
+   "per_world_max": 1,
+   "delve": {
+    "direction": "up",
+    "rooms": "the vaulted galleries under the terraces, level by level, the channel running through them",
+    "heart": "the cistern where the water-lift stood",
+    "way_out": "the channel's mouth at the river",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "the gallery hearths vent through the terraces' drains",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DT] Mike, 3 Oct: its own kind, overgrown. A garden that outlived its gardeners: the channel still runs onto the top terrace (\u00a7BP), so the mountain trees the gardeners carried in grew huge and went wild (\u00a7CS/\u00a7CT's one exception placed by the generator), with the river's own palms and figs below. Water steps down the terraces (R6). Cedrus libani and Ficus carica are not in the catalogue yet (a fill for chat)."
+  },
+  "abbey": {
+   "kind": "own",
+   "name_in_play": "Ruined abbey",
+   "source": "The roofless abbeys of northern England (Whitby, Rievaulx, Kirkstall, Fountains); notes only (\u00a7BO)",
+   "length_m": [
+    40,
+    90
+   ],
+   "profile": "roofless_church_walls_and_arcades_one_tower_grass_floor",
+   "material": "ashlar_limestone_or_sandstone",
+   "parts": [
+    "nave_walls",
+    "arcades",
+    "lancet_windows",
+    "pointed_arches",
+    "tower_whole_or_half",
+    "cloister_foundations",
+    "chapter_house_foundations",
+    "warming_house_with_chimney"
+   ],
+   "spawn": {
+    "realm": [
+     "palearctic"
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MARITIME_FOREST",
+     "TUNDRA",
+     "BOG",
+     "ROCKY_SHORE"
+    ],
+    "needs": [
+     "cool_wet"
+    ],
+    "where": [
+     "headland_over_sea",
+     "river_valley_floor"
+    ],
+    "never": [
+     "hot",
+     "dry"
+    ]
+   },
+   "chance": 0.4,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "down",
+    "rooms": "the crypt and the undercroft under the east end",
+    "heart": "the crypt's chapel",
+    "way_out": "the night stair up into the cloister",
+    "fire_holder": "brazier"
+   },
+   "haunted": true,
+   "shafts": "\u00a7DC's ruin kind through the lancets onto the grass",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DU] A great church with its roof gone: walls and arcades standing, lancets framing the sky, one tower, the floor turned to grass, the cloister in the turf, the warming house's chimney stack (smoke.json). Where \u00a7DC's shafts, \u00a7DI's residents and \u00a7DI's haunt meet. On a headland it is a landmark seen from the coast road (\u00a7DN)."
+  },
+  "colonnade": {
+   "kind": "own",
+   "name_in_play": "Old colonnade",
+   "source": "The columns of a burned great house near Port Gibson, Mississippi; notes only (\u00a7BO)",
+   "columns": [
+    20,
+    30
+   ],
+   "column_height_m": [
+    10,
+    14
+   ],
+   "profile": "ring_of_plastered_brick_columns_with_iron_capitals_on_a_lost_house",
+   "material": "brick_plastered_iron_capitals",
+   "avenue": "a planted avenue of old oaks from the road (\u00a7DM.4), taller and older than the wild",
+   "spawn": {
+    "realm": [
+     "nearctic"
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "needs": [
+     "humid",
+     "rise_above_river"
+    ],
+    "never": [
+     "dry",
+     "cold"
+    ]
+   },
+   "chance": 0.4,
+   "per_world_max": 3,
+   "delve": {
+    "direction": "down",
+    "rooms": "the brick cellar and the cistern under the house's footprint, half flooded",
+    "heart": "the cistern",
+    "way_out": "the cellar's outside stair",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "none (nothing above the cellar)",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DV] The smallest monument in the set: the columns of a house of wood that burned, standing in a ring in a clearing among old oaks; \u00a7BQ to the letter, and the ending unnamed. \u00a7DI's wet row: vines on the columns, ferns at their feet, resurrection fern on the limbs (\u00a7CD)."
+  },
+  "temple_park": {
+   "kind": "own",
+   "name_in_play": "Temple park",
+   "source": "The brick-and-laterite temple precincts of the monsoon plains (Sukhothai, Ayutthaya); notes only (\u00a7BO)",
+   "across_m": [
+    200,
+    400
+   ],
+   "profile": "open_precinct_of_brick_platforms_roofless_column_rows_stupas_and_ponds",
+   "material": "brick_and_laterite",
+   "parts": [
+    "stepped_platforms",
+    "roofless_laterite_column_grids",
+    "bell_stupas",
+    "lotus_bud_stupas",
+    "ribbed_corn_cob_towers",
+    "seated_figures_in_brick_niches",
+    "lotus_ponds",
+    "one_great_fig_at_a_pond"
+   ],
+   "figures": "seated, hands in the lap, faces worn smooth; nobody by name (\u00a7BO)",
+   "ponds": {
+    "community": "the sacred lotus's niche (\u00a7CS.6): warm still shallows",
+    "species": [
+     "Nelumbo nucifera",
+     "Nymphaea"
+    ],
+    "note": "neither is in the catalogue yet: a fill for chat"
+   },
+   "spawn": {
+    "realm": [
+     "indomalaya"
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "JUNGLE"
+    ],
+    "needs": [
+     "flat_lowland",
+     "still_water"
+    ],
+    "never": [
+     "crag",
+     "slope"
+    ],
+    "min_km_from": {
+     "temple_city": 5
+    }
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "down",
+    "rooms": "the great stupa's relic crypt reached by a shaft, the stores around it",
+    "heart": "the relic crypt",
+    "way_out": "the shaft up the tower's side",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "open fires only; the stupas vent nothing",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DW] The open cousin of the temple city (\u00a7DR): flat, sunlit, in the monsoon dry forest, the sky over everything; roofless column rows (the roofs rotted, \u00a7BQ), stupas and towers, seated figures in niches, and lotus ponds with the towers reflected in them (R6). Never within 5 km of a temple city. \u00a7DI's dry row."
+  },
+  "pillar_shrines": {
+   "kind": "own",
+   "name_in_play": "Pillar shrines",
+   "source": "The sandstone pillar forests and tower karst of southern China, and the cut stairs and plank walks of the sacred mountains; notes only (\u00a7BO)",
+   "pillars": [
+    6,
+    15
+   ],
+   "pillar_height_m": [
+    50,
+    150
+   ],
+   "profile": "shrines_on_pillar_tops_joined_by_bridges_cut_stairs_up_the_faces",
+   "material": "sandstone_or_karst_pillars_stone_shrines",
+   "bridges": {
+    "stone_arch": {
+     "span_m": [
+      4,
+      15
+     ],
+     "stands": true
+    },
+    "rope_and_plank": {
+     "span_m": [
+      15,
+      60
+     ],
+     "stands": false,
+     "left": "stone abutments and anchor posts",
+     "standing_share": 0.17
+    },
+    "living_root": {
+     "span_m": [
+      10,
+      40
+     ],
+     "stands": true,
+     "grows": true,
+     "where": "pillars where canopy folk lived (\u00a7BT)"
+    }
+   },
+   "stairs": "cut into the rock faces; the only way up (\u00a7AU: no wall climbing)",
+   "spawn": {
+    "realm": [
+     "east_asia_temperate",
+     "indomalaya"
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TEMPERATE_RAINFOREST",
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST"
+    ],
+    "nest": [
+     "karst_towers"
+    ],
+    "needs": [
+     "pillar_valley",
+     "pooled_mist"
+    ],
+    "never": [
+     "flat"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "up",
+    "rooms": "a cave at the pillar's foot, then a stair cut up through it to the summit shrine",
+    "heart": "the summit shrine",
+    "way_out": "a bridge, or the cliff stair",
+    "fire_holder": "hearth_ring"
+   },
+   "camp": "canopy folk (\u00a7BT), who grow the root bridges back",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DY] A valley of pillars out of mist, a shrine on each top, bridges between them by span: stone arches stand, rope bridges are gone but for their posts (about one in six still hangs: first guess), living root bridges still grow (\u00a7BT). \u00a7BC's forks in three dimensions: you see the next shrine across a gap with no bridge, and the way is another pillar's stair or round through the mist. Bridges sway in the gust (\u00a7DA)."
+  },
+  "hewn_temple": {
+   "kind": "own",
+   "name_in_play": "Hewn temple",
+   "source": "The monolithic temple and cave halls at Ellora; notes only (\u00a7BO)",
+   "pit_m": [
+    60,
+    120
+   ],
+   "profile": "a_pit_cut_into_an_escarpment_with_a_temple_left_standing_free_in_it_and_halls_in_the_walls",
+   "material": "basalt_living_rock",
+   "parts": [
+    "free_standing_temple_towers_and_courts",
+    "two_free_standing_pillars",
+    "elephants_carved_round_the_base",
+    "reliefs_on_every_face",
+    "halls_in_the_court_walls_on_two_or_three_levels",
+    "ribbed_vaults_cut_like_timber",
+    "seated_figure_in_the_deepest_apse"
+   ],
+   "found_from_above": true,
+   "spawn": {
+    "realm": [
+     "indomalaya"
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "THORN_SCRUB",
+     "SAVANNA"
+    ],
+    "nest": [
+     "escarpment"
+    ],
+    "needs": [
+     "basalt",
+     "escarpment",
+     "dry_plateau"
+    ],
+    "never": [
+     "wet",
+     "flat_lowland"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "in",
+    "rooms": "the halls in the court walls, up the cut stairs between levels",
+    "heart": "the deepest hall",
+    "way_out": "a stair to the hilltop",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "none",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DZ] A whole temple cut out of the hill from the top down, free in a court of living rock; found from above (the road comes along the rim and the ground opens at your feet, \u00a7BB's reveal inverted); the halls in the court walls are the delve as they stand (\u00a7CJ). Different from carved_cliffs (\u00a7DS.2), whose facades are cut into a face."
   }
  },
  "overgrowth": {
@@ -934,12 +1300,13 @@
   "cold_mean_c": 0.0
  },
  "haunt": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, \u00a7CJ); share: of those, how many are. A ghost is the shared cloaked rig (\u00a70) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (\u00a7CU): \u00a7BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (\u00a7BQ: the ending stays unnamed).",
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, \u00a7CJ); share: of those, how many are. A ghost is the shared cloaked rig (\u00a70) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (\u00a7CU): \u00a7BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (\u00a7BQ: the ending stays unnamed). (\u00a7DU adds the abbey: it has its graveyard and its tombs.)",
   "kinds": [
    "GRAVEYARD",
    "BARROW",
    "tomb",
-   "mausoleum"
+   "mausoleum",
+   "abbey"
   ],
   "share": 0.4,
   "color": "#C8D8FF",

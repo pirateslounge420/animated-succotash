@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows.
 
 ---
 
@@ -2816,6 +2816,13 @@ realm, which is `RealmMap`, code), the terraced pueblo, the stone circle, the to
 the broch. Each new kind: a `Ruins.Kind` and `KIND_NAMES` entry, the builder, its delve (§CJ), its
 smoke outlet (§CV), its overgrowth (§DI), a headless check, one walkabout.
 
+**Added 3 Oct, 21:55 (§DT–§DZ, locked at 21:48):** six more monument kinds and one nest, data in and
+none wired, in this order after the §DS list: **§DZ the hewn temple** (found from above: the
+cheapest and the strangest) → **§DT the hanging gardens** → **§DU the abbey** → **§DW the temple
+park** → **§DY the pillar shrines** (needs the karst towers nest and the bridges) → **§DV the
+colonnade** → **§DX the columns** (a nest, with the landforms tier-2 set pieces). The same
+every-new-kind rule as §DS.
+
 ## DM. The road is the stage: it never leads where you can't follow, it widens toward the ruin, and the things on it have lives — LOCKED (3 Oct, 18:30–19:20, Mike)
 
 Mike, from play: *"when I was using the road before, it felt really thin, it got really thin,
@@ -3132,4 +3139,220 @@ platform gains the fitted polygonal stone wall as its §BQ signature.
 **Order:** the long wall, the carved cliffs, the temple city (§DR), the crag fortress (§DO), the
 cliff dwelling, the brick city, the stone heads (after the realm), the terraced pueblo, the stone
 circle, the tower house and the broch.
+
+## DT. The hanging gardens: a garden that outlived its gardeners — LOCKED (3 Oct, 21:32–21:48, Mike)
+
+Mike: *"we also need the hanging gardens of babylon"*; asked whether part of the brick city or its
+own kind, alive or dead, and what grows: *"its own kind. its overgrown with some plants"*; locked
+with *"lock it all in"* (21:48). Builds on §BQ (the brick vaults are what the diggers found; the
+gardens rotted), §BP (irrigation is a rule: a plot by water or a dug channel counts as watered),
+§CS (a community is native to one land) and §CT (the human hand is the one way a plant lives
+outside its home), §CJ, §CV, §DI, §DS.6 (the brick city, which may stand near it), §BE (water
+stepping down). Data: `ruins.json → styles.hanging_gardens` (kind own, with `hand_carried`).
+Real references in the notes only (Babylon's vaulted terraces; the account of a king planting
+mountain trees for a queen who missed her hills). Not built.
+
+1. **Its own kind** ("Hanging gardens" in play): a stepped mound of vaulted brick, 20–35 m high
+   and 80–150 m across, on a desert river's floodplain, with or without a brick city near it; at
+   most one a world. What stone leaves (§BQ): the vaults that held the terraces' soil, the
+   terrace walls, and the old channel cut down the mound. Everything that was wood is gone.
+2. **The garden outlived its gardeners.** A channel drawn from the river upstream still runs onto
+   the top terrace, so the trees never died (§BP: a plot by a channel counts as watered). It is
+   overgrown, not tended (Mike): the mountain trees the gardeners carried in, cedar, juniper and
+   cypress, grown huge and gone wild, rooting into the vaults; the river's own date palms, figs,
+   pomegranates and tamarisk on the lower terraces; seedlings in every crack; moss and ferns
+   where the water runs. It is the one place in the world where a community grows outside its
+   land before the player plants anything, and it is honest: the water never stopped. §CS and
+   §CT's exception, placed by the generator, not the player.
+3. **Water steps down the terraces** from the channel's mouth at the top, a small fall at each
+   wall (§BE's falls; R6: the brightest thing), into the river at the foot. The sound is water
+   and birds everywhere (§BG). On a flat desert river a green mound 30 m high is seen from far
+   off (R10, §CR.7).
+4. **The delve** is the vaults under the terraces, with the channel running through them: in at
+   the foot, up through the vaulted galleries level by level, the cistern where the water-lift
+   stood as the heart, the channel's mouth at the river as the way out. Hearth rings; the
+   gallery hearths vent through the terraces' drains. A camp at the foot could tend it again
+   (§BQ: restoration is the reveal), and until it does the garden stays wild.
+5. **Where:** palearctic and central_asia, hot desert, oasis and steppe on a desert river
+   (the levee and oasis nests), flat, water on one side; never a crag.
+
+**Data note:** juniper, cypress, date palm, pomegranate and tamarisk are in the catalogue; the
+cedar (*Cedrus libani*) and the common fig (*Ficus carica*) are not, a two-line fill for chat.
+
+## DU. The abbey: a roofless church in cool wet country — LOCKED (3 Oct, 21:38–21:48, Mike)
+
+Mike: *"more references"* (four frames: a great church ruined on a headland, its tower and
+arcades against the sky; the inside of one with sun through the lancets onto a grass floor; one at
+sunset over its foundations); locked with *"lock it all in"* (21:48). Builds on §BQ, §CJ, §CV,
+§DC (the shafts: frame 3 is their shot), §DI (residents, the bed, the haunt), §DM.5, §DN (a
+headland landmark). Data: `ruins.json → styles.abbey` (kind own), `ruins.json → haunt.kinds`
+gains `abbey`. Real references in the notes only (Whitby, Rievaulx, Kirkstall, Fountains). Not
+built.
+
+1. **Its own kind** ("Ruined abbey" in play): a great church with its roof gone: the nave's walls
+   and arcades standing, pointed arches and lancet windows framing the sky, one tower (whole or
+   half), the floor turned to grass, the cloister and chapter house reduced to foundations in the
+   turf, a warming house with its chimney stack still standing. 40–90 m long. At most two a
+   world.
+2. **Where:** palearctic, in cool wet country: temperate deciduous, maritime forest, the moor
+   (tundra and bog edges), and on headlands over the sea (rocky shore), where it is a landmark
+   seen from the coast road as §DN's lighthouse is. In a river valley it sits at the valley's
+   floor by the water.
+3. **Where three locked things meet:** §DC's shafts fall through the lancets onto the grass on a
+   misty morning (the ruin kind of shaft, with the walls as the broken roof); §DI's residents
+   (jackdaws in the tower by day, an owl in a window at night, the wind moaning in the arcades at
+   6 m/s); and §DI's haunt, since an abbey has its graveyard and its tombs, so it can be haunted.
+4. **The delve:** the crypt and the undercroft under the east end; the crypt's chapel is the
+   heart; the night stair up into the cloister the way out. Braziers. Smoke: the castle's chimney
+   stack at the warming house, the one room the monks kept a fire in.
+5. **Overgrowth** at §DI's wet row: moss on every ledge, ferns in the window sills, ivy up the
+   tower, grass over the foundations; lichen on the headland ones.
+
+## DV. The colonnade: the columns of a house that burned — LOCKED (3 Oct, 21:38–21:48, Mike)
+
+Mike's first frame of that batch: a ring of tall fluted columns with iron capitals standing in a
+grassy clearing among old trees, the house they held long gone; locked with *"lock it all in"*
+(21:48). The smallest monument in the set, and §BQ to the letter: the imperishable part of a thing,
+and no word about what happened. Builds on §BQ, §CJ, §DI, §DM.4 (the avenue). Data: `ruins.json →
+styles.colonnade` (kind own). Real reference in the notes only (the columns near Port Gibson,
+Mississippi). Not built.
+
+1. **Its own kind** ("Old colonnade" in play): 20–30 brick columns, plastered, 10–14 m tall, with
+   iron capitals, standing in a ring on the footprint of a great house of wood that burned; a
+   few fallen; the brick cellar open to the sky in the middle; a planted avenue of old oaks
+   (§DM.4's avenue, taller and older than the wild around them) running to it from the road. At
+   most three a world.
+2. **Where:** nearctic, in the humid south: floodplain forest, maritime forest, the southern
+   temperate deciduous woods, on a rise above a river. Never in dry country.
+3. **The delve** is small: the brick cellar and the cistern under the house's footprint, half
+   flooded (§BE: still water, wade), the cistern the heart, the cellar's outside stair the way
+   out. Hearth rings. No stack (nothing above the cellar to smoke through).
+4. **Overgrowth** at §DI's wet row: vines on the columns, ferns at their feet, the oaks' limbs
+   over everything, resurrection fern on the limbs (§CD). The ending stays unnamed (§BQ).
+
+## DW. The temple park: the open cousin of the temple city — LOCKED (3 Oct, 21:39–21:48, Mike)
+
+Mike: *"sukothai ruins as well"* (five frames: stepped brick platforms, rows of roofless laterite
+columns, bell and lotus-bud stupas, tall ribbed towers, seated figures in brick niches, lotus
+ponds with the towers reflected in them, a great fig at a pond's edge); locked with *"lock it all
+in"* (21:48). Kept separate from §DR on purpose: the temple city is closed, in jungle, taken by
+the forest; this is open, in the monsoon dry forest, with the sky over everything. Builds on §BQ,
+§CJ, §CS (the sacred lotus's niche: "the warm, still shallows of its land"), §DR, §DI, R6. Data:
+`ruins.json → styles.temple_park` (kind own). Real references in the notes only (Sukhothai,
+Ayutthaya). Not built.
+
+1. **Its own kind** ("Temple park" in play): a flat precinct, 200–400 m across, of stepped brick
+   platforms, rows of roofless laterite columns in a grid (the wooden roofs and tiles rotted a
+   generation after the last monk, §BQ, and the columns stand like a dead orchard), bell-shaped
+   and lotus-bud stupas, two or three tall ribbed corn-cob towers, seated figures in the brick
+   niches with their hands in their laps and their faces worn smooth, nobody by name (§BO), and
+   the ponds between the platforms. One great old fig at the edge, roots in a pond bank. At most
+   two a world, and never within 5 km of a temple city.
+2. **The ponds** are lotus and lily ponds with the towers reflected in them (R6): the sacred
+   lotus's own niche (§CS.6), so this is one of the places the lotus community lives. Neither
+   *Nelumbo* nor *Nymphaea* is in the catalogue yet: a two-line fill for chat.
+3. **Where:** indomalaya, tropical dry forest and the jungle's open edges, flat lowland with still
+   water; never a crag.
+4. **The delve** is the great stupa's relic crypt: a chamber under the tower reached by a shaft,
+   the stores around it, the crypt the heart, the shaft up the tower's side the way out. Hearth
+   rings. Smoke: open fires only (a camp among the platforms); the stupas vent nothing.
+5. **Overgrowth** at §DI's dry row: grass over every platform, a creeper on the columns, moss only
+   at the ponds' edges.
+
+**A note Mike will see without being told:** the colonnade (§DV), the abbey (§DU) and the temple
+park are the same story in three climates: a roof that rotted and the columns that didn't.
+
+## DX. The columns: columnar basalt as a nest — LOCKED (3 Oct, 21:42–21:48, Mike)
+
+Mike: *"these hexagonal structures are a cool natural formation"* (three frames of the causeway,
+then two of the columned sea cave); the inland cliffs taken too (Claude's call, unanswered);
+locked with *"lock it all in"* (21:48). A landform, not a ruin: a thick lava flow that cooled
+slowly and cracked into hexagonal columns, which is why it looks built when nothing built it.
+Builds on §CK (the fire family: the caldera, the obsidian flow, the volcanic neck), §CY.3 (a
+flat stone is a seat), §BC (a road that walks into the sea), §BQ, §BG. Data: `landforms.json →
+landforms.columnar_basalt` with two variants (gate `tools/landforms_check.py`, 0 errors). Real
+references in the notes (the Giant's Causeway, Staffa, Svartifoss, the Devils Postpile). Not built.
+
+1. **The causeway** (the main form): where an old flow meets the sea on a volcanic coast, a flat
+   stepped floor of hexagon tops running down into the water. What it gives a camp (§CK):
+   a floor and a hundred ready-made seats, rain and tide pools in the cups with green weed in
+   them (R6: bright water in every cup), a lookout from the top step, and a hearth spot on the
+   highest dry step above the spray. The columns come loose, so the people here built with them:
+   a hut of stacked hexagonal columns is the camp's remains, a signature nothing else has (a
+   coast-folk signature to add with the next peoples fill).
+2. **The organ pipes:** a cliff of columns where a river or a waterfall has cut the flow (the
+   canyon and the waterfall nest, the fall pouring over the columns).
+3. **The columned sea cave:** where the sea has hollowed the flow: the sea runs straight in, the
+   roof is the underside of the columns, and the stumps of broken columns along the wall make a
+   natural ledge above the water to the back: the way in is already there. The mouth is the only
+   light (§BD), the water turquoise under a black roof (R6), and the cave booms with the swell, a
+   §BG source heard from the clifftop before the way down is found. The night roster dens in it
+   (§CH). No dry floor, so never a camp: a landmark and a passage, with the hearth spot on the
+   clifftop above (§CK: the hearth is never in the hazard).
+4. **Look:** dark grey-black with wet tops, so the shade rule is navy; a hexagon tile at 16
+   texels a metre does the work. Any realm, wherever old lava meets water. Walking scale.
+5. **The log line,** once: *"A road of stone steps goes down into the sea."* Nothing in the game
+   says whether anyone made it (§BC: the player finishes the thought).
+
+## DY. The pillar shrines: forks in three dimensions — LOCKED (3 Oct, 21:45–21:48, Mike)
+
+Mike: *"karst mountains of china with bridges connecting different ruins on each pillar"* (a
+valley of sandstone pillars rising out of mist); locked with *"lock it all in"* (21:48); the two
+calls (the three bridge kinds; a few rope bridges still up) unanswered and written at the defaults.
+Builds on §BC (forks legible before you commit; one-way gates), §BT (the canopy folk's vine and
+living root bridges), §BQ, §BY (half the bridges are out), §CJ, §CK (the karst towers nest), §DA
+(rope sways in the gust), §DI. Data: `ruins.json → styles.pillar_shrines` (kind own). Real
+references in the notes only (the pillar forests of Zhangjiajie and the tower karst of Guilin, the
+cut stairs and plank walks of the sacred mountains). Not built.
+
+1. **Its own kind** ("Pillar shrines" in play): a valley of 6–15 stone pillars 50–150 m high at
+   walking scale rising out of pooled mist, a small shrine or hermitage on the top of each,
+   stairs cut into the rock faces to reach them, and bridges between the tops. At most two a
+   world.
+2. **The bridges, by span, are the design.** Stone arches between close pillars still stand.
+   Rope-and-plank bridges over the long gaps are gone (§BQ), only their stone abutments and
+   anchor posts left, so half the ways across are out (§BY's rule, in the air); first guess: one
+   in six rope bridges still hangs, so a crossing can be a swaying one (§DA's rope rule). Where
+   canopy folk lived (§BT), living root bridges of fig are still there and still growing: the one
+   ruin that gets stronger after its makers are gone. So you climb a pillar, see the next shrine
+   across the gap, and the bridge is a pair of posts and nothing between them: the fork is
+   legible before you commit (§BC), and the way is another pillar's stair, or round through the
+   valley floor in the mist. No wall climbing (§AU): the cut stairs are the only way up.
+3. **Where:** east_asia_temperate and indomalaya, at the karst towers nest and a sandstone pillar
+   variant of it, in cloud forest, temperate rainforest, jungle and monsoon forest, in a valley
+   where the mist pools (look.json's mist does this; the pillars standing out of it is R5's shot
+   made of rock).
+4. **The delve** is inside a pillar: a cave at its foot (karst caves, §CJ) and a stair cut up
+   through it to the summit shrine, which is the heart; the way out is a bridge, or the cliff
+   stair. Hearth rings at the shrines. Smoke: open (a hermit's fire on a summit, if a camp).
+5. **A camp here is canopy folk** (§BT): they are the ones who grow the root bridges back.
+
+## DZ. The hewn temple: found from above — LOCKED (3 Oct, 21:48, Mike)
+
+Mike: *"ellora caves"* (five frames: a whole temple cut out of a basalt hill from the top down,
+standing free in a court of living rock; elephants carved round its base; columned halls dug into
+the court's walls with ribbed vaults and a seated figure in the apse); locked with *"lock it all
+in"* (21:48). Different from the carved cliffs (§DS.2): Petra's facades are cut into a cliff face;
+this is a temple cut out of the hill, with a pit dug round it. Builds on §BB (the reveal, inverted),
+§BQ, §CJ, §CK (the escarpment nest, the volcanic field), §DI. Data: `ruins.json →
+styles.hewn_temple` (kind own). Real references in the notes only (Ellora's Kailasa and its
+halls). Not built.
+
+1. **Its own kind** ("Hewn temple" in play): a pit 60–120 m across cut into a basalt escarpment,
+   and in the middle of it a temple left standing in the living rock, free on all sides: towers,
+   courts, two free-standing pillars, a row of elephants carved round its base, reliefs on every
+   face (nobody's gods by name, §BO). Halls dug into the court's walls on two or three levels,
+   columned, with ribbed vaults cut to look like timber that was never there, and a seated figure
+   in the apse of the deepest one, hands in the lap. At most two a world.
+2. **You find it from above.** The road comes along the hilltop, the ground opens at your feet,
+   and the whole temple is below you before you have found the way down (§BB's reveal with the
+   ruin in the hole; §DM.5's approach runs along the rim). The way down is a stair cut in the
+   court's wall.
+3. **The halls are the delve as they stand** (§CJ): in through the court, up the cut stairs
+   between levels, the deepest hall the heart, a stair to the hilltop the way out. Hearth rings.
+   No smoke of its own.
+4. **Where:** indomalaya, on a basalt escarpment in dry plateau country: tropical dry forest,
+   thorn scrub and savanna. Dark grey-black basalt: navy shade, warm grey in the sun.
+5. **Overgrowth** at §DI's dry row: grass on the hill above, a creeper down the court walls,
+   lichen on the towers.
 
