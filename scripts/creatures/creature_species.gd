@@ -241,8 +241,9 @@ func active_now(daylight: float) -> bool:
 		"dusk":
 			return daylight > DUSK_BAND.x and daylight < DUSK_BAND.y
 		"full_moon":
-			# Only on the nights round the full moon.
-			return daylight < 0.3 and moon_full > 0.85
+			# Only on the brightest nights (design 3 Oct §DG,
+			# DayCycle.full_moon_illumination: about three a month).
+			return daylight < 0.3 and moon_full >= DayCycle.full_moon_illumination()
 	return true
 
 

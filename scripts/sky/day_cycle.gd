@@ -88,6 +88,13 @@ static func year_days() -> float:
 	return maxf(float(data().year_days), 1.0)
 
 
+## The moon's lit share at or above which a night is a full-moon night
+## (design 3 Oct §DG): the werewolf hunts only then. One number for every
+## reader (CreatureSpecies.active_now, Dread's hunter and its speed).
+static func full_moon_illumination() -> float:
+	return float(data().get("full_moon_illumination", 0.97))
+
+
 ## Day of the year (0 = the northern spring equinox) at game day 0.
 static func year_start_day() -> float:
 	return float(data().year_start_day)

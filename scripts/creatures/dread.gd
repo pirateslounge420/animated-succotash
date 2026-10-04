@@ -14,9 +14,15 @@ extends Node
 ## Never a fight: a chase you lose by being in the dark too long.
 ##
 ## One hunter is built: the werewolf as a pacer in temperate forest
-## (dread.json hunters, `first`); everywhere else the dark itself, a
-## cloaked shape with no species. Never inside a fire's radius. Ignores
-## the travellers. No bestiary, no HUD. Ambient profile only.
+## (dread.json hunters, `first`), only on the brightest nights (design 3
+## Oct §DG, dread.json full_moon: the moon at least
+## DayCycle.full_moon_illumination lit); its forests' other nights and
+## everywhere else, the dark itself, a cloaked shape with no species. The
+## werewolf hunts by scent (senses.json watchers.werewolf: light_sight_m
+## 0): a torch neither draws it nor hides you, and it comes from downwind
+## of you. Light still holds every beast off. Never inside a fire's
+## radius. Ignores the travellers. No bestiary, no HUD. Ambient profile
+## only.
 
 static var D := Tuning.table("dread")
 static var M: Dictionary = D.get("meter", {})
@@ -55,6 +61,11 @@ var _closing := false
 var _rng := RandomNumberGenerator.new()
 ## Tests: force night and no light (dread_check).
 var force_dark := false
+## Tools: a wind (scene vector, m/s) to smell by instead of the gust field.
+static var wind_pin := Vector3.INF
+## The bearing (radians from north, east positive) a scent hunter keeps
+## from you: downwind, re-picked slowly (§DG). NAN until first picked.
+var scent_bearing := NAN
 
 
 func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer, p_sky: SkySystem) -> void:
@@ -100,6 +111,34 @@ func fire_distance() -> float:
 		if fire and fire.is_inside_tree() and bool(fire.get_meta("lit", true)):
 			best = minf(best, fire.global_position.distance_to(player.global_position))
 	return best
+
+
+## The meter's fill per minute at night away from a fire: a torch on you
+## slows it, unless what hunts here hunts by scent (§DG: the torch neither
+## draws it nor hides you), else fill_rate by the moonlight.
+static func dark_rate(moonlight: float, torch_on: bool, hunter: Dictionary) -> float:
+	if torch_on and not by_scent(hunter):
+		return float(M.get("fill_per_min_torch", 0.07))
+	return fill_rate(moonlight)
+
+
+## Does the hunter `entry` (a dread.json hunters row) hunt by scent: its
+## senses.json watchers row has no light sight (the werewolf, §DG)?
+static func by_scent(entry: Dictionary) -> bool:
+	var c = entry.get("creature")
+	if c == null:
+		return false
+	var row: Dictionary = (Tuning.table("senses").get("watchers", {}) as Dictionary).get(str(c).to_lower(), {})
+	return not row.is_empty() and float(row.get("light_sight_m", 1.0)) <= 0.0 and float(row.get("scent_m", 0.0)) > 0.0
+
+
+## What hunts where you stand tonight (den_entry in an overrun delve).
+func hunter_here() -> Dictionary:
+	if not den_entry.is_empty():
+		return den_entry
+	if _hunter != null:
+		return _hunter_entry
+	return entry_for(FireStore.biome_key(world, player.surface_dir), Astro.moon_illumination(world.days))
 
 
 ## The meter's fill per minute in the dark, by the moonlight on you (0-1,
@@ -154,10 +193,8 @@ func update_dread(delta: float) -> void:
 		rate = -float(M.get("drain_per_min_fire", 1.0))
 	elif _since_dusk_min < float(M.get("dusk_grace_min", 6.0)):
 		rate = 0.0
-	elif light_on_you():
-		rate = float(M.get("fill_per_min_torch", 0.07))
 	else:
-		rate = fill_rate(0.0 if force_dark else sky.moonlight)
+		rate = dark_rate(0.0 if force_dark else sky.moonlight, light_on_you(), hunter_here())
 	# Near an overrun ruin at night, outside a fire, it fills faster (§CN).
 	if rate > 0.0:
 		rate *= Overrun.dread_scale(player.global_position)
@@ -224,7 +261,10 @@ func _cues(delta: float, by_fire: bool) -> void:
 				_ensure_hunter()
 				var dist := _rand_range(_rng, row.get("distance_m"), Vector2(10, 16))
 				var side := 1.0 if _rng.randf() < 0.5 else -1.0
-				var d := CreatureSpawner._offset(player.surface_dir, _facing_angle() + side * deg_to_rad(_rng.randf_range(50.0, 110.0)), dist)
+				var bearing := _facing_angle() + side * deg_to_rad(_rng.randf_range(50.0, 110.0))
+				if by_scent(_hunter_entry):
+					bearing = pick_scent_bearing(1.0)
+				var d := CreatureSpawner._offset(player.surface_dir, bearing, dist)
 				if not Campfire.lit_near(get_tree(), _ground_pos(d), float(RULES.get("never_within_fire_m", 14.0))):
 					_place_hunter(d, true)
 					_hunter.visible = true
@@ -247,9 +287,7 @@ func _facing_angle() -> float:
 ## else it holds off, waiting for the torch to gutter.
 func _follow(delta: float, by_fire: bool) -> void:
 	var pattern: Dictionary = (D.get("patterns", {}) as Dictionary).get(str(_hunter_entry.get("pattern", "pacer")), {})
-	var speed := float(_hunter_entry.get("speed_mps", 5.8))
-	if sky.moonlight > 0.9:
-		speed *= float(_hunter_entry.get("full_moon_speed_scale", 1.0))
+	var speed := speed_for(_hunter_entry, Astro.moon_illumination(world.days))
 	var row5 := stage_row(5)
 	var far := fire_distance() > float(row5.get("far_from_fire_m", 120.0))
 	var can_take := stage >= 5 and (not light_on_you() or far) and not by_fire
@@ -266,12 +304,16 @@ func _follow(delta: float, by_fire: bool) -> void:
 		target = pd
 		speed *= 1.15
 	else:
-		# Parallel, off to one side, at keep_m: slowly re-picked.
+		# Parallel, off to one side, at keep_m: slowly re-picked. A scent
+		# hunter keeps to your downwind side instead (§DG).
 		if _rng.randf() < delta * 0.05:
 			_side = -_side
 		if _rng.randf() < delta * 0.1:
 			_keep_m = _rand_range(_rng, pattern.get("keep_m"), Vector2(20, 40))
-		target = CreatureSpawner._offset(pd, _facing_angle() + _side * PI * 0.5, _keep_m)
+		var bearing := _facing_angle() + _side * PI * 0.5
+		if by_scent(_hunter_entry):
+			bearing = pick_scent_bearing(delta)
+		target = CreatureSpawner._offset(pd, bearing, _keep_m)
 	# Never inside a lit fire's radius: hold where it is.
 	var tp: Vector3 = _ground_pos(target)
 	if Campfire.lit_near(get_tree(), tp, float(RULES.get("never_within_fire_m", 14.0))):
@@ -294,12 +336,47 @@ func _take() -> void:
 	_enter_stage(0)
 
 
+## The bearing (from north, east positive) the wind blows toward where you
+## stand: the gust field's (Wind I), or wind_pin. NAN in a calm.
+func downwind_bearing() -> float:
+	var up := player.surface_dir
+	var w: Vector3 = wind_pin if wind_pin != Vector3.INF else Wind.gust_vec(player.global_position, player.global_basis.y)
+	var e := w.dot(CubeSphere.east(up))
+	var n := w.dot(CubeSphere.north(up))
+	if Vector2(e, n).length() < 0.2:
+		return NAN
+	return atan2(e, n)
+
+
+## A scent hunter's side (§DG): your downwind side, with a little play,
+## re-picked about every ten seconds (`delta` the time since the last
+## call; 1 forces a pick). In a calm it keeps the bearing it had.
+func pick_scent_bearing(delta: float) -> float:
+	if is_nan(scent_bearing) or _rng.randf() < delta * 0.1:
+		var dw := downwind_bearing()
+		if not is_nan(dw):
+			scent_bearing = dw + deg_to_rad(_rng.randf_range(-25.0, 25.0))
+		elif is_nan(scent_bearing):
+			scent_bearing = _facing_angle() + _side * PI * 0.5
+	return scent_bearing
+
+
+## The hunter's speed (m/s): its row's, times full_moon_speed_scale on a
+## full-moon night (the lit share at or above full_moon_illumination).
+static func speed_for(entry: Dictionary, illumination: float) -> float:
+	var speed := float(entry.get("speed_mps", 5.8))
+	if illumination >= DayCycle.full_moon_illumination():
+		speed *= float(entry.get("full_moon_speed_scale", 1.0))
+	return speed
+
+
 ## The hunter for this biome (dread.json hunters): the werewolf in its
-## forests (built, `first`), else the dark itself, a cloaked shape.
+## forests on the brightest nights (built, `first`), else the dark
+## itself, a cloaked shape.
 func _ensure_hunter() -> void:
 	if _hunter != null:
 		return
-	_hunter_entry = den_entry if not den_entry.is_empty() else _entry_for(FireStore.biome_key(world, player.surface_dir))
+	_hunter_entry = den_entry if not den_entry.is_empty() else entry_for(FireStore.biome_key(world, player.surface_dir), Astro.moon_illumination(world.days))
 	_hunter = Node3D.new()
 	_hunter.name = "Dread"
 	world.world_root.add_child(_hunter)
@@ -319,23 +396,28 @@ func _ensure_hunter() -> void:
 	_hunter_dir = player.surface_dir
 
 
-func _entry_for(biome: String) -> Dictionary:
-	return entry_for(biome)
-
-
-## The dread.json hunter for `biome`: the werewolf in its forests (built,
-## `first`), else the fallback (the dark itself).
-static func entry_for(biome: String) -> Dictionary:
+## The dread.json hunter for `biome` with the moon `illumination` lit:
+## the werewolf in its forests (built, `first`), but a hunter named in
+## full_moon.only only on a full-moon night (DayCycle
+## .full_moon_illumination, §DG); else the fallback (the dark itself, the
+## lurker with no species, §CU), as the grasslands meet every night.
+static func entry_for(biome: String, illumination := 1.0) -> Dictionary:
 	var fallback := {}
+	var fm: Dictionary = D.get("full_moon", {})
+	var only: Array = fm.get("only", [])
+	var bright := illumination >= DayCycle.full_moon_illumination()
+	var found := {}
 	for h in D.get("hunters", []):
 		if not h is Dictionary:
 			continue
 		var biomes: Array = h.get("biomes", [])
 		if biomes.has("*"):
 			fallback = h
-		elif biomes.has(biome) and str(h.get("creature", "")) == "Werewolf":
-			return h
-	return fallback
+		elif found.is_empty() and biomes.has(biome) and str(h.get("creature", "")) == "Werewolf":
+			if str(h.get("creature", "")) in only and not bright and str(fm.get("other_nights", "fallback")) == "fallback":
+				continue
+			found = h
+	return found if not found.is_empty() else fallback
 
 
 func _place_hunter(d: Vector3, face_player: bool, along := Vector3.ZERO) -> void:

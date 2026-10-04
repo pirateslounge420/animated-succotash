@@ -4,6 +4,23 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DG the werewolf only on the brightest nights, by scent, from downwind
+- **One threshold** (`DayCycle.full_moon_illumination()`, `day_cycle.json` 0.97): `CreatureSpecies.active_now` uses it for `active: full_moon` (it was 0.85, about seven nights; now about three). `Dread.speed_for` gives a hunter its `full_moon_speed_scale` when the moon's lit share is at or above it (it used to be above a moonlight of 0.9).
+- **The werewolf's forests on other nights** (`Dread.entry_for(biome, illumination)`, `dread.json full_moon.only` / `other_nights`): the temperate deciduous, temperate rain, maritime and floodplain forests get the werewolf only while the moon is at least 97 % lit. On every other night they get the fallback row, the lurker with no species (§CU), as the grasslands do every night. The werewolf keeps its pacer pattern, 6.5 m/s and ×1.3 on the full moon.
+- **By scent** (`Dread.by_scent`: `senses.json watchers.werewolf` has no light sight and a scent range):
+  - Its noticing ignores the torch: the meter fills at the moonlight rate whether your torch is lit or not (`Dread.dark_rate`). For the lurker, a torch still slows the meter.
+  - It keeps to your downwind side (`pick_scent_bearing`): the bearing the gust field blows toward where you stand, with ±25° of play, re-picked about every ten seconds. That bearing places both its first glimpse at stage 3 and its pacing at stage 4.
+  - Light holds it back at stage 5 exactly as built.
+  - `Tuning` now loads `senses.json`.
+- **Checked:** `tools/dread_check.gd`, seed 7731, 0 fails:
+  - at a lit share of 0.5 a temperate deciduous forest gets the lurker; at 0.98 it gets the werewolf at 8.45 m/s (6.5 × 1.3);
+  - the hunter and `active_now` both switch at 0.97 (0.86 and 0.96 off);
+  - in a steady 5 m/s wind the werewolf's side is within 45° of downwind in 100 % of 600 picks;
+  - its fill is 0.164/min with or without a torch, and the lurker's slows to 0.070 with one.
+  
+  `moon_reference.py` (run): a new world's first three nights are werewolf nights (99.4 %, 99.9 % and 98.2 % lit at midnight). That is §DG's open call, untouched.
+- **Data:** `dread.json full_moon` and the `full_moon_illumination` row in `data/sky/README.md` are unmarked (that row's text now says what reads it). `senses.json` stays marked for §DF.
+
 ## 2026-10-04 — §DE waking: found by folk, days later, at your hearth or the nearest
 - **Where you wake** (`Main._found_fire`, `Camps.camp_at` / `found_fault` / `found_fire`, `camps.json wake_found`): your hearth if you made one and its camp is lit with folk at it. A home that has gone dark (its fire is embers or out), is overrun (§CN) or is abandoned (nobody lives there) is skipped that waking. A hearth with no camp left at it is let go, with a log line. Otherwise you wake at the nearest lit fire with folk at it, measured from where you fell. The candidates are the opening camp, the people's camps at ruins (never an overrun one) and the lived nests, searched from 12 km out and widening. The opening camp is the last resort. **This amends §AY:** a new world has no hearth until you right click a camp's fire. An old save whose hearth was the opening camp by default (never chosen) lets it go.
 - **The lost days** (`LostDays`): a span, uniform between 1 and 3 game days, rolled per death. The world runs it through the paths it already has:

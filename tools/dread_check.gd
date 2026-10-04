@@ -137,5 +137,44 @@ func _initialize() -> void:
 	ok(dread.meter < 0.5, "by the lit fire the meter drains (%.3f)" % dread.meter)
 	dread.force_dark = false
 
+	# --- The full-moon werewolf (design 3 Oct §DG) ---
+	var thr := DayCycle.full_moon_illumination()
+	var half := Dread.entry_for("TEMPERATE_DECIDUOUS", 0.5)
+	ok(half.get("creature") == null, "a temperate deciduous forest at a lit share of 0.5: the fallback lurker (%s)" % str(half.get("creature")))
+	var bright := Dread.entry_for("TEMPERATE_DECIDUOUS", 0.98)
+	var v := Dread.speed_for(bright, 0.98)
+	ok(str(bright.get("creature", "")) == "Werewolf" and is_equal_approx(v, 6.5 * 1.3), "at 0.98: the werewolf, %.2f m/s (6.5 x 1.3)" % v)
+	ok(Dread.entry_for("TEMPERATE_DECIDUOUS", thr - 0.005).get("creature") == null and str(Dread.entry_for("TEMPERATE_DECIDUOUS", thr).get("creature", "")) == "Werewolf", "the hunter turns werewolf at %.2f lit, not before" % thr)
+	var wolf := CreatureSpecies.find("Werewolf")
+	if wolf != null:
+		var at := func(m: float) -> bool:
+			CreatureSpecies.moon_full = m
+			return wolf.active_now(0.0)
+		var a86: bool = at.call(0.86)
+		var a96: bool = at.call(thr - 0.01)
+		var a97: bool = at.call(thr)
+		ok(not a86 and not a96 and a97, "active_now flips at %.2f, not 0.85 (0.86: %s, %.2f: %s, %.2f: %s)" % [thr, a86, thr - 0.01, a96, thr, a97])
+	else:
+		ok(false, "the Werewolf species exists")
+	# From downwind: a steady 5 m/s wind, the side it keeps.
+	dread._ensure_hunter()
+	dread._hunter_entry = bright
+	var dwd := CubeSphere.east(player.surface_dir) * 0.6 + CubeSphere.north(player.surface_dir) * 0.8
+	Dread.wind_pin = dwd.normalized() * 5.0
+	var down := dread.downwind_bearing()
+	var within := 0
+	var n_s := 600
+	for i in n_s:
+		var b := dread.pick_scent_bearing(1.0 / 60.0 * 10.0)
+		if absf(angle_difference(b, down)) <= deg_to_rad(45.0):
+			within += 1
+	ok(float(within) / n_s >= 0.8, "with a steady 5 m/s wind the werewolf keeps within 45° of downwind in %d %% of %d samples" % [int(100.0 * within / n_s), n_s])
+	Dread.wind_pin = Vector3.INF
+	# A torch changes nothing about whether it notices you.
+	var r_dark := Dread.dark_rate(0.6, false, bright)
+	var r_torch := Dread.dark_rate(0.6, true, bright)
+	var r_lurker := Dread.dark_rate(0.6, true, half)
+	ok(Dread.by_scent(bright) and is_equal_approx(r_dark, r_torch) and r_lurker < r_dark, "it hunts by scent: its meter fills %.3f/min with a torch and %.3f without (the lurker's slows to %.3f by the torch)" % [r_torch, r_dark, r_lurker])
+
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
