@@ -25,7 +25,7 @@ keeps the table's marks when it regenerates this file.
 were locked in other chats and handed over there. §BR puts §DM's pass between 16 and 17; §DH (the
 goblin band) waits for Mike's four calls.
 
-Built so far: 01–09, 17. Next up: 10.
+Built so far: 01–10, 17. Next up: 11.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Built so far: 01–09, 17. Next up: 10.
 | 7 | §DG | The full-moon werewolf | built 6b40278 |
 | 8 | §DC (part 1 of 2) | Shafts of light, only when the air would really show them | built 0d0a3f8 |
 | 9 | §DC (part 2 of 2) | Butterflies by day | built d8880fa |
-| 10 | §DI (part 1 of 3) | Ruins wear their place: the overgrowth | todo |
+| 10 | §DI (part 1 of 3) | Ruins wear their place: the overgrowth | built db1ba8b |
 | 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | todo |
 | 12 | §DI (part 3 of 3) | The ghost at the corner | todo |
 | 13 | §DF | Your light gives you away | todo |
@@ -259,7 +259,7 @@ REPORT TO MIKE: that each land's real species and colours are a later data fill 
 
 ## 10 — Ruins wear their place: the overgrowth — §DI (part 1 of 3)
 
-**Status:** todo
+**Status:** built db1ba8b
 **Mike sees:** A cloud-forest ruin green to the cornice, a desert one nearly bare with lichen, moss thicker on the shaded side; dressing only, nothing to clear.
 
 ```text
