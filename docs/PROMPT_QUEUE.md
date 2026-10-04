@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–18. Next up: 19.
+Built so far: 01–19. Next up: 20.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -48,7 +48,7 @@ Built so far: 01–18. Next up: 19.
 | 16 | §DL | Tomes: the I Ching first | built a4e6994 |
 | 17 | §DO | The crag fortress | built 5d88fbe |
 | 18 | §DR | The temple city: roots over stone | built 1b7eacc |
-| 19 | §DP | The wandering fire: thirteen in the desert | todo |
+| 19 | §DP | The wandering fire: thirteen in the desert | built b545e71 |
 | 20 | §DQ | The old man on his ox | todo |
 | 21 | §DS.1 | The long wall | todo |
 | 22 | §DS.2 | The carved cliffs | todo |
@@ -439,7 +439,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 19 — The wandering fire: thirteen in the desert — §DP
 
-**Status:** todo
+**Status:** built b545e71
 **Mike sees:** A line of cold fire rings across the sand a day's walk apart, and at the end of it, at night, thirteen figures round a fire that wasn't there yesterday.
 
 ```text
