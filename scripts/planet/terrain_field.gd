@@ -295,6 +295,55 @@ func line_mask(dir: Vector3, which: String) -> float:
 	return smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e) * clampf((e - 3.0) / RAVINE_M, 0.0, 1.0)
 
 
+## The same with the smooth height `e` at `dir` already in hand (the
+## roads' lattice, which has it).
+func line_mask_at(dir: Vector3, which: String, e: float) -> float:
+	var p := dir * PlanetConst.GEO_RADIUS_M
+	var x := _continent.get_noise_3dv(p) - sea_threshold
+	if x <= 0.06:
+		return 0.0
+	var inland := smoothstep(0.06, 0.2, x)
+	if which == "escarp":
+		return smoothstep(0.1, 0.35, _escarp_mask.get_noise_3dv(p)) * inland
+	return smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e) * clampf((e - 3.0) / RAVINE_M, 0.0, 1.0)
+
+
+## How much of a great range's sheer faces stand at `dir` (0-1; §CR.4,
+## _cliff_steps' mask on the range's flank), for the roads' lattice: a
+## road keeps to the flanks' walkable ways.
+func range_cliff(dir: Vector3) -> float:
+	if great_ranges.is_empty():
+		return 0.0
+	var best := 0.0
+	var rr := PlanetConst.GEO_RADIUS_M
+	for g in great_ranges:
+		var hl := float(g.half_len_m)
+		var c: Vector3 = g.center
+		var reach := (hl + float(g.summit_m) / tan(deg_to_rad(FLANK_DEG)) * 1.2) / rr
+		if dir.dot(c) < cos(reach):
+			continue
+		var rel := dir - c * dir.dot(c)
+		var along := rel.dot(g.axis) * rr
+		var across := rel.dot(g.side) * rr
+		var t := along / hl
+		if absf(t) >= 1.0:
+			continue
+		var p := dir * rr
+		var t0 := float(g.t0)
+		var bump := exp(-pow((t - t0) / 0.3, 2.0))
+		var ridge := 0.5 + 0.12 * _crest.get_noise_3dv(p)
+		var crest := float(g.summit_m) * (ridge + (1.0 - ridge) * bump) * smoothstep(1.0, 0.72, absf(t))
+		var half_w := crest / tan(deg_to_rad(FLANK_DEG))
+		if half_w <= 1.0:
+			continue
+		var u := absf(across) / half_w
+		if u >= 1.0:
+			continue
+		var m := smoothstep(CLIFF_MASK, CLIFF_MASK + 0.08, _cliff.get_noise_3dv(dir * PlanetConst.RADIUS_M)) * smoothstep(0.04, 0.1, u) * smoothstep(0.98, 0.9, u)
+		best = maxf(best, m)
+	return best
+
+
 ## Seed the great ranges (§CR.4): 4-7 a world, each on land, apart from
 ## one another, its summit 500-885 m (summit_m_earth x HEIGHT_SCALE). On the
 ## dev postage stamp (geography a tenth the size) there are none.

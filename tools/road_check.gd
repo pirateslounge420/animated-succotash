@@ -8,6 +8,13 @@ extends SceneTree
 ## a room reads as a room by the ray test (most headings closed within
 ## 40 m, one open); the props build near the player; a traveller walks
 ## the road, hood on you, holding a beat, immune to the dark.
+## §DM.1 (the hard grade cap): every built road within 12 km, walked every
+## 5 m on the fine ground as built (its cuttings carved in), never steeper
+## than roads.json network.hard_max_grade, and its tread no steeper than
+## PlanetPlayer.WALK_MAX_DEG either way (outside the ruins' own footprints
+## and the river crossings, which are their own); and the opening road on
+## the drawn chunks (TerrainChunk.compute) the same (outside a river's
+## banks, its channel being carved after the road).
 var main
 var world
 var player: PlanetPlayer
@@ -108,6 +115,8 @@ func _initialize() -> void:
 			worst = maxf(worst, de / dm)
 	print("[road] the nearest link's steepest step: %.2f on the way, %.2f at its ends (max_grade %.2f)" % [worst, worst_end, max_grade])
 	ok(worst < 0.9, "the road keeps its grade on the way: no step a cliff (worst %.2f between 30 m samples; roads.json max_grade %.2f is the routing's own limit at its %.0f m step)" % [worst, max_grade, RoadNetwork.STEP_M])
+	_grade_audit(roads, near)
+	await _drawn_audit(roads, near)
 	# Rooms.
 	var rooms := roads.rooms_near(on, 3000.0)
 	ok(not rooms.is_empty(), "rooms hang off the roads (%d within 3 km)" % rooms.size())
@@ -203,3 +212,136 @@ func _initialize() -> void:
 	main.dread._enter_stage(0)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+## The ground as built along a link every 5 m: [m, ground at the centre,
+## the tread's steepest slope there (along and across, as a grade)], with
+## the ruins' footprints and the river crossings left out.
+func _walk_built(roads: RoadNetwork, link: Dictionary, step := 5.0) -> Array:
+	var t: TerrainField = world.planet.terrain
+	var pts: PackedVector3Array = link.pts
+	var total := RoadNetwork.length_m(pts)
+	var skip: Array = []
+	for k in [int(link.a), int(link.b)]:
+		var nd: Dictionary = roads.nodes[k]
+		skip.append([nd.dir, float(nd.get("foot_m", 0.0)) + 4.0])
+	for c in link.crossings:
+		skip.append([c[0], float(c[3]) * 0.5 + TerrainChunk.BANK_M + 6.0])
+	var out: Array = []
+	var m := 0.0
+	while m <= total:
+		var p := RoadNetwork.point_at(pts, m)
+		var held := false
+		for sk in skip:
+			if CubeSphere.surface_distance_m(p, sk[0]) <= float(sk[1]):
+				held = true
+				break
+		if not held:
+			var fwd := RoadNetwork.point_at(pts, minf(m + 1.0, total)) - RoadNetwork.point_at(pts, maxf(m - 1.0, 0.0))
+			var side := fwd.cross(p).normalized()
+			var g := RoadNetwork.ground_on(link, m, 0.0, t.elevation(p, true))
+			var gl := RoadNetwork.ground_on(link, m, 0.7, t.elevation((p + side * 0.7 / PlanetConst.RADIUS_M).normalized(), true))
+			var gr := RoadNetwork.ground_on(link, m, -0.7, t.elevation((p - side * 0.7 / PlanetConst.RADIUS_M).normalized(), true))
+			out.append([m, g, absf(gl - gr) / 1.4])
+		else:
+			out.append([m, NAN, 0.0])
+		m += step
+	return out
+
+
+func _grade_audit(roads: RoadNetwork, near: Array) -> void:
+	var hard := RoadNetwork.hard_max_grade()
+	var walk_tan := tan(deg_to_rad(PlanetPlayer.WALK_MAX_DEG))
+	var steps := 0
+	var over := 0
+	var worst := 0.0
+	var worst_at := ""
+	var steep := 0
+	var worst_slope := 0.0
+	var benched := 0.0
+	var t0 := Time.get_ticks_msec()
+	for l in near:
+		var w := _walk_built(roads, l)
+		for b in l.get("bench", []):
+			benched += float(b[1]) - float(b[0])
+		for i in range(1, w.size()):
+			var g0 := float(w[i - 1][1])
+			var g1 := float(w[i][1])
+			if is_nan(g0) or is_nan(g1):
+				continue
+			steps += 1
+			var gr := absf(g1 - g0) / 5.0
+			if gr > worst:
+				worst = gr
+				worst_at = "link %d-%d at %.0f m" % [int(l.a), int(l.b), float(w[i][0])]
+			if gr > hard + 1e-3:
+				over += 1
+			var slope := sqrt(gr * gr + float(w[i][2]) * float(w[i][2]))
+			worst_slope = maxf(worst_slope, slope)
+			if slope > walk_tan:
+				steep += 1
+	print("[road] §DM.1: %d links, %d 5 m steps on the fine ground as built (%.0f s): steepest %.3f (%s), %d over hard_max_grade %.2f; steepest tread %.0f°, %d over %.0f°; %.1f km of cuttings; %d people's camps unreached" % [near.size(), steps, (Time.get_ticks_msec() - t0) / 1000.0, worst, worst_at, over, hard, rad_to_deg(atan(worst_slope)), steep, PlanetPlayer.WALK_MAX_DEG, benched / 1000.0, roads.unreached.size()])
+	ok(over == 0, "no built road steeper than hard_max_grade %.2f anywhere on the fine ground (steepest %.3f)" % [hard, worst])
+	ok(steep == 0, "every road's tread walkable at WALK_MAX_DEG %.0f° (steepest %.0f°)" % [PlanetPlayer.WALK_MAX_DEG, rad_to_deg(atan(worst_slope))])
+
+
+## The opening road (else the nearest) on the drawn ground: its chunks
+## computed as the game draws them, the centreline every 5 m.
+func _drawn_audit(roads: RoadNetwork, near: Array) -> void:
+	var link: Dictionary = {}
+	for l in near:
+		if bool(l.get("opening", false)):
+			link = l
+	if link.is_empty():
+		link = RoadNetwork.nearest_in(near, player.surface_dir, 20000.0).link
+	var cache := {}
+	var w := _walk_built(roads, link)
+	var hard := RoadNetwork.hard_max_grade()
+	var prev := NAN
+	var worst := 0.0
+	var over := 0
+	var n := 0
+	for s in w:
+		if is_nan(float(s[1])):
+			prev = NAN
+			continue
+		var p := RoadNetwork.point_at(link.pts, float(s[0]))
+		# A river's banks are its own (its channel carved after the road:
+		# a ford's way down to the water).
+		var rv0: RiverNetwork = main.chunks.rivers
+		var in_bank := false
+		for sg in rv0.segments_near(world.planet, world.planet.cell_at(p)):
+			if rv0.closest_dt(sg, p).x < rv0.width[sg] * 0.5 + TerrainChunk.BANK_M + 2.0:
+				in_bank = true
+				break
+		if in_bank:
+			prev = NAN
+			continue
+		var key := TerrainChunk.key_at(p)
+		if not cache.has(key):
+			cache[key] = TerrainChunk.compute(key, world.planet, main.chunks.rivers)
+		var data: Dictionary = cache[key]
+		var g := _drawn_height(data, p)
+		if not is_nan(prev):
+			var gr := absf(g - prev) / 5.0
+			worst = maxf(worst, gr)
+			n += 1
+			if gr > hard + 0.02:
+				over += 1
+				var near_river := INF
+				var rv: RiverNetwork = main.chunks.rivers
+				for sg in rv.segments_near(world.planet, world.planet.cell_at(p)):
+					near_river = minf(near_river, rv.closest_dt(sg, p).x - rv.width[sg] * 0.5)
+				print("   drawn step %.3f at %.0f m: drawn %.2f -> %.2f, as built %.2f, natural %.2f, cutting %.2f, %.0f m from a river's edge" % [gr, float(s[0]), prev, g, float(s[1]), world.planet.terrain.elevation(p, true), RoadNetwork.bench_at(link, float(s[0])), near_river])
+		prev = g
+	print("[road] §DM.1 drawn: the %s road (%.1f km), %d chunks computed, %d steps: steepest %.3f, %d over %.2f (+0.02 for the 4 m mesh)" % ["opening" if bool(link.get("opening", false)) else "nearest", float(link.len_m) / 1000.0, cache.size(), n, worst, over, hard])
+	ok(over == 0, "the drawn ground under the %s road keeps the cap (steepest %.3f)" % ["opening" if bool(link.get("opening", false)) else "nearest", worst])
+	await process_frame
+
+
+func _drawn_height(data: Dictionary, d: Vector3) -> float:
+	var key: Vector3i = data.key
+	var uv := CubeSphere.face_uv(key.x, d)
+	var gx := ((uv.x + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE - key.y) * TerrainChunk.FINE
+	var gy := ((uv.y + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE - key.z) * TerrainChunk.FINE
+	return TerrainChunk.fine_height(data.fine_heights, gx, gy)

@@ -173,10 +173,20 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	pad_h.resize(pn * pn)
 	pad_d.resize(pn * pn)
 
+	# The roads round it, and their cuttings (design 3 Oct §DM.1, §DM.3:
+	# the tread cut down to its graded profile where the ground stands
+	# over it).
+	var road_segs: Array = []
+	if RoadNetwork.instance != null:
+		var rr := CHUNK_M * 0.8 + RoadNetwork.FAR_M
+		road_segs = RoadNetwork.segments_in(RoadNetwork.instance.links_near(center, rr), center, rr)
+	var cuttings := RoadNetwork.bench_segs(road_segs)
 	for jj in range(-1, nf + 1):
 		for ii in range(-1, nf + 1):
 			var d := CubeSphere.to_dir(key.x, _uvf(key.y, ii), _uvf(key.z, jj))
 			var e := map.terrain.elevation(d, true)
+			if not cuttings.is_empty():
+				e = RoadNetwork.carve(cuttings, d, e)
 			var in_river_here := 0
 			var inside := ii >= 0 and jj >= 0 and ii < nf and jj < nf
 			var coarse := inside and ii % 2 == 0 and jj % 2 == 0
@@ -220,10 +230,6 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	for jj in n:
 		for ii in n:
 			normals[jj * n + ii] = fine_n[(jj * 2) * nf + ii * 2]
-	var road_segs: Array = []
-	if RoadNetwork.instance != null:
-		var rr := CHUNK_M * 0.8 + RoadNetwork.FAR_M
-		road_segs = RoadNetwork.segments_in(RoadNetwork.instance.links_near(center, rr), center, rr)
 	return {
 		"key": key,
 		"center": center,

@@ -4,6 +4,19 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DM.1 the road never leads where you can't follow (the hard grade cap)
+- **Mike's bug** (the road thinned, went up an unclimbable hill and was lost): today's roads, walked every 5 m on the fine ground, had 1,900 steps of 67,000 over a 0.30 grade, 378 of them walls (worst 5.9), all on what the 120 m routing lattice couldn't see.
+- **The coarse route** (`RoadNetwork._route`): `roads.json network.hard_max_grade` (0.30) is now a hard reject per lattice step, and `max_grade` (0.18) stays the soft switchback cost. The lattice also refuses a step across an escarpment or a ravine taller than a cutting (`TerrainField.line_noise`/`line_mask_at`: the step's ends disagree in sign) and onto a great range's sheer faces (`TerrainField.range_cliff`, new).
+- **The fine walk** (`_fine_fix`): after routing, the tread is walked every 5 m on the detailed ground. Its profile is the highest line under the ground that never climbs faster than 0.27 (0.9 × the cap, a margin for the 4 m mesh). A stretch that would need a cutting deeper than `holloway.depth_m`'s 2.0 m, or that falls away across the tread more than a metre's fill and a 0.6 slope, is re-routed on a fine A*. Its heights sit on a 5 m grid, every move is checked at every 5 m point, and no cell may be steeper than 1:1. The re-route runs at 10 m steps, then 20 m, then 40 m in wider windows. A link that still can't be made walkable is not built: its camp tries its next neighbours, and is logged unreached if none route.
+- **The cutting** (`_bench`, `RoadNetwork.carve`, `TerrainChunk.compute`): where the ground stands over the profile, or falls away across the tread, the chunk cuts the tread down to the profile. The flat is at least 2.5 m each side of the centreline, with banks rising 1.2 in 1 beyond and up to 1 m of fill. Plants sit on the carved ground (they read the chunk's heights). §DM.3 will shape these into holloways.
+- **Speed:** a region's links now route on up to four threads. Seed 42's 12 km round the camp takes 21.7 s to build, against 3.6 s before. Time to play, headless on this 4-core machine, went from 33 s to 41.5 s.
+- **Checked** (`tools/road_check.gd`, seed 42), on 81 links, 88,802 five-metre steps on the ground as built:
+  - steepest step 0.280, none over 0.30; steepest tread 31°, none over WALK_MAX_DEG 45°; 8.5 km of cuttings;
+  - the drawn chunks under the nearest road: steepest 0.312, within 0.02 of the cap for the 4 m mesh.
+  
+  River banks and crossings are left out: they are the river's own ground, carved after the road. Ruin footprints are left out too.
+- **The cost:** 81 links where the old network had 101. The ones dropped cross cliffs with no way round within 600 m, mostly to springs, fords and stones. One people's camp has no road, the same one as before. The check's "tread reads on the road" fail (0.07) is the same on the commit before this pass.
+
 ## 2026-10-04 — §DI part 1: a ruin wears its place (the overgrowth)
 - **What it reads:** `ruins.json overgrowth` (by_moisture rows, blended between rows; shade_side_scale; age; cold_mean_c). The place's moisture and the year's mean temperature come from the planet at the ruin.
 - **What it writes** (`Overgrowth` and `RuinBuilder`, at build time on the worker):
