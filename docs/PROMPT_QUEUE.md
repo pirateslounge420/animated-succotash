@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–11, 17. Next up: 12.
+Built so far: 01–12, 17. Next up: 13.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -41,7 +41,7 @@ Built so far: 01–11, 17. Next up: 12.
 | 9 | §DC (part 2 of 2) | Butterflies by day | built d8880fa |
 | 10 | §DI (part 1 of 3) | Ruins wear their place: the overgrowth | built db1ba8b |
 | 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | built 63e9956 |
-| 12 | §DI (part 3 of 3) | The ghost at the corner | todo |
+| 12 | §DI (part 3 of 3) | The ghost at the corner | built 81ad44d |
 | 13 | §DF | Your light gives you away | todo |
 | 14 | §DJ | Off the road: hidden places, and the few who speak | todo |
 | 15 | §DK | The shrine and the sealed scroll | todo |
@@ -300,7 +300,7 @@ CHECK (tools/ruin_sound_check.gd, headless): a tower ruin at noon → at least o
 
 ## 12 — The ghost at the corner — §DI (part 3 of 3)
 
-**Status:** todo
+**Status:** built 81ad44d
 **Mike sees:** In a graveyard at night a pale figure stands at the edge of your light, steps round a headstone, and the corner is empty when you get there.
 
 ```text
