@@ -8,8 +8,8 @@
 > [`docs/OVERVIEW.md`](./docs/OVERVIEW.md), and how to play is in
 > [`docs/HOW_TO_RUN.md`](./docs/HOW_TO_RUN.md). They override this README.
 
-A slow, first-person walk across a procedural cube-sphere planet: **4,000 km around, one
-tenth of Earth**, with heights and time at the same 1/10. Old, overgrown roads lead between
+A slow, first-person walk across a procedural cube-sphere planet: **400 km around, one
+one hundredth of Earth**, with heights and time at 1/10. Old, overgrown roads lead between
 ruins and living camps. You wake with nothing; the torch is the first tool, and fire is
 carried, never made. What lurks in the dark is the only enemy, and every ruin is designed to go down into
 the dark (§CJ, not built yet). There's no crafting: the camps' makers work what you bring. You
