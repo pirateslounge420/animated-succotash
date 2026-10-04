@@ -246,6 +246,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._temple_city()
 		Ruins.Kind.CARVED_CLIFFS:
 			b._carved_cliffs()
+		Ruins.Kind.CLIFF_DWELLING:
+			b._cliff_dwelling()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4460,7 +4462,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -4788,3 +4790,122 @@ func _carved_cliffs() -> void:
 			ivy(o + bs * Vector3(w * 0.5 + 0.6, h, -0.1), bs * Vector3(0.0, 0.0, -1.0), rng.randf_range(4.0, minf(9.0, h)))
 	if Delves.has_delve(site):
 		_delve_build()
+
+
+# --- The cliff dwelling (design 3 Oct §DS.4) ---------------------------------------
+
+const ROOM_H := 2.2
+const PUEBLO := [Color(0.66, 0.52, 0.38), Color(0.62, 0.49, 0.36), Color(0.7, 0.56, 0.41), Color(0.58, 0.46, 0.34), Color(0.64, 0.5, 0.35)]
+
+
+## The town in its alcove (Monuments._cliff_dwelling): the alcove itself
+## (§CK: anything with a roof is a mesh): a back wall of the face's
+## sandstone, its ends, and the overhang over it all, its lip hanging at
+## the drip line; then the rooms of fitted stone in their storeys (a dark
+## T-shaped door on each, beam ends under the top ones), the round towers,
+## the ladders, the kivas in the plaza (rings of stone round a dark pit,
+## a ladder up out of each), the way down at the alcove's back (the barrow
+## kit: the stores cut under the rooms, the heart under the plaza with the
+## great kiva's ring over it, a way up out past the plaza). The alcove is
+## its roof, so the stone stands nearly whole.
+func _cliff_dwelling() -> void:
+	palette = PUEBLO
+	var w: float = site.alcove_w
+	var dd: float = site.alcove_d
+	_lod_m = float(site.footprint_m) + LOD_M
+	# +z runs out of the face: the alcove's back at z 0, the drip line at
+	# dd, the plateau over the face behind (-z).
+	var y0 := ground(0.0, 4.0)
+	var yt := maxf(ground(0.0, -8.0), maxf(ground(0.0, -12.0), ground(0.0, -16.0)))
+	var yu := clampf(yt - 2.5, y0 + float(site.storeys) * ROOM_H + 2.5, y0 + 14.0)
+	var top := maxf(yt + 0.4, yu + 2.8)
+	var rock: Color = SANDSTONE[3]
+	# The back wall, the ends, the overhang and its lip.
+	_pbox(Transform3D(Basis(), Vector3(0.0, (y0 - 2.0 + yu + 0.5) * 0.5, -1.6)), Vector3(w + 6.0, yu + 0.5 - y0 + 2.0, 3.2), rock, 0.1)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(Basis(), Vector3(sx * (w * 0.5 + 1.8), (y0 - 2.0 + yu + 0.5) * 0.5, dd * 0.35)), Vector3(3.6, yu + 0.5 - y0 + 2.0, dd * 0.7 + 3.2), rock.darkened(0.04), 0.1)
+	_pbox(Transform3D(Basis(), Vector3(0.0, (yu + top) * 0.5, dd * 0.5 - 1.5)), Vector3(w + 8.0, top - yu, dd + 3.0), rock.darkened(0.08), 0.2)
+	_pbox(Transform3D(Basis(), Vector3(0.0, yu - 0.5, dd - 1.0)), Vector3(w + 6.0, 1.2, 2.0), rock.darkened(0.12), 0.25)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(Basis(), Vector3(sx * (w * 0.5 + 1.0), yu - 0.9, dd * 0.5)), Vector3(3.0, 2.0, dd), rock.darkened(0.1), 0.2)
+	# The rooms, storey on storey (each a little back toward the face), a
+	# T-shaped door on each one's front.
+	for rm in site.rooms:
+		var x := float(rm[0])
+		var z := float(rm[1])
+		var st := int(rm[2])
+		var g := ground(x, z)
+		for s in st:
+			var col: Color = PUEBLO[rng.randi() % PUEBLO.size()]
+			var setback := s * 0.15
+			_pbox(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.03, 0.03)), Vector3(x, g + ROOM_H * 0.5 + s * ROOM_H - 0.1, z - setback)), Vector3(3.1, ROOM_H, 2.9 - setback), col, 0.05)
+			var fz := z - setback + (2.9 - setback) * 0.5 + 0.03
+			var dy := g + s * ROOM_H
+			_pbox(Transform3D(Basis(), Vector3(x, dy + 0.65, fz)), Vector3(0.55, 1.0, 0.06), VOID, 0.0)
+			_pbox(Transform3D(Basis(), Vector3(x, dy + 1.3, fz)), Vector3(1.0, 0.45, 0.06), VOID, 0.0)
+		# Beam ends under the top storey's roof.
+		var by := g + st * ROOM_H - 0.25
+		for bx in [-0.9, 0.9]:
+			_pbox(Transform3D(Basis(), Vector3(x + float(bx), by, z + 1.6)), Vector3(0.16, 0.16, 0.5), OLD_WOOD, 0.0)
+	# The round towers: eight stones of wall round each, a door on the front.
+	for tw in site.towers_round:
+		var c := Vector2(float(tw[0]), float(tw[1]))
+		var r := float(tw[2])
+		var g := ground(c.x, c.y)
+		var h := float(site.storeys) * ROOM_H + 1.6
+		for k in 8:
+			var a := k * TAU / 8.0
+			var p := c + Vector2(cos(a), sin(a)) * r
+			_pbox(Transform3D(Basis(Vector3.UP, -a + PI * 0.5), Vector3(p.x, g + h * 0.5 - 0.2, p.y)), Vector3(r * 0.85, h, 0.6), PUEBLO[k % 5], 0.05)
+		_pbox(Transform3D(Basis(), Vector3(c.x, g + h * 0.5 - 1.0, c.y + r + 0.32)), Vector3(0.45, 0.7, 0.06), VOID, 0.0)
+	# Ladders against the upper storeys.
+	for ld in site.ladders:
+		var lx := float(ld[0])
+		var lz := float(ld[1])
+		var g := ground(lx, lz + 0.6)
+		var h := float(ld[2]) * ROOM_H - 0.6
+		_ladder(Vector3(lx, g, lz + 0.6), Vector3(lx, g + h, lz - 0.1))
+	# The kivas in the plaza, and the great kiva over the heart.
+	for kv in site.kivas:
+		_kiva(Vector2(float(kv[0]), float(kv[1])), float(kv[2]), false)
+	if Delves.has_delve(site):
+		_delve_build()
+		var heart := {}
+		for pc in (_delve.get("pieces", []) as Array):
+			if str(pc.kind) == "heart":
+				heart = pc
+		if not heart.is_empty():
+			var hc: Vector2 = heart.c
+			_kiva(Vector2(hc.x, hc.y + float(heart.len) * 0.5), 4.6, true)
+
+
+## A ladder from `a` (its foot) to `b` (its top): two rails and rungs.
+func _ladder(a: Vector3, b: Vector3) -> void:
+	var was := solid
+	solid = false
+	var up_v := (b - a)
+	var side := up_v.cross(Vector3.BACK).normalized() * 0.24
+	if side.length() < 0.1:
+		side = Vector3(0.24, 0.0, 0.0)
+	for s: float in [-1.0, 1.0]:
+		_pole(a + side * s, b + side * s, 0.07)
+	var n := int(up_v.length() / 0.45)
+	for k in range(1, n):
+		var p := a.lerp(b, float(k) / n)
+		_pole(p - side, p + side, 0.05)
+	solid = was
+
+
+## A kiva: a ring of stone round a dark pit, a ladder up out of it; the
+## great one larger, a ring of stone over the heart below, no pit.
+func _kiva(c: Vector2, r: float, great: bool) -> void:
+	var g := ground(c.x, c.y)
+	var n := 16 if great else 10
+	for k in n:
+		var a := k * TAU / n
+		var p := c + Vector2(cos(a), sin(a)) * r
+		_pbox(Transform3D(Basis(Vector3.UP, -a + PI * 0.5), Vector3(p.x, ground(p.x, p.y) + 0.25, p.y)), Vector3(r * TAU / n * 1.05, 0.9, 0.7), PUEBLO[k % 5].darkened(0.05), 0.1)
+	if not great:
+		for k in 2:
+			_pbox(Transform3D(Basis(Vector3.UP, k * PI * 0.25), Vector3(c.x, g + 0.03, c.y)), Vector3(r * 1.55, 0.06, r * 1.55), VOID, 0.0)
+		_ladder(Vector3(c.x, g - 0.5, c.y), Vector3(c.x + 0.3, g + 2.4, c.y + 0.6))

@@ -813,7 +813,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "out the kivas' vents and the roof hatches",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.4] Mike's second batch, 3 Oct 21:27: a town of stone rooms and round towers filling a sandstone alcove, and the great kiva. Its own kind at the mesa alcove nest (\u00a7CK): the alcove is its roof, so the stone stays nearly whole (\u00a7BQ)."
+   "_help": "Built (design \u00a7DS.4; Monuments._cliff_dwelling, RuinBuilder._cliff_dwelling): a town of fitted sandstone rooms (rooms, storeys: rows from the back of the alcove to the front, the storeys stepping down toward the plaza, a T-shaped door on each), round towers, ladders, kivas in the plaza, in an alcove of its own (\u00a7CK: anything with a roof is a mesh: a back wall, its ends, the overhang and its lip) at a sandstone escarpment face or canyon wall 9 m high or more (alcove_under_overhang), with water within 2 km (water_below). The delve: in at the alcove's back, the stores cut under the rooms, the heart under the plaza with the great kiva's ring over it, a way up out past the plaza. The alcove is its roof, so the stone stands nearly whole. Rare: the nearctic canyon, cold desert and sagebrush meet a sandstone face on about one world in ten (seed 8 has one). Restart after editing."
   },
   "brick_city": {
    "kind": "own",

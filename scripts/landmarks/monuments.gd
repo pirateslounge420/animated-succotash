@@ -22,10 +22,15 @@ class_name Monuments
 ##   sandstone         the rock under it is sandstone;
 ##   canyon_wall       a ravine (or a slot canyon) within CANYON_M, its
 ##                     walls CANYON_DEEP_M deep or more (canyon_at);
+##   alcove_under_overhang  a sandstone escarpment face ALCOVE_FACE_M high
+##                     or more with level ground before it (alcove_at: the
+##                     alcove itself is the monument's own mesh, §CK);
+##   water_below       a river, a lake or the sea within WATER_BELOW_M;
+##   forest            (never) a forest biome.
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -35,6 +40,8 @@ const RIDGE_RISE_M := 5.0
 const WET := 0.62
 const CANYON_M := 400.0
 const CANYON_DEEP_M := 8.0
+const ALCOVE_FACE_M := 9.0
+const WATER_BELOW_M := 2000.0
 ## The long wall's line (§DS.1): steps along the crest, the turn allowed a
 ## step, and where it gives up (water, a drop steeper than WALL_MAX_GRADE).
 const WALL_STEP_M := 40.0
@@ -101,7 +108,51 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "rock"
 	if needs.has("canyon_wall") and canyon_at(map, p).is_empty():
 		return "no_canyon"
+	if never.has("forest") and bkey.contains("FOREST"):
+		return "forest"
+	if needs.has("alcove_under_overhang") and alcove_at(map, p).is_empty():
+		return "no_alcove"
+	if needs.has("water_below") and HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) > WATER_BELOW_M:
+		return "dry"
 	return ""
+
+
+## An alcove's face near `p` (§DS.4): a sandstone escarpment face (the
+## escarpment layer, TerrainField) or a canyon's wall whose floor holds a
+## plaza, ALCOVE_FACE_M high or more within 400 m,
+## level ground for 8 m before its foot: {"foot", "face", "toward" (the
+## bearing into the face), "h"}; {} where there's none.
+static func alcove_at(map: PlanetData, p: Vector3) -> Dictionary:
+	if Nests.terrain != map.terrain:
+		return {}
+	var cl := {}
+	if map.terrain.line_mask(p, "escarp") >= 0.57:
+		cl = Nests._cliff_at_escarp(p)
+	# Or a canyon's wall (the ravine layer), its floor wide enough for a
+	# plaza: the deeper wall.
+	if (cl.is_empty() or float(cl.h) < ALCOVE_FACE_M) and map.terrain.line_mask(p, "ravine") >= 0.6:
+		var r := Nests._snap(p, "ravine")
+		if not r.is_empty():
+			var g: Vector2 = r.g
+			var gl := g.length()
+			var floor_half := lerpf(TerrainField.RAVINE_FLOOR_N, TerrainField.SLOT_FLOOR_N, Nests.slot_at(r.dir)) / gl
+			if floor_half >= 12.0:
+				for s in [1.0, -1.0]:
+					var into := atan2(g.x * s, g.y * s)
+					var foot := CreatureSpawner._offset(r.dir, into, floor_half - 2.5)
+					var h := Nests._e(CreatureSpawner._offset(r.dir, into, floor_half + 10.0)) - Nests._e(foot)
+					if cl.is_empty() or h > float(cl.h):
+						cl = {"foot": foot, "face": CreatureSpawner._offset(r.dir, into, floor_half), "toward": into, "h": h, "line": "ravine"}
+	if cl.is_empty() or float(cl.h) < ALCOVE_FACE_M:
+		return {}
+	var foot: Vector3 = cl.foot
+	if CubeSphere.surface_distance_m(foot, p) > 400.0 or map.rock[map.cell_at(foot)] != PlanetData.Rock.SANDSTONE:
+		return {}
+	if map.water[map.cell_at(foot)] != PlanetData.Water.NONE:
+		return {}
+	if Nests._slope(CreatureSpawner._offset(foot, float(cl.toward) + PI, 8.0), 4.0) > 0.18:
+		return {}
+	return cl
 
 
 ## The canyon at `p` (the ravine layer, a slot canyon where it pinches in
@@ -314,6 +365,10 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 		"carved_cliffs":
 			var cc := _carved_cliffs(map, E, d, rng, site)
 			if cc.is_empty():
+				return {}
+		"cliff_dwelling":
+			var cd := _cliff_dwelling(map, E, d, rng, site)
+			if cd.is_empty():
 				return {}
 	return site
 
@@ -570,5 +625,98 @@ static func _carved_cliffs(map: PlanetData, E: Dictionary, d: Vector3, rng: Rand
 	site.half_l = 5.0
 	site.footprint_m = span * 0.5 + 8.0
 	site.clear = [[site.dir, 6.0]]
+	return site
+
+
+## The cliff dwelling (§DS.4): an alcove in a sandstone escarpment face
+## near `d`, where the face looks nearest the ground grid's axes (the great
+## kiva's way down opens on the grid); its size, and its town laid out:
+## rows of rooms back to front, storeys stepping down toward the plaza
+## (storeys at the back), the round towers, the ladders, the kivas in the
+## plaza and the great kiva over the way down. Fills `site`.
+static func _cliff_dwelling(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var a0 := alcove_at(map, d)
+	if a0.is_empty():
+		return {}
+	var best := {}
+	var best_dev := INF
+	var along := float(a0.toward) + PI * 0.5
+	for k in range(-10, 11):
+		var q := CreatureSpawner._offset(a0.foot, along, k * 15.0)
+		var aq := alcove_at(map, q)
+		if aq.is_empty():
+			continue
+		# Its frame: +z out of the face, toward the plaza (the barrow kit's
+		# way runs +z: in at the alcove's back, out past the plaza).
+		var heading := float(aq.toward)
+		var gh := Delves.grid_heading(aq.foot, heading)
+		var dev := absf(wrapf(gh - heading, -PI, PI))
+		if dev < best_dev:
+			best_dev = dev
+			best = aq
+			best.heading = gh
+	if best.is_empty():
+		return {}
+	var foot: Vector3 = best.foot
+	site.dir = foot
+	site.heading = float(best.heading)
+	site.face_h = float(best.h)
+	var stb: Array = E.get("storeys", [2, 4])
+	var rmb: Array = E.get("rooms", [20, 150])
+	var storeys := rng.randi_range(int(stb[0]), int(stb[1]))
+	var width := rng.randf_range(36.0, 72.0)
+	var rows := clampi(storeys + 1, 3, 4)
+	site.alcove_w = width
+	site.alcove_d = 4.5 + rows * 3.2 + rng.randf_range(2.0, 4.0)
+	site.storeys = storeys
+	# The rooms: [x, z (the room's middle, out from the face), storeys],
+	# back row first; a room in seven fallen out, a lane left down the
+	# middle (the way down opens in it, at the back).
+	var rooms: Array = []
+	var count := 0
+	var x0 := -width * 0.5 + 3.0
+	for r in rows:
+		var z := 1.8 + r * 3.2
+		var st := maxi(1, storeys - r)
+		var x := x0
+		while x < width * 0.5 - 3.0:
+			if absf(x) > 1.8 and rng.randf() > 0.14:
+				rooms.append([x, z, st])
+				count += st
+			x += 3.4
+	while count > int(rmb[1]) and not rooms.is_empty():
+		var last: Array = rooms.pop_back()
+		count -= int(last[2])
+	if count < int(rmb[0]):
+		return {}
+	site.rooms = rooms
+	site.room_count = count
+	var towers: Array = []
+	for k in rng.randi_range(2, 3):
+		var tx := rng.randf_range(-width * 0.4, width * 0.4)
+		if absf(tx) < 4.0:
+			tx = 4.0 * signf(tx if tx != 0.0 else 1.0)
+		towers.append([tx, 1.8 + rng.randi_range(0, 1) * 3.2, rng.randf_range(1.6, 2.2)])
+	site.towers_round = towers
+	var ladders: Array = []
+	for k in rng.randi_range(4, 7):
+		var rm: Array = rooms[rng.randi() % rooms.size()]
+		if int(rm[2]) >= 2:
+			ladders.append([float(rm[0]) + rng.randf_range(-0.8, 0.8), float(rm[1]) + 1.6, int(rm[2])])
+	site.ladders = ladders
+	# The way down at the alcove's back (the first stair's top a metre out
+	# from the face), the plaza in front of the rooms with its kivas, and
+	# the great kiva over the heart (Delves.layout tells where).
+	site.half_l = 4.7
+	var plaza_z := 4.5 + rows * 3.2
+	var kivas: Array = []
+	for k in rng.randi_range(2, 4):
+		var kx := rng.randf_range(-width * 0.4, width * 0.4)
+		if absf(kx) < 7.0:
+			kx = 7.0 * signf(kx if kx != 0.0 else 1.0) + kx * 0.3
+		kivas.append([kx, plaza_z + rng.randf_range(-0.5, 2.0), rng.randf_range(2.0, 2.6)])
+	site.kivas = kivas
+	site.footprint_m = width * 0.5 + 14.0
+	site.clear = [[Ruins.local_dir(site, 0.0, plaza_z * 0.6), width * 0.5 + 6.0]]
 	return site
 

@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.4: the cliff dwelling (prompt 23)
+- **The kind:** `Ruins.Kind.CLIFF_DWELLING`, "Cliff dwelling" (`data/ruins.json` → `styles.cliff_dwelling`, unmarked), placed by Monuments' sites pass.
+  - **New gate words:**
+    - `alcove_under_overhang` (`Monuments.alcove_at`): a sandstone escarpment face, or a canyon wall whose floor holds a plaza, 9 m high or more, with level ground before it;
+    - `water_below`: water within 2 km;
+    - `forest` (never).
+- **The town** (`Monuments._cliff_dwelling`, `RuinBuilder._cliff_dwelling`):
+  - **The alcove** is its own mesh (§CK: anything with a roof): a back wall of the face's sandstone, its ends, and the overhang with its lip at the drip line.
+  - **The rooms:** 20–150 fitted sandstone rooms in rows, their storeys (2–4) stepping down toward the front, each with a dark T-shaped door and beam ends under the top storey's roof.
+  - **Also:** 2–3 round towers, 4–7 ladders against the upper storeys, and 2–4 kivas in the plaza (stone rings round a dark pit, a ladder up out of each).
+  - **The delve** (the barrow kit, its frame turned so +z runs out of the face): in at the alcove's back, the stores cut under the rooms, the heart under the plaza with the great kiva's ring over it, and a way up out past the plaza.
+  - Smoke: `roof_vent`.
+- **Check:** `tools/cliff_dwelling_check.gd`, 0 fails on 7731 and 8.
+  - 7731 has none; scanning eleven worlds found one only on seed 8: 33.83°N 156.52°W, cold desert, nearctic, sandstone, a face 11 m high.
+  - An alcove 49 × 20 m with 111 rooms in up to 4 storeys, 2 round towers, 4 ladders and 2 kivas.
+  - The delve: stair, room, stair, heart, exit. 38,568 triangles against the castle's 78,733.
+- **Walkabout** (`SEED=8 SITES=cliff_dwelling HOURS=15`, harness frame §CG): the alcove's overhang over a stepped town of pale rooms with dark T-doors, seen across the plaza.
+- **Flags:**
+  - **It is rare:** about one world in ten has a nearctic sandstone face in its biomes.
+  - The mesa nest (§CK) isn't built, so the alcove is the dwelling's own mesh, a flat slab overhang rather than an arched hollow.
+  - The way out comes up past the plaza, not at the alcove's rim (the barrow kit can't climb the face).
+  - Seeds 101 and 1234 overflow the stack when a check generates a fourth world in one run (in the world's own setup, before any monument code; pre-existing).
+
 ## 2026-10-04 — §DS.2: the carved cliffs (prompt 22)
 - **The kind:** `Ruins.Kind.CARVED_CLIFFS`, "Carved cliffs" (`data/ruins.json` → `styles.carved_cliffs`, unmarked), placed by Monuments' sites pass.
   - **New gate words:** `sandstone` (the rock under it) and `canyon_wall` (`Monuments.canyon_at`: the ravine layer within 400 m, its walls 8 m deep or more, a slot canyon where it pinches in dry sandstone).

@@ -32,6 +32,9 @@ extends SceneTree
 ## to the gate tower, and along the wall from a stretch of it.
 ## SITES=carved_cliffs the nearest carved cliffs (§DS.2): from the canyon
 ## floor along it, looking at the facades.
+## SITES=cliff_dwelling the nearest cliff dwelling (§DS.4): from its plaza's
+## approach, 26 m out and to one side (clear of the delve's way out),
+## looking into the alcove (SEED=8 has one).
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -178,6 +181,8 @@ func _run() -> void:
 			kinds.append("long_wall")
 		if only.has("carved_cliffs"):
 			kinds.append("carved_cliffs")
+		if only.has("cliff_dwelling"):
+			kinds.append("cliff_dwelling")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -294,6 +299,18 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"cliff_dwelling":
+				var cdw := {}
+				var cdd := INF
+				for cs in Monuments.all_sites(world.planet, "cliff_dwelling"):
+					if CubeSphere.surface_distance_m(cs.dir, camp_d) < cdd:
+						cdd = CubeSphere.surface_distance_m(cs.dir, camp_d)
+						cdw = cs
+				if cdw.is_empty():
+					lines.append("-- cliff_dwelling: none on this world")
+					continue
+				sites.append({"name": "cliff_dwelling", "dir": Ruins.local_dir(cdw, float(cdw.alcove_w) * 0.35, float(cdw.alcove_d) + 26.0), "look": Ruins.local_dir(cdw, 0.0, 4.0),
+					"note": "the cliff dwelling: %d rooms in its alcove" % int(cdw.room_count)})
 			"carved_cliffs":
 				var cb := {}
 				var cbd := INF
