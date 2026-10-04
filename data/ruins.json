@@ -1238,7 +1238,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "none",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DZ] A whole temple cut out of the hill from the top down, free in a court of living rock; found from above (the road comes along the rim and the ground opens at your feet, \u00a7BB's reveal inverted); the halls in the court walls are the delve as they stand (\u00a7CJ). Different from carved_cliffs (\u00a7DS.2), whose facades are cut into a face."
+   "_help": "[built \u2014 design \u00a7DZ: Monuments._hewn_temple, HewnTemple.layout, RuinBuilder._hewn_temple] A whole temple cut out of the hill from the top down, free in a court of living rock; found from above (the ground opens at your feet at the rim, \u00a7BB's reveal inverted; its top stays under the rim); the halls in the court's back wall are the delve as they stand (\u00a7CJ), three a level apart, the top one the heart, a stair out to the hilltop. Different from carved_cliffs (\u00a7DS.2), whose facades are cut into a face. 'basalt' loosens to any hard rock on a world where no basalt land passes (the site's 'loose'); the pit is set 20 m back from the escarpment's face and its rim may fall up to 12 m (the hillside it is cut into)."
   }
  },
  "overgrowth": {

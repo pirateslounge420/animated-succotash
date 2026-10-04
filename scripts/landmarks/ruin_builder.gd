@@ -256,6 +256,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._terraced_pueblo()
 		Ruins.Kind.STONE_CIRCLE:
 			b._stone_circle()
+		Ruins.Kind.HEWN_TEMPLE:
+			b._hewn_temple()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4481,7 +4483,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -5607,3 +5609,329 @@ func _stone_circle() -> void:
 			_pbox(Transform3D(Basis(Vector3.UP, -am + PI * 0.5), Vector3(c.x, gy + hh * 0.5 - 0.15, c.y)), Vector3(seg_l, hh + 0.3, float(band[1])), band[3], 0.6)
 	if Delves.has_delve(site):
 		_delve_build()
+
+
+# --- The hewn temple (design 3 Oct §DZ) ----------------------------------------------
+
+## Basalt, the living rock: grey-black, a little warm in the sun.
+const BASALT := [Color(0.29, 0.28, 0.29), Color(0.25, 0.25, 0.28), Color(0.32, 0.3, 0.29), Color(0.23, 0.23, 0.27), Color(0.3, 0.28, 0.27)]
+const BASALT_RELIEF := Color(0.36, 0.34, 0.32)
+
+
+## The hewn temple (Monuments._hewn_temple, HewnTemple.layout): the pit's
+## floor and its walls of living rock (5 m thick, so they cover the ground's
+## quads left out round it, their tops at the rim), the stair cut down the
+## front wall, and standing free in the middle the temple: its plinth with
+## elephants round the base, the pillared hall, the shrine with its
+## stepped tower, the porch, the gatehouse before it and the two pillars;
+## reliefs on its faces. In the back wall the halls (the delve), their
+## fronts on the court: the first's open porch, dark windows for the two
+## above. A creeper down the walls here and there.
+func _hewn_temple() -> void:
+	palette = BASALT
+	var w: float = site.pit_w
+	var l: float = site.pit_l
+	var lay: Dictionary = Delves.layout(map, site)
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var yf := float(site.floor_y) - off
+	var rim := float(site.rim_y) - off
+	_lod_m = Vector2(w, l).length() * 0.5 + LOD_M
+	_lit_per_pixel = true
+	# The floor.
+	var nx := int(ceil(w / 12.0))
+	var nz := int(ceil(l / 12.0))
+	for i in nx:
+		for j in nz:
+			var fx := -w * 0.5 + (i + 0.5) * w / nx
+			var fz := -l * 0.5 + (j + 0.5) * l / nz
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(fx, yf - 0.5, fz)), Vector3(w / nx + 0.02, 1.0, l / nz + 0.02), BASALT[(i + j) % BASALT.size()].darkened(0.04), 0.15)
+	# The walls; the back wall opened where the halls come through it.
+	var zf := l * 0.5
+	var cuts: Array = []
+	for i in 3:
+		var hx: float = HewnTemple.HALL_X[i]
+		var y0 := yf + i * HewnTemple.HALL_RISE
+		var hh := HewnTemple.HEART_H if i == 2 else HewnTemple.HALL_H
+		var half := HewnTemple.HALL_HALF if i == 0 else HewnTemple.HALL_HALF + Delves.WALL
+		cuts.append([hx - half, hx + half, y0 - (1.2 if i == 0 else Delves.WALL), y0 + hh + Delves.SLAB + 0.05])
+	_pit_wall(Vector2(-w * 0.5, -zf), Vector2(w * 0.5, -zf), Vector2(0.0, -1.0), [])
+	_pit_wall(Vector2(-w * 0.5, zf), Vector2(w * 0.5, zf), Vector2(0.0, 1.0), cuts)
+	_pit_wall(Vector2(-w * 0.5, -zf - 5.0), Vector2(-w * 0.5, zf + 5.0), Vector2(-1.0, 0.0), [])
+	_pit_wall(Vector2(w * 0.5, -zf - 5.0), Vector2(w * 0.5, zf + 5.0), Vector2(1.0, 0.0), [])
+	# The stair down the front wall, from the rim at its -x end.
+	var ssx := float(site.get("stair_sx", -1.0))
+	var sx0 := ssx * (w * 0.5 - 3.0)
+	var gtop := ground(sx0, -zf - 1.0)
+	var rise := gtop - yf
+	var run := rise / HewnTemple.COURT_STAIR
+	var steps := maxi(4, int(ceil(rise / 0.3)))
+	var sz := -zf + 1.2
+	solid = false
+	for k in steps:
+		var xa := sx0 - ssx * run * k / steps
+		var xb := sx0 - ssx * run * (k + 1) / steps
+		var top := gtop - rise * k / steps
+		_pbox(Transform3D(Basis.IDENTITY, Vector3((xa + xb) * 0.5, (yf - 0.5 + top) * 0.5, sz)), Vector3(absf(xb - xa) + 0.02, top - yf + 0.5, 2.4), BASALT[k % BASALT.size()], 0.1)
+	solid = true
+	_dramp(Vector3(sx0 - ssx * run, yf, sz), Vector3(sx0, gtop, sz), 2.4)
+	# The temple, standing free.
+	_hewn_shrine(yf, rim)
+	# The halls' fronts on the court.
+	var p0 := Vector2(HewnTemple.HALL_X[0], zf)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(p0.x + sx * 1.4, yf + HewnTemple.HALL_H * 0.5, zf - 0.6)), Vector3(0.6, HewnTemple.HALL_H, 0.6), BASALT[2], 0.1)
+	for i in [1, 2]:
+		var hx: float = HewnTemple.HALL_X[i]
+		var y0: float = yf + i * HewnTemple.HALL_RISE
+		for px: float in [-2.9, -0.95, 0.95, 2.9]:
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(hx + px, y0 + 2.0, zf - 0.08)), Vector3(0.4, 4.0, 0.2), BASALT[2], 0.05)
+		for vx: float in [-1.925, 0.0, 1.925]:
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(hx + vx, y0 + 1.9, zf - 0.03)), Vector3(1.3 if vx == 0.0 else 1.5, 2.8, 0.06), VOID, 0.0)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(hx, y0 + 4.3, zf - 0.15)), Vector3(7.0, 0.5, 0.3), BASALT[4], 0.1)
+	# A creeper down the walls here and there (§DI).
+	for k in 10:
+		var side := k % 4
+		var t := rng.randf_range(-0.4, 0.4)
+		var at := Vector2(t * w, -zf) if side == 0 else (Vector2(t * w, zf) if side == 1 else Vector2((-0.5 if side == 2 else 0.5) * w, t * l))
+		var inward := Vector3(0.0, 0.0, 1.0) if side == 0 else (Vector3(0.0, 0.0, -1.0) if side == 1 else Vector3(1.0 if side == 2 else -1.0, 0.0, 0.0))
+		ivy(Vector3(at.x, ground(at.x, at.y) - 0.2, at.y) + inward * 0.05, inward, rng.randf_range(4.0, minf(12.0, rim - yf)))
+	# The court's old hearth (OldHearths), off to the side before the temple
+	# (away from the stair's foot).
+	_camp_spot = Vector3(ssx * w * 0.32, yf, -l * 0.3)
+	# The halls (the delve).
+	shade = 0.0
+	_delve_from = _v.size()
+	_hewn_halls(lay, off)
+	_delve_to = _v.size()
+
+
+## A wall of the pit from `a` to `b` (its inner face's line), its rock `out`
+## from there 5 m thick, from under the floor to the rim; `cuts` ([x0, x1,
+## y_lo, y_hi] along x) leave the rock out between y_lo and y_hi.
+func _pit_wall(a: Vector2, b: Vector2, out: Vector2, cuts: Array) -> void:
+	var yb := float(site.floor_y) - _delve_off - 1.0
+	var marks: Array = [0.0, 1.0]
+	var along := b - a
+	var length := along.length()
+	for ct in cuts:
+		marks.append(clampf((float(ct[0]) - a.x) / along.x, 0.0, 1.0))
+		marks.append(clampf((float(ct[1]) - a.x) / along.x, 0.0, 1.0))
+	marks.sort()
+	for m in marks.size() - 1:
+		var t0: float = marks[m]
+		var t1: float = marks[m + 1]
+		if t1 - t0 < 0.001:
+			continue
+		var seg := (t1 - t0) * length
+		var cols := maxi(1, int(ceil(seg / 4.0)))
+		for k in cols:
+			var ta := t0 + (t1 - t0) * (k + 0.5) / cols
+			var p := a + along * ta
+			var top := maxf(ground(p.x, p.y), maxf(ground(p.x + out.x * 2.5, p.y + out.y * 2.5), ground(p.x + out.x * 5.0, p.y + out.y * 5.0))) + 0.1
+			var cw := seg / cols + 0.02
+			var c := p + out * 2.5
+			var size := Vector3(cw if absf(out.y) > 0.5 else 5.0, 0.0, 5.0 if absf(out.y) > 0.5 else cw)
+			var col: Color = BASALT[rng.randi() % BASALT.size()]
+			var spans: Array = [[yb, top]]
+			for ct in cuts:
+				if p.x > float(ct[0]) and p.x < float(ct[1]):
+					spans = [[yb, float(ct[2])], [float(ct[3]), top]]
+			for sp in spans:
+				if float(sp[1]) - float(sp[0]) < 0.05:
+					continue
+				size.y = float(sp[1]) - float(sp[0])
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, (float(sp[0]) + float(sp[1])) * 0.5, c.y)), size, col, 0.12)
+
+
+## The temple in the middle of the court (its front -z), its top under the
+## rim: the plinth, its elephants, the pillared hall, the shrine and its
+## tower, the porch, the stair up, the gatehouse and the two pillars.
+func _hewn_shrine(yf: float, rim: float) -> void:
+	var tw: float = site.temple_w
+	var tl: float = site.temple_l
+	var htot := rim - yf - 1.5
+	var ph := 5.0
+	var top := yf + ph
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 0.4, 0.0)), Vector3(tw + 0.6, 0.8, tl + 0.6), BASALT[3], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + ph * 0.5, 0.0)), Vector3(tw, ph, tl), BASALT[0], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top - 0.3, 0.0)), Vector3(tw + 0.8, 0.6, tl + 0.8), BASALT[2], 0.15)
+	# The stair up its front.
+	var srun := ph / 0.7
+	var sw := 4.0
+	var steps := int(ceil(ph / 0.3))
+	solid = false
+	for k in steps:
+		var za := -tl * 0.5 - srun + srun * k / steps
+		var zb := -tl * 0.5 - srun + srun * (k + 1) / steps
+		var st := yf + ph * (k + 1) / steps
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, (yf - 0.2 + st) * 0.5, (za + zb) * 0.5)), Vector3(sw, st - yf + 0.2, zb - za + 0.02), BASALT[k % 5], 0.1)
+	solid = true
+	_dramp(Vector3(0.0, yf, -tl * 0.5 - srun), Vector3(0.0, top, -tl * 0.5), sw)
+	# The elephants round the base, facing out (none across the stair).
+	for f in 4:
+		var n := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var span := tw if f % 2 == 0 else tl
+		var count := int(span / 4.2)
+		for k in count:
+			var u := -span * 0.5 + (k + 0.5) * span / count
+			if f == 0 and absf(u) < sw * 0.5 + 1.2:
+				continue
+			var at := n * ((tl if f % 2 == 0 else tw) * 0.5) + Vector2(-n.y, n.x) * u
+			_elephant(Vector3(at.x, yf + 0.8, at.y), n)
+	# The shrine at the back, its stepped tower, and the pillared hall
+	# before it; the porch at the front.
+	var sv := tw * 0.62
+	var vz := tl * 0.5 - sv * 0.5 - 2.0
+	var wall_h := 6.0
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + wall_h * 0.5, vz)), Vector3(sv, wall_h, sv), BASALT[1], 0.1)
+	_hewn_reliefs(Vector3(0.0, top, vz), Vector2(sv, sv), wall_h)
+	var tiers := int(site.towers)
+	# (The crown and finial take the last 2 m.)
+	var tower_h := maxf(htot - ph - wall_h - 2.0, 3.0)
+	var th := tower_h / tiers
+	var y := top + wall_h
+	for k in tiers:
+		var side := sv * (0.92 - 0.6 * k / tiers)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + th * 0.5, vz)), Vector3(side, th, side), BASALT[(k + 1) % 5], 0.12)
+		# Little pavilions along each tier's edge.
+		var ps := side * 0.16
+		for cx: float in [-1.0, 0.0, 1.0]:
+			for cz: float in [-1.0, 1.0]:
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(cx * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cz * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), BASALT[2], 0.1)
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(cz * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cx * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), BASALT[2], 0.1)
+		y += th
+	# The cap: an octagonal crown and its finial.
+	var cap := sv * 0.3
+	for r: float in [0.0, PI * 0.25]:
+		_pbox(Transform3D(Basis(Vector3.UP, r), Vector3(0.0, y + 0.6, vz)), Vector3(cap, 1.2, cap), BASALT[0], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 1.6, vz)), Vector3(0.4, 0.8, 0.4), BASALT[2], 0.0)
+	# The pillared hall: its roof on pillars, dark within.
+	var hl := tl * 0.38
+	var hz := vz - sv * 0.5 - hl * 0.5
+	var hw := tw * 0.8
+	var hh := 5.0
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh * 0.5, hz)), Vector3(hw - 1.6, hh, hl - 1.6), VOID, 0.0)
+	var cols := int(hw / 2.6)
+	for k in cols + 1:
+		var px := -hw * 0.5 + 0.4 + (hw - 0.8) * k / cols
+		for pz: float in [-1.0, 1.0]:
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(px, top + hh * 0.5, hz + pz * (hl * 0.5 - 0.4))), Vector3(0.8, hh, 0.8), BASALT[2], 0.05)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 0.5, hz)), Vector3(hw + 1.0, 1.0, hl + 1.0), BASALT[3], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 1.4, hz)), Vector3(hw * 0.7, 0.8, hl * 0.7), BASALT[0], 0.15)
+	# The porch at the plinth's front, over the stair's head.
+	var pz0 := -tl * 0.5 + 4.0
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 2.0, pz0)), Vector3(6.0, 4.0, 5.0), BASALT[4], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 1.4, pz0 - 2.52)), Vector3(1.8, 2.8, 0.06), VOID, 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 4.4, pz0)), Vector3(6.8, 0.8, 5.8), BASALT[3], 0.15)
+	# The gatehouse on the court before the stair: two halves and the
+	# lintel over the way through.
+	var gz := -tl * 0.5 - srun - 9.0
+	var gh := minf(9.0, htot - 1.0)
+	for gx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(gx * 4.5, yf + gh * 0.5, gz)), Vector3(6.0, gh, 6.0), BASALT[1], 0.12)
+		_hewn_reliefs(Vector3(gx * 4.5, yf, gz), Vector2(6.0, 6.0), gh * 0.6)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 4.5 + (gh - 4.5) * 0.5, gz)), Vector3(3.2, gh - 4.5, 6.0), BASALT[3], 0.12)
+	# The two pillars, standing free either side of the hall.
+	var pil_h := minf(ph + 10.0, htot - 1.0)
+	for px: float in [-1.0, 1.0]:
+		var c := Vector3(px * (tw * 0.5 + 4.0), yf, hz)
+		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, 0.6, 0.0)), Vector3(2.2, 1.2, 2.2), BASALT[3], 0.2)
+		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, pil_h * 0.5, 0.0)), Vector3(1.3, pil_h, 1.3), BASALT[2], 0.1)
+		_pbox(Transform3D(Basis(Vector3.UP, PI * 0.25), c + Vector3(0.0, pil_h + 0.5, 0.0)), Vector3(1.9, 1.0, 1.9), BASALT[0], 0.1)
+
+
+## An elephant in the round from the plinth's face at `p` (its feet), its
+## back in the rock, facing `n`: body, head, ears, trunk down, tusks, legs.
+func _elephant(p: Vector3, n: Vector2) -> void:
+	var bs := Basis(Vector3.UP, atan2(n.x, n.y))
+	var col := BASALT_RELIEF.darkened(rng.randf_range(0.0, 0.08))
+	var parts := [[Vector3(0.0, 1.8, 0.4), Vector3(2.0, 2.0, 1.4)], [Vector3(0.0, 2.4, 1.4), Vector3(1.5, 1.4, 1.0)],
+		[Vector3(-0.95, 2.4, 1.2), Vector3(0.3, 1.3, 1.0)], [Vector3(0.95, 2.4, 1.2), Vector3(0.3, 1.3, 1.0)],
+		[Vector3(0.0, 1.2, 2.0), Vector3(0.45, 1.8, 0.45)], [Vector3(-0.55, 0.55, 1.3), Vector3(0.55, 1.1, 0.55)],
+		[Vector3(0.55, 0.55, 1.3), Vector3(0.55, 1.1, 0.55)]]
+	for pt in parts:
+		_pbox(Transform3D(bs, p + bs * (pt[0] as Vector3)), pt[1], col, 0.1)
+	for tx: float in [-0.35, 0.35]:
+		_pbox(Transform3D(bs * Basis(Vector3.RIGHT, 0.5), p + bs * Vector3(tx, 1.75, 2.15)), Vector3(0.14, 0.14, 0.8), BASALT_RELIEF.lightened(0.25), 0.0)
+
+
+## Reliefs round a block whose foot's middle is `c`, `size` (x, z) across:
+## on each face a frieze of dark panels, a figure standing in each (no one
+## by name, §BO), `h` up its face.
+func _hewn_reliefs(c: Vector3, size: Vector2, h: float) -> void:
+	for f in 4:
+		var n := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var span := size.x if f % 2 == 0 else size.y
+		var depth := size.y if f % 2 == 0 else size.x
+		var count := maxi(1, int(span / 2.4))
+		var bs := Basis(Vector3.UP, atan2(n.x, n.y))
+		var py := c.y + h * 0.45
+		for k in count:
+			var u := -span * 0.5 + (k + 0.5) * span / count
+			var at := Vector2(c.x, c.z) + n * (depth * 0.5) + Vector2(-n.y, n.x) * u
+			_pbox(Transform3D(bs, Vector3(at.x, py, at.y) + Vector3(n.x, 0.0, n.y) * 0.03), Vector3(1.8, minf(3.0, h * 0.7), 0.06), BASALT[3].darkened(0.35), 0.0)
+			var fig := Vector3(at.x, py - 0.4, at.y) + Vector3(n.x, 0.0, n.y) * 0.12
+			_pbox(Transform3D(bs, fig), Vector3(0.6, 1.6, 0.18), BASALT_RELIEF, 0.0)
+			_pbox(Transform3D(bs, fig + Vector3(0.0, 1.05, 0.0)), Vector3(0.42, 0.45, 0.18), BASALT_RELIEF, 0.0)
+
+
+## The halls (HewnTemple.layout): the porch, the three halls with their
+## pillars and the ribs of their vaults (cut to look like timber that was
+## never there), the stairs up through the rock between them, the seated
+## figure in the heart's apse, the way out to the hilltop.
+func _hewn_halls(lay: Dictionary, off: float) -> void:
+	var pieces: Array = lay.pieces
+	for i in pieces.size():
+		var pc: Dictionary = pieces[i]
+		var prev: Dictionary = pieces[i - 1] if i > 0 else {}
+		var nxt: Dictionary = pieces[i + 1] if i + 1 < pieces.size() else {}
+		match str(pc.kind):
+			"passage":
+				_delve_room(pc, off, [["start", 0.0, float(pc.half) - 0.05], ["end", 0.0, float(pc.half) - 0.05]])
+			"room", "heart":
+				var opens: Array = []
+				opens.append(_opening(pc, (prev.c as Vector2) + (prev.dir as Vector2) * float(prev.len), float(prev.half) if str(prev.kind) != "passage" else float(prev.half) - 0.05))
+				if not nxt.is_empty():
+					opens.append(_opening(pc, nxt.c, float(nxt.half)))
+				_delve_room(pc, off, opens)
+				_hewn_hall_dress(pc, off, str(pc.kind) == "heart")
+			"stair":
+				_delve_stair(pc, off, false, 0.0, 0.0)
+			"exit":
+				_delve_stair_open_top(pc, off, float(lay.exit_open), float(pc.y1) - off)
+
+
+## A hall's pillars (two rows, clear of the stairs' doors) and the ribs
+## under its ceiling; in the heart, the apse's narrowing and the seated
+## figure on its dais, hands in its lap.
+func _hewn_hall_dress(pc: Dictionary, off: float, heart: bool) -> void:
+	var y := float(pc.y0) - off
+	var h := float(pc.h)
+	var c: Vector2 = pc.c
+	var ln := float(pc.len)
+	var zs := float(site.pit_l) * 0.5 + HewnTemple.STAIR_Z
+	var z := c.y + 2.0
+	while z < c.y + ln - (4.0 if heart else 1.5):
+		if absf(z - zs) > 1.6:
+			for sx: float in [-1.9, 1.9]:
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x + sx, y + h * 0.5, z)), Vector3(0.6, h, 0.6), BASALT[2], 0.0)
+		z += 3.0
+	var r := c.y + 0.6
+	while r < c.y + ln - 0.3:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.14, r)), Vector3(2.0 * float(pc.half), 0.28, 0.3), BASALT[4].darkened(0.1), 0.0)
+		r += 1.1
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.2, c.y + ln * 0.5)), Vector3(0.4, 0.4, ln), BASALT[4].darkened(0.1), 0.0)
+	if not heart:
+		return
+	var ze := c.y + ln
+	# The apse narrows on its left; the way out leaves on its right.
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x - 2.4, y + h * 0.5, ze - 1.6)), Vector3(1.2, h, 3.2), BASALT[1], 0.0)
+	var fc := BASALT_RELIEF.lightened(0.05)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 0.25, ze - 1.2)), Vector3(2.2, 0.5, 1.6), BASALT[3], 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.5, ze - 0.35)), Vector3(1.8, 2.6, 0.2), BASALT[0], 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 0.78, ze - 1.3)), Vector3(1.6, 0.55, 1.1), fc, 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.6, ze - 1.45)), Vector3(0.85, 1.1, 0.55), fc, 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 2.42, ze - 1.45)), Vector3(0.48, 0.55, 0.48), fc, 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.12, ze - 1.75)), Vector3(0.6, 0.18, 0.35), fc.lightened(0.05), 0.0)

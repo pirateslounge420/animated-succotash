@@ -46,9 +46,18 @@ class_name Monuments
 ##                     the tower house, the broch);
 ##   hot               (never) the cell over HOT_C;
 ##   coast_or_moor     the sea within COAST_M, or a moor (tundra or bog).
+##   basalt            the rock under it is basalt (a world with none of its
+##                     land on basalt loosens this to any hard rock: granite,
+##                     basalt, limestone or sandstone; the site says so in
+##                     "loose", the tally in "loosened");
+##   escarpment        on an escarpment's plateau, its face within
+##                     ESCARP_NEAR_M and ESCARP_FACE_M high or more
+##                     (escarp_top);
+##   dry_plateau       the ground's moisture under DRY_PLATEAU and rolling
+##                     under FLAT_LOOSE over 60 m.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -68,6 +77,12 @@ const DRY := 0.4
 const COOL_C := 14.0
 const COOL_WET := 0.5
 const HOT_C := 22.0
+## "escarpment" and "dry_plateau" (the hewn temple, §DZ).
+const ESCARP_NEAR_M := 300.0
+const ESCARP_FACE_M := 4.0
+const DRY_PLATEAU := 0.55
+## The hard rocks "basalt" loosens to on a world with no basalt land.
+const HARD_ROCK := [PlanetData.Rock.GRANITE, PlanetData.Rock.BASALT_VOLCANIC, PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
 ## over 60 m in the dry country, so a little looser than flat_lowland's.
 const FLAT_LOOSE := 0.1
@@ -100,7 +115,7 @@ static func key_of(kind: int) -> String:
 
 
 ## Why `p` can't hold a `kind_key` monument ("" if it can).
-static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
+static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = []) -> String:
 	var cell := map.cell_at(p)
 	var sp: Dictionary = entry(kind_key).get("spawn", {})
 	# A floodplain city stands in a river's cell (the cells are ~10 km): only
@@ -165,12 +180,35 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "not_cool_wet"
 	if needs.has("coast_or_moor") and not (bkey in ["TUNDRA", "BOG"]) and is_inf(sea_bearing(map, p)):
 		return "inland"
+	if needs.has("basalt") and not (map.rock[cell] == PlanetData.Rock.BASALT_VOLCANIC or (loose.has("basalt") and map.rock[cell] in HARD_ROCK)):
+		return "rock"
+	if needs.has("dry_plateau") and (map.sample(map.moisture, p) >= DRY_PLATEAU or slope(map, p, 60.0) > FLAT_LOOSE):
+		return "not_dry_plateau"
+	if needs.has("escarpment") and escarp_top(map, p).is_empty():
+		return "no_escarpment"
 	if needs.has("desert_river_floodplain"):
 		var rv := river_m(map, p)
 		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0
 		if e > LOWLAND_M or not by_water or TerrainChunk._standing_water(map, p).x > e - 0.3:
 			return "no_floodplain"
 	return ""
+
+
+## The escarpment `p` stands above (§DZ): on its plateau (the + side of
+## the escarpment's line), its face within ESCARP_NEAR_M and at least
+## ESCARP_FACE_M high: {"face", "toward" (the bearing from the face into
+## the plateau), "h"}; {} where there's none.
+static func escarp_top(map: PlanetData, p: Vector3) -> Dictionary:
+	if Nests.terrain != map.terrain:
+		return {}
+	if map.terrain.line_mask(p, "escarp") < 0.5 or map.terrain.line_noise(p, "escarp") <= 0.0:
+		return {}
+	var cl := Nests._cliff_at_escarp(p)
+	if cl.is_empty() or float(cl.h) < ESCARP_FACE_M:
+		return {}
+	if CubeSphere.surface_distance_m(cl.face, p) > ESCARP_NEAR_M:
+		return {}
+	return {"face": cl.face, "toward": cl.toward, "h": cl.h}
 
 
 ## An alcove's face near `p` (§DS.4): a sandstone escarpment face (the
@@ -346,54 +384,20 @@ static func _pass(map: PlanetData) -> void:
 	_sites.clear()
 	report = {}
 	RealmMap.warm(int(map.terrain.world_seed))
-	var n := Ruins.cells_per_face()
 	for kind_key in KINDS:
 		var E := entry(kind_key)
 		var rep := {"cells": 0, "passed": 0, "rolled": 0, "kept": 0, "why": {}}
 		report[kind_key] = rep
 		if E.is_empty():
 			continue
-		var biomes: Array = (E.get("spawn", {}) as Dictionary).get("biomes", [])
-		var chance := float(E.get("chance", 0.3))
 		var cap := int(E.get("per_world_max", 2))
-		var cand: Array = []
-		for f in 6:
-			for i in n:
-				for j in n:
-					var c := Vector3i(f, i, j)
-					if _sites.has(c) or not CragFortress.site_in(map, c).is_empty():
-						continue
-					rep.cells += 1
-					var center := CreatureSpawner._cell_point(c, n, Ruins.SALT)
-					if not biomes.is_empty() and not biomes.has(BiomeTemplates.KEYS[map.biome[map.cell_at(center)]]):
-						continue
-					var rng := RandomNumberGenerator.new()
-					rng.seed = hash([Vector4i(-2, c.x, c.y, c.z), kind_key])
-					var best := {}
-					var best_s := INF
-					var why := ""
-					for t in 12:
-						var p := CreatureSpawner._offset(center, rng.randf() * TAU, sqrt(rng.randf()) * Ruins.CELL_M * 0.35)
-						var g := gate(map, p, kind_key)
-						if g != "":
-							why = g
-							continue
-						var sl := slope(map, p, 60.0)
-						if sl < best_s:
-							best_s = sl
-							best = {"dir": p}
-					if best.is_empty():
-						rep.why[why] = int(rep.why.get(why, 0)) + 1
-						continue
-					rep.passed += 1
-					var roll := rng.randf()
-					var won := roll < chance
-					if won:
-						rep.rolled += 1
-					# The losers wait in line: where the land exists and no
-					# cell won its roll, the best of them stands (§DR.5: one
-					# or two per world where the realm exists).
-					cand.append([roll + best_s + (0.0 if won else 10.0), c, best, rng.randi()])
+		var cand := _candidates(map, kind_key, rep, [])
+		# A world with no basalt land at all (§DZ): the hard rocks will do.
+		var loose: Array = []
+		if cand.is_empty() and ((E.get("spawn", {}) as Dictionary).get("needs", []) as Array).has("basalt"):
+			loose = ["basalt"]
+			rep.loosened = "basalt"
+			cand = _candidates(map, kind_key, rep, loose)
 		cand.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
 		var kept := 0
 		for k in cand.size():
@@ -402,6 +406,8 @@ static func _pass(map: PlanetData) -> void:
 			var c: Vector3i = cand[k][1]
 			var best: Dictionary = cand[k][2]
 			var site := make_site(map, kind_key, c, best.dir, int(cand[k][3]))
+			if not site.is_empty() and not loose.is_empty():
+				site.loose = loose
 			if site.is_empty():
 				rep.why["short"] = int(rep.why.get("short", 0)) + 1
 				continue
@@ -410,6 +416,54 @@ static func _pass(map: PlanetData) -> void:
 			_sites[c] = site
 			kept += 1
 		rep.kept = kept
+
+
+## The cells that may hold `kind_key` (the sites pass): [[order, cell, best
+## spot, seed]...], their tally in `rep`.
+static func _candidates(map: PlanetData, kind_key: String, rep: Dictionary, loose: Array) -> Array:
+	var E := entry(kind_key)
+	var n := Ruins.cells_per_face()
+	var biomes: Array = (E.get("spawn", {}) as Dictionary).get("biomes", [])
+	var chance := float(E.get("chance", 0.3))
+	var cand: Array = []
+	for f in 6:
+		for i in n:
+			for j in n:
+				var c := Vector3i(f, i, j)
+				if _sites.has(c) or not CragFortress.site_in(map, c).is_empty():
+					continue
+				rep.cells += 1
+				var center := CreatureSpawner._cell_point(c, n, Ruins.SALT)
+				if not biomes.is_empty() and not biomes.has(BiomeTemplates.KEYS[map.biome[map.cell_at(center)]]):
+					continue
+				var rng := RandomNumberGenerator.new()
+				rng.seed = hash([Vector4i(-2, c.x, c.y, c.z), kind_key])
+				var best := {}
+				var best_s := INF
+				var why := ""
+				for t in 12:
+					var p := CreatureSpawner._offset(center, rng.randf() * TAU, sqrt(rng.randf()) * Ruins.CELL_M * 0.35)
+					var g := gate(map, p, kind_key, loose)
+					if g != "":
+						why = g
+						continue
+					var sl := slope(map, p, 60.0)
+					if sl < best_s:
+						best_s = sl
+						best = {"dir": p}
+				if best.is_empty():
+					rep.why[why] = int(rep.why.get(why, 0)) + 1
+					continue
+				rep.passed += 1
+				var roll := rng.randf()
+				var won := roll < chance
+				if won:
+					rep.rolled += 1
+				# The losers wait in line: where the land exists and no
+				# cell won its roll, the best of them stands (§DR.5: one
+				# or two per world where the realm exists).
+				cand.append([roll + best_s + (0.0 if won else 10.0), c, best, rng.randi()])
+	return cand
 
 
 ## A kept site's measurements from its seed (Ruins.find's shape).
@@ -475,6 +529,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 				return {}
 		"stone_circle":
 			_stone_circle(E, d, rng, site)
+		"hewn_temple":
+			if _hewn_temple(map, E, d, rng, site).is_empty():
+				return {}
 	return site
 
 
@@ -966,3 +1023,88 @@ static func _stone_circle(E: Dictionary, d: Vector3, rng: RandomNumberGenerator,
 	site.footprint_m = r + 14.0
 	site.clear = [[d, r + 14.0]]
 
+
+
+## The hewn temple (§DZ): a pit pit_w by pit_l (pit_m, across the face and
+## into the plateau) cut depth_m into the plateau behind the escarpment's
+## face, its front wall 8 m back from the edge, its frame on the ground's
+## grid with +z into the plateau (the halls in the back wall go that way,
+## under the hill). floor_y is the pit's floor (from the frame's base_e,
+## Delves.frame), rim_y the lowest of its rim; stair_sx the end of the
+## front wall the stair down starts from. {} where the plateau is too
+## broken for it or too thin over the halls. Fills `site` in place.
+const HEWN_HALLS_X := 14.0
+const HEWN_REAR_M := 36.0
+## The pit's front wall this far back from the escarpment's face, and how
+## much its rim may fall from its high side to its low.
+const HEWN_BACK_M := 20.0
+const HEWN_RIM_M := 12.0
+static func _hewn_temple(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var top := escarp_top(map, d)
+	if top.is_empty():
+		return {}
+	var pm: Array = E.get("pit_m", [60, 120])
+	var across := rng.randf_range(float(pm[0]), float(pm[1]))
+	var depth := rng.randf_range(18.0, 24.0)
+	var pit_l := across
+	var pit_w := maxf(across * rng.randf_range(0.7, 0.85), depth / HewnTemple.COURT_STAIR + 10.0)
+	var c := CreatureSpawner._offset(top.face, float(top.toward), pit_l * 0.5 + HEWN_BACK_M)
+	site.dir = c
+	site.heading = Delves.grid_heading(c, float(top.toward) - PI)
+	site.pit_w = pit_w
+	site.pit_l = pit_l
+	var fr := Delves.frame(map, site)
+	# The rim: its lowest point and how broken it is.
+	var lo := INF
+	var hi := -INF
+	for k in 40:
+		var t := k / 40.0
+		var q := Vector2.ZERO
+		match k % 4:
+			0:
+				q = Vector2(lerpf(-pit_w, pit_w, t) * 0.5, -pit_l * 0.5)
+			1:
+				q = Vector2(lerpf(-pit_w, pit_w, t) * 0.5, pit_l * 0.5)
+			2:
+				q = Vector2(-pit_w * 0.5, lerpf(-pit_l, pit_l, t) * 0.5)
+			_:
+				q = Vector2(pit_w * 0.5, lerpf(-pit_l, pit_l, t) * 0.5)
+		var g := Delves._g0(map, fr, q.x, q.y)
+		lo = minf(lo, g)
+		hi = maxf(hi, g)
+		var qd := Delves.to_dir(fr, q.x, q.y)
+		if map.water[map.cell_at(qd)] != PlanetData.Water.NONE:
+			return {}
+	# A rim that falls a little toward the edge is the hillside the pit is
+	# cut into (deeper on its high side); a broken one isn't.
+	if hi - lo > HEWN_RIM_M:
+		return {}
+	# The hill over the halls (HewnTemple.layout) thick enough: the top
+	# hall's roof under the ground with cover to spare.
+	var over := INF
+	for xi in 7:
+		for zi in 7:
+			var x := lerpf(-HEWN_HALLS_X - 4.0, HEWN_HALLS_X + 4.0, xi / 6.0)
+			var z := pit_l * 0.5 + lerpf(0.0, HEWN_REAR_M, zi / 6.0)
+			over = minf(over, Delves._g0(map, fr, x, z))
+	var need := HewnTemple.TOP_ROOF + Delves.COVER_M
+	depth = maxf(depth, need - (over - lo))
+	if depth > 28.0:
+		return {}
+	site.depth_m = depth
+	site.rim_y = lo
+	site.floor_y = lo - depth
+	# The stair down the front wall starts at its lower end (stair_sx: the
+	# -x end or the +x); the pit wide enough for its run.
+	var gl := Delves._g0(map, fr, -pit_w * 0.5 + 3.0, -pit_l * 0.5 - 1.0)
+	var gr := Delves._g0(map, fr, pit_w * 0.5 - 3.0, -pit_l * 0.5 - 1.0)
+	site.stair_sx = -1.0 if gl <= gr else 1.0
+	var run := (minf(gl, gr) - float(site.floor_y)) / HewnTemple.COURT_STAIR
+	if run + 8.0 > pit_w:
+		return {}
+	site.temple_w = pit_w * 0.42
+	site.temple_l = pit_l * 0.55
+	site.towers = rng.randi_range(5, 7)
+	site.footprint_m = Vector2(pit_w, pit_l).length() * 0.5 + HEWN_REAR_M
+	site.clear = [[c, Vector2(pit_w, pit_l).length() * 0.5 + 5.0]]
+	return site

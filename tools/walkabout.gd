@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=hewn_temple the nearest hewn temple (§DZ): on the rim of its pit
+## at the front, looking down at the temple (SEED=7731 has one).
 ## SITES=northern the nearest tower house and the nearest broch (§DS): the
 ## keep from beyond its barmkin's gate, the broch from before its door with
 ## the souterrain's mouth to the left.
@@ -204,6 +206,8 @@ func _run() -> void:
 			kinds.append("stone_circle")
 		if only.has("northern"):
 			kinds.append("northern")
+		if only.has("hewn_temple"):
+			kinds.append("hewn_temple")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -320,6 +324,14 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"hewn_temple":
+				var hts: Array = Monuments.all_sites(world.planet, "hewn_temple")
+				if hts.is_empty():
+					lines.append("-- hewn_temple: none on this world")
+					continue
+				var ht0: Dictionary = hts[0]
+				sites.append({"name": "hewn_temple", "dir": Ruins.local_dir(ht0, float(ht0.pit_w) * 0.12, -float(ht0.pit_l) * 0.5 - 2.5), "look": ht0.dir, "pitch_to": ht0.dir, "pitch_add_m": float(ht0.floor_y) + 6.0,
+					"note": "the hewn temple from its rim, the pit %.0f by %.0f m and %.0f m deep" % [float(ht0.pit_w), float(ht0.pit_l), float(ht0.depth_m)]})
 			"northern":
 				var near := {}
 				var nd := {}

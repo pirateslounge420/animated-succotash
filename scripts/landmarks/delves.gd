@@ -111,6 +111,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# The terraced pueblo: down from the great kiva to the stores (§DS.5).
 	if int(site.kind) == Ruins.Kind.TERRACED_PUEBLO:
 		return true
+	# The hewn temple's halls in its court's wall (§DZ).
+	if int(site.kind) == Ruins.Kind.HEWN_TEMPLE:
+		return true
 	# The northern styles (§DS): the tower house's undercroft and pit
 	# prison under its keep, a postern out; the broch's souterrain.
 	if int(site.kind) == Ruins.Kind.CASTLE and str(site.get("style", "")) == "tower_house":
@@ -208,7 +211,14 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	_mutex.unlock()
 	if hit != null:
 		return hit
-	var lay := CragFortress.layout(map, site) if int(site.kind) == Ruins.Kind.CRAG_FORTRESS else _make_layout(map, site)
+	var lay := {}
+	if int(site.kind) == Ruins.Kind.CRAG_FORTRESS:
+		lay = CragFortress.layout(map, site)
+	elif int(site.kind) == Ruins.Kind.HEWN_TEMPLE:
+		# Its halls as they stand (design 3 Oct §DZ).
+		lay = HewnTemple.layout(map, site)
+	else:
+		lay = _make_layout(map, site)
 	# A kind whose delve has no fire-holders (delves.json fire_holders
 	# by_ruin "none": the stone circle's souterrain, §DS.7).
 	var holders: Dictionary = (Tuning.table("delves").get("fire_holders", {}) as Dictionary).get("by_ruin", {})

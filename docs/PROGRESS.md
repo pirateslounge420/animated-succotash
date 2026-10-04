@@ -4,6 +4,37 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DZ: the hewn temple (prompt 29)
+- **The kind:** `Ruins.Kind.HEWN_TEMPLE`, "Hewn temple" (`data/ruins.json` → `styles.hewn_temple`, unmarked), placed by Monuments' sites pass, at most two a world. Nobody lives there: the ground's heights don't know the pit is there, so folk couldn't walk its floor.
+  - **New gate words:** `basalt`, `escarpment` (on an escarpment's plateau, its face within 300 m and 4 m high or more) and `dry_plateau` (moisture under 0.55, rolling under 0.1).
+  - **Loosened:** no world tried has dry Indomalayan land on basalt at an escarpment. Basalt barely occurs in Indomalaya. So when no cell passes, the pass runs again with `basalt` loosened to any hard rock (granite, basalt, limestone, sandstone). The tally says `"loosened": "basalt"` and the site carries `loose`.
+- **The pit** (`Monuments._hewn_temple`):
+  - 60–120 m across and 18–24 m deep (up to 28 where the hill over the halls needs it), set 20 m back from the escarpment's face, its frame on the grid with +z into the plateau.
+  - Its rim may fall up to 12 m: it is cut into the hillside, deeper on the high side.
+  - The pit's rectangle is the delve's first hole, so the near ground leaves it out (the far ground covers it: you find it from above). Its walls of living rock are 5 m thick and stand to the rim, covering the quads left out round the edge.
+- **The temple** (`RuinBuilder._hewn_temple`, `_hewn_shrine`), standing free in the middle, its top 1.5 m under the rim:
+  - A plinth with elephants round its base facing out, a stair up the front, a porch, and a pillared hall dark within.
+  - The shrine with figure reliefs on its faces (no one by name, §BO) and a stepped tower of 5–7 tiers with little pavilions, an octagonal crown and a finial.
+  - A gatehouse on the court, and the two free-standing pillars either side.
+  - A stair is cut down the front wall from its lower corner, and creepers hang down the walls (§DI).
+- **The halls, the delve as they stand** (`HewnTemple.layout`, climbing like the crag fortress's):
+  - The porch through the back wall into the first hall (its old hearth), then a stair up through the rock to the second, a level up, and another to the third.
+  - The third is the longest: the heart, with its hearth ring and an apse with a seated figure on a dais, hands in its lap.
+  - From the heart a stair goes up to the hilltop: the way out, open to the sky where it breaks the ground.
+  - Every hall has two rows of pillars and ribs under its ceiling cut like timber. From the court, the upper halls show as dark windows between pilasters.
+- **Smoke:** `open_ring`, no stack (smoke.json's §DT–§DZ help now says this one is wired).
+- **Check:** `tools/hewn_temple_check.gd`, 0 fails on 7731.
+  - 7731: one at 8.9°S 80.8°E in savanna on granite (loosened), the pit 74 by 96 m and 22.7 m deep. Its halls are passage, room, stair, room, stair, heart, exit, the way out 13 m up to the hilltop.
+  - Every hall and stair is under the hill with cover to spare, and the temple's top is 1.5 m under the rim. 36,645 triangles against the castle's 78,835.
+  - Seed 2 has one too. Seeds 8 and 5 have none: no dry Indomalayan escarpment at all.
+  - The stone circle, long wall and delve checks still pass after the sites pass was split into `_candidates`.
+- **Walkabout** (`SEED=7731 SITES=hewn_temple HOURS=10`, harness frame §CG): from the front rim, looking down into the pit. The walls of living rock, sunlit on the far side; the temple below in the pit's navy shade, its pillared hall, a free pillar and the tower.
+- **Flags:**
+  - The basalt loosening is a call for Mike: the real thing wants basalt, and our Indomalaya has almost none.
+  - Creatures' and roads' heights come from the ground, which doesn't know the pit. A beast could walk over the pit in the air, and a road could cross it. No road is routed to the rim yet (§DM.5 isn't built).
+  - The upper halls' windows are dark panels: you can't fall out of them, and you can't see out.
+  - The lichen on the towers isn't separate from §DI's moss.
+
 ## 2026-10-04 — §DS: the tower house and the broch (prompt 28)
 - **Two styles of kinds we have,** picked where the castle and the tower already stand (`Ruins._northern_style`, `data/ruins.json` → `styles.tower_house` / `styles.broch`, both unmarked). Each passes its spawn gate (Monuments.gate: palearctic, its biomes) and then its own seeded `chance` roll (0.5).
   - **New gate words:** `cool_wet` (the cell under 14 °C and the ground's moisture 0.5 or more), `hot` (never: over 22 °C) and `coast_or_moor` (the sea within 360 m, or tundra or bog).
