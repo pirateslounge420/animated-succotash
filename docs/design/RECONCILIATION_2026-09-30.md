@@ -2805,3 +2805,83 @@ its own pass) → **§DB the flare** → **§DD the two nights and the year** �
 the residents' sounds, the ghost) → **§DF the senses** → **§DJ–§DL** the hidden places, the
 shrine and its scroll, the tomes. **§DH waits for Mike's calls.** Where §DA meets §CV (smoke) and
 §CZ (the fire), the built thing stands and §DA adds to it.
+
+## DM. The road is the stage: it never leads where you can't follow, it widens toward the ruin, and the things on it have lives — LOCKED (3 Oct, 18:30–19:20, Mike)
+
+Mike, from play: *"when I was using the road before, it felt really thin, it got really thin,
+and then like went up a hill, then I lost it, and I couldn't even go over the hill because it
+was unclimbable, so that needs to be fixed"*; *"that's since where a lot of the players are going
+to be doing some of their moving"*; *"I don't really like the way that the hyenas and stuff be
+moving around the player. It just feels kind of broken right now, and I want them to be more
+like doing their own thing. It gets kind of annoying whenever they're just following you and
+they're just howling"*; *"I want everything to have more of a personality. So maybe instead of a
+bunch of generic critters, we can start making some unique characters that you might see along
+the path."* Also from this talk (Mike): the real clock runs while the game is closed; a camp you
+leave with a thin woodpile can be embers, then fully cold, when you come back; fire lasts about
+as long as a real log burns. Builds on §BC, §BF, §BY, §CY, §DF, §DI, §DJ. Supersedes §BY's
+"thin and lost" only where a road would otherwise lead onto ground the player cannot climb.
+Data: `roads.json → network.hard_max_grade`, `grades`, `holders`, `holloway`, `approach`;
+`creatures.json` Spotted hyena `pack` (notice, fear of the torch); `uniques.json → road_regulars`
+(cast open). Not built.
+
+1. **The road can never lead you where you can't follow.** The route is a least-cost path
+   (what `RoadNetwork._route` already is) but the grade cap becomes HARD: no step of a road may
+   exceed `hard_max_grade` (0.30, well under the player's `walk_max_deg` 45° ≈ grade 1.0, and
+   under the Tobler knee), and `max_grade` 0.18 stays the soft cost that makes it switchback.
+   Where the lattice (120 m) hides a ravine between samples, the tread is checked on the fine
+   terrain after routing and a failing stretch re-routed or cut into the hill (3). A road that
+   cannot be routed under the hard cap is not built (the camp goes in `unreached`, as now).
+2. **Thin is a signal, not a failure.** The road has three grades of surface and it WIDENS
+   toward what it leads to, like a river toward its mouth: `trodden` (bare line worn through
+   the grass, 0.8–1.4 m, far out), `track` (packed earth with ruts, 1.6–2.6 m, the middle),
+   `kerbed` (edging stones set along both sides, 2.6–3.6 m, the last 400–800 m before a ruin or
+   a people's camp; the Roman-road look). The grade is by distance along the link to its
+   nearer end node; a link between two ruins is kerbed at both ends and trodden in the middle.
+   §BY's vanishings keep happening, but only on `trodden` stretches, and the holders (4) mark
+   every one.
+3. **Where it climbs, it cuts in: holloways.** On any stretch steeper than `max_grade` the
+   road is sunk `holloway.depth_m` (0.6–2.0, deeper the steeper and the older) into the slope,
+   with earth banks either side, roots showing in the banks, and the bend trees (§AG 7) leaning
+   in to meet overhead. A holloway is the corridor shot (LOOK_REFERENCE R-walls) given for free,
+   and its banks are what make a hill road legible from below.
+4. **The line is held by what outlasts the surface.** Even where the grass has eaten the
+   tread, the road's line is readable: a cairn or standing stone at every bend and every
+   pickup (§BY's tells, now guaranteed at each vanish end, not a share), a milestone every
+   `holders.milestone_every_m` (a squat waist-high stone, one notch per mile from the node) on
+   `track` and `kerbed`, and an AVENUE (a double row of one planted species, not the biome's
+   own, `holders.avenue_within_m` of a node) on the kerbed approach. The avenue trees are
+   taller and older than the wild around them.
+5. **The approach to a ruin is the epic part.** The last `approach.straight_m` (300–600) of
+   any road into a ruin or shrine runs STRAIGHT at it, kerbed, down an avenue, so the ruin is
+   first seen as a pale blue silhouette (distance light, R-distance) at the far end of a
+   corridor and grows for minutes. The router gets the end node's "front" (its apron side,
+   §CJ) and must enter from it. Music drops out on the approach (§DI's residents' sounds take
+   over).
+6. **Hyenas, and every pack, have a life that isn't you.** The `close_in` state that rings the
+   player in slots and follows is CUT for ambient. A pack: sleeps at the den by day; at dusk
+   patrols its own range along its own paths (desire lines, §BY, so you can read where a clan
+   walks); notices you from `notice_m` but a lit torch is a hard edge it will not cross
+   (`pack.fear_of_fire_m`, 12 m): it hangs at the edge of your light, eyes glinting (the §DF
+   glint), one member whoops once to the clan, then they go back to what they were doing. They
+   follow only if you are UNLIT in the dark, and then as §DF–§DH's dark things do. Howls are a
+   clan talking to itself and to the next clan, on their own clock, not a response to you: the
+   howl timer no longer resets on noticing the player. You become something they notice, not
+   something they orbit.
+7. **Road regulars: a cast of one-offs, each with one habit, one stretch, one hour.** Instead
+   of generic travellers alone (§BF stays as the background), a handful of named one-of-a-kind
+   figures on the shared rig (§0, uniques.json rules), each with ONE habit tied to the real
+   clock, so you learn them like neighbours: Mike liked, as starters, the pilgrim who walks the
+   shrine road at dawn; the old one always sat on the same milestone; a dog that falls in beside
+   you and turns back at the camp's edge. Mute (§BF) except as §DJ allows; the habit is the
+   personality. **The cast itself is OPEN** — Mike and Claude build it together next; nothing
+   beyond the three starters is locked.
+8. **The woodpile is the hourglass (from this talk, restating the clock).** The real clock
+   runs while the game is closed (§CW). Fuel burns at real-log rates (a hardwood log 1–2 real
+   hours; a stacked pile of ~40 holds a hearth two real days alone; gatherers top it up by
+   day). A camp left with a thin pile and no gatherers goes to embers, then fully cold, and
+   can be relit by §CN's rule. Embers hold about a real night, like a fire banked under ash.
+   §DE (waking at a hearth) is the guard: you never resume torchless in the woods.
+
+**Engine order:** 1 and 2 first (the bug), then 3–5 on the road's build, then 6 (the packs),
+then 4's milestones and avenues. 7 waits for the cast. 8 is a tuning pass on `fuel.json` against
+the real clock. Mike plays and reports; no screenshots asked.

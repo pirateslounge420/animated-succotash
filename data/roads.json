@@ -9,7 +9,8 @@
   "desire_lines": "Design 30 Sept night §BY (pushed 1 Oct): the LIVE road layer. Every folk trip (camps.json sim.jobs) and every pass of the player stamps wear_per_pass on the ground along a width_m strip; it shows once wear passes show_at_wear (grass thins, dirt through) and fades by fade_per_game_day when the walking stops. Paths appear where people actually walk; a camp's gather trails are the first sign it is alive.",
   "lost_and_found": "Design 30 Sept night §BY: the old roads are half-forgotten and LONG (Mike). A share of each road (vanish_share) is stretches vanish_len_m long where the trail all but disappears under the understory (overgrown_in_vanish), between clear stretches clear_len_m long; the pickup is marked by a tell within tell_within_m of where the trail resumes (pickup_tells). Losing and refinding the path is the ambient game.",
   "opening_road": "Design 30 Sept night §BX (pushed 1 Oct), amended by §CY (3 Oct): the first road. spawn_beside_road: the opening camp sits on the road, never in trackless woods. first_landmark camp_at_ruin: the road leads to a camp restoring a ruin, its hearth glow the beacon. The clock and the road's length are dawn_start's (below); §BX's afternoon keys (spawn.real_min_before_dusk, walk_real_min, walk_speed_mps, detour_allowance_min, arrive_by, length_km_hint) were retired by Claude Code when it wired dawn_start, 3 Oct. Only the opening road is tuned; the rest is network/trail/decay above.",
-  "opening_road_dawn_start": "The opening at dawn (Mike, 3 Oct: \"move to dawn and you'll reach another landmark by dusk ... or before dusk, but hopefully dusk at the latest\"). opening_road.dawn_start supersedes the afternoon clock and the half-hour length above; the old afternoon keys are retired (Claude Code, 3 Oct, when this was wired: main.open_clock and World.opening_walk_target read it). spawn.phase dawn, real_min_after_dawn_begins: the clock starts this many real minutes after dawn begins at the spawn's latitude and date (the world still blue, the fire the one warm thing). walk_real_min: the road to the first landmark is this many minutes of straight walking, about half of the daylight you wake with. measure walking_minutes: the road is measured in minutes at the pace the player really walks it (§CR.5's slope pace, built 3 Oct), not in flat kilometres; the first camp is the one whose road to a camp at a ruin comes nearest walk_real_min. length_km_hint is the same walk on dead-flat ground (walk_real_min x 60 x walk_speed_mps, the ambient walk of movement.json), the most the road can be; pace_share_typical is the share of the flat speed ordinary land gives (0.82, pace_check, 3 Oct), so a typical opening road is about 8.5 km. arrive before_dusk, latest dusk_end: a straight walk arrives in the working day; a walk that spends as long looking as walking arrives as dusk begins; dusk itself (18 real min at the reference) is the grace, with the hearth glow ahead. slack_before_dusk_min: a straight walk must arrive at least this long before dusk begins at the spawn's latitude and date; where the day is too short for that, the road is shortened to fit (never the clock moved). first_landmark stays camp_at_ruin (§BX). Checked by tools/fire_circle_check.py against sky/day_cycle.json and tools/reference/daylight_reference.py. First guesses; the designer owns them."
+  "opening_road_dawn_start": "The opening at dawn (Mike, 3 Oct: \"move to dawn and you'll reach another landmark by dusk ... or before dusk, but hopefully dusk at the latest\"). opening_road.dawn_start supersedes the afternoon clock and the half-hour length above; the old afternoon keys are retired (Claude Code, 3 Oct, when this was wired: main.open_clock and World.opening_walk_target read it). spawn.phase dawn, real_min_after_dawn_begins: the clock starts this many real minutes after dawn begins at the spawn's latitude and date (the world still blue, the fire the one warm thing). walk_real_min: the road to the first landmark is this many minutes of straight walking, about half of the daylight you wake with. measure walking_minutes: the road is measured in minutes at the pace the player really walks it (§CR.5's slope pace, built 3 Oct), not in flat kilometres; the first camp is the one whose road to a camp at a ruin comes nearest walk_real_min. length_km_hint is the same walk on dead-flat ground (walk_real_min x 60 x walk_speed_mps, the ambient walk of movement.json), the most the road can be; pace_share_typical is the share of the flat speed ordinary land gives (0.82, pace_check, 3 Oct), so a typical opening road is about 8.5 km. arrive before_dusk, latest dusk_end: a straight walk arrives in the working day; a walk that spends as long looking as walking arrives as dusk begins; dusk itself (18 real min at the reference) is the grace, with the hearth glow ahead. slack_before_dusk_min: a straight walk must arrive at least this long before dusk begins at the spawn's latitude and date; where the day is too short for that, the road is shortened to fit (never the clock moved). first_landmark stays camp_at_ruin (§BX). Checked by tools/fire_circle_check.py against sky/day_cycle.json and tools/reference/daylight_reference.py. First guesses; the designer owns them.",
+  "grades_holders_holloway_approach": "Design 3 Oct §DM (Mike, from play): the road never leads where you can't follow (network.hard_max_grade is a HARD cap; max_grade stays the soft switchback cost); it widens toward what it leads to (grades, by distance along the link to the nearer node); where it climbs above max_grade it is sunk into the slope (holloway); its line is held by cairns at every bend and pickup, milestones, and a planted avenue on the kerbed approach (holders); the last stretch into a ruin or shrine runs straight at it down the avenue (approach). Not wired."
  },
  "layer": "before_plants",
  "network": {
@@ -26,7 +27,8 @@
   "link_max_km": 15.0,
   "follow_rivers": true,
   "follow_contours": true,
-  "max_grade": 0.18
+  "max_grade": 0.18,
+  "hard_max_grade": 0.3
  },
  "trail": {
   "width_m": [
@@ -129,5 +131,70 @@
    "slack_before_dusk_min": 20.0,
    "first_landmark": "camp_at_ruin"
   }
+ },
+ "grades": {
+  "trodden": {
+   "width_m": [
+    0.8,
+    1.4
+   ],
+   "wear": 0.45,
+   "overgrown": 0.7,
+   "beyond_m": 1500
+  },
+  "track": {
+   "width_m": [
+    1.6,
+    2.6
+   ],
+   "wear": 0.7,
+   "overgrown": 0.4,
+   "ruts": true,
+   "from_m": 600
+  },
+  "kerbed": {
+   "width_m": [
+    2.6,
+    3.6
+   ],
+   "wear": 0.9,
+   "overgrown": 0.15,
+   "edging": "stone",
+   "within_m": [
+    400,
+    800
+   ]
+  }
+ },
+ "holloway": {
+  "above_grade": 0.18,
+  "depth_m": [
+   0.6,
+   2.0
+  ],
+  "bank_roots": true,
+  "bend_trees_lean_in": true
+ },
+ "holders": {
+  "cairn_at_every_bend": true,
+  "tell_at_every_pickup": true,
+  "milestone_every_m": 1609,
+  "milestone_on": [
+   "track",
+   "kerbed"
+  ],
+  "avenue_within_m": 800,
+  "avenue_one_species": true,
+  "avenue_not_biome_native": true,
+  "avenue_age_bonus": 1.4
+ },
+ "approach": {
+  "straight_m": [
+   300,
+   600
+  ],
+  "grade": "kerbed",
+  "enter_from_front": true,
+  "music_drops_out": true
  }
 }
