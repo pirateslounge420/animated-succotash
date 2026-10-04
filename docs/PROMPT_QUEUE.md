@@ -21,9 +21,10 @@ doc or the built game, say so to Mike and stop.
 **Claude (chat)** appends new prompts after the ones already here (numbers never change) and
 keeps the table's marks when it regenerates this file.
 
-**Not in this file:** §DM (the road is the stage, built as `2978fb9` and `053c218`) and §DN (the
-lighthouse, built as `dd1349f`) were locked in other chats, handed over there, and are done. §DH (the
-goblin band) waits for Mike's four calls.
+**Not in this file:** §DM (the road is the stage) and §DN (the lighthouse) were locked in other
+chats and handed over there. Their design and data are `2978fb9`, `053c218` and `dd1349f`; in the
+engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
+(Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
 Built so far: 01–10, 17. Next up: 11.
 
