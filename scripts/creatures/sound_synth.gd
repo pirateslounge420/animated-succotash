@@ -38,6 +38,17 @@ class_name SoundSynth
 ##   fire_crackle a softer crackle: a cluster of small pops with a low
 ##                thump under the first (Campfire, the same clock)
 ##
+##   owl          two or three soft low hoots, the last held (a ruin's window
+##                at night, design 3 Oct §DI.3)
+##   bats         a stream of bats leaving a vault: wing flutter and thin
+##                high squeaks for a second or two (§DI.3)
+##   scrabble     something small in the dark: claw ticks and a dry scuffle
+##   drip         one drop into still water: a plink and its ring
+##   lizard       a quick dry skitter over warm stone
+##   stone_wind_loop  wind in the stones: a hollow moan with a breathy edge,
+##                swelling and easing, 6 s loop (the ruin's bed, §DI.3)
+##   drips_loop   slow drips in a wet hall, no rumble, 7 s loop
+##
 ## Every one of them plays on a 3D player tuned by the falloff table,
 ## data/audio.json (Audio3D), except the hitmarker, a UI sound.
 
@@ -121,6 +132,20 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _fire_snap(rng)
 		"fire_crackle":
 			samples = _fire_crackle(rng)
+		"owl":
+			samples = _owl(rng)
+		"bats":
+			samples = _bats(rng)
+		"scrabble":
+			samples = _scrabble(rng)
+		"drip":
+			samples = _drip(rng)
+		"lizard":
+			samples = _lizard(rng)
+		"stone_wind_loop":
+			samples = _stone_wind_loop(rng)
+		"drips_loop":
+			samples = _drips_loop(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -879,3 +904,158 @@ static func _hitmarker(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var click := rng.randf_range(-1, 1) * exp(-t * 400.0) * 0.6
 		s[i] = ping + click
 	return s
+
+
+## An owl: two or three soft hoots, low and round (a sine with a little
+## breath), the last one held longer.
+static func _owl(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(2.2)
+	var f := rng.randf_range(330.0, 420.0)
+	var hoots := rng.randi_range(2, 3)
+	var start := int(0.05 * RATE)
+	var phase := 0.0
+	for k in hoots:
+		var last := k == hoots - 1
+		var n := int((rng.randf_range(0.5, 0.75) if last else rng.randf_range(0.18, 0.28)) * RATE)
+		var fk := f * (0.94 if last else 1.0)
+		for i in n:
+			if start + i >= s.size():
+				break
+			var t := float(i) / n
+			phase += TAU * fk * (1.0 + 0.04 * sin(PI * t)) / RATE
+			var e := sin(PI * minf(t * 3.0, 1.0) * 0.5) * (1.0 - smoothstep(0.6, 1.0, t))
+			s[start + i] += e * (sin(phase) + 0.15 * sin(2.0 * phase) + 0.06 * rng.randf_range(-1, 1))
+		start += n + int(rng.randf_range(0.12, 0.2) * RATE)
+	return s
+
+
+## Bats leaving a vault: a fast flutter (amplitude-modulated low noise)
+## swelling and fading, with a scatter of thin high squeaks.
+static func _bats(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(1.4, 2.0))
+	var lp := 0.0
+	var flap := rng.randf_range(14.0, 20.0)
+	for i in s.size():
+		var t := float(i) / RATE
+		var u := float(i) / s.size()
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.25)
+		var wing := 0.5 + 0.5 * sin(TAU * flap * t + 2.0 * sin(TAU * 3.1 * t))
+		s[i] = lp * wing * sin(PI * u) * 0.8
+	for k in rng.randi_range(6, 12):
+		var at := int(rng.randf_range(0.05, 0.9) * s.size())
+		var n := int(rng.randf_range(0.015, 0.035) * RATE)
+		var f0 := rng.randf_range(6500.0, 9000.0)
+		var phase := 0.0
+		for i in n:
+			if at + i >= s.size():
+				break
+			var t := float(i) / n
+			phase += TAU * f0 * (1.0 - 0.3 * t) / RATE
+			s[at + i] += sin(phase) * sin(PI * t) * 0.5
+	return s
+
+
+## Something small in the dark: sharp claw ticks in quick runs over a
+## faint dry scuffle.
+static func _scrabble(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.6, 1.0))
+	var hp := 0.0
+	var prev := 0.0
+	var runs := rng.randi_range(2, 3)
+	for r in runs:
+		var at := rng.randf_range(0.0, 0.6)
+		var ticks := rng.randi_range(4, 9)
+		for k in ticks:
+			var i0 := int((at + k * rng.randf_range(0.03, 0.06)) * RATE)
+			var n := int(0.006 * RATE)
+			for i in n:
+				if i0 + i < s.size():
+					s[i0 + i] += rng.randf_range(-1, 1) * (1.0 - float(i) / n)
+	for i in s.size():
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + 0.9 * hp
+		prev = x
+		s[i] += hp * 0.08 * sin(PI * float(i) / s.size())
+	return s
+
+
+## One drop into still water: a falling plink and a short ring.
+static func _drip(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.5)
+	var f := rng.randf_range(1300.0, 2400.0)
+	var phase := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		phase += TAU * f * (1.0 + 0.7 * exp(-t * 45.0)) / RATE
+		s[i] = sin(phase) * exp(-t * 18.0) + (rng.randf_range(-1, 1) * exp(-t * 300.0) * 0.3)
+	return s
+
+
+## A lizard: a quick dry skitter (a short burst of crackle).
+static func _lizard(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.25, 0.4))
+	var hp := 0.0
+	var prev := 0.0
+	for i in s.size():
+		var u := float(i) / s.size()
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + 0.95 * hp
+		prev = x
+		var click := rng.randf_range(-1, 1) * 2.5 if rng.randf() < 0.02 else 0.0
+		s[i] = (hp * 0.5 + click) * sin(PI * u)
+	return s
+
+
+## Wind in the stones: noise through two narrow resonances (the gap's
+## hollow note and its fifth), a breathy edge, swelling and easing.
+static func _stone_wind_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(6.0 * RATE)
+	var fade := int(0.6 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var f1 := rng.randf_range(150.0, 210.0)
+	var f2 := f1 * 1.5
+	# Two resonators (2-pole band-pass).
+	var r := 0.996
+	var c1 := 2.0 * r * cos(TAU * f1 / RATE)
+	var c2 := 2.0 * r * cos(TAU * f2 / RATE)
+	var y1a := 0.0
+	var y1b := 0.0
+	var y2a := 0.0
+	var y2b := 0.0
+	var air := 0.0
+	var gp := rng.randf() * TAU
+	for i in raw.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		var swell := 0.45 + 0.55 * pow(maxf(0.0, sin(gp + TAU * t / 6.0)), 1.5)
+		var y1 := c1 * y1a - r * r * y1b + x * 0.02
+		y1b = y1a
+		y1a = y1
+		var y2 := c2 * y2a - r * r * y2b + x * 0.012
+		y2b = y2a
+		y2a = y2
+		air = lerpf(air, x, 0.05)
+		raw[i] = (y1 + 0.6 * y2) * swell + air * 0.25 * swell
+	return _loopify(raw, n, fade)
+
+
+## Slow drips in a wet hall: drops at three or four pitches, nothing else.
+static func _drips_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(7.0 * RATE)
+	var fade := int(0.4 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var drops := []
+	for k in 9:
+		drops.append([rng.randf_range(0.0, 7.0), rng.randf_range(1200.0, 2600.0), rng.randf_range(0.3, 1.0)])
+	for i in raw.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for dp in drops:
+			var dt := fposmod(t - float(dp[0]), 7.0)
+			if dt < 0.3:
+				var f := float(dp[1]) * (1.0 + 0.7 * exp(-dt * 45.0))
+				acc += sin(TAU * f * dt) * exp(-dt * 18.0) * float(dp[2])
+		raw[i] = acc
+	return _loopify(raw, n, fade)

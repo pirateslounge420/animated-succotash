@@ -188,6 +188,83 @@
    ],
    "class": "source"
   },
+  "ruin_birds": {
+   "unit_size": 8,
+   "max_distance": 70,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    20,
+    70
+   ],
+   "class": "source"
+  },
+  "ruin_bats": {
+   "unit_size": 6,
+   "max_distance": 50,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    15,
+    50
+   ],
+   "class": "source"
+  },
+  "ruin_owl": {
+   "unit_size": 10,
+   "max_distance": 110,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    30,
+    110
+   ],
+   "class": "source"
+  },
+  "ruin_scrabble": {
+   "unit_size": 2.5,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    6,
+    22
+   ],
+   "class": "source"
+  },
+  "ruin_drip": {
+   "unit_size": 2,
+   "max_distance": 18,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    5,
+    18
+   ],
+   "class": "source"
+  },
+  "ruin_frogs": {
+   "unit_size": 5,
+   "max_distance": 45,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    12,
+    45
+   ],
+   "class": "source"
+  },
+  "ruin_lizard": {
+   "unit_size": 2,
+   "max_distance": 14,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    4,
+    14
+   ],
+   "class": "source"
+  },
   "thunder": {
    "unit_size": 1000,
    "max_distance": 12000,
@@ -514,7 +591,7 @@
   "hear_before_seen": true
  },
  "ruins": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] A ruin sounds like what lives in it (Mike, 3 Oct by voice: \"we need to have some ambient sounds based off of what type of creatures are lurking there\"), inside \u00a7BG's two systems. residents are SOURCES, each calling from the part of the ruin it lives in, at its hours (the creature itself comes from the biome's roster, \u00a7CH; these name the place and the kind). The swifts in a cold stack are \u00a7CV.5 (smoke.json swifts.sound). bed: the ruin's own room tone, with no position: wind in the stones (gaps, doorways, window holes and cave mouths moan when the gust at them passes stone_wind_from_mps, wind.json), drips where there is water, and the hush of a closed hall. overrun: an overrun ruin's residents fall silent by day (delves.json overrun tells). The ghost (ruins.json haunt) makes no sound at all. Not written: Minecraft's cave groans, whose unplaceable noises are what \u00a7BG took out on 30 Sept; Mike's call (\u00a7DI, open).",
+  "_help": "A ruin sounds like what lives in it (Mike, 3 Oct by voice: \"we need to have some ambient sounds based off of what type of creatures are lurking there\"), inside \u00a7BG's two systems. residents are SOURCES, each calling from the part of the ruin it lives in, at its hours (the creature itself comes from the biome's roster, \u00a7CH; these name the place and the kind). The swifts in a cold stack are \u00a7CV.5 (smoke.json swifts.sound). bed: the ruin's own room tone, with no position: wind in the stones (gaps, doorways, window holes and cave mouths moan when the gust at them passes stone_wind_from_mps, wind.json), drips where there is water, and the hush of a closed hall. overrun: an overrun ruin's residents fall silent by day (delves.json overrun tells). The ghost (ruins.json haunt) makes no sound at all. Not written: Minecraft's cave groans, whose unplaceable noises are what \u00a7BG took out on 30 Sept; Mike's call (\u00a7DI, open).",
   "residents": [
    {
     "part": "tower_top",

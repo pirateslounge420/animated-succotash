@@ -65,6 +65,7 @@ var post: PostGrade
 var rain_overlay: RainOverlay
 var night_accents: NightAccents
 var day_accents: DayAccents
+var ruin_sounds: RuinSounds
 ## The local ground mean (m above the planet radius) for the valley fog.
 var _ground_mean := INF
 var _ground_t := 0.0
@@ -339,6 +340,11 @@ func _on_planet_ready() -> void:
 	night_accents.name = "NightAccents"
 	add_child(night_accents)
 	night_accents.setup(world, chunks, landmarks, sky, player)
+	# A ruin sounds like what lives in it (design 3 Oct §DI.3).
+	ruin_sounds = RuinSounds.new()
+	ruin_sounds.name = "RuinSounds"
+	add_child(ruin_sounds)
+	ruin_sounds.setup(self)
 	# Butterflies by day (design 3 Oct §DC, data/day_accents.json).
 	day_accents = DayAccents.new()
 	day_accents.name = "DayAccents"

@@ -44,6 +44,9 @@ var _canopy := 0.0
 ## Down in a delve (design 1 Oct §CJ, Delves.underground): the outdoor
 ## layers fall away and the delve's own drone and drips come in.
 var _delve: AudioStreamPlayer
+## A ruin's own room tone (design 3 Oct §DI.3, RuinSounds): the wind in its
+## stones and its drips; its closed hall's hush lowers the layers above.
+var _ruin := {}
 
 
 func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_sky: SkySystem) -> void:
@@ -79,6 +82,15 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D, p_sky: SkySy
 	_delve.volume_db = -60.0
 	add_child(_delve)
 	_delve.play()
+	for layer in ["stone_wind", "drips"]:
+		var rp := AudioStreamPlayer.new()
+		rp.name = "Ruin" + layer.capitalize().replace(" ", "")
+		rp.bus = BUS
+		rp.stream = SoundSynth.stream(layer + "_loop", 0)
+		rp.volume_db = -60.0
+		add_child(rp)
+		rp.play(randf() * 3.0)
+		_ruin[layer] = rp
 
 
 static func _group_of(biome_key: String) -> String:
@@ -134,7 +146,7 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 		_lpf.cutoff_hz = lerpf(float(canopy.get("cutoff_hz_open", 20000.0)), float(canopy.get("cutoff_hz_canopy", 1800.0)), _canopy)
 	for layer in LAYERS:
 		var p: AudioStreamPlayer = _players[layer]
-		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground) * (1.0 - Overrun.quiet)
+		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground) * (1.0 - Overrun.quiet) * (1.0 - RuinSounds.hush)
 		if layer == "wind":
 			g *= lerpf(1.0, float(canopy.get("wind_gain", 0.45)), _canopy)
 			# The gust at you, the instant the grass and crowns show it
@@ -144,6 +156,11 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 			wind_gain = g
 		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", -18.0 if layer == "cicadas" else 0.0))
 		p.volume_db = lerpf(p.volume_db, want_db, minf(delta * 1.5, 1.0))
+	# The ruin's room tone (§DI.3): no position, like the rest of the bed.
+	for layer in _ruin:
+		var rg: float = (RuinSounds.stone_wind if layer == "stone_wind" else RuinSounds.drips) * Dread.bed_gain * (1.0 - Delves.underground)
+		var rdb := float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", -10.0 if layer == "stone_wind" else -14.0))
+		(_ruin[layer] as AudioStreamPlayer).volume_db = lerpf((_ruin[layer] as AudioStreamPlayer).volume_db, linear_to_db(maxf(rg, 0.0005)) + rdb, minf(delta * 1.5, 1.0))
 	if _delve != null:
 		_delve.volume_db = lerpf(_delve.volume_db, linear_to_db(maxf(Delves.underground, 0.0005)) + float((D.get("layers", {}) as Dictionary).get("delve", {}).get("db", -12.0)), minf(delta * 1.5, 1.0))
 

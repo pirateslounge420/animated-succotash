@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DI part 2: a ruin sounds like what lives in it (prompt 11)
+- **Residents are sources** (`RuinSounds`, under main): every built ruin within 150 m gets its residents, each an Audio3D player at its own part of the ruin. The parts are read from the ruin's drawn bounds, or its delve's door and well. Each calls on its own clock, at its hours from `audio.json ruins.residents`, by the sun:
+  - **birds** at the top of a tower, keep, aqueduct, pyramid or crag fortress, dawn and day, where the roster's day birds fit the climate;
+  - **bats** at the vault or the delve's door, dusk and dawn, where it is at least 2 °C;
+  - **an owl** at a high window (a ruin 5 m or more), night;
+  - **something scrabbling** below, dusk and night, where the roster's night ground or canopy animals fit;
+  - **frogs and drips** at the cistern, any hour, where the ruin has water (a wetland, standing water, a boardwalk's marsh, the crag's cistern). Frogs follow the roster's frog or a mild wet place, never brackish water;
+  - **lizards** on the sunward wall by day, in warm dry country (18 °C or more, moisture 0.5 or less).
+  
+  New `audio.json` kinds, each with a muffle: ruin_birds, ruin_bats, ruin_owl, ruin_scrabble, ruin_drip, ruin_frogs, ruin_lizard. New synth voices: owl, bats, scrabble, drip, lizard.
+- **The ruin's bed** (SoundBed, no position): `stone_wind_loop`, a hollow moan, is 0 below `bed.stone_wind_from_mps` (6) at the ruin's opening and full 4 m/s above (`Wind.at` there). `drips_loop` plays where the ruin has water. Inside a closed hall the outdoor layers drop by up to 60 % (the enclosure). Each fades by how near the ruin is (full within 30 m, gone by 90 m).
+- **Overrun:** the residents are silent by day (`overrun_quiet_by_day`, delves.json's tell); the bed's quiet stays Overrun's own. Night stays as built. The ghost makes no sound. No cave groans (Mike's call).
+- **Checked** (`tools/ruin_sound_check.gd`, seed 7731, 0 fails):
+  - the tower at 38.93°N 156.82°E: birds at noon, heard and placed at the ruin; the owl and the scrabble at 02:00, no birds;
+  - a wet-meadow boardwalk (40.71°N 66.40°W, 15 °C): frogs and drips;
+  - an overrun barrow at real noon: no residents, Overrun.quiet 0.82;
+  - the stone wind: 0.00 at 5 m/s, 0.50 at 8;
+  - every new kind has a muffle.
+  
+  No swamp ruin stands on this world, so the check takes the first warm freshwater wetland. A cold fen (−2.5 °C) got drips and no frogs, as it should. `audio_mix_check`: 0 fails.
+- **Walkabout** (for the ear, harness frames, §CG; `SITES=ruins HOURS=18.4`): at dusk the wet aqueduct had bats and the scrabble and the desert tower its bats. The wind was 0.5–1.3 m/s, so no stone wind.
+- **Flag for Mike:** the creature roster has no bats, owls, lizards, small rodents or cliff birds. The owl, the bats and the lizards go by climate rules (`RuinSounds` BAT_MIN_C, OWL_MIN_C, LIZARD_*) until it does; the birds, the scrabble and the frogs go by the roster's songbird, toucan, possum, raccoon, hare and tree frog. Call spacing (EVERY_S) is in code for now.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `audio.json ruins`.
+
 ## 2026-10-04 — §DM.1 the road never leads where you can't follow (the hard grade cap)
 - **Mike's bug** (the road thinned, went up an unclimbable hill and was lost): today's roads, walked every 5 m on the fine ground, had 1,900 steps of 67,000 over a 0.30 grade, 378 of them walls (worst 5.9), all on what the 120 m routing lattice couldn't see.
 - **The coarse route** (`RoadNetwork._route`): `roads.json network.hard_max_grade` (0.30) is now a hard reject per lattice step, and `max_grade` (0.18) stays the soft switchback cost. The lattice also refuses a step across an escarpment or a ravine taller than a cutting (`TerrainField.line_noise`/`line_mask_at`: the step's ends disagree in sign) and onto a great range's sheer faces (`TerrainField.range_cliff`, new).

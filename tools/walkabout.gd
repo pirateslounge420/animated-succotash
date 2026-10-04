@@ -566,6 +566,15 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			if k == 0 and main.get("day_accents") != null:
 				var dac: DayAccents = main.day_accents
 				print("[butterflies] %s %02dh: %d (%s)" % [site.name, int(hour), dac.flies.size(), "on" if bool(dac.gate_state.get("ok", false)) else str(dac.gate_state.get("why", ""))])
+			if k == 0 and main.get("ruin_sounds") != null:
+				# What a ruin round you sounds like (design 3 Oct §DI.3).
+				var rsn: RuinSounds = main.ruin_sounds
+				rsn.refresh()
+				var heard: Array = []
+				for rn in rsn.state.get("ruins", {}):
+					var rst: Dictionary = rsn.state.ruins[rn]
+					heard.append("%s %.0f m: %s%s" % [rn, float(rst.get("dist", 0.0)), ", ".join(rst.get("who", [])) if not (rst.get("who", []) as Array).is_empty() else "none", " (overrun, silent)" if bool(rst.get("silent", false)) else ""])
+				print("[ruin sounds] %s %02dh (%s): %s; bed: stone wind %.2f (wind at the opening %.1f m/s), drips %.2f, hush %.2f" % [site.name, int(hour), str(rsn.state.get("hour", "")), "; ".join(heard) if not heard.is_empty() else "no ruin near", RuinSounds.stone_wind, float(rsn.state.get("wind_mps", 0.0)), RuinSounds.drips, RuinSounds.hush])
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])
