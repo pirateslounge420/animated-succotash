@@ -2,7 +2,8 @@
  "_help": {
   "about": "[NOT WIRED YET — design §DL] Tomes: real philosophical texts you can find and read (3 Oct, Mike by voice: \"I would like to add some philosophical texts that you might be able to find randomly. For example, the I Ching\"). Rare finds live in ruins (§AW): a tome lies where someone left it, most often at a delve's heart (§CJ.3), never in a chest. It is read while you carry it, opening like the log (in the internal frame, in the HUD's font) a page at a time; the log notes the find (hud.json log_more: tome). Public-domain translations only. No systems yet (Mike: \"we might implement some systems based on it later, but we're going to wait on that for now\"): the I Ching coin cast already in the game (scripts/core/iching.gd, the rare-event RNG) is a separate thing. Restart after editing.",
   "find": "at: where tomes lie; share_of_hearts: of the delves' hearts, how many hold a tome instead of another find. First guesses.",
-  "tomes": "id; title (its name in play); what it is; translation (the public-domain one used) and not (the one not to use); pages (how it divides); text_file (the text itself, one file per tome under data/tomes/: a later data job, filled from a public-domain edition and checked against it); filled: whether the text is in yet."
+  "tomes": "id; title (its name in play); what it is; translation (the public-domain one used) and not (the one not to use); pages (how it divides); text_file (the text itself, one file per tome under data/tomes/: a later data job, filled from a public-domain edition and checked against it); filled: whether the text is in yet.",
+  "found_at": "found_at on a tome overrides find.at for that tome (§DQ: the second tome lies at the pass gate)."
  },
  "find": {
   "at": "delve_heart",
@@ -18,6 +19,18 @@
    "pages": "one hexagram a page",
    "text_file": "data/tomes/iching_legge.txt",
    "filled": false
+  },
+  {
+   "id": "tao",
+   "title": "The Book of the Way",
+   "what": "The Tao Te Ching: eighty-one short chapters.",
+   "translation": "James Legge, The Tâo Teh King, The Sacred Books of the East vol. 39 (Oxford, 1891): public domain.",
+   "not": "Not any twentieth-century translation (Waley 1934, Feng and English 1972, Mitchell 1988), all in copyright.",
+   "pages": "one chapter a page",
+   "text_file": "data/tomes/tao_legge.txt",
+   "filled": false,
+   "found_at": "pass_gate",
+   "_note": "[NOT WIRED YET — design §DQ] Found at the gate at the pass the rider is heading for (uniques.json road_regulars.ox_rider.gate), not at a delve's heart; a first guess with the gate itself."
   }
  ]
 }

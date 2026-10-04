@@ -1,23 +1,27 @@
 {
  "_help": {
-  "about": "[The sacred fig wired (Uniques; design §CL) — its faint path in from a road, roots on old stone, the leaves' own flutter and the hood down NOT WIRED YET] One-of-a-kind places: each appears exactly once in a world. The sites pass (§CK) places it where its `where` holds, off a road like the §BC landmarks (40-120 m from the trail and out of sight of it, with a faint path in), built to the composition rules (LOOK_REFERENCE: a straight last approach, walls either side, an apron in front). It is never a camp and never a ruin. Restart after editing.",
-  "fields": "name · count_per_world (always 1) · where (biomes in order of preference; the first the world has wins; other: plain words) · tree (the species and how this one specimen differs from the wild ones) · figure (who is there: the shared cloaked rig, pose, colours, behaviour) · ground (the clearing) · sound · log (the line written the first time you come within reach) · open (calls still with the designer).",
-  "rig": "Every figure uses the player's cloaked rig (one rig, §0); a figure here is a pose and a palette, never a new body. The player's indigo-and-rust is reserved for the player."
+  "about": "[The sacred fig wired (Uniques; design \u00a7CL) \u2014 its faint path in from a road, roots on old stone, the leaves' own flutter and the hood down NOT WIRED YET] One-of-a-kind places: each appears exactly once in a world. The sites pass (\u00a7CK) places it where its `where` holds, off a road like the \u00a7BC landmarks (40-120 m from the trail and out of sight of it, with a faint path in), built to the composition rules (LOOK_REFERENCE: a straight last approach, walls either side, an apron in front). It is never a camp and never a ruin. Restart after editing.",
+  "fields": "name \u00b7 count_per_world (always 1) \u00b7 where (biomes in order of preference; the first the world has wins; other: plain words) \u00b7 tree (the species and how this one specimen differs from the wild ones) \u00b7 figure (who is there: the shared cloaked rig, pose, colours, behaviour) \u00b7 ground (the clearing) \u00b7 sound \u00b7 log (the line written the first time you come within reach) \u00b7 open (calls still with the designer).",
+  "rig": "Every figure uses the player's cloaked rig (one rig, \u00a70); a figure here is a pose and a palette, never a new body. The player's indigo-and-rust is reserved for the player."
  },
  "uniques": {
   "sacred_fig": {
    "name": "The sacred fig",
    "count_per_world": 1,
    "where": {
-    "biomes": ["TROPICAL_DRY_FOREST", "JUNGLE", "SAVANNA"],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "JUNGLE",
+     "SAVANNA"
+    ],
     "other": "A level clearing on a low rise in tropical dry forest (else monsoon jungle, else savanna woodland), off a road, not in a wetland or on a slope; the oldest tree for kilometres. If old stone is near (a ruin wall, a boulder), the tree grows out of it."
    },
    "tree": {
     "genus": "Ficus",
     "species": "religiosa",
-    "entry": "data/biomes/21_tropical_dry_forest.json → plants.canopy → \"Sacred fig\" (also in 20_jungle.json)",
+    "entry": "data/biomes/21_tropical_dry_forest.json \u2192 plants.canopy \u2192 \"Sacred fig\" (also in 20_jungle.json)",
     "size": "Past the top of the species' band: about 30 m tall, the crown 35-45 m across, the trunk a fused mass of old grey stems several metres round.",
-    "notes": "Heart-shaped leaves with a long drip-tip tail on long, slender stalks, so they tremble in still air (the wind shader has no per-species flutter yet: §CL asks for one here). Smooth pale grey bark. Roots gripping stone where it started on a wall. Purple-black figs in pairs in the leaf axils in season; birds and bats in the crown."
+    "notes": "Heart-shaped leaves with a long drip-tip tail on long, slender stalks, so they tremble in still air (the wind shader has no per-species flutter yet: \u00a7CL asks for one here). Smooth pale grey bark. Roots gripping stone where it started on a wall. Purple-black figs in pairs in the leaf axils in season; birds and bats in the crown."
    },
    "figure": {
     "rig": "the cloaked figure, folk scale (~1.7 m standing)",
@@ -35,8 +39,80 @@
    "sound": "The leaves' dry rustle over everything; birds in the crown by day.",
    "log": "Someone sits beneath the old fig, very still.",
    "open": [
-    "Naming (Mike): Mike asked for the Buddha meditating beneath it. Play names nobody (§BO keeps real names out of play), so the default is no name and the image speaks for itself; say if the log or a label should name him.",
+    "Naming (Mike): Mike asked for the Buddha meditating beneath it. Play names nobody (\u00a7BO keeps real names out of play), so the default is no name and the image speaks for itself; say if the log or a label should name him.",
     "Night (Mike): does the dark keep away from this place, a still circle with no fire? Default: no special rule until Mike decides."
+   ]
+  },
+  "wandering_fire": {
+   "name": "The wandering fire",
+   "count_per_world": 1,
+   "moves": true,
+   "where": {
+    "biomes": [
+     "HOT_DESERT",
+     "THORN_SCRUB"
+    ],
+    "nests": [
+     "wadi",
+     "oasis"
+    ],
+    "other": "The hot desert and its edges; they walk on and off the roads, a few kilometres a day, and never settle."
+   },
+   "figures": {
+    "count": 13,
+    "rig": "the cloaked figure, folk scale; one set apart by his robe, the twelve in the desert folk's palette (cloaks.json)",
+    "the_one": {
+     "robe": {
+      "colour": "#E8E0D0",
+      "edge": "#C9BBA6",
+      "notes": "undyed pale wool, hood down; first guess"
+     }
+    },
+    "speaks": false,
+    "name_in_play": null
+   },
+   "day": "They walk (\u00a7BF's pace, on and off the road), carrying their flame as a coal in an ember carrier (\u00a7BP: fire is never made).",
+   "dusk": "They lay a fire where they are from what the desert gives (fuel.json: scrub, dung), and sit round it: \u00a7CY.2's circle loops (watch the fire, warm hands, eat, doze), no pipe.",
+   "dawn": "They walk on and leave the ring: a line of cold fire rings a day's walk apart is their trail.",
+   "fire": {
+    "safe_circle": true,
+    "coal_free_to_take": true,
+    "column_by_day": false,
+    "note": "a safe circle like any fire (\u00a7BA); its glow is how you find them at night (\u00a7CV)"
+   },
+   "log": "Thirteen sit round a fire in the sand.",
+   "open": [
+    "Naming (Mike): default as the fig, play names nobody.",
+    "Night (Mike): does the dark keep off their circle when the fire burns low? Default: no special rule.",
+    "Giving (Mike): anything beyond a coal? Default: nothing."
+   ],
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DP] The second one-of-a-kind and the first that moves: thirteen in the desert who walk by day and sit by a carried fire at night, leaving a trail of cold rings."
+  }
+ },
+ "road_regulars": {
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DM.7, \u00a7DQ] The road regulars: a cast of named one-of-a-kind figures on the shared rig, each with ONE habit tied to the real clock, one stretch and one hour (\u00a7DM.7, cast open). Mute (\u00a7BF) except as \u00a7DJ allows; the habit is the personality. The first entry is \u00a7DQ's rider; \u00a7DM.7's three starters (the pilgrim at dawn, the old one on the milestone, the dog) are not written until Mike and Claude build the cast.",
+  "ox_rider": {
+   "name": "The old man on his ox",
+   "count_per_world": 1,
+   "rules": "a \u00a7BF traveller (mute, never stops for you, the hood turns and holds a beat, the dark ignores him) who rides",
+   "stretch": "the high roads of one great range (\u00a7CR.4), toward its highest pass, westward",
+   "hours": "rides by day at the ox's pace (under the walk); at dusk stops where he is, the ox grazes, no fire; at dawn rides on",
+   "mount": {
+    "body": "ox",
+    "notes": "a domestic ox, not a buffalo (Mike): heavy, slow, horns curving forward and out, a dull black-brown coat (#2A2220), no load and no plough; a creature body (\u00a70), new; the rider is the shared rig seated on it, hood up, a plain dark robe (first guess)"
+   },
+   "speaks": false,
+   "name_in_play": null,
+   "log": "An old man rides an ox up the pass road, slowly.",
+   "gate": {
+    "first_guess": true,
+    "what": "a gatehouse at the highest pass of his range: a small camp with its keeper (\u00a7BL, one or two folk), and the book he left lying there",
+    "tome": "tao (tomes.json)",
+    "open": "Mike: in or out (one line to strike)"
+   },
+   "open": [
+    "Naming (Mike): default as the fig, play names nobody.",
+    "The gate, its keeper and the book: written in as a first guess."
    ]
   }
  }

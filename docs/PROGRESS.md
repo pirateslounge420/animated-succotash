@@ -201,6 +201,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-03 (21:30) — §DO–§DS: the crag fortress, the wandering fire, the old man on his ox, the temple city, and the monuments by realm: design and data only (design chat; Mike, "lock it in" at 21:24, with two batches of reference frames)
+- **Design:** §DO (a Tibet-like fortress climbing a crag, its own kind, the delve goes up), §DP (thirteen in the desert who walk by day and sit by a carried fire at night, leaving a trail of cold rings; the second one-of-a-kind and the first that moves), §DQ (the one traveller who rides: an old man on an ox on the pass roads, the first road regular of §DM.7; the gate, its keeper and the Tao Te Ching as first guesses), §DR (the temple city: galleries, tiered towers, a moat, root-trees standing on the stone as the signature, face towers and a guardian causeway at the gate), §DS (the set: the long wall, the carved cliffs, the cliff dwelling, the brick city, the stone heads, the terraced pueblo, the stone circle, the tower house and the broch; four of Mike's list were already in as pyramid styles). Appended after §DN; §BR gains the build order.
+- **Data, none of it wired:** `ruins.json → styles` gains nine entries with `kind: own` (crag_fortress, temple_city, long_wall, carved_cliffs, stone_heads, cliff_dwelling, terraced_pueblo, brick_city, stone_circle) and two styles of existing kinds (tower_house, broch), a `_help.styles_kinds` line, `terrace_platform.signature`, and a `root_trees` block; `uniques.json → uniques.wandering_fire` and a new `road_regulars` block (ox_rider); `tomes.json → tao` (found at the pass gate); `smoke.json → outlets.by_ruin` and `delves.json → fire_holders.by_ruin` rows for every new kind. Every data file parses.
+- **For Claude Code:** the stone heads wait for a tenth realm, oceania, in `RealmMap` (code). The ox is a new creature body. Every `kind: own` entry is a new `Ruins.Kind` with its `name_in_play` as its `KIND_NAMES` entry.
+- **For Mike:** the calls written at their defaults: the fortress's finial (kept); the thirteen's naming, night rule and giving; the rider's naming and the gate; the temple city's size, root-trees elsewhere and the ochre camp; the stone circle's "no delve" exception.
+
+---
+
 ## 2026-10-03 (night) — Mike's 14:34 play fixed (wood lit from outside, rain only from a drawn raincloud, giant herbs, the den); §CY.1 you wake at dawn; §CZ the fire breathes (Claude Code)
 - **1. Wood lit from the wrong side.** Trunks, limbs, bark cones and bamboo culms had their normals pointing in, so the sunny side read dark. They point out now (`plant_meshes.gd` `tri3` / `_smooth`; bark cones were wound the other way and are fixed too).
   - The shadow pass's "closed shapes cast from their far faces" rule now reads the normal, not the winding (`foliage.gdshader`), so mirrored trees cast the same.

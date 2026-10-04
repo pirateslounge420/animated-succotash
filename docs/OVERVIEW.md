@@ -160,6 +160,20 @@ as rare finds in ruins.
   the way deeper. No quest log and no markers: the scroll in your hands and the log are the
   quest.
 - **Tomes:** real philosophical texts to find and read, the I Ching first.
+- **Three sages** *(locked 3 Oct; not built yet)*: one who sits beneath the sacred fig; thirteen
+  who walk the desert by day and sit round a carried fire at night, leaving a trail of cold
+  rings; one old man who rides an ox up the pass roads, always on his way out. None of them is
+  named in play.
+
+## Monuments by realm *(locked 3 Oct; not built yet)*
+
+A world grows only the monuments that belong to its lands: a whitewashed fortress climbing a
+crag in Tibet-like country; a temple city in the monsoon forest with trees standing on its
+galleries and faces on its gate towers; a wall running over the ridges for miles; facades cut
+into a sandstone canyon; a town of stone rooms filling a sandstone alcove; a city of melted
+brick on a desert river with its blue gate still standing; a row of stone heads on a treeless
+coast; stepped adobe towns; stone circles; tower houses and brochs on the cold wet coasts. The
+pyramids were already in, by region. Nothing is named after the real place.
 
 ## Camps and peoples
 

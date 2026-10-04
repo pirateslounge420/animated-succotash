@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows.
 
 ---
 
@@ -2806,6 +2806,16 @@ the residents' sounds, the ghost) → **§DF the senses** → **§DJ–§DL** th
 shrine and its scroll, the tomes. **§DH waits for Mike's calls.** Where §DA meets §CV (smoke) and
 §CZ (the fire), the built thing stands and §DA adds to it.
 
+**Added 3 Oct, 21:30 (§DO–§DS, the monuments and the sages, locked at 21:24):** the data is in
+and none of it is wired. These are builder passes, one kind at a time, after the sixteen of
+§DA–§DL and §DM–§DN: **§DO the crag fortress** → **§DR the temple city** (with `root_trees`) →
+**§DP the wandering fire** → **§DQ the old man on his ox** (the first road regular; the ox is a
+new creature body; the gate and the tome are first guesses) → **§DS** in its own order: the long
+wall, the carved cliffs, the cliff dwelling, the brick city, the stone heads (after the oceania
+realm, which is `RealmMap`, code), the terraced pueblo, the stone circle, the tower house and
+the broch. Each new kind: a `Ruins.Kind` and `KIND_NAMES` entry, the builder, its delve (§CJ), its
+smoke outlet (§CV), its overgrowth (§DI), a headless check, one walkabout.
+
 ## DM. The road is the stage: it never leads where you can't follow, it widens toward the ruin, and the things on it have lives — LOCKED (3 Oct, 18:30–19:20, Mike)
 
 Mike, from play: *"when I was using the road before, it felt really thin, it got really thin,
@@ -2905,3 +2915,221 @@ steady fire."* Builds on §CN (overrun ruins cleared by light), §CU, §CV (hear
    sea as one wall and the rise as the other.
 5. **Relighting brings the headland back**: a camp forms at the keeper's hut (§BL's rules) once
    the lamp is lit.
+
+## DO. The crag fortress: its own kind, in Tibet-like country — LOCKED (3 Oct, 20:53–21:24, Mike)
+
+Mike: *"i have a new reference shot for a potential new ruins style"* (a hilltop fortress-monastery
+of the Tibetan kind: whitewashed walls leaning inward as they rise, flat roofs, a dull red band
+under every roofline, a long stair cut up the rock, lesser buildings at the foot). Asked whether
+it is a castle style or its own kind, where it appears, whether the red band stays, the finial,
+and prayer flags: *"its it own kind. it appears in biomes similar to where its found like tibet.
+the red band is fine. and no prayer flags"*; then *"lock it in"* (21:24). The finial was not
+answered, so it is kept as a first guess. Builds on §BB, §BQ, §CJ, §CK, §CV, §DI, §DM.5, §DN
+(the pattern for a new monument entry). Data: `ruins.json → styles.crag_fortress` (`kind:
+own`), `smoke.json → outlets.by_ruin.crag_fortress`, `delves.json → fire_holders.by_ruin`.
+Real references in the notes only (Gyantse Dzong, the dzongs of Bhutan, Leh Palace): never a
+real name in play (§BO). Not built.
+
+1. **Its own kind** (`Ruins.Kind` gains one; "Crag fortress" in play): a fortress climbing a
+   rock rise in tiers, 40–100 m from foot to top at walking scale (§CK: sizes read next to the
+   player). Walls of rammed earth and stone, limewashed white, battered (leaning inward 5–8°),
+   flat roofs, small dark windows in trapezoid frames, the dull red-brown band under every
+   roofline (a matte material, never a light; R7 keeps the warm accent for fire, and this
+   reads as stone), one gilt finial on the topmost chapel (first guess: kept; matte, one per
+   fortress, never glowing: the "golden landmark under a navy sky" of the favourites), a single
+   long stair cut up the rock from the foot, and a cluster of lesser buildings at the foot.
+2. **Where:** Tibet-like country only: puna, cold desert, steppe, alpine meadow and krummholz, at
+   altitude, on a crag (the kopje, volcanic neck, escarpment or mesa nests at their larger
+   sizes, or a rock rise the builder raises for it); never on a flat, never in wet or warm
+   biomes. Realms: central_asia, east_asia_temperate, andes, palearctic. Rare: at most a few
+   per world, each seen from far across its valley (§DM.5's straight approach climbs to it).
+3. **The delve goes up** (§CJ allows a tower's stair to climb): from the foot, the stair through
+   the tiers, with stores and a cistern cut into the rock on the way, and the heart is the
+   chapel at the top under the finial. The way out (§CJ.4) is the outside stair. Fire-holders:
+   braziers (the castle's).
+4. **Smoke (§CV):** flat roofs, so each delve hearth vents through a roof vent; the honest form
+   is the rooftop burner these buildings really had. A living camp at the foot (§CK's camp at a
+   monument) keeps an open fire like any camp.
+5. **Overgrowth (§DI):** cold and dry, so lichen and a little moss on the shaded faces, nothing
+   else. Soot above the roof vents. No cloth anywhere: no prayer flags, living or dead (Mike).
+6. **Signature (§BQ):** lime kilns and dry-stone walls are already the mountain folk's heap, so
+   this is the monument of a lime-and-stone people, the ladder run past the ceiling (§BL).
+
+## DP. The wandering fire: thirteen in the desert — LOCKED (3 Oct, 21:04–21:24, Mike)
+
+Mike: *"we also need Jesus to be wandering the desert somewhere chilling around a fire with the
+apostles"*; locked with *"lock it in"* (21:24) after the reading below; the three calls Claude put
+to him were not answered, so each is written at its default and marked open. Builds on §CL (the
+first one-of-a-kind figure: unnamed in play, never speaks), §BA, §BL, §BO, §BP, §CK, §CQ.4, §CV,
+§CY.2. Data: `uniques.json → uniques.wandering_fire`. Not built.
+
+1. **The second one-of-a-kind, and the first that moves.** Thirteen cloaked figures on the
+   shared rig (§0), folk scale, one of them set apart by his robe the way the fig's figure is by
+   his ochre (first guess: undyed pale wool, hood down; the twelve in the desert folk's palette).
+   They are never a settled camp and never a ruin. One group per world.
+2. **They walk by day and sit by a fire at night.** Every camp in the world sits at a nest
+   (§BL, §CK); this one doesn't. Fire is never made, only carried (§BP), so they carry their
+   flame as a coal in an ember carrier and lay a new fire at dusk from what the desert gives
+   (scrub, dung: `fuel.json`), and at dawn they walk on and leave the ring. **They leave a
+   trail:** a line of cold fire rings across the sand a day's walk apart, and following the ash
+   is how you find them. No column by day (they are walking; §CV draws none at night), so by
+   night it is their glow across the desert, the one safe fire that isn't where it was
+   yesterday.
+3. **At the fire** they are at rest: §CY.2's circle loops (watch the fire, warm hands, eat, doze)
+   and no pipe. Their fire is a safe circle like any (§BA): the lurkers keep off it. Mute like
+   all folk, plus one line in the log the first time you come within reach (§CL's pattern). A
+   coal from their fire is free to take (§CQ.4), and they lose nothing by it.
+4. **Where:** the hot desert and its edges only (hot desert, thorn scrub; the wadi and oasis
+   nests), walking on and off the roads, a few kilometres a day.
+
+**Open (Mike), each written at its default:** naming (default, as the fig: play never names
+him; the log says *"Thirteen sit round a fire in the sand"*); whether the dark keeps off their
+circle even when the fire burns low (default: no special rule; the fire does what every fire
+does); whether they give anything beyond a coal (default: nothing).
+
+## DQ. The old man on his ox: the first road regular — LOCKED (3 Oct, 21:05–21:24, Mike)
+
+Mike: *"also Laotzu in the mountains"*, *"with his bull"*, then: *"actually it was an ox not a
+bull.."*; locked with *"lock it in"* (21:24). §DM.7 left the road regulars' cast open: this is
+its first entry. Builds on §BF (travellers: mute, never stop, the hood tracks you, unharmed in the
+dark), §CR.4 (every great range has a walkable route to its summit or pass), §DL (tomes), §DM.7.
+Data: `uniques.json → road_regulars.ox_rider`, `tomes.json → tao`. Not built.
+
+1. **The one traveller who rides.** A §BF traveller in every rule (mute, never stops for you,
+   the hood turns and holds a beat, the dark ignores him), with two differences: he rides, and he
+   keeps to the mountains, on the high roads of the great ranges (§CR.4), heading for the
+   highest pass. Slowly: the ox's pace, under the walk. At dusk he stops where he is; the ox
+   grazes; no fire (a traveller needs none); at dawn he rides on. On a planet you can walk
+   around he never leaves, which is honest to the story: always on his way out, and always to be
+   found on the pass roads. One per world.
+2. **The ox** is the one new body: a domestic ox, not a buffalo (Mike): heavy, slow, horns
+   curving forward and out, a dull black-brown coat, no load and no plough, just the rider. A
+   creature body (beasts keep creature bodies, §0) at the walk; the rider is the shared rig
+   seated on it, hood up, a plain dark robe (first guess).
+3. **The gate at the pass, its keeper and the book** (first guess, open): the story's other half
+   is the keeper of the gate who asked him to write his teaching down before he left. A
+   gatehouse at the highest pass of his range, a small camp with its keeper (§BL's rules, one or
+   two folk), and the book he left lying there: the *Tao Te Ching* as the second tome (§DL), in
+   James Legge's 1891 translation (*The Sacred Books of the East*, vol. 39, public domain), one
+   chapter a page. It is found at the gate, not at a delve's heart.
+
+**Open (Mike):** naming (default, as the fig: play never names him; the log says *"An old man
+rides an ox up the pass road, slowly"*); and whether the gate, the keeper and the book are in
+(written in as a first guess; one line to strike).
+
+## DR. The temple city: roots over stone — LOCKED (3 Oct, 21:20–21:24, Mike)
+
+Mike: *"got some cool reference photos for ankor wat style ruins"* (eight frames of the temple the
+forest took back: pale trees standing on gallery roofs with their roots poured over the
+doorways, moss-green roofs, galleries of square columns, towers rising in diminishing tiers,
+courtyards of tumbled blocks, two figures in ochre walking a gallery); locked with *"lock it in"*
+(21:24). The three calls (size, where root-trees grow, the ochre camp) were not answered and are
+written at the defaults Claude proposed. Builds on §BB, §BQ, §CA, §CJ, §CK, §CL, §CS, §DI, §DJ,
+§DM.5. Data: `ruins.json → styles.temple_city` (`kind: own`), `ruins.json → root_trees`,
+`smoke.json → outlets.by_ruin.temple_city`, `delves.json → fire_holders.by_ruin`. Real references
+in the notes only (Angkor, Ta Prohm, Preah Khan): never a real name in play. Not built.
+
+1. **Its own kind** ("Temple city" in play): concentric enclosures of long low galleries with
+   square columns, carved doorways (gopuras) through each wall, courtyards, and towers that rise
+   in diminishing tiers at the centre, with a moat outside. First guess: 150–300 m across, two or
+   three enclosures, five towers (the real ones are a kilometre across and would eat an hour at
+   the walk; §CR.2's true size bends here on purpose, as §CK's walking-scale rule allows).
+2. **The root-tree is the signature.** Not dressing: a tree *standing on* the ruin, its trunk on
+   a gallery roof or a gopura and its roots poured down over the lintel and the wall to the
+   ground, bark pale against dark stone. The mechanism is already in the design twice (§CL: the
+   fig's roots gripping old stone; §DJ: the oak door) and this is where it becomes the whole
+   character of a place: one root-tree on about every third gopura and gallery. The species are
+   the place's own (§CA, §CS): the banyan and the sacred fig are in the jungle data; the big pale
+   silk-cotton with the cascading roots (*Tetrameles nudiflora*) is not yet, a one-line fill.
+   **Root-trees are not only the temple city's** (default): any old monument in jungle or
+   rainforest may carry one or two (`ruins.json → root_trees`); the temple city carries many.
+3. **§BB in stone.** Galleries are corridors, gopuras thresholds, courtyards rooms with one
+   feature, doorways voids (R8). The collapse is the obstacle (§CJ.6): courtyards knee-deep in
+   tumbled blocks, galleries climbed over or gone round. The delve is the walk inward: enclosure,
+   gallery, inner enclosure, the central tower as the heart, and the way out a collapsed gallery
+   on the far side. No fights (§CJ).
+4. **The look is already ours:** moss on every roof (§DI's wettest row), shade olive not navy
+   (R3's green-scene rule), stone grey-green, roots pale, doorways black, sky cobalt. Carved
+   figures on the walls stay as reliefs of dancers and guardians: nobody's gods by name (§BO).
+5. **Where:** indomalaya, in jungle and monsoon (tropical dry) forest, on flat lowland near water
+   (the moat), never on a crag. Rare: one or two per world where the realm exists.
+6. **The ochre camp** (default: yes): a living camp at the monument (§CK) wears ochre robes, the
+   colour the sacred fig's figure wears (§CL), so the sages and this place quietly share one
+   colour. Its fire is open (§CV.2). The delve's hearths vent through the towers (`tower_vent`).
+7. **The gate and the faces** (Mike's second batch, 21:27: the face towers, the causeway of
+   guardian heads, the three-headed elephant at the gate's corners, the sun behind a face tower).
+   The outer wall's gates are towers with a great serene face on each of their four sides,
+   looking out over the four roads; the causeway over the moat is lined with rows of crouching
+   guardians holding a serpent's body as a balustrade, half of them scowling and half serene;
+   the gate's corners are carved as a three-headed elephant pulling lotus trunks from the wall.
+   All of it ours (§BO): faces of nobody by name, guardians and elephants as reliefs. The faces
+   are the temple city's far-off tell (R10): a pale face in the trees at the end of the avenue.
+
+**Open (Mike):** the size, the root-trees elsewhere, and the ochre camp, each written at the
+default above.
+
+## DS. Monuments by realm: the set — LOCKED (3 Oct, 21:18–21:24, Mike)
+
+Mike: *"some more types of ruins: scottish castles, ankor watt, anasazi, mayan, aztec, incan,
+egyptian, pueblo pyramids, great wall of china, petra, stone hinge, easter island heads"*; locked
+with *"lock it in"* (21:24) over the table Claude put to him, with its two calls (all of them, in
+the order below; the stone heads wait for a tenth realm) written at the defaults. At 21:27, while
+this was being written, a second batch of frames: the temple city's face towers and guardian
+causeway (§DR.7), the cliff dwellings and the great kiva (4), and the brick city on its river (6),
+folded in here. The rule for
+every one: a realm and a biome gate (`ruins.json → styles`, the lighthouse's shape, §DN), a nest
+where one applies (§CK), what stone leaves behind (§BQ), a delve (§CJ), a smoke outlet (§CV), and
+never a real name in play (§BO). Not built.
+
+**Already in the game** (nothing to add): the Maya temple pyramid, the Aztec platform pyramid, the
+Inca terrace platform, the Egyptian true pyramid and the mastaba tomb. One addition: the terrace
+platform gains the fitted polygonal stone wall as its §BQ signature.
+
+**New styles of kinds we have:**
+- **the tower house** (a castle style) and **the broch** (a tower style: a drystone round
+  tower, double-walled, with a souterrain, an underground passage, as its delve): palearctic,
+  on the cold wet coasts and moors (maritime forest, rocky shore, the bog and tundra edge);
+  lichen and moss (§DI).
+
+**New kinds** (`kind: own`), in build order:
+1. **The long wall:** a wall running over the ridges for miles, with towers at intervals, broken
+   in places, a road along its top (§DM: the wall is a road kind). east_asia_temperate and
+   central_asia, on the steppe edge, mountains and cold desert. The gate towers' vaults are the
+   delve; the towers vent through wall flues. The first linear monument besides the aqueduct.
+2. **The carved cliffs:** facades cut into a sandstone canyon wall, entered through a slot
+   canyon (§CK's slot canyon and canyon nests), the rock-cut tombs behind the facades as the
+   delve. palearctic hot desert and canyon, sandstone only. Smoke: out the facade doors, soot
+   above them.
+3. **The stone heads:** a row of great stone heads on their platforms along a treeless coast,
+   facing inland, and the quarry's cave as the delve. **Waits for a tenth realm, oceania**
+   (`RealmMap` is code: Claude Code's), on coastal grassland. The restraint rule (§BL) as a
+   landscape: heads, grass, no trees, and nothing says why (§BQ).
+4. **The cliff dwelling** (Mike's second batch, 21:27: a town of stone rooms and round towers
+   filling a sandstone alcove; a smaller one high in a cave mouth; the great kiva): its own kind,
+   at the mesa alcove nest (§CK already names the alcoves): three or four storeys of fitted
+   sandstone rooms under the overhang, round towers, ladders, and the kivas, round sunken rooms
+   with a firebox and a vent, in the plaza in front. nearctic canyon, cold desert and sagebrush;
+   the alcove is its roof, so the stone stays nearly whole (§BQ). The delve is the great kiva
+   and the stores cut into the alcove's back; smoke out the kivas' vents and the roof hatches.
+5. **The terraced pueblo** (Mike's "pueblo pyramids", read as the stepped adobe towns of many
+   storeys on open ground): nearctic cold desert, sagebrush and canyon, near water; adobe melts,
+   so an old one is a mound with walls standing in it; the kiva is the delve; smoke out roof
+   hatches.
+6. **The brick city** (Mike's second batch, 21:27: a city of mud brick on a desert river: a
+   processional way between high buttressed walls to an arched gate, a maze of melted brick
+   foundation walls, the palace mound above the palms): its own kind, on a desert river's
+   floodplain (palearctic and central_asia; hot desert, oasis and steppe by a river, the levee
+   nest); the existing ziggurat style stands at its centre. What remains is the tell: a mound of
+   melted brick with the foundation walls standing in it as a maze, the gate still arched, its
+   face glazed blue with animals in relief (a saturated blue material: blue owns the frame, and
+   it never glows, R8). The delve is the vaulted stores under the palace mound and a well; smoke
+   out the courtyards' roof hatches.
+7. **The stone circle** (a henge): a ring of standing stones on grassland or moor, palearctic;
+   standing stones are already waymarks (§BC), this is the great one. The delve is a souterrain,
+   or none (the one allowed exception to §CJ's "every ruin has one", first guess). No smoke.
+8. **The temple city** is §DR; **the crag fortress** is §DO.
+
+**Order:** the long wall, the carved cliffs, the temple city (§DR), the crag fortress (§DO), the
+cliff dwelling, the brick city, the stone heads (after the realm), the terraced pueblo, the stone
+circle, the tower house and the broch.
+

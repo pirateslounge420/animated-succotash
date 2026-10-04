@@ -1,8 +1,9 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, §AA) AND whose spawn.biomes contains the biome key; no match → no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
+  "about": "[NOT WIRED YET \u2014 design \u00a7AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, \u00a7AA) AND whose spawn.biomes contains the biome key; no match \u2192 no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
   "fields": "base_m: side length range. tiers: receding steps (1 = smooth). face_deg: face angle. profile: smooth | step | talud_tablero | rounded_adobe | earth. stairs: number of grand stairs (0 = none). top: none | chapel_at_foot | temple_comb | twin_shrine | hall | shrine | post_circle. interior: none | corridor_chamber | top_room. material: palette key. cluster: single | single+satellite | field | plaza | avenue | terraces (cluster_n = how many). chance: share of that biome's ruins that are this style (replaces PYRAMID_CHANCE).",
-  "climb": "Stair risers are ledges (§0). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants)."
+  "climb": "Stair risers are ledges (\u00a70). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants).",
+  "styles_kinds": "[NOT WIRED YET \u2014 design \u00a7DO, \u00a7DR, \u00a7DS] Entries with kind 'own' are new Ruins.Kind values (each 'name_in_play' is its KIND_NAMES entry); entries with kind 'castle' or 'tower' are styles of those kinds, picked like the pyramid styles by spawn.realm and spawn.biomes. spawn.nest names landforms.json nests; needs and never are plain words for the builder. per_world_max caps a kind. delve: direction (up, down, in, inward), rooms, heart, way_out (\u00a7CJ.4), fire_holder (delves.json). Real references live only in source (\u00a7BO). The terrace_platform style gains the fitted polygonal stone wall as its \u00a7BQ signature (\u00a7DS)."
  },
  "styles": {
   "true_pyramid": {
@@ -179,7 +180,8 @@
      "PUNA"
     ]
    },
-   "chance": 0.3
+   "chance": 0.3,
+   "signature": "fitted polygonal stone walls (\u00a7BQ, \u00a7DS)"
   },
   "ziggurat": {
    "source": "Mesopotamia (Ur)",
@@ -305,11 +307,575 @@
    "restore_brings": [
     "headland_camp"
    ],
-   "_help": "[NOT WIRED YET — design §DN] Design 3 Oct §DN (Mike): a lighthouse on the coast. The lamp room is the ruin's hearth, a steady coal-fire brazier (no sweeping beam), one warm point on the headland seen from the far end of the coast road; dark means the stairwell is a den to clear before you can carry fire up and relight it. The §DM straight approach runs along the cliff top."
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DN] Design 3 Oct \u00a7DN (Mike): a lighthouse on the coast. The lamp room is the ruin's hearth, a steady coal-fire brazier (no sweeping beam), one warm point on the headland seen from the far end of the coast road; dark means the stairwell is a den to clear before you can carry fire up and relight it. The \u00a7DM straight approach runs along the cliff top."
+  },
+  "crag_fortress": {
+   "kind": "own",
+   "name_in_play": "Crag fortress",
+   "source": "Hilltop fortress-monasteries of the Tibetan plateau and the Himalaya (Gyantse Dzong, the dzongs of Bhutan, Leh Palace); notes only, never named in play (\u00a7BO)",
+   "rise_m": [
+    40,
+    100
+   ],
+   "tiers": [
+    3,
+    6
+   ],
+   "profile": "battered_tiers",
+   "batter_deg": [
+    5,
+    8
+   ],
+   "material": "limewashed_rammed_earth_and_stone",
+   "roof": "flat",
+   "windows": "small_dark_trapezoid_frames",
+   "band": {
+    "colour": "#5A2420",
+    "where": "under every roofline",
+    "matte": true
+   },
+   "finial": {
+    "on": "top_chapel",
+    "colour": "#B08A2E",
+    "matte": true,
+    "count": 1
+   },
+   "stairs": "one_long_stair_cut_up_the_rock",
+   "foot": "lesser_buildings_cluster",
+   "cloth": "none",
+   "spawn": {
+    "realm": [
+     "central_asia",
+     "east_asia_temperate",
+     "andes",
+     "palearctic"
+    ],
+    "biomes": [
+     "PUNA",
+     "COLD_DESERT",
+     "STEPPE",
+     "ALPINE_MEADOW",
+     "KRUMMHOLZ"
+    ],
+    "nest": [
+     "kopje",
+     "volcanic_neck",
+     "escarpment",
+     "mesa"
+    ],
+    "needs": [
+     "crag",
+     "altitude"
+    ],
+    "never": [
+     "flat",
+     "wet",
+     "warm"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 4,
+   "delve": {
+    "direction": "up",
+    "rooms": "stair_through_tiers, stores_in_rock, cistern",
+    "heart": "top_chapel",
+    "way_out": "outside_stair",
+    "fire_holder": "brazier"
+   },
+   "approach": "straight_climb_to_the_foot",
+   "overgrowth": "lichen_and_moss_shade_side_only",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DO] Mike, 3 Oct: its own kind, in Tibet-like country, the red band kept, no prayer flags. Battered limewashed walls in tiers up a crag, flat roofs, the matte red band under every roofline (a material, never a light: R7), one matte gilt finial on the top chapel (first guess, kept), the long stair, buildings at the foot where a camp lives if one does (\u00a7CK). The delve climbs: stores and a cistern in the rock, the heart is the chapel at the top, out by the outside stair (\u00a7CJ.4). Smoke: roof vents (smoke.json). No cloth anywhere."
+  },
+  "temple_city": {
+   "kind": "own",
+   "name_in_play": "Temple city",
+   "source": "The temple cities of the Khmer in monsoon forest (Angkor, Ta Prohm, Preah Khan); notes only, never named in play (\u00a7BO)",
+   "across_m": [
+    150,
+    300
+   ],
+   "enclosures": [
+    2,
+    3
+   ],
+   "towers": 5,
+   "profile": "galleries_and_tiered_towers",
+   "material": "grey_green_sandstone_laterite",
+   "moat": true,
+   "gopuras": "carved_doorways_through_each_wall",
+   "reliefs": "dancers_and_guardians_no_named_gods",
+   "collapse": "courtyards_of_tumbled_blocks",
+   "root_trees": {
+    "on": "every_third_gopura_and_gallery",
+    "species": "the place's own (\u00a7CA, \u00a7CS): Ficus benghalensis, Ficus religiosa; Tetrameles nudiflora once filled"
+   },
+   "spawn": {
+    "realm": [
+     "indomalaya"
+    ],
+    "biomes": [
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST"
+    ],
+    "needs": [
+     "flat_lowland",
+     "water_for_moat"
+    ],
+    "never": [
+     "crag",
+     "slope"
+    ]
+   },
+   "chance": 0.2,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "inward",
+    "rooms": "enclosure, gallery, inner_enclosure",
+    "heart": "central_tower",
+    "way_out": "collapsed_gallery_far_side",
+    "fire_holder": "hearth_ring"
+   },
+   "camp": {
+    "robes": "#CC7722",
+    "note": "a living camp at the monument wears ochre (\u00a7CL's colour); first guess, Mike's call"
+   },
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DR] Mike, 3 Oct, from eight frames of the temple the forest took back. Concentric galleries of square columns, carved gopuras, courtyards of tumbled blocks, tiered towers, a moat; root-trees standing on the gallery roofs with their roots poured over the doorways (the mechanism of \u00a7CL and \u00a7DJ, here the signature). \u00a7BB in stone: galleries corridors, gopuras thresholds, courtyards rooms, doorways voids. Shade olive (R3). The delve walks inward to the central tower and out by a collapsed gallery. Size is a first guess; the real ones are a kilometre.",
+   "gate": {
+    "face_towers": "a great serene face on each of the gate tower's four sides, looking out over the four roads; faces of nobody by name (\u00a7BO)",
+    "causeway": "rows of crouching guardians holding a serpent's body as a balustrade over the moat, half scowling and half serene",
+    "corners": "a three-headed elephant pulling lotus trunks from the wall",
+    "far_tell": "a pale face in the trees at the end of the avenue (R10)"
+   }
+  },
+  "long_wall": {
+   "kind": "own",
+   "name_in_play": "The long wall",
+   "source": "Frontier walls over the ridges (the Great Wall's Ming and earlier stretches, Hadrian's Wall for the smaller form); notes only (\u00a7BO)",
+   "length_km": [
+    3,
+    12
+   ],
+   "height_m": [
+    5,
+    8
+   ],
+   "towers_every_m": [
+    250,
+    500
+   ],
+   "profile": "wall_over_ridges_with_towers",
+   "material": "local_stone_and_rammed_earth",
+   "road_on_top": true,
+   "broken": "gaps_and_fallen_stretches",
+   "spawn": {
+    "realm": [
+     "east_asia_temperate",
+     "central_asia"
+    ],
+    "biomes": [
+     "STEPPE",
+     "COLD_DESERT",
+     "ALPINE_MEADOW",
+     "KRUMMHOLZ",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "needs": [
+     "ridgeline"
+    ],
+    "never": [
+     "wet",
+     "flat_lowland"
+    ]
+   },
+   "chance": 0.25,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "down",
+    "rooms": "gate_tower_vaults",
+    "heart": "gate_tower_undercroft",
+    "way_out": "a postern on the far side",
+    "fire_holder": "brazier"
+   },
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.1] A wall running over the ridges for miles with towers at intervals, broken in places, a road along its top (\u00a7DM: the wall is a road kind). The first linear monument besides the aqueduct. The gate towers' vaults are the delve; the towers vent through wall flues (smoke.json)."
+  },
+  "carved_cliffs": {
+   "kind": "own",
+   "name_in_play": "Carved cliffs",
+   "source": "Rock-cut facades of desert canyons (Petra, the Lycian and Ajanta cut tombs); notes only (\u00a7BO)",
+   "facades": [
+    3,
+    9
+   ],
+   "facade_height_m": [
+    8,
+    30
+   ],
+   "profile": "facades_cut_into_canyon_wall",
+   "material": "sandstone",
+   "entered_through": "slot_canyon",
+   "spawn": {
+    "realm": [
+     "palearctic",
+     "afrotropic"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "CANYON",
+     "BADLANDS"
+    ],
+    "nest": [
+     "slot_canyon",
+     "wadi"
+    ],
+    "needs": [
+     "sandstone",
+     "canyon_wall"
+    ],
+    "never": [
+     "wet"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "in",
+    "rooms": "rock_cut_tombs_behind_facades",
+    "heart": "the deepest tomb",
+    "way_out": "a shaft to the canyon rim",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "out the facade doors; soot above them",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.2] Facades cut into a sandstone canyon wall, reached through a slot canyon (\u00a7CK's nests); the rock-cut tombs behind them are the delve. Sandstone only."
+  },
+  "stone_heads": {
+   "kind": "own",
+   "name_in_play": "The stone heads",
+   "source": "The moai of Rapa Nui on their ahu, and the quarry at Rano Raraku; notes only (\u00a7BO)",
+   "heads": [
+    5,
+    15
+   ],
+   "height_m": [
+    4,
+    10
+   ],
+   "profile": "row_of_heads_on_platforms_facing_inland",
+   "material": "volcanic_tuff",
+   "landscape": "treeless_grass_coast",
+   "spawn": {
+    "realm": [
+     "oceania"
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "BEACH",
+     "ROCKY_SHORE"
+    ],
+    "needs": [
+     "coast",
+     "treeless"
+    ],
+    "never": [
+     "forest"
+    ]
+   },
+   "chance": 0.5,
+   "per_world_max": 1,
+   "waits_for": "a tenth realm, oceania, in RealmMap (code: Claude Code's); until then this entry places nothing",
+   "delve": {
+    "direction": "down",
+    "rooms": "the quarry's cave",
+    "heart": "an unfinished head still in the rock",
+    "way_out": "the quarry's open face",
+    "fire_holder": "hearth_ring"
+   },
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.3] A row of great stone heads on their platforms along a treeless coast, facing inland; the quarry's cave is the delve. The restraint rule (\u00a7BL) as a landscape: heads, grass, no trees, and nothing says why (\u00a7BQ). Waits for the oceania realm."
+  },
+  "terraced_pueblo": {
+   "kind": "own",
+   "name_in_play": "Terraced pueblo",
+   "source": "The stepped adobe towns of the American Southwest (Taos, the Chaco great houses) and the alcove dwellings (Mesa Verde) for the cliff variant; notes only (\u00a7BO)",
+   "storeys": [
+    3,
+    5
+   ],
+   "profile": "stepped_adobe_terraces",
+   "material": "adobe_that_has_melted_to_a_mound_with_walls_in_it",
+   "ladders_and_roof_hatches": true,
+   "spawn": {
+    "realm": [
+     "nearctic"
+    ],
+    "biomes": [
+     "COLD_DESERT",
+     "SAGEBRUSH",
+     "CANYON"
+    ],
+    "needs": [
+     "dry",
+     "near_water"
+    ],
+    "never": [
+     "wet",
+     "forest"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 3,
+   "delve": {
+    "direction": "down",
+    "rooms": "the kiva, a round sunken room, and stores",
+    "heart": "the great kiva",
+    "way_out": "a roof hatch",
+    "fire_holder": "hearth_ring"
+   },
+   "cliff_dwelling": {
+    "as": "its own kind now (styles.cliff_dwelling, \u00a7DS.4)"
+   },
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.4] Mike's 'pueblo pyramids', read as the stepped adobe towns of many storeys. Adobe melts, so an old one is a mound with walls standing in it; the kiva is the delve; smoke out roof hatches. With it, the cliff dwelling as a camp's remains at the mesa alcove nest."
+  },
+  "stone_circle": {
+   "kind": "own",
+   "name_in_play": "Stone circle",
+   "source": "The henges and stone circles of Atlantic Europe (Stonehenge, Avebury, Callanish); notes only (\u00a7BO)",
+   "stones": [
+    9,
+    30
+   ],
+   "stone_height_m": [
+    2,
+    7
+   ],
+   "profile": "ring_of_standing_stones_some_with_lintels",
+   "material": "local_hard_stone",
+   "ditch_and_bank": true,
+   "spawn": {
+    "realm": [
+     "palearctic"
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "WET_MEADOW",
+     "BOG"
+    ],
+    "needs": [
+     "open_ground"
+    ],
+    "never": [
+     "forest",
+     "slope"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "down",
+    "rooms": "a souterrain, or none",
+    "heart": "the souterrain's end chamber",
+    "way_out": "its second mouth",
+    "fire_holder": "none",
+    "note": "the one allowed exception to \u00a7CJ's every ruin has a delve (first guess)"
+   },
+   "smoke": "none",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.5] A ring of standing stones on open grassland or moor; standing stones are already waymarks (\u00a7BC), this is the great one. The delve is a souterrain, or none."
+  },
+  "tower_house": {
+   "kind": "castle",
+   "name_in_play": "Ruined castle",
+   "source": "The tower houses of Scotland and Ireland (14th\u201317th c.); notes only (\u00a7BO)",
+   "profile": "tall_narrow_keep_with_barmkin_wall",
+   "height_m": [
+    12,
+    20
+   ],
+   "material": "rubble_stone_harled",
+   "spawn": {
+    "realm": [
+     "palearctic"
+    ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "ROCKY_SHORE",
+     "TUNDRA",
+     "BOG",
+     "TEMPERATE_DECIDUOUS"
+    ],
+    "needs": [
+     "cool_wet"
+    ],
+    "never": [
+     "hot"
+    ]
+   },
+   "chance": 0.5,
+   "delve": {
+    "direction": "down",
+    "rooms": "vaulted_undercroft, pit_prison",
+    "heart": "the vault",
+    "way_out": "a postern",
+    "fire_holder": "brazier"
+   },
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS] A style of the castle kind: a tall narrow keep inside a low wall, on the cold wet coasts and moors; lichen and moss (\u00a7DI); the castle's chimney stack (\u00a7CV)."
+  },
+  "broch": {
+   "kind": "tower",
+   "name_in_play": "Ruined tower",
+   "source": "The Iron Age brochs of Scotland (Mousa, Dun Carloway): drystone round towers, double-walled, with souterrains nearby; notes only (\u00a7BO)",
+   "profile": "drystone_round_tower_double_walled",
+   "height_m": [
+    8,
+    13
+   ],
+   "base_m": [
+    14,
+    20
+   ],
+   "material": "drystone",
+   "spawn": {
+    "realm": [
+     "palearctic"
+    ],
+    "biomes": [
+     "ROCKY_SHORE",
+     "TUNDRA",
+     "BOG",
+     "MARITIME_FOREST"
+    ],
+    "needs": [
+     "cool_wet",
+     "coast_or_moor"
+    ],
+    "never": [
+     "hot"
+    ]
+   },
+   "chance": 0.5,
+   "delve": {
+    "direction": "down",
+    "rooms": "the gallery between the walls, then a souterrain",
+    "heart": "the souterrain's chamber",
+    "way_out": "its second mouth",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "a central hearth, open roof",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS] A style of the tower kind: a drystone round tower, double-walled, a souterrain (an underground passage) as its delve; lichen and moss (\u00a7DI)."
+  },
+  "cliff_dwelling": {
+   "kind": "own",
+   "name_in_play": "Cliff dwelling",
+   "source": "The alcove towns of the Ancestral Puebloans (Cliff Palace and Balcony House at Mesa Verde, Betatakin, Keet Seel) and the great kiva at Aztec Ruins; notes only (\u00a7BO)",
+   "rooms": [
+    20,
+    150
+   ],
+   "storeys": [
+    2,
+    4
+   ],
+   "profile": "fitted_sandstone_rooms_and_round_towers_filling_an_alcove",
+   "material": "fitted_sandstone_and_mud_mortar",
+   "kivas": {
+    "where": "the plaza in front",
+    "form": "round sunken rooms with a firebox and a vent"
+   },
+   "ladders": true,
+   "spawn": {
+    "realm": [
+     "nearctic"
+    ],
+    "biomes": [
+     "CANYON",
+     "COLD_DESERT",
+     "SAGEBRUSH"
+    ],
+    "nest": [
+     "mesa"
+    ],
+    "needs": [
+     "alcove_under_overhang",
+     "water_below"
+    ],
+    "never": [
+     "wet",
+     "forest"
+    ]
+   },
+   "chance": 0.4,
+   "per_world_max": 3,
+   "delve": {
+    "direction": "in",
+    "rooms": "the great kiva, then stores cut into the alcove's back",
+    "heart": "the great kiva",
+    "way_out": "a ladder to the alcove's rim",
+    "fire_holder": "hearth_ring"
+   },
+   "smoke": "out the kivas' vents and the roof hatches",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.4] Mike's second batch, 3 Oct 21:27: a town of stone rooms and round towers filling a sandstone alcove, and the great kiva. Its own kind at the mesa alcove nest (\u00a7CK): the alcove is its roof, so the stone stays nearly whole (\u00a7BQ)."
+  },
+  "brick_city": {
+   "kind": "own",
+   "name_in_play": "Brick city",
+   "source": "The mud-brick cities of the Mesopotamian floodplain (Babylon's Processional Way and gate, its tell of melted brick, the palace mound); notes only (\u00a7BO)",
+   "across_m": [
+    200,
+    400
+   ],
+   "profile": "tell_of_melted_brick_with_foundation_walls_as_a_maze",
+   "material": "sun_dried_brick_with_fired_brick_facings",
+   "processional_way": {
+    "between": "high buttressed walls",
+    "to": "an arched gate with pilasters"
+   },
+   "gate": {
+    "arched": true,
+    "glazed": {
+     "colour": "#1E3FD0",
+     "reliefs": "animals in relief (aurochs, lions, a dragon of our own)",
+     "glows": false
+    }
+   },
+   "centre": "the ziggurat style (existing)",
+   "palace_mound": true,
+   "spawn": {
+    "realm": [
+     "palearctic",
+     "central_asia"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS",
+     "STEPPE"
+    ],
+    "nest": [
+     "levee_and_chenier",
+     "oasis"
+    ],
+    "needs": [
+     "desert_river_floodplain",
+     "flat"
+    ],
+    "never": [
+     "crag",
+     "forest"
+    ]
+   },
+   "chance": 0.3,
+   "per_world_max": 2,
+   "delve": {
+    "direction": "down",
+    "rooms": "the vaulted stores under the palace mound, a well",
+    "heart": "the deepest vault",
+    "way_out": "the well shaft to the river bank",
+    "fire_holder": "brazier"
+   },
+   "smoke": "out the courtyards' roof hatches",
+   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.6] Mike's second batch, 3 Oct 21:27: a city of mud brick on a desert river. What remains is the tell, a mound of melted brick with the foundation walls standing in it as a maze, the processional way between buttressed walls, the arched gate still standing with its blue glazed face (a saturated blue material that never glows, R8), the palace mound above the palms, the existing ziggurat at the centre."
   }
  },
  "overgrowth": {
-  "_help": "[NOT WIRED YET — design §DI] A ruin wears its place (Mike, 3 Oct by voice: \"different mosses and plants and vines and stuff like overgrowing them\"; \"just dressing for now\"). Dressing only: nothing to clear, no mechanic. What grows on it comes from the plants that really grow there (the community of the place, §CS; the biome gate §CA; the vines §CE; a nest's own plants §CM): moss on the stones, ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall tops, and lichen painted into the stone's own tile (look R9: detail in the albedo). by_moisture: how much of each by the place's moisture (the climate's 0-1), as rows of the columns; between rows they blend. shade_side_scale: the side away from the sun (north in the northern hemisphere, south in the southern) carries this much more moss and fern, as real walls do. age: older stone carries more (a monument against a camp's remains, §CK). cold_mean_c: where the year's mean is below this, only lichen and moss. Never a species the place can't grow: a desert ruin is nearly bare, a cloud-forest ruin green to the cornice. With §BQ's signatures and §CU's no-two-alike hearths, this is why two ruins of one kind are two places.",
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] A ruin wears its place (Mike, 3 Oct by voice: \"different mosses and plants and vines and stuff like overgrowing them\"; \"just dressing for now\"). Dressing only: nothing to clear, no mechanic. What grows on it comes from the plants that really grow there (the community of the place, \u00a7CS; the biome gate \u00a7CA; the vines \u00a7CE; a nest's own plants \u00a7CM): moss on the stones, ferns in the cracks and at the foot, vines over the walls, grass and herbs along the wall tops, and lichen painted into the stone's own tile (look R9: detail in the albedo). by_moisture: how much of each by the place's moisture (the climate's 0-1), as rows of the columns; between rows they blend. shade_side_scale: the side away from the sun (north in the northern hemisphere, south in the southern) carries this much more moss and fern, as real walls do. age: older stone carries more (a monument against a camp's remains, \u00a7CK). cold_mean_c: where the year's mean is below this, only lichen and moss. Never a species the place can't grow: a desert ruin is nearly bare, a cloud-forest ruin green to the cornice. With \u00a7BQ's signatures and \u00a7CU's no-two-alike hearths, this is why two ruins of one kind are two places.",
   "columns": [
    "moisture",
    "moss",
@@ -368,7 +934,7 @@
   "cold_mean_c": 0.0
  },
  "haunt": {
-  "_help": "[NOT WIRED YET — design §DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, §CJ); share: of those, how many are. A ghost is the shared cloaked rig (§0) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (§CU): §BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (§BQ: the ending stays unnamed).",
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DI] Haunted where the dead lie (Mike, 3 Oct by voice: \"graveyards, mausoleums, it can be haunted. And so you might get glimpses of different ghosts which vanish\"; \"if you follow it around the corner ... it might just have vanished\"). kinds: the ruins that can be (Ruins.Kind names; and the tomb and mausoleum rooms of any delve, \u00a7CJ); share: of those, how many are. A ghost is the shared cloaked rig (\u00a70) in color at alpha, pale and a little see-through, with no light of its own (R8) and no sound; it never harms, never speaks and fills no meter. It is not a lurker (\u00a7CU): \u00a7BA's stage-3 shape at the edge of the light comes with the dread and its warnings, a ghost with none. when: only where the light is low (dusk, night, or a dark hall by day: sky visibility under low_light_visibility). where: at a corner, a doorway or the edge of your light, distance_m off, with an occluder within occluder_within_m of it to step behind. It is seen for seen_s, steps out of sight round that occluder, and is gone the moment it is out of view, so the corner you hurry round is empty. Never twice in a row at one spot. rarity: at most per_visit_max a visit, and about per_real_hour in a real hour spent in haunted places. It tells nothing (\u00a7BQ: the ending stays unnamed).",
   "kinds": [
    "GRAVEYARD",
    "BARROW",
@@ -390,5 +956,35 @@
   ],
   "per_visit_max": 1,
   "per_real_hour": 1.0
+ },
+ "root_trees": {
+  "_help": "[NOT WIRED YET \u2014 design \u00a7DR] Trees that stand ON a ruin: a trunk on a gallery roof, a gopura or a wall top, its roots poured down over the lintel and the wall to the ground, bark pale against dark stone. The mechanism of \u00a7CL (the fig's roots gripping old stone) and \u00a7DJ (the oak door). species: the place's own (\u00a7CA, \u00a7CS) from genera; the big pale silk-cotton with the cascading roots (Tetrameles nudiflora) is a later one-line data fill for the jungle. by_kind: how many a monument carries: the temple city many (its signature), any other old monument in the listed biomes one or two (first guess, Mike's default). Only in the wet tropics (biomes). age: a camp's remains carry none.",
+  "genera": [
+   "Ficus",
+   "Tetrameles"
+  ],
+  "biomes": [
+   "JUNGLE",
+   "TROPICAL_RAINFOREST",
+   "TROPICAL_DRY_FOREST",
+   "CLOUD_FOREST"
+  ],
+  "by_kind": {
+   "temple_city": "every_third_gopura_and_gallery",
+   "default_monument": [
+    1,
+    2
+   ],
+   "camp_remains": 0
+  },
+  "roots": {
+   "over": [
+    "lintel",
+    "doorway",
+    "wall_face"
+   ],
+   "reach_ground": true,
+   "colour": "pale_bark_against_dark_stone"
+  }
  }
 }
