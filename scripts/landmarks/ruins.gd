@@ -43,14 +43,14 @@ class_name Ruins
 ## of the planet data (thread-safe), so every visit finds the same ruin and
 ## vegetation can keep the footprint clear.
 
-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY, LONG_WALL, CARVED_CLIFFS, CLIFF_DWELLING, BRICK_CITY, STONE_HEADS, TERRACED_PUEBLO }
+enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY, LONG_WALL, CARVED_CLIFFS, CLIFF_DWELLING, BRICK_CITY, STONE_HEADS, TERRACED_PUEBLO, STONE_CIRCLE }
 
 const CELL_M := 3200.0
 const CHANCE := 0.5
 const SALT := 555
 const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
 	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
-	"Barrow tomb", "Crag fortress", "Temple city", "The long wall", "Carved cliffs", "Cliff dwelling", "Brick city", "The stone heads", "Terraced pueblo"]
+	"Barrow tomb", "Crag fortress", "Temple city", "The long wall", "Carved cliffs", "Cliff dwelling", "Brick city", "The stone heads", "Terraced pueblo", "Stone circle"]
 const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
 const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
 const SNOW_C := -3.0
@@ -345,7 +345,7 @@ static func inhabited(site: Dictionary) -> bool:
 static func rolls_inhabited(site: Dictionary) -> bool:
 	# Nobody lives by the stone heads (design 3 Oct §DS.3: the restraint
 	# rule as a landscape).
-	if not (site.get("kind") is String) and int(site.get("kind", -1)) == Kind.STONE_HEADS:
+	if not (site.get("kind") is String) and int(site.get("kind", -1)) in [Kind.STONE_HEADS, Kind.STONE_CIRCLE]:
 		return false
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "living"])
@@ -404,6 +404,9 @@ static func camp_folk(site: Dictionary) -> String:
 		Kind.TERRACED_PUEBLO:
 			# Folk in the plaza below the terraces (§DS.5).
 			return "tribal"
+		Kind.STONE_CIRCLE:
+			# Nobody lives in the ring (rolls_inhabited).
+			return "dead"
 		Kind.BARROW:
 			var brng := RandomNumberGenerator.new()
 			brng.seed = hash([site.seed, "folk"])

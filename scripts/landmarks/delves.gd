@@ -101,6 +101,10 @@ static func has_delve(site: Dictionary) -> bool:
 	# The brick city: the vaulted stores under the palace mound (§DS.6).
 	if int(site.kind) == Ruins.Kind.BRICK_CITY:
 		return true
+	# The stone circle: a souterrain where its seed gives one (§DS.7: the
+	# one kind allowed none).
+	if int(site.kind) == Ruins.Kind.STONE_CIRCLE:
+		return bool(site.get("souterrain", false))
 	# The stone heads: the quarry's cave in the hill behind (§DS.3).
 	if int(site.kind) == Ruins.Kind.STONE_HEADS:
 		return true
@@ -199,6 +203,11 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	if hit != null:
 		return hit
 	var lay := CragFortress.layout(map, site) if int(site.kind) == Ruins.Kind.CRAG_FORTRESS else _make_layout(map, site)
+	# A kind whose delve has no fire-holders (delves.json fire_holders
+	# by_ruin "none": the stone circle's souterrain, §DS.7).
+	var holders: Dictionary = (Tuning.table("delves").get("fire_holders", {}) as Dictionary).get("by_ruin", {})
+	if not (site.kind is String) and str(holders.get(str(Ruins.Kind.keys()[int(site.kind)]).to_lower(), "")) == "none":
+		lay.no_fire = true
 	_mutex.lock()
 	_layouts[key] = lay
 	_mutex.unlock()

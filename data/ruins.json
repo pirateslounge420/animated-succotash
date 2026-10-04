@@ -680,7 +680,7 @@
     "note": "the one allowed exception to \u00a7CJ's every ruin has a delve (first guess)"
    },
    "smoke": "none",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.5] A ring of standing stones on open grassland or moor; standing stones are already waymarks (\u00a7BC), this is the great one. The delve is a souterrain, or none."
+   "_help": "Built (design \u00a7DS.7; Monuments._stone_circle, RuinBuilder._stone_circle): a ring of standing stones (stones, stone_height_m) of the local hard stone, leaning a little, about one in seven fallen in the grass, lintels on some near-equal pairs; outside it a ditch (a dark band) and a bank (a low ring of turfed earth) with a causeway in. On palearctic prairie, wet meadow or bog; open_ground (no tree of the catalogue may grow there, the ground rolling under 0.1 over 60 m) and never a slope (the same 0.1 for this kind). Half the circles have a souterrain (the barrow kit going down from the bank under the ring, its end chamber the heart, a second mouth beyond, no fire-holders: delves.json by_ruin none); the rest have no delve, \u00a7CJ's one allowed exception. No smoke. Nobody lives there. The wind moans in the stones above 6 m/s (\u00a7DI's ruin bed). Restart after editing."
   },
   "tower_house": {
    "kind": "castle",

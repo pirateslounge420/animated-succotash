@@ -145,7 +145,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 			continue
 		var site: Dictionary = node.get_meta("site", {})
 		# A delve's first room (design 1 Oct §CJ): its one safe room's hearth.
-		if node.has_meta("delve"):
+		if node.has_meta("delve") and not bool((node.get_meta("delve") as Dictionary).get("no_fire", false)):
 			var lay: Dictionary = node.get_meta("delve")
 			var hl: Vector3 = lay.get("hearth", Vector3.INF)
 			if hl != Vector3.INF:

@@ -254,6 +254,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._stone_heads()
 		Ruins.Kind.TERRACED_PUEBLO:
 			b._terraced_pueblo()
+		Ruins.Kind.STONE_CIRCLE:
+			b._stone_circle()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4468,7 +4470,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -5274,5 +5276,64 @@ func _terraced_pueblo() -> void:
 		if p.y > kc.y and absf(p.x - kc.x) < 1.6:
 			continue
 		_pbox(Transform3D(Basis(Vector3.UP, -a + PI * 0.5), Vector3(p.x, ground(p.x, p.y) + 0.25, p.y)), Vector3(kr * TAU / 16.0 * 1.05, 0.9, 0.7), ADOBE[k % 5].darkened(0.08), 0.1)
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+# --- The stone circle (design 3 Oct §DS.7) -----------------------------------------
+
+## The ring (Monuments._stone_circle): its standing stones of the local
+## hard stone, leaning a little, some fallen in the grass, lintels on some
+## pairs; outside it the ditch (a dark band) and the bank (a low ring of
+## turfed earth) with a causeway in; where the seed gives one, the
+## souterrain's mouth at the bank (the barrow kit going down under the
+## ring, no fire-holders: delves.json by_ruin "none").
+func _stone_circle() -> void:
+	palette = STONES
+	var r: float = site.ring_r
+	_lod_m = r + 14.0 + LOD_M
+	var stones: Array = site.stones
+	var tops: Array = []
+	for i in stones.size():
+		var s: Dictionary = stones[i]
+		var a := float(s.a)
+		var p := Vector2(cos(a), sin(a)) * r
+		var g := ground(p.x, p.y)
+		var h := float(s.h)
+		var w := float(s.w)
+		var col: Color = STONES[i % STONES.size()]
+		var face := Basis(Vector3.UP, -a + PI * 0.5)
+		if bool(s.fallen):
+			_pbox(Transform3D(face * Basis(Vector3.RIGHT, PI * 0.5 - 0.05), Vector3(p.x * 1.08, g + 0.45, p.y * 1.08)), Vector3(w, h, 0.85), col, 0.4)
+			tops.append(Vector3.INF)
+			continue
+		var bs := face * Basis(Vector3.BACK, float(s.lean))
+		_pbox(Transform3D(bs, Vector3(p.x, g + h * 0.5 - 0.6, p.y)), Vector3(w, h + 1.2, 0.95), col, 0.3)
+		tops.append(Vector3(p.x, g + h - 0.6, p.y))
+	# The lintels across their pairs.
+	for i in site.lintels:
+		var t1: Vector3 = tops[int(i)]
+		var t2: Vector3 = tops[(int(i) + 1) % stones.size()]
+		if t1 == Vector3.INF or t2 == Vector3.INF:
+			continue
+		var mid := (t1 + t2) * 0.5
+		var along := (t2 - t1)
+		var bl := Basis(Vector3.UP, atan2(-along.z, along.x))
+		_pbox(Transform3D(bl, Vector3(mid.x, maxf(t1.y, t2.y) + 0.45, mid.z)), Vector3(along.length() + 1.6, 0.9, 1.0), STONES[2].darkened(0.06), 0.35)
+	# The ditch and the bank, the causeway in on the -z side.
+	var segs := 36
+	for k in segs:
+		var a0 := TAU * k / segs
+		var a1 := TAU * (k + 1) / segs
+		var am := (a0 + a1) * 0.5
+		if absf(wrapf(am + PI * 0.5, -PI, PI)) < 0.2:
+			continue
+		for band in [[r + 8.0, 2.4, 0.08, EARTH.darkened(0.45)], [r + 11.5, 2.6, 0.8, GRASS.darkened(0.15)]]:
+			var rr: float = band[0]
+			var c := Vector2(cos(am), sin(am)) * rr
+			var seg_l := TAU * rr / segs + 0.4
+			var hh: float = band[2]
+			var gy := ground(c.x, c.y)
+			_pbox(Transform3D(Basis(Vector3.UP, -am + PI * 0.5), Vector3(c.x, gy + hh * 0.5 - 0.15, c.y)), Vector3(seg_l, hh + 0.3, float(band[1])), band[3], 0.6)
 	if Delves.has_delve(site):
 		_delve_build()

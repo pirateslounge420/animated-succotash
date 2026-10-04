@@ -34,6 +34,8 @@ class_name Monuments
 ##   flat              the ground within 60 m rises no more than FLAT_LOOSE;
 ##   coast             the sea within COAST_M (sea_bearing);
 ##   dry               the ground's moisture under DRY;
+##   open_ground       open land: no tree of the catalogue may grow there
+##                     (treeless) and the ground rolls under FLAT_LOOSE;
 ##   near_water        a river, a lake or the shore within WATER_BELOW_M;
 ##   treeless          no tree of the catalogue passes its gate there or
 ##                     40 m round (HiddenPlaces.tree_gate): the land is
@@ -41,7 +43,7 @@ class_name Monuments
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -111,7 +113,7 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 	var needs: Array = sp.get("needs", [])
 	var never: Array = sp.get("never", [])
 	if needs.has("flat_lowland") or never.has("slope"):
-		if slope(map, p, 60.0) > FLAT_MAX:
+		if slope(map, p, 60.0) > (FLAT_LOOSE if needs.has("open_ground") else FLAT_MAX):
 			return "slope"
 	if needs.has("flat_lowland") and e > LOWLAND_M:
 		return "upland"
@@ -137,6 +139,8 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "dry"
 	if needs.has("flat") and slope(map, p, 60.0) > FLAT_LOOSE:
 		return "slope"
+	if needs.has("open_ground") and (slope(map, p, 60.0) > FLAT_LOOSE or not treeless(map, p)):
+		return "closed"
 	if needs.has("dry") and map.sample(map.moisture, p) >= DRY:
 		return "wet"
 	if needs.has("near_water") and HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) > WATER_BELOW_M:
@@ -453,6 +457,8 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 		"terraced_pueblo":
 			if _terraced_pueblo(map, E, d, rng, site).is_empty():
 				return {}
+		"stone_circle":
+			_stone_circle(E, d, rng, site)
 	return site
 
 
@@ -910,4 +916,37 @@ static func _terraced_pueblo(map: PlanetData, E: Dictionary, d: Vector3, rng: Ra
 	site.footprint_m = maxf(cols, rows) * 4.0 * 0.5 + 18.0
 	site.clear = [[d, float(site.footprint_m)]]
 	return site
+
+
+## The stone circle (§DS.7): its ring of stones round `d`, the ditch and
+## bank outside it with a causeway in, and (half the time) a souterrain:
+## its hidden mouth at the bank, its passage under the ring to the end
+## chamber, a second mouth beyond. Fills `site`.
+static func _stone_circle(E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> void:
+	var sc: Array = E.get("stones", [9, 30])
+	var sh: Array = E.get("stone_height_m", [2, 7])
+	var n := rng.randi_range(int(sc[0]), int(sc[1]))
+	var r := 4.0 + n * 0.45
+	site.heading = Delves.grid_heading(d, rng.randf() * TAU)
+	site.ring_r = r
+	var stones: Array = []
+	for i in n:
+		stones.append({"a": TAU * i / n + rng.randf_range(-0.04, 0.04), "h": rng.randf_range(float(sh[0]), float(sh[1])), "w": rng.randf_range(1.3, 2.1),
+			"lean": rng.randf_range(-0.12, 0.12), "fallen": rng.randf() < 0.15})
+	# Lintels on pairs of near-equal standing stones.
+	var lintels: Array = []
+	for i in n:
+		var s1: Dictionary = stones[i]
+		var s2: Dictionary = stones[(i + 1) % n]
+		if bool(s1.fallen) or bool(s2.fallen) or float(s1.h) < 3.2 or absf(float(s1.h) - float(s2.h)) > 1.2 or rng.randf() > 0.4:
+			continue
+		if not lintels.is_empty() and int(lintels[-1]) == i - 1:
+			continue
+		lintels.append(i)
+	site.stones = stones
+	site.lintels = lintels
+	site.souterrain = rng.randf() < 0.5
+	site.half_l = r + 10.0 + 5.7
+	site.footprint_m = r + 14.0
+	site.clear = [[d, r + 14.0]]
 

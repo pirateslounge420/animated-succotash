@@ -41,6 +41,8 @@ extends SceneTree
 ## at their faces with the sea behind.
 ## SITES=terraced_pueblo the nearest terraced pueblo (§DS.5): from beyond its
 ## plaza, looking up its terraces (SEED=8 has one).
+## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
+## through the bank (SEED=8 has one).
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -195,6 +197,8 @@ func _run() -> void:
 			kinds.append("stone_heads")
 		if only.has("terraced_pueblo"):
 			kinds.append("terraced_pueblo")
+		if only.has("stone_circle"):
+			kinds.append("stone_circle")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -311,6 +315,14 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"stone_circle":
+				var scs: Array = Monuments.all_sites(world.planet, "stone_circle")
+				if scs.is_empty():
+					lines.append("-- stone_circle: none on this world")
+					continue
+				var sc0: Dictionary = scs[0]
+				sites.append({"name": "stone_circle", "dir": Ruins.local_dir(sc0, 0.0, -(float(sc0.ring_r) + 18.0)), "look": sc0.dir,
+					"note": "the stone circle, %d stones" % (sc0.stones as Array).size()})
 			"terraced_pueblo":
 				var tps: Array = Monuments.all_sites(world.planet, "terraced_pueblo")
 				if tps.is_empty():

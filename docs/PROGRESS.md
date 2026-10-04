@@ -4,6 +4,25 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.7: the stone circle (prompt 27)
+- **The kind:** `Ruins.Kind.STONE_CIRCLE`, "Stone circle" (`data/ruins.json` → `styles.stone_circle`, unmarked), placed by Monuments' sites pass. Nobody lives there (`Ruins.rolls_inhabited`).
+  - **New gate word:** `open_ground` (no tree of the catalogue may grow there, the ground rolling under 0.1 over 60 m). Its `slope` never-word takes the same 0.1, the moor's own roll.
+- **The ring** (`Monuments._stone_circle`, `RuinBuilder._stone_circle`):
+  - 9–30 stones, 2–7 m tall, on a ring of 4 + 0.45 m per stone, leaning a little. About one in seven are fallen. Lintels sit on near-equal pairs over 3.2 m.
+  - Outside: a dark ditch band and a low turf bank, with a causeway in on the -z side.
+- **The souterrain:** on half the circles (seeded), the barrow kit going down from the bank under the ring to its end chamber (the heart) and a second mouth.
+  - No fire-holders: `Delves.layout` marks a kind with delves.json `by_ruin` "none" (`no_fire`), and OldHearths lays no hearth there.
+  - The other half have no delve: §CJ's one allowed exception.
+- **No smoke.** The wind moans in the stones above 6 m/s through §DI's ruin bed, which already covers any stone ruin.
+- **Check:** `tools/stone_circle_check.gd`, 0 fails.
+  - 7731 has none (most of its grass is outside the palearctic).
+  - Seed 2 has two: one of 30 stones with 2 lintels and a souterrain (stair, room, stair, heart, exit; no fire-holders; 31,744 triangles); one of 27 stones with 3 lintels and no delve (1,176 triangles).
+  - Seed 8 and seed 5 have one each.
+- **Walkabout** (`SEED=8 SITES=stone_circle`, harness frame §CG): the ring of grey stones with a lintel pair from the causeway, the bank's blocks in the foreground.
+- **Flags:**
+  - The bank reads blocky up close; it is built from plain blocks.
+  - Seeds 2, 101 and 1234 print stack overflows during the world's own setup, before any monument code runs. They are pre-existing; the checks still pass.
+
 ## 2026-10-04 — §DS.5: the terraced pueblo (prompt 26)
 - **The kind:** `Ruins.Kind.TERRACED_PUEBLO`, "Terraced pueblo" (`data/ruins.json` → `styles.terraced_pueblo`, unmarked), placed by Monuments' sites pass.
   - **New gate words:** `dry` (moisture under 0.4) and `near_water` (water within 2 km).
