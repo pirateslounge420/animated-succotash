@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–30. Next up: 31.
+Built so far: 01–31. Next up: 32.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -60,7 +60,7 @@ Built so far: 01–30. Next up: 31.
 | 28 | §DS | The tower house and the broch | built 0cb81c7 |
 | 29 | §DZ | The hewn temple, found from above | built 40ca950 |
 | 30 | §DT | The hanging gardens | built 74439f5 |
-| 31 | §DU | The ruined abbey | todo |
+| 31 | §DU | The ruined abbey | built 40a3af1 |
 | 32 | §DW | The temple park | todo |
 | 33 | §DY | The pillar shrines | todo |
 | 34 | §DV | The old colonnade | todo |
@@ -637,7 +637,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 31 — The ruined abbey — §DU
 
-**Status:** todo
+**Status:** built 40a3af1
 **Mike sees:** A great church with its roof gone: arcades and lancet windows framing the sky, one tower, a grass floor, and on a misty morning the sun through the windows onto the grass.
 
 ```text
