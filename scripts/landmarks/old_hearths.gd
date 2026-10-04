@@ -228,7 +228,7 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 	fire.set_meta("smoke", 1.0)
 	if ruin != null and kind in ["delve", "holder"]:
 		var site_r: Dictionary = ruin.get_meta("site")
-		var rk := str(Ruins.Kind.keys()[int(site_r.kind)]).to_lower() if not (site_r.kind is String) else "default"
+		var rk := Ruins.data_key(site_r, (Smoke.D.get("outlets", {}) as Dictionary).get("by_ruin", {}))
 		var form := Smoke.stack_form(rk)
 		var up := d.normalized()
 		var foot: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))

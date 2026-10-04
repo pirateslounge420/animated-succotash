@@ -718,7 +718,7 @@
     "way_out": "a postern",
     "fire_holder": "brazier"
    },
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS] A style of the castle kind: a tall narrow keep inside a low wall, on the cold wet coasts and moors; lichen and moss (\u00a7DI); the castle's chimney stack (\u00a7CV)."
+   "_help": "[built \u2014 design \u00a7DS: Ruins._northern_style, RuinBuilder._tower_house] A style of the castle kind: a tall narrow keep inside a low wall, on the cold wet coasts and moors; lichen and moss (\u00a7DI); the castle's chimney stack (\u00a7CV). On the moors (tundra and bog, igloo and boardwalk country otherwise) a ruin may take it too. The keep 9.2 m wide and 14-20 m long (long enough to hold the way down's open hole), the barmkin 28 m square."
   },
   "broch": {
    "kind": "tower",
@@ -761,7 +761,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "a central hearth, open roof",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS] A style of the tower kind: a drystone round tower, double-walled, a souterrain (an underground passage) as its delve; lichen and moss (\u00a7DI)."
+   "_help": "[built \u2014 design \u00a7DS: Ruins._northern_style, RuinBuilder._broch] A style of the tower kind: a drystone round tower, double-walled, a souterrain (an underground passage) as its delve, its mouth beside the broch; lichen and moss (\u00a7DI). On the moors (tundra and bog) a ruin may take it too, before the tower house."
   },
   "cliff_dwelling": {
    "kind": "own",

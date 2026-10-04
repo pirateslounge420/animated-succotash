@@ -41,6 +41,11 @@ class_name Monuments
 ##                     40 m round (HiddenPlaces.tree_gate): the land is
 ##                     already bare, nothing is cleared (§DS.3).
 ##   flat_lowland      (never) flat and low, as above.
+##   cool_wet          the cell under COOL_C and the ground's moisture
+##                     COOL_WET or more (the castle and tower styles, §DS:
+##                     the tower house, the broch);
+##   hot               (never) the cell over HOT_C;
+##   coast_or_moor     the sea within COAST_M, or a moor (tundra or bog).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
 const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE}
@@ -58,6 +63,11 @@ const WATER_BELOW_M := 2000.0
 const FLOODPLAIN_M := 1500.0
 const COAST_M := 360.0
 const DRY := 0.4
+## "cool_wet" and (never) "hot" (the northern styles, §DS): the cell's mean
+## temperature and the ground's moisture.
+const COOL_C := 14.0
+const COOL_WET := 0.5
+const HOT_C := 22.0
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
 ## over 60 m in the dry country, so a little looser than flat_lowland's.
 const FLAT_LOOSE := 0.1
@@ -149,6 +159,12 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "inland"
 	if needs.has("treeless") and not treeless(map, p):
 		return "trees"
+	if never.has("hot") and map.temp_c[cell] > HOT_C:
+		return "hot"
+	if needs.has("cool_wet") and (map.temp_c[cell] >= COOL_C or map.sample(map.moisture, p) < COOL_WET):
+		return "not_cool_wet"
+	if needs.has("coast_or_moor") and not (bkey in ["TUNDRA", "BOG"]) and is_inf(sea_bearing(map, p)):
+		return "inland"
 	if needs.has("desert_river_floodplain"):
 		var rv := river_m(map, p)
 		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0

@@ -201,6 +201,15 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 				kind = Kind.CASTLE
 			elif rng.randf() < 0.4:
 				kind = Kind.AQUEDUCT
+	# A northern style of the castle or the tower (design 3 Oct §DS): the
+	# tower house, the broch, on the cold wet coasts and moors.
+	var north := ""
+	if style == "" and tomb == "":
+		north = _northern_style(map, best.dir, kind, land, key)
+		if north == "tower_house":
+			kind = Kind.CASTLE
+		elif north == "broch":
+			kind = Kind.TOWER
 	if style != "":
 		kind = Kind.PYRAMID
 	elif tomb == "graveyard":
@@ -217,9 +226,13 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		Kind.CASTLE:
 			site.footprint_m = 28.0
 			site.clear = [[best.dir, 30.0]]
+			if north != "":
+				_northern_site(map, site, north)
 		Kind.TOWER:
 			site.footprint_m = 10.0
 			site.clear = [[best.dir, 11.0]]
+			if north != "":
+				_northern_site(map, site, north)
 		Kind.IGLOO:
 			site.footprint_m = 12.0
 			site.clear = [[best.dir, 13.0]]
@@ -244,6 +257,104 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 	if Delves.has_delve(site):
 		Delves.decorate(map, site)
 	return site
+
+
+## The northern style a castle or tower at `p` takes (design 3 Oct §DS,
+## ruins.json styles.tower_house / styles.broch, "" for none): where the
+## style's spawn gate holds (Monuments.gate: its realm, its biomes, cool
+## and wet, never hot; the broch on a coast or a moor), on its own seeded
+## `chance` roll. A castle may take the tower house, a tower the broch; on
+## the moors (tundra and bog: igloo and boardwalk country otherwise) a
+## ruin may take either, the broch first.
+static func _northern_style(map: PlanetData, p: Vector3, kind: int, land: String, key: Vector4i) -> String:
+	var moor := land in ["snow", "marsh"] and map.biome[map.cell_at(p)] in [BiomeTemplates.TUNDRA, BiomeTemplates.BOG]
+	var tries: Array = []
+	if moor:
+		tries = ["broch", "tower_house"]
+	elif land == "" and kind == Kind.CASTLE:
+		tries = ["tower_house"]
+	elif land == "" and kind == Kind.TOWER:
+		tries = ["broch"]
+	var srng := RandomNumberGenerator.new()
+	srng.seed = hash([key, "north"])
+	for s in tries:
+		var roll := srng.randf()
+		if Monuments.gate(map, p, s) == "" and roll < float(Monuments.entry(s).get("chance", 0.5)):
+			return s
+	return ""
+
+
+## A northern style's measurements (RuinBuilder builds to them; §DS):
+## the tower house {"keep_h", "keep_hx", "keep_hz", "barmkin_hs"}, its
+## door and the delve's way down (the barrow kit, Delves) inside the keep
+## on its -z face; the broch {"base_m", "height_m", "outer_r", "inner_r"},
+## its door on the +x side and the souterrain's mouth (the barrow kit's
+## passage) beside it on the -z side. Both frames lie on the terrain's grid
+## (Delves.grid_heading), as every delve's must.
+static func _northern_site(map: PlanetData, site: Dictionary, north: String) -> void:
+	var srng := RandomNumberGenerator.new()
+	srng.seed = hash([site.seed, north])
+	var E := Monuments.entry(north)
+	var hr: Array = E.get("height_m", [12, 20])
+	site.style = north
+	var th := north == "tower_house"
+	if th:
+		site.keep_h = srng.randf_range(float(hr[0]), float(hr[1]))
+		site.keep_hx = 4.6
+		site.barmkin_hs = 14.0
+		# The kit's passage from just inside the door.
+		site.half_l = 6.0
+	else:
+		var br: Array = E.get("base_m", [14, 20])
+		site.base_m = srng.randf_range(float(br[0]), float(br[1]))
+		site.height_m = srng.randf_range(float(hr[0]), float(hr[1]))
+		site.outer_r = float(site.base_m) * 0.5
+		site.inner_r = float(site.outer_r) - 3.6
+		site.half_l = float(site.outer_r) + 12.0
+	# The way down's open hole (the barrow kit's first stair, Delves) must
+	# end inside the keep, or short of the broch's wall: of the frame's
+	# four grid headings, the one with a way out whose hole ends soonest.
+	var h0 := Delves.grid_heading(site.dir, float(site.heading))
+	var best_score := INF
+	var best_end := 0.0
+	for k in 4:
+		var trial := site.duplicate()
+		trial.heading = h0 + k * PI * 0.5
+		var lay := Delves._make_layout(map, trial)
+		var end_z := ((lay.holes as Array)[0] as Rect2).end.y
+		var score := end_z + (0.0 if not (lay.exit as Dictionary).is_empty() else 100.0)
+		if score < best_score:
+			best_score = score
+			best_end = end_z
+			site.heading = trial.heading
+	if th:
+		# The keep long enough to hold it (its walls 1 m thick).
+		site.keep_hz = clampf(best_end + 1.3, 7.0, 10.0)
+		return
+	# The souterrain's passage on the -z side (the broch's door is on +x),
+	# drawn back till its hole ends short of the wall, the stair going on
+	# down under the broch.
+	var ro: float = site.outer_r
+	for it in 3:
+		var need := best_end + ro + 0.5
+		if need <= 0.0:
+			break
+		site.half_l = float(site.half_l) + need
+		best_end = ((Delves._make_layout(map, site).holes as Array)[0] as Rect2).end.y
+	site.footprint_m = float(site.half_l) + 4.0
+	site.clear = [[site.dir, ro + 2.5], [local_dir(site, 0.0, -float(site.half_l) + 4.0), 7.0]]
+
+
+## The key a ruin goes by in a table keyed by ruin (smoke.json
+## outlets.by_ruin, delves.json fire_holders.by_ruin): its style where the
+## table has one (§DS: tower_house, broch), else its kind, lowercased.
+static func data_key(site: Dictionary, table: Dictionary) -> String:
+	if site.kind is String:
+		return "default"
+	var st := str(site.get("style", ""))
+	if st != "" and table.has(st):
+		return st
+	return str(Kind.keys()[int(site.kind)]).to_lower()
 
 
 ## A pyramid's measurements (RuinBuilder builds to them) and the ground it

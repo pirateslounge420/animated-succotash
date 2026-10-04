@@ -1276,6 +1276,9 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 # --- Structures -------------------------------------------------------------------
 
 func _castle() -> void:
+	if str(site.get("style", "")) == "tower_house":
+		_tower_house()
+		return
 	mound(24.0, 36.0, 32.0, 0.35)
 	# Curtain wall: an octagon with two breaches and a gate gap.
 	var r := 17.0
@@ -1324,6 +1327,9 @@ func _castle() -> void:
 
 
 func _lone_tower() -> void:
+	if str(site.get("style", "")) == "broch":
+		_broch()
+		return
 	mound(6.0, 10.0, 14.0, 0.0)
 	_tower_r = rng.randf_range(3.2, 4.2)
 	round_tower(Vector2.ZERO, _tower_r, rng.randf_range(14.0, 22.0), rng.randf() * TAU)
@@ -1420,10 +1426,15 @@ func _stone_camp_spot() -> void:
 		Ruins.Kind.CASTLE:
 			var a := rng.randf() * TAU
 			p = Vector2(cos(a), sin(a)) * 10.5
-			floor_y = 0.35
+			# (A tower house stands on the ground, no motte: §DS.)
+			floor_y = 0.0 if _northern() else 0.35
 		Ruins.Kind.TOWER:
 			var a := _stub_angle + PI + rng.randf_range(-0.8, 0.8)
 			p = Vector2(cos(a), sin(a)) * (_tower_r + 4.5)
+			# The broch's hearth: the middle of its court, under the open
+			# roof (§DS).
+			if _northern():
+				p = Vector2.ZERO
 		Ruins.Kind.AQUEDUCT:
 			var length: float = site.length_m
 			var spacing := 7.5
@@ -1458,7 +1469,7 @@ func _camp(kind: int) -> void:
 			for i in mini(count, piers - 1):
 				var span := rng.randi() % (piers - 1)
 				spots.append(Vector2(x0 + (span + 0.5) * spacing, rng.randf_range(-1.0, 1.0)))
-	var floor_y := 0.35 if kind == Ruins.Kind.CASTLE else 0.0
+	var floor_y := 0.35 if kind == Ruins.Kind.CASTLE and not _northern() else 0.0
 	for i in spots.size():
 		var p := spots[i]
 		if kind == Ruins.Kind.AQUEDUCT or rng.randf() < 0.65:
@@ -4720,6 +4731,265 @@ func _long_wall_gate() -> void:
 			_pblock(bs * Vector3(u, 0.0, -hs) + Vector3(0.0, g0 + h + MERLON_H * 0.5, 0.0), Vector3(hs * 0.3, MERLON_H, 0.9), WALL_STONES[(k + side) % 5].darkened(0.1), 0.5, -rot)
 	_pblock(Vector3(0.0, g0 + h - 0.4, 0.0), Vector3(2.0 * hs + 1.0, 0.8, 2.0 * hs + 1.0), WALL_STONES[0], 0.8)
 	_pave(Rect2(-hs, -hs, 2.0 * hs, 2.0 * hs), NAN, Rect2(-1.2, -hs, 2.4, 2.0 * hs))
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+# --- The northern styles (design 3 Oct §DS) -----------------------------------------
+
+## Harl: the lime render on a tower house's rubble, weathered pale (§DS).
+const HARL := [Color(0.53, 0.52, 0.48), Color(0.49, 0.49, 0.46), Color(0.55, 0.53, 0.47)]
+## A broch's drystone: dark grey flags (§DS).
+const FLAGS := [Color(0.38, 0.39, 0.43), Color(0.34, 0.35, 0.4), Color(0.42, 0.42, 0.45), Color(0.31, 0.33, 0.38)]
+const SLATE := Color(0.24, 0.26, 0.33)
+
+
+## Is this ruin one of the northern styles (the tower house, the broch)?
+func _northern() -> bool:
+	return str(site.get("style", "")) in ["tower_house", "broch"]
+
+
+## A tower house (§DS, ruins.json styles.tower_house): a tall narrow keep
+## of harled rubble, keep_h high, its door on the -z face over the way
+## down (the barrow kit, Delves: the undercroft, the pit prison below,
+## a postern out), slit windows, a corbelled parapet, two bartizans on
+## opposite corners, a chimney stack on the back gable, one back corner
+## fallen in; round it a low barmkin wall, its gate before the door.
+func _tower_house() -> void:
+	palette = STONES
+	var hx: float = site.keep_hx
+	var hz: float = site.keep_hz
+	var kh: float = site.keep_h
+	var bs: float = site.barmkin_hs
+	var t := 1.0
+	_lod_m = bs * 1.5 + LOD_M
+	_lit_per_pixel = true
+	var corners := [Vector2(-hx, -hz), Vector2(hx, -hz), Vector2(hx, hz), Vector2(-hx, hz)]
+	# One back corner fallen in (the door's face stands).
+	var broken := 2 + rng.randi() % 2
+	var cb: Vector2 = corners[broken]
+	var keep_top := INF
+	inside_at = Vector3.ZERO
+	inside = INSIDE
+	for f in 4:
+		var a: Vector2 = corners[f]
+		var b: Vector2 = corners[(f + 1) % 4]
+		var along := (b - a).normalized()
+		var n := Vector2(along.y, -along.x)
+		# The x faces run between the z faces (no faces lying in one plane).
+		if f % 2 == 1:
+			a += along * t
+			b -= along * t
+		var runs: Array = [[0.0, a.distance_to(b)]]
+		if f == 0:
+			var mid := a.distance_to(b) * 0.5
+			runs = [[0.0, mid - 0.9], [mid - 0.9, mid + 0.9], [mid + 0.9, a.distance_to(b)]]
+		for r in runs:
+			var r0: float = r[0]
+			var r1: float = r[1]
+			var door: bool = f == 0 and runs.size() == 3 and r == runs[1]
+			var cols := maxi(1, int(ceil((r1 - r0) / 1.5)))
+			var w := (r1 - r0) / cols
+			for k in cols:
+				var u := r0 + (k + 0.5) * w
+				var c := a + along * u - n * t * 0.5
+				var g := minf(ground(c.x, c.y), minf(ground(c.x + n.x * t * 0.5, c.y + n.y * t * 0.5), ground(c.x - n.x * t * 0.5, c.y - n.y * t * 0.5)))
+				var dfall := c.distance_to(cb)
+				var h := kh * lerpf(0.3, 1.0, smoothstep(1.5, 7.5, dfall)) - rng.randf_range(0.0, 0.5)
+				var bs3 := Basis(Vector3.UP, atan2(-along.y, along.x))
+				var y := g - 0.4
+				if door:
+					# The doorway: its lintel and the wall over it.
+					y = g + 2.6
+					jamb = JAMB
+				# Bands of harl, the rubble showing where it has fallen.
+				while y < g + h - 0.05:
+					var top := minf(y + rng.randf_range(2.0, 3.2), g + h)
+					var bare := rng.randf() < 0.3 + 0.35 * exp(-(y - g) / 3.0)
+					var col: Color = (STONES[rng.randi() % STONES.size()] as Color) if bare else (HARL[rng.randi() % HARL.size()] as Color).darkened(rng.randf_range(0.0, 0.08))
+					var moss := 0.1 + 0.45 * exp(-(y - g) / 2.0) + (0.15 if bare else 0.0)
+					_pbox(Transform3D(bs3, Vector3(c.x, (y + top) * 0.5, c.y)), Vector3(w + 0.02, top - y, t), col, moss)
+					y = top
+				jamb = 0.0
+				keep_top = minf(keep_top, g + h) if dfall > 7.5 else keep_top
+				# Slit windows up its face (R8: voids read dark).
+				if not door and k % 2 == 1:
+					var sy := g + 3.4
+					while sy < g + h - 2.0:
+						if rng.randf() < 0.55:
+							var big := sy > g + kh * 0.6
+							var o := c + n * (t * 0.5 + 0.02)
+							_pbox(Transform3D(bs3, Vector3(o.x, sy, o.y)), Vector3(0.6 if big else 0.22, 1.0 if big else 1.1, 0.06), VOID, 0.0)
+						sy += rng.randf_range(2.8, 3.6)
+				# The corbelled parapet where the wall stands to its height.
+				if dfall > 7.5 and h > kh - 0.6:
+					var oc := c + n * 0.55
+					for q: float in [-0.25, 0.25]:
+						var qc := oc + along * q * w
+						_pbox(Transform3D(bs3, Vector3(qc.x, g + h - 0.35, qc.y)), Vector3(0.35, 0.6, 0.7), STONES[(k + int(q * 4.0) + 4) % STONES.size()], 0.2)
+					var pc := c + n * 0.7
+					_pbox(Transform3D(bs3, Vector3(pc.x, g + h + 0.5, pc.y)), Vector3(w + 0.04, 1.3, 0.5), HARL[k % HARL.size()], 0.25)
+	inside = 0.0
+	inside_at = Vector3.INF
+	# The bartizans: little round turrets corbelled out at two corners.
+	var bartizan_at := [0, 5 - broken]
+	for ci in bartizan_at:
+		var cc: Vector2 = corners[ci]
+		var out := Vector2(signf(cc.x), signf(cc.y)) * 0.45
+		var bc := cc + out
+		var gy := ground(cc.x, cc.y)
+		var by := gy + kh - 1.4
+		for rot: float in [0.0, PI * 0.25]:
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(bc.x, by + 1.3, bc.y)), Vector3(1.9, 2.6, 1.9), HARL[ci % HARL.size()], 0.2)
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(bc.x, by - 0.4, bc.y)), Vector3(1.3, 0.8, 1.3), STONES[1], 0.3)
+		for k in 3:
+			var sz := 1.7 - k * 0.55
+			_pbox(Transform3D(Basis(Vector3.UP, PI * 0.25 * k), Vector3(bc.x, by + 2.6 + 0.35 + k * 0.6, bc.y)), Vector3(sz, 0.62, sz), SLATE, 0.1)
+		# A slit in each.
+		var so := bc + out.normalized() * 0.97
+		_pbox(Transform3D(Basis(Vector3.UP, atan2(-out.x, out.y)), Vector3(so.x, by + 1.4, so.y)), Vector3(0.2, 0.9, 0.06), VOID, 0.0)
+	# The chimney stack on the back gable, where the corner left it.
+	var chim := Vector2(-hx * 0.45 if broken == 2 else hx * 0.45, hz - t * 0.5)
+	var cg := ground(chim.x, chim.y)
+	if chim.distance_to(cb) > 7.5:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(chim.x, cg + kh + 1.2, chim.y)), Vector3(1.5, 2.6, 1.0), HARL[1], 0.25)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(chim.x, cg + kh + 2.6, chim.y)), Vector3(1.7, 0.3, 1.2), STONES[3], 0.2)
+	rubble(Vector3(cb.x * 1.35, 0, cb.y * 1.25), 4.5, 22)
+	# The barmkin: a low wall round the yard, its gate before the door; a
+	# gap where the way out comes up (the postern).
+	var lay: Dictionary = Delves.layout(map, site)
+	var holes: Array = []
+	var cairn: Dictionary = lay.get("cairn", {})
+	if not cairn.is_empty():
+		var mid: Vector2 = (cairn.o as Vector2) - (cairn.dir as Vector2) * (float(cairn.back) * 0.5 - 2.0)
+		holes.append([mid, maxf(float(cairn.back) * 0.5, float(cairn.half)) + 2.5])
+	var bk := [Vector2(-bs, -bs), Vector2(bs, -bs), Vector2(bs, bs), Vector2(-bs, bs)]
+	var breach_side := 1 + rng.randi() % 3
+	for f in 4:
+		var a: Vector2 = bk[f]
+		var b: Vector2 = bk[(f + 1) % 4]
+		var cuts: Array = [[0.0, 1.0]]
+		if f == 0:
+			cuts = [[0.0, (bs - 1.8) / (2.0 * bs)], [(bs + 1.8) / (2.0 * bs), 1.0]]
+		for hc in holes:
+			var p: Vector2 = hc[0]
+			var rr: float = hc[1]
+			var tt := clampf((p - a).dot(b - a) / (b - a).length_squared(), 0.0, 1.0)
+			if (a + (b - a) * tt).distance_to(p) < rr:
+				var dt := rr / (b - a).length()
+				var nc: Array = []
+				for c in cuts:
+					if tt - dt > c[0]:
+						nc.append([c[0], minf(c[1], tt - dt)])
+					if tt + dt < c[1]:
+						nc.append([maxf(c[0], tt + dt), c[1]])
+				cuts = nc
+		for c in cuts:
+			if float(c[1]) - float(c[0]) < 0.03:
+				continue
+			var br: Array = []
+			if f == breach_side and c == cuts[0]:
+				br = [[0.3, 0.55]]
+			wall(a.lerp(b, c[0]), a.lerp(b, c[1]), rng.randf_range(2.4, 3.2), 0.9, br, 0.35)
+	# The gate's piers.
+	for sx: float in [-1.0, 1.0]:
+		var gp := Vector2(sx * 2.4, -bs)
+		var gg := ground(gp.x, gp.y)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(gp.x, gg + 1.5, gp.y)), Vector3(1.2, 3.8, 1.2), HARL[2], 0.35)
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+## A broch (§DS, ruins.json styles.broch): a drystone round tower,
+## height_m on a base of base_m, its outer skin drawing in as it rises,
+## a gallery between it and the inner skin floored with flags every few
+## metres, the voids stacked over the court's side of the door, an arc
+## fallen away (the outer skin lower, the gallery showing), its door on
+## the +x side; a hearth in the middle of the court under the open sky
+## (the camp spot). Its delve, the souterrain, opens beside it on the -z
+## side (the barrow kit: the passage, the stair going down under the
+## broch, the end chamber the heart, its second mouth the way out).
+func _broch() -> void:
+	palette = FLAGS
+	var ro: float = site.outer_r
+	var ri: float = site.inner_r
+	var hb: float = site.height_m
+	_lod_m = float(site.footprint_m) + LOD_M
+	_lit_per_pixel = true
+	_tower_r = ro
+	# Shelters, when folk live here, go on the +z side (_camp).
+	_stub_angle = -PI * 0.5
+	var door_a := 0.0
+	var slump_a := PI + rng.randf_range(-0.4, 0.4)
+	var band := 1.0
+	var gap0 := ri + 1.3
+	var gap1 := ro - 1.4
+	inside_at = Vector3.ZERO
+	inside = INSIDE
+	# [centre radius at the foot, thickness, draw-in at the top, fallen share]
+	var skins := [[ro - 0.7, 1.4, 1.3, 0.75], [ri + 0.65, 1.3, 0.5, 0.5]]
+	var tops := {}
+	for si in 2:
+		var rc: float = skins[si][0]
+		var th: float = skins[si][1]
+		var lean: float = skins[si][2]
+		var fall: float = skins[si][3]
+		var segs := maxi(12, int(TAU * rc / 1.8))
+		for i in segs:
+			var a := TAU * (i + 0.5) / segs
+			var near := (cos(a - slump_a) + 1.0) * 0.5
+			var h := hb * (1.0 - smoothstep(0.55, 1.0, near) * fall) - rng.randf_range(0.0, 0.7)
+			var door := absf(angle_difference(a, door_a)) * rc < 0.9
+			var face := Basis(Vector3.UP, -a + PI * 0.5)
+			var p0 := Vector2(cos(a), sin(a))
+			var g := minf(ground(p0.x * (rc - th * 0.5), p0.y * (rc - th * 0.5)), ground(p0.x * (rc + th * 0.5), p0.y * (rc + th * 0.5)))
+			var y := g - 0.5
+			if si == 0:
+				tops[i] = g + h
+			while y < g + h - 0.05:
+				var top := minf(y + band, g + h)
+				if door and top <= g + 2.3:
+					y = top
+					continue
+				var f := clampf((y - g) / hb, 0.0, 1.0)
+				var r := rc - lean * pow(f, 1.6)
+				var bw := TAU * r / segs * 1.04
+				var c := p0 * r
+				var col: Color = (FLAGS[(i + int(y)) % FLAGS.size()] as Color).darkened(rng.randf_range(0.0, 0.07))
+				var moss := 0.12 + 0.5 * exp(-(y - g) / 1.6) + rng.randf_range(0.0, 0.15)
+				_pbox(Transform3D(face, Vector3(c.x, (y + top) * 0.5, c.y)), Vector3(bw, top - y + 0.02, th), col, moss)
+				y = top
+		# The gallery's floors: flags across between the skins, every
+		# 2.6 m, where both still stand.
+		if si == 1:
+			var og := maxi(12, int(TAU * (gap0 + gap1) * 0.5 / 1.8))
+			for i in og:
+				if i % 2 == 1:
+					continue
+				var a := TAU * (i + 0.5) / og
+				var near := (cos(a - slump_a) + 1.0) * 0.5
+				var hmin := hb * (1.0 - smoothstep(0.55, 1.0, near) * 0.75)
+				var rm := (gap0 + gap1) * 0.5
+				var p0 := Vector2(cos(a), sin(a))
+				var g := ground(p0.x * rm, p0.y * rm)
+				var fy := 2.6
+				while fy < hmin - 1.0:
+					var f := fy / hb
+					var r := rm - 0.9 * pow(f, 1.6)
+					_pbox(Transform3D(Basis(Vector3.UP, -a + PI * 0.5), Vector3(p0.x * r, g + fy, p0.y * r)), Vector3(TAU * r / og * 1.02, 0.22, gap1 - gap0 + 0.7), FLAGS[2], 0.2)
+					fy += 2.6
+	inside = 0.0
+	inside_at = Vector3.INF
+	# The door's lintel through the wall, and the voids stacked over it on
+	# the court's side.
+	var gd := ground(ro * 0.5 + ri * 0.5, 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3((ro + ri) * 0.5, gd + 2.45, 0.0)), Vector3(ro - ri + 0.2, 0.35, 2.0), FLAGS[3], 0.2)
+	var vy := gd + 3.6
+	while vy < hb - 1.5:
+		_pbox(Transform3D(Basis(Vector3.UP, PI * 0.5), Vector3(ri - 0.03, vy, 0.0)), Vector3(0.8, 1.2, 0.06), VOID, 0.0)
+		vy += 2.6
+	rubble(Vector3(cos(slump_a) * (ro + 2.5), 0.0, sin(slump_a) * (ro + 2.5)), 4.5, 24)
+	rubble(Vector3(cos(slump_a) * ri * 0.5, 0.0, sin(slump_a) * ri * 0.5), 2.0, 6)
 	if Delves.has_delve(site):
 		_delve_build()
 

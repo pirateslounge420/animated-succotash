@@ -43,6 +43,9 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=northern the nearest tower house and the nearest broch (§DS): the
+## keep from beyond its barmkin's gate, the broch from before its door with
+## the souterrain's mouth to the left.
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -199,6 +202,8 @@ func _run() -> void:
 			kinds.append("terraced_pueblo")
 		if only.has("stone_circle"):
 			kinds.append("stone_circle")
+		if only.has("northern"):
+			kinds.append("northern")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -315,6 +320,34 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"northern":
+				var near := {}
+				var nd := {}
+				var npf := Ruins.cells_per_face()
+				for f in 6:
+					for i in npf:
+						for j in npf:
+							var rs := Ruins.find(world.planet, Vector3i(f, i, j))
+							if rs.is_empty() or rs.kind is String:
+								continue
+							var stl := str(rs.get("style", ""))
+							if not (stl in ["tower_house", "broch"]):
+								continue
+							var dd := CubeSphere.surface_distance_m(rs.dir, camp_d)
+							if dd < float(nd.get(stl, INF)):
+								nd[stl] = dd
+								near[stl] = rs
+				for stl in ["tower_house", "broch"]:
+					if not near.has(stl):
+						lines.append("-- %s: none on this world" % stl)
+						continue
+					var ns: Dictionary = near[stl]
+					if stl == "tower_house":
+						sites.append({"name": "tower_house", "dir": Ruins.local_dir(ns, 6.0, -float(ns.barmkin_hs) - 26.0), "look": Ruins.local_dir(ns, 0.0, 0.0), "pitch_to": ns.dir, "pitch_add_m": float(ns.keep_h) * 0.45,
+							"note": "the tower house, its keep %.1f m, %.0f km from the camp" % [float(ns.keep_h), float(nd[stl]) / 1000.0]})
+					else:
+						sites.append({"name": "broch", "dir": Ruins.local_dir(ns, float(ns.outer_r) + 24.0, -6.0), "look": ns.dir, "pitch_to": ns.dir, "pitch_add_m": float(ns.height_m) * 0.35,
+							"note": "the broch, %.1f m on a base of %.1f m, %.0f km from the camp" % [float(ns.height_m), float(ns.base_m), float(nd[stl]) / 1000.0]})
 			"stone_circle":
 				var scs: Array = Monuments.all_sites(world.planet, "stone_circle")
 				if scs.is_empty():

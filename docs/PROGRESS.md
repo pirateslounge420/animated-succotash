@@ -4,6 +4,33 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS: the tower house and the broch (prompt 28)
+- **Two styles of kinds we have,** picked where the castle and the tower already stand (`Ruins._northern_style`, `data/ruins.json` → `styles.tower_house` / `styles.broch`, both unmarked). Each passes its spawn gate (Monuments.gate: palearctic, its biomes) and then its own seeded `chance` roll (0.5).
+  - **New gate words:** `cool_wet` (the cell under 14 °C and the ground's moisture 0.5 or more), `hot` (never: over 22 °C) and `coast_or_moor` (the sea within 360 m, or tundra or bog).
+  - **The moors:** tundra and bog are igloo and boardwalk country (`Ruins.country`), so no castle or tower ever stood there. A ruin there may now take the broch (first) or the tower house instead, so a few palearctic igloos and boardwalks become brochs.
+- **The tower house** (`RuinBuilder._tower_house`):
+  - A harled keep 12–20 m tall and 9.2 m wide, 14–20 m long: long enough that the way down's open hole ends inside it.
+  - The harl falls away in patches, worst near the foot. It has slit windows, a corbelled parapet, two bartizans with slate caps, and a chimney stack on the back gable.
+  - One back corner has fallen in, with rubble below. A low barmkin wall 28 m square stands round it, its gate before the door; the wall opens where the postern comes up.
+  - The delve is the barrow kit, from just inside the door down to the undercroft and the vault (the heart), and up the postern.
+  - Smoke: the castle's `chimney_stack`, looked up by style first (`Ruins.data_key`).
+- **The broch** (`RuinBuilder._broch`):
+  - A drystone round tower 8–13 m tall on a base of 14–20 m. Its outer skin draws in as it rises. A gallery runs between the skins, floored with flags every 2.6 m.
+  - The door is on +x, with voids stacked over it on the court's side. One arc has fallen away, the outer skin lower so the gallery shows.
+  - Its old hearth sits in the middle of the court, under the open sky (`open_ring`: no stack).
+  - The souterrain opens beside it on the -z side: the barrow kit's passage, a stair going down under the broch, the end chamber (the heart) and a second mouth.
+- **The frame:** both use the terrain's grid. Of the four grid headings, the site takes the one with a way out whose open hole ends soonest. The broch's mouth is drawn back until its hole ends short of the wall.
+- **Check:** `tools/northern_styles_check.gd`, 0 fails on 7731 and 8.
+  - 7731: 6 tower houses (temperate deciduous, bog, tundra) and 9 brochs (tundra). None of the 14 hot-desert castles takes the tower house.
+  - Seed 8: 1 tower house and 2 brochs.
+  - Every one passes its gate and has a heart and a way out, with its hole inside the keep or clear of the broch. Each is 26–57 k triangles against the plain castle's 78 k.
+  - `overgrowth_check` and `delve_check` still pass.
+- **Walkabout** (`SEED=8 SITES=northern HOURS=11`, harness frames §CG): the keep standing pale over a temperate wood, a bartizan at its top. The broch dark on the snow with its fallen side, the souterrain's slab passage beside it.
+- **Flags:**
+  - The data's realm is palearctic only. On 7731 the palearctic's castles sit in temperate deciduous wood, so most tower houses and all brochs come from the moors.
+  - Tundra at −9 °C counts as cool and wet: the gate has no lower bound.
+  - The undercroft and pit prison are the barrow kit's room and heart, with the kit's slab passage inside the keep. No new rooms were built.
+
 ## 2026-10-04 — §DS.7: the stone circle (prompt 27)
 - **The kind:** `Ruins.Kind.STONE_CIRCLE`, "Stone circle" (`data/ruins.json` → `styles.stone_circle`, unmarked), placed by Monuments' sites pass. Nobody lives there (`Ruins.rolls_inhabited`).
   - **New gate word:** `open_ground` (no tree of the catalogue may grow there, the ground rolling under 0.1 over 60 m). Its `slope` never-word takes the same 0.1, the moor's own roll.
