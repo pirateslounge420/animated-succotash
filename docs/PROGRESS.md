@@ -4,6 +4,9 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — docs/PROMPT_QUEUE.md: the Claude Code passes, readable from the repo (Claude, chat)
+- **New:** `docs/PROMPT_QUEUE.md` holds the thirty-five one-idea Claude Code prompts for §DA–§DL, §DO–§DS and §DT–§DZ in §BR's order, with a status table. Mike no longer pastes: "Pull, then read docs/PROMPT_QUEUE.md and do the next prompt marked todo." Claude Code marks a row `built <hash>` when it pushes the pass; Claude (chat) appends new prompts and keeps the marks. 01–09 are marked built from the log; §DM's pass (another chat's hand-off) sits between 16 and 17 and is not in the file.
+
 ## 2026-10-04 — §DC part 2: butterflies by day
 - **DayAccents** (`data/day_accents.json butterflies`), the day's counterpart of NightAccents (whose blue butterflies at the ruins stay as they are). Every half second, all must hold:
   - it is day (daylight at or over night_accents' 0.35);
