@@ -442,6 +442,8 @@ static func holes_near(map: PlanetData, d: Vector3, radius: float) -> Array:
 ## For a chunk: 1 per fine quad the ground leaves open (a hole), or empty.
 static func chunk_holes(map: PlanetData, center: Vector3, fine_d: PackedVector3Array, nf: int) -> PackedByteArray:
 	var near := holes_near(map, center, TerrainChunk.CHUNK_M * 0.75)
+	# The shrines' ways down (design 3 Oct §DK, Shrines).
+	near.append_array(Shrines.holes_near(map, center, TerrainChunk.CHUNK_M * 0.75))
 	var out := PackedByteArray()
 	if near.is_empty():
 		return out
@@ -519,7 +521,14 @@ func built() -> Dictionary:
 ## Where scene position `pos` is in a delve: {"ruin", "lay", "piece",
 ## "local" (Vector3 in the barrow's frame, y from base_e)}, or {}.
 func locate(pos: Vector3) -> Dictionary:
-	for node: Node3D in built():
+	var nodes: Array = built().keys()
+	# The shrines' halls (§DK) are delves too, for the dark.
+	if Shrines.instance != null:
+		for k in Shrines.instance.built:
+			var sn = Shrines.instance.built[k].node
+			if is_instance_valid(sn):
+				nodes.append(sn)
+	for node: Node3D in nodes:
 		var lay: Dictionary = node.get_meta("delve")
 		var off := float(node.get_meta("delve_off", 0.0))
 		var lp: Vector3 = node.global_transform.affine_inverse() * pos
@@ -568,7 +577,12 @@ func _process(delta: float) -> void:
 		var pc: Dictionary = at.piece
 		var seed_v := int(site.seed)
 		var climbs := bool((at.lay as Dictionary).get("climbs", false))
-		if str(pc.kind) == "stair" and want > 0.5:
+		if bool(site.get("shrine", false)):
+			if str(pc.kind) == "stair" and want > 0.5:
+				GameLog.add_once("shrine_down:%d" % seed_v, "A long hall goes down into the hill. Torches burn along its walls.", "delve")
+			elif str(pc.kind) == "heart":
+				GameLog.add_once("shrine_heart:%d" % seed_v, "Below the altar, a room no one has stood in for a long time.", "delve")
+		elif str(pc.kind) == "stair" and want > 0.5:
 			if climbs:
 				GameLog.add_once("delve_up:%d" % seed_v, "A stair climbs into the dark inside the rock.", "delve")
 			else:

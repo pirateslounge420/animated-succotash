@@ -4,6 +4,36 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DK: the shrine and the sealed scroll (prompt 15)
+- **Shrines** (`scripts/landmarks/shrines.gd`, under main; reads `shrines.json shrine, scroll, log`): built behind every burning shrine and oak door of §DJ. RuinBuilder builds the stone (`compute_shrine`); the layout is Delves pieces, so the dark, the dread and `Delves.locate` work in it as in a barrow's delve.
+  - **The court:** flagstones on the ground over the hole and round it, the way down between low parapets.
+  - **The hall:** 16–21 m long, steepened until everything under it has 1.6 m of earth over it. Under the oak it begins at the tree's foot, the open steps in front of the roots.
+  - **The sconces:** 6–8 along the hall's walls (a bracket, a torch, a flame, a light), lit when you come and burning without fuel. What they burn is still open (`shrine.light`). They never smoke.
+  - **The altar room:** the sealed scroll on the altar, a solid wall behind it. Beyond the wall, a stair and a room below (the barrow kit; nothing in it yet).
+  - **The ground:** the holes in it come through `Delves.chunk_holes`.
+- **The scroll:** right click takes it (`log.taken`). Carry it with your hands empty and right click a folk to show it (§BI's gesture; a scroll has no hand slot). Anyone else: `log.shown`, and you keep it sealed.
+- **The reader:** the stand-in `scroll.readers` "headman_far", written into the data and flagged. It is the headman, else the first sitter, of the nearest lived-in camp 5–60 km from the shrine. They give `log.asked_where`, then one entry with the passage (`scroll.passage_first_guess`, four lines of my own; Mike replaces them) and the pattern ("The second and the third burn. The rest are dark."). The item becomes "Opened scroll". The scroll carries its shrine's place and pattern, so it reads anywhere.
+- **The pattern lock:** seeded per shrine, never all lit or all dark. Right click a lit sconce to smother it; the torch's swing lights a dark one (and a lit sconce lights an unlit torch). When the hall matches, `log.opened` and the wall is gone, once, saved per world (WorldSave `shrines`). No hint, no counter.
+- **The log panel wraps:** a long entry runs over several rows, its stamp on the first, so the deciphered text shows whole (`keep_deciphered_whole`).
+- **Checked** (`tools/shrine_check.gd`, seed 7731, 0 fails):
+  - the shrine behind an oak door 1.0 km from the camp: 6 sconces, pattern "The second and the third burn";
+  - built: the hole in the ground; in the altar room, underground 1.00;
+  - taken (log); shown at another camp (handed back, still sealed);
+  - the reader at `ruin:(5, 9, 29)`, 8.3 km off: asks, then the whole text, and the item is renamed; the panel shows it in 9 rows, none wider than its 400 px;
+  - 40 wrong arrangements leave the wall standing; the pattern opens it once; no sconce smokes.
+  
+  `hidden_check` 0 fails (now 95 places: 52 burning shrines, 37 oak doors, 6 earth homes). One run of it crashed mid-way (signal 11, the engine's intermittent one); the rerun passed.
+- **Walkabout** (harness frames, §CG; new `SITES=shrine`, seed 101): the court under the great oak with the stair going down and the sconces glowing; the torchlit hall going down; the altar room by torchlight, the scroll on the altar, the wall behind.
+- **Fixes on the way:**
+  - two regions can each route a road between the same two nodes, so hidden places are now keyed by a road's ends and its length;
+  - lit blocks in the delve turn their faces the way the delve's own mesh does (the altar had come out black).
+- **Flags for Mike:**
+  - **Who reads:** the readers are open; the stand-in reads at the nearest lived-in camp, since a camp's growth isn't known until you visit.
+  - **Where the scroll is held:** it is shown carried, hands empty.
+  - **What lies deeper, and the sconces' light:** both open.
+  - **Roads vary between runs:** the network differs a little between runs of one seed (60 or 62 links near the camp), as duplicate roads come and go with the order the regions build in. It predates this pass, but it decides which hidden places a world has.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `shrines.json` and from `items.json kinds.scroll`. `hud.json log_more` now names only the tome (§DL) and "given" as not wired. New: `scroll.readers` "headman_far", `scroll.passage_first_guess`.
+
 ## 2026-10-04 — §DJ: off the road, hidden places and the few who speak (prompt 14)
 - **HiddenPlaces** (`scripts/landmarks/hidden_places.gd`, under main; reads `shrines.json hidden`):
   - **Placement:** placed after the roads. Each road link offers `per_km_of_road` (0.25) × its length in places, seeded by its two ends, `off_road_m` (150–900 m) to one side. A place stands only where no road, its own or another, passes within 150 m. The kits take turns in a seeded order, 14 tries each, so one easy kit doesn't take every place. The main thread never places: a worker does, and the place shows on the next refresh.

@@ -288,7 +288,8 @@ func lit() -> bool:
 ## Any flame within `radius` of `pos` a torch can be lit at (a lit fire,
 ## a planted torch).
 static func flame_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
-	return Campfire.lit_near(tree, pos, radius) or PlantedTorch.lit_near(pos, radius)
+	return Campfire.lit_near(tree, pos, radius) or PlantedTorch.lit_near(pos, radius) \
+		or (Shrines.instance != null and Shrines.instance.sconce_near(pos, radius + 0.4, true) != null)
 
 
 ## How far the flame passes on the swing (torch.json swing, §CN).
@@ -319,6 +320,12 @@ func swing_target() -> Array:
 	var pt := PlantedTorch.unlit_near(at, r)
 	if pt != null:
 		return ["planted", pt]
+	# A shrine's dark sconce (design 3 Oct §DK): lit by the swing, no
+	# kindling.
+	if Shrines.instance != null:
+		var sc := Shrines.instance.sconce_near(at, r + 0.4, false)
+		if sc != null:
+			return ["sconce", sc]
 	return []
 
 
@@ -356,6 +363,10 @@ func pass_flame() -> String:
 			(t[1] as PlantedTorch).relight()
 			note = "The planted torch catches."
 			last_pass = "planted"
+		"sconce":
+			Shrines.instance.light(t[1])
+			note = "The sconce catches."
+			last_pass = "sconce"
 		"fire":
 			var fire: Node3D = t[1]
 			var how := FireStore.swing_light(fire, player.world.days)

@@ -97,6 +97,41 @@ func _input(event: InputEvent) -> void:
 ## "Y1 D3 03:40" -> ["Y1 D3", "03:40"] (hud.json calendar.log_stamp,
 ## §DD): the day part heads its lines, the time stamps each one. A save's
 ## older stamps ("Day 3 · 03:40") split the same way.
+## The panel's rows for `entries`: [stamp, text, kind], a dim day row where
+## the day changes, and each entry wrapped to `width` px at `px` (its own
+## line breaks kept), its stamp on its first row only, so a long entry (a
+## deciphered scroll, hud.json log_more.keep_deciphered_whole) shows whole.
+static func rows_for(entries: Array, font: Font, px: int, width: float) -> Array:
+	var rows: Array = []
+	var last_day := ""
+	for e in entries:
+		var st := _split_stamp(str(e.get("t", "")))
+		if st[0] != last_day and st[0] != "":
+			rows.append([str(st[0]), "", "day"])
+			last_day = st[0]
+		var first := true
+		for line in wrap_text(str(e.get("text", "")), font, px, width):
+			rows.append([str(st[1]) if first else "", line, str(e.get("kind", ""))])
+			first = false
+	return rows
+
+
+## `text` broken at its own line breaks and between words to fit `width`.
+static func wrap_text(text: String, font: Font, px: int, width: float) -> PackedStringArray:
+	var out := PackedStringArray()
+	for para in text.split("\n"):
+		var line := ""
+		for word in para.split(" "):
+			var trial := word if line == "" else line + " " + word
+			if line != "" and font.get_string_size(trial, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x > width:
+				out.append(line)
+				line = word
+			else:
+				line = trial
+		out.append(line)
+	return out
+
+
 static func _split_stamp(t: String) -> Array:
 	var parts := t.split(" · ")
 	if parts.size() >= 2:
@@ -114,15 +149,7 @@ func _draw() -> void:
 	draw_rect(r, Color(EDGE, 0.55), false, 1.0)
 	# The lines, newest at the bottom, a dim day line where the day
 	# changes.
-	var entries := GameLog.entries
-	var rows: Array = []
-	var last_day := ""
-	for e in entries:
-		var st := _split_stamp(str(e.get("t", "")))
-		if st[0] != last_day and st[0] != "":
-			rows.append([str(st[0]), "", "day"])
-			last_day = st[0]
-		rows.append([str(st[1]), str(e.get("text", "")), str(e.get("kind", ""))])
+	var rows := rows_for(GameLog.entries, font, _px, r.size.x - PAD * 2.0 - _px * 3.2)
 	var last := rows.size() - 1 - _scroll
 	var y := r.position.y + PAD + _line_h * n - 6.0
 	for i in n:

@@ -48,6 +48,7 @@ var sound_bed: SoundBed
 var water_sounds: WaterSounds
 var road_props: RoadProps
 var hidden_places: HiddenPlaces
+var shrines: Shrines
 var camp_sim: CampSim
 var player_fires: PlayerFires
 var travellers: Travellers
@@ -307,6 +308,10 @@ func _on_planet_ready() -> void:
 	hidden_places.name = "HiddenPlaces"
 	add_child(hidden_places)
 	hidden_places.setup(world, chunks, player)
+	shrines = Shrines.new()
+	shrines.name = "Shrines"
+	add_child(shrines)
+	shrines.setup(world, chunks, player)
 	travellers = Travellers.new()
 	travellers.name = "Travellers"
 	add_child(travellers)
@@ -577,8 +582,12 @@ func _process(delta: float) -> void:
 		prompt = "%s: take the arrow back" % Controls.interact_word()
 	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
 		prompt = "%s: take your things back" % Controls.interact_word()
+	elif _scroll_to_show() >= 0 and _folk_in_reach() != null:
+		prompt = "%s: show the %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_scroll_to_show()]).to_lower()]
 	elif _headman_in_reach() != null:
 		prompt = "%s: the headman" % Controls.interact_word()
+	elif shrines != null and shrines.sconce_near(player.reach_from(), Shrines.SCONCE_REACH_M, true) != null:
+		prompt = "%s: smother the sconce" % Controls.interact_word()
 	elif hidden_places != null and not hidden_places.speaker_in_reach(player.global_position).is_empty():
 		prompt = "%s: the small one" % Controls.interact_word()
 	elif not _ladder_in_reach().is_empty():
@@ -846,8 +855,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		var headman := _headman_in_reach()
 		var ladder := _ladder_in_reach()
 		var speaker := hidden_places.speaker_in_reach(player.global_position) if hidden_places != null else {}
-		if headman != null:
+		var lit_sconce := shrines.sconce_near(player.reach_from(), Shrines.SCONCE_REACH_M, true) if shrines != null else null
+		if _scroll_to_show() >= 0 and _folk_in_reach() != null:
+			# The trade gesture (§BI): the scroll held out to a folk (§DK).
+			var how := Shrines.show_to(world.planet, player.inventory.carried[_scroll_to_show()], _folk_in_reach())
+			_say_note({"read": "They read it, and say where it points.", "shown": "They hand it back.", "read_before": "They hand it back."}.get(how, ""))
+		elif headman != null:
 			_meet_headman(headman)
+		elif lit_sconce != null:
+			shrines.smother(lit_sconce)
+			_say_note("You smother the sconce.")
 		elif not speaker.is_empty():
 			# One of the few who speak (§DJ): one line in the log a visit.
 			if not hidden_places.speak(speaker):
@@ -1029,6 +1046,8 @@ func _swing_words(t: Array) -> String:
 			return "swing the torch through the flame"
 		"planted":
 			return "swing the torch to light the planted one"
+		"sconce":
+			return "swing the torch to light the sconce"
 	var fire: Node3D = t[1]
 	return "swing the torch to rekindle the old hearth" if fire.has_meta("old_hearth") else "swing the torch to light the fire"
 
@@ -1185,6 +1204,15 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		elif say:
 			_say_note("Your hands are full.")
 		return
+	if kind == "scroll":
+		# The sealed scroll from a shrine's altar (design 3 Oct §DK).
+		if player.inventory.add(it):
+			if lying.has_meta("shrine_scroll"):
+				Shrines.took(str(lying.get_meta("shrine_scroll")))
+			lying.pick_up()
+		elif say:
+			_say_note("Your hands are full.")
+		return
 	if TOOL_OF.has(kind):
 		var slot := str(Inventory.kind_info(kind).get("slot", ""))
 		var worn = player.inventory.worn_in(slot)
@@ -1208,6 +1236,24 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 
 
 # --- Techniques (design 30 Sept §BN, §BP) ---------------------------------------------
+
+## The slot of a scroll you could show (carried, your hands empty), or -1.
+func _scroll_to_show() -> int:
+	if player.in_hand() != "hands":
+		return -1
+	return player.inventory.slot_of("scroll")
+
+
+## Any camp folk within reach (a sitter), or null.
+func _folk_in_reach() -> Node3D:
+	var pos := player.reach_from()
+	for key in camps._camps:
+		var cn: Node3D = camps._camps[key]
+		for s in cn.get_meta("sitters", []):
+			if is_instance_valid(s) and (s as Node3D).global_position.distance_to(pos) < 2.6:
+				return s
+	return null
+
 
 ## The headman within reach (a camp's marked figure), or null.
 func _headman_in_reach() -> Node3D:

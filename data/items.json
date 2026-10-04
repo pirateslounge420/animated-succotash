@@ -141,7 +141,7 @@
    "name": "Sealed scroll",
    "icon": "scroll",
    "color": "#d8cfa8",
-   "_note": "[NOT WIRED YET \u2014 design \u00a7DK] Taken from a shrine's altar: marks you can't read and a seal you can't break. Carried like anything else (burden); it stays where you fall if you are taken (\u00a7AY). Once a reader has opened it its name becomes 'Opened scroll' and its text lives in the log (hud.json log_more). data/shrines.json."
+   "_note": "Taken from a shrine's altar: marks you can't read and a seal you can't break. Carried like anything else (burden); it stays where you fall if you are taken (\u00a7AY). Once a reader has opened it its name becomes 'Opened scroll' and its text lives in the log (hud.json log_more). data/shrines.json."
   },
   "tome": {
    "name": "Tome",

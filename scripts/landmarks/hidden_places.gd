@@ -50,7 +50,7 @@ const TRIES := 14
 ## How far the earth homes' water may be.
 const WATER_M := 500.0
 ## How far round each kit the trees and undergrowth keep back.
-const CLEAR_M := {"earth_homes": 16.0, "oak_door": 9.0, "burning_shrine": 7.0}
+const CLEAR_M := {"earth_homes": 16.0, "oak_door": 22.0, "burning_shrine": 18.0}
 ## Past the top of the tree's size band (as the sacred fig, §CL).
 const PAST_BAND := 1.12
 ## The leaf types that make a broadleaf tree.
@@ -92,10 +92,11 @@ func _exit_tree() -> void:
 
 # --- Placement (pure) ----------------------------------------------------------------
 
-## The two ends' keys of `link` (RoadNetwork nodes), its identity whoever
-## built it.
+## The two ends' keys of `link` (RoadNetwork nodes) and its length, its
+## identity whoever built it (two neighbouring regions can each route a
+## road between the same two nodes).
 static func link_key(roads: RoadNetwork, link: Dictionary) -> String:
-	return "%s|%s" % [str(roads.nodes[int(link.a)].key), str(roads.nodes[int(link.b)].key)]
+	return "%s|%s|%.0f" % [str(roads.nodes[int(link.a)].key), str(roads.nodes[int(link.b)].key), RoadNetwork.length_m(link.pts)]
 
 
 ## The hidden places `link` offers: [{"key", "kit", "dir", "facing"
@@ -401,6 +402,8 @@ func refresh(block := false) -> void:
 			if is_instance_valid(n):
 				NodeRelease.free_later(n)
 			_built.erase(key)
+			if Shrines.instance != null:
+				Shrines.instance.drop(str(key))
 	speakers = speakers.filter(func(s): return is_instance_valid(s.node))
 
 
@@ -447,8 +450,9 @@ func build(pl: Dictionary) -> Node3D:
 			_earth_homes(root, pl, rng, body)
 		"oak_door":
 			_oak_door(root, pl, rng, body)
-		"burning_shrine":
-			_burning_shrine(root, pl, rng, body)
+	# The shrine behind the oak door and the burning shrine (§DK).
+	if str(pl.kit) in Shrines.KITS and Shrines.instance != null:
+		Shrines.instance.build_into(root, pl)
 	if bool(pl.get("speaker", false)):
 		_speaker(root, pl, rng)
 	return root
@@ -540,55 +544,17 @@ func _oak_door(root: Node3D, pl: Dictionary, rng: RandomNumberGenerator, body: S
 	root.add_child(mmi)
 	var trunk_r := clampf(h * 0.03, 0.6, 1.4)
 	PropCollision.capsule(body, Transform3D(Basis(), _local(root, d, 2.0)), trunk_r, 4.0)
-	# The doorway at its foot, sunk a little, facing out; roots over it.
-	var at := CreatureSpawner._offset(d, face, trunk_r + 0.3)
-	var f := _frame(root, at, face, -0.35)
-	_doorway(f, 0.95, 1.55, DARK_STONE, STONE.darkened(0.25), body)
+	# Its roots over the shrine's mouth at its foot (§DK builds the way
+	# down; the court's flagstones run under the trunk).
+	var f := _frame(root, Shrines.facade_dir(world.planet, pl), face, 0.0)
 	var bark := Color(0.28, 0.22, 0.16)
-	for k in 5:
+	for k in 6:
 		var side := -1.0 if k % 2 == 0 else 1.0
-		var x := side * rng.randf_range(0.5, 1.1)
-		var root_r := rng.randf_range(0.1, 0.2)
-		var rlen := rng.randf_range(1.6, 2.6)
-		var c := CreatureBodies.cone(f, root_r * 1.6, root_r * 0.5, rlen, Vector3(x, 1.2 + rng.randf() * 0.5, 0.15), bark)
-		c.rotation = Vector3(rng.randf_range(-0.3, 0.2), 0.0, side * rng.randf_range(0.5, 1.1))
-
-
-func _burning_shrine(root: Node3D, pl: Dictionary, rng: RandomNumberGenerator, body: StaticBody3D) -> void:
-	var d: Vector3 = pl.dir
-	var face := float(pl.facing)
-	var f := _frame(root, d, face)
-	var w := 1.3
-	var h := 2.1
-	_doorway(f, w, h, STONE, STONE, body, true)
-	# The porch going in: side walls and a roof slab, the slope over it.
-	var deep := 3.2
-	for sx in [-1.0, 1.0]:
-		var wall := _block(f, Vector3(0.35, h + 0.4, deep), Vector3(sx * (w * 0.5 + 0.2), (h + 0.4) * 0.5 - 0.2, deep * 0.5), DARK_STONE)
-		PropCollision.box(body, f.transform * wall.transform, Vector3(0.35, h + 0.4, deep))
-	var roof := _block(f, Vector3(w + 1.0, 0.4, deep + 0.4), Vector3(0.0, h + 0.3, deep * 0.5), DARK_STONE.darkened(0.1))
-	PropCollision.box(body, f.transform * roof.transform, Vector3(w + 1.0, 0.4, deep + 0.4))
-	# Steps going down into the dark, and the dark itself.
-	for k in 4:
-		var st := _block(f, Vector3(w, 0.18, 0.5), Vector3(0.0, 0.02 - k * 0.22, 0.5 + k * 0.55), DARK_STONE.darkened(0.15 + k * 0.15))
-		st.name = "Step%d" % k
-	var back := _block(f, Vector3(w + 0.2, h + 1.0, 0.2), Vector3(0.0, h * 0.5 - 0.6, deep - 0.1), Color(0.02, 0.02, 0.03))
-	back.name = "Dark"
-	# Torchlight showing inside: a torch in a bracket on the wall.
-	var sconce := Node3D.new()
-	sconce.name = "Sconce"
-	f.add_child(sconce)
-	sconce.position = Vector3(-w * 0.5 + 0.12, 1.35, 1.6)
-	_block(sconce, Vector3(0.08, 0.08, 0.3), Vector3(0.0, -0.1, 0.0), Color(0.15, 0.13, 0.12))
-	CreatureBodies.cone(sconce, 0.035, 0.03, 0.45, Vector3(0.05, 0.1, 0.0), WOOD)
-	var flame := Torch.flame_node()
-	flame.position = Vector3(0.05, 0.38, 0.0)
-	sconce.add_child(flame)
-	var light := Torch.light_node()
-	light.position = Vector3(0.25, 0.4, 0.0)
-	light.light_energy *= 0.8
-	sconce.add_child(light)
-	root.set_meta("light", light)
+		var x := side * rng.randf_range(1.0, 1.8)
+		var root_r := rng.randf_range(0.12, 0.24)
+		var rlen := rng.randf_range(2.0, 3.2)
+		var c := CreatureBodies.cone(f, root_r * 1.6, root_r * 0.5, rlen, Vector3(x, 0.5 + rng.randf() * 0.4, 1.4 + rng.randf() * 1.2), bark)
+		c.rotation = Vector3(rng.randf_range(-0.6, -0.2), 0.0, side * rng.randf_range(0.7, 1.2))
 
 
 ## One small cloaked figure (small folk's scale) standing by the place.

@@ -3996,3 +3996,81 @@ func _tri_box_lod(xf: Transform3D, size: Vector3, col: Color) -> void:
 	col.a = 0.0
 	_tri_box(xf, size, col)
 	_lod_box(xf, size * 0.5, col, col, col.darkened(UNDER))
+
+
+# --- The shrine (design 3 Oct §DK, Shrines) --------------------------------------------
+
+## The shrine behind a hidden place (Shrines.layout `lay`, its delve-frame
+## `p_site`): the same data as compute() for make_node.
+static func compute_shrine(p_map: PlanetData, p_site: Dictionary, lay: Dictionary) -> Dictionary:
+	var b := RuinBuilder.new()
+	b.map = p_map
+	b.site = p_site
+	b.rng.seed = int(p_site.seed)
+	b.up = p_site.dir
+	var a: float = float(p_site.heading) + PI * 0.5
+	b.ex = CubeSphere.north(b.up) * cos(a) + CubeSphere.east(b.up) * sin(a)
+	b.ez = b.ex.cross(b.up).normalized()
+	b.base_e = p_map.terrain.elevation(b.up, true)
+	b.wet = smoothstep(0.2, 0.8, p_map.sample(p_map.moisture, b.up))
+	b._og_setup()
+	b._shrine_hall(lay)
+	return {"og": b.og, "og_plants": [], "og_shade": b._og_shade, "ivy_places": 0, "ivy_kept": 0, "site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
+		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
+		"shelters": b._shelters, "camp_spot": Vector3.ZERO, "lights": [], "lamps": [], "delve": lay, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": [], "boulder_anchors": [], "lod_m": b._lod_m, "lit_per_pixel": false}
+
+
+## The court, the hall going down, the altar room, and behind it the stair
+## and the room below (Shrines). +z runs into the hill, the mouth at z 0.
+func _shrine_hall(lay: Dictionary) -> void:
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var pieces: Array = lay.pieces
+	var hall: Dictionary = pieces[0]
+	var open_to: float = lay.open_to
+	var hw := float(hall.half) + Delves.WALL * 0.5
+	var outer := hw + Delves.WALL * 0.5
+	var z_open := 0.5 + open_to
+	# The court: flagstones on the ground over the hole and round it, the
+	# way down left open between its parapets.
+	shade = 0.25
+	var court: Rect2 = (lay.holes[0] as Rect2).grow(Delves.QUAD_PAD + 1.0)
+	_pave(court, NAN, Rect2(-outer, 0.5, 2.0 * outer, open_to + 0.05))
+	# The parapets each side of the open stair, a little over the court;
+	# the facade across where its roof begins.
+	var a0 := 0.0
+	while a0 < open_to - 0.01:
+		var a1 := minf(a0 + 1.2, open_to)
+		for sd: float in [-1.0, 1.0]:
+			var g := -INF
+			for q in [a0, a1]:
+				for xx in [sd * hw, sd * (outer + 0.4)]:
+					g = maxf(g, ground(xx, 0.5 + q))
+			var lo := minf(Delves.floor_of(hall, a0), Delves.floor_of(hall, a1)) - off - 0.6
+			_dwall(Vector2(sd * hw, 0.5 + a0), Vector2(sd * hw, 0.5 + a1), lo, g + 0.45)
+		a0 = a1
+	var gf := maxf(ground(-outer, z_open), ground(outer, z_open))
+	var lint := Delves.floor_of(hall, open_to) - off + float(hall.h)
+	_dwall(Vector2(-outer, z_open + Delves.WALL * 0.5), Vector2(outer, z_open + Delves.WALL * 0.5), lint, gf + 0.6)
+	# Below: the hall, the rooms (lit per pixel, as a delve's inside).
+	shade = 0.0
+	_delve_from = _v.size()
+	# The open stretch: steps only (its parapets above); then walls and roof.
+	var cut := clampf(open_to, 0.5, float(hall.len) - 0.5)
+	var open_pc := hall.duplicate()
+	open_pc.len = cut
+	open_pc.y1 = Delves.floor_of(hall, cut)
+	_delve_stair(open_pc, off, true, cut + 1.0, -1.0e6)
+	var cov_pc := hall.duplicate()
+	cov_pc.c = (hall.c as Vector2) + (hall.dir as Vector2) * cut
+	cov_pc.len = float(hall.len) - cut
+	cov_pc.y0 = open_pc.y1
+	_delve_stair(cov_pc, off, false, 0.0, 0.0)
+	var room: Dictionary = pieces[1]
+	var stair: Dictionary = pieces[2]
+	var heart: Dictionary = pieces[3]
+	_delve_room(room, off, [_opening(room, (hall.c as Vector2) + (hall.dir as Vector2) * float(hall.len), float(hall.half)), _opening(room, stair.c, float(stair.half))])
+	_delve_stair(stair, off, false, 0.0, 0.0)
+	_delve_room(heart, off, [_opening(heart, (stair.c as Vector2) + (stair.dir as Vector2) * float(stair.len), float(stair.half))])
+	_delve_to = _v.size()

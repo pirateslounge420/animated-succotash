@@ -26,6 +26,8 @@ extends SceneTree
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
 ## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
+## SITES=shrine the nearest shrine (§DK): its court and the way down, the
+## hall from near its top, and the altar room by torchlight.
 ## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
 ## (design §DC's shafts; ShaftField prints its gate per frame).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
@@ -154,6 +156,8 @@ func _run() -> void:
 			kinds.append("haunt")
 		if only.has("hidden"):
 			kinds.append("hidden")
+		if only.has("shrine"):
+			kinds.append("shrine")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -253,6 +257,8 @@ func _run() -> void:
 					var side := 0.75 if kit == "earth_homes" else 0.0
 					sites.append({"name": "hidden_" + kit, "dir": CreatureSpawner._offset(hb.dir, float(hb.facing) + side, back), "look": hb.dir,
 						"note": "a hidden %s %.1f km from the camp%s" % [kit.replace("_", " "), hd / 1000.0, ", a speaker by it" if bool(hb.speaker) else ""]})
+			"shrine":
+				sites.append_array(_shrine_sites(camp_d))
 			"ruins":
 				# SITES=ruins: the wettest and the driest stone ruins of
 				# this world (design 3 Oct §DI: a ruin wears its place),
@@ -480,6 +486,12 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
+	if site.has("shrine_stand"):
+		await _into_shrine(site)
+	elif site.has("shrine_pitch"):
+		main.hidden_places.refresh(true)
+		await _frames(5)
+		player.set_view(float(site.shrine_pitch), 0.0)
 	# Wait for the chunk's near plants (the leaf cards, not the far
 	# pictures), as play has them within seconds on a GPU.
 	# Bounded by the clock, not frames: the software renderer draws about
@@ -792,6 +804,62 @@ func _delve_sites(camp: Vector3) -> Array:
 		var at: Vector2 = o + dv * 9.0
 		out.append({"name": "delve_cairn", "dir": Delves.to_dir(fr, at.x, at.y), "look": Delves.to_dir(fr, o.x, o.y), "note": "the cairn the way out comes up in, its slab shut", "delve_hours": true})
 	return out
+
+
+## The nearest shrine (design 3 Oct §DK): its court, the hall, the altar.
+func _shrine_sites(camp: Vector3) -> Array:
+	var map: PlanetData = world.planet
+	var pl := {}
+	var bd := INF
+	for p in HiddenPlaces.near(main.chunks.roads, camp, 40000.0, true):
+		if str(p.kit) in Shrines.KITS and CubeSphere.surface_distance_m(p.dir, camp) < bd:
+			bd = CubeSphere.surface_distance_m(p.dir, camp)
+			pl = p
+	if pl.is_empty():
+		lines.append("-- shrine: none within 40 km")
+		return []
+	var lay := Shrines.layout(map, pl)
+	var fr: Dictionary = lay.fr
+	var hall: Dictionary = lay.pieces[0]
+	var room: Dictionary = lay.pieces[1]
+	var hl := float(hall.len)
+	var zr := float((room.c as Vector2).y)
+	var note := "the shrine behind a %s %.1f km from the camp, %d sconces" % [str(pl.kit).replace("_", " "), bd / 1000.0, (lay.sconces as Array).size()]
+	var out: Array = []
+	out.append({"name": "shrine_court", "dir": Delves.to_dir(fr, 0.0, -5.0), "look": Delves.to_dir(fr, 0.0, 12.0), "note": note + ", the court and the way down", "shrine_key": str(pl.key), "shrine_pitch": -0.35})
+	out.append({"name": "shrine_hall", "dir": Delves.to_dir(fr, 0.0, 0.5 + float(lay.open_to) + 1.0), "look": Delves.to_dir(fr, 0.0, zr + 4.0), "note": "the hall going down, its sconces",
+		"shrine_key": str(pl.key), "shrine_stand": Vector3(0.0, Delves.floor_of(hall, float(lay.open_to) + 1.0), 0.5 + float(lay.open_to) + 1.0), "shrine_look": Vector3(0.0, Delves.floor_of(hall, hl) + 1.0, zr + 2.0)})
+	out.append({"name": "shrine_altar", "dir": Delves.to_dir(fr, 0.9, zr + 0.8), "look": Delves.to_dir(fr, 0.0, zr + 6.0), "note": "the altar room: the scroll on the altar, the wall behind it",
+		"shrine_key": str(pl.key), "shrine_stand": Vector3(0.9, float(room.y0), zr + 0.8), "shrine_look": Vector3(0.0, float(room.y0) + 1.0, zr + Shrines.ROOM_L - 1.5), "torch": true})
+	return out
+
+
+## Stand at a shrine: built, the player on its floor (layout coordinates),
+## looking along it; a lit torch in hand if the site asks.
+func _into_shrine(site: Dictionary) -> void:
+	main.hidden_places.refresh(true)
+	await _frames(5)
+	var e: Dictionary = Shrines.instance.built.get(str(site.shrine_key), {}) if Shrines.instance != null else {}
+	if e.is_empty():
+		site["note"] = str(site.get("note", "")) + " · the shrine did not build"
+		return
+	var node: Node3D = e.node
+	var off := float(e.off)
+	var st: Vector3 = site.shrine_stand
+	var lk: Vector3 = site.shrine_look
+	player.global_position = node.global_transform * Vector3(st.x, st.y - off + 0.02, st.z)
+	player.velocity = Vector3.ZERO
+	await _frames(5)
+	if bool(site.get("torch", false)):
+		player.inventory.add(Inventory.make("torch"))
+		player.weapon = "torch"
+		player.torch.light()
+	for i in 30:
+		player.torch.update_torch(1.0 / 60.0)
+		await process_frame
+	var to: Vector3 = node.global_transform * Vector3(lk.x, lk.y - off, lk.z) - player.eye_position()
+	player.set_view(clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)), -0.8, 0.8), 0.0)
+	site["note"] = str(site.get("note", "")) + " · inside (%s)" % ("underground" if Delves.underground > 0.5 else "at ground level")
 
 
 ## Stand inside a delve: the barrow built and solid, the player on the
