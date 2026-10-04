@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–13, 17. Next up: 14.
+Built so far: 01–14, 17. Next up: 15.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -43,7 +43,7 @@ Built so far: 01–13, 17. Next up: 14.
 | 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | built 63e9956 |
 | 12 | §DI (part 3 of 3) | The ghost at the corner | built 81ad44d |
 | 13 | §DF | Your light gives you away | built 8217d38 |
-| 14 | §DJ | Off the road: hidden places, and the few who speak | todo |
+| 14 | §DJ | Off the road: hidden places, and the few who speak | built 812f794 |
 | 15 | §DK | The shrine and the sealed scroll | todo |
 | 16 | §DL | Tomes: the I Ching first | todo |
 | 17 | §DO | The crag fortress | built 5d88fbe |
@@ -343,7 +343,7 @@ REPORT TO MIKE: the open call: what the stranger does when they come (stands wit
 
 ## 14 — Off the road: hidden places, and the few who speak — §DJ
 
-**Status:** todo
+**Status:** built 812f794
 **Mike sees:** Off the trail, a hidden grove with turf-roofed homes dug into a bank, a doorway under a gnarled old oak, a shrine's mouth; a small strange figure who says one cryptic line in the log.
 
 ```text
