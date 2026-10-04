@@ -4,6 +4,25 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.2: the carved cliffs (prompt 22)
+- **The kind:** `Ruins.Kind.CARVED_CLIFFS`, "Carved cliffs" (`data/ruins.json` → `styles.carved_cliffs`, unmarked), placed by Monuments' sites pass.
+  - **New gate words:** `sandstone` (the rock under it) and `canyon_wall` (`Monuments.canyon_at`: the ravine layer within 400 m, its walls 8 m deep or more, a slot canyon where it pinches in dry sandstone).
+- **Its facades** (`Monuments._carved_cliffs`, `RuinBuilder._carved_cliffs`):
+  - 3–9 in a row along one wall. Each is re-found along the canyon so the row follows its bends, and the row's middle is where the wall faces the ground grid (the tombs' way in opens on it).
+  - Each is a mass of the wall's own sandstone standing sheer from the foot (its back in the slope), carved in relief: plinth, 4 or 6 columns with capitals, entablature, a stepped pediment, an upper order on the tall ones, a dark doorway (R8) with soot above it, side niches on the wide ones, and now and then a creeper in a crack.
+  - Behind the middle facade's door, the tombs are the delve: the barrow kit, in and down, with a shaft up to the rim as the way out. Their hearths smoke out through `open_ring` (no stack).
+- **Check:** `tools/carved_cliffs_check.gd`, 0 fails on 7731.
+  - One site: 23.53°S 30.25°W, hot desert, afrotropic, sandstone, in a slot canyon 8.4 m deep.
+  - 4 facades, 8.9–16.6 m tall.
+  - The tombs: stair, room, stair, heart, exit.
+  - 34,800 triangles against the castle's 78,835.
+- **Walkabout** (`SITES=carved_cliffs HOURS=13`, harness frame §CG): in the slot's bed, the facades' columns run along the right-hand wall in deep navy shade. It reads dimly, because the slot is narrow and in shadow.
+- **Flags:**
+  - The canyons are 12 m deep at this scale (`RAVINE_M`), against facades of 8–30 m; a facade taller than its wall rises over the rim as a mass of its own rock.
+  - In sandstone desert every ravine is a slot, so the facades face across a slot a few metres wide. Petra's opening-out (the slot onto a wider court) would need a terrain stamp, which is not built.
+  - The wadi entrance waits for the wadi nest.
+  - The delve is the barrow kit.
+
 ## 2026-10-04 — §DS.1: the long wall (prompt 21)
 - **The kind:** `Ruins.Kind.LONG_WALL`, "The long wall" (`data/ruins.json` → `styles.long_wall`, unmarked), placed by Monuments' sites pass (`KINDS` gains its line).
   - **New gate words:** `ridgeline` (needs a crest: the ground 120 m either side at least 5 m below, along some axis), and `wet` and `flat_lowland` (never).

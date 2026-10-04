@@ -546,7 +546,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "out the facade doors; soot above them",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.2] Facades cut into a sandstone canyon wall, reached through a slot canyon (\u00a7CK's nests); the rock-cut tombs behind them are the delve. Sandstone only."
+   "_help": "Built (design \u00a7DS.2; Monuments._carved_cliffs, RuinBuilder._carved_cliffs): facades cut into one wall of a sandstone canyon (the ravine layer, a slot canyon where it pinches in dry sandstone; the gate's needs: sandstone, canyon_wall), the row following the canyon's bends, its middle where the wall faces the ground grid. Each facade is a mass of the wall's own sandstone standing sheer from the wall's foot, carved in relief: a plinth, columns with capitals, an entablature, a stepped pediment, an upper order on the tall ones, a dark doorway with soot over it, a creeper in a crack now and then. The canyons are about 12 m deep at this scale, so a facade taller than its wall rises over the rim as its own rock. The tombs behind the middle facade's door are the delve (in and down; a shaft up to the rim the way out). Restart after editing."
   },
   "stone_heads": {
    "kind": "own",

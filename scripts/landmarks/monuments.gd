@@ -19,10 +19,13 @@ class_name Monuments
 ##   ridgeline         a crest: the ground RIDGE_M either side of it, along
 ##                     some axis, at least RIDGE_RISE_M below it;
 ##   wet               (never) the ground's moisture over WET;
+##   sandstone         the rock under it is sandstone;
+##   canyon_wall       a ravine (or a slot canyon) within CANYON_M, its
+##                     walls CANYON_DEEP_M deep or more (canyon_at);
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -30,6 +33,8 @@ const CRAG_MIN_M := 6.0
 const RIDGE_M := 120.0
 const RIDGE_RISE_M := 5.0
 const WET := 0.62
+const CANYON_M := 400.0
+const CANYON_DEEP_M := 8.0
 ## The long wall's line (§DS.1): steps along the crest, the turn allowed a
 ## step, and where it gives up (water, a drop steeper than WALL_MAX_GRADE).
 const WALL_STEP_M := 40.0
@@ -92,7 +97,40 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "flat_lowland"
 	if needs.has("ridgeline") and ridge_axis(map, p) < 0.0:
 		return "no_ridge"
+	if needs.has("sandstone") and map.rock[cell] != PlanetData.Rock.SANDSTONE:
+		return "rock"
+	if needs.has("canyon_wall") and canyon_at(map, p).is_empty():
+		return "no_canyon"
 	return ""
+
+
+## The canyon at `p` (the ravine layer, a slot canyon where it pinches in
+## dry sandstone; TerrainField._cliffs, Nests.slot_at): {"dir" (its middle
+## line), "across" (the bearing across it), "floor_half", "rim_half" (m),
+## "depth" (its walls, m), "slot" (0-1)}; {} where there's none within
+## CANYON_M or it's shallower than CANYON_DEEP_M.
+static func canyon_at(map: PlanetData, p: Vector3) -> Dictionary:
+	if Nests.terrain != map.terrain:
+		return {}
+	if map.terrain.line_mask(p, "ravine") < 0.6:
+		return {}
+	var r := Nests._snap(p, "ravine")
+	if r.is_empty():
+		return {}
+	var d: Vector3 = r.dir
+	if CubeSphere.surface_distance_m(d, p) > CANYON_M:
+		return {}
+	var g: Vector2 = r.g
+	var gl := g.length()
+	var across := atan2(g.x, g.y)
+	var slot := Nests.slot_at(d)
+	var rim_half := lerpf(TerrainField.RAVINE_RIM_N, TerrainField.SLOT_RIM_N, slot) / gl
+	var floor_half := lerpf(TerrainField.RAVINE_FLOOR_N, TerrainField.SLOT_FLOOR_N, slot) / gl
+	var e0 := Nests._e(d)
+	var depth := minf(Nests._e(CreatureSpawner._offset(d, across, rim_half + 6.0)), Nests._e(CreatureSpawner._offset(d, across + PI, rim_half + 6.0))) - e0
+	if depth < CANYON_DEEP_M:
+		return {}
+	return {"dir": d, "across": across, "floor_half": floor_half, "rim_half": rim_half, "depth": depth, "slot": slot}
 
 
 ## The bearing of the crest `p` stands on (radians from north, 0..PI), or
@@ -273,6 +311,10 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 			var built := _long_wall(map, E, c, d, rng, site)
 			if built.is_empty():
 				return {}
+		"carved_cliffs":
+			var cc := _carved_cliffs(map, E, d, rng, site)
+			if cc.is_empty():
+				return {}
 	return site
 
 
@@ -451,3 +493,82 @@ static func _bearing_at(line: PackedVector3Array, m: float) -> float:
 	var b := RoadNetwork.point_at(line, clampf(m + 10.0, 0.0, total))
 	var t := b - a * b.dot(a)
 	return atan2(t.dot(CubeSphere.east(a)), t.dot(CubeSphere.north(a)))
+
+
+## The carved cliffs (§DS.2): a row of facades along one wall of the canyon
+## at `d`, the row's middle where the wall runs nearest the ground grid's
+## axes (its tombs' way in opens on the grid); each facade at the wall's
+## foot (re-found along the canyon, so the row follows its bends), facing
+## across it, its height facade_height_m but no more than the wall's depth
+## and 8 m over it (the rock mass rising above the rim). Fills `site`.
+static func _carved_cliffs(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var cy := canyon_at(map, d)
+	if cy.is_empty():
+		return {}
+	# The middle: along the canyon, where its wall faces the grid.
+	var along := float(cy.across) + PI * 0.5
+	var best := {}
+	var best_dev := INF
+	for k in range(-10, 11):
+		var q := CreatureSpawner._offset(cy.dir, along, k * 15.0)
+		var cq := canyon_at(map, q)
+		if cq.is_empty():
+			continue
+		for s in [1.0, -1.0]:
+			var into := float(cq.across) + (0.0 if s > 0.0 else PI)
+			var foot := CreatureSpawner._offset(cq.dir, into, float(cq.floor_half) + 0.5)
+			var heading := into - PI
+			var gh := Delves.grid_heading(foot, heading)
+			var dev := absf(wrapf(gh - heading, -PI, PI))
+			if dev < best_dev:
+				best_dev = dev
+				best = {"cy": cq, "side": s, "foot": foot, "heading": gh}
+	if best.is_empty():
+		return {}
+	var cyc: Dictionary = best.cy
+	var side := float(best.side)
+	var fc := E.get("facades", [3, 9]) as Array
+	var fh := E.get("facade_height_m", [8, 30]) as Array
+	var n := rng.randi_range(int(fc[0]), int(fc[1]))
+	var widths: Array = []
+	var span := 0.0
+	for i in n:
+		var w := rng.randf_range(7.0, 12.0)
+		widths.append(w)
+		span += w + (3.0 if i > 0 else 0.0)
+	var facades: Array = []
+	var s0 := -span * 0.5
+	var along_c := float(cyc.across) + PI * 0.5
+	for i in n:
+		var w := float(widths[i])
+		var s := s0 + w * 0.5
+		s0 += w + 3.0
+		var q := CreatureSpawner._offset(cyc.dir, along_c, s)
+		var cq := canyon_at(map, q) if absf(s) > 0.1 else cyc
+		if cq.is_empty():
+			continue
+		var into := float(cq.across) + (0.0 if side > 0.0 else PI)
+		# The same wall: the across bearing may have flipped along the way.
+		if cos(wrapf(into - (float(cyc.across) + (0.0 if side > 0.0 else PI)), -PI, PI)) < 0.0:
+			into += PI
+		var foot := CreatureSpawner._offset(cq.dir, into, float(cq.floor_half) + 0.5)
+		var h := clampf(rng.randf_range(float(fh[0]), float(fh[1])), 8.0, float(cq.depth) + 8.0)
+		facades.append({"dir": foot, "into": into, "w": w, "h": h, "cols": 4 if w < 9.5 else 6, "upper": h > 14.0, "s": s, "creeper": rng.randf() < 0.3})
+	if facades.size() < 3:
+		return {}
+	# The middle facade's foot is the site's (its door over the way in).
+	var mid := 0
+	for i in facades.size():
+		if absf(float(facades[i].s)) < absf(float(facades[mid].s)):
+			mid = i
+	site.dir = facades[mid].dir
+	site.heading = Delves.grid_heading(site.dir, float(facades[mid].into) - PI)
+	site.facades = facades
+	site.mid = mid
+	site.slot = float(cyc.slot)
+	site.depth_m = float(cyc.depth)
+	site.half_l = 5.0
+	site.footprint_m = span * 0.5 + 8.0
+	site.clear = [[site.dir, 6.0]]
+	return site
+

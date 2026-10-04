@@ -244,6 +244,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._crag_fortress()
 		Ruins.Kind.TEMPLE_CITY:
 			b._temple_city()
+		Ruins.Kind.CARVED_CLIFFS:
+			b._carved_cliffs()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4458,7 +4460,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -4708,5 +4710,81 @@ func _long_wall_gate() -> void:
 			_pblock(bs * Vector3(u, 0.0, -hs) + Vector3(0.0, g0 + h + MERLON_H * 0.5, 0.0), Vector3(hs * 0.3, MERLON_H, 0.9), WALL_STONES[(k + side) % 5].darkened(0.1), 0.5, -rot)
 	_pblock(Vector3(0.0, g0 + h - 0.4, 0.0), Vector3(2.0 * hs + 1.0, 0.8, 2.0 * hs + 1.0), WALL_STONES[0], 0.8)
 	_pave(Rect2(-hs, -hs, 2.0 * hs, 2.0 * hs), NAN, Rect2(-1.2, -hs, 2.4, 2.0 * hs))
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+# --- The carved cliffs (design 3 Oct §DS.2) ----------------------------------------
+
+const VOID := Color(0.04, 0.035, 0.04)
+
+
+## The facades cut into the canyon wall (Monuments._carved_cliffs): each
+## a mass of the wall's own sandstone standing sheer from the wall's foot
+## (its back in the slope; where it's taller than the wall, rising over
+## the rim), and on its face, in relief, a plinth, columns with capitals,
+## an entablature, a stepped pediment, an upper order on the tall ones, a
+## dark doorway (R8: a void) with soot over it. The tombs behind the middle
+## facade's door are the delve (the barrow kit going in and down; a shaft
+## up to the rim its way out).
+func _carved_cliffs() -> void:
+	palette = SANDSTONE
+	var fs: Array = site.facades
+	_lod_m = float(site.footprint_m) + LOD_M
+	for i in fs.size():
+		var f: Dictionary = fs[i]
+		var p := _local_of(f.dir)
+		var q := _local_of(CreatureSpawner._offset(f.dir, float(f.into), 1.0))
+		var into := (q - p).normalized()
+		var a := atan2(into.x, into.y)
+		var bs := Basis(Vector3.UP, a)
+		var w: float = f.w
+		var h: float = f.h
+		var g := INF
+		for u in [-0.5, 0.0, 0.5]:
+			var gp: Vector2 = p + Vector2(into.y, -into.x) * w * float(u)
+			g = minf(g, ground(gp.x, gp.y))
+		var o := Vector3(p.x, g, p.y)
+		var mid := i == int(site.mid)
+		var stone: Color = SANDSTONE[i % SANDSTONE.size()]
+		# The rock mass: sheer in front, its back deep in the slope; the
+		# middle one stands on the ground, over the way in.
+		var deep := clampf(h * 1.2, 6.0, 22.0)
+		var bury := 0.2 if mid else 2.5
+		_pbox(Transform3D(bs, o + bs * Vector3(0.0, (h + 1.5 - bury) * 0.5, deep * 0.5)), Vector3(w + 3.0, h + 1.5 + bury, deep), stone.darkened(0.06), 0.15)
+		var cols := int(f.cols)
+		var hc := h * 0.5
+		# Plinth, columns and capitals.
+		_pbox(Transform3D(bs, o + bs * Vector3(0.0, 0.4, -0.25)), Vector3(w, 0.8, 0.5), stone, 0.1)
+		for k in cols:
+			var x := lerpf(-w * 0.5 + 0.7, w * 0.5 - 0.7, float(k) / float(cols - 1))
+			_pbox(Transform3D(bs, o + bs * Vector3(x, 0.8 + hc * 0.5, -0.3)), Vector3(0.75, hc, 0.6), stone.lightened(0.04), 0.1)
+			_pbox(Transform3D(bs, o + bs * Vector3(x, 0.8 + hc + 0.2, -0.36)), Vector3(1.05, 0.4, 0.72), stone, 0.1)
+		var ye := 0.8 + hc + 0.4
+		_pbox(Transform3D(bs, o + bs * Vector3(0.0, ye + 0.45, -0.32)), Vector3(w, 0.9, 0.64), stone.darkened(0.03), 0.15)
+		# The stepped pediment.
+		var yp := ye + 0.9
+		for st in 4:
+			var pw := w * (1.0 - st * 0.24)
+			_pbox(Transform3D(bs, o + bs * Vector3(0.0, yp + 0.25, -0.28)), Vector3(pw, 0.5, 0.56), stone, 0.15)
+			yp += 0.5
+		# An upper order on the tall ones: four slimmer columns, a band.
+		if bool(f.upper) and h - yp > 3.0:
+			var hu := h - yp - 1.0
+			for k in 4:
+				var x := lerpf(-w * 0.32, w * 0.32, float(k) / 3.0)
+				_pbox(Transform3D(bs, o + bs * Vector3(x, yp + 0.2 + hu * 0.5, -0.26)), Vector3(0.6, hu, 0.52), stone.lightened(0.04), 0.1)
+			_pbox(Transform3D(bs, o + bs * Vector3(0.0, yp + 0.2 + hu + 0.35, -0.3)), Vector3(w * 0.75, 0.7, 0.6), stone.darkened(0.03), 0.15)
+		# The doorway (a void) and the soot over it; dark niches either side
+		# on the wide ones.
+		var dh := minf(4.0, hc * 0.85)
+		_pbox(Transform3D(bs, o + bs * Vector3(0.0, 0.8 + dh * 0.5, -0.62)), Vector3(2.0, dh, 0.06), VOID, 0.0)
+		_pbox(Transform3D(bs, o + bs * Vector3(0.0, 0.8 + dh + 0.6, -0.61)), Vector3(2.6, 1.6, 0.05), stone.darkened(0.55), 0.0)
+		if cols == 6:
+			for sx in [-1.0, 1.0]:
+				_pbox(Transform3D(bs, o + bs * Vector3(float(sx) * w * 0.3, 0.8 + dh * 0.35, -0.62)), Vector3(1.0, dh * 0.6, 0.06), VOID, 0.0)
+		# A creeper in a crack (§DI's dry row: lichen comes with the stone).
+		if bool(f.creeper):
+			ivy(o + bs * Vector3(w * 0.5 + 0.6, h, -0.1), bs * Vector3(0.0, 0.0, -1.0), rng.randf_range(4.0, minf(9.0, h)))
 	if Delves.has_delve(site):
 		_delve_build()

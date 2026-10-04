@@ -90,6 +90,10 @@ static func has_delve(site: Dictionary) -> bool:
 	# kit, its way out a postern on the far side).
 	if int(site.kind) == Ruins.Kind.LONG_WALL and not site.has("piece"):
 		return true
+	# The carved cliffs' rock-cut tombs (§DS.2: in through the middle
+	# facade's door, the deepest tomb the heart, a shaft up to the rim).
+	if int(site.kind) == Ruins.Kind.CARVED_CLIFFS:
+		return true
 	return int(site.kind) == Ruins.Kind.BARROW and str(site.get("style", "")) in ["stone", "snow"]
 
 

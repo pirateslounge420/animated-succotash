@@ -30,6 +30,8 @@ extends SceneTree
 ## them at their fire (HOURS=19.5 for dusk).
 ## SITES=long_wall the nearest long wall (§DS.1): from its straight approach
 ## to the gate tower, and along the wall from a stretch of it.
+## SITES=carved_cliffs the nearest carved cliffs (§DS.2): from the canyon
+## floor along it, looking at the facades.
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -174,6 +176,8 @@ func _run() -> void:
 			kinds.append("ox_rider")
 		if only.has("long_wall"):
 			kinds.append("long_wall")
+		if only.has("carved_cliffs"):
+			kinds.append("carved_cliffs")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -290,6 +294,20 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"carved_cliffs":
+				var cb := {}
+				var cbd := INF
+				for cs in Monuments.all_sites(world.planet, "carved_cliffs"):
+					if CubeSphere.surface_distance_m(cs.dir, camp_d) < cbd:
+						cbd = CubeSphere.surface_distance_m(cs.dir, camp_d)
+						cb = cs
+				if cb.is_empty():
+					lines.append("-- carved_cliffs: none on this world")
+					continue
+				# Down the canyon 24 m from the middle facade, in its bed.
+				var ccy := Monuments.canyon_at(world.planet, cb.dir)
+				var cstand: Vector3 = CreatureSpawner._offset(ccy.dir, float(ccy.across) + PI * 0.5, 24.0) if not ccy.is_empty() else Ruins.local_dir(cb, 0.0, -20.0)
+				sites.append({"name": "carved_cliffs", "dir": cstand, "look": cb.dir, "note": "the carved cliffs, %d facades in a canyon %.0f m deep" % [(cb.facades as Array).size(), float(cb.depth_m)]})
 			"long_wall":
 				var lw := {}
 				var lwd := INF
