@@ -25,7 +25,7 @@ keeps the table's marks when it regenerates this file.
 were locked in other chats and handed over there. §BR puts §DM's pass between 16 and 17; §DH (the
 goblin band) waits for Mike's four calls.
 
-Built so far: 01, 02, 03, 04, 05, 06, 07, 08, 09. Next up: 10.
+Built so far: 01–09, 17. Next up: 10.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -45,7 +45,7 @@ Built so far: 01, 02, 03, 04, 05, 06, 07, 08, 09. Next up: 10.
 | 14 | §DJ | Off the road: hidden places, and the few who speak | todo |
 | 15 | §DK | The shrine and the sealed scroll | todo |
 | 16 | §DL | Tomes: the I Ching first | todo |
-| 17 | §DO | The crag fortress | todo |
+| 17 | §DO | The crag fortress | built 5d88fbe |
 | 18 | §DR | The temple city: roots over stone | todo |
 | 19 | §DP | The wandering fire: thirteen in the desert | todo |
 | 20 | §DQ | The old man on his ox | todo |
@@ -404,7 +404,7 @@ REPORT TO MIKE: that the game is ready for the text, and that filling data/tomes
 
 ## 17 — The crag fortress — §DO
 
-**Status:** todo
+**Status:** built 5d88fbe
 **Mike sees:** A whitewashed fortress climbing a crag in tiers under a cobalt sky, the red band under every roofline, one long stair up the rock; its delve climbs to the chapel at the top.
 
 ```text
