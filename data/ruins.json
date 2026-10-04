@@ -634,7 +634,7 @@
    "cliff_dwelling": {
     "as": "its own kind now (styles.cliff_dwelling, \u00a7DS.4)"
    },
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.4] Mike's 'pueblo pyramids', read as the stepped adobe towns of many storeys. Adobe melts, so an old one is a mound with walls standing in it; the kiva is the delve; smoke out roof hatches. With it, the cliff dwelling as a camp's remains at the mesa alcove nest."
+   "_help": "Built (design \u00a7DS.5; Monuments._terraced_pueblo, RuinBuilder._terraced_pueblo): a stepped adobe town (storeys) on open ground (a slope under 0.12 over 40 m) in the nearctic cold desert, sagebrush or canyon, dry (moisture under 0.4), water within 2 km (near_water). Rows of rooms on a mound of their own melted adobe, the back rows tallest, each storey set back to make terraces; a third of the rooms have lost a storey or two. Dark T-doors and roof hatches (R8), beam ends, ladders up the terraces. In the plaza in front, a kiva or two and the great kiva round the way down: the stores under the town (the barrow kit), the deepest the heart, a way up out behind it. Rare: the nearctic dry country turns up on few worlds (seed 8 has one). Restart after editing."
   },
   "stone_circle": {
    "kind": "own",

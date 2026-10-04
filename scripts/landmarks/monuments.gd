@@ -33,13 +33,15 @@ class_name Monuments
 ##                     and dry (a river's or lake's cell is no bar here);
 ##   flat              the ground within 60 m rises no more than FLAT_LOOSE;
 ##   coast             the sea within COAST_M (sea_bearing);
+##   dry               the ground's moisture under DRY;
+##   near_water        a river, a lake or the shore within WATER_BELOW_M;
 ##   treeless          no tree of the catalogue passes its gate there or
 ##                     40 m round (HiddenPlaces.tree_gate): the land is
 ##                     already bare, nothing is cleared (§DS.3).
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -53,6 +55,7 @@ const ALCOVE_FACE_M := 9.0
 const WATER_BELOW_M := 2000.0
 const FLOODPLAIN_M := 1500.0
 const COAST_M := 360.0
+const DRY := 0.4
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
 ## over 60 m in the dry country, so a little looser than flat_lowland's.
 const FLAT_LOOSE := 0.1
@@ -134,6 +137,10 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "dry"
 	if needs.has("flat") and slope(map, p, 60.0) > FLAT_LOOSE:
 		return "slope"
+	if needs.has("dry") and map.sample(map.moisture, p) >= DRY:
+		return "wet"
+	if needs.has("near_water") and HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) > WATER_BELOW_M:
+		return "dry"
 	if needs.has("coast") and is_inf(sea_bearing(map, p)):
 		return "inland"
 	if needs.has("treeless") and not treeless(map, p):
@@ -442,6 +449,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 			_brick_city(map, E, d, rng, site)
 		"stone_heads":
 			if _stone_heads(map, E, d, rng, site).is_empty():
+				return {}
+		"terraced_pueblo":
+			if _terraced_pueblo(map, E, d, rng, site).is_empty():
 				return {}
 	return site
 
@@ -856,5 +866,48 @@ static func _stone_heads(map: PlanetData, E: Dictionary, d: Vector3, rng: Random
 	site.half_l = 5.7 - QUARRY_Z
 	site.footprint_m = maxf(n * 4.6 * 0.5 + 8.0, QUARRY_Z * 0.6)
 	site.clear = []
+	return site
+
+
+## The terraced pueblo (§DS.5): a stepped town on open ground round `d`,
+## its frame on the ground grid (the great kiva's way down opens on it):
+## rows of rooms back to front, the back rows the tallest (storeys), each
+## storey set back toward the back; its plaza in front (-z) with the great
+## kiva over the way down. {} where the ground isn't open. Fills `site`.
+static func _terraced_pueblo(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	if slope(map, d, 40.0) > 0.12:
+		return {}
+	var stb: Array = E.get("storeys", [3, 5])
+	var storeys := rng.randi_range(int(stb[0]), int(stb[1]))
+	var cols := rng.randi_range(7, 11)
+	var rows := storeys + 1
+	site.heading = Delves.grid_heading(d, rng.randf() * TAU)
+	site.storeys = storeys
+	site.cols = cols
+	site.rows = rows
+	site.room_m = 4.0
+	# Each room: [col, row, standing storeys] (the top ones melted away).
+	var rooms: Array = []
+	for r in rows:
+		var full := clampi(storeys - (rows - 1 - r), 1, storeys)
+		for c in cols:
+			if rng.randf() < 0.08:
+				continue
+			var st := full
+			if rng.randf() < 0.35:
+				st = maxi(1, full - rng.randi_range(1, 2))
+			rooms.append([c, r, st])
+	site.rooms = rooms
+	site.room_count = rooms.reduce(func(a, b): return a + int(b[2]), 0)
+	# The plaza in front, its small kivas, the great kiva over the way down.
+	var front_z := -float(rows) * 4.0 * 0.5 - 4.0
+	site.half_l = -(front_z - 7.0) + 5.7
+	var kivas: Array = []
+	for k in rng.randi_range(1, 2):
+		kivas.append([rng.randf_range(0.25, 0.45) * cols * 4.0 * (1.0 if k == 0 else -1.0), front_z - rng.randf_range(4.0, 8.0), rng.randf_range(2.0, 2.6)])
+	site.kivas = kivas
+	site.great_kiva = [0.0, front_z - 7.0 + 1.0, 4.4]
+	site.footprint_m = maxf(cols, rows) * 4.0 * 0.5 + 18.0
+	site.clear = [[d, float(site.footprint_m)]]
 	return site
 

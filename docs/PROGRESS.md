@@ -4,6 +4,26 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.5: the terraced pueblo (prompt 26)
+- **The kind:** `Ruins.Kind.TERRACED_PUEBLO`, "Terraced pueblo" (`data/ruins.json` → `styles.terraced_pueblo`, unmarked), placed by Monuments' sites pass.
+  - **New gate words:** `dry` (moisture under 0.4) and `near_water` (water within 2 km).
+  - `make_site` also wants open ground (a slope under 0.12 over 40 m).
+- **The town** (`Monuments._terraced_pueblo`, `RuinBuilder._terraced_pueblo`):
+  - Rows of 4 m adobe rooms (7–11 across, storeys + 1 deep) on a mound of melted adobe (`_tell`), the back rows standing tallest (3–5 storeys), each storey set back to make terraces.
+  - A third of the rooms have lost a storey or two, and one in twelve is gone.
+  - Dark T-doors on each storey's front, roof hatches, beam ends, and ladders up the terraces.
+  - The plaza has 1–2 kivas (`_kiva`) and the great kiva's ring round the way down: the barrow kit, the stores under the town, the deepest the heart, a way up out behind it.
+  - Smoke: `roof_vent`.
+- **Check:** `tools/terraced_pueblo_check.gd`, 0 fails on 7731 and 8.
+  - 7731 has none; seed 8 has one at 37.53°N 154.68°W in cold desert, nearctic: 5 storeys over 11 × 6 rooms, 152 rooms in all, 1 kiva.
+  - The delve: stair, room, stair, heart, exit. 38,772 triangles against the castle's 78,733.
+- **Walkabout** (`SEED=8 SITES=terraced_pueblo HOURS=15`, harness frame §CG): the stepped town of five storeys on its mound, dark T-doors along every terrace, a kiva ring with its ladder in front; it is backlit.
+- **Flags:**
+  - It is rare, for the same reason as the cliff dwelling.
+  - The way out comes up behind the town, not by a roof hatch.
+  - The great kiva is the way in, not the heart (the barrow kit's heart is its deepest room).
+  - The roof hatches are dark panels, not openings.
+
 ## 2026-10-04 — §DS.3: the stone heads and the oceania realm (prompt 25)
 - **The realm:** oceania already exists in `RealmMap`. One of its nine provinces is dealt the OCEANIA world in the seeded shuffle (§AA), and all its land reads "oceania".
   - On 7731 it is province 2, with 1,653 land cells of 55,296 (3.0 %); on 8, province 8 with 2,274 (4.1 %). It is mostly coast: hot desert, dunes, savanna, beach, rainforest and rocky shore.

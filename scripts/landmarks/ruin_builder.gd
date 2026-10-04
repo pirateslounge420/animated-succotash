@@ -252,6 +252,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._brick_city()
 		Ruins.Kind.STONE_HEADS:
 			b._stone_heads()
+		Ruins.Kind.TERRACED_PUEBLO:
+			b._terraced_pueblo()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4466,7 +4468,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -5202,3 +5204,75 @@ func _head_shape(xf: Transform3D, h: float, topknot: bool, rough := false) -> vo
 	_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh * 0.12, fz + 0.12)), Vector3(hw * 0.62, hh * 0.14, 0.3), col.darkened(0.03), 0.1)
 	if topknot:
 		_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh + h * 0.08, 0.0)), Vector3(hw * 0.78, h * 0.16, hw * 0.78), SCORIA, 0.0)
+
+
+# --- The terraced pueblo (design 3 Oct §DS.5) --------------------------------------
+
+const ADOBE := [Color(0.7, 0.55, 0.4), Color(0.66, 0.51, 0.37), Color(0.73, 0.58, 0.42), Color(0.63, 0.49, 0.36), Color(0.68, 0.53, 0.38)]
+
+
+## The town (Monuments._terraced_pueblo): its rooms in rows on a mound of
+## its own melted adobe, the back rows standing tallest, each storey set
+## back from the one below so the roofs make terraces; doors and roof
+## hatches dark (R8), ladders up the terraces, beam ends; the plaza in
+## front with its kivas, and the great kiva over the way down (the barrow
+## kit: the stores under the town, the heart the deepest, a way up out
+## behind it).
+func _terraced_pueblo() -> void:
+	palette = ADOBE
+	var rm: float = site.room_m
+	var cols := int(site.cols)
+	var rows := int(site.rows)
+	var w := cols * rm
+	var dpt := rows * rm
+	_lod_m = float(site.footprint_m) + LOD_M
+	# The mound of melted adobe under it all.
+	_tell(Vector2(0.0, 0.0), maxf(w, dpt) * 0.62, maxf(w, dpt) * 0.42, 1.6, ADOBE[3].darkened(0.08))
+	var g0 := ground(0.0, 0.0) + 1.6
+	var x0 := -w * 0.5 + rm * 0.5
+	var z0 := -dpt * 0.5 + rm * 0.5
+	for rmv in site.rooms:
+		var c := int(rmv[0])
+		var r := int(rmv[1])
+		var st := int(rmv[2])
+		var x := x0 + c * rm
+		var z := z0 + r * rm
+		for s in st:
+			var col: Color = ADOBE[(c + r + s) % 5]
+			var sh := ROOM_H + 0.2
+			var y := g0 + s * sh
+			_pbox(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.02, 0.02)), Vector3(x, y + sh * 0.5 - 0.2, z)), Vector3(rm - 0.1, sh, rm - 0.1), col, 0.04)
+			# A door on the front of the front-most room of each storey.
+			var front := true
+			for o in site.rooms:
+				if int(o[0]) == c and int(o[1]) == r - 1 and int(o[2]) > s:
+					front = false
+					break
+			if front:
+				_pbox(Transform3D(Basis(), Vector3(x, y + 0.75, z - rm * 0.5 + 0.02)), Vector3(0.6, 1.1, 0.06), VOID, 0.0)
+				_pbox(Transform3D(Basis(), Vector3(x, y + 1.45, z - rm * 0.5 + 0.02)), Vector3(1.1, 0.4, 0.06), VOID, 0.0)
+		var top := g0 + st * (ROOM_H + 0.2)
+		# The roof: a hatch on some, beam ends at the front.
+		if rng.randf() < 0.35:
+			_pbox(Transform3D(Basis(), Vector3(x + 0.6, top - 0.15, z + 0.4)), Vector3(0.9, 0.06, 0.9), VOID, 0.0)
+		for bx in [-1.2, 0.0, 1.2]:
+			_pbox(Transform3D(Basis(), Vector3(x + float(bx), top - 0.3, z - rm * 0.5 - 0.2)), Vector3(0.16, 0.16, 0.45), OLD_WOOD, 0.0)
+		# A ladder up to the next terrace now and then.
+		if st >= 1 and r > 0 and rng.randf() < 0.18:
+			var lz := z - rm * 0.5 - 0.7
+			_ladder(Vector3(x - 0.8, top - (ROOM_H + 0.2) + 0.0, lz), Vector3(x - 0.8, top + 1.2, lz + 0.5))
+	# The plaza: its kivas, the great kiva round the way down.
+	for kv in site.kivas:
+		_kiva(Vector2(float(kv[0]), float(kv[1])), float(kv[2]), false)
+	var gk: Array = site.great_kiva
+	var kc := Vector2(float(gk[0]), float(gk[1]))
+	var kr := float(gk[2])
+	for k in 16:
+		var a := k * TAU / 16.0
+		var p := kc + Vector2(cos(a), sin(a)) * kr
+		# (Open where the stair runs in, +z.)
+		if p.y > kc.y and absf(p.x - kc.x) < 1.6:
+			continue
+		_pbox(Transform3D(Basis(Vector3.UP, -a + PI * 0.5), Vector3(p.x, ground(p.x, p.y) + 0.25, p.y)), Vector3(kr * TAU / 16.0 * 1.05, 0.9, 0.7), ADOBE[k % 5].darkened(0.08), 0.1)
+	if Delves.has_delve(site):
+		_delve_build()

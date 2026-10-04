@@ -39,6 +39,8 @@ extends SceneTree
 ## way toward the blue gate (SEED=8 has one).
 ## SITES=stone_heads the stone heads (§DS.3): 30 m inland of them, looking
 ## at their faces with the sea behind.
+## SITES=terraced_pueblo the nearest terraced pueblo (§DS.5): from beyond its
+## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -191,6 +193,8 @@ func _run() -> void:
 			kinds.append("brick_city")
 		if only.has("stone_heads"):
 			kinds.append("stone_heads")
+		if only.has("terraced_pueblo"):
+			kinds.append("terraced_pueblo")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -307,6 +311,15 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"terraced_pueblo":
+				var tps: Array = Monuments.all_sites(world.planet, "terraced_pueblo")
+				if tps.is_empty():
+					lines.append("-- terraced_pueblo: none on this world")
+					continue
+				var tp0: Dictionary = tps[0]
+				var tfz := -float(tp0.rows) * 4.0 * 0.5 - 4.0
+				sites.append({"name": "terraced_pueblo", "dir": Ruins.local_dir(tp0, float(tp0.cols) * 1.2, tfz - 26.0), "look": tp0.dir, "pitch_to": tp0.dir, "pitch_add_m": 6.0,
+					"note": "the terraced pueblo, %d storeys" % int(tp0.storeys)})
 			"stone_heads":
 				var shs: Array = Monuments.all_sites(world.planet, "stone_heads")
 				if shs.is_empty():
