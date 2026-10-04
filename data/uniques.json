@@ -86,7 +86,7 @@
     "Night (Mike): does the dark keep off their circle when the fire burns low? Default: no special rule.",
     "Giving (Mike): anything beyond a coal? Default: nothing."
    ],
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DP] The second one-of-a-kind and the first that moves: thirteen in the desert who walk by day and sit by a carried fire at night, leaving a trail of cold rings."
+   "_help": "The second one-of-a-kind and the first that moves (WanderingFire; design \u00a7DP): thirteen in the desert who walk by day and sit by a carried fire at night, leaving a trail of cold rings. Built: each night's place is a pure function of the world's seed and the clock (2.5-5 km a day, hot desert or thorn scrub, never standing water); they walk 06:30-17:30, lay and light the fire at 18:00 (a FireStore like any, a safe circle, a coal free to take), sit round it till dawn; the last nights' rings lie cold. Not built: \u00a7CY.2's circle loops (they sit still), the hood down (the rig has no bare head). Restart after editing."
   }
  },
  "road_regulars": {

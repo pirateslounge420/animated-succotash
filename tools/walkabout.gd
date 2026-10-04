@@ -26,6 +26,8 @@ extends SceneTree
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
 ## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
+## SITES=wandering_fire the thirteen (§DP): one of their cold rings, and
+## them at their fire (HOURS=19.5 for dusk).
 ## SITES=temple_city the nearest temple city (§DR), from its straight
 ## approach: at the head of its causeway, 4 m out, looking at its gate.
 ## SITES=shrine the nearest shrine (§DK): its court and the way down, the
@@ -162,6 +164,8 @@ func _run() -> void:
 			kinds.append("shrine")
 		if only.has("temple_city"):
 			kinds.append("temple_city")
+		if only.has("wandering_fire"):
+			kinds.append("wandering_fire")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -263,6 +267,21 @@ func _run() -> void:
 						"note": "a hidden %s %.1f km from the camp%s" % [kit.replace("_", " "), hd / 1000.0, ", a speaker by it" if bool(hb.speaker) else ""]})
 			"shrine":
 				sites.append_array(_shrine_sites(camp_d))
+			"wandering_fire":
+				var p0 := WanderingFire.night_at(world.planet, 0)
+				if p0 == Vector3.ZERO:
+					lines.append("-- wandering_fire: no desert for them on this world")
+					continue
+				var hr := float(OS.get_environment("HOURS").split(",")[0]) if OS.get_environment("HOURS") != "" else 19.5
+				# The walkabout's own clock for a site (floor(spawn) + 1 at its
+				# solar hour), at the group's place.
+				var at_days := Astro.days_at_solar_hour(floor(world.days) + 1.0, hr, CubeSphere.longitude(p0), CubeSphere.latitude(p0))
+				var ww := WanderingFire.where(world, at_days)
+				var past := WanderingFire.past_nights(world, at_days)
+				if not past.is_empty():
+					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
+					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
+				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
 			"temple_city":
 				var tb := {}
 				var tbd := INF

@@ -4,6 +4,18 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DP: the wandering fire (prompt 19)
+- **WanderingFire** (`scripts/landmarks/wandering_fire.gd`, new): the second one-of-a-kind (`data/uniques.json` → `uniques.wandering_fire`, unmarked), and the first that moves.
+  - **Where they are** is a pure function of the world's seed and the clock: night 0 in the hot desert or thorn scrub, each next night 2.5–5 km on, never into standing water or out of the desert. Nothing is saved; a reload finds them where the clock says.
+  - **By day** (06:30–17:30) the thirteen walk the line from last night's place to tonight's; one carries their coal in a clay pot (§BP).
+  - **At 18:00** they lay a fire and light it, a FireStore like any: a safe circle (§BA) and a coal free to take. They sit round it till dawn.
+  - **Behind them** the last nights' places hold cold rings of stones and ash.
+  - The log notes them once: "Thirteen sit round a fire in the sand."
+- **Check:** `tools/wandering_fire_check.gd`, 0 fails on seed 7731. First night 33.36°N 165.47°W in hot desert; gaps 2.5–4.9 km; 2.40 m walked in 3 s at noon with no fire; at 21:00 the fire is lit with 13 of 13 inside 14 m, and the dread drains 0.50 → 0.467; a cold ring built at night 2; the log line once.
+- **Walkabout** (`SITES=wandering_fire`, harness frame §CG): the thirteen seated round their lit fire among tall cacti at night. On that clock there was no past night yet, so no ring frame (the rings are checked headless).
+- **Open calls, built at their defaults:** naming (play names nobody), the night rule (no special rule when their fire burns low), giving (nothing beyond a coal).
+- **Not built:** §CY.2's circle loops (they sit still), and the one's hood down (the shared rig has no bare head).
+
 ## 2026-10-04 — §DR: the temple city, roots over stone (prompt 18)
 - **Monuments** (`scripts/landmarks/monuments.gd`, new): one sites pass for every `ruins.json` style whose kind is "own" (§DS's rule).
   - **The gate:** realm, biomes, the plain words in needs and never (flat_lowland, water_for_moat, crag, slope).

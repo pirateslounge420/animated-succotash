@@ -49,6 +49,7 @@ var water_sounds: WaterSounds
 var road_props: RoadProps
 var hidden_places: HiddenPlaces
 var shrines: Shrines
+var wandering_fire: WanderingFire
 var camp_sim: CampSim
 var player_fires: PlayerFires
 var travellers: Travellers
@@ -313,6 +314,10 @@ func _on_planet_ready() -> void:
 	shrines.name = "Shrines"
 	add_child(shrines)
 	shrines.setup(world, chunks, player)
+	wandering_fire = WanderingFire.new()
+	wandering_fire.name = "WanderingFire"
+	add_child(wandering_fire)
+	wandering_fire.setup(world, chunks, player)
 	travellers = Travellers.new()
 	travellers.name = "Travellers"
 	add_child(travellers)
