@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–14, 17. Next up: 15.
+Built so far: 01–15, 17. Next up: 16.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -44,7 +44,7 @@ Built so far: 01–14, 17. Next up: 15.
 | 12 | §DI (part 3 of 3) | The ghost at the corner | built 81ad44d |
 | 13 | §DF | Your light gives you away | built 8217d38 |
 | 14 | §DJ | Off the road: hidden places, and the few who speak | built 812f794 |
-| 15 | §DK | The shrine and the sealed scroll | todo |
+| 15 | §DK | The shrine and the sealed scroll | built 5ef2aa4 |
 | 16 | §DL | Tomes: the I Ching first | todo |
 | 17 | §DO | The crag fortress | built 5d88fbe |
 | 18 | §DR | The temple city: roots over stone | todo |
@@ -362,7 +362,7 @@ CHECK (tools/hidden_check.gd, headless): on seed 7731, count the hidden places; 
 
 ## 15 — The shrine and the sealed scroll — §DK
 
-**Status:** todo
+**Status:** built 5ef2aa4
 **Mike sees:** An ominous hall going down, torches burning in sconces, a sealed scroll on an altar; far away someone reads it and asks where you found it; back at the shrine the right torches open the wall.
 
 ```text
