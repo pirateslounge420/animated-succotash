@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–27. Next up: 28.
+Built so far: 01–28. Next up: 29.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -57,7 +57,7 @@ Built so far: 01–27. Next up: 28.
 | 25 | §DS.3 | The stone heads (and the oceania realm) | built b0965f2 |
 | 26 | §DS.5 | The terraced pueblo | built 373561d |
 | 27 | §DS.7 | The stone circle | built 51dcffb |
-| 28 | §DS | The tower house and the broch | todo |
+| 28 | §DS | The tower house and the broch | built 0cb81c7 |
 | 29 | §DZ | The hewn temple, found from above | todo |
 | 30 | §DT | The hanging gardens | todo |
 | 31 | §DU | The ruined abbey | todo |
@@ -588,7 +588,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 28 — The tower house and the broch — §DS
 
-**Status:** todo
+**Status:** built 0cb81c7
 **Mike sees:** On the cold wet coasts: a tall narrow keep inside a low wall, and a drystone round tower with a passage under the ground beside it.
 
 ```text
