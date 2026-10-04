@@ -250,6 +250,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._cliff_dwelling()
 		Ruins.Kind.BRICK_CITY:
 			b._brick_city()
+		Ruins.Kind.STONE_HEADS:
+			b._stone_heads()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4464,7 +4466,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -5093,3 +5095,110 @@ func _beast(p: Vector3, sx: float, kind: int) -> void:
 			_pbox(Transform3D(Basis(Vector3.BACK, -0.35 * sx), p + Vector3(sx * (bl * 0.5 + 0.2), 1.4, 0.0)), Vector3(0.22, 1.2, 0.14), col, 0.0)
 			_pbox(Transform3D(Basis(), p + Vector3(sx * (bl * 0.5 + 0.45), 2.0, 0.0)), Vector3(0.5, 0.3, 0.14), col, 0.0)
 			_pbox(Transform3D(Basis(Vector3.BACK, 0.7 * sx), p + Vector3(-sx * (bl * 0.5 + 0.2), 1.25, 0.0)), Vector3(0.14, 0.9, 0.14), col, 0.0)
+
+
+# --- The stone heads (design 3 Oct §DS.3) ------------------------------------------
+
+## Volcanic tuff, and the red scoria of a topknot.
+const TUFF := [Color(0.42, 0.39, 0.35), Color(0.38, 0.36, 0.33), Color(0.46, 0.42, 0.37), Color(0.4, 0.37, 0.32), Color(0.44, 0.4, 0.36)]
+const SCORIA := Color(0.55, 0.27, 0.2)
+
+
+## The row (Monuments._stone_heads): a long platform of fitted stone along
+## the shore, the heads on it with their backs to the sea, facing inland
+## (+z): each a torso and a long head, a heavy brow over deep-shadowed
+## eyes, a long nose, a jutting chin, long ears; a red topknot on some;
+## one in five face down in the grass before the platform. Inland in the
+## hill behind, the quarry's open face over its cave (the barrow kit going
+## down; an unfinished head lies in the rock at its heart). Nothing says
+## why the trees are gone (§BQ).
+func _stone_heads() -> void:
+	palette = TUFF
+	var heads: Array = site.heads
+	var n := heads.size()
+	var span := n * 4.6 + 4.0
+	_lod_m = maxf(span * 0.5, Monuments.QUARRY_Z) + LOD_M
+	# The row turned to face truly inland (the frame is on the grid).
+	var fi := (_local_of(CreatureSpawner._offset(site.dir, float(site.inland), 10.0)) - _local_of(site.dir)).normalized()
+	var rb := Basis(Vector3.UP, atan2(fi.x, fi.y))
+	_stone_row(heads, span, rb)
+	# The quarry in the hill behind: its open face, a few tuff blocks
+	# round the way down, a half-cut head lying by it.
+	var qz := Monuments.QUARRY_Z
+	for k in 7:
+		var a := -PI * 0.5 + (k - 3) * 0.32
+		var qp := Vector2(cos(a) * 9.0, qz + 4.0 + sin(a) * 9.0 * 0.6)
+		var qg := ground(qp.x, qp.y)
+		var qh := rng.randf_range(2.5, 4.5)
+		_pbox(Transform3D(Basis(Vector3.UP, -a), Vector3(qp.x, qg + qh * 0.5 - 0.4, qp.y + 6.0)), Vector3(3.2, qh, 2.4), TUFF[k % 5].darkened(0.04), 0.1)
+	var ug := ground(-6.0, qz + 2.0)
+	_head_shape(Transform3D(Basis(Vector3.RIGHT, PI * 0.5) * Basis(Vector3.UP, 0.4), Vector3(-6.0, ug + 0.5, qz - 2.0)), 5.5, false, true)
+	if Delves.has_delve(site):
+		_delve_build()
+		for pc in (_delve.get("pieces", []) as Array):
+			if str(pc.kind) == "heart":
+				var hc: Vector2 = pc.c
+				var hl := float(pc.len)
+				# The unfinished head, still in the rock at the heart's back.
+				_head_shape(Transform3D(Basis(Vector3.RIGHT, -PI * 0.5), Vector3(hc.x, float(pc.y0) - _delve_off + 0.6, hc.y + hl * 0.6)), 4.2, false, true)
+
+
+## The platform and its heads, laid in the row's own frame `rb` (its +z
+## inland), positions turned by it from the site's middle.
+func _stone_row(heads: Array, span: float, rb: Basis) -> void:
+	var n := heads.size()
+	# The platform: fitted blocks along x, its top level.
+	var top := -INF
+	for k in 9:
+		var tp := rb * Vector3(lerpf(-span * 0.5, span * 0.5, k / 8.0), 0.0, 0.0)
+		top = maxf(top, ground(tp.x, tp.z))
+	top += 1.6
+	var x := -span * 0.5
+	while x < span * 0.5:
+		var bl := minf(rng.randf_range(1.6, 2.6), span * 0.5 - x)
+		var pa := rb * Vector3(x + bl * 0.5, 0.0, -2.5)
+		var pb := rb * Vector3(x + bl * 0.5, 0.0, 2.5)
+		var gb := minf(ground(pa.x, pa.z), ground(pb.x, pb.z))
+		var pc := rb * Vector3(x + bl * 0.5, 0.0, 0.0)
+		_pbox(Transform3D(rb, Vector3(pc.x, (gb - 0.6 + top) * 0.5, pc.z)), Vector3(bl - 0.04, top - gb + 0.6, 6.0), TUFF[rng.randi() % 5], 0.05)
+		x += bl
+	# The ramp of stones down the seaward side.
+	_pbox(Transform3D(rb * Basis(Vector3.RIGHT, -0.35), rb * Vector3(0.0, 0.0, -4.2) + Vector3(0.0, top - 1.2, 0.0)), Vector3(span, 0.6, 3.4), TUFF[2].darkened(0.06), 0.05)
+	for i in n:
+		var hd: Dictionary = heads[i]
+		var hx := -span * 0.5 + 2.0 + 2.3 + i * 4.6
+		var h := float(hd.h)
+		if bool(hd.fallen):
+			# Face down in the grass before the platform, its head inland.
+			var fp := rb * Vector3(hx, 0.0, 4.0)
+			var gf := ground(fp.x, fp.z)
+			_head_shape(Transform3D(rb * Basis(Vector3.RIGHT, PI * 0.5), Vector3(fp.x, gf + 0.7, fp.z)), h, false)
+			continue
+		var hp := rb * Vector3(hx, 0.0, 0.0)
+		_head_shape(Transform3D(rb * Basis(Vector3.UP, float(hd.turn)), Vector3(hp.x, top, hp.z)), h, bool(hd.topknot))
+
+
+## One head standing on `xf` (its foot at the origin, facing +z), `h`
+## tall: torso, the long head, brow, nose, chin, ears; `topknot` a red
+## cylinder of scoria; `rough` an unfinished one (no features cut).
+func _head_shape(xf: Transform3D, h: float, topknot: bool, rough := false) -> void:
+	var col: Color = TUFF[rng.randi() % 5]
+	var tw := h * 0.32
+	var th := h * 0.42
+	_pbox(xf * Transform3D(Basis(), Vector3(0.0, th * 0.5, 0.0)), Vector3(tw, th, tw * 0.62), col, 0.15)
+	var hw := tw * 0.86
+	var hh := h * 0.58
+	var hy := th + hh * 0.5
+	_pbox(xf * Transform3D(Basis(), Vector3(0.0, hy, 0.02)), Vector3(hw, hh, tw * 0.66), col.lightened(0.03), 0.15)
+	if rough:
+		return
+	var fz := tw * 0.33 + 0.02
+	# The brow, the shadowed eyes under it, the long nose, the chin.
+	_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh * 0.72, fz + 0.1)), Vector3(hw * 0.96, hh * 0.1, 0.32), col.darkened(0.04), 0.1)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(xf * Transform3D(Basis(), Vector3(sx * hw * 0.24, th + hh * 0.63, fz + 0.01)), Vector3(hw * 0.26, hh * 0.08, 0.04), VOID, 0.0)
+		_pbox(xf * Transform3D(Basis(), Vector3(sx * (hw * 0.5 + 0.08), th + hh * 0.5, 0.0)), Vector3(0.18, hh * 0.55, tw * 0.3), col.darkened(0.06), 0.1)
+	_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh * 0.5, fz + 0.16)), Vector3(hw * 0.2, hh * 0.32, 0.36), col, 0.1)
+	_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh * 0.12, fz + 0.12)), Vector3(hw * 0.62, hh * 0.14, 0.3), col.darkened(0.03), 0.1)
+	if topknot:
+		_pbox(xf * Transform3D(Basis(), Vector3(0.0, th + hh + h * 0.08, 0.0)), Vector3(hw * 0.78, h * 0.16, hw * 0.78), SCORIA, 0.0)

@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.3: the stone heads and the oceania realm (prompt 25)
+- **The realm:** oceania already exists in `RealmMap`. One of its nine provinces is dealt the OCEANIA world in the seeded shuffle (§AA), and all its land reads "oceania".
+  - On 7731 it is province 2, with 1,653 land cells of 55,296 (3.0 %); on 8, province 8 with 2,274 (4.1 %). It is mostly coast: hot desert, dunes, savanna, beach, rainforest and rocky shore.
+  - I left the dealing as it is, rather than adding a tenth realm for small isolated islands. **Flag:** the data's `waits_for` said the realm was missing; it now records that it is met.
+  - **Its plant communities today** (none are tagged for oceania; dealt per land by niche fit, §CS):
+    - Its own, 7731: Saguaro-paloverde Arizona Upland (hot desert), Coastal wattle dune scrub (dunes), Moso bamboo and Sasa grove (temperate deciduous), Baobab-palm savanna, Quebracho Chaco forest (thorn scrub), Reaumuria gravel desert, Amazon terra firme forest, Saltgrass-alkali heath meadow, Thrift-sea campion cliff-ledge sward (rocky shore), Post-fire birch-fireweed stand, Mountain-avens dwarf willow mat, Hagenia Afromontane forest, Sonneratia-Avicennia pioneer mudflat, Teak-bamboo moist deciduous forest, Alpenrose-dwarf juniper heath, Coiron-neneo Patagonian steppe, Prickly pear-yucca eroded slope, Tussock grass paramo grassland, Ohia-amaumau fern lava pioneer forest, Meadowsweet tall-herb fringe, Gambel oak-hackberry side-canyon woodland, Tussock sedge meadow, Hot-spring moss-bentgrass warm ground.
+    - Spread from the nearest land (§CS.4's short-biome rule): Coconut-screw pine littoral wood (beach), Redwood alluvial flat forest, Guanacaste-bursera Pacific dry forest, Aleppo pine-kermes oak garrigue, Mountain birch forest-tundra, Map lichen-glacier buttercup fresh moraine, Switchgrass lowland prairie, Needlerush marsh, Loblolly pine-wax myrtle back-dune woodland, Black poplar-white willow riverside wood.
+    - These are for chat's fill (`tools/stone_heads_check.gd` prints them for any seed).
+- **The kind:** `Ruins.Kind.STONE_HEADS`, "The stone heads" (`data/ruins.json` → `styles.stone_heads`, unmarked), one a world. Nobody lives there (`Ruins.rolls_inhabited`).
+  - **New gate words:** `coast` (the sea within 360 m: `Monuments.sea_bearing`) and `treeless` (no tree of the catalogue passes `HiddenPlaces.tree_gate` there or 40 m round: nothing is cleared).
+- **The row** (`Monuments._stone_heads`, `RuinBuilder._stone_heads`):
+  - A platform of fitted tuff 35 m in from the water, turned to face truly inland (the frame is on the ground grid for the delve).
+  - On it, 5–15 heads 4–10 m tall (`_head_shape`): torso, long head, brow, shadowed eyes, nose, chin, ears, a red scoria topknot on some, one in five face down in the grass.
+  - Inland, the quarry: an open face of tuff blocks and a half-cut head. Its cave is the delve, with an unfinished head lying at the heart. No smoke (`open_ring`).
+- **Check:** `tools/stone_heads_check.gd`, 0 fails on 7731 and 8.
+  - 7731: at 37.41°N 179.27°E, on a beach in oceania; 7 heads of 4.1–9.8 m, 4 with topknots.
+  - 8: on a rocky shore; 12 heads, 2 fallen.
+  - The sea lies behind both rows. No tree can grow there. The quarry's cave has a heart and a way out. About 32–35k triangles.
+- **Walkabout** (`SITES=stone_heads HOURS=16`, harness frame §CG): the row of dark heads on their platform against a bright sea, a bare sandy coast round them.
+- **Flags:**
+  - "Treeless" is judged by each tree's gate (biome, realm, climate, soil), not by the stand the placer deals. A community's understory or a lone stray could still differ.
+  - At 37°N the beach is too cool for the coconut palm, so it reads bare.
+
 ## 2026-10-04 — §DS.6: the brick city (prompt 24)
 - **The kind:** `Ruins.Kind.BRICK_CITY`, "Brick city" (`data/ruins.json` → `styles.brick_city`, unmarked), placed by Monuments' sites pass.
   - **New gate words:**

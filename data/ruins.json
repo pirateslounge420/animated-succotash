@@ -583,7 +583,7 @@
    },
    "chance": 0.5,
    "per_world_max": 1,
-   "waits_for": "a tenth realm, oceania, in RealmMap (code: Claude Code's); until then this entry places nothing",
+   "waits_for": "Met (4 Oct, \u00a7DS.3): RealmMap already deals an oceania world, one province in nine (\u00a7AA), its land reading \"oceania\"; about 3-4 % of a world's land, mostly coasts and islands.",
    "delve": {
     "direction": "down",
     "rooms": "the quarry's cave",
@@ -591,7 +591,7 @@
     "way_out": "the quarry's open face",
     "fire_holder": "hearth_ring"
    },
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.3] A row of great stone heads on their platforms along a treeless coast, facing inland; the quarry's cave is the delve. The restraint rule (\u00a7BL) as a landscape: heads, grass, no trees, and nothing says why (\u00a7BQ). Waits for the oceania realm."
+   "_help": "Built (design \u00a7DS.3; Monuments._stone_heads, RuinBuilder._stone_heads): one row a world, in oceania, on a treeless grass or shore coast. The gate words: coast (the sea within 360 m) and treeless (no tree of the catalogue passes its gate there or 40 m round: nothing is cleared). A long platform of fitted tuff 35 m in from the water, the heads on it (heads, height_m) with their backs to the sea, facing inland: a torso and a long head, a heavy brow over shadowed eyes, a long nose, a jutting chin, long ears, a red topknot on some, one in five face down in the grass. Inland in the hill behind, the quarry's open face and a half-cut head; the delve is the quarry's cave, an unfinished head still in the rock at its heart. Nobody lives there, and nothing says why the trees are gone. Restart after editing."
   },
   "terraced_pueblo": {
    "kind": "own",

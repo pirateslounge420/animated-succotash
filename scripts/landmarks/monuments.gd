@@ -31,11 +31,15 @@ class_name Monuments
 ##                     60 m or more from its line) or a lake or the shore
 ##                     within 450 m (the oasis), the ground under LOWLAND_M
 ##                     and dry (a river's or lake's cell is no bar here);
-##   flat              the ground within 60 m rises no more than FLAT_LOOSE.
+##   flat              the ground within 60 m rises no more than FLAT_LOOSE;
+##   coast             the sea within COAST_M (sea_bearing);
+##   treeless          no tree of the catalogue passes its gate there or
+##                     40 m round (HiddenPlaces.tree_gate): the land is
+##                     already bare, nothing is cleared (§DS.3).
 ##   flat_lowland      (never) flat and low, as above.
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -48,6 +52,7 @@ const CANYON_DEEP_M := 8.0
 const ALCOVE_FACE_M := 9.0
 const WATER_BELOW_M := 2000.0
 const FLOODPLAIN_M := 1500.0
+const COAST_M := 360.0
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
 ## over 60 m in the dry country, so a little looser than flat_lowland's.
 const FLAT_LOOSE := 0.1
@@ -129,6 +134,10 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String) -> String:
 		return "dry"
 	if needs.has("flat") and slope(map, p, 60.0) > FLAT_LOOSE:
 		return "slope"
+	if needs.has("coast") and is_inf(sea_bearing(map, p)):
+		return "inland"
+	if needs.has("treeless") and not treeless(map, p):
+		return "trees"
 	if needs.has("desert_river_floodplain"):
 		var rv := river_m(map, p)
 		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0
@@ -173,6 +182,34 @@ static func alcove_at(map: PlanetData, p: Vector3) -> Dictionary:
 	if Nests._slope(CreatureSpawner._offset(foot, float(cl.toward) + PI, 8.0), 4.0) > 0.18:
 		return {}
 	return cl
+
+
+## The bearing from `p` to the nearest sea within COAST_M (the ground
+## half a metre under the sea), INF with none.
+static func sea_bearing(map: PlanetData, p: Vector3) -> float:
+	for r in [60.0, 120.0, 180.0, 240.0, 300.0, COAST_M]:
+		for k in 16:
+			var b := k * TAU / 16.0
+			if map.terrain.elevation(CreatureSpawner._offset(p, b, r), true, false, false) < PlanetConst.SEA_LEVEL_M - 0.5:
+				return b
+	return INF
+
+
+static var _trees: Array = []
+
+
+## No tree of the catalogue may grow at `p` or 40 m round it.
+static func treeless(map: PlanetData, p: Vector3) -> bool:
+	if _trees.is_empty():
+		for sp in SpeciesDB.all():
+			if (sp as PlantSpecies).tier in [PlantSpecies.Tier.EMERGENT, PlantSpecies.Tier.CANOPY]:
+				_trees.append(sp)
+	for k in 5:
+		var q := p if k == 0 else CreatureSpawner._offset(p, k * TAU / 4.0, 40.0)
+		for sp in _trees:
+			if HiddenPlaces.tree_gate(map, q, sp):
+				return false
+	return true
 
 
 ## The distance from `p` to the nearest river's line (INF with none in its
@@ -403,6 +440,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 				return {}
 		"brick_city":
 			_brick_city(map, E, d, rng, site)
+		"stone_heads":
+			if _stone_heads(map, E, d, rng, site).is_empty():
+				return {}
 	return site
 
 
@@ -776,4 +816,45 @@ static func _brick_city(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomN
 	site.maze_seed = rng.randi()
 	site.footprint_m = r * 2.0 + 30.0
 	site.clear = [[d, r * 0.95], [palace, float(site.palace_r) + 4.0]]
+
+
+## The stone heads (§DS.3): the platform along the shore 35 m in from the
+## water, the heads on it facing inland (site.inland: the row turns to it;
+## the frame is turned to the ground grid, so the quarry's way down opens
+## on it), the quarry QUARRY_Z up the frame's +z in the hill behind.
+## Fills `site`.
+const QUARRY_Z := 70.0
+
+
+static func _stone_heads(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var sb := sea_bearing(map, d)
+	if is_inf(sb):
+		return {}
+	# The shore along the sea's bearing, then 35 m in from it.
+	var shore := d
+	for i in 40:
+		var q := CreatureSpawner._offset(d, sb, i * 10.0)
+		if map.terrain.elevation(q, true, false, false) < PlanetConst.SEA_LEVEL_M + 0.3:
+			shore = q
+			break
+	var inland := sb + PI
+	var c := CreatureSpawner._offset(shore, inland, 35.0)
+	# 35 m in from the water, if that's still the heads' ground; else where
+	# the gate found it.
+	if map.terrain.elevation(c, true, false, false) < 1.0 or gate(map, c, "stone_heads") != "":
+		c = d
+	site.dir = c
+	site.inland = inland
+	site.heading = Delves.grid_heading(c, inland - PI)
+	var hc: Array = E.get("heads", [5, 15])
+	var hh: Array = E.get("height_m", [4, 10])
+	var n := rng.randi_range(int(hc[0]), int(hc[1]))
+	var heads: Array = []
+	for i in n:
+		heads.append({"h": rng.randf_range(float(hh[0]), float(hh[1])), "fallen": rng.randf() < 0.2, "topknot": rng.randf() < 0.25, "turn": rng.randf_range(-0.08, 0.08)})
+	site.heads = heads
+	site.half_l = 5.7 - QUARRY_Z
+	site.footprint_m = maxf(n * 4.6 * 0.5 + 8.0, QUARRY_Z * 0.6)
+	site.clear = []
+	return site
 

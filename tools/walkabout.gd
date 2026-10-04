@@ -37,6 +37,8 @@ extends SceneTree
 ## looking into the alcove (SEED=8 has one).
 ## SITES=brick_city the nearest brick city (§DS.6): down its processional
 ## way toward the blue gate (SEED=8 has one).
+## SITES=stone_heads the stone heads (§DS.3): 30 m inland of them, looking
+## at their faces with the sea behind.
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -187,6 +189,8 @@ func _run() -> void:
 			kinds.append("cliff_dwelling")
 		if only.has("brick_city"):
 			kinds.append("brick_city")
+		if only.has("stone_heads"):
+			kinds.append("stone_heads")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -303,6 +307,14 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"stone_heads":
+				var shs: Array = Monuments.all_sites(world.planet, "stone_heads")
+				if shs.is_empty():
+					lines.append("-- stone_heads: none on this world")
+					continue
+				var sh0: Dictionary = shs[0]
+				sites.append({"name": "stone_heads", "dir": CreatureSpawner._offset(sh0.dir, float(sh0.inland), 30.0), "look": sh0.dir, "pitch_to": sh0.dir, "pitch_add_m": 5.0,
+					"note": "the stone heads, %d on their platform" % (sh0.heads as Array).size()})
 			"brick_city":
 				var bcs := {}
 				var bcd := INF
