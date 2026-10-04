@@ -111,8 +111,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# The terraced pueblo: down from the great kiva to the stores (§DS.5).
 	if int(site.kind) == Ruins.Kind.TERRACED_PUEBLO:
 		return true
-	# The hewn temple's halls in its court's wall (§DZ).
-	if int(site.kind) == Ruins.Kind.HEWN_TEMPLE:
+	# The hewn temple's halls in its court's wall (§DZ); the hanging
+	# gardens' galleries under their terraces (§DT).
+	if int(site.kind) in [Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS]:
 		return true
 	# The northern styles (§DS): the tower house's undercroft and pit
 	# prison under its keep, a postern out; the broch's souterrain.
@@ -217,6 +218,9 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 	elif int(site.kind) == Ruins.Kind.HEWN_TEMPLE:
 		# Its halls as they stand (design 3 Oct §DZ).
 		lay = HewnTemple.layout(map, site)
+	elif int(site.kind) == Ruins.Kind.HANGING_GARDENS:
+		# The vaulted galleries under the terraces (§DT).
+		lay = HangingGardens.layout(map, site)
 	else:
 		lay = _make_layout(map, site)
 	# A kind whose delve has no fire-holders (delves.json fire_holders

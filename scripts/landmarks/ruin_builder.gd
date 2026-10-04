@@ -258,6 +258,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._stone_circle()
 		Ruins.Kind.HEWN_TEMPLE:
 			b._hewn_temple()
+		Ruins.Kind.HANGING_GARDENS:
+			b._hanging_gardens()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -280,7 +282,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 	var og_plants := Overgrowth.plants(p_map, p_site, b.og, b._og_spots(), b._og_shade)
 	return {"og": b.og, "og_plants": og_plants, "og_shade": b._og_shade, "ivy_places": b._ivy_places, "ivy_kept": b._ivy_kept, "site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel, "root_trees": b._root_trees}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel, "root_trees": b._root_trees,
+		"water": {"v": b._wv, "uv": b._wuv, "uv2": b._wuv2}, "falls": {"v": b._fv, "n": b._fn, "uv": b._fuv, "uv2": b._fuv2}, "garden": b._garden}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -453,6 +456,71 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		rmi.multimesh = mm
 		rmi.material_override = PlantMeshes.material_for(rsp)
 		root.add_child(rmi)
+	# Running water on it (§DT: the channel down the gardens' terraces):
+	# the place's fresh water (WaterLook), and its falls.
+	var wd: Dictionary = data.get("water", {})
+	if not (wd.get("v", PackedVector3Array()) as PackedVector3Array).is_empty():
+		TerrainChunk.materials()
+		var wn := PackedVector3Array()
+		wn.resize((wd.v as PackedVector3Array).size())
+		wn.fill(Vector3.UP)
+		var warr := []
+		warr.resize(Mesh.ARRAY_MAX)
+		warr[Mesh.ARRAY_VERTEX] = wd.v
+		warr[Mesh.ARRAY_NORMAL] = wn
+		warr[Mesh.ARRAY_TEX_UV] = wd.uv
+		warr[Mesh.ARRAY_TEX_UV2] = wd.uv2
+		var wmesh := ArrayMesh.new()
+		wmesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, warr)
+		var wmi := MeshInstance3D.new()
+		wmi.name = "Water"
+		wmi.mesh = wmesh
+		wmi.material_override = WaterLook.material(FireStore.biome_key(world, (data.site as Dictionary).dir), false)
+		wmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		root.add_child(wmi)
+	var fd: Dictionary = data.get("falls", {})
+	if not (fd.get("v", PackedVector3Array()) as PackedVector3Array).is_empty():
+		TerrainChunk.materials()
+		var farr := []
+		farr.resize(Mesh.ARRAY_MAX)
+		farr[Mesh.ARRAY_VERTEX] = fd.v
+		farr[Mesh.ARRAY_NORMAL] = fd.n
+		farr[Mesh.ARRAY_TEX_UV] = fd.uv
+		farr[Mesh.ARRAY_TEX_UV2] = fd.uv2
+		var fmesh := ArrayMesh.new()
+		fmesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, farr)
+		var fmi := MeshInstance3D.new()
+		fmi.name = "Falls"
+		fmi.mesh = fmesh
+		fmi.material_override = TerrainChunk._fall_mat
+		fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		root.add_child(fmi)
+	# A garden gone wild on it (§DT): one multimesh a species.
+	var by_sp := {}
+	for gt in data.get("garden", []):
+		if not by_sp.has(int(gt[1])):
+			by_sp[int(gt[1])] = []
+		(by_sp[int(gt[1])] as Array).append(gt)
+	for spi in by_sp:
+		var gsp: PlantSpecies = SpeciesDB.all()[int(spi)]
+		var list: Array = by_sp[spi]
+		var gmm := MultiMesh.new()
+		gmm.transform_format = MultiMesh.TRANSFORM_3D
+		gmm.use_custom_data = true
+		gmm.use_colors = true
+		gmm.mesh = PlantMeshes.mesh_for(gsp, PlantMeshes.LOD_NEAR, 0)
+		gmm.instance_count = list.size()
+		for gi in list.size():
+			var gt: Array = list[gi]
+			var gh := float(gt[2])
+			gmm.set_instance_transform(gi, Transform3D(Basis(Vector3.UP, float(hash(gt[0]) % 628) / 100.0).scaled(Vector3(gh, gh, gh)), gt[0]))
+			gmm.set_instance_color(gi, Color(1, 1, 1, 1))
+			gmm.set_instance_custom_data(gi, Color(0.2, 0.0, 0.0, 0.0))
+		var gmi := MultiMeshInstance3D.new()
+		gmi.name = "Garden"
+		gmi.multimesh = gmm
+		gmi.material_override = PlantMeshes.material_for(gsp)
+		root.add_child(gmi)
 	if not (data.get("delve", {}) as Dictionary).is_empty():
 		root.set_meta("delve", data.delve)
 		root.set_meta("delve_off", data.get("delve_off", 0.0))
@@ -4139,6 +4207,17 @@ const MOAT := Color(0.34, 0.58, 0.82)
 ## Root-trees standing on the stone (§DR.2, ruins.json root_trees): [local
 ## foot (on the roof), species index, height_m], drawn by make_node.
 var _root_trees: Array = []
+## Running water (§DT): {"v", "uv", "uv2"} (local, drawn as the place's
+## fresh water) and its falls {"v", "n", "uv", "uv2"} (the waterfall sheet);
+## a garden gone wild: [[local foot, species index, height]...].
+var _wv := PackedVector3Array()
+var _wuv := PackedVector2Array()
+var _wuv2 := PackedVector2Array()
+var _fv := PackedVector3Array()
+var _fn := PackedVector3Array()
+var _fuv := PackedVector2Array()
+var _fuv2 := PackedVector2Array()
+var _garden: Array = []
 
 
 ## A plain block (12 triangles, collision) at `c` (its middle), turned
@@ -4483,7 +4562,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -5935,3 +6014,280 @@ func _hewn_hall_dress(pc: Dictionary, off: float, heart: bool) -> void:
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.6, ze - 1.45)), Vector3(0.85, 1.1, 0.55), fc, 0.0)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 2.42, ze - 1.45)), Vector3(0.48, 0.55, 0.48), fc, 0.0)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.12, ze - 1.75)), Vector3(0.6, 0.18, 0.35), fc.lightened(0.05), 0.0)
+
+
+# --- The hanging gardens (design 3 Oct §DT) -------------------------------------------
+
+## Fired brick facings over the sun-dried core, and the terraces' soil.
+const FACING := [Color(0.6, 0.45, 0.32), Color(0.56, 0.42, 0.3), Color(0.64, 0.48, 0.34), Color(0.52, 0.4, 0.29), Color(0.58, 0.44, 0.31)]
+const TERRACE_SOIL := Color(0.3, 0.36, 0.2)
+## The garden's trees (§DT: garden.hand_carried on the upper terraces,
+## garden.local below), by catalogue name: the cedar isn't in the
+## catalogue yet, so the "Eastern redcedar" juniper stands in for it.
+const GARDEN_HIGH := ["Eastern redcedar", "Mediterranean cypress", "Juniper"]
+const GARDEN_LOW := ["Date palm", "Pomegranate", "Athel tamarisk", "Saltcedar"]
+
+
+## The hanging gardens (HangingGardens): the terraces, each a retaining
+## wall of brick with its vaults' dark arches along it and the soil of its
+## band; the channel coming out on the top terrace by the water-lift's
+## stump and stepping down the back (+z) with a fall at every wall, then
+## running on the ground to the river; the trees gone wild on the
+## terraces; inside, the galleries, the channel's tunnel, the cistern.
+func _hanging_gardens() -> void:
+	palette = FACING
+	var n := int(site.terraces)
+	var lay: Dictionary = Delves.layout(map, site)
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var r0 := HangingGardens.half(site, 0)
+	_lod_m = r0 * 1.42 + LOD_M
+	_lit_per_pixel = true
+	var low := INF
+	for i in 9:
+		for j in 9:
+			low = minf(low, ground(lerpf(-r0, r0, i / 8.0), lerpf(-r0, r0, j / 8.0)))
+	# The way in and the way out, through the lowest wall.
+	var pin: Dictionary = lay.pieces[0]
+	var ex: Dictionary = lay.exit
+	var cuts_front := [[float((pin.c as Vector2).x) - 1.5, float((pin.c as Vector2).x) + 1.5, -INF, float(site.base_y) - off + Delves.H_STAIR + Delves.SLAB + 0.2]]
+	var cuts_back := [[float((ex.c as Vector2).x) - 1.6, float((ex.c as Vector2).x) + 1.6, -INF, maxf(float(ex.y0), float(ex.y1)) - off + Delves.H_STAIR + Delves.SLAB + 0.6]]
+	for k in n:
+		var hk := HangingGardens.half(site, k)
+		var y0 := (low - 1.0) if k == 0 else HangingGardens.top(site, k - 1) - off - 1.0
+		var y1 := HangingGardens.top(site, k) - off
+		# The walls, their outer faces on the ring.
+		for f in 4:
+			var cuts: Array = []
+			if k == 0 and f == 0:
+				cuts = cuts_front
+			elif k == 0 and f == 2:
+				cuts = cuts_back
+			_garden_wall(f, hk, y0, y1, cuts, k)
+		# The band's soil, from the next wall's foot to this wall.
+		var inner := HangingGardens.half(site, k + 1) - HangingGardens.WALL_T if k + 1 < n else 0.0
+		_garden_band(inner, hk - HangingGardens.WALL_T, y1, k + 1 >= n)
+	# The water-lift's stump on the top terrace, the channel's head.
+	var tt := HangingGardens.top(site, n - 1) - off
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, tt + 1.2, -1.5)), Vector3(4.0, 2.4, 3.0), FACING[3], 0.3)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, tt + 0.9, 0.3)), Vector3(1.2, 1.0, 0.8), FACING[1], 0.3)
+	_garden_channel(off)
+	_garden_trees(off)
+	# A camp at the foot could tend it again (§BQ): its spot before the way in.
+	var pc0: Vector2 = pin.c
+	_camp_spot = Vector3(pc0.x + 7.0, ground(pc0.x + 7.0, -r0 - 9.0), -r0 - 9.0)
+	shade = 0.0
+	_delve_from = _v.size()
+	_garden_galleries(lay, off)
+	_delve_to = _v.size()
+
+
+## Face `f` (0 -z, 1 +x, 2 +z, 3 -x) of terrace `k`'s retaining wall, half
+## `hk`, from y0 to y1: brick columns with the dark arch of a vault in every
+## other one (none where the channel falls down the back); `cuts` ([x0, x1,
+## y_lo, y_hi] along the face) left open.
+func _garden_wall(f: int, hk: float, y0: float, y1: float, cuts: Array, k: int) -> void:
+	var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+	var t := HangingGardens.WALL_T
+	var along := Vector2(-n2.y, n2.x)
+	var span := 2.0 * hk
+	var cols := maxi(2, int(span / 4.0))
+	var w := span / cols
+	var bs := Basis(Vector3.UP, atan2(n2.x, n2.y))
+	for i in cols:
+		var u := -hk + (i + 0.5) * w
+		var c := n2 * (hk - t * 0.5) + along * u
+		var spans: Array = [[y0, y1]]
+		var cut_here := false
+		for ct in cuts:
+			if u + w * 0.5 > float(ct[0]) and u - w * 0.5 < float(ct[1]):
+				spans = [[y0, minf(y1, maxf(y0, float(ct[2])))], [maxf(y0, float(ct[3])), y1]]
+				cut_here = true
+		for sp in spans:
+			if float(sp[1]) - float(sp[0]) < 0.05:
+				continue
+			_pbox(Transform3D(bs, Vector3(c.x, (float(sp[0]) + float(sp[1])) * 0.5, c.y)), Vector3(w + 0.02, float(sp[1]) - float(sp[0]), t), FACING[(i + k) % FACING.size()], 0.15)
+		# A vault's arch, dark (R8), on every other column.
+		var chan := f == 2 and absf(u) < 3.0
+		if i % 2 == 1 and not chan and not cut_here:
+			var ab := y1 - float(site.tier_m) + 0.6 if k > 0 else maxf(y0 + 1.0, y1 - float(site.tier_m) + 0.6)
+			var ah := minf(float(site.tier_m) - 1.8, 3.2)
+			var o := n2 * (hk + 0.03) + along * u
+			_pbox(Transform3D(bs, Vector3(o.x, ab + ah * 0.5, o.y)), Vector3(w * 0.5, ah, 0.06), VOID, 0.0)
+			_pbox(Transform3D(bs, Vector3(o.x, ab + ah + 0.25, o.y)), Vector3(w * 0.3, 0.5, 0.06), VOID, 0.0)
+	# The coping along its top (open where the channel falls over it).
+	for half_run: Array in ([[-hk, -1.4], [1.4, hk]] if f == 2 else [[-hk, hk]]):
+		var cp := n2 * (hk - 0.4) + along * (float(half_run[0]) + float(half_run[1])) * 0.5
+		_pbox(Transform3D(bs, Vector3(cp.x, y1 + 0.15, cp.y)), Vector3(float(half_run[1]) - float(half_run[0]), 0.3, 1.0), FACING[2].darkened(0.1), 0.3)
+
+
+## Terrace soil between square rings `inner` and `outer` at `y` (its top);
+## `full` fills the middle (the top terrace).
+func _garden_band(inner: float, outer: float, y: float, full: bool) -> void:
+	var col := TERRACE_SOIL.lerp(TerrainChunk._biome_blend(map, up), 0.25)
+	if full:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y - 0.5, 0.0)), Vector3(2.0 * outer, 1.0, 2.0 * outer), col, 0.7)
+		return
+	var bw := outer - inner
+	for f in 4:
+		var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var c := n2 * (inner + bw * 0.5)
+		var long := 2.0 * outer if f % 2 == 0 else 2.0 * inner
+		var size := Vector3(long, 1.0, bw) if f % 2 == 0 else Vector3(bw, 1.0, long)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y - 0.5, c.y)), size, col, 0.7)
+
+
+## The channel (§DT, §BE): from the top terrace's head down the back, a
+## fall at each wall, then on the ground to the river (site.riv); kerbs
+## of brick both sides, the water bright between them (R6).
+func _garden_channel(off: float) -> void:
+	var n := int(site.terraces)
+	var along := 0.0
+	for k in range(n - 1, -1, -1):
+		var hk := HangingGardens.half(site, k)
+		# From the head by the stump, or from where the fall above lands.
+		var z := 0.6 if k == n - 1 else HangingGardens.half(site, k + 1) + 0.3
+		var y := HangingGardens.top(site, k) - off + 0.18
+		_water_strip(Vector3(0.0, y, z), Vector3(0.0, y, hk - 0.05), 1.0, along)
+		along += hk - z
+		for sx: float in [-1.0, 1.0]:
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(sx * 1.2, y + 0.1, (z + hk) * 0.5)), Vector3(0.4, 0.5, hk - z), FACING[1], 0.5)
+		var below := HangingGardens.top(site, k - 1) - off + 0.18 if k > 0 else ground(0.0, hk + 1.5) + 0.12
+		_water_fall(Vector3(-1.0, y, hk), Vector3(1.0, y, hk), below)
+	# On the ground to the river.
+	var a := Vector2(0.0, HangingGardens.half(site, 0) + 1.0)
+	var b: Vector2 = site.riv
+	var dl := a.distance_to(b)
+	var segs := maxi(1, int(dl / 4.0))
+	for i in segs:
+		var p := a.lerp(b, float(i) / segs)
+		var q := a.lerp(b, float(i + 1) / segs)
+		var yp := ground(p.x, p.y) + 0.1
+		var yq := ground(q.x, q.y) + 0.1
+		_water_strip(Vector3(p.x, yp, p.y), Vector3(q.x, yq, q.y), 0.9, along)
+		along += p.distance_to(q)
+		var dir := (q - p).normalized()
+		var side := Vector2(dir.y, -dir.x)
+		var mid := (p + q) * 0.5
+		for sx: float in [-1.0, 1.0]:
+			var kc := mid + side * sx * 1.1
+			_pbox(Transform3D(Basis(Vector3.UP, atan2(dir.x, dir.y)), Vector3(kc.x, (yp + yq) * 0.5 + 0.05, kc.y)), Vector3(0.35, 0.45, p.distance_to(q) + 0.05), FACING[3].darkened(0.1), 0.6)
+
+
+## A strip of running water from `a` to `b` (local), half width `hw`,
+## its uv as a river's (across, downstream from `along`).
+func _water_strip(a: Vector3, b: Vector3, hw: float, along: float) -> void:
+	var d := Vector3(b.x - a.x, 0.0, b.z - a.z)
+	var ln := d.length()
+	if ln < 0.05:
+		return
+	var s := Vector3(d.z, 0.0, -d.x) / ln * hw
+	var q := [a - s, a + s, b + s, b - s]
+	var uvs := [Vector2(-hw, along), Vector2(hw, along), Vector2(hw, along + ln), Vector2(-hw, along + ln)]
+	for idx in [0, 2, 1, 0, 3, 2]:
+		_wv.append(q[idx])
+		_wuv.append(uvs[idx])
+		_wuv2.append(Vector2(0.15, hw))
+
+
+## A fall's sheet off the lip `a`-`b` (local, the lip's height) down to
+## `bottom`, arcing a little out (+z) as it drops (TerrainChunk's falls).
+func _water_fall(a: Vector3, b: Vector3, bottom: float) -> void:
+	var h := a.y - bottom
+	if h < 0.2:
+		return
+	var w := a.distance_to(b)
+	var rows := 4
+	var vs: Array = []
+	for r in rows + 1:
+		var t := float(r) / rows
+		var out := Vector3(0.0, 0.0, 0.2 + 0.7 * sin(t * PI * 0.5))
+		for side in 2:
+			var p: Vector3 = (a if side == 0 else b)
+			vs.append([Vector3(p.x, lerpf(a.y, bottom, t), p.z) + out, Vector2(w * side, h * t)])
+	for r in rows:
+		for idx in [0, 2, 1, 1, 2, 3]:
+			var vv: Array = vs[r * 2 + idx]
+			_fv.append(vv[0])
+			_fn.append(Vector3(0.0, 0.0, 1.0))
+			_fuv.append(vv[1])
+			_fuv2.append(Vector2(h, w))
+
+
+## The garden gone wild (§DT, §CS/§CT's one exception): the mountain trees
+## the gardeners carried in on the upper terraces, grown past their
+## height; the river's own below; never on the channel.
+func _garden_trees(off: float) -> void:
+	var n := int(site.terraces)
+	var high: Array = []
+	var lowl: Array = []
+	for nm in GARDEN_HIGH:
+		var sp := SpeciesDB.find(nm)
+		if sp != null:
+			high.append(sp)
+	for nm in GARDEN_LOW:
+		var sp := SpeciesDB.find(nm)
+		if sp != null:
+			lowl.append(sp)
+	for k in n:
+		var hk := HangingGardens.half(site, k)
+		var inner := HangingGardens.half(site, k + 1) if k + 1 < n else 0.0
+		var y := HangingGardens.top(site, k) - off
+		var mid := (inner + hk - HangingGardens.WALL_T) * 0.5 if k + 1 < n else hk * 0.5
+		var pool: Array = high if k >= n / 2 else lowl
+		if pool.is_empty():
+			continue
+		var count := int(8.0 * mid / 12.0)
+		for i in count:
+			if _garden.size() >= 48 or rng.randf() < 0.35:
+				continue
+			var a := TAU * (i + rng.randf_range(0.2, 0.8)) / count
+			var p := Vector2(cos(a), sin(a))
+			p = p / maxf(absf(p.x), absf(p.y)) * (mid + rng.randf_range(-1.0, 1.0))
+			if p.y > 0.0 and absf(p.x) < 3.5:
+				continue
+			var sp: PlantSpecies = pool[rng.randi() % pool.size()]
+			var grow := rng.randf_range(1.1, 1.35) if pool == high else rng.randf_range(0.8, 1.05)
+			_garden.append([Vector3(p.x, y, p.y), SpeciesDB.index_of(sp), sp.height_m.y * grow])
+
+
+## The galleries, the tunnel and the cistern (HangingGardens.layout).
+func _garden_galleries(lay: Dictionary, off: float) -> void:
+	var pieces: Array = lay.pieces
+	for i in pieces.size():
+		var pc: Dictionary = pieces[i]
+		var prev: Dictionary = pieces[i - 1] if i > 0 else {}
+		var nxt: Dictionary = pieces[i + 1] if i + 1 < pieces.size() else {}
+		match str(pc.kind):
+			"passage":
+				if absf(float(pc.y1) - float(pc.y0)) > 0.2:
+					_delve_stair(pc, off, false, 0.0, 0.0)
+				else:
+					_delve_room(pc, off, [["start", 0.0, float(pc.half) - 0.05], ["end", 0.0, float(pc.half) - 0.05]])
+			"room", "heart":
+				var opens: Array = []
+				opens.append(_opening(pc, (prev.c as Vector2) + (prev.dir as Vector2) * float(prev.len), float(prev.half)))
+				if not nxt.is_empty():
+					opens.append(_opening(pc, nxt.c, float(nxt.half)))
+				_delve_room(pc, off, opens)
+				# The vault's ribs.
+				var y := float(pc.y0) - off
+				var c: Vector2 = pc.c
+				var r := 0.6
+				while r < float(pc.len) - 0.3:
+					var rp := c + (pc.dir as Vector2) * r
+					_pbox(Transform3D(Basis.IDENTITY, Vector3(rp.x, y + float(pc.h) - 0.14, rp.y)), Vector3(2.0 * float(pc.half), 0.28, 0.3), FACING[3].darkened(0.15), 0.0)
+					r += 1.4
+				if str(pc.kind) == "heart":
+					# The cistern: its basin of dark water, the water-lift's footings.
+					var bc := c + (pc.dir as Vector2) * float(pc.len) * 0.55
+					_pbox(Transform3D(Basis.IDENTITY, Vector3(bc.x + 0.6, y + 0.1, bc.y)), Vector3(2.6, 0.2, 3.6), Color(0.04, 0.08, 0.14), 0.0)
+					for sz: float in [-1.0, 1.0]:
+						_pbox(Transform3D(Basis.IDENTITY, Vector3(bc.x + 0.6, y + 0.35, bc.y + sz * 2.0)), Vector3(3.0, 0.7, 0.4), FACING[1], 0.0)
+						_pbox(Transform3D(Basis.IDENTITY, Vector3(bc.x + 2.1, y + 0.35, bc.y + sz * 0.9)), Vector3(0.4, 0.7, 1.4), FACING[1], 0.0)
+					_pbox(Transform3D(Basis.IDENTITY, Vector3(bc.x + 0.6, y + 1.6, bc.y - 2.6)), Vector3(0.8, 3.2, 0.8), FACING[4], 0.0)
+			"stair":
+				_delve_stair(pc, off, false, 0.0, 0.0)
+			"exit":
+				_delve_stair_open_top(pc, off, float(lay.exit_open), float(maxf(float(pc.y0), float(pc.y1))) - off + Delves.H_STAIR)

@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=hanging_gardens the hanging gardens (§DT): off their back corner,
+## the channel's falls down the terraces in view (SEED=8 has them).
 ## SITES=hewn_temple the nearest hewn temple (§DZ): on the rim of its pit
 ## at the front, looking down at the temple (SEED=7731 has one).
 ## SITES=northern the nearest tower house and the nearest broch (§DS): the
@@ -208,6 +210,8 @@ func _run() -> void:
 			kinds.append("northern")
 		if only.has("hewn_temple"):
 			kinds.append("hewn_temple")
+		if only.has("hanging_gardens"):
+			kinds.append("hanging_gardens")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -324,6 +328,15 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"hanging_gardens":
+				var hgs: Array = Monuments.all_sites(world.planet, "hanging_gardens")
+				if hgs.is_empty():
+					lines.append("-- hanging_gardens: none on this world")
+					continue
+				var hg0: Dictionary = hgs[0]
+				var hr := float(hg0.across_m) * 0.5
+				sites.append({"name": "hanging_gardens", "dir": Ruins.local_dir(hg0, hr * 1.1, hr + 75.0), "look": Ruins.local_dir(hg0, 0.0, hr * 0.4), "pitch_to": hg0.dir, "pitch_add_m": float(hg0.height_m) * 0.4,
+					"note": "the hanging gardens, %d terraces, %.0f m high, %.0f m across" % [int(hg0.terraces), float(hg0.height_m), float(hg0.across_m)]})
 			"hewn_temple":
 				var hts: Array = Monuments.all_sites(world.planet, "hewn_temple")
 				if hts.is_empty():

@@ -4,6 +4,39 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DT: the hanging gardens (prompt 30)
+- **The kind:** `Ruins.Kind.HANGING_GARDENS`, "Hanging gardens" (`data/ruins.json` → `styles.hanging_gardens`, unmarked), placed by Monuments' sites pass, one a world at most.
+  - **New gate word:** `water_one_side`: a river, a lake or the shore within 600 m (`Monuments.water_point`).
+  - **Loosened:** the dry Palearctic and Central Asian land has no rivers at all on seeds 7731, 8, 2 and 5, so an oasis's lake counts as the water.
+  - **River sampling:** for a kind that wants water beside it, the pass tries spots along the cell's rivers.
+  - **Beside a brick city:** the design allows the gardens "with or without a brick city near it". So where a brick city holds the cell, they may stand in a free cell beside it, clear of the city's walls and palace.
+- **The mound** (`HangingGardens`, `RuinBuilder._hanging_gardens`):
+  - 4–7 square terraces, 20–35 m high and 80–150 m across, each at least 5 m high. Its back is toward its water, the foot 30–100 m from it, tried at five angles round the water's edge.
+  - Each terrace is a 2 m retaining wall of brick with its vaults' dark arches along it and a coping, and the soil of its band.
+- **The water** (§BE, R6), drawn as the place's own fresh water and the waterfall sheet (`make_node` now draws a ruin's `water` and `falls`):
+  - The channel comes out on the top terrace by the water-lift's stump and runs between brick kerbs down the back, with a fall at every wall.
+  - Then it runs on the ground to the water's edge.
+- **The garden gone wild** (§CS/§CT's one exception, placed by the generator):
+  - On the upper terraces, the mountain trees the gardeners carried in, grown past their height (×1.1–1.35): the "Eastern redcedar" juniper standing in for the cedar, the Mediterranean cypress and the juniper.
+  - Below, the water's own date palms, pomegranates and tamarisks, never on the channel. They are drawn as one multimesh a species (`make_node`'s `garden`).
+- **The delve** (`HangingGardens.layout`, climbing):
+  - In at the front foot, then the vaulted galleries under the terraces, one a level, left and right by turns, with ribs under their ceilings and the stairs climbing across between them.
+  - From the top gallery the channel's tunnel runs down and back to the cistern at the foot of the mound: the heart, its basin of dark water and the water-lift's footings.
+  - Out through the back wall by the water. Every piece is checked to be under the slab or wall over it.
+  - Smoke: `vent_shaft` up through the terraces.
+- **Check:** `tools/hanging_gardens_check.gd`, 0 fails on seed 8.
+  - 7731, 2 and 5 have none (no dry land by water passes).
+  - Seed 8: one at 41.0°N 143.5°W in steppe, beside that world's brick city: 4 terraces, 20.6 m high, 129 m across, the channel's 4 falls and its run to the lake.
+  - 11 mountain trees and 35 of the water's own. Galleries: passage, room, stair, room, stair, room, stair, heart, exit. 47,152 triangles against the castle's 78,733.
+  - `brick_city_check` and `hewn_temple_check` still pass.
+- **Walkabout** (`SEED=8 SITES=hanging_gardens HOURS=10`, harness frame §CG): from 75 m off the back corner. The mound with cypress, juniper and palms on its terraces, the bright fall down its back wall; a rise in the ground hides its lowest wall. An earlier closer frame showed the vaults' dark arches along the wall and the fall bright on it.
+- **Flags:**
+  - A lake stands in for the river.
+  - The juniper stands in for the cedar, and there is no fig yet (a fill for chat).
+  - The trees stand on the terraces but don't root into the vaults.
+  - The falls make no sound of their own yet: the ruin bed is quiet there.
+  - The steps read faintly from the ground: the terraces are wide and low against the trees.
+
 ## 2026-10-04 — §DZ: the hewn temple (prompt 29)
 - **The kind:** `Ruins.Kind.HEWN_TEMPLE`, "Hewn temple" (`data/ruins.json` → `styles.hewn_temple`, unmarked), placed by Monuments' sites pass, at most two a world. Nobody lives there: the ground's heights don't know the pit is there, so folk couldn't walk its floor.
   - **New gate words:** `basalt`, `escarpment` (on an escarpment's plateau, its face within 300 m and 4 m high or more) and `dry_plateau` (moisture under 0.55, rolling under 0.1).

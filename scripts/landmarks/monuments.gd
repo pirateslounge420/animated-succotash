@@ -55,9 +55,13 @@ class_name Monuments
 ##                     (escarp_top);
 ##   dry_plateau       the ground's moisture under DRY_PLATEAU and rolling
 ##                     under FLAT_LOOSE over 60 m.
+##   water_one_side    a river, a lake or the shore within WATER_SIDE_M
+##                     (water_point; the hanging gardens, §DT: their channel
+##                     runs to it; the dry realms' rivers are few, so an
+##                     oasis's lake will do).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -81,6 +85,8 @@ const HOT_C := 22.0
 const ESCARP_NEAR_M := 300.0
 const ESCARP_FACE_M := 4.0
 const DRY_PLATEAU := 0.55
+## "water_one_side" (the hanging gardens, §DT).
+const WATER_SIDE_M := 600.0
 ## The hard rocks "basalt" loosens to on a world with no basalt land.
 const HARD_ROCK := [PlanetData.Rock.GRANITE, PlanetData.Rock.BASALT_VOLCANIC, PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
@@ -186,6 +192,8 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = [
 		return "not_dry_plateau"
 	if needs.has("escarpment") and escarp_top(map, p).is_empty():
 		return "no_escarpment"
+	if needs.has("water_one_side") and water_point(map, p, WATER_SIDE_M).is_empty():
+		return "dry"
 	if needs.has("desert_river_floodplain"):
 		var rv := river_m(map, p)
 		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0
@@ -286,6 +294,42 @@ static func river_m(map: PlanetData, p: Vector3) -> float:
 		for s in rivers.segments_near(map, map.cell_at(p)):
 			best = minf(best, rivers.closest_dt(s, p).x)
 	return best
+
+
+## The nearest point of a river to `p` within `within_m`, or INF-free {}:
+## {"dir", "m"}.
+static func river_point(map: PlanetData, p: Vector3, within_m: float) -> Dictionary:
+	var rivers := Encampment.rivers_for(map)
+	var best := {}
+	if rivers == null:
+		return best
+	for sg in rivers.segments_near(map, map.cell_at(p)):
+		var dt := rivers.closest_dt(sg, p)
+		if dt.x < within_m and (best.is_empty() or dt.x < float(best.m)):
+			var q: Vector3 = (rivers.a[sg] + (rivers.b[sg] - rivers.a[sg]) * dt.y).normalized()
+			best = {"dir": q, "m": dt.x}
+	return best
+
+
+## The nearest water to `p` within `within_m`: a river's nearest point
+## (river_point), else the first standing water (a lake, the sea) on rings
+## out from it, 12 bearings a ring: {"dir", "m"}, or {}.
+static func water_point(map: PlanetData, p: Vector3, within_m: float) -> Dictionary:
+	var rv := river_point(map, p, within_m)
+	if not rv.is_empty():
+		return rv
+	var e0 := map.terrain.elevation(p, true, false, false)
+	if e0 < PlanetConst.SEA_LEVEL_M - 0.5 or TerrainChunk._standing_water(map, p).x > e0 + 0.1:
+		return {"dir": p, "m": 0.0}
+	var r := 60.0
+	while r <= within_m:
+		for k in 12:
+			var q := CreatureSpawner._offset(p, k * TAU / 12.0, r)
+			var e := map.terrain.elevation(q, true, false, false)
+			if e < PlanetConst.SEA_LEVEL_M - 0.5 or TerrainChunk._standing_water(map, q).x > e + 0.1:
+				return {"dir": q, "m": r}
+		r += 60.0
+	return {}
 
 
 ## The canyon at `p` (the ravine layer, a slot canyon where it pinches in
@@ -425,15 +469,32 @@ static func _candidates(map: PlanetData, kind_key: String, rep: Dictionary, loos
 	var n := Ruins.cells_per_face()
 	var biomes: Array = (E.get("spawn", {}) as Dictionary).get("biomes", [])
 	var chance := float(E.get("chance", 0.3))
+	var needs_river := ((E.get("spawn", {}) as Dictionary).get("needs", []) as Array).has("water_one_side")
+	var rivers := Encampment.rivers_for(map)
+	if rivers == null:
+		needs_river = false
 	var cand: Array = []
 	for f in 6:
 		for i in n:
 			for j in n:
 				var c := Vector3i(f, i, j)
-				if _sites.has(c) or not CragFortress.site_in(map, c).is_empty():
-					continue
-				rep.cells += 1
 				var center := CreatureSpawner._cell_point(c, n, Ruins.SALT)
+				if _sites.has(c) or not CragFortress.site_in(map, c).is_empty():
+					# The hanging gardens may stand by a brick city (§DT: "with
+					# or without a brick city near it"): their spot sought
+					# round the city's cell, the site kept in a free cell
+					# beside it.
+					if not (kind_key == "hanging_gardens" and str((_sites.get(c, {}) as Dictionary).get("style", "")) == "brick_city"):
+						continue
+					var free := Vector3i(-1, -1, -1)
+					for nb in [Vector3i(f, i + 1, j), Vector3i(f, i - 1, j), Vector3i(f, i, j + 1), Vector3i(f, i, j - 1)]:
+						if nb.y >= 0 and nb.y < n and nb.z >= 0 and nb.z < n and not _sites.has(nb) and CragFortress.site_in(map, nb).is_empty():
+							free = nb
+							break
+					if free.x < 0:
+						continue
+					c = free
+				rep.cells += 1
 				if not biomes.is_empty() and not biomes.has(BiomeTemplates.KEYS[map.biome[map.cell_at(center)]]):
 					continue
 				var rng := RandomNumberGenerator.new()
@@ -441,8 +502,19 @@ static func _candidates(map: PlanetData, kind_key: String, rep: Dictionary, loos
 				var best := {}
 				var best_s := INF
 				var why := ""
+				# A kind that wants a river beside it (§DT) tries spots along
+				# the cell's rivers, a little way off the water.
+				var by_river: Array = []
+				if needs_river:
+					for sg in rivers.segments_near(map, map.cell_at(center)):
+						if CubeSphere.surface_distance_m(rivers.a[sg], center) < Ruins.CELL_M * 0.5:
+							by_river.append(sg)
 				for t in 12:
 					var p := CreatureSpawner._offset(center, rng.randf() * TAU, sqrt(rng.randf()) * Ruins.CELL_M * 0.35)
+					if not by_river.is_empty():
+						var sg: int = by_river[rng.randi() % by_river.size()]
+						var on: Vector3 = (rivers.a[sg] + (rivers.b[sg] - rivers.a[sg]) * rng.randf()).normalized()
+						p = CreatureSpawner._offset(on, rng.randf() * TAU, rng.randf_range(120.0, WATER_SIDE_M - 50.0))
 					var g := gate(map, p, kind_key, loose)
 					if g != "":
 						why = g
@@ -531,6 +603,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 			_stone_circle(E, d, rng, site)
 		"hewn_temple":
 			if _hewn_temple(map, E, d, rng, site).is_empty():
+				return {}
+		"hanging_gardens":
+			if _hanging_gardens(map, E, d, rng, site).is_empty():
 				return {}
 	return site
 
@@ -1107,4 +1182,97 @@ static func _hewn_temple(map: PlanetData, E: Dictionary, d: Vector3, rng: Random
 	site.towers = rng.randi_range(5, 7)
 	site.footprint_m = Vector2(pit_w, pit_l).length() * 0.5 + HEWN_REAR_M
 	site.clear = [[c, Vector2(pit_w, pit_l).length() * 0.5 + 5.0]]
+	return site
+
+
+## The hanging gardens (§DT): a stepped mound across_m wide (terraces of
+## height_m / terraces each, at least HangingGardens.TIER_MIN_M) with its
+## back (+z, the frame turned to the ground's grid) toward its water (a
+## river, or an oasis's lake: water_point), set so its back foot stands
+## about 30 m from it; the water's nearest point in the frame (riv: the
+## channel runs to it); base_y the floor of
+## its lowest galleries (from the frame's base_e: over the highest ground
+## under it). {} where there's no river near or the ground won't hold it.
+## Fills `site` in place.
+static func _hanging_gardens(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var rv := water_point(map, d, WATER_SIDE_M)
+	if rv.is_empty():
+		return {}
+	var ac: Array = E.get("across_m", [80, 150])
+	var hm: Array = E.get("height_m", [20, 35])
+	var tr: Array = E.get("terraces", [4, 7])
+	var across := rng.randf_range(float(ac[0]), float(ac[1]))
+	var height := rng.randf_range(float(hm[0]), float(hm[1]))
+	var n := clampi(rng.randi_range(int(tr[0]), int(tr[1])), int(tr[0]), int(height / HangingGardens.TIER_MIN_M))
+	var r := across * 0.5
+	var rd: Vector3 = rv.dir
+	var rel := rd - d * rd.dot(d)
+	var bearing := atan2(rel.dot(CubeSphere.east(d)), rel.dot(CubeSphere.north(d)))
+	# Its back foot 30 m from the water, or a little further where the
+	# water's edge wanders under it.
+	var hi := -INF
+	var c := Vector3.ZERO
+	var placed := false
+	var tries: Array = []
+	for back in [30.0, 60.0, 100.0]:
+		for turn in [0.0, 0.5, -0.5, 1.0, -1.0]:
+			tries.append([back, turn])
+	for tr2 in tries:
+		var back := float(tr2[0])
+		var face := bearing + float(tr2[1])
+		c = CreatureSpawner._offset(rd, face + PI, r + back)
+		if map.water[map.cell_at(c)] == PlanetData.Water.OCEAN or map.terrain.elevation(c, true) < 0.3:
+			continue
+		# Clear of the sites already standing (a brick city beside it: its
+		# walls' ring and its palace).
+		var clear := true
+		for other in _sites.values():
+			var spots: Array = [[other.dir, float(other.get("footprint_m", 30.0))]]
+			if str(other.get("style", "")) == "brick_city":
+				var cc: Vector2 = other.city_c
+				spots = [[Ruins.local_dir(other, cc.x, cc.y), float(other.across_m) * 0.5 + 10.0], [other.dir, float(other.palace_r) + 10.0]]
+			for sp in spots:
+				if CubeSphere.surface_distance_m(sp[0], c) < float(sp[1]) + r * 1.42:
+					clear = false
+		if not clear:
+			continue
+		site.dir = c
+		site.heading = Delves.grid_heading(c, face - PI)
+		var fr0 := Delves.frame(map, site)
+		# The highest ground under it, and none of it in the water.
+		hi = -INF
+		var dry := true
+		for i in 7:
+			for j in 7:
+				var x := lerpf(-r, r, i / 6.0)
+				var z := lerpf(-r, r, j / 6.0)
+				var q := Delves.to_dir(fr0, x, z)
+				if map.water[map.cell_at(q)] == PlanetData.Water.OCEAN or TerrainChunk._standing_water(map, q).x > map.terrain.elevation(q, true) - 0.2:
+					dry = false
+				hi = maxf(hi, Delves._g0(map, fr0, x, z))
+		if dry:
+			placed = true
+			break
+	if not placed:
+		return {}
+	site.across_m = across
+	site.height_m = height
+	site.terraces = n
+	site.tier_m = height / n
+	site.top_half = maxf(14.0, across * 0.12)
+	var fr := Delves.frame(map, site)
+	site.base_y = hi + 0.05
+	site.riv = Delves.to_local(fr, rd)
+	site.footprint_m = r * 1.42 + 8.0
+	site.clear = [[c, r * 1.42 + 4.0]]
+	# Its channel's line to the river kept open.
+	var foot := Vector2(0.0, r)
+	var riv: Vector2 = site.riv
+	var steps := int(foot.distance_to(riv) / 20.0)
+	for k in steps:
+		var q2 := foot.lerp(riv, (k + 0.5) / maxf(steps, 1))
+		(site.clear as Array).append([Delves.to_dir(fr, q2.x, q2.y), 5.0])
+	var lay := HangingGardens.layout(map, site)
+	if not bool(lay.get("ok", false)):
+		return {}
 	return site

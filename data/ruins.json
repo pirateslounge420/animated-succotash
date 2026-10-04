@@ -946,7 +946,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "the gallery hearths vent through the terraces' drains",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DT] Mike, 3 Oct: its own kind, overgrown. A garden that outlived its gardeners: the channel still runs onto the top terrace (\u00a7BP), so the mountain trees the gardeners carried in grew huge and went wild (\u00a7CS/\u00a7CT's one exception placed by the generator), with the river's own palms and figs below. Water steps down the terraces (R6). Cedrus libani and Ficus carica are not in the catalogue yet (a fill for chat)."
+   "_help": "[built \u2014 design \u00a7DT: Monuments._hanging_gardens, HangingGardens, RuinBuilder._hanging_gardens] Mike, 3 Oct: its own kind, overgrown. A garden that outlived its gardeners: the channel still comes out on the top terrace (\u00a7BP) by the water-lift's stump and steps down the back with a fall at every wall (R6), on to its water; the mountain trees the gardeners carried in grew huge and went wild on the upper terraces (\u00a7CS/\u00a7CT's one exception placed by the generator), the river's own palms, pomegranates and tamarisk below. Cedrus libani and Ficus carica are not in the catalogue yet (a fill for chat): the Eastern redcedar juniper stands in for the cedar, and there is no fig. water_one_side takes a river, a lake or the shore (the dry realms have almost no rivers; an oasis's lake will do); it may stand in a free cell beside a brick city."
   },
   "abbey": {
    "kind": "own",
