@@ -1047,7 +1047,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "none (nothing above the cellar)",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DV] The smallest monument in the set: the columns of a house of wood that burned, standing in a ring in a clearing among old oaks; \u00a7BQ to the letter, and the ending unnamed. \u00a7DI's wet row: vines on the columns, ferns at their feet, resurrection fern on the limbs (\u00a7CD)."
+   "_help": "[built \u2014 design \u00a7DV: Monuments._colonnade, Colonnade, RuinBuilder._colonnade] The smallest monument in the set: the columns of a house of wood that burned, standing in a ring in a clearing, an avenue of old live oaks (taller than the wild) running out from its front; \u00a7BQ to the letter, and the ending unnamed. The brick cellar open in the middle, a hand of still water on its floor (\u00a7BE: wade), a low door and steps down to the flooded cistern (the heart), the old stair up and out past the footprint (the way out; the cellar's own stair is the way in). \u00a7DI's wet row: vines on the columns, ferns at their feet. Resurrection fern on the oaks' limbs is not placed yet (\u00a7CD)."
   },
   "temple_park": {
    "kind": "own",

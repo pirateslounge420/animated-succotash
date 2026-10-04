@@ -55,6 +55,11 @@ class_name Monuments
 ##                     (escarp_top);
 ##   dry_plateau       the ground's moisture under DRY_PLATEAU and rolling
 ##                     under FLAT_LOOSE over 60 m.
+##   humid             the ground's moisture HUMID or more (the colonnade,
+##                     §DV);
+##   rise_above_river  water (a river, a lake) within RISE_WATER_M, the spot
+##                     RISE_M or more above it;
+##   cold              (never) the cell under WARM_SOUTH_C (the humid south);
 ##   pillar_valley     karst or sandstone country (the karst towers nest and
 ##                     its sandstone variant, §DY);
 ##   pooled_mist       a valley: the ground 200 m round stands MIST_VALLEY_M
@@ -71,7 +76,7 @@ class_name Monuments
 ##                     oasis's lake will do).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY, "temple_park": Ruins.Kind.TEMPLE_PARK, "pillar_shrines": Ruins.Kind.PILLAR_SHRINES}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY, "temple_park": Ruins.Kind.TEMPLE_PARK, "pillar_shrines": Ruins.Kind.PILLAR_SHRINES, "colonnade": Ruins.Kind.COLONNADE}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -99,6 +104,11 @@ const DRY_PLATEAU := 0.55
 const WATER_SIDE_M := 600.0
 ## "still_water" (the temple park, §DW).
 const STILL_M := 1500.0
+## "humid", "rise_above_river" and (never) "cold" (the colonnade, §DV).
+const HUMID := 0.55
+const RISE_WATER_M := 1000.0
+const RISE_M := 3.0
+const WARM_SOUTH_C := 12.0
 ## "pooled_mist" (the pillar shrines, §DY): how far the ground round stands
 ## over a valley's floor.
 const MIST_VALLEY_M := 3.0
@@ -215,6 +225,14 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = [
 		return "dry"
 	if needs.has("still_water") and still_water(map, p, STILL_M).is_empty():
 		return "no_still_water"
+	if needs.has("humid") and map.sample(map.moisture, p) < HUMID:
+		return "dry"
+	if never.has("cold") and map.temp_c[cell] < WARM_SOUTH_C:
+		return "cold"
+	if needs.has("rise_above_river"):
+		var wp := water_point(map, p, RISE_WATER_M)
+		if wp.is_empty() or e - map.terrain.elevation(wp.dir, true, false, false) < RISE_M:
+			return "no_rise"
 	if needs.has("pillar_valley") and not (map.rock[cell] in [PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]):
 		return "rock"
 	if never.has("flat") and slope(map, p, 60.0) <= FLAT_LOOSE * 0.5:
@@ -673,6 +691,8 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 		"pillar_shrines":
 			if _pillar_shrines(map, E, d, rng, site).is_empty():
 				return {}
+		"colonnade":
+			_colonnade(E, d, rng, site)
 	return site
 
 
@@ -1561,3 +1581,27 @@ static func _pillar_shrines(map: PlanetData, E: Dictionary, d: Vector3, rng: Ran
 	for q in pillars:
 		(site.clear as Array).append([Delves.to_dir(fr, float(q[0]), float(q[1])), float(q[2]) * 1.5 + 3.0])
 	return site
+
+
+## The colonnade (§DV): the house's footprint house_w by house_l (its front
+## -z, the avenue running out from it), `columns` round it, cols_h tall,
+## the fallen ones in `fallen`; the cellar in the middle (Colonnade). Fills
+## `site`.
+static func _colonnade(E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> void:
+	var cc: Array = E.get("columns", [20, 30])
+	var ch: Array = E.get("column_height_m", [10, 14])
+	site.heading = Delves.grid_heading(d, rng.randf() * TAU)
+	site.house_w = rng.randf_range(22.0, 28.0)
+	site.house_l = rng.randf_range(28.0, 36.0)
+	site.columns = rng.randi_range(int(cc[0]), int(cc[1]))
+	site.cols_h = rng.randf_range(float(ch[0]), float(ch[1]))
+	var fallen: Array = []
+	for i in int(site.columns):
+		if rng.randf() < 0.15:
+			fallen.append(i)
+	site.fallen = fallen
+	site.avenue_m = rng.randf_range(90.0, 140.0)
+	site.footprint_m = float(site.house_l) * 0.5 + float(site.avenue_m)
+	site.clear = [[d, float(site.house_l) * 0.75 + 4.0]]
+	for k in int(float(site.avenue_m) / 14.0):
+		(site.clear as Array).append([Ruins.local_dir(site, 0.0, -float(site.house_l) * 0.5 - 8.0 - k * 14.0), 6.0])

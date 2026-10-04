@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=colonnade the nearest old colonnade (§DV): in its avenue of oaks,
+## looking up it at the columns (SEED=8 has three).
 ## SITES=pillar_shrines the nearest pillar shrines (§DY): on the valley's
 ## floor before the middle pillar's door, looking up at the tops.
 ## SITES=temple_park the nearest temple park (§DW): on its edge, looking in
@@ -224,6 +226,8 @@ func _run() -> void:
 			kinds.append("temple_park")
 		if only.has("pillar_shrines"):
 			kinds.append("pillar_shrines")
+		if only.has("colonnade"):
+			kinds.append("colonnade")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -340,6 +344,19 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"colonnade":
+				var cod := INF
+				var co0 := {}
+				for cok in Monuments.all_sites(world.planet, "colonnade"):
+					if CubeSphere.surface_distance_m(cok.dir, camp_d) < cod:
+						cod = CubeSphere.surface_distance_m(cok.dir, camp_d)
+						co0 = cok
+				if co0.is_empty():
+					lines.append("-- colonnade: none on this world")
+					continue
+				var chl := float(co0.house_l) * 0.5
+				sites.append({"name": "colonnade", "dir": Ruins.local_dir(co0, 1.5, -chl - 45.0), "look": co0.dir, "pitch_to": co0.dir, "pitch_add_m": float(co0.cols_h) * 0.5,
+					"note": "the old colonnade, %d columns, up its avenue" % int(co0.columns)})
 			"pillar_shrines":
 				var psd := INF
 				var ps0 := {}

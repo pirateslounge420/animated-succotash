@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DV: the old colonnade (prompt 34)
+- **The kind:** `Ruins.Kind.COLONNADE`, "Old colonnade" (`data/ruins.json` → `styles.colonnade`, unmarked), placed by Monuments' sites pass, at most three a world.
+  - **New gate words:** `humid` (moisture 0.55 or more), `rise_above_river` (water within 1 km, the spot 3 m or more above it) and `cold` as a never-word (the cell under 12 °C: the humid south).
+  - Where: nearctic floodplain forest, maritime forest and deciduous woods.
+- **The ring** (`Monuments._colonnade`, `RuinBuilder._colonnade`):
+  - 20–30 plastered brick columns 10–14 m tall round a house's footprint 22–28 by 28–36 m, on brick bases, with iron capitals.
+  - About one in seven has fallen outward, its drums lying in the grass; a few are broken short. Vines climb some.
+- **The cellar** (`Colonnade`): open to the sky in the middle (a hole in the ground), brick-lined, a hand of still water on its floor (§BE: wade). A stair goes down from its near end, with a dry ledge for its old hearth.
+- **The delve** (climbing, for the dark):
+  - A low door in the cellar's far wall and steps down, as deep as the ground over the cistern needs.
+  - The cistern under the footprint (the heart), flooded to the knee, a dry ledge for its hearth ring and the find, ribs under its vault.
+  - The old stair up and out past the footprint (the way out). The cellar's own stair is the way in.
+  - Hearth rings, no stack.
+- **The avenue:** two rows of old live oaks every 14 m running 90–140 m out from the front, 1.25–1.45 times the wild's height, a few gone (`make_node`'s `garden`).
+- **Check:** `tools/colonnade_check.gd`, 0 fails on 8, 2 and 5.
+  - 7731 has none (its nearctic south is cold or has no rise above water).
+  - Seed 8: three, 23 columns each, avenues of 15–16 oaks 25–29 m tall against the wild's 20.
+  - Every cistern is under the ground with cover, the cellar a hole with water. About 8–10 k triangles, the smallest in the set.
+- **Walkabout** (`SEED=8 SITES=colonnade HOURS=10`, harness frame §CG): from under the oaks in the avenue, looking up it to the pale columns standing in a sunlit clearing.
+- **Flags:**
+  - Resurrection fern on the oaks' limbs isn't placed (it is in the catalogue).
+  - The avenue isn't joined to a road (§DM.4 isn't built).
+  - The cellar's stair is the way in and the cistern's old stair is the way out: the design names the cellar's outside stair as the way out.
+
 ## 2026-10-04 — §DY: the pillar shrines (prompt 33)
 - **The kind:** `Ruins.Kind.PILLAR_SHRINES`, "Pillar shrines" (`data/ruins.json` → `styles.pillar_shrines`, unmarked), placed by Monuments' sites pass, at most two a world.
   - **New gate words:** `pillar_valley` (karst or sandstone), `pooled_mist` (a valley: the ground 200 m round stands 3 m or more above it) and `flat` as a never-word.

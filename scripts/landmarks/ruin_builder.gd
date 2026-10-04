@@ -266,6 +266,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._temple_park()
 		Ruins.Kind.PILLAR_SHRINES:
 			b._pillar_shrines()
+		Ruins.Kind.COLONNADE:
+			b._colonnade()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4568,7 +4570,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK, Ruins.Kind.PILLAR_SHRINES] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK, Ruins.Kind.PILLAR_SHRINES, Ruins.Kind.COLONNADE] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -6992,3 +6994,147 @@ func _pillar_bridge(i: int, j: int, kind: String, off: float) -> void:
 				for s2: float in [-1.0, 1.0]:
 					var rp := mid + Vector2(-dir.y, dir.x) * s2 * (0.85 if not root else 0.75)
 					_pbox(Transform3D(yaw * Basis(Vector3.BACK, segt), Vector3(rp.x, (y0 + y1) * 0.5 + 0.9, rp.y)), Vector3(p0.distance_to(p1) + 0.04, 0.08 if not root else 0.3, 0.08 if not root else 0.3), (PLANK.darkened(0.3) if not root else FIG_ROOT), 0.2)
+
+
+# --- The old colonnade (design 3 Oct §DV) ----------------------------------------------
+
+const PLASTER := [Color(0.74, 0.71, 0.64), Color(0.7, 0.67, 0.6), Color(0.77, 0.73, 0.65)]
+const IRON := Color(0.17, 0.16, 0.16)
+const OLD_BRICK := [Color(0.5, 0.3, 0.24), Color(0.46, 0.28, 0.22), Color(0.53, 0.33, 0.26)]
+
+
+## The old colonnade (Monuments._colonnade, Colonnade): the columns in their
+## ring round the house's footprint (plastered brick, iron capitals, a few
+## fallen, a few broken), the brick cellar open in the middle with still
+## water on its floor and a stair down into it, the door to the cistern;
+## the avenue of old oaks running out from the front (-z). Nothing says
+## what happened (§BQ).
+func _colonnade() -> void:
+	palette = OLD_BRICK
+	var lay: Dictionary = Delves.layout(map, site)
+	_delve = lay
+	_delve_off = base_e - float(lay.base_e)
+	var off := _delve_off
+	var hw: float = float(site.house_w) * 0.5
+	var hl: float = float(site.house_l) * 0.5
+	var ch: float = site.cols_h
+	var n := int(site.columns)
+	_lod_m = hl + float(site.avenue_m) + LOD_M
+	_lit_per_pixel = true
+	# The columns round the footprint.
+	var per := 4.0 * (hw + hl)
+	for i in n:
+		var u := per * i / n
+		var p := Vector2.ZERO
+		if u < 2.0 * hw:
+			p = Vector2(-hw + u, -hl)
+		elif u < 2.0 * hw + 2.0 * hl:
+			p = Vector2(hw, -hl + u - 2.0 * hw)
+		elif u < 4.0 * hw + 2.0 * hl:
+			p = Vector2(hw - (u - 2.0 * hw - 2.0 * hl), hl)
+		else:
+			p = Vector2(-hw, hl - (u - 4.0 * hw - 2.0 * hl))
+		var g := ground(p.x, p.y)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, g + 0.2, p.y)), Vector3(1.7, 1.0, 1.7), OLD_BRICK[i % 3], 0.6)
+		if (site.fallen as Array).has(i):
+			# Fallen: its drums lying in the grass, outward.
+			var outw := (p / Vector2(hw, hl)).normalized()
+			for k in 3:
+				var dp := p + outw * (1.5 + k * ch * 0.3)
+				_pbox(Transform3D(Basis(Vector3.UP, atan2(outw.x, outw.y)) * Basis(Vector3.RIGHT, PI * 0.5), Vector3(dp.x, ground(dp.x, dp.y) + 0.5, dp.y)), Vector3(1.1, ch * 0.28, 1.1), PLASTER[k % 3].darkened(0.08), 0.5)
+			continue
+		var h := ch if rng.randf() > 0.1 else ch * rng.randf_range(0.4, 0.7)
+		for rot: float in [0.0, PI * 0.25]:
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(p.x, g + 0.7 + h * 0.5, p.y)), Vector3(1.1, h, 1.1), PLASTER[i % 3].darkened(rng.randf_range(0.0, 0.1)), 0.25)
+		if h > ch * 0.9:
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, g + 0.7 + h + 0.25, p.y)), Vector3(1.5, 0.5, 1.5), IRON, 0.05)
+			for f in 4:
+				var a := f * PI * 0.5
+				_pbox(Transform3D(Basis(Vector3.UP, a), Vector3(p.x + cos(a) * 0.62, g + 0.7 + h - 0.15, p.y + sin(a) * 0.62)), Vector3(0.18, 0.5, 0.5), IRON, 0.0)
+		if rng.randf() < 0.3:
+			ivy(Vector3(p.x + 0.58, g + 0.7 + h, p.y), Vector3(1.0, 0.0, 0.0), rng.randf_range(3.0, h))
+	# The cellar: its brick walls, the still water on its floor, the stair
+	# down, the dry ledge, the door to the cistern.
+	var r := Colonnade.cellar(site)
+	var yc := float(lay.cellar_y) - off
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(r.get_center().x, yc - 0.5, r.get_center().y)), Vector3(r.size.x, 1.0, r.size.y), Color(0.14, 0.13, 0.11), 0.9)
+	_water_strip(Vector3(r.get_center().x, yc + Colonnade.CELLAR_WATER, r.position.y), Vector3(r.get_center().x, yc + Colonnade.CELLAR_WATER, r.end.y), r.size.x * 0.5, 0.0)
+	var cs := [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	for k in 4:
+		var a: Vector2 = cs[k]
+		var b: Vector2 = cs[(k + 1) % 4]
+		var c := (a + b) * 0.5
+		var outw := (c - r.get_center())
+		outw = Vector2(signf(outw.x), 0.0) if absf(outw.x) / r.size.x > absf(outw.y) / r.size.y else Vector2(0.0, signf(outw.y))
+		var dir := (b - a).normalized()
+		var segs := maxi(1, int(a.distance_to(b) / 3.0))
+		for i in segs:
+			var q := a.lerp(b, (i + 0.5) / segs)
+			var pe := q + outw * 2.6
+			var top := maxf(ground(q.x, q.y), maxf(ground(pe.x, pe.y), ground(q.x + outw.x * 5.0, q.y + outw.y * 5.0))) + 0.1
+			var bs := Basis(Vector3.UP, atan2(-dir.y, dir.x))
+			var lo := yc - 1.0
+			# The door to the cistern in the far (+z) wall.
+			if k == 2 and absf(q.x) < 1.5:
+				var dt := yc + Delves.H_STAIR + 0.2
+				_pbox(Transform3D(bs, Vector3(pe.x, (dt + top) * 0.5, pe.y)), Vector3(a.distance_to(b) / segs + 0.02, top - dt, 5.2), OLD_BRICK[(i + k) % 3], 0.6)
+				continue
+			_pbox(Transform3D(bs, Vector3(pe.x, (lo + top) * 0.5, pe.y)), Vector3(a.distance_to(b) / segs + 5.2, top - lo, 5.2), OLD_BRICK[(i + k) % 3], 0.6)
+	# The stair down along the -x wall from its near end.
+	var sx := r.position.x + 0.75
+	var gtop := ground(sx, r.position.y + 0.3)
+	var rise := gtop - yc
+	var run := rise / 0.65
+	var steps := maxi(3, int(ceil(rise / 0.3)))
+	solid = false
+	for k in steps:
+		var za := r.position.y + 0.2 + run * k / steps
+		var zb := r.position.y + 0.2 + run * (k + 1) / steps
+		var st := gtop - rise * (k + 1) / steps + 0.3
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(sx, (yc - 0.2 + st) * 0.5, (za + zb) * 0.5)), Vector3(1.3, st - yc + 0.2, zb - za + 0.02), OLD_BRICK[k % 3], 0.3)
+	solid = true
+	_dramp(Vector3(sx, yc, r.position.y + 0.2 + run), Vector3(sx, gtop, r.position.y + 0.2), 1.3)
+	# The dry ledge beyond it.
+	var lz0 := r.position.y + run + 0.6
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(r.position.x + 0.85, yc + Colonnade.LEDGE_H * 0.5, (lz0 + r.end.y) * 0.5)), Vector3(1.6, Colonnade.LEDGE_H, r.end.y - lz0), OLD_BRICK[1], 0.5)
+	# The avenue of old oaks from the front, taller than the wild.
+	var oak := SpeciesDB.find("Wind-shaped live oak")
+	if oak == null:
+		oak = SpeciesDB.find("White oak")
+	if oak != null:
+		var k2 := 0
+		var z := -hl - 8.0
+		while z > -hl - float(site.avenue_m):
+			for sxx: float in [-9.0, 9.0]:
+				if rng.randf() > 0.12:
+					var x := sxx + rng.randf_range(-0.8, 0.8)
+					_garden.append([Vector3(x, ground(x, z) - 0.1, z), SpeciesDB.index_of(oak), oak.height_m.y * rng.randf_range(1.25, 1.45)])
+			z -= 14.0
+			k2 += 1
+	_camp_spot = Vector3(7.0, ground(7.0, -hl - 6.0), -hl - 6.0)
+	shade = 0.0
+	_delve_from = _v.size()
+	_colonnade_cistern(lay, off)
+	_delve_to = _v.size()
+
+
+## The cistern under the footprint (Colonnade.layout): the steps down from
+## the cellar's door, the vaulted room flooded to the knee with its dry
+## ledge, the old stair up and out.
+func _colonnade_cistern(lay: Dictionary, off: float) -> void:
+	var pieces: Array = lay.pieces
+	var pas: Dictionary = pieces[0]
+	var heart: Dictionary = pieces[1]
+	var ex: Dictionary = pieces[2]
+	_delve_stair(pas, off, false, 0.0, 0.0)
+	_delve_room(heart, off, [_opening(heart, (pas.c as Vector2) + (pas.dir as Vector2) * float(pas.len), float(pas.half)), _opening(heart, ex.c, float(ex.half))])
+	var y := float(heart.y0) - off
+	var c: Vector2 = heart.c
+	var ln := float(heart.len)
+	_water_strip(Vector3(c.x, y + Colonnade.CISTERN_WATER, c.y), Vector3(c.x, y + Colonnade.CISTERN_WATER, c.y + ln), float(heart.half), 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(-1.8, y + Colonnade.LEDGE_H * 0.5, c.y + ln * 0.5)), Vector3(1.2, Colonnade.LEDGE_H, ln - 0.2), OLD_BRICK[2], 0.0)
+	var r := 0.6
+	while r < ln - 0.3:
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + float(heart.h) - 0.12, c.y + r)), Vector3(2.0 * float(heart.half), 0.24, 0.3), OLD_BRICK[0].darkened(0.15), 0.0)
+		r += 1.2
+	_delve_stair_open_top(ex, off, float(lay.exit_open), float(ex.y1) - off)
