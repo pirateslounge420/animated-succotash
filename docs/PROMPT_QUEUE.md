@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–15, 17. Next up: 16.
+Built so far: 01–17. Next up: 18.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -45,7 +45,7 @@ Built so far: 01–15, 17. Next up: 16.
 | 13 | §DF | Your light gives you away | built 8217d38 |
 | 14 | §DJ | Off the road: hidden places, and the few who speak | built 812f794 |
 | 15 | §DK | The shrine and the sealed scroll | built 5ef2aa4 |
-| 16 | §DL | Tomes: the I Ching first | todo |
+| 16 | §DL | Tomes: the I Ching first | built a4e6994 |
 | 17 | §DO | The crag fortress | built 5d88fbe |
 | 18 | §DR | The temple city: roots over stone | todo |
 | 19 | §DP | The wandering fire: thirteen in the desert | todo |
@@ -384,7 +384,7 @@ REPORT TO MIKE: the three open calls you stood in for (the reader, the passage t
 
 ## 16 — Tomes: the I Ching first — §DL
 
-**Status:** todo
+**Status:** built a4e6994
 **Mike sees:** At a delve's heart a tome lies where someone left it; carry it and open it to read, one hexagram to a page, in the HUD's font.
 
 ```text
