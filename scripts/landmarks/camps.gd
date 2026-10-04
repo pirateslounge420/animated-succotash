@@ -597,7 +597,7 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	if folk != "small_folk" and folk != "dead" and canopy.is_empty():
 		var ch := chunks.chunk_at(d)
 		circle = FireCircle.lay_seats(root, count, rng, {"biome": biome_key, "people": people_id,
-			"site": "ruin" if key.begins_with("ruin") else ("cliff" if key.begins_with("cliff") else ""),
+			"site": "ruin" if key.begins_with("ruin") else ("cliff" if key.begins_with("cliff") else ("columns" if key.begins_with("nest:columnar_basalt") else "")),
 			"bark": FireCircle.stand_bark(chunks, at), "stones": CreatureSpawner.den_stones(map.rock[map.cell_at(d)]),
 			"ground": ch.ground_color_at(d) if ch != null else Color(0.35, 0.42, 0.22),
 			"cloth": _people_pal[0] if not _people_pal.is_empty() else Color(0.45, 0.3, 0.2)}, body)

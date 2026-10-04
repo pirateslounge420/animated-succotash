@@ -238,6 +238,13 @@ static func holder_entry(map: PlanetData, d: Vector3, id: String, biome: String)
 		if e.get("creature") != null:
 			return {"creature": str(e.creature), "pattern": str(e.get("pattern", "pacer")), "speed_mps": float(e.get("speed_mps", 5.8)), "hunter": true}
 		return {"creature": "", "pattern": "pacer", "speed_mps": float(e.get("speed_mps", 5.8)), "hunter": true}
+	return roster_holder(map, d, id)
+
+
+## A night-roster species fitting the climate at `d`, seeded by `id` (the
+## sea cave's den, §DX, uses it too): {"creature", "pattern", "speed_mps",
+## "hunter": false}; creature "" (the dark itself) where none fits.
+static func roster_holder(map: PlanetData, d: Vector3, id: String) -> Dictionary:
 	var t := float(map.temp_c[map.cell_at(d)]) if map != null and not map.temp_c.is_empty() else 12.0
 	var best: Array = []
 	var fallback: Array = []

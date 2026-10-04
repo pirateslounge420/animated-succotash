@@ -1,5 +1,6 @@
 {
  "_help": {
+  "sea_cave_boom": "Design §DX (the columns, added by Claude Code, 4 Oct): the swell striking the back of the columned sea cave, once a swell (Landmarks SWELL_S, 7-11 s; SoundSynth boom). A source at the cave's back: played only while you are within max_distance, so you hear it from the clifftop before you have found the way down; muffled with distance like any source.",
   "crown_kinds": "Design §DA (Wind II, added by Claude Code, 4 Oct): crown_hush, crown_rustle, crown_clatter, crown_rattle are the crowns round you sounding in the gusts (WindCrowns; wind.json sound.crowns): a source at each crown, voiced by its leaf (needles hush, broad leaves rustle, palm fronds clatter, dry autumn leaves rattle; SoundSynth crown_*_loop), muffled like any source so you can walk to it.",
   "kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
   "unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
@@ -333,6 +334,17 @@
    "muffle": [
     60,
     180
+   ],
+   "class": "source"
+  },
+  "sea_cave_boom": {
+   "unit_size": 14,
+   "max_distance": 140,
+   "model": "inverse",
+   "max_db": 6,
+   "muffle": [
+    40,
+    140
    ],
    "class": "source"
   },

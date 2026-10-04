@@ -407,6 +407,12 @@
       "height_m": 0.3,
       "seats": 2,
       "tint": "stand_species_bark"
+     },
+     "column_top": {
+      "what": "the top of a hexagonal basalt column standing a little proud of the causeway's floor (design 3 Oct \u00a7DX: a hundred ready-made seats; added by Claude Code)",
+      "height_m": 0.35,
+      "seats": 1,
+      "tint": "terrain_stone"
      }
     },
     "by_biome": {
@@ -630,8 +636,15 @@
      ],
      "cliff": [
       "flat_stone"
+     ],
+     "columns": [
+      "column_top"
      ]
     },
+    "place_first": [
+     "columns"
+    ],
+    "_help_place_first": "Design 3 Oct \u00a7DX (added by Claude Code): sites whose own seats win over a people's (by_people): the causeway's column tops are the seats whoever lives there.",
     "by_people": {
      "canopy": [
       "limb"

@@ -95,6 +95,7 @@ func update_landmarks(delta: float, daylight: float) -> void:
 		_refresh_sites(pd)
 	_attach_ruins()
 	_build_ruin_collision(pd)
+	_tick_columns(delta)
 
 	# How deep inside a site the player is (ponds count a bit less).
 	magic = 0.0
@@ -206,6 +207,79 @@ func _attach_nest(key: String, data: Dictionary) -> void:
 ## The nests built right now: key -> node (meta "nest").
 func built_nests() -> Dictionary:
 	return _nests
+
+
+# --- The columns (design 3 Oct §DX) ------------------------------------------------
+
+## The causeway's log line, once (§BC: nothing says whether anyone made it).
+const CAUSEWAY_LINE := "A road of stone steps goes down into the sea."
+const CAUSEWAY_LINE_M := 30.0
+## The swell's period at the sea cave (s, [min, max]): one boom a swell.
+const SWELL_S := Vector2(7.0, 11.0)
+## The sea cave's boom (tools): {"key", "dist", "max_m", "booms", "heard"}.
+var boom_state := {}
+var _swell_rng := RandomNumberGenerator.new()
+
+
+## Each frame: the causeway's line when you reach it; the sea cave's boom
+## with the swell, a source at the cave's back (§BG) that plays only while
+## you are within its max_distance (audio.json sea_cave_boom), so it is
+## heard from the clifftop before the way down is found; and the night
+## roster asleep in its den by day (§CH), out by night.
+func _tick_columns(delta: float) -> void:
+	var pp := player.global_position
+	var pd := player.surface_dir
+	var day := sky != null and sky.sun_elevation_deg > -4.0
+	for key in _nests:
+		var node: Node3D = _nests[key]
+		if not is_instance_valid(node) or not node.is_inside_tree():
+			continue
+		var n: Dictionary = node.get_meta("nest", {})
+		if str(n.get("kind", "")) != "columnar_basalt":
+			continue
+		if str(n.get("variant", "")) == "" and CubeSphere.surface_distance_m(n.dir, pd) < CAUSEWAY_LINE_M:
+			GameLog.add_once("causeway", CAUSEWAY_LINE, "found")
+		if node.has_meta("boom"):
+			_tick_boom(node, n, pp, delta)
+		if node.has_meta("den"):
+			_den_sleeper(node, n, day)
+
+
+func _tick_boom(node: Node3D, n: Dictionary, pp: Vector3, delta: float) -> void:
+	var boom := node.get_node_or_null("Boom") as AudioStreamPlayer3D
+	if boom == null:
+		boom = Audio3D.make("sea_cave_boom", node, "Boom")
+		boom.position = node.get_meta("boom")
+		node.set_meta("boom_t", _swell_rng.randf_range(0.5, SWELL_S.x))
+		node.set_meta("booms", 0)
+	var t := float(node.get_meta("boom_t", 1.0)) - delta
+	var dist := boom.global_position.distance_to(pp)
+	var heard := dist < boom.max_distance
+	if t <= 0.0:
+		t = _swell_rng.randf_range(SWELL_S.x, SWELL_S.y)
+		if heard:
+			boom.stream = SoundSynth.stream("boom", _swell_rng.randi())
+			boom.pitch_scale = _swell_rng.randf_range(0.9, 1.05)
+			boom.play()
+			node.set_meta("booms", int(node.get_meta("booms", 0)) + 1)
+	node.set_meta("boom_t", t)
+	boom_state = {"key": str(n.key), "dist": dist, "max_m": boom.max_distance, "booms": int(node.get_meta("booms", 0)), "heard": heard}
+
+
+## The den's sleeper: by day a creature of the night roster lies on the
+## ledge at the cave's back; by night it is out (the spawner's own).
+func _den_sleeper(node: Node3D, n: Dictionary, day: bool) -> void:
+	var sl := node.get_node_or_null("DenSleeper") as Node3D
+	if day and sl == null:
+		var who := Overrun.roster_holder(map, n.dir, str(n.key))
+		sl = Overrun.body_for(str(who.get("creature", "")))
+		sl.name = "DenSleeper"
+		sl.set_meta("creature", str(who.get("creature", "")))
+		node.add_child(sl)
+		sl.position = node.get_meta("den")
+		sl.rotation.y = PI * 0.5
+	elif not day and sl != null:
+		sl.queue_free()
 
 
 func _attach_ruins() -> void:

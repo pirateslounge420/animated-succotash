@@ -22,7 +22,14 @@ class_name Nests
 ##                       with a spring along the foot; on open grass the
 ##                       buffalo jump (a kill site, cairn lanes to the lip);
 ##   bioluminescent_bay  a warm lagoon by mangrove that glows where the water
-##                       is stirred (MagicSites "bay", water.gdshader).
+##                       is stirred (MagicSites "bay", water.gdshader);
+##   columnar_basalt     tier 2 (design 3 Oct §DX): an old basalt flow laid
+##                       bare where the sea or a river cut it — the causeway
+##                       (a stair of hexagon tops into the sea on a shelving
+##                       basalt shore), the organ pipes (a cliff of columns
+##                       on a river's bank with a fall over it), the columned
+##                       sea cave (a column headland facing open sea, the sea
+##                       running in; never a camp).
 ##
 ## One candidate per grid cell per kind (the rarity's cell: common ~4 km,
 ## uncommon ~12 km, rare ~40 km), placed only where the cause holds. Pure
@@ -46,7 +53,7 @@ class_name Nests
 ## kept free of plants) and the kind's own measurements (cliff_h, radius_m,
 ## depth_m, pool_m, ...).
 
-const KINDS := ["cenote", "grotto", "cave_mouth", "waterfall", "slot_canyon", "ravine", "escarpment", "bioluminescent_bay"]
+const KINDS := ["cenote", "grotto", "cave_mouth", "waterfall", "slot_canyon", "ravine", "escarpment", "bioluminescent_bay", "columnar_basalt"]
 ## Grid cell per rarity (landforms.json _help.rarity: common one every
 ## 3-5 km where the cause holds, uncommon 10-15 km, rare 40 km or more).
 const CELL_M := {"common": 4000.0, "uncommon": 12000.0, "rare": 40000.0}
@@ -61,6 +68,23 @@ const TRIES := 40
 const BUDGET := {"roof_water": 0.36, "water": 0.2, "roof": 0.15, "remains": 0.5}
 const KARST := PlanetData.Rock.LIMESTONE_KARST
 const SANDSTONE := PlanetData.Rock.SANDSTONE
+const BASALT := PlanetData.Rock.BASALT_VOLCANIC
+## Columnar basalt (§DX). There are no tides: the high-water line is the
+## swell's reach over sea level, and the causeway's hearth stands on the
+## first step this far above it plus the spray.
+const COLUMN_HIGH_WATER_M := 1.2
+const COLUMN_SPRAY_M := 0.6
+## The lattice the sites pass sweeps a 12 km cell on (the coasts and banks
+## where basalt meets water are a few planet cells a world).
+const COLUMN_LATTICE := 24
+## A cell takes the form most of its shore makes (a steep one the cave, a
+## shelving one the causeway); SEA_CAVE_SHARE of the even ones take the
+## cave. ORGAN_PIPES_SHARE of the cells with a river bank take the pipes.
+const SEA_CAVE_SHARE := 0.5
+const ORGAN_PIPES_SHARE := 0.6
+## How far a river may be from basalt ground for the organ pipes (the
+## planet cells round it, RiverNetwork.segments_near).
+const ORGAN_RIVER_M := 1500.0
 
 static var D: Dictionary = _load()
 static var terrain: TerrainField = null
@@ -323,6 +347,8 @@ static func _find_raw(kind: String, c: Vector3i) -> Dictionary:
 			nest = _waterfall(center, cm, rng)
 		"bioluminescent_bay":
 			nest = _bay(center, cm, rng)
+		"columnar_basalt":
+			nest = _columns(c, n, rng)
 	if nest.is_empty():
 		return {}
 	nest.kind = kind
@@ -871,6 +897,230 @@ static func _bay(center: Vector3, cm: float, rng: RandomNumberGenerator) -> Dict
 	return {}
 
 
+## Columnar basalt (landforms.json columnar_basalt, design 3 Oct §DX): an
+## old flow laid bare where the sea or a river cut it. The cell's ground is
+## swept on a COLUMN_LATTICE lattice, not tried at random: the shores and
+## banks where basalt meets water are a few planet cells a world. Each
+## point on basalt is tried for the three forms, and the cell takes one by a
+## seeded roll among those that hold (the organ pipes first, they are the
+## rarest; then the shore's own make: the sea cave where most of it drops
+## deep, the causeway where most of it shelves).
+## The planet keeps no record of live and old flows, so any basalt counts
+## as an old one (cause.hotspot "old").
+static func _columns(c: Vector3i, n: int, rng: RandomNumberGenerator) -> Dictionary:
+	var cand := _column_candidates(c, n, rng)
+	var causeways: Array = cand.causeway
+	var caves: Array = cand.sea_cave
+	var pipes: Array = cand.organ_pipes
+	var roll := rng.randf()
+	var pick: Array = []
+	if not pipes.is_empty() and (roll < ORGAN_PIPES_SHARE or (causeways.is_empty() and caves.is_empty())):
+		pick = pipes
+	elif not caves.is_empty() and (causeways.size() < caves.size() or (causeways.size() == caves.size() and rng.randf() < SEA_CAVE_SHARE)):
+		# The coast's own make: mostly steep, a cave; mostly shelving, a
+		# causeway; even, the roll.
+		pick = caves
+	elif not causeways.is_empty():
+		pick = causeways
+	if pick.is_empty():
+		return {}
+	var best: Dictionary = pick[0]
+	for o in pick:
+		if float(o.score) > float(best.score):
+			best = o
+	best.erase("score")
+	return best
+
+
+## Which of the three forms hold in grid cell `c` (tools): {"causeway",
+## "sea_cave", "organ_pipes"} -> how many candidates.
+static func column_forms(c: Vector3i) -> Dictionary:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1
+	var cand := _column_candidates(c, CreatureSpawner._cells_per_face(cell_m("columnar_basalt")), rng)
+	return {"causeway": (cand.causeway as Array).size(), "sea_cave": (cand.sea_cave as Array).size(), "organ_pipes": (cand.organ_pipes as Array).size()}
+
+
+static func _column_candidates(c: Vector3i, n: int, rng: RandomNumberGenerator) -> Dictionary:
+	var e := entry("columnar_basalt")
+	var forms := {}
+	for v in e.get("variants", []):
+		forms[str(v.get("id", ""))] = v
+	var shore: Array = (forms.get("columned_sea_cave", {}) as Dictionary).get("biomes", ["ROCKY_SHORE", "VOLCANIC_FIELD"])
+	var pipe_biomes: Array = (forms.get("organ_pipes", {}) as Dictionary).get("biomes", [])
+	var causeways: Array = []
+	var caves: Array = []
+	var pipes: Array = []
+	var pipes_loose: Array = []
+	var shores_seen := {}
+	for a in COLUMN_LATTICE:
+		for b in COLUMN_LATTICE:
+			var u := -1.0 + 2.0 * (c.y + (a + 0.5) / COLUMN_LATTICE) / n
+			var v := -1.0 + 2.0 * (c.z + (b + 0.5) / COLUMN_LATTICE) / n
+			var p := CubeSphere.to_dir(c.x, u, v)
+			var cell := _map.cell_at(p)
+			if _map.rock[cell] != BASALT or _map.water[cell] != PlanetData.Water.NONE:
+				continue
+			var key := _biome_key(cell)
+			if shore.has(key) and causeways.size() + caves.size() < 8:
+				var sb := Monuments.sea_bearing(_map, p)
+				if not is_inf(sb):
+					var sh := _waterline(p, sb)
+					var sk := Vector3i(sh * 20000.0)
+					if sh != Vector3.ZERO and not shores_seen.has(sk):
+						shores_seen[sk] = true
+						var cw := _causeway_at(sh, sb, rng)
+						if not cw.is_empty():
+							causeways.append(cw)
+						var cv := _sea_cave_at(sh, sb, rng)
+						if not cv.is_empty():
+							caves.append(cv)
+			if key in ["ICE_SHEET", "SEA_ICE"] or pipes.size() + pipes_loose.size() >= 6 or _rivers == null:
+				continue
+			var op := _organ_pipes_at(p, cell)
+			if not op.is_empty():
+				(pipes if pipe_biomes.has(key) else pipes_loose).append(op)
+	if pipes.is_empty() and not pipes_loose.is_empty():
+		# No river cuts basalt in the variant's own biomes on the worlds
+		# measured (PROGRESS, §DX): the bank's biome is loosened, the rock
+		# and the river are not.
+		for op in pipes_loose:
+			op.loosened = true
+		pipes = pipes_loose
+	return {"causeway": causeways, "sea_cave": caves, "organ_pipes": pipes}
+
+
+## The water's edge from `p` toward the sea on bearing `b` (the last dry
+## point, 3 m steps), or ZERO.
+static func _waterline(p: Vector3, b: float) -> Vector3:
+	var q := p
+	for i in 140:
+		var nx := CreatureSpawner._offset(q, b, 3.0)
+		if _e(nx) < PlanetConst.SEA_LEVEL_M:
+			return q
+		q = nx
+	return Vector3.ZERO
+
+
+## The causeway (§DX.1) at the waterline `sh`, the sea on bearing `b`: a
+## shore that shelves gently (the steps go down into the water, not off a
+## drop), and the first dry step above the high water and the spray within
+## 30 m inland for the hearth. Local frame: the waterline at z 0, the land
+## at -z; the field runs land_m inland to the cliff of tall columns and
+## sea_m out under the water.
+static func _causeway_at(sh: Vector3, b: float, rng: RandomNumberGenerator) -> Dictionary:
+	var sea := PlanetConst.SEA_LEVEL_M
+	var d20 := _e(CreatureSpawner._offset(sh, b, 20.0))
+	if d20 > sea - 0.3 or d20 < sea - 1.8:
+		return {}
+	var land := b + PI
+	var dry := sea + COLUMN_HIGH_WATER_M + COLUMN_SPRAY_M + 0.2
+	var hm := 0.0
+	var m := 4.0
+	while m <= 30.0:
+		var hp := CreatureSpawner._offset(sh, land, m)
+		if _e(hp) >= dry and _slope(hp, 2.5) <= 0.2:
+			hm = m
+			break
+		m += 2.0
+	if hm <= 0.0:
+		return {}
+	var hearth := CreatureSpawner._offset(sh, land, hm)
+	var land_m := hm + 6.0
+	var width := rng.randf_range(20.0, 28.0)
+	return {"dir": sh, "variant": "", "toward": land, "facing": b, "hearth": hearth, "hearth_m": hm,
+		"land_m": land_m, "sea_m": 16.0, "width_m": width, "cliff_m": rng.randf_range(6.0, 12.0),
+		"high_water_m": sea + COLUMN_HIGH_WATER_M, "footprint_m": maxf(land_m, width * 0.5) + 6.0,
+		"gives": (entry("columnar_basalt").get("gives", []) as Array) + ["water"],
+		"clear": [[CreatureSpawner._offset(sh, land, land_m * 0.5 - 2.0), maxf(land_m * 0.5, width * 0.5) + 3.0]],
+		"score": rng.randf() + (0.5 if absf(d20 - (sea - 1.2)) < 0.8 else 0.0)}
+
+
+## The columned sea cave (§DX.3) at the waterline `sh`, the sea on bearing
+## `b`: open water in front (no inlet, no lagoon) and deep enough at the
+## cliff's foot for the sea to run in. A headland of columns stands out
+## from the shore over the water (reach_m), the cave through it from its
+## seaward face to its back just off the shore; its top is the clifftop
+## (top_m over the sea), reached from the land by a stair of column tops.
+## The hearth spot is on the clifftop above the cave's back; no camp.
+static func _sea_cave_at(sh: Vector3, b: float, rng: RandomNumberGenerator) -> Dictionary:
+	var sea := PlanetConst.SEA_LEVEL_M
+	# Open water in front: straight out all the way, and most of a fan
+	# either side of it (a headland's ragged coast, never an inlet).
+	var open := 0
+	for m: float in [60.0, 120.0, 200.0]:
+		for db: float in [-0.35, 0.0, 0.35]:
+			var wet := _e(CreatureSpawner._offset(sh, b + db, m)) < sea - 0.3
+			if db == 0.0 and not wet:
+				return {}
+			open += 1 if wet else 0
+	if open < 7:
+		return {}
+	var front := _biome_key(_map.cell_at(CreatureSpawner._offset(sh, b, 200.0)))
+	if front in ["LAGOON", "ESTUARY", "MANGROVE"]:
+		return {}
+	# Deep at the cliff's foot (a shore that drops, not one that shelves:
+	# that is the causeway's).
+	if _e(CreatureSpawner._offset(sh, b, 15.0)) > sea - 0.6 or _e(CreatureSpawner._offset(sh, b, 30.0)) > sea - 1.8:
+		return {}
+	var land := b + PI
+	if _slope(CreatureSpawner._offset(sh, land, 14.0), 4.0) > 0.35:
+		return {}
+	var reach := rng.randf_range(26.0, 34.0)
+	var width := rng.randf_range(22.0, 28.0)
+	var top := rng.randf_range(8.0, 10.0)
+	var hearth := CreatureSpawner._offset(sh, land, 1.0)
+	return {"dir": sh, "variant": "columned_sea_cave", "toward": land, "facing": b, "hearth": hearth,
+		"reach_m": reach, "width_m": width, "top_m": top, "back_m": 2.5, "stair_m": 18.0,
+		"footprint_m": reach + 6.0, "den": true,
+		"clear": [[CreatureSpawner._offset(sh, b, reach * 0.4), reach * 0.6 + 4.0], [CreatureSpawner._offset(sh, land, 10.0), 13.0]],
+		"score": rng.randf() + clampf(-(_e(CreatureSpawner._offset(sh, b, 30.0)) - sea) * 0.2, 0.0, 1.0)}
+
+
+## The organ pipes (§DX.2) near basalt ground `p` (planet cell `cell`): the
+## nearest river reach within ORGAN_RIVER_M whose bank is basalt country
+## (the bank's planet cell or one beside it on basalt). Local frame: the
+## water's edge at z 0, the river at +z; the cliff's face face_m back from
+## the edge, its fall pouring over the middle into a pool at the foot, the
+## hearth along the foot out of the spray.
+static func _organ_pipes_at(p: Vector3, cell: int) -> Dictionary:
+	var best := {}
+	var best_m := ORGAN_RIVER_M
+	for s in _rivers.segments_near(_map, cell):
+		var dt := _rivers.closest_dt(s, p)
+		if dt.x > best_m:
+			continue
+		var r := _rivers.a[s].slerp(_rivers.b[s], dt.y)
+		var into := _bearing(r, p)
+		var half := _rivers.width[s] * 0.5
+		var edge := CreatureSpawner._offset(r, into, half + 2.0)
+		var face_m := 9.0
+		var face := CreatureSpawner._offset(edge, into, face_m)
+		var fc := _map.cell_at(face)
+		var on_basalt := _map.rock[fc] == BASALT
+		for k in 8:
+			var nb := _map.neighbors[fc * 8 + k]
+			if nb >= 0 and _map.rock[nb] == BASALT:
+				on_basalt = true
+		# (A planet cell the river runs through is still the bank's.)
+		if not on_basalt or _map.water[fc] == PlanetData.Water.OCEAN or _map.water[fc] == PlanetData.Water.LAKE:
+			continue
+		var level := _rivers.level_at(s, dt.y)
+		var along := into + PI * 0.5
+		var hearth := CreatureSpawner._offset(CreatureSpawner._offset(edge, into, face_m - 4.0), along, 7.0)
+		var pool := CreatureSpawner._offset(edge, into, face_m - 2.5)
+		if _e(hearth) < level + 1.0 or _slope(hearth, 2.5) > 0.2 or _e(pool) < level + 0.2 or _river_m(hearth) < 4.0:
+			continue
+		best_m = dt.x
+		best = {"dir": edge, "variant": "organ_pipes", "toward": into, "facing": _bearing(hearth, CreatureSpawner._offset(edge, into, face_m)),
+			"hearth": hearth, "face_m": face_m, "width_m": 28.0, "cliff_m": 12.0 + 10.0 * fposmod(float(hash([s, "pipes"]) % 1000) / 1000.0, 1.0),
+			"river_level_m": level, "segment": s, "footprint_m": 26.0,
+			"gives": (entry("columnar_basalt").get("gives", []) as Array) + ["water"],
+			"clear": [[CreatureSpawner._offset(edge, into, face_m + 4.0), 18.0]],
+			"score": 1.0 - dt.x / ORGAN_RIVER_M}
+	return best
+
+
 # --- Resolution and the camp loop ----------------------------------------------------
 
 ## A nest gives way to a kind earlier in KINDS within SPACING_M, and to a
@@ -904,6 +1154,10 @@ static func _settle(nest: Dictionary) -> void:
 	if hearth != Vector3.ZERO and (roof or water) and _fuel_ok(_map.cell_at(hearth)):
 		p_live = float(BUDGET.roof_water if roof and water else (BUDGET.water if water else BUDGET.roof))
 	var roll := rng.randf()
+	if str(nest.get("variant", "")) == "columned_sea_cave":
+		# No dry floor: never a camp, nor an old one's remains (§DX.3).
+		nest.state = "untouched"
+		return
 	if roll < p_live:
 		nest.state = "lived"
 	elif hearth != Vector3.ZERO and not (entry(str(nest.kind)).get("remains", []) as Array).is_empty() and rng.randf() < float(BUDGET.remains):

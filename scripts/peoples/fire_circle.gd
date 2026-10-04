@@ -64,6 +64,10 @@ const STONE := ["rock", "flat_stone"]
 static func kinds_for(biome_key: String, people_id: String, site: String) -> Array:
 	var by_people: Dictionary = SEATS.get("by_people", {})
 	var out: Array = []
+	# A place whose own seats win whoever lives there (§DX: the causeway's
+	# column tops).
+	if (SEATS.get("place_first", []) as Array).has(site) and (SEATS.get("at_site", {}) as Dictionary).has(site):
+		return (SEATS.at_site[site] as Array).duplicate()
 	if by_people.has(people_id):
 		out = (by_people[people_id] as Array).duplicate()
 	else:
@@ -178,6 +182,14 @@ static func _seat_mesh(root: Node3D, kind: String, at: Vector3, a: float, h: flo
 			mi.set_meta("stone", col2)
 			root.add_child(mi)
 			PropCollision.box(body, mi.transform, size * Vector3(0.9, 0.65, 0.9))
+		"column_top":
+			# A basalt column standing proud of the floor (§DX): a hexagonal
+			# prism, its foot sunk in the floor.
+			var col3: Color = NestBuilder.BASALT_TOP
+			col3.a = 1.0
+			var hx := CreatureBodies.cone(root, 0.22, 0.22, h + 0.6, at + Vector3(0, (h - 0.6) * 0.5, 0), col3, 0.0, 6)
+			hx.rotation.y = -a
+			PropCollision.box(body, hx.transform, Vector3(0.38, h + 0.6, 0.38))
 		"hummock":
 			var g: Color = ctx.get("ground", Color(0.35, 0.42, 0.22))
 			CreatureBodies.ball(root, Vector3(0.32, h, 0.3), at + Vector3(0, h * 0.2, 0), g.darkened(0.08))

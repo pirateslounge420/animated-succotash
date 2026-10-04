@@ -4,6 +4,37 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DX: the columns, columnar basalt as a nest (prompt 35)
+- **The kind:** `columnar_basalt`, the ninth in `Nests.KINDS` (tier 2, uncommon, a 12 km cell).
+  - `Nests._columns` sweeps each cell on a 24 × 24 lattice instead of random tries. The basalt shores and banks are only a few planet cells a world.
+  - It tries each basalt point for the three forms (`_causeway_at`, `_sea_cave_at`, `_organ_pipes_at`).
+  - The organ pipes win a cell on a 60 % roll. Otherwise the cell takes the form most of its shore makes: shelving → causeway, dropping deep → sea cave, even → a roll.
+  - Count, seeds 7731 / 8 / 2 / 5: causeways 1 / 2 / 2 / 1, organ pipes 1 / 4 / 3 / 0, sea caves 4 / 2 / 2 / 3. Seed 5 has no river by basalt ground.
+  - `landforms.json` status `new` → `built`.
+- **The builds** (`NestBuilder._hex_field`): real hexagonal prisms on a flat-topped hex grid.
+  - Faces are drawn only where they show: tops, the undersides of hanging columns, and the sides a neighbour doesn't cover.
+  - Under 72 k triangles a build, with a coarse far stand-in. Collision is a smooth walk surface (`_walk_grid`), so the stepped tops walk as a slope and the cliffs stand as walls.
+  - **The causeway:** about 4,000–5,400 columns 0.42 m across, stepping down from a 6–12 m cliff of columns into the sea. 200–500 cups hold water with weed round them. The hearth is on a flush floor on the first step 1.8 m or more above the sea, and the camp's seats are new `column_top` seats (`camps.json` → `fire_circle.seats`: kind `column_top`, `at_site.columns`, `place_first`).
+  - **The organ pipes:** a 12–22 m cliff of columns on the bank 9 m back from the water. A stream comes over a notch and pours as a waterfall sheet into a pool, which runs on to the river. Its roar is a `waterfall` source, and the hearth is 7 m along the foot.
+  - **The sea cave:** a headland of columns 26–34 m out over the sea, its top 8–10 m up, reached by a stair of tops from the land. The cave runs through it under a roof of column undersides, with a stump ledge inside and round the outside to the shore, darkening toward the back.
+    - The boom: `SoundSynth` "boom", `audio.json` → `sea_cave_boom`, a source played once a swell only within its 140 m (`Landmarks._tick_boom`).
+    - The den: by day a night-roster creature sleeps on the ledge (`Overrun.roster_holder`, split out of `holder_entry`).
+    - It is never a camp, nor an old one's remains (`_settle`).
+- **The log line** once at the causeway (within 30 m): "A road of stone steps goes down into the sea."
+- **Checks:** `tools/basalt_check.gd` passes on 7731, 8, 2 and 5 (seed 5 skips the organ pipes).
+  - `nest_check` on 7731 fails only its known waterfall-plants line, which fails the same before this change.
+  - Walkabout harness frames (§CG): `SITES=columns` on 7731 (the causeway from its top step); `sea_cave` on 7731; `organ_pipes` on 8.
+- **Flags:**
+  - No river cuts basalt in the organ pipes' own biomes on any of four seeds, so their bank's biome is loosened (rock and river kept). They land in savanna, rainforest, thorn scrub and estuary.
+  - Their fall is the nest's own stream over the cliff, not a river's fall: no river fall lands on basalt.
+  - There are no tides: the high-water line is 1.2 m over the sea, plus 0.6 m of spray.
+  - The planet keeps no record of old and live flows, so any basalt counts as old.
+  - The sea cave's hearth spot is on its clifftop (a mesh). It never burns, so nothing needs the ground there.
+  - The den's sleeper is whatever night-roster species fits the climate (a ghost crab, a tree frog, once a spotted hyena).
+  - The column-hut remains signature waits for the peoples fill.
+  - The coast road is not routed to the causeway's top.
+  - The wind's moan in the organ pipes (§DA) is not built.
+
 ## 2026-10-04 — §DV: the old colonnade (prompt 34)
 - **The kind:** `Ruins.Kind.COLONNADE`, "Old colonnade" (`data/ruins.json` → `styles.colonnade`, unmarked), placed by Monuments' sites pass, at most three a world.
   - **New gate words:** `humid` (moisture 0.55 or more), `rise_above_river` (water within 1 km, the spot 3 m or more above it) and `cold` as a never-word (the cell under 12 °C: the humid south).

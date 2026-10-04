@@ -43,6 +43,9 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=columns the nearest causeway (§DX): from its top step, down its
+## steps into the sea; SITES=sea_cave its headland and mouth from the
+## shore beside it; SITES=organ_pipes the cliff and its fall from the foot.
 ## SITES=colonnade the nearest old colonnade (§DV): in its avenue of oaks,
 ## looking up it at the columns (SEED=8 has three).
 ## SITES=pillar_shrines the nearest pillar shrines (§DY): on the valley's
@@ -228,6 +231,9 @@ func _run() -> void:
 			kinds.append("pillar_shrines")
 		if only.has("colonnade"):
 			kinds.append("colonnade")
+		for ck in ["columns", "sea_cave", "organ_pipes"]:
+			if only.has(ck):
+				kinds.append(ck)
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -344,6 +350,35 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"columns", "sea_cave", "organ_pipes":
+				# The columns (design 3 Oct §DX): the nearest causeway from
+				# the shore beside it, down its steps into the sea; the
+				# nearest sea cave from off its mouth's side; the organ pipes
+				# from across the foot.
+				var want: String = {"columns": "", "sea_cave": "columned_sea_cave", "organ_pipes": "organ_pipes"}[str(kind)]
+				var bd := INF
+				var b0 := {}
+				for bn in Nests.near(camp_d, 400000.0, ["columnar_basalt"]):
+					if str(bn.variant) == want and CubeSphere.surface_distance_m(bn.dir, camp_d) < bd:
+						bd = CubeSphere.surface_distance_m(bn.dir, camp_d)
+						b0 = bn
+				if b0.is_empty():
+					lines.append("-- %s: none on this world" % kind)
+					continue
+				var tw := float(b0.toward)
+				match want:
+					"":
+						var top_step := CreatureSpawner._offset(CreatureSpawner._offset(b0.dir, tw, float(b0.hearth_m) + 1.0), tw + PI * 0.5, 4.0)
+						sites.append({"name": "causeway", "dir": top_step, "look": CreatureSpawner._offset(b0.dir, tw + PI, 8.0),
+							"note": "the causeway from its top step, down into the sea (%.0f km from the camp, %s)" % [bd / 1000.0, str(b0.state)]})
+					"columned_sea_cave":
+						var off := CreatureSpawner._offset(CreatureSpawner._offset(b0.dir, tw, 3.0), tw + PI * 0.5, float(b0.width_m) * 0.5 + 14.0)
+						sites.append({"name": "sea_cave", "dir": off, "look": CreatureSpawner._offset(b0.dir, tw + PI, float(b0.reach_m)), "pitch_to": CreatureSpawner._offset(b0.dir, tw + PI, float(b0.reach_m)), "pitch_add_m": 3.0,
+							"note": "the columned sea cave's mouth (%.0f km from the camp)" % (bd / 1000.0)})
+					"organ_pipes":
+						var across := CreatureSpawner._offset(CreatureSpawner._offset(b0.dir, tw, 2.0), tw + PI * 0.5, 22.0)
+						sites.append({"name": "organ_pipes", "dir": across, "look": CreatureSpawner._offset(b0.dir, tw, float(b0.face_m)), "pitch_to": CreatureSpawner._offset(b0.dir, tw, float(b0.face_m)), "pitch_add_m": float(b0.cliff_m) * 0.5,
+							"note": "the organ pipes and their fall (%.0f km from the camp)" % (bd / 1000.0)})
 			"colonnade":
 				var cod := INF
 				var co0 := {}

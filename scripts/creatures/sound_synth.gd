@@ -90,6 +90,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _rain_loop(rng)
 		"thunder_near", "thunder_far":
 			samples = _thunder(kind == "thunder_near", rng)
+		"boom":
+			samples = _boom(rng)
 		"bow_draw":
 			samples = _bow_draw(rng)
 		"bow_release":
@@ -778,6 +780,29 @@ static func _thunder(near: bool, rng: RandomNumberGenerator) -> PackedFloat32Arr
 			hp_prev = x
 			v += hp * 1.6 * exp(-t * 14.0)
 		s[i] = v
+	return s
+
+
+## The swell striking the back of a sea cave (design 3 Oct §DX, §BG): a
+## deep hollow thump that rings in the rock, then the wash of the water
+## running back out.
+static func _boom(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(3.2, 4.2))
+	var f0 := rng.randf_range(34.0, 46.0)
+	var ph := 0.0
+	var lp := 0.0
+	var lp2 := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		ph += TAU * f0 * (1.0 - 0.18 * minf(t, 1.0)) / RATE
+		var thump := sin(ph) * minf(t / 0.03, 1.0) * exp(-t * 2.2)
+		# The rock's ring: a second, higher hollow tone, fading sooner.
+		var ring := sin(ph * 2.7) * 0.25 * exp(-t * 4.0)
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.03)
+		lp2 = lerpf(lp2, lp, 0.08)
+		var wash := lp2 * 9.0 * smoothstep(0.3, 1.2, t) * exp(-maxf(t - 1.2, 0.0) * 1.3)
+		s[i] = (thump + ring) * 0.9 + wash
 	return s
 
 
