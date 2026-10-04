@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–21. Next up: 22.
+Built so far: 01–22. Next up: 23.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -51,7 +51,7 @@ Built so far: 01–21. Next up: 22.
 | 19 | §DP | The wandering fire: thirteen in the desert | built b545e71 |
 | 20 | §DQ | The old man on his ox | built c0fae2b |
 | 21 | §DS.1 | The long wall | built 8c59923 |
-| 22 | §DS.2 | The carved cliffs | todo |
+| 22 | §DS.2 | The carved cliffs | built ffc23f7 |
 | 23 | §DS.4 | The cliff dwelling | todo |
 | 24 | §DS.6 | The brick city | todo |
 | 25 | §DS.3 | The stone heads (and the oceania realm) | todo |
@@ -486,7 +486,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 22 — The carved cliffs — §DS.2
 
-**Status:** todo
+**Status:** built ffc23f7
 **Mike sees:** Facades cut into a sandstone canyon wall, reached through a slot canyon, the tombs behind them.
 
 ```text
