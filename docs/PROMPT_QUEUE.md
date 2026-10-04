@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–10, 17. Next up: 11.
+Built so far: 01–11, 17. Next up: 12.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -40,7 +40,7 @@ Built so far: 01–10, 17. Next up: 11.
 | 8 | §DC (part 1 of 2) | Shafts of light, only when the air would really show them | built 0d0a3f8 |
 | 9 | §DC (part 2 of 2) | Butterflies by day | built d8880fa |
 | 10 | §DI (part 1 of 3) | Ruins wear their place: the overgrowth | built db1ba8b |
-| 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | todo |
+| 11 | §DI (part 2 of 3) | A ruin sounds like what lives in it | built 63e9956 |
 | 12 | §DI (part 3 of 3) | The ghost at the corner | todo |
 | 13 | §DF | Your light gives you away | todo |
 | 14 | §DJ | Off the road: hidden places, and the few who speak | todo |
@@ -281,7 +281,7 @@ CHECK (tools/overgrowth_check.gd, headless): a castle in cloud forest (moisture 
 
 ## 11 — A ruin sounds like what lives in it — §DI (part 2 of 3)
 
-**Status:** todo
+**Status:** built 63e9956
 **Mike sees:** Birds in a tower top by day, bats out of the vault at dusk, an owl in a window at night, something scrabbling below in the dark, wind moaning through the gaps; an overrun ruin silent by day.
 
 ```text
