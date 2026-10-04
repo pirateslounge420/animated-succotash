@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–19. Next up: 20.
+Built so far: 01–20. Next up: 21.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -49,7 +49,7 @@ Built so far: 01–19. Next up: 20.
 | 17 | §DO | The crag fortress | built 5d88fbe |
 | 18 | §DR | The temple city: roots over stone | built 1b7eacc |
 | 19 | §DP | The wandering fire: thirteen in the desert | built b545e71 |
-| 20 | §DQ | The old man on his ox | todo |
+| 20 | §DQ | The old man on his ox | built c0fae2b |
 | 21 | §DS.1 | The long wall | todo |
 | 22 | §DS.2 | The carved cliffs | todo |
 | 23 | §DS.4 | The cliff dwelling | todo |
@@ -454,7 +454,7 @@ CHECK (tools/wandering_fire_check.gd, headless): exactly one group on seed 7731,
 
 ## 20 — The old man on his ox — §DQ
 
-**Status:** todo
+**Status:** built c0fae2b
 **Mike sees:** An old man on a slow dark ox on the high pass road, hood turning to hold you a beat as you pass, then on toward the pass; at dusk he stops where he is.
 
 ```text
