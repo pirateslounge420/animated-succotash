@@ -28,6 +28,8 @@ extends SceneTree
 ## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
 ## SITES=wandering_fire the thirteen (§DP): one of their cold rings, and
 ## them at their fire (HOURS=19.5 for dusk).
+## SITES=long_wall the nearest long wall (§DS.1): from its straight approach
+## to the gate tower, and along the wall from a stretch of it.
 ## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
 ## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
@@ -170,6 +172,8 @@ func _run() -> void:
 			kinds.append("wandering_fire")
 		if only.has("ox_rider"):
 			kinds.append("ox_rider")
+		if only.has("long_wall"):
+			kinds.append("long_wall")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -286,6 +290,26 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"long_wall":
+				var lw := {}
+				var lwd := INF
+				for ls in Monuments.all_sites(world.planet, "long_wall"):
+					if CubeSphere.surface_distance_m(ls.dir, camp_d) < lwd:
+						lwd = CubeSphere.surface_distance_m(ls.dir, camp_d)
+						lw = ls
+				if lw.is_empty():
+					lines.append("-- long_wall: none on this world")
+					continue
+				# The gate tower's door from 45 m out on its outer side, and a
+				# stretch of the wall 600 m on, from 35 m off its side.
+				sites.append({"name": "long_wall_gate", "dir": Ruins.local_dir(lw, 0.0, -45.0), "look": lw.dir, "note": "the long wall's gate tower (%.1f km of wall)" % (float(lw.len_m) / 1000.0)})
+				var lm := clampf(float(lw.gate_m) + 600.0, 0.0, float(lw.len_m))
+				if lm - float(lw.gate_m) < 300.0:
+					lm = clampf(float(lw.gate_m) - 600.0, 0.0, float(lw.len_m))
+				var lp := RoadNetwork.point_at(lw.line, lm)
+				var lq := RoadNetwork.point_at(lw.line, clampf(lm + 10.0, 0.0, float(lw.len_m)))
+				var lsd := (lq - lp).cross(lp).normalized()
+				sites.append({"name": "long_wall_run", "dir": (lp + lsd * 35.0 / PlanetConst.RADIUS_M).normalized(), "look": RoadNetwork.point_at(lw.line, clampf(lm + 120.0, 0.0, float(lw.len_m))), "note": "a stretch of the long wall, %.0f m from the gate" % absf(lm - float(lw.gate_m))})
 			"ox_rider":
 				var orr := OxRider.road(world.planet, main.chunks.rivers, main.chunks.roads)
 				if orr.is_empty():
@@ -549,6 +573,9 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	player.global_position -= off
 	main.chunks.load_blocking(d)
 	player.spawn_at(d, site.get("look", CreatureSpawner._offset(d, 0.0, 30.0)))
+	# The long walls' stretches in sight (§DS.1: streamed, LongWalls).
+	if main.get("long_walls") != null:
+		main.long_walls.build_now(d, LongWalls.BUILD_M)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)

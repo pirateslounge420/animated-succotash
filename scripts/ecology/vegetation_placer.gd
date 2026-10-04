@@ -1140,6 +1140,8 @@ class _Context:
 		for camp in Territories.camps_near(map, data.center, chunk_m * 0.75):
 			_clearings.append([camp, Territories.CLEARING_M])
 		_clearings.append_array(Ruins.clearings_near(map, data.center, chunk_m * 0.75))
+		# The long walls' line (design 3 Oct §DS.1).
+		_clearings.append_array(LongWalls.clearings_near(map, data.center, chunk_m * 0.75))
 		_clearings.append_array(Encampment.clearings_near(data.center, chunk_m * 0.75))
 		# The nests' floors, shafts and hearths (design 1 Oct §CK), and the
 		# sacred fig's ring (§CL).

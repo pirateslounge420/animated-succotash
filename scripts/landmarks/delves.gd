@@ -86,6 +86,10 @@ static func has_delve(site: Dictionary) -> bool:
 	# The temple city walks inward to its sanctum (§DR.3: the barrow kit).
 	if int(site.kind) == Ruins.Kind.TEMPLE_CITY:
 		return true
+	# The long wall's gate tower: down into its vaults (§DS.1: the barrow
+	# kit, its way out a postern on the far side).
+	if int(site.kind) == Ruins.Kind.LONG_WALL and not site.has("piece"):
+		return true
 	return int(site.kind) == Ruins.Kind.BARROW and str(site.get("style", "")) in ["stone", "snow"]
 
 

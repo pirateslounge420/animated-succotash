@@ -4,6 +4,33 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DS.1: the long wall (prompt 21)
+- **The kind:** `Ruins.Kind.LONG_WALL`, "The long wall" (`data/ruins.json` → `styles.long_wall`, unmarked), placed by Monuments' sites pass (`KINDS` gains its line).
+  - **New gate words:** `ridgeline` (needs a crest: the ground 120 m either side at least 5 m below, along some axis), and `wet` and `flat_lowland` (never).
+- **Its line** (`Monuments._long_wall`):
+  - From the site it walks the crest both ways in 40 m steps. Each step takes the highest point ahead within ±12°, snaps sideways to the crest, and never crosses itself.
+  - The walk stops at water, at a drop steeper than 0.7, or where the crest is lost for 200 m. Under 3 km, no wall.
+  - **Its gate** is the middle-stretch point nearest the ground grid's axes (the tower's delve opens on the grid); a road network node stands there.
+  - **The rest:** towers every 250–500 m and at both ends, a height of 5–8 m, and the breaks (gaps, fallen stretches 1–2 m high, a tower down now and then).
+- **Built in pieces, not one mesh** (`RuinBuilder._wall_run`, `_wall_tower`; `LongWalls`, new): plain blocks a 6 m step.
+  - Each block's top is pitched with the ground: the walkway. There is an inner parapet and a crenellated outer one.
+  - The gate (`_long_wall_gate`) is the site Ruins.find gives: a hollow tower with its door on the outer face, the way down (the barrow kit: rooms, the heart in the undercroft, a postern out on the far side), a gateway through the wall beside it, and a stone stair up the inner face.
+  - Every other tower-to-tower stretch is a piece LongWalls computes on a worker within 650 m and frees past 900 m, with collision near.
+  - Plants keep off its line (`LongWalls.clearings_near`).
+  - Its delve hearths vent through wall flues (`smoke.json` `long_wall`, help line updated).
+- **Check:** `tools/long_wall_check.gd`, 0 fails on 7731.
+  - One wall kept (the other passers' crests gave out under 3 km): at 39.35°S 90.94°E in temperate deciduous forest (east_asia_temperate).
+  - 4.4 km, 6.0 m high, 14 towers, 7 breaks and 2 towers down; 25 of 45 points along it on a crest.
+  - Its delve: stair, room, stair, heart, exit.
+  - Triangles: gate 35,364; the largest of 13 stretches 7,372; the castle's budget 81,184.
+  - One road comes to its gate.
+- **Walkabout** (`SITES=long_wall`, harness frames §CG): the crenellated wall across the view with the gateway and the gate tower behind bare trees, and a stretch going over a hill with a tower and more towers far off.
+- **Flags:**
+  - The gate tower's delve is the barrow kit, as the temple city's is.
+  - The gate point needn't itself be a crest, so its gate tally shows "no_ridge".
+  - There is no wall-top road in the network: the walkway is the wall's top, and the network's road ends at the gate tower.
+  - Other ruins whose cells it crosses still stand where they are.
+
 ## 2026-10-04 — §DQ: the old man on his ox (prompt 20)
 - **OxRider** (`scripts/landmarks/ox_rider.gd`, new): the first road regular (`data/uniques.json` → `road_regulars.ox_rider`, unmarked). One per world, a §BF traveller who rides.
   - **His road:** a road of his own over one great range, westward, from its east foot over a crossing to its west foot.

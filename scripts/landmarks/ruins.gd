@@ -43,14 +43,14 @@ class_name Ruins
 ## of the planet data (thread-safe), so every visit finds the same ruin and
 ## vegetation can keep the footprint clear.
 
-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY }
+enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW, CRAG_FORTRESS, TEMPLE_CITY, LONG_WALL }
 
 const CELL_M := 3200.0
 const CHANCE := 0.5
 const SALT := 555
 const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
 	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
-	"Barrow tomb", "Crag fortress", "Temple city"]
+	"Barrow tomb", "Crag fortress", "Temple city", "The long wall"]
 const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
 const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
 const SNOW_C := -3.0
@@ -382,6 +382,9 @@ static func camp_folk(site: Dictionary) -> String:
 		Kind.TEMPLE_CITY:
 			# The ochre camp (§DR.6): Camps dresses it.
 			return "tribal"
+		Kind.LONG_WALL:
+			# Steppe and mountain folk at the gate tower's foot (§DS.1).
+			return "north"
 		Kind.BARROW:
 			var brng := RandomNumberGenerator.new()
 			brng.seed = hash([site.seed, "folk"])

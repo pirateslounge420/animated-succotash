@@ -497,7 +497,7 @@
     "way_out": "a postern on the far side",
     "fire_holder": "brazier"
    },
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DS.1] A wall running over the ridges for miles with towers at intervals, broken in places, a road along its top (\u00a7DM: the wall is a road kind). The first linear monument besides the aqueduct. The gate towers' vaults are the delve; the towers vent through wall flues (smoke.json)."
+   "_help": "Built (design \u00a7DS.1; Monuments, RuinBuilder._long_wall_gate and _long_wall_piece, LongWalls): a wall running over the ridges for miles with towers at intervals, broken in places, a walkway along its top. Its line follows the crest from the site (the walk stops where the crest is lost for 200 m, at water, or at a drop steeper than 0.7; under length_km's low end, no wall); towers every towers_every_m; gaps, fallen stretches and a tower down now and then. The gate (the site the road network links to): the gate tower, hollow, with the way down into its vaults (the barrow kit: rooms, the heart, a postern out on the far side), a gateway through the wall beside it, a stair up the inner face. Every other stretch is streamed tower to tower near you, not one mesh. Its delve's hearths vent through wall flues (smoke.json). Restart after editing."
   },
   "carved_cliffs": {
    "kind": "own",

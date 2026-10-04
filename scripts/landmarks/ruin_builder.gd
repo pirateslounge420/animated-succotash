@@ -244,6 +244,11 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._crag_fortress()
 		Ruins.Kind.TEMPLE_CITY:
 			b._temple_city()
+		Ruins.Kind.LONG_WALL:
+			if p_site.has("piece"):
+				b._long_wall_piece()
+			else:
+				b._long_wall_gate()
 	# Root-trees on old monuments in the wet tropics (§DR.2).
 	b._root_trees_elsewhere()
 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
@@ -4453,7 +4458,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) == Ruins.Kind.TEMPLE_CITY or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -4488,3 +4493,220 @@ func _root_trees_elsewhere() -> void:
 		used.append(p)
 		var xf: Transform3D = t[2]
 		_root_tree_at(p, atan2(xf.basis.x.z, xf.basis.x.x), float(t[0]))
+
+
+# --- The long wall (design 3 Oct §DS.1) --------------------------------------------
+
+## Local stone and rammed earth: a dun, a grey, an earthen core.
+const WALL_STONES := [Color(0.5, 0.47, 0.42), Color(0.46, 0.44, 0.4), Color(0.53, 0.5, 0.44), Color(0.43, 0.41, 0.37), Color(0.49, 0.45, 0.38)]
+const WALL_CORE := Color(0.5, 0.42, 0.32)
+## A wall run's steps along the line, the parapet and the merlons.
+const WALL_SEG_M := 6.0
+const PARAPET_H := 1.1
+const MERLON_H := 0.9
+
+
+## A plain block (12 triangles, collision) with its own frame.
+func _pbox(xf: Transform3D, size: Vector3, col: Color, moss: float) -> void:
+	var was := plain
+	plain = true
+	var ft := foot_y
+	foot_y = xf.origin.y - size.y * 0.5
+	box(xf, size, col, _growth(moss))
+	foot_y = ft
+	plain = was
+
+
+## A direction on the planet in this frame's local x/z.
+func _local_of(d: Vector3) -> Vector2:
+	var q := d - up * d.dot(up)
+	return Vector2(q.dot(ex), q.dot(ez)) * PlanetConst.RADIUS_M
+
+
+## The wall's state at `m` along its line: "full", "fallen" (with its
+## height) or "gap".
+func _wall_state(m: float) -> Array:
+	for b in site.get("breaks", []):
+		if m >= float(b[0]) and m <= float(b[1]):
+			return [str(b[2]), float(b[3]) if b.size() > 3 else 0.0]
+	return ["full", 0.0]
+
+
+## The wall along its line from m0 to m1 (the site's line, in this frame):
+## a body of stone WALL_SEG_M a step, its top `wall_h` over the lower of
+## the ground either side and pitched with it (the walkway: the road on
+## top, §DS.1), a parapet on the inner side and a crenellated one on the
+## outer; down to its core where it has fallen, gone where there's a gap
+## (rubble at the ends).
+func _wall_run(m0: float, m1: float) -> void:
+	var line: PackedVector3Array = site.line
+	var h_full: float = site.wall_h
+	var th: float = site.thick_m
+	var m := m0
+	var prev_state := ""
+	while m < m1 - 0.3:
+		var mb := minf(m + WALL_SEG_M, m1)
+		var st := _wall_state((m + mb) * 0.5)
+		if str(st[0]) != prev_state and prev_state != "" and (str(st[0]) == "gap" or prev_state == "gap"):
+			var ep := _local_of(RoadNetwork.point_at(line, m))
+			rubble(Vector3(ep.x, 0.0, ep.y), 3.5, 7)
+		prev_state = str(st[0])
+		if str(st[0]) == "gap":
+			m = mb
+			continue
+		var a := _local_of(RoadNetwork.point_at(line, m))
+		var b := _local_of(RoadNetwork.point_at(line, mb))
+		var along := (b - a).normalized()
+		var side := Vector2(-along.y, along.x) * (th * 0.5)
+		var ga := minf(ground(a.x + side.x, a.y + side.y), ground(a.x - side.x, a.y - side.y))
+		var gb := minf(ground(b.x + side.x, b.y + side.y), ground(b.x - side.x, b.y - side.y))
+		var h := h_full if str(st[0]) == "full" else float(st[1])
+		var a3 := Vector3(a.x, ga + h, a.y)
+		var b3 := Vector3(b.x, gb + h, b.y)
+		var dv := b3 - a3
+		var ln := dv.length()
+		if ln < 0.05:
+			m = mb
+			continue
+		var xa := dv / ln
+		var za := xa.cross(Vector3.UP).normalized()
+		var ya := za.cross(xa).normalized()
+		var bs := Basis(xa, ya, za)
+		var mid := (a3 + b3) * 0.5
+		var col: Color = palette[rng.randi() % palette.size()]
+		var body_h := h + 3.0
+		_pbox(Transform3D(bs, mid - ya * body_h * 0.5), Vector3(ln + 0.5, body_h, th), col if str(st[0]) == "full" else WALL_CORE, 0.25)
+		if str(st[0]) == "full":
+			# The inner parapet, and the outer one with its merlons.
+			_pbox(Transform3D(bs, mid + ya * PARAPET_H * 0.5 + za * (th * 0.5 - 0.25)), Vector3(ln + 0.4, PARAPET_H, 0.5), col.darkened(0.05), 0.35)
+			_pbox(Transform3D(bs, mid + ya * 0.3 - za * (th * 0.5 - 0.25)), Vector3(ln + 0.4, 0.6, 0.5), col.darkened(0.08), 0.35)
+			for k in 2:
+				var u := (k + 0.5) / 2.0 - 0.5
+				_pbox(Transform3D(bs, mid + xa * u * ln + ya * (0.6 + MERLON_H * 0.5) - za * (th * 0.5 - 0.25)), Vector3(ln * 0.28, MERLON_H, 0.5), col.darkened(0.1), 0.4)
+		m = mb
+
+
+## A tower on the wall at `m` along its line: a square of stone astride it,
+## its roof a platform with merlons; a stump and a heap where it fell.
+func _wall_tower(m: float, fallen: bool) -> void:
+	var line: PackedVector3Array = site.line
+	var total := RoadNetwork.length_m(line)
+	var p := _local_of(RoadNetwork.point_at(line, m))
+	var q := _local_of(RoadNetwork.point_at(line, clampf(m + 4.0, 0.0, total)))
+	var q0 := _local_of(RoadNetwork.point_at(line, clampf(m - 4.0, 0.0, total)))
+	var along := (q - q0).normalized()
+	var rot := atan2(-along.y, along.x)
+	var w := 8.5
+	var g := INF
+	for cx in [-1.0, 1.0]:
+		for cz in [-1.0, 1.0]:
+			var c: Vector2 = p + along * cx * w * 0.5 + Vector2(-along.y, along.x) * cz * w * 0.5
+			g = minf(g, ground(c.x, c.y))
+	var h: float = float(site.wall_h) + 4.5
+	if fallen:
+		h = rng.randf_range(1.5, 3.0)
+	var bs := Basis(Vector3.UP, rot)
+	var col: Color = palette[rng.randi() % palette.size()]
+	_pbox(Transform3D(bs, Vector3(p.x, g - 3.0 + (h + 3.0) * 0.5, p.y)), Vector3(w, h + 3.0, w), col, 0.3)
+	if fallen:
+		rubble(Vector3(p.x, 0.0, p.y), 7.0, 14)
+		return
+	# Its roof's merlons, three a side, and a dark loophole on each face.
+	for side in 4:
+		var sb := Basis(Vector3.UP, rot + side * PI * 0.5)
+		for k in 3:
+			var u := (k - 1) * w * 0.34
+			_pbox(Transform3D(sb, Vector3(p.x, g + h + MERLON_H * 0.5, p.y) + sb * Vector3(u, 0.0, w * 0.5 - 0.3)), Vector3(w * 0.2, MERLON_H, 0.6), col.darkened(0.1), 0.4)
+		_pbox(Transform3D(sb, Vector3(p.x, g + h - 2.0, p.y) + sb * Vector3(0.0, 0.0, w * 0.5 + 0.02)), Vector3(0.5, 1.2, 0.06), Color(0.06, 0.06, 0.07), 0.0)
+
+
+## A stretch of the long wall between two of its towers (LongWalls streams
+## them): the run, and the tower at its end (and its start, the first
+## one), the gate's own stretch left to the gate.
+func _long_wall_piece() -> void:
+	palette = WALL_STONES
+	var pc: Array = site.piece
+	var m0 := float(pc[0])
+	var m1 := float(pc[1])
+	_lod_m = (m1 - m0) * 0.5 + LOD_M
+	var gs: Array = site.gate_span
+	var fallen: Array = site.get("fallen_towers", [])
+	# The run, around the gate's stretch.
+	if m1 <= float(gs[0]) or m0 >= float(gs[1]):
+		_wall_run(m0, m1)
+	else:
+		if m0 < float(gs[0]):
+			_wall_run(m0, float(gs[0]))
+		if m1 > float(gs[1]):
+			_wall_run(float(gs[1]), m1)
+	var gate_m := float(site.gate_m)
+	for tm in [m0, m1]:
+		if absf(float(tm) - gate_m) < 1.0:
+			continue
+		# Each tower once: the end of its stretch (the very first one by
+		# the first stretch too).
+		if float(tm) == m0 and m0 > 0.0:
+			continue
+		_wall_tower(float(tm), fallen.any(func(f): return absf(float(f) - float(tm)) < 1.0))
+
+
+## The long wall's gate (the site Ruins.find gives, §DS.1): the gate tower
+## astride the wall, hollow, its door on the outer face and the way down
+## into its vaults inside it (the barrow kit, Delves.layout: rooms, the
+## heart in the undercroft, a postern out on the far side); the gateway
+## through the wall beside it, a lintel over the road; and a stair of
+## stone up the inner face to the walkway on the other side.
+func _long_wall_gate() -> void:
+	palette = WALL_STONES
+	var gs: Array = site.gate_span
+	var gate_m := float(site.gate_m)
+	var wh: float = site.wall_h
+	_lod_m = float(site.footprint_m) + LOD_M
+	# The wall either side: up to the tower, the gateway's two cheeks and
+	# its lintel on the far side.
+	var gw0 := gate_m + 10.5
+	var gw1 := gate_m + 14.5
+	_wall_run(float(gs[0]), gate_m - 7.5)
+	_wall_run(gate_m + 7.5, gw0)
+	_wall_run(gw1, float(gs[1]))
+	var line: PackedVector3Array = site.line
+	var la := _local_of(RoadNetwork.point_at(line, gw0))
+	var lb := _local_of(RoadNetwork.point_at(line, gw1))
+	var lmid := (la + lb) * 0.5
+	var lal := (lb - la).normalized()
+	var lg := ground(lmid.x, lmid.y)
+	_pbox(Transform3D(Basis(Vector3.UP, atan2(-lal.y, lal.x)), Vector3(lmid.x, lg + 4.2 + (wh - 4.2) * 0.5 + 0.3, lmid.y)), Vector3(gw1 - gw0 + 1.0, wh - 4.2 + 0.6, float(site.thick_m)), WALL_STONES[2], 0.3)
+	# The stair up the inner face behind the tower.
+	var s0 := gate_m - 9.0
+	var steps := int(ceil(wh / 0.5))
+	for k in steps:
+		var sm := s0 - k * 0.65
+		var sp := _local_of(RoadNetwork.point_at(line, sm))
+		var sq := _local_of(RoadNetwork.point_at(line, sm - 1.0))
+		var sal := (sp - sq).normalized()
+		var inner := Vector2(-sal.y, sal.x) * (float(site.thick_m) * 0.5 + 0.8)
+		var c := sp + inner
+		var gy := ground(c.x, c.y)
+		var top := minf(gy + (k + 1) * 0.5, gy + wh)
+		_pbox(Transform3D(Basis(Vector3.UP, atan2(-sal.y, sal.x)), Vector3(c.x, (gy - 1.0 + top) * 0.5, c.y)), Vector3(0.75, top - gy + 1.0, 1.6), WALL_STONES[k % 5], 0.3)
+	# The gate tower: four walls round the way down, its door on the outer
+	# face (-z), a floor over the hole, a roof with merlons.
+	var hs := 7.0
+	var h := wh + 6.0
+	var g0 := ground(0.0, 0.0)
+	for side in 4:
+		var rot := side * PI * 0.5
+		var bs := Basis(Vector3.UP, -rot)
+		if side == 0:
+			for sx: float in [-1.0, 1.0]:
+				_pblock(bs * Vector3(sx * (hs + 1.0) * 0.5 + sx * 0.6, 0.0, -hs) + Vector3(0.0, g0 + h * 0.5 - 1.5, 0.0), Vector3(hs - 1.2, h + 3.0, 0.9), WALL_STONES[1], 0.4, -rot)
+			_pblock(bs * Vector3(0.0, 0.0, -hs) + Vector3(0.0, g0 + 3.2 + (h - 3.2) * 0.5, 0.0), Vector3(2.4, h - 3.2, 0.9), WALL_STONES[2], 0.5, -rot)
+		else:
+			_pblock(bs * Vector3(0.0, 0.0, -hs) + Vector3(0.0, g0 + h * 0.5 - 1.5, 0.0), Vector3(2.0 * hs + 0.9, h + 3.0, 0.9), WALL_STONES[side % 5], 0.4, -rot)
+		for k in 4:
+			var u := (k - 1.5) * hs * 0.5
+			_pblock(bs * Vector3(u, 0.0, -hs) + Vector3(0.0, g0 + h + MERLON_H * 0.5, 0.0), Vector3(hs * 0.3, MERLON_H, 0.9), WALL_STONES[(k + side) % 5].darkened(0.1), 0.5, -rot)
+	_pblock(Vector3(0.0, g0 + h - 0.4, 0.0), Vector3(2.0 * hs + 1.0, 0.8, 2.0 * hs + 1.0), WALL_STONES[0], 0.8)
+	_pave(Rect2(-hs, -hs, 2.0 * hs, 2.0 * hs), NAN, Rect2(-1.2, -hs, 2.4, 2.0 * hs))
+	if Delves.has_delve(site):
+		_delve_build()
