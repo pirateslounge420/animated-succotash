@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–29. Next up: 30.
+Built so far: 01–30. Next up: 31.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -59,7 +59,7 @@ Built so far: 01–29. Next up: 30.
 | 27 | §DS.7 | The stone circle | built 51dcffb |
 | 28 | §DS | The tower house and the broch | built 0cb81c7 |
 | 29 | §DZ | The hewn temple, found from above | built 40ca950 |
-| 30 | §DT | The hanging gardens | todo |
+| 30 | §DT | The hanging gardens | built 74439f5 |
 | 31 | §DU | The ruined abbey | todo |
 | 32 | §DW | The temple park | todo |
 | 33 | §DY | The pillar shrines | todo |
@@ -620,7 +620,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 30 — The hanging gardens — §DT
 
-**Status:** todo
+**Status:** built 74439f5
 **Mike sees:** A stepped mound of vaulted brick on a desert river, water stepping down its terraces, and the mountain trees a king planted gone wild over it.
 
 ```text
