@@ -81,6 +81,7 @@ var hud: Hud
 var map_overlay: MapOverlay
 var inventory_screen: InventoryScreen
 var log_panel: LogPanel
+var tome_panel: TomePanel
 var _last_biome := -1
 var _last_sun_el := NAN
 ## The settings panel (O / F10): the HUD switches (design §L).
@@ -406,6 +407,9 @@ func _on_planet_ready() -> void:
 	log_panel = LogPanel.new()
 	log_panel.name = "Log"
 	hud.add_child(log_panel)
+	tome_panel = TomePanel.new()
+	tome_panel.name = "Tome"
+	hud.add_child(tome_panel)
 
 	hud.hide_loading()
 	_playing = true
@@ -565,7 +569,7 @@ func _process(delta: float) -> void:
 	FireStore.tick(get_tree(), delta, player.global_position)
 	VegetationPlacer.NOW_DAYS = world.days
 	WorldSave.flush(delta)
-	player.typing = log_panel.visible
+	player.typing = log_panel.visible or tome_panel.visible
 	dread.update_dread(delta)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
@@ -810,6 +814,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		settings_panel.drag(event.position)
 	elif event.is_action_pressed("log") and not log_panel.visible and not inventory_screen.visible and not settings_panel.visible:
 		log_panel.open()
+	elif event.is_action_pressed("read_tome") and not tome_panel.visible and not log_panel.visible and not inventory_screen.visible and not settings_panel.visible:
+		# Read a tome you carry (§DL).
+		var ti := player.inventory.slot_of("tome")
+		if ti >= 0:
+			tome_panel.open(str(player.inventory.carried[ti].get("tome", "")))
 	elif event.is_action_pressed("inventory"):
 		_toggle_inventory(not inventory_screen.visible)
 	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:
@@ -1201,6 +1210,17 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 			FuelField.gathered(it, wet, world.days)
 			if say:
 				_say_note("You pick up the %s%s." % [Inventory.title(it).to_lower(), ", wet through" if wet else ""])
+		elif say:
+			_say_note("Your hands are full.")
+		return
+	if kind == "tome":
+		# A tome where someone left it (design 3 Oct §DL).
+		if player.inventory.add(it):
+			Delves.took(lying)
+			lying.pick_up()
+			GameLog.add("You found a tome: %s" % str(it.get("title", "a tome")), "tome")
+			if say:
+				_say_note("You take the tome. R reads it.")
 		elif say:
 			_say_note("Your hands are full.")
 		return

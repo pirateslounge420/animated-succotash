@@ -633,7 +633,16 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 	] + "\nSoil %s (plants gate on it)" % PlanetData.soil_name(world.planet.soil_at(player_dir)).replace("_", "/") + Nests.overlay_text(player_dir) + "\nSeason %s · day %d · %+.1f °C · wet x%.2f" % [
 		Seasons.label(world.days, lat), int(Seasons.at(world.days, lat).day_of_season) + 1,
 		Seasons.temp_offset_c(world.days, lat), Seasons.moisture_mult(world.days, lat),
-	] + "\n%s\n%s" % [EngineReport.summary(), EngineReport.shaders_text()]
+	] + "\n%s\n%s" % [EngineReport.summary(), EngineReport.shaders_text()] + tome_text()
+
+
+## The overlay's tome line (design 3 Oct §DL): which tomes' texts aren't
+## in yet (none of them lies anywhere until it is).
+static func tome_text() -> String:
+	var out := ""
+	for id in Tomes.missing():
+		out += "\ntome text missing: %s" % id
+	return out
 
 
 static func _hhmm(hours: float) -> String:

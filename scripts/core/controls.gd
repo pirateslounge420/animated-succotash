@@ -43,6 +43,8 @@ const DEFAULTS := {
 	# The next tool to hand: the bow, the spear, bare hands (whichever you
 	# have).
 	"weapon_swap": [KEY_Q],
+	# Read a tome you carry (design 3 Oct §DL, TomePanel); R or Esc closes.
+	"read_tome": [KEY_R],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
 	# trees' branch graphs, F7 spawns the next Phase 1 rig beside you (Night
 	# Riders, Pond Crawler, monkey), F8 makes the nearest wolf pack howl.

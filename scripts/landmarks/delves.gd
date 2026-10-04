@@ -714,7 +714,11 @@ func _lay_find(node: Node3D, lay: Dictionary, seed_v: int) -> WorldItem:
 	var lp: Vector3 = lay.find
 	var pos: Vector3 = node.global_transform * Vector3(lp.x, lp.y - off + 0.12, lp.z)
 	var d: Vector3 = world.dir_of(pos)
-	var it := WorldItem.drop(Inventory.make(str(lay.find_kind)), world, d, world.radius_of(pos) - PlanetConst.RADIUS_M - 0.06)
+	# A tome where someone left it, at some hearts (design 3 Oct §DL), in
+	# place of the spear or the bow; never one whose text isn't in.
+	var tome := Tomes.heart_tome(seed_v)
+	var made := Tomes.item(tome) if tome != "" else Inventory.make(str(lay.find_kind))
+	var it := WorldItem.drop(made, world, d, world.radius_of(pos) - PlanetConst.RADIUS_M - 0.06)
 	it.set_meta("delve_find", seed_v)
 	return it
 

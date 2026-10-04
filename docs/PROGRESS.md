@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DL: tomes, the I Ching first (prompt 16)
+- **Tomes** (`scripts/player/tomes.gd`, reads `data/tomes.json`):
+  - **Where:** `find.share_of_hearts` (0.15) of the delves' hearts hold a tome in place of their spear or bow (Delves' find, seeded per delve), among the tomes whose text is in and that have no `found_at` of their own (the Tao waits for §DQ's gate).
+  - **Not until the text is in:** a tome's text is in only when its entry is `filled: true` and its `text_file` exists. Until then it never lies anywhere (no blank books), and the F3 overlay says `tome text missing: <id>`.
+  - **Taking one:** right click; the log says "You found a tome: The Book of Changes". It is carried like anything and stays with your body if you fall.
+- **Reading** (`scripts/ui/tome_panel.gd`): **R** with a tome carried (a new binding, `read_tome`, in `controls.gd`, shared ground; R was free) opens a panel built like the log's, in the HUD's font and colours. Its title page first, then one page at a time; ← → or A / D turn it (you don't walk while it's open); Esc or R closes. The clock keeps running (§CW). No systems: `iching.gd`'s coin cast is untouched.
+- **The text format** (`data/tomes/README.md`): plain UTF-8, the first line the title, pages separated by a line holding only `---`, a page's first line its heading. Legge's public-domain translations only.
+- **Checked** (`tools/tome_check.gd`, seed 7731, 0 fails):
+  - as the data stands: no tome at any of 200 hearts, and the overlay lists iching and tao as missing;
+  - with a three-page test file: the title page, three pages and no more, and back a page;
+  - the clock ran with the panel open;
+  - with the text in, 30 of 200 hearts (15 %) hold a tome;
+  - taking one writes the log line.
+  
+  `delve_check` 0 fails.
+- **For Mike:** the game is ready for the text. Filling `data/tomes/iching_legge.txt` from Legge's 1882 edition is a chat data job (one agent per group of hexagrams, checked against the source), then set `filled` to true.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `tomes.json` and `items.json kinds.tome`. `hud.json log_more` now names only "given" as not wired. The Tao's own `found_at` note stays marked (§DQ).
+
 ## 2026-10-04 — §DK: the shrine and the sealed scroll (prompt 15)
 - **Shrines** (`scripts/landmarks/shrines.gd`, under main; reads `shrines.json shrine, scroll, log`): built behind every burning shrine and oak door of §DJ. RuinBuilder builds the stone (`compute_shrine`); the layout is Delves pieces, so the dark, the dread and `Delves.locate` work in it as in a barrow's delve.
   - **The court:** flagstones on the ground over the hole and round it, the way down between low parapets.

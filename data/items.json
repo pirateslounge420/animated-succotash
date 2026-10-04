@@ -147,7 +147,7 @@
    "name": "Tome",
    "icon": "book",
    "color": "#5a4632",
-   "_note": "[NOT WIRED YET \u2014 design \u00a7DL] A real philosophical text, found where someone left it in a ruin (most often at a delve's heart). Its title in play comes from data/tomes.json (the first: The Book of Changes). Read while you carry it, a page at a time."
+   "_note": "A real philosophical text, found where someone left it in a ruin (most often at a delve's heart). Its title in play comes from data/tomes.json (the first: The Book of Changes). Read while you carry it, a page at a time."
   }
  },
  "sample_part": {
