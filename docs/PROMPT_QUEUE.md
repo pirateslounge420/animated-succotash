@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–33. Next up: 34.
+Built so far: 01–34. Next up: 35.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -63,7 +63,7 @@ Built so far: 01–33. Next up: 34.
 | 31 | §DU | The ruined abbey | built 40a3af1 |
 | 32 | §DW | The temple park | built 6de4562 |
 | 33 | §DY | The pillar shrines | built fc29d06 |
-| 34 | §DV | The old colonnade | todo |
+| 34 | §DV | The old colonnade | built a4711a9 |
 | 35 | §DX | The columns: columnar basalt as a nest | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -688,7 +688,7 @@ CHECK (a tools/<kind>_check.gd, headless): on seed 7731 the kind places only whe
 
 ## 34 — The old colonnade — §DV
 
-**Status:** todo
+**Status:** built a4711a9
 **Mike sees:** A ring of tall plastered columns standing in a clearing among old oaks, the house they held long gone, an avenue running to it from the road.
 
 ```text
