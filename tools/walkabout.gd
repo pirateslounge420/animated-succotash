@@ -23,6 +23,7 @@ extends SceneTree
 ## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
 ## SITES=lake adds the nearest lake's shore, looking over the water.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
+## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
 ## (design §DC's shafts; ShaftField prints its gate per frame).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
@@ -145,6 +146,8 @@ func _run() -> void:
 			kinds.append("at")
 		if only.has("crag"):
 			kinds.append("crag")
+		if only.has("ruins"):
+			kinds.append("ruins")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -202,6 +205,12 @@ func _run() -> void:
 				var top := Ruins.local_dir(best, 0.0, float(pl.zs0))
 				sites.append({"name": "crag_fortress_approach", "dir": stand, "look": best.dir, "pitch_to": top, "pitch_add_m": float(pl.top_y) * 0.6,
 					"note": "a crag fortress %.0f km from the camp, %.0f m high in %d tiers, from %.0f m out on its approach" % [bd / 1000.0, float(best.rise_m), int(best.tiers), out_m]})
+			"ruins":
+				# SITES=ruins: the wettest and the driest stone ruins of
+				# this world (design 3 Oct §DI: a ruin wears its place),
+				# each from its shade side (away from the sun, where the
+				# moss and ferns are thickest), looking at it.
+				sites.append_array(_overgrowth_sites(camp_d))
 			"at":
 				# SITES=at AT=lat,lon: stand there (design §DC: the wood
 				# whose broken crowns shaft_check found).
@@ -796,3 +805,38 @@ func _into_delve(site: Dictionary) -> void:
 	if to.length() > 0.1:
 		player.set_view(clampf(asin(clampf(to.normalized().dot(player.up), -1.0, 1.0)), -0.8, 0.8), 0.0)
 
+
+## The wettest and the driest stone ruins (castle, tower, aqueduct) of
+## this world from a sample of ruin cells (design 3 Oct §DI), each seen
+## from its shade side.
+func _overgrowth_sites(camp_d: Vector3) -> Array:
+	var map: PlanetData = world.planet
+	var n := Ruins.cells_per_face()
+	var r := RandomNumberGenerator.new()
+	r.seed = 11
+	var wet := {}
+	var dry := {}
+	for i in 6000:
+		var c := Vector3i(r.randi() % 6, r.randi() % n, r.randi() % n)
+		var f := Ruins.find(map, c)
+		if f.is_empty() or not int(f.kind) in [Ruins.Kind.CASTLE, Ruins.Kind.TOWER, Ruins.Kind.AQUEDUCT]:
+			continue
+		var m := map.sample(map.moisture, f.dir)
+		if map.sample(map.temp_c, f.dir) < 5.0:
+			continue
+		if wet.is_empty() or m > float(wet.m):
+			wet = {"f": f, "m": m}
+		if dry.is_empty() or m < float(dry.m):
+			dry = {"f": f, "m": m}
+	var out: Array = []
+	for pick in [wet, dry]:
+		if pick.is_empty():
+			continue
+		var f: Dictionary = pick.f
+		var og := Overgrowth.for_site(map, f)
+		var bearing := 0.0 if CubeSphere.latitude(f.dir) >= 0.0 else PI
+		# (An aqueduct's footprint is half its length: stand by its piers.)
+		var stand := CreatureSpawner._offset(f.dir, bearing, 16.0 if int(f.kind) == Ruins.Kind.AQUEDUCT else float(f.footprint_m) + 12.0)
+		out.append({"name": "ruin_%s" % ("wet" if pick == wet else "dry"), "dir": stand, "look": f.dir,
+			"note": "%s in %s, moisture %.2f (moss %.2f fern %.2f vine %.2f wall-top %.2f lichen %.2f), %.0f km from the camp, from its shade side" % [Ruins.site_name(f), BiomeTemplates.KEYS[map.biome[map.cell_at(f.dir)]].to_lower(), float(pick.m), float(og.moss), float(og.fern), float(og.vine), float(og.wall_top), float(og.lichen), CubeSphere.surface_distance_m(f.dir, camp_d) / 1000.0]})
+	return out

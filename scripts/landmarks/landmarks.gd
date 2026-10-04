@@ -246,6 +246,7 @@ func _attach_ruins() -> void:
 		RuinMarks.dress(node, site, world, chunks, Peoples.get_people(pid), rung)
 		node.set_meta("marks_rung", rung)
 	_dress_vines(node, c, item[1])
+	Overgrowth.dress(node, item[1])
 
 
 ## A vine species over the ruin's walls and heaps (§CE), hung from the ivy
@@ -278,6 +279,10 @@ func _dress_vines(node: Node3D, c: Vector3i, data: Dictionary, nest_key := "") -
 				legibility = 0 if rung < 1 else (1 if rung < 2 else 2)
 			else:
 				age = full * CampSim.instance.reclaim(st)
+	# A ruin's overgrowth (design 3 Oct §DI) chose its hanging places.
+	if data.has("og") and nest_key == "":
+		Overgrowth.dress_vines(map, node, data, age, legibility)
+		return
 	VineCover.ruin_patches(node, anchors, sp, m, t, age, legibility)
 	VineCover.ruin_patches(node, rocks, sp, m, t, age, legibility, "boulder")
 
@@ -313,6 +318,7 @@ func build_ruin_at(d: Vector3) -> void:
 		node.global_transform = RuinBuilder.placement(data, world)
 		_ruins[c] = node
 		_dress_vines(node, c, data)
+		Overgrowth.dress(node, data)
 
 
 ## Collision for ruins the player is near (COLLIDE_M), a piece a frame

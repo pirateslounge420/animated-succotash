@@ -140,6 +140,23 @@ var _delve_from := -1
 var _delve_to := -1
 ## Ivy strand tops [top, out, length] (local), for the vine species' cards.
 var _vine_anchors: Array = []
+## The ruin's overgrowth (design 3 Oct §DI, Overgrowth.for_site): set by
+## compute() before the build; empty for anything else built with these
+## parts (nests, lone rocks), which keep their old moss.
+var og: Dictionary = {}
+var _og_on := false
+## og's moss column over the builder's moss pattern (Overgrowth.PATTERN_MEAN).
+var _og_k := 1.0
+## The shade side (away from the sun), local and horizontal.
+var _og_shade := Vector3.ZERO
+var _og_ss := 1.6
+## Lichen in the stone's tile (UV.y on stone, the ruin shader).
+var lichen := 0.0
+## Stone boxes for the plants' spots (_og_spots): [xf, half size, foot_y].
+var _og_boxes: Array = []
+## The hanging places (ivy() calls) and those kept by the vine column.
+var _ivy_places := 0
+var _ivy_kept := 0
 ## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
 var _boulder_anchors: Array = []
 ## Collision triangles: plain boxes and thin slabs behind covers, much
@@ -203,6 +220,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 	b.ez = b.ex.cross(b.up).normalized()
 	b.base_e = p_map.terrain.elevation(b.up, true)
 	b.wet = smoothstep(0.2, 0.8, p_map.sample(p_map.moisture, b.up))
+	b._og_setup()
 	match p_site.kind:
 		Ruins.Kind.CASTLE:
 			b._castle()
@@ -234,7 +252,10 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._camp(p_site.kind)
 	elif p_site.kind <= Ruins.Kind.AQUEDUCT:
 		b._stone_camp_spot()
-	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
+	# The plants it wears (§DI): ferns at its feet and in its gaps, grass
+	# and herbs along its tops.
+	var og_plants := Overgrowth.plants(p_map, p_site, b.og, b._og_spots(), b._og_shade)
+	return {"og": b.og, "og_plants": og_plants, "og_shade": b._og_shade, "ivy_places": b._ivy_places, "ivy_kept": b._ivy_kept, "site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
 		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel}
 
@@ -501,11 +522,16 @@ func _face(a: Vector3, b: Vector3, c: Vector3, d: Vector3, col: Color, inside: V
 ## jittered by up to `wear` m.
 func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09, wear := 0.05) -> void:
 	col = col.darkened(shade)
+	# A stone block standing on the ground, outside: the overgrowth's
+	# plants may grow at its foot and on its top (§DI, _og_spots).
+	if _og_on and mat == STONE_M and not plain and not is_nan(foot_y) and not (_delve_from >= 0 and _delve_to < 0):
+		_og_boxes.append([xf, size * 0.5, foot_y])
 	if plain:
 		# Plain boxes (12 triangles, no bevels): a big build's insides (the
 		# crag fortress's climb, §DO) within a castle's budget.
-		var pc := col.lerp(MOSS, moss * 0.5)
-		pc.a = moss * 0.4
+		var pm := clampf(moss * _og_k, 0.0, 1.0) if _og_on else moss
+		var pc := col.lerp(MOSS, pm * 0.5)
+		pc.a = pm * 0.4
 		_tri_box(xf, size, pc)
 		if solid:
 			_collision_box(xf, size * 0.5)
@@ -513,10 +539,28 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 		return
 	var h := size * 0.5
 	var b := minf(bevel, minf(h.x, minf(h.y, h.z)) * 0.45)
-	var top := col.lerp(MOSS, moss)
-	top.a = moss
-	var side := col.lerp(MOSS, moss * 0.3)
-	side.a = moss * 0.4
+	var ns := PackedVector3Array()
+	ns.resize(6)
+	for a in 3:
+		for sgn in 2:
+			var nv := Vector3.ZERO
+			nv[a] = 1.0 if sgn == 1 else -1.0
+			ns[a * 2 + sgn] = (xf.basis * nv).normalized()
+	# Moss (§DI with the overgrowth): the top face fully, the sides partly,
+	# the shade side more.
+	var top_m := _og_top(moss) if _og_on else moss
+	var top := col.lerp(MOSS, top_m)
+	top.a = top_m
+	var sides := PackedColorArray()
+	sides.resize(6)
+	var side := Color(0, 0, 0, 0)
+	for a: int in [0, 2]:
+		for sgn in 2:
+			var sm := _og_side(moss, ns[a * 2 + sgn]) if _og_on else moss * 0.4
+			var sc := col.lerp(MOSS, sm * 0.75)
+			sc.a = sm
+			sides[a * 2 + sgn] = sc
+			side += sc * 0.25
 	var bottom := col.darkened(UNDER)
 	bottom.a = 0.0
 	var o := xf.origin
@@ -539,14 +583,7 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 				if k != a:
 					p[k] -= sg[k] * b
 			vs[i * 3 + a] = xf * p
-			cs[i * 3 + a] = (top if i & 2 else bottom) if a == 1 else side
-	var ns := PackedVector3Array()
-	ns.resize(6)
-	for a in 3:
-		for sgn in 2:
-			var nv := Vector3.ZERO
-			nv[a] = 1.0 if sgn == 1 else -1.0
-			ns[a * 2 + sgn] = (xf.basis * nv).normalized()
+			cs[i * 3 + a] = (top if i & 2 else bottom) if a == 1 else sides[a * 2 + ((i >> a) & 1)]
 	var lod_k := _contact(vs, cs, ns, o)
 	# Faces: each face's 4 corners, in order round it.
 	for a in 3:
@@ -653,7 +690,7 @@ func _tri_n(a: Vector3, b: Vector3, c: Vector3, na: Vector3, nb: Vector3, nc: Ve
 
 
 func _add_mat() -> void:
-	var m := Vector2(mat, 0.0)
+	var m := Vector2(mat, lichen if mat == STONE_M else 0.0)
 	_m.append(m)
 	_m.append(m)
 	_m.append(m)
@@ -770,7 +807,8 @@ func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Colo
 				_lv.append_array([a, b, c])
 			_ln.append_array([nrm, nrm, nrm])
 			_lc.append_array([col, col, col])
-			_lm.append_array([Vector2(mat, 0.0), Vector2(mat, 0.0), Vector2(mat, 0.0)])
+			var lm := Vector2(mat, lichen if mat == STONE_M else 0.0)
+			_lm.append_array([lm, lm, lm])
 
 
 ## A rough stone: a noise-displaced icosphere (320 triangles, so its
@@ -800,6 +838,8 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 	for i in verts.size():
 		nrm[i] = nrm[i].normalized()
 		var m := moss * smoothstep(0.1, 0.7, nrm[i].y)
+		if _og_on:
+			m = _og_side(m, nrm[i])
 		var c := col.lerp(MOSS, m)
 		# Contact shade (_contact()): dark at its foot and underneath.
 		var keep := 1.0 - UNDER * smoothstep(0.3, 0.8, -nrm[i].y)
@@ -815,10 +855,11 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 		_tri_n(pos[a], pos[b2], pos[d], nrm[a], nrm[b2], nrm[d], cols[a], cols[b2], cols[d], center)
 	if solid:
 		_ch.append(boulder_hull(center, radii, basis, ph))
-	var top := col.lerp(MOSS, moss)
-	top.a = moss
-	var side := col.lerp(MOSS, moss * 0.2)
-	side.a = moss * 0.2
+	var bm := _og_top(moss) if _og_on else moss
+	var top := col.lerp(MOSS, bm)
+	top.a = bm
+	var side := col.lerp(MOSS, bm * 0.2)
+	side.a = bm * 0.2
 	_lod_box(Transform3D(basis, center), radii * 0.85, top, side, col)
 
 
@@ -876,49 +917,182 @@ func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 
 
 
 ## Moss amount for this site: sparse where it's dry, thick where it's wet.
+## With the overgrowth (§DI) box() and boulder() scale it by the moss
+## column instead, so this is the pattern alone.
 func _growth(moss: float) -> float:
+	if _og_on:
+		return clampf(moss, 0.0, 1.0)
 	return clampf(moss * (0.3 + 1.1 * wet), 0.0, 1.0)
+
+
+## The overgrowth for this site (§DI): the moss scale, the shade side in
+## the ruin's frame, the lichen.
+func _og_setup() -> void:
+	og = Overgrowth.for_site(map, site)
+	_og_on = true
+	_og_k = float(og.moss) / Overgrowth.PATTERN_MEAN
+	var sh: Vector3 = og.shade
+	_og_shade = Vector3(sh.dot(ex), 0.0, sh.dot(ez)).normalized()
+	_og_ss = float(og.shade_scale)
+	lichen = float(og.lichen)
+
+
+## A top face's moss (alpha) from the pattern value `moss`.
+const OG_TOP_K := 1.3
+
+
+func _og_top(moss: float) -> float:
+	return clampf(moss * _og_k * OG_TOP_K, 0.0, 1.0)
+
+
+## A side face's moss (alpha), facing `n`: thicker on the shade side.
+func _og_side(moss: float, n: Vector3) -> float:
+	var hn := Vector3(n.x, 0.0, n.z)
+	var dot := hn.normalized().dot(_og_shade) if hn.length() > 0.05 else 0.0
+	return clampf(moss * _og_k * Overgrowth.side_factor(dot, _og_ss), 0.0, 1.0)
+
+
+## The plants' spots from the stone boxes (§DI): "feet" [ground point
+## beside a block's long face at the foot, its outward normal], "gaps"
+## [the exposed top of a low stump], "tops" [the exposed top of a wall,
+## over 1 m up]. A top is exposed when no box sits on it; a foot is clear
+## when no box stands on the spot.
+func _og_spots() -> Dictionary:
+	var out := {"feet": [], "gaps": [], "tops": []}
+	if _og_boxes.is_empty():
+		return out
+	# Boxes by 1 m column: their bottoms (y) and their tops.
+	var grid := {}
+	for k in _og_boxes.size():
+		var b: Array = _og_boxes[k]
+		var c: Vector3 = (b[0] as Transform3D).origin
+		var key := Vector2i(floori(c.x), floori(c.z))
+		if not grid.has(key):
+			grid[key] = []
+		(grid[key] as Array).append(k)
+	for k in _og_boxes.size():
+		var b: Array = _og_boxes[k]
+		var xf: Transform3D = b[0]
+		var h: Vector3 = b[1]
+		var foot := float(b[2])
+		var up_n := xf.basis.y.normalized()
+		if up_n.y < 0.9:
+			continue
+		var top := xf.origin + xf.basis.y * h.y
+		var bottom_y := xf.origin.y - absf(xf.basis.y.y) * h.y
+		# Covered: another box's bottom within 0.35 m above this top, its
+		# middle within this one's footprint.
+		var covered := false
+		var reach := maxf(h.x, h.z)
+		for gx in range(floori(top.x - reach) - 1, floori(top.x + reach) + 2):
+			for gz in range(floori(top.z - reach) - 1, floori(top.z + reach) + 2):
+				for j in grid.get(Vector2i(gx, gz), []):
+					if j == k:
+						continue
+					var o: Array = _og_boxes[j]
+					var oxf: Transform3D = o[0]
+					var oh: Vector3 = o[1]
+					var ob := oxf.origin.y - absf(oxf.basis.y.y) * oh.y
+					if ob > top.y - 0.2 and ob < top.y + 0.35 and Vector2(oxf.origin.x - top.x, oxf.origin.z - top.z).length() < reach:
+						covered = true
+						break
+				if covered:
+					break
+			if covered:
+				break
+		var above := top.y - foot
+		if not covered:
+			if above > 1.0:
+				(out.tops as Array).append([top])
+			elif above > 0.2:
+				(out.gaps as Array).append([top])
+		# The foot: a block at the ground (its bottom within 0.7 m of it)
+		# puts a spot on each side of its long faces.
+		if bottom_y - foot < 0.7 and top.y > foot + 0.1 and h.y < 1.5:
+			var nz := xf.basis.z.normalized() if h.z < h.x else xf.basis.x.normalized()
+			var half := minf(h.z, h.x)
+			for sg: float in [-1.0, 1.0]:
+				var n := Vector3(nz.x, 0.0, nz.z).normalized() * sg
+				var p := Vector3(xf.origin.x, foot, xf.origin.z) + n * (half + 0.35)
+				var blocked := false
+				for gx in range(floori(p.x) - 1, floori(p.x) + 2):
+					for gz in range(floori(p.z) - 1, floori(p.z) + 2):
+						for j in grid.get(Vector2i(gx, gz), []):
+							var o: Array = _og_boxes[j]
+							var oxf: Transform3D = o[0]
+							var local := oxf.affine_inverse() * Vector3(p.x, oxf.origin.y, p.z)
+							var oh: Vector3 = o[1]
+							if absf(local.x) < oh.x + 0.15 and absf(local.z) < oh.z + 0.15:
+								blocked = true
+				if not blocked:
+					(out.feet as Array).append([p, n])
+	return out
 
 
 ## Ivy hanging from `top` down a face with outward normal `out`: often
 ## missing on dry ruins, longer and doubled into curtains on wet ones.
+## With the overgrowth (§DI) each call is a hanging place, and the vine
+## column is the share of them that hang a strand (by the place's own
+## hash); the builder's rolls are drawn as before either way, so the ruin
+## itself never changes with it.
 func ivy(top: Vector3, out: Vector3, length: float) -> void:
+	var place := _ivy_places
+	_ivy_places += 1
+	var keep := true
+	if _og_on:
+		# A low-discrepancy draw from the ruin's own offset: about the
+		# column's share of the places, spread evenly over the ruin.
+		var off := float(hash([int(site.seed), "ivy"]) & 0xFFFF) / 65535.0
+		keep = fposmod(off + place * 0.6180339887, 1.0) < float(og.get("vine", 0.0))
+	if keep:
+		_ivy_kept += 1
 	if rng.randf() > 0.3 + 0.7 * wet:
+		if keep and _og_on:
+			# A place the old roll left bare: its own roll, not the ruin's.
+			var own := RandomNumberGenerator.new()
+			own.seed = hash([int(site.seed), place, "ivy_own"])
+			_ivy_strand(top, out, length * (0.7 + 0.6 * wet), true, own)
 		return
 	length *= 0.7 + 0.6 * wet
-	_ivy_strand(top, out, length)
+	_ivy_strand(top, out, length, keep)
 	var along := Vector3.UP.cross(out).normalized()
 	for k in 2:
 		if rng.randf() < wet * 0.6:
-			_ivy_strand(top + along * rng.randf_range(-1.2, 1.2), out, length * rng.randf_range(0.5, 1.0))
+			_ivy_strand(top + along * rng.randf_range(-1.2, 1.2), out, length * rng.randf_range(0.5, 1.0), keep)
 
 
-func _ivy_strand(top: Vector3, out: Vector3, length: float) -> void:
+## One strand. Not `draw`n, its rolls are still drawn (from `r`, else the
+## ruin's own), so nothing after it moves.
+func _ivy_strand(top: Vector3, out: Vector3, length: float, draw := true, r: RandomNumberGenerator = null) -> void:
+	var g := r if r != null else rng
 	# Where a vine species climbs too (§CE): VineCover hangs its leaf
 	# cards from the same tops near the player. Recorded only, so the
 	# ruin's own rolls (and its geometry) never change.
-	_vine_anchors.append([top, out, length])
-	var side := Vector3.UP.cross(out).normalized() * rng.randf_range(0.25, 0.45)
+	if draw:
+		_vine_anchors.append([top, out, length])
+	var side := Vector3.UP.cross(out).normalized() * g.randf_range(0.25, 0.45)
 	var o := out.normalized() * 0.08
 	var steps := maxi(1, int(length / 0.8))
 	var prev_l := top + o - side
 	var prev_r := top + o + side
 	for i in steps:
 		var y := -length * float(i + 1) / steps
-		var sway := side * rng.randf_range(-0.4, 0.4)
+		var sway := side * g.randf_range(-0.4, 0.4)
 		var taper := 1.0 - 0.6 * float(i + 1) / steps
 		var l := top + o + Vector3(0, y, 0) - side * taper + sway
-		var r := top + o + Vector3(0, y, 0) + side * taper + sway
-		var col := IVY.lerp(IVY_LIGHT, rng.randf())
+		var rr := top + o + Vector3(0, y, 0) + side * taper + sway
+		var col := IVY.lerp(IVY_LIGHT, g.randf())
 		col.a = 1.0
-		_quad(prev_l, prev_r, r, l, col)
+		if draw:
+			_quad(prev_l, prev_r, rr, l, col)
 		# A leaf sticking out.
-		if rng.randf() < 0.6:
-			var c := (prev_l + r) * 0.5 + o
-			var s := rng.randf_range(0.18, 0.3)
-			_tri(c, c + out.normalized() * s + Vector3(0, s, 0), c + side.normalized() * s, col.lightened(0.1))
+		if g.randf() < 0.6:
+			var c := (prev_l + rr) * 0.5 + o
+			var s := g.randf_range(0.18, 0.3)
+			if draw:
+				_tri(c, c + out.normalized() * s + Vector3(0, s, 0), c + side.normalized() * s, col.lightened(0.1))
 		prev_l = l
-		prev_r = r
+		prev_r = rr
 
 
 ## Fallen blocks strewn around a point.

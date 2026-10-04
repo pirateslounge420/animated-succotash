@@ -224,7 +224,10 @@ static func green(map: PlanetData, data: Dictionary) -> void:
 ## the climate x its age (full_after_years),
 ## cut back as a camp restores it (legibility 1 cleared: half; 2 restored:
 ## none, ruins.restored_clears).
-static func ruin_patches(ruin: Node3D, anchors: Array, sp: PlantSpecies, m: float, t: float, age_years: float, legibility: int, surface := "ruin") -> MultiMeshInstance3D:
+## `cover_override` (0-1, when set) replaces the surface's cover x the
+## climate: a ruin's overgrowth (§DI, Overgrowth.dress_vines) has already
+## chosen its hanging places by its vine column.
+static func ruin_patches(ruin: Node3D, anchors: Array, sp: PlantSpecies, m: float, t: float, age_years: float, legibility: int, surface := "ruin", cover_override := -1.0) -> MultiMeshInstance3D:
 	if sp == null or anchors.is_empty():
 		return null
 	var rd: Dictionary = D.get("ruins", {})
@@ -232,7 +235,7 @@ static func ruin_patches(ruin: Node3D, anchors: Array, sp: PlantSpecies, m: floa
 	var cut := 1.0
 	if bool(rd.get("restored_clears", true)):
 		cut = 1.0 if legibility <= 0 else (0.5 if legibility == 1 else 0.0)
-	var cov := cover(surface, m, t, 0.5) * age * cut
+	var cov := (cover_override if cover_override >= 0.0 else cover(surface, m, t, 0.5)) * age * cut
 	if cov <= 0.0:
 		return null
 	var share = (SURF.get(surface, {}) as Dictionary).get("climb_share", [0.4, 1.0])

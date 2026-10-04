@@ -1,7 +1,8 @@
 // Ruins (RuinBuilder): stone blocks, timber, snow blocks, thatch and hide,
 // vertex-lit (Lambert, no specular, Look) with Look's textures mapped per
 // face. UV.x is the material (RuinBuilder: 0 stone, 1 wood, 2 snow,
-// 3 thatch, 4 leaves, 5 hide). Vertex alpha is moss: at night, near
+// 3 thatch, 4 leaves, 5 hide); UV.y the lichen in the stone (§DI,
+// Overgrowth). Vertex alpha is moss: at night, near
 // glowing sites (every ruin is one), the moss patches shine teal/cobalt.
 // Stone colors come from RuinBuilder's palettes (R1a: blue-grey #6F7A8A);
 // after dark stone, timber and moss cool toward their R1a night targets
@@ -54,6 +55,19 @@ void fragment() {
 		surface = vec3(0.45 + 0.1 * texture(look_grain_soft, uv * 1.5).r);
 	} else {
 		surface = retro_tile(look_tex_stone, uv / look_tile_m.w).rgb;
+	}
+	// Lichen (design 3 Oct §DI, UV.y: the ruin's lichen column): pale
+	// flecks painted into the stone's own tile at its 16 texels a metre
+	// (look R9: detail in the albedo, matte, never an overlay), patchy
+	// over a metre or two; grey-green with a few ochre ones.
+	float lich = UV.y;
+	if (kind == 0 && lich > 0.001) {
+		vec2 tg = floor(uv * 16.0) + 0.5;
+		float speck = fract(sin(dot(tg, vec2(12.9898, 78.233))) * 43758.5453);
+		float blot = texture(look_grain_soft, tg / 16.0 * 0.55 + 0.31).r;
+		float fleck = step(1.0 - lich, blot * 0.75 + speck * 0.25 + (lich - 0.5) * 0.1);
+		vec3 tint = speck > 0.85 ? vec3(0.8, 0.66, 0.38) : vec3(0.72, 0.75, 0.55);
+		surface = mix(surface, tint * (0.92 + 0.16 * speck), fleck);
 	}
 	vec3 moss = retro_tile(look_tex_leaves, uv / look_tile_m2.y).rgb;
 	float weather = texture(look_grain_soft, uv * 0.12 + 0.5).r - 0.5;

@@ -4,6 +4,28 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DI part 1: a ruin wears its place (the overgrowth)
+- **What it reads:** `ruins.json overgrowth` (by_moisture rows, blended between rows; shade_side_scale; age; cold_mean_c). The place's moisture and the year's mean temperature come from the planet at the ruin.
+- **What it writes** (`Overgrowth` and `RuinBuilder`, at build time on the worker):
+  - **Moss:** the moss column scales the stone's moss (vertex alpha, which the ruin shader turns leafy). Tops carry ×1.3. Side faces facing away from the sun carry shade_side_scale more than those facing it (poleward: north in the north, south in the south). The builder's old wet-scaling is replaced on ruins; nests and lone rocks keep it.
+  - **Lichen:** the lichen column goes in UV.y. The ruin shader paints pale grey-green flecks (a few ochre) into the stone's tile at its 16 texels a metre (R9), patchy over a metre or two.
+  - **Ivy and vines:** every place the builder can hang ivy (broken wall tops) is a hanging place. The vine column is the share that hang a strand, by an even, low-discrepancy draw. The builder's own rolls are drawn as before, so no ruin's shape changes. VineCover's species patches hang from the kept places near you; vines use their §CE rule (the biome lists them and they fit), as on the trees.
+  - **Ferns and wall-top plants:** spots come from the stone boxes: wall feet beside a block's long faces (if no other block stands there), gaps (exposed tops of low stumps) and tops (exposed tops over 1 m up). Each spot is kept by its own hash against the fern or wall_top column (ferns also by the shade side). Species come from the place's own plants: the §CA biome gate, the §CS community, the realm, needs a wall can meet, and the climate. Ferns are FERN-shaped ground cover. Wall tops are small grass, tussock, rosette, cushion or shrub ground cover, never a fungus, and ferns where the place has none. At most two fern and three wall-top species per ruin. They are drawn as plant MultiMeshes in the ruin's frame (`Overgrowth.dress`), at most 12 % of the ruin's own triangles, with no collision.
+  - The cold rule (mean under 0 °C) leaves only lichen and moss. `age` is 1.0 for every ruin (monuments). Nest remains keep their own look for now.
+- **Check** (`tools/overgrowth_check.gd`, seed 7731, 0 fails). One castle is built in four places:
+  - cloud forest (moisture 0.92, the wettest warm cell with a fern): moss coverage 0.67 (shade 0.83, sun 0.68), 93 ferns and 68 wall-top ferns (Hammock fern);
+  - hot desert (moisture 0.00): moss 0.003, vine 0.017 (1 of 58 places), lichen 0.25;
+  - tundra (−11 °C): lichen 0.26 and moss 0.18, nothing else;
+  - temperate wood with Ivy (moisture 0.90): 66 wall-top plants (Forest bluegrass) and Ivy on 28 of 71 places.
+  - Every placed species passes the gate. The dressing adds at most 15.1 % (temperate wood: plants 330 triangles, Ivy patches 11,100) to a castle's ~75,500.
+- **Walkabout** (harness frames, §CG; `SITES=ruins`, seed 101 at 14:00): the wettest stone ruin, an aqueduct in temperate wood at moisture 0.95, reads green to the cornice with ivy hanging from the arches; the driest, a hot-desert tower, is bare blue-grey stone with lichen. The ferns at the piers are too small to read at 480p from 16 m.
+- **Other checks:** crag_fortress_check and delve_check pass. vine_check's ruin vines pass after the fix above. Its one remaining fail ("TROPICAL_RAINFOREST: vines on living trunks (0 of 0)": no trees at its probe spot) fails the same on the base commit.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `ruins.json overgrowth`. `haunt` and `audio.json ruins` stay marked (parts 2 and 3).
+- **For Mike:**
+  - A real hot-desert ruin at moisture 0.16 carries a faint 3 % moss and a 5 % vine share by the rows. Only the driest desert is truly bare. If you want no moss in any desert, the 0.3 row's moss is the dial.
+  - Many wet places' communities have no small grass or herb, so their wall tops carry ferns.
+  - The "camp_remains" age (0.5) isn't used yet: nest remains aren't stone ruins.
+
 ## 2026-10-04 — §DO the crag fortress: its own kind, in Tibet-like country, a delve that climbs
 - **The kind:** `Ruins.Kind.CRAG_FORTRESS`, "Crag fortress" in play (`ruins.json styles.crag_fortress`). The reference names stay in the entry's source line only (§BO).
 - **Where** (`CragFortress`, the sites pass):
