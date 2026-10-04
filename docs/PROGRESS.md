@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DI part 3: the ghost at the corner (prompt 12)
+- **Haunt** (`scripts/landmarks/haunt.gd`, under main; `ruins.json haunt`):
+  - **Which places:** `share` (0.4) of the ruins whose kind is in `kinds` (graveyards, barrows) are haunted, seeded per ruin, and the same share of any delve's tomb (its heart).
+  - **When:** while you are in or beside one (its footprint plus 25 m, or down its delve) and the light is low: dusk or night by the sun, or sky visibility under `low_light_visibility` (0.25) where you stand (a dark hall, a delve). A roll each second at `per_real_hour` (1.0) an hour; a roll won waits for a good spot in the same visit. At most `per_visit_max` (1) a visit, never within 4 m of its last spot at that place.
+  - **Where:** 8–20 m off (`distance_m`), within ±35° of where you look, inside the camera's frustum with nothing between, and an occluder (a wall end, a jamb, a headstone, a trunk: anything with collision) within `occluder_within_m` (1.5).
+  - **What:** the shared cloaked rig in `color` #C8D8FF at `alpha` 0.55. It runs on its own copy of the body shader with an alpha added and the hood's dark emission taken out. No shadow, no Light3D, no collision, no sound, no footsteps, no head-look. It stands `seen_s` (0.5–2 s), then walks past its occluder, away from you. The frame it leaves the frustum or a ray to it is blocked, it is freed (after 15 s in view at the most).
+  - **Never:** the haunt's code touches no Dread, no log, no sound. It is not a lurker.
+- **Checked** (`tools/haunt_check.gd`, seed 7731, 0 fails):
+  - 840 graveyards and barrows sampled: 37 % haunted (share 0.40);
+  - a haunted graveyard (21.91°N 155.08°E) at night: a ghost in 19 of 100 ten-minute visits, at most 1 a visit, never at the same spot twice running;
+  - at noon in the open: 0 in 100; at an unhaunted ruin (a pyramid): 0 in 100;
+  - a ghost 16.3 m off stood in view, then was freed 1 frame (0.02 s) after the view turned away;
+  - no emission, no Light3D, no shadow, no collision; the dread's meter and stage unchanged.
+  
+  One of three runs crashed (signal 11) between the checks, on the teleport to the second ruin; the reruns passed. The quit-time crash is the known one.
+- **Walkabout** (harness frame, §CG; new `SITES=haunt HOURS=22`): the haunted graveyard under a bright moon, headstones and a mausoleum. The haunt line says it is in a haunted place, the light is low, no ghost yet. That is the point: it is rare. The same site's ruin sounds: the owl and the scrabble.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `ruins.json haunt`. `kinds` also lists "abbey" (§DU, not built), which waits for that kind.
+
 ## 2026-10-04 — §DI part 2: a ruin sounds like what lives in it (prompt 11)
 - **Residents are sources** (`RuinSounds`, under main): every built ruin within 150 m gets its residents, each an Audio3D player at its own part of the ruin. The parts are read from the ruin's drawn bounds, or its delve's door and well. Each calls on its own clock, at its hours from `audio.json ruins.residents`, by the sun:
   - **birds** at the top of a tower, keep, aqueduct, pyramid or crag fortress, dawn and day, where the roster's day birds fit the climate;

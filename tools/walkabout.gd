@@ -24,6 +24,7 @@ extends SceneTree
 ## SITES=lake adds the nearest lake's shore, looking over the water.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
+## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
 ## SITES=at AT=lat,lon stands at that place; RH=0.95 sets the air's damp
 ## (design §DC's shafts; ShaftField prints its gate per frame).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
@@ -148,6 +149,8 @@ func _run() -> void:
 			kinds.append("crag")
 		if only.has("ruins"):
 			kinds.append("ruins")
+		if only.has("haunt"):
+			kinds.append("haunt")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -205,6 +208,25 @@ func _run() -> void:
 				var top := Ruins.local_dir(best, 0.0, float(pl.zs0))
 				sites.append({"name": "crag_fortress_approach", "dir": stand, "look": best.dir, "pitch_to": top, "pitch_add_m": float(pl.top_y) * 0.6,
 					"note": "a crag fortress %.0f km from the camp, %.0f m high in %d tiers, from %.0f m out on its approach" % [bd / 1000.0, float(best.rise_m), int(best.tiers), out_m]})
+			"haunt":
+				# SITES=haunt: the nearest haunted graveyard (design 3 Oct
+				# §DI.4), from 14 m off, looking at it (at night: HOURS=22;
+				# the ghost may or may not show, that is the point).
+				var hb := {}
+				var hd := INF
+				for hc in CreatureSpawner._cells_around(camp_d, 60000.0, Ruins.CELL_M):
+					var hs := Ruins.find(world.planet, hc)
+					if hs.is_empty() or int(hs.kind) != Ruins.Kind.GRAVEYARD or not Haunt.haunted(hs):
+						continue
+					var hdm := CubeSphere.surface_distance_m(hs.dir, camp_d)
+					if hdm < hd:
+						hd = hdm
+						hb = hs
+				if hb.is_empty():
+					lines.append("-- haunt: no haunted graveyard within 60 km")
+					continue
+				sites.append({"name": "haunted_graveyard", "dir": CreatureSpawner._offset(hb.dir, 0.3, float(hb.footprint_m) * 0.5 + 12.0), "look": hb.dir,
+					"note": "a haunted graveyard %.1f km from the camp" % (hd / 1000.0)})
 			"ruins":
 				# SITES=ruins: the wettest and the driest stone ruins of
 				# this world (design 3 Oct §DI: a ruin wears its place),
@@ -575,6 +597,11 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 					var rst: Dictionary = rsn.state.ruins[rn]
 					heard.append("%s %.0f m: %s%s" % [rn, float(rst.get("dist", 0.0)), ", ".join(rst.get("who", [])) if not (rst.get("who", []) as Array).is_empty() else "none", " (overrun, silent)" if bool(rst.get("silent", false)) else ""])
 				print("[ruin sounds] %s %02dh (%s): %s; bed: stone wind %.2f (wind at the opening %.1f m/s), drips %.2f, hush %.2f" % [site.name, int(hour), str(rsn.state.get("hour", "")), "; ".join(heard) if not heard.is_empty() else "no ruin near", RuinSounds.stone_wind, float(rsn.state.get("wind_mps", 0.0)), RuinSounds.drips, RuinSounds.hush])
+			if k == 0 and main.get("haunt") != null:
+				var hn: Haunt = main.haunt
+				var hp := hn.place_now()
+				if hp != null:
+					print("[haunt] %s %02dh: in a haunted place (%s), light %s, ghost %s, %d seen so far" % [site.name, int(hour), hp.name, "low" if hn.low_light() else "too bright", "standing in view" if not hn.ghost.is_empty() else "none now", hn.seen_log.size()])
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])

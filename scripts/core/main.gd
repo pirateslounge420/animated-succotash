@@ -60,6 +60,7 @@ var old_hearths: OldHearths
 ## "nearest" or "opening", "home_fault", "key"}.
 var last_wake := {}
 var overrun: Overrun
+var haunt: Haunt
 var delves: Delves
 var post: PostGrade
 var rain_overlay: RainOverlay
@@ -364,6 +365,11 @@ func _on_planet_ready() -> void:
 	overrun.name = "Overrun"
 	add_child(overrun)
 	overrun.setup(world, chunks, player, landmarks, sky)
+	# Haunted where the dead lie (design 3 Oct §DI.4): a ghost, now and then.
+	haunt = Haunt.new()
+	haunt.name = "Haunt"
+	add_child(haunt)
+	haunt.setup(world, chunks, player, sky, landmarks)
 	# The delves under the barrows (design 1 Oct §CJ): who is in one, the
 	# cairn doors, the finds.
 	delves = Delves.new()
