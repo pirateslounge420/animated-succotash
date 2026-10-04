@@ -78,6 +78,8 @@ class _Fall:
 	var age := PackedFloat32Array()
 	var dur := PackedFloat32Array()
 	var phase := PackedFloat32Array()
+	## A skating leaf's hop height (m; 0 for one falling from a crown).
+	var hop := PackedFloat32Array()
 	var size := 0.1
 
 
@@ -336,6 +338,7 @@ func _spawn(t: Array, sp: PlantSpecies, r: float, spread: float, drift: Vector3)
 	f.age.append(0.0)
 	f.dur.append(maxf((from - to).dot(up), 0.5) / float(FALL.get("leaf_fall_speed_mps", 0.6)))
 	f.phase.append(_rng.randf() * TAU)
+	f.hop.append(0.0)
 
 
 func _fall_of(idx: int, sp: PlantSpecies) -> _Fall:
@@ -390,6 +393,8 @@ func _fly(delta: float) -> void:
 				f.age[i] = f.age[last]
 				f.dur[i] = f.dur[last]
 				f.phase[i] = f.phase[last]
+				f.hop[i] = f.hop[last]
+				f.hop.resize(last)
 				f.start.resize(last)
 				f.land.resize(last)
 				f.side.resize(last)
@@ -404,6 +409,11 @@ func _fly(delta: float) -> void:
 			var u := f.age[k] / f.dur[k]
 			var swing := sin(f.age[k] * 1.9 + f.phase[k]) * flutter * 0.6 * minf(u * 4.0, 1.0)
 			var p := f.start[k].lerp(f.land[k], u) + f.side[k] * swing
+			if f.hop[k] > 0.0:
+				# A skating leaf (skate()): it slows as it goes, skips along
+				# the ground in shrinking hops, and lies down at the end.
+				var e := 1.0 - (1.0 - u) * (1.0 - u)
+				p = f.start[k].lerp(f.land[k], e) + f.side[k] * f.hop[k] * absf(sin(e * PI * 3.0)) * (1.0 - e)
 			mm.set_instance_transform(k, Transform3D(Basis().scaled(Vector3.ONE * f.size), p))
 			mm.set_instance_custom_data(k, Color(f.phase[k], 0.0, 0.0, 0.0))
 		mm.visible_instance_count = n
@@ -451,6 +461,28 @@ func kick(at: Vector3, up: Vector3, sp_idx: int, n: int) -> void:
 		f.age.append(0.0)
 		f.dur.append(maxf((from - to).dot(up), 0.3) / float(FALL.get("leaf_fall_speed_mps", 0.6)))
 		f.phase.append(_rng.randf() * TAU)
+		f.hop.append(0.0)
+
+
+## A leaf lifted off the ground by a gust (WindLitter; design §DA): species
+## `sp_idx`'s own card from scene `from` to `to` over `dur` s, skipping
+## along the ground in hops up to `hop` m (its `side` holds the ground's
+## up), tumbling end over end as every falling leaf does.
+func skate(from: Vector3, to: Vector3, up: Vector3, sp_idx: int, dur: float, hop: float) -> bool:
+	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
+	if not sp.tiles.has("leaf"):
+		return false
+	var f := _fall_of(sp_idx, sp)
+	if f.start.size() >= POOL:
+		return false
+	f.start.append(to_local(from))
+	f.land.append(to_local(to))
+	f.side.append(up)
+	f.age.append(0.0)
+	f.dur.append(maxf(dur, 0.2))
+	f.phase.append(_rng.randf() * TAU)
+	f.hop.append(maxf(hop, 0.01))
+	return true
 
 
 ## How many leaves are in the air (tools).

@@ -2702,7 +2702,8 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	if _body is PlayerBody:
 		(_body as PlayerBody).set_motion(move_speed / SPRINT_SPEED, delta)
 		(_body as PlayerBody).set_velocity(velocity)
-		(_body as PlayerBody).set_wind(WeatherFX.plant_wind)
+		# The gust at you, sheltered by the crowns over you (design §DA).
+		(_body as PlayerBody).set_wind(Wind.cloak_at(global_position, up))
 	elif _animator:
 		var rate := 1.0
 		if anim_state == "walk" or anim_state == "sprint" or anim_state == "crouch_walk":

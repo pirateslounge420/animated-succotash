@@ -28,6 +28,10 @@ var sky: SkySystem
 var leaf_season: LeafSeason
 ## Fallen leaves on the ground: piles, rustle, rot.
 var litter: LitterField
+## Loose litter lifting in the gusts, and the crowns sounding in them
+## (design §DA, Wind II).
+var wind_litter: WindLitter
+var wind_crowns: WindCrowns
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
@@ -166,6 +170,14 @@ func _on_planet_ready() -> void:
 	litter.main = self
 	litter.leaf_season = leaf_season
 	root.add_child(litter)
+	wind_litter = WindLitter.new()
+	wind_litter.name = "WindLitter"
+	root.add_child(wind_litter)
+	wind_litter.setup(self)
+	wind_crowns = WindCrowns.new()
+	wind_crowns.name = "WindCrowns"
+	root.add_child(wind_crowns)
+	wind_crowns.setup(self)
 	shell.build(world)
 	clouds = CloudLayers.new()
 	clouds.name = "Clouds"
@@ -482,6 +494,8 @@ func _process(delta: float) -> void:
 	fx.update_fx(cam.global_position, d, weather, sheltered)
 	# The gust field rides on the wind just set (design §DA, Wind).
 	Wind.tick(delta, world, player)
+	wind_litter.update_litter(delta)
+	wind_crowns.update_crowns(delta)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
 	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))

@@ -7,7 +7,8 @@
 // g and b seeds, a its kind (0-0.5 a spark, 1-1.5 ash) plus a seed. The
 // vertex stage flies it from those: out at its own speed inside cone_deg
 // of straight up, slowing as it climbs (drag a second), curling sideways
-// (curl_m), drifting with the weather's wind (plant_wind x wind_share),
+// (curl_m), drifting with the gusted wind at the fire (plant_wind and the
+// gust field, wind.gdshaderinc; x wind_share),
 // never above height_max_m, gone after its life. Drawn a camera-facing
 // square `px` internal pixels across at any distance. A spark is the
 // flame's orange (spark_col, pushed past 1 so it glints in the bloom)
@@ -18,6 +19,7 @@ shader_type spatial;
 render_mode unshaded, blend_mix, depth_draw_opaque, cull_disabled, shadows_disabled;
 
 global uniform vec3 plant_wind;
+#include "res://shaders/wind.gdshaderinc"
 uniform float now = 0.0;
 uniform float px = 1.0;
 uniform vec2 speed_mps = vec2(0.5, 2.2);
@@ -67,7 +69,10 @@ void vertex() {
 		p.x += sin(a * 7.0 + az) * 0.05;
 		p.y -= 0.04 * abs(sin(a * 5.0 + az));
 	}
-	vec3 world = (MODEL_MATRIX * vec4(p, 1.0)).xyz + plant_wind * wind_share * a;
+	// The gust field at the fire, not just the mean (design §DA, wind.json
+	// specks.read_gust_field): a gust carries the specks off harder.
+	vec3 gust_w = wind_gust_vec(MODEL_MATRIX[3].xyz, plant_wind, normalize(MODEL_MATRIX[1].xyz)).xyz;
+	vec3 world = (MODEL_MATRIX * vec4(p, 1.0)).xyz + gust_w * wind_share * a;
 	vec4 v = VIEW_MATRIX * vec4(world, 1.0);
 	float size = px * 2.0 * max(-v.z, 0.01) / (PROJECTION_MATRIX[1][1] * VIEWPORT_SIZE.y);
 	v.xy += VERTEX.xy * size;

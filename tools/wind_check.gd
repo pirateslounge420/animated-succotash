@@ -19,7 +19,16 @@ extends SceneTree
 ##  (f) in play, the chunks round the opening camp are stamped: grasses and
 ##      herbs bow (kind 1), canopy trees take the full wind (kind 2), the
 ##      understory is sheltered where the dapple says so, Populus and the
-##      sacred fig flutter.
+##      sacred fig flutter;
+## Wind II (wind.json litter, sound, cloaks, specks):
+##  (g) on an open road with autumn leaves lying and a 7 m/s gust over it,
+##      leaves lift, travel downwind and settle within settle_s (2-6 s);
+##      at 4 m/s none lift; needles don't lift at 7;
+##  (h) the bed's wind gain rises with the gust factor at you;
+##  (i) a crown sounds only within radius_m 40 and only when the gust at
+##      that crown passes 1.6 m/s, never more than 4 at once;
+##  (j) the cloak's wind is the gusted wind at you (sheltered by the
+##      crowns over you).
 
 var fails := 0
 
@@ -189,8 +198,153 @@ func _run() -> void:
 	print("[wind] %d plants read round the opening camp: %d sheltered or open below the crowns, %d grass and herbs, %d crowns; %d under a crown (sky < 0.6); flutter: %s" % [total, kinds[0], kinds[1], kinds[2], sheltered, ", ".join(flutter_sp.keys()) if not flutter_sp.is_empty() else "none here"])
 	ok(total > 0 and wrong.is_empty(), "(f) every plant read carries its species' wind kind and flutter (%s)" % ("all right" if wrong.is_empty() else ", ".join(wrong.slice(0, 12))))
 	ok(kinds[1] > 0 or kinds[2] > 0, "(f) the camp's ground has grasses or crowns stamped")
+	await _wind_two(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+## Pin the weather's wind (Main eases toward it; the field reads it).
+func _pin_wind(main, v: Vector3) -> void:
+	var wx := {"wind": v, "rain_mm_h": 0.0, "snow": false, "temp_c": 12.0, "storm": 0.0, "clear": 1.0, "cloud": 0.1}
+	main._weather_timer = 1e9
+	main._local_weather = wx
+	main._weather_eased = wx.duplicate()
+	WeatherFX.plant_wind = v
+	Wind.mean = v
+
+
+func _wind_two(main) -> void:
+	var player: PlanetPlayer = main.player
+	var world = main.world
+	var wl: WindLitter = main.wind_litter
+	var ls: LeafSeason = main.leaf_season
+	var lf: LitterField = main.litter
+	var up: Vector3 = world.dir_of(player.global_position)
+	var e := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
+	var n := up.cross(e)
+	# (g) An open spot near you (sky visibility near 1: a road or clearing).
+	var spot := Vector3.ZERO
+	for k in 400:
+		var a := k * 2.399
+		var p: Vector3 = player.global_position + (e * cos(a) + n * sin(a)) * (2.0 + k * 0.06)
+		if main.chunks.sky_visibility_at(p) > 0.97:
+			spot = p
+			break
+	if spot == Vector3.ZERO:
+		print("SKIP  (g) no open ground within 26 m of the camp")
+	else:
+		var d: Vector3 = world.dir_of(spot)
+		var leafy: PlantSpecies = null
+		var needle: PlantSpecies = null
+		for sp: PlantSpecies in SpeciesDB.all():
+			if not sp.tiles.has("leaf") or sp.tier != PlantSpecies.Tier.CANOPY:
+				continue
+			if WindLitter.litter_kind(sp) == "leaves" and sp.deciduous and leafy == null:
+				leafy = sp
+			elif WindLitter.litter_kind(sp) == "needles" and needle == null:
+				needle = sp
+		var key := lf.key_of(d)
+		var cell: LitterField.Cell = lf._cell(key)
+		cell.m[0] = 0.3
+		cell.dominant = SpeciesDB.index_of(leafy)
+		var at: Vector3 = world.to_scene(lf._center_of(key), PlanetConst.RADIUS_M + cell.ground)
+		var dirw := (e * 0.8 + n * 0.6).normalized()
+		var lift := func(gust_mps: float, tries: int) -> int:
+			# A mean that makes the gust there this strong.
+			_pin_wind(main, dirw * 1.0)
+			var f := Wind.gust_vec(at, up).length()
+			_pin_wind(main, dirw * gust_mps / maxf(f, 0.1))
+			var got := 0
+			for t in tries:
+				if wl.try_lift(at):
+					got += 1
+			return got
+		var before := ls.falling_count()
+		var lifted: int = lift.call(7.0, 60)
+		var fl: Array = wl.last_lift
+		var travel := ((fl[3] as Vector3) - (fl[2] as Vector3)) if lifted > 0 else Vector3.ZERO
+		var down := travel.normalized().dot((Wind.gust_vec(at, up) - up * Wind.gust_vec(at, up).dot(up)).normalized()) if lifted > 0 else 0.0
+		ok(lifted > 0 and down > 0.95 and travel.length() > 1.0 and float(fl[4]) >= 2.0 and float(fl[4]) <= 6.0, "(g) a 7 m/s gust lifts %s leaves (%d of 60 tries): each skates %.1f m downwind (%.2f along the gust) and settles after %.1f s" % [leafy.name if leafy else "?", lifted, travel.length(), down, float(fl[4]) if lifted > 0 else 0.0])
+		var airborne := ls.falling_count() - before
+		for k in 7 * 30:
+			ls._fly(1.0 / 30.0)
+		ok(airborne > 0 and ls.falling_count() <= before, "(g) all %d have lain down again within 7 s (%d still in the air)" % [airborne, maxi(ls.falling_count() - before, 0)])
+		ok(lift.call(4.0, 200) == 0, "(g) at 4 m/s nothing lifts (from_mps %.1f)" % WindLitter.kind_from("leaves"))
+		if needle != null:
+			cell.dominant = SpeciesDB.index_of(needle)
+			ok(lift.call(7.0, 200) == 0, "(g) %s needles stay put at 7 m/s (from_mps %.1f)" % [needle.name, WindLitter.kind_from("needles")])
+		cell.m[0] = 0.0
+	# (h) The bed follows the gust at you.
+	var bed: SoundBed = main.sound_bed
+	_pin_wind(main, e * 6.0)
+	var lo_p := player.global_position
+	var hi_p := player.global_position
+	var lo_f := 9.0
+	var hi_f := 0.0
+	for k in 300:
+		var p: Vector3 = player.global_position + (e * cos(k * 1.7) + n * sin(k * 1.7)) * (k * 3.0)
+		var f := Wind.gust_at(p, Wind.clock).x
+		if f < lo_f:
+			lo_f = f
+			lo_p = p
+		if f > hi_f:
+			hi_f = f
+			hi_p = p
+	var keep := player.global_position
+	player.global_position = lo_p
+	bed.update_bed(1.0 / 60.0, main._local_weather, 12.0)
+	var g_lo := bed.wind_gain
+	player.global_position = hi_p
+	bed.update_bed(1.0 / 60.0, main._local_weather, 12.0)
+	var g_hi := bed.wind_gain
+	player.global_position = keep
+	ok(g_hi > g_lo and absf(g_hi / maxf(g_lo, 1e-6) - hi_f / lo_f) < 0.05 * hi_f / lo_f, "(h) the bed's wind rises with the gust at you: gain %.3f at a lull (x%.2f), %.3f in a gust (x%.2f)" % [g_lo, lo_f, g_hi, hi_f])
+	# (i) The crowns round you.
+	var wc: WindCrowns = main.wind_crowns
+	# Stand by the nearest tree (the camp itself may be a clearing).
+	var eye: Vector3 = player.global_position
+	var best := 1e9
+	for key in main.chunks.chunks:
+		var ch: TerrainChunk = main.chunks.chunks[key]
+		for i in ch.trees.size():
+			var dd := ch.tree_base(i).distance_to(player.global_position)
+			if dd < best:
+				best = dd
+				eye = ch.tree_base(i) + e * 6.0
+	_pin_wind(main, e * 0.6)
+	wc._assign(wc.candidates(eye))
+	ok(wc.sounding.is_empty(), "(i) at 0.6 m/s (every crown under 1.6 m/s) no crown sounds")
+	_pin_wind(main, e * 8.0)
+	var cands := wc.candidates(eye)
+	var bad := 0
+	for c in cands:
+		if float(c.gust_mps) < 1.6 or float(c.dist) > 40.0:
+			bad += 1
+	wc._assign(cands)
+	var far := 0
+	for s in wc.sounding:
+		if (s.pos as Vector3).distance_to(eye) > 40.0 + 30.0:
+			far += 1
+	var voices := {}
+	for c in cands:
+		voices[c.voice] = true
+	ok(not cands.is_empty() and bad == 0 and wc.sounding.size() <= 4 and wc.sounding.size() > 0 and far == 0, "(i) at 8 m/s, %.0f m from the camp by a tree: %d crowns past 1.6 m/s within 40 m (%s), %d sounding (at most 4), each at its crown" % [best, cands.size(), ", ".join(voices.keys()), wc.sounding.size()])
+	var none := 0
+	for c in wc.candidates(eye + e * 400.0):
+		none += 1
+	_pin_wind(main, e * 0.6)
+	ok(wc.candidates(eye).is_empty(), "(i) and at 0.6 m/s by the same trees, none (the gust there is under 1.6)")
+	# (j) The cloak.
+	_pin_wind(main, e * 5.0)
+	for i in 3:
+		await process_frame
+	var body := player._body as PlayerBody
+	if body == null:
+		print("SKIP  (j) the player has no cloth rig (an imported model)")
+	else:
+		var want := Wind.cloak_at(player.global_position, player.up)
+		var sky: float = main.chunks.sky_visibility_at(player.global_position)
+		ok((body._wind - want).length() < 0.05 * maxf(want.length(), 0.5) and absf(want.length() - Wind.gust_vec(player.global_position, player.up).length() * Wind.shelter(sky)) < 1e-3, "(j) the cloak takes the gusted wind at you: %.2f m/s (the field's %.2f x shelter %.2f)" % [body._wind.length(), Wind.gust_vec(player.global_position, player.up).length(), Wind.shelter(sky)])
 
 
 ## Run wind.gdshaderinc on 100 points in a 100 x 1 viewport and read the

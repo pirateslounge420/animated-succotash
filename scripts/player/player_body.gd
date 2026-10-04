@@ -195,6 +195,9 @@ var _vel := Vector3.ZERO
 var _vel_prev := Vector3.ZERO
 var _vel_fresh := false
 var _wind := Vector3.ZERO
+## A cloaked figure nobody hands a wind (set_wind) samples its own: the
+## gust at it, sheltered by the crowns over it (design §DA, Wind.cloak_at).
+var _own_wind := true
 ## False for a cloaked figure that isn't the player (CloakedFigure): its
 ## parts stay on the ordinary render layer (the first-person split is the
 ## player's own).
@@ -311,6 +314,7 @@ func set_velocity(v: Vector3) -> void:
 ## the cloak lifts and flutters downwind.
 func set_wind(wind_vector: Vector3) -> void:
 	_wind = wind_vector
+	_own_wind = false
 
 
 ## A cloaked figure's own colors (not the player's): the cloth in `main`,
@@ -675,6 +679,8 @@ func _simulate(delta: float) -> void:
 	# air it moves through, in body space.
 	var acc := (_vel - _vel_prev) / maxf(delta, 1e-4)
 	acc = acc.limit_length(30.0)
+	if _own_wind and is_inside_tree():
+		_wind = Wind.cloak_at(global_position, up_w)
 	var air := inv * (_wind - _vel)
 	var steady := grav + inv * (-acc) + air * DRAG
 	# The frame turned: free points keep their heading in the world.

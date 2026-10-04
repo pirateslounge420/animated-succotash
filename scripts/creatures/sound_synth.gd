@@ -99,6 +99,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _murmur(rng, rng.randi_range(3, 4) if kind == "murmur" else 1)
 		"wind_loop":
 			samples = _wind_loop(rng)
+		"crown_hush_loop", "crown_rustle_loop", "crown_clatter_loop", "crown_rattle_loop":
+			samples = _crown_loop(rng, kind.trim_prefix("crown_").trim_suffix("_loop"))
 		"insects_loop":
 			samples = _insects_loop(rng)
 		"frogs_loop":
@@ -455,6 +457,43 @@ static func _wind_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		gust_t += 1.0 / RATE
 		gust = 0.55 + 0.45 * sin(gp + gust_t * 0.9) * sin(gp * 0.7 + gust_t * 0.37)
 		raw[i] = (lp - lp2) * 6.0 * (0.4 + gust) + lp2 * 0.8 * gust
+	return _loopify(raw, n, fade)
+
+
+## A crown in the gusts (design §DA, WindCrowns: a source at the tree):
+## `voice` hush (needles: soft high hiss, no clicks), rustle (broad
+## leaves: a leafy hiss with a scatter of clicks), clatter (palm fronds:
+## dry knocks and slaps over a low hiss) or rattle (dry autumn leaves: a
+## dense crackle). The gusts swell and ease through the 4 s loop.
+static func _crown_loop(rng: RandomNumberGenerator, voice: String) -> PackedFloat32Array:
+	var n := int(4.0 * RATE)
+	var fade := int(0.4 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var hp := 0.0
+	var prev := 0.0
+	var lp := 0.0
+	var knock := 0.0
+	var gp := rng.randf() * TAU
+	var hiss: float = {"hush": 0.9, "rustle": 0.6, "clatter": 0.25, "rattle": 0.35}.get(voice, 0.6)
+	var clicks: float = {"hush": 0.0, "rustle": 0.004, "clatter": 0.0012, "rattle": 0.02}.get(voice, 0.004)
+	var smooth: float = {"hush": 0.25, "rustle": 0.55, "clatter": 0.4, "rattle": 0.75}.get(voice, 0.55)
+	for i in raw.size():
+		var t := float(i) / RATE
+		var swell := 0.45 + 0.55 * absf(sin(gp + t * 1.3) * sin(gp * 0.6 + t * 0.47))
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + 0.97 * hp
+		prev = x
+		lp = lerpf(lp, hp, smooth)
+		var c := 0.0
+		if rng.randf() < clicks * swell:
+			c = rng.randf_range(-1, 1) * (3.0 if voice != "clatter" else 1.0)
+			if voice == "clatter":
+				knock = 1.0
+		# A palm frond's knock: a short low thump that dies fast.
+		knock *= 0.9985
+		var k := sin(t * TAU * 180.0) * knock * 0.8 if voice == "clatter" else 0.0
+		raw[i] = (lp * hiss + c + k) * swell
 	return _loopify(raw, n, fade)
 
 

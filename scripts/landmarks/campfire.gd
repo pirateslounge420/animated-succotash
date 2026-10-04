@@ -432,9 +432,10 @@ static func _breathe(camp: Node3D, time: float, burn: float) -> float:
 	if camp.has_meta("air_t"):
 		var since := time - float(camp.get_meta("air_t"))
 		air = exp(-maxf(since, 0.0) / settle) if since >= 0.0 else 0.0
-	# A gust of the weather's wind: the wind's strength, now and then.
+	# A gust of the weather's wind at the fire: the gust field there (design
+	# §DA, wind.json specks.read_gust_field), the stronger the wind the more.
 	var wind := WeatherFX.plant_wind.length()
-	var gust := smoothstep(0.62, 0.95, _vnoise(time * 0.25, sd + 21.0)) * clampf(wind / 8.0, 0.0, 1.0)
+	var gust := smoothstep(1.05, 1.45, Wind.gust_at(camp.global_position, Wind.clock).x) * clampf(wind / 8.0, 0.0, 1.0)
 	air = maxf(air, gust)
 	var coals := camp.get_node_or_null("Coals") as MeshInstance3D
 	if coals and coals.material_override is ShaderMaterial:

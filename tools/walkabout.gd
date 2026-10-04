@@ -19,7 +19,7 @@ extends SceneTree
 ## camp's first frame must be dawn (design 3 Oct §CY.1: within the first
 ## minutes after dawn begins).
 ## WIND=6 pins the weather's wind at 6 m/s (design §DA's breeze; else
-## 1.1 m/s).
+## 1.1 m/s). SEASON=autumn walks in that season (ten days into it).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -373,6 +373,16 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	var lon := CubeSphere.longitude(d)
 	var lat := CubeSphere.latitude(d)
 	var base: float = floor(spawn_days) + 1.0
+	# SEASON=autumn (or spring, summer, winter): the first day after the
+	# spawn that sits in the middle of that season here (design §DA's
+	# autumn road).
+	if OS.get_environment("SEASON") != "":
+		var want := OS.get_environment("SEASON")
+		for k in int(DayCycle.year_days()) + 1:
+			var at := Seasons.at(base + k, lat)
+			if str(at.get("name", "")) == want and float(at.get("t", 0.0)) == 0.0:
+				base += k + 10.0
+				break
 	var first := true
 	if site.has("delve_stand") or site.has("delve_hours"):
 		# Down there it is dark at noon but for the torch (§CJ).

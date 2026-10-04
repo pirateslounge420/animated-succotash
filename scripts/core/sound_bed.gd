@@ -109,6 +109,12 @@ static func _hour_word(clock_h: float, sun_deg: float = NAN) -> String:
 
 
 ## Each frame (main): the target mix from where you are and when.
+## The gust factor at the player and the wind layer's gain this frame
+## (tools; design §DA).
+var gust := 1.0
+var wind_gain := 0.0
+
+
 func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 	if world == null or player == null:
 		return
@@ -131,6 +137,11 @@ func update_bed(delta: float, weather: Dictionary, clock_h: float) -> void:
 		var g: float = _gain[layer] * Dread.bed_gain * (1.0 - Delves.underground) * (1.0 - Overrun.quiet)
 		if layer == "wind":
 			g *= lerpf(1.0, float(canopy.get("wind_gain", 0.45)), _canopy)
+			# The gust at you, the instant the grass and crowns show it
+			# (design §DA, wind.json sound.bed_follows_gust; Wind).
+			gust = Wind.gust_at(player.global_position, Wind.clock).x
+			g *= gust
+			wind_gain = g
 		var want_db := linear_to_db(maxf(g, 0.0005)) + float((D.get("layers", {}) as Dictionary).get(layer, {}).get("db", -18.0 if layer == "cicadas" else 0.0))
 		p.volume_db = lerpf(p.volume_db, want_db, minf(delta * 1.5, 1.0))
 	if _delve != null:

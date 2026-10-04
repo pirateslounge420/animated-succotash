@@ -21,6 +21,11 @@ uniform float life_max = 2.5;
 uniform float spread_m = 0.25;   // radius round the coals they start in
 uniform float wobble_m = 0.08;   // sideways drift as they climb
 uniform float phase = 0.0;
+// The torch's sparks drift with the gusted wind at the torch (design §DA,
+// wind.json specks.torch_sparks_drift), this share of it.
+uniform float wind_share = 0.35;
+global uniform vec3 plant_wind;
+#include "res://shaders/wind.gdshaderinc"
 
 varying float v_t;     // 0..1 of this ember's life
 varying float v_blink; // the moment (in life) it blinks off
@@ -37,6 +42,9 @@ void vertex() {
 	float w = TIME * (1.5 + s.r) + s.b * 6.2832;
 	p.x += sin(w) * wobble_m * t;
 	p.z += cos(w * 0.7 + s.a * 6.2832) * wobble_m * t;
+	// Carried downwind as it climbs (in the ember's own frame).
+	vec3 gw = wind_gust_vec(MODEL_MATRIX[3].xyz, plant_wind, normalize(MODEL_MATRIX[1].xyz)).xyz;
+	p += inverse(mat3(MODEL_MATRIX)) * gw * wind_share * t * life;
 	// To view space, then grow the quad's corners by px pixels at this depth
 	// and project ourselves (writing POSITION skips the built-in projection).
 	vec4 v = MODELVIEW_MATRIX * vec4(p, 1.0);

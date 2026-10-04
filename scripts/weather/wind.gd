@@ -51,6 +51,9 @@ static var z0 := 0.03
 static var _center := Vector3.ZERO
 static var _z0_t := 0.0
 static var _set := false
+## The chunks round the player (sky visibility for the shelter; Wind
+## II's readers at the cloth, the litter and the crowns).
+static var chunks: ChunkManager = null
 
 
 static func patch() -> Vector2:
@@ -115,6 +118,8 @@ static func tick(delta: float, world, player) -> void:
 	drift = Vector3(fposmod(drift.x, per), fposmod(drift.y, per), fposmod(drift.z, per))
 	if world != null:
 		_center = world.planet_center()
+	if player != null and player.get("chunks") is ChunkManager:
+		chunks = player.chunks
 	RenderingServer.global_shader_parameter_set("wind_shift", shift())
 	_z0_t -= delta
 	if _z0_t <= 0.0 and player != null and player is PlanetPlayer:
@@ -231,6 +236,16 @@ static func shelter(sky: float, enclosed := false) -> float:
 static func at(p: Vector3, up: Vector3, z: float, sky := 1.0, crown := false, enclosed := false) -> Vector3:
 	var s := 1.0 if crown and not enclosed else shelter(sky, enclosed)
 	return gust_vec(p, up) * profile(z) * s
+
+
+## The wind on a cloaked figure's cloth at scene point `p` (design §DA,
+## wind.json cloaks.take_gust): the gusted wind there, sheltered by the
+## crowns over it (sky visibility); none in a delve.
+static func cloak_at(p: Vector3, up: Vector3) -> Vector3:
+	if Delves.inside:
+		return Vector3.ZERO
+	var sky := chunks.sky_visibility_at(p) if chunks != null else 1.0
+	return gust_vec(p, up) * shelter(sky)
 
 
 ## Flutter: genus Populus and the species Ficus religiosa (flutter.genera,
