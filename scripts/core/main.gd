@@ -65,6 +65,8 @@ var old_hearths: OldHearths
 ## "nearest" or "opening", "home_fault", "key"}.
 var last_wake := {}
 var overrun: Overrun
+## Three hits, no bar (design 4 Oct §EA), the ambient game only.
+var harm: Harm
 var haunt: Haunt
 var delves: Delves
 var post: PostGrade
@@ -392,6 +394,13 @@ func _on_planet_ready() -> void:
 	overrun.name = "Overrun"
 	add_child(overrun)
 	overrun.setup(world, chunks, player, landmarks, sky)
+	# Three hits, no bar (design 4 Oct §EA, data/harm.json): the ambient
+	# game counts a creature's hits instead of taking health.
+	if Tuning.profile() == "ambient":
+		harm = Harm.new()
+		harm.name = "Harm"
+		add_child(harm)
+		harm.setup(player, post, hud)
 	# Haunted where the dead lie (design 3 Oct §DI.4): a ghost, now and then.
 	haunt = Haunt.new()
 	haunt.name = "Haunt"
@@ -711,7 +720,11 @@ func _above_clouds(w: Dictionary) -> void:
 ## line (worded for one found alive), then the found line, both stamped
 ## at the waking. The shinobi game keeps its old wake (Camps.wake_fire).
 func _on_player_died() -> void:
-	hud.show_death()
+	# Taken by a third hit (§EA): the dark has closed the frame and said
+	# "Good night" already; no curtain and no wait on top of it.
+	var taken := harm != null and harm.taking
+	if not taken:
+		hud.show_death()
 	var cause: String = player.death_cause
 	player.death_cause = ""
 	var death_dir: Vector3 = player.surface_dir
@@ -719,7 +732,7 @@ func _on_player_died() -> void:
 	if not found:
 		GameLog.add(_death_line(cause), "death_cause")
 	var corpse := PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
-	await get_tree().create_timer(3.5).timeout
+	await get_tree().create_timer(0.3 if taken else 3.5).timeout
 	hud.show_loading("", 0.5)
 	await get_tree().process_frame
 	await get_tree().process_frame
@@ -757,6 +770,8 @@ func _on_player_died() -> void:
 	player.revive()
 	player.wake(float(dt.get("wake_s", 2.5)))
 	hud.hide_death()
+	if harm != null:
+		harm.reset()
 	hud.hide_loading()
 	await get_tree().create_timer(1.2).timeout
 	if found:

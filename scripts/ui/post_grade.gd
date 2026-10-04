@@ -76,5 +76,13 @@ func set_magic(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("magic", v)
 
 
+## Hurt (design 4 Oct §EA, Harm): the frame's edges darkened and its
+## colour drained toward the dark's navy, 0-1 each.
+func set_harm(vignette: float, desaturate: float) -> void:
+	var m := _rect.material as ShaderMaterial
+	m.set_shader_parameter("harm_vignette", vignette)
+	m.set_shader_parameter("harm_desat", desaturate)
+
+
 func set_dither(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("dither", v)

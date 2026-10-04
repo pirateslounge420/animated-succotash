@@ -54,6 +54,11 @@ var _death := 0.0
 var _dead := false
 var _time := 0.0
 var _death_label: Label
+## The ambient game (design 4 Oct §EA): no health meter and no red flash at
+## the edges; a third hit closes the frame (set_taken).
+var ambient := Tuning.profile() == "ambient"
+var _taken_black := 0.0
+var _taken_label: Label
 var _tick: AudioStreamPlayer
 
 
@@ -73,6 +78,15 @@ func _ready() -> void:
 	_death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_death_label.visible = false
 	add_child(_death_label)
+	# "Good night" (§EA): big, red, inside the 480-line frame.
+	_taken_label = Label.new()
+	_taken_label.add_theme_color_override("font_outline_color", Color(0.02, 0.0, 0.0))
+	_taken_label.add_theme_constant_override("outline_size", 4)
+	_taken_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_taken_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_taken_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_taken_label.visible = false
+	add_child(_taken_label)
 	# The hit marker's tick: a UI sound, not placed in the world.
 	_tick = AudioStreamPlayer.new()
 	_tick.name = "HitTick"
@@ -86,6 +100,23 @@ func _ready() -> void:
 
 func flash_hurt() -> void:
 	_hurt = 1.0
+
+
+## Taken (§EA): the frame closed to black by `black` 0-1, `text` over it
+## at `text_alpha`.
+func set_taken(black: float, text_alpha: float, text: String, color: Color, size_px: int) -> void:
+	_taken_black = black
+	_taken_label.text = text
+	_taken_label.add_theme_font_size_override("font_size", HudText.px(size_px))
+	_taken_label.add_theme_color_override("font_color", color)
+	_taken_label.modulate.a = text_alpha
+	_taken_label.visible = text_alpha > 0.0
+	queue_redraw()
+
+
+## The words now (tools).
+func taken_text() -> String:
+	return _taken_label.text if _taken_label.visible else ""
 
 
 func set_dead(on: bool) -> void:
@@ -142,8 +173,9 @@ func _play_tick(kill: bool) -> void:
 
 func _draw() -> void:
 	var size := get_viewport_rect().size
-	# Hurt: red at the edges.
-	if _hurt > 0.0:
+	# Hurt: red at the edges (the ninja game; the ambient one's dark comes
+	# in through the grade, Harm).
+	if _hurt > 0.0 and not ambient:
 		var c := Color(0.8, 0.05, 0.02, 0.45 * _hurt)
 		var w := size.x * 0.12
 		draw_rect(Rect2(0, 0, w, size.y), c)
@@ -152,9 +184,12 @@ func _draw() -> void:
 		draw_rect(Rect2(w, size.y * 0.9, size.x - 2 * w, size.y * 0.1), c)
 	if _death > 0.0:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.08, 0.0, 0.0, _death))
+	if _taken_black > 0.0:
+		# Black, as near as the frame goes: the darkest navy.
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.004, 0.006, 0.02, _taken_black))
 	var fb := Hits.feedback()
 	var ink := Color.from_string(str(fb.colors.outline), Color(0.04, 0.07, 0.31))
-	if Settings.get_bool("hud.health"):
+	if Settings.get_bool("hud.health") and not ambient:
 		_draw_meter(size, fb.meter, ink)
 	# The weapon in hand, above the meter.
 	if weapon != "" and not _dead and Settings.get_bool("hud.weapon"):

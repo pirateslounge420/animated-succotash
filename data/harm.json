@@ -1,5 +1,5 @@
 {
-  "_help": "[NOT WIRED YET] §EA (4 Oct): three hits, no bar, ambient profile only. The ninja game keeps PlanetPlayer.hp and the status bar.",
+  "_help": "§EA (4 Oct; wired by Claude Code: Harm, scripts/player/harm.gd): three hits, no bar, ambient profile only. The ninja game keeps PlanetPlayer.hp and the status bar.",
   "hits_to_take": 3,
   "window_s": 20.0,
   "recover": { "calm_s": 8.0, "step_s": 6.0, "heart_first": true },

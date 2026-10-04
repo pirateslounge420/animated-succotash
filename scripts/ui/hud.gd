@@ -339,6 +339,14 @@ func flash_hurt() -> void:
 	_status.flash_hurt()
 
 
+## Taken (design 4 Oct §EA, Harm): the frame closed `black` 0-1 and the
+## words at `text_alpha`.
+func set_taken(black: float, text_alpha: float, text: String, color := Color("#C81E1E"), size_px := 40) -> void:
+	_status.set_taken(black, text_alpha, text, color, size_px)
+	if black > 0.0 or not _status._dead:
+		_dim_readouts(black > 0.0)
+
+
 func show_death() -> void:
 	_status.set_dead(true)
 	_dim_readouts(true)

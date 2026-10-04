@@ -1592,7 +1592,33 @@ func take_hit(amount: float, from_pos: Vector3) -> void:
 	var away := global_position - from_pos
 	away = (away - up * away.dot(up)).normalized()
 	_knock = away * 5.0 + up * 2.5
+	# The ambient game (design 4 Oct §EA): no health, a creature's hit
+	# counts one (Harm); the dark's catch (Dread) still takes you outright.
+	if Harm.active() and amount < 9999.0:
+		_since_hit = 0.0
+		shake(0.5)
+		voice.stream = SoundSynth.stream("hurt", randi())
+		voice.play()
+		hurt.emit(amount)
+		Harm.instance.hit(death_cause)
+		return
 	_damage(amount)
+
+
+## Taken by the third hit (Harm, §EA), after "Good night": dead, as
+## _damage() makes you, with no health spent.
+func fall_taken() -> void:
+	if dead:
+		return
+	hp = 0.0
+	dead = true
+	meter.died()
+	bow.drawing = false
+	spear.cancel()
+	fists.cancel()
+	stop_climb()
+	stop_perch()
+	died.emit()
 
 
 ## A spear thrust met the world (a trunk, a wall, a rock) closing at

@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=harm two hits taken by the opening camp (§EA): the dark at the
+## edges and the colour drained, 2 s on; then the same 40 s on, recovered.
 ## SITES=columns the nearest causeway (§DX): from its top step, down its
 ## steps into the sea; SITES=sea_cave its headland and mouth from the
 ## shore beside it; SITES=organ_pipes the cliff and its fall from the foot.
@@ -231,6 +233,8 @@ func _run() -> void:
 			kinds.append("pillar_shrines")
 		if only.has("colonnade"):
 			kinds.append("colonnade")
+		if only.has("harm"):
+			kinds.append("harm")
 		for ck in ["columns", "sea_cave", "organ_pipes"]:
 			if only.has(ck):
 				kinds.append(ck)
@@ -350,6 +354,13 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"harm":
+				# Three hits, no bar (design 4 Oct §EA): two hits taken by
+				# the opening camp, the frame darkened and drained, the heart
+				# going; then the same after the calm, recovered.
+				var hstand := CreatureSpawner._offset(camp_d, 0.6, 14.0)
+				sites.append({"name": "harm_two_hits", "dir": hstand, "look": camp_d, "harm_hits": 2, "harm_after_s": 2.0, "note": "two hits taken, 2 s on"})
+				sites.append({"name": "harm_recovered", "dir": hstand, "look": camp_d, "harm_hits": 2, "harm_after_s": 40.0, "note": "two hits taken, 40 s on"})
 			"columns", "sea_cave", "organ_pipes":
 				# The columns (design 3 Oct §DX): the nearest causeway from
 				# the shore beside it, down its steps into the sea; the
@@ -959,6 +970,19 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 					best = flat.dot(sflat)
 					yaw0 = yw
 			pitch0 = clampf(asin(clampf(sd.dot(player.up), -1.0, 1.0)) * 0.85, -0.2, 1.2)
+		if site.has("harm_hits") and main.get("harm") != null:
+			# §EA: the hits counted by hand, Harm's clock run on to the
+			# moment (its look held there while the frames settle).
+			var hm: Harm = main.harm
+			hm.set_process(false)
+			hm.reset()
+			for i in int(site.harm_hits):
+				hm.hit("creature:wolf")
+				for j in 10:
+					hm.tick(0.1)
+			for j in int(float(site.harm_after_s) * 10.0):
+				hm.tick(0.1)
+			print("[harm] %s: stage %d, vignette %.2f, desaturate %.2f, muffle %.1f dB, heart %s" % [site.name, hm.stage, hm.vignette, hm.desaturate, hm.muffle_db, ("%.0f bpm" % hm.heart_bpm) if hm.heart else "still"])
 		for k in facings:
 			var yaw := TAU * k / facings + yaw0
 			for i in (12 if k == 0 else 6):
@@ -1000,6 +1024,9 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				var local_h: float = world.local_clock(d).y
 				var into: float = fposmod(local_h - dawn, 24.0) / 24.0 * (world.day_length_s / 60.0)
 				ok(into < 4.0, "the opening camp's first frame is dawn (%.2f h on the clock, dawn begins %.2f h, %.1f real min in, sun %.1f°)" % [local_h, dawn, into, main.sky.sun_elevation_deg])
+		if site.has("harm_hits") and main.get("harm") != null:
+			(main.harm as Harm).reset()
+			(main.harm as Harm).set_process(true)
 		first = false
 
 

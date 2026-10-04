@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §EA: three hits, no bar, "Good night" (prompt 36)
+- **`Harm`** (`scripts/player/harm.gd`, `data/harm.json`, unmarked) runs in the ambient profile only. The ninja game keeps `PlanetPlayer.hp` and its status bar.
+  - A creature's hit (`PlanetPlayer.take_hit`, anything under the dark's 9999) no longer takes health. It knocks you back, shakes the view and counts one.
+  - Hits older than `window_s` (20 s) drop out. Three inside it take you.
+  - `harm.json` is now in `Tuning.FILES`.
+- **Stages:**
+  - Hit 1: `PostGrade.set_harm` darkens the edges and drains the colour toward the shadow floor's navy, before the floor, so it is never grey. The fire's oranges are protected. The Master bus is muffled by a low-pass and `muffle_db`.
+  - Hit 2: deeper, and a heartbeat (`SoundSynth` "heartbeat", lub-dub) at `heart_bpm`.
+- **Recovery:** after `calm_s` with no hits, the oldest hit is let go every `step_s`. The heart slows and stops first, then the dark eases back.
+  - Measured: heart still 3 s into the check, stage 2 → 1 at 12 s, 1 → 0 at 18 s, clear at 22 s.
+- **Taken:**
+  - The frame closes to the darkest navy over `close_s`. "Good night" shows in `#C81E1E` at `text_size_px` in the 480-line frame (`StatusHud.set_taken`), holds `hold_s`, then fades.
+  - Then `PlanetPlayer.fall_taken()` hands to the §DE wake (`main._on_player_died`, with no "You died" curtain on top). The cause line is "Struck down by a {creature}", and the harm is cleared.
+- The ambient HUD drops the health meter and the red edge flash.
+- **Checks:**
+  - `tools/harm_check.gd` on 7731: 25 PASS, 0 FAIL.
+  - Walkabout harness frames (§CG): `SITES=harm` (two hits; recovered).
+  - `camp_check` (`STAMP=1`) fails only its "platforms lashed" line, which fails the same at the previous HEAD.
+- **Flags:**
+  - Nothing yet lands a knockback without a hit (the ram's goat isn't a species), so `knockback_counts_as_hit` has nothing to count.
+  - Falls still spend the hidden health and can kill with the old curtain.
+  - Folk's arrows count as hits too.
+
 ## 2026-10-04 — §DX: the columns, columnar basalt as a nest (prompt 35)
 - **The kind:** `columnar_basalt`, the ninth in `Nests.KINDS` (tier 2, uncommon, a 12 km cell).
   - `Nests._columns` sweeps each cell on a 24 × 24 lattice instead of random tries. The basalt shores and banks are only a few planet cells a world.

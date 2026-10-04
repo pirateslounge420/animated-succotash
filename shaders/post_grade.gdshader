@@ -66,6 +66,10 @@ uniform vec2 highlight_amount = vec2(0.3, 0.25);
 uniform vec2 olive_amount = vec2(1.0, 0.0);
 uniform vec2 contrast = vec2(1.12, 1.1);
 uniform vec2 vignette = vec2(0.12, 0.4);
+// Hurt (design 4 Oct §EA, Harm): the dark reaching in at the edges and the
+// colour drained toward its navy; the shadow floor below keeps it navy.
+uniform float harm_vignette = 0.0;
+uniform float harm_desat = 0.0;
 // Shared by both presets (look.json grade).
 uniform vec3 olive_color = vec3(0.118, 0.188, 0.039); // #1E300A
 uniform vec2 olive_greenness = vec2(0.05, 0.3); // (G - max(R, B)) / G: not green .. green
@@ -191,6 +195,14 @@ void fragment() {
 	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y, shadow_color_night, shadow_tint_amount.y, highlight_color_night, highlight_amount.y, olive_amount.y, contrast.y, vignette.y, prot, SCREEN_UV);
 	col = mix(day_c, night_c, night);
 	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
+	if (harm_vignette > 0.0 || harm_desat > 0.0) {
+		vec3 navy = max(shadow_floor, vec3(0.002, 0.004, 0.02));
+		float hy = luma_of(col);
+		col = mix(col, navy * (hy / max(luma_of(navy), 1e-4)), harm_desat * (1.0 - protect(col)));
+		float r = length((SCREEN_UV - 0.5) * vec2(1.0, 0.8));
+		col *= 1.0 - harm_vignette * smoothstep(0.62 - 0.5 * harm_vignette, 0.75, r) - harm_vignette * harm_vignette * 0.5;
+		col = max(col, vec3(0.0));
+	}
 	// Night is one colour: the darks take the floor's hue at their own
 	// brightness and their own saturation (the hue collapses, the chroma
 	// does not, so the preset's saturation knob still sets how blue the

@@ -92,6 +92,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _thunder(kind == "thunder_near", rng)
 		"boom":
 			samples = _boom(rng)
+		"heartbeat":
+			samples = _heartbeat(rng)
 		"bow_draw":
 			samples = _bow_draw(rng)
 		"bow_release":
@@ -803,6 +805,21 @@ static func _boom(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		lp2 = lerpf(lp2, lp, 0.08)
 		var wash := lp2 * 9.0 * smoothstep(0.3, 1.2, t) * exp(-maxf(t - 1.2, 0.0) * 1.3)
 		s[i] = (thump + ring) * 0.9 + wash
+	return s
+
+
+## One heartbeat heard from inside (design 4 Oct §EA): lub-dub, two low
+## soft thuds a fifth of a second apart, the second fainter.
+static func _heartbeat(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.42)
+	for i in s.size():
+		var t := float(i) / RATE
+		var v := 0.0
+		for b: Array in [[0.0, 52.0, 1.0], [0.19, 46.0, 0.7]]:
+			var tt := t - float(b[0])
+			if tt >= 0.0:
+				v += sin(TAU * float(b[1]) * tt) * float(b[2]) * minf(tt / 0.008, 1.0) * exp(-tt * 28.0)
+		s[i] = v * 0.95
 	return s
 
 
