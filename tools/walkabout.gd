@@ -43,6 +43,8 @@ extends SceneTree
 ## plaza, looking up its terraces (SEED=8 has one).
 ## SITES=stone_circle the nearest stone circle (§DS.7): from its causeway
 ## through the bank (SEED=8 has one).
+## SITES=temple_park the nearest temple park (§DW): on its edge, looking in
+## across a pond to the great tower.
 ## SITES=abbey the nearest ruined abbey (§DU): inside its nave at the west
 ## end, looking east down the arcades to the lancets.
 ## SITES=hanging_gardens the hanging gardens (§DT): off their back corner,
@@ -216,6 +218,8 @@ func _run() -> void:
 			kinds.append("hanging_gardens")
 		if only.has("abbey"):
 			kinds.append("abbey")
+		if only.has("temple_park"):
+			kinds.append("temple_park")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -332,6 +336,19 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"temple_park":
+				var tpd := INF
+				var tp1 := {}
+				for tpk in Monuments.all_sites(world.planet, "temple_park"):
+					if CubeSphere.surface_distance_m(tpk.dir, camp_d) < tpd:
+						tpd = CubeSphere.surface_distance_m(tpk.dir, camp_d)
+						tp1 = tpk
+				if tp1.is_empty():
+					lines.append("-- temple_park: none on this world")
+					continue
+				var tsz := float(tp1.stupa_z)
+				sites.append({"name": "temple_park", "dir": Ruins.local_dir(tp1, 14.0, tsz - 70.0), "look": Ruins.local_dir(tp1, 0.0, tsz), "pitch_to": Ruins.local_dir(tp1, 0.0, tsz), "pitch_add_m": 10.0,
+					"note": "the temple park, %.0f m across, toward its great tower" % float(tp1.across_m)})
 			"abbey":
 				var abd := INF
 				var ab0 := {}

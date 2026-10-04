@@ -1108,7 +1108,7 @@
     "fire_holder": "hearth_ring"
    },
    "smoke": "open fires only; the stupas vent nothing",
-   "_help": "[NOT WIRED YET \u2014 design \u00a7DW] The open cousin of the temple city (\u00a7DR): flat, sunlit, in the monsoon dry forest, the sky over everything; roofless column rows (the roofs rotted, \u00a7BQ), stupas and towers, seated figures in niches, and lotus ponds with the towers reflected in them (R6). Never within 5 km of a temple city. \u00a7DI's dry row."
+   "_help": "[built \u2014 design \u00a7DW: Monuments._temple_park, RuinBuilder._temple_park] The open cousin of the temple city (\u00a7DR): flat, sunlit, in the monsoon dry forest, the sky over everything; roofless column rows on brick platforms (the roofs rotted, \u00a7BQ), bell stupas and ribbed towers, the great lotus-bud tower over the relic crypt (the barrow kit), seated figures in niches, and ponds (holes in the ground with water in them) with the towers reflected in them (R6), the great fig at one's bank. Never within 5 km of a temple city (min_km_from). still_water: a lake or a wetland's pools within 1.5 km. The ponds wait for Nelumbo and Nymphaea (a fill for chat)."
   },
   "pillar_shrines": {
    "kind": "own",

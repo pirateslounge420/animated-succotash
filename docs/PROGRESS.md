@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DW: the temple park (prompt 32), and the monuments pass no longer runs inside itself
+- **The kind:** `Ruins.Kind.TEMPLE_PARK`, "Temple park" (`data/ruins.json` → `styles.temple_park`, unmarked), placed by Monuments' sites pass, at most two a world.
+  - **New gate words:** `still_water` (a lake or a wetland's pools within 1.5 km; not the sea, not a river) and `min_km_from` (spawn.min_km_from: never within 5 km of a temple city).
+- **The precinct** (`Monuments._temple_park`, `RuinBuilder._temple_park`), 200–400 m across, open to the sky:
+  - At its middle, the great lotus-bud tower over the relic crypt: a stepped base, a body with a niche on each face, the bud drawn to its point.
+  - Two column halls on platforms beside the way down, and a great seated figure behind the tower.
+  - Round it, on a grid of cells: column halls (grids of roofless laterite columns, some broken, a few fallen, creepers on some), bell stupas, ribbed corn-cob towers (two at most, at least one), seated figures in brick niches, and ponds (at least two).
+  - The figures sit with their hands in their laps, faces worn smooth, nobody by name.
+- **The ponds:** their rectangles are holes in the ground, with water at the level of their lowest bank, a dark floor and a brick edge and apron over the ground's ragged edge. The great fig stands on one's bank (a root-tree). They wait for the lotus and the lily (a fill for chat).
+- **The crypt:** the barrow kit, its way down in front of the great tower, which stands where the way down's open hole ends. Hearth rings, open fires only (`open_ring`).
+- **A fix that matters for every monument:** the monuments pass asked Nests where water stands, Nests asked Ruins what stood near it, and Ruins asked the monuments pass, which started over inside itself.
+  - That loop overflowed the stack on seeds 2, 101 and 1234 (the "pre-existing" overflows I flagged before), and on 7731 it let a kind past its cap.
+  - Now the pass answers from what it has placed so far when it is asked from its own thread (`Monuments._ensure`).
+  - Seeds 2, 101 and 1234 now print no overflow. Every monument check passes again: the temple city, long wall, carved cliffs, cliff dwelling, brick city, stone heads, terraced pueblo, stone circle, hewn temple, hanging gardens, abbey, the northern styles and the crag fortress.
+- **Check:** `tools/temple_park_check.gd`, 0 fails on 7731, 8 and 2.
+  - 7731: one at 2.3°S 86.1°E in tropical dry forest, 329 m across: 5 ponds, 2 towers beside the great one, 7 column halls, 4 stupas, 5 niches.
+  - Its crypt: stair, room, stair, heart, exit, cairn. The nearest temple city is 28 km off. 39,526 triangles against the castle's 78,835, and one root-tree.
+  - Seed 5 has none.
+- **Walkabout** (`SEED=7731 SITES=temple_park HOURS=9`, harness frame §CG): the open park on the grass, the great lotus-bud tower in the middle, column rows on their brick platforms either side, white bell stupas, a bright pond in front, the fig's crown behind.
+- **Flags:**
+  - `tools/nest_check.gd` fails one line on 7731 (a waterfall nest's own plants: 0 at its spot). It fails the same without this pass's changes; it isn't from the temple park.
+  - The crypt's way out comes up wherever the kit finds ground, not up the tower's side.
+  - Nothing keeps a cell's pieces from overlapping each other.
+
 ## 2026-10-04 — §DU: the ruined abbey (prompt 31)
 - **The kind:** `Ruins.Kind.ABBEY`, "Ruined abbey" (`data/ruins.json` → `styles.abbey`, unmarked), placed by Monuments' sites pass, at most two a world.
   - **Where:** palearctic temperate deciduous, maritime forest, tundra, bog and rocky shore, cool and wet (`cool_wet`), never hot, never dry (`dry` now also works as a never-word).

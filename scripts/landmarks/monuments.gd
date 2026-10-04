@@ -55,13 +55,18 @@ class_name Monuments
 ##                     (escarp_top);
 ##   dry_plateau       the ground's moisture under DRY_PLATEAU and rolling
 ##                     under FLAT_LOOSE over 60 m.
+##   still_water       standing water (a lake, a wetland's pools; not the
+##                     sea, not a river) within STILL_M (the temple park,
+##                     §DW: its ponds are its own);
+##   min_km_from       (spawn.min_km_from {kind: km}) no kept site of that
+##                     kind that near;
 ##   water_one_side    a river, a lake or the shore within WATER_SIDE_M
 ##                     (water_point; the hanging gardens, §DT: their channel
 ##                     runs to it; the dry realms' rivers are few, so an
 ##                     oasis's lake will do).
 ## Pure functions of the planet once warmed; thread-safe after it.
 
-const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY}
+const KINDS := {"temple_city": Ruins.Kind.TEMPLE_CITY, "long_wall": Ruins.Kind.LONG_WALL, "carved_cliffs": Ruins.Kind.CARVED_CLIFFS, "cliff_dwelling": Ruins.Kind.CLIFF_DWELLING, "brick_city": Ruins.Kind.BRICK_CITY, "stone_heads": Ruins.Kind.STONE_HEADS, "terraced_pueblo": Ruins.Kind.TERRACED_PUEBLO, "stone_circle": Ruins.Kind.STONE_CIRCLE, "hewn_temple": Ruins.Kind.HEWN_TEMPLE, "hanging_gardens": Ruins.Kind.HANGING_GARDENS, "abbey": Ruins.Kind.ABBEY, "temple_park": Ruins.Kind.TEMPLE_PARK}
 const FLAT_MAX := 0.06
 const LOWLAND_M := 60.0
 const WATER_M := 2500.0
@@ -87,6 +92,8 @@ const ESCARP_FACE_M := 4.0
 const DRY_PLATEAU := 0.55
 ## "water_one_side" (the hanging gardens, §DT).
 const WATER_SIDE_M := 600.0
+## "still_water" (the temple park, §DW).
+const STILL_M := 1500.0
 ## The hard rocks "basalt" loosens to on a world with no basalt land.
 const HARD_ROCK := [PlanetData.Rock.GRANITE, PlanetData.Rock.BASALT_VOLCANIC, PlanetData.Rock.LIMESTONE_KARST, PlanetData.Rock.SANDSTONE]
 ## "flat" (a city's floor, §DS.6): the walking ground's own roll is 0.07-0.2
@@ -104,6 +111,8 @@ static var _mutex := Mutex.new()
 static var _for_seed := -1
 static var _for_map: PlanetData = null
 static var _sites := {}
+static var _running := false
+static var _pass_thread := 0
 ## Tools: per kind {"cells", "passed", "rolled", "kept", "why": {reason: n}}.
 static var report := {}
 
@@ -196,6 +205,13 @@ static func gate(map: PlanetData, p: Vector3, kind_key: String, loose: Array = [
 		return "no_escarpment"
 	if needs.has("water_one_side") and water_point(map, p, WATER_SIDE_M).is_empty():
 		return "dry"
+	if needs.has("still_water") and still_water(map, p, STILL_M).is_empty():
+		return "no_still_water"
+	var keep_off: Dictionary = sp.get("min_km_from", {})
+	for other_key in keep_off:
+		for other in _sites.values():
+			if str(other.get("style", "")) == str(other_key) and CubeSphere.surface_distance_m(other.dir, p) < float(keep_off[other_key]) * 1000.0:
+				return "near_" + str(other_key)
 	if needs.has("desert_river_floodplain"):
 		var rv := river_m(map, p)
 		var by_water := (rv <= FLOODPLAIN_M and rv >= 60.0) or HiddenPlaces.water_m(map, Encampment.rivers_for(map), p) <= 450.0
@@ -334,6 +350,21 @@ static func water_point(map: PlanetData, p: Vector3, within_m: float) -> Diction
 	return {}
 
 
+## The nearest standing water to `p` within `within_m` (a lake or a
+## wetland's pools, never the sea or a river), on rings 100 m apart, 12
+## bearings a ring: {"dir", "m"}, or {}.
+static func still_water(map: PlanetData, p: Vector3, within_m: float) -> Dictionary:
+	var r := 0.0
+	while r <= within_m:
+		for k in (1 if r == 0.0 else 12):
+			var q := p if r == 0.0 else CreatureSpawner._offset(p, k * TAU / 12.0, r)
+			var e := map.terrain.elevation(q, true, false, false)
+			if e >= PlanetConst.SEA_LEVEL_M - 0.5 and TerrainChunk._standing_water(map, q).x > e + 0.1:
+				return {"dir": q, "m": r}
+		r += 100.0
+	return {}
+
+
 ## The canyon at `p` (the ravine layer, a slot canyon where it pinches in
 ## dry sandstone; TerrainField._cliffs, Nests.slot_at): {"dir" (its middle
 ## line), "across" (the bearing across it), "floor_half", "rim_half" (m),
@@ -414,12 +445,22 @@ static func all_sites(map: PlanetData, kind_key := "") -> Array:
 static func _ensure(map: PlanetData) -> void:
 	if map == null or map.terrain == null:
 		return
+	# The pass asks after the land (a nest's pool, Nests, which asks
+	# Ruins what stands near it, which asks here): on the pass's own thread
+	# it answers from what the pass has placed so far, and never starts
+	# over inside itself (that recursion overflowed the stack on some
+	# worlds).
+	if _running and OS.get_thread_caller_id() == _pass_thread:
+		return
 	var sd := int(map.terrain.world_seed)
 	_mutex.lock()
 	if _for_seed == sd and _for_map == map:
 		_mutex.unlock()
 		return
+	_running = true
+	_pass_thread = OS.get_thread_caller_id()
 	_pass(map)
+	_running = false
 	_for_seed = sd
 	_for_map = map
 	_mutex.unlock()
@@ -611,6 +652,9 @@ static func make_site(map: PlanetData, kind_key: String, c: Vector3i, d: Vector3
 				return {}
 		"abbey":
 			if _abbey(map, E, d, rng, site).is_empty():
+				return {}
+		"temple_park":
+			if _temple_park(map, E, d, rng, site).is_empty():
 				return {}
 	return site
 
@@ -1336,4 +1380,76 @@ static func _abbey(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumber
 	var reach := half + float(site.nave_w)
 	site.footprint_m = reach + 10.0
 	site.clear = [[c, reach + 4.0]]
+	return site
+
+
+## The temple park (§DW): a precinct across_m wide, its frame on the
+## ground's grid; at its middle the great stupa over its relic crypt (the
+## barrow kit: the way down starts in front of the stupa, which stands
+## where the way down's open hole ends: stupa_z); round it a grid of
+## pieces (pieces: [[kind, x, z]...]: "columns", "stupa", "tower",
+## "niche", "pond" (with its width and length)), at least two ponds and one
+## more tower. Fills `site`.
+static func _temple_park(map: PlanetData, E: Dictionary, d: Vector3, rng: RandomNumberGenerator, site: Dictionary) -> Dictionary:
+	var ac: Array = E.get("across_m", [200, 400])
+	var across := rng.randf_range(float(ac[0]), float(ac[1]))
+	site.across_m = across
+	site.half_l = 6.0
+	var h0 := Delves.grid_heading(d, rng.randf() * TAU)
+	var best := INF
+	for k in 4:
+		var trial := site.duplicate()
+		trial.heading = h0 + k * PI * 0.5
+		var lay := Delves._make_layout(map, trial)
+		var end_z := ((lay.holes as Array)[0] as Rect2).end.y
+		var score := end_z + (0.0 if not (lay.exit as Dictionary).is_empty() else 100.0)
+		if score < best:
+			best = score
+			site.heading = trial.heading
+	var end_z := ((Delves._make_layout(map, site).holes as Array)[0] as Rect2).end.y
+	site.stupa_b = 7.0
+	site.stupa_z = end_z + float(site.stupa_b) + 1.0
+	# The pieces round it, on a grid of cells (the middle three kept for
+	# the great stupa and its hall).
+	var cell := 48.0
+	var nc := maxi(3, int(across / cell))
+	var pieces: Array = []
+	var kinds := ["columns", "stupa", "tower", "niche", "pond", "columns", "stupa", "pond", "niche"]
+	var ponds := 0
+	var towers := 0
+	for i in nc:
+		for j in nc:
+			var x := (i - (nc - 1) * 0.5) * cell + rng.randf_range(-6.0, 6.0)
+			var z := (j - (nc - 1) * 0.5) * cell + rng.randf_range(-6.0, 6.0)
+			if absf(x) < cell * 0.8 and absf(z - float(site.stupa_z) * 0.5) < cell * 1.1:
+				continue
+			if rng.randf() < 0.3:
+				continue
+			var kd: String = kinds[rng.randi() % kinds.size()]
+			if kd == "pond":
+				ponds += 1
+			if kd == "tower":
+				if towers >= 2:
+					kd = "stupa"
+				else:
+					towers += 1
+			pieces.append([kd, x, z])
+	# At least two ponds and one more tower.
+	var k2 := 0
+	while (ponds < 2 or towers < 1) and k2 < pieces.size():
+		if str(pieces[k2][0]) in ["columns", "stupa", "niche"]:
+			pieces[k2][0] = "pond" if ponds < 2 else "tower"
+			if ponds < 2:
+				ponds += 1
+			else:
+				towers += 1
+		k2 += 1
+	# Each pond's size (its rectangle is a hole in the ground: Delves).
+	for pc in pieces:
+		if str(pc[0]) == "pond":
+			pc.append(rng.randf_range(14.0, 24.0))
+			pc.append(rng.randf_range(10.0, 18.0))
+	site.pieces = pieces
+	site.footprint_m = across * 0.72
+	site.clear = [[d, across * 0.72]]
 	return site

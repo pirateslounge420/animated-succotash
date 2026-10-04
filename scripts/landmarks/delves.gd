@@ -115,8 +115,9 @@ static func has_delve(site: Dictionary) -> bool:
 	# gardens' galleries under their terraces (§DT).
 	if int(site.kind) in [Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS]:
 		return true
-	# The abbey's crypt and undercroft under its east end (§DU).
-	if int(site.kind) == Ruins.Kind.ABBEY:
+	# The abbey's crypt and undercroft under its east end (§DU); the
+	# temple park's relic crypt under its great stupa (§DW).
+	if int(site.kind) in [Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK]:
 		return true
 	# The northern styles (§DS): the tower house's undercroft and pit
 	# prison under its keep, a postern out; the broch's souterrain.
@@ -226,6 +227,11 @@ static func layout(map: PlanetData, site: Dictionary) -> Dictionary:
 		lay = HangingGardens.layout(map, site)
 	else:
 		lay = _make_layout(map, site)
+		# The temple park's ponds are holes in the ground too (§DW).
+		if int(site.kind) == Ruins.Kind.TEMPLE_PARK:
+			for pc in site.get("pieces", []):
+				if str(pc[0]) == "pond":
+					(lay.holes as Array).append(Rect2(float(pc[1]) - float(pc[3]) * 0.5, float(pc[2]) - float(pc[4]) * 0.5, float(pc[3]), float(pc[4])))
 	# A kind whose delve has no fire-holders (delves.json fire_holders
 	# by_ruin "none": the stone circle's souterrain, §DS.7).
 	var holders: Dictionary = (Tuning.table("delves").get("fire_holders", {}) as Dictionary).get("by_ruin", {})

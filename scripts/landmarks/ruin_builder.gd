@@ -262,6 +262,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._hanging_gardens()
 		Ruins.Kind.ABBEY:
 			b._abbey()
+		Ruins.Kind.TEMPLE_PARK:
+			b._temple_park()
 		Ruins.Kind.LONG_WALL:
 			if p_site.has("piece"):
 				b._long_wall_piece()
@@ -4564,7 +4566,7 @@ static func root_species(p_map: PlanetData, d: Vector3) -> PlantSpecies:
 ## remains): on the highest wall tops the overgrowth found.
 func _root_trees_elsewhere() -> void:
 	var rt: Dictionary = Tuning.table("ruins").get("root_trees", {})
-	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
+	if rt.is_empty() or int(site.kind) in [Ruins.Kind.TEMPLE_CITY, Ruins.Kind.LONG_WALL, Ruins.Kind.CARVED_CLIFFS, Ruins.Kind.CLIFF_DWELLING, Ruins.Kind.BRICK_CITY, Ruins.Kind.STONE_HEADS, Ruins.Kind.TERRACED_PUEBLO, Ruins.Kind.STONE_CIRCLE, Ruins.Kind.HEWN_TEMPLE, Ruins.Kind.HANGING_GARDENS, Ruins.Kind.ABBEY, Ruins.Kind.TEMPLE_PARK] or int(site.kind) in [Ruins.Kind.IGLOO, Ruins.Kind.TREEHOUSE, Ruins.Kind.BOARDWALK, Ruins.Kind.GRAVEYARD]:
 		return
 	var bkey: String = BiomeTemplates.KEYS[map.biome[map.cell_at(site.dir)]]
 	if not (rt.get("biomes", []) as Array).has(bkey):
@@ -6517,3 +6519,246 @@ func _foundation(r: Rect2, fh: float) -> void:
 			var hh := fh * rng.randf_range(0.6, 1.1)
 			var dir := (b - a).normalized()
 			_pbox(Transform3D(Basis(Vector3.UP, atan2(-dir.y, dir.x)), Vector3(p.x, g - 0.3 + (hh + 0.3) * 0.5, p.y)), Vector3(a.distance_to(b) / segs + 0.02, hh + 0.3, 0.9), ASHLAR[(i + k) % ASHLAR.size()].darkened(0.06), 0.6)
+
+
+# --- The temple park (design 3 Oct §DW) ------------------------------------------------
+
+## Old brick, red-brown laterite, the stucco left on the figures.
+const PARK_BRICK := [Color(0.58, 0.36, 0.27), Color(0.54, 0.33, 0.25), Color(0.62, 0.39, 0.29), Color(0.5, 0.31, 0.24), Color(0.56, 0.35, 0.26)]
+const PARK_LATERITE := Color(0.5, 0.3, 0.22)
+const STUCCO := Color(0.66, 0.62, 0.55)
+
+
+## The temple park (Monuments._temple_park): at its middle the great hall's
+## platform with its grid of roofless columns, the great lotus-bud tower
+## over the relic crypt (the barrow kit, its way down in front of it), the
+## seated figure at the hall's back; round it the site's pieces: column
+## halls, bell stupas, ribbed towers, figures in brick niches, ponds with
+## their brick edges (the ponds' rectangles are holes in the ground, the
+## water level in them; one has the great fig at its edge).
+func _temple_park() -> void:
+	palette = PARK_BRICK
+	var across: float = site.across_m
+	_lod_m = across * 0.72 + LOD_M
+	_lit_per_pixel = true
+	var sz: float = site.stupa_z
+	var sb: float = site.stupa_b
+	# The great tower over the crypt.
+	_lotus_tower(Vector2(0.0, sz), sb, 26.0)
+	# The great hall before it: its platform beside the way down, its
+	# columns, the seated figure at its back by the tower.
+	for sx: float in [-1.0, 1.0]:
+		var hx := sx * (sb + 10.0)
+		_park_platform(Rect2(hx - 8.0, sz - 22.0, 16.0, 30.0), 1.4)
+		_column_grid(Rect2(hx - 6.5, sz - 20.0, 13.0, 26.0), rng.randf_range(4.5, 6.5))
+	_seated_figure(Vector3(0.0, ground(0.0, sz + sb + 6.0), sz + sb + 6.0), 3.2, PI)
+	var fig_done := false
+	for pc in site.pieces:
+		var x := float(pc[1])
+		var z := float(pc[2])
+		match str(pc[0]):
+			"columns":
+				var cw := rng.randf_range(12.0, 18.0)
+				var cl := rng.randf_range(20.0, 30.0)
+				_park_platform(Rect2(x - cw * 0.5 - 1.5, z - cl * 0.5 - 1.5, cw + 3.0, cl + 3.0), rng.randf_range(0.8, 1.6))
+				_column_grid(Rect2(x - cw * 0.5, z - cl * 0.5, cw, cl), rng.randf_range(3.5, 6.0))
+			"stupa":
+				_park_platform(Rect2(x - 6.0, z - 6.0, 12.0, 12.0), 1.0)
+				_bell_stupa(Vector3(x, ground(x, z) + 1.0, z), rng.randf_range(2.6, 4.0))
+			"tower":
+				_park_platform(Rect2(x - 7.0, z - 7.0, 14.0, 14.0), 1.2)
+				_prang(Vector3(x, ground(x, z) + 1.2, z), rng.randf_range(16.0, 24.0))
+			"niche":
+				_niche(Vector3(x, ground(x, z), z), rng.randf() * TAU)
+			"pond":
+				var fig := not fig_done
+				_pond(Rect2(x - float(pc[3]) * 0.5, z - float(pc[4]) * 0.5, float(pc[3]), float(pc[4])), fig)
+				fig_done = true
+	# A camp among the platforms (its spot) could light an open fire.
+	_camp_spot = Vector3(-sb - 22.0, ground(-sb - 22.0, sz - 30.0), sz - 30.0)
+	if Delves.has_delve(site):
+		_delve_build()
+
+
+## A stepped brick platform over rectangle `r` (local x/z), `ph` high at its
+## lowest corner, grassed over on top (§DI).
+func _park_platform(r: Rect2, ph: float) -> void:
+	var lo := INF
+	var hi := -INF
+	for c in [r.position, r.end, Vector2(r.position.x, r.end.y), Vector2(r.end.x, r.position.y), r.get_center()]:
+		lo = minf(lo, ground(c.x, c.y))
+		hi = maxf(hi, ground(c.x, c.y))
+	var top := hi + ph * 0.5
+	var c2 := r.get_center()
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c2.x, (lo - 0.6 + top - ph * 0.5) * 0.5, c2.y)), Vector3(r.size.x + 1.6, top - ph * 0.5 - lo + 0.6, r.size.y + 1.6), PARK_BRICK[3], 0.4)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c2.x, top - ph * 0.25, c2.y)), Vector3(r.size.x, ph * 0.5, r.size.y), PARK_BRICK[0], 0.85)
+
+
+## The top of whatever stands at (x, z): a platform's, else the ground.
+func _park_floor(x: float, z: float) -> float:
+	return ground(x, z)
+
+
+## A grid of roofless laterite columns over rectangle `r`, `ch` high: in rows
+## 3.6 m apart; some broken short, a few fallen in the grass; a creeper on
+## some (§DI).
+func _column_grid(r: Rect2, ch: float) -> void:
+	var nx := maxi(2, int(r.size.x / 3.6) + 1)
+	var nz := maxi(2, int(r.size.y / 3.6) + 1)
+	for i in nx:
+		for j in nz:
+			var x := r.position.x + r.size.x * i / (nx - 1)
+			var z := r.position.y + r.size.y * j / (nz - 1)
+			var g := ground(x, z) + 1.4
+			var roll := rng.randf()
+			if roll < 0.08:
+				var a := rng.randf() * TAU
+				_pbox(Transform3D(Basis(Vector3.UP, a) * Basis(Vector3.RIGHT, PI * 0.5), Vector3(x + cos(a) * ch * 0.4, g + 0.4, z + sin(a) * ch * 0.4)), Vector3(0.8, ch * 0.8, 0.8), PARK_LATERITE.darkened(0.08), 0.5)
+				continue
+			var hh := ch if roll > 0.3 else ch * rng.randf_range(0.25, 0.7)
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(x, g - 0.5 + (hh + 0.5) * 0.5, z)), Vector3(0.8, hh + 0.5, 0.8), PARK_LATERITE.lightened(rng.randf_range(-0.05, 0.08)), 0.2)
+			if roll > 0.85:
+				ivy(Vector3(x + 0.42, g + hh, z), Vector3(1.0, 0.0, 0.0), rng.randf_range(1.5, hh))
+
+
+## A bell-shaped stupa on `p` (its foot), its bell `r` across the middle:
+## round bases, the bell, the box over it, the spire.
+func _bell_stupa(p: Vector3, r: float) -> void:
+	var y := p.y
+	for tier in [[r * 1.5, 0.8], [r * 1.3, 0.7], [r * 1.12, 0.6]]:
+		for rot: float in [0.0, PI * 0.25]:
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(p.x, y + float(tier[1]) * 0.5, p.z)), Vector3(float(tier[0]) * 2.0 * 0.83, float(tier[1]), float(tier[0]) * 2.0 * 0.83), STUCCO.darkened(0.12), 0.4)
+		y += float(tier[1])
+	# The bell: wide at its shoulder, drawn in to the top.
+	var bh := r * 1.6
+	for k in 4:
+		var t := float(k) / 4.0
+		var rk := r * (1.0 - 0.45 * t * t)
+		for rot: float in [0.0, PI * 0.25]:
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(p.x, y + bh * (t + 0.125), p.z)), Vector3(rk * 1.66, bh * 0.25 + 0.02, rk * 1.66), STUCCO.darkened(0.06 + 0.04 * k), 0.15)
+	y += bh
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, y + 0.4, p.z)), Vector3(r * 0.7, 0.8, r * 0.7), STUCCO.darkened(0.15), 0.1)
+	var sh := r * 1.8
+	for k in 5:
+		var sw := r * 0.35 * (1.0 - k / 5.0) + 0.1
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, y + 0.8 + sh * (k + 0.5) / 5.0, p.z)), Vector3(sw, sh / 5.0, sw), STUCCO.darkened(0.2), 0.0)
+
+
+## The great lotus-bud tower at `c` (local x/z), its base `b` half-wide,
+## `h` high: a stepped base, the square body with a niche each side, the
+## bud drawn in to its point.
+func _lotus_tower(c: Vector2, b: float, h: float) -> void:
+	var g := ground(c.x, c.y)
+	var y := g - 0.5
+	var w := b * 2.0
+	for tier in 3:
+		var th := 1.6
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + th * 0.5, c.y)), Vector3(w, th, w), PARK_BRICK[tier % 5], 0.6)
+		y += th
+		w *= 0.84
+	var body := h * 0.35
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + body * 0.5, c.y)), Vector3(w * 0.75, body, w * 0.75), PARK_BRICK[1], 0.3)
+	for f in 4:
+		var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+		var o := c + n2 * (w * 0.375 + 0.03)
+		_pbox(Transform3D(Basis(Vector3.UP, atan2(n2.x, n2.y)), Vector3(o.x, y + body * 0.45, o.y)), Vector3(1.4, 2.4, 0.06), VOID, 0.0)
+	y += body
+	# The bud: an octagon swelling then drawn in to its point.
+	var bud := h - (y - g) - 2.0
+	for k in 6:
+		var t := float(k) / 6.0
+		var bw := w * 0.75 * (1.0 + 0.25 * sin(t * PI) - 0.9 * t)
+		for rot: float in [0.0, PI * 0.25]:
+			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(c.x, y + bud * (t + 1.0 / 12.0), c.y)), Vector3(maxf(bw, 0.6) * 0.83, bud / 6.0 + 0.02, maxf(bw, 0.6) * 0.83), STUCCO.darkened(0.08 + 0.03 * k), 0.2)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + bud + 1.0, c.y)), Vector3(0.35, 2.0, 0.35), STUCCO.darkened(0.25), 0.0)
+
+
+## A ribbed corn-cob tower on `p` (its foot), `h` high: the square base
+## with its stair and door, the cob drawn in course by course with its
+## ribs, the rounded crown.
+func _prang(p: Vector3, h: float) -> void:
+	var base_h := h * 0.3
+	var w := h * 0.3
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, p.y + base_h * 0.5, p.z)), Vector3(w, base_h, w), PARK_LATERITE, 0.3)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, p.y + 1.3, p.z - w * 0.5 - 0.03)), Vector3(1.2, 2.4, 0.06), VOID, 0.0)
+	var y := p.y + base_h
+	var cob := h - base_h - 1.5
+	var n := 6
+	for k in n:
+		var t := float(k) / n
+		var cw := w * 0.9 * (1.0 - 0.55 * t * t)
+		var ch := cob / n
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, y + ch * 0.5, p.z)), Vector3(cw, ch, cw), STUCCO.darkened(0.1 + 0.03 * k), 0.15)
+		# The ribs.
+		for f in 4:
+			var n2 := [Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0)][f] as Vector2
+			for u: float in [-0.25, 0.25]:
+				var o := Vector2(p.x, p.z) + n2 * (cw * 0.5 + 0.1) + Vector2(-n2.y, n2.x) * u * cw
+				_pbox(Transform3D(Basis(Vector3.UP, atan2(n2.x, n2.y)), Vector3(o.x, y + ch * 0.5, o.y)), Vector3(0.35, ch * 0.92, 0.25), STUCCO.darkened(0.18), 0.1)
+		y += ch
+	for rot: float in [0.0, PI * 0.25]:
+		_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(p.x, y + 0.6, p.z)), Vector3(w * 0.3, 1.2, w * 0.3), STUCCO.darkened(0.3), 0.0)
+
+
+## A seated figure on `p` (its foot), `s` its scale (1 = sitting 1.6 m
+## tall), facing `rot`: crossed legs, the body, the head, the hands in its
+## lap; its face worn smooth (no features), nobody by name (§BO).
+func _seated_figure(p: Vector3, s: float, rot: float) -> void:
+	var bs := Basis(Vector3.UP, rot)
+	var fc := STUCCO.darkened(0.05)
+	var parts := [[Vector3(0.0, 0.25, 0.0), Vector3(2.2, 0.5, 1.6), PARK_BRICK[3]],
+		[Vector3(0.0, 0.78, 0.1), Vector3(1.6, 0.55, 1.1), fc],
+		[Vector3(0.0, 1.6, -0.05), Vector3(0.85, 1.1, 0.55), fc],
+		[Vector3(0.0, 2.42, -0.05), Vector3(0.48, 0.55, 0.48), fc],
+		[Vector3(0.0, 2.78, -0.05), Vector3(0.22, 0.25, 0.22), fc.darkened(0.1)],
+		[Vector3(0.0, 1.12, 0.42), Vector3(0.6, 0.18, 0.35), fc.lightened(0.05)]]
+	for pt in parts:
+		_pbox(Transform3D(bs, p + bs * ((pt[0] as Vector3) * s)), (pt[1] as Vector3) * s, pt[2], 0.15)
+
+
+## A brick niche on `p`, facing `rot`, a seated figure in it.
+func _niche(p: Vector3, rot: float) -> void:
+	var bs := Basis(Vector3.UP, rot)
+	var s := rng.randf_range(1.0, 1.6)
+	var nh := 3.6 * s
+	var nw := 3.0 * s
+	_pbox(Transform3D(bs, p + bs * Vector3(0.0, nh * 0.5 - 0.3, -0.9 * s)), Vector3(nw + 1.2, nh + 0.6, 0.8), PARK_BRICK[2], 0.4)
+	for sx: float in [-1.0, 1.0]:
+		_pbox(Transform3D(bs, p + bs * Vector3(sx * (nw * 0.5 + 0.3), nh * 0.5 - 0.3, 0.0)), Vector3(0.6, nh + 0.6, 1.8 * s), PARK_BRICK[1], 0.4)
+	_pbox(Transform3D(bs, p + bs * Vector3(0.0, nh + 0.2, -0.1)), Vector3(nw + 1.2, 0.8, 2.0 * s), PARK_BRICK[4], 0.6)
+	_seated_figure(p + bs * Vector3(0.0, 0.0, -0.2 * s), s, rot)
+
+
+## A pond in rectangle `r` (a hole in the ground, Delves): its water level
+## under the lowest of its bank, its floor below, brick edges round it and
+## a paved apron over the ground's ragged edge; `fig` sets the great fig on
+## its bank, its roots down into the water (§DW, a root-tree).
+func _pond(r: Rect2, fig: bool) -> void:
+	var lo := INF
+	for k in 9:
+		var q := Vector2(lerpf(r.position.x, r.end.x, (k % 3) / 2.0), lerpf(r.position.y, r.end.y, (k / 3) / 2.0))
+		lo = minf(lo, ground(q.x, q.y))
+	for k in 8:
+		var a := TAU * k / 8.0
+		var q := r.get_center() + Vector2(cos(a) * r.size.x * 0.5, sin(a) * r.size.y * 0.5)
+		lo = minf(lo, ground(q.x, q.y))
+	var wl := lo - 0.35
+	var c := r.get_center()
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, wl - 1.6, c.y)), Vector3(r.size.x, 1.0, r.size.y), Color(0.16, 0.18, 0.12), 0.9)
+	_water_strip(Vector3(c.x, wl, r.position.y), Vector3(c.x, wl, r.end.y), r.size.x * 0.5, 0.0)
+	var cs := [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	for k in 4:
+		var a: Vector2 = cs[k]
+		var b: Vector2 = cs[(k + 1) % 4]
+		var out := (a + b) * 0.5 - c
+		out = Vector2(signf(out.x) if absf(out.x) > absf(out.y) else 0.0, signf(out.y) if absf(out.y) >= absf(out.x) else 0.0)
+		var dir := (b - a).normalized()
+		var segs := maxi(1, int(a.distance_to(b) / 4.0))
+		for i in segs:
+			var p := a.lerp(b, (i + 0.5) / segs)
+			var pe := p + out * 2.6
+			var top := maxf(ground(p.x, p.y), maxf(ground(pe.x, pe.y), ground(p.x + out.x * 5.0, p.y + out.y * 5.0))) + 0.08
+			_pbox(Transform3D(Basis(Vector3.UP, atan2(-dir.y, dir.x)), Vector3(pe.x, (wl - 2.0 + top) * 0.5, pe.y)), Vector3(a.distance_to(b) / segs + 5.2, top - wl + 2.0, 5.2), PARK_BRICK[(i + k) % 5].darkened(0.05), 0.75)
+	if fig:
+		var bank := Vector2(r.end.x + 2.0, c.y)
+		_root_tree_at(Vector3(bank.x, ground(bank.x, bank.y) + 0.1, bank.y), PI * 0.5, 1.2)
