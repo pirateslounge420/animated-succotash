@@ -362,6 +362,9 @@ func _compute_base(key: Vector3i) -> void:
 	# near_m; design 1 Oct §CE).
 	VineCover.green(map, data)
 	data["dapple"] = CanopyDapple.bake(data.center, data.plants)
+	# Each plant's shelter (the dapple's sky visibility), its wind kind and
+	# its flutter, into its custom data for the foliage shader (§DA, Wind).
+	Wind.stamp(data.plants, data.dapple, data.center)
 	TerrainChunk.prepare_meshes(data)
 	data["hosts"] = trees.hosts
 	# The trees' meshes, if this is the first time a species shows up, and
@@ -381,6 +384,7 @@ func _compute_detail(key: Vector3i, data: Dictionary, hosts: Array) -> void:
 	var vines := {}
 	if not skip:
 		plants = VegetationPlacer.prepare(VegetationPlacer.compute_detail(key, map, data, hosts), data.center, data.anchor_r)
+		Wind.stamp(plants, data.get("dapple"), data.center)
 		PlantMeshes.warm(plants.keys())
 		# Vines over cliff faces and open ground (design 1 Oct §CE).
 		var cols: PackedColorArray = data.get("colors", PackedColorArray())

@@ -18,6 +18,8 @@ extends SceneTree
 ## not list it FAILS the site (unlisted_species_allowed). The opening
 ## camp's first frame must be dawn (design 3 Oct §CY.1: within the first
 ## minutes after dawn begins).
+## WIND=6 pins the weather's wind at 6 m/s (design §DA's breeze; else
+## 1.1 m/s).
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -379,7 +381,12 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	for h in hours:
 		var hour := float(h.get("solar_h", 14.0))
 		var overcast := str(h.get("weather", "clear")) == "overcast"
-		var wx := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 0.0 if overcast else 1.0, "cloud": 0.95 if overcast else 0.12}
+		# WIND=<m/s> blows that hard (design §DA: a meadow in a breeze);
+		# else the gentle 1.1 m/s of every walkabout before it.
+		var wind_v := Vector3(1, 0, 0.5)
+		if OS.get_environment("WIND") != "":
+			wind_v = wind_v.normalized() * float(OS.get_environment("WIND"))
+		var wx := {"wind": wind_v, "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 0.0 if overcast else 1.0, "cloud": 0.95 if overcast else 0.12}
 		main._weather_timer = 1e9
 		main._local_weather = wx
 		main._weather_eased = wx.duplicate()

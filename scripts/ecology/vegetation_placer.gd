@@ -944,7 +944,8 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 
 ## One instance into a MultiMesh buffer at float `k`: the transform as the
 ## rows of its 3x4 matrix, then color (white), then custom data (moss,
-## vines, rustle 0, bare): Godot's MultiMesh layout.
+## vines, rustle 0 (Wind.stamp adds the plant's wind code), bare):
+## Godot's MultiMesh layout.
 static func _put(buf: PackedFloat32Array, k: int, basis: Basis, pos: Vector3, moss: float, vines: float, bare := 0.0) -> void:
 	buf[k] = basis.x.x
 	buf[k + 1] = basis.y.x
@@ -1050,7 +1051,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 static func _multimesh(mesh: Mesh, buf: PackedFloat32Array, count: int) -> MultiMesh:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.use_custom_data = true # (moss, vines, rustle, bare)
+	mm.use_custom_data = true # (moss, vines, rustle + Wind's code, bare)
 	# Instance colors (all white) too: without them the compatibility
 	# renderer garbles vertex colors when custom data is on.
 	mm.use_colors = true

@@ -219,7 +219,8 @@ func _animate(delta: float) -> void:
 	for r in _rustling:
 		r.t -= delta / RUSTLE_S
 		var c: Color = r.base
-		c.b = maxf(r.t, 0.0)
+		# (The blue's whole part is the plant's wind code: Wind.)
+		c.b = Wind.with_rustle(c.b, maxf(r.t, 0.0))
 		(r.mm as MultiMesh).set_instance_custom_data(r.inst, c)
 		if r.t > 0.0:
 			alive.append(r)

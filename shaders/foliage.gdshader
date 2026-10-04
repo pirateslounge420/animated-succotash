@@ -3,8 +3,12 @@
 // color in vertex RGB and how much each vertex may sway in vertex alpha
 // (0 at the roots, 1 at the crown), so trunks stay put and crowns move.
 // Wind comes from the live weather: the global `plant_wind`, set each frame
-// by WeatherFX (every plant material reads it); its direction
-// sets which way crowns lean and its strength how far and how fast.
+// by WeatherFX, with the travelling gust field on top (design §DA,
+// wind.gdshaderinc, data/wind.json): each plant samples the field at its
+// root, is sheltered below the crowns by its spot's sky visibility, and
+// moves by the Beaufort table (grass bows; leaves, twigs, branches and
+// trunks start at their own wind speeds; each trunk sways at its period
+// by height; Populus and the sacred fig flutter in any air).
 //
 // Textured with Look's tiny detail tiles (§AG), nearest-filtered with at
 // most two mip levels (retro_tex): bark every look_tile_m2.x metres on
@@ -68,6 +72,7 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
+#include "res://shaders/wind.gdshaderinc"
 
 global uniform vec3 plant_wind;
 // The eye (the active camera, scene space) and how far from it leaves
@@ -164,6 +169,7 @@ const float SP_NEAR_M = 25.0;
 //             instance
 //   f_d       dead (bare 1), a dead limb of a living tree (TreeArch: UV2.y
 //             1 on bark), a far picture's crown base and trunk half-width
+//             (z on every other plant: the gust's sheen on grass, §DA)
 //   f_imp     a far picture's crown profile (CUSTOM0)
 // Smooth (across a triangle):
 //   s_pos     position in the plant's own frame (meters), the sway weight
@@ -289,35 +295,101 @@ void vertex() {
 		float fade = 1.0 - smoothstep(draw_range_m * 0.9, draw_range_m, distance(root, look_eye));
 		VERTEX = root + (VERTEX - root) * fade;
 	}
+	// The wind (design 3 Oct §DA, wind.gdshaderinc; Wind I). Every plant
+	// samples the one gust field at its root, so a gust is a patch that
+	// runs across a meadow and through a wood, not each plant on its own
+	// sine. Its instance custom blue carries its rustle (TreeContact) and
+	// Wind.stamp's code: its cover (1 - sky visibility, §BD) in
+	// 31sts, its flutter flag, and its kind (0 sheltered below the
+	// crowns, 1 grass and herbs, 2 a canopy crown in the full wind).
 	float sway = COLOR.a;
-	float speed = length(plant_wind);
-	vec3 dir = speed > 0.01 ? plant_wind / speed : vec3(0.0);
+	vec3 root_w = MODEL_MATRIX[3].xyz;
+	vec3 up_p = normalize(MODEL_MATRIX[1].xyz);
+	float tall = length(MODEL_MATRIX[1].xyz);
+	float wcode = floor(INSTANCE_CUSTOM.b * 0.5 + 1e-4);
+	float rustle = INSTANCE_CUSTOM.b - 2.0 * wcode;
+	float sky = 1.0 - mod(wcode, 32.0) / 31.0;
+	float flut = mod(floor(wcode / 32.0), 2.0);
+	float wkind = floor(wcode / 64.0);
+	vec4 gv = wind_gust_vec(root_w, plant_wind, up_p);
+	float u10 = length(gv.xyz);
+	vec3 dir = u10 > 0.01 ? gv.xyz / u10 : vec3(0.0);
+	// The wind it feels, as the open 10 m wind the Beaufort table is
+	// written against: the crowns the full gust, everything below them
+	// sheltered by its spot's sky visibility; how far it moves goes with
+	// the wind at its own height (the log profile).
+	float ug = u10 * (wkind > 1.5 ? 1.0 : wind_shelter(sky));
+	float prof = wind_profile(max(tall * 0.8, 0.05));
 	float phase = float(INSTANCE_ID) * 1.37;
-	float gust = 0.65 + 0.35 * sin(TIME * (1.1 + speed * 0.06) + phase);
-	float lean = clamp(speed * 0.04, 0.0, 0.8) * gust;
-	float flutter = sin(TIME * 3.3 + phase * 2.1) * 0.05 * clamp(speed * 0.12, 0.0, 1.0);
-	VERTEX += dir * (lean + flutter) * sway;
-	// A branchy tree's twigs each sway on their own phase, and the
-	// clusters they carry with them, so the gaps in the crown open and
-	// close (§AJ 5): the phase in CUSTOM0.w on the twig's wood, in UV2.y on
-	// its clusters.
-	// A whole leaf (2.25) sways on its stalk's phase, in UV2.y.
+	bool leafy = (mat_id > 0.5 && mat_id < 2.5) || (mat_id > 4.5 && mat_id < 5.5);
 	bool blade_v = abs(mat_id - 2.25) < 0.1;
-	float tw = mat_id > 5.5 ? -1.0 : ((mat_id > 4.5 || blade_v) ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0));
-	if (tw >= 0.0 && sway > 0.0) {
-		float size_k = clamp(length(MODEL_MATRIX[1].xyz) / 15.0, 0.5, 1.5);
-		float amp = (0.06 + 0.12 * clamp(speed * 0.1, 0.0, 1.0)) * size_k * sway / 0.45;
-		vec3 side_w = speed > 0.01 ? normalize(cross(dir, normalize(MODEL_MATRIX[1].xyz)) + vec3(1e-4)) : normalize(MODEL_MATRIX[0].xyz);
-		float t1 = TIME * (1.6 + tw * 0.9) + tw * 6.2832 + phase;
-		VERTEX += (side_w * sin(t1) + dir * 0.6 * sin(t1 * 1.37 + 1.1) + normalize(MODEL_MATRIX[1].xyz) * 0.3 * sin(t1 * 0.73 + 2.0)) * amp;
+	f_d.z = 0.0;
+	if (wkind > 0.5 && wkind < 1.5) {
+		// Grass, reeds and herbs (wind.json grass): bow from lean_from_mps
+		// to lean_max of their height, nearly flat by flatten_mps; a gust
+		// is a bowed patch, its cards tipping their lit side away, so a
+		// paler sheen runs over the meadow ahead of it.
+		float bow = wind_crowns2.w * smoothstep(wind_grass.x, wind_grass.y, ug);
+		float shiver = 0.08 * bow * sin(TIME * 3.1 + phase);
+		VERTEX += dir * (bow + shiver) * tall * sway - up_p * tall * sway * bow * bow * 0.45;
+		f_d.z = wind_grass.z * smoothstep(wind_grass.x, wind_grass.y * 0.6, ug) * clamp(gv.w - 0.85, 0.0, 0.75) * 0.35;
+	} else {
+		// Trees and shrubs by force (wind.json crowns): leaves from
+		// leaves_mps, twigs from twigs_mps, small branches from
+		// small_branches_mps, small trees swaying from small_trees_mps,
+		// large branches from large_branches_mps, whole trees from
+		// whole_trees_mps. Nothing breaks (§BS).
+		float leaves = wind_gate(ug, wind_crowns.x);
+		float twigs = wind_gate(ug, wind_crowns.y);
+		float smallb = wind_gate(ug, wind_crowns.z);
+		float largeb = wind_gate(ug, wind_crowns2.x);
+		// The steady push: the crown leans downwind, more in a gust.
+		float push = min(0.022 * ug * prof * leaves, min(0.9, 0.06 * tall));
+		// The trunk's own sway, at its period by height, so a stand of one
+		// height sways together; the gust field's own value shifts its
+		// phase, so the sway rolls through the stand with the gust.
+		float thr = mix(wind_crowns.w, wind_crowns2.y, smoothstep(6.0, 15.0, tall));
+		float whole = wind_gate(ug, thr) * clamp(ug / thr, 1.0, 1.6);
+		float per = wind_sway_period(tall);
+		float osc = sin(6.2832 * TIME / per + 2.5 * (gv.w - 1.0));
+		float sway_m = 0.012 * tall * prof * whole;
+		vec3 side_s = normalize(cross(up_p, dir) + vec3(1e-4));
+		VERTEX += (dir * (push + sway_m * osc) + side_s * sway_m * 0.3 * osc) * sway;
+		// A branchy tree's twigs each sway on their own phase, and the
+		// clusters they carry with them, so the gaps in the crown open and
+		// close (§AJ 5): the phase in CUSTOM0.w on the twig's wood, in UV2.y
+		// on its clusters; a whole leaf (2.25) on its stalk's, in UV2.y.
+		// Still below twigs_mps, more with the small and large branches.
+		float tw = mat_id > 5.5 ? -1.0 : ((mat_id > 4.5 || blade_v) ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0));
+		if (tw >= 0.0 && sway > 0.0) {
+			float size_k = clamp(tall / 15.0, 0.5, 1.5);
+			float amp = (0.05 * twigs + 0.06 * smallb + 0.08 * largeb) * prof * size_k * sway / 0.45;
+			vec3 side_w = u10 > 0.01 ? side_s : normalize(MODEL_MATRIX[0].xyz);
+			float t1 = TIME * (1.6 + tw * 0.9) + tw * 6.2832 + phase;
+			VERTEX += (side_w * sin(t1) + dir * 0.6 * sin(t1 * 1.37 + 1.1) + up_p * 0.3 * sin(t1 * 0.73 + 2.0)) * amp;
+		}
+		// The leaves stir from leaves_mps: a small quick shimmer of the
+		// leaf clusters and cards.
+		if (leafy && sway > 0.0) {
+			float lp = (tw >= 0.0 ? tw : 0.0) * 6.2832 + phase;
+			float lamp = 0.02 * leaves * clamp(ug / wind_crowns.x, 1.0, 3.0) * sway;
+			VERTEX += (side_s * sin(TIME * 5.3 + lp) + up_p * 0.5 * sin(TIME * 4.1 + lp * 1.7)) * lamp;
+		}
+	}
+	// Flutter (wind.json flutter): leaves on long or flattened stalks
+	// (Populus, Ficus religiosa; §CL) tremble in any air, from from_mps,
+	// by amount on top of the crown's sway.
+	if (flut > 0.5 && leafy) {
+		float lp = (blade_v || mat_id > 4.5 ? UV2.y : 0.0) * 6.2832 + phase;
+		float famp = wind_prof.w * smoothstep(wind_crowns2.z, wind_crowns2.z + 1.5, ug) * sway;
+		VERTEX += (normalize(cross(up_p, dir + vec3(1e-3, 0.0, 0.0))) * sin(TIME * 9.0 + lp) + up_p * 0.4 * sin(TIME * 7.3 + lp * 2.3)) * famp;
 	}
 	// Rustled (brushed through or bumped, TreeContact): a quick shiver of
 	// the whole crown, a few tens of centimeters on a big tree.
-	float rustle = INSTANCE_CUSTOM.b;
 	if (rustle > 0.001) {
 		vec3 sx = normalize(MODEL_MATRIX[0].xyz);
 		vec3 sz = normalize(MODEL_MATRIX[2].xyz);
-		float amp = 0.012 * length(MODEL_MATRIX[1].xyz) * rustle * sway;
+		float amp = 0.012 * tall * rustle * sway;
 		VERTEX += (sx * sin(TIME * 23.0 + phase) + sz * cos(TIME * 19.0 + phase * 1.3)) * amp;
 	}
 	sway_w = sway;
@@ -680,6 +752,11 @@ void fragment() {
 	if (v_leafs > 1.01 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
 		// Shade leaves: more chlorophyll to a leaf, a little darker.
 		ALBEDO *= mix(1.0, 0.86, clamp((v_leafs - 1.0) / 0.45, 0.0, 1.0));
+	}
+	if (mat_id < 5.5 && f_d.z > 0.0) {
+		// The gust's sheen on grass (§DA, wind.json grass.sheen): bowed
+		// blades tip their lit side away, paler toward the tips.
+		ALBEDO *= 1.0 + f_d.z * smoothstep(0.2, 1.0, sway_w);
 	}
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one

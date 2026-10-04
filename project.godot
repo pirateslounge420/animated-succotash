@@ -93,6 +93,46 @@ plant_wind={
 "type": "vec3",
 "value": Vector3(0, 0, 0)
 }
+wind_shift={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+wind_gust={
+"type": "vec4",
+"value": Vector4(0.28, 1.6, 0.45, 0.5)
+}
+wind_gust2={
+"type": "vec4",
+"value": Vector4(40, 12, 0.174533, 3.12)
+}
+wind_prof={
+"type": "vec4",
+"value": Vector4(0.03, 10, 0.15, 0.08)
+}
+wind_crowns={
+"type": "vec4",
+"value": Vector4(1.6, 3.4, 5.5, 8)
+}
+wind_crowns2={
+"type": "vec4",
+"value": Vector4(10.8, 13.9, 0.1, 0.55)
+}
+wind_grass={
+"type": "vec4",
+"value": Vector4(1.6, 13.9, 1, 0)
+}
+wind_sway_h={
+"type": "vec4",
+"value": Vector4(3, 10, 20, 40)
+}
+wind_sway_s={
+"type": "vec4",
+"value": Vector4(0.8, 1.7, 2.8, 4.5)
+}
+wind_sway_last={
+"type": "vec2",
+"value": Vector2(70, 6)
+}
 look_canopy_dark={
 "type": "float",
 "value": 0.0

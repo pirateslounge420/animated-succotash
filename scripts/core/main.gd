@@ -480,6 +480,8 @@ func _process(delta: float) -> void:
 	if float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 and not _under_roof():
 		Kindling.rain_on(player.inventory, world.days)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
+	# The gust field rides on the wind just set (design §DA, Wind).
+	Wind.tick(delta, world, player)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
 	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))

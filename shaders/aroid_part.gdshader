@@ -21,12 +21,14 @@
 // are drawn with it too.
 // Vertex-lit like the creatures and props (Lambert, no specular, Look),
 // cooled toward the night palette after dark, fogged like everything else.
-// The tall parts lean with the wind by their height (plant_wind).
+// The tall parts lean with the wind by their height (plant_wind and the
+// gust field, design §DA: wind.gdshaderinc).
 shader_type spatial;
 render_mode vertex_lighting, diffuse_lambert, specular_disabled, cull_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
+#include "res://shaders/wind.gdshaderinc"
 
 global uniform vec3 plant_wind;
 
@@ -52,13 +54,17 @@ void vertex() {
 	v_obj = VERTEX;
 	v_c2 = INSTANCE_CUSTOM;
 	v_mode = INSTANCE_CUSTOM.a;
-	// Lean with the wind by the square of the height up the part.
-	float speed = length(plant_wind);
+	// Lean with the wind by the square of the height up the part: the
+	// gust field at the plant's foot (design §DA, wind.gdshaderinc), from
+	// the leaves' wind speed (wind.json crowns.leaves_mps), rocking at the
+	// sway period of its height as the gusts pass.
 	vec3 up = MODEL_MATRIX[1].xyz;
 	float h = length(up);
+	vec4 gv = wind_gust_vec(MODEL_MATRIX[3].xyz, plant_wind, up / max(h, 1e-4));
+	float speed = length(gv.xyz);
 	float k = clamp(VERTEX.y, 0.0, 1.2);
-	vec3 bend = speed > 0.01 ? plant_wind / speed * clamp(speed * 0.01, 0.0, 0.12) * h * k * k : vec3(0.0);
-	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz + bend * (0.8 + 0.2 * sin(TIME * 1.7 + float(INSTANCE_ID)));
+	vec3 bend = speed > 0.01 ? gv.xyz / speed * clamp(speed * 0.01, 0.0, 0.12) * h * k * k * wind_gate(speed, wind_crowns.x) : vec3(0.0);
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz + bend * (0.8 + 0.2 * sin(6.2832 * TIME / wind_sway_period(h) + 2.5 * (gv.w - 1.0)));
 	VERTEX = (inverse(MODEL_MATRIX) * vec4(world_pos, 1.0)).xyz;
 }
 

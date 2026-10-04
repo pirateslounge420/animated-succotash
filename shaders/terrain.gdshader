@@ -39,6 +39,7 @@ render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
+#include "res://shaders/wind.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
@@ -198,7 +199,10 @@ void fragment() {
 	// clusters cast, shifting a little as the wind moves them.
 	float dap = 0.0;
 	if (dapple_on) {
-		float gust = clamp(length(plant_wind) * 0.1, 0.15, 1.0);
+		// The crowns above move with the gust field here (design §DA,
+		// wind.gdshaderinc): still under leaves_mps, more as a gust passes.
+		float u = length(plant_wind) * wind_gust_field(world_pos, length(plant_wind)).x;
+		float gust = clamp(u * 0.1, 0.15, 1.0) * wind_gate(u, wind_crowns.x);
 		vec2 wob = vec2(sin(TIME * 1.3 + UV.y * 0.9), cos(TIME * 1.1 + UV.x * 0.8)) * 0.18 * gust;
 		dap = 1.0 - texture(dapple_tex, (UV + wob) / dapple_span + 0.5).r;
 	}
