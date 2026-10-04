@@ -289,6 +289,7 @@ func _on_planet_ready() -> void:
 	dread.name = "Dread"
 	add_child(dread)
 	dread.setup(world, chunks, player, sky)
+	Senses.setup(world, chunks, player, sky)
 	sound_bed = SoundBed.new()
 	sound_bed.name = "SoundBed"
 	add_child(sound_bed)

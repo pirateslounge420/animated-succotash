@@ -1,11 +1,16 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §DF] Your light gives you away (3 Oct, Mike by voice: \"lighting a torch at night or holding it at night actually gives away your position ... so actually, snuffing your flame will become a tactical thing\"; \"different creatures will see you at different distances ... creatures at night are going to have really good night vision\"; \"other things out there that have senses in different ways ... because it smells you\"). What the player gives off, and how each kind of watcher senses it. First guesses by Claude (chat), 3 Oct; the designer tunes by play. Restart after editing.",
+  "about": "Your light gives you away (3 Oct, Mike by voice: \"lighting a torch at night or holding it at night actually gives away your position ... so actually, snuffing your flame will become a tactical thing\"; \"different creatures will see you at different distances ... creatures at night are going to have really good night vision\"; \"other things out there that have senses in different ways ... because it smells you\"). What the player gives off, and how each kind of watcher senses it. First guesses by Claude (chat), 3 Oct; the designer tunes by play. Restart after editing.",
   "player": "What you give off. light: a lit torch, in hand or planted, is seen far beyond its own circle (its circle is how far the lurkers keep back, §CQ; this is how far it is seen). A planted torch is a light like a held one, so whatever comes to the light finds the torch, not you. sound: your footsteps, from noise_events.gd as built (0 silent to 1 sprinting; sneaking quietest). scent: you always give it off, and it rides the wind like every scent (27 Sept §0: pheromones on the wind field): it carries downwind only (wind.json), so a nose upwind of you smells nothing and the werewolf comes from downwind (§DG).",
   "watchers": "How each kind senses you. sight_day_m: how far it sees you in the open by day. night_vision: its sight at night as a share of by day, and moonlight_adds more of that share under a full moon (§DD: the moon lights you up too). light_sight_m: how far it sees a lit torch at night with a clear line. hearing_m: how far it hears you sprinting (walking half, sneaking a fifth). scent_m: how far it smells you. held_by_light: it keeps out of a torch's circle and a fire's radius (§BA, §CN). drawn_by_light: it comes toward a light it sees. Line of sight always counts: trunks, ruin walls, ridges and the horizon stop sight and light alike (on the 400 km planet the horizon is about 450 m from eye height on level ground, §CR), and hills and walls muffle sound. A light is seen by line of sight long before brightness runs out: a torch on a dark night is a point to anything that can see the place it stands.",
   "kinds": "lurker: the dread's hunters and the cloaked shape with no species (§BA, §CU: what lurks in the dark is the antagonist): held off by light and drawn to it, so a torch keeps them at its edge but calls them there. night_animal / day_animal: the ordinary rosters (§CH); their creature light_response (creatures.json) stands. werewolf: §DG, by scent. goblin_band: §DH, sees light from far and little else at night; not built until Mike's calls on §DH. stranger: the one who sometimes comes to a light in trouble to help (§DF); what they do is open.",
   "lose_lock": "§DH, for the band when it is built: it loses you when your light has been out and you have stood still for snuffed_and_still_s, when you are up a tree (in_a_tree), or when it has not seen you for out_of_sight_s.",
-  "interrupt": "Watchers sense each other with the same senses, so a hunter on your trail and a band crossing it can meet and tangle while you slip away. Nothing is staged for you (§CH)."
+  "interrupt": "Watchers sense each other with the same senses, so a hunter on your trail and a band crossing it can meet and tangle while you slip away. Nothing is staged for you (§CH).",
+  "wired": "Built 4 Oct (§DF): scripts/creatures/senses.gd reads every watcher row. The dread's hunter (dread.gd) follows what it senses (lurker, or werewolf when it hunts by scent), goes to a lit planted torch it can see when it senses nothing of you (the decoy), else to where it last sensed you, and closes only on you while it senses you. The rosters' flight distance (creature.gd) reads night_animal / day_animal: the seeing part of it shrinks to their night share at night unless your torch is lit, and downwind within scent_m they notice you whatever the dark. goblin_band and stranger stay built false: nothing reads them (§DH, §DF open).",
+  "moonlight": "moonlight_adds is ADDED to night_vision, times the moonlight (0-1, phase and height): a day animal sees 0.15 of its day sight at new moon and 0.65 under a full moon high (never more than by day). Built that way because the §DF check needs it (a day animal at 60 m sees a dark player at full moon); multiplying (0.15 × 1.5 = 0.225, 27 m) could not.",
+  "touch_m": "Anything this close senses you whatever the light or the noise (it bumps into you).",
+  "heard_share": "player.sound.heard_share: [noise level, share of hearing_m] points, read between. Your noise_level is 1 sprinting, about 0.4 walking, 0.12 sneaking, 0 still: heard at all of hearing_m sprinting, half walking, a fifth sneaking, not at all standing still.",
+  "scent_cone": "player.scent: cone_deg, how far either side of straight downwind your scent reaches a nose; calm_mps, the wind under which there is no downwind; calm_share, the share of scent_m a nose smells you from all round in a calm."
  },
  "player": {
   "light": {
@@ -13,11 +18,32 @@
    "planted_counts": true
   },
   "sound": {
-   "from": "scripts/player/noise_events.gd"
+   "from": "scripts/player/noise_events.gd",
+   "heard_share": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.2
+    ],
+    [
+     0.4,
+     0.5
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ]
   },
   "scent": {
    "always": true,
-   "rides_wind": true
+   "rides_wind": true,
+   "cone_deg": 30.0,
+   "calm_mps": 0.5,
+   "calm_share": 0.25
   }
  },
  "watchers": {
@@ -83,5 +109,6 @@
   "snuffed_and_still_s": 6.0,
   "in_a_tree": true,
   "out_of_sight_s": 10.0
- }
+ },
+ "touch_m": 3.0
 }

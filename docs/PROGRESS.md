@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DF: your light gives you away (prompt 13)
+- **Senses** (`scripts/creatures/senses.gd`, reads every `senses.json` watcher row): `can_sense(kind, eye, player)` answers how a watcher senses you, or that it doesn't.
+  - **light:** your lit torch from `light_sight_m` at night, on a clear line;
+  - **sight:** you yourself, from `sight_day_m` by day and at night `night_vision` plus `moonlight_adds` × the moonlight of it;
+  - **hearing:** `hearing_m` × your noise (new `player.sound.heard_share`: a sprint all of it, walking half, sneaking a fifth, still nothing);
+  - **scent:** `scent_m` within 30° of straight downwind of you (new `player.scent.cone_deg`, `calm_mps`, `calm_share`);
+  - **touch:** within `touch_m` (3).
+  
+  Line of sight is one ray against trunks, walls and rocks, plus a march along the line against the ground, so ridges and the horizon stop it too.
+- **The hunter** (`dread.gd quarry()`) follows you while it senses you; else a lit planted torch it can see (the decoy: it stops at the torch's circle, 14 m); else where it last sensed you. It closes and takes you only while it senses you. The meter, its stages and its rates are unchanged. The lurker has no day sight, so in the dark it finds you only by ear or touch.
+- **The rosters** (`creature.gd _shy_m`): an animal's seeing share of its flight distance shrinks to its night share at night unless your torch is lit, and downwind within its `scent_m` it notices you anyway. `light_response` stands.
+- **Checked** (`tools/senses_check.gd`, seed 7731, 0 fails):
+  - a lurker 400 m off, clear line: torch lit "light", dark nothing; over a hill, neither;
+  - a day animal at 60 m: 18 m sight at new moon (nothing), 78 m at full (sight);
+  - a werewolf 300 m downwind smells you, 300 m upwind nothing;
+  - hearing: a sprint at 59 m, sneaking not there but at 11 m, walking at 29 m;
+  - the decoy: you 50 m off in the dark, the hunter goes to the torch, and 25 s later stands 14.0 m from it and 60 m from you.
+  
+  `dread_check` 0 fails. `cover_check` 0. `climb_check` has 2 fails (3 on the base, the shinobi kit's). `hits_check` crashes on the base too.
+- **Flag (a clash in the prompt):** it gave night sight as `night_vision × (1 + moonlight_adds × moonlight)`. That makes a day animal's full-moon sight 27 m, so its own check (sees a dark player at 60 m under a full moon) could not pass. Built as `senses.json`'s help reads it, moonlight *adding* to the share (0.15 + 0.5 = 0.65, 78 m), and the reading is written into the help. Mike's call.
+- **Data:** the `[NOT WIRED YET]` prefix is gone from `senses.json`. `goblin_band` and `stranger` keep `built: false`, and nothing reads them. New with help lines: `touch_m`, `player.sound.heard_share`, `player.scent.cone_deg`/`calm_mps`/`calm_share`. Hills don't muffle sound yet.
+- **Open (Mike):** what the stranger does when they come (stands with you, walks you to a fire, leaves you a coal, something stranger); the goblin band waits on the four §DH calls.
+
 ## 2026-10-04 — §DI part 3: the ghost at the corner (prompt 12)
 - **Haunt** (`scripts/landmarks/haunt.gd`, under main; `ruins.json haunt`):
   - **Which places:** `share` (0.4) of the ruins whose kind is in `kinds` (graveyards, barrows) are haunted, seeded per ruin, and the same share of any delve's tomb (its heart).

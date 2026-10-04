@@ -23,6 +23,13 @@ extends Node
 ## of you. Light still holds every beast off. Never inside a fire's
 ## radius. Ignores the travellers. No bestiary, no HUD. Ambient profile
 ## only.
+##
+## What it follows is what it senses (design 3 Oct §DF, Senses): your
+## torch from far (light_sight_m, with a clear line), its night sight,
+## your footsteps, your scent (the werewolf). Sensing nothing of you, it
+## goes to a lit planted torch it can see (the decoy: it ends at the
+## torch's circle, not at you), else to where it last sensed you. It
+## closes only on you while it senses you (`quarry`).
 
 static var D := Tuning.table("dread")
 static var M: Dictionary = D.get("meter", {})
@@ -66,6 +73,11 @@ static var wind_pin := Vector3.INF
 ## The bearing (radians from north, east positive) a scent hunter keeps
 ## from you: downwind, re-picked slowly (§DG). NAN until first picked.
 var scent_bearing := NAN
+## What it goes to (§DF, quarry()): {"what": "player" / "torch" / "last",
+## "dir", "pos" (scene), "by" (the sense)}; re-sensed four times a second.
+var _quarry := {}
+var _sense_t := 0.0
+var _last_dir := Vector3.ZERO
 
 
 func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer, p_sky: SkySystem) -> void:
@@ -225,6 +237,10 @@ func _enter_stage(level: int) -> void:
 		_ensure_hunter()
 		_hunter.visible = true
 		_hunter_dir = CreatureSpawner._offset(player.surface_dir, _rng.randf() * TAU, _keep_m)
+		# The meter brought it: it knows where you were (§DF).
+		_last_dir = player.surface_dir
+		_quarry = {}
+		_sense_t = 0.0
 	_closing = false
 
 
@@ -290,7 +306,9 @@ func _follow(delta: float, by_fire: bool) -> void:
 	var speed := speed_for(_hunter_entry, Astro.moon_illumination(world.days))
 	var row5 := stage_row(5)
 	var far := fire_distance() > float(row5.get("far_from_fire_m", 120.0))
-	var can_take := stage >= 5 and (not light_on_you() or far) and not by_fire
+	var q := quarry(delta)
+	var on_you := str(q.get("what", "")) == "player"
+	var can_take := stage >= 5 and on_you and (not light_on_you() or far) and not by_fire
 	if can_take and not _closing:
 		_closing = true
 		_close_voice.global_position = _hunter.global_position
@@ -303,6 +321,16 @@ func _follow(delta: float, by_fire: bool) -> void:
 	if _closing:
 		target = pd
 		speed *= 1.15
+	elif not on_you:
+		# It doesn't sense you: to the light it sees, held at its circle's
+		# edge (§DF.3, the decoy), or to where it last sensed you.
+		target = q.dir
+		if str(q.what) == "torch":
+			var circle := float(Torch.L.get("range_m", 14.0))
+			if CubeSphere.surface_distance_m(_hunter_dir, q.dir) > circle:
+				target = CreatureSpawner._offset(q.dir, _bearing_from(q.dir, _hunter_dir), circle)
+			else:
+				target = _hunter_dir
 	else:
 		# Parallel, off to one side, at keep_m: slowly re-picked. A scent
 		# hunter keeps to your downwind side instead (§DG).
@@ -326,6 +354,53 @@ func _follow(delta: float, by_fire: bool) -> void:
 		_place_hunter(nd, false, gap.normalized())
 	if _closing and _hunter.global_position.distance_to(player.global_position) < 1.9:
 		_take()
+
+
+## The senses.json watcher this hunter is: the werewolf by its own row
+## (it hunts by scent, §DG), else a lurker (§CU).
+func watcher_kind() -> String:
+	return "werewolf" if by_scent(_hunter_entry) else "lurker"
+
+
+## What the hunter goes to now (§DF): you while it senses you
+## (Senses.can_sense from its eyes); else the nearest lit planted torch
+## it can see (the decoy); else where it last sensed you. {"what":
+## "player" / "torch" / "last", "dir", "pos" (scene), "by"} ({} with no
+## hunter). Re-sensed four times a second (`delta` since the last call).
+func quarry(delta := 1.0) -> Dictionary:
+	if _hunter == null:
+		return {}
+	_sense_t -= delta
+	if _sense_t > 0.0 and not _quarry.is_empty():
+		if str(_quarry.what) == "player":
+			_quarry.dir = player.surface_dir
+			_quarry.pos = player.global_position
+		return _quarry
+	_sense_t = 0.25
+	var kind := watcher_kind()
+	var eye: Vector3 = _hunter.global_position + _hunter_dir * 1.6
+	var by := Senses.can_sense(kind, eye, player)
+	if force_dark and by == "light":
+		by = ""
+	if by != "":
+		_last_dir = player.surface_dir
+		_quarry = {"what": "player", "dir": player.surface_dir, "pos": player.global_position, "by": by}
+		return _quarry
+	var seen := Senses.torches_seen(kind, eye, [player.get_rid()])
+	if not seen.is_empty():
+		var tp: Vector3 = seen[0]
+		_quarry = {"what": "torch", "dir": world.dir_of(tp), "pos": tp, "by": "light"}
+		return _quarry
+	if _last_dir == Vector3.ZERO:
+		_last_dir = player.surface_dir
+	_quarry = {"what": "last", "dir": _last_dir, "pos": _ground_pos(_last_dir), "by": ""}
+	return _quarry
+
+
+## The compass bearing (from north, east positive) from `a` to `b`.
+static func _bearing_from(a: Vector3, b: Vector3) -> float:
+	var t := b - a * b.dot(a)
+	return atan2(t.dot(CubeSphere.east(a)), t.dot(CubeSphere.north(a)))
 
 
 ## Taken by the dark (design §BA): the log's line, the death.
@@ -435,6 +510,7 @@ func _place_hunter(d: Vector3, face_player: bool, along := Vector3.ZERO) -> void
 
 
 func _free_hunter() -> void:
+	_quarry = {}
 	if _hunter != null:
 		_hunter.queue_free()
 		_hunter = null

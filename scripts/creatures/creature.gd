@@ -540,6 +540,17 @@ func _shy_m(ctx: Dictionary, to_player := INF) -> float:
 	if not cover.is_empty() and to_player < species.shy_m * 4.0 * (1.0 + suspicion):
 		var eye := global_position + global_basis.y * maxf(species.size_m * 0.6, 0.2)
 		seen = FoliageCover.see_through(eye, ctx.player_eye, cover)
+	# What it senses you by (design 3 Oct §DF, Senses, senses.json
+	# night_animal / day_animal): at night its eyes see you only its night
+	# share (a day animal barely, more under the moon) unless your torch is
+	# lit; downwind of you within its nose's reach it smells you, seen or not.
+	if Senses.player != null:
+		var kind := Senses.kind_of(species)
+		var held_lit := Torch.instance != null and is_instance_valid(Torch.instance) and Torch.instance.lit()
+		if not held_lit:
+			seen *= Senses.sight_share(kind)
+		if seen < 1.0 and to_player < species.shy_m * 4.0 and Senses.in_scent(float(Senses.row(kind).get("scent_m", 0.0)), global_position, Senses.player.global_position, ctx.player_dir):
+			seen = 1.0
 	return species.shy_m * (0.35 * seen + 1.25 * noise) * (1.0 + suspicion) * sight
 
 
