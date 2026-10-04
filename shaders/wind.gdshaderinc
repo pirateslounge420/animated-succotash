@@ -120,3 +120,37 @@ float wind_sway_period(float h) {
 	if (h <= wind_sway_last.x) return mix(wind_sway_s.w, wind_sway_last.y, (h - wind_sway_h.w) / (wind_sway_last.x - wind_sway_h.w));
 	return wind_sway_last.y;
 }
+
+// --- Wind III (design §DA point 4: water, cloud shadows) -----------------
+
+// water: calm_below_mps, cats_paws_mps, whitecaps_mps; 0.
+global uniform vec4 wind_water;
+// The water's answer to the wind `u` (the gusted 10 m wind there, m/s):
+// (roughness 0-1: the cat's paw, from cats_paws_mps; crests 0-1: from
+// whitecaps_mps; calm 0-1: a mirror under calm_below_mps). Wind.gd:
+// water_state.
+vec3 wind_water_state(float u) {
+	float rough = smoothstep(wind_water.y, wind_water.y * 1.6, u);
+	float crest = smoothstep(wind_water.z, wind_water.z * 1.4, u);
+	float calm = 1.0 - smoothstep(wind_water.x * 0.7, wind_water.x, u);
+	return vec3(rough, crest, calm);
+}
+
+// Cloud shadows (wind.json cloud_shadows): x the strength by §CX's cover
+// (0 outside from_cover..to_cover), y the noise threshold under which a
+// point is in shadow (so the shaded share of the ground is the cover),
+// z and w the two patch sizes (m). cloud_shift: -(planet centre) - the
+// clouds' drift (Wind: the ground wind x speed_x, summed).
+global uniform vec4 cloud_shadow;
+global uniform vec3 cloud_shift;
+
+// How much of the sun's direct light a cloud takes at scene point `p`
+// (0 none, up to cloud_shadow.x). Wind.gd: cloud_shade.
+float wind_cloud_shade(vec3 p) {
+	if (cloud_shadow.x <= 0.0) {
+		return 0.0;
+	}
+	vec3 q = p + cloud_shift;
+	float n = 0.65 * wind_vnoise(q / cloud_shadow.w) + 0.35 * wind_vnoise(q / cloud_shadow.z + vec3(5.0, 9.0, 13.0));
+	return n < cloud_shadow.y ? cloud_shadow.x : 0.0;
+}

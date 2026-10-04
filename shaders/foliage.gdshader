@@ -73,6 +73,8 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 #include "res://shaders/wind.gdshaderinc"
+// A cloud's shadow here (fragment to light; design §DA, wind_cloud_shade).
+varying float v_cloud;
 
 global uniform vec3 plant_wind;
 // The eye (the active camera, scene space) and how far from it leaves
@@ -521,6 +523,7 @@ vec3 sport_tint(vec3 c, bool leafy) {
 void fragment() {
 	// World position, rebuilt here (not a varying: see the slots above).
 	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	v_cloud = wind_cloud_shade(world_pos);
 	// The sun's and moon's shadow maps are drawn with an orthographic
 	// projection (the game camera is perspective). There, closed shapes
 	// (bark, crowns, bamboo culms) cast from their far faces only, so a
@@ -789,4 +792,18 @@ void fragment() {
 	EMISSION = look_glow_emission(world_pos, glow * 1.0) + ALBEDO * look_floor;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 	}
+}
+
+
+// The sun's light, as Godot's own Lambert draws it (and the leaves'
+// translucency, BACKLIGHT), but dimmed where a cloud's shadow passes
+// (design 3 Oct §DA, wind.json cloud_shadows; wind_cloud_shade): the lit
+// side goes to shade and the shade colour holds (R3, §BD); the shadow
+// maps are untouched (ATTENUATION keeps them). v_cloud: the shade here,
+// worked out once in fragment().
+void light() {
+	float k = LIGHT_IS_DIRECTIONAL ? 1.0 - v_cloud : 1.0;
+	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
+	DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
+	DIFFUSE_LIGHT += LIGHT_COLOR / PI * (1.0 - ndl) * BACKLIGHT * ATTENUATION * k;
 }

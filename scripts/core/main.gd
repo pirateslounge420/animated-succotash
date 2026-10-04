@@ -492,7 +492,9 @@ func _process(delta: float) -> void:
 	if float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 and not _under_roof():
 		Kindling.rain_on(player.inventory, world.days)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
-	# The gust field rides on the wind just set (design §DA, Wind).
+	# The gust field rides on the wind just set (design §DA, Wind); the
+	# cloud shadows on §CX's one cover value.
+	Wind.cover = float(_weather_eased.get("cloud", weather.get("cloud", 0.0)))
 	Wind.tick(delta, world, player)
 	wind_litter.update_litter(delta)
 	wind_crowns.update_crowns(delta)

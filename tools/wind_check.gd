@@ -28,7 +28,15 @@ extends SceneTree
 ##  (i) a crown sounds only within radius_m 40 and only when the gust at
 ##      that crown passes 1.6 m/s, never more than 4 at once;
 ##  (j) the cloak's wind is the gusted wind at you (sheltered by the
-##      crowns over you).
+##      crowns over you);
+## Wind III (wind.json water, cloud_shadows, smoke):
+##  (k) water: a mirror under calm_below_mps, a cat's paw (roughness > 0)
+##      at 3 m/s in a gust patch, crests only from whitecaps_mps;
+##  (l) the cloud-shadow strength is 0 at cover 0.1 and 0.9 and > 0 at
+##      0.5, and the shaded share of the ground follows the cover;
+##  (m) the shadow field moves 1.8x the ground wind;
+##  (n) a hearth under a closed crown: its column stands straight below the
+##      crowns and leans fully above them.
 
 var fails := 0
 
@@ -199,6 +207,7 @@ func _run() -> void:
 	ok(total > 0 and wrong.is_empty(), "(f) every plant read carries its species' wind kind and flutter (%s)" % ("all right" if wrong.is_empty() else ", ".join(wrong.slice(0, 12))))
 	ok(kinds[1] > 0 or kinds[2] > 0, "(f) the camp's ground has grasses or crowns stamped")
 	await _wind_two(main)
+	_wind_three(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -398,3 +407,60 @@ void fragment() {
 		worst_v = maxf(worst_v, absf(v - want[i].y))
 	ok(worst_f < 2e-3 and worst_v < 2e-3, "(e) the shader and Wind agree at %d points (worst factor %.5f, worst veer %.5f rad)" % [n, worst_f, worst_v])
 	vp.queue_free()
+
+
+func _wind_three(main) -> void:
+	var player: PlanetPlayer = main.player
+	var up: Vector3 = main.world.dir_of(player.global_position)
+	var e := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
+	var W: Dictionary = Wind.WA
+	# (k) Water.
+	var mirror := Wind.water_state(float(W.get("calm_below_mps", 1.0)) * 0.6)
+	ok(mirror.x == 0.0 and mirror.z > 0.99 and mirror.y == 0.0, "(k) under %.1f m/s the water is a mirror (calm %.2f, roughness %.2f)" % [float(W.get("calm_below_mps", 1.0)), mirror.z, mirror.x])
+	_pin_wind(main, e * 3.0)
+	var rough := 0.0
+	var gust_f := 0.0
+	for k in 400:
+		var p: Vector3 = player.global_position + e * k * 7.0
+		var w := Wind.water_at(p)
+		if w.x > rough:
+			rough = w.x
+			gust_f = Wind.gust_at(p, Wind.clock).x
+	var below := Wind.water_state(float(W.get("whitecaps_mps", 8.0)) - 0.1)
+	var above := Wind.water_state(float(W.get("whitecaps_mps", 8.0)) * 1.2)
+	ok(rough > 0.0 and below.y == 0.0 and above.y > 0.0, "(k) at 3 m/s a gust patch (x%.2f) roughens the water to %.2f; crests none at %.1f m/s, %.2f at %.1f" % [gust_f, rough, float(W.get("whitecaps_mps", 8.0)) - 0.1, above.y, float(W.get("whitecaps_mps", 8.0)) * 1.2])
+	# (l) Cloud shadows by cover.
+	var s1 := Wind.cloud_strength(0.1)
+	var s5 := Wind.cloud_strength(0.5)
+	var s9 := Wind.cloud_strength(0.9)
+	Wind.cover = 0.5
+	var shaded := 0
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 5
+	for k in 3000:
+		var p := Vector3(rng.randf_range(-40000.0, 40000.0), rng.randf_range(-200.0, 200.0), rng.randf_range(-40000.0, 40000.0))
+		if Wind.cloud_shade(p) > 0.0:
+			shaded += 1
+	ok(s1 == 0.0 and s9 == 0.0 and s5 > 0.0 and absf(shaded / 3000.0 - 0.5) < 0.08, "(l) cloud shadows: strength %.2f at cover 0.1, %.2f at 0.5, %.2f at 0.9; at 0.5 %.0f %% of the ground in shadow" % [s1, s5, s9, shaded / 30.0])
+	# (m) The shadow field's speed.
+	WeatherFX.plant_wind = e * 5.0
+	var d0 := Wind.drift
+	var c0 := Wind.cloud_drift
+	Wind.tick(1.0, main.world, null)
+	var ground := (Wind.drift - d0).length()
+	var cloud := (Wind.cloud_drift - c0).length()
+	ok(absf(cloud / maxf(ground, 1e-6) - float(Wind.CS.get("speed_x", 1.8))) < 0.01, "(m) the cloud shadows move %.2f m a second against the ground wind's %.2f (x%.2f)" % [cloud, ground, cloud / maxf(ground, 1e-6)])
+	# (n) A hearth's column under a closed crown.
+	var holder := Node3D.new()
+	main.add_child(holder)
+	var col := Smoke.column(holder, "WindCheckSmoke")
+	var foot: Vector3 = player.global_position
+	Wind.mean = e * 6.0
+	Smoke.update(col, foot, up, "flames", e * 6.0, 0.0, 0.0, false, 1.0, 15.0)
+	var lo := Smoke.lean_offset(col, 12.0).length()
+	var a := Smoke.lean_offset(col, 30.0)
+	var b := Smoke.lean_offset(col, 32.0)
+	var deg := rad_to_deg(atan((b - a).length() / 2.0))
+	var want := rad_to_deg(atan((col.get_meta("lean") as Vector3).length()))
+	ok(lo < 1e-4 and deg > want * 0.4, "(n) under 15 m of crowns the column rises straight (%.3f m off at 12 m) and leans above them (%.0f°, the open column %.0f° x the gust and shear)" % [lo, deg, want])
+	holder.queue_free()

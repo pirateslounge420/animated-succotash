@@ -124,7 +124,7 @@ static func size_for(state: String, scale := 1.0) -> Vector3:
 ## Lay a column out this frame: its foot at scene `foot`, up `up`, the fire
 ## in `state`, the weather's `wind` there (m/s, a world vector), `rain_mm_h`,
 ## `night` (0-1), `calm_dawn` (true on a still dawn), `scale`.
-static func update(col: Node3D, foot: Vector3, up: Vector3, state: String, wind: Vector3, rain_mm_h: float, night: float, calm_dawn: bool, scale := 1.0) -> void:
+static func update(col: Node3D, foot: Vector3, up: Vector3, state: String, wind: Vector3, rain_mm_h: float, night: float, calm_dawn: bool, scale := 1.0, shelter_m := 0.0) -> void:
 	var sz := size_for(state, scale)
 	var rain: Dictionary = H.get("rain", {})
 	if rain_mm_h >= float(rain.get("from_mm_h", 1.0)):
@@ -152,8 +152,51 @@ static func update(col: Node3D, foot: Vector3, up: Vector3, state: String, wind:
 	m.set_shader_parameter("night", 0.0 if draw else night)
 	# The fire lights less of a small fire's smoke (by the flame's size).
 	m.set_shader_parameter("fire_lit_m", float((H.get("night", {}) as Dictionary).get("fire_lit_m", 8.0)) * sqrt(maxf(scale, 0.0)))
+	# Under trees it rises straight through the crowns and leans above
+	# them; its lean follows the gust field at each height, and a gust at
+	# the fire shreds it (design §DA, wind.json smoke; the shader).
+	var g := Wind.gust_at(foot, Wind.clock).x if bool((((Wind.D.get("smoke", {}) as Dictionary).get("gusts", {})) as Dictionary).get("lean_follows_gust", true)) else 1.0
+	m.set_shader_parameter("shelter_m", shelter_m if bool((Wind.D.get("smoke", {}) as Dictionary).get("shelter_under_crowns", true)) else 0.0)
+	m.set_shader_parameter("gust", g)
 	col.set_meta("top_m", sz.x)
 	col.set_meta("lean", lean)
+	col.set_meta("shelter_m", shelter_m)
+	col.set_meta("foot", foot)
+	col.set_meta("up", up)
+
+
+## How far the column's spine stands off upright `h` m up (scene vector;
+## the shader's sum, for the checks): none below the crowns' shelter_m,
+## the lean (with the gust field there) above them.
+static func lean_offset(col: Node3D, h: float) -> Vector3:
+	var m: ShaderMaterial = col.get_meta("mat")
+	var lean: Vector3 = col.get_meta("lean", Vector3.ZERO)
+	var top := maxf(float(col.get_meta("top_m", 1.0)), 0.1)
+	var shelter := float(col.get_meta("shelter_m", 0.0))
+	var y := clampf(h / top, 0.0, 1.0)
+	var foot: Vector3 = col.get_meta("foot", Vector3.ZERO)
+	var up: Vector3 = col.get_meta("up", Vector3.UP)
+	var g := Wind.gust_field(foot + up * h + Wind.shift(), Wind.mean.length()).x
+	return lean * maxf(h - shelter, 0.0) * (1.0 + float(m.get_shader_parameter("shear")) * y * y) * g
+
+
+## The height of the crowns over a hearth (m above `foot`; 0 in the open):
+## the tallest tree within 9 m whose crown covers it, where the sky is
+## mostly closed (§BD's sky visibility under 0.6).
+static func shelter_over(foot: Vector3) -> float:
+	var chunks: ChunkManager = Wind.chunks
+	if chunks == null or chunks.sky_visibility_at(foot) >= 0.6:
+		return 0.0
+	var best := 0.0
+	for key in chunks.chunks:
+		var ch: TerrainChunk = chunks.chunks[key]
+		if ch.global_position.distance_to(foot) > TerrainChunk.CHUNK_M:
+			continue
+		for i in ch.trees.size():
+			var root := ch.tree_base(i)
+			if root.distance_to(foot) < 9.0:
+				best = maxf(best, float((ch.trees[i] as Array)[1]) - (foot - root).dot(ch.tree_up(i)))
+	return maxf(best, 0.0)
 
 
 ## The fire's FireStore state, for a lit fire node.
@@ -203,7 +246,10 @@ static func tick_fire(fire: Node3D) -> void:
 				mm.emission = want
 				mouth.material_override = mm
 	var state := state_of(fire)
-	update(col, foot, up, state, wind, rain_mm_h, Campfire.night, calm_dawn, float(fire.get_meta("smoke")))
+	# The crowns over it (looked up once; a stack's mouth is above them).
+	if not fire.has_meta("smoke_shelter") and (st != null or Wind.chunks != null):
+		fire.set_meta("smoke_shelter", 0.0 if st != null else shelter_over(foot))
+	update(col, foot, up, state, wind, rain_mm_h, Campfire.night, calm_dawn, float(fire.get_meta("smoke")), float(fire.get_meta("smoke_shelter", 0.0)))
 	# The hearth's last warm day (the swifts read it), and the flock.
 	var stay: Array = (SW.get("lit_below", {}) as Dictionary).get("stay_away_states", ["flames", "flare", "low", "embers"])
 	var store := FireStore.store_of(fire)

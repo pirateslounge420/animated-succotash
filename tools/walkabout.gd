@@ -20,6 +20,8 @@ extends SceneTree
 ## minutes after dawn begins).
 ## WIND=6 pins the weather's wind at 6 m/s (design §DA's breeze; else
 ## 1.1 m/s). SEASON=autumn walks in that season (ten days into it).
+## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
+## SITES=lake adds the nearest lake's shore, looking over the water.
 ## SITES=nests adds the nearest nests of four kinds (design 1 Oct §CK);
 ## SITES=fig the sacred fig (§CL).
 ## SITES=range the nearest great range (design 3 Oct §CR): from its foot,
@@ -127,6 +129,8 @@ func _run() -> void:
 			kinds.append("fig")
 		if only.has("delve"):
 			kinds.append("delve")
+		if only.has("lake"):
+			kinds.append("lake")
 		if only.has("range"):
 			kinds.append("range")
 	for kind in kinds:
@@ -151,6 +155,14 @@ func _run() -> void:
 			"first_road_1km":
 				var rd := _down_the_road(camp_d, 1000.0)
 				sites.append({"name": "first_road_1km", "dir": rd.dir, "note": rd.note})
+			"lake":
+				# The nearest lake shore to the camp, looking out over the
+				# water (design §DA: a lake in a breeze).
+				var lk := _lake_shore(camp_d)
+				if lk.is_empty():
+					lines.append("-- lake: no lake on this planet; skipped")
+					continue
+				sites.append({"name": "lake", "dir": lk.dir, "look": lk.look, "note": "a lake %.1f km from the camp" % (CubeSphere.surface_distance_m(lk.dir, camp_d) / 1000.0)})
 			"random_biome":
 				var key: String = wanted[random_i % wanted.size()] if not wanted.is_empty() else ""
 				random_i += 1
@@ -210,6 +222,29 @@ func _wanted_biomes() -> Array:
 			pick = str(keys[sd % keys.size()])
 		out.append(pick)
 	return out
+
+
+## The nearest lake to `d`: a land cell beside a lake cell (its direction)
+## and a point out over the water to look at; {} if there is none.
+func _lake_shore(d: Vector3) -> Dictionary:
+	var map: PlanetData = world.planet
+	var best := -1
+	var best_m := INF
+	for c in map.cell_count:
+		if map.water[c] != PlanetData.Water.LAKE:
+			continue
+		var m := CubeSphere.surface_distance_m(map.dir[c], d)
+		if m < best_m:
+			best_m = m
+			best = c
+	if best < 0:
+		return {}
+	for k in 8:
+		var nb := map.neighbors[best * 8 + k]
+		if nb >= 0 and map.water[nb] == PlanetData.Water.NONE:
+			var shore: Vector3 = map.dir[nb].lerp(map.dir[best], 0.35).normalized()
+			return {"dir": shore, "look": map.dir[best]}
+	return {"dir": map.dir[best], "look": CreatureSpawner._offset(map.dir[best], 0.0, 30.0)}
 
 
 ## A random land cell of biome `key` (direction), or ZERO.
@@ -397,6 +432,10 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		if OS.get_environment("WIND") != "":
 			wind_v = wind_v.normalized() * float(OS.get_environment("WIND"))
 		var wx := {"wind": wind_v, "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 0.0 if overcast else 1.0, "cloud": 0.95 if overcast else 0.12}
+		# CLOUD=0.5: §CX's cover that much (a part-cloudy day: the cloud
+		# shadows, design §DA).
+		if OS.get_environment("CLOUD") != "" and not overcast:
+			wx["cloud"] = float(OS.get_environment("CLOUD"))
 		main._weather_timer = 1e9
 		main._local_weather = wx
 		main._weather_eased = wx.duplicate()

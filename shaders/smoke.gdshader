@@ -20,6 +20,8 @@ shader_type spatial;
 render_mode unshaded, cull_disabled, shadows_disabled, world_vertex_coords;
 
 #include "res://shaders/look.gdshaderinc"
+global uniform vec3 plant_wind;
+#include "res://shaders/wind.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_nearest, repeat_enable;
 uniform vec3 base = vec3(0.0);
@@ -41,6 +43,12 @@ uniform vec3 colour_far = vec3(0.45, 0.54, 0.81);
 uniform vec3 colour_shade = vec3(0.1, 0.14, 0.35);
 uniform vec3 fire_lit = vec3(0.9, 0.35, 0.12);
 uniform float far_m = 3200.0;
+// The wind on it (design §DA, wind.json smoke): below shelter_m (the
+// crowns over a hearth under trees) it rises straight; above, its lean
+// follows the gust field at each height, not only the mean; `gust` is the
+// field's factor at the fire, which shreds the cards near it.
+uniform float shelter_m = 0.0;
+uniform float gust = 1.0;
 instance uniform float card_phase = 0.0;
 instance uniform float card_off = 0.0;
 
@@ -62,7 +70,10 @@ void vertex() {
 	float hp = mix(h, min(h, pool_m) + max(h - pool_m, 0.0) * 0.08, pool);
 	float w = width_m * (0.55 + 1.6 * y) + pool * smoothstep(pool_m * 0.6, pool_m, h) * pool_spread_m * y;
 	vec3 up = normalize(up_dir);
-	vec3 spine = base + up * hp + lean * hp * (1.0 + shear * y * y);
+	// Straight up through the crowns, then leaning with the gust there.
+	float lh = max(hp - shelter_m, 0.0);
+	float g = wind_gust_field(base + up * hp, length(plant_wind)).x;
+	vec3 spine = base + up * hp + lean * lh * (1.0 + shear * y * y) * g;
 	vec3 to_cam = CAMERA_POSITION_WORLD - spine;
 	vec3 right = cross(up, to_cam);
 	right = length(right) > 1e-4 ? normalize(right) : vec3(1.0, 0.0, 0.0);
@@ -87,6 +98,9 @@ void fragment() {
 	float a = body * density * (0.55 + 0.6 * n);
 	// At night only the first fire_lit_m, lit by the fire below.
 	a *= mix(1.0, 1.0 - smoothstep(fire_lit_m * 0.5, fire_lit_m, v_h), night);
+	// A gust at the fire tears the low column into rags.
+	float shred = smoothstep(1.15, 1.5, gust) * (1.0 - smoothstep(4.0, 14.0, v_h));
+	a *= 1.0 - shred * step(0.45, n2);
 	if (a < bayer4(FRAGCOORD.xy)) {
 		discard;
 	}

@@ -33,6 +33,8 @@ static var P: Dictionary = D.get("profile", {})
 static var C: Dictionary = D.get("crowns", {})
 static var GR: Dictionary = D.get("grass", {})
 static var FL: Dictionary = D.get("flutter", {})
+static var WA: Dictionary = D.get("water", {})
+static var CS: Dictionary = D.get("cloud_shadows", {})
 
 ## 1 / the noise's standard deviation (measured over 6,000 points; the big swell weighs 0.85, the small puff 0.15, so neighbours 3 m apart share a gust), so
 ## `intensity` is the gusts' own standard deviation as a share of the mean.
@@ -51,6 +53,10 @@ static var z0 := 0.03
 static var _center := Vector3.ZERO
 static var _z0_t := 0.0
 static var _set := false
+## The clouds' drift (m, wrapped) and §CX's one cover value overhead
+## (Main sets it each frame from the eased weather), for the cloud shadows.
+static var cloud_drift := Vector3.ZERO
+static var cover := 0.0
 ## The chunks round the player (sky visibility for the shelter; Wind
 ## II's readers at the cloth, the litter and the crowns).
 static var chunks: ChunkManager = null
@@ -102,6 +108,7 @@ static func setup() -> void:
 	RS.global_shader_parameter_set("wind_sway_h", Vector4(hs[0], hs[1], hs[2], hs[3]))
 	RS.global_shader_parameter_set("wind_sway_s", Vector4(ss[0], ss[1], ss[2], ss[3]))
 	RS.global_shader_parameter_set("wind_sway_last", Vector2(hs[4], ss[4]))
+	RS.global_shader_parameter_set("wind_water", Vector4(float(WA.get("calm_below_mps", 1.0)), float(WA.get("cats_paws_mps", 2.5)), float(WA.get("whitecaps_mps", 8.0)), 0.0))
 	_set = true
 
 
@@ -121,6 +128,14 @@ static func tick(delta: float, world, player) -> void:
 	if player != null and player.get("chunks") is ChunkManager:
 		chunks = player.chunks
 	RenderingServer.global_shader_parameter_set("wind_shift", shift())
+	# The clouds' shadows sail at speed_x times the ground wind (design
+	# §DA, wind.json cloud_shadows), only on part-cloudy days.
+	cloud_drift += mean * float(CS.get("speed_x", 1.8)) * delta
+	var cper := cloud_period_m()
+	cloud_drift = Vector3(fposmod(cloud_drift.x, cper), fposmod(cloud_drift.y, cper), fposmod(cloud_drift.z, cper))
+	var cp := cloud_patch()
+	RenderingServer.global_shader_parameter_set("cloud_shift", cloud_shift())
+	RenderingServer.global_shader_parameter_set("cloud_shadow", Vector4(cloud_strength(cover), cloud_threshold(cover), cp.x, cp.y))
 	_z0_t -= delta
 	if _z0_t <= 0.0 and player != null and player is PlanetPlayer:
 		_z0_t = 2.0
@@ -246,6 +261,84 @@ static func cloak_at(p: Vector3, up: Vector3) -> Vector3:
 		return Vector3.ZERO
 	var sky := chunks.sky_visibility_at(p) if chunks != null else 1.0
 	return gust_vec(p, up) * shelter(sky)
+
+
+## The water's answer to the gusted wind `u` (m/s) there (wind.json water;
+## wind_water_state): (roughness: the cat's paw, crests, calm: a mirror).
+static func water_state(u: float) -> Vector3:
+	var c := float(WA.get("calm_below_mps", 1.0))
+	var p := float(WA.get("cats_paws_mps", 2.5))
+	var w := float(WA.get("whitecaps_mps", 8.0))
+	return Vector3(smoothstep(p, p * 1.6, u), smoothstep(w, w * 1.4, u), 1.0 - smoothstep(c * 0.7, c, u))
+
+
+## The water at scene point `p` now (water_state of the gust there).
+static func water_at(p: Vector3) -> Vector3:
+	return water_state(mean.length() * gust_field(p + shift(), mean.length()).x)
+
+
+## Cloud shadows (wind.json cloud_shadows): the patch sizes (small, big).
+static func cloud_patch() -> Vector2:
+	var p: Array = CS.get("patch_m", [200.0, 800.0])
+	return Vector2(float(p[0]), float(p[1]))
+
+
+static func cloud_period_m() -> float:
+	var p := cloud_patch()
+	return PERIOD_CELLS * _lcm(roundi(p.x), roundi(p.y))
+
+
+## The field's offset for scene points: -(planet centre) - the clouds' drift.
+static func cloud_shift() -> Vector3:
+	return -_center - cloud_drift
+
+
+## How much of the sun's direct light a cloud's shadow takes at cover `c`
+## (§CX's one value): only on part-cloudy days, between from_cover and
+## to_cover, easing in and out at both ends (clear has none; overcast is
+## all shade already, the sun dimmed by §CX).
+static func cloud_strength(c: float) -> float:
+	var a := float(CS.get("from_cover", 0.15))
+	var b := float(CS.get("to_cover", 0.85))
+	var e := (b - a) * 0.15
+	return smoothstep(a, a + e, c) * (1.0 - smoothstep(b - e, b, c))
+
+
+## The noise level under which a point is in a cloud's shadow, so that the
+## shaded share of the ground is the cover (a quantile of the field's
+## values, measured once).
+static var _quantiles := PackedFloat32Array()
+
+
+static func cloud_threshold(c: float) -> float:
+	if _quantiles.is_empty():
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 77
+		var vals: Array[float] = []
+		var cp := cloud_patch()
+		for i in 4000:
+			var q := Vector3(rng.randf_range(-3e5, 3e5), rng.randf_range(-3e5, 3e5), rng.randf_range(-3e5, 3e5))
+			vals.append(cloud_noise(q, cp))
+		vals.sort()
+		for k in 101:
+			_quantiles.append(vals[mini(int(k / 100.0 * (vals.size() - 1)), vals.size() - 1)])
+	var x := clampf(c, 0.0, 1.0) * 100.0
+	var i := mini(int(x), 99)
+	return lerpf(_quantiles[i], _quantiles[i + 1], x - i)
+
+
+## The cloud field's value at field point `q` (wind_cloud_shade).
+static func cloud_noise(q: Vector3, cp: Vector2) -> float:
+	return 0.65 * _vnoise(q / cp.y) + 0.35 * _vnoise(q / cp.x + Vector3(5.0, 9.0, 13.0))
+
+
+## The share of the sun's direct light a cloud takes at scene point `p`
+## now (wind_cloud_shade): 0, or cloud_strength(cover) in a shadow.
+static func cloud_shade(p: Vector3) -> float:
+	var s := cloud_strength(cover)
+	if s <= 0.0:
+		return 0.0
+	return s if cloud_noise(p + cloud_shift(), cloud_patch()) < cloud_threshold(cover) else 0.0
 
 
 ## Flutter: genus Populus and the species Ficus religiosa (flutter.genera,

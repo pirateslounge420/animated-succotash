@@ -49,6 +49,8 @@ shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+global uniform vec3 plant_wind;
+#include "res://shaders/wind.gdshaderinc"
 
 varying vec3 world_pos;
 // How far fresh water has risen in heavy rain, m (StormFX).
@@ -185,6 +187,14 @@ void fragment() {
 	// Under painted rings the water's own mottling and sparkle calm, so
 	// the bands read as bands.
 	body *= 1.0 - ripple_ring.z * ring;
+	// The wind on the water (design 3 Oct §DA, wind.json water): the gust
+	// field here. Under calm_below_mps a mirror (its mottling stills);
+	// past cats_paws_mps a gust's patch roughens as it slides over (the
+	// glints break up, the blue deepens a little); from whitecaps_mps a
+	// few pale pixel crests on open water (never on a river ribbon).
+	float u_w = length(plant_wind) * wind_gust_field(world_pos, length(plant_wind)).x;
+	vec3 wst = wind_water_state(u_w);
+	body *= 1.0 - 0.6 * wst.z;
 
 	// Calm: still fresh water away from any white water (not rivers, not
 	// the sea: calm_share is 0 on salt water).
@@ -199,9 +209,22 @@ void fragment() {
 	float nb = retro_tex(glint_tex, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * (UV - gb * TIME) / (caustic_tile_m * 1.25)).r;
 	float cover = mix(glint_cover, glint_cover_calm, calm);
 	float glint = smoothstep(cover, cover + 0.08, na * nb) * (1.0 - ripple_ring.z * ring);
+	glint *= 1.0 - 0.75 * wst.x;
+	ALBEDO *= 1.0 - 0.14 * wst.x;
 	// The night body (the glints are added over it below; the §AG tile's
 	// two-tone bands made the old highlight blend cover most of the water).
 	vec3 glow = night_color * (1.0 + 0.22 * body);
+	if (wst.y > 0.0 && river < 0.5) {
+		// Crests: a pixel cell here and there on a half-metre grid, running
+		// downwind with the gust.
+		float sw = length(plant_wind);
+		vec3 wd = sw > 0.01 ? plant_wind / sw : vec3(1.0, 0.0, 0.0);
+		vec3 wc = normalize(cross(wd, NORMAL * mat3(VIEW_MATRIX)));
+		vec2 cq = vec2(dot(world_pos, wd) - TIME * u_w * 0.4, dot(world_pos, wc)) * 2.0;
+		float crest = step(1.0 - 0.035 * wst.y, hash(floor(cq) + floor(TIME * 1.5) * vec2(0.0, 7.31)));
+		ALBEDO = mix(ALBEDO, foam_color, crest * 0.85);
+		glow = mix(glow, night_highlight, crest * 0.6);
+	}
 
 	float bay_drop = 0.0;
 	if (rain_drops > 0.01) {

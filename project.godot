@@ -133,6 +133,18 @@ wind_sway_last={
 "type": "vec2",
 "value": Vector2(70, 6)
 }
+wind_water={
+"type": "vec4",
+"value": Vector4(1, 2.5, 8, 0)
+}
+cloud_shadow={
+"type": "vec4",
+"value": Vector4(0, 0.5, 200, 800)
+}
+cloud_shift={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
 look_canopy_dark={
 "type": "float",
 "value": 0.0

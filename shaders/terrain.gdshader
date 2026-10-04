@@ -40,6 +40,8 @@ render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 #include "res://shaders/wind.gdshaderinc"
+// A cloud's shadow here (fragment to light; design §DA, wind_cloud_shade).
+varying float v_cloud;
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
@@ -131,6 +133,7 @@ float tree_feet(vec2 uv) {
 }
 
 void fragment() {
+	v_cloud = wind_cloud_shade(world_pos);
 	// Slow, smooth noise: big soft patches of light and dark (a few meters
 	// and a few tens of meters).
 	float patch_s = texture(look_grain_soft, UV * 0.09 + 0.3).r;
@@ -245,4 +248,17 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 0.55) + floor_light;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+}
+
+
+// The sun's light, as Godot's own Lambert draws it (and the leaves'
+// translucency, BACKLIGHT), but dimmed where a cloud's shadow passes
+// (design 3 Oct §DA, wind.json cloud_shadows; wind_cloud_shade): the lit
+// side goes to shade and the shade colour holds (R3, §BD); the shadow
+// maps are untouched (ATTENUATION keeps them). v_cloud: the shade here,
+// worked out once in fragment().
+void light() {
+	float k = LIGHT_IS_DIRECTIONAL ? 1.0 - v_cloud : 1.0;
+	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
+	DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
 }
