@@ -90,7 +90,7 @@
   }
  },
  "road_regulars": {
-  "_help": "[NOT WIRED YET \u2014 design \u00a7DM.7, \u00a7DQ] The road regulars: a cast of named one-of-a-kind figures on the shared rig, each with ONE habit tied to the real clock, one stretch and one hour (\u00a7DM.7, cast open). Mute (\u00a7BF) except as \u00a7DJ allows; the habit is the personality. The first entry is \u00a7DQ's rider; \u00a7DM.7's three starters (the pilgrim at dawn, the old one on the milestone, the dog) are not written until Mike and Claude build the cast.",
+  "_help": "[The ox rider wired (OxRider; design \u00a7DQ); \u00a7DM.7's other starters not written yet] The road regulars: a cast of named one-of-a-kind figures on the shared rig, each with ONE habit tied to the real clock, one stretch and one hour (\u00a7DM.7, cast open). Mute (\u00a7BF) except as \u00a7DJ allows; the habit is the personality. The first entry is \u00a7DQ's rider; \u00a7DM.7's three starters (the pilgrim at dawn, the old one on the milestone, the dog) are not written until Mike and Claude build the cast.",
   "ox_rider": {
    "name": "The old man on his ox",
    "count_per_world": 1,
@@ -99,7 +99,10 @@
    "hours": "rides by day at the ox's pace (under the walk); at dusk stops where he is, the ox grazes, no fire; at dawn rides on",
    "mount": {
     "body": "ox",
-    "notes": "a domestic ox, not a buffalo (Mike): heavy, slow, horns curving forward and out, a dull black-brown coat (#2A2220), no load and no plough; a creature body (\u00a70), new; the rider is the shared rig seated on it, hood up, a plain dark robe (first guess)"
+    "notes": "a domestic ox, not a buffalo (Mike): heavy, slow, horns curving forward and out, a dull black-brown coat (#2A2220), no load and no plough; a creature body (\u00a70), new; the rider is the shared rig seated on it, hood up, a plain dark robe (first guess)",
+    "speed_mps": 0.9,
+    "length_m": 2.4,
+    "colour": "#2A2220"
    },
    "speaks": false,
    "name_in_play": null,
@@ -113,7 +116,18 @@
    "open": [
     "Naming (Mike): default as the fig, play names nobody.",
     "The gate, its keeper and the book: written in as a first guess."
-   ]
+   ],
+   "ride_hours": [
+    7.0,
+    17.5
+   ],
+   "robe": {
+    "colour": "#34302E",
+    "edge": "#262220",
+    "notes": "a plain dark robe, hood up (first guess)"
+   },
+   "_fields": "mount.speed_mps: the ox's pace (under the walk; he may go a little slower so that each crossing ends at a dusk); mount.length_m: the ox's body length; ride_hours: local solar hours he rides [from, to], stopped otherwise; robe: the rider's colours.",
+   "_built": "Built 4 Oct (scripts/landmarks/ox_rider.gd, OxRider): one per world. His road is routed once a world from a great range's east foot over its highest crossing that a road will take (\u00a7DM.1's grade cap) to its west foot, and put on the road network; he rides it at the ox's pace by day (ride_hours), stops at dusk (the ox grazes, no fire), and starts each crossing again at the east foot at a dawn. The gate: two towers and a lintel astride the road at the crossing, the keeper's hut, and the keeper's camp (one or two folk at a hearth); the tome lies at the hut's door once tomes.json tao's text is in."
   }
  }
 }

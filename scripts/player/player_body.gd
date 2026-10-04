@@ -208,6 +208,8 @@ var seated := false
 ## on the ground, back straight, head a little bowed, hands toward the
 ## lap, still but for its breath. "" otherwise.
 var pose := ""
+## "ride" (§DQ): the beast's step, -1..1, rocking the rider's hips.
+var ride_sway := 0.0
 ## Stride length as a share of the player's: bigger figures take longer,
 ## slower strides, smaller ones quicker, shorter ones (set to the scale).
 var stride_scale := 1.0
@@ -508,6 +510,25 @@ func _pose(delta: float) -> void:
 		_pose_arms_rest(0.0)
 		for s in 2:
 			_elbows[s].rotation = Vector3(-1.25, 0.0, 0.35 * (1.0 if s == 0 else -1.0))
+		return
+	if pose == "ride":
+		# Astride a beast (design 3 Oct §DQ): hips where they stand, thighs
+		# forward and out round its back, shins hanging; the back upright,
+		# rocking a little with the beast's steps (`ride_sway`, set by
+		# whoever leads it). The hood still turns by the look.
+		_hips.position = Vector3(0.0, HIP_Y, 0.0)
+		_hips.rotation = Vector3(0.0, 0.0, 0.03 * ride_sway)
+		_update_look(delta)
+		_torso.rotation = Vector3(-0.06 + 0.02 * absf(ride_sway), _torso_yaw * 0.5, 0.0)
+		head.rotation = Vector3(0.08 + _head_pitch, _head_yaw - _torso_yaw * 0.5, 0.0)
+		for s in 2:
+			var sx := -1.0 if s == 0 else 1.0
+			_legs[s].rotation = Vector3(0.75, 0.0, 0.55 * sx)
+			_knees[s].rotation = Vector3(-1.05, 0.0, 0.0)
+			_ankles[s].rotation = Vector3(0.25, 0.0, 0.0)
+		_pose_arms_rest(0.0)
+		for s in 2:
+			_elbows[s].rotation = Vector3(-0.9, 0.0, 0.25 * (1.0 if s == 0 else -1.0))
 		return
 	if seated:
 		# On a seat at knee height: thighs forward, shins down, a little

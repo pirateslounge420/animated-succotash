@@ -31,7 +31,7 @@
    "text_file": "data/tomes/tao_legge.txt",
    "filled": false,
    "found_at": "pass_gate",
-   "_note": "[NOT WIRED YET — design §DQ] Found at the gate at the pass the rider is heading for (uniques.json road_regulars.ox_rider.gate), not at a delve's heart; a first guess with the gate itself."
+   "_note": "Found at the gate at the pass the rider is heading for (uniques.json road_regulars.ox_rider.gate), not at a delve's heart; a first guess with the gate itself."
   }
  ]
 }

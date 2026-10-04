@@ -4,6 +4,36 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-04 — §DQ: the old man on his ox (prompt 20)
+- **OxRider** (`scripts/landmarks/ox_rider.gd`, new): the first road regular (`data/uniques.json` → `road_regulars.ox_rider`, unmarked). One per world, a §BF traveller who rides.
+  - **His road:** a road of his own over one great range, westward, from its east foot over a crossing to its west foot.
+    - It is routed once a world on a worker by the network's own A* (`RoadNetwork.own_road`, whole: no collapse, no bridge out).
+    - It is then put on the network (`publish`), so its tread and waymarks show like any road's.
+    - The crossing is the range's highest that a road will take: the crest's dips first, then every fifth crest point, highest first, the seeded range first.
+  - **His day** is a pure function of the clock, like the wandering fire's. He rides 07:00–17:30 local (`ride_hours`) at the ox's pace (`mount.speed_mps` 0.9; 0.78 m/s on 7731, so that a crossing ends at a dusk). At dusk he stops where he is and the ox grazes; there is no fire. Each crossing takes whole days, and the next dawn he is at the east foot again.
+  - **The rider and the ox:**
+    - The ox is a new sculpted body, `"ox"` in SculptedBodies: a heavy barrel, withers, a dewlap, its head low, horns out and forward (parts), dull black-brown #2A2220 with a mealy muzzle.
+    - The rider is the shared rig in a new `"ride"` pose (PlayerBody: astride, rocking with the ox's step), hood up, in a plain dark robe.
+    - The ox's legs step in diagonal pairs.
+    - The hood tracks you by travellers.json's head_look; the ox never breaks stride. Dread hunts only you.
+  - **The gate** (first guess, `OxRider.GATE`): two stone towers and a lintel astride the road at the crossing, the keeper's hut, and the keeper's camp. Camps builds the camp (key `gate:ox`) with one or two folk at their own hearth. The Book of the Way (tomes.json `tao`, `_note` unmarked) lies at the hut's door only once its text is in.
+- **Check:** `tools/ox_rider_check.gd`, 0 fails on 7731.
+  - Range 3 (summit 631 m), crossing at 157 m near its tail; his road 1,633 + 1,671 m, on the network.
+  - Ten days: two days a crossing; forward by day, nearer the pass on the way up, still dusk to dawn.
+  - 0.78 m/s against the 4.3 m/s walk.
+  - The hood turned as you passed and the ox went on 1.73 m in 2.5 s; never hunted.
+  - The gate and the keeper's lit camp with 1 folk; no tome without the text, the tome with a test text; the log line once.
+- **Walkabout** (`SITES=ox_rider HOURS=12`, harness frames §CG): the old man on his ox coming down the snowy road toward you with a long shadow; the gate with the keeper's fire smoking beside it.
+- **Flag for Mike (contradiction):**
+  - §DQ puts him on "the high roads of the great ranges", but §DM.1's road cap (0.3 grade) can't climb a great range's flanks (24° on average, §CR.4; its "walkable routes" are walking routes, up to 35°).
+  - On 7731 no crest point of any of the five ranges routes except near a range's tail, so "his highest pass" is 157 m at the end of a 631 m range, in the ice sheet at 74°N.
+  - The search takes about 25 s of a worker thread at boot.
+  - Options: let his road take the walking cap, or keep it.
+- **Also flagged:**
+  - He reappears at the east foot overnight (the "round the world" wrap).
+  - The pass road isn't joined to the wider network at its two feet.
+  - The keeper's hearth adds to §CU's count, as the hidden places' do.
+
 ## 2026-10-04 — §DP: the wandering fire (prompt 19)
 - **WanderingFire** (`scripts/landmarks/wandering_fire.gd`, new): the second one-of-a-kind (`data/uniques.json` → `uniques.wandering_fire`, unmarked), and the first that moves.
   - **Where they are** is a pure function of the world's seed and the clock: night 0 in the hot desert or thorn scrub, each next night 2.5–5 km on, never into standing water or out of the desert. Nothing is saved; a reload finds them where the clock says.

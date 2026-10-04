@@ -441,6 +441,16 @@ func _refresh() -> void:
 		if hspot.distance_to(pp) < BUILD_M:
 			var hland := Ruins.country(map, hd2)
 			want[str(hp.key)] = [hspot, "north" if hland == "snow" else ("marsh" if hland == "marsh" else "tribal"), int(hp.seed)]
+	# The keeper's camp at the old man's pass (design 3 Oct §DQ.3,
+	# OxRider): one or two folk at their own hearth by the gate.
+	for gc in OxRider.camps_near(map, pd, BUILD_M):
+		var gd: Vector3 = gc.hearth
+		var gspot: Vector3 = world.to_scene(gd, PlanetConst.RADIUS_M + chunks.ground_height(gd))
+		if gspot.distance_to(pp) < BUILD_M:
+			if CampSim.instance != null and not CampSim.instance.states.has(str(gc.key)):
+				CampSim.instance.ensure(str(gc.key), gd, Peoples.pick(map, chunks.rivers, gd, "ruin"), FireStore.biome_key(world, gd), int(gc.seed), 1 + absi(int(gc.seed)) % 2)
+			var gland := Ruins.country(map, gd)
+			want[str(gc.key)] = [gspot, "north" if gland == "snow" else "tribal", int(gc.seed)]
 	var only_ruins := bool(RULES.get("only_at_ruins", true))
 	# Wild camps near water.
 	for c in CreatureSpawner._cells_around(pd, BUILD_M, WILD_CELL_M) if not only_ruins else []:

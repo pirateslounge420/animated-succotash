@@ -69,12 +69,16 @@ var links: Array = []
 var nodes: Array = [] # {"dir", "kind", "key"}
 var _node_keys := {}
 var _hash := {} # Vector3i -> PackedInt32Array of link ids
+## Route whole (own_road's probe): no collapse, no bridge out.
+var keep_whole := false
 
 
-func _init(p_map: PlanetData, p_rivers: RiverNetwork) -> void:
+func _init(p_map: PlanetData, p_rivers: RiverNetwork, probe := false) -> void:
 	map = p_map
 	rivers = p_rivers
-	instance = self
+	# A probe (own_road's) routes on its own and is never the network.
+	if not probe:
+		instance = self
 	# Sized from the planet now, not when the class first loaded: loaded
 	# before PlanetConst was set up (some boot orders, 1 Oct), REGION_M
 	# came out 0 and no road was ever built.
@@ -527,6 +531,46 @@ static func route_pts(p_map: PlanetData, p_rivers: RiverNetwork, a: Vector3, b: 
 	return link.get("pts", PackedVector3Array())
 
 
+## A road that belongs to someone (design 3 Oct §DQ: the old man's pass
+## road): routed from `a` to `b` by the network's own A* and fine fix on a
+## probe of its own, whole (no collapse, no bridge out), its waymarks and
+## lost-and-found laid like any link's; `key` names its ends. {} when it
+## won't route. publish() puts it on the network.
+static func own_road(p_map: PlanetData, p_rivers: RiverNetwork, a: Vector3, b: Vector3, key: String) -> Dictionary:
+	var net := RoadNetwork.new(p_map, p_rivers, true)
+	net.keep_whole = true
+	net.nodes = [{"dir": a, "kind": "waypoint", "key": key + ":a"}, {"dir": b, "kind": "waypoint", "key": key + ":b"}]
+	var centre := (a + b).normalized()
+	var reach := CubeSphere.surface_distance_m(a, b) * 0.6 + 2500.0
+	var link := net._route(0, 1, centre, reach)
+	if link.is_empty():
+		return {}
+	net._lost_and_found(link)
+	link.own = key
+	link.ends = [net.nodes[0], net.nodes[1]]
+	return link
+
+
+## Put an own_road() link on this network (its ends become nodes): the
+## tread, the waymarks and every road query see it from now on.
+func publish(link: Dictionary) -> void:
+	_mutex.lock()
+	var ends: Array = link.get("ends", [])
+	for e in ends.size():
+		var nd: Dictionary = ends[e]
+		if not _node_keys.has(nd.key):
+			_node_keys[nd.key] = nodes.size()
+			nodes.append(nd)
+		if e == 0:
+			link.a = _node_keys[nd.key]
+		else:
+			link.b = _node_keys[nd.key]
+	link.id = links.size()
+	links.append(link)
+	_index(link)
+	_mutex.unlock()
+
+
 ## Real minutes to walk `pts` at `speed_mps` on the flat, slowed and
 ## sped by the slope as the player is (PlanetPlayer.slope_pace, design
 ## §CR.5): the opening road's length in walking minutes (§CY.1).
@@ -879,7 +923,7 @@ func _decay(link: Dictionary, lat: _Lattice) -> void:
 	var total := length_m(pts)
 	link.len_m = total
 	# A trail that ends at a collapse: cut short, rubble at the end.
-	link.collapsed = rng.randf() < float(decay.get("collapse_end_share", 0.15))
+	link.collapsed = rng.randf() < float(decay.get("collapse_end_share", 0.15)) and not keep_whole
 	if link.collapsed:
 		var keep := rng.randf_range(0.6, 0.85)
 		var cut := PackedVector3Array()
@@ -909,7 +953,7 @@ func _decay(link: Dictionary, lat: _Lattice) -> void:
 			rw = float(lc[2]) if int(lc[1]) == 2 else 6.0
 		if wet and not in_water:
 			var kind := "bridge" if rw >= 9.0 else "ford"
-			var out := kind == "bridge" and rng.randf() < float(decay.get("bridge_out_share", 0.5))
+			var out := kind == "bridge" and rng.randf() < float(decay.get("bridge_out_share", 0.5)) and not keep_whole
 			crossings.append([pts[i], kind, out, rw])
 		in_water = wet
 	link.crossings = crossings

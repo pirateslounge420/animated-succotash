@@ -22,7 +22,7 @@ class_name SculptedBodies
 ## tail swings drive the bones unchanged. Until a kind's mesh is ready
 ## (or with `enabled` off) CreatureBodies builds the old body.
 ##
-## Kinds: "wolf", "deer", "goblin", and people: "tribal" (the camps'
+## Kinds: "wolf", "deer", "goblin", "ox" (§DQ's mount), and people: "tribal" (the camps'
 ## hunters and archers) and "elder" (a fur mantle, grey hair, a beard).
 ## A near mesh and a coarser far one (past FAR_M).
 ##
@@ -32,7 +32,7 @@ class_name SculptedBodies
 ## kind, and each one's own colors in a material (_tinted()). Other kinds
 ## are built once per coat color. Colors are sRGB like CreatureBodies'.
 
-const KINDS := ["wolf", "deer", "goblin", "tribal", "elder"]
+const KINDS := ["wolf", "deer", "goblin", "tribal", "elder", "ox"]
 const TINTED := ["tribal", "elder", "goblin"]
 const FAR_M := 45.0
 
@@ -272,6 +272,18 @@ static func _attach_extras(b: Dictionary, kind: String, sp: CreatureSpecies) -> 
 					brow.rotation = Vector3(-0.9, 0.0, -0.2 * s)
 					var tine := CreatureBodies.cone(head, 0.01, 0.0, 0.12, Vector3(0.14 * s, 1.21, -0.43) - hp, bone, 0.0, 5)
 					tine.rotation = Vector3(-0.5, 0.0, -0.1 * s)
+		"ox":
+			CreatureBodies.eyes(head, Vector3(0, 0.53, -0.47) - hp, 0.07, 0.011, Color(0.05, 0.04, 0.04))
+			# Horns from the poll, out to the sides then curving forward
+			# and up: pale at the root, dark at the tips.
+			var horn := Color(0.78, 0.72, 0.6)
+			for sd: float in [-1.0, 1.0]:
+				var root_h := CreatureBodies.cone(head, 0.022, 0.016, 0.1, Vector3(0.1 * sd, 0.565, -0.43) - hp, horn, 0.0, 6)
+				root_h.rotation = Vector3(0.0, 0.0, -1.35 * sd)
+				var mid := CreatureBodies.cone(head, 0.016, 0.01, 0.08, Vector3(0.175 * sd, 0.585, -0.455) - hp, horn.darkened(0.1), 0.0, 6)
+				mid.rotation = Vector3(-0.9, 0.0, -0.55 * sd)
+				var tip := CreatureBodies.cone(head, 0.01, 0.0, 0.06, Vector3(0.19 * sd, 0.63, -0.5) - hp, Color(0.2, 0.17, 0.14), 0.0, 6)
+				tip.rotation = Vector3(-0.35, 0.0, 0.1 * sd)
 		"goblin":
 			CreatureBodies.eyes(head, Vector3(0, 0.79, -0.125) - hp, 0.05, 0.022, Color(1.0, 0.85, 0.3), 1.5)
 			var arm: Node3D = b.wings[1] if b.wings.size() > 1 else root
@@ -426,6 +438,8 @@ static func _spec(kind: String, base: Color) -> Spec:
 			_wolf(s, base)
 		"deer":
 			_deer(s, base)
+		"ox":
+			_ox(s, base)
 		"goblin":
 			_goblin(s)
 		"tribal":
@@ -525,6 +539,55 @@ static func _deer(s: Spec, base: Color) -> void:
 	s.paint(Vector3(0, 0.84, -0.3), Vector3(0.05, 0.06, 0.05), white, 0.03) # throat patch
 	s.paint(Vector3(0, 0.935, -0.565), Vector3(0.028, 0.022, 0.02), dark, 0.008, Basis.IDENTITY, 2) # nose
 	s.paint(Vector3(0, 0.955, -0.52), Vector3(0.045, 0.03, 0.03), white.darkened(0.1), 0.012) # muzzle band
+
+
+## Ox (design 3 Oct §DQ; unit = body length, feet at y 0, facing -Z): a
+## domestic ox, heavy and slow: a deep barrel on short thick legs, a hump
+## of withers, a dewlap, the head carried low on a short neck, a broad
+## muzzle, a long tail with a tuft. A dull black-brown coat (#2A2220), a
+## mealy grey muzzle, dark hooves. Horns are parts (_attach_extras).
+static func _ox(s: Spec, base: Color) -> void:
+	s.cell = 0.028
+	var coat := base
+	var mealy := base.lightened(0.28)
+	var dark := Color(0.08, 0.07, 0.06)
+	var root := s.bone("Root", -1, Vector3(0, 0.48, 0))
+	var head := s.bone("Head", root, Vector3(0, 0.52, -0.32), "head")
+	s.cap(Vector3(0, 0.48, -0.16), Vector3(0, 0.47, 0.22), 0.165, 0.15, root, coat, 0.07) # barrel
+	s.ell(Vector3(0, 0.45, -0.02), Vector3(0.17, 0.175, 0.26), root, coat, 0.06)
+	s.ell(Vector3(0, 0.58, -0.17), Vector3(0.11, 0.085, 0.13), root, coat, 0.06) # withers
+	s.ell(Vector3(0, 0.5, 0.25), Vector3(0.14, 0.14, 0.12), root, coat, 0.05) # hindquarters
+	s.ell(Vector3(0, 0.56, 0.3), Vector3(0.1, 0.05, 0.06), root, coat, 0.04) # hip bones
+	s.ell(Vector3(0, 0.36, -0.3), Vector3(0.045, 0.1, 0.075), head, coat, 0.05) # dewlap
+	s.cap(Vector3(0, 0.52, -0.26), Vector3(0, 0.51, -0.4), 0.115, 0.085, head, coat, 0.06) # neck
+	s.ell(Vector3(0, 0.51, -0.45), Vector3(0.08, 0.085, 0.085), head, coat, 0.04) # head
+	s.cap(Vector3(0, 0.49, -0.48), Vector3(0, 0.42, -0.58), 0.07, 0.06, head, coat, 0.035) # face
+	s.ell(Vector3(0, 0.41, -0.6), Vector3(0.066, 0.05, 0.05), head, coat, 0.03) # muzzle
+	for sd: float in [-1.0, 1.0]:
+		var ear_b := Basis(Vector3.BACK, -1.35 * sd)
+		s.ell(Vector3(0.105 * sd, 0.535, -0.425), Vector3(0.022, 0.05, 0.012), head, coat, 0.012, ear_b)
+	# Legs, in CreatureBodies' order: left front, left hind, right front,
+	# right hind (the gait alternates by index).
+	for sd: float in [-1.0, 1.0]:
+		for front: bool in [true, false]:
+			var x := 0.095 * sd
+			var zj := -0.2 if front else 0.23
+			var leg := s.bone(("Front" if front else "Hind") + ("L" if sd < 0.0 else "R"), root, Vector3(x, 0.44, zj), "leg")
+			if front:
+				s.cap(Vector3(x, 0.44, zj), Vector3(x, 0.22, zj - 0.01), 0.065, 0.045, leg, coat, 0.05)
+				s.cap(Vector3(x, 0.22, zj - 0.01), Vector3(x, 0.05, zj), 0.042, 0.037, leg, coat, 0.015)
+			else:
+				s.ell(Vector3(x * 0.85, 0.4, zj + 0.02), Vector3(0.07, 0.13, 0.09), leg, coat, 0.05)
+				s.cap(Vector3(x, 0.38, zj + 0.03), Vector3(x, 0.2, zj + 0.07), 0.06, 0.04, leg, coat, 0.03)
+				s.cap(Vector3(x, 0.2, zj + 0.07), Vector3(x, 0.05, zj + 0.04), 0.04, 0.037, leg, coat, 0.015)
+			s.cap(Vector3(x, 0.05, zj - 0.005), Vector3(x, 0.016, zj - 0.02), 0.04, 0.036, leg, dark, 0.008, 2) # hoof
+			s.paint(Vector3(x, 0.03, zj - 0.01), Vector3(0.05, 0.035, 0.055), dark, 0.01, Basis.IDENTITY, 2)
+	var tail := s.bone("Tail", root, Vector3(0, 0.58, 0.36), "tail")
+	s.cap(Vector3(0, 0.58, 0.36), Vector3(0, 0.3, 0.4), 0.022, 0.013, tail, coat, 0.025)
+	s.ell(Vector3(0, 0.26, 0.405), Vector3(0.03, 0.06, 0.03), tail, coat.darkened(0.3), 0.02) # tuft
+	s.paint(Vector3(0, 0.42, -0.6), Vector3(0.075, 0.06, 0.05), mealy, 0.02) # mealy muzzle
+	s.paint(Vector3(0, 0.41, -0.635), Vector3(0.04, 0.025, 0.015), dark, 0.008, Basis.IDENTITY, 2) # nose
+	s.paint(Vector3(0, 0.29, -0.02), Vector3(0.13, 0.05, 0.24), coat.lightened(0.08), 0.05) # belly
 
 
 ## Goblin (unit = height ~1, standing): a pot belly on skinny legs with

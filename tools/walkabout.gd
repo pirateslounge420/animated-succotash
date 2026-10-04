@@ -28,6 +28,8 @@ extends SceneTree
 ## SITES=hidden the nearest hidden place of each kit (§DJ), from in front.
 ## SITES=wandering_fire the thirteen (§DP): one of their cold rings, and
 ## them at their fire (HOURS=19.5 for dusk).
+## SITES=ox_rider the old man on his ox (§DQ): passing him on his road at
+## his own midday (HOURS=12), and the gate at his pass.
 ## SITES=temple_city the nearest temple city (§DR), from its straight
 ## approach: at the head of its causeway, 4 m out, looking at its gate.
 ## SITES=shrine the nearest shrine (§DK): its court and the way down, the
@@ -166,6 +168,8 @@ func _run() -> void:
 			kinds.append("temple_city")
 		if only.has("wandering_fire"):
 			kinds.append("wandering_fire")
+		if only.has("ox_rider"):
+			kinds.append("ox_rider")
 	for kind in kinds:
 		match str(kind):
 			"nests":
@@ -282,6 +286,30 @@ func _run() -> void:
 					var rd := WanderingFire.night_at(world.planet, int(past[past.size() - 1]))
 					sites.append({"name": "wandering_fire_ring", "dir": CreatureSpawner._offset(rd, 0.4, 5.0), "look": rd, "note": "their last night's cold ring, night %d" % int(past[past.size() - 1])})
 				sites.append({"name": "wandering_fire", "dir": CreatureSpawner._offset(ww.dir, 0.4, 11.0), "look": ww.dir, "note": "the thirteen (%s, night %d)" % [str(ww.state), int(ww.night)]})
+			"ox_rider":
+				var orr := OxRider.road(world.planet, main.chunks.rivers, main.chunks.roads)
+				if orr.is_empty():
+					lines.append("-- ox_rider: no road over a great range on this world")
+					continue
+				var ohr := float(OS.get_environment("HOURS").split(",")[0]) if OS.get_environment("HOURS") != "" else 12.0
+				var opd: Vector3 = orr.pass
+				var o_days := Astro.days_at_solar_hour(floor(world.days) + 1.0, ohr, CubeSphere.longitude(opd), CubeSphere.latitude(opd))
+				var ow := OxRider.where(world, o_days)
+				# On the road 22 m ahead of him, a step to its side, looking
+				# back at him coming (the walkabout's clock is the stand's own
+				# solar hour: settled twice).
+				var oa := OxRider.point(orr, minf(float(ow.m) + 22.0, float(orr.total)))
+				for it in 2:
+					ow = OxRider.where(world, Astro.days_at_solar_hour(floor(world.days) + 1.0, ohr, CubeSphere.longitude(oa), CubeSphere.latitude(oa)))
+					oa = OxRider.point(orr, minf(float(ow.m) + 22.0, float(orr.total)))
+				var ofw: Vector3 = (ow.ahead as Vector3) - (ow.behind as Vector3)
+				var oside := ofw.cross(oa).normalized()
+				sites.append({"name": "ox_rider", "dir": (oa + oside * 1.6 / PlanetConst.RADIUS_M).normalized(), "look": ow.dir, "note": "the old man on his ox (%s, %.0f m along his road of %.0f)" % [str(ow.state), float(ow.m), float(orr.total)]})
+				var og := OxRider.gate_site(world.planet)
+				if not og.is_empty():
+					var ogd: Vector3 = (og.dir as Vector3)
+					var ogf: Vector3 = og.fwd
+					sites.append({"name": "ox_gate", "dir": (ogd - ogf * 26.0 / PlanetConst.RADIUS_M).normalized(), "look": ogd, "note": "the gate at his pass (%.0f m up)" % float(orr.pass_m)})
 			"temple_city":
 				var tb := {}
 				var tbd := INF

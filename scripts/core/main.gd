@@ -50,6 +50,7 @@ var road_props: RoadProps
 var hidden_places: HiddenPlaces
 var shrines: Shrines
 var wandering_fire: WanderingFire
+var ox_rider: OxRider
 var camp_sim: CampSim
 var player_fires: PlayerFires
 var travellers: Travellers
@@ -318,6 +319,10 @@ func _on_planet_ready() -> void:
 	wandering_fire.name = "WanderingFire"
 	add_child(wandering_fire)
 	wandering_fire.setup(world, chunks, player)
+	ox_rider = OxRider.new()
+	ox_rider.name = "OxRider"
+	add_child(ox_rider)
+	ox_rider.setup(world, chunks, player)
 	travellers = Travellers.new()
 	travellers.name = "Travellers"
 	add_child(travellers)
