@@ -2,7 +2,8 @@ class_name WaterSounds
 extends Node
 ## Running water as sources you can walk to (design 30 Sept §BG, §BE):
 ## a few "water_flow" players (audio.json) kept at the nearest points of
-## the river segments round the player, louder for a faster, wider reach;
+## the river segments round the player, louder by its phase (§ED.2) and
+## for a wider reach;
 ## the waterfalls' own roar is on each fall (TerrainChunk._build_falls,
 ## "waterfall"). Both muffled by terrain and foliage (Audio3D).
 
@@ -63,6 +64,11 @@ func _process(delta: float) -> void:
 		var at := (pa + (rivers.b[s] - pa) * t).normalized()
 		var flow := Current.flow_at(rivers, map, at)
 		p.global_position = world.to_scene(at, PlanetConst.RADIUS_M + rivers.level_at(s, t) + 0.3)
-		var loud := clampf(0.25 + float(flow.speed) * 0.35 + rivers.width[s] / RiverNetwork.MAX_WIDTH_M * 0.4, 0.0, 1.0)
+		# Its phase (design 4 Oct §ED.2, RiverPhases): a pool's hush to a
+		# fall's thunder; and a bigger river (downstream, it gathers its
+		# tributaries) louder for the same phase, so the sound swells as you
+		# walk down it.
+		var ph := RiverPhases.at_t(rivers, s, t)
+		var loud := clampf(RiverPhases.loudness(ph) * 0.8 + float(flow.speed) * 0.1 + rivers.width[s] / RiverNetwork.MAX_WIDTH_M * 0.35, 0.0, 1.0)
 		p.volume_db = lerpf(p.volume_db, linear_to_db(maxf(loud, 0.001)) - 4.0, 0.5)
-		p.pitch_scale = 0.9 + 0.2 * clampf(float(flow.speed) / 3.0, 0.0, 1.0)
+		p.pitch_scale = 0.85 + 0.08 * ph

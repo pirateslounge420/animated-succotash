@@ -76,6 +76,10 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _croak(rng)
 		"howl":
 			samples = _howl(rng)
+		"dire_howl":
+			samples = _dire_howl(rng)
+		"hare_scream":
+			samples = _hare_scream(rng)
 		"drone":
 			samples = _drone(rng)
 		"whisper":
@@ -253,6 +257,41 @@ static func _howl(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var f := lerpf(lo, hi, glide) * (1.0 + 0.012 * sin(TAU * 5.5 * t * s.size() / RATE))
 		phase += TAU * f / RATE
 		s[i] = _env(i, s.size(), 0.35, 0.6) * (sin(phase) + 0.18 * sin(2.0 * phase) + 0.05 * rng.randf_range(-1, 1))
+	return s
+
+
+## The dire wolf's voice (design 4 Oct §ED.5, rungs.json): a howl an
+## octave down and twice as long, rough in the throat, the sag at its end
+## breaking into a growl.
+static func _dire_howl(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(5.0, 6.2))
+	var lo := rng.randf_range(150.0, 185.0)
+	var hi := lo * rng.randf_range(1.7, 1.95)
+	var phase := 0.0
+	var rough := 0.0
+	for i in s.size():
+		var t := float(i) / s.size()
+		var glide := smoothstep(0.0, 0.3, t) - 0.5 * smoothstep(0.65, 1.0, t)
+		var f := lerpf(lo, hi, glide) * (1.0 + 0.02 * sin(TAU * 4.0 * t * s.size() / RATE))
+		phase += TAU * f / RATE
+		rough = lerpf(rough, rng.randf_range(-1, 1), 0.2)
+		var growl := smoothstep(0.75, 1.0, t)
+		s[i] = _env(i, s.size(), 0.5, 1.0) * (sin(phase) + 0.35 * sin(2.0 * phase) + 0.2 * sin(3.0 * phase) + (0.12 + 0.4 * growl) * rough)
+	return s
+
+
+## The jackalope's voice (§ED.5): a hare's scream, high and short, pitched
+## stranger, with a chattering stutter.
+static func _hare_scream(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.7, 1.0))
+	var f0 := rng.randf_range(1500.0, 1900.0)
+	var phase := 0.0
+	for i in s.size():
+		var t := float(i) / s.size()
+		var f := f0 * (1.0 - 0.25 * t) * (1.0 + 0.08 * sin(TAU * 31.0 * t))
+		phase += TAU * f / RATE
+		var stutter: float = 0.55 + 0.45 * signf(sin(TAU * 11.0 * t))
+		s[i] = _env(i, s.size(), 0.02, 0.2) * stutter * (sin(phase) + 0.4 * sin(1.5 * phase) + 0.15 * rng.randf_range(-1, 1))
 	return s
 
 

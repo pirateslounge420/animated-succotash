@@ -12,7 +12,9 @@ extends Node3D
 ##     (Camps.shot_at()), and it bounces off and falls;
 ##   * ground, trees, ruins: buries its point there (a tree's wood only:
 ##     its leaves have no collider, design §AM);
-##   * water: splashes (Ripples) and floats on the surface.
+##   * water: splashes (Ripples) and floats on the surface; on a river in
+##     a run or anything stronger (design 4 Oct §ED.2, RiverPhases.
+##     takes_spear) the current carries it off downstream and it is lost.
 ## Leaf clusters on the way (FoliageCover) each take combat.foliage_drag of
 ## its speed and rustle their tree.
 ## Wherever it lands makes a noise wildlife hears (NoiseEvents, NOISE_M).
@@ -99,6 +101,8 @@ func _physics_process(delta: float) -> void:
 	# A brief faint trail behind it in flight (AimArc.Trail).
 	if _trail != null:
 		_trail.track(global_position, delta, not landed)
+	if lost:
+		return
 	if landed:
 		_rest()
 		return
@@ -213,12 +217,44 @@ func _lay_down() -> void:
 
 ## Afloat on the water at `d`, lying along its flight.
 func _float(d: Vector3, water: float) -> void:
+	if RiverPhases.takes_spear(chunks.rivers, world.planet, d):
+		_carry_off(d, water)
+		return
 	landed = true
 	afloat = true
 	_flatten(d)
 	_float_at = world.to_scene(d, PlanetConst.RADIUS_M + water + 0.02)
 	global_position = _float_at
 	velocity = Vector3.ZERO
+
+
+## Carried off by a strong current (§ED.2, §BQ "a spear is forever unless
+## lost, e.g. to a current"): it rides away downstream for CARRY_S,
+## tumbling, then it is gone, and with it your spear.
+const CARRY_S := 3.5
+var lost := false
+## The Spear that threw it (its slot is emptied when the river takes it).
+var from_spear: Spear = null
+
+
+func _carry_off(d: Vector3, water: float) -> void:
+	lost = true
+	landed = false
+	afloat = true
+	_flatten(d)
+	global_position = world.to_scene(d, PlanetConst.RADIUS_M + water + 0.02)
+	var flow := Current.flow_at(chunks.rivers, world.planet, d)
+	var dir: Vector3 = flow.get("dir", Vector3.ZERO)
+	var speed := maxf(float(flow.get("speed", 1.5)), 2.0)
+	GameLog.add("The current takes your spear.", "spear")
+	var tw := create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(self, "global_position", global_position + dir * speed * CARRY_S, CARRY_S)
+	tw.tween_property(self, "rotation", rotation + Vector3(0.0, 2.5, 0.4), CARRY_S)
+	tw.chain().tween_callback(func() -> void:
+		if from_spear != null and is_instance_valid(from_spear) and from_spear.thrown == self:
+			from_spear.lose()
+		NodeRelease.free_later(self))
 
 
 ## Turn it level along the ground at `d`, keeping its heading.

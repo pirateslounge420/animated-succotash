@@ -36,17 +36,9 @@
   }
  },
  "starting_kit": {
-  "worn": [
-   {
-    "kind": "spear",
-    "slot": "melee"
-   },
-   {
-    "kind": "bow",
-    "slot": "ranged"
-   }
-  ],
-  "arrows": "combat.quiver.start"
+  "worn": [],
+  "arrows": 0,
+  "_help_ed7": "Design 4 Oct \u00a7ED.7 (amended by Claude Code, 5 Oct): the spear and the bow are no longer laid at your feet on waking; they are finds in the world or a maker's work. The old kit was [spear in melee, bow in ranged, a quiver of combat.quiver.start arrows]."
  },
  "kinds": {
   "bow": {
@@ -184,7 +176,14 @@
     "kind": "torch",
     "count": 3
    }
-  ]
+  ],
+  "in_hand": [
+   {
+    "kind": "torch",
+    "count": 1
+   }
+  ],
+  "_help_in_hand": "Design 4 Oct \u00a7ED.1/\u00a7ED.7 (added by Claude Code, 5 Oct): you wake holding this, an unlit torch, and nothing else (a new world, and after a death when you have no torch left). The bundle by the fire stays."
  },
  "carried_plants": {
   "optional": true,

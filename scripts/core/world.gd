@@ -270,6 +270,13 @@ func stamp_text(d: Vector3) -> String:
 	return calendar_text(_cal_fmt("log_stamp", "Y{year} D{day} {hh}:{mm}"), int(c.x), c.y)
 
 
+## The log's stamp at `d` for game day `at_days` (a camp book's line,
+## §ED.3, written when it happened).
+func stamp_at(d: Vector3, at_days: float) -> String:
+	var c := Astro.local_clock(at_days, CubeSphere.longitude(d), CubeSphere.latitude(d))
+	return calendar_text(_cal_fmt("log_stamp", "Y{year} D{day} {hh}:{mm}"), int(maxf(c.x - first_local_day + 1.0, 1.0)), c.y)
+
+
 func generate(p_seed: int) -> void:
 	_load_dev_settings()
 	world_seed = p_seed
@@ -426,7 +433,9 @@ var opening := {}
 ## pace (design 3 Oct §CY.1; opening_walk_target()). A kind with no
 ## fire site anywhere is dropped and another rolled; play never falls back
 ## to the old list unless no kind has one at all.
-func pick_spawn_site() -> Vector3:
+func pick_spawn_site(plain := false) -> Vector3:
+	# The river camp (design 4 Oct §ED.1) unless it found nothing.
+	Encampment.river_off = plain
 	opening = {}
 	RoadNetwork.opening = {}
 	first_camp_kind = ""
@@ -472,6 +481,9 @@ func pick_spawn_site() -> Vector3:
 		names.remove_at(at)
 		weights.remove_at(at)
 		forced = ""
+	if not plain and not Encampment.river_rule().is_empty():
+		push_warning("World: no river camp (§ED.1) on seed %d; the plain first-camp rules" % world_seed)
+		return pick_spawn_site(true)
 	push_error("World: no first-camp kind has a fire site on seed %d; the old list" % world_seed)
 	if pool.is_empty():
 		return Vector3.UP
@@ -563,6 +575,7 @@ func _first_camp_of(kind: String, cells: PackedVector3Array, rng: RandomNumberGe
 			best_err = err
 			best = pick
 	if not best.is_empty():
+		best["back"] = _back_target(best.site, best.ruin)
 		return best
 	push_warning("World: no %s first camp's people's camp could be reached by road on seed %d; the camp stands on the network alone" % [kind, world_seed])
 	var lone: Vector3 = options[0][1]
@@ -580,9 +593,48 @@ func _people_camps_toward(site: Vector3, hint_m: float, target: float) -> Array:
 		var dm := CubeSphere.surface_distance_m(site, r.dir)
 		if dm < 1500.0:
 			continue
-		camps.append([absf(dm - target), r.dir, dm])
+		var score := absf(dm - target)
+		if not Encampment.river_rule().is_empty():
+			# The river camp (§ED.1): the first landmarks lie up and down the
+			# river; a people's camp by it is worth a longer or shorter walk.
+			score += minf(_river_m(r.dir), 3000.0) * 0.6
+		camps.append([score, r.dir, dm])
 	camps.sort_custom(func(x, y): return x[0] < y[0])
 	return camps
+
+
+## Metres from `d` to the nearest river segment round its cell (INF with
+## none).
+func _river_m(d: Vector3) -> float:
+	var rivers := Encampment.rivers_for(planet)
+	var best := INF
+	for sg in rivers.segments_near(planet, planet.cell_at(d)):
+		best = minf(best, rivers.closest_dt(sg, d).x)
+	return best
+
+
+## The river camp's second road (§ED.1 back_road): the ruin the other way
+## from `ruin` (its bearing from `site` turned more than 90 degrees from
+## the first road's), back_m away, nearest the river first; ZERO with none.
+func _back_target(site: Vector3, ruin: Vector3) -> Vector3:
+	var rc := Encampment.river_rule()
+	if rc.is_empty() or not bool(rc.get("back_road", true)) or ruin == Vector3.ZERO:
+		return Vector3.ZERO
+	var band: Array = rc.get("back_m", [1500.0, 9000.0])
+	var fwd := (ruin - site).normalized()
+	var best := Vector3.ZERO
+	var best_s := INF
+	for r in Ruins.near(planet, site, float(band[1])):
+		var dm := CubeSphere.surface_distance_m(site, r.dir)
+		if dm < float(band[0]):
+			continue
+		if (r.dir - site).normalized().dot(fwd) > 0.0:
+			continue
+		var sc := dm + minf(_river_m(r.dir), 3000.0) * 2.0
+		if sc < best_s:
+			best_s = sc
+			best = r.dir
+	return best
 
 
 ## The opening road from `site` to the people's camp among its best
@@ -645,6 +697,8 @@ func restore_spawn_site(site: Vector3, kind: String) -> Vector3:
 	if pick.is_empty():
 		push_warning("World: the kept opening camp at %s has no people's camp a road reaches" % str(site))
 		pick = {"site": site, "node": site, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF}
+	if not pick.is_empty() and pick.get("ruin", Vector3.ZERO) != Vector3.ZERO:
+		pick["back"] = _back_target(site, pick.ruin)
 	opening = pick
 	RoadNetwork.opening = pick
 	return site

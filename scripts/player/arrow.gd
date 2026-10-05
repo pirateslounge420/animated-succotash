@@ -62,6 +62,13 @@ var _glanced := false
 var _life := 0.0
 var _voice: AudioStreamPlayer3D
 var _trail: AimArc.Trail
+## A fire arrow (design 4 Oct §ED.7): it flies burning and passes its flame
+## to what it lands at (light_at), a fire across a gap, kindling on a
+## ledge; the flame goes out a few seconds after.
+var lit := false
+var _flame: Node3D
+const FLAME_PASS_M := 1.8
+const FLAME_LINGER_S := 6.0
 
 
 func launch(from: Vector3, vel: Vector3) -> void:
@@ -75,8 +82,44 @@ func launch(from: Vector3, vel: Vector3) -> void:
 		_trail.color = Color(str(oc.get("tracer_color", "#FF2A2A")))
 		_trail.length_s = float(oc.get("tracer_s", 0.9))
 	add_child(_trail)
+	if lit:
+		# A small flame at the head, the one warm thing on it.
+		_flame = Node3D.new()
+		_flame.name = "Flame"
+		add_child(_flame)
+		_flame.position = Vector3(0, 0, -0.42)
+		CreatureBodies.cone(_flame, 0.035, 0.0, 0.14, Vector3(0, 0.05, 0), Color("#FFA050"), 2.5, 6)
+		var l := OmniLight3D.new()
+		l.light_color = Color("#FFA050")
+		l.light_energy = 0.8
+		l.omni_range = 3.0
+		l.shadow_enabled = false
+		_flame.add_child(l)
 	_orient()
 	flying.append(self)
+
+
+## A fire arrow's flame passed at `pos` (§ED.7): the torch swing's rule
+## (Torch.swing_target) from where it landed, within FLAME_PASS_M: a cold
+## fire or a fire-holder catches (FireStore.swing_light, kindling and
+## all), a planted torch gone out relights, a shrine's dark sconce lights.
+## Returns what caught ("" nothing).
+static func light_at(tree: SceneTree, pos: Vector3, days: float) -> String:
+	var fire := FireStore.nearest(tree, pos, FLAME_PASS_M)
+	if fire != null and not FireStore.is_lit(fire) and FireStore.state_of(fire) != "catching":
+		var how := FireStore.swing_light(fire, days)
+		GameLog.add("The fire arrow lights the fire.", "fire_lit")
+		return "fire:" + how
+	var pt := PlantedTorch.unlit_near(pos, FLAME_PASS_M)
+	if pt != null:
+		pt.relight()
+		return "planted"
+	if Shrines.instance != null:
+		var sc := Shrines.instance.sconce_near(pos, FLAME_PASS_M + 0.4, false)
+		if sc != null:
+			Shrines.instance.light(sc)
+			return "sconce"
+	return ""
 
 
 ## Leaf clusters passed through (so each slows it once) and trees
@@ -138,6 +181,9 @@ func _physics_process(delta: float) -> void:
 		_trail.track(global_position, delta, not _stuck)
 	_life += delta
 	if _stuck:
+		if _flame != null and _life - _stuck_at > FLAME_LINGER_S:
+			_flame.queue_free()
+			_flame = null
 		if _life > STUCK_S:
 			queue_free()
 		return
@@ -281,8 +327,14 @@ func _splash_crossing(a: Vector3, b: Vector3) -> void:
 	Ripples.splash(world.to_scene(world.dir_of(p), surface), RippleSim.contact("arrow_kg"), velocity.length())
 
 
+var _stuck_at := 0.0
+
+
 func _stick() -> void:
 	_stuck = true
+	_stuck_at = _life
+	if lit:
+		light_at(get_tree(), global_position, world.days)
 	velocity = Vector3.ZERO
 	flying.erase(self)
 	stuck.append(self)

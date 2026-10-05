@@ -3,6 +3,63 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §ED.7 the only two weapons: spear and bow as finds or a maker's work, the fire arrow
+- **No crafting, nothing laid by you:** spears and bows still lie at delve hearts (§CJ). A living camp with a maker now also leaves one by its fire (`Camps._maker_work`): a bow if its people's maker fletches, otherwise a spear. Each camp gives once (`maker_gave` in the camp's sim state).
+- **Edges touch only flesh and blood:** `Rungs.of_the_dark` (in the ambient profile, the hostile mythicals: the werewolf, the night rider, the pond crawler and their kind). `Creature.hurt` does nothing to them. A guardian is flesh and blood and can be hurt.
+- **The fire arrow** (`techniques.json` fire_arrow, which gains `"id"`): until it is learned the bow is for hunting only.
+  - Once known, an arrow drawn within 1.6 m of a flame catches (`Bow.nock_lit`): a small flame and a #FFA050 light on its head.
+  - Where it lands it lights a fire, a planted torch or a sconce within reach (`Arrow.light_at`).
+  - The row's camp is still OPEN in the data, so for now the headman of the people's camp at the end of the opening road teaches it (`Techniques.teaches_fire_arrow`, a placeholder until Mike names the camp).
+- Checked in `tools/ed_check.gd`: the werewolf is untouched by 500 damage; a cold camp fire relit by an arrow; nothing lit 9 m away.
+
+## 2026-10-05 — §ED.6 guardians
+- New `scripts/creatures/guardians.gd` and `rungs.json → guardians` (new block with `_help`). Half of the overrun ruins, seeded per ruin, bind a mythic whose rungs.json entry says `guardian: true` (the dire wolf). It stands on ground 22 m outside the ruin's door and keeps 28 m round it (`Creature._guardian`).
+  - It **ignores light**.
+  - It **closes on a slow walker** (up to 2.2 m/s) and bites in reach.
+  - It is **spooked by a runner** (4.5 m/s or faster) for 10 s.
+  - It **ranges out from dusk until dawn**, leaving its ground empty.
+  - A **spear or arrow wound drives it off** for 8 game hours, and the log says "It will be back."
+  - It **leaves for good** once the ruin's hearth is restored. This is kept in the world's save (`guardians`).
+- Checked in `ed_check`: 100 of 200 ruins bind one; it closed from 27 m to 16 m on a walker; it spooked at a runner; a wound drives it off without killing it; it is on its ground 14 of 24 hours; it is gone once restored.
+
+## 2026-10-05 — §ED.5 creature rungs: rare and mythic
+- New `scripts/creatures/rungs.gd`. Each animal rolls its rung from its own seed. Only the species `rungs.json` lists can roll one: the hare (rare white, mythic Jackalope) and the wolf (rare black, mythic Dire wolf, matched by last word, so the Arctic wolf counts).
+  - A rare animal keeps the same mesh with only its tint changed.
+  - A mythic carries its own name, its own voice (`SoundSynth` "hare_scream" and "dire_howl", new) and the multipliers on speed, shyness, notice, territory and size. Its shape changes too: pronged antlers on the jackalope; a heavier head and a ruff on the dire wolf.
+- **The voice outranges sight:** a mythic's voice carries voice_range_x × its sight (dire wolf 210 m against 105 m). Heard from beyond sight, it writes "Something out there." to the log once. Seeing a rare or a mythic logs it once.
+- Checked in `ed_check`: over 20,000 hare seeds, 387 rare and 35 mythic (about 2% and 0.2%); a built jackalope wears 8 antler cones.
+
+## 2026-10-05 — §ED.3 the camp book
+- New `scripts/peoples/camp_book.gd` and `scripts/ui/camp_book_panel.gd`, reading `data/camp_books.json`.
+  - Every camp has a book or a scroll on a low stand by its hearth, with a quill and an ink pot (the opening camp too).
+  - Right click it to read. It opens like the log, at its newest page, on a yellowed page.
+- **What it says:** `CampSim._note` writes the sim's listed events (hearth relit, birth, store change, gatherer lost, folk left for a fire, the woodpile running low) with the game time they happened. Ink is near black when fresh and browns with age (`CampBook.ink`).
+- **The rumour:** when an overrun ruin lies in range, the last line is a rumour of it, worded from its smoke ("no smoke" if nothing burns there, "thin smoke" if a fire has not cleared it). Reading copies it into the log once.
+- Checked in `ed_check`: the lines are written, stamped and browned; the book opens at its newest page.
+
+## 2026-10-05 — §ED.2 river phases
+- New `scripts/water/river_phases.gd` classifies each river sample from its slope (averaged over ±3 samples, eased by width) into the seven phases of `data/water/phases.json`: pool, glide, riffle, run, rapid, cascade, fall. Every waterfall reads as a fall.
+- **One surface per phase** (`shaders/water.gdshader`, the phase in the ribbon's vertex colour):
+  - a pool lies flat and dark;
+  - a glide shows slow streaks;
+  - a riffle shows small white flecks;
+  - a run and anything stronger shows more white water and foam lines.
+  - Foam lines and the odd drifting leaf move downstream at fixed layer speeds. Water stays the brightest thing in view, and no new glow was added.
+- **Sound** swells and rises in pitch with the phase (`WaterSounds`).
+- **Fish** bite only in a pool or a glide (`FishingLine`).
+- **A thrown spear** landing in a run or anything stronger is carried off downstream and lost ("The current takes your spear."). In calm water it floats where it fell.
+- On seed 42 (stamp), across 262 segments within 15 km: pool 6929, glide 367, riffle 273, run 257, rapid 548, cascade 1244, fall 1252 samples. Checked with `tools/river_phases_check.gd`.
+
+## 2026-10-05 — §ED.1 the opening: a river camp, torch only
+- **Where you wake:** `camps.json → first_camp.river_camp` (new block) picks the first camp:
+  - in the 28–52° band of the hemisphere in spring or summer on day one (`Encampment.summer_sign`, from the sun's declination);
+  - its fire within 180 m of a river that runs on for at least 1 km both ways;
+  - a ruin camp of 4–5 folk (elder, hunter, gatherer, mender, sometimes a child) round its hearth inside old broken walls.
+  - The opening road follows the river to a people's camp. A second road leaves the other way to the nearest ruin on the far side (`world._back_target`, `opening_back` link), when there is one.
+- **Starting kit:** `items.json → starting_kit_ambient.in_hand` gives the torch only. Nothing is worn, there are no arrows, and no spear or bow is laid by you.
+- **Relaxed from the data's first numbers, flagged for Mike:** at 1/100 scale rivers are short (about 1–2.5 km), so `flow_m` is 1000 (not 2500) and `within_m` is 180. Any biome a fire may stand in is accepted.
+- `tools/river_camp_check.gd` on seed 7731 (full planet) passes 10/10: 42.2°N, north in summer, 107 m from the bank, 1000 m both ways, 5 folk, old walls, the torch in hand. 7731 has no ruin on the far side, so it has no back road.
+
 ## 2026-10-04 evening — §ED locked by voice (Claude in chat): the river camp, river phases, camp books, creature rungs, guardians, spear and bow as finds
 - New section §ED plus additive data: `data/water/phases.json`, `data/camp_books.json`, `data/creatures/rungs.json`, a Fire arrow hook in `techniques.json`. Nothing in code changed.
 - Amends `items.json → starting_kit`: you wake with the torch only; spear and bow are finds or a maker's work.

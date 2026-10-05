@@ -586,6 +586,13 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 			root.set_meta("sitters", [] as Array[Node3D])
 			root.set_meta("guards", [] as Array[Node3D])
 			return root
+	# The camp book on its altar by the hearth (design 4 Oct §ED.3), its
+	# own roll so the camp's layout stays as it was.
+	if canopy.is_empty() and key != "":
+		var brng := RandomNumberGenerator.new()
+		brng.seed = hash([key, "camp_book"])
+		CampBook.place(root, world, chunks, key, brng)
+		_maker_work(root, key, brng)
 	var count := rng.randi_range(2, 4) if st_folk.is_empty() else mini(st_folk.size(), 8)
 	if not canopy.is_empty():
 		count = mini(count, (canopy.seats as Array).size())
@@ -1272,3 +1279,32 @@ func shot_at(folk: Node3D) -> void:
 	var camp := folk.get_parent() as Node3D
 	if camp and camp.has_meta("chatter"):
 		_murmur(camp, folk.global_position + world.dir_of(folk.global_position) * 0.9, folk)
+
+
+## A maker's work (design 4 Oct §ED.7): a camp with a maker (CampSim role
+## "maker", §BM) has a spear or a bow lying by its fire for you, once (a
+## bow from a bowyer or fletcher's craft, else a spear); taking it marks the
+## camp's state maker_gave (main). The player never crafts.
+func _maker_work(root: Node3D, key: String, rng: RandomNumberGenerator) -> void:
+	if CampSim.instance == null:
+		return
+	var st := CampSim.instance.state_of(key)
+	if st.is_empty() or bool(st.get("maker_gave", false)) or str(st.get("state", "living")) != "living":
+		return
+	var has_maker := false
+	for f in st.get("folk", []):
+		if str((f as Dictionary).get("role", "")) == "maker":
+			has_maker = true
+	if not has_maker:
+		return
+	var people := Peoples.get_people(str(st.get("people", "")))
+	var craft := str(((people.get("specialists", {}) as Dictionary).get("maker", {}) as Dictionary).get("craft", "")).to_lower()
+	var kind := "bow" if craft.find("bow") >= 0 or craft.find("fletch") >= 0 or craft.find("arrow") >= 0 else "spear"
+	var a := rng.randf() * TAU
+	var g: Vector3 = root.to_global(Vector3(cos(a), 0, sin(a)) * 3.0)
+	var d: Vector3 = world.dir_of(g)
+	var w := WorldItem.drop(Inventory.make(kind), world, d, chunks.ground_height(d))
+	w.set_meta("maker_of", key)
+	# Goes with the camp when it is freed.
+	w.reparent(root)
+

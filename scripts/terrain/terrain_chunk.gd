@@ -761,6 +761,8 @@ static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork
 		var pb := rivers.b[s]
 		var prof := rivers.profile(s)
 		var white := rivers.rapids(s)
+		# Its phases (design 4 Oct §ED.2), one per profile sample.
+		var phases := RiverPhases.of_segment(rivers, s)
 		var n := prof.size() - 1
 		var tangent := (pb - pa).normalized()
 		var half := rivers.width[s] * 0.5
@@ -777,15 +779,15 @@ static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork
 		# Plain Arrays while building: a packed array read back out of an
 		# Array is a copy, so appending to it there is lost (why ribbons
 		# used to come out empty and rivers showed only their flat pools).
-		var rb := [[], [], [], [], [], []]
+		var rb := [[], [], [], [], [], [], []]
 		var wrap := [0.0]
 		var emit := func() -> void:
 			if (rb[0] as Array).size() >= 2:
 				out.append([PackedVector3Array(rb[0]), PackedVector3Array(rb[1]), PackedFloat32Array(rb[2]),
-					PackedFloat32Array(rb[3]), rivers.salty[s], PackedFloat32Array(rb[4]), PackedFloat32Array(rb[5])])
+					PackedFloat32Array(rb[3]), rivers.salty[s], PackedFloat32Array(rb[4]), PackedFloat32Array(rb[5]), PackedFloat32Array(rb[6])])
 			for k in rb.size():
 				(rb[k] as Array).clear()
-		var add := func(t: float, level: float, foam: float) -> void:
+		var add := func(t: float, level: float, foam: float, ph: int) -> void:
 			var p := pa.slerp(pb, t)
 			var side: Vector3
 			var h: float
@@ -808,6 +810,7 @@ static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork
 			(rb[3] as Array).append(h)
 			(rb[4] as Array).append(foam)
 			(rb[5] as Array).append(m - wrap[0])
+			(rb[6] as Array).append(float(ph))
 		for i in range(1, n + 1):
 			var t0 := float(i - 1) / n
 			var t1 := float(i) / n
@@ -815,20 +818,20 @@ static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork
 				emit.call()
 				continue
 			if (rb[0] as Array).is_empty():
-				add.call(t0, prof[i - 1], white[i - 1])
+				add.call(t0, prof[i - 1], white[i - 1], phases[i - 1])
 			if prof[i - 1] - prof[i] >= RiverNetwork.FALL_MIN_M:
 				# Waterfall: the upper ribbon ends at its lip, the lower one
 				# starts at the plunge pool, and a falling sheet joins them.
 				var tm := (i - 0.5) / n
-				add.call(tm, prof[i - 1], white[i - 1])
+				add.call(tm, prof[i - 1], white[i - 1], phases[i - 1])
 				emit.call()
 				var pm := pa.slerp(pb, tm)
 				var side := tangent.cross(pm).normalized() * half / PlanetConst.RADIUS_M
 				falls.append([(pm - side).normalized(), (pm + side).normalized(),
 					PlanetConst.RADIUS_M + prof[i - 1] + 0.15, PlanetConst.RADIUS_M + prof[i] + 0.15,
 					rivers.width[s], rivers.salty[s], (pb - pa).normalized()])
-				add.call(tm, prof[i], 1.0)
-			add.call(t1, prof[i], white[i])
+				add.call(tm, prof[i], 1.0, phases[i])
+			add.call(t1, prof[i], white[i], phases[i])
 		emit.call()
 	return out
 
@@ -1641,8 +1644,10 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 	# the centerline, and downstream). uv2.x: white water (rapids), 0 on
 	# still water; uv2.y: on rivers, the ribbon's half width (m; the water
 	# runs downstream and the edges fade into the pool beneath), else 0.
-	var salt := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array()}
-	var fresh := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array()}
+	# COLOR.r: a river's phase (§ED.2, RiverPhases: 0 pool .. 1 fall), 0 on
+	# standing water.
+	var salt := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array(), "c": PackedColorArray()}
+	var fresh := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array(), "c": PackedColorArray()}
 	for q in quads:
 		var target: Dictionary = salt if q[5] else fresh
 		var radii: PackedFloat32Array = q[4]
@@ -1654,6 +1659,7 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 			target.v.append(corners[idx])
 			target.uv.append(quv[idx])
 			target.uv2.append(Vector2.ZERO)
+			target.c.append(Color(0, 0, 0, 1))
 	for rb in ribbons:
 		var lefts: PackedVector3Array = rb[0]
 		var rights: PackedVector3Array = rb[1]
@@ -1662,6 +1668,8 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 		var target: Dictionary = salt if rb[4] == 1 else fresh
 		var foam: PackedFloat32Array = rb[5]
 		var along: PackedFloat32Array = rb[6]
+		var phs: PackedFloat32Array = rb[7] if rb.size() > 7 else PackedFloat32Array()
+		var top := maxf(RiverPhases.count() - 1, 1.0)
 		for k in lefts.size() - 1:
 			var quad := [
 				world.to_scene_relative(lefts[k], radii[k], anchor),
@@ -1673,10 +1681,14 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 				Vector2(halves[k + 1], along[k + 1]), Vector2(-halves[k + 1], along[k + 1])]
 			var uv2s := [Vector2(foam[k], halves[k]), Vector2(foam[k], halves[k]),
 				Vector2(foam[k + 1], halves[k + 1]), Vector2(foam[k + 1], halves[k + 1])]
+			var cs := [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)]
+			if not phs.is_empty():
+				cs = [Color(phs[k] / top, 0, 0, 1), Color(phs[k] / top, 0, 0, 1), Color(phs[k + 1] / top, 0, 0, 1), Color(phs[k + 1] / top, 0, 0, 1)]
 			for idx in [0, 2, 1, 0, 3, 2]:
 				target.v.append(quad[idx])
 				target.uv.append(uvs[idx])
 				target.uv2.append(uv2s[idx])
+				target.c.append(cs[idx])
 	# The water's colours by the family of the biome at the chunk's middle
 	# (§BU step 4, WaterLook): the sea its own, fresh water its biome's.
 	var bk := FireStore.biome_key(world, center_of(key()))
@@ -1826,6 +1838,8 @@ func _water_mesh(data: Dictionary, mat: ShaderMaterial, node_name: String) -> vo
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_TEX_UV] = data.uv
 	arrays[Mesh.ARRAY_TEX_UV2] = data.uv2
+	if data.has("c") and (data.c as PackedColorArray).size() == v.size():
+		arrays[Mesh.ARRAY_COLOR] = data.c
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {}, GROUND_FORMAT)
 	var mi := MeshInstance3D.new()

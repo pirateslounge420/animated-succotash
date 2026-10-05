@@ -889,6 +889,17 @@
   }
  },
  "first_camp": {
+  "river_camp": {
+   "_help": "Design 4 Oct §ED.1 (added by Claude Code, 5 Oct): the opening is a river camp. on: the rule applies. lat_deg: the temperate band (absolute latitude, degrees) the spawn must lie in, in whichever hemisphere is in spring or summer on day one (the sun is over that side of the equator), so the first day is never shorter than the equinox's. within_m: the fire stands this near a river (its bank, not the water), on any usable land there (the bank's own biome, never one first_camp.never bars); every kind's own water and biome rule gives way to this. flow_m: the river must run on at least this far both upstream and downstream of the camp, so a road can follow it both ways (rivers are short at 1/100 scale: 1 km, measured 5 Oct on seed 7731). folk: how many sit at the hearth (the elder and the hunter, then others). ruin: the camp is a restored hearth inside old broken walls. back_road: a second road leaves the camp the other way along the river, to the nearest ruin that way back_m away.",
+   "on": true,
+   "lat_deg": [28.0, 52.0],
+   "within_m": 180.0,
+   "flow_m": 1000.0,
+   "folk": [4, 5],
+   "ruin": true,
+   "back_road": true,
+   "back_m": [1500.0, 12000.0]
+  },
   "roll_kind": true,
   "candidates_per_kind": 6,
   "min_separation_m": 20000.0,

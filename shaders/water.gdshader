@@ -145,6 +145,60 @@ void fragment() {
 	// Mottled body: -1..1, darker and lighter blue, never grey.
 	float body = (la.r + lb.r) - 1.0;
 
+	// Reading the river (design 4 Oct §ED.2, RiverPhases, phases.json):
+	// on a river ribbon COLOR.r is its phase, 0 pool .. 6 fall. Three
+	// layers at fixed speeds downstream (0.25, 0.75 and 2 m/s), blended by
+	// phase: no layer's speed changes across the water, so nothing shears
+	// as TIME runs, and each times 3600 s is whole repeats.
+	float ph = COLOR.r * 6.0 * river;
+	float w_slow = river * (1.0 - smoothstep(1.0, 2.0, ph));
+	float w_mid = river * (smoothstep(1.0, 2.0, ph) - smoothstep(2.0, 3.0, ph));
+	float w_fast = river * smoothstep(2.0, 3.0, ph);
+	float pool = river * (1.0 - smoothstep(0.0, 1.0, ph));
+	float rif = river * (smoothstep(1.5, 2.0, ph) - smoothstep(2.5, 3.0, ph));
+	float leaf = 0.0;
+	float fline = 0.0;
+	float stone = 0.0;
+	if (river > 0.5) {
+		// pool: still, slow drift; glide: smooth, faint streaks; riffle:
+		// broken, finer; run and on: fast, long streaks.
+		float l0 = retro_tile(look_tex_water, (UV - vec2(0.0, 0.25) * TIME) / TILE_A).r;
+		float l1 = retro_tile(look_tex_water, vec2(UV.x * 1.6, UV.y - 0.75 * TIME) / TILE_A).r;
+		float l2 = retro_tile(look_tex_water, vec2(UV.x * 2.0 / TILE_A, (UV.y - 2.0 * TIME) / (TILE_A * 3.0))).r;
+		body = (l0 * 2.0 - 1.0) * w_slow * mix(0.35, 0.8, smoothstep(0.0, 1.0, ph))
+			+ (l1 * 2.0 - 1.0) * w_mid * 1.2 + (l2 * 2.0 - 1.0) * w_fast;
+		// Foam lines (the direction, never in doubt): two thin pale lines
+		// along the current, wandering, broken into dashes that drift
+		// downstream, on the slow and the fast layer.
+		float half_w = max(UV2.y, 0.5);
+		for (int k = 0; k < 2; k++) {
+			float sk = k == 0 ? 0.25 : 2.0;
+			float wk = k == 0 ? (w_slow + w_mid) * (0.35 + 0.65 * smoothstep(0.0, 1.0, ph)) : w_fast * (1.0 - smoothstep(3.0, 4.0, ph));
+			float y = UV.y - sk * TIME;
+			for (int j = 0; j < 2; j++) {
+				float side = j == 0 ? -0.32 : 0.28;
+				float xo = half_w * side + (texture(look_tex_water, vec2(0.13 + 0.4 * float(j), UV.y / 60.0)).g - 0.5) * half_w * 0.5;
+				float on_line = 1.0 - smoothstep(0.08, 0.16, abs(UV.x - xo));
+				float dash = step(0.42, texture(look_tex_water, vec2(0.71 + 0.3 * float(j), y / (k == 0 ? 7.0 : 16.0))).r);
+				fline = max(fline, on_line * dash * wk);
+			}
+		}
+		// Drifting leaves on the slower water: a few dark flecks riding the
+		// current (the slow layer on pools and glides, the middle one on a
+		// riffle). Every 1/1.5 m cell times its speed x 3600 s is whole.
+		vec2 c0 = vec2(UV.x, UV.y - 0.25 * TIME) * 1.5;
+		vec2 c1 = vec2(UV.x, UV.y - 0.75 * TIME) * 1.5;
+		float d0 = step(0.986, hash(floor(c0) + vec2(17.0, 3.0))) * (1.0 - smoothstep(0.14, 0.24, length(fract(c0) - 0.5)));
+		float d1 = step(0.986, hash(floor(c1) + vec2(5.0, 29.0))) * (1.0 - smoothstep(0.14, 0.24, length(fract(c1) - 0.5)));
+		leaf = d0 * w_slow + d1 * w_mid;
+		// A riffle's stones showing: dark rounded backs fixed in the flow.
+		vec2 sc = UV / 0.7;
+		stone = rif * step(0.9, hash(floor(sc) + vec2(41.0, 7.0))) * (1.0 - smoothstep(0.2, 0.32, length(fract(sc) - 0.5)));
+		// White water rises with the phase: a few streaks on a run, white
+		// on a rapid, all white down a cascade.
+		white = max(white, 0.2 * smoothstep(2.5, 3.5, ph) + 0.5 * smoothstep(3.5, 4.5, ph) + 0.3 * smoothstep(4.5, 5.5, ph));
+	}
+
 	// Ripples near the camera (RippleSim): `swing` +1 on a ring's crest ..
 	// -1 in its trough (`swing_w` how fast it changes across a pixel),
 	// `ring` how strongly it's painted (0 where calm or out of reach),
@@ -200,6 +254,8 @@ void fragment() {
 	// the sea: calm_share is 0 on salt water).
 	float calm = calm_share * (1.0 - river) * (1.0 - smoothstep(0.0, 0.3, white));
 	ALBEDO = mix(water_color, calm_color, calm) * (1.0 + body_mottle * body);
+	// A pool lies still and a little deeper blue.
+	ALBEDO = mix(ALBEDO, calm_color, pool * 0.16);
 	// Glints: two layers of the noise, scrolling apart (downstream on
 	// rivers); where both are high the water flares. Each layer's drift
 	// times 3600 s is a whole number of its repeats at 0.25 m/s steps.
@@ -276,6 +332,25 @@ void fragment() {
 		ALPHA = mix(ALPHA, 0.98, foam);
 	}
 
+	// The phase's marks over the body: foam lines pale, a riffle's stones
+	// dark, a rapid's standing waves and a cascade's steps as pale bands
+	// fixed across the flow.
+	if (river > 0.5) {
+		ALBEDO = mix(ALBEDO, foam_color, fline * 0.55);
+		glow = mix(glow, night_highlight * 1.1, fline * 0.5);
+		ALBEDO *= 1.0 - stone * 0.45;
+		glow *= 1.0 - stone * 0.4;
+		float standing = smoothstep(3.0, 4.0, ph);
+		if (standing > 0.0) {
+			float wob = texture(look_tex_water, vec2(UV.x / 4.0, UV.y / 9.0)).g;
+			float band = fract(UV.y / mix(2.2, 3.4, smoothstep(4.0, 5.0, ph)) + wob * 0.35);
+			float crest = step(0.7, band) * standing;
+			ALBEDO = mix(ALBEDO, foam_color, crest * 0.8);
+			glow = mix(glow, night_highlight * 1.15, crest * 0.8);
+			glint *= 1.0 - crest;
+		}
+	}
+
 	// By day the body is glow_day x its colour, self_lit of it emitted
 	// (it holds its glow as the land darkens) and the rest lit; near
 	// self-lit at night: the lit albedo fades back so the glow sets the
@@ -300,5 +375,12 @@ void fragment() {
 		EMISSION += vec3(0.25, 1.0, 0.75) * bay_hdr * stirred * bay * mix(0.15, 1.0, look_night);
 	}
 	ALPHA = mix(ALPHA, 0.92, site * look_glow) * fade;
+	// The drifting leaves: dull, lit like the land, never glowing (only
+	// things that give off light glow).
+	if (leaf > 0.0) {
+		ALBEDO = mix(ALBEDO, vec3(0.16, 0.13, 0.05), leaf);
+		EMISSION *= 1.0 - leaf;
+		ALPHA = max(ALPHA, leaf * fade);
+	}
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

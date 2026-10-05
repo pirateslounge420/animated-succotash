@@ -27,6 +27,8 @@ var _bite_t := 0.0
 var _t := 0.0
 var _hold := false
 var _rng := RandomNumberGenerator.new()
+## Do fish hold where the float lies (§ED.2): -1 not judged yet.
+var _holds := -1
 
 
 func setup(p: PlanetPlayer) -> void:
@@ -100,6 +102,7 @@ func cast() -> bool:
 	bite = false
 	_float_pos = at
 	_float_up = player.world.dir_of(at)
+	_holds = -1
 	var b = P.get("bite_s", [8.0, 30.0])
 	_wait = _rng.randf_range(float(b[0]), float(b[1]))
 	_float.visible = true
@@ -148,7 +151,13 @@ func update_line(delta: float) -> void:
 			var b = P.get("bite_s", [8.0, 30.0])
 			_wait = _rng.randf_range(float(b[0]), float(b[1]))
 	else:
-		_wait -= delta
+		# Fish hold only in a pool or a glide (design 4 Oct §ED.2,
+		# RiverPhases.fish_hold); on faster water the float just rides.
+		if _holds < 0:
+			var fd: Vector3 = player.world.dir_of(_float_pos)
+			_holds = 1 if RiverPhases.fish_hold(player.chunks.rivers, player.world.planet, fd) else 0
+		if _holds == 1:
+			_wait -= delta
 		if _wait <= 0.0:
 			bite = true
 			_bite_t = float(P.get("hook_window_s", 2.0))

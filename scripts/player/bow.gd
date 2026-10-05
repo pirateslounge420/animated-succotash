@@ -43,6 +43,10 @@ var _view: Node3D # first-person bow, on the camera
 var _nocked: Node3D # the arrow on the string in view
 var _voice: AudioStreamPlayer3D
 var _blocked := false # the click that captured the mouse doesn't draw
+## The arrow on the string has caught (§ED.7 fire arrow), until it's loosed.
+var nock_lit := false
+## How near a flame the drawn arrow's head catches (m).
+const FIRE_REACH_M := 1.6
 ## Draw only while the mouse is captured (off in automated tests, where
 ## there's no mouse to capture).
 static var need_capture := true
@@ -98,6 +102,11 @@ func update_bow(delta: float) -> void:
 			drawing = true
 			charge = 0.0
 			_play("bow_draw")
+		# The fire arrow (design 4 Oct §ED.7, technique fire_arrow): once
+		# learned, a drawn arrow held near any flame catches.
+		if not nock_lit and Techniques.knows("fire_arrow") and Torch.flame_near(player.get_tree(), _nock_point(), FIRE_REACH_M):
+			nock_lit = true
+			_play("torch_light")
 		var was_over := overcharge() >= 1.0
 		var cap := DRAW_S + float(SuperMeter.overcharge("bow").get("extra_s", 1.2)) if player.meter.has() else DRAW_S * 1.5
 		charge = minf(charge + delta, cap)
@@ -109,6 +118,7 @@ func update_bow(delta: float) -> void:
 		if can and power() >= MIN_POWER:
 			_loose(is_super)
 		charge = 0.0
+		nock_lit = false
 	_carry()
 
 
@@ -153,6 +163,7 @@ func _loose(is_super := false) -> void:
 		player.meter.spend()
 		super_shots += 1
 	arrow.damage = dmg
+	arrow.lit = nock_lit
 	player.world.world_root.add_child(arrow)
 	arrow.launch(from, vel)
 	_play("bow_release")
@@ -162,6 +173,11 @@ func _loose(is_super := false) -> void:
 	var arrows: Array = player.world.world_root.get_children().filter(func(n): return n is Arrow)
 	for i in maxi(0, arrows.size() - MAX_ARROWS):
 		arrows[i].queue_free()
+
+
+## Where the drawn arrow's head is: just ahead of your hands.
+func _nock_point() -> Vector3:
+	return player.reach_from() - player.global_basis.z * 0.6
 
 
 ## Where the bow is: slung on the back, raised and drawn in the left hand,

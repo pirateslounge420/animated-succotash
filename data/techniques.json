@@ -925,6 +925,8 @@
    "player_can": true
   },
   {
+   "id": "fire_arrow",
+   "_help_id": "Added by Claude Code, 5 Oct: the id the code learns it by (Techniques.knows(\"fire_arrow\")). While camp is OPEN the teacher is the headman of the people's camp at the end of the opening road (a placeholder until the designer names the camp: put a people id or a camp key in camp).",
    "name": "Fire arrow",
    "taught_by": "headman",
    "camp": "OPEN \u2014 which camp teaches it is undecided (\u00a7ED.7)",

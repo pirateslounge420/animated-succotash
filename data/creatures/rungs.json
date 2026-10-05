@@ -39,5 +39,17 @@
     "guardian": true
    }
   }
+ },
+ "guardians": {
+  "_help": "Design 4 Oct \u00a7ED.6 (added by Claude Code, 5 Oct): guardians. share: of the overrun ruins (\u00a7CN), how many have a mythic with guardian true holding the ground outside (seeded per ruin). hold_m: how far round its ground it ranges (the ground lies ground_out_m beyond the ruin's door). slow_mps: a walker no faster than this it closes on; run_mps: a runner at least this fast spooks it off for spook_s seconds. drive_off_game_h: a wound from spear or bow drives it off for this many game hours. bite: what its bite does (Harm counts hits). It ignores light, and ranges out from dusk until dawn to hunt. When the ruin's hearth is restored (the ruin no longer overrun) it leaves for good.",
+  "share": 0.5,
+  "ground_out_m": 22.0,
+  "hold_m": 28.0,
+  "slow_mps": 2.2,
+  "run_mps": 4.5,
+  "spook_s": 10.0,
+  "drive_off_game_h": 8.0,
+  "bite": 24.0,
+  "spawn_within_m": 220.0
  }
 }

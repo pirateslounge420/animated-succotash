@@ -254,6 +254,24 @@ func _build_region(k: Vector3i) -> void:
 				done = true
 		if not done:
 			push_warning("RoadNetwork: the opening camp's road to its people's camp would not route")
+		# The river camp's second road (design 4 Oct §ED.1): the other way
+		# along the river, to the ruin World picked that way.
+		var back: Vector3 = opening.get("back", Vector3.ZERO)
+		var jb := _node_at(all, back) if back != Vector3.ZERO else -1
+		if jb >= 0 and jb != i:
+			var kb := Vector2i(mini(i, jb), maxi(i, jb))
+			var have := false
+			for l in new_links:
+				if Vector2i(mini(int(l.a), int(l.b)), maxi(int(l.a), int(l.b))) == kb:
+					l.opening_back = true
+					have = true
+			if not have:
+				var lb := _route(i, jb, centre, reach)
+				if not lb.is_empty():
+					lb.opening_back = true
+					new_links.append(lb)
+					linked[i] = true
+					linked[jb] = true
 	# Every people's camp and ruin on the network (§BC): one whose pruned
 	# neighbours are gone or would not route tries the next nearest, up to
 	# six, before it is given up (and logged, for a camp).

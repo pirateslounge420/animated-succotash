@@ -29,6 +29,9 @@ const CANDIDATES := 12
 const MIN_SEPARATION_M := 20000.0
 const SEARCH_M := 500.0
 const CLEARING_M := 12.0
+## The river camp's old walls (§ED.1 ruin): stubs on a ring this far out
+## (m), round the fire.
+const RUIN_R_M := [10.5, 13.5]
 const PLAYER_M := 3.3
 const HIDE := Color(0.55, 0.4, 0.26)
 
@@ -71,6 +74,11 @@ var _voice: AudioStreamPlayer3D
 ## too. kinds: a set of biome keys and a water rule each; the common
 ## gates (fuel, temperature, slope, elevation, never); the roll's weights.
 static var FC: Dictionary = Tuning.section("camps", "first_camp")
+## The river camp (design 4 Oct §ED.1, first_camp.river_camp): the opening
+## in a temperate band of the summer hemisphere, beside a river that runs
+## on both ways. Set off for one roll when no kind has such a site
+## (World.pick_spawn_site falls back to the plain rules).
+static var river_off := false
 static var _kind_cache := {}
 static var _rivers_cache := {}
 
@@ -101,7 +109,7 @@ static func rivers_for(map: PlanetData) -> RiverNetwork:
 ## never. Within a kind the score is the old one minus the latitude term:
 ## closeness to its water, moisture, a mild mean, level ground.
 static func candidates_by_kind(map: PlanetData) -> Dictionary:
-	var id := map.get_instance_id()
+	var id := [map.get_instance_id(), river_rule().is_empty()]
 	if _kind_cache.has(id):
 		return _kind_cache[id]
 	_kind_cache.clear()
@@ -117,6 +125,7 @@ static func candidates_by_kind(map: PlanetData) -> Dictionary:
 	var sep := float(FC.get("min_separation_m", MIN_SEPARATION_M))
 	var kind_biomes := {}
 	var scored := {}
+	var rc := river_rule()
 	for k in kinds:
 		var ids := PackedInt32Array()
 		for key in (kinds[k] as Dictionary).get("biomes", []):
@@ -141,12 +150,19 @@ static func candidates_by_kind(map: PlanetData) -> Dictionary:
 			continue
 		if needs_fuel and not _offers_fuel(fuel, key):
 			continue
+		if not rc.is_empty() and not in_river_band(map.dir[c], rc):
+			continue
 		for k in kinds:
 			if not (kind_biomes[k] as PackedInt32Array).has(bid):
 				continue
 			var rule: Dictionary = kinds[k]
 			var within := float(rule.get("within_m", 1500.0))
-			var wd := water_m(map, rivers, c, str(rule.get("near", "water")))
+			var near_k := str(rule.get("near", "water"))
+			if not rc.is_empty():
+				# The river camp (§ED.1): every kind by a river.
+				near_k = "river"
+				within = float(rc.get("within_m", 140.0))
+			var wd := water_m(map, rivers, c, near_k)
 			if wd > within:
 				continue
 			var score := -wd / within * 2.0 + map.moisture[c] * 3.0 - absf(map.temp_c[c] - 19.0) * 0.25 - map.slope[c] * 20.0
@@ -170,6 +186,44 @@ static func candidates_by_kind(map: PlanetData) -> Dictionary:
 		out[k] = cells
 	_kind_cache[id] = out
 	return out
+
+
+## The river camp's rule (first_camp.river_camp, §ED.1), {} when it is off.
+static func river_rule() -> Dictionary:
+	var rc: Dictionary = FC.get("river_camp", {})
+	return rc if bool(rc.get("on", false)) and not river_off else {}
+
+
+## +1 when the northern hemisphere is in spring or summer on day one (the
+## sun over the north side of the equator, World.START_DAYS), -1 for the
+## southern; at an equinox, the side the sun is moving into.
+static func summer_sign() -> float:
+	var days: float = load("res://scripts/core/world.gd").START_DAYS
+	var dec := Astro.declination(days)
+	if absf(dec) < 0.002:
+		dec = Astro.declination(days + 5.0) - dec
+	return 1.0 if dec >= 0.0 else -1.0
+
+
+## Is `d` in the river camp's temperate band of the summer hemisphere?
+static func in_river_band(d: Vector3, rc: Dictionary) -> bool:
+	var lat := rad_to_deg(CubeSphere.latitude(d))
+	var band: Array = rc.get("lat_deg", [28.0, 52.0])
+	return lat * summer_sign() >= float(band[0]) and lat * summer_sign() <= float(band[1])
+
+
+## How far the river runs on from segment `s`, upstream and downstream
+## (m, each capped at `cap`).
+static func river_runs(rivers: RiverNetwork, s: int, cap: float) -> Vector2:
+	var down := float(rivers.to_end_m[s])
+	var up := 0.0
+	var k := rivers.up_seg[s]
+	var guard := 0
+	while k >= 0 and up < cap and guard < 400:
+		up += CubeSphere.surface_distance_m(rivers.a[k], rivers.b[k])
+		k = rivers.up_seg[k]
+		guard += 1
+	return Vector2(minf(up, cap), minf(down, cap))
 
 
 ## Does the fuel table give this biome anything to burn?
@@ -236,6 +290,13 @@ static func fire_site(map: PlanetData, rivers: RiverNetwork, d: Vector3, kind: S
 	var rule: Dictionary = (FC.get("kinds", {}) as Dictionary).get(kind, {})
 	var near := str(rule.get("near", "water"))
 	var within := float(rule.get("within_m", 1500.0))
+	var rc := river_rule()
+	var flow := 0.0
+	if not rc.is_empty():
+		# The river camp (§ED.1): by a river that runs on both ways.
+		near = "river"
+		within = float(rc.get("within_m", 140.0))
+		flow = float(rc.get("flow_m", 2500.0))
 	var ids := PackedInt32Array()
 	for key in rule.get("biomes", []):
 		var bid := BiomeTemplates.id_of_key(str(key))
@@ -247,6 +308,10 @@ static func fire_site(map: PlanetData, rivers: RiverNetwork, d: Vector3, kind: S
 	var c0 := map.cell_at(d)
 	if near == "river" or near == "water":
 		for s in rivers.segments_near(map, c0):
+			if flow > 0.0:
+				var runs := river_runs(rivers, s, flow)
+				if runs.x < flow or runs.y < flow:
+					continue
 			var a: Vector3 = rivers.a[s]
 			var b: Vector3 = rivers.b[s]
 			var seg_m := CubeSphere.surface_distance_m(a, b)
@@ -286,7 +351,14 @@ static func fire_site(map: PlanetData, rivers: RiverNetwork, d: Vector3, kind: S
 				var cell := map.cell_at(p)
 				if map.water[cell] != PlanetData.Water.NONE or map.biome[cell] in TerrainChunk.WETLANDS:
 					continue
-				if not ids.has(map.biome[cell]):
+				# The river camp (§ED.1) stands on any usable land by its river
+				# (the bank's own biome, not the cell's kind), never in a biome
+				# first_camp.never bars.
+				if flow > 0.0:
+					var bk: String = BiomeTemplates.KEYS[map.biome[cell]] if map.biome[cell] >= 0 and map.biome[cell] < BiomeTemplates.KEYS.size() else ""
+					if (FC.get("never", []) as Array).has(bk):
+						continue
+				elif not ids.has(map.biome[cell]):
 					continue
 				if _standing_water(map, p, "water"):
 					continue
@@ -393,7 +465,8 @@ static func site_near(map: PlanetData, d: Vector3) -> Vector3:
 
 ## Make `site` the camp: plants keep clear of it.
 static func set_active(p_site: Vector3) -> void:
-	clearings = [[p_site, CLEARING_M]]
+	# The river camp's broken walls (§ED.1) stand a little further out.
+	clearings = [[p_site, CLEARING_M + (RUIN_R_M[1] + 2.0 - CLEARING_M if bool(river_rule().get("ruin", false)) else 0.0)]]
 
 
 ## Clearings within `radius` m of `d`.
@@ -442,6 +515,10 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		fs.basis = Basis.looking_at(-fs.position.normalized(), Vector3.UP)
 		woodpile = wp
 		food_store = fs
+	# The camp book by the hearth (design 4 Oct §ED.3).
+	var brng := RandomNumberGenerator.new()
+	brng.seed = hash([site, "camp_book"])
+	CampBook.place(dress, world, chunks, "opening", brng, 4.4)
 	var props: Array = (people.get("aesthetic", {}) as Dictionary).get("props", [])
 	for i in mini(3, props.size()):
 		var s := str(props[i]).to_lower()
@@ -464,18 +541,30 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	# (the designer's pick, every game), sitting in the fire circle (design
 	# 3 Oct §CY.2–CY.3, FireCircle) on the seats the place supplies, the
 	# spare seat on the player's side.
-	var names := ["Elder", "Hunter"]
+	# The river camp (§ED.1) sits 4-5 at its hearth: the elder and the
+	# hunter, then others of the camp.
+	var rc := river_rule()
+	var folk_n := 2
+	if not rc.is_empty():
+		var fr: Array = rc.get("folk", [4, 5])
+		var frng := RandomNumberGenerator.new()
+		frng.seed = hash([site, "folk_n"])
+		folk_n = frng.randi_range(int(fr[0]), int(fr[1]))
+		if bool(rc.get("ruin", false)):
+			_old_walls(dress, dbody, frng)
+	var names := ["Elder", "Hunter", "Gatherer", "Mender", "Youngster"]
 	var prng := RandomNumberGenerator.new()
 	prng.seed = hash([site, "folk"])
 	var to_player := dress.to_local(world.to_scene(player_spot, PlanetConst.RADIUS_M + chunks.ground_height(player_spot)))
 	var ch := chunks.chunk_at(site)
-	var seats := FireCircle.lay_seats(dress, 2, prng, {"biome": biome_key, "people": people_id, "site": "",
+	var seats := FireCircle.lay_seats(dress, folk_n, prng, {"biome": biome_key, "people": people_id, "site": "",
 		"bark": FireCircle.stand_bark(chunks, _fire.global_position), "stones": CreatureSpawner.den_stones(world.planet.rock[world.planet.cell_at(site)]),
 		"ground": ch.ground_color_at(site) if ch != null else Color(0.35, 0.42, 0.22),
 		"cloth": ppal[0] if not ppal.is_empty() else HIDE, "spare_at": atan2(to_player.z, to_player.x)}, dbody)
-	for i in 2:
-		var pal := CloakedFigure.roll_palette(prng, OPENING_FAMILIES[i], true)
-		var height := 1.66 if i == 0 else 1.74
+	for i in mini(folk_n, seats.size()):
+		var fam: int = OPENING_FAMILIES[i] if i < OPENING_FAMILIES.size() else prng.randi() % CloakedFigure.FAMILIES.size()
+		var pal := CloakedFigure.roll_palette(prng, fam, i < OPENING_FAMILIES.size())
+		var height := 1.66 if i == 0 else (1.74 if i == 1 else (1.38 if i == 4 else prng.randf_range(1.58, 1.76)))
 		var holder := Node3D.new()
 		holder.name = names[i]
 		dress.add_child(holder)
@@ -487,7 +576,7 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		holder.set_meta("hitboxes", CloakedFigure.hitboxes(holder, b, true))
 		holder.set_meta("arms", b.wings)
 		holder.set_meta("head", (body as PlayerBody).head)
-		holder.set_meta("stage", "adult")
+		holder.set_meta("stage", "child" if i == 4 else "adult")
 		holder.set_meta("phase", prng.randf() * TAU)
 		BlobShadow.make(holder, 0.35, 0.35)
 		FireCircle.sit(holder, seats[i])
@@ -497,6 +586,53 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	_voice.volume_db = -8.0
 	for i in 2:
 		SoundSynth.stream("murmur_one", i)
+
+
+## The river camp's ruin (§ED.1): the hearth restored inside what is left
+## of an old building's walls, stubs of dressed stone on a ring round the
+## fire with gaps between (the way in, the way to the water), a few blocks
+## fallen beside them. Each stub sits on its own ground.
+func _old_walls(dress: Node3D, body: StaticBody3D, rng: RandomNumberGenerator) -> void:
+	var stone := Color(0.46, 0.45, 0.42)
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var start := rng.randf() * TAU
+	var placed := 0.0
+	while placed < TAU - 0.4:
+		var r := rng.randf_range(float(RUIN_R_M[0]), float(RUIN_R_M[1]))
+		var len_m := rng.randf_range(2.0, 5.5)
+		var arc := len_m / r
+		var gap := rng.randf_range(0.25, 0.8)
+		var mid := start + placed + arc * 0.5
+		placed += arc + gap
+		if placed > TAU - 0.2:
+			break
+		var d := CreatureSpawner._offset(site, mid, r)
+		var at := dress.to_local(world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d)))
+		var d2 := CreatureSpawner._offset(site, mid + 0.02, r)
+		var along := dress.to_local(world.to_scene(d2, PlanetConst.RADIUS_M + chunks.ground_height(d2))) - at
+		var yaw := atan2(-along.z, along.x) + rng.randf_range(-0.08, 0.08)
+		var h := rng.randf_range(0.5, 2.3)
+		var t := rng.randf_range(0.6, 0.8)
+		# Sunk 0.4 m, so the stub stands on the slope with no gap under it.
+		var xf := Transform3D(Basis(Vector3.UP, yaw), at + Vector3(0, h * 0.5 - 0.2, 0))
+		var size := Vector3(len_m, h + 0.4, t)
+		RoadProps.stone_box(st, xf, size, stone.darkened(rng.randf() * 0.18), rng.randf_range(0.15, 0.5))
+		PropCollision.box(body, xf, size)
+		# A capstone on the taller ones, and a block fallen at its foot.
+		if h > 1.4:
+			RoadProps.stone_box(st, xf * Transform3D(Basis.IDENTITY, Vector3(rng.randf_range(-0.3, 0.3), size.y * 0.5 + 0.11, 0)), Vector3(len_m * 0.6, 0.22, t + 0.12), stone.lightened(0.05), 0.5)
+		if rng.randf() < 0.6:
+			var fd := CreatureSpawner._offset(d, mid + rng.randf_range(-0.2, 0.2), rng.randf_range(1.2, 2.2))
+			var fat := dress.to_local(world.to_scene(fd, PlanetConst.RADIUS_M + chunks.ground_height(fd)))
+			var bxf := Transform3D(Basis.from_euler(Vector3(rng.randf_range(-0.2, 0.2), rng.randf() * TAU, rng.randf_range(-0.15, 0.15))), fat + Vector3(0, 0.15, 0))
+			RoadProps.stone_box(st, bxf, Vector3(0.9, 0.45, 0.6), stone.darkened(0.12), 0.4)
+			PropCollision.box(body, bxf, Vector3(0.9, 0.45, 0.6))
+	var mi := MeshInstance3D.new()
+	mi.name = "OldWalls"
+	mi.mesh = st.commit()
+	mi.material_override = RuinBuilder.material()
+	dress.add_child(mi)
 
 
 ## One of the two (0 the elder, 1 the hunter) speaks `delay` seconds from

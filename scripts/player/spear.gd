@@ -258,6 +258,7 @@ func throw(is_super := false) -> void:
 	s.chunks = player.chunks
 	s.camps = player.camps
 	s.exclude = [player.get_rid()]
+	s.from_spear = self
 	s.damage = THROW_DAMAGE * p
 	if is_super:
 		var oc := SuperMeter.overcharge("spear")
@@ -305,6 +306,19 @@ func in_reach() -> bool:
 	var tip := thrown.global_position
 	var butt := tip + thrown.global_basis.z.normalized() * LENGTH
 	return Geometry3D.get_closest_point_to_segment(chest, tip, butt).distance_to(chest) < PICK_M
+
+
+## Lost to the river (§ED.2, ThrownSpear._carry_off): gone from its
+## slot, not coming back.
+func lose() -> void:
+	thrown = null
+	var a = player.inventory.worn.get("melee", [])
+	for i in (a as Array).size():
+		if a[i] is Dictionary and str(a[i].get("kind", "")) == "spear":
+			a[i] = null
+			break
+	if player.weapon == "spear":
+		player.weapon = "hands"
 
 
 ## Take it back (in hand).

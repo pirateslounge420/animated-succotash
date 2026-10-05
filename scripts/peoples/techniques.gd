@@ -53,3 +53,17 @@ static func learn(id: String, people: Dictionary) -> bool:
 	WorldSave.mark_dirty()
 	GameLog.add("The %s showed you %s." % [Peoples.name_of(people).to_lower(), name_of(id).to_lower()], "technique")
 	return true
+
+
+## Does the headman of the camp `key` at `d` (people `people_id`) teach the
+## fire arrow (design 4 Oct §ED.7, techniques.json fire_arrow camp)? The
+## row's camp names a people id or a camp key; while it is OPEN, the
+## people's camp at the end of the opening road teaches it (a placeholder
+## until the designer picks).
+static func teaches_fire_arrow(key: String, people_id: String, d: Vector3) -> bool:
+	var camp := str(row("fire_arrow").get("camp", "OPEN"))
+	if not camp.begins_with("OPEN"):
+		return camp == key or camp == people_id
+	var ruin: Vector3 = RoadNetwork.opening.get("ruin", Vector3.ZERO)
+	return ruin != Vector3.ZERO and CubeSphere.surface_distance_m(ruin, d) < 120.0
+

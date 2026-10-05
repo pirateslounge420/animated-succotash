@@ -326,6 +326,21 @@ func _tick(st: Dictionary, days: float) -> void:
 		st.food_short_days = float(st.food_short_days) + th / 24.0
 	else:
 		st.food_short_days = maxf(float(st.food_short_days) - th / 24.0, 0.0)
+	# The camp book (§ED.3): the woodpile running low (under a night's
+	# burning) and the store emptying or filling again, each once as it
+	# turns.
+	var night_wood := float(store.get("wood_units_per_night", 4.0))
+	if float(st.wood) < night_wood and not bool(st.get("wood_low", false)):
+		st["wood_low"] = true
+		_note(st, "The woodpile is low.", days, "woodpile_low")
+	elif float(st.wood) > night_wood * 2.0:
+		st["wood_low"] = false
+	if float(st.food) <= 0.0 and not bool(st.get("store_empty", false)):
+		st["store_empty"] = true
+		_note(st, "The store is empty.", days, "store_change")
+	elif float(st.food) > float(store.get("food_units_per_folk_day", 1.0)) * folk_count(st) * 2.0 and bool(st.get("store_empty", false)):
+		st["store_empty"] = false
+		_note(st, "There is food in the store again.", days, "store_change")
 	# --- The fire: burn while unloaded, feed from the woodpile ---
 	var fst: Dictionary = FireStore.stores.get(str(st.fire_key), {})
 	if fst.is_empty():
@@ -396,7 +411,7 @@ func _relight_from_ember(st: Dictionary, days: float, _th: float) -> void:
 	st["wood_fed"] = float(st.get("wood_fed", 0.0)) + feed
 	fst.embers_min = 0.0
 	fst.state = "low" if FireStore.share(fst) < float(FireStore.F.get("low_share", 0.25)) else "flames"
-	_note(st, "They have lit the fire again from an ember.", days)
+	_note(st, "They have lit the fire again from an ember.", days, "hearth_relit")
 
 
 ## Once a day at dawn: the surplus counted, the stages advancing, a
@@ -441,7 +456,7 @@ func _dawn(st: Dictionary, days: float) -> void:
 			break
 		(st.folk as Array).append({"sex": "m" if rng.randf() < 0.5 else "f", "stage": first, "born": days, "role": "", "seed": rng.randi()})
 		st.last_birth = days
-		_note(st, "A child was born at the fire.", days)
+		_note(st, "A child was born at the fire.", days, "birth")
 	_night_after(st, days)
 
 
@@ -476,7 +491,7 @@ func _ladder(st: Dictionary, days: float) -> void:
 		rung = 2
 		_give_role(st, "headman", "m")
 		_give_role(st, "plantkeeper", "f")
-		_note(st, "The camp keeps a store now.", days)
+		_note(st, "The camp keeps a store now.", days, "store_change")
 	if rung == 2:
 		# The specialist: the first who does not gather (the maker), where
 		# the site allows and there is surplus and enough hands.
@@ -496,7 +511,7 @@ func _ladder(st: Dictionary, days: float) -> void:
 			var theirs := str(((op.get("specialists", {}) as Dictionary).get("maker", {}) as Dictionary).get("craft", ""))
 			if theirs != mine and CubeSphere.surface_distance_m(_dir(st), _dir(other)) <= km * 1000.0:
 				rung = 4
-				_note(st, "The road carries their %s to a neighbour." % mine, days)
+				_note(st, "The road carries their %s to a neighbour." % mine, days, "store_change")
 				break
 	if rung != int(st.rung):
 		st.rung = rung
@@ -551,7 +566,10 @@ func _give_role(st: Dictionary, role: String, prefer_sex: String) -> void:
 
 ## A line for the log, only when the camp is within earshot (the log is
 ## what you saw, not what the world did).
-func _note(st: Dictionary, text: String, days: float) -> void:
+## `event`: the camp book's kind of line (§ED.3, camp_books.json
+## lines.events; CampBook.write), written whether you are near or not.
+func _note(st: Dictionary, text: String, days: float, event := "") -> void:
+	CampBook.write(st, event, text, days)
 	if world == null or Torch.instance == null or not is_instance_valid(Torch.instance):
 		return
 	var pp: Vector3 = Torch.instance.player.global_position if Torch.instance.player else Vector3.ZERO
@@ -576,14 +594,14 @@ func _night_after(st: Dictionary, days: float) -> void:
 		for i in taken:
 			(st.folk as Array).pop_back()
 		st.blood = true
-		_note(st, "The dark took %d of them in the night." % taken, days)
+		_note(st, "The dark took %d of them in the night." % taken, days, "gatherer_lost")
 		if folk_count(st) > 0 and bool(col.get("survivors_walk_to_nearest_fire", true)):
 			_walk_away(st, days, true, rng)
 		elif folk_count(st) == 0:
 			_abandon(st, days, "taken")
 		return
 	if float(st.food_short_days) >= float(col.get("starve_moves_after_days", 6)):
-		_note(st, "They have gone, hungry, to a neighbour's fire.", days)
+		_note(st, "They have gone, hungry, to a neighbour's fire.", days, "folk_left_for_fire")
 		_walk_away(st, days, false, rng)
 
 
@@ -828,7 +846,7 @@ func _tick_empty(st: Dictionary, days: float) -> void:
 				st.blood = false
 				st.food = 4.0
 				st.fire_low_nights = 0
-				_note(st, "Folk have come back to the relit fire.", days)
+				_note(st, "Folk have come back to the relit fire.", days, "hearth_relit")
 				return
 		if since >= float(ab.get("ruin_after_game_days", 60)):
 			st.state = "ruin"
@@ -966,7 +984,7 @@ func _walk_from_fire(st: Dictionary, days: float) -> void:
 	ns.wood = wood
 	ns.food = food
 	ns.moved_from = str(st.key)
-	_note(st, "The camp walked away from the fire to rebuild a valley over.", days)
+	_note(st, "The camp walked away from the fire to rebuild a valley over.", days, "folk_left_for_fire")
 
 
 ## How far the forest has taken an empty camp back (0 fresh .. 1 gone),

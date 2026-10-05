@@ -87,6 +87,8 @@ var map_overlay: MapOverlay
 var inventory_screen: InventoryScreen
 var log_panel: LogPanel
 var tome_panel: TomePanel
+var camp_book_panel: CampBookPanel
+var guardians: Guardians
 var _last_biome := -1
 var _last_sun_el := NAN
 ## The settings panel (O / F10): the HUD switches (design §L).
@@ -394,6 +396,11 @@ func _on_planet_ready() -> void:
 	overrun.name = "Overrun"
 	add_child(overrun)
 	overrun.setup(world, chunks, player, landmarks, sky)
+	# Guardians outside some overrun ruins (design 4 Oct §ED.6).
+	guardians = Guardians.new()
+	guardians.name = "Guardians"
+	add_child(guardians)
+	guardians.setup(world, chunks, player, creatures)
 	# Three hits, no bar (design 4 Oct §EA, data/harm.json): the ambient
 	# game counts a creature's hits instead of taking health.
 	if Tuning.profile() == "ambient":
@@ -434,6 +441,9 @@ func _on_planet_ready() -> void:
 	tome_panel = TomePanel.new()
 	tome_panel.name = "Tome"
 	hud.add_child(tome_panel)
+	camp_book_panel = CampBookPanel.new()
+	camp_book_panel.name = "CampBook"
+	hud.add_child(camp_book_panel)
 
 	hud.hide_loading()
 	_playing = true
@@ -607,7 +617,7 @@ func _process(delta: float) -> void:
 	FireStore.tick(get_tree(), delta, player.global_position)
 	VegetationPlacer.NOW_DAYS = world.days
 	WorldSave.flush(delta)
-	player.typing = log_panel.visible or tome_panel.visible
+	player.typing = log_panel.visible or tome_panel.visible or camp_book_panel.visible
 	dread.update_dread(delta)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
@@ -628,6 +638,8 @@ func _process(delta: float) -> void:
 		prompt = "%s: show the %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_scroll_to_show()]).to_lower()]
 	elif _headman_in_reach() != null:
 		prompt = "%s: the headman" % Controls.interact_word()
+	elif not CampBook.in_reach(player.global_position).is_empty():
+		prompt = "%s: read the camp book" % Controls.interact_word()
 	elif shrines != null and shrines.sconce_near(player.reach_from(), Shrines.SCONCE_REACH_M, true) != null:
 		prompt = "%s: smother the sconce" % Controls.interact_word()
 	elif hidden_places != null and not hidden_places.speaker_in_reach(player.global_position).is_empty():
@@ -920,6 +932,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			_say_note({"read": "They read it, and say where it points.", "shown": "They hand it back.", "read_before": "They hand it back."}.get(how, ""))
 		elif headman != null:
 			_meet_headman(headman)
+		elif not CampBook.in_reach(player.global_position).is_empty():
+			# The camp book (§ED.3): the camp's own lines, and its rumour.
+			var bk := CampBook.in_reach(player.global_position)
+			var bst: Dictionary = CampSim.instance.states.get(str(bk.key), {}) if CampSim.instance != null else {}
+			camp_book_panel.open(world, str(bk.key), bst)
 		elif lit_sconce != null:
 			shrines.smother(lit_sconce)
 			_say_note("You smother the sconce.")
@@ -1198,10 +1215,19 @@ func _lay_gifts() -> void:
 		if is_instance_valid(g):
 			(g as WorldItem).pick_up()
 	_gifts = []
-	# The ambient profile (design 30 Sept §AW): you wake with nothing and
-	# nothing is laid beside you; the camp keeps a bundle of unlit torches
-	# by its fire (Torch.lay_bundle, at every camp's fire).
+	# The ambient profile (design 30 Sept §AW, amended 4 Oct §ED.1/§ED.7):
+	# nothing is laid beside you; you wake holding an unlit torch
+	# (items.json starting_kit_ambient.in_hand) unless you still carry one,
+	# and the camp keeps a bundle of unlit torches by its fire
+	# (Torch.lay_bundle, at every camp's fire).
 	if Tuning.profile() == "ambient":
+		for h in Inventory.data().get("starting_kit_ambient", {}).get("in_hand", []):
+			if not h is Dictionary or player.inventory.has_kind(str(h.kind)):
+				continue
+			for i in int(h.get("count", 1)):
+				player.inventory.add(Inventory.make(str(h.kind)))
+			if player.in_hand() == "hands":
+				player.weapon = str(h.kind)
 		return
 	var p: Vector3 = player.global_position
 	var side: Vector3 = player.global_basis.x
@@ -1292,6 +1318,12 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		if player.inventory.wear(it):
 			# A delve's find (§CJ) is kept as taken.
 			Delves.took(lying)
+			# A maker's work (§ED.7): given once by that camp.
+			if lying.has_meta("maker_of") and camp_sim != null:
+				var mst := camp_sim.state_of(str(lying.get_meta("maker_of")))
+				if not mst.is_empty():
+					mst["maker_gave"] = true
+					WorldSave.mark_dirty()
 			lying.pick_up()
 			if player.in_hand() == "hands":
 				player.weapon = TOOL_OF[kind]
@@ -1376,7 +1408,12 @@ func _meet_headman(h: Node3D) -> void:
 		st.met_headman = true
 		WorldSave.mark_dirty()
 	var tid := str((people.get("specialists", {}) as Dictionary).get("headman_teaches", ""))
-	if Techniques.learn(tid, people):
+	var shown := Techniques.learn(tid, people)
+	# The fire arrow (§ED.7): one camp's headman teaches it.
+	var fa := Techniques.teaches_fire_arrow(key, str(cn.get_meta("people", "")), world.dir_of(cn.global_position)) and Techniques.learn("fire_arrow", people)
+	if fa:
+		_say_note("The headman shows you how to light an arrow at a flame and send it.")
+	elif shown:
 		_say_note("The headman shows you %s." % Techniques.name_of(tid).to_lower())
 	else:
 		_say_note("The headman nods.")

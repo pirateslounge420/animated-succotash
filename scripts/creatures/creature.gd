@@ -74,6 +74,11 @@ var goal_speed := 0.0
 var keep_away_m := 0.0 # pack / mythical: stay this far from goal
 var ring_offset := 0.0 # pack: slot angle around the player
 var voice: AudioStreamPlayer3D
+## Its rung (§ED.5, Rungs): "common", "rare" or "mythic".
+var rung := "common"
+## Set by Guardians for a guardian (§ED.6, _guardian()); empty otherwise.
+var guard := {}
+var _rung_seen := false
 var voice_variant := 0
 var leaving := false
 var done := false
@@ -166,6 +171,14 @@ var _stride_n := 0
 
 
 func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner: Node, d: Vector3, seed_value: int) -> void:
+	# Its rung (design 4 Oct §ED.5, Rungs): common, a rare morph's tint, or
+	# a mythic's silhouette, voice and multipliers.
+	if sp.has_meta("rung_of"):
+		# Already a variant (a guardian, Guardians): its own rung.
+		rung = "mythic" if sp.has_meta("silhouette") else "rare"
+	else:
+		rung = Rungs.roll(sp, seed_value)
+		sp = Rungs.variant(sp, rung)
 	species = sp
 	world = p_world
 	chunks = p_chunks
@@ -179,6 +192,8 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	name = sp.name.replace(" ", "_")
 	heading = CubeSphere.north(d).rotated(d, _rng.randf() * TAU)
 	_parts = CreatureBodies.build(sp)
+	if rung == "mythic":
+		Rungs.dress(_parts, sp)
 	_body = _parts.root
 	add_child(_body)
 	hitboxes = CreatureHitboxes.build(self, _parts, sp, CreatureHitboxes.blocks(sp))
@@ -200,6 +215,10 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 		Audio3D.apply(voice, VOICE_KINDS.get(sp.role, "wildlife_call"))
 		voice.volume_db = -6.0
 		voice.position = Vector3(0, sp.size_m * 0.6, 0)
+		if rung == "mythic":
+			# Its voice carries further than it sees (§ED.5): the first tell.
+			voice.max_distance = maxf(voice.max_distance, Rungs.voice_range(sp))
+			voice.volume_db = 0.0
 		add_child(voice)
 	_call_timer = _rng.randf_range(2.0, 12.0)
 	match sp.role:
@@ -300,6 +319,11 @@ func say() -> void:
 		return
 	_last_call[species.sound] = now
 	Audio3D.play(voice)
+	# A mythic heard from beyond its sight (§ED.5): "something out there".
+	if rung == "mythic" and Torch.instance != null and Torch.instance.player != null:
+		var dm: float = global_position.distance_to(Torch.instance.player.global_position)
+		if dm > Rungs.sight_m(species) and dm < Rungs.voice_range(species):
+			Rungs.heard(species)
 
 
 func distance_to(d: Vector3) -> float:
@@ -315,6 +339,10 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	var to_player := Vector2(distance_to(player_dir), float(ctx.get("player_above_m", 0.0))).length()
 	_rig_near = to_player < RIG_M
 	_hitboxes_near = to_player < Hitboxes.ACTIVE_M or Arrow.near(global_position, Hitboxes.ARROW_WAKE_M)
+	# A rare or a mythic in sight goes in the log, once (§ED.5).
+	if rung != "common" and not _rung_seen and not dead and to_player < minf(Rungs.sight_m(species) * 1.5, 60.0) and _fade > 0.5:
+		_rung_seen = true
+		Rungs.seen(species, rung)
 
 	if _life > 0.0:
 		_life -= delta
@@ -331,6 +359,10 @@ func tick(delta: float, ctx: Dictionary) -> void:
 			done = true
 			finished.emit(self)
 			return
+		_place(delta)
+		return
+	if not guard.is_empty():
+		_guardian(delta, ctx, to_player)
 		_place(delta)
 		return
 	if pinned_t > 0.0:
@@ -402,6 +434,12 @@ func tick(delta: float, ctx: Dictionary) -> void:
 func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -> void:
 	if dead or done:
 		return
+	# Edges and points touch only flesh and blood (design 4 Oct §ED.7):
+	# what lurks in the dark shrugs off spear and arrow; only fire
+	# answers it (§CN).
+	if Rungs.of_the_dark(species):
+		_flash = 0.3
+		return
 	var table := species.hit_table()
 	var dealt := Hits.dealt(table, part, amount)
 	_wound(table, part, at)
@@ -411,6 +449,14 @@ func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -
 	Hits.report(self, at, dealt, Hits.critical(part), hp <= 0.0)
 	_flash = 1.0
 	suspicion = 1.0
+	if not guard.is_empty():
+		# A guardian is driven off by a wound, never killed (§ED.6): it
+		# bolts from the ground and Guardians keeps it away for a while.
+		hp = maxf(hp, 1.0)
+		guard["state"] = "driven"
+		guard["t"] = 0.0
+		hurt_by_player.emit(self, false)
+		return
 	if hp <= 0.0:
 		dead = true
 		angry = 0.0
@@ -460,6 +506,64 @@ func sight_toward(d: Vector3) -> float:
 		return float(Hits.hits().blind_notice)
 	var side := "r" if _tangent_to(d).dot(heading.cross(dir)) >= 0.0 else "l"
 	return float(Hits.hits().blind_notice) if blind.has(side) else 1.0
+
+
+## A guardian (design 4 Oct §ED.6, Guardians sets `guard`: {"ground"
+## (dir), "hold_m", "state", "t", "player_speed", "slow_mps", "run_mps",
+## "spook_s", "bite"}): flesh and blood, it ignores light. It keeps to its
+## ground outside the ruin; a walker in its sight it closes on and bites
+## within reach; a runner spooks it off for spook_s; wounded it bolts
+## ("driven", Guardians then keeps it away).
+func _guardian(delta: float, ctx: Dictionary, to_player: float) -> void:
+	var pd: Vector3 = ctx.player_dir
+	var ground: Vector3 = guard.ground
+	var hold := float(guard.get("hold_m", 30.0))
+	var sight := Rungs.sight_m(species) * sight_toward(pd)
+	var sp := float(guard.get("player_speed", 0.0))
+	guard["t"] = float(guard.get("t", 0.0)) + delta
+	_bite_cd -= delta
+	var state := str(guard.get("state", "hold"))
+	match state:
+		"driven", "spooked":
+			# Away from you, fast, past the edge of its ground.
+			var away := _tangent_to(pd) * -1.0
+			var target := (dir + away * (hold * 3.0) / PlanetConst.RADIUS_M).normalized()
+			mode = "flee"
+			_walk(target, species.speed_mps * 1.2, delta)
+			if state == "spooked" and float(guard.t) > float(guard.get("spook_s", 8.0)):
+				guard["state"] = "hold"
+		"close":
+			var reach := 0.9 + species.size_m * 0.45
+			if sp >= float(guard.get("run_mps", 4.5)) and to_player < sight:
+				guard["state"] = "spooked"
+				guard["t"] = 0.0
+			elif to_player > sight * 1.3 or distance_to(ground) > hold * 4.0:
+				guard["state"] = "hold"
+			elif to_player > reach:
+				mode = "go"
+				_walk(pd, species.speed_mps * 0.75, delta)
+			else:
+				_speed_now = 0.0
+				heading = _tangent_to(pd)
+				if _bite_cd <= 0.0:
+					_bite_cd = 1.4
+					spawner.player_hit(float(guard.get("bite", species.bite if species.bite > 0.0 else 20.0)), global_position, species.name)
+		_:
+			# Holding the ground: a slow round of it, facing out.
+			if to_player < sight:
+				if sp >= float(guard.get("run_mps", 4.5)):
+					guard["state"] = "spooked"
+				else:
+					guard["state"] = "close"
+				guard["t"] = 0.0
+				if voice and voice.stream:
+					say()
+				return
+			if _timer <= 0.0 or goal == Vector3.ZERO or distance_to(goal) < 2.0:
+				_timer = _rng.randf_range(4.0, 9.0)
+				goal = CreatureSpawner._offset(ground, _rng.randf() * TAU, _rng.randf_range(0.0, hold))
+			mode = "walk"
+			_walk(goal, species.speed_mps * 0.25, delta)
 
 
 ## Chase the player and bite when in reach; give up when they're far.

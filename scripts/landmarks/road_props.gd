@@ -388,7 +388,7 @@ func _kerb(span: int, link: Dictionary, rng: RandomNumberGenerator) -> Node3D:
 			var bs := Basis(to_local * side, to_local * d, to_local * fwd).orthonormalized()
 			bs = bs * Basis(Vector3.UP, rng.randf_range(-0.16, 0.16)) * Basis(Vector3.BACK, rng.randf_range(-0.12, 0.12))
 			var origin := to_local * at + bs.y * (size.y * 0.5 - sunk)
-			_stone(st, Transform3D(bs, origin), size, STONE.darkened(rng.randf_range(0.3, 0.5)), rng.randf_range(0.25, 0.7))
+			stone_box(st, Transform3D(bs, origin), size, STONE.darkened(rng.randf_range(0.3, 0.5)), rng.randf_range(0.25, 0.7))
 			count += 1
 		m += KERB_EVERY_M
 	if count == 0:
@@ -412,7 +412,7 @@ func _near_crossing(crossings: Array, d: Vector3) -> bool:
 ## A box of 12 triangles, flat-shaded, in the ruins' stone (UV.x 0),
 ## each face wound to face out; `moss` (vertex alpha) greens it as the
 ## ruins' shader greens their stone.
-func _stone(st: SurfaceTool, xf: Transform3D, size: Vector3, col: Color, moss := 0.15) -> void:
+static func stone_box(st: SurfaceTool, xf: Transform3D, size: Vector3, col: Color, moss := 0.15) -> void:
 	var h := size * 0.5
 	var c: Array[Vector3] = []
 	for i in 8:
