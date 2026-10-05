@@ -68,6 +68,16 @@ var _hitboxes_on := true
 ## Their voice when they speak (talk()): a wordless murmur, 3D at the
 ## speaker (Audio3D "camp_chatter").
 var _voice: AudioStreamPlayer3D
+## The camp's dressing node (the frame its props, folk and workshop sit
+## in: the fire at the origin, y up).
+var dressing: Node3D
+## The workshop (design 5 Oct §EL, Workshop), once the camp is at the
+## storage rung; its hearth props; the folk's day plan.
+var workshop: Node3D
+var hearth_props: Node3D
+var _plan: Array = []
+var _plan_t := 0.0
+var _ruin_walls := false
 
 
 ## camps.json first_camp (design 1 Oct §CB): the first camp's kind rolls
@@ -499,6 +509,7 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	var dress := Node3D.new()
 	dress.name = "Dressing"
 	add_child(dress)
+	dressing = dress
 	dress.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(site), site), _fire.global_position)
 	var dbody := PropCollision.body(dress)
 	var shelter := CampProps.shelter(dress, people, ppal, drng, dbody)
@@ -552,6 +563,7 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		folk_n = frng.randi_range(int(fr[0]), int(fr[1]))
 		if bool(rc.get("ruin", false)):
 			_old_walls(dress, dbody, frng)
+			_ruin_walls = true
 	var names := ["Elder", "Hunter", "Gatherer", "Mender", "Youngster"]
 	var prng := RandomNumberGenerator.new()
 	prng.seed = hash([site, "folk"])
@@ -581,6 +593,10 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		BlobShadow.make(holder, 0.35, 0.35)
 		FireCircle.sit(holder, seats[i])
 		holder.set_meta("dir", world.dir_of(holder.global_position))
+		# Its place in the circle, and whose day it lives (§EL): the
+		# camp's folk in order; the youngster stays by the fire.
+		holder.set_meta("folk_i", -1 if i == 4 else i)
+		Workshop.remember_home(holder)
 		_npcs.append(holder)
 	_voice = Audio3D.make("camp_chatter", self, "Chatter")
 	_voice.volume_db = -8.0
@@ -662,6 +678,10 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 				CampProps.refresh_food_store(food_store, float(st.food))
 	_time += delta
 	Campfire.flicker(_fire, _time)
+	# The workshop (§EL): built once the camp reaches storage, out of the
+	# player's sight (or at once for the harness).
+	if workshop == null and _store_t >= 1.49:
+		ensure_workshop(player_pos.distance_to(_fire.global_position) > 40.0)
 	# Their hitboxes only while someone's near (Hitboxes.wanted_at()).
 	var want := Hitboxes.wanted_at(_fire.global_position, player_pos)
 	if want != _hitboxes_on:
@@ -677,7 +697,60 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 	var fst := FireStore.store_of(_fire)
 	if not fst.is_empty():
 		ctx.fire_low = FireStore.units_now(fst) < float((CampSim.SIM.get("store", {}) as Dictionary).get("feed_fire_below_units", 3.0))
-	FireCircle.animate(_npcs, _fire, _time, delta, player_pos, FireCircle.phase_name(world.local_clock(site).y, CubeSphere.latitude(site), world.days), ctx)
+	var phase := FireCircle.phase_name(world.local_clock(site).y, CubeSphere.latitude(site), world.days)
+	var circle: Array = _npcs
+	if workshop != null and is_instance_valid(workshop) and CampSim.instance != null:
+		# By day the benches and the porch, at dusk the circle (§EL.2).
+		var st3 := CampSim.instance.state_of("opening")
+		_plan_t -= delta
+		if _plan_t <= 0.0 or _plan.is_empty():
+			_plan_t = 1.0
+			_plan = Workshop.plan_now(st3, world.days)
+		Workshop.drive(_npcs, workshop, _plan, delta, _time, player_pos, player_pos.distance_to(_fire.global_position) > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)))
+		circle = Workshop.fire_sitters(_npcs)
+		Workshop.tick(workshop, hearth_props, phase == "dusk" or phase == "night", Workshop.potter_working(st3, _plan))
+	FireCircle.animate(circle, _fire, _time, delta, player_pos, phase, ctx)
+
+
+## The workshop at the opening camp (§EL), when its state is at the
+## storage rung: `ok` false waits (the player is close). Inside the old
+## walls' ring where the camp is a ruin (§ED.1).
+func ensure_workshop(ok: bool) -> void:
+	if workshop != null or not ok or CampSim.instance == null or dressing == null:
+		return
+	var st := CampSim.instance.state_of("opening")
+	if not Workshop.wanted(st):
+		return
+	var people := Peoples.get_people(people_id)
+	var ppal := Peoples.palette(people, FireStore.biome_key(world, site))
+	var wrng := RandomNumberGenerator.new()
+	wrng.seed = hash([site, "workshop"])
+	var avoid: Array = [[Vector3.ZERO, 2.9]]
+	for c in dressing.get_children():
+		if not c is Node3D:
+			continue
+		var p: Vector3 = (c as Node3D).position
+		var r := Vector2(p.x, p.z).length()
+		if r < 3.0 or r > 18.0:
+			continue
+		avoid.append([Vector3(p.x, 0, p.z), 3.4 if str(c.name).begins_with("Shelter") else 1.0])
+	# The player's mat.
+	var pm: Vector3 = dressing.to_local(world.to_scene(player_spot, PlanetConst.RADIUS_M + chunks.ground_height(player_spot)))
+	avoid.append([Vector3(pm.x, 0, pm.z), 1.2])
+	var dn := dressing
+	var ctx := {"avoid": avoid, "wind": dressing.global_basis.inverse() * world.planet.wind_avg[world.planet.cell_at(site)], "key": "opening",
+		"r": [6.0, 8.0] if _ruin_walls else [6.0, 10.0], "kiln_r_max": 9.5 if _ruin_walls else 1.0e9,
+		"ground": func(p: Vector3) -> float:
+			var g: Vector3 = world.dir_of(dn.to_global(p))
+			return dn.to_local(world.to_scene(g, PlanetConst.RADIUS_M + chunks.ground_height(g))).y}
+	workshop = Workshop.build(dressing, people, ppal, wrng, ctx)
+	Workshop.restore(workshop, st)
+	var hav: Array = avoid.duplicate()
+	hav.append([Vector3(workshop.position.x, 0, workshop.position.z), Workshop.HUT_HALF + 0.5])
+	if workshop.has_meta("kiln"):
+		var kp: Vector3 = (workshop.get_meta("kiln") as Node3D).position
+		hav.append([Vector3(kp.x, 0, kp.z), 1.8])
+	hearth_props = Workshop.hearth_props(dressing, people, ppal, wrng, hav)
 
 
 static func _tangent(from: Vector3, to: Vector3) -> Vector3:

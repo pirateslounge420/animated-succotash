@@ -240,6 +240,8 @@ func _run() -> void:
 			kinds.append("colonnade")
 		if only.has("village"):
 			kinds.append("village")
+		if only.has("workshop"):
+			kinds.append("workshop")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -470,6 +472,14 @@ func _run() -> void:
 				for vlit in [false, true]:
 					sites.append({"name": "village_lit" if vlit else "village_dead", "dir": vp.dir_at(vfrom), "look": vp.dir_at(vto), "village": v0, "village_lit": vlit,
 						"note": "the village %s (%d houses, %s/%s/%s), down a view ending on its %s, %s" % [v0.id, vp.houses.size(), vp.materials.stone, vp.materials.timber, vp.materials.roof, str(bv.end), "every hearth lit" if vlit else "dead"]})
+			"workshop":
+				# The opening camp's workshop (design 5 Oct §EL) from the road
+				# 28 m out, at the midday hour most of its folk are at the
+				# benches. A harness frame (§CG): the camp is pushed to the
+				# storage rung for it; on day one it is still at food.
+				var wrd := _down_the_road(camp_d, 28.0)
+				sites.append({"name": "workshop", "dir": wrd.dir, "look": camp_d, "workshop": true,
+					"note": "the opening camp's workshop from the road (harness: the camp set to the storage rung)"})
 			"colonnade":
 				var cod := INF
 				var co0 := {}
@@ -937,6 +947,16 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				if (f as Node3D).has_meta("village"):
 					FireStore.apply(f)
 			main.village_life.sync()
+	# The opening camp's workshop (§EL): its camp at storage, the headman
+	# and the plantkeeper named as the ladder names them, the hut built now
+	# and its folk moved at once.
+	if bool(site.get("workshop", false)):
+		var wst: Dictionary = main.camp_sim.state_of("opening")
+		wst.rung = maxi(int(wst.rung), Workshop.rung_index())
+		main.camp_sim._give_role(wst, "headman", "m")
+		main.camp_sim._give_role(wst, "plantkeeper", "f")
+		Workshop.instant = true
+		main.camp.ensure_workshop(true)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
@@ -1016,6 +1036,21 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				base += k + 10.0
 				break
 	var first := true
+	if bool(site.get("workshop", false)) and OS.get_environment("HOURS") == "":
+		# Midday, the hour (11-14) the most folk are at the benches.
+		var wst2: Dictionary = main.camp_sim.state_of("opening")
+		var best_h := 12.0
+		var best_n := -1
+		var hh := 11.0
+		while hh <= 14.0:
+			var pl := Workshop.plan_now(wst2, Astro.days_at_solar_hour(base, hh, lon, lat))
+			var nb := pl.count("soft") + pl.count("hard")
+			if nb > best_n:
+				best_n = nb
+				best_h = hh
+			hh += 0.25
+		hours = [{"solar_h": best_h, "weather": "clear"}]
+		site["note"] = str(site.get("note", "")) + " · %.2f h, %d at the benches" % [best_h, best_n]
 	if site.has("delve_stand") or site.has("delve_hours"):
 		# Down there it is dark at noon but for the torch (§CJ).
 		hours = [{"solar_h": 13.0, "weather": "clear"}]

@@ -198,11 +198,10 @@ static func _bundle(n: Node3D, rng: RandomNumberGenerator, col: Color) -> void:
 		b.rotation = Vector3(PI * 0.5, rng.randf() * 0.6, 0)
 
 
-## The shelter (a people's shelter.form and materials): a hut in the
-## form the words name, coloured by the materials, its door to the fire.
-static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, _body: StaticBody3D) -> Node3D:
+## The shelter's wall and roof colours (the people's shelter.materials over
+## their palette): [wall, roof]. The workshop (§EL) wears the same.
+static func tints(people: Dictionary, pal: Array) -> Array:
 	var sh: Dictionary = people.get("shelter", {})
-	var form := str(sh.get("form", "")).to_lower()
 	var mats := " ".join(PackedStringArray(sh.get("materials", []))).to_lower()
 	var wall: Color = pal[0] if not pal.is_empty() else Color(0.5, 0.42, 0.3)
 	var roof := Color(0.7, 0.58, 0.32)
@@ -223,6 +222,17 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 		roof = Color(0.5, 0.38, 0.25)
 	elif _has(mats, ["bark"]):
 		roof = Color(0.35, 0.28, 0.2)
+	return [wall, roof]
+
+
+## The shelter (a people's shelter.form and materials): a hut in the
+## form the words name, coloured by the materials, its door to the fire.
+static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, _body: StaticBody3D) -> Node3D:
+	var sh: Dictionary = people.get("shelter", {})
+	var form := str(sh.get("form", "")).to_lower()
+	var t := tints(people, pal)
+	var wall: Color = t[0]
+	var roof: Color = t[1]
 	var n := Node3D.new()
 	n.name = "Shelter"
 	parent.add_child(n)

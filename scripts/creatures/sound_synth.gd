@@ -122,6 +122,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _wind_loop(rng)
 		"crown_hush_loop", "crown_rustle_loop", "crown_clatter_loop", "crown_rattle_loop":
 			samples = _crown_loop(rng, kind.trim_prefix("crown_").trim_suffix("_loop"))
+		"scrape_loop", "cord_twist_loop", "needle_through_hide_loop", "tap_tap_loop", "grind_loop", "drill_whirr_loop":
+			samples = _bench_loop(rng, kind.trim_suffix("_loop"))
 		"insects_loop":
 			samples = _insects_loop(rng)
 		"frogs_loop":
@@ -564,6 +566,73 @@ static func _crown_loop(rng: RandomNumberGenerator, voice: String) -> PackedFloa
 		knock *= 0.9985
 		var k := sin(t * TAU * 180.0) * knock * 0.8 if voice == "clatter" else 0.0
 		raw[i] = (lp * hiss + c + k) * swell
+	return _loopify(raw, n, fade)
+
+
+## A workshop bench at work (design 5 Oct §EL, Workshop; audio.json
+## bench_kinds), a 3 s loop, quiet and close: `voice` scrape (long rasping
+## strokes of a scraper over hide), cord_twist (a soft rub and creak as
+## fibre rolls on a thigh), needle_through_hide (a small pop through the
+## skin, then the thread drawn after it), tap_tap (the knapper's hammer:
+## sharp ringing ticks, irregular), grind (a gritty push and pull of stone
+## on stone) or drill_whirr (the bow drill's whirr, reversing each stroke).
+static func _bench_loop(rng: RandomNumberGenerator, voice: String) -> PackedFloat32Array:
+	var n := int(3.0 * RATE)
+	var fade := int(0.3 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var hp := 0.0
+	var prev := 0.0
+	var lp := 0.0
+	var ring := 0.0
+	var ring_f := 2600.0
+	var next_tap := 0.15
+	for i in raw.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + 0.95 * hp
+		prev = x
+		var v := 0.0
+		match voice:
+			"scrape":
+				# Strokes at ~1.1 Hz: a rasp that swells and lifts off.
+				var ph := fmod(t * 1.1, 1.0)
+				var env := sin(clampf(ph / 0.7, 0.0, 1.0) * PI)
+				lp = lerpf(lp, hp, 0.35)
+				v = lp * env * (0.7 + 0.3 * sin(t * TAU * 37.0))
+			"cord_twist":
+				# A slow roll and pull: a soft rub, a creak at the turn.
+				var ph := fmod(t * 0.7, 1.0)
+				lp = lerpf(lp, x, 0.04)
+				v = lp * 2.5 * (0.4 + 0.6 * sin(ph * PI)) + (sin(t * TAU * 140.0) * 0.25 * exp(-fmod(t * 0.7, 1.0) * 30.0))
+			"needle_through_hide":
+				# Every ~1.4 s a pop through the skin, then the thread drawn.
+				var ph := fmod(t / 1.4, 1.0) * 1.4
+				var pop := exp(-ph * 120.0) * rng.randf_range(-1, 1) * 1.5
+				lp = lerpf(lp, hp, 0.5)
+				var draw := lp * 0.5 * smoothstep(0.05, 0.15, ph) * (1.0 - smoothstep(0.5, 0.9, ph))
+				v = pop + draw
+			"tap_tap":
+				# The hammerstone on the core: sharp ticks that ring a little.
+				if t >= next_tap:
+					ring = 1.0
+					ring_f = rng.randf_range(1900.0, 3200.0)
+					next_tap = t + rng.randf_range(0.35, 0.9)
+				ring *= 0.9975
+				v = sin(t * TAU * ring_f) * ring * 0.8 + hp * ring * 0.6
+			"grind":
+				# Stone on stone, pushed and pulled at ~0.8 Hz: gritty, low.
+				var stroke := absf(sin(t * PI * 0.8))
+				lp = lerpf(lp, x, 0.12)
+				var grit := (1.0 if rng.randf() < 0.02 * stroke else 0.0) * rng.randf_range(-1, 1)
+				v = (lp * 1.6 + grit) * stroke
+			"drill_whirr":
+				# The spindle spinning one way, then back: a whirr that
+				# rises and falls twice a second.
+				var sp := absf(sin(t * TAU * 1.0))
+				lp = lerpf(lp, hp, 0.2)
+				v = sin(t * TAU * (90.0 + 70.0 * sp)) * 0.4 * sp + lp * 0.5 * sp
+		raw[i] = v
 	return _loopify(raw, n, fade)
 
 

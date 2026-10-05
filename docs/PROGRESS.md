@@ -3,6 +3,43 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EL the workshop: one hut, two benches, the hearth outside (queue 38)
+- **What changes on screen:** a camp that has reached the storage rung gets one workshop hut 6–10 m from its fire, open on the fire side.
+  - **The hut:** built in the people's own form and the shelter's tints. Each people gets its own: a gable hut, a round stone hut, a hide cone, the marsh's long reed arch, a flat mud room with its ramada, an open shed, or a lean-to.
+  - **The benches:** a soft bench (a hide mat) and a hard bench (a stone slab), each with a seat log behind it and 3–5 of the people's `huts.soft` / `huts.hard` pieces.
+  - **At the door:** a porch seat, and the porch sign readable from the road (the marsh's reed-mat press, the tundra's stone lamp burning day and night).
+  - **The kiln:** a clay hump 4–8 m downwind (the planet's mean wind) where the people make pots. It smokes thin while the potter-maker is at work.
+  - **The hearth:** `huts.hearth`'s pot on its stones, the rack and the lamp now stand round the fire circle, and the lamp is lit only from dusk.
+  - **By day:** the keeper (the headman, else the first adult) and the children stay at the fire. The maker sits at the bench that works the maker's materials for 80% of the gather hours. Everyone else does one 3–6 h stretch at a bench (crossing to the other bench at most once), and spends the rest out gathering, out of sight. A full bench sends a folk to the porch.
+  - **At dusk:** everyone walks back to the circle.
+  - **Idles and sounds:** at a bench a folk plays only that bench's idles, each with its own arm motion, thing in hand and quiet loop from the bench. Soft: sew, twist cord, scrape a hide, plait. Hard: knap, grind an axe, bow drill, hollow a bowl with a coal.
+  - **The player:** carrying reeds or grass (the soft bench) or a branch or log (the hard bench), E lays it on the bench; it joins the bench's pieces and the camp remembers it.
+- **What the code does:**
+  - New `scripts/peoples/workshop.gd` (Workshop): the hut, pieces, sign, kiln and hearth props as cheap box meshes in the ruin material at 16 texels a metre; `plan()` (who is where, per hour); `drive()` (the walker).
+  - `Camps._workshop()` builds it, and a camp reaching storage is rebuilt out of sight (the folk stamp).
+  - `Encampment.ensure_workshop()` does the same for the opening camp once its own state reaches storage.
+  - `main.gd` handles laying a material on a bench.
+  - SoundSynth has six bench loops. `CampProps.tints()` is factored out of the shelter.
+- **§BV's jobs are not built**, so this is the smallest walker the workshop needs, as the prompt says: a folk walks from the fire circle to a bench, sits, works, and walks back at dusk. Far from the player (`sim.jobs.near_player_m`) the move is made at once. The canopy folk's workshop sits on their second deck, and their folk change place only while you are 40 m off.
+- **Data:** the workshop clause of `camps.json _help.village_economy` is wired (no `[NOT WIRED YET]`; the huts blocks carried no prefix).
+  - New tunables in `sim.workshop`: `bench_seats` 2, `porch_seats` 1, `generalist_bench_hours` [3, 6], `idle_hold_s` [15, 40], `out_m` [18, 26], `item_materials`.
+  - `audio.json` has six bench rows (`scrape`, `cord_twist`, `needle_through_hide`, `tap_tap`, `grind`, `drill_whirr`), each quiet and close.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/workshop_check.gd` gives 0 fails. It builds a camp of every people at rungs 1, 2 and 3 (51 camps) beside the opening camp and checks:
+  - exactly one workshop at or past storage, and none below;
+  - the marsh press and the tundra lamp;
+  - the kiln only with `huts.kiln`, downwind within 30°;
+  - signs 12+ px tall at 40 m;
+  - triangles at most 0.15× a fire circle with its seats (the budget is 2×);
+  - a game day at every maker's camp: bench-only idles and sounds, one bench a folk, one folk a seat, at most one crossing, the maker at the bench 0.80 of the gather hours, only the keeper and the children at the fire by day, everyone back at dusk;
+  - the player's reeds and branch going to the right bench;
+  - the lamps dark by day and lit at night;
+  - the opening camp building its workshop at storage.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=workshop` produced `tools/reference/walkabout/7731/workshop_11h_f0.png`. It is the opening camp (a river people on a beach, on the full planet) from the road at 11 h, the hour (11–14) with the most folk at the benches. A harness frame: the camp is set to storage for it. The gable workshop stands to the left of the fire and its smoke, small from the road.
+- **Flags for Mike:**
+  1. **On day one the opening river camp is at the food rung, not storage, so it has no workshop yet.** It gets one when its own sim climbs to storage. The walkabout frame pushes it to storage for the shot (a labelled harness frame, §CG).
+  2. **The kiln stands wherever `huts.kiln` is non-empty**, as prompt 38 says. `sim.workshop.benches.kiln.only_with_trade` (pottery) waits on §EI's trades (prompt 39). The kiln smokes only while a potter-maker is at a bench; the maker comes at the specialist rung, so a camp at plain storage has a cold kiln.
+  3. **The workshop is only as busy as the folk there are.** With few folk, the hut is often near-empty by day: a camp of four has the keeper at the fire and the other three each at a bench for a 3–6 h stretch. `generalist_bench_hours` is the dial.
+
 ## 2026-10-05 — §EH no metal; a camp can be fifty (queue 37)
 - **What changes on screen:**
   - The old colonnade's capitals are dark stone, not iron.

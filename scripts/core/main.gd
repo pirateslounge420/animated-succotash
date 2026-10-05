@@ -676,6 +676,8 @@ func _process(delta: float) -> void:
 	elif not _store_in_reach().is_empty() and _store_item() >= 0:
 		var sn: Node3D = _store_in_reach()[0]
 		prompt = "%s: put the %s %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_store_item()]).to_lower(), "on the woodpile" if sn.name == "Woodpile" else "in the store"]
+	elif _bench_item() >= 0:
+		prompt = "%s: lay the %s on their %s bench" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_bench_item()]).to_lower(), str(_bench_in_reach()[0].get_meta("bench", ""))]
 	elif _fire_in_reach() != null and FireStore.wants_kindling(_fire_in_reach()) and Kindling.best_slot(player.inventory, world.days) >= 0:
 		prompt = "%s: lay the %s in the cold %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[Kindling.best_slot(player.inventory, world.days)]).to_lower(), "hearth" if _fire_in_reach().has_meta("old_hearth") else "fire"]
 	elif _fire_in_reach() != null and player.inventory.has_kind("fuel"):
@@ -982,6 +984,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif not store.is_empty() and _store_item() >= 0:
 			# The player's gathering goes into the camp's store (§BL).
 			_give_to_store(store)
+		elif _bench_item() >= 0:
+			# What the maker works, to the bench that works it (§EL.3).
+			_give_to_bench()
 		elif fire != null and FireStore.wants_kindling(fire) and Kindling.best_slot(player.inventory, world.days) >= 0:
 			# Lay a cold fire (§CN): the kindling first, then fuel.
 			var ki := Kindling.best_slot(player.inventory, world.days)
@@ -1594,6 +1599,49 @@ func _store_item() -> int:
 		if not wood and (CampSim.food_units(it) > 0.0 or CampSim.is_seed(it)):
 			return i
 	return -1
+
+
+## A workshop bench within reach (§EL): [bench node, camp key], or [].
+func _bench_in_reach() -> Array:
+	var r := float(Tuning.table("torch").get("lighting_reach_m", 2.2)) + 0.8
+	var at := player.reach_from()
+	for key in camps._camps:
+		var cn: Node3D = camps._camps[key]
+		if is_instance_valid(cn) and cn.has_meta("workshop") and cn.global_position.distance_to(at) < 20.0:
+			var bn := Workshop.bench_near(cn.get_meta("workshop"), at, r)
+			if bn != null:
+				return [bn, str(key)]
+	if camp != null and camp.workshop != null:
+		var bn2 := Workshop.bench_near(camp.workshop, at, r)
+		if bn2 != null:
+			return [bn2, "opening"]
+	return []
+
+
+## The carry slot of the first thing the bench in reach works (its
+## player_brings_to_bench materials), or -1.
+func _bench_item() -> int:
+	var found := _bench_in_reach()
+	if found.is_empty():
+		return -1
+	var bench := str((found[0] as Node3D).get_meta("bench", ""))
+	for i in player.inventory.carried.size():
+		var it = player.inventory.carried[i]
+		if it is Dictionary and Workshop.bench_for(Workshop.material_of(it)) == bench:
+			return i
+	return -1
+
+
+func _give_to_bench() -> void:
+	var found := _bench_in_reach()
+	var i := _bench_item()
+	if found.is_empty() or i < 0:
+		return
+	var it: Dictionary = player.inventory.take(i)
+	var bn: Node3D = found[0]
+	Workshop.lay(bn, Workshop.material_of(it), camp_sim.state_of(str(found[1])))
+	_say_note("You lay the %s on their %s bench." % [Inventory.title(it).to_lower(), str(bn.get_meta("bench", ""))])
+	GameLog.add_once("bench:" + str(found[1]), "Brought them %s for the %s bench." % [Inventory.title(it).to_lower(), str(bn.get_meta("bench", ""))], "camp")
 
 
 func _give_to_store(found: Array) -> void:

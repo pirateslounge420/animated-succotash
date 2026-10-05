@@ -641,6 +641,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 			seat_pos = (circle[i] as Dictionary).pos
 			a = atan2(seat_pos.z, seat_pos.x)
 		holder.set_meta("phase", rng.randf() * TAU)
+		# Its place in the circle, where it comes back to at dusk (§EL).
+		holder.set_meta("folk_i", i)
+		Workshop.remember_home(holder)
 		sitters.append(holder)
 		# Tribal and northern folk keep their weapons at hand: a spear
 		# leaning on the log, or a bow laid by it.
@@ -694,12 +697,70 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 		root.set_meta("food_store", fs)
 		root.set_meta("store_t", 0.0)
 		root.set_meta("walk_t", rng.randf_range(4.0, 12.0))
+	# The workshop (design 5 Oct §EL, Workshop): one hut at the storage
+	# rung, its benches, its porch sign; the hearth's own props round the
+	# fire circle; the kiln downwind where there is a potter's trade.
+	if CampSim.instance != null and key != "" and Workshop.wanted(CampSim.instance.state_of(key)):
+		_workshop(root, people, CampSim.instance.state_of(key), canopy)
 	# Their talk: among the seated folk, at head height.
 	var chatter := Audio3D.make("camp_chatter", root, "Chatter")
 	chatter.position = Vector3(0, 0.9, 0)
 	chatter.volume_db = -8.0
 	root.set_meta("chatter", chatter)
 	return root
+
+
+## The workshop (§EL) under camp `root`: clear of what already stands
+## round the fire (the shelter, the props, the store, the guards, where
+## the plot will go), its kiln downwind of the planet's mean wind here;
+## the canopy folk's on their second deck. The hearth's props round the
+## fire circle.
+func _workshop(root: Node3D, people: Dictionary, st: Dictionary, canopy: Dictionary) -> void:
+	var wrng := RandomNumberGenerator.new()
+	wrng.seed = hash([str(st.key), "workshop"])
+	var d: Vector3 = world.dir_of(root.global_position)
+	var wind: Vector3 = root.global_basis.inverse() * map.wind_avg[map.cell_at(d)]
+	var avoid: Array = [[Vector3.ZERO, 2.9]]
+	for c in root.get_children():
+		if not c is Node3D:
+			continue
+		var p: Vector3 = (c as Node3D).position
+		var r := Vector2(p.x, p.z).length()
+		if r < 3.0 or r > 18.0:
+			continue
+		avoid.append([Vector3(p.x, 0, p.z), 3.4 if str(c.name).begins_with("Shelter") else 1.0])
+	# Where the plot will go (§BM, _plot's own roll).
+	var prng := RandomNumberGenerator.new()
+	prng.seed = hash([str(st.key), "plot"])
+	var pa := prng.randf() * TAU
+	avoid.append([Vector3(cos(pa), 0, sin(pa)) * 12.5, 3.4])
+	var ctx := {"avoid": avoid, "wind": wind, "key": str(st.key),
+		"ground": func(p: Vector3) -> float:
+			var g: Vector3 = world.dir_of(root.to_global(p))
+			return root.to_local(world.to_scene(g, PlanetConst.RADIUS_M + chunks.ground_height(g))).y}
+	if not canopy.is_empty():
+		# Up in the giants: on the second deck, small, turned to the hearth.
+		var decks: Array = canopy.decks
+		if decks.size() < 2:
+			return
+		var dk: Dictionary = decks[1]
+		var to_h: Vector3 = (canopy.hearth as Vector3) - (dk.center as Vector3)
+		to_h.y = 0.0
+		var at: Vector3 = (dk.center as Vector3) - to_h.normalized() * (float(dk.r_t) + 1.2)
+		at.y = float((dk.center as Vector3).y) + 0.06
+		ctx["at"] = at
+		ctx["scale"] = 0.62
+		ctx["yaw_to"] = canopy.hearth
+	var ws := Workshop.build(root, people, _people_pal, wrng, ctx)
+	Workshop.restore(ws, st)
+	root.set_meta("workshop", ws)
+	if canopy.is_empty():
+		var hav: Array = avoid.duplicate()
+		hav.append([Vector3(ws.position.x, 0, ws.position.z), Workshop.HUT_HALF + 0.5])
+		if ws.has_meta("kiln"):
+			var kp: Vector3 = (ws.get_meta("kiln") as Node3D).position
+			hav.append([Vector3(kp.x, 0, kp.z), 1.8])
+		root.set_meta("hearth_props", Workshop.hearth_props(root, people, _people_pal, wrng, hav))
 
 
 ## The camp's dressing (design 30 Sept §BO, CampProps): the people's
@@ -958,6 +1019,22 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 	for s in sitters:
 		if (s as Node3D).has_meta("stage"):
 			cloaked.append(s)
+	# The workshop's day (§EL): by day the folk at the benches and the
+	# porch, at dusk back to the circle; the circle plays only those at it.
+	var ws = camp.get_meta("workshop") if camp.has_meta("workshop") else null
+	if ws != null and is_instance_valid(ws) and CampSim.instance != null:
+		var st := CampSim.instance.state_of(str(camp.get_meta("key", "")))
+		var plan_t: float = camp.get_meta("plan_t", 0.0) - delta
+		var hold := camp.has_meta("canopy") and near < 40.0
+		if (plan_t <= 0.0 or not camp.has_meta("plan")) and not hold:
+			plan_t = 1.0
+			camp.set_meta("plan", Workshop.plan_now(st, world.days))
+		camp.set_meta("plan_t", plan_t)
+		var plan: Array = camp.get_meta("plan", [])
+		Workshop.drive(cloaked, ws, plan, delta, _time, pp, near > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)) or camp.has_meta("canopy"))
+		cloaked = Workshop.fire_sitters(cloaked)
+		var ph_name := _circle_phase(camp)
+		Workshop.tick(ws, camp.get_meta("hearth_props") if camp.has_meta("hearth_props") else null, ph_name == "dusk" or ph_name == "night", Workshop.potter_working(st, plan))
 	if not cloaked.is_empty():
 		FireCircle.animate(cloaked, camp.get_meta("fire"), _time, delta, pp, _circle_phase(camp), _circle_ctx(camp))
 	for i in sitters.size():
@@ -1181,6 +1258,9 @@ static func _folk_stamp(st: Dictionary) -> String:
 	var s := ""
 	for f in st.get("folk", []):
 		s += "%s%s%s," % [str(f.get("sex", "")), CampSim.stage_of(f), str(f.get("role", ""))]
+	# A camp that reaches storage is built again with its workshop (§EL).
+	if Workshop.wanted(st):
+		s += "W"
 	return s
 
 
@@ -1260,7 +1340,8 @@ func _hitboxes(camp: Node3D, on: bool) -> void:
 		return
 	camp.set_meta("hitboxes_on", on)
 	for f in camp.get_meta("sitters") + camp.get_meta("guards", []):
-		Hitboxes.set_active((f as Node).get_meta("hitboxes", []), on)
+		# Out gathering (§EL): out of sight, nothing to hit.
+		Hitboxes.set_active((f as Node).get_meta("hitboxes", []), on and (f as Node3D).visible)
 
 
 const SHOT_LINES := ["Hey! Watch where you shoot!", "Oi! Put that bow down!", "Are you trying to get yourself killed?", "Aim at the deer, not at us!"]

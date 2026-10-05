@@ -1,6 +1,7 @@
 {
  "_help": {
   "sea_cave_boom": "Design §DX (the columns, added by Claude Code, 4 Oct): the swell striking the back of the columned sea cave, once a swell (Landmarks SWELL_S, 7-11 s; SoundSynth boom). A source at the cave's back: played only while you are within max_distance, so you hear it from the clifftop before you have found the way down; muffled with distance like any source.",
+  "bench_kinds": "Design 5 Oct §EL (the workshop, added by Claude Code): scrape, cord_twist, needle_through_hide (the soft bench) and tap_tap, grind, drill_whirr (the hard bench) are the benches' work sounds (camps.json sim.workshop.benches[].sounds; Workshop, SoundSynth <kind>_loop): short quiet loops from the bench itself while a folk works at it, each idle its own (sew_with_awl the needle, twist_cord and plait_basket the cord, scrape_hide the scrape; knap the tap-tap, grind_axe and hollow_bowl_with_coal the grind, bow_drill the whirr). A source like any other (§BG): heard from the door, gone at max_distance.",
   "crown_kinds": "Design §DA (Wind II, added by Claude Code, 4 Oct): crown_hush, crown_rustle, crown_clatter, crown_rattle are the crowns round you sounding in the gusts (WindCrowns; wind.json sound.crowns): a source at each crown, voiced by its leaf (needles hush, broad leaves rustle, palm fronds clatter, dry autumn leaves rattle; SoundSynth crown_*_loop), muffled like any source so you can walk to it.",
   "kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
   "unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
@@ -394,6 +395,54 @@
    "model": "inverse",
    "max_db": 0,
    "muffle": [25, 70],
+   "class": "source"
+  },
+  "scrape": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
+   "class": "source"
+  },
+  "cord_twist": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
+   "class": "source"
+  },
+  "needle_through_hide": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
+   "class": "source"
+  },
+  "tap_tap": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
+   "class": "source"
+  },
+  "grind": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
+   "class": "source"
+  },
+  "drill_whirr": {
+   "unit_size": 2,
+   "max_distance": 22,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": [8, 22],
    "class": "source"
   }
  },
