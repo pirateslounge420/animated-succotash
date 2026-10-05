@@ -234,6 +234,8 @@ var _day_shadows_set := -1
 ## metre, the clear zone start_m) and the low mist (look.json "mist").
 static var RETRO_FOG := Tuning.section("look", "retro").get("fog", {}) as Dictionary
 static var MIST := Tuning.section("look", "mist")
+## 0-1: how much mist the place you stand in holds (MistPlaces, main).
+var mist_place := 1.0
 
 
 func _ready() -> void:
@@ -527,8 +529,10 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var density := lerpf(day_density, float(RETRO_FOG.get("night_density", 0.0025)), night) + fog_amount * 0.003 + storm * 0.002
 	# Low mist (look.json "mist"), in the fog's colour: pooled in valleys
 	# and lying under the canopy, by altitude above the planet (Look).
-	var mist := lerpf(float(MIST.get("day_density", 0.0006)), float(MIST.get("night_density", 0.005)), night) \
-		+ fog_amount * float(MIST.get("fog_density", 0.006)) + storm * float(MIST.get("storm_density", 0.003))
+	# Only where the place holds it (mist_place, MistPlaces): by water, in
+	# wet country, on valley floors; a trace elsewhere.
+	var mist := (lerpf(float(MIST.get("day_density", 0.0006)), float(MIST.get("night_density", 0.005)), night) \
+		+ fog_amount * float(MIST.get("fog_density", 0.006))) * mist_place + storm * float(MIST.get("storm_density", 0.003))
 	mist *= 1.0 - Delves.underground
 	mist_density = mist
 	environment.fog_light_color = fog_color

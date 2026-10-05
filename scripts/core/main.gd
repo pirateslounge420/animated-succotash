@@ -544,6 +544,10 @@ func _process(delta: float) -> void:
 		var mean := sum / 17.0
 		_ground_mean = mean if _ground_mean == INF else lerpf(_ground_mean, mean, 0.3)
 		Look.apply({"look_ground_m": _ground_mean})
+		# Where mist lies (MistPlaces; Mike, 5 Oct): eased, so it gathers
+		# and thins as you walk into a valley or out of one.
+		var place := MistPlaces.share(world.planet, chunks.rivers, d, chunks.ground_height(d), _ground_mean)
+		sky.mist_place = lerpf(sky.mist_place, place, 0.25)
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
 	leaf_season.update_season(delta, d, world.days, WeatherFX.plant_wind)

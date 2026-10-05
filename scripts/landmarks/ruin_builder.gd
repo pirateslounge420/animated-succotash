@@ -5721,6 +5721,23 @@ func _stone_circle() -> void:
 ## Basalt, the living rock: grey-black, a little warm in the sun.
 const BASALT := [Color(0.29, 0.28, 0.29), Color(0.25, 0.25, 0.28), Color(0.32, 0.3, 0.29), Color(0.23, 0.23, 0.27), Color(0.3, 0.28, 0.27)]
 const BASALT_RELIEF := Color(0.36, 0.34, 0.32)
+## The hewn temple's stone: the rock it is cut from (Mike, 5 Oct:
+## "different temples should have different building materials"): basalt
+## dark grey, granite grey with pink, sandstone red, karst limestone cream.
+const HEWN_STONES := {
+	PlanetData.Rock.GRANITE: [Color(0.46, 0.42, 0.42), Color(0.42, 0.39, 0.4), Color(0.5, 0.45, 0.44), Color(0.39, 0.37, 0.39), Color(0.48, 0.43, 0.41)],
+	PlanetData.Rock.SANDSTONE: [Color(0.58, 0.36, 0.26), Color(0.53, 0.33, 0.24), Color(0.62, 0.4, 0.29), Color(0.5, 0.31, 0.23), Color(0.6, 0.38, 0.27)],
+	PlanetData.Rock.LIMESTONE_KARST: [Color(0.64, 0.6, 0.5), Color(0.58, 0.55, 0.47), Color(0.68, 0.63, 0.53), Color(0.55, 0.52, 0.45), Color(0.62, 0.58, 0.49)],
+}
+var _hewn: Array = BASALT
+var _hewn_relief := BASALT_RELIEF
+
+
+## The hewn temple's palette from the rock under it (basalt else).
+func _hewn_stone() -> void:
+	var rock: int = map.rock[map.cell_at(site.dir)]
+	_hewn = HEWN_STONES.get(rock, BASALT)
+	_hewn_relief = (_hewn[0] as Color).lightened(0.12) if HEWN_STONES.has(rock) else BASALT_RELIEF
 
 
 ## The hewn temple (Monuments._hewn_temple, HewnTemple.layout): the pit's
@@ -5733,7 +5750,8 @@ const BASALT_RELIEF := Color(0.36, 0.34, 0.32)
 ## fronts on the court: the first's open porch, dark windows for the two
 ## above. A creeper down the walls here and there.
 func _hewn_temple() -> void:
-	palette = BASALT
+	_hewn_stone()
+	palette = _hewn
 	var w: float = site.pit_w
 	var l: float = site.pit_l
 	var lay: Dictionary = Delves.layout(map, site)
@@ -5751,7 +5769,7 @@ func _hewn_temple() -> void:
 		for j in nz:
 			var fx := -w * 0.5 + (i + 0.5) * w / nx
 			var fz := -l * 0.5 + (j + 0.5) * l / nz
-			_pbox(Transform3D(Basis.IDENTITY, Vector3(fx, yf - 0.5, fz)), Vector3(w / nx + 0.02, 1.0, l / nz + 0.02), BASALT[(i + j) % BASALT.size()].darkened(0.04), 0.15)
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(fx, yf - 0.5, fz)), Vector3(w / nx + 0.02, 1.0, l / nz + 0.02), _hewn[(i + j) % _hewn.size()].darkened(0.04), 0.15)
 	# The walls; the back wall opened where the halls come through it.
 	var zf := l * 0.5
 	var cuts: Array = []
@@ -5778,7 +5796,7 @@ func _hewn_temple() -> void:
 		var xa := sx0 - ssx * run * k / steps
 		var xb := sx0 - ssx * run * (k + 1) / steps
 		var top := gtop - rise * k / steps
-		_pbox(Transform3D(Basis.IDENTITY, Vector3((xa + xb) * 0.5, (yf - 0.5 + top) * 0.5, sz)), Vector3(absf(xb - xa) + 0.02, top - yf + 0.5, 2.4), BASALT[k % BASALT.size()], 0.1)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3((xa + xb) * 0.5, (yf - 0.5 + top) * 0.5, sz)), Vector3(absf(xb - xa) + 0.02, top - yf + 0.5, 2.4), _hewn[k % _hewn.size()], 0.1)
 	solid = true
 	_dramp(Vector3(sx0 - ssx * run, yf, sz), Vector3(sx0, gtop, sz), 2.4)
 	# The temple, standing free.
@@ -5786,15 +5804,15 @@ func _hewn_temple() -> void:
 	# The halls' fronts on the court.
 	var p0 := Vector2(HewnTemple.HALL_X[0], zf)
 	for sx: float in [-1.0, 1.0]:
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(p0.x + sx * 1.4, yf + HewnTemple.HALL_H * 0.5, zf - 0.6)), Vector3(0.6, HewnTemple.HALL_H, 0.6), BASALT[2], 0.1)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(p0.x + sx * 1.4, yf + HewnTemple.HALL_H * 0.5, zf - 0.6)), Vector3(0.6, HewnTemple.HALL_H, 0.6), _hewn[2], 0.1)
 	for i in [1, 2]:
 		var hx: float = HewnTemple.HALL_X[i]
 		var y0: float = yf + i * HewnTemple.HALL_RISE
 		for px: float in [-2.9, -0.95, 0.95, 2.9]:
-			_pbox(Transform3D(Basis.IDENTITY, Vector3(hx + px, y0 + 2.0, zf - 0.08)), Vector3(0.4, 4.0, 0.2), BASALT[2], 0.05)
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(hx + px, y0 + 2.0, zf - 0.08)), Vector3(0.4, 4.0, 0.2), _hewn[2], 0.05)
 		for vx: float in [-1.925, 0.0, 1.925]:
 			_pbox(Transform3D(Basis.IDENTITY, Vector3(hx + vx, y0 + 1.9, zf - 0.03)), Vector3(1.3 if vx == 0.0 else 1.5, 2.8, 0.06), VOID, 0.0)
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(hx, y0 + 4.3, zf - 0.15)), Vector3(7.0, 0.5, 0.3), BASALT[4], 0.1)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(hx, y0 + 4.3, zf - 0.15)), Vector3(7.0, 0.5, 0.3), _hewn[4], 0.1)
 	# A creeper down the walls here and there (§DI).
 	for k in 10:
 		var side := k % 4
@@ -5838,7 +5856,7 @@ func _pit_wall(a: Vector2, b: Vector2, out: Vector2, cuts: Array) -> void:
 			var cw := seg / cols + 0.02
 			var c := p + out * 2.5
 			var size := Vector3(cw if absf(out.y) > 0.5 else 5.0, 0.0, 5.0 if absf(out.y) > 0.5 else cw)
-			var col: Color = BASALT[rng.randi() % BASALT.size()]
+			var col: Color = _hewn[rng.randi() % _hewn.size()]
 			var spans: Array = [[yb, top]]
 			for ct in cuts:
 				if p.x > float(ct[0]) and p.x < float(ct[1]):
@@ -5859,9 +5877,9 @@ func _hewn_shrine(yf: float, rim: float) -> void:
 	var htot := rim - yf - 1.5
 	var ph := 5.0
 	var top := yf + ph
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 0.4, 0.0)), Vector3(tw + 0.6, 0.8, tl + 0.6), BASALT[3], 0.15)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + ph * 0.5, 0.0)), Vector3(tw, ph, tl), BASALT[0], 0.1)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top - 0.3, 0.0)), Vector3(tw + 0.8, 0.6, tl + 0.8), BASALT[2], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 0.4, 0.0)), Vector3(tw + 0.6, 0.8, tl + 0.6), _hewn[3], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + ph * 0.5, 0.0)), Vector3(tw, ph, tl), _hewn[0], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top - 0.3, 0.0)), Vector3(tw + 0.8, 0.6, tl + 0.8), _hewn[2], 0.15)
 	# The stair up its front.
 	var srun := ph / 0.7
 	var sw := 4.0
@@ -5871,7 +5889,7 @@ func _hewn_shrine(yf: float, rim: float) -> void:
 		var za := -tl * 0.5 - srun + srun * k / steps
 		var zb := -tl * 0.5 - srun + srun * (k + 1) / steps
 		var st := yf + ph * (k + 1) / steps
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, (yf - 0.2 + st) * 0.5, (za + zb) * 0.5)), Vector3(sw, st - yf + 0.2, zb - za + 0.02), BASALT[k % 5], 0.1)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, (yf - 0.2 + st) * 0.5, (za + zb) * 0.5)), Vector3(sw, st - yf + 0.2, zb - za + 0.02), _hewn[k % 5], 0.1)
 	solid = true
 	_dramp(Vector3(0.0, yf, -tl * 0.5 - srun), Vector3(0.0, top, -tl * 0.5), sw)
 	# The elephants round the base, facing out (none across the stair).
@@ -5890,7 +5908,7 @@ func _hewn_shrine(yf: float, rim: float) -> void:
 	var sv := tw * 0.62
 	var vz := tl * 0.5 - sv * 0.5 - 2.0
 	var wall_h := 6.0
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + wall_h * 0.5, vz)), Vector3(sv, wall_h, sv), BASALT[1], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + wall_h * 0.5, vz)), Vector3(sv, wall_h, sv), _hewn[1], 0.1)
 	_hewn_reliefs(Vector3(0.0, top, vz), Vector2(sv, sv), wall_h)
 	var tiers := int(site.towers)
 	# (The crown and finial take the last 2 m.)
@@ -5899,19 +5917,19 @@ func _hewn_shrine(yf: float, rim: float) -> void:
 	var y := top + wall_h
 	for k in tiers:
 		var side := sv * (0.92 - 0.6 * k / tiers)
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + th * 0.5, vz)), Vector3(side, th, side), BASALT[(k + 1) % 5], 0.12)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + th * 0.5, vz)), Vector3(side, th, side), _hewn[(k + 1) % 5], 0.12)
 		# Little pavilions along each tier's edge.
 		var ps := side * 0.16
 		for cx: float in [-1.0, 0.0, 1.0]:
 			for cz: float in [-1.0, 1.0]:
-				_pbox(Transform3D(Basis.IDENTITY, Vector3(cx * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cz * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), BASALT[2], 0.1)
-				_pbox(Transform3D(Basis.IDENTITY, Vector3(cz * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cx * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), BASALT[2], 0.1)
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(cx * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cz * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), _hewn[2], 0.1)
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(cz * (side * 0.5 - ps * 0.5), y + th + ps * 0.3, vz + cx * (side * 0.5 - ps * 0.5))), Vector3(ps, ps * 0.6, ps), _hewn[2], 0.1)
 		y += th
 	# The cap: an octagonal crown and its finial.
 	var cap := sv * 0.3
 	for r: float in [0.0, PI * 0.25]:
-		_pbox(Transform3D(Basis(Vector3.UP, r), Vector3(0.0, y + 0.6, vz)), Vector3(cap, 1.2, cap), BASALT[0], 0.1)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 1.6, vz)), Vector3(0.4, 0.8, 0.4), BASALT[2], 0.0)
+		_pbox(Transform3D(Basis(Vector3.UP, r), Vector3(0.0, y + 0.6, vz)), Vector3(cap, 1.2, cap), _hewn[0], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 1.6, vz)), Vector3(0.4, 0.8, 0.4), _hewn[2], 0.0)
 	# The pillared hall: its roof on pillars, dark within.
 	var hl := tl * 0.38
 	var hz := vz - sv * 0.5 - hl * 0.5
@@ -5922,36 +5940,36 @@ func _hewn_shrine(yf: float, rim: float) -> void:
 	for k in cols + 1:
 		var px := -hw * 0.5 + 0.4 + (hw - 0.8) * k / cols
 		for pz: float in [-1.0, 1.0]:
-			_pbox(Transform3D(Basis.IDENTITY, Vector3(px, top + hh * 0.5, hz + pz * (hl * 0.5 - 0.4))), Vector3(0.8, hh, 0.8), BASALT[2], 0.05)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 0.5, hz)), Vector3(hw + 1.0, 1.0, hl + 1.0), BASALT[3], 0.15)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 1.4, hz)), Vector3(hw * 0.7, 0.8, hl * 0.7), BASALT[0], 0.15)
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(px, top + hh * 0.5, hz + pz * (hl * 0.5 - 0.4))), Vector3(0.8, hh, 0.8), _hewn[2], 0.05)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 0.5, hz)), Vector3(hw + 1.0, 1.0, hl + 1.0), _hewn[3], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + hh + 1.4, hz)), Vector3(hw * 0.7, 0.8, hl * 0.7), _hewn[0], 0.15)
 	# The porch at the plinth's front, over the stair's head.
 	var pz0 := -tl * 0.5 + 4.0
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 2.0, pz0)), Vector3(6.0, 4.0, 5.0), BASALT[4], 0.1)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 2.0, pz0)), Vector3(6.0, 4.0, 5.0), _hewn[4], 0.1)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 1.4, pz0 - 2.52)), Vector3(1.8, 2.8, 0.06), VOID, 0.0)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 4.4, pz0)), Vector3(6.8, 0.8, 5.8), BASALT[3], 0.15)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, top + 4.4, pz0)), Vector3(6.8, 0.8, 5.8), _hewn[3], 0.15)
 	# The gatehouse on the court before the stair: two halves and the
 	# lintel over the way through.
 	var gz := -tl * 0.5 - srun - 9.0
 	var gh := minf(9.0, htot - 1.0)
 	for gx: float in [-1.0, 1.0]:
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(gx * 4.5, yf + gh * 0.5, gz)), Vector3(6.0, gh, 6.0), BASALT[1], 0.12)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(gx * 4.5, yf + gh * 0.5, gz)), Vector3(6.0, gh, 6.0), _hewn[1], 0.12)
 		_hewn_reliefs(Vector3(gx * 4.5, yf, gz), Vector2(6.0, 6.0), gh * 0.6)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 4.5 + (gh - 4.5) * 0.5, gz)), Vector3(3.2, gh - 4.5, 6.0), BASALT[3], 0.12)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 4.5 + (gh - 4.5) * 0.5, gz)), Vector3(3.2, gh - 4.5, 6.0), _hewn[3], 0.12)
 	# The two pillars, standing free either side of the hall.
 	var pil_h := minf(ph + 10.0, htot - 1.0)
 	for px: float in [-1.0, 1.0]:
 		var c := Vector3(px * (tw * 0.5 + 4.0), yf, hz)
-		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, 0.6, 0.0)), Vector3(2.2, 1.2, 2.2), BASALT[3], 0.2)
-		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, pil_h * 0.5, 0.0)), Vector3(1.3, pil_h, 1.3), BASALT[2], 0.1)
-		_pbox(Transform3D(Basis(Vector3.UP, PI * 0.25), c + Vector3(0.0, pil_h + 0.5, 0.0)), Vector3(1.9, 1.0, 1.9), BASALT[0], 0.1)
+		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, 0.6, 0.0)), Vector3(2.2, 1.2, 2.2), _hewn[3], 0.2)
+		_pbox(Transform3D(Basis.IDENTITY, c + Vector3(0.0, pil_h * 0.5, 0.0)), Vector3(1.3, pil_h, 1.3), _hewn[2], 0.1)
+		_pbox(Transform3D(Basis(Vector3.UP, PI * 0.25), c + Vector3(0.0, pil_h + 0.5, 0.0)), Vector3(1.9, 1.0, 1.9), _hewn[0], 0.1)
 
 
 ## An elephant in the round from the plinth's face at `p` (its feet), its
 ## back in the rock, facing `n`: body, head, ears, trunk down, tusks, legs.
 func _elephant(p: Vector3, n: Vector2) -> void:
 	var bs := Basis(Vector3.UP, atan2(n.x, n.y))
-	var col := BASALT_RELIEF.darkened(rng.randf_range(0.0, 0.08))
+	var col := _hewn_relief.darkened(rng.randf_range(0.0, 0.08))
 	var parts := [[Vector3(0.0, 1.8, 0.4), Vector3(2.0, 2.0, 1.4)], [Vector3(0.0, 2.4, 1.4), Vector3(1.5, 1.4, 1.0)],
 		[Vector3(-0.95, 2.4, 1.2), Vector3(0.3, 1.3, 1.0)], [Vector3(0.95, 2.4, 1.2), Vector3(0.3, 1.3, 1.0)],
 		[Vector3(0.0, 1.2, 2.0), Vector3(0.45, 1.8, 0.45)], [Vector3(-0.55, 0.55, 1.3), Vector3(0.55, 1.1, 0.55)],
@@ -5959,7 +5977,7 @@ func _elephant(p: Vector3, n: Vector2) -> void:
 	for pt in parts:
 		_pbox(Transform3D(bs, p + bs * (pt[0] as Vector3)), pt[1], col, 0.1)
 	for tx: float in [-0.35, 0.35]:
-		_pbox(Transform3D(bs * Basis(Vector3.RIGHT, 0.5), p + bs * Vector3(tx, 1.75, 2.15)), Vector3(0.14, 0.14, 0.8), BASALT_RELIEF.lightened(0.25), 0.0)
+		_pbox(Transform3D(bs * Basis(Vector3.RIGHT, 0.5), p + bs * Vector3(tx, 1.75, 2.15)), Vector3(0.14, 0.14, 0.8), _hewn_relief.lightened(0.25), 0.0)
 
 
 ## Reliefs round a block whose foot's middle is `c`, `size` (x, z) across:
@@ -5976,10 +5994,10 @@ func _hewn_reliefs(c: Vector3, size: Vector2, h: float) -> void:
 		for k in count:
 			var u := -span * 0.5 + (k + 0.5) * span / count
 			var at := Vector2(c.x, c.z) + n * (depth * 0.5) + Vector2(-n.y, n.x) * u
-			_pbox(Transform3D(bs, Vector3(at.x, py, at.y) + Vector3(n.x, 0.0, n.y) * 0.03), Vector3(1.8, minf(3.0, h * 0.7), 0.06), BASALT[3].darkened(0.35), 0.0)
+			_pbox(Transform3D(bs, Vector3(at.x, py, at.y) + Vector3(n.x, 0.0, n.y) * 0.03), Vector3(1.8, minf(3.0, h * 0.7), 0.06), _hewn[3].darkened(0.35), 0.0)
 			var fig := Vector3(at.x, py - 0.4, at.y) + Vector3(n.x, 0.0, n.y) * 0.12
-			_pbox(Transform3D(bs, fig), Vector3(0.6, 1.6, 0.18), BASALT_RELIEF, 0.0)
-			_pbox(Transform3D(bs, fig + Vector3(0.0, 1.05, 0.0)), Vector3(0.42, 0.45, 0.18), BASALT_RELIEF, 0.0)
+			_pbox(Transform3D(bs, fig), Vector3(0.6, 1.6, 0.18), _hewn_relief, 0.0)
+			_pbox(Transform3D(bs, fig + Vector3(0.0, 1.05, 0.0)), Vector3(0.42, 0.45, 0.18), _hewn_relief, 0.0)
 
 
 ## The halls (HewnTemple.layout): the porch, the three halls with their
@@ -6021,21 +6039,21 @@ func _hewn_hall_dress(pc: Dictionary, off: float, heart: bool) -> void:
 	while z < c.y + ln - (4.0 if heart else 1.5):
 		if absf(z - zs) > 1.6:
 			for sx: float in [-1.9, 1.9]:
-				_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x + sx, y + h * 0.5, z)), Vector3(0.6, h, 0.6), BASALT[2], 0.0)
+				_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x + sx, y + h * 0.5, z)), Vector3(0.6, h, 0.6), _hewn[2], 0.0)
 		z += 3.0
 	var r := c.y + 0.6
 	while r < c.y + ln - 0.3:
-		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.14, r)), Vector3(2.0 * float(pc.half), 0.28, 0.3), BASALT[4].darkened(0.1), 0.0)
+		_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.14, r)), Vector3(2.0 * float(pc.half), 0.28, 0.3), _hewn[4].darkened(0.1), 0.0)
 		r += 1.1
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.2, c.y + ln * 0.5)), Vector3(0.4, 0.4, ln), BASALT[4].darkened(0.1), 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + h - 0.2, c.y + ln * 0.5)), Vector3(0.4, 0.4, ln), _hewn[4].darkened(0.1), 0.0)
 	if not heart:
 		return
 	var ze := c.y + ln
 	# The apse narrows on its left; the way out leaves on its right.
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x - 2.4, y + h * 0.5, ze - 1.6)), Vector3(1.2, h, 3.2), BASALT[1], 0.0)
-	var fc := BASALT_RELIEF.lightened(0.05)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 0.25, ze - 1.2)), Vector3(2.2, 0.5, 1.6), BASALT[3], 0.0)
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.5, ze - 0.35)), Vector3(1.8, 2.6, 0.2), BASALT[0], 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x - 2.4, y + h * 0.5, ze - 1.6)), Vector3(1.2, h, 3.2), _hewn[1], 0.0)
+	var fc := _hewn_relief.lightened(0.05)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 0.25, ze - 1.2)), Vector3(2.2, 0.5, 1.6), _hewn[3], 0.0)
+	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.5, ze - 0.35)), Vector3(1.8, 2.6, 0.2), _hewn[0], 0.0)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 0.78, ze - 1.3)), Vector3(1.6, 0.55, 1.1), fc, 0.0)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 1.6, ze - 1.45)), Vector3(0.85, 1.1, 0.55), fc, 0.0)
 	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, y + 2.42, ze - 1.45)), Vector3(0.48, 0.55, 0.48), fc, 0.0)
@@ -6044,8 +6062,10 @@ func _hewn_hall_dress(pc: Dictionary, off: float, heart: bool) -> void:
 
 # --- The hanging gardens (design 3 Oct §DT) -------------------------------------------
 
-## Fired brick facings over the sun-dried core, and the terraces' soil.
-const FACING := [Color(0.6, 0.45, 0.32), Color(0.56, 0.42, 0.3), Color(0.64, 0.48, 0.34), Color(0.52, 0.4, 0.29), Color(0.58, 0.44, 0.31)]
+## The facings over the core, and the terraces' soil.
+## Pale dressed stone (Mike, 5 Oct: the gardens "built out of more light
+## colored material"), cream going warm.
+const FACING := [Color(0.78, 0.74, 0.63), Color(0.73, 0.69, 0.59), Color(0.82, 0.77, 0.66), Color(0.7, 0.67, 0.58), Color(0.76, 0.72, 0.61)]
 const TERRACE_SOIL := Color(0.3, 0.36, 0.2)
 ## The garden's trees (§DT: garden.hand_carried on the upper terraces,
 ## garden.local below), by catalogue name: the cedar isn't in the
@@ -6180,9 +6200,20 @@ func _garden_channel(off: float) -> void:
 		for sx: float in [-1.0, 1.0]:
 			_pbox(Transform3D(Basis.IDENTITY, Vector3(sx * 1.2, y + 0.1, (z + hk) * 0.5)), Vector3(0.4, 0.5, hk - z), FACING[1], 0.5)
 		var below := HangingGardens.top(site, k - 1) - off + 0.18 if k > 0 else ground(0.0, hk + 1.5) + 0.12
-		_water_fall(Vector3(-1.0, y, hk), Vector3(1.0, y, hk), below)
+		if k > 0:
+			_water_fall(Vector3(-1.0, y, hk), Vector3(1.0, y, hk), below)
+		else:
+			# The last drop is the gardens' waterfall (Mike, 5 Oct): wider,
+			# over the lowest wall into a plunge pool at its foot, and on
+			# to the river as a stream.
+			_water_fall(Vector3(-1.8, y, hk), Vector3(1.8, y, hk), below)
+			_water_strip(Vector3(0.0, below, hk + 0.2), Vector3(0.0, below, hk + 4.2), 2.6, along)
+			for sx: float in [-1.0, 1.0]:
+				for j in 3:
+					var pz := hk + 0.8 + j * 1.5
+					_pbox(Transform3D(Basis.IDENTITY, Vector3(sx * 2.9, below + 0.05, pz)), Vector3(0.5, 0.4, 1.4), FACING[3].darkened(0.1), 0.6)
 	# On the ground to the river.
-	var a := Vector2(0.0, HangingGardens.half(site, 0) + 1.0)
+	var a := Vector2(0.0, HangingGardens.half(site, 0) + 4.2)
 	var b: Vector2 = site.riv
 	var dl := a.distance_to(b)
 	var segs := maxi(1, int(dl / 4.0))
@@ -6191,13 +6222,13 @@ func _garden_channel(off: float) -> void:
 		var q := a.lerp(b, float(i + 1) / segs)
 		var yp := ground(p.x, p.y) + 0.1
 		var yq := ground(q.x, q.y) + 0.1
-		_water_strip(Vector3(p.x, yp, p.y), Vector3(q.x, yq, q.y), 0.9, along)
+		_water_strip(Vector3(p.x, yp, p.y), Vector3(q.x, yq, q.y), 1.4, along)
 		along += p.distance_to(q)
 		var dir := (q - p).normalized()
 		var side := Vector2(dir.y, -dir.x)
 		var mid := (p + q) * 0.5
 		for sx: float in [-1.0, 1.0]:
-			var kc := mid + side * sx * 1.1
+			var kc := mid + side * sx * 1.6
 			_pbox(Transform3D(Basis(Vector3.UP, atan2(dir.x, dir.y)), Vector3(kc.x, (yp + yq) * 0.5 + 0.05, kc.y)), Vector3(0.35, 0.45, p.distance_to(q) + 0.05), FACING[3].darkened(0.1), 0.6)
 
 
@@ -6854,25 +6885,64 @@ func _pillar_reach(i: int, dir: Vector2) -> float:
 ## A pillar of rough rock at `c`, `hs` half wide, its top at `ty`: blocks
 ## stacked a dozen metres at a time, a little this way and that, never
 ## out past its faces (its stair goes round them).
+## The pillar's widest reach at height share `t` (0 foot, 1 top): the
+## stair round it keeps outside this (_cut_stair).
+static func _pillar_env(hs: float, t: float) -> float:
+	var e := hs * (1.22 + 0.22 * pow(1.0 - t, 2.0))
+	return lerpf(e, hs * 1.13, smoothstep(0.92, 1.0, t))
+
+
 func _rock_pillar(c: Vector2, hs: float, ty: float) -> void:
+	# A pillar, not a stack of blocks (Mike, 5 Oct): one weathered column of
+	# rock, round in plan with fluted grooves down it where the rain runs,
+	# a little wider at the foot and bulging here and there along its
+	# height, its colour banded by the beds it was cut through; mossed at
+	# the top. Drawn as rings of a dozen sides, smooth-shaded, solid.
 	var g := INF
 	for k in 5:
 		var q := c + Vector2(cos(k * TAU / 5.0), sin(k * TAU / 5.0)) * hs
 		g = minf(g, ground(q.x, q.y))
 	g = minf(g, ground(c.x, c.y)) - 2.0
-	var y := g
-	var k2 := 0
-	while y < ty - 0.05:
-		var seg := minf(rng.randf_range(9.0, 14.0), ty - y)
-		var sx := hs * 2.0 * rng.randf_range(0.86, 1.0)
-		var sz := hs * 2.0 * rng.randf_range(0.86, 1.0)
-		var j := Vector2(rng.randf_range(-1.0, 1.0) * (hs * 2.0 - sx) * 0.5, rng.randf_range(-1.0, 1.0) * (hs * 2.0 - sz) * 0.5)
-		var moss := 0.15 + 0.6 * float(y + seg > ty - 0.5)
-		_pbox(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.05, 0.05)), Vector3(c.x + j.x, y + seg * 0.5, c.y + j.y)), Vector3(sx, seg + 0.05, sz), CRAG_ROCK[k2 % CRAG_ROCK.size()].darkened(rng.randf_range(0.0, 0.1)), moss)
-		y += seg
-		k2 += 1
-	# The top, level, its turf.
-	_pbox(Transform3D(Basis.IDENTITY, Vector3(c.x, ty - 0.3, c.y)), Vector3(hs * 2.0, 0.6, hs * 2.0), CRAG_ROCK[1], 0.85)
+	var sides := 12
+	var rings := maxi(4, int((ty - g) / 3.5))
+	var ph := rng.randf() * TAU
+	var ph2 := rng.randf() * TAU
+	var pts: Array = []
+	for r in rings + 1:
+		var t := float(r) / rings
+		var y := lerpf(g, ty - 0.05, t)
+		var ring: Array[Vector3] = []
+		for k in sides:
+			var a := TAU * k / sides
+			var rad := hs * (1.1 + 0.22 * pow(1.0 - t, 2.0) + 0.07 * sin(t * 7.0 + ph) * sin(a * 2.0 + ph2) + 0.05 * cos(a * 6.0)) 
+			if t > 0.92:
+				# The lip: drawn in under the turf.
+				rad = lerpf(rad, hs * 1.08, smoothstep(0.92, 1.0, t))
+			ring.append(Vector3(c.x + cos(a) * rad, y, c.y + sin(a) * rad))
+		pts.append(ring)
+	var start := _v.size()
+	for r in rings:
+		var t := (float(r) + 0.5) / rings
+		var band: Color = CRAG_ROCK[int(t * 9.0 + ph) % CRAG_ROCK.size()]
+		for k in sides:
+			var k1 := (k + 1) % sides
+			var a: Vector3 = pts[r][k]
+			var b: Vector3 = pts[r][k1]
+			var cc: Vector3 = pts[r + 1][k1]
+			var d: Vector3 = pts[r + 1][k]
+			# The grooves darker, the moss coming down from the top.
+			var col := band.darkened(0.12 * (0.5 + 0.5 * cos(TAU * k / sides * 6.0)))
+			var moss := smoothstep(0.82, 1.0, t) * 0.8 + 0.1
+			col = col.lerp(MOSS, moss * 0.45)
+			col.a = moss * 0.4
+			_face(a, b, cc, d, col, Vector3(c.x, (a.y + d.y) * 0.5, c.y))
+	_smooth_from(start)
+	_collide_since(start)
+	# The far stand-in: the same, coarse.
+	_lod_box(Transform3D(Basis.IDENTITY, Vector3(c.x, (g + ty) * 0.5, c.y)), Vector3(hs * 1.15, (ty - g) * 0.5, hs * 1.15), CRAG_ROCK[0], CRAG_ROCK[1], CRAG_ROCK[2].darkened(UNDER))
+	# The top, level, its turf (round enough to meet the lip and the stair).
+	for rot: float in [0.0, PI * 0.25]:
+		_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(c.x, ty - 0.3, c.y)), Vector3(hs * 2.3, 0.6, hs * 2.3), CRAG_ROCK[1], 0.85)
 
 
 ## A small shrine on a pillar's top at `p`: a stone room, its door, its
@@ -6918,14 +6988,18 @@ func _shrine_roof(p: Vector3, size: Vector2, rot := 0.0) -> void:
 ## its foot to its top `ty`, its treads standing out of the rock, climbing
 ## at a walkable grade, turning at each corner (the only way up, §AU).
 func _cut_stair(c: Vector2, hs: float, ty: float) -> void:
-	var r := hs + 0.8
-	var corners := [Vector2(-r, -r), Vector2(r, -r), Vector2(r, r), Vector2(-r, r)]
-	var y := ground(c.x - r, c.y - r)
+	# Round the pillar on an eight-sided path just outside its widest reach
+	# at each height (_pillar_env), so the treads sit on its flanks.
+	var y0 := ground(c.x - hs, c.y - hs) - 2.0
+	var env := func(yy: float) -> float:
+		return _pillar_env(hs, clampf((yy - y0) / maxf(ty - y0, 1.0), 0.0, 1.0)) + 0.8
+	var r0: float = env.call(y0 + 2.0)
+	var y := ground(c.x - r0 * 0.7, c.y - r0 * 0.7)
 	var grade := 0.5
 	var k := 0
-	while y < ty - 0.1 and k < 80:
-		var a: Vector2 = c + corners[k % 4]
-		var b: Vector2 = c + corners[(k + 1) % 4]
+	while y < ty - 0.1 and k < 160:
+		var a: Vector2 = c + Vector2(cos(k * TAU / 8.0 + PI * 1.25), sin(k * TAU / 8.0 + PI * 1.25)) * float(env.call(y))
+		var b: Vector2 = c + Vector2(cos((k + 1) * TAU / 8.0 + PI * 1.25), sin((k + 1) * TAU / 8.0 + PI * 1.25)) * float(env.call(minf(y + 4.0, ty)))
 		var seg := a.distance_to(b)
 		var y1 := minf(y + seg * grade, ty)
 		var run := (y1 - y) / grade
