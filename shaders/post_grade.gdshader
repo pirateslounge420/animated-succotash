@@ -78,6 +78,19 @@ uniform float highlight_from = 0.5; // luma where the cyan-white starts
 uniform vec2 protect_hue = vec2(-20.0, 62.0); // degrees, red = 0
 uniform float protect_feather = 10.0;
 uniform vec2 protect_chroma = vec2(0.12, 0.25); // brightest minus darkest channel
+// A lit village round the eye (design 5 Oct §EE.1, look.json
+// village_warmth.grade; VillageWarmth): 0 in the wild and in a dead
+// village, up to 1 standing in one with every hearth lit. It lifts the
+// night pull, the night's teal and cyan-white lights and the navy floor,
+// takes the darks toward firelit brown, and lets dimmer firelit stone keep
+// its orange (protect).
+uniform float warmth = 0.0;
+uniform float warm_pull_ease = 0.85;
+uniform float warm_teal_ease = 0.8;
+uniform float warm_highlight_ease = 0.75;
+uniform vec3 warm_shadow_color = vec3(0.075, 0.055, 0.047); // #130E0C
+uniform float warm_shadow_mix = 0.65;
+uniform float warm_protect_scale = 0.4;
 
 // 4x4 Bayer thresholds, 0-15.
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0,
@@ -120,7 +133,8 @@ float protect(vec3 c) {
 	float h = rgb2hsv(max(c, vec3(0.0))).x * 360.0;
 	h = h > 180.0 ? h - 360.0 : h;
 	float w = smoothstep(protect_hue.x - protect_feather, protect_hue.x, h) * (1.0 - smoothstep(protect_hue.y, protect_hue.y + protect_feather, h));
-	return w * smoothstep(protect_chroma.x, protect_chroma.y, max3(c) - min(c.r, min(c.g, c.b)));
+	vec2 pc = protect_chroma * mix(1.0, warm_protect_scale, warmth);
+	return w * smoothstep(pc.x, pc.y, max3(c) - min(c.r, min(c.g, c.b)));
 }
 
 // `c` scaled so its brightest channel is `v` (hue and saturation kept).
@@ -192,7 +206,10 @@ void fragment() {
 	// The two presets, each in full, crossfaded by night.
 	float prot = protect(col);
 	vec3 day_c = grade(col, exposure.x, mids.x, saturation.x, teal.x, shadow_color_day, shadow_tint_amount.x, highlight_color_day, highlight_amount.x, olive_amount.x, contrast.x, vignette.x, prot, SCREEN_UV);
-	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y, shadow_color_night, shadow_tint_amount.y, highlight_color_night, highlight_amount.y, olive_amount.y, contrast.y, vignette.y, prot, SCREEN_UV);
+	// In a lit village the night preset warms (§EE.1): less teal, less
+	// cyan-white, the darks toward firelit brown.
+	vec3 night_shadow = mix(shadow_color_night, warm_shadow_color, warmth * warm_shadow_mix);
+	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y * (1.0 - warmth * warm_teal_ease), night_shadow, shadow_tint_amount.y, highlight_color_night, highlight_amount.y * (1.0 - warmth * warm_highlight_ease), olive_amount.y, contrast.y, vignette.y, prot, SCREEN_UV);
 	col = mix(day_c, night_c, night);
 	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
 	if (harm_vignette > 0.0 || harm_desat > 0.0) {
@@ -213,12 +230,14 @@ void fragment() {
 	float s_px = (max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b))) / max(max(col.r, max(col.g, col.b)), 1e-4);
 	float s_fl = (max(fdir.r, max(fdir.g, fdir.b)) - min(fdir.r, min(fdir.g, fdir.b))) / max(max(fdir.r, max(fdir.g, fdir.b)), 1e-4);
 	vec3 one = mix(vec3(yd), fdir * (yd / max(luma_of(fdir), 1e-4)), clamp(s_px / max(s_fl, 1e-3), 0.0, 1.0));
-	col = mix(col, one, night_pull * (1.0 - prot) * (1.0 - smoothstep(pull_luma * 0.6, pull_luma * 1.6, yd)));
+	col = mix(col, one, night_pull * (1.0 - warmth * warm_pull_ease) * (1.0 - prot) * (1.0 - smoothstep(pull_luma * 0.6, pull_luma * 1.6, yd)));
 	// Shadow floor: the darks come up to navy (each channel at least the
 	// floor's, easing off above the floor's own brightness); under a green
 	// pixel by day, to the olive at the floor's brightness instead.
 	float olive_now = mix(olive_amount.x, olive_amount.y, night) * greenness(max(col, vec3(0.0)));
 	vec3 fcol = mix(shadow_floor, olive_color * (luma_of(shadow_floor) / max(luma_of(olive_color), 1e-4)), olive_now);
+	// In a lit village the floor is firelit brown, not navy (R3, §EE.1).
+	fcol = mix(fcol, warm_shadow_color * (luma_of(fcol) / max(luma_of(warm_shadow_color), 1e-4)), warmth * warm_shadow_mix * night);
 	float fl = luma_of(fcol);
 	col = mix(col, max(col, fcol), 1.0 - smoothstep(fl, fl * 4.0, luma_of(col)));
 	float luma = luma_of(col);

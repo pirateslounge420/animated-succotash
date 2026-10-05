@@ -3,6 +3,12 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EE.1 a lit village goes amber, one hearth at a time; the wild stays blue
+- **What changes on screen:** at night a village warms where its hearths burn. Each lit hearth eases the night's blue pull on the ground, walls and plants within about 10 m of it and lays a dim pool of firelight round it. The more of a village's hearths burn, the warmer the whole village reads. While you stand in a lit village the grade itself warms: shade goes firelit brown instead of navy. A dead village, and the wild between villages, look exactly as before. Warm light is still only firelight, and nothing glows that doesn't give light (the pool stays under full brightness, so nothing blooms).
+- **Data-driven:** each village has a lit fraction (lit hearths ÷ all, 0 to 1). The lighting and the grade read only that, plus the lit hearths themselves (`VillageWarmth`; `data/look.json → village_warmth`). The 16 lit hearths nearest you go to the shaders as a small data texture; the terrain, ruin, foliage, litter and aroid shaders and `post_grade` read it.
+- **Docs:** CLAUDE.md's look lines and LOOK_REFERENCE's eye test, R2, R3 and R7 now say blue owns the frame by default, not always (§EE.1). The lit-village band is still to be measured.
+- **Checked** (`tools/village_warmth_check.gd`, rendered, a stand-in village of 12 hearths at 01:00): the warm share of the frame goes 0.36, 0.42, 0.46, 0.50, 0.51 as the lit fraction goes 0, ¼, ½, ¾, 1, and blue falls from 0.56 to 0.37. A dead village sends nothing to the shaders. The first run's "same as today" tests were stricter than the frame's own flicker (the camp fire in view moves the warm share by about 0.007), so the check now measures that flicker and also asserts the exact zero; it is re-run on this commit.
+
 ## 2026-10-05 — Villages plan revised for §EF and §EG (nothing built)
 - The village section of `docs/implementation-notes.md` is rewritten as seven steps:
   1. site score;

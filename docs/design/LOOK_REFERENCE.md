@@ -24,8 +24,10 @@ Ten yes/no checks. Each one is a rule below; a "no" names what to tune.
 3. **Distance (R5):** do far hills get lighter and bluer, not darker?
 4. **Water (R6):** is water the brightest, most saturated thing in view (electric blue
    with cyan glints, still ponds a darker navy)?
-5. **Warm (R7):** at night, is the fire (or a candle or torch) the only warm thing, and
-   does it pop?
+5. **Warm (R7):** at night, out in the wild or in a dead village, is the fire (or a candle
+   or torch) the only warm thing, and does it pop? In a relit village (§EE.1), is every warm
+   thing firelight (a hearth, a lit window, a lantern), and does the village go warmer as each
+   hearth is lit while the wild round it stays blue?
 6. **Pixels (R9):** are surfaces chunky while the edges of trunks and stones against the
    sky stay clean?
 7. **Night (R4, R5):** is night one blue world, with misty gaps between trees glowing
@@ -77,10 +79,19 @@ than plain mid-grey, so a frame can be dark and vivid at once.
 By day: blue 35 %, green 37 %, warm 9 %. At night: **blue 84 %**, green 2 %, warm 0 %. Night
 is one colour, with the warm accent as the exception.
 
+*Amended 5 Oct (§EE.1): blue owns the frame by default, not always.* A relit village may go
+amber-dominant: lit windows, lanterns and hearth glow. Its warmth follows its **lit fraction**
+(lit hearths / all, 0–1; `look.json → village_warmth`, `VillageWarmth`): each lit hearth warms
+the walls and ground round it, so a village warms one house at a time. A dead village stays blue
+and cold, and the wild between villages keeps the shares above. The favourites' night shares
+are the wild's; a lit-village band is still to be measured (from the en4ria frames, with
+`measure_look.py --fav`).
+
 **R3. Shade takes the scene's colour, never grey.**
 - Blue scenes: deep shade **#020A39**, shade **#06186C** (#11, #16).
 - Green scenes: dark olive, e.g. #0F130B and #0A1009 (#6, #3).
-- By the fire: brown, #130E0C (#8).
+- By the fire: brown, #130E0C (#8). In a lit village this is the shade, not the exception
+  (§EE.1: the grade takes the darks toward it as the village's hearths are lit).
 - At night the darkest 5 % range from black under a closed crown (#13, luma 0.000) to a
   lifted navy under a lit sky (#9, #16, luma ~0.08). Median 0.019.
 
@@ -111,6 +122,9 @@ is one colour, with the warm accent as the exception.
 - Wheat **#C0722F** (#1). Fire **#E6552A** with a core of **#FEFC54** (#8). Candles (#16,
   #19, #20). A lit path, about #C39151 (#13). A golden landmark under a navy sky (#18).
 - It's always the complement of the blue around it.
+- *Amended 5 Oct (§EE.1):* one warm accent **in the wild**. In a lit village there are many
+  (each lit hearth's windows and the ground round them), and the village may go amber. Warm light
+  is still only ever firelight; amber means life.
 
 **R8. Glow only on what emits.** Water glints, falls, candles and fire, the moon,
 doorway voids, glowing flowers (#17) and eyes (#19, #20). Lit surfaces never bloom.

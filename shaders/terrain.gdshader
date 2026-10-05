@@ -191,7 +191,8 @@ void fragment() {
 	c = pal_pull(c, pal_dirt, 0.55 * dirt_w);
 	c = pal_pull(c, pal_stone, 0.85 * rocky);
 	c = pal_pull(c, pal_snow, 0.9 * snow);
-	float nk = look_night;
+	// A lit village (§EE.1): its hearths ease the night's blue pull here.
+	float nk = look_night * (1.0 - look_warm(world_pos));
 	c = pal_pull(c, pal_grass_night, 0.8 * nk * green);
 	c = pal_pull(c, pal_bark_night, 0.6 * nk * dirt_w);
 	c = pal_pull(c, pal_stone_night, 0.75 * nk * rocky);
@@ -246,7 +247,7 @@ void fragment() {
 	// few meters across.
 	float patch = texture(look_grain_soft, UV * 0.03).r;
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
-	EMISSION = look_glow_emission(world_pos, glow * 0.55) + floor_light;
+	EMISSION = look_glow_emission(world_pos, glow * 0.55) + floor_light + look_warm_pool_light(world_pos);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
 

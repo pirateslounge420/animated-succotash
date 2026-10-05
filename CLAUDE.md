@@ -59,10 +59,13 @@ two of them disagree, tell Mike. Don't quietly pick one.
 1999–2004 consoles.
 - A 480-line internal frame with nearest-neighbour scaling, and 16 texels a metre.
 - Clean silhouettes, and no normal maps or specular.
-- Dark but saturated, and blue owns the frame. The sun is the one light.
-- Shade goes navy (olive in green scenes), never grey. Distance gets lighter and bluer.
-- Water is the brightest thing in view and fire the one warm accent. Only things that give
-  off light glow.
+- Dark but saturated, and blue owns the frame by default, not always: a relit village may go
+  amber, one lit hearth at a time, while the wild between villages stays blue (§EE.1). The sun
+  is the one light in the wild.
+- Shade goes navy (olive in green scenes, firelit brown in a lit village), never grey. Distance
+  gets lighter and bluer.
+- Water is the brightest thing in view. Fire is the only warm light: one warm accent in the
+  wild, many in a lit village (§EE.1). Only things that give off light glow.
 
 The numbers are in LOOK_REFERENCE.md.
 

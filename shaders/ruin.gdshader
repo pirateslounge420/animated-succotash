@@ -75,7 +75,8 @@ void fragment() {
 	// moss to teal.
 	vec3 col = COLOR.rgb;
 	float gw = pal_greenness(col);
-	float nk = look_night;
+	// A lit village (§EE.1): its hearths ease the night's blue pull here.
+	float nk = look_night * (1.0 - look_warm(world_pos));
 	col = pal_pull(col, pal_moss, 0.5 * gw); // moss, ivy and turf toward R1a moss
 	if (kind == 0) {
 		col = pal_pull(col, pal_stone_night, 0.75 * nk * (1.0 - gw));
@@ -89,6 +90,6 @@ void fragment() {
 	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m
 	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
-	EMISSION = look_glow_emission(world_pos, glow * 1.3);
+	EMISSION = look_glow_emission(world_pos, glow * 1.3) + look_warm_pool_light(world_pos);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

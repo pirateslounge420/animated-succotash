@@ -45,6 +45,14 @@ func _ready() -> void:
 	mat.set_shader_parameter("levels", pow(2.0, float(retro.get("bits_per_channel", 5))) - 1.0)
 	var fl := Color(str((retro.get("colors", {}) as Dictionary).get("shadow_floor", "#080C4A")))
 	mat.set_shader_parameter("shadow_floor", Vector3(fl.r, fl.g, fl.b))
+	# A lit village (design 5 Oct §EE.1, look.json village_warmth.grade).
+	var wg: Dictionary = Tuning.section("look", "village_warmth").get("grade", {})
+	mat.set_shader_parameter("warm_pull_ease", float(wg.get("pull_ease", 0.85)))
+	mat.set_shader_parameter("warm_teal_ease", float(wg.get("teal_ease", 0.8)))
+	mat.set_shader_parameter("warm_highlight_ease", float(wg.get("highlight_ease", 0.75)))
+	mat.set_shader_parameter("warm_shadow_color", _rgb(wg.get("shadow_color", "#130E0C")))
+	mat.set_shader_parameter("warm_shadow_mix", float(wg.get("shadow_mix", 0.65)))
+	mat.set_shader_parameter("warm_protect_scale", float(wg.get("protect_chroma_scale", 0.4)))
 
 
 ## A look.json hex colour as a display-space (sRGB) vector for the grade.
@@ -70,6 +78,12 @@ func set_floor(floor_rgb: Vector3, pull: float, pull_luma: float) -> void:
 	m.set_shader_parameter("shadow_floor", floor_rgb)
 	m.set_shader_parameter("night_pull", pull)
 	m.set_shader_parameter("pull_luma", pull_luma)
+
+
+## How warm the grade runs (0-1): a lit village round the eye (design 5 Oct
+## §EE.1, VillageWarmth.grade_warmth): 0 in the wild and in a dead village.
+func set_warmth(v: float) -> void:
+	(_rect.material as ShaderMaterial).set_shader_parameter("warmth", clampf(v, 0.0, 1.0))
 
 
 func set_magic(v: float) -> void:

@@ -107,7 +107,7 @@ void fragment() {
 		float vein = smoothstep(0.035, 0.0, abs(fract(v_obj.x * 3.0 + v_obj.z * 1.5) - 0.5) - 0.44);
 		c = mix(c, c2, max(vein * 0.8, smoothstep(0.7, 1.0, v_obj.x)));
 	}
-	c = pal_pull(c, pal_bark_night, 0.45 * look_night);
+	c = pal_pull(c, pal_bark_night, 0.45 * look_night * (1.0 - look_warm(world_pos)));
 	ALBEDO = c;
 	if (mode > 11.5 && mode < 12.5) {
 		EMISSION = c * 0.25;

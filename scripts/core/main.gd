@@ -595,6 +595,8 @@ func _process(delta: float) -> void:
 	wind_crowns.update_crowns(delta)
 	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
+	# A lit village round the eye goes amber; the wild stays blue (§EE.1).
+	post.set_warmth(VillageWarmth.update(world, cam.global_position))
 	# The sun's flare (§DB): drawn into the frame under the grade.
 	flare.step(cam, sky.sun_dir, sky.sun_elevation_deg, Wind.cover, Wind.cloud_shade(player.global_position), Delves.underground > 0.5, delta)
 	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))

@@ -572,7 +572,7 @@ void fragment() {
 		if (!crown && !trunk && !twigs) {
 			discard;
 		}
-		float nk_i = look_night;
+		float nk_i = look_night * (1.0 - look_warm(world_pos));
 		vec3 c;
 		if (crown) {
 			c = sp_tiled ? mix(sp_leaf_color, sp_autumn_color, v_season.x) : COLOR.rgb;
@@ -659,7 +659,8 @@ void fragment() {
 		base = sp_vine_color;
 	}
 	float gw = pal_greenness(base);
-	float nk = look_night;
+	// A lit village (§EE.1): its hearths ease the night's blue pull here.
+	float nk = look_night * (1.0 - look_warm(world_pos));
 	if (mat_id < 0.5) {
 		base = pal_pull(base, pal_bark, 0.7 * (1.0 - gw));
 		base = pal_pull(base, pal_bark_night, 0.6 * nk * (1.0 - gw));

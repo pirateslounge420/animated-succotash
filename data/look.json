@@ -742,5 +742,24 @@
   "new_mean_luma": 0.1,
   "curve_exponent": 3.3,
   "lift_scale": 0.67
+ },
+ "village_warmth": {
+  "_help": "Design 5 Oct §EE.1 (added by Claude Code, 5 Oct): a lit village may go amber; the wild between villages stays blue. Blue owns the frame by default, not always. Warm light is still only firelight (lit hearths and their windows), and lit ground never blooms (R8). Read by VillageWarmth (scripts/sky/village_warmth.gd), which pushes the look_warm_* globals each frame, and by PostGrade. Two scales: (1) each LIT hearth warms a patch round it, hearth_radius_m: there the night's blue pull on surfaces (palette.gdshaderinc, look_night) eases by hearth_ease, and the ground takes a pool of firelight, pool_color at pool_strength (an albedo-scale light, under 1, so it never blooms), so a village warms one house at a time; (2) the village's lit fraction (lit hearths / all its hearths, 0-1) eases the night pull across the whole village (village_ease at full lit, fading over the last village_fade share of its radius) and warms the grade when you stand in it: grade.pull_ease (how much of post_grade's night_pull lifts), grade.teal_ease and grade.highlight_ease (the night preset's teal and cyan-white lights, lifted), grade.shadow_color and grade.shadow_mix (the darks toward the firelit brown of R3 instead of navy), grade.protect_chroma_scale (the orange and gold the grade leaves alone reaches dimmer firelit stone). camera_fade: the grade's warmth is full inside camera_fade[0] x the village radius and gone past camera_fade[1] x it. max_hearths: lit hearths sent to the shaders (nearest first). A dead village (lit fraction 0) and the wild are exactly as before.",
+  "hearth_radius_m": 10.0,
+  "hearth_ease": 0.85,
+  "pool_color": "#FF8A3C",
+  "pool_strength": 0.22,
+  "village_ease": 0.45,
+  "village_fade": 0.3,
+  "camera_fade": [0.8, 1.4],
+  "max_hearths": 16,
+  "grade": {
+   "pull_ease": 0.85,
+   "teal_ease": 0.8,
+   "highlight_ease": 0.75,
+   "shadow_color": "#130E0C",
+   "shadow_mix": 0.65,
+   "protect_chroma_scale": 0.4
+  }
  }
 }

@@ -90,6 +90,23 @@ global uniform vec4 look_site_kind_a;
 global uniform vec4 look_site_kind_b;
 global uniform int look_site_count;
 
+// Lit villages (design 5 Oct §EE.1, look.json village_warmth; VillageWarmth
+// sets these each frame). A lit village may go amber while the wild stays
+// blue, so the warmth is local, never a switch on the whole frame:
+// look_warm_tex holds the nearest LIT hearths, one texel each (xyz scene
+// position, w the radius of its warm patch), look_warm_count of them;
+// look_warm_village is the nearest village (xyz its middle, w its radius)
+// and look_warm_lit its lit fraction (0 dead .. 1 every hearth lit);
+// look_warm_ease is (hearth_ease, village_ease, village_fade) and
+// look_warm_pool the firelight pooled round a lit hearth (rgb linear,
+// a strength). Dead villages and the wild read 0 everywhere.
+global uniform sampler2D look_warm_tex : filter_nearest, repeat_disable;
+global uniform int look_warm_count;
+global uniform vec4 look_warm_village;
+global uniform float look_warm_lit;
+global uniform vec3 look_warm_ease;
+global uniform vec4 look_warm_pool;
+
 // Haze thickens smoothly with distance (it used to step in flat bands).
 float look_band(float f) {
 	return f;
@@ -141,6 +158,50 @@ vec3 look_glow_emission(vec3 world_pos, float amount) {
 
 // 0-1 closeness to the nearest glowing site; `kind_weight` 1 counts every
 // site fully, 0 counts only ruins/mythical sites (kind 1).
+// 0-1: how far the night's blue pull on a surface eases here, in a lit
+// village (§EE.1): the most of a lit hearth's patch (hearth_ease at its
+// heart, gone at its rim) and the village's own lit fraction across it.
+float look_warm(vec3 world_pos) {
+	float w = 0.0;
+	if (look_warm_village.w > 0.0 && look_warm_lit > 0.0) {
+		float d = distance(world_pos, look_warm_village.xyz);
+		float rim = look_warm_village.w * (1.0 - look_warm_ease.z);
+		w = look_warm_lit * look_warm_ease.y * (1.0 - smoothstep(rim, look_warm_village.w, d));
+	}
+	for (int i = 0; i < 16; i++) {
+		if (i >= look_warm_count) {
+			break;
+		}
+		vec4 h = texelFetch(look_warm_tex, ivec2(i, 0), 0);
+		if (h.w <= 0.0) {
+			continue;
+		}
+		float d = distance(world_pos, h.xyz);
+		w = max(w, look_warm_ease.x * (1.0 - smoothstep(h.w * 0.35, h.w, d)));
+	}
+	return clamp(w, 0.0, 1.0);
+}
+
+// The firelight a lit hearth's windows and door pool on the ground and the
+// walls round it (§EE.1: each relit hearth warms the ground round it), as
+// an albedo-scale light (under 1: lit surfaces never bloom, R8), at night
+// only. Zero away from lit hearths.
+vec3 look_warm_pool_light(vec3 world_pos) {
+	float p = 0.0;
+	for (int i = 0; i < 16; i++) {
+		if (i >= look_warm_count) {
+			break;
+		}
+		vec4 h = texelFetch(look_warm_tex, ivec2(i, 0), 0);
+		if (h.w <= 0.0) {
+			continue;
+		}
+		float f = 1.0 - smoothstep(0.0, h.w, distance(world_pos, h.xyz));
+		p = max(p, f * f);
+	}
+	return look_warm_pool.rgb * look_warm_pool.a * p * look_night;
+}
+
 float look_site_glow(vec3 world_pos, float kind_weight) {
 	if (look_site_count <= 0) {
 		return 0.0;

@@ -114,7 +114,7 @@ void fragment() {
 	float edge = 1.0 - smoothstep(0.62, 0.98, r_edge + (n - 0.5) * 0.6);
 	ALPHA = step(leaf_cell, cover) * step(0.5, edge);
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
-	float nk = look_night;
+	float nk = look_night * (1.0 - look_warm(world_pos));
 	c = pal_pull(c, pal_bark_night, 0.6 * nk);
 	ALBEDO = c;
 	ROUGHNESS = 1.0;
