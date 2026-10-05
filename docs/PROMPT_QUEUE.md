@@ -68,7 +68,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 36 | §EA | Three hits, no bar, "Good night" | built 6c08095 |
 | 37 | §EH | No metal, and a camp can be fifty | built d5dbe75 |
 | 38 | §EL | The workshop: one hut, two benches, the hearth outside | built d4b159e |
-| 39 | §EI | What a camp needs, and the trades that follow | todo |
+| 39 | §EI | What a camp needs, and the trades that follow | built defc49a |
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | todo |
 | 41 | §EJ | Food passed round, the night stories, the gift | todo |
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | todo |
@@ -771,7 +771,7 @@ CHECK (tools/workshop_check.gd, headless): on seed 7731 every camp at or past st
 
 ## 39 — What a camp needs, and the trades that follow — §EI
 
-**Status:** todo
+**Status:** built defc49a
 **Mike sees:** A folk carrying a pot to the river and back, the pot sitting by the hearth. As a camp grows, its benches fill in a real order: cord and baskets first, then a kiln and pots, then hides, then a loom, then the lamp-maker; a camp never shows a craft its land cannot feed, and never more than three.
 
 ```text
