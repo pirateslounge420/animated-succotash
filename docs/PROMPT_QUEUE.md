@@ -66,7 +66,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 34 | §DV | The old colonnade | built a4711a9 |
 | 35 | §DX | The columns: columnar basalt as a nest | built 21ecf1b |
 | 36 | §EA | Three hits, no bar, "Good night" | built 6c08095 |
-| 37 | §EH | No metal, and a camp can be fifty | todo |
+| 37 | §EH | No metal, and a camp can be fifty | built d5dbe75 |
 | 38 | §EL | The workshop: one hut, two benches, the hearth outside | todo |
 | 39 | §EI | What a camp needs, and the trades that follow | todo |
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | todo |
@@ -741,7 +741,7 @@ CHECK: three hits inside the window take you, three spread past it do not; stage
 
 ## 37 — No metal, and a camp can be fifty — §EH
 
-**Status:** todo
+**Status:** built d5dbe75
 **Mike sees:** Nothing new on screen. The marsh folk's maker is a reedworker, no camp anywhere mentions iron, and a camp can grow to fifty folk before it stops.
 
 ```text
