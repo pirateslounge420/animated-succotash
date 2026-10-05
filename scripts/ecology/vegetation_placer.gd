@@ -554,7 +554,7 @@ static func _place_road_trees(ctx: _Context, out: Dictionary, hosts: Array) -> v
 			continue
 		var h := lerpf(sp.height_m.x, sp.height_m.y, 0.85) * float(SIZE_SCALE[T.CANOPY])
 		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.05 * side)
-		hosts.append([d, h * 0.04, h, SpeciesDB.index_of(sp), 0.0])
+		hosts.append([d, PlanetConst.RADIUS_M + site.h, h, SpeciesDB.index_of(sp), 0.0])
 	for i in ctx._old_trees.size():
 		var d := ctx._old_trees[i]
 		var list := ctx.species_for(T.EMERGENT)
@@ -570,7 +570,7 @@ static func _place_road_trees(ctx: _Context, out: Dictionary, hosts: Array) -> v
 			continue
 		var h := sp.height_m.y * float(SIZE_SCALE[tier]) * float(STAND.get("giant_scale", 1.3))
 		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.03)
-		hosts.append([d, h * 0.045, h, SpeciesDB.index_of(sp), 0.0])
+		hosts.append([d, PlanetConst.RADIUS_M + site.h, h, SpeciesDB.index_of(sp), 0.0])
 		ctx.add_emergent(d)
 
 
@@ -606,7 +606,7 @@ static func _place_avenue(ctx: _Context, out: Dictionary, hosts: Array) -> void:
 			continue
 		var h := lerpf(sp.height_m.x, sp.height_m.y, 0.6) * float(SIZE_SCALE[T.CANOPY]) * bonus * (0.94 + PlantGenetics.unit(hash([d, "avenue"]), 1) * 0.12)
 		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.02)
-		hosts.append([d, h * 0.04, h, SpeciesDB.index_of(sp), 0.0])
+		hosts.append([d, PlanetConst.RADIUS_M + site.h, h, SpeciesDB.index_of(sp), 0.0])
 
 
 ## The avenue's tree for the road's node at `nd` (§DM.4): a canopy tree
@@ -1055,6 +1055,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			var ymm := _multimesh(PlantMeshes.young_mesh(sp, young_code, PlantMeshes.LOD_NEAR), entry[0], entry[1])
 			var yreach := float(RANGES.get("ground_m", 80.0)) if young_code == 1 else float(RANGES.get("shrub_m", 150.0))
 			var ymi := _instance(parent, sp_idx, sp, ymm, "%s_young%d" % [sp.name.replace(" ", "_"), young_code], yreach)
+			ymi.custom_aabb = TerrainChunk.box_of(entry[0], entry[1])
 			ymi.set_meta("young", young_code)
 			TerrainChunk.plant_shadow(ymi, sp, lod if young_code > 1 else PlantMeshes.LOD_NEAR)
 			continue
@@ -1063,6 +1064,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 		# A branchy species' own MultiMesh only ever shows the far crown.
 		var mm := _multimesh(PlantMeshes.mesh_for(sp, PlantMeshes.LOD_FAR if far_only else lod), entry[0], entry[1])
 		var mmi := _instance(parent, sp_idx, sp, mm, sp.name.replace(" ", "_"))
+		# Its box from the plants themselves (TerrainChunk.box_of): the
+		# engine's, made when the buffer is set, goes empty once the mesh
+		# is swapped or comes later, and an empty box is culled.
+		mmi.custom_aabb = TerrainChunk.box_of(entry[0], entry[1])
 		TerrainChunk.plant_shadow(mmi, sp, lod)
 		if far_only:
 			mmi.set_meta("far_only", true)
@@ -1073,6 +1078,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			var lmesh: Mesh = PlantMeshes.mesh_for(sp, lod, l) if near else null
 			var lmm := _multimesh(lmesh, layouts[l][0], layouts[l][1])
 			var lmi := _instance(parent, sp_idx, sp, lmm, "%s_%d" % [sp.name.replace(" ", "_"), l])
+			lmi.custom_aabb = TerrainChunk.box_of(layouts[l][0], layouts[l][1])
 			lmi.set_meta("layout", l)
 			TerrainChunk.plant_shadow(lmi, sp, lod)
 			lmi.visible = near

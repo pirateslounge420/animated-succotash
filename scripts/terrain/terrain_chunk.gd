@@ -1485,6 +1485,7 @@ func setup_bands(parent: Node = null) -> void:
 			var reach := mmi.visibility_range_end - CHUNK_M * 0.75 if mmi.visibility_range_end > 0.0 else float(RANGES.get("shrub_m", 150.0))
 			_bands[mmi] = {"buf": ymm.buffer, "n": ymm.instance_count, "mmi": mmi, "reach": reach, "where": PackedInt32Array()}
 			mmi.set_meta("band", true)
+			mmi.custom_aabb = box_of(ymm.buffer, ymm.instance_count)
 			_band_reach = maxf(_band_reach, _reach_of(ymm.buffer, ymm.instance_count))
 			continue
 		if parent != self:
@@ -1494,6 +1495,7 @@ func setup_bands(parent: Node = null) -> void:
 			_bands[sp_idx] = {"buf": mm.buffer, "n": mm.instance_count, "mmi": mmi, "where": PackedInt32Array()}
 			mmi.set_meta("band", true)
 			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mmi.custom_aabb = box_of(mm.buffer, mm.instance_count)
 			_band_reach = maxf(_band_reach, _reach_of(mm.buffer, mm.instance_count))
 		elif ch.has_meta("layout"):
 			var l: int = ch.get_meta("layout")
@@ -1514,8 +1516,37 @@ func setup_bands(parent: Node = null) -> void:
 				m.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if g == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 				m.multimesh.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_LIGHT if g == 2 else PlantMeshes.LOD_HERO, l)
 				mmis.append(m)
+			var box := box_of(src.buffer, src.instance_count)
+			for m in mmis:
+				(m as MultiMeshInstance3D).custom_aabb = box
 			_bands[Vector2i(sp_idx, l)] = {"buf": src.buffer, "n": src.instance_count, "mmis": mmis, "where": PackedInt32Array()}
 	band_at = Vector3(INF, INF, INF)
+
+
+## The box every copy of these plants can be drawn in (chunk-local): round
+## all of them, padded by the biggest one's size (a crown can spread some
+## 3.5 times its tree's height across). Each banded copy is given it as its
+## custom AABB, because the engine's own box, made from the instances, came
+## out empty for a copy whose buffer was set before its mesh (the layouts
+## are meshless until the detail ring), and an empty box is culled as off
+## screen: the near trees vanished (the avenue's, 5 Oct).
+const BOX_PAD := 4.0
+
+static func box_of(buf: PackedFloat32Array, n: int) -> AABB:
+	if n <= 0 or buf.size() < n * STRIDE_F:
+		return AABB()
+	var lo := Vector3(INF, INF, INF)
+	var hi := -lo
+	var size := 0.0
+	for i in n:
+		var k := i * STRIDE_F
+		var p := Vector3(buf[k + 3], buf[k + 7], buf[k + 11])
+		lo = lo.min(p)
+		hi = hi.max(p)
+		size = maxf(size, Vector3(buf[k + 1], buf[k + 5], buf[k + 9]).length())
+		size = maxf(size, Vector3(buf[k], buf[k + 4], buf[k + 8]).length())
+	var pad := Vector3.ONE * size * BOX_PAD
+	return AABB(lo - pad, hi - lo + pad * 2.0)
 
 
 static func _reach_of(buf: PackedFloat32Array, n: int) -> float:
