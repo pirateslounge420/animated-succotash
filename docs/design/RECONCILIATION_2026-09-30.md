@@ -3484,3 +3484,24 @@ Archetypes and specialties are a reservoir in `data/villages.json`; **prototype 
 
 ### EE.6 Weapons: OPEN, not changed
 On 5 Oct Mike said *"we'll just keep it at torch"*, after Claude (in chat) advised against letting bow and spear in and wrongly said it would reopen the 30 Sept split. **§ED.7 (4 Oct) had already locked spear and bow into Torchfire 1** for hunting, fishing and guardians. §ED.7 stands until Mike decides with that in view.
+
+## EF. Villages are composed, not scattered: ten layout rules for an ambient walk — LOCKED (5 Oct, 11:24, Mike)
+
+Mike (by voice and chat, 5 Oct morning): he wants every procedural village to feel *"clever and deliberate"*, borrowing from garden design (perspective, spaces that wrap and make another space), fed to the generator as rules, because the game is *"very ambient"*. Locked at 11:24; *"I would like to keep shaping it, but we got some good fundamentals down."* Builds on §EE.3 (siting and building with the land). Data: `data/villages.json` → `layout_rules`.
+
+**The principle:** real villages grew, they were never placed. Generate the growth, not the result. The village should reward slow walking and looking.
+
+1. **Grow from the reason.** Start at the village's reason to exist (hearth, well, crossing, harbour). Lay the paths people would really walk (desire lines) first, then crowd buildings along them, facing the path and sharing walls: tight at the core, looser at the edges.
+2. **Terminate every vista.** After the streets are grown, find each long straight sightline a player will stand and look down. If its far end lands on nothing, place a focal point (well, lantern, feature tree, shrine, a hearth house) or bend the street so it ends on an existing building. A far landmark (a peak, a tower in the next valley) also counts: borrowed scenery (shakkei).
+3. **Compress, then release.** A narrow, dark lane opens into a small bright square, then narrows again before the next reveal.
+4. **Buildings wrap outdoor rooms.** Houses enclose courtyards and squares so outdoor space feels held, never left over in a field.
+5. **Gentle curves, slow reveals.** Streets bend slightly so what comes next unfolds rather than shows all at once.
+6. **Edges to linger on.** Low walls, steps and benches sit where the light or the view is good.
+7. **Layered depth.** Each key view has a near frame (arch, branch, doorway), a middle subject and a far backdrop. This is §look's hero shot extended to every street.
+8. **Water you follow.** Channels, gutters and streams run along streets and lead you through town; you can hear them.
+9. **Thresholds.** Gates, arches and a change of paving mark passing from one part of the village to another.
+10. **One landmark seen from everywhere.** A spire, tower or great tree keeps you oriented with no map.
+
+**In a dead village** the cold hearths sit at the ends of those views and in those squares: the rules that make the place feel composed also lead you to the next fire, with no waypoint.
+
+Open, still being shaped: more rules (Mike wants to keep going); how strictly each applies per archetype (a canal town's "streets" are water; a spire village's are bridges).

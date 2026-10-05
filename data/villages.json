@@ -14,35 +14,196 @@
       "fast_straight_water": -0.5,
       "flood_level": -1.0
     },
-    "may_build_missing_piece": ["raised_mound_behind", "dug_pond_in_front"]
+    "may_build_missing_piece": [
+      "raised_mound_behind",
+      "dug_pond_in_front"
+    ]
   },
-  "with_the_land": ["stepped_foundations_cut_and_fill", "dry_stone_retaining_terraces", "variable_length_posts_and_stilts", "drainage_channels_and_gravel_beds"],
-  "lost_techniques": ["posts_on_foundation_stones", "nail_free_joinery", "deep_eaves_raised_floors", "mortarless_interlocking_masonry", "catenary_arches_and_vaults", "leaning_course_vaults_no_formwork", "thin_tile_vaults", "self_healing_lime_ash_concrete", "pendulum_central_pillar"],
-  "energy": ["water_wheel", "windmill", "wind_pump", "windcatcher", "gravity_channel", "qanat", "geothermal_heat"],
+  "with_the_land": [
+    "stepped_foundations_cut_and_fill",
+    "dry_stone_retaining_terraces",
+    "variable_length_posts_and_stilts",
+    "drainage_channels_and_gravel_beds"
+  ],
+  "lost_techniques": [
+    "posts_on_foundation_stones",
+    "nail_free_joinery",
+    "deep_eaves_raised_floors",
+    "mortarless_interlocking_masonry",
+    "catenary_arches_and_vaults",
+    "leaning_course_vaults_no_formwork",
+    "thin_tile_vaults",
+    "self_healing_lime_ash_concrete",
+    "pendulum_central_pillar"
+  ],
+  "energy": [
+    "water_wheel",
+    "windmill",
+    "wind_pump",
+    "windcatcher",
+    "gravity_channel",
+    "qanat",
+    "geothermal_heat"
+  ],
   "archetypes": [
-    {"id": "stream_gutter_town", "needs": "clear mountain stream on a gentle slope", "notes": "stone channels along every street, carp; water reused top to bottom"},
-    {"id": "canal_town", "needs": "lagoon or delta, soft ground", "notes": "travel by small boat plus bridges and walkways; abandoned and still, not flooded"},
-    {"id": "cliff_carved", "needs": "soft rock face", "notes": "rooms cut into the cliff, cut stairs and ladders"},
-    {"id": "stone_spires", "needs": "rock pillars", "notes": "buildings on top, rope bridges between, winch basket"},
-    {"id": "canopy", "needs": "grove of giant trees", "notes": "houses in the branches, rope bridges"},
-    {"id": "hot_spring", "needs": "geothermal vents in cold country", "notes": "warm pools, steam, heat piped through houses"},
-    {"id": "beach_boardwalk", "needs": "tidal flats", "notes": "stilt grammar; bright, wistful when dead"},
-    {"id": "swamp_stilt", "needs": "black-water swamp", "notes": "same stilt grammar as the beach; witch huts; dread when dead"},
-    {"id": "contour_terraces", "needs": "steep wet hillside with a stream", "notes": "one stream feeds every step"},
-    {"id": "qanat_desert", "needs": "dry plain below mountains", "notes": "underground channels, windcatchers, ice houses"},
-    {"id": "dike_windmill", "needs": "low wet coast", "notes": "wind pumps, life below the waterline"}
+    {
+      "id": "stream_gutter_town",
+      "needs": "clear mountain stream on a gentle slope",
+      "notes": "stone channels along every street, carp; water reused top to bottom"
+    },
+    {
+      "id": "canal_town",
+      "needs": "lagoon or delta, soft ground",
+      "notes": "travel by small boat plus bridges and walkways; abandoned and still, not flooded"
+    },
+    {
+      "id": "cliff_carved",
+      "needs": "soft rock face",
+      "notes": "rooms cut into the cliff, cut stairs and ladders"
+    },
+    {
+      "id": "stone_spires",
+      "needs": "rock pillars",
+      "notes": "buildings on top, rope bridges between, winch basket"
+    },
+    {
+      "id": "canopy",
+      "needs": "grove of giant trees",
+      "notes": "houses in the branches, rope bridges"
+    },
+    {
+      "id": "hot_spring",
+      "needs": "geothermal vents in cold country",
+      "notes": "warm pools, steam, heat piped through houses"
+    },
+    {
+      "id": "beach_boardwalk",
+      "needs": "tidal flats",
+      "notes": "stilt grammar; bright, wistful when dead"
+    },
+    {
+      "id": "swamp_stilt",
+      "needs": "black-water swamp",
+      "notes": "same stilt grammar as the beach; witch huts; dread when dead"
+    },
+    {
+      "id": "contour_terraces",
+      "needs": "steep wet hillside with a stream",
+      "notes": "one stream feeds every step"
+    },
+    {
+      "id": "qanat_desert",
+      "needs": "dry plain below mountains",
+      "notes": "underground channels, windcatchers, ice houses"
+    },
+    {
+      "id": "dike_windmill",
+      "needs": "low wet coast",
+      "notes": "wind pumps, life below the waterline"
+    }
   ],
   "specialties": [
-    {"id": "salt", "from": "brine spring or salt flat", "dead_state": "cracked white pans"},
-    {"id": "kiln", "from": "clay bank on a slope", "dead_state": "a staircase of cold ovens"},
-    {"id": "mill", "from": "hard-running stream", "dead_state": "a still, moss-choked wheel"},
-    {"id": "paper", "from": "cold clean mountain stream", "dead_state": "drying frames gone grey"},
-    {"id": "glass", "from": "sand and fuel by water", "dead_state": "cold furnaces, glinting shards"},
-    {"id": "charcoal", "from": "deep woods, coppice", "dead_state": "cold mounds", "notes": "the fire-keepers"},
-    {"id": "mining", "from": "ore vein at the surface", "dead_state": "black shafts into the dark"},
-    {"id": "vineyard_olive", "from": "sun-facing slope", "dead_state": "feral vines over everything"},
-    {"id": "dye", "from": "dye plants thick nearby (plant ranges)", "dead_state": "dry stained vats"},
-    {"id": "quarry", "from": "good building stone outcrop", "dead_state": "half-cut blocks, a chisel left in the rock"},
-    {"id": "beacon_chain", "from": "high point in sight of the next", "dead_state": "a cold brazier on a height"}
-  ]
+    {
+      "id": "salt",
+      "from": "brine spring or salt flat",
+      "dead_state": "cracked white pans"
+    },
+    {
+      "id": "kiln",
+      "from": "clay bank on a slope",
+      "dead_state": "a staircase of cold ovens"
+    },
+    {
+      "id": "mill",
+      "from": "hard-running stream",
+      "dead_state": "a still, moss-choked wheel"
+    },
+    {
+      "id": "paper",
+      "from": "cold clean mountain stream",
+      "dead_state": "drying frames gone grey"
+    },
+    {
+      "id": "glass",
+      "from": "sand and fuel by water",
+      "dead_state": "cold furnaces, glinting shards"
+    },
+    {
+      "id": "charcoal",
+      "from": "deep woods, coppice",
+      "dead_state": "cold mounds",
+      "notes": "the fire-keepers"
+    },
+    {
+      "id": "mining",
+      "from": "ore vein at the surface",
+      "dead_state": "black shafts into the dark"
+    },
+    {
+      "id": "vineyard_olive",
+      "from": "sun-facing slope",
+      "dead_state": "feral vines over everything"
+    },
+    {
+      "id": "dye",
+      "from": "dye plants thick nearby (plant ranges)",
+      "dead_state": "dry stained vats"
+    },
+    {
+      "id": "quarry",
+      "from": "good building stone outcrop",
+      "dead_state": "half-cut blocks, a chisel left in the rock"
+    },
+    {
+      "id": "beacon_chain",
+      "from": "high point in sight of the next",
+      "dead_state": "a cold brazier on a height"
+    }
+  ],
+  "layout_rules": {
+    "_help": "[NOT WIRED YET — design §EF] Applied in order after siting (§EE.3). Grow the village, then compose its views.",
+    "rules": [
+      {
+        "id": "grow_from_reason",
+        "do": "seed at hearth/well/crossing/harbour; lay desire-line paths first; pack buildings along paths facing them, shared walls, dense core, loose edge"
+      },
+      {
+        "id": "terminate_vistas",
+        "do": "for each long straight sightline, ensure the far end lands on a focal point; else place one (well, lantern, feature tree, shrine, hearth house) or bend the street onto a building; distant landmarks count (borrowed scenery)"
+      },
+      {
+        "id": "compress_release",
+        "do": "alternate narrow dark lanes with small open squares"
+      },
+      {
+        "id": "wrap_outdoor_rooms",
+        "do": "buildings enclose courtyards and squares; no leftover open field inside the village"
+      },
+      {
+        "id": "gentle_curves",
+        "do": "streets bend slightly for gradual reveals"
+      },
+      {
+        "id": "lingering_edges",
+        "do": "low walls, steps, benches where light or view is good"
+      },
+      {
+        "id": "layered_depth",
+        "do": "key views get a near frame, middle subject, far backdrop"
+      },
+      {
+        "id": "water_you_follow",
+        "do": "channels and streams run along streets, audible"
+      },
+      {
+        "id": "thresholds",
+        "do": "gates, arches, paving changes between quarters"
+      },
+      {
+        "id": "one_landmark",
+        "do": "one spire, tower or great tree visible from most of the village"
+      }
+    ],
+    "dead_village": "cold hearths are placed at vista ends and in squares, so composition leads to the next fire"
+  }
 }
