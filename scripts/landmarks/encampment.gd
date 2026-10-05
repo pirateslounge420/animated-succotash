@@ -679,17 +679,11 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 				CampProps.refresh_food_store(food_store, float(st.food))
 	_time += delta
 	Campfire.flicker(_fire, _time)
-	# The workshop (§EL): built once the camp reaches storage, out of the
-	# player's sight (or at once for the harness); built again, out of
-	# sight, as its trades change (§EI).
+	# The opening camp has no workshop in play (Mike, 5 Oct); the
+	# harness builds one for its frames (ensure_workshop). What every camp
+	# does every day (§EI.1, CampNeeds).
 	if _store_t >= 1.49 and CampSim.instance != null:
-		var far := player_pos.distance_to(_fire.global_position) > 40.0
 		var stw := CampSim.instance.state_of("opening")
-		if workshop != null and far and ",".join(PackedStringArray(stw.get("trades", []))) != _trades_stamp:
-			rebuild_workshop()
-		if workshop == null:
-			ensure_workshop(far)
-		# What every camp does every day (§EI.1, CampNeeds).
 		CampNeeds.live(dressing, stw, _needs_ctx(player_pos))
 	if dressing != null:
 		CampNeeds.tick(dressing, delta, dressing.get_node_or_null("Shelter"), _ground_fn(), _shelter_material(), Peoples.palette(Peoples.get_people(people_id), FireStore.biome_key(world, site)))
@@ -770,8 +764,9 @@ func _shelter_material() -> String:
 	return str(mats[0]) if not mats.is_empty() else "thatch"
 
 
-## The workshop at the opening camp (§EL), when its state is at the
-## storage rung: `ok` false waits (the player is close). Inside the old
+## The workshop at the opening camp (§EL), for the harness only (the
+## walkabout's frames, the checks): the opening camp has none in play
+## (Mike, 5 Oct). Its state must be at the storage rung; `ok` false waits. Inside the old
 ## walls' ring where the camp is a ruin (§ED.1).
 func ensure_workshop(ok: bool) -> void:
 	if workshop != null or not ok or CampSim.instance == null or dressing == null:

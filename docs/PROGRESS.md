@@ -3,6 +3,18 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — Mike's calls on the village economy flags
+- **Villages:** a relit village hearth now stays lit. The villagers it draws back tend it, so it no longer burns down (`FireStore.burn`: a village hearth's store is `kept` once lit). `tools/village_check.gd` checks it: a relit village hearth is still burning after 100,000 minutes, while an ordinary old hearth burns out.
+- **The opening camp has no workshop in play.** Only the walkabout's harness frames build one there.
+- **Births can grow a camp to 50:** new `camps.json → sim.population.births_to_village_cap` (true). A camp's ceiling is then the village cap, and food still gates every birth. The forage, weir and crop ceilings apply only if it is switched off.
+- **Trades** (Mike: "whatever makes sense, fundamental first"):
+  - A camp shows cordage first, then its maker's trade with every trade that trade needs, then the rest in order (`Trades.pick_shown`).
+  - Lighting no longer waits on pottery, matching §EI.3's fat, oil or resin.
+  - Result on seed 7731 (119 test camps): lighting now shows at 57 camps.
+  - Textiles still needs a herd's wool or a fibre crop together with leather, so it shows nowhere yet.
+- **The hunt (prompt 40):** Mike's call is that no elaborate ecology is needed. A simple per-area game count that drops with each hunt and refills when it gets low will do; built with prompt 40.
+- `tools/no_metal_check.gd`, `tools/trades_check.gd` and `tools/workshop_check.gd` all give 0 fails on 7731.
+
 ## 2026-10-05 — §EI what a camp needs, and the trades that follow (queue 39)
 - **What changes on screen:**
   - **Water:** at its trip hours (two a day, again for each ten folk past ten) a folk walks from the hearth to the camp's water with a pot on the head, pauses and walks back. The water is the nearest fresh water within 120 m, else within gather reach, else a seep at the lowest ground near, and never the sea. After the camp's first trip the water pot stands by the hearth (`store.pieces.water_pot_by_hearth`).

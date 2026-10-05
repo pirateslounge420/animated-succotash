@@ -198,6 +198,9 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF, chimne
 	# Campfire.build registers a tended store only when there is none; this
 	# one is the old hearth's own, untended.
 	st.tended = false
+	if kind == "village":
+		# Relit, it stays lit (FireStore.burn: kept).
+		st["village"] = true
 	FireStore.apply(fire)
 	fire.name = "OldHearth"
 	fire.set_meta("old_hearth", true)

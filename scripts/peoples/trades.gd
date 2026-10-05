@@ -10,7 +10,9 @@ class_name Trades
 ##   - every trade it comes after is present;
 ##   - the people's huts.trades lists it;
 ##   - a generalist false trade has the camp's maker (§BN) to work it.
-## The earliest show_max in order show; a trade once present stays while
+## At most show_max show: cordage first, then the maker's trade with what
+## it comes after, then the rest in order (pick_shown, Mike 5 Oct); a
+## trade once present stays while
 ## its rung, maker and earlier trades hold (sticky: a thin woodpile does
 ## not end a pottery tradition). The maker's station is the first
 ## non-generalist trade's bench (maker_bench()). Nothing here is a market,
@@ -167,7 +169,49 @@ static func present(st: Dictionary, facts: Dictionary) -> Array:
 					break
 		if ok:
 			out.append(id)
-	return out.slice(0, int(T.get("show_max", 3)))
+	return pick_shown(out, int(T.get("show_max", 3)))
+
+
+## Which of the eligible trades `all` (in order) a camp shows, at most
+## `n` (Mike, 5 Oct: the fundamental ones first, then what makes sense):
+## cordage and basketry first (half a fundamental, §EI.3); then the
+## camp's maker trade (the first non-generalist) with every trade it
+## comes after; then the rest in trades.order. Returned in trades.order.
+static func pick_shown(all: Array, n: int) -> Array:
+	var chosen: Array = []
+	if all.has("cordage_basketry"):
+		chosen.append("cordage_basketry")
+	for id in all:
+		var r := row(str(id))
+		if bool(r.get("generalist", true)):
+			continue
+		var need: Array = _chain(str(id), all)
+		var extra: Array = need.filter(func(x): return not chosen.has(x))
+		if chosen.size() + extra.size() <= n:
+			for x in extra:
+				chosen.append(x)
+		break
+	for id in all:
+		if chosen.size() >= n:
+			break
+		if not chosen.has(id):
+			chosen.append(id)
+	var out: Array = []
+	for id in all:
+		if chosen.has(id):
+			out.append(id)
+	return out
+
+
+## Trade `id` and every trade it comes after, recursively, among `all`.
+static func _chain(id: String, all: Array) -> Array:
+	var out: Array = [id]
+	for a in row(id).get("after", []):
+		if all.has(str(a)):
+			for x in _chain(str(a), all):
+				if not out.has(x):
+					out.append(x)
+	return out
 
 
 ## Once a tick (CampSim): the camp's trades, remembered.

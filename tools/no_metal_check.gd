@@ -179,7 +179,8 @@ func _cap() -> void:
 	st.weir = true
 	st.plot = true
 	var built := cs.cap(st)
-	ok(built == mini(int(pop.get("forage_cap", 6)) + int(pop.get("fundamental_adds", 6)) + int(pop.get("crop_adds", 4)), 50), "a camp's own ceiling is forage + weir + crop under the cap (%d)" % built)
+	var want_cap := 50 if bool(pop.get("births_to_village_cap", false)) else mini(int(pop.get("forage_cap", 6)) + int(pop.get("fundamental_adds", 6)) + int(pop.get("crop_adds", 4)), 50)
+	ok(built == want_cap, "a camp's own ceiling is %s (%d)" % ["the village cap (births_to_village_cap, Mike 5 Oct)" if bool(pop.get("births_to_village_cap", false)) else "forage + weir + crop under the cap", built])
 	# A camp fed past 24, with its ceiling raised past the village cap:
 	# births go on to 50 and stop.
 	var keep_fc = pop.get("forage_cap", 6)

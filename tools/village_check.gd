@@ -228,6 +228,17 @@ func _in_the_world(map: PlanetData, s: Dictionary, plan: VillagePlan) -> Array:
 	var after: bool = (wins[int(plan.hearths[hi].of)] as MeshInstance3D).visible if hi >= 0 else false
 	var f1 := VillageWarmth.lit_fraction(str(s.id))
 	out.append(["relight", hi >= 0 and not before and after and f1 > f0, "one house hearth lit: its windows %s -> %s; lit fraction %.3f -> %.3f (squares lit first: %.3f)" % ["lit" if before else "dark", "lit" if after else "dark", f0, f1, f0]])
+	# Relit, a village hearth stays lit (Mike, 5 Oct): the folk it draws
+	# back tend it. An old hearth that is not a village's burns out.
+	if not lit_keys.is_empty():
+		var vst: Dictionary = (FireStore.stores[lit_keys[0]] as Dictionary).duplicate(true)
+		vst["village"] = true
+		var ost: Dictionary = vst.duplicate(true)
+		ost.erase("village")
+		FireStore.burn(vst, 100000.0)
+		FireStore.burn(ost, 100000.0)
+		FireStore.burn(ost, 100000.0)
+		out.append(["stays lit", str(vst.state) in ["flames", "low"] and bool(vst.get("kept", false)) and str(ost.state) in ["embers", "out"], "a relit village hearth after 100,000 minutes is %s (kept %s); an old hearth that is not a village's is %s" % [str(vst.state), str(vst.get("kept", false)), str(ost.state)]])
 	for k in lit_keys:
 		FireStore.stores.erase(k)
 	VillageWarmth.forget(str(s.id))

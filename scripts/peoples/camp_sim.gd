@@ -514,10 +514,15 @@ func _dawn(st: Dictionary, days: float) -> void:
 	_night_after(st, days)
 
 
-## The camp's ceiling: forage_cap, a fundamental (the weir) or a crop
-## (the plot) adding, never past village_cap (§BM).
+## The camp's ceiling: village_cap while population.births_to_village_cap
+## (Mike, 5 Oct); else forage_cap, a fundamental (the weir) or a crop (the
+## plot) adding, never past village_cap (§BM).
 func cap(st: Dictionary) -> int:
 	var pop: Dictionary = SIM.get("population", {})
+	# Births run all the way to the village cap (Mike, 5 Oct): food still
+	# gates them (a surplus, both sexes, the slow clock).
+	if bool(pop.get("births_to_village_cap", false)):
+		return int(pop.get("village_cap", 50))
 	var c := int(pop.get("forage_cap", 6))
 	if bool(st.get("weir", false)):
 		c += int(pop.get("fundamental_adds", 6))

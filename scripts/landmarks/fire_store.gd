@@ -148,6 +148,12 @@ static func burn(st: Dictionary, minutes: float) -> void:
 	# The flame still taking, or kindling flaring alone: _take's.
 	if state in ["catching", "flare"]:
 		return
+	# A village hearth once relit stays lit (Mike, 5 Oct, §EE.2): the
+	# villagers it draws back tend it, so it no longer burns down.
+	if bool(st.get("village", false)) and state in ["flames", "low"]:
+		st["kept"] = true
+	if bool(st.get("kept", false)) and state in ["flames", "low"]:
+		return
 	if not units.is_empty() and state != "out":
 		var rate := float(F.get("burn_scale", 1.0)) * (float(F.get("tended_burn_scale", 0.35)) if bool(st.get("tended", true)) else 1.0)
 		var left := minutes * rate
