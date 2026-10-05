@@ -34,7 +34,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Part 1 rerun** on its own commit (`tools/village_warmth_check.gd`): 0 fails. The warm share is 0.26, 0.33, 0.42, 0.45, 0.50 for lit fractions 0, ¼, ½, ¾, 1; blue goes 0.61 to 0.27. A dead village is today's frame (exactly nothing reaches the shaders), and so is the frame 1 km away.
 - **Old hearths still pass** (`old_hearth_check`, 0 fails). Village hearths are OldHearths of kind "village"; they light, burn and go out by the same rules.
 - `docs/implementation-notes.md`: "Villages as built". The §EE.6 note is corrected: bow and spear stay as §ED.7 for now, and §EE.6 is open (it was wrongly marked settled).
-- **Walkabout** (`SITES=village`, 22:00, dead then relit): see the next entry.
+- **Walkabout** (seed 42, `QUICK=1 HOURS=22 SITES=village`): stood at the nearest village's best key view, a narrow lane of stone houses ending on a house's gable, at night.
+  - Dead: navy shade, with only your torch warming the nearest wall (warm share 0.07, blue 0.91).
+  - Every hearth lit: the lane goes firelit brown and amber while the sky and the hill beyond stay blue (warm 0.65, blue 0.26).
+
+  Frames are in `tools/reference/walkabout/42/village_{dead,lit}_23h_f0.png`.
+- **Flags for Mike** (§EE–§EG against built code; none decided here):
+  1. Village hearths burn down untended, like every old hearth (§AX), so a relit village cools again. This answers §EE.2's open "can hearths go cold again?" with yes for now.
+  2. Each hearth needs kindling laid (§CN), and a village has about 45 hearths. Relighting a whole village is a long job against the carry slots.
+  3. Restoring water (§EE.2) isn't built: the gutter is dry and silent.
+  4. No plague yet (§EE.2): the villages are empty.
+  5. No road leads to a village yet.
+  6. §EG.2's "focal on the thirds" and §EF.2's terminated vista disagree deep in a narrow lane, where only a slot is visible. Focals go on a third where they can be seen, else 3–7° off-axis in the slot. Mike may want those centred, as §EG's "Western punctuation".
+  7. My readings, for Mike to change:
+     - "Most of the village" sees the tower: 55% of lane spots.
+     - One dominant: 1.4 times the next, with a terrace counted as one mass.
+     - "Key view": one per vista, at its best standing spot.
+  8. "A stream, not a great river" is the narrower half of the world's rivers; the stamp's are 28–55 m wide.
+  9. River bends exist only at segment joints at this scale.
+  10. The "missing piece" is built as structure, not ground: the mound behind is a turfed, stone-faced bank, and the dug pond is a raised stone basin, since the ground can't be dug yet.
+  11. Losing refuge in a dead square doesn't touch the dread meter (§EG.4 vs §BA).
+  12. Lit villages have no measured look band in LOOK_REFERENCE yet (§BU's "night is one colour" holds outside them).
+  13. "Tribal tech" lives in DESIGN.md, not CLAUDE.md.
+  14. Seen in passing, all present before this work:
+     - headless checks crash on exit (signal 11, after RESULT);
+     - `terrain_chunk.gd:1662` touches a freed tree band after a teleport;
+     - the headless dummy renderer prints "Parameter m is null" for new meshes.
 
 ## 2026-10-05 — §EE.1 a lit village goes amber, one hearth at a time; the wild stays blue
 - **What changes on screen:** at night a village warms where its hearths burn. Each lit hearth eases the night's blue pull on the ground, walls and plants within about 10 m of it and lays a dim pool of firelight round it. The more of a village's hearths burn, the warmer the whole village reads. While you stand in a lit village the grade itself warms: shade goes firelit brown instead of navy. A dead village, and the wild between villages, look exactly as before. Warm light is still only firelight, and nothing glows that doesn't give light (the pool stays under full brightness, so nothing blooms).
