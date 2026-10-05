@@ -458,6 +458,16 @@ func open_clock(spawn_dir: Vector3) -> void:
 	var spawn_lat := CubeSphere.latitude(spawn_dir)
 	var local_start_h := World.dawn_start_hour(spawn_lat, Astro.declination(world.days), world.day_length_s)
 	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
+	# ... and until the sun is up to dawn_start.spawn.sun_deg there (§EB.1:
+	# a minute into dawn the sun is still ~8 degrees down, which the grade
+	# reads as full night): the blue before sunrise.
+	var want_deg := float(World.dawn_rule().get("spawn", {}).get("sun_deg", -90.0))
+	var lon := CubeSphere.longitude(spawn_dir)
+	for i in 240:
+		var sun := Astro.sun_dir(Astro.apparent_days(world.days, lon, spawn_lat))
+		if rad_to_deg(Astro.elevation(sun, spawn_dir)) >= want_deg:
+			break
+		world.days += 1.0 / 1440.0
 	# Day 1 (design 1 Oct §CG): the world's first local day, at its opening
 	# camp, kept in its save. A save from before has none: the clock starts
 	# over at START_DAYS on every boot (it isn't saved), so the day it wakes

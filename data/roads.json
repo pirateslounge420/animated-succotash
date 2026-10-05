@@ -119,7 +119,9 @@
   "dawn_start": {
    "spawn": {
     "phase": "dawn",
-    "real_min_after_dawn_begins": 1.0
+    "real_min_after_dawn_begins": 1.0,
+    "sun_deg": -3.0,
+    "_help_sun_deg": "Design 4 Oct \u00a7EB.1 (added by Claude Code, 5 Oct): the wake waits until the sun is this high (degrees, below the horizon) at the camp, as well as real_min_after_dawn_begins. One real minute after dawn begins the sun is about 8 degrees down, and the grade reads anything below -6 as full night (SkySystem daylight), so the game woke looking like night. At -3 the sky is the blue before sunrise and the fire still the one warm thing."
    },
    "walk_real_min": 40.0,
    "measure": "walking_minutes",

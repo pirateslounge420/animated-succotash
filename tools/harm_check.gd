@@ -7,10 +7,12 @@ extends SceneTree
 ##    stays the ninja game's);
 ##  - stage 1 darkens the edges, drains the colour and muffles, with no
 ##    heartbeat; stage 2 deepens it and the heart beats at heart_bpm;
-##  - after calm the hits are let go one step at a time: the heartbeat
-##    settles first, then stage 2 falls to 1 and 1 to 0, the dark last;
-##  - three hits spread past window_s do not take you;
-##  - three inside it do: the frame closes to black, "Good night" in red
+##  - every hit is unmistakable (§EC): a dark-navy edge flash and a camera
+##    kick; a bite inside invuln_s of a hit doesn't land;
+##  - one hit heals every recover.step_s, any new hit resetting the timer;
+##    healing from 2 to 1 the heartbeat settles first, the dark last;
+##  - hits spread wider than step_s never add up;
+##  - three before they heal take you: the frame closes to black, "Good night" in red
 ##    shows, held, faded, then the §DE wake lands at a lit fire with folk
 ##    (or your hearth), "Struck down by a <creature>" in the log, the
 ##    harm cleared.
@@ -67,7 +69,14 @@ func _run() -> void:
 	ok(not (D.get("_help", "") as String).begins_with("[NOT WIRED"), "harm.json is no longer marked not wired")
 	# Hit 1.
 	_hit()
-	_run_for(1.0)
+	ok(harm.flash > 0.9 and absf(player._hit_kick.x) > 0.01, "a hit is unmistakable: the edge flash and the camera kick (§EC)")
+	var ef: Color = main.hud._status._hit_flash
+	ok(ef.b > ef.r and ef.r < 0.2, "the flash is dark navy, never red (%s)" % ef.to_html(false))
+	# A second bite inside invuln_s doesn't land.
+	_run_for(0.3)
+	_hit()
+	ok(harm.hits.size() == 1, "a bite %.1f s after a hit doesn't count (invuln_s %.1f)" % [0.3, float(D.get("invuln_s", 0.6))])
+	_run_for(0.7)
 	var s1: Dictionary = harm.stage_of(1)
 	ok(player.hp == hp0, "a creature's hit takes no health (%.0f)" % player.hp)
 	ok(main.hud._status.ambient, "no health meter on screen (the status bar is the ninja game's)")
@@ -81,13 +90,14 @@ func _run() -> void:
 	var s2: Dictionary = harm.stage_of(2)
 	ok(harm.stage == 2 and harm.vignette > float(s1.vignette) + 0.1, "hit 2: deeper (vignette %.2f)" % harm.vignette)
 	ok(harm.heart and harm.beats >= 3 and absf(harm.heart_bpm - float(s2.heart_bpm)) < 10.0, "hit 2: a fast heartbeat (%d beats in 2 s at %.0f bpm)" % [harm.beats, harm.heart_bpm])
-	# Recovery: no hits.
+	# Recovery: one hit back every step_s from the last hit (§EC).
+	var step := float(D.recover.step_s)
 	var t_heart := -1.0
 	var t_s1 := -1.0
 	var t_s0 := -1.0
 	var t_clear := -1.0
-	var t := 0.0
-	while t < 60.0:
+	var t := 2.0
+	while t < 40.0:
 		harm.tick(0.1)
 		t += 0.1
 		if t_heart < 0.0 and not harm.heart:
@@ -98,26 +108,34 @@ func _run() -> void:
 			t_s0 = t
 		if t_clear < 0.0 and harm.vignette < 0.02:
 			t_clear = t
-	print("[harm] recovery: heart still %.1f s · stage 1 at %.1f s · stage 0 at %.1f s · dark gone %.1f s" % [t_heart, t_s1, t_s0, t_clear])
-	ok(t_heart > 0.0 and t_heart <= t_s1, "the heartbeat settles first (%.1f s, before stage 2 falls at %.1f s)" % [t_heart, t_s1])
-	ok(t_s1 > 0.0 and t_s0 > t_s1, "the stages fall back in order (2 → 1 at %.1f s, 1 → 0 at %.1f s)" % [t_s1, t_s0])
-	ok(t_clear >= t_s0, "the dark pulls back last (%.1f s)" % t_clear)
-	# Three spread past the window.
-	var window := float(D.get("window_s", 20.0))
+	print("[harm] recovery after hit 2: stage 1 at %.1f s · heart still %.1f s · stage 0 at %.1f s · dark gone %.1f s" % [t_s1, t_heart, t_s0, t_clear])
+	ok(absf(t_s1 - step) < 0.3 and absf(t_s0 - 2.0 * step) < 0.3, "one hit back every %.0f s (2 → 1 at %.1f s, 1 → 0 at %.1f s)" % [step, t_s1, t_s0])
+	ok(t_heart >= t_s1 and t_heart < t_s0, "healing from 2 to 1 the heartbeat settles first (%.1f s)" % t_heart)
+	ok(t_clear >= t_s0, "then the dark pulls back (%.1f s)" % t_clear)
+	# Any new hit sets the timer back to a full step_s.
+	_hit()
+	_run_for(step - 1.0)
+	_hit()
+	_run_for(step - 1.0)
+	ok(harm.hits.size() == 2, "a new hit resets the timer (still 2 hits %.0f s after the first)" % (2.0 * step - 2.0))
+	_run_for(1.2)
+	ok(harm.hits.size() == 1, "a full %.0f s after the last, one heals" % step)
+	_run_for(30.0)
+	# Hits spread wider than step_s never add up.
 	var spread_taken := false
-	for i in 3:
+	for i in 4:
 		spread_taken = _hit() or spread_taken
-		_run_for(window + 1.0)
-	ok(not spread_taken, "three hits spread past %.0f s do not take you" % window)
-	_run_for(60.0)
-	# Three inside the window: taken.
+		_run_for(step + 0.5)
+	ok(not spread_taken, "hits %.1f s apart never add up to three" % (step + 0.5))
+	_run_for(30.0)
+	# Three before they heal: taken.
 	var deaths0: int = main.camps.deaths
 	_hit("wolf")
-	_run_for(2.0)
+	_run_for(1.0)
 	_hit("wolf")
-	_run_for(2.0)
+	_run_for(1.0)
 	var took := _hit("wolf")
-	ok(took, "three hits inside %.0f s take you" % window)
+	ok(took, "three hits before they heal take you")
 	_run_for(float(D.taken.close_s) + 0.2)
 	ok(main.hud._status._taken_black > 0.99, "the frame closes to black (%.2f)" % main.hud._status._taken_black)
 	ok(main.hud._status.taken_text() == str(D.taken.text), "\"%s\" on screen" % main.hud._status.taken_text())

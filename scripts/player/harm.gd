@@ -4,9 +4,13 @@ extends Node
 ## profile only: the ninja game keeps PlanetPlayer.hp and its status bar.
 ##
 ## A creature's hit (or a ram's knockback landing: PlanetPlayer.take_hit,
-## anything but the dark's catch) no longer takes health: it counts one.
-## Hits older than window_s are forgotten; hits_to_take of them inside the
-## window take you.
+## anything but the dark's catch) no longer takes health: it counts one,
+## and hits_to_take of them take you. Amended by §EC (4 Oct, 19:33): every
+## hit is unmistakable (a dark-navy flash at the frame's edges, a camera
+## kick, a thud and a breath, a hitstop of a few frames); after a hit no
+## other counts for invuln_s; one hit heals every recover.step_s, and any
+## new hit sets that timer back to a full step_s (no window, no "break
+## contact").
 ##   hit 1  the frame's edges darken and the colour drains a little toward
 ##          the dark's navy (never grey: PostGrade.set_harm), sound goes a
 ##          little muffled (the Master bus: muffle_db and a low-pass);
@@ -17,9 +21,9 @@ extends Node
 ##          hold_s, faded over fade_s, then the §DE wake (main: home hearth
 ##          else the nearest lit fire with folk, the lost days, the found
 ##          line, "Struck down by a {creature}").
-## Recovery mirrors it: once calm_s pass with no hit, the oldest hit is let
-## go every step_s; the heartbeat slows and stops first, then the dark
-## pulls back (the stage's look eases to the next one down).
+## Recovery mirrors it: a hit heals every step_s (the timer reset by any
+## hit); healing from 2 to 1 the heartbeat slows and stops first, then the
+## dark pulls back (the stage's look eases to the next one down).
 
 static var instance: Harm = null
 static var D: Dictionary = Tuning.table("harm")
@@ -53,6 +57,11 @@ var _last_hit := -INF
 var _step_t := 0.0
 var _beat_t := 0.0
 var _heart: AudioStreamPlayer
+var _thud: AudioStreamPlayer
+## The edge flash now (0-1 of hit_feedback.edge_flash.alpha), and how many
+## hits have landed (tools).
+var flash := 0.0
+var landed := 0
 var _bus_fx := -1
 var _lpf: AudioEffectLowPassFilter
 
@@ -70,6 +79,9 @@ func setup(p_player: PlanetPlayer, p_post: PostGrade, p_hud: Hud) -> void:
 	_heart.name = "Heartbeat"
 	_heart.stream = SoundSynth.stream("heartbeat", 0)
 	add_child(_heart)
+	_thud = AudioStreamPlayer.new()
+	_thud.name = "HitThud"
+	add_child(_thud)
 	# The muffle: a low-pass on the Master bus, wide open until a hit.
 	_lpf = AudioEffectLowPassFilter.new()
 	_lpf.cutoff_hz = 20000.0
@@ -89,22 +101,45 @@ func stage_of(n: int) -> Dictionary:
 	return (D.get("stages", {}) as Dictionary).get(str(n), {})
 
 
+## Inside invuln_s of the last hit (§EC): a new one doesn't land.
+func invulnerable() -> bool:
+	return taking or now - _last_hit < float(D.get("invuln_s", 0.6))
+
+
 ## A hit landed (PlanetPlayer.take_hit). `who` is the death cause
 ## ("creature:<name>"). Returns true when it takes you.
 func hit(who: String) -> bool:
 	if taking:
 		return true
-	var window := float(D.get("window_s", 20.0))
-	hits = hits.filter(func(t: float) -> bool: return now - t <= window)
+	if invulnerable():
+		return false
 	hits.append(now)
 	_last_hit = now
 	_step_t = 0.0
 	cause = who
+	landed += 1
 	stage = mini(hits.size(), 2)
+	_feedback()
 	if hits.size() >= int(D.get("hits_to_take", 3)):
 		_take()
 		return true
 	return false
+
+
+## The hit felt (§EC hit_feedback): the edge flash, the kick, the thud and
+## the breath, the hitstop.
+func _feedback() -> void:
+	var fb: Dictionary = D.get("hit_feedback", {})
+	flash = 1.0
+	if player != null:
+		player.kick(float(fb.get("camera_kick_deg", 4.0)))
+	if _thud != null and _thud.is_inside_tree():
+		_thud.stream = SoundSynth.stream("thud_breath", landed)
+		_thud.play()
+	var stop := float(fb.get("hitstop_s", 0.05))
+	if stop > 0.0 and is_inside_tree() and Engine.time_scale >= 1.0:
+		Engine.time_scale = 0.05
+		get_tree().create_timer(stop, true, false, true).timeout.connect(func() -> void: Engine.time_scale = 1.0)
 
 
 func _take() -> void:
@@ -132,6 +167,7 @@ func close_for_death() -> void:
 func reset() -> void:
 	hits.clear()
 	stage = 0
+	flash = 0.0
 	taking = false
 	_dead_already = false
 	taken_t = 0.0
@@ -156,20 +192,21 @@ func _process(delta: float) -> void:
 func tick(delta: float) -> void:
 	now += delta
 	var rec: Dictionary = D.get("recover", {})
+	var fb: Dictionary = (D.get("hit_feedback", {}) as Dictionary).get("edge_flash", {})
+	flash = maxf(flash - delta / maxf(float(fb.get("fade_s", 0.25)), 0.01), 0.0)
 	if taking:
 		_taken(delta)
-	elif not hits.is_empty() and now - _last_hit > float(rec.get("calm_s", 8.0)):
-		# Calm: the oldest hit is let go every step_s.
+	elif not hits.is_empty():
+		# One hit heals every step_s; any hit set the timer back (§EC).
 		_step_t += delta
-		if _step_t >= float(rec.get("step_s", 6.0)):
+		if _step_t >= float(rec.get("step_s", 5.0)):
 			_step_t = 0.0
 			hits.pop_front()
 			stage = mini(hits.size(), 2)
 	# The look eases toward the stage's (the dark comes in fast, pulls back
 	# slowly); the heart goes first on the way down (recover.heart_first).
 	var st := stage_of(stage)
-	var calm := not taking and not hits.is_empty() and now - _last_hit > float(rec.get("calm_s", 8.0)) * 0.5
-	var want_heart := bool(st.get("heartbeat", false)) and not (calm and bool(rec.get("heart_first", true)))
+	var want_heart := bool(st.get("heartbeat", false))
 	var k_in := 1.0 - exp(-delta * 6.0)
 	var k_out := 1.0 - exp(-delta * 0.8)
 	var tv := float(st.get("vignette", 0.0))
@@ -237,6 +274,9 @@ static func taken_s() -> float:
 func _apply() -> void:
 	if post != null:
 		post.set_harm(vignette, desaturate)
+	if hud != null:
+		var ef: Dictionary = (D.get("hit_feedback", {}) as Dictionary).get("edge_flash", {})
+		hud.set_hit_flash(Color(str(ef.get("color", "#0A1440"))), flash * float(ef.get("alpha", 0.55)))
 	AudioServer.set_bus_volume_db(0, muffle_db)
 	if _lpf != null:
 		# 0 dB wide open; each -4 dB takes the top off a little more.

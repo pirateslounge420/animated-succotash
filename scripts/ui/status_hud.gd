@@ -58,6 +58,7 @@ var _death_label: Label
 ## the edges; a third hit closes the frame (set_taken).
 var ambient := Tuning.profile() == "ambient"
 var _taken_black := 0.0
+var _hit_flash := Color(0, 0, 0, 0)
 var _taken_label: Label
 var _tick: AudioStreamPlayer
 
@@ -100,6 +101,14 @@ func _ready() -> void:
 
 func flash_hurt() -> void:
 	_hurt = 1.0
+
+
+## A hit's edge flash (§EC): `color` at `alpha`.
+func set_hit_flash(color: Color, alpha: float) -> void:
+	var was := _hit_flash.a
+	_hit_flash = Color(color, alpha)
+	if alpha > 0.0 or was > 0.0:
+		queue_redraw()
 
 
 ## Taken (§EA): the frame closed to black by `black` 0-1, `text` over it
@@ -184,6 +193,21 @@ func _draw() -> void:
 		draw_rect(Rect2(w, size.y * 0.9, size.x - 2 * w, size.y * 0.1), c)
 	if _death > 0.0:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.08, 0.0, 0.0, _death))
+	if _hit_flash.a > 0.0:
+		# A hit (§EC): dark navy in from the edges, thickest at the rim.
+		var ew := size.x * 0.16
+		var eh := size.y * 0.16
+		for band in 4:
+			var t := float(band) / 4.0
+			var c2 := Color(_hit_flash, _hit_flash.a * (1.0 - t))
+			var bx := ew * t
+			var by := eh * t
+			var bw := ew / 4.0
+			var bh := eh / 4.0
+			draw_rect(Rect2(bx, by, bw, size.y - 2.0 * by), c2)
+			draw_rect(Rect2(size.x - bx - bw, by, bw, size.y - 2.0 * by), c2)
+			draw_rect(Rect2(bx + bw, by, size.x - 2.0 * (bx + bw), bh), c2)
+			draw_rect(Rect2(bx + bw, size.y - by - bh, size.x - 2.0 * (bx + bw), bh), c2)
 	if _taken_black > 0.0:
 		# Black, as near as the frame goes: the darkest navy.
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.004, 0.006, 0.02, _taken_black))

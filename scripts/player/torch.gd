@@ -92,6 +92,9 @@ func setup(p: PlanetPlayer) -> void:
 	Bow._no_shadow(_view)
 	# The light, at the hand, on the player (it lights the world round you).
 	_light = light_node()
+	# The torch in hand a bit brighter than a planted one (design 4 Oct
+	# §EB.3: light.held_scale on energy and range; same colour).
+	_light.omni_range *= held_scale()
 	_light.position = Vector3(0.3, 1.25, -0.4)
 	p.add_child(_light)
 	_voice = Audio3D.make("torch", self, "Voice")
@@ -251,6 +254,11 @@ static func set_glow(ember: Node3D, glow: float, it: Dictionary) -> void:
 
 ## The torch's point light from the data: Minecraft-style falloff, warm,
 ## no shadow map (§AG).
+## The torch in hand's light over a planted one's (light.held_scale; §EB.3).
+static func held_scale() -> float:
+	return float(L.get("held_scale", 1.0))
+
+
 static func light_node() -> OmniLight3D:
 	var l := OmniLight3D.new()
 	l.name = "TorchLight"
@@ -537,7 +545,7 @@ func update_torch(delta: float) -> void:
 			put_out("doused")
 			return
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
-		_light.light_energy = energy_now(it, _t, motion)
+		_light.light_energy = energy_now(it, _t, motion) * held_scale()
 		set_glow(_view_flame, ember_glow(it, _t, motion), it)
 	_apply(lit())
 	if lit() and _view_flame.visible:
@@ -581,7 +589,7 @@ func _play(kind: String) -> void:
 static func light_at(pos: Vector3) -> float:
 	var best := PlantedTorch.light_at(pos)
 	if instance != null and is_instance_valid(instance) and instance.lit():
-		var range_m := float(L.get("range_m", 14.0))
+		var range_m := float(L.get("range_m", 14.0)) * held_scale()
 		best = maxf(best, clampf(1.0 - instance._light.global_position.distance_to(pos) / range_m, 0.0, 1.0) * share_now(instance.item()))
 	return best
 

@@ -23,6 +23,8 @@
  "light": {
   "range_m": 14.0,
   "energy": 2.2,
+  "held_scale": 1.27,
+  "_help_held_scale": "Design 4 Oct \u00a7EB.3 (added by Claude Code): the torch in hand's energy and range times this (about 25-30% brighter, same colour), so it pushes the dark back further; planted torches keep range_m and energy. First guess; Mike tunes it by playing.",
   "color": "#ffb347",
   "attenuation": 1.6,
   "gutter_energy": 0.9,

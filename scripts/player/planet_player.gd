@@ -614,6 +614,15 @@ func shake(amount: float) -> void:
 	_shake = maxf(_shake, amount)
 
 
+## A hit's camera kick (design 4 Oct §EC): the view snapped up and aside by
+## `deg`, easing back over a third of a second.
+var _hit_kick := Vector2.ZERO
+
+func kick(deg: float) -> void:
+	var r := deg_to_rad(deg)
+	_hit_kick = Vector2(r, r * 0.4 * (1.0 if randf() < 0.5 else -1.0))
+
+
 ## Point the camera: `pitch` (radians, negative looks down) and `yaw`
 ## relative to where the body faces.
 func set_view(pitch: float, yaw: float) -> void:
@@ -1595,10 +1604,13 @@ func take_hit(amount: float, from_pos: Vector3) -> void:
 	# The ambient game (design 4 Oct §EA): no health, a creature's hit
 	# counts one (Harm); the dark's catch (Dread) still takes you outright.
 	if Harm.active() and amount < 9999.0:
+		# A breath between bites (§EC): a hit inside invuln_s of the last
+		# doesn't land at all.
+		if Harm.instance.invulnerable():
+			_knock = Vector3.ZERO
+			return
 		_since_hit = 0.0
 		shake(0.5)
-		voice.stream = SoundSynth.stream("hurt", randi())
-		voice.play()
 		hurt.emit(amount)
 		Harm.instance.hit(death_cause)
 		return
@@ -2422,6 +2434,8 @@ func _update_camera(delta: float) -> void:
 		_spring.spring_length = lerpf(4.5, 2.4, _aim_blend)
 	_camera.h_offset = 0.55 * _aim_blend + randf_range(-1.0, 1.0) * _shake * 0.12
 	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
+	_hit_kick = _hit_kick.lerp(Vector2.ZERO, 1.0 - exp(-delta * 9.0))
+	_camera.rotation = Vector3(_hit_kick.x, _hit_kick.y, 0.0)
 	_camera.fov = lerpf(FOV, AIM_FOV, aim_power())
 	# The elf raises both arms to aim the bow, the right one to hold and
 	# throw the spear (an imported model has its own clips); on a branch

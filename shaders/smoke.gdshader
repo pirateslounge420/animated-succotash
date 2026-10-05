@@ -1,10 +1,11 @@
 // A column of smoke (design 3 Oct §CV, data/smoke.json): over a lit hearth,
-// out of a stack, or a wildfire's plume. The flame's family (§BZ): a few
-// camera-facing cards (Smoke builds `look.cards` of them round the column's
-// spine, each its own phase), noise scrolled upward and posterised to
-// three flat bands on a coarse texel grid, cut out by a 4x4 dither, no soft
-// alpha. Pale blue-grey (colour_near) with a shaded side (colour_shade),
-// lighter and bluer with distance (colour_far), never a neutral grey.
+// out of a stack, or a wildfire's plume. A soft grey column (design 4 Oct
+// §EB.2): a few camera-facing cards (Smoke builds `look.cards` of them
+// round the column's spine, each its own phase), noise scrolled upward on
+// a coarse texel grid, alpha-blended (never additive, nothing emitted:
+// smoke gives off no light), thinning as it climbs. Grey with a little of
+// the sky's blue (colour_near), a bluer shaded side (colour_shade), lighter
+// and bluer with distance (colour_far); in shade never a neutral grey.
 //
 // Each card is a strip of quads, x -0.5..0.5 across, y 0..1 up (Smoke's
 // mesh). The vertex stage lays it in the world (world_vertex_coords): up
@@ -14,10 +15,11 @@
 // to face the camera about the column. `pool` (0-1): on a still dawn the
 // smoke stops rising at pool_m and spreads pool_spread_m flat. `density`
 // (0-1) is how solid it draws (the fire's state, rain); `night` (0-1)
-// hides all but the first fire_lit_m, lit warm by the fire (smoke gives
-// off no light).
+// takes it to the moonlit scene's dim blue-grey (colour_night), a little
+// thinner, never lit red: only right at its foot, just above the flames,
+// a faint warmth (fire_lit, base_warm over base_warm_m).
 shader_type spatial;
-render_mode unshaded, cull_disabled, shadows_disabled, world_vertex_coords;
+render_mode unshaded, cull_disabled, shadows_disabled, world_vertex_coords, blend_mix, depth_draw_never;
 
 #include "res://shaders/look.gdshaderinc"
 global uniform vec3 plant_wind;
@@ -42,6 +44,10 @@ uniform vec3 colour_near = vec3(0.27, 0.35, 0.58);
 uniform vec3 colour_far = vec3(0.45, 0.54, 0.81);
 uniform vec3 colour_shade = vec3(0.1, 0.14, 0.35);
 uniform vec3 fire_lit = vec3(0.9, 0.35, 0.12);
+uniform vec3 colour_night = vec3(0.035, 0.042, 0.075);
+uniform float base_warm = 0.18;
+uniform float base_warm_m = 1.2;
+uniform float grey = 0.35;
 uniform float far_m = 3200.0;
 // The wind on it (design §DA, wind.json smoke): below shelter_m (the
 // crowns over a hearth under trees) it rises straight; above, its lean
@@ -54,14 +60,6 @@ instance uniform float card_off = 0.0;
 
 varying vec2 v_uv;
 varying float v_h;
-
-float bayer4(vec2 p) {
-	int x = int(mod(p.x, 4.0));
-	int y = int(mod(p.y, 4.0));
-	int i = x + y * 4;
-	int m[16] = int[16](0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5);
-	return (float(m[i]) + 0.5) / 16.0;
-}
 
 void vertex() {
 	float y = VERTEX.y;
@@ -96,12 +94,16 @@ void fragment() {
 	float body = (1.0 - smoothstep(0.35, 1.0, x + (n - 0.5) * 0.6)) * (1.0 - smoothstep(0.55, 1.0, q.y + (n - 0.5) * 0.4));
 	body *= smoothstep(0.0, 0.05, q.y);
 	float a = body * density * (0.55 + 0.6 * n);
-	// At night only the first fire_lit_m, lit by the fire below.
-	a *= mix(1.0, 1.0 - smoothstep(fire_lit_m * 0.5, fire_lit_m, v_h), night);
+	// Thinner as it climbs and widens.
+	a *= 1.0 - 0.75 * smoothstep(0.15, 1.0, q.y);
+	// A little thinner by moonlight.
+	a *= mix(1.0, 0.7, night);
 	// A gust at the fire tears the low column into rags.
 	float shred = smoothstep(1.15, 1.5, gust) * (1.0 - smoothstep(4.0, 14.0, v_h));
 	a *= 1.0 - shred * step(0.45, n2);
-	if (a < bayer4(FRAGCOORD.xy)) {
+	// Big texels: the alpha in four steps, not a smooth gradient.
+	a = floor(clamp(a, 0.0, 1.0) * 4.0 + 0.5) / 4.0;
+	if (a <= 0.0) {
 		discard;
 	}
 	// Three flat bands: the shaded side, the body, the lit edge.
@@ -109,9 +111,15 @@ void fragment() {
 	vec3 near_c = mix(colour_near, colour_far, smoothstep(far_m * 0.15, far_m, dist));
 	float shade = n * 0.7 + (1.0 - x) * 0.3;
 	vec3 c = shade > 0.62 ? mix(near_c, colour_far, 0.35) : (shade > 0.38 ? near_c : mix(colour_shade, near_c, 0.35));
-	// By day the sky lights it; at night only the fire does, near its foot.
-	c *= mix(1.0, 0.0, night);
-	c += fire_lit * night * (1.0 - smoothstep(0.0, fire_lit_m, v_h)) * 0.6;
+	// Greyer in the light, keeping its blue in the shade.
+	float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
+	c = mix(c, vec3(lum), grey * step(0.38, shade));
+	// At night the moonlit scene's dim blue-grey; only right at its foot,
+	// just above the flames, a faint warmth (no glow, nothing emitted).
+	vec3 night_c = colour_night * (0.8 + 0.4 * shade);
+	c = mix(c, night_c, night);
+	c = mix(c, fire_lit * 0.35, base_warm * (1.0 - smoothstep(0.0, base_warm_m, v_h)) * (0.4 + 0.6 * night));
 	ALBEDO = c;
+	ALPHA = a * 0.85;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

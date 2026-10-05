@@ -94,6 +94,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _boom(rng)
 		"heartbeat":
 			samples = _heartbeat(rng)
+		"thud_breath":
+			samples = _thud_breath(rng)
 		"bow_draw":
 			samples = _bow_draw(rng)
 		"bow_release":
@@ -805,6 +807,27 @@ static func _boom(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		lp2 = lerpf(lp2, lp, 0.08)
 		var wash := lp2 * 9.0 * smoothstep(0.3, 1.2, t) * exp(-maxf(t - 1.2, 0.0) * 1.3)
 		s[i] = (thump + ring) * 0.9 + wash
+	return s
+
+
+## A hit landing (design 4 Oct §EC): a dull body thud, then a sharp
+## breath knocked out.
+static func _thud_breath(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.55)
+	var f0 := rng.randf_range(70.0, 90.0)
+	var lp := 0.0
+	var hp_prev := 0.0
+	var hp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var thud := sin(TAU * f0 * t * (1.0 - 0.4 * minf(t * 8.0, 1.0))) * minf(t / 0.004, 1.0) * exp(-t * 22.0)
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.35)
+		hp = lp - hp_prev + 0.6 * hp
+		hp_prev = lp
+		var bt := t - 0.07
+		var breath := hp * 0.35 * (smoothstep(0.0, 0.03, bt) * exp(-maxf(bt, 0.0) * 9.0) if bt > 0.0 else 0.0)
+		s[i] = thud * 0.9 + breath
 	return s
 
 

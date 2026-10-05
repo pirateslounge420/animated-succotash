@@ -1023,7 +1023,7 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 				var dawn := DayCycle.phase_start_hour("dawn", lat, Astro.declination(world.days))
 				var local_h: float = world.local_clock(d).y
 				var into: float = fposmod(local_h - dawn, 24.0) / 24.0 * (world.day_length_s / 60.0)
-				ok(into < 4.0, "the opening camp's first frame is dawn (%.2f h on the clock, dawn begins %.2f h, %.1f real min in, sun %.1f°)" % [local_h, dawn, into, main.sky.sun_elevation_deg])
+				ok(into < 18.0 and main.sky.sun_elevation_deg > -4.0 and main.sky.sun_elevation_deg < 1.0, "the opening camp's first frame is dawn, the blue before sunrise (%.2f h on the clock, dawn begins %.2f h, %.1f real min in, sun %.1f°)" % [local_h, dawn, into, main.sky.sun_elevation_deg])
 		if site.has("harm_hits") and main.get("harm") != null:
 			(main.harm as Harm).reset()
 			(main.harm as Harm).set_process(true)

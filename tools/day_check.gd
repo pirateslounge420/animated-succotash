@@ -85,13 +85,16 @@ func _place(label: String, d: Vector3, here: bool) -> void:
 	WorldSave.data.erase("first_local_day")
 	var before := Astro.days_at_solar_hour(World.START_DAYS, _start_h(d), CubeSphere.longitude(d), CubeSphere.latitude(d))
 	main.open_clock(d)
-	ok(is_equal_approx(world.days, before), "%s (%.1f°, %.1f°): the sky's clock is START_DAYS taken to the dawn (%.4f)" % [label, rad_to_deg(CubeSphere.latitude(d)), rad_to_deg(CubeSphere.longitude(d)), world.days])
+	var sun_deg := rad_to_deg(Astro.elevation(Astro.sun_dir(Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))), d))
+	var want_deg := float(Tuning.section("roads", "opening_road").get("dawn_start", {}).get("spawn", {}).get("sun_deg", -3.0))
+	ok(world.days >= before - 1e-6 and world.days - before < 0.25 and sun_deg >= want_deg - 0.6 and sun_deg < 1.0, "%s (%.1f°, %.1f°): the sky's clock is START_DAYS taken to the dawn, the blue before sunrise (§EB.1: sun %.1f°, wake from %.0f°)" % [label, rad_to_deg(CubeSphere.latitude(d)), rad_to_deg(CubeSphere.longitude(d)), sun_deg, want_deg])
 	var c: Vector2 = world.local_clock(d)
 	var lat := CubeSphere.latitude(d)
 	var decl := Astro.declination(World.START_DAYS)
 	var dawn_h := DayCycle.phase_start_hour("dawn", lat, decl)
 	var into: float = fposmod(c.y - dawn_h, 24.0) / 24.0 * (world.day_length_s / 60.0)
-	ok(int(c.x) == 1 and into >= 0.0 and into < 3.0, "%s: wakes on Day 1 in the first minutes of dawn (%s, %.1f real min after dawn begins)" % [label, world.clock_text(d), into])
+	var dawn_len := float(DayCycle.phase_minutes_at(lat, decl).get("dawn", 18.0))
+	ok(int(c.x) == 1 and into >= 0.0 and into < dawn_len, "%s: wakes on Day 1 within dawn (%s, %.1f real min after dawn begins, of %.0f)" % [label, world.clock_text(d), into, dawn_len])
 	var day1_ok := true
 	var agree_ok := true
 	var steps := 0

@@ -4,6 +4,50 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-05 — §EB and §EC: dawn wake, grey smoke, brighter torch, hits you can feel
+- **§EB.1, the dawn spawn:** no save, `dev.json` value or early clock overrode the rule. The clock was set as written, 1 real minute after dawn begins (a windowed boot woke at 5.60 h with the sun at −8°; the day check agrees).
+  - The bug was the rule itself: a minute into dawn the sun is still about 8° down, and the grade reads anything below −6° as full night (`SkySystem.daylight = smoothstep(−6, 10, sun)`). Day 1 began at "dawn" by the clock and looked like night.
+  - `main.open_clock` now also waits until the sun is up to `roads.json → opening_road.dawn_start.spawn.sun_deg` (−3°, new key with `_help`) at the camp. The wake is now 3–4 real minutes into dawn, sun −2.9°, the blue before sunrise.
+  - `tools/day_check.gd` and the walkabout's dawn assertion now test for that.
+- **§EB.2, the smoke:** `shaders/smoke.gdshader` is now an alpha-blended soft grey column (`blend_mix`, `depth_draw_never`, still unshaded: nothing emitted, so it never blooms). Its alpha comes in four steps for big texels, and it thins as it climbs.
+  - It is greyer in the light and keeps its blue in the shade. At night it takes a dim moonlit blue-grey (`colour_night`) instead of going black under a red cap.
+  - The red came from the old `fire_lit` tint, added to the column's foot while the rest went to zero. Only a faint warmth is left, right at the base (`base_warm`, 1.2 m).
+- **§EB.3, the torch:** `torch.json → light.held_scale` 1.27 (new key) on the hand torch's energy and range, same colour. Planted torches unchanged; the dark keeps out of the larger circle (`Torch.light_at`).
+- **§EB.4, the storm light, kept and recorded:** what lights the land around you at night in a storm is:
+  - `StormFX` lightning: a third `DirectionalLight3D` ("Lightning", `FLASH_COLOR` pale blue-white, energy = the flash curve × the strike's energy) from a random bearing;
+  - `SkySystem.event_flash`, which pulls the ambient light toward the flash colour and adds `amount × 0.5` to its energy for the flash;
+  - the sky shader's `lightning` uniform, and `CloudLayers` reading `StormFX.flash`;
+  - under it all, the storm deck's own lit colour at night (`SkySystem`: zenith and mid toward a blue-purple, `painted_lit` toward the storm purple).
+  - Nothing in this pass touches any of them.
+- **§EC, hits:** `Harm` now follows `harm.json` as amended.
+  - Every hit shows a dark-navy edge flash (`hit_feedback.edge_flash`, `StatusHud`), a camera kick (`PlanetPlayer.kick`, 4°), a thud and a breath (`SoundSynth` "thud_breath") and a 0.05 s hitstop (`Engine.time_scale`).
+  - For `invuln_s` (0.6 s) after a hit, nothing lands (no knockback either).
+  - One hit heals every `recover.step_s` (5 s), and any hit resets the timer. `window_s` and `calm_s` are gone. Healing 2 → 1, the heartbeat settles first.
+  - `tools/harm_check.gd` passes 32/32.
+- Also checked: `day_check` (7731), `hearth_smoke_check`, `smoke_check.py`, `torch_kinds_check.py` all pass. No screenshots, as asked; Mike playtests.
+
+## 2026-10-05 — Mike's 5 Oct calls, first part (7f9a00e, 4de9d91)
+- **Done:**
+  - Every death in the ambient game closes with "Good night".
+  - Your own falling arrow only glances off.
+  - The organ pipes only come in their own biomes.
+  - The sea cave's sleeper is something that would den there, else the cave is empty.
+  - Tundra stays igloo country: northern styles take tundra ruins at a fifth of their chance.
+  - Goblins are out of play (`Peoples.OFF_KINDS`).
+  - Every ruin's falls roar.
+  - The hewn temple is cut from the local rock's colour.
+  - The hanging gardens are pale stone, with a real waterfall, a plunge pool and a stream.
+  - The pillar shrines are round fluted columns with stairs spiralling round them.
+  - Mist only lies where the place holds it (`MistPlaces`; `tools/mist_check.gd`).
+- **Kept as is:** the colonnade's way in and out; its stairs work both ways.
+- **Not built yet from the same list:**
+  - real tides from the moon and the weather;
+  - the frozen castle;
+  - steeper passes where the land allows;
+  - clearer, wider roads;
+  - §DM.2–6 and the §DN lighthouse.
+- **Design doc:** Mike's calls aren't in it yet (Claude in chat appends them).
+
 ## 2026-10-04 — §EA: three hits, no bar, "Good night" (prompt 36)
 - **`Harm`** (`scripts/player/harm.gd`, `data/harm.json`, unmarked) runs in the ambient profile only. The ninja game keeps `PlanetPlayer.hp` and its status bar.
   - A creature's hit (`PlanetPlayer.take_hit`, anything under the dark's 9999) no longer takes health. It knocks you back, shakes the view and counts one.

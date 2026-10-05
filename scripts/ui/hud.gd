@@ -339,6 +339,12 @@ func flash_hurt() -> void:
 	_status.flash_hurt()
 
 
+## A hit's flash at the frame's edges (design 4 Oct §EC, Harm): `color`
+## at `alpha` (dark navy; never red).
+func set_hit_flash(color: Color, alpha: float) -> void:
+	_status.set_hit_flash(color, alpha)
+
+
 ## Taken (design 4 Oct §EA, Harm): the frame closed `black` 0-1 and the
 ## words at `text_alpha`.
 func set_taken(black: float, text_alpha: float, text: String, color := Color("#C81E1E"), size_px := 40) -> void:
