@@ -3,6 +3,20 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — Villages plan revised for §EF and §EG (nothing built)
+- The village section of `docs/implementation-notes.md` is rewritten as seven steps:
+  1. site score;
+  2. desire-line growth on a 2 m Tobler-cost grid, with used cells getting cheaper so paths merge into trunks;
+  3. Lynch's five bones, each measured;
+  4. the composition pass (vistas terminated, one dominant per key view, the thirds, a visual-weight moment, groups of 1/3/5, a mirror test, layered depth, the closure lure, one `ma` void);
+  5. one stone, one timber and one roof from the rock, the stand and the land;
+  6. stepped foundations and posts, a hearth per house;
+  7. the dead state warming window by window, with squares losing their refuge.
+- Every step says what is checked headless: the plan is plain data, composition is projected geometry checked with physics ray casts, and the refuge test is a ray-cast backing plus view. What isn't: whether it feels composed (the walkabout pair, Mike's eye).
+- Still the stream-gutter town first.
+- The amber bends are carried over. There are 15 flags now; new ones: layout-dread vs the dread meter, composition needing set viewpoints, cold lanterns, the landmark against the horizon and fog, channel sound.
+- §EE.6 settled as Mike offered: §ED.7 stands as built.
+
 ## 2026-10-05 — §EE villages: a plan, nothing built
 - New section in `docs/implementation-notes.md`, "Villages (design 5 Oct §EE): plan for the first prototype". It covers:
   - siting from `villages.json → siting`, every weight read from what the planet already computes;

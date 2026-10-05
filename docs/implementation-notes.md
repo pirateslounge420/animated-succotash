@@ -2483,212 +2483,352 @@ latest results:
   (`-- --shots`): the X and a yellow number over a head-shot deer, the
   number risen with the meter at 64, a white body-hit number.
 
-## Villages (design 5 Oct §EE): plan for the first prototype (not built)
+## Villages (design 5 Oct §EE, §EF, §EG): plan for the first prototype (not built)
 
-A planning pass (5 Oct). Nothing here is built. It reads `data/villages.json` and §EE, and
-names the built code each step stands on. One archetype first, end to end; the rest of the
-backlog waits until it is proved (§EE.5).
+A planning pass (5 Oct, revised after §EF and §EG). Nothing here is built. It reads §EE
+(villages, siting, building with the land), §EF (the ten layout rules), §EG (the
+composition layer) and `data/villages.json` (`siting`, `with_the_land`, `layout_rules`,
+`composition`). One village, end to end, in the seven steps below. Each step says how it
+is checked and whether that check can run headless. Everything runs inside the village's
+own frame: a local tangent plane at its site, metres east and north, with heights from the
+fine ground (`TerrainField.elevation(detail)`).
 
 ### Which archetype first: the stream-gutter town
 
-Recommended: **`stream_gutter_town`** (a clear stream on a gentle slope, stone channels
-down every street, water used top to bottom). Why:
-- **It uses every siting weight.** A gentle slope with a ridge behind, open ground and water
-  in front, facing the sun, out of the wind: all ten `siting.weights` mean something here,
-  so the first site pass tests the whole score, not a corner of it.
-- **Its slope is the right test.** At 4–15° the houses need stepped foundations and some
-  posts, but no cliff engineering. "With the land" shows plainly without the hardest case.
-- **The water is ours to build.** Rivers here are at least 7 m wide (`RiverNetwork.MIN_WIDTH_M`)
-  and there are no small streams. So the gutters are the village's own channel, fed from a
-  river segment or a spring node above the town (§EE.3's gravity channel). That gives
-  §EE.2's second loop for free: a choked channel head you clear to bring the water back. The
-  `mill` specialty (a still, moss-choked wheel) sits at the bottom of the street.
+Recommended: **`stream_gutter_town`** (a stream on a gentle slope, stone channels down the
+streets, water used top to bottom).
+- **It uses every `siting` weight.** A ridge behind, flanks, open ground and water in front,
+  a sunny slope, shelter from the wind: all ten mean something on a gentle slope, so the
+  first site pass tests the whole score.
+- **§EF and §EG come almost free on that ground:**
+  - the street runs down the fall line with its channel: "water you follow" (§EF.8);
+  - the downhill view is a vista with borrowed scenery at its end, the valley or the next
+    ridge (§EF.2);
+  - the uphill view ends on whatever stands at the top: the hall, the tower (§EF.10);
+  - steps on the slope give compress-then-release for nothing (§EF.3);
+  - a sheltered back with an open view is how a slope already works (§EG.4).
+- **The slope is the right difficulty.** At 4–15° the houses need stepped foundations and
+  some posts, but no cliff engineering.
+- **The water can be its own.** The game has no stream under 7 m wide
+  (`RiverNetwork.MIN_WIDTH_M`). So the gutters are the village's own channel, fed from a
+  river segment or spring node uphill. That gives §EE.2's second way back to life: a
+  choked channel head, cleared to bring the water and the mill wheel back.
 - **It is near the start.** It is temperate, the same band as the river-camp opening
-  (§ED.1, 28–52°), so Mike can walk to the first one early.
-- **It is closest to the references** (en4ria's lamplit stone-and-timber towns), and it
-  stands on built parts:
-  - RuinBuilder's stacked-block stone and its materials;
-  - Overgrowth's moss and ivy for the dead state (§DI);
-  - OldHearths and FireStore for the cold hearths;
+  (§ED.1), and closest to Mike's en4ria references.
+- **It stands on built parts:**
+  - RuinBuilder's stacked-block stone and materials;
+  - Overgrowth's moss and ivy (§DI);
+  - OldHearths and FireStore;
   - the smoke columns (§CV);
-  - the kerbed approach and its avenue (§DM);
+  - the kerbed road approach (§DM);
   - the river phases (§ED.2).
-- **Next after it:** `contour_terraces` (the same grammar, steeper, the terraced pueblo's
-  retaining walls), then `beach_boardwalk` (a wistful dead state, not dread; the marsh
-  boardwalk's stilts already exist in RuinBuilder).
+- **Next:** `contour_terraces` (the same grammar, steeper), then `beach_boardwalk` (a
+  wistful dead state; its stilts already exist in RuinBuilder's marsh boardwalk).
 
-### The pipeline, step by step
+### The seven steps
 
-1. **Siting** (new `scripts/landmarks/villages.gd`, a sites pass like Nests and Ruins, kept
-   in the world's save as "villages").
-   - **Candidates** come from the archetype's `needs`: a ground slope of 4–15° over about
-     200 m, and water reachable uphill (a river segment, or a road's spring node, within
-     about 600 m above the site's top).
-   - **The score** adds `siting.weights` × each term, every term read from what the planet
-     already computes:
-     - **`ridge_behind`:** the fine ground (`TerrainField.elevation(detail)`) sampled on a
-       ring at 150–600 m; the rise of the uphill sector.
-     - **`flanking_ridges`:** the rise at about ±70° either side of uphill.
-     - **`open_front_low_ground`:** the fall of the downhill sector, and how even it is.
-     - **`water_in_front`:** the nearest river segment, lake (`water_dist_km`) or coast,
-       80–400 m out on the downhill side.
-     - **`inside_of_river_bend` / `outer_eroding_bank`:** the turn between the nearest
-       segment's `up_seg` and `down_seg`, and which side of it the site lies on.
-     - **`fast_straight_water`:** `RiverPhases` at run or stronger along a joint with
-       little turn.
-     - **`sun_facing_slope`:** the ground's fall direction (as `VegetationPlacer._lean`
-       reads it) against the equatorward direction.
-     - **`shelter_from_prevailing_wind`:** `wind_avg` against the uphill direction (the
-       ridge on the windward side).
-     - **`flood_level`:** the site's height over the river's `level_at` under a few metres.
-   - **Picking:** the best sites per world, spread apart, each registered as a road node
-     ("village") and as **one** hearth site in the §CU pass.
-   - **`may_build_missing_piece`** (a raised mound behind, a dug pond in front) is only
-     recorded in the prototype. Building it means a terrain stamp like `Nests.stamp`, which
-     has to land before the roads, plants and caves read the ground. That comes later.
-   - **Check:** `tools/village_site_check.gd` lists, per seed, how many candidates there
-     are and the top three sites term by term, so the score can be read and tuned.
-2. **Layout:** one street down the fall line carrying the gutter, from the channel head to
-   a small square at the bottom (well, mill, the hall). Houses go either side, long axis
-   along the contour: 8–14 of them, spaced by their footprint and the slope.
-3. **Built with the land, no flattened pads** (new `village_builder.gd`, reusing
-   RuinBuilder's block grammar). The ground is never edited. Each house reads the fine
-   ground at its footprint corners and the middle of each side, then picks one of three:
-   - **under about 4° of fall across it:** a low plinth course down to the ground;
-   - **4–15°:** stepped foundations, the floor in one or two steps along the contour. The
-     downhill face is a dry-stone retaining wall down to the ground, mortarless, with weep
-     gaps. A gravel drain runs along the uphill wall.
-   - **steeper than that, or over a channel:** a level floor on posts, each its own length
-     down to its own foundation stone (§EE.3, "posts on foundation stones").
+**1. Pick the site with the `siting` score** (new `scripts/landmarks/villages.gd`, a sites
+pass like Nests and Ruins, kept in the world's save as "villages").
+- **Candidates** come from the archetype's `needs`: ground at 4–15° over about 200 m, and
+  water reachable uphill (a river segment, or a road's spring node, within about 600 m
+  above the top of the site).
+- **Score:** the sum of `siting.weights` × each term, every term read from built data:
+  - **`ridge_behind`:** a ring of fine-ground samples at 150–600 m, and the rise in the
+    uphill sector.
+  - **`flanking_ridges`:** the rise at about ±70° either side of uphill.
+  - **`open_front_low_ground`:** the fall of the downhill sector, and how even it is.
+  - **`water_in_front`:** a river segment, lake (`water_dist_km`) or coast, 80–400 m
+    downhill.
+  - **`inside_of_river_bend` / `outer_eroding_bank`:** the turn between the nearest
+    segment's `up_seg` and `down_seg`, and which side of it the site lies on.
+  - **`fast_straight_water`:** `RiverPhases` at run or stronger, along a joint with little
+    turn.
+  - **`sun_facing_slope`:** the ground's fall direction (as `VegetationPlacer._lean` reads
+    it) against the equatorward direction.
+  - **`shelter_from_prevailing_wind`:** `wind_avg` against the uphill direction.
+  - **`flood_level`:** the site's height over the river's `level_at`.
+- **Picking:** the best sites per world, spread apart. Each becomes one road node
+  ("village") and **one** hearth site in the §CU pass.
+- **`may_build_missing_piece`** is only recorded for now. Building the mound or pond needs a
+  terrain stamp like `Nests.stamp`, so it comes after the prototype.
+- *Headless:* yes. `tools/village_site_check.gd` prints, per seed, the candidate count and
+  the top three sites term by term, so the score can be read and tuned.
 
-   This is what RuinBuilder already does in spirit: its walls run down into deep footings,
-   and it never levels a pad. **Check:** every post and wall foot meets the ground within
-   5 cm, no floor sits buried, and no post is longer than the posts' maximum.
-4. **Every house has its own hearth:**
-   - a hearth and chimney inside, windows on the street side;
-   - each hearth is an old hearth (OldHearths: a ring of ash and charred wood counted as
-     fuel) keyed in FireStore like any fire.
+**2. Grow it: desire lines first, buildings packed along them (§EF.1)** (new
+`scripts/landmarks/village_plan.gd`, pure data; nothing is built here).
+- **The seed:** the reason to exist. For this archetype that is the well and channel head;
+  the first hearth (the hall's) stands beside it.
+- **The desire lines:** the paths people would really walk, from the seed to every reason
+  to leave it:
+  - the road in, joining the network's kerbed approach;
+  - the water: the channel head uphill, the river below;
+  - the fields and woods, as two or three exits by aspect.
+- **How they are drawn:** least-cost paths on a 2 m grid, costed by Tobler's pace on the
+  fine slope (`world_scale.json → pace`, the cost RoadNetwork already uses). Each cell a
+  path uses becomes cheaper for the next path, so the routes merge into shared trunks.
+  That is how desire lines really form, and it gives §EF.5's gentle curves without drawing
+  any.
+- **Packing:** buildings go along the paths, nearest the seed first:
+  - each faces its path;
+  - plots are long side to the contour where the slope allows;
+  - it shares a wall with its neighbour when a plot touches one;
+  - the gap between buildings grows with distance from the seed (a dense core, a loose
+    edge);
+  - 8–14 houses plus the hall.
+- **Squares:** a square forms where three or more paths meet (a node), and houses close
+  round it (§EF.4).
+- **Thresholds:** an arch or a change of paving goes where a path crosses from one quarter
+  to the next (§EF.9).
+- *Headless:* yes. The plan is plain data: path polylines, plots, squares, the hall, the
+  landmark. `tools/village_plan_check.gd` asserts:
+  - every house faces a path within 4 m;
+  - how many walls are shared (core against edge);
+  - plot density falls with distance from the seed;
+  - no path is steeper than the walk limit;
+  - no leftover open field: an empty area inside the village outline either touches a
+    path, square or void, or it fails.
 
-   **Dead:** cold hearths, dark windows, ivy over the doors and moss in the stone at full
-   age (Overgrowth §DI), the channel choked and the wheel still. **Lit:** the window panes
-   warm as the flame takes, smoke rises from the chimney (§CV), and that house holds the
-   dark off (§BA, `Campfire.lit_near`).
-5. **The loop: relight one window at a time**, under the rules already built:
-   - Fire is carried, never made (§CQ).
-   - A cold hearth needs kindling laid on fuel; then the torch's swing passes the flame,
-     and it catches after the kindling's time (§CN).
-   - The village keeps which hearths are lit ("villages": id → {hearths, plague}). The
-     lit share drives the warmth (part 2 below).
-6. **One plague for the prototype:** the built "overrun" state (§CN). The hall's cellar is
-   the den, leading down to a delve (§CJ), and the hall's hearth is the heart: lit, it
-   clears the village. Ghosts (`Haunt`, §DI.4) come second.
-7. **Checks and frames:**
-   - `village_site_check` and `village_build_check` run headless;
-   - a walkabout `SITES=village` pair (dead at night, relit at night) is taken once, at
-     the end of the pass, per the working agreement.
+**3. Check Lynch's five bones (§EG.1)** on the plan, before anything is built. *Headless:*
+all five, by measurement:
+- **Paths:** the path graph is connected, and every house is reachable.
+- **Edges:** the village outline (the hull of plots plus a margin) is bounded for at least
+  half its length by something named: the forest line (the plant placer's tree mask), the
+  water, a wall or a retaining terrace.
+- **Districts:** the plots split into two to four clusters (by path-graph distance and
+  height band), each with its own trait: by the water, up the slope, round the square, at
+  the mill. Each is given a name for the log.
+- **Nodes:** at least one square (a junction where three or more paths meet, with room in
+  it), and no more than one per about five houses.
+- **Landmarks:** one landmark (the hall tower or a great tree) seen from at least about
+  70 % of points sampled along the paths. This is a line-of-sight test against the plan's
+  building volumes and the fine ground, plain geometry before the build. After the build
+  it is repeated with physics ray casts (headless checks already use `intersect_ray`).
 
-Order of milestones for Mike:
-1. siting (numbers only);
-2. one dead village standing on its slope;
-3. the relight loop and its windows;
-4. the warmth (part 2);
-5. the plague.
+If a bone is missing, the plan regrows with the next seed offset (a few tries), then
+fails loud in the check.
 
-### What must bend so a relit village can go amber while the wild stays blue (§EE.1)
+**4. Composition pass (§EF.2–3, §EF.7, §EG.2–3)**, still on the plan.
+- **Key views.** Composition can only be judged from places a player will stand. So the
+  pass lists the **key views**:
+  - the village entrance;
+  - each square's entries;
+  - each long straight run's start (a sightline of 25 m or more);
+  - the top and bottom of the street.
 
-The night is blue in two places today, and both are global (they read `look_night` or
-`night`, not where a pixel is). So the amber has to be **local**: a warm zone round each
+  Each view is a camera: eye height, the run's direction, the game's FOV.
+- **Terminate every vista (§EF.2):** cast along each straight run. Where the far end lands
+  on nothing named, it gets a focal point: the well, a feature tree, a shrine, a cold
+  hearth house, a lantern post (cold until lit). Or the run bends onto an existing
+  building. A peak or tower beyond counts too (borrowed scenery): a skyline sample on the
+  run's bearing.
+- **One dominant element per view (§EG.2):** in each view, rank the elements by visual
+  weight (below). Exactly one must lead by a clear margin, at most `secondary_max` (3) may
+  follow, and the rest stay under a quiet threshold.
+- **Focal points on the thirds:** project the dominant element into the view's frame. Its
+  centre must lie within a tolerance of a thirds line or crossing, and never within about
+  10 % of dead centre. If it fails, nudge the element along its plot, or swing the run's
+  last bend.
+- **Visual-weight balance (Arnheim):**
+  - Each element's weight is its projected area × brightness × isolation × off-centre
+    distance (`composition.view.weight_from`).
+  - Brightness for the plan check comes from its material's albedo by day, or its lit or
+    emissive state by night.
+  - Isolation is its screen-space distance to its nearest neighbour.
+  - The check: the weighted moment about the frame's centre is under a tolerance, and the
+    two halves are **not** mirror images (below).
+  - If it fails, add a small bright counterweight (a lantern, a pale stone, a white-flowered
+    tree) far out on the light side.
+- **Groups of 3 and 5, never mirrored:**
+  - Cluster the repeated elements (houses round a square, trees, lantern posts, steps):
+    every group must be 1, 3 or 5, so 2s and 4s get one added or removed.
+  - For mirroring, reflect each view's elements across its axis and match them. The best
+    match must stay under a share (say 40 %).
+- **Layered depth (§EF.7):** each key view needs a near frame within 6 m (an arch, a branch,
+  an eave, a doorway), a middle subject and a far backdrop. Three distance bands, each
+  holding something.
+- **Closure lure:** the landmark is half-hidden (30–70 % of its projected area blocked) from
+  at least one view on the main approach.
+- **At least one deliberate void, `ma` (§EG.3):** one of `ma.kinds` (an empty square, an
+  unplanted bank, a still pool) is reserved in the plan:
+  - nothing is built or planted inside it (plants are masked like a clearing);
+  - it is bounded on two sides at least;
+  - it sits off the main path, but is seen from it.
+- *Headless:* all of it is geometry. It is computed from the plan with a projection maths
+  helper (no renderer), then repeated after the build with ray casts for occlusion. What
+  headless can't judge is whether the result *feels* composed. That is the walkabout pair
+  at the end, and Mike's eye.
+
+**5. One stone, one timber, one roof per village (§EG.3)**, chosen from the land, never
+from a template:
+- **Stone:** from the planet's rock class under the site (`PlanetData.Rock`). Granite gives
+  grey granite; limestone pale limestone; sandstone warm sandstone; basalt dark basalt;
+  alluvium or till give river cobble and fieldstone.
+- **Timber:** the dominant canopy tree within reach (the stand dominance, §BH). Oak, pine,
+  chestnut and so on, each with its bark tile.
+- **Roof:**
+  - slate where the rock splits (metamorphic or shale country);
+  - clay tile on a clay bank or a warm, dry slope;
+  - reed or straw thatch by water and wetland;
+  - wooden shingle in conifer country.
+- *Headless:* yes. The check counts the distinct materials across all the village's meshes:
+  exactly 1 + 1 + 1 (dressing such as moss, ivy and iron excepted).
+
+**6. Build it with the land; a hearth in every house** (new `village_builder.gd`,
+reusing RuinBuilder's block grammar). The ground is never edited. Each house reads the
+fine ground at its footprint's corners and side midpoints, then picks one of three:
+- **under about 4° across it:** a low plinth course;
+- **4–15°:** stepped foundations. The floor steps once or twice along the contour, a
+  mortarless dry-stone retaining wall runs down to the ground on the downhill face, and a
+  gravel drain lies along the uphill wall.
+- **steeper, or over the channel:** a level floor on posts, each its own length, each on its
+  own foundation stone.
+
+A terraced row steps house by house along the contour (shared walls, §EF.1). Every house
+has a hearth, a chimney and street-side windows. Each hearth is an old hearth (OldHearths:
+an ash ring with charred wood counted as fuel), keyed in FireStore like any fire.
+- *Headless:* yes. `village_build_check` asserts:
+  - every post and wall foot meets the ground within 5 cm;
+  - no floor is buried;
+  - no post is longer than the maximum;
+  - every house has one hearth key;
+  - the colliders let you walk the steps (the walk-max slope, a step height under the
+    player's).
+
+**7. The dead state, warming window by window; squares lose their refuge while dead
+(§EE.2, §CN, §CQ, §EG.4).**
+- **Dead:**
+  - cold hearths, dark windows;
+  - ivy over doors and moss in the stone at full age (Overgrowth);
+  - the channel choked and the wheel still;
+  - the hearth houses placed at vista ends and in squares (§EF's dead-village rule), so
+    the composition leads to the next fire with no waypoint.
+- **Refuge taken away:** in each square, the sheltered spots (a bench against a wall, a
+  porch, a niche: a backing within 1.5 m with an open view of 15 m or more) are broken
+  while the village is dead. The bench is collapsed, the porch is down, the niche is choked
+  with bramble. They come back as the hearths round that square are lit.
+- **Relighting under the rules as built:**
+  - the flame is carried, never made (§CQ);
+  - a cold hearth needs kindling laid on fuel;
+  - the torch's swing lights it after the kindling's catch time (§CN).
+- **When a hearth catches:** its windows warm (emission eased in over the catch time), its
+  chimney smokes (§CV), it holds the dark off (§BA), and the village's lit share rises. The
+  save holds "villages": id → {hearths, refuge, plague}.
+- **The plague:** for the prototype, the built "overrun" state. The hall's cellar is the
+  den down to a delve (§CJ), and the hall's hearth is the heart.
+- *Headless:*
+  - the save state;
+  - the lit share;
+  - each window's emission after a hearth is lit;
+  - each square's sheltered-spot count, dead against lit. A spot counts when ray casts find
+    a backing behind it and a clear view ahead.
+
+  Not headless: whether the dead square *reads* exposed. That is the walkabout pair
+  (`SITES=village`: dead at night, relit at night), taken once at the end of the pass.
+
+Milestones for Mike:
+1. site numbers (step 1);
+2. the plan and its checks (steps 2–4, numbers and a top-down map image drawn by the tool,
+   not a screenshot);
+3. one dead village standing (steps 5–6);
+4. the relight loop and the refuge flip (step 7);
+5. the warmth (below);
+6. the walkabout pair.
+
+### What must bend so a relit village can go amber (§EE.1, §EG.4: figure against ground)
+
+The night is blue in two places today, and both are global: they read `look_night` or the
+grade's `night`, not where a pixel is. So the amber must be a **local warm zone** round each
 lit village, not a switch on the whole frame. There is a pattern for that already: the
-eight nearest glowing sites reach the shaders as global uniforms (`look_site_0..7` in
-`look.gdshaderinc`, set by `Look.gd`).
+eight nearest glowing sites reach the shaders as global uniforms (`look_site_0..7`,
+`Look.gd`).
 
-In LOOK_REFERENCE (Claude in chat's file; these are the lines to amend):
-- **R2 "Blue owns the frame"** (night: blue 84 %, warm 0 %): add "outside a lit village".
-- **R7 "One warm accent, and when it's there it's alone":** warm light stays firelight
-  only, but a lit village may hold many accents and go amber-dominant.
-- **Eye test 5** ("is the fire the only warm thing"): the same exception.
-- **R3:** shade by firelight (brown, #130E0C) becomes the rule inside a lit village, not a
-  corner case.
-- **The targets table:** the night warm share of 0.00 needs a lit-village band. Measure it
-  from the en4ria frames with `measure_look.py --fav` before tuning anything.
-- **R6 "Water is the brightest thing":** lit windows must stay under the water's brightness,
-  or this rule needs its own exception.
+**LOOK_REFERENCE** (Claude in chat's file; the lines to amend):
+- **R2** (night: blue 84 %, warm 0 %): add "outside a lit village".
+- **R7** (one warm accent, alone): firelight only, but a lit village may hold many accents
+  and go amber-dominant.
+- **Eye test 5:** the same exception.
+- **R3:** shade by firelight (brown, #130E0C) becomes the rule inside a lit village.
+- **The targets table:** a lit-village band, measured from the en4ria frames with
+  `measure_look.py --fav` before any tuning.
+- **R6 (water is the brightest thing):** lit windows stay under it, or R6 gets an exception.
 
-In the code:
+**Code:**
 1. **`shaders/post_grade.gdshader`:**
    - `night_pull` pulls every dark pixel that isn't protected to the navy floor's hue, and
-     `protect()` only spares oranges whose chroma is over `protect_chroma` (0.12–0.25). So
-     dimly firelit stone, low in chroma, is still pulled navy, and the amber drops off
-     within metres of each window.
+     `protect()` only spares oranges whose chroma is over 0.12–0.25. So dimly firelit
+     stone goes navy within metres of a window.
    - The night preset's teal, cyan highlight and navy shadow tint push the same way.
-   - **The bend:** a `warmth` uniform (0–1, the nearest lit village's lit share times how
-     close you are) that eases `night_pull`, the teal and the cyan, turns the shadow tint
-     toward the firelit brown, and lowers `protect_chroma`.
-2. **`shaders/palette.gdshaderinc` night pull** (used by terrain, foliage and ruin
+   - **The bend:** a `warmth` uniform (the nearest lit village's lit share × how close you
+     are) that eases the pull, the teal and the cyan, turns the shadow tint toward the
+     firelit brown, and lowers `protect_chroma`.
+2. **`shaders/palette.gdshaderinc`'s night pull** (used by terrain, foliage and ruin
    shaders):
-   - At night it moves every surface's albedo toward its blue night target before any
-     light lands on it. Firelight on slate-blue stone then reads grey-violet, not amber.
-   - **The bend:** the pull × (1 − `look_warm(world_pos)`). Here `look_warm` reads new
-     globals `look_warm_0..7` (position, radius, strength = lit share), the same shape as
-     `look_site_*`.
-3. **`scripts/sky/look.gd` and SkySystem:**
-   - **The bend:** set `look_warm_*` for the nearest lit villages, and `warmth` for the
-     grade.
-   - SkySystem's blue night ambient stays as it is: the wild stays blue, and the warmth
-     comes from local lights.
+   - At night it moves each albedo toward its blue night target before light lands on it,
+     so firelight on slate-blue stone reads grey-violet.
+   - **The bend:** the pull × (1 − `look_warm(world_pos)`), with new globals
+     `look_warm_0..7` in the shape of `look_site_*`.
+3. **`Look.gd` and SkySystem:**
+   - **The bend:** set those uniforms for the nearest lit villages.
+   - The blue night ambient stays as it is: the wild stays blue, and the warmth comes from
+     local lights.
 4. **The lights:**
-   - Today each fire is a `Campfire` light: an OmniLight, `look.json fire.light` range
-     7 m, swelling 1.3×/1.4× at night, plus a flame card, coals and a smoke column. Twelve
-     lit hearths would mean twelve of each.
-   - **The bend:** shadowless window lights; only the nearest ~6 lit hearths get a real
-     OmniLight. The rest are emissive panes plus the warm ground glow
-     (`shaders/fire_glow_warm.gdshader`). Smoke stays capped by `Smoke`'s `FAR_MAX`.
-5. **Window glass:** a new emissive pane, using the ruin shader's tomb-lamp gold (#FFC040,
-   R1a lantern), so the grade's protected hue keeps it gold and it blooms on HDR only (R8
-   holds: only what gives light glows).
-6. **Data help text:** `look.json`'s `grade._help` and `fire._help`, and the brief's look
-   lines in `CLAUDE.md`, say "fire the one warm accent". They should cite §EE.1.
+   - Today each lit hearth would be a full `Campfire`: an OmniLight (`look.json fire.light`,
+     7 m, swelling 1.3×/1.4× at night), flame, coals and smoke.
+   - **The bend:** shadowless window lights; a real OmniLight for only the nearest ~6 lit
+     hearths; emissive panes plus `fire_glow_warm` ground glow for the rest. Smoke stays
+     capped by `Smoke`'s `FAR_MAX`.
+5. **Window glass:** an emissive pane in the ruin shader's tomb-lamp gold (#FFC040), inside
+   the grade's protected hues, blooming on HDR only (R8 holds).
+6. **Help text:** `look.json`'s `grade._help` and `fire._help`, and the brief's look lines in
+   `CLAUDE.md`, still say "fire the one warm accent". They should cite §EE.1.
 
-### Where §EE meets built code: things to flag
+### Where §EE, §EF and §EG meet built code: flags for Mike
 
 1. **§BU (locked) says "Night is one colour (collapse toward the floor's blue)".**
-   `post_grade`'s `night_pull` is that line in code. §EE.1 amends LOOK_REFERENCE and "blue
-   owns the frame", but doesn't name §BU or the brief's look lines in CLAUDE.md. Both need
-   the same amendment.
-2. **Hearths go cold again (an open call in §EE.2) already has a built answer:**
-   - OldHearths and FireStore burn an untended fire at the full rate until it is out.
-   - So a relit village goes dark again within game hours unless something tends it:
-     folk returning (the camp sim), a slower "banked" village hearth, or tended-rate
-     burning once relit.
-   - It needs Mike's call before the loop is built.
-3. **Kindling per hearth (§CN):** each cold hearth needs kindling laid. A 12-house village
-   is 12 gatherings, against 10 carry slots. A dry kindling box in each dead house would
-   ease it, but it bends §CN's "gather your own".
-4. **What clears a village:** overrun (§CN) clears on one heart fire-holder, while §EE has
-   the village warm "one window at a time". The prototype takes the hall's hearth as the
-   heart; Mike should confirm.
-5. **Beasts as a plague vs the guardians (§ED.6):** a guardian ignores light and is driven
-   off by spear or bow, and leaves for good when the hearth is restored. "Every plague is
-   answered by light" (§EE.2) holds only if it means *restoring the hearths*, not light
-   repelling the beast.
-6. **"Amends 'tribal tech' in the project brief":** `CLAUDE.md` has no such line. It is
-   `DESIGN.md` line 26 ("a tribal, pre-firearm tech level"), which is Claude in chat's to
-   correct. §CK's "a ruin is what a camp leaves" also needs a word on who built the stone
-   towns, though many built ruins (castles, abbey, brick city) are already past tribal.
-7. **One hearth site or many:** the §CU hearth pass keeps "a few hearths per biome, one per
-   150 km², never repeat". Proposed: a village counts as **one** site, and its house
-   hearths aren't counted.
-8. **River bends at this scale:**
-   - At 1/100 a river is 1–2.5 km of straight cell-to-cell segments, so a bend exists only
-     at a joint.
-   - `inside_of_river_bend`, `outer_eroding_bank` and "slow meandering water" can only be
-     read there, coarsely.
-   - There are no streams under 7 m, hence the village-built channel.
-9. **Building the missing piece** (mound, pond) means editing the ground, which is a pure
-   function today. It needs a stamp hook like `Nests.stamp`, ordered before the roads,
-   plants and caves. It's deferred past the prototype.
-10. **Weapons (§EE.6):** §ED.7 is built (spear and bow as finds or a maker's work, the fire
-    arrow). Nothing changes until Mike decides.
+   `post_grade`'s `night_pull` is that line in code. §EE.1 amends LOOK_REFERENCE but not
+   §BU or the brief's look lines; they need the same amendment.
+2. **Hearths go cold again (open in §EE.2):** the built rule already answers it. An
+   untended fire burns at the full rate until it is out (FireStore, OldHearths), so a relit
+   village goes dark within game hours. Options: folk return and tend it (the camp sim), a
+   slow "banked" village hearth, or tended-rate burning once relit.
+3. **Kindling per hearth (§CN):** 12 houses means 12 gatherings, against 10 carry slots. A
+   dry kindling box in each house would ease it, but it bends "gather your own".
+4. **What clears a village:** overrun clears on one heart fire, while §EE warms the village
+   window by window. The plan takes the hall's hearth as the heart.
+5. **Beasts as a plague vs the guardians (§ED.6):** a guardian ignores light. "Every plague is
+   answered by light" holds only if it means restoring the hearths.
+6. **Layout dread vs the dread meter:** §EG.4 asks for dread from the layout alone. The dread
+   meter (§BA) rises only from the dark and hunters, so an exposed dead square wouldn't move
+   it. Should exposure feed it, or should the layout do the work on its own?
+7. **Composition needs set viewpoints.** The player is a free first-person camera, so
+   "focal point on the thirds" and "one dominant per view" can only be composed for the
+   key views (entrances, square entries, the start of each run). Between them the rules
+   hold only roughly.
+8. **Lanterns as focal points (§EF.2):** a lantern gives light, so under §CQ it must be cold
+   until lit from a carried flame. By day, and in a dead village, it is a dark iron post,
+   not a bright point; the balance check reads it that way.
+9. **The landmark seen from everywhere (§EF.10)** competes with the 400 m horizon and with
+   night fog. Inside a ~200 m village that is fine; from the approach the landmark has to
+   clear the fog's start distance.
+10. **"Water you follow" must be heard (§EF.8):** the river sounds (`WaterSounds`) follow
+    river segments only. The channels need their own sound source.
+11. **"Amends 'tribal tech' in the project brief":** the line is `DESIGN.md` line 26, not
+    `CLAUDE.md`. §CK's "a ruin is what a camp leaves" also needs a word on who built the
+    stone towns.
+12. **One hearth site or many (§CU):** proposed, one village = one site.
+13. **River bends at this scale:** a river is 1–2.5 km of straight cell-to-cell segments, so
+    the bend terms can only be read at a joint, coarsely.
+14. **Building the missing piece** (mound, pond) means editing a ground that is a pure
+    function today. That waits for a stamp hook.
+15. **Bow and spear (§EE.6), settled by Claude Code (Mike handed it over, 5 Oct):** §ED.7
+    stands as built. Spear and bow are rare finds or a maker's work, for hunting, fishing
+    and driving off guardians, with the fire arrow taught by a headman. Edges never touch
+    what lurks in the dark. Reasons:
+    - it is built and checked;
+    - the torch stays the game's first tool;
+    - villages don't need either one.
+
+    Claude in chat should record it under §EE.6.
 
 ## Known gaps and next steps
 
