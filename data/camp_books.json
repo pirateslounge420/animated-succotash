@@ -1,0 +1,33 @@
+{
+ "_help": "Camp books, \u00a7ED.3 (4 Oct 2026). One per camp, on an altar or shelf by the hearth; the camp sim's only readout. Lines are in the folk's hand, stamped in game time; ink darkens by age (fresh -> brown over age_brown_days). rumour: when an overrun ruin (\u00a7CN) is within range_m, the newest line points at it, worded from its smoke state (\u00a7CV). Reading copies the rumour into the player's log.",
+ "object": {
+  "forms": [
+   "bound book",
+   "scroll"
+  ],
+  "with": [
+   "quill",
+   "ink pot"
+  ],
+  "pages": "yellowed",
+  "placement": "altar or shelf by the hearth"
+ },
+ "lines": {
+  "events": [
+   "birth",
+   "gatherer_lost",
+   "woodpile_low",
+   "store_change",
+   "hearth_relit",
+   "folk_left_for_fire"
+  ],
+  "age_brown_days": 30,
+  "max_pages": 12
+ },
+ "rumour": {
+  "range_m": 3000,
+  "no_smoke": "No smoke from the {ruin} for a season.",
+  "thin_smoke": "The fire at the {ruin} burns low; nobody goes.",
+  "copy_to_log": true
+ }
+}

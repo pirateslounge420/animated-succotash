@@ -3411,3 +3411,42 @@ From the same playtest: wolves closed in and took Mike in what felt like an inst
 - **A breath between bites.** After a hit lands, no further hit counts for `invuln_s` (0.6 s, first guess). A pack can't land three bites in one blink; you get a moment to turn and run.
 - **One hit back every 5 seconds.** Each counted hit heals after `recover.step_s` (5 s). Any new hit resets that timer to a full 5 s. It ticks even while you're being chased: there is no "break contact" condition now, and §EA's `window_s` and `calm_s` are retired. So hit once and you're whole 5 s later; hit twice and it takes 10 s, unless a third lands first.
 - **The stages still run:** hit 1 the dark reaches in; hit 2 the fast heartbeat (as §EA); hit 3 "Good night". Healing from 2 to 1 settles the heartbeat first, then the dark pulls back.
+
+## ED. The river camp, reading the river, the camp book, the sighting log, guardians, and the only two weapons — LOCKED (4 Oct, 21:13, by voice, Mike)
+
+Stacks on §BV–§BW (the spawn camp), §AZ (the log), §CN (overrun ruins), §CV (smoke), §CY (dawn start) and §EA/§EC (hits). Amends §T and `items.json → starting_kit` only where ED.7 says so. "Tome" keeps its 3 Oct meaning (a found philosophical text, `data/tomes.json`); the book at a hearth is the **camp book**.
+
+### ED.1 The opening is a river camp
+- Dawn start stands (§CY, bug noted in §EB.1). Spawn sits in a temperate band of whichever hemisphere is in spring or summer on day one, so the first day is never shorter than the equinox reference: 18 real minutes of dawn and 60 of day before dusk.
+- The spawn point is the first restored hearth: a ruin camp of 4–5 folk beside a river, on a road that follows the river both ways. Rivers were the trade roads; the first landmarks lie upstream and down.
+- You wake with the torch and nothing else (ED.7).
+
+### ED.2 Reading the river
+- Direction is never in doubt: foam lines and drifting leaves travel downstream, and the river's sound swells as you walk down it.
+- Strength is read by eye, by phase: pool, glide, riffle, run, rapid, cascade, fall. Each phase is its own surface treatment inside the look rules (water the brightest thing in view, biome-matched hue, no shine). No numbers on screen. Data: `data/water/phases.json`.
+- Phases do work: fish hold in pools and glides; a spear thrown into a run or anything stronger is carried off and lost (§BQ's "a spear is forever unless lost, e.g. to a current" made concrete).
+
+### ED.3 The camp book
+- Folk stay mute. Every camp keeps one camp book on an altar or shelf by the hearth: a bound book or scroll, yellowed pages, a quill and ink pot beside it. The books are relics of the old builders; the folk who inherited the hearth keep writing in them. Interacting opens it, in the internal frame, in the HUD's font, like the log.
+- The camp book is the camp sim's only readout: births, a gatherer who never came back, the woodpile running low, the store changing. One line per event the sim already emits, stamped in game time; the newest ink dark, older pages browned.
+- The newest line may be a rumour about a nearby overrun ruin (§CN), tied to its smoke (§CV): "no smoke from the old tower for a season". Reading a camp book copies its rumour into the player's log. Data: `data/camp_books.json`.
+
+### ED.4 The log, later
+- §AZ stands: Enter, one chronological log, game-time stamps. Later, not now: tabs, a plant log and a creature log at least.
+
+### ED.5 The sighting log, the long game
+- Every loggable plant gets a unique pixel-art sprite (its leaf or a branch) and a short real-world write-up; a cutting can be taken from it.
+- Every creature has three rungs: **common**; **rare morph**, the same mesh with only the tint changed (white stag, black wolf, albino raven: real morphs, really rare); **mythic**, a changed silhouette (jackalope for the hare, dire wolf for the wolf) with its own voice and a multiplier on the data the species already carries (`speed_mps`, `shy_m`, notice range, territory), so it is harder to slip away from. Every creature gets a mythic.
+- A mythic is a sighting you survive, not a kill. Its voice is the first tell and carries further than its sight: a howl alone is loggable as "something out there".
+- Seasons and photoperiod gate the log on their own; a full log is meant to take a very long time. Data: `data/creatures/rungs.json` (two placeholders; the rest is a chat data fill).
+
+### ED.6 Guardians
+- Some overrun ruins have a mythic holding the ground outside, on top of what lurks in the dark inside. The thing inside fears light; the guardian is flesh and blood and does not. You get past it by creeping (a slow walk draws near, running spooks it), by waiting for it to range out at dusk to hunt, or by wounding it with spear or bow to drive it off for a while. The camp book's rumour may hint which.
+- Restoring the hearth drives the guardian off to find new territory; it does not come back.
+
+### ED.7 Weapons in Torchfire 1: spear, bow, torch
+- The spear and the bow are the only weapons in Torchfire 1 (hunters have always hunted; meat comes back to the camp). Both are finds in the world or a maker's work; the player never crafts (no whittling). **Amends §T / `starting_kit`:** they are no longer laid at your feet on waking. You wake with the torch only.
+- Spear: tap thrust, hold throw, for hunting and fishing (combat.json as is). Bow: hunting at range, finite arrows, found or brought from a maker.
+- Edges and points touch only flesh and blood: game and guardians. Nothing with an edge touches what lurks in the dark; only fire answers it (§CN holds).
+- The fire arrow is a technique, not a tool: taught by the headman of one particular camp (which is open; data hook in `techniques.json`), permanent and weightless once learned. A lit arrow carries fire to what is out of reach: a hearth across a gap, kindling on a ledge. The torch with reach. Before it is learned, the bow is hunting only.
+- Deferred to Torchfire 2, a later era built on this game's systems: the full Wu Xing five-phase ring (unarmed, spear and javelin, axe, blade, bow). The torch sits outside the ring in both games. Fists stay as they are here.

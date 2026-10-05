@@ -923,6 +923,13 @@
    "verb": "knock the hardened resin off the bark where a dipterocarp has bled, pound it and pack it into a leaf or bark tube or a split bamboo, light it at the hearth box",
    "unlocks": "the dammar torch: a slow bright hand light in the wet forests; fir pitch is the temperate stand-in",
    "player_can": true
+  },
+  {
+   "name": "Fire arrow",
+   "taught_by": "headman",
+   "camp": "OPEN \u2014 which camp teaches it is undecided (\u00a7ED.7)",
+   "effect": "a drawn arrow may be lit at any flame; it lights what it hits",
+   "note": "\u00a7ED.7, 4 Oct 2026"
   }
  ]
 }

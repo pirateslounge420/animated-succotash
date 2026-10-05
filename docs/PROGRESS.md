@@ -3,6 +3,11 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-04 evening — §ED locked by voice (Claude in chat): the river camp, river phases, camp books, creature rungs, guardians, spear and bow as finds
+- New section §ED plus additive data: `data/water/phases.json`, `data/camp_books.json`, `data/creatures/rungs.json`, a Fire arrow hook in `techniques.json`. Nothing in code changed.
+- Amends `items.json → starting_kit`: you wake with the torch only; spear and bow are finds or a maker's work.
+- "Tome" keeps its 3 Oct meaning (found texts); the book at a hearth is the camp book.
+
 
 ## 2026-10-05 — Mike's 5 Oct calls, roads: wider, graded, held, sunk, steeper in the mountains (§DM.2–4)
 - **Wider (Mike: "they can be easy to lose"):** every grade in `roads.json → grades` is about 0.8 m wider: trodden 1.4–2.0 m, track 2.4–3.4 m, kerbed 3.4–4.4 m. Trodden is a little more worn and less grown over.

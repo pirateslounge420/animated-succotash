@@ -1,0 +1,43 @@
+{
+ "_help": "Creature rungs, \u00a7ED.5 (4 Oct 2026). Every species gets three: common (creatures.json as is), rare (tint only, chance), mythic (variant mesh/silhouette, own voice, multipliers on the species' own numbers, rarer chance). guardian: may be bound to the ground outside an overrun ruin (\u00a7ED.6). Only two placeholders here; the rest is a chat data fill.",
+ "defaults": {
+  "rare": {
+   "chance": 0.02
+  },
+  "mythic": {
+   "chance": 0.002,
+   "speed_x": 1.3,
+   "shy_x": 1.5,
+   "notice_x": 1.5,
+   "territory_x": 2.0,
+   "size_x": 1.6,
+   "voice_range_x": 2.0
+  }
+ },
+ "species": {
+  "Hare": {
+   "rare": {
+    "tint": "#f2efe6",
+    "note": "white morph"
+   },
+   "mythic": {
+    "name": "Jackalope",
+    "silhouette": "hare with pronged antlers",
+    "voice": "hare_scream",
+    "guardian": false
+   }
+  },
+  "Wolf": {
+   "rare": {
+    "tint": "#1a1a1f",
+    "note": "black morph"
+   },
+   "mythic": {
+    "name": "Dire wolf",
+    "silhouette": "wolf, heavier head and chest",
+    "voice": "dire_howl",
+    "guardian": true
+   }
+  }
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "_help": "River phases, \u00a7ED.2 (4 Oct 2026). Classified per segment from slope and width; thresholds are first guesses for Claude Code to tune. surface: the look; fish: whether fish hold here; spear: a thrown spear landing here is lost.",
+ "phases": [
+  {
+   "name": "pool",
+   "slope_max": 0.002,
+   "surface": "still, reflections, slow drift",
+   "sound": "hush",
+   "fish": true,
+   "spear": "recoverable"
+  },
+  {
+   "name": "glide",
+   "slope_max": 0.006,
+   "surface": "smooth scrolling, faint streaks",
+   "sound": "low",
+   "fish": true,
+   "spear": "recoverable"
+  },
+  {
+   "name": "riffle",
+   "slope_max": 0.015,
+   "surface": "broken, shallow, stones showing",
+   "sound": "chatter",
+   "fish": false,
+   "spear": "recoverable"
+  },
+  {
+   "name": "run",
+   "slope_max": 0.03,
+   "surface": "fast scroll, long streaks",
+   "sound": "rush",
+   "fish": false,
+   "spear": "lost"
+  },
+  {
+   "name": "rapid",
+   "slope_max": 0.08,
+   "surface": "white water, standing waves",
+   "sound": "roar",
+   "fish": false,
+   "spear": "lost"
+  },
+  {
+   "name": "cascade",
+   "slope_max": 0.3,
+   "surface": "stepped white water",
+   "sound": "roar",
+   "fish": false,
+   "spear": "lost"
+  },
+  {
+   "name": "fall",
+   "slope_max": 9,
+   "surface": "free-fall sheet, plunge-pool foam",
+   "sound": "thunder",
+   "fish": false,
+   "spear": "lost"
+  }
+ ],
+ "direction": {
+  "foam_lines": true,
+  "drifting_leaves": true,
+  "sound_swells_downstream": true
+ }
+}
