@@ -205,5 +205,57 @@
       }
     ],
     "dead_village": "cold hearths are placed at vista ends and in squares, so composition leads to the next fire"
+  },
+  "composition": {
+    "_help": "[NOT WIRED YET — design §EG] Composition layer over §EF layout. Measurable checks for the generator; thresholds are placeholders for Claude Code to tune.",
+    "governing": "consult the genius of the place: derive everything from the site; eastern skeleton (grown, asymmetric) with western punctuation (a few axes onto landmarks)",
+    "bones_required": [
+      "paths",
+      "edges",
+      "districts",
+      "nodes",
+      "landmarks"
+    ],
+    "view": {
+      "hierarchy": {
+        "dominant": 1,
+        "secondary_max": 3
+      },
+      "focal_on_thirds": true,
+      "balance": "visual_weight",
+      "weight_from": [
+        "size",
+        "brightness",
+        "isolation",
+        "position"
+      ],
+      "group_sizes": [
+        1,
+        3,
+        5
+      ],
+      "mirror_symmetry": false,
+      "closure_lure": "half-hide landmarks behind a frame"
+    },
+    "unity": {
+      "materials_per_village": {
+        "stone": 1,
+        "timber": 1,
+        "roof": 1
+      }
+    },
+    "ma": {
+      "voids_min": 1,
+      "kinds": [
+        "empty_square",
+        "unplanted_bank",
+        "still_pool"
+      ]
+    },
+    "wabi_sabi": "weathered, aged, imperfect",
+    "dead_state": {
+      "remove_refuge_in_squares": true,
+      "_why": "prospect without refuge reads as exposed: dread from layout (Burke's Sublime)"
+    }
   }
 }

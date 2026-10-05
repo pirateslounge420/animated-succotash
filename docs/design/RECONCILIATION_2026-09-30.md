@@ -3505,3 +3505,30 @@ Mike (by voice and chat, 5 Oct morning): he wants every procedural village to fe
 **In a dead village** the cold hearths sit at the ends of those views and in those squares: the rules that make the place feel composed also lead you to the next fire, with no waypoint.
 
 Open, still being shaped: more rules (Mike wants to keep going); how strictly each applies per archetype (a canal town's "streets" are water; a spire village's are bridges).
+
+## EG. The composition layer: consult the genius of the place — LOCKED (5 Oct, by voice to 11:56, Mike)
+
+Mike asked (by voice) to be taught the fundamentals of design as a history lesson, then turned into generator rules. Sources covered: aquascaping (Takashi Amano's Nature Aquarium, iwagumi, ma, wabi-sabi); garden design (Russell Page, *The Education of a Gardener*, 1962); Greek proportion and Vitruvius; Chinese and Japanese gardens; Renaissance perspective (Brunelleschi, Alberti), Versailles (Le Nôtre); the English landscape revolt (Pope, Kent, Brown, the Picturesque, Burke's Sublime); Gordon Cullen's serial vision; Kevin Lynch's *The Image of the City*; Jay Appleton's prospect and refuge; gestalt psychology; Rudolf Arnheim's visual weight. Sits on top of §EE (siting, building with the land) and §EF (layout). Data: `data/villages.json` → `composition`.
+
+**Governing principle: consult the genius of the place** (Pope, 1731; Page). Everything comes from the specific site the planet computed; nothing is a template dropped on top. Each village is an **Eastern skeleton with Western punctuation**: grown, asymmetric, path-based and built with the land, with a few chosen moments where a straight axis snaps onto a landmark (the terminated vista, §EF.2).
+
+### EG.1 The bones: legible with no map (Lynch)
+Every village must generate all five, clearly and distinctly: **paths** (routes), **edges** (forest line, shore, wall), **districts** (quarters with a character you could name), **nodes** (squares and junctions you pause in), **landmarks** (the one seen from everywhere, §EF.10). Test: a player could sketch the village from memory.
+
+### EG.2 Composing each view
+- **Hierarchy (iwagumi's main stone):** one dominant element leads and sets the lean of the scene; a few secondary; the rest quiet.
+- **Off-centre:** focal points land on the thirds, never dead centre.
+- **Visual-weight seesaw (Arnheim):** balance by weight, not mirroring. A big quiet dark mass on one side is balanced by a single small bright point far out on the other. Weight comes from size, brightness, isolation and position. This is how an asymmetric village still reads as composed.
+- **Odd numbers, never mirrored:** group in threes and fives; never match two sides.
+- **Closure lure (gestalt):** half-hide a landmark behind a branch or corner so the eye completes it and pulls you on.
+
+### EG.3 Unity and emptiness
+- **One repeated material per village:** one stone, one timber, one roof (gestalt similarity; Page's restraint). This alone reads as deliberate.
+- **Ma, one deliberate void:** each village keeps at least one quiet empty space on purpose (an empty square, an unplanted bank, a still pool) so the busy parts land. Restraint over ornament.
+- **Wabi-sabi:** weathered, aged, imperfect; the place looks like it has been there a thousand years.
+
+### EG.4 Figure and ground, the walk, the dark
+- The village reads as figure against the ground of the wild: amber against blue once lit (§EE.1).
+- Design the walk, not the plan (Cullen's serial vision): a "here" with a half-glimpsed "there" pulling you on; compress and release (§EF.3).
+- **Prospect and refuge (Appleton):** a good spot gives a sheltered back and an open view. Siting (§EE.3) already does this for the whole village; composition does it for squares and resting places (§EF.6).
+- **The dead-state flip (Burke's Sublime):** in a dead village, take the refuge away. A square with nowhere to put your back reads as exposed. Dread from the layout alone, no monster needed. The game sits in the Picturesque and the Sublime, not Brown's smooth lawns.
