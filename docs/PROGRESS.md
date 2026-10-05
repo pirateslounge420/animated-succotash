@@ -3,6 +3,17 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EE villages: a plan, nothing built
+- New section in `docs/implementation-notes.md`, "Villages (design 5 Oct §EE): plan for the first prototype". It covers:
+  - siting from `villages.json → siting`, every weight read from what the planet already computes;
+  - houses on stepped foundations, dry-stone retaining walls and posts of varying length, with the ground never edited;
+  - a hearth in every house;
+  - the relight loop under §CN/§CQ as built;
+  - one plague (overrun), and the checks.
+- Recommends the **stream-gutter town** first: it uses every siting weight and sits on a gentle slope. Its channel is the village's own, so it also gives the water loop, and it is temperate, near the opening.
+- Lists what must bend for a lit village to go amber while the wild stays blue (§EE.1). The night pulls in `post_grade` and `palette.gdshaderinc` are global, so the warmth has to be a local zone (`look_warm_*`, like `look_site_*`), not a switch on the whole frame.
+- Ten flags where §EE meets built code. Among them: §BU's locked "night is one colour"; built hearths burn out untended, which already answers "can hearths go cold"; kindling per hearth; what clears a village; and river bends existing only at segment joints at 1/100 scale.
+
 ## 2026-10-05 — Near trees culled as off screen: the avenue's missing trees (§DM.4), and every near tree like them
 - **What Mike would have seen:** on the full planet, trees within about 120 m of you could be missing while their shadows (and the trees farther off) stayed. The avenue down a kerbed approach (§DM.4) showed it plainest: a road with kerbs and no trees beside it. A road through rainforest could look like open grass.
 - **Why:** each branchy tree species in a chunk is drawn by copies sorted by distance from you (near, full, light; `TerrainChunk.band_trees`). Those copies start without a mesh until the chunk comes into the detail ring, and their buffers are filled before the mesh arrives. On that path the engine left each copy's bounding box empty, a point at the chunk's middle, so it judged the whole copy off screen and drew none of it. The trees were all placed, on the ground, in the right copies, with their meshes. Only the box was wrong. Found by rendering the 7731 kerbed spot: red marker boxes stood at the trees' recorded spots, the copies' boxes read 0 × 0 × 0, and an oversized box made the trees appear.
