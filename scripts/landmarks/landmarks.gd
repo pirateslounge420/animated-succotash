@@ -271,8 +271,11 @@ func _tick_boom(node: Node3D, n: Dictionary, pp: Vector3, delta: float) -> void:
 func _den_sleeper(node: Node3D, n: Dictionary, day: bool) -> void:
 	var sl := node.get_node_or_null("DenSleeper") as Node3D
 	if day and sl == null:
-		var who := Overrun.roster_holder(map, n.dir, str(n.key))
-		sl = Overrun.body_for(str(who.get("creature", "")))
+		var who := Overrun.cave_sleeper(map, n.dir, str(n.key))
+		if str(who.creature) == "":
+			# Nothing that would den here: the cave is empty.
+			return
+		sl = Overrun.body_for(str(who.creature))
 		sl.name = "DenSleeper"
 		sl.set_meta("creature", str(who.get("creature", "")))
 		node.add_child(sl)

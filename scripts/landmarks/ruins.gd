@@ -265,7 +265,11 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 ## and wet, never hot; the broch on a coast or a moor), on its own seeded
 ## `chance` roll. A castle may take the tower house, a tower the broch; on
 ## the moors (tundra and bog: igloo and boardwalk country otherwise) a
-## ruin may take either, the broch first.
+## ruin may take either, the broch first. Tundra stays igloo country (Mike,
+## 5 Oct): there only TUNDRA_STONE_SHARE of the rolls that would take a
+## northern style do.
+const TUNDRA_STONE_SHARE := 0.2
+
 static func _northern_style(map: PlanetData, p: Vector3, kind: int, land: String, key: Vector4i) -> String:
 	var moor := land in ["snow", "marsh"] and map.biome[map.cell_at(p)] in [BiomeTemplates.TUNDRA, BiomeTemplates.BOG]
 	var tries: Array = []
@@ -277,9 +281,11 @@ static func _northern_style(map: PlanetData, p: Vector3, kind: int, land: String
 		tries = ["broch"]
 	var srng := RandomNumberGenerator.new()
 	srng.seed = hash([key, "north"])
+	var tundra := moor and map.biome[map.cell_at(p)] == BiomeTemplates.TUNDRA
 	for s in tries:
 		var roll := srng.randf()
-		if Monuments.gate(map, p, s) == "" and roll < float(Monuments.entry(s).get("chance", 0.5)):
+		var chance := float(Monuments.entry(s).get("chance", 0.5)) * (TUNDRA_STONE_SHARE if tundra else 1.0)
+		if Monuments.gate(map, p, s) == "" and roll < chance:
 			return s
 	return ""
 

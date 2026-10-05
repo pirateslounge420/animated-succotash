@@ -146,5 +146,27 @@ func _run() -> void:
 			struck = true
 	ok(struck, "the log says \"Struck down by a wolf\"")
 	ok(harm.hits.is_empty() and not harm.taking and main.hud._status._taken_black == 0.0, "the harm is cleared after the wake")
+	# Any other death closes the same way (Mike, 5 Oct): a fall.
+	await _fall_death()
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+func _fall_death() -> void:
+	player._invulnerable = 0.0
+	player.death_cause = "fall"
+	player._damage(9999.0)
+	var t := 0.0
+	var saw_words := false
+	var saw_curtain := false
+	while t < float(Harm.D.taken.close_s) + float(Harm.D.taken.hold_s) * 0.5:
+		await process_frame
+		t += 1.0 / 60.0
+		saw_words = saw_words or main.hud._status.taken_text() == str(Harm.D.taken.text)
+		saw_curtain = saw_curtain or main.hud._status._death_label.visible
+	ok(saw_words and not saw_curtain, "a fall closes with \"Good night\" too, no \"You died\" (words %s, curtain %s)" % [str(saw_words), str(saw_curtain)])
+	var waited := 0.0
+	while player.dead and waited < 120.0:
+		await process_frame
+		waited += 1.0 / 60.0
+	ok(not player.dead and not harm.taking, "and you wake as before (%.1f s)" % waited)

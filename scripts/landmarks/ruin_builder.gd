@@ -503,6 +503,24 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		fmi.material_override = TerrainChunk._fall_mat
 		fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		root.add_child(fmi)
+		# Falls roar (Mike, 5 Oct: "waterfalls should have sounds"): a
+		# waterfall source at the foot of the tallest sheet, as a river's
+		# falls have (TerrainChunk, §BG), louder for a taller one. A nest
+		# that places its own roar (the organ pipes) is skipped.
+		if (data.get("roar", []) as Array).is_empty():
+			var fv: PackedVector3Array = fd.v
+			var lo := fv[0]
+			var hi := fv[0]
+			for p in fv:
+				if p.y < lo.y:
+					lo = p
+				if p.y > hi.y:
+					hi = p
+			var roar := Audio3D.make("waterfall", root, "Roar")
+			roar.stream = SoundSynth.stream("waterfall_loop", posmod(hash(lo), SoundSynth.VARIANTS))
+			roar.position = lo + Vector3(0.0, 0.5, 0.0)
+			roar.volume_db = linear_to_db(clampf((hi.y - lo.y) / 20.0 + 0.3, 0.3, 1.5))
+			roar.autoplay = true
 	# A garden gone wild on it (§DT): one multimesh a species.
 	var by_sp := {}
 	for gt in data.get("garden", []):

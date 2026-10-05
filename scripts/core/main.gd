@@ -723,7 +723,12 @@ func _on_player_died() -> void:
 	# Taken by a third hit (§EA): the dark has closed the frame and said
 	# "Good night" already; no curtain and no wait on top of it.
 	var taken := harm != null and harm.taking
-	if not taken:
+	# Any other death in the ambient game closes the same way, with "Good
+	# night" (Mike, 5 Oct); the ninja game keeps its curtain.
+	var closing := harm != null and not taken
+	if closing:
+		harm.close_for_death()
+	elif not taken:
 		hud.show_death()
 	var cause: String = player.death_cause
 	player.death_cause = ""
@@ -732,7 +737,7 @@ func _on_player_died() -> void:
 	if not found:
 		GameLog.add(_death_line(cause), "death_cause")
 	var corpse := PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
-	await get_tree().create_timer(0.3 if taken else 3.5).timeout
+	await get_tree().create_timer(0.3 if taken else (Harm.taken_s() + 0.2 if closing else 3.5)).timeout
 	hud.show_loading("", 0.5)
 	await get_tree().process_frame
 	await get_tree().process_frame

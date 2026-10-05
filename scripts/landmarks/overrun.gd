@@ -264,6 +264,39 @@ static func roster_holder(map: PlanetData, d: Vector3, id: String) -> Dictionary
 	return {"creature": pick.name, "pattern": "pacer", "speed_mps": maxf(pick.speed_mps, 3.0), "hunter": false}
 
 
+## Who sleeps in a sea cave by day (§DX; Mike, 5 Oct: "kind of a strange
+## place to find a hyena"): a night-roster species fitting the climate at
+## `d`, the shore's own first (crabs and the like: needs.shore or salt),
+## then small things that live by water, and only then anything else that
+## dens; never a canopy animal, a swarm or a sea fish. {"creature": ""}
+## where none fits: the cave is empty.
+static func cave_sleeper(map: PlanetData, d: Vector3, id: String) -> Dictionary:
+	var c := map.cell_at(d) if map != null else -1
+	var t := float(map.temp_c[c]) if c >= 0 and not map.temp_c.is_empty() else 12.0
+	var m := float(map.moisture[c]) if c >= 0 and not map.moisture.is_empty() else 0.5
+	var tiers := [[], [], []]
+	for sp in CreatureSpecies.all():
+		if sp.role in ["mythical", "canopy", "swarm"] or sp.body == "shark" or not sp.active in ["night", "dusk"]:
+			continue
+		if t < sp.temp_c.x or t > sp.temp_c.y or m < sp.moisture.x - 0.1 or m > sp.moisture.y + 0.1:
+			continue
+		var needs: Dictionary = sp.needs
+		if bool(needs.get("shore", false)) or bool(needs.get("salt", false)):
+			tiers[0].append(sp)
+		elif needs.has("water_within_m") and sp.size_m <= 1.0:
+			tiers[1].append(sp)
+		else:
+			tiers[2].append(sp)
+	for pool: Array in tiers:
+		if pool.is_empty():
+			continue
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([id, "cave_sleeper"])
+		var pick: CreatureSpecies = pool[rng.randi() % pool.size()]
+		return {"creature": pick.name}
+	return {"creature": ""}
+
+
 ## A body for a holder: the species' (CreatureBodies), else a cloaked
 ## shape, the dark itself.
 static func body_for(creature: String) -> Node3D:

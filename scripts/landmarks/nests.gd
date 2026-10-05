@@ -951,7 +951,6 @@ static func _column_candidates(c: Vector3i, n: int, rng: RandomNumberGenerator) 
 	var causeways: Array = []
 	var caves: Array = []
 	var pipes: Array = []
-	var pipes_loose: Array = []
 	var shores_seen := {}
 	for a in COLUMN_LATTICE:
 		for b in COLUMN_LATTICE:
@@ -975,18 +974,13 @@ static func _column_candidates(c: Vector3i, n: int, rng: RandomNumberGenerator) 
 						var cv := _sea_cave_at(sh, sb, rng)
 						if not cv.is_empty():
 							caves.append(cv)
-			if key in ["ICE_SHEET", "SEA_ICE"] or pipes.size() + pipes_loose.size() >= 6 or _rivers == null:
+			if not pipe_biomes.has(key) or pipes.size() >= 6 or _rivers == null:
 				continue
 			var op := _organ_pipes_at(p, cell)
 			if not op.is_empty():
-				(pipes if pipe_biomes.has(key) else pipes_loose).append(op)
-	if pipes.is_empty() and not pipes_loose.is_empty():
-		# No river cuts basalt in the variant's own biomes on the worlds
-		# measured (PROGRESS, §DX): the bank's biome is loosened, the rock
-		# and the river are not.
-		for op in pipes_loose:
-			op.loosened = true
-		pipes = pipes_loose
+				pipes.append(op)
+	# Only in the variant's own biomes (Mike, 5 Oct: drop them where their
+	# biomes don't allow; on the worlds measured that is most worlds).
 	return {"causeway": causeways, "sea_cave": caves, "organ_pipes": pipes}
 
 

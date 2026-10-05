@@ -223,8 +223,11 @@ func _physics_process(delta: float) -> void:
 			_stick()
 		"shooter":
 			# Your own arrow coming back down on you: it hurts like any
-			# other (by its speed), and glances off and drops.
-			shooter.take_hit(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
+			# other (by its speed), and glances off and drops. In the ambient
+			# game an arrow is never a hit (Mike, 5 Oct: arrows don't count
+			# toward §EA's three, for now): it only glances off.
+			if not Harm.active():
+				shooter.take_hit(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
 			_sound("arrow_hit")
 			exclude.append(shooter.get_rid())
 			global_position = hit_pos - velocity.normalized() * 0.03

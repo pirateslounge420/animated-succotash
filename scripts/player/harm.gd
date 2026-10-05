@@ -44,6 +44,9 @@ var taken_t := 0.0
 var black := 0.0
 var text_alpha := 0.0
 var cause := ""
+## Dead some other way (a fall, the dark's catch): the same closing and
+## "Good night", but nobody to take (main waits taken_s()).
+var _dead_already := false
 ## Tools: the clock (s) and a stand-in for the real one.
 var now := 0.0
 var _last_hit := -INF
@@ -113,11 +116,24 @@ func _take() -> void:
 		hud.set_taken(0.0, 0.0, "")
 
 
+## Every death in the ambient game closes the same way (Mike, 5 Oct: "the
+## old You died screen is replaced with Good night"): a fall or the dark's
+## catch plays the closing and the words; main waits taken_s().
+func close_for_death() -> void:
+	if taking:
+		return
+	taking = true
+	_dead_already = true
+	taken_t = 0.0
+	stage = 2
+
+
 ## All clear (after the wake, a new world).
 func reset() -> void:
 	hits.clear()
 	stage = 0
 	taking = false
+	_dead_already = false
 	taken_t = 0.0
 	black = 0.0
 	text_alpha = 0.0
@@ -205,7 +221,7 @@ func _taken(delta: float) -> void:
 		text_alpha = clampf(1.0 - (taken_t - close - hold) / fade, 0.0, 1.0)
 	if hud != null:
 		hud.set_taken(black, text_alpha, str(tk.get("text", "Good night")), Color(str(tk.get("text_color", "#C81E1E"))), int(tk.get("text_size_px", 40)))
-	if taken_t >= close + hold + fade and not player.dead:
+	if taken_t >= close + hold + fade and not player.dead and not _dead_already:
 		# Then the §DE wake (main._on_player_died, told by `taking`).
 		player.typing = false
 		player.death_cause = cause if cause != "" else "creature:something"

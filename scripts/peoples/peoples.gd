@@ -255,8 +255,12 @@ static func color_of(phrase: String) -> Color:
 ## The folk kind a camp of this people wears (its file's first kind, the
 ## seed picking another now and then), and the rig's scale for it
 ## (folk_kinds.json silhouette "folk_scale 0.75").
+## Folk kinds held out of play (Mike, 5 Oct: the goblins come out until
+## the mobs are worked on; §DH stays open). Their data stays.
+const OFF_KINDS := ["goblin"]
+
 static func folk_kind(people: Dictionary, seed_value: int) -> String:
-	var ks: Array = people.get("folk_kinds", ["human"])
+	var ks: Array = (people.get("folk_kinds", ["human"]) as Array).filter(func(k) -> bool: return not OFF_KINDS.has(str(k)))
 	if ks.is_empty():
 		return "human"
 	var rng := RandomNumberGenerator.new()

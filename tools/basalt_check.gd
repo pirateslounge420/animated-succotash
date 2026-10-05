@@ -192,8 +192,6 @@ func _one(map: PlanetData, rivers: RiverNetwork, n: Dictionary, built: Dictionar
 			ok(dp > 4.0 and dp < 12.0, "the hearth at the foot by the pool, out of the spray (%.1f m from it)" % dp)
 			ok(hl.z > -float(n.face_m), "the hearth stands in front of the face (z %.1f, face %.1f)" % [hl.z, -float(n.face_m)])
 			ok(not (data.roar as Array).is_empty(), "the fall roars (a waterfall source)")
-			if n.get("loosened", false):
-				print("[basalt] the organ pipes' biome loosened (%s): no river cuts basalt in its own biomes here" % BiomeTemplates.KEYS[map.biome[map.cell_at(d)]])
 		"columned_sea_cave":
 			ok(str(n.state) == "untouched" and str(n.get("raw_state", n.state)) == "untouched", "the sea cave holds no camp and no remains (%s)" % str(n.state))
 			ok(not (n.gives as Array).has("water") and not (n.gives as Array).has("roof"), "the sea cave gives no camp water nor roof")
@@ -217,5 +215,7 @@ func _one(map: PlanetData, rivers: RiverNetwork, n: Dictionary, built: Dictionar
 			ok(boom != Vector3.INF, "the boom's source at the cave's back")
 			var sea_below := Nests._e(CreatureSpawner._offset(d, float(n.facing), float(n.reach_m) * 0.6)) < sea - 0.5
 			ok(sea_below, "the sea runs in under the cave")
-			var who := Overrun.roster_holder(map, d, str(n.key))
-			print("[basalt] the sea cave's den holds: %s" % (str(who.creature) if str(who.creature) != "" else "the dark itself"))
+			var who := Overrun.cave_sleeper(map, d, str(n.key))
+			print("[basalt] the sea cave's den holds: %s" % (str(who.creature) if str(who.creature) != "" else "nothing (empty)"))
+			var sp := CreatureSpecies.find(str(who.creature)) if str(who.creature) != "" else null
+			ok(sp == null or not sp.role in ["canopy", "swarm", "mythical"], "the sleeper is something that would den in a sea cave (%s)" % str(who.creature))
