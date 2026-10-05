@@ -469,7 +469,7 @@ func cap(st: Dictionary) -> int:
 		c += int(pop.get("fundamental_adds", 6))
 	if bool(st.get("plot", false)):
 		c += int(pop.get("crop_adds", 4))
-	return mini(c, int(pop.get("village_cap", 24)))
+	return mini(c, int(pop.get("village_cap", 50)))
 
 
 ## The ladder as camp state (§BM): fire -> food -> storage -> specialist
@@ -632,7 +632,7 @@ func _walk_away(st: Dictionary, days: float, fled: bool, rng: RandomNumberGenera
 		dest.wood = float(dest.wood) + float(st.wood) * 0.3
 		dest.food = float(dest.food) + float(st.food) * 0.5
 		var dcap := cap(dest)
-		while (dest.folk as Array).size() > int((SIM.get("population", {}) as Dictionary).get("village_cap", 24)):
+		while (dest.folk as Array).size() > int((SIM.get("population", {}) as Dictionary).get("village_cap", 50)):
 			(dest.folk as Array).pop_back()
 		dest.folk_joined = days
 		if dcap >= 0:

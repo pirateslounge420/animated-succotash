@@ -7091,12 +7091,13 @@ func _pillar_bridge(i: int, j: int, kind: String, off: float) -> void:
 # --- The old colonnade (design 3 Oct §DV) ----------------------------------------------
 
 const PLASTER := [Color(0.74, 0.71, 0.64), Color(0.7, 0.67, 0.6), Color(0.77, 0.73, 0.65)]
-const IRON := Color(0.17, 0.16, 0.16)
+## Dark stone capitals: no metal (§EH); the capitals were iron before.
+const CAPITAL_STONE := Color(0.24, 0.23, 0.22)
 const OLD_BRICK := [Color(0.5, 0.3, 0.24), Color(0.46, 0.28, 0.22), Color(0.53, 0.33, 0.26)]
 
 
 ## The old colonnade (Monuments._colonnade, Colonnade): the columns in their
-## ring round the house's footprint (plastered brick, iron capitals, a few
+## ring round the house's footprint (plastered brick, dark stone capitals, a few
 ## fallen, a few broken), the brick cellar open in the middle with still
 ## water on its floor and a stair down into it, the door to the cistern;
 ## the avenue of old oaks running out from the front (-z). Nothing says
@@ -7139,10 +7140,10 @@ func _colonnade() -> void:
 		for rot: float in [0.0, PI * 0.25]:
 			_pbox(Transform3D(Basis(Vector3.UP, rot), Vector3(p.x, g + 0.7 + h * 0.5, p.y)), Vector3(1.1, h, 1.1), PLASTER[i % 3].darkened(rng.randf_range(0.0, 0.1)), 0.25)
 		if h > ch * 0.9:
-			_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, g + 0.7 + h + 0.25, p.y)), Vector3(1.5, 0.5, 1.5), IRON, 0.05)
+			_pbox(Transform3D(Basis.IDENTITY, Vector3(p.x, g + 0.7 + h + 0.25, p.y)), Vector3(1.5, 0.5, 1.5), CAPITAL_STONE, 0.05)
 			for f in 4:
 				var a := f * PI * 0.5
-				_pbox(Transform3D(Basis(Vector3.UP, a), Vector3(p.x + cos(a) * 0.62, g + 0.7 + h - 0.15, p.y + sin(a) * 0.62)), Vector3(0.18, 0.5, 0.5), IRON, 0.0)
+				_pbox(Transform3D(Basis(Vector3.UP, a), Vector3(p.x + cos(a) * 0.62, g + 0.7 + h - 0.15, p.y + sin(a) * 0.62)), Vector3(0.18, 0.5, 0.5), CAPITAL_STONE, 0.0)
 		if rng.randf() < 0.3:
 			ivy(Vector3(p.x + 0.58, g + 0.7 + h, p.y), Vector3(1.0, 0.0, 0.0), rng.randf_range(3.0, h))
 	# The cellar: its brick walls, the still water on its floor, the stair

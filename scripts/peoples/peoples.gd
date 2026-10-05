@@ -24,7 +24,7 @@ const WORDS := {
 	"blue": Color(0.3, 0.45, 0.7), "sky": Color(0.55, 0.7, 0.9), "turquoise": Color(0.2, 0.6, 0.6), "water": Color(0.35, 0.45, 0.5),
 	"clay": Color(0.7, 0.45, 0.3), "fired": Color(0.7, 0.4, 0.28), "limestone": Color(0.72, 0.7, 0.62), "lime": Color(0.86, 0.86, 0.8), "whitewash": Color(0.9, 0.9, 0.86), "stone": Color(0.5, 0.5, 0.48), "ivory": Color(0.88, 0.84, 0.7), "whalebone": Color(0.85, 0.82, 0.7),
 	"birch": Color(0.88, 0.86, 0.8), "spruce": Color(0.18, 0.3, 0.22), "larch": Color(0.75, 0.6, 0.25), "oak": Color(0.4, 0.45, 0.25), "fig": Color(0.3, 0.5, 0.25), "willow": Color(0.55, 0.6, 0.4), "acacia": Color(0.45, 0.55, 0.3), "mesquite": Color(0.4, 0.5, 0.3), "meadow": Color(0.45, 0.6, 0.3), "nipa": Color(0.35, 0.5, 0.3), "sphagnum": Color(0.6, 0.35, 0.3), "lichen": Color(0.65, 0.68, 0.55), "wet": Color(0.3, 0.45, 0.3),
-	"smoke": Color(0.55, 0.55, 0.55), "ash": Color(0.6, 0.6, 0.58), "iron": Color(0.5, 0.3, 0.2), "tannin": Color(0.4, 0.3, 0.18), "oyster": Color(0.6, 0.6, 0.58), "lamp": Color(0.9, 0.75, 0.4), "tola": Color(0.5, 0.55, 0.45), "woven": Color(0.55, 0.35, 0.25),
+	"smoke": Color(0.55, 0.55, 0.55), "ash": Color(0.6, 0.6, 0.58), "tannin": Color(0.4, 0.3, 0.18), "oyster": Color(0.6, 0.6, 0.58), "lamp": Color(0.9, 0.75, 0.4), "tola": Color(0.5, 0.55, 0.45), "woven": Color(0.55, 0.35, 0.25),
 }
 
 

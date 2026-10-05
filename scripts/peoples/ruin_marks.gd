@@ -73,9 +73,9 @@ static func _signature(n: Node3D, sig: Dictionary, level: int, rng: RandomNumber
 		PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, Vector3(0, r * 0.15, 0)), r * 0.6, r * 0.4)
 		return
 	var col := STONE.darkened(0.15) if level == 1 else STONE
-	if s.find("midden") >= 0 or s.find("mound") >= 0 or s.find("black earth") >= 0 or s.find("slag") >= 0 or s.find("kraal") >= 0:
+	if s.find("midden") >= 0 or s.find("mound") >= 0 or s.find("black earth") >= 0 or s.find("kraal") >= 0:
 		var r := rng.randf_range(2.0, 3.2)
-		var mc := Color(0.82, 0.78, 0.66) if s.find("shell") >= 0 else (Color(0.12, 0.1, 0.08) if s.find("black") >= 0 or s.find("slag") >= 0 or s.find("charcoal") >= 0 else Color(0.4, 0.33, 0.22))
+		var mc := Color(0.82, 0.78, 0.66) if s.find("shell") >= 0 else (Color(0.12, 0.1, 0.08) if s.find("black") >= 0 or s.find("charcoal") >= 0 else Color(0.4, 0.33, 0.22))
 		CreatureBodies.ball(n, Vector3(r, r * 0.45, r * 0.8), Vector3(0, r * 0.12, 0), mc)
 		PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, Vector3(0, r * 0.2, 0)), r * 0.7, r * 0.4)
 	elif s.find("stake") >= 0 or s.find("weir") >= 0 or s.find("post") >= 0 or s.find("fence") >= 0 or s.find("pile") >= 0 or s.find("stump") >= 0:
@@ -106,8 +106,8 @@ static func _signature(n: Node3D, sig: Dictionary, level: int, rng: RandomNumber
 		pool.material_override = mat
 		pool.position = Vector3(0, 0.02, 0)
 		n.add_child(pool)
-	elif s.find("kiln") >= 0 or s.find("bloomery") >= 0 or s.find("hump") >= 0 or s.find("hut") >= 0 or s.find("house") >= 0 or s.find("dwelling") >= 0 or s.find("pueblo") >= 0 or s.find("stub") >= 0:
-		if s.find("kiln") >= 0 or s.find("bloomery") >= 0 or s.find("hump") >= 0:
+	elif s.find("kiln") >= 0 or s.find("hump") >= 0 or s.find("hut") >= 0 or s.find("house") >= 0 or s.find("dwelling") >= 0 or s.find("pueblo") >= 0 or s.find("stub") >= 0:
+		if s.find("kiln") >= 0 or s.find("hump") >= 0:
 			var r := rng.randf_range(1.0, 1.4)
 			CreatureBodies.ball(n, Vector3(r, r * (0.6 if level == 1 else 0.95), r), Vector3(0, r * 0.3, 0), Color(0.5, 0.36, 0.28) if level == 2 else col)
 			PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, Vector3(0, r * 0.4, 0)), r * 0.8, r * 0.8)

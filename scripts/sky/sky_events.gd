@@ -8,8 +8,8 @@ extends Node
 ##   meteors         rare: bigger, slower, longer streaks with a glowing
 ##                   head in one of several colors (the colors real
 ##                   meteors take from what burns: sodium orange, magnesium
-##                   blue-green, nickel green, calcium violet, iron
-##                   yellow), a faint flash that lights the land, and a
+##                   blue-green, nickel green, calcium violet, and the
+##                   sky's own yellow; no metal (§EH): these are the sky's, not a craft), a faint flash that lights the land, and a
 ##                   hiss and far rumble. Every meteor_roll_interval_s of
 ##                   darkness the I Ching is cast (IChing): only an
 ##                   all-changing hexagram, 1 in 4,096, brings one.
@@ -35,7 +35,7 @@ const METEOR_COLORS := [
 	Color(0.45, 1.0, 0.72), # magnesium: blue-green
 	Color(0.35, 1.0, 0.35), # nickel: green
 	Color(0.72, 0.45, 1.0), # calcium: violet
-	Color(1.0, 0.93, 0.45), # iron: yellow
+	Color(1.0, 0.93, 0.45), # yellow (a meteor's own burn; no metal (§EH): the sky's, not a craft)
 	Color(0.55, 0.75, 1.0), # blue-white
 ]
 

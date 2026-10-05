@@ -45,6 +45,17 @@ static var _plans := {}
 static var report := {}
 
 
+## The specialties a village may take (§EE.5): villages.json specialties
+## less the retired rows (no metal, §EH: glass and mining are never
+## rolled).
+static func specialties() -> Array:
+	var out: Array = []
+	for s in V.get("specialties", []):
+		if s is Dictionary and not (s as Dictionary).has("retired"):
+			out.append(s)
+	return out
+
+
 ## Every kept village site this world: [site...], best first.
 static func all_sites(map: PlanetData) -> Array:
 	_ensure(map)

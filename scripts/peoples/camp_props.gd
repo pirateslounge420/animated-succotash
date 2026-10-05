@@ -36,14 +36,14 @@ static func prop(parent: Node3D, phrase: String, pal: Array, rng: RandomNumberGe
 		_rack(n, rng, c1, cb)
 	elif _has(s, ["boat", "canoe", "kayak", "dugout"]):
 		_hull(n, rng, c0, cb)
-	elif _has(s, ["midden", "mound", "heap", "pile", "stack", "slag", "peat stack"]):
-		var col := Color(0.82, 0.78, 0.66) if s.find("shell") >= 0 or s.find("midden") >= 0 else (Color(0.16, 0.14, 0.12) if _has(s, ["charcoal", "peat", "slag", "soot"]) else Color(0.4, 0.32, 0.2))
+	elif _has(s, ["midden", "mound", "heap", "pile", "stack", "peat stack"]):
+		var col := Color(0.82, 0.78, 0.66) if s.find("shell") >= 0 or s.find("midden") >= 0 else (Color(0.16, 0.14, 0.12) if _has(s, ["charcoal", "peat", "soot"]) else Color(0.4, 0.32, 0.2))
 		_mound(n, rng.randf_range(1.2, 2.2), rng.randf_range(0.4, 0.9), col, cb)
 	elif _has(s, ["pans", "floor", "griddle", "slab", "grinding", "mortar", "chuño ground"]):
 		_flats(n, rng, cb)
 	elif _has(s, ["fence", "wall", "corral", "fold", "ring", "hurdle", "terrace"]):
 		_ring(n, rng, STONE if _has(s, ["stone", "wall", "corral", "terrace"]) else POLE, s.find("stone") >= 0 or s.find("wall") >= 0, cb)
-	elif _has(s, ["kiln", "bloomery", "chimney", "cistern", "tar pit", "tar pot", "parching"]):
+	elif _has(s, ["kiln", "chimney", "cistern", "tar pit", "tar pot", "parching"]):
 		_hump(n, rng, Color(0.55, 0.4, 0.3), cb)
 	elif _has(s, ["jars", "pots", "gourds", "baskets", "boxes", "cache", "granary", "storehouse", "store on a post"]):
 		_jars(n, rng, c0, cb)

@@ -41,13 +41,28 @@ static func known() -> Dictionary:
 
 
 static func knows(id: String) -> bool:
-	return bool(known().get(id, false))
+	return not retired(id) and bool(known().get(id, false))
+
+
+## A retired row: no metal (§EH), bog_iron. Kept so old references resolve,
+## never taught, never listed, never logged.
+static func retired(id: String) -> bool:
+	return row(id).has("retired")
+
+
+## The techniques the player knows that are still in the game (the lists).
+static func listed() -> Array:
+	var out: Array = []
+	for id in known():
+		if knows(str(id)):
+			out.append(str(id))
+	return out
 
 
 ## Learn `id` from `people` (its name for the log line). True the first
 ## time.
 static func learn(id: String, people: Dictionary) -> bool:
-	if id == "" or knows(id):
+	if id == "" or knows(id) or retired(id):
 		return false
 	known()[id] = true
 	WorldSave.mark_dirty()

@@ -340,14 +340,14 @@ func drop(key: String) -> void:
 	built.erase(key)
 
 
-## A sconce: an iron bracket on the wall, a torch in it, its flame and
+## A sconce: a stone bracket on the wall (no metal, §EH), a torch in it, its flame and
 ## light (a Torch flame: one shader for every fire; never smoking).
 func _sconce(parent: Node3D, at: Vector3, side: float) -> Node3D:
 	var n := Node3D.new()
 	n.name = "Sconce"
 	parent.add_child(n)
 	n.position = at
-	var bracket := lit_block(Vector3(0.3, 0.08, 0.08), 7, Color(0.16, 0.14, 0.13))
+	var bracket := lit_block(Vector3(0.3, 0.1, 0.1), 7, Color(0.34, 0.33, 0.31))
 	bracket.position = Vector3(-side * 0.13, -0.12, 0.0)
 	n.add_child(bracket)
 	var stick := CreatureBodies.cone(n, 0.035, 0.028, 0.5, Vector3(-side * 0.22, 0.05, 0.0), Color(0.28, 0.19, 0.11))

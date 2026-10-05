@@ -3,6 +3,29 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EH no metal; a camp can be fifty (queue 37)
+- **What changes on screen:**
+  - The old colonnade's capitals are dark stone, not iron.
+  - A shrine's torch sconces hang from stone brackets.
+  - No camp, ruin or log line names a smith, bog iron, a bloomery or slag.
+  - The marsh folk's maker is a reedworker, and their old camps leave the smoke floor.
+- **What the code does:**
+  - **Techniques:** a technique marked `retired` in `techniques.json` (bog_iron) is never taught, never counted as known (even from an old save) and never listed (`Techniques.retired`, `listed`).
+  - **Villages:** a village specialty marked retired (glass, mining) is never offered (`Villages.specialties`).
+  - **Props and ruin marks:** the matching for camp props and ruin marks no longer knows "slag" or "bloomery".
+  - **Colours:** the people palette's "iron" colour is gone; iron-red seep water still reads red, as scenery.
+  - **Meteors:** their yellow is the sky's, not a craft.
+  - **Camp cap:** CampSim's cap reads `camps.json → sim.population.village_cap` (50; its fallback was 24).
+- **Flag for Mike:** a camp's own births still stop at forage_cap + weir + crop = 16. So a camp reaches 50 only through folk walking in from a fallen camp, or if those numbers are raised. Births and ladder gates are unchanged, as the prompt said.
+- **Flag for Claude in chat:** §DV's text still says "iron capitals". The build follows §EH: dark stone.
+- **Checked** (`tools/no_metal_check.gd`, seeds 42 and 7731, 0 fails):
+  - 17 peoples: no smith, no bog iron, no slag; the marsh maker is a reedworker with the smoke floor.
+  - The camps sited within 12 km have no smith.
+  - Bog iron can't be learned or listed.
+  - No glass or mining village.
+  - A camp fed past 24 grows to 50 and stops, and arrivals stop at 50.
+  - `scripts/` names no metal except lines tagged "no metal (§EH)".
+
 ## 2026-10-05 — §EE, §EF, §EG: the first village, the stream-gutter town, grown and composed; dead until relit
 - **Why this archetype:** the stream-gutter town tests the most at once. It needs every siting term (a stream, its bend, a ridge, a slope). It sits on a slope, so stepped footings, dry-stone aprons and posts all get used. Its gutter is §EF.8's water you follow. It is plain temperate stone-and-timber country, where most of the world is. Every other archetype is a special case of the same grammar.
 - **What's on screen:** abandoned villages of 30–50 stone houses above the inside of a stream's bend, with a ridge behind and the water in front. Up to 12 a world, at least 6 km apart (1.5 km on the stamp). Each one has:
