@@ -469,6 +469,7 @@
   },
   {
    "id": "bog_iron",
+   "retired": "§EH (5 Oct, Mike): no metal in Torchfire 1; kept as a row so old references resolve, never taught, never shown",
    "name": "Bog iron",
    "category": "materials",
    "taught_by": [

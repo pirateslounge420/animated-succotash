@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows. With §EA (4 Oct, 12:19): `data/harm.json`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows. With §EA (4 Oct, 12:19): `data/harm.json`. With §EH–§EN (5 Oct, 16:04, the village economy by voice): `data/animal_use.json` · `camps.json → sim.needs, sim.trades, sim.sharing, sim.hunt, sim.workshop, sim.third_places, sim.library, sim.specialists.record_keeper, sim.fire_circle.idles.night_stories, sim.jobs.kinds.hunt`, and `sim.population.village_cap` 24 → 50 · `camp_books.json → object.placement, record_keeper, memory` · `villages.json → specialties` mining and glass marked retired · `techniques.json → bog_iron` marked retired · `peoples/*.json → huts` (all seventeen), and the marsh, old_growth, canopy and mangrove files lose the smith.
 
 ---
 
@@ -3532,3 +3532,119 @@ Every village must generate all five, clearly and distinctly: **paths** (routes)
 - Design the walk, not the plan (Cullen's serial vision): a "here" with a half-glimpsed "there" pulling you on; compress and release (§EF.3).
 - **Prospect and refuge (Appleton):** a good spot gives a sheltered back and an open view. Siting (§EE.3) already does this for the whole village; composition does it for squares and resting places (§EF.6).
 - **The dead-state flip (Burke's Sublime):** in a dead village, take the refuge away. A square with nowhere to put your back reads as exposed. Dread from the layout alone, no monster needed. The game sits in the Picturesque and the Sublime, not Brown's smooth lawns.
+
+## EH. No metal: pottery, bone, stone, wood and fibre are the whole craft ceiling — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike, asked whether to let bog iron stay as a rare pocket or bump the world up an age: *"let's go with no. Bog iron will not be a thing. We'll save that for another game. We're going to keep this at pottery and bone and stone and wood."* Locked with §EI–§EN below in the same answer.
+
+- **No metal anywhere in Torchfire 1.** Not bog iron, not a smith, not an iron hook. **Amends §BO's "materials, not elements"** (the bog-iron exception is gone), **§BN** (the maker is never a smith), **§BQ** (no slag mound, no bloomery; the marsh ruin keeps its peat cuttings and trackway), **`data/peoples/README.md` rule 4** and the four people files that named the marsh smith (marsh, old_growth, canopy, mangrove: the edits are in the data list). Metalworking goes to the sequel with the rest of §T's cut.
+- **The craft ceiling, named:** fired clay, bone and antler and horn, knapped and ground stone, worked wood, and fibre (cordage, basketry, hide, sinew, cloth). The real-world parallel is the Neolithic village: farming, herding, pottery, weaving, polished stone, settled houses, no money, no kings; the ruins ran past it. "Tribal tech" in the brief stays true; §EE.1's "medieval-tech" line is narrowed: **stone-and-timber towns, slate, tile and (found) glass are the architecture ceiling; the craft ceiling is this list.** Wooden water wheels, wind pumps and stone querns (§EE.3 natural energy) are wood and stone, so they stay.
+- **§EE.5's specialties:** `mining` and `glass` are retired (an ore vein and a glass furnace are both metal-age); the kiln is a potter's kiln; the mill is a wooden wheel driving a stone quern; charcoal still has a buyer (the potter's kiln, the lime kiln), so the fire-keepers stay.
+- **Light.** No electricity in the world except lightning (which already enters as the only new fire, §BL). Every light is a flame carried from a hearth: the **campfire** and the hearth, the **torch** in its kinds (§CQ), the **lamp** (fat lamp §BP, clay lamp, the tundra's stone lamp), the **rushlight** (a peeled rush drawn through tallow, already `techniques.json → rushlight`), the **candle** (the marsh's fir candle; a tallow candle where there is a herd), and **candlenuts** in the tropics. The lantern is a lamp with a wind screen of horn or hide, a maker's work. All of these already exist as techniques; this section only names the set and closes it.
+
+## EI. What a camp needs, and the trades that follow: the Neolithic ladder, rung by rung — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike wants procedural villages *"realistic in the sense that we should establish the vectors of basic economy"*: the sectors that have to exist before people can live together, then the trades that arrive once they do, in the real order, and where to stop. Stacks on §BM (the four fundamentals and the ladder fire → food → storage → specialist → exchange). Data: `camps.json → sim.needs`, `sim.trades`.
+
+### EI.1 The fundamentals: what every camp does every day
+Six, all present from the first day at the forage rung, all done by generalists; nobody owns one:
+1. **fire-tending** (feed it, bank it, carry it; §BL's feed_fire job);
+2. **water** (a spring, the river, a pot carried back: a visible trip like wood, `sim.needs.water`);
+3. **shelter** (built and mended from what the land gives: brush, reed, hide, poles, snow, stone);
+4. **fuel** (the woodpile; §BW's one piece a trip);
+5. **food, raw** (forage, hunt, fish; later the fundamental of §BM);
+6. **keeping the young** (the children by the fire, §BL's stages).
+A camp with all six and nothing else is a living camp, and most camps the player meets are this.
+
+### EI.2 Storage is the hinge (§BM holds)
+Nothing specialises until a surplus is worth keeping: pits, racks, smoke, salt, the clay pot. The first person who does not gather is the specialist.
+
+### EI.3 The trades, in the order they really arrive
+Each trade is a `sim.trades` row with what it needs to exist (a surplus, a material within reach, an earlier trade) and what it makes visible. The order is historical and the gate is the land, so a camp never shows a trade its site cannot feed:
+1. **cordage and basketry** — string, nets, baskets, mats. So basic it is half a fundamental, because it is what makes fishing and storing anything physically possible. Needs: fibre plants or bark within reach. Comes with storage.
+2. **pottery** — the fired pot: grain jars, cooking pots, the lamp dish. The mark of a camp that has decided to stay. Needs: clay bank, fuel surplus, a kiln spot. The first true specialist.
+3. **leather and hide** — scraped, brain-tanned, sewn with sinew and a bone awl. Needs: hunting or a herd; the hard-goods bench for the awl.
+4. **woodwork** — hafts, bows, bowls, the dugout, the paddle, the loom frame. Needs: timber, the stone adze.
+5. **textiles** — spinning and weaving. A second-generation trade: it needs a fibre to weave, so it waits for a flax or nettle crop or a wool herd (§BM's herd is built last, so so is wool).
+6. **the lighting trade** — rendering fat, pressing oil, dipping rushes, tapping resin: the camp that makes the light it carries (§EH). Needs: fat (hunt or herd) or oil plants or resin trees.
+7. **stone** — the knapper and the grinder: blades, axes, querns, the drill. Needs: a flint or obsidian or fine-grained stone source. Present early as a generalist skill; a specialist only where the stone is worth walking to.
+Trades 1, 3, 4 and 7 are **generalist skills** most of the time (a technique any adult does at the bench); 2, 5 and 6 are the ones that make a maker (§BN). A grown camp shows two or three trades, never all seven.
+
+### EI.4 Stop at exchange (§BL, §BM hold)
+Two camps with different trades trading along the road. No market, no money, no chief, no wall, no standing hunters who do not also gather. The camp sim already has the restraint rule; this section gives it the economy to be restrained with.
+
+## EJ. The harmony machinery: food passed around, the hunter provides, stories only at the night fire — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike wants the villages to feel like *"what it used to be like"*: people living with the land and each other, *"in harmony with the world around them rather than destroy, destroy and dominate."* Claude's framing, which Mike took: those peoples were not purer; they had cheap daily machinery that made greed cost something before it could grow into power. The game shows the machinery, mute, and never lectures (§BL's "restraint is a rule, not a lecture" holds). Data: `camps.json → sim.sharing`, `sim.fire_circle.night_stories`.
+
+### EJ.1 Food is passed around, and it comes off the store
+- At the evening meal (the fire circle's dusk_form, §CY) a folk takes a piece off the food store, carries it to the fire, and it is **shared out**: one carry, the piece leaves the store (§BW's rule run backwards; the store visibly shrinks by what was eaten), and every seated folk gets a bowl. Nobody has a private store. Mike: *"it actually takes away from the food store and what it looks like."*
+- The player is handed a bowl too when sitting in the circle (no stat, a log line the first time: "They shared their food with you").
+
+### EJ.2 The hunter provides; the camp divides
+- A hunter's kill comes back to the camp whole (§EK) and goes to the hut, not to the hunter. The hunter does not hand it out; the folk at the benches do. Success is unhooked from status: there is no best hunter, no trophy, no head on a pole. Mike: *"the hunter will not tease his kill. He'll provide for the village and for it to be broken down for everybody's unique specialty."* (The San's meat-insulting ritual stays in the research notes, not in the game.)
+- The headman leads by giving knowledge away (§BN), never by giving orders: there is no folk who tells another what to do, and no animation of one folk standing over another.
+
+### EJ.3 Stories only at the night fire
+- Daytime at a camp is practical: gathering, the benches (§EL), water, children. **At night the fire circle is the only place anything that is not work happens**: the pipe (§CY), and now **telling** — one seated folk gestures with the hands while the others look at the teller instead of the fire (a new idle, `night_stories`, night weight only; the teller's hood turns to each listener in turn; mute). The hearth is where the camp's culture is made; the player sits in on it.
+- A camp whose fire has gone low has no telling: the idle is gated on the fire being fed.
+
+### EJ.4 Gifting (flavour, later a nudge)
+When the player brings the store something (§BL's player_nudges), a folk may later walk up and hand the player one thing the camp made (a pot, a torch, a bowl of stew), once, logged. Status comes from giving. A hook, not a system: `sim.sharing.gift_back`.
+
+## EK. The whole animal: the hunter's kill goes to the hut and comes out as six things — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike: a loop where *"a hunter goes out and they hunt certain creatures and they bring it back to the camp and then it gets brought to a processing facility … maybe they don't show all of the behind the scenes of it like getting cut up … but you might see how everything comes together after the fact … bones … a hide … some stew or jerky."* Reverence by use, no speech: one creature visibly becomes several needful things around camp. Data: `data/animal_use.json`, `camps.json → sim.hunt`.
+
+### EK.1 The loop
+1. **The hunt** is a job (`sim.jobs.kinds.hunt`): an adult with the spear walks out past gather reach to where the creature sim says game is, within `sim.hunt.reach_m`, and comes back carrying the animal whole over the shoulders (a small one) or dragging it on a pole (a large one). Mute; the kill itself happens off screen beyond the reach, like the gatherer's tree (the player can follow and watch the walk, never a cut).
+2. **The hut.** The carcass goes in the door of the workshop hut (§EL) and is not seen again. The hut is a black box: no butchering, no blood, no animation of cutting. A folk goes in with it; a timer runs (`sim.hunt.process_game_h`).
+3. **The after.** Over the next game-day the animal comes out of the hut as pieces, each on its real station: the **hide** stretched on a frame by the soft bench; **meat strips** on the smoke rack and a **stew** at the hearth pot (the food store gains `sim.hunt.food_units` by size class); **bone awls and needles**, a **horn cup**, an **antler haft** appearing on the hard bench; **sinew** hanking by the soft bench; **fat** rendering in a pot by the hearth, then the lamp lit from it that night (§EH's light). Six things from one animal, each a `store.pieces` row.
+4. **The log**, once per species: "The hunters brought back a {creature}. By evening it was a stew, a hide on the frame, and a lamp."
+
+### EK.2 Which animal, what it gives (`animal_use.json`)
+Keyed by the creature catalogue's size class and kind, not per species: `large_hoofed` (deer, elk, bison-kind: hide → cover and robe; sinew → thread and bowstring; bone → awl, needle, scraper; antler → haft, pick; horn → cup, spoon; fat → pemmican and lamp; brain tans its own hide), `small_hoofed`, `small_game` (hare, fox: hide → mitts, the fur-lined hood; bone → needles), `bird` (feather → fletching and cloak; bone → whistle, needle case; fat → lamp), `fish` (skin → a bag; bone → hook, needle; oil → lamp), `marine_mammal` where a tundra or coast people hunts one (blubber → the stone lamp that is their only light and heat; hide → boat skin, line; bone → sled runner, house rib), `reptile` (hide, shell). Each row lists which bench each part goes to and what piece appears. A `never` list: nothing from any creature goes to a weapon that touches what lurks in the dark (§ED.7 holds; bowstrings and fletching are hunting).
+
+### EK.3 The hut by people (§EL.4)
+A plains camp shows hide racks and pemmican; a river camp a smokehouse of fish; a cold-shore camp an oil lamp burning all day in the hut doorway. The pieces are the same vocabulary dressed by way of life and biome (§BO).
+
+## EL. The workshop: one roof, two benches, the hearth outside; skills distinct — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike: *"the ones that would work together could be in the same huts … bone slash hide people in the same hut, kind of working together and utilising each other's pieces … a workshop … all these different stations had a unique purpose that helped people survive."* And: *"the skills should stay distinct."* Historically crafts clustered by **material**, never by animal and never by one person per craft: soft, bendy things (hide, sinew, gut, cordage, cloth) share needle-and-awl skills; hard things (bone, antler, horn, stone, wood) share carving, grinding and drilling; food and fat belong to the fire. At band and village size nearly everyone was a generalist and a full-time specialist is a town thing, so the benches are stations folk move between, not jobs. Data: `camps.json → sim.workshop`, each people file's `huts`.
+
+### EL.1 The shape (Claude's call, Mike's leave)
+- **One workshop hut per camp at the storage rung, two benches under its roof, the hearth separate** (Mike: *"the workshop should actually be separate"* from the hearth). One roof rather than two because the point is the pieces crossing the floor: the bone-carver makes the awls the hide-worker sews with; the hide side hands sinew across for thread; the fat goes out the door to the hearth. Two huts would hide the exchange.
+- **The soft bench**: hide frames and a scraper, sinew hanks, cordage being twisted, a basket in progress, a loom frame once there is a fibre to weave. Props from `huts.soft`.
+- **The hard bench**: a knapping floor of flakes (the §BQ signature, live), bone and antler in a row, a bow drill, a half-ground axe head, a bowl being hollowed with a coal. Props from `huts.hard`.
+- **The hearth** (outside, the fire circle) does meat, fat and lamp oil: the stew pot, the smoke rack, the rendering pot, the lamp filled from it (§EK.1 step 3).
+- Where there is a potter, the **kiln** is its own station outside the hut (§BQ's kiln hump, live), downwind.
+- **Skills stay distinct.** A folk at the soft bench sews and twists; one at the hard bench grinds and drills; the two are different idles with different props and different sounds, and a folk may cross to the other bench during the day but never does both at once. The maker (§BN) is the one who is at a bench most; everyone else passes through.
+
+### EL.2 Two hearts, day and night
+The workshop is the camp's daytime heart (hands busy, the practical sounds: scraping, tapping, the twist of cord); the fire circle is its night heart (§EJ.3). By day the circle is nearly empty and the hut porch is where folk are; at dusk it flips.
+
+### EL.3 The player
+Brings materials to a bench, not to a person (§BL's bring_material_for_maker, now pointed at the bench that works it: clay and fibre to the soft side, stone and bone to the hard side). Never crafts. Can stand in the door and watch; can take what is offered (§EJ.4).
+
+### EL.4 Huts by people
+Each of the seventeen lives (§BO) gets a `huts` block: which benches it has at which rung, what sits on each, and the one thing on the porch that names the place from the road (a hide frame; a reed-mat press; a row of drying gourds; a stone lamp burning in a doorway). The biome dresses it as always. Filled 5 Oct by parallel agents, one per people, from each file's existing `maker.works` and `materials`.
+
+## EM. Third places: where folk just sit — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike: *"cozy spots where people go to hang out and chillax."* Not work, not sleep. The fire circle (§CY) is already the first one; the world already has hot springs wherever the plates meet (27 Sept §0). Data: `camps.json → sim.third_places`.
+
+- **The soak**: at any camp within `third_places.hot_spring_m` of a hot spring, folk walk there in the afternoon and sit in it, hoods back, steam (§CV's smoke shader, white, slow). The coziest place in the game and already in the geology.
+- **The bench under the great tree**: a log or flat stone under the camp's oldest tree (the one §EF.10 would make a landmark), used in the heat of the day.
+- **The flat rock by the water**: feet in the river, a line in the water (the fishing_line technique's idle), the water the brightest thing in view (R6).
+- **The hut porch**: the daytime hangout, a seat by the workshop door (§EL.2).
+- One idle set shared by all four: sit, lean back, look out, the pipe. Prospect and refuge (§EG.4): every third place has a back to something and a view of something. Folk at a third place are not gathering; the sim counts them as resting (`loop.gather_hours` unchanged: third places fill the hours outside them, and the hot midday).
+
+## EN. The library: the camp book, the record-keeper, and the rescued tomes — LOCKED (5 Oct, 16:04, by voice, Mike)
+
+Mike: *"libraries where people keep tomes and scrolls"*, and, to the question of the camp book (§ED.3): *"the camp book will be at the library with like the record-keeper person."* Writing and archives are historically a city thing, the rung not built; so the library is not a record room but a **keep of treasured knowledge**: what the camp rescued from the ruins, and its own memory kept in pictures and knots, not words. Data: `camp_books.json` (amended), `camps.json → sim.library`, `sim.specialists.record_keeper`.
+
+- **The library is a small hut or a lean-to against the ruin wall, at the storage rung, with the camp book in it.** §ED.3 amended: the camp book moves from the altar by the hearth to a shelf in the library; everything else about it holds (one per camp, the sim's only readout, the rumour, copy to log).
+- **The record-keeper** is the fourth face at a grown camp (§BN amended: headman, plantkeeper, maker, record-keeper), the one who writes in the camp book. Seen sitting in the library with the quill, or walking the camp looking at things (the woodpile, the store, the new child) before going back to write. Appears at the storage rung with the headman.
+- **Two walls.** One wall: the **found tomes and scrolls** (§DL's tomes.json, the philosophical texts), the relics of the old builders, kept like relics; a camp holds `library.tomes_max` and the player can read them there as anywhere. The other wall: the camp's **own memory**, which needs no writing: a **winter-count hide** (one small painted picture per game year, from the sim's biggest event that year: a birth, a fire, the year the woods were stripped, the year a ruin was restored) and a **string of knots** (one knot per folk, a coloured cord for each life stage). Both are rendered from the sim, like the camp book's lines; neither has text. Mute folk, a record in pictures.
+- **Dead camps keep their library.** A library in an overrun ruin (§CN) still has its hide and its knots; reading the hide of a camp that is gone is how the player learns what happened there, which §BQ's "the ending stays unnamed" allows because the pictures do not say either (a year with a black pictogram and then no more years).
+- The record-keeper is also who the gift of §EJ.4 comes from when the camp has one.

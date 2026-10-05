@@ -259,6 +259,19 @@
    "the lined waterhole"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low round pole-and-grass hut with a dung-plaster wall, one of the ring along the inside of the thorn fence; in the scrub, a bark-and-brush house beside the mortar rock",
+  "soft": ["a hide pegged out on the ground, a bone scraper beside it", "a coiled basket on a mat, the grass bundle and bone awl still in it", "grass cordage half-twisted, one end tied to a roof pole", "bark strips soaking in a trough"],
+  "hard": ["a pestle and a pocked mortar stone, acorn meal on the rim", "a pole being trimmed with a hafted stone adze", "a few obsidian blades laid in a row on a flat rock", "a blunt-headed arrow and a bone awl, half-finished"],
+  "hearth": ["a dung-cake fire under a pot, cakes drying on the fence behind", "a smoke rack of dried meat strips", "a milk gourd upside-down over a smouldering olive twig", "a grass brand stuck upright in the embers, the fire-stick"],
+  "kiln": [],
+  "porch_sign": "a row of smoked milk gourds hung on the thorn fence by the door, dung cakes drying beneath them",
+  "library": "a small round hut set against the inside of the thorn ring (in the scrub, a lean-to on the mortar-rock outcrop); the winter-count is painted on a stretched hide",
+  "trades": ["cordage_basketry", "leather_hide", "woodwork", "stone"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the fence gap at dusk, watching the herd come in"]
+ },
  "folk_kinds": [
   "orc",
   "human"

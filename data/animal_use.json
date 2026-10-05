@@ -1,0 +1,136 @@
+{
+ "_help": "[NOT WIRED YET] Design 5 Oct §EK (the whole animal). A hunter's kill goes in the workshop hut door (camps.json sim.hunt) and is never seen cut; after process_game_h the animal comes out as pieces on their stations. Keyed by the creature catalogue's size class and kind, never per species (a people file's dressing and the biome do the rest). Each part says which bench it goes to (soft, hard, hearth, kiln: camps.json sim.workshop.benches) and the piece that appears (a camps.json store.pieces vocabulary row, one visible object). food: the units added to the food store (sim.hunt.food_units has the number). never: nothing from any creature goes to a weapon that touches what lurks in the dark (§ED.7): bowstrings and fletching are for hunting. The reverence is in the use: one creature visibly becomes several needful things, and nothing says so. Real analogues cited at the bottom as elsewhere (§BO). First guesses; the designer owns them.",
+ "benches": ["soft", "hard", "hearth", "kiln"],
+ "classes": {
+  "large_hoofed": {
+   "examples": ["deer", "elk", "moose", "bison_kind", "wild_ox", "caribou", "wild_horse"],
+   "parts": {
+    "hide": {"bench": "soft", "piece": "hide_on_frame", "becomes": ["tent cover", "robe", "moccasins", "rawhide food envelope (parfleche)"], "note": "brain-tanned: every animal has just enough brain to tan its own hide"},
+    "sinew": {"bench": "soft", "piece": "sinew_hank", "becomes": ["thread", "bowstring", "lashing"]},
+    "gut": {"bench": "soft", "piece": "gut_drying", "becomes": ["water bag", "cord"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["awl", "needle", "scraper", "shoulder-blade hoe", "flesher"]},
+    "antler": {"bench": "hard", "piece": "antler_haft", "becomes": ["haft", "pick", "pressure flaker", "comb"]},
+    "horn": {"bench": "hard", "piece": "horn_cup", "becomes": ["cup", "spoon", "powder horn (dry seed)", "lantern screen"]},
+    "hoof": {"bench": "hearth", "piece": "glue_pot", "becomes": ["glue"]},
+    "meat": {"bench": "hearth", "piece": "meat_strips_on_rack", "becomes": ["stew", "jerky", "pemmican"]},
+    "fat": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["pemmican", "lamp oil", "tallow for the rushlight"]},
+    "marrow": {"bench": "hearth", "piece": "cracked_bones_by_fire", "becomes": ["broth"]},
+    "dung": {"bench": "hearth", "piece": "dung_cake", "becomes": ["fuel on treeless ground (fuel.json dung)"]}
+   },
+   "food": "large_hoofed",
+   "things_shown": 6
+  },
+  "small_hoofed": {
+   "examples": ["roe", "goat", "ibex", "chamois", "pronghorn", "wild_sheep", "pig_kind"],
+   "parts": {
+    "hide": {"bench": "soft", "piece": "hide_on_frame", "becomes": ["bag", "leggings", "water skin"]},
+    "sinew": {"bench": "soft", "piece": "sinew_hank", "becomes": ["thread"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["awl", "needle", "flute"]},
+    "horn": {"bench": "hard", "piece": "horn_cup", "becomes": ["cup", "spoon"]},
+    "meat": {"bench": "hearth", "piece": "meat_strips_on_rack", "becomes": ["stew", "jerky"]},
+    "fat": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["tallow candle", "lamp oil"]}
+   },
+   "food": "small_hoofed",
+   "things_shown": 4
+  },
+  "small_game": {
+   "examples": ["hare", "rabbit", "fox", "marmot", "squirrel", "beaver", "otter"],
+   "parts": {
+    "fur": {"bench": "soft", "piece": "pelt_on_stretcher", "becomes": ["mitts", "hood lining", "blanket of sewn pelts"]},
+    "sinew": {"bench": "soft", "piece": "sinew_hank", "becomes": ["fine thread", "snare cord"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["needle", "gaming pieces", "whistle"]},
+    "teeth": {"bench": "hard", "piece": "tooth_pendant", "becomes": ["pendant", "chisel edge (beaver)"]},
+    "meat": {"bench": "hearth", "piece": "spit_over_fire", "becomes": ["stew"]},
+    "fat": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["lamp oil (little)"]}
+   },
+   "food": "small_game",
+   "things_shown": 3
+  },
+  "bird": {
+   "examples": ["goose", "duck", "grouse", "pigeon", "seabird", "turkey_kind"],
+   "parts": {
+    "feather": {"bench": "soft", "piece": "feather_bundle", "becomes": ["fletching", "feather cloak", "down bedding", "fan"]},
+    "skin": {"bench": "soft", "piece": "bird_skin_drying", "becomes": ["pouch", "a skin bag with the down in"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["whistle", "needle case", "bead", "awl"]},
+    "meat": {"bench": "hearth", "piece": "spit_over_fire", "becomes": ["roast", "stew"]},
+    "fat": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["lamp oil", "waterproofing"]},
+    "egg": {"bench": "hearth", "piece": "eggs_in_basket", "becomes": ["food"]}
+   },
+   "food": "bird",
+   "things_shown": 3
+  },
+  "fish": {
+   "examples": ["salmon", "trout", "eel", "carp", "cod", "catfish"],
+   "parts": {
+    "skin": {"bench": "soft", "piece": "fish_skin_drying", "becomes": ["bag", "fish-skin boots (cold shore)", "window pane (oiled)"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["hook", "needle", "comb"]},
+    "meat": {"bench": "hearth", "piece": "fish_on_rack", "becomes": ["smoked fish", "dried fish", "stew"]},
+    "oil": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["lamp oil", "a dried oily fish burned as a candle (the candlefish)"]},
+    "roe": {"bench": "hearth", "piece": "roe_drying", "becomes": ["food"]}
+   },
+   "food": "fish",
+   "things_shown": 3
+  },
+  "marine_mammal": {
+   "examples": ["seal", "walrus", "small_whale_stranded"],
+   "only_for_lives": ["tundra", "coast"],
+   "parts": {
+    "blubber": {"bench": "hearth", "piece": "stone_lamp_burning", "becomes": ["the stone lamp: light and heat and the cooking fire of a people with no trees (§BP, the tundra's light)"]},
+    "hide": {"bench": "soft", "piece": "hide_on_frame", "becomes": ["boat skin", "line", "boots", "tent"]},
+    "sinew": {"bench": "soft", "piece": "sinew_hank", "becomes": ["thread", "lashing"]},
+    "bone": {"bench": "hard", "piece": "big_bones_stacked", "becomes": ["sled runner", "house rib", "harpoon head", "snow knife"]},
+    "ivory": {"bench": "hard", "piece": "ivory_in_row", "becomes": ["harpoon head", "needle", "snow goggles", "carving"]},
+    "gut": {"bench": "soft", "piece": "gut_drying", "becomes": ["parka that sheds water", "window pane"]},
+    "meat": {"bench": "hearth", "piece": "meat_strips_on_rack", "becomes": ["stew", "dried meat"]}
+   },
+   "food": "marine_mammal",
+   "things_shown": 6
+  },
+  "reptile": {
+   "examples": ["turtle", "monitor", "crocodile_kind", "large_snake"],
+   "parts": {
+    "shell": {"bench": "hard", "piece": "shell_bowl", "becomes": ["bowl", "rattle", "comb", "lamp dish"]},
+    "hide": {"bench": "soft", "piece": "hide_on_frame", "becomes": ["drum head", "quiver", "sheath"]},
+    "bone": {"bench": "hard", "piece": "bone_tools_in_row", "becomes": ["awl", "bead"]},
+    "meat": {"bench": "hearth", "piece": "spit_over_fire", "becomes": ["stew"]},
+    "fat": {"bench": "hearth", "piece": "rendering_pot", "becomes": ["lamp oil", "salve"]}
+   },
+   "food": "reptile",
+   "things_shown": 3
+  }
+ },
+ "pieces_vocabulary": {
+  "hide_on_frame": "a hide laced into a pole frame by the soft bench, hair side out, then flesh side; two frames at most",
+  "pelt_on_stretcher": "a small pelt on a forked stick, a row of them under the eave",
+  "sinew_hank": "a hank of pale sinew hung from a peg",
+  "gut_drying": "a loop of gut over a pole",
+  "feather_bundle": "a bundle of feathers tied at the quill, hung",
+  "bird_skin_drying": "a bird skin pegged flat",
+  "fish_skin_drying": "fish skins pegged flat on a board",
+  "bone_tools_in_row": "awls, needles and a scraper laid in a row on the hard bench, more as the camp hunts",
+  "antler_haft": "an antler with a flint set in it, leaning",
+  "horn_cup": "a horn cup on the bench edge",
+  "tooth_pendant": "a tooth on a cord, hung by the door",
+  "big_bones_stacked": "rib and jaw stacked like timber",
+  "ivory_in_row": "tusks on the bench",
+  "shell_bowl": "a turtle shell as a bowl, upturned to dry",
+  "glue_pot": "a small pot of hoof glue warming by the fire",
+  "meat_strips_on_rack": "thin strips over the rack (camps.json food_pieces)",
+  "spit_over_fire": "a small animal on a spit",
+  "fish_on_rack": "fish hung on the drying rack (camps.json food_pieces)",
+  "roe_drying": "roe on a flat stone",
+  "eggs_in_basket": "eggs in a basket by the store",
+  "rendering_pot": "a pot of fat on a hearth stone, a skin on it; the lamp is filled from it",
+  "cracked_bones_by_fire": "long bones split beside the hearth",
+  "stone_lamp_burning": "a stone bowl of oil with a moss wick, lit day and night in the hut doorway (the only warm light in a treeless camp)",
+  "dung_cake": "dung cakes drying in a row (camps.json wood_piece_by_fuel)"
+ },
+ "never": ["a weapon that touches what lurks in the dark (§ED.7)", "a trophy", "a head on a pole", "a hunter shown handing out his own kill (§EJ.2)", "the cutting shown"],
+ "real_world": [
+  {"analogue": "Plains buffalo use", "note": "hide for tipi covers, robes and parfleche; bone awls, scrapers and shoulder-blade hoes; sinew thread and bowstrings; horn cups and spoons; brain tanning; pemmican of pounded dried meat, fat and berries that kept for years; dried dung as fuel on treeless plains", "source": "https://en.wikipedia.org/wiki/American_bison#Native_American_uses"},
+  {"analogue": "The qulliq", "note": "the Inuit soapstone lamp burning seal or whale blubber with a moss or cottongrass wick: the only light, heat and cooking fire in a snow house", "source": "https://en.wikipedia.org/wiki/Qulliq"},
+  {"analogue": "Eulachon, the candlefish", "note": "a Pacific smelt so oily that a dried one with a wick through it burns as a candle; its grease was a trade good along the grease trails", "source": "https://en.wikipedia.org/wiki/Eulachon"},
+  {"analogue": "Fish-skin clothing", "note": "Nivkh, Ainu, Nanai and Alaskan Yup'ik fish-skin boots, bags and coats; salmon skin tanned and sewn with sinew", "source": "https://en.wikipedia.org/wiki/Fish_leather"},
+  {"analogue": "Brain tanning", "note": "the animal's own brain emulsified in water dresses its hide; smoked afterwards so it stays soft when wet", "source": "https://en.wikipedia.org/wiki/Tanning_(leather)#Brain_tanning"}
+ ]
+}

@@ -263,6 +263,19 @@
    "a rack of fuel drying over the hearth"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low open-sided shed of hardwood posts and palm thatch to the ground on the river side, bamboo rails and a raised slat floor, bark-and-liana lashing at every joint, smoke leaking from the longhouse beside it",
+  "soft": ["a woven manioc press hung from a post, a stick through its loop", "liana and bark fibre soaking in a trough, a hank being twisted into cord", "a fish trap of split bamboo half woven", "palm leaf strips laid out for a mat"],
+  "hard": ["a dugout paddle blank on a log, shell-scraped", "a fire-hardened digging stick, its point turned in the coals", "bamboo split into strips with a wedge, a row of knives of it", "a bone awl and fish-bone needles in a gourd"],
+  "hearth": ["the manioc griddle on three stones, meal toasting", "a smoke rack of river fish over a green-wood fire", "a rack of fuel drying over the embers", "candlenuts strung on a palm rib, the top one lit"],
+  "kiln": ["a clay hump kiln stacked with bamboo and bark, downwind", "pots and urns drying in the shade, annatto-red slip on the rims", "the clay pit by the stream, a heap of burnt bark temper beside it"],
+  "porch_sign": "a woven manioc press hanging from the porch post, dripping",
+  "library": "a small thatched hut raised on posts above the flood line, beside the longhouse; the winter-count is painted on a sheet of beaten bark in annatto red and soot",
+  "trades": ["cordage_basketry", "pottery", "woodwork", "lighting"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the dugout on the landing in the rain"]
+ },
  "folk_kinds": [
   "human",
   "fae",

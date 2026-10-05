@@ -257,6 +257,19 @@
    "hands on the ceiling"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a lean-to of hide screen and low stacked stone built against the back wall under the overhang, the roof nobody built over it, the ochre hands on the rock above and the hearth glow on its hides",
+  "soft": ["a hide pegged on a frame, flesh side out", "hanks of sinew hung from a rock knob", "nettle stalks soaking in a hollow, fibre being twisted from them", "a cloak half sewn with a bone needle"],
+  "hard": ["a knapping floor of flint flakes at the mouth", "a grinding slab with a red hollow and a lump of ochre", "bone needles in a row on a flat stone", "a hammerstone and a spent core"],
+  "hearth": ["the hearth in its ash pit, set back from the drip line", "a rack of smoked strips over the coals", "hot stones in a hide-lined pit", "an ember bundle in bark by the fire"],
+  "kiln": [],
+  "porch_sign": "a hide stretched on a frame at the lip, red hands pressed on the rock above it",
+  "library": "a dry recess at the back wall beside the nut cache; the winter-count is painted on a hide stretched on a frame, beside the old hands on the stone",
+  "trades": ["cordage_basketry", "leather_hide", "stone"],
+  "third_places": ["hut_porch", "water_rock", "great_tree_bench", "the lip of the overhang looking out over the valley"]
+ },
  "folk_kinds": [
   "goblin",
   "human",

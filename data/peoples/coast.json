@@ -270,6 +270,19 @@
    "salt pans"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low driftwood-and-plank hut turned from the wind, sod on the roof and whalebone ribs at the gable, a drying rack leaning on its lee wall",
+  "soft": ["a net on pegs, half mended", "cordage being twisted from a heap of fibre", "a sealskin pegged out on a frame", "a basket of line coiled with bone hooks"],
+  "hard": ["shell and bone hooks in a row on a plank", "a bone awl half carved", "a shell scraper on a flat stone", "a driftwood plank being split with a wedge"],
+  "hearth": ["the stew pot of shellfish on the coals", "a smoke rack of split fish", "the fat-rendering pot", "a stone fat lamp with a moss wick, filled from it"],
+  "kiln": [],
+  "porch_sign": "a rack of split fish drying like a flag beside the door",
+  "library": "a small plank hut on the dune side of the midden; the winter-count is painted on a sealskin stretched on a driftwood frame",
+  "trades": ["cordage_basketry", "leather_hide", "woodwork", "lighting", "stone"],
+  "third_places": ["water_rock", "hut_porch", "great_tree_bench", "the midden top at sunset"]
+ },
  "folk_kinds": [
   "human",
   "goblin"

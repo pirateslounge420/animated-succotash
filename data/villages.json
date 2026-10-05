@@ -188,6 +188,7 @@
     },
     {
       "id": "glass",
+      "retired": "§EH (5 Oct): a glass furnace is metal-age; no metal in Torchfire 1",
       "from": "sand and fuel by water",
       "dead_state": "cold furnaces, glinting shards"
     },
@@ -199,6 +200,7 @@
     },
     {
       "id": "mining",
+      "retired": "§EH (5 Oct): an ore vein is metal-age; quarry and the knapping floor cover stone; no metal in Torchfire 1",
       "from": "ore vein at the surface",
       "dead_state": "black shafts into the dark"
     },

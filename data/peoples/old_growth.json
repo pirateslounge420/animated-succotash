@@ -125,8 +125,8 @@
    "id": "charcoal",
    "name": "Charcoal burning",
    "verb": "stack the poles in a mound round a chimney, seal it with bracken and turf, light it and starve it of air for days, watching the smoke go from white to blue",
-   "teaches": "nearly pure carbon, hotter than any wood; what the marsh smith's bloomery needs, so the two peoples are married by trade",
-   "unlocks": "charcoal in the store; exchange with the marsh; the collier",
+   "teaches": "nearly pure carbon, hotter than any wood; what the river potter's kiln and the mountain lime kiln want, so the peoples are married by trade",
+   "unlocks": "charcoal in the store; exchange with the river and the mountains; the collier",
    "player_can": false,
    "category": "fuel"
   },
@@ -186,7 +186,7 @@
   "wants": [
    "clay pots",
    "salt and dried fish",
-   "an iron axe from the marsh smith"
+   "a ground stone axe from the mountains"
   ]
  },
  "growth": {
@@ -195,7 +195,7 @@
    "the clearing: maize, beans and squash in one plot",
    "corn braided under the eaves, nuts in a bark-lined pit, smoke over the meat",
    "the collier: the first one who does not gather",
-   "charcoal walks to the marsh smith; pots and salt walk back"
+   "charcoal walks to the river potter; pots and salt walk back"
   ],
   "restraint": "the coppice is the rule made wood: cut a different stand each winter, seven stands round the camp, and the woods are never emptier than one year's cut; the clearing stays a garden, not a field; the hive is smoked, never felled",
   "ceiling_hint": "a deciduous forest with a deep-soiled flat reaches the village; the rainforest is rich in fuel and poor in maize and stays a few hearths"
@@ -254,6 +254,19 @@
    "braided corn under the eaves",
    "the tar pot in its pit"
   ]
+ },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low pole hut roofed in overlapping bark sheets, smoke-dark at the eaves with stacked poles leaning on one wall; moss-chinked under the giants in the rainforest",
+  "soft": ["a hazel hurdle half-woven on pegs", "withies soaking in a bark trough", "bark fibre twisted into cord on a thigh", "corn husks braided into a string"],
+  "hard": ["straight poles racked and cut to length", "a bowl hollowed with a coal", "a bow stave bent on pegs", "a stone adze half-hafted with birch tar"],
+  "hearth": ["the pitch pot cooking slow on the coals", "a smoke rack of deer meat", "resin torches drying on a rail", "the nut and corn stew pot"],
+  "kiln": [],
+  "porch_sign": "a rank of straight coppice poles stacked against the porch, with a charcoal basket beside the door",
+  "library": "a small bark hut at the end of the longhouse; the winter-count is painted in charcoal and ochre on a flat sheet of peeled bark",
+  "trades": ["cordage_basketry", "woodwork", "lighting"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the charcoal mound at dusk, watching the smoke turn blue"]
  },
  "folk_kinds": [
   "human",

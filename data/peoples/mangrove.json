@@ -106,7 +106,7 @@
    ],
    "wants_from_player": [
     "resin and pitch",
-    "a blade: obsidian, or bog iron from the marsh smith",
+    "a blade of obsidian or shell",
     "salt"
    ]
   }
@@ -177,7 +177,7 @@
   "wants": [
    "salt (no sun for pans under the rain)",
    "resin and pitch",
-   "a blade of obsidian or bog iron",
+   "a blade of obsidian or shell",
    "clay pots"
   ]
  },
@@ -251,6 +251,19 @@
    "the midden",
    "the pond gate and a smoke torch of green leaves"
   ]
+ },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low pole hut at the end of a walkway over the tide, nipa thatch, open on the water side, a dugout hull on trestles beside it and boats moored under the floor",
+  "soft": ["nipa leaves being sewn into thatch panels on a pole frame", "mangrove fibre twisted into cord on a thigh, hanks on a peg", "a fish trap half-woven of split mangrove withies", "a net on pegs, its lines soaking in a trough of mangrove bark"],
+  "hard": ["a dugout hull being hollowed with a coal and a shell adze", "oyster-shell blades in a row on a plank", "paddle blanks of mangrove wood against the wall", "a lump of resin warming by a coal"],
+  "hearth": ["a smoke rack of oysters and fish over a slow fire", "the nipa-sap pot boiling down to sugar", "a green-leaf smoke torch leaning by the log pile", "a rib of candlenuts in a stand, lit as dusk comes"],
+  "kiln": [],
+  "porch_sign": "a half-hollowed dugout on trestles at the door, a row of paddles leaning on the rail",
+  "library": "a small thatched pole hut at the walkway's far end, its door to the water; the winter-count is painted on a smoothed mangrove plank, with a knot-string hung beside it",
+  "trades": ["cordage_basketry", "woodwork", "lighting"],
+  "third_places": ["water_rock", "hut_porch", "the walkway end at slack tide, feet over the water"]
  },
  "folk_kinds": [
   "human",

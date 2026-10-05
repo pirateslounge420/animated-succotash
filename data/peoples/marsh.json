@@ -1,7 +1,7 @@
 {
  "id": "marsh",
  "name": "Marsh folk",
- "one_line": "It looked like the worst place to live and was one of the richest: everything in a marsh is stored energy. Peat to burn, reed to build, eels in every ditch, and iron you rake out of the muck.",
+ "one_line": "It looked like the worst place to live and was one of the richest: everything in a marsh is stored energy. Peat to burn, reed to build, eels in every ditch, and bog fir for the candle.",
  "where": {
   "site_rule": "marsh",
   "biomes": [
@@ -14,7 +14,7 @@
   "needs": [
    "standing water or a wetland within 200 m, a hummock or dry rise to build on, and reeds within reach",
    "peat within reach for the full life; without it the fire runs on reed and willow brush",
-   "an iron seep (red water, an oily sheen on the pool) for the smith, and charcoal from a forest people, or there is no iron"
+   "a stand of bog fir within reach for the candle, and willow for the trap frames (§EH: no iron seep, no smith)"
   ]
  },
  "fundamental": "fish_run",
@@ -53,7 +53,7 @@
    "willow withies and alder posts",
    "turf; saw sedge for the ridge"
   ],
-  "form": "arched reed houses on a hummock or a raised island of reed and mud; the peat stack beside the door; a clay chimney where the smith is; a line of split timber out across the water"
+  "form": "arched reed houses on a hummock or a raised island of reed and mud; the peat stack beside the door; the eel smoke rack on its poles; a line of split timber out across the water"
  },
  "light": [
   "fir_candle"
@@ -87,7 +87,7 @@
    "FEN": {
     "fuel": "alder and tamarack branch, sedge, peat from the fen edge",
     "food": "pike and tench, eels, fowl off the sedge; the richest water of the five",
-    "shelter": "reed walls and saw-sedge thatch on alder posts; the iron seep is usually at this edge",
+    "shelter": "reed walls and saw-sedge thatch on alder posts; the fir stand is usually at this edge",
     "palette": "alder green, brown moss, sedge straw, iron-red water"
    }
   }
@@ -106,22 +106,23 @@
    "teaches_practical": "cattail root in the lean months; sphagnum packs a wound; yellow flag will make you sick; the sour pools are not for drinking"
   },
   "maker": {
-   "craft": "smith",
+   "craft": "reedworker",
    "works": [
-    "iron bloom",
     "reed",
-    "peat"
+    "willow",
+    "peat",
+    "bone"
    ],
    "makes": [
-    "a knife blade, an axe head",
-    "an eel spear and fish-hooks",
-    "a bar of iron to carry",
-    "reed mats and eel traps"
+    "reed mats, a pressed reed wall panel",
+    "an eel spear of fire-hardened wood with bone barbs; hooks of bone and thorn",
+    "eel traps and a reed boat",
+    "fir candles and rushlights"
    ],
    "wants_from_player": [
-    "charcoal",
     "pitch",
-    "clay"
+    "clay",
+    "tallow"
    ]
   }
  },
@@ -154,15 +155,6 @@
    "category": "shelter"
   },
   {
-   "id": "bog_iron",
-   "name": "Bog iron",
-   "verb": "rake the rust-brown lumps out of the seep, roast them in a clay chimney the height of a man packed with charcoal, pull out the spongy bloom and hammer it clean",
-   "teaches": "iron dissolved in groundwater seeps into the marsh and bacteria drop it as lumps: no mine, no pickaxe; it never melts, and a raked seep grows back in a generation",
-   "unlocks": "the only metal in the world, worked at this one hearth; a place, not a tech level; the slag heap is the ruin",
-   "player_can": false,
-   "category": "materials"
-  },
-  {
    "id": "trackway",
    "name": "Trackway",
    "verb": "drive crossed pegs into the peat, lay a rail between, set split planks along the top",
@@ -192,13 +184,13 @@
  ],
  "materials": {
   "gives": [
-   "bog iron: a blade, a hook, an axe head",
+   "eel spears and bone hooks",
    "reed mats and baskets",
    "smoked eel",
    "peat bricks"
   ],
   "wants": [
-   "charcoal",
+   "tallow",
    "pitch",
    "salt",
    "clay pots"
@@ -209,20 +201,20 @@
    "fire on the hummock: reeds and dead willow, then the first peat stack",
    "the eel run: traps in the channels (the fish_run)",
    "smoked eel on the rack; the peat stack is the store you can see",
-   "the smith: the seep raked, the bloomery built, charcoal wanted",
-   "iron goes out along the trackway; charcoal, salt and pots come in"
+   "the reedworker: mats pressed, traps set, the trackway laid",
+   "mats, candles and smoked eel go out along the trackway; salt, tallow and pots come in"
   ],
-  "restraint": "peat is cut from one face and the old face left to fill; a seep is raked once a generation and then let be; reeds are cut in winter after the seed has dropped and the birds have gone; the eel run is trapped, never dammed shut",
-  "ceiling_hint": "a fen with a seep and a bog within reach climbs to exchange and the smith, the only smith there is; a bog alone feeds a handful; a wet meadow without peat is a summer camp"
+  "restraint": "peat is cut from one face and the old face left to fill; reeds are cut in winter after the seed has dropped and the birds have gone; the eel run is trapped, never dammed shut",
+  "ceiling_hint": "a fen with a bog and a fir stand within reach climbs to exchange and the reedworker; a bog alone feeds a handful; a wet meadow without peat is a summer camp"
  },
  "ruin": {
   "signatures": [
    {
-    "id": "slag_mound",
-    "what": "a black glassy heap beside a burnt clay pit; nothing grows on it, and the pool next to it runs red",
-    "legible": "heap",
-    "restore": "cleared: the pit is dug out and re-lined; the heap stays, and grows",
-    "inherits": "the bloomery site and the seep it was built beside: a smith a generation early"
+    "id": "smoke_floor",
+    "what": "a ring of fire-blackened clay on the hummock with a scatter of fish bone, and the post holes of the rack round it",
+    "legible": "cleared",
+    "restore": "cleared: the ring is swept and the posts stood again; restored: the rack hangs full",
+    "inherits": "the smoke floor: the eel store a season early"
    },
    {
     "id": "peat_cuttings",
@@ -246,7 +238,7 @@
     "inherits": "dry ground above the flood"
    }
   ],
-  "plants_differ": "iron-red water and slag ground grow almost nothing but sundew, bog-rush and a rust stain on the moss; the old house islands carry willow and nettle where everything else is reed; a flooded cutting fills with lily and then bulrush before the bog closes it"
+  "plants_differ": "iron-red water grows almost nothing but sundew, bog-rush and a rust stain on the moss; the old house islands carry willow and nettle where everything else is reed; a flooded cutting fills with lily and then bulrush before the bog closes it"
  },
  "aesthetic": {
   "silhouette": "arched reed houses low on a hummock; the peat stack, black and square; one clay chimney smoking; a straight line of timber out across the water",
@@ -261,14 +253,27 @@
    "a bittern booming",
    "reeds hissing in the wind",
    "frogs at dusk; a punt pole knocking",
-   "the smith's hammer, the only hammer in the world"
+   "the slap of a wet reed mat being pressed"
   ],
   "props": [
    "the peat stack",
    "eel traps on a pole",
-   "the bloomery chimney and the slag heap",
+   "the eel smoke rack",
    "a reed boat pulled up; the trackway"
   ]
+ },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a long low arched reed house on the hummock: bundle arches, mats hung over them, a smoke-dark saw-sedge ridge, the door to the channel, eel traps on poles outside",
+  "soft": ["a reed-mat press, two poles with a wet mat in it", "willow withies soaking in a trough", "an eel trap half woven, funnel mouth open", "a net on pegs and a heap of rushes for the wicks"],
+  "hard": ["bone barbs and thorn hooks in a row", "an eel-spear shaft scorched and scraped", "a long peat spade blade half shaped", "split planks and crossed pegs stacked for the trackway"],
+  "hearth": ["the eel smoke rack over a slow peat fire", "the peat stack, black and square, beside the door", "an eel stew pot in the coals", "fir splinters drying on a flat stone"],
+  "kiln": [],
+  "porch_sign": "a reed-mat press by the door with a wet mat dripping onto the hummock",
+  "library": "a small reed hut on a raised house island, dry above the flood; the winter-count is painted in peat black and iron red on a pressed reed mat",
+  "trades": ["cordage_basketry", "woodwork", "lighting"],
+  "third_places": ["water_rock", "great_tree_bench", "hut_porch", "the punt tied at the reed edge at dusk"]
  },
  "folk_kinds": [
   "goblin",
@@ -282,6 +287,7 @@
    "source": "https://en.wikipedia.org/wiki/Marsh_Arabs"
   },
   {
+   "retired": "§EH (5 Oct): no metal in Torchfire 1; kept as a note for the sequel",
    "analogue": "Bog-iron smiths of the Iron Age and Viking age",
    "region": "Denmark, Norway, Iceland; c. 500 BCE–1300 CE",
    "note": "an oily sheen on the bog water (járnbrák, the iron slick) marked the seep; pea-sized nodules were cut out with a turf knife and roasted in a clay bloomery about 80 cm tall with charcoal, ore to charcoal 1:1; a smelt gave a bloom of a few kilos, hammered clean; at Snorup in Jutland the Iron Age left slag-pit furnaces on phosphorus-rich bog ore, each used once and abandoned as a pit of slag, and at Eiðar in east Iceland the slag heaps stood building-high (something like 1,000 tonnes of iron); the same bog could be re-harvested about once a generation",

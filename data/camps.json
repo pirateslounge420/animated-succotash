@@ -1,5 +1,6 @@
 {
  "_help": {
+  "village_economy": "[NOT WIRED YET] Design 5 Oct §EH–§EN (the village economy, by voice). village_cap 24 → 50 (§EI: the band of 25–50 is the harmonious size; 150 is where bosses start, and we stop well short). needs: the six things every camp does every day from the forage rung, by generalists (§EI.1); water is a visible trip like wood (a pot to the spring and back, one piece on the store). trades: the seven trades in the order they really arrive (§EI.3); each has a gate (rung, material within reach, an earlier trade) and what it makes visible; generalist true means any adult does it at a bench, false means it makes the maker (§BN). A grown camp shows show_max of them. sharing (§EJ): at dusk_form one folk carries a piece OFF the food store to the fire and it is shared out: the store visibly shrinks by what was eaten; the player seated in the circle gets a bowl and a log line once; the hunter never hands out his own kill (§EK); gift_back: after the player has brought the store things, a folk (the record-keeper if there is one) hands the player one made thing, once. hunt (§EK): a job for an adult with the spear: out past gather reach to where the creature sim says game is, back carrying it whole (over the shoulders, or dragged on a pole by size class); the carcass goes IN the workshop hut and is never seen cut; after process_game_h the animal's pieces appear on their stations from data/animal_use.json, and the food store gains food_units by size class. workshop (§EL): one hut per camp at the storage rung, two benches under one roof (soft: hide, sinew, cordage, cloth; hard: bone, antler, horn, stone, wood), the hearth outside does meat, fat and lamp oil, the kiln is its own station where there is a potter; benches are stations folk move between, skills distinct (different idles, props, sounds; never both at once); the maker is at a bench most; the player brings materials to the bench that works them; props per people from peoples/*.json huts. third_places (§EM): where folk sit when not working: the soak (hot spring within hot_spring_m), the bench under the oldest tree, the flat rock by the water, the hut porch; one idle set; folk there are resting, the gather hours are unchanged. library (§EN): a small hut or a lean-to at the storage rung holding the camp book (camp_books.json placement moves here), the found tomes on one wall and the camp's own memory on the other: a winter-count hide (one pictogram a game year from the sim's biggest event) and a knot cord (one knot a folk, colour by stage); neither has text. specialists.record_keeper: the fourth face, writes the camp book, sits in the library or walks the camp looking at things. fire_circle.idles.night_stories (§EJ.3): telling, night only, gated on a fed fire; the listeners look at the teller. First guesses; the designer owns them.",
   "about": "Where camp fires — the safe zones you can wake at after dying — are found (design 29 Sept 2026: only in the rare ruins). Restart after editing.",
   "only_at_ruins": "true: camps exist only at inhabited ruins (about half of them) and at the opening encampment; the wild riverside camps and the cliff rock shelters are not placed, and wanderers never make a fire for you. false: the older rule (nearest camp of any kind).",
   "wake_random": "true: after a death you wake at a RANDOM inhabited ruin's fire within wake_radius_m of where you died, a different one each time; false: the nearest.",
@@ -113,7 +114,7 @@
    "forage_cap": 6,
    "fundamental_adds": 6,
    "crop_adds": 4,
-   "village_cap": 24,
+   "village_cap": 50,
    "child_eats": 0.5,
    "fundamental_food_scale": 1.6,
    "crop_food_scale": 1.4,
@@ -185,7 +186,8 @@
   "specialists": {
    "headman": "at_storage",
    "plantkeeper": "at_storage",
-   "maker": "site_allows_and_surplus"
+   "maker": "site_allows_and_surplus",
+   "record_keeper": "at_storage"
   },
   "player_nudges": [
    "gather_to_store",
@@ -257,6 +259,16 @@
    "walk_mps": 1.3,
    "pause_at_source_s": 4.0,
    "kinds": {
+    "hunt": {
+     "who": "adult",
+     "needs_item": "spear",
+     "target": "creature_sim_game",
+     "reach": "hunt.reach_m",
+     "kill_offscreen": true,
+     "carry_visible": true,
+     "to": "workshop_hut_door",
+     "then": "hunt.process_game_h"
+    },
     "feed_fire": {
      "when": "fire_below_feed_units",
      "from": "woodpile",
@@ -658,6 +670,24 @@
     "one_rig_all_folk": true
    },
    "idles": {
+    "night_stories": {
+     "what": "telling: hands moving, the hood turning to each listener in turn; the listeners look at the teller instead of the fire",
+     "who": "adult",
+     "props": [],
+     "hold_s": [
+      20,
+      45
+     ],
+     "needs": "fire_fed",
+     "listeners_look_at_teller": true,
+     "max_at_once": 1,
+     "weight": {
+      "dawn": 0,
+      "day": 0,
+      "dusk": 1,
+      "night": 4
+     }
+    },
     "watch_fire": {
      "what": "sits still and looks into the fire: a slow breath in the shoulders, a shift of weight, the hood tipping",
      "who": "anyone",
@@ -886,6 +916,439 @@
     "keeper_awake": 1,
     "doze_share": 0.6
    }
+  },
+  "needs": {
+   "_design": "§EI.1",
+   "list": [
+    "fire_tending",
+    "water",
+    "shelter",
+    "fuel",
+    "food_raw",
+    "keep_the_young"
+   ],
+   "by_generalists": true,
+   "water": {
+    "job": "gather",
+    "source": [
+     "spring",
+     "river",
+     "lake",
+     "well"
+    ],
+    "piece": "water_pot_by_hearth",
+    "trips_per_day": 2,
+    "reach_m": 120.0,
+    "carry": "pot_on_hip_or_head"
+   },
+   "shelter": {
+    "mend_job_days": 10,
+    "materials_from_people_file": "shelter.materials"
+   }
+  },
+  "trades": {
+   "_design": "§EI.3",
+   "show_max": 3,
+   "order": [
+    {
+     "id": "cordage_basketry",
+     "rung": "storage",
+     "needs": [
+      "fibre_or_bark_in_reach"
+     ],
+     "after": [],
+     "generalist": true,
+     "bench": "soft",
+     "visible": [
+      "cord_hank",
+      "basket_half_made",
+      "net_on_frame",
+      "reed_mat"
+     ]
+    },
+    {
+     "id": "pottery",
+     "rung": "specialist",
+     "needs": [
+      "clay_in_reach",
+      "fuel_surplus"
+     ],
+     "after": [
+      "cordage_basketry"
+     ],
+     "generalist": false,
+     "bench": "kiln",
+     "visible": [
+      "pot_drying",
+      "kiln_hump_smoking",
+      "grain_jar",
+      "lamp_dish"
+     ]
+    },
+    {
+     "id": "leather_hide",
+     "rung": "storage",
+     "needs": [
+      "hunt_or_herd"
+     ],
+     "after": [
+      "cordage_basketry"
+     ],
+     "generalist": true,
+     "bench": "soft",
+     "visible": [
+      "hide_on_frame",
+      "scraper_in_hand",
+      "sinew_hank",
+      "sewn_bag"
+     ]
+    },
+    {
+     "id": "woodwork",
+     "rung": "storage",
+     "needs": [
+      "timber_in_reach"
+     ],
+     "after": [],
+     "generalist": true,
+     "bench": "hard",
+     "visible": [
+      "bowl_hollowed_with_coal",
+      "haft",
+      "bow_stave",
+      "paddle",
+      "loom_frame"
+     ]
+    },
+    {
+     "id": "textiles",
+     "rung": "specialist",
+     "needs": [
+      "fibre_crop_or_wool_herd"
+     ],
+     "after": [
+      "cordage_basketry",
+      "leather_hide"
+     ],
+     "generalist": false,
+     "bench": "soft",
+     "visible": [
+      "spindle",
+      "loom_with_cloth",
+      "cloth_drying"
+     ]
+    },
+    {
+     "id": "lighting",
+     "rung": "specialist",
+     "needs": [
+      "fat_or_oil_or_resin"
+     ],
+     "after": [
+      "pottery"
+     ],
+     "generalist": false,
+     "bench": "hearth",
+     "visible": [
+      "rendering_pot",
+      "rushes_dipping",
+      "lamp_lit_in_doorway",
+      "torch_bundle"
+     ]
+    },
+    {
+     "id": "stone",
+     "rung": "storage",
+     "needs": [
+      "flint_obsidian_or_fine_stone_in_reach"
+     ],
+     "after": [],
+     "generalist": true,
+     "bench": "hard",
+     "visible": [
+      "knapping_floor_flakes",
+      "axe_head_half_ground",
+      "quern",
+      "bow_drill"
+     ]
+    }
+   ],
+   "ceiling": "exchange",
+   "never": [
+    "market",
+    "money",
+    "chief",
+    "wall",
+    "standing_hunters_who_do_not_gather",
+    "metal"
+   ]
+  },
+  "sharing": {
+   "_design": "§EJ",
+   "meal_at_dusk_form": true,
+   "piece_off_store_per_meal": 1,
+   "store_shrinks_visibly": true,
+   "bowls_to_everyone_seated": true,
+   "player_gets_bowl": true,
+   "player_log_once": "They shared their food with you.",
+   "private_stores": false,
+   "hunter_hands_out_own_kill": false,
+   "no_folk_commands_another": true,
+   "gift_back": {
+    "on": true,
+    "after_player_brings_units": 6,
+    "once_per_camp": true,
+    "from": "record_keeper_else_any_adult",
+    "gifts": [
+     "pot",
+     "torch",
+     "bowl_of_stew",
+     "cord_hank",
+     "basket"
+    ],
+    "log": "{people} folk gave you a {gift}."
+   }
+  },
+  "hunt": {
+   "_design": "§EK",
+   "who": "adult_with_spear",
+   "reach_m": 900.0,
+   "beyond_gather_reach": true,
+   "target": "creature_sim_game_in_reach",
+   "kill_offscreen": true,
+   "carry": {
+    "small_game": "over_shoulders",
+    "bird": "in_hand",
+    "fish": "on_a_line",
+    "small_hoofed": "over_shoulders",
+    "large_hoofed": "dragged_on_pole",
+    "marine_mammal": "dragged_on_pole",
+    "reptile": "over_shoulders"
+   },
+   "to": "workshop_hut_door",
+   "process_game_h": 6.0,
+   "pieces_from": "data/animal_use.json",
+   "food_units": {
+    "small_game": 1.5,
+    "bird": 0.7,
+    "fish": 0.8,
+    "small_hoofed": 4.0,
+    "large_hoofed": 12.0,
+    "marine_mammal": 14.0,
+    "reptile": 1.0
+   },
+   "hunts_per_game_week": [
+    1,
+    3
+   ],
+   "log_once_per_species": "The hunters brought back a {creature}. By evening it was a stew, a hide on the frame, and a lamp."
+  },
+  "workshop": {
+   "_design": "§EL",
+   "rung": "storage",
+   "huts": 1,
+   "benches": {
+    "soft": {
+     "materials": [
+      "hide",
+      "sinew",
+      "gut",
+      "cordage",
+      "bark_fibre",
+      "cloth",
+      "reed"
+     ],
+     "verbs": [
+      "scrape",
+      "sew",
+      "twist",
+      "weave",
+      "plait"
+     ],
+     "idles": [
+      "sew_with_awl",
+      "twist_cord",
+      "scrape_hide",
+      "plait_basket"
+     ],
+     "sounds": [
+      "scrape",
+      "cord_twist",
+      "needle_through_hide"
+     ]
+    },
+    "hard": {
+     "materials": [
+      "bone",
+      "antler",
+      "horn",
+      "stone",
+      "wood",
+      "shell"
+     ],
+     "verbs": [
+      "knap",
+      "grind",
+      "drill",
+      "carve",
+      "hollow"
+     ],
+     "idles": [
+      "knap",
+      "grind_axe",
+      "bow_drill",
+      "hollow_bowl_with_coal"
+     ],
+     "sounds": [
+      "tap_tap",
+      "grind",
+      "drill_whirr"
+     ]
+    },
+    "hearth": {
+     "materials": [
+      "meat",
+      "fat",
+      "oil",
+      "marrow"
+     ],
+     "verbs": [
+      "render",
+      "smoke",
+      "stew",
+      "fill_lamp"
+     ],
+     "idles": [
+      "stir_pot",
+      "hang_strips",
+      "fill_lamp"
+     ],
+     "outside": true
+    },
+    "kiln": {
+     "materials": [
+      "clay"
+     ],
+     "verbs": [
+      "throw",
+      "fire"
+     ],
+     "only_with_trade": "pottery",
+     "outside": true,
+     "downwind": true
+    }
+   },
+   "skills_distinct": true,
+   "one_folk_one_bench_at_a_time": true,
+   "cross_bench_per_day_max": 1,
+   "maker_bench_share": 0.8,
+   "player_brings_to_bench": {
+    "soft": [
+     "clay",
+     "cordage_fibre",
+     "hide",
+     "bark"
+    ],
+    "hard": [
+     "stone",
+     "bone",
+     "antler",
+     "shell",
+     "timber"
+    ],
+    "hearth": [
+     "fat",
+     "resin",
+     "oil_nuts"
+    ]
+   },
+   "day_heart": "workshop",
+   "night_heart": "fire_circle",
+   "porch_seat": true,
+   "props_from": "peoples/<life>.json huts"
+  },
+  "third_places": {
+   "_design": "§EM",
+   "kinds": {
+    "soak": {
+     "needs": "hot_spring",
+     "hot_spring_m": 400.0,
+     "hours": "afternoon",
+     "hoods_back": true,
+     "steam": "smoke.json hearth.look, white, slow",
+     "max_at_once": 4
+    },
+    "great_tree_bench": {
+     "needs": "oldest_tree_in_camp",
+     "seat": "log_or_flat_stone",
+     "hours": "midday_heat",
+     "max_at_once": 3
+    },
+    "water_rock": {
+     "needs": "river_or_lake_edge",
+     "seat": "flat_rock",
+     "idle": "fishing_line_if_known",
+     "max_at_once": 2
+    },
+    "hut_porch": {
+     "needs": "workshop",
+     "seat": "by_the_door",
+     "hours": "day",
+     "max_at_once": 2
+    }
+   },
+   "idles": [
+    "sit",
+    "lean_back",
+    "look_out",
+    "pipe"
+   ],
+   "prospect_and_refuge": true,
+   "counts_as_rest": true,
+   "gather_hours_unchanged": true
+  },
+  "library": {
+   "_design": "§EN",
+   "rung": "storage",
+   "form": [
+    "small_hut",
+    "lean_to_on_ruin_wall"
+   ],
+   "holds": [
+    "camp_book",
+    "found_tomes",
+    "winter_count_hide",
+    "knot_cord"
+   ],
+   "tomes_max": 6,
+   "winter_count": {
+    "one_pictogram_per_game_year": true,
+    "from": "sim_biggest_event_of_year",
+    "events": [
+     "birth",
+     "fire_low",
+     "woods_stripped",
+     "ruin_restored",
+     "hunt_large",
+     "camp_grew",
+     "folk_lost",
+     "wildfire",
+     "soak_found"
+    ],
+    "dead_camp_last_pictogram": "black",
+    "no_text": true
+   },
+   "knot_cord": {
+    "one_knot_per_folk": true,
+    "colour_by_stage": {
+     "child": "undyed",
+     "teen": "ochre",
+     "adult": "indigo"
+    },
+    "no_text": true
+   },
+   "survives_abandonment": true,
+   "player_reads_tomes_here": true
   }
  },
  "first_camp": {

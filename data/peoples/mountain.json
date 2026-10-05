@@ -252,6 +252,19 @@
    "a shelf of cheeses"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low double-skinned dry-stone hut with a turf roof roped down and weighted with stones, the goat fold wall alongside, a glitter of black flakes spilled across the doorstep",
+  "soft": ["a goat hide pegged out on a frame", "goat hair being twisted to cord on a spindle stick", "peeled rush stems in a bundle, drying for the dips", "sinew hanks hung from a wall peg"],
+  "hard": ["a knapping floor of black obsidian flakes around a flat stone", "a core and a hammerstone on the slab", "goat horn in a row, half scraped", "a pine haft with a blade waiting to be bound", "a trough of slaked lime"],
+  "hearth": ["the stew pot of goat and roots on the coals", "a rack of wind-dried meat", "the tallow-rendering pot", "a rushlight in its split stick, dipped in tallow"],
+  "kiln": [],
+  "porch_sign": "a row of white cheeses on a stone shelf beside the door",
+  "library": "a small dry-stone hut, whitewashed inside where the lime has burned, turf-roofed; the winter-count is painted on a goat hide stretched on a frame",
+  "trades": ["cordage_basketry", "leather_hide", "lighting", "stone"],
+  "third_places": ["soak", "water_rock", "hut_porch", "the fold wall at dusk with the goats"]
+ },
  "folk_kinds": [
   "orc",
   "human"

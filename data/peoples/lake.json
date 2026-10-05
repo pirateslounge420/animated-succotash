@@ -320,6 +320,50 @@
    "stakes and willows at a bed's edge"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a reed-and-wattle hut plastered with lake clay, set on piles at the water's edge or on the reed island, a plank walk to the door and a boat drawn up beside it",
+  "soft": [
+   "reed bundles drying in stooks against the wall",
+   "a split-reed fish trap half woven on the floor",
+   "cordage hanks twisted from nettle and bark, hung on pegs",
+   "a reed mat on its frame, the weft half through",
+   "birch bark soaking in a trough"
+  ],
+  "hard": [
+   "a half-carved paddle held in a notched post",
+   "rice knockers in a row, one still rough",
+   "a push pole with its end being pointed",
+   "a bone hook and a shell blade on a flat stone",
+   "a bark-peeling knife of obsidian, where there is any"
+  ],
+  "hearth": [
+   "a clay pot of fish stew on three stones",
+   "a smoke rack of split fish over a reed fire",
+   "a parching pit and a winnowing tray",
+   "a bark torch standing ready in a pole"
+  ],
+  "kiln": [
+   "a hump of clay and brush, downwind",
+   "a row of coiled pots drying on a reed mat",
+   "the clay pit gone to a pond, a spade of antler beside it"
+  ],
+  "porch_sign": "a rack of fish drying in the lake wind with a torch pole leaning at the door and a boat drawn up below",
+  "library": "a small reed hut on piles at the shore end of the plank walk, its shelf of rescued tomes dry above the water; the winter-count is painted on a stretched reed mat, one picture per year, with the knot-string hung beside it",
+  "trades": [
+   "cordage_basketry",
+   "pottery",
+   "woodwork",
+   "lighting"
+  ],
+  "third_places": [
+   "water_rock",
+   "great_tree_bench",
+   "hut_porch",
+   "the pile-house end at dusk, feet over the water"
+  ]
+ },
  "folk_kinds": [
   "human",
   "fae"

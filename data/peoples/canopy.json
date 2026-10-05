@@ -124,7 +124,7 @@
    ],
    "wants_from_player": [
     "pitch and resin to seal a lashing",
-    "an obsidian or bog-iron blade",
+    "an obsidian blade",
     "salt"
    ]
   }
@@ -203,7 +203,7 @@
   ],
   "wants": [
    "pitch and resin from the collier",
-   "an obsidian or bog-iron blade",
+   "an obsidian blade",
    "salt",
    "clay for the hearth box"
   ]
@@ -282,6 +282,19 @@
    "a blowpipe and quiver",
    "a notched climbing pole"
   ]
+ },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a walled platform lashed in a giant's crotch beside the hearth-box platform: pole frame, rattan lashing, leaf roof, bark or split-bamboo floor, a bridge to the next trunk at its door",
+  "soft": ["bast fibre soaking in a bark trough", "liana and rattan cable being twisted, one end hitched to a post", "a bridge-weaver's unfinished vine cable on pegs", "a net hung half-knotted from the rafter", "a coil of rope-ladder rope waiting for its rungs"],
+  "hard": ["split bamboo in a stack, rungs cut to a forearm", "a bamboo-tube blowpipe being bored with a long pole", "a bundle of darts and a quiver on a peg", "a half-cut foothold pole, notches in a row", "a bark box lid being cut square"],
+  "hearth": ["the hearth box of clay and sand on the platform, small and watched", "a smoke rack of squirrel and bird over the box", "a bamboo joint of stew leaning in the embers", "a dammar torch in a bark tube, unlit, ready"],
+  "kiln": [],
+  "porch_sign": "a coiled rope ladder hung at the lip of the platform, its rungs still pale from the knife",
+  "library": "a bark-walled nook under the eaves of the oldest platform, reached by the same bridge; the winter-count is painted on a sheet of flattened bark hung from the rafter, the knots on a liana cord",
+  "trades": ["cordage_basketry", "woodwork", "lighting"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the bridge-head at dusk, legs over the drop"]
  },
  "folk_kinds": [
   "fae",

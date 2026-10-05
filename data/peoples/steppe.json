@@ -263,6 +263,19 @@
    "coiled rope and baskets"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low hide cone pegged down with a ring of stones, door flap tied back, a pole rack leaning on its lee side; the same cone as every tent but wider, and open to the wind on the work side",
+  "soft": ["a rawhide pegged out on the ground, half scraped", "sinew hanks drying on a pole", "grass and yucca fibre being twisted into rope", "a coiled basket half built, the snares hung beside it"],
+  "hard": ["a bison rib scraper and bone awls in a row on a hide", "a hammerstone and flat anvil stone with pemmican crumbs", "a fire-hardened digging stick being shaved", "horn spoons and bone tent pegs in a basket"],
+  "hearth": ["the pemmican pot with fat rendering over a dung fire", "a rack of meat sliced thin, drying in the wind", "a basket of dung chips stacked against the rain"],
+  "kiln": [],
+  "porch_sign": "a rack of thin-sliced meat hanging like flags beside the door flap",
+  "library": "a small hide cone pegged inside an old tent ring at the camp's edge; the winter-count is painted on a bison hide stretched on a pole frame",
+  "trades": ["cordage_basketry", "leather_hide", "stone"],
+  "third_places": ["water_rock", "hut_porch", "the stone rim of the lined spring at dusk"]
+ },
  "folk_kinds": [
   "orc",
   "human"

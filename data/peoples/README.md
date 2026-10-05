@@ -26,9 +26,9 @@ level of detail. `tools/peoples_check.py` is the gate (0 errors before commit).
    across all files. `player_can` says whether the player performs it in the world, or it
    is a camp thing that raises the camp's ceilings.
 4. **Materials are for makers.** A material is useless in the player's pack; a people's
-   `maker` works what its land supports, and what the player brings. **No metal except bog
-   iron, worked only by marsh folk** (§BO). No tool tiers, no ladder from copper to steel.
-   No periodic table.
+   `maker` works what its land supports, and what the player brings. **No metal at all** (§EH, 5 Oct, supersedes §BO's bog-iron exception): the craft ceiling
+   is fired clay, bone/antler/horn, knapped and ground stone, worked wood and fibre. No tool
+   tiers, no ladder from copper to steel. No periodic table.
 5. **The four fundamentals** (§BM): `crop` (river, valley), `fish_run` (coast, lake, river),
    `herd` (steppe, savanna, taiga, highland — built last), `managed_burn` (grassland,
    savanna, scrub). `forage` is the floor everyone starts on. A life names one.
@@ -54,5 +54,6 @@ level of detail. `tools/peoples_check.py` is the gate (0 errors before commit).
 `specialists` (`headman_teaches`, `plantkeeper`, `maker`) · `techniques[]` (`id`, `name`,
 `verb`, `teaches`, `unlocks`, `player_can`, `category`) · `materials` (`gives`, `wants`) ·
 `growth` (`ladder`, `restraint`, `ceiling_hint`) · `ruin` (`signatures[]`, `plants_differ`) ·
-`aesthetic` (`silhouette`, `palette`, `sounds`, `props`) · `folk_kinds` · `real_world[]`
+`aesthetic` (`silhouette`, `palette`, `sounds`, `props`) · `huts` (§EL, 5 Oct: `soft`, `hard`, `hearth`,
+`kiln`, `porch_sign`, `library`, each a list of props; `rung` says when the hut appears) · `folk_kinds` · `real_world[]`
 (`analogue`, `region`, `note`, `source`) · `sources[]`.

@@ -252,6 +252,19 @@
    "stone figure"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low sod-and-whalebone qarmaq dug into the bank, a rib-and-jaw frame under turf and skins, a tunnel door toward the shore, a kayak on its stand beside it",
+  "soft": ["a caribou hide pegged out on a frame, the half-moon knife on it", "sinew hanks drying on a line, one being twisted into thread", "a half-sewn kamik boot with a bone needle left in the seam", "a parka laid out, moss wadding in a skin bag"],
+  "hard": ["a soapstone block half-scraped into a lamp bowl", "walrus ivory and bone in a row, carving curls on the floor", "a bone scraper and a stone-bladed knife on a flat slab", "a driftwood stave held in stones, notched for a kayak rib"],
+  "hearth": ["the rendering pot of seal fat over a small dung fire", "a rack of split char drying in the wind", "a skin bag of fat beside the pot, the lamp filled from it"],
+  "kiln": [],
+  "porch_sign": "a stone lamp burning in the doorway, day and night, its small gold flame the only warm thing on the moss",
+  "library": "a dry lean-to of whale ribs and skins against the sod wall of an old house pit; the winter-count is painted on a stretched sealskin on a driftwood frame",
+  "trades": ["cordage_basketry", "leather_hide", "lighting", "stone"],
+  "third_places": ["water_rock", "hut_porch", "the stone figure on the rise at dusk"]
+ },
  "folk_kinds": [
   "human"
  ],

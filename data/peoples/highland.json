@@ -277,6 +277,19 @@
    "a loom pegged to the ground"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low dry-stone room turned from the wind, a turf roof under steep ichu thatch, hugging the ground beside the corral wall; a loom pegged out in front",
+  "soft": ["a backstrap loom pegged to the ground, a half-woven blanket on it", "hanks of wool and a drop spindle", "ichu grass drying and a grass rope being twisted, one end tied to a post", "a llama hide pegged on a frame, a scraper beside it", "a sling and a bag half-sewn"],
+  "hard": ["a row of ground-stone loom weights and a stone for grinding them round", "a stone mallet and a heap of wall-stone, one face half dressed", "a digging stick being fire-hardened in a coal pot", "a footrest stick with its stone blade tied on"],
+  "hearth": ["a stew pot of potatoes and quinoa on three stones", "a rack of thin charki drying in the wind", "dung cakes stacked in the lee of the wall", "ichu torches stacked dry by the fire, two to a hand"],
+  "kiln": [],
+  "porch_sign": "a loom pegged to the ground in front of the door, a red-brown blanket half woven on it",
+  "library": "a lean-to against the wall of a round storehouse stub, a dry-stone recess under its own thatch; the winter-count is painted on a stretched llama hide, the knot-string hung beside it",
+  "trades": ["cordage_basketry", "leather_hide", "textiles", "stone"],
+  "third_places": ["soak", "water_rock", "hut_porch", "the corral wall at dusk, back against the warm dung cakes"]
+ },
  "folk_kinds": [
   "human",
   "small_folk"

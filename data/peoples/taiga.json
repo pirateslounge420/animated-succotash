@@ -263,6 +263,19 @@
    "a pole fence"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a low pole-framed turf hut over a skin of birch bark, white bark showing at the eaves and smoke leaking from the ridge, a drying rack leaning on its lee wall; in summer the same frame wears a bark-covered tent cover",
+  "soft": ["birch bark sheets flattened under stones, outer skin up", "split pine root soaking in a trough, a coil beside it", "a bark box half sewn, the root thread still threaded", "sinew hanks drying on a peg", "a reindeer hide pegged out on a pole frame"],
+  "hard": ["antler tines in a row on a plank", "a snowshoe frame bent and tied to dry", "a bone awl half carved", "a paddle blank with the adze beside it", "a bowl burl hollowed with a coal"],
+  "hearth": ["the stew pot of fish and berries on the coals", "a smoke rack of split whitefish", "a pitch pot on a flat stone, a bark spoon in it", "a bundle of fatwood splints and a resin torch ready by the fire"],
+  "kiln": [],
+  "porch_sign": "an upturned bark canoe on trestles by the door, a black tar seam along its keel",
+  "library": "a small turf-and-bark hut on the lee side of the camp, door away from the wind; the winter-count is painted on a pale reindeer hide stretched on a pole frame, with a string of knots beside it",
+  "trades": ["cordage_basketry", "leather_hide", "woodwork", "lighting"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the pen rail at dusk, watching the herd settle"]
+ },
  "folk_kinds": [
   "human",
   "fae",

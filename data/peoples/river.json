@@ -295,6 +295,19 @@
    "a channel with water in it"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a wattle-and-daub hut on the terrace above the flood line, a reed-thatch roof pulled low, the door facing the river, jars stacked under a lean-to at its side",
+  "soft": ["withies soaking in a bank trough", "a half-woven fish basket on a frame", "nettle and cattail fibre retting in a bundle", "a cord being twisted for the weir net", "a reed mat laid out to dry"],
+  "hard": ["an adze edge being ground on a sandstone slab", "a coppice pole half-hafted", "an antler digging stick in the embers to harden", "shell pounded to temper grit", "stakes sharpened for the weir in a bundle"],
+  "hearth": ["a stew pot of grain and fish", "a rack of drying fish and tubers", "tubers roasting in the ash", "a clay lamp filled from the fat pot"],
+  "kiln": ["the domed kiln humped on the bank, brush stacked beside it", "pots and lidded jars drying in rows in the sun", "the clay pit with its cut face and a heap of sand and shell"],
+  "porch_sign": "a row of lidded storage jars sealed with resin, stacked along the wall",
+  "library": "a small wattle-and-daub hut on the terrace beside the jars, its winter-count painted on a flat of fired clay slabs; a string of knots hangs by the door",
+  "trades": ["cordage_basketry", "pottery", "woodwork", "lighting"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the weir's lip at low water"]
+ },
  "folk_kinds": [
   "human",
   "fae"

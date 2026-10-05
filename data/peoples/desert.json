@@ -300,6 +300,19 @@
    "an eggshell cache and salt cakes"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a flat-roofed room of mud and stone on the camp's block, one more room than the last year, a ladder to the roof and a ramada of poles and brush shading the door; in a canyon it is a room in the overhang's stack, in a cold desert a pit house with a brush roof",
+  "soft": ["a burden basket half coiled, pitch pot beside it", "yucca leaf beaten to fibre on a flat stone, cord hanks on a peg", "a hare-drive net on pegs along the wall", "a pair of yucca sandals mid-braid", "a hide stretched on a pole frame in the shade"],
+  "hard": ["a knapping floor of obsidian flakes with a hammerstone and an antler tine", "a grinding slab and muller, seed flour on the hollow", "a digging stick and a rib pole for saguaro fruit", "a bone awl in a row of three", "an ochre lump and a stone palette"],
+  "hearth": ["a hat-sized fire of brush and dead cactus rib, banked in a ring of stones", "a corrugated cooking pot of beans and mesquite flour", "a stone-lined agave pit with a mat over it", "a sun rack of meat strips, dates and pad slices"],
+  "kiln": ["a low kiln hump of stacked brush and dung over the pots, downwind", "coiled jars drying in a row in the shade, red-on-buff and black-on-white", "the clay pit in the wash bank, a scraper and a water jar beside it"],
+  "porch_sign": "a row of painted water jars along the wall by the door, the biggest one sweating",
+  "library": "a small plastered room of the block, or a dry recess at the back of the overhang; the winter-count is painted on a flat stone slab, one ochre picture a year, with a string of knots hung beside it",
+  "trades": ["cordage_basketry", "pottery", "stone"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the head gate at dusk, feet in the ditch"]
+ },
  "folk_kinds": [
   "human",
   "goblin"

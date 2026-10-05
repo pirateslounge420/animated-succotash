@@ -265,6 +265,19 @@
    "worn steps into a cenote; a cane torch stub"
   ]
  },
+ "huts": {
+  "_design": "§EL (5 Oct)",
+  "rung": "storage",
+  "workshop_form": "a round corbelled stone hut, lime-whitewashed, a thatch-and-brush cap and a doorway wide enough to work in the light; it stands beside the kiln ring",
+  "soft": ["a goat hide pegged on a frame, a stone scraper beside it", "cane and reed split and soaking in a trough, a half-woven basket", "maize husk and bark fibre twisted into cord on a hank", "a thatch bundle being tied, poles and brush racked behind"],
+  "hard": ["a floor of limestone chips and a half-dressed wall stone", "a bone awl and goat horn on a slab, a stone mallet", "a quern slab with a maize cob mid-grind, a mano on it", "a bucket of slaked lime and a plastering trowel of wood"],
+  "hearth": ["a nixtamal pot of maize steeping in limewater", "a goat stew pot on three stones", "a bundle of cane torches stood up to dry beside the fire"],
+  "kiln": ["the lime kiln: a ring of burnt stone with limestone stacked over a brush pit", "a white heap of slaked lime and pots drying on a rock shelf", "the clay pit, wet and red, cut into a pocket of terra rossa"],
+  "porch_sign": "a white-plastered doorway with a handprint in lime and a bundle of cane torches leaning by it",
+  "library": "a dry cave recess walled across with fitted stone, a plastered floor and shelf; the winter-count is painted in pictures on a smooth whitewashed wall panel, with a string of knots hung beside it",
+  "trades": ["cordage_basketry", "pottery", "leather_hide", "stone"],
+  "third_places": ["great_tree_bench", "water_rock", "hut_porch", "the cenote steps at dusk, swifts overhead"]
+ },
  "folk_kinds": [
   "goblin",
   "human"
