@@ -2483,7 +2483,7 @@ latest results:
   (`-- --shots`): the X and a yellow number over a head-shot deer, the
   number risen with the meter at 64, a white body-hit number.
 
-## Villages (design 5 Oct §EE, §EF, §EG): plan for the first prototype (not built)
+## Villages (design 5 Oct §EE, §EF, §EG): plan for the first prototype (built 5 Oct; see "Villages as built" below)
 
 A planning pass (5 Oct, revised after §EF and §EG). Nothing here is built. It reads §EE
 (villages, siting, building with the land), §EF (the ten layout rules), §EG (the
@@ -2820,15 +2820,63 @@ eight nearest glowing sites reach the shaders as global uniforms (`look_site_0..
     the bend terms can only be read at a joint, coarsely.
 14. **Building the missing piece** (mound, pond) means editing a ground that is a pure
     function today. That waits for a stamp hook.
-15. **Bow and spear (§EE.6), settled by Claude Code (Mike handed it over, 5 Oct):** §ED.7
-    stands as built. Spear and bow are rare finds or a maker's work, for hunting, fishing
-    and driving off guardians, with the fire arrow taught by a headman. Edges never touch
-    what lurks in the dark. Reasons:
-    - it is built and checked;
-    - the torch stays the game's first tool;
-    - villages don't need either one.
+15. **Bow and spear (§EE.6): open, not settled.** An earlier version of this note said Claude
+    Code had settled it. Mike's word (5 Oct, the villages build prompt): bow and spear stay
+    as they are in §ED.7 for now, and §EE.6 is open. §ED.7 stands as built (rare finds or
+    a maker's work, the fire arrow by a headman's teaching, edges never touching what lurks
+    in the dark) until Mike decides.
 
-    Claude in chat should record it under §EE.6.
+## Villages as built (5 Oct, §EE, §EF, §EG)
+
+The stream-gutter town, built from the plan above. Four scripts and one data file:
+
+- `Villages` (`scripts/landmarks/villages.gd`) is the sites pass. It scores the bends and
+  reaches of each world's streams with `villages.json → siting.weights`. A stream is the
+  narrower half of the world's rivers, under 40 m wide. It turns away spots that are too
+  steep or flat, near a ruin, or cramped (not enough dry, gentle ground in 60 m). It keeps
+  the best spots, spaced apart.
+- `VillagePlan` (`village_plan.gd`) is the plan as pure data in the village's flat frame:
+  - desire lines on an A* grid;
+  - squares;
+  - the void;
+  - the tower;
+  - houses wrapping squares, then terraces along lanes (one side of each lane set back);
+  - districts by thirds along the spring-to-landing axis, thresholds, the edge wall;
+  - the gutter;
+  - the tower sized for sight;
+  - the vista pass, which uses a sight line half a metre wide;
+  - the hierarchy pass (an upper storey for the house ending a view, the strongest rival
+    quietened);
+  - the frame pass (a tree beside a key view);
+  - hearths, refuge, rim and garden walls.
+
+  `rules()` measures every rule.
+- `VillageBuilder` (`village_builder.gd`) turns the plan into meshes and collision. It
+  never edits the ground.
+- `VillageLife` (`village_life.gd`) streams villages in and out, hands their hearths to
+  `OldHearths` (kind "village"), and keeps windows, brambles and benches in step with the
+  fires. It also registers each village with `VillageWarmth`.
+- Plants keep off lanes, squares and houses through `VillagePlan.clear_at` (asked by
+  `VegetationPlacer.in_clearing`). The trees at view ends are planted as old trees.
+
+Where the build differs from the plan:
+
+- **Key views** are one per vista end: the best place to stand for it (framed and layered
+  where any spot is, else the longest look). Every sample along the lanes is still checked
+  for termination.
+- **A terrace is weighed as one mass** in the hierarchy test (gestalt). A terrace's houses
+  read together, so the dominant is the terrace a view ends on.
+- **Focals sit on a third where the view allows**, else in a lane's open slot, 3–7° off its
+  axis. This is flag 16 below.
+- **Squares that lose a house to a raised front** get a dry-stone rim wall with a bench, so
+  every lit square has somewhere to put your back.
+- **The tower's height** is the shortest of 14–32 m seen from more than 55% of the lanes. It
+  moves to the best-seen free spot by a lane when no height is enough.
+
+16. **Focal on the thirds vs the terminated vista (§EG.2 vs §EF.2):** deep in a narrow
+    lane only a slot is visible, so a focal on a third can't be seen from there. The build
+    keeps thirds where it can and puts the rest in the slot, still off-axis. §EG's "Western
+    punctuation" may mean Mike wants those centred. That is his call.
 
 ## Known gaps and next steps
 

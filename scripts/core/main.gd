@@ -61,6 +61,7 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var old_hearths: OldHearths
+var village_life: VillageLife
 ## Where the last waking took you and why (§DE, tools): {"from": "home",
 ## "nearest" or "opening", "home_fault", "key"}.
 var last_wake := {}
@@ -386,6 +387,12 @@ func _on_planet_ready() -> void:
 	camps.name = "Camps"
 	add_child(camps)
 	camps.setup(world, chunks, player, landmarks, hud)
+	# The villages (design 5 Oct §EE): built near you, relit hearth by
+	# hearth; their hearths are OldHearths'.
+	village_life = VillageLife.new()
+	village_life.name = "VillageLife"
+	add_child(village_life)
+	village_life.setup(world, chunks, player)
 	# The cold hearths at empty ruins and old camps' remains (Mike, 2 Oct).
 	old_hearths = OldHearths.new()
 	old_hearths.name = "OldHearths"

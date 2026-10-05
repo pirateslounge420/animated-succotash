@@ -1,5 +1,68 @@
 {
-  "_help": "[NOT WIRED YET — design §EE] §EE (5 Oct). Villages: abandoned stone-and-timber towns relit hearth by hearth. Backlog reservoir, not a build list: prototype one archetype first. Siting weights are placeholders for Claude Code to tune.",
+  "_help": "§EE (5 Oct). Villages: abandoned stone-and-timber towns relit hearth by hearth. Backlog reservoir, not a build list: one archetype is built (prototype: the stream-gutter town; Villages, VillagePlan, VillageBuilder, VillageLife). Read now: prototype, plan, build, siting.weights, layout_rules (as rules VillagePlan.rules() measures), composition. The other archetypes and the specialties, lost_techniques and energy are not wired yet.",
+  "prototype": {
+    "_help": "Design 5 Oct §EE.5: one archetype built first, the stream-gutter town (Villages, VillagePlan, VillageBuilder, VillageLife). Where it may stand: a stream (river segments stream_width_m wide and, with stream_narrower_half, no wider than the world's median river: a stream, not a great river) in stone-and-timber country (biomes, temp_c, moisture_min), on a gentle slope (grade_range over the village's ground), keep_off_m from any ruin. Each world keeps its best-scoring sites (siting.weights, at least min_score), min_spacing_m apart (scaled down on the dev stamp, never under min_spacing_floor_m), at most per_world_max. build_m / drop_m: when a village is built and freed round you.",
+    "archetype": "stream_gutter_town",
+    "biomes": ["TEMPERATE_DECIDUOUS", "TEMPERATE_RAINFOREST", "TAIGA", "CLOUD_FOREST", "ALPINE_MEADOW", "TALLGRASS_PRAIRIE", "WET_MEADOW", "FLOODPLAIN_FOREST", "MEDITERRANEAN_SCRUB", "MARITIME_FOREST", "STEPPE", "KRUMMHOLZ", "SHORTGRASS_PRAIRIE"],
+    "temp_c": [0.0, 21.0],
+    "moisture_min": 0.25,
+    "stream_width_m": [7.0, 40.0],
+    "stream_narrower_half": true,
+    "grade_range": [0.012, 0.16],
+    "front_m": 48.0,
+    "keep_off_m": 350.0,
+    "min_score": 1.6,
+    "min_spacing_m": 6000.0,
+    "min_spacing_floor_m": 1500.0,
+    "per_world_max": 12,
+    "build_m": 900.0,
+    "drop_m": 1200.0,
+    "collide_m": 260.0
+  },
+  "plan": {
+    "_help": "Design 5 Oct §EF, §EG (VillagePlan). The growth, in metres: the village's reach (radius_m), its grid (cell_m), the core square's radius and the other squares' (squares_r_m), how many squares (squares: the core counts; one is the ma void when void_kind is empty_square), lane widths (main street with its gutter, lanes, edge tracks), a house's frontage and depth, the gap between terraces in the core and at the edge, the terrace sizes allowed by ring (core_groups near the hearth, mid_groups, edge_groups: threes and fives, ones at the edge, §EG.2), meander (amplitude and wavelength of the streets' gentle bends, §EF.5), the long sightline (long_vista_m) and where a vista's focal goes (focal_angle_deg off the axis: on the thirds, §EG.2), the tower's height choices (the shortest that is seen from landmark_seen_min of the lanes: \"most of the village\", more than half, §EF.10).",
+    "radius_m": 78.0,
+    "cell_m": 2.0,
+    "core_square_r_m": 7.5,
+    "squares_r_m": [5.5, 6.5],
+    "squares": 3,
+    "main_half_m": 1.9,
+    "lane_half_m": 1.4,
+    "edge_half_m": 1.2,
+    "frontage_m": [4.6, 6.4],
+    "depth_m": [5.0, 6.6],
+    "core_gap_m": [0.9, 1.9],
+    "edge_gap_m": [5.0, 10.0],
+    "core_ring_m": 26.0,
+    "edge_ring_m": 52.0,
+    "core_groups": [5, 3],
+    "mid_groups": [3, 3, 1],
+    "edge_groups": [1, 1, 1, 3],
+    "meander_m": [0.9, 1.6],
+    "meander_wave_m": [34.0, 56.0],
+    "bank_keep_m": 14.0,
+    "max_fall_m": 3.2,
+    "long_vista_m": 24.0,
+    "focal_angle_deg": 15.0,
+    "tower_h_m": [14.0, 17.0, 20.0, 23.0, 26.0, 29.0, 32.0],
+    "landmark_seen_min": 0.55,
+    "void_kinds": ["empty_square", "still_pool", "unplanted_bank"]
+  },
+  "build": {
+    "_help": "Design 5 Oct §EE.3, §EG.3 (VillageBuilder): how a house stands on its slope (fall across its footprint: under plinth_max_m a stone plinth, under stepped_max_m stepped foundations with a dry-stone terrace below, else a timber floor on posts of their own lengths, each on a foundation stone), its walls (eave_m, focal houses taller by focal_raise_m), the dead village's overgrowth (moss, ivy over doors, roofs holed at roof_hole_share), the squares' brambles while dead (bramble_m deep, §EG.4), and the materials by rock and climate (one stone, one timber, one roof per village).",
+    "plinth_max_m": 0.45,
+    "stepped_max_m": 1.6,
+    "eave_m": [2.6, 3.1],
+    "focal_raise_m": 0.9,
+    "roof_pitch": 0.75,
+    "eave_overhang_m": 0.55,
+    "roof_hole_share": 0.2,
+    "bramble_m": 1.4,
+    "window_color": "#FFA654",
+    "stones": {"granite": "#6F7A8A", "basalt": "#4E535C", "karst": "#A29F92", "sandstone": "#977F63", "alluvium": "#7C7870", "sand": "#9C9584", "clay_peat": "#76726A", "till": "#73777A"},
+    "timbers": {"oak": "#56432F", "pine": "#664632", "larch": "#6A4A30", "chestnut": "#5A4030", "beech": "#5E4B38", "default": "#59473A"},
+    "roofs": {"slate": "#3C4553", "stone_flags": "#6E6B63", "clay_tile": "#7E4A36", "thatch": "#7F6F48"}
+  },
   "siting": {
     "_doc": "Feng-shui logic as a suitability score over terrain the planet already computes.",
     "weights": {
@@ -161,7 +224,7 @@
     }
   ],
   "layout_rules": {
-    "_help": "[NOT WIRED YET — design §EF] Applied in order after siting (§EE.3). Grow the village, then compose its views.",
+    "_help": "Design §EF. Applied in order after siting (§EE.3): grow the village, then compose its views (VillagePlan; each rule measured by rules(), tools/village_check.gd).",
     "rules": [
       {
         "id": "grow_from_reason",
@@ -207,7 +270,7 @@
     "dead_village": "cold hearths are placed at vista ends and in squares, so composition leads to the next fire"
   },
   "composition": {
-    "_help": "[NOT WIRED YET — design §EG] Composition layer over §EF layout. Measurable checks for the generator; thresholds are placeholders for Claude Code to tune.",
+    "_help": "Design §EG. Composition layer over §EF layout, measured by VillagePlan.rules() (tools/village_check.gd): bones, one dominant per key view (1.4 times the next), focal off-centre, no mirror (best mirror overlap under 0.4), visual-weight balance, threes and fives, one ma void, one stone/timber/roof, the dead-state refuge flip.",
     "governing": "consult the genius of the place: derive everything from the site; eastern skeleton (grown, asymmetric) with western punctuation (a few axes onto landmarks)",
     "bones_required": [
       "paths",

@@ -50,6 +50,9 @@ extends SceneTree
 ## SITES=columns the nearest causeway (§DX): from its top step, down its
 ## steps into the sea; SITES=sea_cave its headland and mouth from the
 ## shore beside it; SITES=organ_pipes the cliff and its fall from the foot.
+## SITES=village the nearest village (design 5 Oct §EE): down its best key
+## view, its hearths all cold, then all lit (QUICK=1 HOURS=22 for the
+## night pair; the frames' warm share is §EE.1's measure).
 ## SITES=colonnade the nearest old colonnade (§DV): in its avenue of oaks,
 ## looking up it at the columns (SEED=8 has three).
 ## SITES=pillar_shrines the nearest pillar shrines (§DY): on the valley's
@@ -235,6 +238,8 @@ func _run() -> void:
 			kinds.append("pillar_shrines")
 		if only.has("colonnade"):
 			kinds.append("colonnade")
+		if only.has("village"):
+			kinds.append("village")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -438,6 +443,33 @@ func _run() -> void:
 					sites.append({"name": "holloway", "dir": RoadNetwork.point_at(hp, float(hw0[0]) + 4.0), "look": RoadNetwork.point_at(hp, float(hw0[1])),
 						"note": "a holloway, sunk %.1f m, looking up it" % float(hw0[2])})
 					hl.erase("_hw")
+			"village":
+				# The nearest village (design 5 Oct §EE): down its best key view
+				# (§EF.2, §EG.2: the longest that has one clear dominant), dead,
+				# then with every hearth lit (§EE.1).
+				var vdd := INF
+				var v0 := {}
+				for vk in Villages.all_sites(world.planet):
+					if CubeSphere.surface_distance_m(vk.dir, camp_d) < vdd:
+						vdd = CubeSphere.surface_distance_m(vk.dir, camp_d)
+						v0 = vk
+				if v0.is_empty():
+					lines.append("-- village: none on this world")
+					continue
+				var vp := Villages.plan_of(world.planet, v0)
+				var bv := {}
+				var bl := 0.0
+				for kv in vp.key_views():
+					if bool(vp.view_dominance(kv).ok) and float(kv.len) > bl:
+						bl = float(kv.len)
+						bv = kv
+				if bv.is_empty():
+					bv = vp.vistas[0]
+				var vfrom: Vector2 = bv.from
+				var vto: Vector2 = vfrom + (bv.dir as Vector2) * minf(float(bv.len), 40.0)
+				for vlit in [false, true]:
+					sites.append({"name": "village_lit" if vlit else "village_dead", "dir": vp.dir_at(vfrom), "look": vp.dir_at(vto), "village": v0, "village_lit": vlit,
+						"note": "the village %s (%d houses, %s/%s/%s), down a view ending on its %s, %s" % [v0.id, vp.houses.size(), vp.materials.stone, vp.materials.timber, vp.materials.roof, str(bv.end), "every hearth lit" if vlit else "dead"]})
 			"colonnade":
 				var cod := INF
 				var co0 := {}
@@ -885,6 +917,26 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	# The long walls' stretches in sight (§DS.1: streamed, LongWalls).
 	if main.get("long_walls") != null:
 		main.long_walls.build_now(d, LongWalls.BUILD_M)
+	# A village (design 5 Oct §EE): built now, its hearths cold or all lit.
+	if site.has("village") and main.get("village_life") != null:
+		main.village_life.build_now(d, 300.0)
+		main.old_hearths.refresh_now()
+		var vnode: Node3D = main.village_life.built().get(str(site.village.id), null)
+		if vnode != null:
+			for hd in vnode.get_meta("hearth_dirs", []):
+				var key := FireStore.key_of(hd[0])
+				if bool(site.village_lit):
+					var units: Array = []
+					for i in 6:
+						units.append(["branch", FireStore.burn_min("branch")])
+					FireStore.stores[key] = {"units": units, "embers_min": 0.0, "state": "flames", "tended": true, "dir": [hd[0].x, hd[0].y, hd[0].z], "seen": float(world.days)}
+				else:
+					FireStore.stores.erase(key)
+			main.old_hearths.refresh_now()
+			for f in get_nodes_in_group(Campfire.GROUP):
+				if (f as Node3D).has_meta("village"):
+					FireStore.apply(f)
+			main.village_life.sync()
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)

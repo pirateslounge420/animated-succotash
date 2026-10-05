@@ -133,9 +133,10 @@ static func key_near(d: Vector3, within_m: float) -> String:
 	return ""
 
 
-## The old hearths near surface direction `pd`: [dir, kind ("ruin" or
-## "nest"), ruin node or null] for each uninhabited ruin built now and
-## each nest holding remains.
+## The old hearths near surface direction `pd`: [dir, kind ("ruin",
+## "nest", "village", a delve's), ruin or village node or null, its local
+## spot, a village house's chimney] for each uninhabited ruin built now,
+## each nest holding remains and each village's hearths.
 func _wanted(pd: Vector3) -> Dictionary:
 	var want := {}
 	var ruins := landmarks.built_ruins()
@@ -175,6 +176,12 @@ func _wanted(pd: Vector3) -> Dictionary:
 		var sd: Vector3 = world.dir_of(spot)
 		if CubeSphere.surface_distance_m(sd, pd) < BUILD_M:
 			want[FireStore.key_of(sd)] = [sd, "ruin", node]
+	# The villages' hearths (design 5 Oct §EE.2): one in every house, one
+	# in every square but the void, the cold hearths at the ends of its
+	# views (VillageLife), all cold until a carried flame relights them.
+	if VillageLife.instance != null:
+		for h in VillageLife.instance.hearths_near(pd, BUILD_M):
+			want[FireStore.key_of(h[0])] = [h[0], "village", h[1], h[2], h[3]]
 	for n in Nests.near(pd, BUILD_M):
 		if str(n.state) != "remains":
 			continue
@@ -185,7 +192,7 @@ func _wanted(pd: Vector3) -> Dictionary:
 	return want
 
 
-func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Node3D:
+func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF, chimney: Node3D = null) -> Node3D:
 	var st := store_at(world, d, kind in ["holder", "brazier"])
 	var fire := Campfire.build(_root, world, chunks, d, false)
 	# Campfire.build registers a tended store only when there is none; this
@@ -197,7 +204,14 @@ func _build(d: Vector3, kind: String, ruin: Node3D, local := Vector3.INF) -> Nod
 	fire.set_meta("old_kind", kind)
 	# Lit, it can be your hearth (§AY), like a camp's.
 	fire.set_meta("hearth_ok", true)
-	if ruin != null and kind in ["delve", "holder", "brazier"]:
+	if ruin != null and kind == "village":
+		# On its house's floor under the chimney, or in its square, or at
+		# the end of a view; a house's smoke leaves by the chimney (§CV).
+		fire.global_position = ruin.global_transform * local
+		fire.set_meta("village", ruin.get_meta("village"))
+		if chimney != null:
+			fire.set_meta("smoke_stack", chimney)
+	elif ruin != null and kind in ["delve", "holder", "brazier"]:
 		# Down on the delve's paved floor, not on the ground above it.
 		fire.set_meta("delve_hearth", ruin)
 		fire.global_position = ruin.global_transform * local
@@ -285,7 +299,7 @@ func refresh_now() -> void:
 	for key in want:
 		if not _built.has(key) or not is_instance_valid(_built[key]):
 			var w: Array = want[key]
-			_built[key] = _build(w[0], w[1], w[2], w[3] if w.size() > 3 else Vector3.INF)
+			_built[key] = _build(w[0], w[1], w[2], w[3] if w.size() > 3 else Vector3.INF, w[4] if w.size() > 4 else null)
 	var saved: Dictionary = WorldSave.data["old_hearths"]
 	for key in _built.keys():
 		var node: Node3D = _built[key]

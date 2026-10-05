@@ -3,6 +3,39 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EE, §EF, §EG: the first village, the stream-gutter town, grown and composed; dead until relit
+- **Why this archetype:** the stream-gutter town tests the most at once. It needs every siting term (a stream, its bend, a ridge, a slope). It sits on a slope, so stepped footings, dry-stone aprons and posts all get used. Its gutter is §EF.8's water you follow. It is plain temperate stone-and-timber country, where most of the world is. Every other archetype is a special case of the same grammar.
+- **What's on screen:** abandoned villages of 30–50 stone houses above the inside of a stream's bend, with a ridge behind and the water in front. Up to 12 a world, at least 6 km apart (1.5 km on the stamp). Each one has:
+  - lanes that bend gently, running from the hearth square to the spring above, the landing below and the fields on each side;
+  - squares wrapped by houses, terraces of five and three in the middle and single houses at the edge;
+  - three quarters with arches or bands of kerb stones where you cross between them;
+  - a dry-stone wall round the edge, and a dry gutter down the main street;
+  - one stone tower seen from most of the lanes;
+  - one deliberate empty space (an empty square, a still pool or an unplanted bank);
+  - old trees, shrines and cold hearths ringed with stones where a long view would otherwise run on into nothing.
+
+  Houses sit on their slope as it lies: a plinth, stepped footings with a dry-stone apron, or posts of their own lengths on foundation stones, with steps up to raised doors. The ground is never flattened. One stone, one timber and one roof are taken from the rock and climate. The village is mossy, ivied and a little crooked, with sagging ridges and some holed roofs. A house that ends a view turns its gable to it, and the one that must lead the view has an upper storey. Every house has a cold hearth under its chimney; a lit one lights its windows and smokes from the chimney, and the village warms one house at a time (§EE.1). While a square's hearth is cold, brambles choke its walls; lit, they burn back and its benches are there.
+- **Checked** (`tools/village_check.gd`, the dev stamp, world seeds 42, 7, 101, 2024, 7731): 46 villages; 36 pass every rule; 1,184 of 1,196 rule lines pass.
+  - Seed 42: 7/7 villages pass everything.
+  - Seed 7: 9/12.
+  - Seed 101: 8/10.
+  - Seed 2024: 5/8.
+  - Seed 7731: 7/9.
+
+  The 12 misses:
+  - layered depth just short in four villages (52–59% of key views, against 60%);
+  - a square where no bench can stand against a wall, in three;
+  - one long view with no visible spot for a focal, in two;
+  - one square wrapped only 29%;
+  - one village with no room for its void;
+  - one village with 67% clear dominance, against 70%.
+
+  In the built village, physics rays find brambles in front of every bench while the square is dead and the benches clear once its hearth is lit. Lighting one house's hearth lights its windows and raises the lit fraction. The siting pass takes 0.15–0.6 s a world; a village's plan 0.3–0.5 s and its build 0.1–0.2 s, on a worker.
+- **Part 1 rerun** on its own commit (`tools/village_warmth_check.gd`): 0 fails. The warm share is 0.26, 0.33, 0.42, 0.45, 0.50 for lit fractions 0, ¼, ½, ¾, 1; blue goes 0.61 to 0.27. A dead village is today's frame (exactly nothing reaches the shaders), and so is the frame 1 km away.
+- **Old hearths still pass** (`old_hearth_check`, 0 fails). Village hearths are OldHearths of kind "village"; they light, burn and go out by the same rules.
+- `docs/implementation-notes.md`: "Villages as built". The §EE.6 note is corrected: bow and spear stay as §ED.7 for now, and §EE.6 is open (it was wrongly marked settled).
+- **Walkabout** (`SITES=village`, 22:00, dead then relit): see the next entry.
+
 ## 2026-10-05 — §EE.1 a lit village goes amber, one hearth at a time; the wild stays blue
 - **What changes on screen:** at night a village warms where its hearths burn. Each lit hearth eases the night's blue pull on the ground, walls and plants within about 10 m of it and lays a dim pool of firelight round it. The more of a village's hearths burn, the warmer the whole village reads. While you stand in a lit village the grade itself warms: shade goes firelit brown instead of navy. A dead village, and the wild between villages, look exactly as before. Warm light is still only firelight, and nothing glows that doesn't give light (the pool stays under full brightness, so nothing blooms).
 - **Data-driven:** each village has a lit fraction (lit hearths ÷ all, 0 to 1). The lighting and the grade read only that, plus the lit hearths themselves (`VillageWarmth`; `data/look.json → village_warmth`). The 16 lit hearths nearest you go to the shaders as a small data texture; the terrain, ruin, foliage, litter and aroid shaders and `post_grade` read it.

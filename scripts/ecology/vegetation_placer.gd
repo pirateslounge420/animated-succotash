@@ -1196,6 +1196,9 @@ class _Context:
 	var _old_trees := PackedVector3Array()
 	## The planted avenues' spots in this chunk (§DM.4): [dir, node dir].
 	var _avenue: Array = []
+	## The villages over this chunk (design 5 Oct §EE): their lanes,
+	## squares and houses kept clear (VillagePlan.clear_at).
+	var _villages: Array = []
 
 	func _init(p_key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
 		map = p_map
@@ -1218,6 +1221,13 @@ class _Context:
 		if Nests.terrain != null and Nests.terrain == map.terrain:
 			_clearings.append_array(Nests.clearings_near(data.center, chunk_m * 0.75))
 			_clearings.append_array(Uniques.clearings_near(map, data.center, chunk_m * 0.75))
+		# The villages (§EE): their plans keep lanes and houses clear, and
+		# the old trees at the ends of their views (§EF.2) are planted.
+		_villages = Villages.near(map, data.center, chunk_m * 0.75)
+		for v in _villages:
+			for td in Villages.plan_of(map, v).tree_dirs():
+				if TerrainChunk.key_at(td) == key:
+					_old_trees.append(td)
 		world = RealmMap.world_at(data.center)
 		if RoadNetwork.instance != null:
 			var reach := chunk_m * 0.75 + 20.0
@@ -1278,6 +1288,9 @@ class _Context:
 	func in_clearing(d: Vector3) -> bool:
 		for c in _clearings:
 			if CubeSphere.surface_distance_m(c[0], d) < c[1]:
+				return true
+		for v in _villages:
+			if Villages.plan_of(map, v).clear_at(d):
 				return true
 		return false
 
