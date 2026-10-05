@@ -3450,3 +3450,37 @@ Stacks on §BV–§BW (the spawn camp), §AZ (the log), §CN (overrun ruins), §
 - Edges and points touch only flesh and blood: game and guardians. Nothing with an edge touches what lurks in the dark; only fire answers it (§CN holds).
 - The fire arrow is a technique, not a tool: taught by the headman of one particular camp (which is open; data hook in `techniques.json`), permanent and weightless once learned. A lit arrow carries fire to what is out of reach: a hearth across a gap, kindling on a ledge. The torch with reach. Before it is learned, the bow is hunting only.
 - Deferred to Torchfire 2, a later era built on this game's systems: the full Wu Xing five-phase ring (unarmed, spear and javelin, axe, blade, bow). The torch sits outside the ring in both games. Fists stay as they are here.
+
+## EE. Villages: forgotten stone-and-timber towns, built with the land, brought back hearth by hearth — LOCKED (5 Oct, 04:15–05:24, Mike)
+
+Mike, looking at a new batch of references (en4ria's lamplit stone-and-timber towns and overgrown night gardens): *"blue doesn't always have to own it — the warm amber town is a nice breath of fresh air"*; *"I would like the stone and timber buildings to come along … little villages like this in addition to ruins … different little buildings can have their own fireplaces"*; *"the villages can be run down and abandoned too until you restore their fires"*; *"each abandoned village will have something different plaguing it — beasts, ghosts"*; *"procedurally generated still, but in novel ways … work with the land rather than against it"*; *"medieval ages type of technology but in an alternate universe"*. Locked at 05:24.
+
+### EE.1 What changes
+- **Tech ceiling rises.** Torchfire's world now holds villages of stone, timber, slate, tile and glass: a medieval-tech alternate world. **Amends "tribal tech"** in the project brief. Tribal camps stay (EE.4).
+- **Blue owns the frame by default, not always.** A lit village is allowed to go amber-dominant: lit windows, lanterns, hearth glow. **Amends LOOK_REFERENCE's "blue owns the frame" and "fire is the one warm accent"**: warm light is still only ever firelight, and amber means *life*. A dead village is blue; it warms one window at a time as hearths are relit. The wild and dead places stay blue.
+- Every building can have its own hearth. Lit windows are lit hearths; only things that give light glow (unchanged).
+
+### EE.2 The loop: dead village → relit village
+- Every village starts **abandoned and overgrown**: ivy over doors, moss in the stonework, cold hearths, empty. Fire is still never made, only carried (§CQ holds): you bring a flame from a living hearth and relight the village's fireplaces one by one. This extends §CN (cleared means lit) from ruins to whole towns.
+- Each dead village has **its own plague**, what drove its people out: beasts, ghosts, and other shapes the dark takes. Every plague is answered by light (§CN, §ED.6 hold: nothing with an edge touches what lurks in the dark).
+- A village's dead state carries its own mood: some are dread (the swamp), some are only wistful (the beach). Abandoned does not have to mean scary.
+- **Water restores too**, as a second, lesser way to bring a place back (a jammed wheel, a dry channel, a caved-in qanat). Fire stays first: the game is Torchfire.
+- Open: do people return when a village is relit? Can hearths go cold again? How each plague plays.
+
+### EE.3 Built with the land: the generation rules
+Villages are **procedural**, the point being that Mike can wander and be surprised. Every choice hangs off something the planet already computes (rock, slope, aspect, water, height, wind, plant ranges), so a village always makes sense.
+- **Siting (feng-shui logic as a suitability score):** back to a mountain or ridge (shelter from the cold wind), arms of ridge either side, open low ground in front falling to water, sun-facing; on the **inside** of a river bend (stable, silted bank), never the eroding outer bank; slow meandering water, not a straight torrent. If a good site lacks one piece, the village may build it (a raised mound behind, a dug pond in front).
+- **Building with slope, not flattening it:** stepped foundations following contours with balanced cut-and-fill; dry-stone (mortarless) retaining terraces that let water weep through; posts and stilts of varying length under level floors; drainage under everything (water, not gravity, is the real enemy).
+- **Why the old places still stand** (dressing and lore): posts resting on foundation stones, joinery instead of nails, deep eaves and raised floors, interlocking mortarless masonry, catenary arches and vaults in pure compression, self-healing lime-and-ash concrete. Each village may wear its own lost technique, so reading the architecture is part of the discovery.
+- **Natural energy:** water wheels, windmills and wind pumps, windcatchers, gravity channels, geothermal heat.
+- **Specialty follows the land** (what the land gave them here), read from what it left behind; flavour first, a light system maybe later.
+- The nests of §CK still hold: villages are a bigger kind of settlement at the same land features.
+
+### EE.4 Camps stay, as pit stops
+Tribal camps remain as the friendly stops between villages (the camp sim, headmen, techniques all hold).
+
+### EE.5 The backlog (not a build list)
+Archetypes and specialties are a reservoir in `data/villages.json`; **prototype one first**, prove it, then add. Archetypes: stream-gutter town (water channels along the streets, carp), canal town (small boats; abandoned and still, not flooded), cliff-carved village, stone spires with rope bridges and a winch basket, canopy village, hot-spring village, beach boardwalk, swamp stilt village of witch huts (same stilt grammar as the beach, reskinned), rice/contour-terrace town, qanat desert town, windmill dike town. Specialties: salt, kiln, mill, paper, glass, charcoal (the fire-keepers), mining, vineyard and olive, dye, quarry, beacon chain.
+
+### EE.6 Weapons: OPEN, not changed
+On 5 Oct Mike said *"we'll just keep it at torch"*, after Claude (in chat) advised against letting bow and spear in and wrongly said it would reopen the 30 Sept split. **§ED.7 (4 Oct) had already locked spear and bow into Torchfire 1** for hunting, fishing and guardians. §ED.7 stands until Mike decides with that in view.
