@@ -78,6 +78,7 @@ var hearth_props: Node3D
 var _plan: Array = []
 var _plan_t := 0.0
 var _ruin_walls := false
+var _trades_stamp := ""
 
 
 ## camps.json first_camp (design 1 Oct §CB): the first camp's kind rolls
@@ -679,9 +680,19 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 	_time += delta
 	Campfire.flicker(_fire, _time)
 	# The workshop (§EL): built once the camp reaches storage, out of the
-	# player's sight (or at once for the harness).
-	if workshop == null and _store_t >= 1.49:
-		ensure_workshop(player_pos.distance_to(_fire.global_position) > 40.0)
+	# player's sight (or at once for the harness); built again, out of
+	# sight, as its trades change (§EI).
+	if _store_t >= 1.49 and CampSim.instance != null:
+		var far := player_pos.distance_to(_fire.global_position) > 40.0
+		var stw := CampSim.instance.state_of("opening")
+		if workshop != null and far and ",".join(PackedStringArray(stw.get("trades", []))) != _trades_stamp:
+			rebuild_workshop()
+		if workshop == null:
+			ensure_workshop(far)
+		# What every camp does every day (§EI.1, CampNeeds).
+		CampNeeds.live(dressing, stw, _needs_ctx(player_pos))
+	if dressing != null:
+		CampNeeds.tick(dressing, delta, dressing.get_node_or_null("Shelter"), _ground_fn(), _shelter_material(), Peoples.palette(Peoples.get_people(people_id), FireStore.biome_key(world, site)))
 	# Their hitboxes only while someone's near (Hitboxes.wanted_at()).
 	var want := Hitboxes.wanted_at(_fire.global_position, player_pos)
 	if want != _hitboxes_on:
@@ -712,6 +723,53 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 	FireCircle.animate(circle, _fire, _time, delta, player_pos, phase, ctx)
 
 
+## Free the workshop (its kiln, its hearth props) to be built again with
+## the camp's trades (§EI); the folk walk back to the fire first.
+func rebuild_workshop() -> void:
+	for n in _npcs:
+		if is_instance_valid(n) and n.has_meta("home"):
+			n.transform = n.get_meta("home")
+			n.visible = true
+			n.set_meta("station", "fire")
+			n.set_meta("going", "")
+			n.set_meta("seat_key", "")
+			Workshop._stand(n, false)
+	if workshop != null and workshop.has_meta("kiln") and is_instance_valid(workshop.get_meta("kiln")):
+		(workshop.get_meta("kiln") as Node).queue_free()
+	if workshop != null:
+		workshop.queue_free()
+	if hearth_props != null:
+		hearth_props.queue_free()
+	workshop = null
+	hearth_props = null
+
+
+func _needs_ctx(player_pos: Vector3) -> Dictionary:
+	var avoid: Array = [[Vector3.ZERO, 2.4]]
+	for c in dressing.get_children():
+		if c is Node3D:
+			var p: Vector3 = (c as Node3D).position
+			if Vector2(p.x, p.z).length() > 2.6 and Vector2(p.x, p.z).length() < 6.0:
+				avoid.append([Vector3(p.x, 0, p.z), 1.0])
+	var pm: Vector3 = dressing.to_local(world.to_scene(player_spot, PlanetConst.RADIUS_M + chunks.ground_height(player_spot)))
+	avoid.append([Vector3(pm.x, 0, pm.z), 1.2])
+	return {"d": site, "world": world, "chunks": chunks, "shelter": dressing.get_node_or_null("Shelter"), "ground": _ground_fn(),
+		"near": player_pos.distance_to(_fire.global_position) < float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)),
+		"pal": Peoples.palette(Peoples.get_people(people_id), FireStore.biome_key(world, site)), "height": 1.7, "avoid": avoid, "material": _shelter_material()}
+
+
+func _ground_fn() -> Callable:
+	var dn := dressing
+	return func(p: Vector3) -> float:
+		var g: Vector3 = world.dir_of(dn.to_global(p))
+		return dn.to_local(world.to_scene(g, PlanetConst.RADIUS_M + chunks.ground_height(g))).y
+
+
+func _shelter_material() -> String:
+	var mats: Array = (Peoples.get_people(people_id).get("shelter", {}) as Dictionary).get("materials", [])
+	return str(mats[0]) if not mats.is_empty() else "thatch"
+
+
 ## The workshop at the opening camp (§EL), when its state is at the
 ## storage rung: `ok` false waits (the player is close). Inside the old
 ## walls' ring where the camp is a ruin (§ED.1).
@@ -738,7 +796,7 @@ func ensure_workshop(ok: bool) -> void:
 	var pm: Vector3 = dressing.to_local(world.to_scene(player_spot, PlanetConst.RADIUS_M + chunks.ground_height(player_spot)))
 	avoid.append([Vector3(pm.x, 0, pm.z), 1.2])
 	var dn := dressing
-	var ctx := {"avoid": avoid, "wind": dressing.global_basis.inverse() * world.planet.wind_avg[world.planet.cell_at(site)], "key": "opening",
+	var ctx := {"avoid": avoid, "wind": dressing.global_basis.inverse() * world.planet.wind_avg[world.planet.cell_at(site)], "key": "opening", "st": st,
 		"r": [6.0, 8.0] if _ruin_walls else [6.0, 10.0], "kiln_r_max": 9.5 if _ruin_walls else 1.0e9,
 		"ground": func(p: Vector3) -> float:
 			var g: Vector3 = world.dir_of(dn.to_global(p))
@@ -750,7 +808,10 @@ func ensure_workshop(ok: bool) -> void:
 	if workshop.has_meta("kiln"):
 		var kp: Vector3 = (workshop.get_meta("kiln") as Node3D).position
 		hav.append([Vector3(kp.x, 0, kp.z), 1.8])
-	hearth_props = Workshop.hearth_props(dressing, people, ppal, wrng, hav)
+	hearth_props = Workshop.hearth_props(dressing, people, ppal, wrng, hav, 3.2, Trades.visible_for(st, "hearth"))
+	if hearth_props.has_meta("seat"):
+		(workshop.get_meta("seats") as Dictionary)["hearth"] = [hearth_props.get_meta("seat")]
+	_trades_stamp = ",".join(PackedStringArray(st.get("trades", [])))
 
 
 static func _tangent(from: Vector3, to: Vector3) -> Vector3:

@@ -3,6 +3,39 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-05 — §EI what a camp needs, and the trades that follow (queue 39)
+- **What changes on screen:**
+  - **Water:** at its trip hours (two a day, again for each ten folk past ten) a folk walks from the hearth to the camp's water with a pot on the head, pauses and walks back. The water is the nearest fresh water within 120 m, else within gather reach, else a seep at the lowest ground near, and never the sea. After the camp's first trip the water pot stands by the hearth (`store.pieces.water_pot_by_hearth`).
+  - **Shelter mends:** every 10 game days a folk carries a bundle of the shelter's own material (the people file's first `shelter.materials`) in from the woods, and a patch goes on the shelter's front, toward the fire. The newest six show.
+  - **Trades:** from storage, a camp takes up trades in the real order, at most three, and each puts its first three visible props on its bench (pots drying and grain jars by the kiln for pottery). The maker sits at the bench of the camp's first trade that needs a maker: the potter at the kiln, which now stands only with pottery and smokes while they shape pots and feed it. A lighting maker would sit at a stool by the hearth pot.
+- **What the code does:**
+  - New `scripts/peoples/trades.gd` (Trades). It reads the land once per camp and caches it in the state (`reach_facts`): the biomes' plants, rock, soil and water within `loop.gather_reach_m`, and the river banks. Each sim tick it works out the present trades: rung, needs, earlier trades, the people's `huts.trades`, a maker for the non-generalist ones, and the earliest `show_max`. Once present, a trade stays (sticky) while its rung, maker and earlier trades hold.
+  - `CampSim._needs()` counts the water trips (`st.water`: today, yesterday, total) and the mends (`st.patches`, `st.mend_days`).
+  - New `scripts/peoples/camp_needs.gd` (CampNeeds) draws them: the trip walkers, the pot and the patches.
+  - The Workshop's maker station follows the trades (`maker_station`). It has kiln and hearth stations with seats, five new idles (`shape_pot`, `feed_kiln`, `stir_pot`, `hang_strips`, `fill_lamp`), and the trades' visible pieces on the benches.
+  - A camp is rebuilt out of sight when its trades change (Camps' folk stamp; the opening camp's `rebuild_workshop()`).
+  - CampSim's header carries the §EI.4 guard: no market, money, chief, wall, standing hunter or metal, ever.
+- **Data:**
+  - The needs and trades clauses of `camps.json _help.village_economy` are wired (no `[NOT WIRED YET]`).
+  - New `sim.trades.gates`: the genera, rocks and soils each need reads, `clay_from_water_m` 300, `fuel_surplus_nights` 3, `visible_per_trade` 3.
+  - `sim.workshop.benches.kiln.idles` and `store.pieces.water_pot_by_hearth` added, all with help lines.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/trades_check.gd` gives 0 fails over 119 camps (every people at the 7 camp sites within 12 km). It checks:
+  - the trades are a subset of `huts.trades`, in order, at most 3;
+  - no pottery without clay (51 camps had none, and 5 were forced);
+  - textiles only after cordage and leather;
+  - no maker-trade without a maker;
+  - at least 2 water trips every game day over 44 days;
+  - a patch every 10.0–10.04 days;
+  - the water pot by the hearth;
+  - the trade pieces on their benches;
+  - the kiln only with pottery.
+  `tools/workshop_check.gd` (the kiln now needs pottery; the maker's share holds at the kiln, 0.80) and `tools/no_metal_check.gd` still give 0 fails.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=pottery` (the opening river camp at the specialist rung, from the road) was still rendering at this commit; the next entry line records it.
+- **Flags for Mike:**
+  1. **Textiles and the lighting trade never show on seed 7731.** Under the data's order with `show_max` 3, the first three trades a camp can take fill the slots first: cordage plus woodwork, stone or pottery. Textiles waits on both cordage and leather and needs a herd's wool or a fibre crop, so it would be a camp's fourth. The lighting trade comes `after: [pottery]`, so the eight peoples whose `huts.trades` list lighting but not pottery can never have it: tundra, marsh, coast, canopy, mangrove, mountain, old growth and taiga. That is despite the tundra's porch sign being a burning lamp, and despite §EI.3 asking only for fat, oil or resin. Your call: drop lighting's `after`, raise `show_max`, or let the porch sign stand on its own.
+  2. **Leather and hide needs the hunt (§EK, prompt 40) or a herd.** With no hunt yet, only the herding peoples (mountain, steppe, taiga) show it.
+  3. **"trips_per_day … counted by the camp's folk count"** I read as two trips a day for each ten folk. Tell me if you meant something else.
+
 ## 2026-10-05 — §EL the workshop: one hut, two benches, the hearth outside (queue 38)
 - **What changes on screen:** a camp that has reached the storage rung gets one workshop hut 6–10 m from its fire, open on the fire side.
   - **The hut:** built in the people's own form and the shelter's tints. Each people gets its own: a gable hut, a round stone hut, a hide cone, the marsh's long reed arch, a flat mud room with its ramada, an open shed, or a lean-to.

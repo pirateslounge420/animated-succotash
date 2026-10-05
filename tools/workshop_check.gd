@@ -99,6 +99,9 @@ func _state(key: String, d: Vector3, people_id: String, rung: int, n: int) -> Di
 		folk[1].role = "plantkeeper"
 	if rung >= 3:
 		folk[2].role = "maker"
+	st.wood = 40.0
+	# The camp's trades (§EI) as the sim's next tick would have them.
+	Trades.update(st, world.planet, main.chunks.rivers)
 	return st
 
 
@@ -155,7 +158,7 @@ func _camps() -> void:
 				bad_shape.append("%s: %.1f m from the fire" % [key, fire_d])
 			# The kiln.
 			var hu := Workshop.huts(Peoples.get_people(str(pid)))
-			var want_kiln := not (hu.get("kiln", []) as Array).is_empty()
+			var want_kiln := not (hu.get("kiln", []) as Array).is_empty() and (st.get("trades", []) as Array).has("pottery")
 			var has_kiln := ws.has_meta("kiln")
 			if want_kiln != has_kiln:
 				kiln_bad.append("%s: kiln %s, huts.kiln %d" % [key, str(has_kiln), (hu.get("kiln", []) as Array).size()])
@@ -193,7 +196,7 @@ func _camps() -> void:
 				_day(root, ws, st, key, idle_bad)
 	ok(below_with.is_empty(), "no camp below storage has a workshop (%d below) %s" % [ids.size(), str(below_with)])
 	ok(bad_shape.is_empty(), "every camp at or past storage (%d) has exactly one workshop 6-10 m from its fire, a soft and a hard bench with 3-5 props each, and a door %s" % [at_storage, str(bad_shape.slice(0, 6))])
-	ok(kiln_bad.is_empty(), "a kiln only where huts.kiln is non-empty, 4-8 m downwind of the hut within 30 deg %s" % str(kiln_bad.slice(0, 6)))
+	ok(kiln_bad.is_empty(), "a kiln only where huts.kiln is non-empty and the pottery trade is present (§EI), 4-8 m downwind of the hut within 30 deg %s" % str(kiln_bad.slice(0, 6)))
 	ok(sign_bad.is_empty(), "every porch sign is its people's and reads at 40 m (12+ px tall in the 480-line frame) %s" % str(sign_bad.slice(0, 6)))
 	ok(budget_bad.is_empty(), "every workshop with its props is within 2x the triangles of a fire circle with its seats (worst %.2fx) %s" % [max_ratio, str(budget_bad.slice(0, 6))])
 	ok(idle_bad.is_empty(), "the day at every maker's camp: bench idles and sounds only from their own bench, one bench a folk a tick, one folk a seat, crossings within the max, the maker's share, the circle by day only the keeper and the children, everyone back at dusk %s" % str(idle_bad.slice(0, 8)))
@@ -240,7 +243,7 @@ func _day(root: Node3D, ws: Node3D, st: Dictionary, key: String, bad: Array) -> 
 		if (s as Node3D).has_meta("home"):
 			holders.append(s)
 	var people := Peoples.get_people(str(st.people))
-	var mb := Workshop.maker_bench(people)
+	var mb := Workshop.maker_station(st)
 	var gh: Array = (CampSim.SIM.get("loop", {}) as Dictionary).get("gather_hours", [7, 17])
 	var keeper := Workshop.keeper_of(st)
 	var maker := -1
@@ -264,8 +267,8 @@ func _day(root: Node3D, ws: Node3D, st: Dictionary, key: String, bad: Array) -> 
 				at_bench += 1
 		for i in plan.size():
 			var p := str(plan[i])
-			if p in ["soft", "hard"]:
-				if last.has(i) and str(last[i]) in ["soft", "hard"] and str(last[i]) != p:
+			if p in ["soft", "hard", "kiln", "hearth"]:
+				if last.has(i) and str(last[i]) in ["soft", "hard", "kiln", "hearth"] and str(last[i]) != p:
 					crosses[i] = int(crosses.get(i, 0)) + 1
 				last[i] = p
 		# Drive the drawn folk there and let them work a moment.
@@ -278,14 +281,14 @@ func _day(root: Node3D, ws: Node3D, st: Dictionary, key: String, bad: Array) -> 
 				var hd: Node3D = hv
 				var stn := str(hd.get_meta("station", "fire"))
 				var i := int(hd.get_meta("folk_i", -1))
-				if stn in ["soft", "hard"]:
+				if stn in ["soft", "hard", "kiln", "hearth"]:
 					var idle := str(hd.get_meta("bench_idle", ""))
 					if not Workshop.bench_idles(stn).has(idle):
 						bad.append("%s %s at %s plays %s" % [key, hd.name, stn, idle])
-					if not Workshop.bench_sounds(stn).has(str(Workshop.SOUND_OF.get(idle, ""))):
+					if Workshop.SOUND_OF.has(idle) and not Workshop.bench_sounds(stn).has(str(Workshop.SOUND_OF.get(idle, ""))):
 						bad.append("%s %s: %s sounds %s" % [key, hd.name, idle, str(Workshop.SOUND_OF.get(idle, ""))])
 				var sk := str(hd.get_meta("seat_key", ""))
-				if stn in ["soft", "hard", "porch"]:
+				if stn in ["soft", "hard", "porch", "kiln", "hearth"]:
 					if seat_of.has(sk):
 						bad.append("%s seat %s held twice at %.2f h" % [key, sk, h])
 					seat_of[sk] = hd

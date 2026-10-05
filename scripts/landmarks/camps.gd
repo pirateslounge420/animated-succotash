@@ -538,6 +538,7 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	_root.add_child(root)
 	root.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(d), d), at)
 	root.set_meta("people", people_id)
+	root.set_meta("pal", _people_pal)
 	root.set_meta("kind", kind)
 	root.set_meta("biome", biome_key)
 	root.set_meta("key", key)
@@ -710,6 +711,31 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	return root
 
 
+## The Needs context for `camp` (§EI.1).
+func _needs_ctx(camp: Node3D, pp: Vector3) -> Dictionary:
+	var avoid: Array = [[Vector3.ZERO, 2.4]]
+	for c in camp.get_children():
+		if c is Node3D:
+			var p: Vector3 = (c as Node3D).position
+			if Vector2(p.x, p.z).length() > 2.6 and Vector2(p.x, p.z).length() < 6.0:
+				avoid.append([Vector3(p.x, 0, p.z), 1.0])
+	return {"d": world.dir_of(camp.global_position), "world": world, "chunks": chunks, "shelter": camp.get_node_or_null("Shelter"),
+		"ground": _ground_fn(camp), "near": camp.global_position.distance_to(pp) < float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)),
+		"pal": camp.get_meta("pal", []), "height": 1.7 * Peoples.folk_scale(str(camp.get_meta("kind", "human"))), "avoid": avoid, "material": _shelter_material(camp)}
+
+
+## Local ground height under a point of `camp`'s frame.
+func _ground_fn(camp: Node3D) -> Callable:
+	return func(p: Vector3) -> float:
+		var g: Vector3 = world.dir_of(camp.to_global(p))
+		return camp.to_local(world.to_scene(g, PlanetConst.RADIUS_M + chunks.ground_height(g))).y
+
+
+func _shelter_material(camp: Node3D) -> String:
+	var mats: Array = (Peoples.get_people(str(camp.get_meta("people", ""))).get("shelter", {}) as Dictionary).get("materials", [])
+	return str(mats[0]) if not mats.is_empty() else "thatch"
+
+
 ## The workshop (§EL) under camp `root`: clear of what already stands
 ## round the fire (the shelter, the props, the store, the guards, where
 ## the plot will go), its kiln downwind of the planet's mean wind here;
@@ -734,7 +760,7 @@ func _workshop(root: Node3D, people: Dictionary, st: Dictionary, canopy: Diction
 	prng.seed = hash([str(st.key), "plot"])
 	var pa := prng.randf() * TAU
 	avoid.append([Vector3(cos(pa), 0, sin(pa)) * 12.5, 3.4])
-	var ctx := {"avoid": avoid, "wind": wind, "key": str(st.key),
+	var ctx := {"avoid": avoid, "wind": wind, "key": str(st.key), "st": st,
 		"ground": func(p: Vector3) -> float:
 			var g: Vector3 = world.dir_of(root.to_global(p))
 			return root.to_local(world.to_scene(g, PlanetConst.RADIUS_M + chunks.ground_height(g))).y}
@@ -760,7 +786,10 @@ func _workshop(root: Node3D, people: Dictionary, st: Dictionary, canopy: Diction
 		if ws.has_meta("kiln"):
 			var kp: Vector3 = (ws.get_meta("kiln") as Node3D).position
 			hav.append([Vector3(kp.x, 0, kp.z), 1.8])
-		root.set_meta("hearth_props", Workshop.hearth_props(root, people, _people_pal, wrng, hav))
+		var hp := Workshop.hearth_props(root, people, _people_pal, wrng, hav, 3.2, Trades.visible_for(st, "hearth"))
+		root.set_meta("hearth_props", hp)
+		if hp.has_meta("seat"):
+			(ws.get_meta("seats") as Dictionary)["hearth"] = [hp.get_meta("seat")]
 
 
 ## The camp's dressing (design 30 Sept §BO, CampProps): the people's
@@ -1146,6 +1175,12 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var fs: Node3D = camp.get_meta("food_store")
 		if absf(float(fs.get_meta("units", -1.0)) - float(st.food)) >= 1.0:
 			CampProps.refresh_food_store(fs, float(st.food))
+		# What every camp does every day (§EI.1, CampNeeds): the water trips
+		# and the pot by the hearth, the shelter's mends.
+		if not camp.has_meta("canopy"):
+			CampNeeds.live(camp, st, _needs_ctx(camp, pp))
+	if not camp.has_meta("canopy"):
+		CampNeeds.tick(camp, delta, camp.get_node_or_null("Shelter"), _ground_fn(camp), _shelter_material(camp), camp.get_meta("pal", []))
 	camp.set_meta("store_t", t)
 	# The loop's walker.
 	# (get_meta with a null default still errors when the key is missing.)
@@ -1258,9 +1293,10 @@ static func _folk_stamp(st: Dictionary) -> String:
 	var s := ""
 	for f in st.get("folk", []):
 		s += "%s%s%s," % [str(f.get("sex", "")), CampSim.stage_of(f), str(f.get("role", ""))]
-	# A camp that reaches storage is built again with its workshop (§EL).
+	# A camp that reaches storage is built again with its workshop (§EL),
+	# and again as its trades come (§EI).
 	if Workshop.wanted(st):
-		s += "W"
+		s += "W" + ",".join(PackedStringArray(st.get("trades", [])))
 	return s
 
 

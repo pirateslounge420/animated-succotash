@@ -11,6 +11,14 @@ extends Node
 ## starvation moves them; an empty camp goes to ruin and the forest.
 ## Every number is camps.json sim (first guesses, tune by play).
 ##
+## Stop at exchange (design 5 Oct §EI.4, sim.trades.ceiling and never):
+## nothing in this sim ever makes a market, money, a chief, a wall, a
+## standing hunter who does not also gather, or metal. Two camps with
+## different trades trade along the road, and that is the ceiling. The
+## needs (§EI.1, _needs) and the trades (Trades) give the restraint rule
+## an economy to be restrained with; neither adds a store, a stat or a
+## rank.
+##
 ## The sim is a store plus a timestamp: it ticks every tick_game_h of
 ## game time and on load resolves the ticks it missed (WorldSave), for
 ## every camp the player has come upon, so camps grow while unloaded.
@@ -387,6 +395,52 @@ func _tick(st: Dictionary, days: float) -> void:
 		if str(st.state) == "living":
 			_relight_from_ember(st, days, th)
 	_ladder(st, days)
+	_needs(st, days, h, th)
+	if world != null:
+		Trades.update(st, world.get("planet"), chunks.rivers if chunks != null else null)
+
+
+## The fundamentals made visible (design 5 Oct §EI.1, sim.needs): water
+## trips (trips_per_day for each ten folk, at even hours of the gather
+## day; st.water: today's count, yesterday's, the total; the pot lands by
+## the hearth after the first, store.pieces.water_pot_by_hearth) and a
+## shelter mend every mend_job_days in the gather hours (st.patches, one
+## patch each). No store number changes: water is never short.
+func _needs(st: Dictionary, days: float, h: float, th: float) -> void:
+	var nd: Dictionary = SIM.get("needs", {})
+	var gh: Array = (SIM.get("loop", {}) as Dictionary).get("gather_hours", [7, 17])
+	var g0 := float(gh[0])
+	var span := float(gh[1]) - g0
+	var day := int(floor(days + CubeSphere.longitude(_dir(st)) / TAU))
+	var w: Dictionary = st.get("water", {})
+	if int(w.get("day", -999)) != day:
+		var prev := int(w.get("n", 0)) if int(w.get("day", -999)) == day - 1 else 0
+		w = {"day": day, "n": 0, "prev": prev, "total": int(w.get("total", 0))}
+	var n := water_trips_per_day(st)
+	for k in n:
+		var at := g0 + (k + 0.5) * span / n
+		if h >= at and h < at + th and int(w.n) <= k:
+			w.n = int(w.n) + 1
+			w.total = int(w.total) + 1
+	st["water"] = w
+	var md := float((nd.get("shelter", {}) as Dictionary).get("mend_job_days", 10))
+	if not st.has("mend_last"):
+		st["mend_last"] = days
+	if days - float(st.mend_last) >= md and h >= g0 and h < g0 + span:
+		st["patches"] = int(st.get("patches", 0)) + 1
+		st["mend_last"] = days
+		var log: Array = st.get("mend_days", [])
+		log.append(days)
+		while log.size() > 8:
+			log.pop_front()
+		st["mend_days"] = log
+
+
+## A camp's water trips a day: needs.water.trips_per_day, again for every
+## ten folk past the first ten.
+func water_trips_per_day(st: Dictionary) -> int:
+	var per := int(((SIM.get("needs", {}) as Dictionary).get("water", {}) as Dictionary).get("trips_per_day", 2))
+	return per * maxi(1, int(ceil(folk_count(st) / 10.0)))
 
 
 ## A dead fire the folk still tend relights at dawn from the woodpile:

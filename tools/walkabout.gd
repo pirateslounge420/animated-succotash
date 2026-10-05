@@ -242,6 +242,8 @@ func _run() -> void:
 			kinds.append("village")
 		if only.has("workshop"):
 			kinds.append("workshop")
+		if only.has("pottery"):
+			kinds.append("pottery")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -480,6 +482,13 @@ func _run() -> void:
 				var wrd := _down_the_road(camp_d, 28.0)
 				sites.append({"name": "workshop", "dir": wrd.dir, "look": camp_d, "workshop": true,
 					"note": "the opening camp's workshop from the road (harness: the camp set to the storage rung)"})
+			"pottery":
+				# A river camp at the specialist rung with pottery (design 5
+				# Oct §EI): the opening river camp set to the specialist rung
+				# with its maker, from the road 20 m out (a harness frame).
+				var prd := _down_the_road(camp_d, 20.0)
+				sites.append({"name": "pottery", "dir": prd.dir, "look": camp_d, "workshop": true, "specialist": true,
+					"note": "the opening river camp at the specialist rung (harness: rung, maker and woodpile set for the frame)"})
 			"colonnade":
 				var cod := INF
 				var co0 := {}
@@ -955,6 +964,15 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		wst.rung = maxi(int(wst.rung), Workshop.rung_index())
 		main.camp_sim._give_role(wst, "headman", "m")
 		main.camp_sim._give_role(wst, "plantkeeper", "f")
+		if bool(site.get("specialist", false)):
+			# The specialist rung (§EI): the maker named, the woodpile at a
+			# surplus, the trades as the next tick finds them.
+			wst.rung = maxi(int(wst.rung), Trades.rung_of("specialist"))
+			main.camp_sim._give_role(wst, "maker", "")
+			wst.wood = maxf(float(wst.wood), 40.0)
+			Trades.update(wst, world.planet, main.chunks.rivers)
+			site["note"] = str(site.get("note", "")) + " · trades %s" % str(wst.get("trades", []))
+			main.camp.rebuild_workshop()
 		Workshop.instant = true
 		main.camp.ensure_workshop(true)
 	await _frames(20)
@@ -1044,7 +1062,7 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		var hh := 11.0
 		while hh <= 14.0:
 			var pl := Workshop.plan_now(wst2, Astro.days_at_solar_hour(base, hh, lon, lat))
-			var nb := pl.count("soft") + pl.count("hard")
+			var nb := pl.count("soft") + pl.count("hard") + 3 * pl.count("kiln")
 			if nb > best_n:
 				best_n = nb
 				best_h = hh

@@ -103,6 +103,18 @@ static func maker_bench(people: Dictionary) -> String:
 	return "soft" if int(score.soft) > int(score.hard) else "hard"
 
 
+## The maker's station at camp `st` (§EI.3): the bench of the camp's
+## first non-generalist trade (Trades.maker_bench: soft, hard, the hearth
+## or the kiln; the kiln only where the people build one, else the soft
+## bench, where the clay goes), else the bench of the maker's materials.
+static func maker_station(st: Dictionary) -> String:
+	var people := Peoples.get_people(str(st.get("people", "")))
+	var tb := Trades.maker_bench(st)
+	if tb == "kiln" and (huts(people).get("kiln", []) as Array).is_empty():
+		tb = "soft"
+	return tb if tb != "" else maker_bench(people)
+
+
 ## Is the people's maker a potter (works clay)?
 static func potter(people: Dictionary) -> bool:
 	var mk: Dictionary = (people.get("specialists", {}) as Dictionary).get("maker", {})
@@ -125,7 +137,9 @@ static func keeper_of(st: Dictionary) -> int:
 # --- The day: who is where --------------------------------------------------------
 
 ## Where each folk of camp `st` is at hour `h` (local, 0–24) of game day
-## `day`: "fire", "soft", "hard", "porch" or "out" (gathering, out of
+## `day`: "fire", "soft", "hard", "kiln", "hearth" (the maker's station
+## where the maker's trade is pottery or the lighting trade, §EI), "porch"
+## or "out" (gathering, out of
 ## sight). Outside the gather hours, or below the workshop's rung, all
 ## "fire".
 static func plan(st: Dictionary, h: float, day: int) -> Array:
@@ -139,9 +153,9 @@ static func plan(st: Dictionary, h: float, day: int) -> Array:
 	if h < float(gh[0]) or h >= float(gh[1]):
 		return out
 	var keeper := keeper_of(st)
-	var mb := maker_bench(Peoples.get_people(str(st.get("people", ""))))
-	var cap := {"soft": int(W.get("bench_seats", 2)), "hard": int(W.get("bench_seats", 2)), "porch": int(W.get("porch_seats", 1))}
-	var used := {"soft": 0, "hard": 0, "porch": 0}
+	var mb := maker_station(st)
+	var cap := {"soft": int(W.get("bench_seats", 2)), "hard": int(W.get("bench_seats", 2)), "porch": int(W.get("porch_seats", 1)), "kiln": 1, "hearth": 1}
+	var used := {"soft": 0, "hard": 0, "porch": 0, "kiln": 0, "hearth": 0}
 	# The maker first: the bench is the maker's.
 	var order: Array = []
 	for i in folk.size():
@@ -175,14 +189,13 @@ static func plan_now(st: Dictionary, days: float) -> Array:
 	return plan(st, fposmod(days + lon, 1.0) * 24.0, int(floor(days + lon)))
 
 
-## Is the potter at work now (the people's maker works clay and sits at
-## the bench by `p`)?
+## Is the potter at work now (the maker sits at the kiln by plan `p`;
+## the kiln is the maker's station only where pottery is the camp's
+## maker's trade, §EI)?
 static func potter_working(st: Dictionary, p: Array) -> bool:
-	if not potter(Peoples.get_people(str(st.get("people", "")))):
-		return false
 	var folk: Array = st.get("folk", [])
 	for i in mini(folk.size(), p.size()):
-		if str((folk[i] as Dictionary).get("role", "")) == "maker" and str(p[i]) in ["soft", "hard"]:
+		if str((folk[i] as Dictionary).get("role", "")) == "maker" and str(p[i]) == "kiln":
 			return true
 	return false
 
@@ -377,7 +390,10 @@ static func build(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNum
 	var wind: Vector3 = ctx.get("wind", Vector3.ZERO)
 	wind.y = 0.0
 	var wdir := wind.normalized() if wind.length() > 0.05 else Vector3(cos(rng.randf() * TAU), 0, sin(rng.randf() * TAU))
-	var has_kiln := not (hu.get("kiln", []) as Array).is_empty()
+	# The kiln comes with the pottery trade (§EI.3, benches.kiln
+	# only_with_trade), where the people build one at all.
+	var st: Dictionary = ctx.get("st", {})
+	var has_kiln := not (hu.get("kiln", []) as Array).is_empty() and (st.get("trades", []) as Array).has(str(((W.get("benches", {}) as Dictionary).get("kiln", {}) as Dictionary).get("only_with_trade", "pottery")))
 	var rr: Array = ctx.get("r", [6.0, 10.0])
 	var spot: Dictionary
 	if ctx.has("at"):
@@ -434,6 +450,7 @@ static func build(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNum
 		for i in count:
 			chosen.append(picks[i])
 		bn.set_meta("props", chosen)
+		bn.set_meta("trade", Trades.visible_for(st, bench))
 		bn.set_meta("laid", [] as Array)
 		bn.set_meta("side", -1.0 if bench == "soft" else 1.0)
 		bn.set_meta("half", lay.half)
@@ -492,7 +509,7 @@ static func build(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNum
 		kiln.position = Vector3(kp.x, (float(ground.call(kp)) if ground.is_valid() and not ctx.has("at") else kp.y) - 0.05, kp.z)
 		kiln.basis = Basis.looking_at(-wdir, Vector3.UP)
 		var kb := Build.new()
-		_kiln(kb, rng)
+		_kiln(kb, rng, Trades.visible_for(st, "kiln"))
 		kiln.add_child(kb.node("Hump"))
 		var kcb := PropCollision.body(kiln, "Body")
 		for bx in kb.boxes:
@@ -501,6 +518,8 @@ static func build(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNum
 		kiln.set_meta("what", (hu.kiln as Array)[0])
 		kiln.set_meta("wind", wdir)
 		ws.set_meta("kiln", kiln)
+		# The potter's seat at the mouth, facing it.
+		pseats["kiln"] = [{"pos": kiln.transform * Vector3(0.25, SEAT_H, 1.75), "face": (kiln.transform.basis * Vector3(0, 0, -1)).normalized()}]
 	# Sound from each bench (one player each; drive() picks the loop).
 	for bench in benches:
 		var sp := Audio3D.make("scrape", benches[bench], "Work")
@@ -678,8 +697,10 @@ static func choose_spot(rng: RandomNumberGenerator, avoid: Array, wdir: Vector3,
 	return best
 
 
-## The kiln: a clay hump with its dark mouth, brush stacked beside it.
-static func _kiln(b: Build, rng: RandomNumberGenerator) -> void:
+## The kiln: a clay hump with its dark mouth, brush stacked beside it, a
+## seat stone at the mouth, and the pottery trade's `extra` pieces (pots
+## drying, grain jars) in rows beside it.
+static func _kiln(b: Build, rng: RandomNumberGenerator, extra: Array = []) -> void:
 	var clay := Color(0.55, 0.36, 0.24)
 	b.cone(Vector3(0, -0.05, 0), 1.25, 0.85, 0.6, 9, clay, STONE)
 	b.cone(Vector3(0, 0.55, 0), 0.85, 0.25, 0.4, 9, clay.darkened(0.06), STONE)
@@ -688,6 +709,17 @@ static func _kiln(b: Build, rng: RandomNumberGenerator) -> void:
 	b.boxes.append([Transform3D(Basis(), Vector3(0, 0.45, 0)), Vector3(2.0, 0.9, 2.0)])
 	for i in 4:
 		b.beam(Vector3(1.6, 0.05 + i * 0.09, -0.5 + i * 0.08), Vector3(2.4, 0.1 + i * 0.09, 0.4 - i * 0.05), Vector3.UP, 0.12, 0.08, Color(0.45, 0.36, 0.22).darkened(rng.randf() * 0.15), WOOD)
+	b.ybox(Vector3(0.25, SEAT_H * 0.5, 1.75), Vector3(0.5, SEAT_H, 0.4), 0.2, Color(0.44, 0.43, 0.42), STONE, true)
+	var row := 0
+	for ph in extra:
+		var s := str(ph)
+		if s.find("smoking") >= 0:
+			continue
+		var jar := s.find("jar") >= 0
+		for k in 4:
+			var h := 0.5 if jar else 0.3
+			b.ybox(Vector3(-1.9 - row * 0.6, h * 0.5, -0.9 + k * 0.5), Vector3(0.34, h, 0.34), 0.3 * k, Color(0.62, 0.42, 0.28).darkened(rng.randf() * 0.12) if not jar else Color(0.56, 0.36, 0.24), STONE)
+		row += 1
 
 
 # --- The pieces ----------------------------------------------------------------
@@ -696,7 +728,8 @@ static func _kiln(b: Build, rng: RandomNumberGenerator) -> void:
 static func shape_of(phrase: String) -> String:
 	var s := phrase.to_lower()
 	var table := [
-		["pegged out on the ground", "pegged"], ["pegged out", "pegged"], ["laid out", "pegged"], ["stretched", "frame"], ["on a frame", "frame"], ["on its frame", "frame"],
+		["pegged out on the ground", "pegged"], ["pegged out", "pegged"], ["laid out", "pegged"], ["stretched", "frame"], ["on a frame", "frame"], ["on its frame", "frame"], ["hide on frame", "frame"],
+		["spindle", "hank"], ["cloth", "pegged"],
 		["loom", "frame"], ["press", "frame"], ["net", "net"], ["drill", "drill"], ["knapping", "flakes"], ["flakes", "flakes"], ["chips", "flakes"], ["curls", "flakes"],
 		["trough", "trough"], ["soaking", "trough"], ["retting", "trough"], ["hank", "hank"], ["cord", "hank"], ["rope", "hank"], ["thread", "hank"], ["sinew", "hank"], ["fibre", "hank"],
 		["basket", "basket"], ["trap", "basket"], ["box", "basket"], ["boot", "basket"], ["kamik", "basket"], ["sandal", "basket"], ["bag", "basket"], ["parka", "pegged"], ["mat", "pegged"],
@@ -736,6 +769,7 @@ static func _pieces(bn: Node3D) -> void:
 		bn.remove_child(old)
 		old.queue_free()
 	var all: Array = (bn.get_meta("props", []) as Array).duplicate()
+	all.append_array(bn.get_meta("trade", []))
 	all.append_array(bn.get_meta("laid", []))
 	var pal: Array = bn.get_meta("pal", [])
 	var side := float(bn.get_meta("side", 1.0))
@@ -758,7 +792,8 @@ static func _pieces(bn: Node3D) -> void:
 			at = Vector3(side * (half.x * 0.5 - 0.4), 0.0, 0.35 + 0.65 * big_i)
 			big_i += 1
 		else:
-			at = Vector3(-0.42 + 0.42 * (small_i % 3), top, 0.12 - 0.22 * int(small_i / 3))
+			# Three across on the bench; past six, on the floor in front.
+			at = Vector3(-0.42 + 0.42 * (small_i % 3), top, 0.12 - 0.22 * int(small_i / 3)) if small_i < 6 else Vector3(-0.42 + 0.42 * (small_i % 3), 0.0, 0.62)
 			small_i += 1
 		_piece(b, shape, at, col, rng, side)
 		keys.append(PIECE_OF.get(shape, shape))
@@ -944,16 +979,18 @@ static func _flame(parent: Node3D, at: Vector3, always: bool) -> Node3D:
 ## the stew pot on its stones, the smoke rack, the rendering pot, the lamp
 ## (unlit by day). Under `parent` (the fire at the origin) at `r_m` from
 ## the fire, clear of `avoid`. Returns the node "HearthProps".
-static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, avoid: Array, r_m := 3.2) -> Node3D:
+static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, avoid: Array, r_m := 3.2, extra: Array = []) -> Node3D:
 	var n := Node3D.new()
 	n.name = "HearthProps"
 	parent.add_child(n)
 	var b := Build.new()
-	var list: Array = (huts(people).get("hearth", []) as Array)
+	# huts.hearth's own, then the lighting trade's (§EI.3).
+	var list: Array = (huts(people).get("hearth", []) as Array).slice(0, 4)
+	list.append_array(extra)
 	var used: Array = avoid.duplicate()
 	var lamps: Array = []
 	var what: Array = []
-	for i in mini(list.size(), 4):
+	for i in mini(list.size(), 7):
 		var ph := str(list[i]).to_lower()
 		# The clearest angle on the ring.
 		var best := Vector3.ZERO
@@ -970,6 +1007,13 @@ static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: Ra
 		used.append([best, 1.3])
 		var yaw := atan2(best.x, best.z)
 		what.append(str(list[i]))
+		if i == 0:
+			# The hearth worker's seat (§EI.3: the lighting maker's
+			# station), a step out from the first of them, facing it.
+			var out := Vector3(best.x, 0, best.z).normalized()
+			var side := Vector3(-out.z, 0, out.x)
+			b.ybox(best + side * 0.8 + Vector3(0, SEAT_H * 0.5, 0), Vector3(0.45, SEAT_H, 0.4), yaw, Color(0.44, 0.43, 0.42), STONE, true)
+			n.set_meta("seat", {"pos": best + side * 0.8 + Vector3(0, SEAT_H, 0), "face": -side})
 		if _has(ph, ["lamp", "candle", "rushlight", "torch", "candlenut", "brand"]):
 			b.ybox(best + Vector3(0, 0.2, 0), Vector3(0.36, 0.4, 0.36), yaw, Color(0.44, 0.44, 0.45), STONE, true)
 			b.ybox(best + Vector3(0, 0.46, 0), Vector3(0.3, 0.12, 0.24), yaw, Color(0.55, 0.36, 0.23), STONE)
@@ -1168,7 +1212,7 @@ static func drive(holders: Array, ws: Node3D, plan: Array, delta: float, time: f
 			_walking(h, delta, speed)
 			continue
 		match cur:
-			"soft", "hard":
+			"soft", "hard", "kiln", "hearth":
 				_bench_work(h, cur, time, delta)
 			"porch":
 				_rest(h, time, delta)
@@ -1333,6 +1377,33 @@ static func pose_of(idle: String, t: float, ph: float) -> Dictionary:
 			l = Vector3(0.7, 0, -0.15)
 			r = Vector3(0.75 + 0.1 * sin(t * 0.9 + ph), 0, 0.1)
 			hood = 0.65 + 0.1 * sin(t * 0.5 + ph)
+		# The kiln (§EI.3, the potter): a coil pot turned in the lap, and
+		# brush pushed into the mouth.
+		"shape_pot":
+			var turn := sin(t * 1.8 + ph)
+			l = Vector3(0.7, 0, -0.2 + 0.08 * turn)
+			r = Vector3(0.72, 0, 0.2 + 0.08 * turn)
+			hood = 0.6
+		"feed_kiln":
+			var push := smoothstep(0.0, 1.0, fposmod(t * 0.4 + ph, 1.0)) * (1.0 - smoothstep(0.7, 1.0, fposmod(t * 0.4 + ph, 1.0)))
+			l = Vector3(0.4, 0, -0.1)
+			r = Vector3(0.6 + 0.7 * push, 0, 0.1)
+			hood = 0.35 + 0.2 * push
+		# The hearth (the lighting trade): stirring the rendering pot,
+		# hanging strips, filling the lamp.
+		"stir_pot":
+			r = Vector3(0.95 + 0.15 * sin(t * 2.0 + ph), 0, 0.15 + 0.15 * cos(t * 2.0 + ph))
+			l = Vector3(0.3, 0, -0.05)
+			hood = 0.45
+		"hang_strips":
+			var up := maxf(sin(t * 0.9 + ph), 0.0)
+			l = Vector3(0.6 + 1.0 * up, 0, -0.1)
+			r = Vector3(0.6 + 1.0 * up, 0, 0.1)
+			hood = 0.1 - 0.15 * up
+		"fill_lamp":
+			l = Vector3(0.8, 0, -0.1)
+			r = Vector3(0.85 + 0.12 * maxf(sin(t * 1.1 + ph), 0.0), 0, 0.12)
+			hood = 0.55
 	return {"l": l, "r": r, "hood": hood}
 
 
@@ -1365,6 +1436,16 @@ static func _hand(h: Node3D, idle: String) -> void:
 		"hollow_bowl_with_coal":
 			p = CreatureBodies.box(arms[0], Vector3(0.22, 0.1, 0.22), at, Color(0.44, 0.32, 0.2))
 			CreatureBodies.box(p, Vector3(0.04, 0.03, 0.04), Vector3(0, 0.06, 0), Color(1.0, 0.42, 0.1), 2.5)
+		"shape_pot":
+			p = CreatureBodies.box(arms[0], Vector3(0.2, 0.24, 0.2), at, Color(0.6, 0.42, 0.3))
+		"feed_kiln":
+			p = CreatureBodies.box(hand, Vector3(0.5, 0.06, 0.06), at, Color(0.45, 0.36, 0.22))
+		"stir_pot":
+			p = CreatureBodies.box(hand, Vector3(0.03, 0.03, 0.6), at, Color(0.4, 0.3, 0.2))
+		"hang_strips":
+			p = CreatureBodies.box(hand, Vector3(0.12, 0.35, 0.02), at, Color(0.48, 0.2, 0.15))
+		"fill_lamp":
+			p = CreatureBodies.box(arms[0], Vector3(0.16, 0.06, 0.12), at, Color(0.5, 0.52, 0.5))
 	if p != null:
 		p.name = "BenchProp"
 		h.set_meta("bench_prop", p)
