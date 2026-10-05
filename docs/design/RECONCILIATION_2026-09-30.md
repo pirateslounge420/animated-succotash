@@ -3393,3 +3393,12 @@ per species (hare zig-zag darts, deer and elk floating prance and extra-graceful
 low and weightless with a big brush trailing a half-beat late like a dragon's body, the goat
 stamping, holding ground, ramming you flying with heavy satisfying sound); a sparser,
 dark-ambient soundscape (cut the constant unplaceable bed; keep single sounds you can turn to).
+
+## EB. Playtest notes: dawn spawn, gray smoke, a brighter torch, keep the storm light — LOCKED (4 Oct, 19:31, Mike)
+
+From Mike's quick playthrough, 4 Oct evening. No new data; these are fixes and tuning for Claude Code against rules already locked.
+
+1. **The spawn wakes at dawn (a bug, not a change).** Mike spawned at night. §CY's `roads.json → opening_road.dawn_start` already locks a dawn start (`spawn.phase dawn`, `real_min_after_dawn_begins`). Something is overriding it: a save, a `dev.json` value, or the clock being set before `dawn_start` is read. A fresh game must wake in the blue before sunrise, the fire the one warm thing.
+2. **Smoke is a gray plume.** Fire smoke reads as a soft gray column that rises, widens and thins as it climbs. At night it showed red. Smoke gives off no light, so by "only things that give off light glow" it must not glow or carry the flame's warmth: alpha-blended, not additive, no emission, and not lit as if it were the fire. At night it takes the moonlit scene colour (a dim blue-gray, never neutral gray in shade, never red). A faint warm tint only right at the base, just above the flames, is allowed. Big texels like everything else.
+3. **The hand torch is a bit brighter.** Raise the torch-in-hand light's energy and range by about 25–30%. Same colour. It pushes the dark back further without washing out the blue night. First guess; Mike tunes it by playing.
+4. **Keep the storm light.** Mike liked how the land lit up around him at night in a storm. Protect it: none of the above may change it, and Claude Code records in PROGRESS.md what produces it so later passes don't lose it.
