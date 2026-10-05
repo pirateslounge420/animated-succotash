@@ -245,6 +245,7 @@ static func compute_base(key: Vector3i, map: PlanetData, data: Dictionary) -> Di
 	_place_tier(ctx, T.EMERGENT, plants, hosts)
 	_place_tier(ctx, T.CANOPY, plants, hosts)
 	_place_road_trees(ctx, plants, hosts)
+	_place_avenue(ctx, plants, hosts)
 	# Each tree's light from the crowns over it: its leaf size.
 	_light_pass(plants, _Light.new(data.center, hosts), true)
 	return {"plants": plants, "hosts": hosts}
@@ -571,6 +572,67 @@ static func _place_road_trees(ctx: _Context, out: Dictionary, hosts: Array) -> v
 		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.03)
 		hosts.append([d, h * 0.045, h, SpeciesDB.index_of(sp), 0.0])
 		ctx.add_emergent(d)
+
+
+## The planted avenue on a kerbed approach (design 3 Oct §DM.4, roads.json
+## holders): a double row of one tree, the same all the way along, chosen
+## by the climate at the node the road leads to from the canopy trees that
+## would grow there but aren't native to its biome (planted, by whoever
+## built the road: avenue_not_biome_native), older and taller than the
+## wood round it (avenue_age_bonus). Where no such tree fits, the biome's
+## own dominant canopy tree.
+static func _place_avenue(ctx: _Context, out: Dictionary, hosts: Array) -> void:
+	if ctx._avenue.is_empty():
+		return
+	var H: Dictionary = Tuning.section("roads", "holders")
+	var bonus := float(H.get("avenue_age_bonus", 1.4))
+	var chosen := {}
+	for a in ctx._avenue:
+		var d: Vector3 = a[0]
+		var nd: Vector3 = a[1]
+		if not chosen.has(nd):
+			chosen[nd] = avenue_species(ctx.map, nd, bool(H.get("avenue_not_biome_native", true)))
+		var sp: PlantSpecies = chosen[nd]
+		if sp == null:
+			var list := ctx.species_for(T.CANOPY)
+			if list.is_empty():
+				continue
+			sp = _dominant_of(ctx, list)
+			chosen[nd] = sp
+		if ctx.in_clearing(d):
+			continue
+		var site := ctx.site_at(d)
+		if site.depth > -WATERLINE_M:
+			continue
+		var h := lerpf(sp.height_m.x, sp.height_m.y, 0.6) * float(SIZE_SCALE[T.CANOPY]) * bonus * (0.94 + PlantGenetics.unit(hash([d, "avenue"]), 1) * 0.12)
+		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.02)
+		hosts.append([d, h * 0.04, h, SpeciesDB.index_of(sp), 0.0])
+
+
+## The avenue's tree for the road's node at `nd` (§DM.4): a canopy tree
+## whose climate bands take the node's temperature and moisture, and (with
+## `not_native`) whose biomes leave out the node's; chosen by the node, so
+## every chunk of one avenue plants the same. Null with none.
+static func avenue_species(map: PlanetData, nd: Vector3, not_native := true) -> PlantSpecies:
+	var t := map.sample(map.temp_c, nd)
+	var mo := map.sample(map.moisture, nd)
+	var biome: int = map.biome[map.cell_at(nd)]
+	var ok: Array[PlantSpecies] = []
+	for sp in SpeciesDB.all():
+		if sp.tier != T.CANOPY or sp.shape in [PlantSpecies.Shape.MANGROVE, PlantSpecies.Shape.KNEES, PlantSpecies.Shape.BAMBOO, PlantSpecies.Shape.TREE_FERN]:
+			continue
+		var bits := sp.need_bits()
+		if bits & ((1 << PlantSpecies.Needs.STANDING_WATER) | (1 << PlantSpecies.Needs.SALT_WATER) | (1 << PlantSpecies.Needs.HOT_GROUND)) != 0:
+			continue
+		if t < sp.temp_c.x - 1.0 or t > sp.temp_c.y + 1.0 or mo < sp.moisture.x - 0.12 or mo > sp.moisture.y + 0.12:
+			continue
+		if not_native and sp.biomes.has(biome):
+			continue
+		ok.append(sp)
+	if ok.is_empty():
+		return null
+	ok.sort_custom(func(x: PlantSpecies, y: PlantSpecies) -> bool: return x.name < y.name)
+	return ok[absi(hash([nd, map.terrain.world_seed, "avenue"])) % ok.size()]
 
 
 ## The stand's dominant among `list`: the species with the largest
@@ -1126,6 +1188,8 @@ class _Context:
 	var _rooms: Array = []
 	var _road_bends := PackedVector3Array()
 	var _old_trees := PackedVector3Array()
+	## The planted avenues' spots in this chunk (§DM.4): [dir, node dir].
+	var _avenue: Array = []
 
 	func _init(p_key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
 		map = p_map
@@ -1164,6 +1228,13 @@ class _Context:
 				var lm: Dictionary = link.get("landmark", {})
 				if not lm.is_empty() and str(lm.kind) == "old_tree" and TerrainChunk.key_at(lm.dir) == key:
 					_old_trees.append(lm.dir)
+				var av: PackedVector3Array = link.get("avenue", PackedVector3Array())
+				if not av.is_empty():
+					var ends: PackedByteArray = link.avenue_end
+					var nd: PackedVector3Array = link.avenue_node
+					for i in av.size():
+						if av[i].dot(data.center) >= limit and TerrainChunk.key_at(av[i]) == key:
+							_avenue.append([av[i], nd[ends[i]]])
 		_filter_species()
 
 	## The site at a surface direction inside this chunk (the road's bend
@@ -1181,10 +1252,13 @@ class _Context:
 		var r := RoadNetwork.nearest_seg(_road_segs, d, 60.0)
 		return float(r.dist_m) if not r.is_empty() else INF
 
-	## The road's width where `d` is nearest it (0 with none).
+	## The road's width where `d` is nearest it (0 with none): its grade's
+	## there (design 3 Oct §DM.2), wider toward a ruin or a camp.
 	func road_width(d: Vector3) -> float:
-		var r := RoadNetwork.nearest_seg(_road_segs, d, 60.0)
-		return float((r.link as Dictionary).get("width_m", 2.0)) if not r.is_empty() else 0.0
+		if _road_segs.is_empty():
+			return 0.0
+		var ti := RoadNetwork.tread_info(_road_segs, d)
+		return ti.y * 2.0 if ti.x < RoadNetwork.FAR_M else 0.0
 
 	## The community dealt to biome `b` in this chunk's land (§CS; -1:
 	## the biome has none yet).

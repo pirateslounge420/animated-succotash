@@ -4,6 +4,31 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-05 — Mike's 5 Oct calls, roads: wider, graded, held, sunk, steeper in the mountains (§DM.2–4)
+- **Wider (Mike: "they can be easy to lose"):** every grade in `roads.json → grades` is about 0.8 m wider: trodden 1.4–2.0 m, track 2.4–3.4 m, kerbed 3.4–4.4 m. Trodden is a little more worn and less grown over.
+- **Grades (§DM.2):** `RoadNetwork._grades` and `grade_at` set each link's make by distance along it:
+  - kerbed for its last 400–800 m into a ruin, a people's camp or a waypoint;
+  - track out to 1.5 km;
+  - trodden beyond that.
+  - The tread's width, wear and overgrowth blend over 60 m (`tread_info`), so the road visibly widens and clears as you near a place.
+  - Kerb stones edge the kerbed run (`RoadProps._kerb`: low, sunk, mossy, a few missing, none on a bridge or ford).
+  - The trail now vanishes only on trodden stretches.
+- **Holders (§DM.4):**
+  - a tell at *both* ends of every vanishing;
+  - a cairn at every real bend (the heading turns 40° over 50 m; at most one per 120 m);
+  - a waist-high milestone every mile (1609 m) on track and kerbed stretches, notched once per mile from the place;
+  - an avenue: a double row of one planted tree every 9 m down the kerbed approach. It is chosen from the trees whose climate fits the place but which are *not* native to its biome, and is 1.4× tall (`VegetationPlacer._place_avenue`).
+- **Holloways (§DM.3):** where the road climbs steeper than 0.18 it is sunk 0.6–2 m into the slope, deeper the steeper (`link.hollow`, `link.sunk`), with a wider floor and earth banks. The sunk line keeps the same grade cap, so its ramps never make a step too steep.
+  - This also fixed an old bug: merging cuttings could shorten one that held a shorter one inside it.
+- **Steeper passes (Mike: "where it makes sense"):** new `roads.json → network.steep_passes`. The hard cap rises from 0.30 to 0.45 (about 24°) between 150 m and 350 m up, and the switchback cost rises with it (`hard_max_at`, `soft_max_at`). `road_check` judges every step by the cap where it stands.
+- **Checks:**
+  - New `tools/road_grades_check.gd`: 16/16 on seed 42.
+  - `road_check`: 0 fails. HEAD's one 46° tread step is gone; 0 steps over the cap on the fine ground or the drawn mesh.
+  - `new_world_check` passes.
+  - `road_reach_check` on 7731 fails "every inhabited ruin on the network (1 of 2)", the same at HEAD (not this pass).
+  - The walkabout has `SITES=road_grades` and excuses the avenue's planted tree from the biome gate.
+- **Not built yet:** roots in a holloway's banks, bend trees leaning in, and §DM.5's straight approach.
+
 ## 2026-10-05 — §EB and §EC: dawn wake, grey smoke, brighter torch, hits you can feel
 - **§EB.1, the dawn spawn:** no save, `dev.json` value or early clock overrode the rule. The clock was set as written, 1 real minute after dawn begins (a windowed boot woke at 5.60 h with the sun at −8°; the day check agrees).
   - The bug was the rule itself: a minute into dawn the sun is still about 8° down, and the grade reads anything below −6° as full night (`SkySystem.daylight = smoothstep(−6, 10, sun)`). Day 1 began at "dawn" by the clock and looked like night.

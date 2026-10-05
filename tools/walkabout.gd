@@ -22,6 +22,8 @@ extends SceneTree
 ## 1.1 m/s). SEASON=autumn walks in that season (ten days into it).
 ## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
 ## SITES=lake adds the nearest lake's shore, looking over the water.
+## SITES=road_grades Mike's 5 Oct roads (§DM.2-4): down a kerbed approach and
+## its avenue, at a milestone, and up a holloway.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
 ## SITES=ruins the wettest and the driest stone ruins (§DI overgrowth).
 ## SITES=haunt the nearest haunted graveyard (§DI.4; HOURS=22 for night).
@@ -235,6 +237,8 @@ func _run() -> void:
 			kinds.append("colonnade")
 		if only.has("harm"):
 			kinds.append("harm")
+		if only.has("road_grades"):
+			kinds.append("road_grades")
 		for ck in ["columns", "sea_cave", "organ_pipes"]:
 			if only.has(ck):
 				kinds.append(ck)
@@ -390,6 +394,50 @@ func _run() -> void:
 						var across := CreatureSpawner._offset(CreatureSpawner._offset(b0.dir, tw, 2.0), tw + PI * 0.5, 22.0)
 						sites.append({"name": "organ_pipes", "dir": across, "look": CreatureSpawner._offset(b0.dir, tw, float(b0.face_m)), "pitch_to": CreatureSpawner._offset(b0.dir, tw, float(b0.face_m)), "pitch_add_m": float(b0.cliff_m) * 0.5,
 							"note": "the organ pipes and their fall (%.0f km from the camp)" % (bd / 1000.0)})
+			"road_grades":
+				# Mike's 5 Oct roads (§DM.2-4): down a kerbed approach with its
+				# avenue, at a milestone, and in a holloway.
+				var rn: RoadNetwork = main.chunks.roads
+				var rl := rn.links_near(camp_d, 9000.0, true)
+				var kl := {}
+				var hl := {}
+				var mile := []
+				for l in rl:
+					var gg: Dictionary = l.get("grade", {})
+					if kl.is_empty() and not gg.is_empty() and float(gg.ka) > 300.0 and float(l.len_m) > 1500.0:
+						kl = l
+					if hl.is_empty() and not (l.get("hollow", []) as Array).is_empty():
+						for hw in l.hollow:
+							if float(hw[2]) > 1.2 and float(hw[1]) - float(hw[0]) > 25.0:
+								hl = l
+								hl["_hw"] = hw
+								break
+					for wm in l.waymarks:
+						if mile.is_empty() and wm.size() > 4 and str(wm[3]) == "mile":
+							mile = [wm, l]
+				if not kl.is_empty():
+					var kp: PackedVector3Array = kl.pts
+					sites.append({"name": "kerbed", "dir": RoadNetwork.point_at(kp, 140.0), "look": RoadNetwork.point_at(kp, 60.0),
+						"note": "a kerbed approach, %.1f m wide, down its avenue toward the %s" % [RoadNetwork.grade_at(kl, 140.0).x, str(rn.nodes[kl.a].kind)]})
+				if not mile.is_empty():
+					var ml: Dictionary = mile[1]
+					var mwm: Array = mile[0]
+					var mm0 := 0.0
+					var mbest := INF
+					var mp: PackedVector3Array = ml.pts
+					for i in mp.size():
+						var dd := CubeSphere.surface_distance_m(mp[i], mwm[0])
+						if dd < mbest:
+							mbest = dd
+							mm0 = float((ml.cum as PackedFloat32Array)[i])
+					sites.append({"name": "milestone", "dir": RoadNetwork.point_at(mp, maxf(mm0 - 6.0, 0.0)), "look": mwm[0], "pitch_to": mwm[0],
+						"note": "a milestone, %d notch(es), on the %s" % [int(mwm[4]), RoadNetwork.grade_name_at(ml, mm0)]})
+				if not hl.is_empty():
+					var hw0: Array = hl._hw
+					var hp: PackedVector3Array = hl.pts
+					sites.append({"name": "holloway", "dir": RoadNetwork.point_at(hp, float(hw0[0]) + 4.0), "look": RoadNetwork.point_at(hp, float(hw0[1])),
+						"note": "a holloway, sunk %.1f m, looking up it" % float(hw0[2])})
+					hl.erase("_hw")
 			"colonnade":
 				var cod := INF
 				var co0 := {}
@@ -1082,8 +1130,23 @@ func _count(out: Dictionary, sp: PlantSpecies, at: Vector3) -> void:
 			if out[sp.name].size() < 4:
 				out[sp.name].append(0)
 			out[sp.name][3] += 1
-		else:
+		elif not _avenue_plant(sp, d):
 			out[sp.name][2] += 1
+
+
+## Is `sp` a road's planted avenue tree (design 3 Oct §DM.4: one tree not
+## native there, VegetationPlacer._place_avenue) standing at one of its
+## spots?
+func _avenue_plant(sp: PlantSpecies, d: Vector3) -> bool:
+	if main.chunks.roads == null:
+		return false
+	for l in main.chunks.roads.links_near(d, 60.0):
+		var av: PackedVector3Array = l.get("avenue", PackedVector3Array())
+		for i in av.size():
+			if CubeSphere.surface_distance_m(av[i], d) <= 1.5:
+				var nd: Vector3 = (l.avenue_node as PackedVector3Array)[(l.avenue_end as PackedByteArray)[i]]
+				return VegetationPlacer.avenue_species(world.planet, nd, true) == sp
+	return false
 
 
 ## Is `sp` one of a nest's own plants (landforms.json plants.add) at one of

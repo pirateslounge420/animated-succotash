@@ -274,14 +274,18 @@ func _grade_audit(roads: RoadNetwork, near: Array) -> void:
 			if gr > worst:
 				worst = gr
 				worst_at = "link %d-%d at %.0f m" % [int(l.a), int(l.b), float(w[i][0])]
-			if gr > hard + 1e-3:
+			# Steeper allowed high up (network.steep_passes, Mike 5 Oct).
+			if gr > RoadNetwork.hard_max_at(maxf(g0, g1)) + 1e-3:
 				over += 1
+				if OS.get_environment("DEBUG_OVER") == "1" and over <= 25:
+					var mm := float(w[i][0])
+					print("[over] link %d-%d at %.0f m of %.0f: %.3f, ground %.1f→%.1f, hollow %.2f→%.2f, bench %.2f, prof %.1f→%.1f, cap %.2f" % [int(l.a), int(l.b), mm, float(l.len_m), gr, g0, g1, RoadNetwork.hollow_at(l, mm - 5.0), RoadNetwork.hollow_at(l, mm), RoadNetwork.bench_at(l, mm), RoadNetwork.profile_at(l, mm - 5.0), RoadNetwork.profile_at(l, mm), RoadNetwork.hard_max_at(maxf(g0, g1))])
 			var slope := sqrt(gr * gr + float(w[i][2]) * float(w[i][2]))
 			worst_slope = maxf(worst_slope, slope)
 			if slope > walk_tan:
 				steep += 1
 	print("[road] §DM.1: %d links, %d 5 m steps on the fine ground as built (%.0f s): steepest %.3f (%s), %d over hard_max_grade %.2f; steepest tread %.0f°, %d over %.0f°; %.1f km of cuttings; %d people's camps unreached" % [near.size(), steps, (Time.get_ticks_msec() - t0) / 1000.0, worst, worst_at, over, hard, rad_to_deg(atan(worst_slope)), steep, PlanetPlayer.WALK_MAX_DEG, benched / 1000.0, roads.unreached.size()])
-	ok(over == 0, "no built road steeper than hard_max_grade %.2f anywhere on the fine ground (steepest %.3f)" % [hard, worst])
+	ok(over == 0, "no built road steeper than its cap (hard_max_grade %.2f, steep_passes higher up) anywhere on the fine ground (steepest %.3f)" % [hard, worst])
 	ok(steep == 0, "every road's tread walkable at WALK_MAX_DEG %.0f° (steepest %.0f°)" % [PlanetPlayer.WALK_MAX_DEG, rad_to_deg(atan(worst_slope))])
 
 
@@ -326,8 +330,11 @@ func _drawn_audit(roads: RoadNetwork, near: Array) -> void:
 			var gr := absf(g - prev) / 5.0
 			worst = maxf(worst, gr)
 			n += 1
-			if gr > hard + 0.02:
+			if gr > RoadNetwork.hard_max_at(maxf(g, prev)) + 0.02:
 				over += 1
+				if OS.get_environment("DEBUG_OVER") == "1":
+					var mm := float(s[0])
+					print("[over drawn] at %.0f m: %.3f, drawn %.2f→%.2f, built %.2f, sunk %.2f→%.2f, bench %.2f" % [mm, gr, prev, g, float(s[1]), RoadNetwork.hollow_at(link, mm - 5.0), RoadNetwork.hollow_at(link, mm), RoadNetwork.bench_at(link, mm)])
 				var near_river := INF
 				var rv: RiverNetwork = main.chunks.rivers
 				for sg in rv.segments_near(world.planet, world.planet.cell_at(p)):

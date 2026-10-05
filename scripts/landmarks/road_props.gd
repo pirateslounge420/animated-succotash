@@ -62,13 +62,23 @@ func _process(delta: float) -> void:
 		var lm: Dictionary = link.get("landmark", {})
 		if not lm.is_empty() and str(lm.kind) != "old_tree" and CubeSphere.surface_distance_m(lm.dir, pd) < BUILD_M:
 			want["l:%d" % id] = ["landmark", lm, link]
+		# The kerbed approach's edging stones (§DM.2), one piece per
+		# KERB_SPAN_M of its length.
+		for span in _kerb_spans(link, pd):
+			want["k:%d:%d" % [id, span]] = ["kerb", span, link]
 	for room in roads.rooms_near(pd, BUILD_M):
 		var rk := "r:%s" % str(room.dir)
 		want[rk] = ["threshold", room, null]
+	var kerbs := 0
 	for key in want:
 		if _built.has(key):
 			continue
 		var w: Array = want[key]
+		if str(w[0]) == "kerb":
+			# A few spans a tick: they are a few hundred stones each.
+			kerbs += 1
+			if kerbs > 3:
+				continue
 		var node := _build(str(w[0]), w[1], w[2], key)
 		if node != null:
 			_built[key] = node
@@ -107,6 +117,8 @@ func _build(kind: String, item, link, key: String) -> Node3D:
 			return _landmark(item, rng)
 		"threshold":
 			return _threshold(item, rng)
+		"kerb":
+			return _kerb(int(item), link, rng)
 	return null
 
 
@@ -150,6 +162,19 @@ func _waymark(m: Array, rng: RandomNumberGenerator) -> Node3D:
 			var b := CreatureBodies.box(n, Vector3(1.5, 1.0, 1.1), Vector3(0, 0.45, 0), STONE.darkened(rng.randf() * 0.15))
 			b.rotation = Vector3(0, rng.randf() * TAU, deg_to_rad(rng.randf_range(-5.0, 5.0)))
 			PropCollision.capsule(body, Transform3D(Basis.IDENTITY, b.position), 0.6, 1.3)
+		"milestone":
+			# A squat dressed stone, waist high, a notch cut in its road face
+			# for every mile from the node (design 3 Oct §DM.4, m[4]).
+			var notches := int(m[4]) if m.size() > 4 else 1
+			var face := STONE.lightened(0.08)
+			var ms := CreatureBodies.box(n, Vector3(0.42, 0.85, 0.3), Vector3(0, 0.38, 0), face)
+			ms.rotation.z = deg_to_rad(rng.randf_range(-3.0, 3.0))
+			CreatureBodies.box(n, Vector3(0.48, 0.12, 0.36), Vector3(0, 0.84, 0), face.darkened(0.1))
+			for k in mini(notches, 8):
+				var nz := 0.62 - k * 0.075
+				for sgn: float in [-1.0, 1.0]:
+					CreatureBodies.box(n, Vector3(0.26, 0.03, 0.04), Vector3(0, nz, sgn * 0.152), STONE.darkened(0.55))
+			PropCollision.capsule(body, Transform3D(Basis.IDENTITY, Vector3(0, 0.45, 0)), 0.26, 0.9)
 		"notched_tree":
 			# A dead stem with a pale blaze cut at eye height.
 			var stem := CreatureBodies.cone(n, 0.24, 0.16, 2.8, Vector3(0, 1.4, 0), WOOD.darkened(0.15), 0.0, 7)
@@ -294,3 +319,118 @@ func _threshold(room: Dictionary, rng: RandomNumberGenerator) -> Node3D:
 		if made >= 4:
 			break
 	return n
+
+
+# --- Kerbs (design 3 Oct §DM.2) -----------------------------------------------
+
+const KERB_SPAN_M := 40.0
+const KERB_EVERY_M := 0.9
+
+## The KERB_SPAN_M spans of a link's kerbed stretches that come within
+## BUILD_M of `pd`, by index along it.
+func _kerb_spans(link: Dictionary, pd: Vector3) -> Array:
+	var g: Dictionary = link.get("grade", {})
+	if g.is_empty() or str((RoadNetwork.D.get("grades", {}) as Dictionary).get("kerbed", {}).get("edging", "")) != "stone":
+		return []
+	var out: Array = []
+	var total := float(link.len_m)
+	var pts: PackedVector3Array = link.pts
+	for end in [0, 1]:
+		var k := float(g.ka if end == 0 else g.kz)
+		if k <= 0.0:
+			continue
+		var j0 := 0 if end == 0 else int(floor(maxf(total - k, 0.0) / KERB_SPAN_M))
+		var j1 := int(floor(minf(k, total) / KERB_SPAN_M)) if end == 0 else int(floor(total / KERB_SPAN_M))
+		for span in range(j0, j1 + 1):
+			var mid := RoadNetwork.point_at(pts, clampf((span + 0.5) * KERB_SPAN_M, 0.0, total))
+			if CubeSphere.surface_distance_m(mid, pd) < BUILD_M and not out.has(span):
+				out.append(span)
+	return out
+
+
+## One span of kerb: a line of low, set stones along both edges of the
+## tread, a few sunk or gone, as one mesh; none on a bridge or a ford.
+func _kerb(span: int, link: Dictionary, rng: RandomNumberGenerator) -> Node3D:
+	var pts: PackedVector3Array = link.pts
+	var total := float(link.len_m)
+	var m0 := span * KERB_SPAN_M
+	var m1 := minf(m0 + KERB_SPAN_M, total)
+	if m1 - m0 < 1.0:
+		return null
+	var n := _place(RoadNetwork.point_at(pts, m0))
+	var anchor := n.global_position
+	var to_local := n.global_basis.inverse()
+	var crossings: Array = link.get("crossings", [])
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var count := 0
+	var m := m0 + KERB_EVERY_M * 0.5
+	while m < m1:
+		var here := RoadNetwork.point_at(pts, m)
+		if RoadNetwork.grade_name_at(link, m) != "kerbed" or _near_crossing(crossings, here):
+			m += KERB_EVERY_M
+			continue
+		var ahead := RoadNetwork.point_at(pts, minf(m + 2.0, total))
+		var behind := RoadNetwork.point_at(pts, maxf(m - 2.0, 0.0))
+		var fwd := (ahead - behind).normalized()
+		var side := fwd.cross(here).normalized()
+		var half := RoadNetwork.grade_at(link, m).x * 0.5 + 0.12
+		for sx: float in [-1.0, 1.0]:
+			if rng.randf() < 0.12:
+				continue # a stone gone
+			var d := (here + side * sx * (half + rng.randf_range(-0.07, 0.07)) / PlanetConst.RADIUS_M).normalized()
+			var at: Vector3 = world.to_scene_relative(d, PlanetConst.RADIUS_M + chunks.ground_height(d), anchor)
+			# Old set stones, not a painted line: sunk most of their height,
+			# uneven in length and set a little crooked, dark and mossed.
+			var sunk := rng.randf_range(0.1, 0.17) + (0.08 if rng.randf() < 0.2 else 0.0)
+			var size := Vector3(rng.randf_range(0.24, 0.34), rng.randf_range(0.22, 0.3), KERB_EVERY_M * rng.randf_range(0.6, 0.98))
+			# The stone in the node's frame: x across the road, y up, z along.
+			var bs := Basis(to_local * side, to_local * d, to_local * fwd).orthonormalized()
+			bs = bs * Basis(Vector3.UP, rng.randf_range(-0.16, 0.16)) * Basis(Vector3.BACK, rng.randf_range(-0.12, 0.12))
+			var origin := to_local * at + bs.y * (size.y * 0.5 - sunk)
+			_stone(st, Transform3D(bs, origin), size, STONE.darkened(rng.randf_range(0.3, 0.5)), rng.randf_range(0.25, 0.7))
+			count += 1
+		m += KERB_EVERY_M
+	if count == 0:
+		n.queue_free()
+		return null
+	var mi := MeshInstance3D.new()
+	mi.mesh = st.commit()
+	mi.material_override = RuinBuilder.material()
+	n.add_child(mi)
+	return n
+
+
+## Within a bridge's or a ford's reach of a crossing (no kerb there).
+func _near_crossing(crossings: Array, d: Vector3) -> bool:
+	for c in crossings:
+		if CubeSphere.surface_distance_m(c[0], d) < 12.0:
+			return true
+	return false
+
+
+## A box of 12 triangles, flat-shaded, in the ruins' stone (UV.x 0),
+## each face wound to face out; `moss` (vertex alpha) greens it as the
+## ruins' shader greens their stone.
+func _stone(st: SurfaceTool, xf: Transform3D, size: Vector3, col: Color, moss := 0.15) -> void:
+	var h := size * 0.5
+	var c: Array[Vector3] = []
+	for i in 8:
+		c.append(xf * Vector3(h.x if i & 1 else -h.x, h.y if i & 2 else -h.y, h.z if i & 4 else -h.z))
+	var faces := [[0, 1, 3, 2], [4, 6, 7, 5], [0, 4, 5, 1], [2, 3, 7, 6], [0, 2, 6, 4], [1, 5, 7, 3]]
+	var cc := col
+	cc.a = moss
+	for f in faces:
+		var q: Array[Vector3] = [c[f[0]], c[f[1]], c[f[2]], c[f[3]]]
+		var mid := (q[0] + q[2]) * 0.5
+		var nrm := (q[1] - q[0]).cross(q[2] - q[0]).normalized()
+		# Godot's front faces wind clockwise: flip if this one faces in.
+		if nrm.dot(mid - xf.origin) > 0.0:
+			q.reverse()
+			nrm = -nrm
+		nrm = -nrm
+		for k: int in [0, 1, 2, 0, 2, 3]:
+			st.set_color(cc)
+			st.set_normal(nrm)
+			st.set_uv(Vector2(0.0, 0.0))
+			st.add_vertex(q[k])

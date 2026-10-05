@@ -723,8 +723,6 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 			print("[roads]     no way %d-%d: off the lattice (start %s, goal %s, n %d)" % [ia, ib, start, goal, n])
 		return {}
 	var net: Dictionary = D.get("network", {})
-	var max_grade := float(net.get("max_grade", 0.18))
-	var hard_max := hard_max_grade()
 	var cut_m := cut_max_m()
 	var follow_rivers := bool(net.get("follow_rivers", true))
 	var s_idx := start.y * n + start.x
@@ -773,7 +771,8 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 				# the road never leads where you can't follow); above
 				# max_grade the road switchbacks (the cost climbs steeply
 				# with the excess).
-				if grade > hard_max:
+				var up_e := maxf(float(nc[0]), float(cur_cell[0]))
+				if grade > hard_max_at(up_e):
 					continue
 				# Nor over an escarpment's face or across a ravine taller
 				# than a cutting (the 120 m lattice would step over both).
@@ -784,8 +783,9 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 				if float(nc[9]) > 0.3 and ni != g_idx:
 					continue
 				var cost := dist
-				if grade > max_grade:
-					cost *= 1.0 + 8.0 * (grade - max_grade) / max_grade
+				var soft_here := soft_max_at(up_e)
+				if grade > soft_here:
+					cost *= 1.0 + 8.0 * (grade - soft_here) / soft_here
 				if float(nc[0]) < PlanetConst.SEA_LEVEL_M + STRAND_M:
 					cost *= 1.5
 				if wk == 1:
@@ -1087,6 +1087,7 @@ func _lost_and_found(link: Dictionary) -> void:
 		cum[i] = acc
 	link.cum = cum
 	link.len_m = acc
+	_grades(link)
 	_bench(link)
 	var lf: Dictionary = D.get("lost_and_found", {})
 	var vanish: Array = []
@@ -1110,10 +1111,153 @@ func _lost_and_found(link: Dictionary) -> void:
 		var vl := rng.randf_range(float(vb[0]), float(vb[1]))
 		if m + vl > acc - 80.0:
 			break
-		vanish.append([m, m + vl])
-		var tell := str(tells[rng.randi() % tells.size()])
-		link.waymarks.append([point_at(pts, minf(m + vl + rng.randf_range(0.0, within), acc)), tell, false, "tell"])
+		# Only on the trodden stretches (design 3 Oct §DM.2): never where
+		# the road is a track or kerbed.
+		if grade_name_at(link, m) == "trodden" and grade_name_at(link, m + vl) == "trodden":
+			vanish.append([m, m + vl])
+			# The holders (§DM.4): a tell at both ends of every vanishing,
+			# not a share.
+			var tell := str(tells[rng.randi() % tells.size()])
+			link.waymarks.append([point_at(pts, minf(m + vl + rng.randf_range(0.0, within), acc)), tell, false, "tell"])
+			link.waymarks.append([point_at(pts, maxf(m - rng.randf_range(0.0, within), 0.0)), str(tells[rng.randi() % tells.size()]), false, "tell"])
 		m += vl + rng.randf_range(float(cb[0]), float(cb[1])) * scale
+
+
+# --- Grades and holders (design 3 Oct §DM.2, §DM.4) ------------------------------------
+
+## The node kinds a road widens toward and is kerbed at (§DM.2: the last
+## 400-800 m before a ruin or a people's camp).
+const MAJOR_NODES := ["ruin", "camp", "waypoint"]
+## Metres over which one grade blends into the next.
+const GRADE_BLEND_M := 60.0
+
+## The link's grades (roads.json grades): the kerbed run at each end that
+## is a ruin or a camp (its own length in grades.kerbed.within_m), track
+## from there to grades.trodden.beyond_m along the link, trodden beyond;
+## each grade's width rolled in its range. Then its holders (§DM.4): a
+## cairn at every bend, a milestone every holders.milestone_every_m from a
+## major end along its track and kerbed stretches, and the avenue on the
+## kerbed run (both sides, holders.avenue_within_m of the node).
+func _grades(link: Dictionary) -> void:
+	var G: Dictionary = D.get("grades", {})
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([nodes[link.a].key, nodes[link.b].key, "grades"])
+	var kb: Array = (G.get("kerbed", {}) as Dictionary).get("within_m", [400, 800])
+	var ka := rng.randf_range(float(kb[0]), float(kb[1])) if MAJOR_NODES.has(str(nodes[link.a].kind)) else -1.0
+	var kz := rng.randf_range(float(kb[0]), float(kb[1])) if MAJOR_NODES.has(str(nodes[link.b].kind)) else -1.0
+	var w := {}
+	for g in ["trodden", "track", "kerbed"]:
+		var r: Array = (G.get(g, {}) as Dictionary).get("width_m", [1.2, 2.0])
+		w[g] = rng.randf_range(float(r[0]), float(r[1]))
+	link.grade = {"ka": ka, "kz": kz, "w": w, "beyond": float((G.get("trodden", {}) as Dictionary).get("beyond_m", 1500.0))}
+	link.width_m = float(w.track)
+	var H: Dictionary = D.get("holders", {})
+	var pts: PackedVector3Array = link.pts
+	var total := float(link.len_m)
+	# A cairn at every bend: where the road's heading 25 m back and 25 m on
+	# differ by more than BEND_DEG (the line's own small kinks are not
+	# bends), one per bend, none within BEND_GAP_M of the last.
+	if bool(H.get("cairn_at_every_bend", true)):
+		var last_m := -INF
+		var mm := 25.0
+		while mm < total - 25.0:
+			var p0 := point_at(pts, mm - 25.0)
+			var p1 := point_at(pts, mm)
+			var p2 := point_at(pts, mm + 25.0)
+			var a := (p1 - p0).normalized()
+			var b := (p2 - p1).normalized()
+			if a.dot(b) < cos(deg_to_rad(BEND_DEG)) and mm - last_m > BEND_GAP_M:
+				var side := (p2 - p0).normalized().cross(p1).normalized() * (1.0 if a.cross(b).dot(p1) > 0.0 else -1.0)
+				var off := grade_at(link, mm).x * 0.5 + 1.2
+				link.waymarks.append([(p1 + side * off / PlanetConst.RADIUS_M).normalized(), "cairn", false, "bend"])
+				last_m = mm
+			mm += 5.0
+	# Milestones: one notch per mile from the node.
+	var every := float(H.get("milestone_every_m", 1609.0))
+	var on: Array = H.get("milestone_on", ["track", "kerbed"])
+	for end in [0, 1]:
+		var start_k: float = ka if end == 0 else kz
+		if start_k < 0.0:
+			continue
+		var n := 1
+		while n * every < total * 0.5 + every * 0.5 and n * every < total - 10.0:
+			var m := n * every if end == 0 else total - n * every
+			if on.has(grade_name_at(link, m)):
+				var p := point_at(pts, m)
+				var ahead := point_at(pts, minf(m + 5.0, total))
+				var side := (ahead - p).normalized().cross(p).normalized()
+				var off := grade_at(link, m).x * 0.5 + 0.9
+				link.waymarks.append([(p + side * off / PlanetConst.RADIUS_M).normalized(), "milestone", false, "mile", n])
+			n += 1
+	# The avenue on the kerbed approach: a double row of one planted
+	# species, every AVENUE_EVERY_M.
+	var av := PackedVector3Array()
+	var av_end := PackedByteArray()
+	var within := float(H.get("avenue_within_m", 800.0))
+	for end in [0, 1]:
+		var k2: float = ka if end == 0 else kz
+		if k2 < 0.0:
+			continue
+		var reach := minf(minf(k2, within), total * 0.5)
+		var m := 18.0
+		while m < reach:
+			var mm := m if end == 0 else total - m
+			var p := point_at(pts, mm)
+			var ahead := point_at(pts, minf(mm + 5.0, total))
+			if ahead == p:
+				ahead = point_at(pts, maxf(mm - 5.0, 0.0))
+			var side := (ahead - p).normalized().cross(p).normalized()
+			var off := grade_at(link, mm).x * 0.5 + 2.6
+			for sx: float in [-1.0, 1.0]:
+				av.append((p + side * sx * off / PlanetConst.RADIUS_M).normalized())
+				av_end.append(end)
+			m += AVENUE_EVERY_M
+	link.avenue = av
+	link.avenue_end = av_end
+	# Each end's node, where the avenue's one planted species is chosen
+	# (VegetationPlacer._place_avenue).
+	link.avenue_node = PackedVector3Array([nodes[link.a].dir, nodes[link.b].dir])
+
+
+const AVENUE_EVERY_M := 9.0
+## A bend (a cairn's): the heading turns more than this over 50 m, and no
+## other bend cairn within BEND_GAP_M.
+const BEND_DEG := 40.0
+const BEND_GAP_M := 120.0
+
+
+## The grade `m` metres along `link`: "kerbed", "track" or "trodden".
+static func grade_name_at(link: Dictionary, m: float) -> String:
+	var g: Dictionary = link.get("grade", {})
+	if g.is_empty():
+		return "track"
+	var total := float(link.get("len_m", 0.0))
+	var ka := float(g.ka)
+	var kz := float(g.kz)
+	if (ka >= 0.0 and m <= ka) or (kz >= 0.0 and total - m <= kz):
+		return "kerbed"
+	var d := minf(m, total - m)
+	return "track" if d <= float(g.beyond) else "trodden"
+
+
+## The road's make `m` metres along `link`, blended over GRADE_BLEND_M at
+## each change: Vector3(width_m, wear, overgrown) (roads.json grades).
+static func grade_at(link: Dictionary, m: float) -> Vector3:
+	var g: Dictionary = link.get("grade", {})
+	var trail: Dictionary = D.get("trail", {})
+	if g.is_empty():
+		return Vector3(float(link.get("width_m", 2.0)), float(trail.get("wear", 0.6)), float(trail.get("overgrown", 0.55)))
+	var G: Dictionary = D.get("grades", {})
+	var acc := Vector3.ZERO
+	var wsum := 0.0
+	for k in 3:
+		var mm := m + (float(k) - 1.0) * GRADE_BLEND_M * 0.5
+		var name := grade_name_at(link, mm)
+		var row: Dictionary = G.get(name, {})
+		var wt := 2.0 if k == 1 else 1.0
+		acc += Vector3(float((g.w as Dictionary)[name]), float(row.get("wear", 0.6)), float(row.get("overgrown", 0.55))) * wt
+		wsum += wt
+	return acc / wsum
 
 
 func _index(link: Dictionary) -> void:
@@ -1156,8 +1300,8 @@ const FINE_SLACK := 0.15
 const SIDE_MAX := 1.0
 const FILL_M := 1.0
 ## Half the tread's width the profile is judged across (m): the widest
-## grade's half (§DM.2, kerbed 3.6 m).
-const CROSS_M := 1.8
+## grade's half (§DM.2, kerbed 4.4 m since Mike's 5 Oct widening).
+const CROSS_M := 2.2
 ## The flat of a cutting reaches at least this far from the centreline,
 ## so the drawn 4 m ground has its bottom flat under you.
 const BENCH_HALF_M := 2.5
@@ -1172,6 +1316,36 @@ static func hard_max_grade() -> float:
 	return float((D.get("network", {}) as Dictionary).get("hard_max_grade", 0.3))
 
 
+## The hard cap where the ground stands `elev_m` high (Mike, 5 Oct: "allow
+## steeper passes if it makes sense for that environment"; roads.json
+## network.steep_passes): hard_max_grade in the lowlands, rising to
+## steep_passes.hard_max_grade from from_m to full_m up, where a mountain
+## path climbs as mountain paths do.
+static func hard_max_at(elev_m: float) -> float:
+	var sp: Dictionary = (D.get("network", {}) as Dictionary).get("steep_passes", {})
+	var base := hard_max_grade()
+	if sp.is_empty():
+		return base
+	var k := smoothstep(float(sp.get("from_m", 150.0)), float(sp.get("full_m", 350.0)), elev_m)
+	return lerpf(base, maxf(float(sp.get("hard_max_grade", base)), base), k)
+
+
+## The soft grade (switchbacks above it) at `elev_m`: max_grade, raised in
+## the same proportion as the hard cap.
+static func soft_max_at(elev_m: float) -> float:
+	var soft := float((D.get("network", {}) as Dictionary).get("max_grade", 0.18))
+	return soft * hard_max_at(elev_m) / maxf(hard_max_grade(), 0.01)
+
+
+## Each profile sample's largest step (m per PROFILE_M) for ground `h`.
+static func profile_steps(h: PackedFloat32Array) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(h.size())
+	for i in h.size():
+		out[i] = hard_max_at(h[i]) * PROFILE_SHARE * PROFILE_M
+	return out
+
+
 static func cut_max_m() -> float:
 	var d = (D.get("holloway", {}) as Dictionary).get("depth_m", [0.6, 2.0])
 	return float(d[1]) if d is Array else 2.0
@@ -1180,16 +1354,20 @@ static func cut_max_m() -> float:
 ## The largest profile under `h` (samples PROFILE_M apart) whose step never
 ## exceeds `step` m; samples where `free` is set don't hold it down (a
 ## ruin's footprint).
-static func profile_of(h: PackedFloat32Array, step: float, free := PackedByteArray()) -> PackedFloat32Array:
+static func profile_of(h: PackedFloat32Array, step, free := PackedByteArray()) -> PackedFloat32Array:
 	var p := h.duplicate()
 	var n := p.size()
+	# One step for all, or one per sample (profile_steps: steeper in the
+	# mountains), the larger of the pair between two samples.
+	var per: PackedFloat32Array = step if step is PackedFloat32Array else PackedFloat32Array()
+	var one := float(step) if per.is_empty() else 0.0
 	for i in n:
 		if not free.is_empty() and free[i] == 1:
 			p[i] = INF
 	for i in range(1, n):
-		p[i] = minf(p[i], p[i - 1] + step)
+		p[i] = minf(p[i], p[i - 1] + (one if per.is_empty() else maxf(per[i], per[i - 1])))
 	for i in range(n - 2, -1, -1):
-		p[i] = minf(p[i], p[i + 1] + step)
+		p[i] = minf(p[i], p[i + 1] + (one if per.is_empty() else maxf(per[i], per[i + 1])))
 	for i in n:
 		if is_inf(p[i]):
 			p[i] = h[i]
@@ -1270,7 +1448,7 @@ func _bad_stretches(pts: PackedVector3Array, ia: int, ib: int, info: Dictionary)
 	info.walk = w
 	var free := _free_of(w, ia, ib)
 	var h: PackedFloat32Array = w.h
-	var p := profile_of(h, hard_max_grade() * PROFILE_SHARE * PROFILE_M, free)
+	var p := profile_of(h, profile_steps(h), free)
 	var l: PackedFloat32Array = w.l
 	var r: PackedFloat32Array = w.r
 	var cut_max := cut_max_m()
@@ -1339,7 +1517,7 @@ func _fine_fix(pts: PackedVector3Array, ia: int, ib: int, info: Dictionary) -> P
 	if not left.is_empty() and OS.get_environment("FINE_DEBUG") == "1":
 		var w: Dictionary = info.walk
 		var h: PackedFloat32Array = w.h
-		var pp := profile_of(h, hard_max_grade() * PROFILE_SHARE * PROFILE_M, _free_of(w, ia, ib))
+		var pp := profile_of(h, profile_steps(h), _free_of(w, ia, ib))
 		var st: Array = left[0]
 		var i0 := maxi(0, int(float(st[0]) / PROFILE_M) - 6)
 		var i1 := mini(h.size() - 1, int(float(st[1]) / PROFILE_M) + 6)
@@ -1488,6 +1666,7 @@ func _fine_route_in(a: Vector3, b: Vector3, attempt := 0) -> PackedVector3Array:
 				# Every GRID_M point along the move.
 				var sub := GRID_M * (1.4142 if dx != 0 and dy != 0 else 1.0)
 				var prev: float = gheight.call(cx * k, cy * k)
+				var here_e := prev
 				var worst := 0.0
 				var wet := false
 				for q in range(1, k + 1):
@@ -1500,18 +1679,20 @@ func _fine_route_in(a: Vector3, b: Vector3, attempt := 0) -> PackedVector3Array:
 					prev = e2
 				if wet and not is_goal:
 					continue
-				if worst > cap and not is_goal:
+				# Steeper allowed high up (network.steep_passes).
+				var lift := hard_max_at(maxf(here_e, prev) if not is_nan(here_e) and not is_nan(prev) else 0.0) / maxf(hard_max_grade(), 0.01)
+				if worst > cap * lift and not is_goal:
 					continue
 				var side: float = slope_of.call(nx, ny)
 				if side > SIDE_MAX and not is_goal:
 					continue
 				var c := sub * k
-				if worst > max_grade:
-					c *= 1.0 + 8.0 * (worst - max_grade) / max_grade
+				if worst > max_grade * lift:
+					c *= 1.0 + 8.0 * (worst - max_grade * lift) / (max_grade * lift)
 				# Over the profile's grade only to cross a bump: each such
 				# step costs dearly, so a sustained climb goes round.
-				if worst > soft:
-					c *= 1.0 + 60.0 * (worst - soft)
+				if worst > soft * lift:
+					c *= 1.0 + 60.0 * (worst - soft * lift)
 				if side > 0.5:
 					c *= 1.0 + 6.0 * (side - 0.5)
 				var ng: float = cost[ci] + c
@@ -1571,7 +1752,7 @@ func _bench(link: Dictionary) -> void:
 	link.erase("walk")
 	var free := _free_of(w, int(link.a), int(link.b))
 	var h: PackedFloat32Array = w.h
-	var p := profile_of(h, hard_max_grade() * PROFILE_SHARE * PROFILE_M, free)
+	var p := profile_of(h, profile_steps(h), free)
 	var l: PackedFloat32Array = w.l
 	var r: PackedFloat32Array = w.r
 	var bench: Array = []
@@ -1585,11 +1766,62 @@ func _bench(link: Dictionary) -> void:
 			start = -1
 	if start >= 0:
 		bench.append([start * PROFILE_M, (h.size() - 1) * PROFILE_M])
+	# Holloways (design 3 Oct §DM.3): where the road climbs steeper than
+	# holloway.above_grade it is sunk into the slope, deeper the steeper
+	# (holloway.depth_m), with earth banks either side (ground_on).
+	var HW: Dictionary = D.get("holloway", {})
+	var above := float(HW.get("above_grade", 0.18))
+	var dr: Array = HW.get("depth_m", [0.6, 2.0])
+	var hollow: Array = []
+	var hs := -1
+	var steep := 0.0
+	for i in p.size():
+		var g := absf(p[mini(i + 1, p.size() - 1)] - p[maxi(i - 1, 0)]) / (PROFILE_M * 2.0) if p.size() > 1 else 0.0
+		var is_steep := g > above and free[i] == 0
+		if is_steep:
+			if hs < 0:
+				hs = i
+				steep = 0.0
+			steep = maxf(steep, g)
+		elif hs >= 0:
+			if i - hs >= 3:
+				var depth := lerpf(float(dr[0]), float(dr[1]), clampf((steep - above) / maxf(hard_max_at(h[hs]) - above, 0.01), 0.0, 1.0))
+				hollow.append([hs * PROFILE_M, (i - 1) * PROFILE_M, depth])
+			hs = -1
+	if hs >= 0 and p.size() - hs >= 3:
+		var depth2 := lerpf(float(dr[0]), float(dr[1]), clampf((steep - above) / maxf(hard_max_at(h[hs]) - above, 0.01), 0.0, 1.0))
+		hollow.append([hs * PROFILE_M, (p.size() - 1) * PROFILE_M, depth2])
+	link.hollow = hollow
+	# The sunk tread: the highest line under (profile - the holloway's
+	# depth) that keeps the same grade cap, so it ramps in and out as
+	# gently as it must (link.sunk: metres under the profile per sample).
+	var sunk := PackedFloat32Array()
+	if not hollow.is_empty():
+		var want := p.duplicate()
+		for hw in hollow:
+			for j in range(int(round(float(hw[0]) / PROFILE_M)), int(round(float(hw[1]) / PROFILE_M)) + 1):
+				if j >= 0 and j < want.size():
+					want[j] = minf(want[j], p[j] - float(hw[2]))
+		var t := profile_of(want, profile_steps(h))
+		sunk.resize(p.size())
+		var ss := -1
+		for j in p.size():
+			sunk[j] = maxf(p[j] - t[j], 0.0)
+			if sunk[j] > 0.02 and ss < 0:
+				ss = j
+			elif sunk[j] <= 0.02 and ss >= 0:
+				bench.append([ss * PROFILE_M, (j - 1) * PROFILE_M])
+				ss = -1
+		if ss >= 0:
+			bench.append([ss * PROFILE_M, (p.size() - 1) * PROFILE_M])
+	link.sunk = sunk
+	bench.sort_custom(func(x, y): return float(x[0]) < float(y[0]))
 	# Close the small gaps: one cutting, not a string of them.
 	var merged: Array = []
 	for b in bench:
 		if not merged.is_empty() and float(b[0]) - float(merged[merged.size() - 1][1]) < BENCH_RAMP_M * 2.0:
-			merged[merged.size() - 1][1] = b[1]
+			# (A holloway may sit inside a cutting: never shorten it.)
+			merged[merged.size() - 1][1] = maxf(float(merged[merged.size() - 1][1]), float(b[1]))
 		else:
 			merged.append(b)
 	link.prof = p
@@ -1622,6 +1854,19 @@ static func profile_at(link: Dictionary, m: float) -> float:
 	return lerpf(p[i], p[i + 1], f - i)
 
 
+## How deep the tread is sunk under the profile `m` metres along a link
+## (a holloway, §DM.3, with its ramps: link.sunk); 0 outside one.
+static func hollow_at(link: Dictionary, m: float) -> float:
+	var sk: PackedFloat32Array = link.get("sunk", PackedFloat32Array())
+	if sk.is_empty():
+		return 0.0
+	var f := clampf(m / PROFILE_M, 0.0, sk.size() - 1.0)
+	var i := mini(int(f), sk.size() - 2) if sk.size() > 1 else 0
+	if sk.size() == 1:
+		return sk[0]
+	return lerpf(sk[i], sk[i + 1], f - i)
+
+
 ## The ground as built `m` metres along a link, `off` m from its
 ## centreline, where the natural ground is `e`: the cutting's flat (the
 ## profile) out to the tread's half-width (at least BENCH_HALF_M), a small
@@ -1634,7 +1879,12 @@ static func ground_on(link: Dictionary, m: float, off: float, e: float) -> float
 	var p := profile_at(link, m)
 	if is_nan(p):
 		return e
-	var flat := maxf(float(link.get("width_m", 2.0)) * 0.5 + 0.3, BENCH_HALF_M)
+	# A holloway sinks the tread below the profile; its banks rise from it,
+	# its floor a metre wider than a cutting's (so the drawn 4 m ground
+	# keeps its corners on the floor, not up the bank).
+	var sink := hollow_at(link, m)
+	p -= sink
+	var flat := maxf(grade_at(link, m).x * 0.5 + 0.3, BENCH_HALF_M) + clampf(sink, 0.0, 1.0)
 	var ad := absf(off)
 	var built := e
 	if ad <= flat:
@@ -1811,14 +2061,16 @@ static func tread_info(segs: Array, d: Vector3) -> Vector4:
 	var at_end := (i == 0 and best_t <= 0.0) or (i == pts.size() - 2 and best_t >= 1.0)
 	if not at_end and (d - p).dot(ab.cross(p)) < 0.0:
 		sd = -best_m
-	var trail: Dictionary = D.get("trail", {})
-	var og := float(trail.get("overgrown", 0.55))
 	var cum: PackedFloat32Array = link.get("cum", PackedFloat32Array())
+	var m := lerpf(cum[i], cum[i + 1], best_t) if i + 1 < cum.size() else 0.0
+	# Its make here (§DM.2): wider, more worn and less grown over toward
+	# a ruin or a camp.
+	var gr := grade_at(link, m)
+	var og := gr.z
 	var vanish: Array = link.get("vanish", [])
 	if not vanish.is_empty() and i + 1 < cum.size():
-		var m := lerpf(cum[i], cum[i + 1], best_t)
 		og = maxf(og, vanish_overgrown(vanish, m))
-	return Vector4(sd, float(link.get("width_m", 2.0)) * 0.5, float(trail.get("wear", 0.6)), og)
+	return Vector4(sd, gr.x * 0.5, gr.y, og)
 
 
 ## How overgrown the trail is `m` metres along a link with lost-and-found
