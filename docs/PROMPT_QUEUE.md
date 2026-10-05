@@ -67,7 +67,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 35 | §DX | The columns: columnar basalt as a nest | built 21ecf1b |
 | 36 | §EA | Three hits, no bar, "Good night" | built 6c08095 |
 | 37 | §EH | No metal, and a camp can be fifty | built d5dbe75 |
-| 38 | §EL | The workshop: one hut, two benches, the hearth outside | todo |
+| 38 | §EL | The workshop: one hut, two benches, the hearth outside | built d4b159e |
 | 39 | §EI | What a camp needs, and the trades that follow | todo |
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | todo |
 | 41 | §EJ | Food passed round, the night stories, the gift | todo |
@@ -756,7 +756,7 @@ CHECK (tools/no_metal_check.gd, headless): on seeds 42 and 7731, walk every plac
 
 ## 38 — The workshop: one hut, two benches, the hearth outside — §EL
 
-**Status:** todo
+**Status:** built d4b159e
 **Mike sees:** At a camp that has reached storage, a second roof beside the fire circle: a workshop in the people's own materials. Inside, a soft bench (a hide on a frame, cord being twisted, a basket) and a hard bench (a knapping floor, bone in a row, a bow drill); folk sit at one or the other and work, with different motions and sounds; the hearth outside has the stew pot and the smoke rack; a kiln hump stands downwind where there is a potter. One thing on the porch tells you which people this is from the road. By day the folk are at the hut; at dusk they are at the fire.
 
 ```text
