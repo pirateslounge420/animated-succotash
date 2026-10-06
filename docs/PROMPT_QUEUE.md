@@ -71,7 +71,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 39 | §EI | What a camp needs, and the trades that follow | built defc49a |
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | built 2d4b6a2 |
 | 41 | §EJ | Food passed round, the night stories, the gift | built 6939b24 |
-| 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | todo |
+| 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | built 6dec101 |
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -816,7 +816,7 @@ CHECK (tools/sharing_check.gd, headless): on seed 7731 at a camp with a full foo
 
 ## 42 — Third places: the soak, the great tree, the water rock, the porch — §EM
 
-**Status:** todo
+**Status:** built 6dec101
 **Mike sees:** In the heat of the day folk are not at the fire: two sit under the camp's biggest tree, one has his feet in the river with a line in the water, one leans on the workshop porch with a pipe. Near a hot spring they walk over in the afternoon and sit in it, hoods back, in the steam.
 
 ```text
