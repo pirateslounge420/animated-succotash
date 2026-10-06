@@ -4,6 +4,57 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — §ET.11 first slice: Torchfire 1, the dungeon crawler (switch, hearth room, tomb kit, relighting, snuff rules, baked rescuer sprite)
+- **1. The switch (§ET.2).** `data/game.json` → `game`: `torchfire1` (the default) or `torchfire2`. `GAME=` in the environment overrides it for one run.
+  - The project now boots `scenes/boot.tscn` (`GameMode`), which opens `scenes/crawler.tscn` for Torchfire 1 or `scenes/main.tscn` for the open world.
+  - Nothing of the open world was deleted. It still compiles, and every check in `tools/` still opens `scenes/main.tscn` directly.
+  - Shared code changed only where the crawler needed it, all behaviour-neutral for the open world:
+    - `Campfire.build_at()`: a fire on flat ground;
+    - `PlanetPlayer.water_depth()`: the torch's water test;
+    - a stone fallback in `Footsteps`;
+    - Campfire `light_y`;
+    - `FireShadows.mode`.
+  - swing, delve and old-hearth checks pass. `fire_wall_check` fails 5–6 times and times out, the same on the commit before this work (checked in a worktree), so that failure was already there.
+- **2. The hearth room and the tomb kit (§ET.3, §CJ.8;** `TombKit`, `TombBuild`, `crawler.json kit`). You wake on a reed mat by a lit hearth in a 9 × 9 m stone room, its smoke going up a shaft in the ceiling (§ET.6).
+  - Across the fire stands the rescuer; by it lies a bundle of three unlit torches.
+  - Three or four doorways lead out. Each branch is corridor, room, corridor, room, two or three rooms deep, straight on or turning, sometimes a flight of stairs down.
+  - Room kinds:
+    - crypt (coffins in rows, lids askew);
+    - catacomb (bone niches down the walls);
+    - ossuary (bones heaped in the corners);
+    - collapsed (a fallen ceiling slab and rubble);
+    - the heart: the deepest room, ochre ceiling, the dead's goods, and Mike's frame 9 (a mossy stone box with a skeleton leaning out of it).
+  - All of it is drawn in the ruins' own dry-stone kit (RuinBuilder), lit per pixel like the barrow delves. A new tomb each launch; `SEED=` pins one, and Settings' "New world" rolls another.
+  - Over 30 seeds: 18 pieces a tomb on average and 1.5 flights of stairs. Nothing overlaps except at a door, and every piece is reachable. The tomb's stone is ~76k triangles.
+- **3. Relighting (§ET.4, delves.json fire_holders, crawler.json holders).** Every room past the hearth room has a cold hearth ring, and corridors have a stone wall sconce every 7 m. They start out and dark, with the ash of the last fire laid in them.
+  - A lit torch's swing catches one; it then never burns down ("kept"), and an unlit torch swung through it catches.
+  - Full dark between them: no sky, a 0.05 navy ambient, the haze `#05081c`. With the torch out in a corridor the frame's mean is 0.056, and with its sconce relit 0.267.
+  - The log counts the lights burning again. Wordless (§ET.3): no prompts, no HUD lines.
+- **4. The snuff rules (§ET.7, `torch.json → snuff`, wired; `TorchSnuff`, `Airways`).** Crawler only; the open world keeps its old torch rules.
+  - Walking, turning and looking about never gutter it (a minute in the check).
+  - A flat-out sprint gutters at 6 s and is out at 9 s (8.98 s measured); stopping recovers it in 2 s.
+  - Airways: an ordinary slot in a corridor wall only leans the flame toward it. A marked mouth low in a room wall (a carved frame, two notches) moans and streams dust 1.5 s before each gust, and the gust puts out a torch in its line, but not one out of the line or behind cover.
+  - Wading toward douse depth gutters it, and past it douses it, though there is no water in the tombs yet.
+  - Each rule warns first: the coal dims and flickers, with a sputter you hear.
+- **5. The rescuer as a baked sprite (§ET.8, §ET.3; `FigureSprite`, `shaders/figure_sprite.gdshader`, crawler.json sprites, rescuer).** The shared rig (CloakedFigure, a zodiac beast head from the seed, the cloak from cloaks.json, painted per §ES) is rendered at boot, in a little world of its own, to one sheet:
+  - 8 around × 3 heights (−25°, 0°, 30°) × 4 idle frames (a slow breath), 72 × 96 px a frame.
+  - In play it is one upright quad turning to face you, showing the frame for where you stand, stepped at 8 fps. The fire lights it; the fog fogs it.
+  - No skinning, cloth or physics in play. The screen fades up from black once the sheet is baked (~3 s).
+- **Data:** the `[NOT WIRED YET]` prefix is dropped from `crawler.json` about, opening, themes, progress and sprites, and from `torch.json` snuff. `persistence` and `gates` keep theirs.
+  - New Claude Code blocks with `_help`: `kit`, `holders`, `look` (with `fire_shadow_mode: cube`), `airways`, `rescuer`, `snuff_log`, plus `data/game.json`.
+- **Fixed on the way:**
+  - Campfire's flicker put every fire's light 1 m above its base, which put a sconce's light above the corridor ceiling.
+  - The open world's dual-paraboloid fire shadows warp into big curved blots on walls a step from the light, so the crawler uses cube shadows (still only the nearest two fires cast).
+  - A sconce's own bracket, cup and coals cast no shadow.
+- **Checks:**
+  - `tools/crawler_check.gd`: 46 PASS, 0 fails on seeds 7, 1, 42 and 31337. It covers the switch, 30 layouts, floors and ceilings, relighting all 19 holders, the snuff rules and the sprite's frame picking.
+  - `tools/crawler_frames.gd` (rendered, the one visual check): 0 fails, with frames of waking, the sheet (all 96 cells hold the figure), the rescuer from three sides, a corridor by torchlight, in full dark and relit, a relit room, and the heart.
+- **For Mike to call:**
+  - **Spear and bow:** §ED.7 locks them into Torchfire 1, while §ET.1's "no combat" points away from them; this slice has neither (§ET.10 call 4).
+  - **Dread:** this slice has no dread meter or hunter in the dark: "full dark" here is light only. Say if the dark should start pressing (§BA) in the next slice.
+  - **Torch colour by stone walls:** the torch's own colour (`torch.json light.color #ffb347`) lights near stone a yellow-olive after the grade, where the hearth and sconces read amber. Say if you want it warmer.
+  - **Rescuer's head:** the beast is picked from the seed; §ET.9's hood-down human folk come with the NPC maker.
+
 ## 2026-10-06 — §ER.1 performance pass and §ES 3D pixel art (270 lines, pre-lit, impostors); occlusion tested and left off
 - **The camp view Mike measured at ~7 fps** (`SCENE=rainforest_camp tools/perf_bench.gd`): a rainforest camp at a ruin 40 km from the opening, 15:00, seen from 9 m off its fire.
   - This machine has no GPU (llvmpipe, software rendering), so its milliseconds are about 100× a real card's. Compare the rows, not the numbers.

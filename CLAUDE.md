@@ -11,7 +11,7 @@ plain English: what it reads, what it writes, what changes on screen.
 ## Engine
 - **Godot 4.3, the standard build. GDScript only, no plugins.** Mike opens `project.godot`
   straight in the Godot editor. Plain Godot is the only engine (design 30 Sept doc §CI).
-- The main scene is `scenes/main.tscn`; the autoload is `World` (`scripts/core/world.gd`). How
+- The project boots `scenes/boot.tscn`, which opens the game `data/game.json` names (§ET.2, `GameMode`): Torchfire 1, the crawler (`scenes/crawler.tscn`, `scripts/crawler/`), by default; the open world (Torchfire 2) is `scenes/main.tscn`, still the scene every check in `tools/` boots. The autoload is `World` (`scripts/core/world.gd`). How
   Mike opens and plays the game, the walkabout command, and where this machine's headless
   Godot lives are all in `docs/HOW_TO_RUN.md`.
 

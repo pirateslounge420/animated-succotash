@@ -87,6 +87,15 @@ static var _warm_mat: ShaderMaterial
 ## Build one on the ground at surface direction `d`, under `parent`
 ## (which must be in the scene tree).
 static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3, seat := true) -> Node3D:
+	var xf := Transform3D(Basis.looking_at(CubeSphere.north(d), d), world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d)))
+	return build_at(parent, world, xf, d, seat)
+
+
+## Build one standing at scene transform `xf` (its y the up), its fuel
+## store keyed by `d` (FireStore.key_of): the planet's fires pass their
+## surface direction (build()); the crawler's flat tombs (design 6 Oct
+## §ET, CrawlerFires) a key of their own.
+static func build_at(parent: Node3D, world: Node, xf: Transform3D, d: Vector3, seat := true) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Campfire"
 	# Every fire, wherever it was built (camps, the opening camp, mythic
@@ -97,8 +106,7 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	# the column is sized against (a delve's hearth resets it to its stack's).
 	root.set_meta("smoke", 1.0)
 	parent.add_child(root)
-	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
-	root.global_basis = Basis.looking_at(CubeSphere.north(d), d)
+	root.global_transform = xf
 	var body := PropCollision.body(root)
 	for i in 8:
 		var a := i * TAU / 8.0
@@ -520,7 +528,8 @@ static func flicker(camp: Node3D, time: float) -> void:
 		light.light_energy = LIGHT_ENERGY * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
 		light.omni_range = (float(camp.get_meta("range_m")) if camp.has_meta("range_m") else RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night))
 		var jm := float(fk.get("position_jitter_m", 0.06))
-		light.position = Vector3(0, 1.0, 0) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
+		# (meta light_y: a fire whose light sits lower, a wall sconce's.)
+		light.position = Vector3(0, float(camp.get_meta("light_y", 1.0)), 0) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
 	# The pool on the ground swells with the light.
 	var gs := GLOW_M * lerpf(1.0, float(L.get("ground_glow_night_scale", 1.4)), night)
 	for n in ["GroundWarm", "GroundGlow"]:

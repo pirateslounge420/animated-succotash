@@ -44,6 +44,9 @@ static var instance: Torch = null
 static var bundles: Array = []
 
 var player: PlanetPlayer
+## The crawler's snuff rules (design 6 Oct §ET.7, TorchSnuff): the gutter
+## warning, the draft's lean.
+var snuff := TorchSnuff.new()
 var _view: Node3D
 var _view_flame: Node3D
 var _light: OmniLight3D
@@ -392,6 +395,7 @@ func light() -> void:
 	if it.is_empty():
 		return
 	it["lit"] = true
+	snuff.reset()
 	if not it.has("burn_left_min"):
 		it["burn_left_min"] = float(D.get("burn_min", 50.0))
 	_play("torch_light")
@@ -459,6 +463,10 @@ func put_out(why: String) -> void:
 			GameLog.add("The torch has burnt out: a stick now.", "torch")
 		"doused":
 			GameLog.add("The water put the torch out.", "torch")
+		"sprint":
+			GameLog.add(str(TorchSnuff.LOG.get("sprint", "Running flat out, the coal guttered and went out.")), "torch")
+		"draft":
+			GameLog.add(str(TorchSnuff.LOG.get("draft", "The draft from the airway put the torch out.")), "torch")
 		_:
 			GameLog.add("The torch is out.", "torch")
 	_play("torch")
@@ -541,19 +549,36 @@ func update_torch(delta: float) -> void:
 		elif what == "out":
 			put_out("burnt")
 			return
-		# Water: swimming, or wading past the douse depth.
-		var water := player.chunks.water_level_at(player.surface_dir)
-		var depth: float = (PlanetConst.RADIUS_M + water) - player.world.radius_of(player.global_position)
-		# (In a delve, §CJ, you are under the ground, not under the sea.)
-		if player.swimming or (depth > float(D.get("douse_depth_m", 0.6)) and not Delves.inside):
+		# Water: swimming, or wading past the douse depth (in a delve, §CJ,
+		# you are under the ground, not under the sea: PlanetPlayer.water_depth).
+		var depth := player.water_depth()
+		if player.swimming or depth > float(D.get("douse_depth_m", 0.6)):
 			put_out("doused")
 			return
+		# The crawler's snuff rules (design 6 Oct §ET.7, torch.json snuff):
+		# a long flat-out sprint, a strong airway draft or deep water put
+		# it out, each warned first by the coal guttering.
+		if GameMode.crawler_running:
+			var why := snuff.step(self, delta, depth)
+			if why != "":
+				put_out(why)
+				return
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
-		_light.light_energy = energy_now(it, _t, motion) * held_scale()
-		set_glow(_view_flame, ember_glow(it, _t, motion), it)
+		var e := energy_now(it, _t, motion)
+		var g := ember_glow(it, _t, motion)
+		if snuff.gutter > 0.0:
+			# The coal gutters (§ET.7 warns_first): dimmer, cooler, its
+			# light failing in a harder flicker as the moment comes.
+			var k := snuff.gutter
+			var flick := 1.0 - k * (0.35 + 0.35 * sin(_t * 23.0) * sin(_t * 7.3))
+			e = lerpf(e, float(L.get("gutter_energy", 0.9)) * 0.6, k) * flick
+			g *= lerpf(1.0, float(EMBER.get("gutter_glow", 0.72)) * 0.7, k) * flick
+		_light.light_energy = e * held_scale()
+		set_glow(_view_flame, g, it)
 	_apply(lit())
 	if lit() and _view_flame.visible:
-		smoke_ember(_view_flame, player.up, -player.velocity)
+		# A draft leans the burnt end's smoke toward open air (§ET.6).
+		smoke_ember(_view_flame, player.up, -player.velocity + snuff.lean)
 
 
 func _apply(on: bool) -> void:
@@ -579,6 +604,20 @@ func _update_swing(delta: float) -> void:
 		_swing = maxf(_swing - delta / maxf(Fists.STRIKE_S, 0.05), 0.0)
 		if _swing <= 0.0:
 			pass_flame()
+
+
+## Where the burnt end is (scene): the light at the hand (TorchSnuff
+## reads the draft there).
+func flame_position() -> Vector3:
+	return _light.global_position
+
+
+## The coal sputtering as it starts to gutter (TorchSnuff, §ET.7): a snap
+## and a hiss, the warning you hear.
+func sputter() -> void:
+	_voice.stream = SoundSynth.stream("fire_snap", randi())
+	_voice.pitch_scale = randf_range(1.1, 1.3)
+	_voice.play()
 
 
 func _play(kind: String) -> void:

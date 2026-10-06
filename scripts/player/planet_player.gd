@@ -1511,6 +1511,16 @@ func reach_from() -> Vector3:
 	return global_position + up * 0.9
 
 
+## How deep the water is at the player's feet (m; negative: dry). The
+## torch douses past torch.json douse_depth_m (§AW); in a delve the
+## ground's water is far overhead and never counts.
+func water_depth() -> float:
+	if Delves.inside:
+		return -INF
+	var water := chunks.water_level_at(surface_dir)
+	return (PlanetConst.RADIUS_M + water) - world.radius_of(global_position)
+
+
 ## Take something at `point`: while climbing, the hand nearer it lets go of
 ## the wood and reaches for it for a moment (GRAB_S) while the other hand
 ## holds on.

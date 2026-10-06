@@ -1,0 +1,6 @@
+{
+ "_help": {
+  "about": "(design 6 Oct §ET.2) Which game the project boots into, mirroring movement.json → profile (§AU). torchfire1: the ambient first-person dungeon crawler (scenes/crawler.tscn, scripts/crawler/). torchfire2: the open world, shelved for Torchfire 2 (scenes/main.tscn): the planet, roads, ecology, weather, seasons and the camp simulation. Nothing of the open world is deleted: it still compiles, and every check in tools/ still runs it (they open scenes/main.tscn directly, whatever this says). GAME=torchfire2 (or torchfire1) in the environment overrides this for one run. Restart after editing."
+ },
+ "game": "torchfire1"
+}

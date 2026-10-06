@@ -100,6 +100,9 @@ func effect(player: PlanetPlayer, kind: String) -> void:
 static func material_under(player: PlanetPlayer) -> String:
 	var d := player.surface_dir
 	var chunks := player.chunks
+	# Underground in the crawler's tombs (design 6 Oct §ET): paved stone.
+	if chunks == null:
+		return "stone"
 	var ground_h := chunks.ground_height(d)
 	var water := chunks.water_level_at(d)
 	if water > ground_h + 0.05:

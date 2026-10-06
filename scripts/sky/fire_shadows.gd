@@ -15,6 +15,11 @@ const GROUP := "fire_light"
 const PICK_S := 0.25
 
 static var F: Dictionary = Tuning.section("look", "fire_shadows")
+## A game's own shadow kind for its casters ("" keeps the dual-paraboloid;
+## "cube": six faces, true on big flat walls near the light). The crawler
+## sets crawler.json look.fire_shadow_mode (§ET: its lights are always a
+## step from a wall, where the paraboloids warp).
+static var mode := ""
 
 var _camera: Callable
 var _t := 0.0
@@ -71,7 +76,7 @@ func pick() -> void:
 
 
 func _cast(l: OmniLight3D, reach: float) -> void:
-	l.omni_shadow_mode = OmniLight3D.SHADOW_DUAL_PARABOLOID
+	l.omni_shadow_mode = OmniLight3D.SHADOW_CUBE if mode == "cube" else OmniLight3D.SHADOW_DUAL_PARABOLOID
 	l.shadow_blur = float(F.get("blur", 1.5))
 	l.shadow_bias = float(F.get("bias", 0.15))
 	l.shadow_normal_bias = float(F.get("normal_bias", 1.5))
