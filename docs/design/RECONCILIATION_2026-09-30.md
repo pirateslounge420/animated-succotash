@@ -3715,3 +3715,23 @@ Mike: the beast heads look shrunken because they are sized to fill a human hood.
 ### EQ.2 What changes from §EO.1
 - §EO.1 said a figure reads as a person from a distance. **Now the head's silhouette shows at any distance**; only the face's painted detail still fades in up close (look.near_m to look.gone_m). The cloak, rig and colours still say "folk".
 - The player's hood stays empty and full-sized (§EO.2), so the player stays the odd one out.
+
+## ER. Performance pass, and the painted-pixel test at 240 lines — LOCKED as a test (6 Oct, 10:41, Mike)
+
+Mike played the 6 Oct build: about 7 fps in a rainy tropical-rainforest camp. The overlay read ~347 draws and ~4.6M triangles, with GPU time not measured (0.0).
+
+### ER.1 Performance (locked)
+- **Measure first:** real GPU ms on the overlay; record rain on vs rain off before changing anything. Move the perf overlay off the date/biome HUD line.
+- **Default render distance halved.** Distance fog pulled in so its far edge sits just inside the draw distance, keeping R-distance (lighter and bluer). Still a player setting; only the default changes.
+- **Triangles fall with distance:** MultiMesh plants, visibility ranges by size class (ground cover, shrub, tree), lower-detail far terrain. Target under ~500k triangles in the camp view.
+- **Rain ≤2 ms GPU:** one capped, camera-following volume or a screen-space streak shader.
+- **Shadows:** no sun shadow in storms or at night. **Fire still casts shadows** (Mike): only the nearest 1–2 fires or torches, dual-paraboloid, small atlas, short range, distance fade. Rough and soft is fine.
+- **CPU:** no per-frame scripts or collision on decorative plants.
+- **Occlusion culling after the above:** simple box/quad occluders on terrain ridges and ruin pieces, never foliage. Kept only if it measurably helps.
+
+### ER.2 The painted-pixel look test (a test, not yet a change to §Y/§BU)
+Mike wants to move toward reference frame 3 (goat with bowl in rain): smooth-ish models with **lighting painted into the textures**, drawn at a **low internal resolution** and blown up nearest-neighbour, so big pixels hide the facets and the form reads round and solid. The life-sized head under a cowl is already §EQ.
+- **Contradicts §Y/§BU (480 lines, 720 max)**, flagged to Mike, who chose to test it. Add a `painted` preset at **240 lines** alongside chunky/default/half_hd/fine; 480 stays the default until Mike locks the switch.
+- **Repaint one camp figure** as the test piece: painted shading (cloak folds, hood shadow, face form) baked into its textures, a smoother cloak mesh, the §EQ head fit. No normal maps, no shine (R-rules unchanged).
+- **Impostors:** far trees and ruins drawn as pre-rendered sprites of their own 3D models, swapping in beyond a distance per size class. This serves both ER.1 (triangles) and ER.2 (the pixel illusion).
+- Mike compares `painted` 240 vs `default` 480 with F11 in his own game, then decides.
