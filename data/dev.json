@@ -78,5 +78,13 @@
   "stall_log": "true: when the unstick rule frees you, print what was in the way (the blocking colliders' node paths and shape sizes). STALL_LOG=1 in the environment does the same.",
   "seed_and_spawn": "Design 1 Oct §CB (Mike: every new world should spawn somewhere else). seed and spawn_choice are the DEV TOOLS' pins (tools/dev_view.gd and the checks need the same frame every time: seed 42, spawn 0). They apply in play only when pin_in_play is true or DEV_PIN=1 is in the environment; otherwise a new world rolls a fresh seed and a random first camp among Encampment.candidates. spawn_choice -1: random (the §P / §AO rule, 'a different one each game'); 0..11: that candidate, best first. Until 1 Oct these were pinned at 42 / 0 and every 'new world' was the same cell — the savanna in Mike's screenshots."
  },
- "pin_in_play": false
+ "pin_in_play": false,
+ "beast_lineup": {
+  "_help": "Design 6 Oct §EQ silhouette test (added by Claude Code). on: true stands all twelve zodiac folk in a row distance_m in front of where you wake, raise_m up on a dark ledge so their heads stand against the sky, spacing_m apart, side-on (facing along the row: the profile names a species best). black: true draws them pure black (the test: every species nameable at 480 lines). BEAST_LINEUP=1 in the environment turns it on too (BEAST_LINEUP=colour for colour). Dev mode only.",
+  "on": false,
+  "black": true,
+  "distance_m": 6.0,
+  "raise_m": 1.4,
+  "spacing_m": 0.9
+ }
 }

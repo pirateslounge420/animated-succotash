@@ -66,7 +66,7 @@
   }
  },
  "look": {
-  "_help": "Added by Claude Code with the §EO.1 wiring. The face is drawn only up close: within near_m (metres from the eye) fully, fading into the hood's flat dark hollow by gone_m, so from further off the figure reads as a person (an empty hood). hood_shade: how much light reaches into the hood (1 = all of it), so a face shows best by firelight. Folk kinds that keep the empty hood: no_head_kinds (the small folk with their lanterns, §BO; not retired). Colours (sRGB) per animal: fur, the muzzle or face, the accent (nose, beak, comb, horn); the shapes are in scripts/creatures/beast_heads.gd.",
+  "_help": "Added by Claude Code with the §EO.1 wiring. Since §EQ (6 Oct) the head is life-sized and out of the hood (data/beast_head_fit.json), so its silhouette shows at every distance; only the face's painted detail comes in up close: fully within near_m (metres from the eye), fading to the animal's plain fur (its first colour) by gone_m. hood_shade is no longer read (the head no longer sits in the hood's shade). Folk kinds that keep the empty hood: no_head_kinds (the small folk with their lanterns, §BO; not retired). Colours (sRGB) per animal: fur, the muzzle or face, the accent (nose, beak, comb, horn); the shapes are in scripts/creatures/beast_heads.gd.",
   "near_m": 4.0,
   "gone_m": 8.0,
   "hood_shade": 0.6,

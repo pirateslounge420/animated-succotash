@@ -316,24 +316,56 @@ func _find_beast() -> void:
 
 ## Put `animal`'s head under the hood ("" takes it away). The player's
 ## hood stays empty, always (§EO.2): refused.
+##
+## Life-sized (design 6 Oct §EQ, BeastHeads.fit; data/beast_head_fit.json):
+## the head is scaled for its animal and pushed forward so the muzzle
+## juts past the brim, and the hood becomes a cowl behind it (the lined
+## hood with no dark hollow, stretched round the skull, its brim slid
+## back behind the ears and horns). Only the head's own node and the
+## cowl change; the rig and the body stay as they are.
 func set_beast(animal: String) -> void:
 	if is_player:
 		return
-	var old := head.get_node_or_null("Beast")
-	if old != null:
-		head.remove_child(old)
-		old.queue_free()
+	for nm in ["Beast", "Cowl"]:
+		var old := head.get_node_or_null(nm)
+		if old != null:
+			head.remove_child(old)
+			old.queue_free()
+	var hood := head.get_node_or_null("Hood") as Node3D
+	if hood != null:
+		hood.visible = true
 	beast = ""
 	var m := BeastHeads.mesh(animal) if animal != "" else null
 	if m == null:
+		CloakedFigure.fit_head_hitbox(self)
 		return
+	var fit := BeastHeads.fit(animal)
 	var mi := MeshInstance3D.new()
 	mi.name = "Beast"
 	mi.mesh = m
-	mi.material_override = BeastHeads.material()
+	mi.material_override = BeastHeads.material(animal)
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.transform = fit.head
 	head.add_child(mi)
+	# The hood as a cowl behind the head.
+	if hood != null:
+		hood.visible = false
+	var cowl := MeshInstance3D.new()
+	cowl.name = "Cowl"
+	cowl.mesh = _cowl_mesh()
+	cowl.material_override = _mat
+	cowl.transform = fit.cowl
+	head.add_child(cowl)
 	beast = animal
+	CloakedFigure.fit_head_hitbox(self)
+
+
+## The cowl (§EQ): the hood with its hollow lined like the rest of its
+## inside (no flat dark void: the head fills it), built once.
+static func _cowl_mesh() -> ArrayMesh:
+	if not _meshes.has("cowl"):
+		_meshes["cowl"] = _hood_mesh(false)
+	return _meshes["cowl"]
 
 
 ## Per frame: how fast the player is going, 0 (still) to 1 (sprinting):
@@ -442,8 +474,12 @@ func _update_look(delta: float) -> void:
 		watch_point = head.global_position + global_basis.y * 0.1
 
 
+## Held still: no head-look (the §EQ silhouette lineup stands side-on).
+var look_still := false
+
+
 func _look_enabled() -> bool:
-	return bool(HEAD_LOOK.get("enabled", true))
+	return bool(HEAD_LOOK.get("enabled", true)) and not look_still
 
 
 ## 0 standing .. 1 crouched: the knees bend, the body folds forward and
@@ -1202,7 +1238,7 @@ const HOOD_RINGS := [
 ]
 
 
-static func _hood_mesh() -> ArrayMesh:
+static func _hood_mesh(hollow := true) -> ArrayMesh:
 	var g := Geo.new()
 	var n := HOOD_RINGS.size()
 	_lathe(g, n, 28, func(i: int, a: float) -> Array:
@@ -1228,8 +1264,8 @@ static func _hood_mesh() -> ArrayMesh:
 				# The brim's edge catches the light; inside it, the lining.
 				col = CLOAK * 1.25 if i == 5 else LINING * 0.8
 			_:
-				col = HOLLOW
-				kind = HOLLOW_K
+				col = HOLLOW if hollow else LINING * 0.8
+				kind = HOLLOW_K if hollow else CLOTH_K
 		return [p, _lin(col), kind],
 		Vector3(0, 0.17, 0.19), Vector3(0, 0.117, 0.065))
 	return _geo_mesh(g)

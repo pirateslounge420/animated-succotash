@@ -67,16 +67,33 @@ func _heads() -> void:
 	var Z: Dictionary = Tuning.table("zodiac_heads")
 	var heads: Dictionary = Z.get("heads", {})
 	ok(heads.size() == 12, "twelve zodiac animals (%d)" % heads.size())
+	# §EQ: life-sized, the muzzle out past the brim by its share, every
+	# through_hood part built and in front of the cowl's brim, the ears up.
 	var bad: Array = []
+	var through_bad: Array = []
 	for a in heads:
 		var m := BeastHeads.mesh(str(a))
 		if m == null or int(m.get_meta("tris", 0)) <= 0:
 			bad.append([a, "no mesh"])
 			continue
-		var bb := m.get_aabb()
-		if bb.position.x < -0.125 or bb.end.x > 0.125 or bb.position.y < -0.03 or bb.end.y > 0.23 or bb.position.z < -0.195 or bb.end.z > 0.13:
-			bad.append([a, bb])
-	ok(bad.is_empty(), "every head fits under the hood, its snout at most 6.5 cm past the brim %s" % str(bad))
+		var f := BeastHeads.fit(str(a))
+		var nums := BeastHeads.fit_numbers(str(a))
+		var want_out := float(nums.get("muzzle_out", 0.5)) * float(f.length)
+		print("  %-8s scale %.2f, forward %.3f m, %.0f%% of its %.2f m past the brim (want %.0f%%), cowl brim at z %.3f, cowl x%.2f" % [a, float(f.scale), float(f.forward), 100.0 * float(f.out) / float(f.length), float(f.length), 100.0 * float(nums.get("muzzle_out", 0.5)), float(f.brim), float(f.cowl_k)])
+		if float(f.out) < want_out - 0.002 or not is_equal_approx(float(f.scale), float(nums.get("scale", 1.4))):
+			bad.append([a, "out %.3f < %.3f" % [float(f.out), want_out]])
+		var parts: Dictionary = m.get_meta("parts", {})
+		for t in nums.get("through_hood", []):
+			if not parts.has(t):
+				through_bad.append([a, t, "not built"])
+				continue
+			var pb: AABB = (f.head as Transform3D) * (parts[t] as AABB)
+			if pb.end.z > float(f.brim) - BeastHeads.BRIM_OVERHANG:
+				through_bad.append([a, t, "behind the brim"])
+		if parts.has("ears") and (parts.ears as AABB).get_center().z > (parts.skull as AABB).get_center().z + 0.01:
+			through_bad.append([a, "ears", "laid back"])
+	ok(bad.is_empty(), "every head is its beast_head_fit scale, its muzzle past the brim by muzzle_out of its length %s" % str(bad))
+	ok(through_bad.is_empty(), "every through_hood part is built and stands in front of the cowl's brim; no ears laid back %s" % str(through_bad))
 	var peoples: Array = []
 	for f in DirAccess.get_files_at("res://data/peoples"):
 		if f.ends_with(".json"):
@@ -105,7 +122,8 @@ func _camp_heads() -> void:
 		pb = c
 	if pb != null:
 		pb.set_beast("ox")
-		ok(pb.is_player and pb.beast == "" and pb.head.get_node_or_null("Beast") == null, "the player's hood stays empty, even asked to wear the ox")
+		var hood := pb.head.get_node_or_null("Hood") as Node3D
+		ok(pb.is_player and pb.beast == "" and pb.head.get_node_or_null("Beast") == null and pb.head.get_node_or_null("Cowl") == null and hood != null and hood.visible and (hood as MeshInstance3D).mesh == PlayerBody._meshes["hood"], "the player's hood stays empty and whole (no cowl), even asked to wear the ox")
 	else:
 		ok(false, "the player's body found")
 	# A camp's folk, built now.
@@ -119,14 +137,38 @@ func _camp_heads() -> void:
 	var wearing := bodies.filter(func(b): return (b as PlayerBody).beast == want)
 	print("  a %s camp (%s): %d folk, %d wearing the %s" % [root.get_meta("people", ""), root.get_meta("kind", ""), bodies.size(), wearing.size(), want])
 	ok(want != "" and bodies.size() > 0 and wearing.size() == bodies.size(), "every folk of a camp wears its beast")
+	var cowled := bodies.filter(func(b): return (b as PlayerBody).head.get_node_or_null("Cowl") != null and not ((b as PlayerBody).head.get_node("Hood") as Node3D).visible)
+	ok(cowled.size() == bodies.size(), "their hoods are cowls behind the head (%d of %d)" % [cowled.size(), bodies.size()])
+	var fitted := 0
+	for b in bodies:
+		var h = (b as PlayerBody).get_meta("head_hitbox") if (b as PlayerBody).has_meta("head_hitbox") else null
+		if h == null or not is_instance_valid(h):
+			print("  a head hitbox gone (%s)" % str(h))
+			continue
+		var cs := (h as Node).get_child(0) as CollisionShape3D
+		var aabb: AABB = BeastHeads.fit(want).aabb
+		if not cs.position.is_equal_approx(aabb.get_center()) or (cs.shape as SphereShape3D).radius < 0.5 * maxf(aabb.size.x, maxf(aabb.size.y, aabb.size.z)) - 0.001:
+			print("  hitbox at %s r %.3f (beast %s); the head %s" % [str(cs.position), (cs.shape as SphereShape3D).radius, (b as PlayerBody).beast, str(aabb)])
+		if cs.position.is_equal_approx(aabb.get_center()) and (cs.shape as SphereShape3D).radius >= 0.5 * maxf(aabb.size.x, maxf(aabb.size.y, aabb.size.z)) - 0.001 and (cs.shape as SphereShape3D).radius >= CloakedFigure.HEAD_HIT_R - 0.0001:
+			fitted += 1
+	var with_hb := bodies.filter(func(b): return (b as PlayerBody).has_meta("head_hitbox")).size()
+	ok(with_hb > 0 and fitted == with_hb, "the head hitbox is round the life-sized head (%d of %d with hitboxes)" % [fitted, with_hb])
 	root.queue_free()
 	# The opening camp.
 	var ob: Array = main.camp.dressing.find_children("*", "PlayerBody", true, false) if main.camp.dressing != null else []
 	var ow := str(main.camp.dressing.get_meta("beast", "")) if main.camp.dressing != null else ""
 	ok(ow == BeastHeads.of_people(main.camp.people_id) and ob.size() > 0 and ob.all(func(b): return (b as PlayerBody).beast == ow), "the opening camp's %d folk wear the %s (%s)" % [ob.size(), ow, main.camp.people_id])
-	var m := BeastHeads.material()
+	var m := BeastHeads.material("goat")
 	var L: Dictionary = Tuning.table("zodiac_heads").get("look", {})
-	ok(is_equal_approx(float(m.get_shader_parameter("near_m")), float(L.get("near_m", 4.0))) and is_equal_approx(float(m.get_shader_parameter("gone_m")), float(L.get("gone_m", 8.0))), "the face shows within %.0f m and is the hood's hollow past %.0f m" % [float(L.get("near_m", 4.0)), float(L.get("gone_m", 8.0))])
+	var code := (m.shader as Shader).code
+	ok(is_equal_approx(float(m.get_shader_parameter("near_m")), float(L.get("near_m", 4.0))) and is_equal_approx(float(m.get_shader_parameter("gone_m")), float(L.get("gone_m", 8.0))) and code.find("EMISSION") < 0 and code.find("fur_color") >= 0, "the face's detail shows within %.0f m and is plain fur past %.0f m; the head never fades into the hollow" % [float(L.get("near_m", 4.0)), float(L.get("gone_m", 8.0))])
+	# The silhouette lineup (dev.json beast_lineup).
+	var lu := BeastLineup.build(world.world_root, world, main.chunks, main.player, {"black": true})
+	await process_frame
+	var lb: Array = lu.find_children("*", "PlayerBody", true, false)
+	var named := lb.filter(func(b): return (b as PlayerBody).beast == str((b as PlayerBody).get_meta("animal", "")) and (b as PlayerBody).beast != "")
+	ok(lb.size() == 12 and named.size() == 12, "the lineup stands all twelve, each wearing its own head (%d)" % named.size())
+	lu.queue_free()
 
 
 func _rings() -> void:

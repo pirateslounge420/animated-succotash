@@ -4,6 +4,52 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — §EQ life-sized beast heads; the hood becomes a cowl; the silhouette lineup
+- **What changes on screen:** the beast heads are now the animal's own size and sit out in front of the hood, with the hood draped behind them like a cowl (the goat of reference frame 3). Before, every head was shrunk to fit inside a human hood.
+  - **Life-sized:** each head is scaled by its `scale` in `beast_head_fit.json` (1.15 for rat and monkey, up to 1.7 for the horse). It is pushed forward and a little down, so its muzzle, beak or snout juts past the old brim by its `muzzle_out` share of the head's length.
+    - The push is `forward_m`, or more where that isn't enough to get the muzzle out (rat 8 cm, horse 10 cm, others 5–8 cm).
+    - The bodies and the shared rig are unchanged; only the head's own node moves.
+  - **The cowl:** on beast folk only, the hood is swapped for a cowl.
+    - It is the same hood with its inside lined in cloth, no dark void, stretched up to 1.25× to fit round the bigger skull.
+    - Its brim slides back behind the middle of the skull, by `cowl_back_m` at least, and further where needed so every `through_hood` part stands in front of it.
+    - It tilts back off the crown, so it drapes on the shoulders like a hood pushed back.
+  - **Through the hood:** ears, horns, combs and the rest stand out in front of the cowl, never folded under it.
+    - The rabbit's ears now stand up; before they were laid back under the hood.
+    - The horse gained upright ears, and the ox, goat and monkey gained ears.
+    - Added for the parts the fit file lists: the rat's whiskers, the tiger's cheek ruff, the dragon's jaw frills and the pig's tusks.
+  - **Fading:** the head's outline now shows at every distance (§EQ.2). Only the painted face detail fades: eyes, nose, stripes, the muzzle's paler fur, horn and comb colours. It is full within 4 m and flattens to the animal's plain fur by 8 m. The head no longer fades into the dark hollow.
+  - **Hitboxes:** a beast folk's head hit sphere now sits round the life-sized head (its bounds' middle, half its longest side), never smaller than before. It updates whenever a head is put on.
+  - **The player is untouched:** your hood stays whole, empty, indigo with the rust hem (§EO.2). Asking the player to wear a head does nothing.
+- **The silhouette lineup (dev):** `data/dev.json → beast_lineup` (`on: true`, dev mode) or `BEAST_LINEUP=1` in the environment (`BEAST_LINEUP=colour` for colour).
+  - All twelve stand side-on in a row on a dark ledge 6 m in front of where you wake, raised 1.4 m so their heads stand against the sky.
+  - They are drawn pure black, or in their colours, and held still (no head turning).
+  - Distance, height and spacing are in the same block.
+- **Data:**
+  - `beast_head_fit.json` is read through `Tuning`, each animal over its `defaults`.
+  - In `zodiac_heads.json → look._help`, `hood_shade` is now marked not read.
+  - `dev.json` gains `beast_lineup` with its `_help`.
+- **What the code does:**
+  - **BeastHeads:** tags every part of a head and works out the fit (`fit()`: the head's transform, the cowl's transform, the bounds), with one material per animal.
+  - **`PlayerBody.set_beast`:** places the head and swaps the hood for the cowl (`_cowl_mesh`: `_hood_mesh(false)`).
+  - **`CloakedFigure.fit_head_hitbox`:** sizes the head hit sphere.
+  - **New `BeastLineup`:** builds the lineup; `PlayerBody.look_still` keeps its figures from turning.
+- **Check:** `tools/fae_check.gd` gives 0 fails. It prints each animal's scale, its forward push, the share of its length past the brim and where its cowl's brim lands, and checks:
+  - every head is at its fit scale with its muzzle out by its share;
+  - every `through_hood` part exists and stands in front of the cowl's brim; no ears are laid back;
+  - a camp's folk all wear cowls (their hoods hidden), and their head hitboxes sit round the life-sized head;
+  - the player keeps the whole, empty hood and gets no cowl;
+  - the head shader has no hollow fade and flattens to fur;
+  - the lineup stands all twelve, each in its own head.
+  - `circle_check` still gives 0 fails.
+  - A float rounding in the hitbox test (the monkey's sphere sits at the 0.13 m minimum) first made it fail now and then; fixed in the check.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=lineup HOURS=12` wrote `lineup_black_12h_f0.png` and `lineup_colour_12h_f0.png` (a harness frame: the ledge 2.2 m up, beside the opening camp). The twelve stand side-on against the sky.
+  - In black, the snouts, the horns of the ox, goat and dragon, the rabbit's ears and the rooster's comb break the outline.
+  - In colour, the opening camp's rat folk behind wear their cowls.
+  - The dog, the pig and the monkey are the hardest to tell apart in black; their numbers are the dials.
+- **Flags for Mike:**
+  1. **The fit numbers are as Claude (chat) wrote them**, except where the forward push had to grow to get `muzzle_out` past the brim. The cowl's 1.25× stretch limit and its tilt are mine (`COWL_K_MAX`, `COWL_TILT` in BeastHeads). Say if the cowl should be smaller or sit lower.
+  2. **"Scale the head pivot only":** I scaled the head's own node under the Head pivot rather than the pivot itself, because the pivot also carries the hood. The cowl is the hood swapped and moved, not scaled with the head.
+
 ## 2026-10-06 — §EO beast heads under the hood, the empty hood, fairy rings and the fae
 - **Beast heads (§EO.1):** every people's folk now have an animal's head under the hood, one of the twelve Eastern zodiac animals. The cloaked rig is unchanged; only the head is new.
   - **Up close only:** the face shows fully within 4 m. Between 4 and 8 m it fades into the hood's flat dark hollow, so from further off a figure is still a person with an empty hood.

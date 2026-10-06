@@ -1,21 +1,21 @@
-// A beast's head under a cloaked figure's hood (design 5 Oct §EO.1,
-// BeastHeads; data/zodiac_heads.json look): vertex-lit like the body
-// (Lambert, no specular, Look's fog) over vertex colours, with the
-// body's coarse painted mottling. Only up close does it show: from
-// near_m out to gone_m it fades into the hood's flat dark hollow (the
-// same colour PlayerBody's hollow is drawn in), so from further off the
-// figure is a person with an empty hood. hood_shade dims what light gets
-// into the hood, so a face shows best by firelight.
+// A beast's head on a cloaked figure (design 5 Oct §EO.1, 6 Oct §EQ;
+// BeastHeads; data/zodiac_heads.json look, data/beast_head_fit.json):
+// vertex-lit like the body (Lambert, no specular, Look's fog) over vertex
+// colours, with the body's coarse painted mottling. The head is life-sized
+// and out of the hood, so its silhouette shows at every distance (§EQ.2);
+// only the face's painted detail (eyes, nose, stripes, the muzzle's paler
+// fur, horn and comb colours) comes in up close: from gone_m in to near_m
+// the vertex colours fade in over the animal's plain fur (fur_color).
 shader_type spatial;
 render_mode vertex_lighting, diffuse_lambert, specular_disabled, cull_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform vec3 hollow_color = vec3(0.0042, 0.0048, 0.028);
 uniform float near_m = 4.0;
 uniform float gone_m = 8.0;
-uniform float hood_shade = 0.6;
+// Linear.
+uniform vec3 fur_color = vec3(0.2);
 
 varying vec3 world_pos;
 varying vec3 tex_pos;
@@ -31,6 +31,5 @@ void fragment() {
 	SPECULAR = 0.0;
 	float far = smoothstep(near_m, gone_m, distance(world_pos, CAMERA_POSITION_WORLD));
 	float g = texture(look_grain_soft, (tex_pos.xy * 1.3 + tex_pos.zy * 1.7) * 9.0).r;
-	ALBEDO = COLOR.rgb * (0.7 + 0.6 * g) * hood_shade * (1.0 - far);
-	EMISSION = hollow_color * far;
+	ALBEDO = mix(COLOR.rgb, fur_color, far) * (0.7 + 0.6 * g);
 }

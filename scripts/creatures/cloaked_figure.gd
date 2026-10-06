@@ -137,6 +137,30 @@ static func add_lantern(b: Dictionary, color := Color(1.0, 0.6, 0.25)) -> void:
 	b.light = light
 
 
+## The head's hit sphere on an empty hood (Head space).
+const HEAD_HIT_C := Vector3(0, 0.12, 0.0)
+const HEAD_HIT_R := 0.13
+
+
+## Fit `body`'s head hit sphere to its beast head (design 6 Oct §EQ): round
+## the life-sized head as it sits (its bounds' middle, half its longest
+## side), never smaller than the empty hood's; back to the hood's on an
+## empty one. A no-op until hitboxes() has made it.
+static func fit_head_hitbox(body: PlayerBody) -> void:
+	var h = body.get_meta("head_hitbox") if body.has_meta("head_hitbox") else null
+	if h == null or not is_instance_valid(h):
+		return
+	var cs := (h as Node).get_child(0) as CollisionShape3D
+	var sp := cs.shape as SphereShape3D
+	if body.beast == "":
+		cs.position = HEAD_HIT_C
+		sp.radius = HEAD_HIT_R
+		return
+	var aabb: AABB = BeastHeads.fit(body.beast).get("aabb", AABB(HEAD_HIT_C, Vector3.ZERO))
+	cs.position = aabb.get_center()
+	sp.radius = maxf(HEAD_HIT_R, 0.5 * maxf(aabb.size.x, maxf(aabb.size.y, aabb.size.z)))
+
+
 ## Its hit parts (Hits: head, body, limbs) on the rig's pivots, and a
 ## blocker in the torso if `block`: capsules in the player-body's own
 ## units (the root's scale carries them to size).
@@ -148,10 +172,12 @@ static func hitboxes(owner: Node, b: Dictionary, block: bool) -> Array:
 	t.name = "Torso"
 	Hits.mark(t, "body")
 	out.append(t)
-	var h := Hitboxes.sphere(owner, body.head, Vector3(0, 0.12, 0.0), 0.13)
+	var h := Hitboxes.sphere(owner, body.head, HEAD_HIT_C, HEAD_HIT_R)
 	h.name = "Head"
 	Hits.mark(h, "head")
 	out.append(h)
+	body.set_meta("head_hitbox", h)
+	fit_head_hitbox(body)
 	for s in 2:
 		var leg: Node3D = body.legs()[s]
 		var l := Hitboxes.capsule(owner, leg, Vector3(0, -0.02, 0), Vector3(0, -PlayerBody.THIGH_M - PlayerBody.SHIN_M + 0.05, 0), 0.07)

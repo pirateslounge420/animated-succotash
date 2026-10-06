@@ -463,6 +463,11 @@ func _on_planet_ready() -> void:
 
 	hud.hide_loading()
 	_playing = true
+	# The beast heads' silhouette test (design 6 Oct §EQ; dev.json
+	# beast_lineup, or BEAST_LINEUP=1).
+	var lineup := BeastLineup.settings(world)
+	if bool(lineup.get("on", false)):
+		BeastLineup.build(world.world_root, world, chunks, player, lineup)
 	# The opening lines, once, at the start of the game.
 	hud.say("Elder", "You're finally awake.", 1.2, 3.2)
 	hud.say("Hunter", "Be careful at night, don't let it get you...", 4.6, 4.8)

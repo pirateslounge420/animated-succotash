@@ -24,6 +24,7 @@ extends SceneTree
 ## SITES=lake adds the nearest lake's shore, looking over the water.
 ## SITES=beasts a face under the hood up close at the opening camp's fire;
 ## SITES=fae a fairy ring by the opening camp with its fae out (§EO; HOURS=21).
+## SITES=lineup the twelve zodiac folk against the sky, black and colour (§EQ).
 ## SITES=road_grades Mike's 5 Oct roads (§DM.2-4): down a kerbed approach and
 ## its avenue, at a milestone, and up a holloway.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
@@ -254,7 +255,7 @@ func _run() -> void:
 			kinds.append("soak")
 		if only.has("library"):
 			kinds.append("library")
-		for ek in ["beasts", "fae"]:
+		for ek in ["beasts", "fae", "lineup"]:
 			if only.has(ek):
 				kinds.append(ek)
 		if only.has("harm"):
@@ -549,6 +550,14 @@ func _run() -> void:
 				var fd := CreatureSpawner._offset(camp_d, 2.4, 14.0)
 				sites.append({"name": "fae", "dir": fd, "look": camp_d, "fae_ring": fd,
 					"note": "a fairy ring by the opening camp with its fae out, trust at the most (harness)"})
+			"lineup":
+				# The beast heads' silhouette test (design 6 Oct §EQ): the
+				# twelve zodiac folk on a raised ledge against the sky, in
+				# black and in colour (BeastLineup, as dev.json beast_lineup
+				# stands it).
+				for lk in ["black", "colour"]:
+					sites.append({"name": "lineup_" + lk, "dir": main.camp.player_spot, "look": CreatureSpawner._offset(main.camp.player_spot, 0.0, 80.0), "lineup": lk,
+						"note": "the twelve zodiac folk side-on against the sky, %s (§EQ silhouette test)" % ("pure black" if lk == "black" else "in colour")})
 			"meal":
 				# The opening camp's meal at dusk (design 5 Oct §EJ): from your
 				# own place in the circle, the carrier on the way back from
@@ -994,6 +1003,19 @@ func _library_camp(site: Dictionary) -> void:
 	print("[library] %s: %s, the %s; tomes %s; winter count %s" % [site.name, Peoples.name_of(Peoples.get_people(pid)), "lean-to" if key.begins_with("ruin:") else "hut", str(lib.get_meta("tomes", [])), str(st.get("winter", []))])
 
 
+## The §EQ lineup in front of you, raised against the sky, the view tipped
+## up to it.
+func _lineup(site: Dictionary) -> void:
+	var old: Node = world.world_root.get_node_or_null("BeastLineup")
+	if old != null:
+		old.free()
+	player.global_position -= player.up * 1.0
+	var L := {"black": str(site.lineup) == "black", "distance_m": 6.0, "raise_m": 2.2, "spacing_m": 0.9}
+	var lu := BeastLineup.build(world.world_root, world, main.chunks, player, L)
+	site["pitch_to"] = world.dir_of(lu.global_position)
+	site["pitch_add_m"] = 2.2 + 1.3 - 1.6
+
+
 ## Stand 1.3 m in front of the opening camp's elder, feet on the ground,
 ## looking at the face under the hood (§EO.1).
 func _beast_close(site: Dictionary) -> void:
@@ -1411,6 +1433,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			world.days = Astro.days_at_solar_hour(base, hour, lon, lat)
 		if site.has("hunt_key"):
 			_hunt_retime(site)
+		if site.has("lineup"):
+			_lineup(site)
 		if site.get("beast_close", false):
 			# (At the hour: the folk have taken their places for it.)
 			for i in 30:
