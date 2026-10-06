@@ -308,92 +308,100 @@ static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 					a += every
 
 
-## The vents (Mike, 6 Oct, LOCKED: the underground fire ventilation rule;
-## data/dungeon/vents.json): every permanent fire the generator built (the
-## hearth, each hearth ring and sconce; carried torches are exempt) gets a
-## flue from its piece's ceiling straight up to the surface, kinked where
-## another piece of the tomb stands over it. Each is {"kind", "fire" (the
-## fire's place), "fire_index" (-1 the hearth, else its holder's index),
-## "piece", "mouth" (the flue's mouth in the ceiling's underside), "d"
-## (its width, narrowing with depth), "depth" (the fire under the
-## surface), "sky" (shallow enough for daylight), "share" (the daylight
-## left at that depth), "legs" ([[from, to]...], the flue's runs, up and
-## any sideways step), "top" (its opening at the surface)}.
+## The vents (design §EV; smoke.json vents): every permanent fire the
+## generator built (the hearth, each hearth ring and sconce; carried
+## torches are exempt) gets its own vent from its piece's ceiling up to the
+## surface, kinked where another piece of the tomb stands over it: a shaft
+## for a hearth, ring or altar, a narrow flue for a sconce or brazier
+## (§EV.1). Each is {"kind", "type" ("shaft" / "flue"), "fire" (the fire's
+## place), "fire_index" (-1 the hearth, else its holder's index), "piece",
+## "mouth" (the vent's mouth in the ceiling's underside), "d" (its width,
+## narrowing with depth), "depth" (the vent's length up to the surface),
+## "sky" (a shaft with daylight left at that depth, §EV.2), "share" (the
+## daylight left), "legs" ([[from, to]...], the runs, up and any sideways
+## step), "top" (its opening at the surface), "outlet" (what it becomes on
+## the surface once there is one, §EV.4 with §EW: smoke.json
+## vents.surface)}.
 static func _place_vents(lay: Dictionary) -> void:
-	var V: Dictionary = Tuning.table("vents")
+	var V: Dictionary = vents_table()
 	var fires: Array = [{"kind": "hearth", "pos": lay.hearth, "normal": Vector3.UP, "piece": 0, "index": -1}]
 	for i in (lay.holders as Array).size():
 		var h: Dictionary = lay.holders[i]
 		fires.append({"kind": h.kind, "pos": h.pos, "normal": h.normal, "piece": h.piece, "index": i})
 	var surface := float(V.get("surface_y_m", 9.0))
-	var max_carve := maxf(float(V.get("max_carve_m", 16.0)), 0.1)
+	var dl: Dictionary = V.get("daylight", {})
+	var fade: Array = dl.get("fade_depth_m", [3.0, 25.0])
+	var narrow := bool(dl.get("narrow_with_depth", true))
 	var vents: Array = []
 	for f in fires:
 		var pc: Dictionary = lay.pieces[int(f.piece)]
 		var fp: Vector3 = f.pos
-		var depth := surface - fp.y
-		var k := clampf(depth / max_carve, 0.0, 1.0)
-		# A shaft for a big fire, a narrow flue for a small one (§EV.1).
 		var vtype := vent_type(str(f.kind))
 		var wr: Array = (V.get(vtype, {}) as Dictionary).get("width_m", [0.6, 1.2] if vtype == "shaft" else [0.15, 0.3])
-		var d := maxf(lerpf(float(wr[1]), float(wr[0]), k), 0.08)
 		# The mouth: beside a fire on the floor for a shaft, straight over it
 		# for a flue; over a sconce, just off its wall. Kept inside the
 		# piece's ceiling.
 		var m := Vector2(fp.x, fp.z)
+		var d0 := float(wr[1])
 		if str(f.kind) == "sconce":
 			var nv: Vector3 = f.normal
-			m += Vector2(nv.x, nv.z) * (d * 0.5 + 0.08)
+			m += Vector2(nv.x, nv.z) * (d0 * 0.5 + 0.08)
 		elif vtype == "shaft":
-			# A floor fire's flue to one side, so its daylight lands beside
-			# the fire, not in it.
 			var off: Array = V.get("mouth_offset_m", [0.7, 1.1])
 			var orng := RandomNumberGenerator.new()
 			orng.seed = hash([int(lay.seed), fp, "vent"])
 			m += Vector2.RIGHT.rotated(orng.randf() * TAU) * orng.randf_range(float(off[0]), float(off[1]))
 		var aa := Delves.along_across(pc, m)
+		var ceil_y := Delves.floor_of(pc, clampf(aa.x, 0.0, float(pc.len))) + float(pc.h)
+		var depth := maxf(surface - ceil_y, 0.0)
+		# Narrower the deeper (§EV.2): the full width at the surface, the
+		# least at the depth where the daylight is gone.
+		var k := clampf(depth / maxf(float(fade[1]), 0.1), 0.0, 1.0) if narrow else 0.0
+		var d := maxf(lerpf(float(wr[1]), float(wr[0]), k), 0.08)
 		aa.x = clampf(aa.x, d * 0.5 + 0.05, float(pc.len) - d * 0.5 - 0.05)
 		aa.y = clampf(aa.y, -float(pc.half) + d * 0.5 + 0.05, float(pc.half) - d * 0.5 - 0.05)
 		m = (pc.c as Vector2) + (pc.dir as Vector2) * aa.x + Delves.perp(pc.dir) * aa.y
-		var ceil_y := Delves.floor_of(pc, aa.x) + float(pc.h)
+		ceil_y = Delves.floor_of(pc, aa.x) + float(pc.h)
 		var mouth := Vector3(m.x, ceil_y, m.y)
-		var legs := _flue_legs(lay, int(pc.id), mouth, d, surface, V.get("kink", {}))
+		var kink: Dictionary = V.get("kink", {})
+		var legs := _flue_legs(lay, int(pc.id), mouth, d, surface, kink, int((V.get("shaft", {}) as Dictionary).get("kinks", 2)))
 		var top: Vector3 = (legs[-1] as Array)[1]
+		var share := daylight_share(depth) if vtype == "shaft" or not bool(dl.get("shafts_only", true)) else 0.0
 		vents.append({"kind": f.kind, "type": vtype, "fire": fp, "fire_index": int(f.index), "piece": int(pc.id), "mouth": mouth, "d": d,
-			"depth": depth, "sky": vtype == "shaft" and depth <= max_carve, "share": daylight_share(depth), "legs": legs, "top": top})
+			"depth": depth, "sky": share > 0.0, "share": share, "legs": legs, "top": top,
+			"outlet": str((V.get("surface", {}) as Dictionary).get(vtype, ""))})
 	lay["vents"] = vents
 
 
-## "shaft" or "flue": which vent a fire of `kind` gets (vents.json shaft.for,
-## flue.for; design §EV.1). An unlisted kind gets a flue.
+## smoke.json vents (design §EV).
+static func vents_table() -> Dictionary:
+	return Tuning.table("smoke").get("vents", {})
+
+
+## "shaft" or "flue": which vent a fire of `kind` gets (smoke.json
+## vents.shaft.for; design §EV.1). Anything else gets a flue.
 static func vent_type(kind: String) -> String:
-	var sh: Array = (Tuning.table("vents").get("shaft", {}) as Dictionary).get("for", ["hearth", "hearth_ring", "altar"])
+	var sh: Array = (vents_table().get("shaft", {}) as Dictionary).get("for", ["hearth", "old_hearth", "hearth_ring", "altar"])
 	return "shaft" if kind in sh else "flue"
 
 
-## The share of daylight left at `depth` m under the surface (vents.json
-## light.attenuation: straight lines between the points, nothing past the
-## last).
+## The share of daylight left down a shaft `depth` m long (smoke.json
+## vents.daylight.fade_depth_m: full to the first, none past the second,
+## a straight line between).
 static func daylight_share(depth: float) -> float:
-	var pts: Array = (Tuning.table("vents").get("light", {}) as Dictionary).get("attenuation", [[3.0, 1.0], [16.0, 0.08]])
-	if pts.is_empty():
-		return 1.0
-	if depth <= float(pts[0][0]):
-		return float(pts[0][1])
-	for i in range(1, pts.size()):
-		var a: Array = pts[i - 1]
-		var b: Array = pts[i]
-		if depth <= float(b[0]):
-			return lerpf(float(a[1]), float(b[1]), (depth - float(a[0])) / maxf(float(b[0]) - float(a[0]), 0.01))
-	return 0.0
+	var fade: Array = (vents_table().get("daylight", {}) as Dictionary).get("fade_depth_m", [3.0, 25.0])
+	var a := float(fade[0])
+	var b := maxf(float(fade[1]), a + 0.01)
+	return clampf(1.0 - (depth - a) / (b - a), 0.0, 1.0)
 
 
-## The flue's runs from `mouth` up to the surface: straight up if no other
+## The vent's runs from `mouth` up to the surface: straight up if no other
 ## piece of the tomb stands over it; else up kink.clear_m, a step sideways
-## (up to kink.step_m) to clear rock, and on up.
-static func _flue_legs(lay: Dictionary, own: int, mouth: Vector3, d: float, surface: float, kink: Dictionary) -> Array:
+## (up to kink.step_m) to clear rock, and on up (two bends; `kinks` under
+## 2 keeps it straight, the rock taking it).
+static func _flue_legs(lay: Dictionary, own: int, mouth: Vector3, d: float, surface: float, kink: Dictionary, kinks := 2) -> Array:
 	var top := Vector3(mouth.x, surface, mouth.z)
-	if _column_clear(lay, own, Vector2(mouth.x, mouth.z), d, mouth.y):
+	if kinks < 2 or _column_clear(lay, own, Vector2(mouth.x, mouth.z), d, mouth.y):
 		return [[mouth, top]]
 	var rise := mouth.y + float(kink.get("clear_m", 1.2))
 	var step := float(kink.get("step_m", 2.5))

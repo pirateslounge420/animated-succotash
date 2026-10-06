@@ -98,7 +98,7 @@ func _ready() -> void:
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
-	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), str(FittedStone.M.get("preset", "")), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles"))])
+	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles"))])
 	_bake_rescuer.call_deferred()
 
 

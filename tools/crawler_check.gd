@@ -253,17 +253,18 @@ func _relight(main: CrawlerMain) -> void:
 	ok(not t.lit() and t.pass_flame() == "torch" and t.lit(), "a dead torch relights at a relit holder")
 
 
-## The fitted-stone walls (Mike, 6 Oct; FittedStone, masonry.json).
+## The fitted-stone walls (design §EU; FittedStone, masonry.json).
 func _masonry(main: CrawlerMain) -> void:
 	var stones := int(main.tomb.get_meta("stones", 0))
 	var faces := int(main.tomb.get_meta("faces", 0))
-	ok(stones > 200 and faces > 20, "fitted stones on every seen wall face (%d stones on %d faces, %s)" % [stones, faces, str(FittedStone.M.get("preset", ""))])
-	# The partition is tight: the cells fill the wall, no gaps, no overlaps.
+	ok(stones > 200 and faces > 20, "fitted stones on every seen wall face (%d stones on %d faces, %s for the %s)" % [stones, faces, FittedStone.preset_name(), main.lay.theme])
+	# The partition is tight: the cells fill the wall, no gaps, no overlaps,
+	# for both presets, after the relaxation.
 	var rng := RandomNumberGenerator.new()
 	var worst := 0.0
+	var t0 := Time.get_ticks_msec()
 	for preset in ["megalithic", "fitted_small"]:
-		var keep := str(FittedStone.M.get("preset", ""))
-		FittedStone.M["preset"] = preset
+		FittedStone.preset_override = preset
 		for k in 6:
 			rng.seed = 900 + k
 			var l := rng.randf_range(2.0, 11.0)
@@ -272,40 +273,78 @@ func _masonry(main: CrawlerMain) -> void:
 			for c in FittedStone.cells(l, h, rng):
 				area += FittedStone._area(c[1])
 			worst = maxf(worst, absf(area - l * h) / (l * h))
-		FittedStone.M["preset"] = keep
-	ok(worst < 0.002, "the stones' cells fill each wall exactly: shared edges, no gaps (worst %.4f of the wall)" % worst)
-	# The damp differs from place to place, and the overgrowth with it.
+	FittedStone.preset_override = ""
+	ok(worst < 0.002, "the stones' cells fill each wall exactly in both presets: shared edges, no gaps (worst %.4f of the wall; %d ms)" % [worst, Time.get_ticks_msec() - t0])
+	# Every face its own seed: the two faces of one wall differ.
+	var ra := RandomNumberGenerator.new()
+	var rb := RandomNumberGenerator.new()
+	ra.seed = hash([1, -1.0])
+	rb.seed = hash([1, 1.0])
+	var ca := FittedStone.cells(6.0, 3.0, ra)
+	var cb := FittedStone.cells(6.0, 3.0, rb)
+	ok((ca[0][0] as Vector2).distance_to(cb[0][0]) > 0.01, "every wall face its own stones: the two sides of a wall don't mirror")
+	# A typical room's triangles (the tomb mesh inside each room's walls).
+	var per_room: Array = []
+	var arrs: Array = []
+	for mi in main.tomb.get_children():
+		if mi is MeshInstance3D:
+			arrs.append((mi as MeshInstance3D).mesh.surface_get_arrays(0))
+	for pc in main.lay.pieces:
+		if str(pc.kind) != "room":
+			continue
+		var n := 0
+		for arr in arrs:
+			var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			for i in range(0, vv.size(), 3):
+				var c3 := (vv[i] + vv[i + 1] + vv[i + 2]) / 3.0
+				var aa := Delves.along_across(pc, Vector2(c3.x, c3.z))
+				if aa.x > -0.7 and aa.x < float(pc.len) + 0.7 and absf(aa.y) < float(pc.half) + 0.7 and c3.y > float(pc.y0) - 0.5 and c3.y < float(pc.y0) + float(pc.h) + 0.5:
+					n += 1
+		per_room.append(n)
+	per_room.sort()
+	if not per_room.is_empty():
+		print("  triangles in a room: median %d (fewest %d, most %d, %d rooms); the whole tomb %d" % [per_room[per_room.size() / 2], per_room[0], per_room[-1], per_room.size(), int(main.tomb.get_meta("triangles", 0))])
+	# The climate: the theme's world's biome through vines.json climate.
+	var cl_tomb := FittedStone.climate_of("tomb")
+	var cl_snow := FittedStone.climate_of("snow_ruins")
+	print("  climate: tomb %s (%.2f, %.0f C), snow_ruins %s (%.2f, %.0f C)" % [cl_tomb.from, cl_tomb.moisture, cl_tomb.temp_c, cl_snow.from, cl_snow.moisture, cl_snow.temp_c])
+	ok(str(cl_snow.from) == "tundra" and FittedStone.moss_of(Vector2(cl_snow.moisture, cl_snow.temp_c)) == 0.0, "the snow ruins take the tundra world's climate: too cold for moss")
+	# The moisture differs from place to place, and the overgrowth with it.
 	var lo := 1.0
 	var hi := 0.0
 	for pc in main.lay.pieces:
 		var c: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * 0.5
-		var hm := FittedStone.humidity(str(main.lay.theme), int(main.lay.seed), Vector3(c.x, float(pc.y0), c.y))
-		lo = minf(lo, hm)
-		hi = maxf(hi, hm)
-	print("  the tomb's damp runs %.2f to %.2f" % [lo, hi])
-	ok(hi - lo > 0.2, "the damp differs from place to place (%.2f to %.2f)" % [lo, hi])
-	ok(FittedStone.moss_of(0.2) == 0.0 and FittedStone.moss_of(0.95) > 0.9, "no moss where it's dry, full moss where it's wet")
-	# One wall dressed dry and once wet: dust and bare stone, then vines.
+		var cl := FittedStone.climate_at(str(main.lay.theme), int(main.lay.seed), Vector3(c.x, float(pc.y0), c.y))
+		var mk := FittedStone.moss_of(cl)
+		lo = minf(lo, mk)
+		hi = maxf(hi, mk)
+	print("  the tomb's moss runs %.2f to %.2f" % [lo, hi])
+	ok(hi - lo > 0.15, "the moss differs from place to place (%.2f to %.2f)" % [lo, hi])
+	ok(FittedStone.moss_of(Vector2(0.2, 14.0)) == 0.0 and FittedStone.moss_of(Vector2(0.95, 14.0)) > 0.9, "no moss where it's dry, full moss where it's wet (vines.json climate)")
+	# One wall dressed in a desert and in a damp place: dust and bare stone,
+	# then vines.
 	var out := {}
-	for hum in [0.1, 0.95]:
+	for wi in 2:
+		var cl2: Vector2 = [Vector2(0.1, 26.0), Vector2(0.9, 14.0)][wi]
 		var tb := TombBuild.new()
 		var r2 := RandomNumberGenerator.new()
 		r2.seed = 77
-		FittedStone.face(tb, Vector3.ZERO, Vector3.RIGHT, Vector3.BACK, 8.0, -0.1, 3.0, 0.0, hum, r2)
+		FittedStone.face(tb, Vector3.ZERO, Vector3.RIGHT, Vector3.BACK, 8.0, -0.1, 3.0, 0.0, cl2, r2)
 		var leaf := 0
 		for m in tb._m:
 			if int(round(m.x)) == RuinBuilder.LEAF_M:
 				leaf += 1
-		out[hum] = [tb._boulder_anchors.size(), leaf / 3]
-	ok(int(out[0.1][0]) > 0 and int(out[0.1][1]) == 0, "a dry wall: drifted dust at its foot and corners, no vines (%d drifts)" % out[0.1][0])
-	ok(int(out[0.95][0]) == 0 and int(out[0.95][1]) > 0, "a wet wall: vines from its top and cracks, no dust (%d leaf triangles)" % out[0.95][1])
+		out[wi] = [tb._boulder_anchors.size(), leaf / 3]
+	ok(int(out[0][0]) > 0 and int(out[0][1]) == 0, "a desert wall: drifted sand at its foot and corners, no vines (%d drifts)" % out[0][0])
+	ok(int(out[1][0]) == 0 and int(out[1][1]) > 0, "a damp wall: vines from its top and cracks, no sand (%d leaf triangles)" % out[1][1])
 
 
-## The ventilation rule (Mike, 6 Oct; TombKit vents, Vents, vents.json).
+## Every built-in fire's own vent (design §EV; TombKit, Vents, smoke.json
+## vents).
 func _vents(main: CrawlerMain) -> void:
 	var lay := main.lay
 	var vents: Array = lay.vents
-	var V: Dictionary = Tuning.table("vents")
+	var V: Dictionary = TombKit.vents_table()
 	var surface := float(V.get("surface_y_m", 9.0))
 	ok(vents.size() == (lay.holders as Array).size() + 1, "every permanent fire has a vent: the hearth and %d holders (%d vents)" % [(lay.holders as Array).size(), vents.size()])
 	var reach := true
@@ -355,7 +394,21 @@ func _vents(main: CrawlerMain) -> void:
 			sized = false
 	ok(sized, "every vent is sized by its fire: shafts %s m, flues %s m" % [str((V.get("shaft", {}) as Dictionary).get("width_m")), str((V.get("flue", {}) as Dictionary).get("width_m"))])
 	ok(main.vents.shafts.size() == n_shaft and n_shaft >= 1, "daylight comes down the shafts only (%d of %d vents), never a flue" % [n_shaft, vents.size()])
-	ok(TombKit.daylight_share(float(V.get("max_carve_m", 16.0)) + 1.0) == 0.0, "past the deepest point on the curve no daylight comes down")
+	var fade: Array = (V.get("daylight", {}) as Dictionary).get("fade_depth_m", [3.0, 25.0])
+	ok(TombKit.daylight_share(float(fade[0])) == 1.0 and TombKit.daylight_share(float(fade[1]) + 0.5) == 0.0, "full daylight down a shaft %.0f m long, none past %.0f m (daylight.fade_depth_m)" % [fade[0], fade[1]])
+	# Never a way in or out (passable false): every mouth out of reach
+	# overhead; and each keeps what it becomes on the surface (§EV.4).
+	var reachable := 0
+	var outlets := true
+	for v in vents:
+		var pc: Dictionary = lay.pieces[int(v.piece)]
+		var m: Vector3 = v.mouth
+		if m.y - Delves.floor_of(pc, Delves.along_across(pc, Vector2(m.x, m.z)).x) < 2.4:
+			reachable += 1
+		if str(v.get("outlet", "")) == "":
+			outlets = false
+	ok(reachable == 0, "no vent is a way out: every mouth overhead, out of reach (%d low)" % reachable)
+	ok(outlets, "every vent knows its outlet for the surface to come (a shaft's stack, a flue's slot; §EV.4 with §EW)")
 	# Day and night on the world's clock.
 	ok(Vents.daylight_at(13.5) > 0.99 and Vents.daylight_at(13.0) < 0.01, "the shafts follow the clock: full day at noon, night at midnight")
 	var w := main.world

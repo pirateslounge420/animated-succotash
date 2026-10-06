@@ -4,47 +4,54 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
-## 2026-10-06 — §EU fitted-stone walls and 480 lines, §EV a vent for every built-in fire (Torchfire 1)
-- **480 lines (§EU.1).** `look.json → render.preset` is `default` (854×480) again. Every preset stays in Settings. `auto` now prefers 480, then 540, 360, 270, 720, so a 1440p window gets 480 ×3 and a 1080p or 4K window gets 540.
-  - **Texel density at 480 (the open number in §EU.1):** at 78° a pixel spans 3.4 mm per metre of distance.
-  - The tiles stay at 16 texels a metre, so one texel is one pixel at ~18 m and ~3.7 pixels at 5 m.
-  - On the fitted walls the joints are geometry now, so the stone tile only adds a faint grain: 7 texels a metre at 30% strength, plus a fleck on the 16-a-metre grid.
-- **Fitted stone (§EU.2–3; `scripts/crawler/fitted_stone.gd`, `data/dungeon/masonry.json`).** Every wall face you can see is cut into its own Voronoi cells, each with its own seed, and each cell is built as one stone in real geometry:
-  - a dark joint backing;
-  - a bevel running down into the joint;
-  - a face standing proud, with a pillowed middle.
-  - A minority of stones have settled: out or in, turned, or sunk.
-  - The ruin shader has a new kind (6) for this stone: grain without the tile's painted cracks.
-  - Two presets:
+## 2026-10-06 — §EW.7 step 1 in the tomb: §EU fitted stone and 480 lines, §EV a vent for every built-in fire
+- **Data folded into chat's files.** The walls read `data/masonry.json` and the vents read `smoke.json → vents`; both had their `[NOT WIRED YET]` taken off.
+  - My first pass earlier today had used `data/dungeon/*.json`. Those files are deleted, and their extra knobs were added to chat's blocks with help text: masonry `seed`, `aspect`, a preset's own `relief`, `dropped_m`, the overgrowth amounts, `wet` and `stand_in`; vents `surface_y_m`, daylight energies, soot `amount`, draft lean, `kink`, `mouth_offset_m`.
+  - No RECONCILIATION section of my own; §EU, §EV and §EW are chat's.
+- **§EU.1: 480 lines.** `look.json → render.preset` is `default` (854×480). 270 "painted" and the rest stay in Settings. `auto` prefers 480, then 540, 360, 270, 720.
+  - **Texel density at 480:** at the 78° vertical view a pixel spans 3.4 mm per metre of distance.
+  - Tiles stay at 16 texels a metre, so a texel is 1 pixel at ~18.5 m, 3.7 px at 5 m and 9 px at 2 m (at 270 a texel was 1 pixel at 10 m).
+  - On the fitted walls the stone tile is only a faint grain (7 texels a metre at 30%, plus a fleck on the 16 grid); the stones themselves are geometry.
+- **§EU.2–EU.5: fitted stone (`scripts/crawler/fitted_stone.gd`, `TombBuild._dwall`).** Every wall face you can see gets its own seed and is cut into Voronoi cells:
+  - seed points are laid in loose courses (`stone_m`, `aspect`, `course_bias`) and relaxed twice (`relax_steps`, Lloyd);
+  - each cell is a real stone: joint backing, bevel, a proud pillowed face; proud is rolled per stone in `proud_m`;
+  - joints and stone feet are darkened toward the scene's shade (`joint_occlusion: scene_shade`, `Prelit.ao_tint`); no normal maps;
+  - settling uses the `settle` block: share, offset, tilt, and the dropped share.
+  - The preset follows `by_theme`, so the tomb is `fitted_small` and the snow ruins are `megalithic`.
+  - **Triangles in a typical room (fitted_small):** median ~30,000 (seed 7: 20–36k over 11 rooms; seeds 1 and 42 a median of 32k).
 
-    | Preset (seed 7) | Stones | Wall faces | Triangles |
+    | Preset | Stones (seed 7) | Whole tomb (seeds 7/1/42) | Build time here |
     |---|---|---|---|
-    | `megalithic` (the default) | 1,282 | 84 | 101,166 |
-    | `fitted_small` | 6,796 | 84 | ~259,000 |
+    | `fitted_small` | 12,671 | 420k–550k triangles | 2.6–3.2 s |
+    | `megalithic` | 1,373 | 106k–155k triangles | ~0.5 s |
 
-  - The tomb mesh is split into 10 m chunks so the GPU can cull it.
-- **Overgrowth by damp (§EU.4).** `masonry.json → humidity` sets how damp each place is: a base by theme, noise across the tomb, and wetter with each flight down.
-  - Damp walls: moss in the joints and on the lower stones, and thin vines from cracks and wall tops.
-  - Dry walls: bare stone, with sand and dust drifted at the wall's foot and into the corners.
-- **Vents (§EV; `TombKit._place_vents`, `TombBuild._flue`, `scripts/crawler/vents.gd`, `data/dungeon/vents.json`).** Every built-in fire gets its own vent, carved up to `surface_y_m`: straight up, or kinked round a piece of the tomb above it. The ceiling slabs are cut round each mouth.
-  - **Shafts:** a hearth, hearth ring or altar gets a 0.6–1.2 m shaft, narrower the deeper it is. Daylight comes down it beside the fire: a spot light, a seen beam and the sky's disc at the top. It is cool blue at noon and a faint moonlit blue at midnight on the world's clock, and fades with depth along `light.attenuation` (none past 16 m).
-  - **Flues:** a sconce or brazier gets a 0.15–0.3 m flue. It lets in no light (§EV.2), so the corridors are full dark by day as well.
-  - **Soot:** navy-black (`smoke.json → outlets.soot`, §CV.3), painted into the vertex colours round every vent's mouth and up a sconce's wall.
-  - **Draft:** each vented flame leans toward its vent and flickers a little more.
-- **Checks.** `crawler_check` gains the masonry and vent checks; 0 fails on seeds 7, 1 and 42 (seed 7: 20 vents, 11 with daylight).
-  - `crawler_frames` adds four frames: waking at noon, waking at midnight, looking up the hearth's shaft, and a fitted wall close by torchlight. The full-dark corridor test now runs at midday: mean 0.056 dark, 0.282 with the sconce relit. 0 fails.
-- **Flags for Mike:**
-  - **Two data files for each system.** Chat logged §EU and §EV first, with not-wired `data/masonry.json` and `smoke.json → vents`. The built game reads `data/dungeon/masonry.json` and `data/dungeon/vents.json`, as your message asked. Each of chat's blocks now has a `built_as` help line pointing to the wired file. Which pair stays is your call.
-  - **I followed §EV, where it is more specific than your message,** on three points:
-    - only shafts let daylight down;
-    - flues are 0.15–0.3 m;
-    - soot is navy-black.
-  - **Spelling:** the preset is spelled `fitted_small`, as in §EU.5, and "fitted-small" is read as the same.
-  - **Damp:** §EU.4 drives overgrowth from `vines.json → climate`. The tomb has no climate yet (no planet), so a humidity value in masonry.json stands in until §EW gives each world its own.
-  - **Not built:**
-    - which preset each place gets (chat's `by_theme` guess);
-    - §EV.4's stacks on the surface (they need §EW);
-    - the RECONCILIATION section, which chat already wrote as §EU and §EV, so I did not add a second one.
+  - Speed fixes made on the way: nearest-first Voronoi candidates, and soot sources bucketed on a 2 m grid (the soot pass had been 5+ s).
+  - **Moss and vines are gated by `vines.json → climate`** (`VineCover.climate`; underground counts as full shade in the joints and half shade higher up). The climate is the theme's world's biome (`worlds.json → biome → data/biomes`):
+    - the snow ruins get the tundra's −7 °C, so no moss;
+    - the tomb belongs to no world yet, so it uses `overgrowth.stand_in` (moisture 0.58, 14 °C).
+  - Inside a place the moisture wanders (`wet`), so the tomb's moss runs from 0.2 to 1.0. A desert wall gets drifted sand, a damp one vines.
+- **§EU.6:** the amber firelit stone underground is unchanged.
+- **§EV: vents (`TombKit._place_vents`, `TombBuild._flue/_soot`, `scripts/crawler/vents.gd`, `CrawlerFires._draft`).**
+  - **Shafts:** a hearth, ring or altar gets a 0.6–1.2 m shaft, narrowing with depth, its mouth beside the fire. A column of daylight comes down it (`daylight.day_color`/`night_color` on the world's clock), fading over `fade_depth_m` 3→25 m of shaft.
+  - **Flues:** a sconce or brazier gets a 0.15–0.3 m flue straight up, with no light.
+  - **Soot:** navy-black (`outlets.soot`), a `streak_m` roll per vent, measured from the vent's rim.
+  - **Draft:** the flame leans only (`lean_only`).
+  - **Kinks:** at most `shaft.kinks`.
+  - **Ready for §EW:** every vent keeps its `top` and its `outlet` (a stack, or a ground slot), and `surface_y_m` stands in for the surface until §EW builds one, so nothing here blocks §EV.4.
+- **Checks.** `crawler_check` passes with 0 fails on seeds 7, 1 and 42. New lines:
+  - both presets fill the wall exactly;
+  - the two sides of a wall differ;
+  - the tundra climate gives no moss;
+  - desert → sand, damp → vines;
+  - the room triangle report;
+  - the daylight fade;
+  - no vent mouth in reach;
+  - every vent has its outlet.
+  - `crawler_frames` (seed 7) has 0 fails: the corridor is full dark at midday (mean 0.056), 0.278 with its sconce relit.
+- **Open for Mike:**
+  - which world the tomb belongs to (its moss comes from `stand_in` until then; a desert world would make it bare stone with drifted sand);
+  - the vents' sizes and fade (chat's first guesses);
+  - vines are generic ivy until a world gives its biome's own vine species.
 
 ---
 

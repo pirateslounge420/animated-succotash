@@ -210,7 +210,7 @@ func _process(delta: float) -> void:
 				l.visible = float(n.get_meta("burn", 1.0)) > 0.0
 
 
-## A vented fire's draft (the vents rule, Vents): the flue draws the air,
+## A vented fire's draft (§EV.3, Vents): the vent draws the air,
 ## so the flame leans toward it, breathing, and its light flickers harder.
 func _draft(n: Node3D, l: OmniLight3D) -> void:
 	var lean: Vector3 = n.get_meta("draft")

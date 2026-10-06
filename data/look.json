@@ -139,7 +139,7 @@
   },
   "_help_preset_now": "30 Sept 21:27, Mike: try 640x360 and see how it feels. preset 'chunky' (360 lines) is active; 'auto' and the others stay in the settings menu. 1 Oct look pass (Mike): 480 stays the default, the blockiness comes from the textures, not the screen: preset back to 'default' (854x480); chunky stays in the settings menu.",
   "_help_preset_es": "6 Oct 11:34, Mike, design §ES: 3D pixel art is the look. Preset 'painted' (270 lines, 480x270) is the default: it fits 1080p x4, 1440p x5.33 (letterbox), 2160p x8. 480 ('default') and the rest stay in Settings > Display > Pixel size.",
-  "_help_preset_480": "6 Oct, Mike, LOCKED (design 6 Oct, dungeon walls and resolution): 480 lines is the committed default again (preset 'default', 854x480). 270 was partly there to fight the open world's triangle counts; the dungeon removed that pressure. Every preset stays in Settings > Display > Pixel size (painted 270, chunky 360, default 480, half_hd 540, fine 720); auto prefers default (480), then half_hd (540), chunky (360), painted (270), fine (720): a 1440p window gets 480 x3, a 1080p or 4K window 540 x2 or x4."
+  "_help_preset_480": "6 Oct, Mike, design \u00a7EU.1 (amends \u00a7ES.1): 480 lines is the committed default again (preset 'default', 854x480). 270 was partly there to fight the open world's triangle counts; the dungeon removed that pressure. Every preset stays in Settings > Display > Pixel size (painted 270, chunky 360, default 480, half_hd 540, fine 720); auto prefers default (480), then half_hd (540), chunky (360), painted (270), fine (720): a 1440p window gets 480 x3, a 1080p or 4K window 540 x2 or x4."
  },
  "retro": {
   "tile_px": {

@@ -1,14 +1,15 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET \u2014 design \u00a7EU] Walls of fitted stone for Torchfire 1's ruins: the Inca way, every stone its own polygon, fitted with no mortar; real relief, never a normal map; settled with age; overgrown only where it would really grow. First guesses by Claude (chat), 6 Oct; Claude Code matches the shape to its generator (keep the meaning, rename freely) and Mike tunes by playing. Restart after editing.",
-  "built_as": "Claude Code, 6 Oct: §EU is built from data/dungeon/masonry.json, the file Mike's 6 Oct message named (same meaning, the generator's own shape: one preset for the tomb, a humidity model for the overgrowth). This file is not read; which of the two stays is Mike's call (flagged in PROGRESS).",
-  "partition": "How a wall face is cut into stones. method: voronoi (one cell per stone on the wall plane). seed_per_face: every wall face takes its own seed, so joints never mirror across a corridor (Mike's 6 Oct note). relax_steps: smoothing passes so cells are rounder and more even (0 = raw, more = more regular). corner_rule: stones at a wall's corner wrap or stop at the edge (stop is the first guess; wrap if the corners look cut).",
-  "relief": "Real geometry (R-rules: no normal maps, no shine). proud_m: how far a stone's face stands out from the wall plane [min, max]. pillow_m: how much its face bulges in the middle. bevel_m: the rounded edge's width. joint_m: the gap left between stones at the face. joint_depth_m: how deep the joints sink. joint_occlusion: baked occlusion in the joints, tinted to the scene's shade colour (navy, olive in green scenes, never grey; \u00a7ES.2). The torch's live light catches the pillowed faces.",
-  "settle": "Fitted but settled (\u00a7EU.3): share of stones that have moved; offset_m: in (negative) or out (positive) [min, max]; tilt_deg [min, max]; dropped_share: stones fallen out of their place (rare; a collapsed room, crawler.json kit.kinds collapsed, is where the rubble lives).",
-  "overgrowth": "\u00a7EU.4: only where it would really grow. climate: the moisture and temperature gate is vines.json climate (moisture[0] none, moisture[1] full, fades outside temp_c, shade_boost). moss_in_joints: moss gathers in the recessed joints first. moss_low_wall_m: moss climbs the shaded lower wall to this height at full climate. vines: vines from cracks and wall tops, the biome's own vine species, drawn per vines.json. dry: where the climate gives no moss, sand and dust drift into corners (drift_corner_m deep).",
-  "presets": "\u00a7EU.5. stone_m: a stone's typical width [min, max]; course_bias: 0 = free polygons, 1 = loosely in courses (rows); tint: the stone's colour (sRGB hex) or \"theme\" for the stage's existing stone colour. megalithic: a few huge stones (Sacsayhuam\u00e1n). fitted_small: many tight stones.",
-  "by_theme": "Which preset each crawler.json theme uses (first guess, open for Mike, \u00a7EU). Per world with \u00a7EW (worlds.json)."
+  "about": "Walls of fitted stone for Torchfire 1's ruins: the Inca way, every stone its own polygon, fitted with no mortar; real relief, never a normal map; settled with age; overgrown only where it would really grow. First guesses by Claude (chat), 6 Oct; Claude Code matches the shape to its generator (keep the meaning, rename freely) and Mike tunes by playing. Built 6 Oct by Claude Code (FittedStone, TombBuild): every seen tomb wall face. Restart after editing.",
+  "partition": "How a wall face is cut into stones. method: voronoi (one cell per stone on the wall plane). seed_per_face: every wall face takes its own seed, so joints never mirror across a corridor (Mike's 6 Oct note). relax_steps: smoothing passes so cells are rounder and more even (0 = raw, more = more regular). corner_rule: stones at a wall's corner wrap or stop at the edge (stop is the first guess; wrap if the corners look cut). Built: the cells are laid in loose courses (presets course_bias), then relaxed relax_steps times (each site moved to its cell's middle, Lloyd's way).",
+  "relief": "Real geometry (R-rules: no normal maps, no shine). proud_m: how far a stone's face stands out from the wall plane [min, max]. pillow_m: how much its face bulges in the middle. bevel_m: the rounded edge's width. joint_m: the gap left between stones at the face. joint_depth_m: how deep the joints sink. joint_occlusion: baked occlusion in the joints, tinted to the scene's shade colour (navy, olive in green scenes, never grey; \u00a7ES.2). The torch's live light catches the pillowed faces. Built: each stone's proud is rolled in proud_m; joint_occlusion scene_shade darkens the joints and the stones' feet toward the scene's shade (Prelit.ao_tint: navy, olive on green); a preset's own relief block overrides these for its stones.",
+  "settle": "Fitted but settled (\u00a7EU.3): share of stones that have moved; offset_m: in (negative) or out (positive) [min, max]; tilt_deg [min, max]; dropped_share: stones fallen out of their place (rare; a collapsed room, crawler.json kit.kinds collapsed, is where the rubble lives). Built: tilt turns the stone in the wall's plane; a dropped stone sinks dropped_m and tilts double.",
+  "overgrowth": "\u00a7EU.4: only where it would really grow. climate: the moisture and temperature gate is vines.json climate (moisture[0] none, moisture[1] full, fades outside temp_c, shade_boost). moss_in_joints: moss gathers in the recessed joints first. moss_low_wall_m: moss climbs the shaded lower wall to this height at full climate. vines: vines from cracks and wall tops, the biome's own vine species, drawn per vines.json. dry: where the climate gives no moss, sand and dust drift into corners (drift_corner_m deep). Built (Claude Code): the place's climate is its world's biome (worlds.json worlds[*].theme -> biome -> data/biomes climate, the middle of its moisture and temp_c ranges); a theme with no world yet uses stand_in (the tomb, until \u00a7EW places it: open for Mike). Underground is all shade (shade 1 in the joints and low on the wall, half-shade higher up). density scales it all; joint_moss and low_moss how green the joints and the lower wall go at full climate; wet: how the moisture wanders inside a place (vary, over scale_m) and rises each flight down (per_flight), so areas differ on their own; vines_per_m and vine_len_m the vines (generic ivy until a world has a biome with vine species); dry: where the climate gives no moss, drifts_per_m drifts a metre of wall foot, drift_h_m high, reaching drift_corner_m out (deeper in the corners), color.",
+  "presets": "\u00a7EU.5. stone_m: a stone's typical width [min, max]; course_bias: 0 = free polygons, 1 = loosely in courses (rows); tint: the stone's colour (sRGB hex) or \"theme\" for the stage's existing stone colour. megalithic: a few huge stones (Sacsayhuam\u00e1n). fitted_small: many tight stones. Built: aspect is a stone's width over its height (Inca courses run wide); a preset's relief block overrides relief for it (small stones want a smaller bevel and pillow).",
+  "by_theme": "Which preset each crawler.json theme uses (first guess, open for Mike, \u00a7EU). Per world with \u00a7EW (worlds.json). A theme not listed takes default.",
+  "seed": "Claude Code: 0 takes the stones from the tomb's own seed (each tomb its own stones; every wall face then hashes its own seed from it, partition.seed_per_face); any other number pins the layout."
  },
+ "seed": 0,
  "partition": {
   "method": "voronoi",
   "seed_per_face": true,
@@ -36,7 +37,8 @@
    0.0,
    4.0
   ],
-  "dropped_share": 0.02
+  "dropped_share": 0.02,
+  "dropped_m": 0.05
  },
  "overgrowth": {
   "climate": "vines.json climate",
@@ -44,8 +46,31 @@
   "moss_low_wall_m": 1.2,
   "vines": "vines.json",
   "dry": {
-   "drift_corner_m": 0.25
-  }
+   "drift_corner_m": 0.25,
+   "drifts_per_m": 0.35,
+   "drift_h_m": [
+    0.04,
+    0.16
+   ],
+   "color": "#a89a7c"
+  },
+  "density": 1.0,
+  "joint_moss": 0.9,
+  "low_moss": 0.65,
+  "wet": {
+   "vary": 0.15,
+   "scale_m": 16.0,
+   "per_flight": 0.02
+  },
+  "stand_in": {
+   "moisture": 0.58,
+   "temp_c": 14.0
+  },
+  "vines_per_m": 0.4,
+  "vine_len_m": [
+   0.6,
+   2.2
+  ]
  },
  "presets": {
   "megalithic": {
@@ -54,7 +79,8 @@
     2.2
    ],
    "course_bias": 0.2,
-   "tint": "theme"
+   "tint": "theme",
+   "aspect": 1.45
   },
   "fitted_small": {
    "stone_m": [
@@ -62,11 +88,23 @@
     0.6
    ],
    "course_bias": 0.4,
-   "tint": "theme"
+   "tint": "theme",
+   "aspect": 1.3,
+   "relief": {
+    "bevel_m": 0.03,
+    "pillow_m": 0.025,
+    "proud_m": [
+     0.012,
+     0.03
+    ],
+    "joint_m": 0.008,
+    "joint_depth_m": 0.045
+   }
   }
  },
  "by_theme": {
   "tomb": "fitted_small",
-  "snow_ruins": "megalithic"
+  "snow_ruins": "megalithic",
+  "default": "megalithic"
  }
 }

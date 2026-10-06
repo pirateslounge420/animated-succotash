@@ -1,27 +1,27 @@
 class_name Vents
 extends Node3D
-## The underground fire ventilation rule (Mike, 6 Oct, LOCKED, design §EV; data/
-## dungeon/vents.json; TombKit places the vents, TombBuild carves their
-## flues): every permanent fire underground has a flue up to the surface.
-## This draws what comes down it and what it leaves behind:
+## Every built-in fire underground has its own vent to the sky (design §EV;
+## smoke.json vents; TombKit places the vents, TombBuild carves them and
+## paints their soot). This draws what comes down them and what the air
+## does:
 ##
-##   the daylight  down a shaft (a hearth's, a hearth ring's, an altar's;
-##                 a sconce's or brazier's narrow flue lets in none worth
-##                 drawing, design §EV.2), a column of sky-light falling to
-##                 the floor beside the fire (a spot light, a seen beam of lit
-##                 air, the sky's disc up the flue), cool blue by day and a
-##                 dim moonlit blue by night on the world's clock (the
-##                 144-minute day), so blue owns the frame and the fire is
-##                 the one warm accent; fainter and narrower the deeper the
-##                 fire (light.attenuation), none past max_carve_m
-##   the soot      navy-black, painted into the stone round the vent's mouth and up a
-##                 sconce's wall (TombBuild._soot, vents.json soot)
-##   the draft     the air the flue draws leans the fire's flame toward it
-##                 and quickens its flicker (CrawlerFires reads the fire's
-##                 "draft" meta; draft)
+##   the daylight  down a shaft only (a hearth's, a hearth ring's, an
+##                 altar's; a sconce's or brazier's narrow flue lets in no
+##                 light worth drawing, §EV.2): a column of sky-light
+##                 falling to the floor beside the fire (a spot light, a
+##                 seen beam of lit air, the sky's disc up the shaft), cool
+##                 blue by day and a faint moonlit blue by night on the
+##                 world's clock (the 144-minute day), so blue owns the
+##                 frame and the fire is the one warm accent; fainter and
+##                 narrower the deeper the shaft (daylight.fade_depth_m)
+##   the draft     the air the vent draws leans the fire's flame toward it
+##                 and quickens its flicker, the ordinary lean only (§EV.3;
+##                 CrawlerFires reads the fire's "draft" meta)
+##
+## The soot is painted into the stone (TombBuild._soot).
 
-static var V: Dictionary = Tuning.table("vents")
-static var L: Dictionary = V.get("light", {})
+static var V: Dictionary = TombKit.vents_table()
+static var L: Dictionary = V.get("daylight", {})
 
 var world: Node
 ## [{"vent", "light", "beam", "sky", "beam_mat", "sky_mat"}]
@@ -46,7 +46,7 @@ func build(p_world: Node, lay: Dictionary, fires: CrawlerFires) -> void:
 	_update(true)
 
 
-## The flame leans toward the flue (CrawlerFires applies it).
+## The flame leans toward its vent (CrawlerFires applies it).
 func _draft(v: Dictionary, fire: Node3D) -> void:
 	var m: Vector3 = v.mouth
 	var f: Vector3 = v.fire
@@ -59,7 +59,7 @@ func _draft(v: Dictionary, fire: Node3D) -> void:
 	fire.set_meta("vent", v)
 
 
-## The daylight down a flue: the spot light, the seen beam, the sky's disc.
+## The daylight down a shaft: the spot light, the seen beam, the sky's disc.
 func _shaft(v: Dictionary, lay: Dictionary) -> void:
 	var m: Vector3 = v.mouth
 	var pc: Dictionary = lay.pieces[int(v.piece)]
@@ -119,8 +119,8 @@ func _update(_force: bool) -> void:
 	if world == null:
 		return
 	daylight = daylight_at(float(world.get("days")))
-	var day_c := Color(str(L.get("day_color", "#9cc2ff")))
-	var night_c := Color(str(L.get("night_color", "#3448b0")))
+	var day_c := Color(str(L.get("day_color", "#6f95e8")))
+	var night_c := Color(str(L.get("night_color", "#2a3f80")))
 	var col := night_c.lerp(day_c, daylight)
 	var energy := lerpf(float(L.get("night_energy", 0.45)), float(L.get("day_energy", 3.2)), daylight)
 	var ref_d := float(((V.get("shaft", {}) as Dictionary).get("width_m", [0.6, 1.2]) as Array)[1])

@@ -126,7 +126,7 @@ func _run() -> void:
 		var spot: Vector2 = (room.c as Vector2) + rd * float(room.len) * 0.5 + pv * (float(room.half) - 1.4)
 		p.spawn_flat(Vector3(spot.x, float(room.y0), spot.y), atan2(-pv.x, -pv.y), -0.1)
 		await _frames(8)
-		await _shot("01d_fitted_stone_%s" % str(FittedStone.M.get("preset", "")))
+		await _shot("01d_fitted_stone_%s" % FittedStone.preset_name())
 	p.torch.put_out("stowed")
 	# The sheet.
 	var r := main.rescuer

@@ -54,6 +54,8 @@ static func build(lay: Dictionary) -> Dictionary:
 	b.ez = Vector3.BACK
 	# Damp: the tombs are deep and still (crawler.json themes.tomb).
 	b.wet = 0.75
+	# The walls' masonry: the preset and climate by the tomb's theme.
+	FittedStone.theme = str(lay.get("theme", "tomb"))
 	var ms := int(FittedStone.M.get("seed", 0))
 	b._mseed = ms if ms != 0 else hash([int(lay.seed), "masonry"])
 	for pc in lay.pieces:
@@ -201,18 +203,17 @@ func _flue(v: Dictionary) -> void:
 			box(Transform3D(Basis.IDENTITY, mid - Vector3(0.0, 0.2, 0.0)), size, (palette[1] as Color).darkened(0.3), 0.0, 0.05, 0.02)
 
 
-## A fitted-stone wall (Mike, 6 Oct, LOCKED; FittedStone, masonry.json): a
+## A fitted-stone wall (design §EU; FittedStone, masonry.json): a
 ## run of wall from a to b (x/z), y_bot to y_top, `thick` thick. Its core
 ## is one plain block (its ends the jambs at the doors), its collision a
 ## plain box; every face that looks into a piece of the tomb is dressed
-## with fitted stones, overgrown by the damp there.
+## with fitted stones, overgrown as its climate allows.
 func _dwall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, thick: float = 0.6) -> void:
 	var along := b2 - a
 	var length := along.length()
 	if length < 0.15 or y_top <= y_bot + 0.05:
 		return
-	var p := FittedStone.preset()
-	var jd := float(p.get("joint_depth_m", 0.06))
+	var jd := float(FittedStone.relief().get("joint_depth_m", 0.06))
 	var dir2 := along / length
 	var u := Vector3(dir2.x, 0.0, dir2.y)
 	var bs := Basis(u, Vector3.UP, u.cross(Vector3.UP))
@@ -235,10 +236,12 @@ func _dwall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, thick: float = 
 			continue
 		var n := Vector3(n2.x, 0.0, n2.y)
 		var o := Vector3(a.x, 0.0, a.y) + n * (thick * 0.5)
-		var hum := FittedStone.humidity(str(_lay.get("theme", "tomb")), int(_lay.seed), Vector3(probe.x, floor_y, probe.y))
+		var cl := FittedStone.climate_at(str(_lay.get("theme", "tomb")), int(_lay.seed), Vector3(probe.x, floor_y, probe.y))
+		# Every wall face its own seed (partition.seed_per_face), so nothing
+		# mirrors across a corridor.
 		var mr := RandomNumberGenerator.new()
 		mr.seed = hash([_mseed, snappedf(a.x, 0.01), snappedf(a.y, 0.01), snappedf(b2.x, 0.01), snappedf(b2.y, 0.01), sd, snappedf(y_bot, 0.01)])
-		stones += FittedStone.face(self, o, u, n, length, floor_y - 0.1, y1, floor_y, hum, mr)
+		stones += FittedStone.face(self, o, u, n, length, floor_y - 0.1, y1, floor_y, cl, mr)
 		faces += 1
 
 
@@ -447,38 +450,63 @@ func _airway_surround(a: Dictionary) -> void:
 	solid = true
 
 
-## Soot (the vents rule, vents.json soot): the smoke's stain painted into
-## the stone round every flue's mouth (the ceiling's slabs, the stones, the
-## flue's own walls there) and up a sconce's wall from its flame: the
-## vertex colours pulled toward navy-black soot, mottled, the moss burnt off.
+const SOOT_CELL := 2.0
+
+
+## Soot (design §EV.1; smoke.json vents.soot): the smoke's stain painted
+## into the stone round every vent's mouth (the ceiling's slabs, the
+## stones, the vent's own walls there) and up a sconce's wall from its
+## flame, streak_m long (rolled per vent): the vertex colours pulled toward
+## navy-black soot (outlets.soot, §CV.3), mottled, the moss burnt off. It
+## is stone, so it stays when the fire is out (stays_when_cold).
 func _soot(lay: Dictionary) -> void:
-	var so: Dictionary = Tuning.table("vents").get("soot", {})
+	var so: Dictionary = TombKit.vents_table().get("soot", {})
 	var amount := clampf(float(so.get("amount", 0.85)), 0.0, 1.0)
 	if amount <= 0.0:
 		return
-	# Navy-black, the smoke stacks' soot (smoke.json outlets.soot, §CV.3, §EV.1).
-	var soot_c: Dictionary = (Tuning.table("smoke").get("outlets", {}) as Dictionary).get("soot", {})
-	var black := Color(str(soot_c.get("colour", "#0A0C20")))
-	var wall_m := float(so.get("wall_m", 1.2))
+	var cs := str(so.get("color", "outlets.soot"))
+	if not cs.begins_with("#"):
+		cs = str(((Tuning.table("smoke").get("outlets", {}) as Dictionary).get("soot", {}) as Dictionary).get("colour", "#0A0C20"))
+	var black := Color(cs)
+	var streak: Array = so.get("streak_m", [0.8, 2.0])
 	var srcs: Array = []
 	for v in lay.get("vents", []):
 		var m: Vector3 = v.mouth
-		var r := float(so.get("size_m", 1.8)) * 0.5 * clampf(float(v.d) / 0.9, 0.55, 1.4)
-		srcs.append([0, m, r])
+		var sr := RandomNumberGenerator.new()
+		sr.seed = hash([int(lay.seed), m, "soot"])
+		var l := sr.randf_range(float(streak[0]), float(streak[1]))
+		var r := l * 0.5 * clampf(float(v.d) / 0.9, 0.55, 1.4)
+		srcs.append([0, m, r, float(v.d) * 0.5])
 		if str(v.kind) == "sconce":
 			var f: Vector3 = v.fire
 			var nrm := Vector3(m.x - f.x, 0.0, m.z - f.z).normalized()
-			srcs.append([1, f, nrm, minf(wall_m, m.y - f.y + 0.1)])
+			srcs.append([1, f, nrm, minf(l, m.y - f.y + 0.1)])
+	# Each source in the cells of a coarse x/z grid it reaches, so each
+	# vertex tests only the sources near it.
+	var buckets := {}
+	for s2 in srcs:
+		var c2: Vector3 = s2[1]
+		var reach := (float(s2[2]) + float(s2[3]) + 0.1) if int(s2[0]) == 0 else 0.6
+		for gx in range(floori((c2.x - reach) / SOOT_CELL), floori((c2.x + reach) / SOOT_CELL) + 1):
+			for gz in range(floori((c2.z - reach) / SOOT_CELL), floori((c2.z + reach) / SOOT_CELL) + 1):
+				var key := Vector2i(gx, gz)
+				if not buckets.has(key):
+					buckets[key] = []
+				(buckets[key] as Array).append(s2)
 	for i in _v.size():
 		var p := _v[i]
+		var near = buckets.get(Vector2i(floori(p.x / SOOT_CELL), floori(p.z / SOOT_CELL)))
+		if near == null:
+			continue
 		var k := 0.0
-		for s2 in srcs:
+		for s2 in near:
 			if int(s2[0]) == 0:
 				var m2: Vector3 = s2[1]
 				var dy := p.y - m2.y
 				if dy < -0.45 or dy > 0.9:
 					continue
-				var dh := Vector2(p.x - m2.x, p.z - m2.z).length()
+				# From the vent's rim out across the ceiling.
+				var dh := maxf(Vector2(p.x - m2.x, p.z - m2.z).length() - float(s2[3]), 0.0)
 				k = maxf(k, smoothstep(float(s2[2]), float(s2[2]) * 0.25, dh) * (1.0 - smoothstep(-0.1, -0.45, dy) * 0.0))
 			else:
 				var f2: Vector3 = s2[1]
