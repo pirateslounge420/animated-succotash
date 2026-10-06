@@ -22,6 +22,8 @@ extends SceneTree
 ## 1.1 m/s). SEASON=autumn walks in that season (ten days into it).
 ## CLOUD=0.5 sets §CX's cover (a part-cloudy day's cloud shadows).
 ## SITES=lake adds the nearest lake's shore, looking over the water.
+## SITES=beasts a face under the hood up close at the opening camp's fire;
+## SITES=fae a fairy ring by the opening camp with its fae out (§EO; HOURS=21).
 ## SITES=road_grades Mike's 5 Oct roads (§DM.2-4): down a kerbed approach and
 ## its avenue, at a milestone, and up a holloway.
 ## MOON=full (new, first_quarter) walks on the nearest night with that moon.
@@ -252,6 +254,9 @@ func _run() -> void:
 			kinds.append("soak")
 		if only.has("library"):
 			kinds.append("library")
+		for ek in ["beasts", "fae"]:
+			if only.has(ek):
+				kinds.append(ek)
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -530,6 +535,20 @@ func _run() -> void:
 					if pool != Vector3.ZERO:
 						sites.append({"name": "soak", "dir": CreatureSpawner._offset(pool, 2.4, 7.0), "look": pool, "soak_camp": sd,
 							"note": "a mountain camp's soak at a hot spring %.1f km from the opening camp, in the afternoon (harness: the camp built for the frame)" % (best_m / 1000.0)})
+			"beasts":
+				# A beast's face under the hood, up close by the fire at night
+				# (design 5 Oct §EO.1): the opening camp's elder, from 1.3 m
+				# (a harness frame: you stand in the circle by them).
+				sites.append({"name": "beasts", "dir": main.camp.player_spot, "look": camp_d, "beast_close": true,
+					"note": "the opening camp's folk by firelight, up close: the %s under the hood (§EO.1)" % BeastHeads.of_people(main.camp.people_id)})
+			"fae":
+				# A fairy ring with its fae out (design 5 Oct §EO.4): a ring
+				# 10 m off the opening camp, its trust at the most, the fae
+				# held out for the frame (a harness frame: you have sat here
+				# many times).
+				var fd := CreatureSpawner._offset(camp_d, 2.4, 14.0)
+				sites.append({"name": "fae", "dir": fd, "look": camp_d, "fae_ring": fd,
+					"note": "a fairy ring by the opening camp with its fae out, trust at the most (harness)"})
 			"meal":
 				# The opening camp's meal at dusk (design 5 Oct §EJ): from your
 				# own place in the circle, the carrier on the way back from
@@ -975,6 +994,75 @@ func _library_camp(site: Dictionary) -> void:
 	print("[library] %s: %s, the %s; tomes %s; winter count %s" % [site.name, Peoples.name_of(Peoples.get_people(pid)), "lean-to" if key.begins_with("ruin:") else "hut", str(lib.get_meta("tomes", [])), str(st.get("winter", []))])
 
 
+## Stand 1.3 m in front of the opening camp's elder, feet on the ground,
+## looking at the face under the hood (§EO.1).
+func _beast_close(site: Dictionary) -> void:
+	var dress: Node3D = main.camp.dressing
+	var elder: Node3D = dress.get_node_or_null("Elder") if dress != null else null
+	if elder == null:
+		print("[beasts] %s: no elder" % site.name)
+		return
+	var b: PlayerBody = null
+	for c in elder.find_children("*", "PlayerBody", true, false):
+		b = c
+	# In front of the face: the body faces its -Z.
+	var fwd: Vector3 = -(b.global_basis.z if b != null else elder.global_basis.z)
+	fwd -= player.up * fwd.dot(player.up)
+	var cam: Vector3 = elder.global_position + fwd.normalized() * 1.3
+	player.spawn_at(world.dir_of(cam), world.dir_of(elder.global_position))
+	player.global_position -= player.up * 1.0
+	# (The pitch target is measured from the feet, the eye 1.6 m up: the
+	# seated head about 1 m up is 0.6 m below the eye.)
+	site["pitch_to"] = world.dir_of(elder.global_position)
+	site["pitch_add_m"] = -0.6
+	print("[beasts] %s: the elder wears the %s, 1.3 m off" % [site.name, b.beast if b != null else "?"])
+
+
+## A fairy ring at the site's fae_ring with its fae out, trust at the most,
+## held for the frame; you at its edge looking in, feet on the ground.
+func _fae_ring(site: Dictionary) -> void:
+	var fr: FaeRings = main.fae_rings
+	var d: Vector3 = site.fae_ring
+	# A spot 16-24 m out from the fire with nothing solid between your eye
+	# and the ring's middle (camp props, ruin stones).
+	var camp_d: Vector3 = site.look
+	var space := player.get_world_3d().direct_space_state
+	var found := false
+	for r in [16.0, 20.0, 24.0]:
+		for k in 12:
+			var b := TAU * k / 12.0
+			var rd := CreatureSpawner._offset(camp_d, b, r)
+			var cd := CreatureSpawner._offset(rd, b, 4.2)
+			var eye: Vector3 = world.to_scene(cd, PlanetConst.RADIUS_M + main.chunks.ground_height(cd) + 1.6)
+			var mid: Vector3 = world.to_scene(rd, PlanetConst.RADIUS_M + main.chunks.ground_height(rd) + 0.3)
+			var q := PhysicsRayQueryParameters3D.create(eye, mid, 0xFFFFFFFF, [player.get_rid()])
+			if space.intersect_ray(q).is_empty() and main.chunks.water_level_at(rd) < main.chunks.ground_height(rd) - 0.1:
+				d = rd
+				site["fae_bearing"] = b
+				found = true
+				break
+		if found:
+			break
+	var s := {"id": "walk", "dir": d, "radius": 2.2, "n": 16, "cap": Color("#C8B08A"), "band": "night", "seed": 7}
+	if fr.rings.has("walk"):
+		(fr.rings["walk"] as Node).queue_free()
+	fr.rings["walk"] = FaeRings.build_ring(fr._root, s, world, main.chunks)
+	var T: Dictionary = Tuning.table("fae").get("trust", {})
+	var all: Dictionary = WorldSave.data.get("fae_trust", {})
+	all["walk"] = {"t": int(T.get("max", 5)), "d": world.days}
+	WorldSave.data["fae_trust"] = all
+	FaeRings.instant = true
+	FaeRings.hold = true
+	fr.come(s)
+	# Beyond the ring from the camp, looking back over it to the fire.
+	var cam := CreatureSpawner._offset(d, float(site.get("fae_bearing", 2.4)), 4.2)
+	player.spawn_at(cam, d)
+	player.global_position -= player.up * 1.0
+	site["pitch_to"] = d
+	site["pitch_add_m"] = -0.5
+	print("[fae] %s: a ring of %d, the fae out (%d), %.1f m round, trust %d" % [site.name, int(s.n), (fr.visit.get("figs", []) as Array).size(), float(fr.visit.get("r", 0.0)), int(fr.visit.get("trust", 0))])
+
+
 ## The soak's camp (§EM): a mountain camp at the storage rung built at
 ## the site's soak_camp, registered with Camps (its folk go to the soak in
 ## the afternoon hours).
@@ -1197,6 +1285,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		_soak_camp(site)
 	if site.has("library_camp"):
 		_library_camp(site)
+	if site.has("fae_ring"):
+		_fae_ring(site)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
@@ -1321,6 +1411,11 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			world.days = Astro.days_at_solar_hour(base, hour, lon, lat)
 		if site.has("hunt_key"):
 			_hunt_retime(site)
+		if site.get("beast_close", false):
+			# (At the hour: the folk have taken their places for it.)
+			for i in 30:
+				await process_frame
+			_beast_close(site)
 		if site.get("meal", false):
 			_meal_now(site)
 		# A site that looks up at something (a great range's summit) tips

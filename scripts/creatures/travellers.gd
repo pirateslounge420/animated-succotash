@@ -76,6 +76,9 @@ func _make(link: Dictionary, m: float, dir: float) -> void:
 	var body: Node3D = cb.root
 	var node := Node3D.new()
 	node.name = "Traveller"
+	# The beast under the hood (§EO.1): the people whose land the road
+	# runs through here.
+	node.set_meta("beast", BeastHeads.for_camp(Peoples.pick(world.planet, chunks.rivers, RoadNetwork.point_at(link.pts, m), "ruin"), hash([link.id, m]), "human"))
 	_root.add_child(node)
 	node.add_child(body)
 	var w := {"node": node, "body": body, "link": link, "m": m, "dir": dir, "hold": 0.0, "seen": false}

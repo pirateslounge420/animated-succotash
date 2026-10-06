@@ -296,6 +296,44 @@ func _ready() -> void:
 	# PlanetPlayer puts everything under the body on its BODY_LAYER once
 	# it's added; sort the parts after that.
 	_apply_layers.call_deferred()
+	# Someone else's body wears the beast its camp (or road, or band) is
+	# (§EO.1, BeastHeads: meta "beast" on a node above it), once the tree
+	# above it is whole.
+	if not is_player and beast == "":
+		_find_beast.call_deferred()
+
+
+## The beast under the hood (design 5 Oct §EO.1): "" the empty hood.
+var beast := ""
+
+
+func _find_beast() -> void:
+	if beast == "" and is_inside_tree():
+		var a := BeastHeads.beast_above(self)
+		if a != "":
+			set_beast(a)
+
+
+## Put `animal`'s head under the hood ("" takes it away). The player's
+## hood stays empty, always (§EO.2): refused.
+func set_beast(animal: String) -> void:
+	if is_player:
+		return
+	var old := head.get_node_or_null("Beast")
+	if old != null:
+		head.remove_child(old)
+		old.queue_free()
+	beast = ""
+	var m := BeastHeads.mesh(animal) if animal != "" else null
+	if m == null:
+		return
+	var mi := MeshInstance3D.new()
+	mi.name = "Beast"
+	mi.mesh = m
+	mi.material_override = BeastHeads.material()
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	head.add_child(mi)
+	beast = animal
 
 
 ## Per frame: how fast the player is going, 0 (still) to 1 (sprinting):

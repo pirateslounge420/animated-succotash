@@ -49,6 +49,13 @@
   - **Who goes:** folk idle at the fire (never the keeper, never anyone at a bench or out gathering) walk there in its hours and back after. They notice you as the circle does.
   - **Tunables:** `camps.json → sim.third_places`.
   - **Checks:** `STAMP=1 SEED=7731 godot --headless --path . --fixed-fps 60 --script tools/third_places_check.gd` checks it; `THIRD_PLACES=0` turns them off. `SITES=soak QUICK=1 HOURS=15` in the walkabout shows a mountain camp's soak at the hot spring nearest the opening camp.
+- **Beast heads** (§EO.1): every people's folk wear an animal's head under the hood, one of the twelve zodiac animals (`zodiac_heads.json → peoples`; the dragon is a rare 3% of camps). The face shows within 4 m and fades into the hood's dark by 8 m, so from further off they are people with empty hoods; it reads best by firelight. The small folk keep the empty hood, and so does yours, always (§EO.2). Tunables: `zodiac_heads.json → look`.
+- **Fairy rings and the fae** (§EO.3–EO.4): rings of small pale mushrooms in about one chunk in eight, kept only where dry and flat. Crouch (Shift) and keep still inside one for 10 s and, at their hour, three small glowing fae come and circle, shedding glowing specks:
+  - **Their hour:** day fae by day; night fae by night with the moon at least a quarter lit.
+  - **Trust:** the first time a flicker far off. Each return (at most once every 2 game hours) they come closer and stay longer. Stand up and they scatter.
+  - **Tunables:** `fae.json` (`ring_look`, `sitting`, `bands`, `trust`, `fae_look`).
+  - **Not built yet:** the gifts (§EO.5).
+  - **Checks:** `STAMP=1 SEED=7731 godot --headless --path . --fixed-fps 60 --script tools/fae_check.gd`. `SITES=fae QUICK=1 HOURS=21` in the walkabout shows a ring by the opening camp with its fae out; `SITES=beasts` tries a face up close at the opening camp but does not frame one reliably yet.
 - **The library** (§EN): at a camp at the storage rung, a small hut 4–8 m from the fire, open to it, or at a ruin camp a lean-to against an old stone wall:
   - **the camp book** on its shelf (read it there; the altar by the hearth only below storage);
   - **found tomes** on the left wall ("read the <title>": a ruin's delve tome while you have not taken it);

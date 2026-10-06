@@ -4,6 +4,79 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — §EO beast heads under the hood, the empty hood, fairy rings and the fae
+- **Beast heads (§EO.1):** every people's folk now have an animal's head under the hood, one of the twelve Eastern zodiac animals. The cloaked rig is unchanged; only the head is new.
+  - **Up close only:** the face shows fully within 4 m. Between 4 and 8 m it fades into the hood's flat dark hollow, so from further off a figure is still a person with an empty hood.
+  - **Firelight:** only part of the light reaches into the hood (`hood_shade` 0.6), so a face reads best by the fire.
+  - **The heads:** each is a few rounded shapes (skull, muzzle or snout, ears, horns, beak, comb, beard), with the snout, horns or beak just out past the brim. In a firelight test render all twelve read: rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog, pig.
+  - **Who is which:** a new `peoples` block in `zodiac_heads.json`, my first guess from each animal's home (you own it):
+    - rat: river, marsh, rock shelter
+    - ox: savanna herders
+    - tiger: taiga
+    - rabbit: highland, lake
+    - snake: desert, mangrove
+    - horse: steppe
+    - goat: mountain
+    - monkey: rainforest, canopy
+    - rooster: karst
+    - dog: tundra, coast
+    - pig: old growth
+  - **The dragon** is no people's: it is the rare tribe, 3% of camps (`rare.dragon.chance_per_camp`). The opening camp is never dragons.
+  - **Who wears them:** camp folk (the guards, walkers, water carriers, the hunter and the gift-giver too), the opening camp, and road travellers (the people whose land the road crosses).
+  - **Who keeps the empty hood:** the small folk with their lanterns (`look.no_head_kinds`), the thirteen of the wandering fire, the ox rider, the uniques, haunts and the dark's figures.
+  - Goblin, orc and small folk are not retired.
+- **The player's hood is empty (§EO.2):** it always was (the hollow is drawn flat and unlit). Now `PlayerBody.set_beast` refuses the player outright, and the check asks.
+- **The mushroom (§EO.4's build need):**
+  - A short stem, a two-tier domed cap and a dark gill ring.
+  - Square-cut in the ruin material at 16 texels a metre, so a cap is a couple of big texels. Matte, a clean silhouette.
+  - About 60 triangles; a whole ring is one mesh.
+- **Fairy rings (§EO.4):**
+  - **Where:** 12% of terrain chunks (about 260 m across) roll a ring, from the world seed, so a ring is always in the same place.
+  - **Which survive:** one in water or on a slope over 18° is dropped. Round the river opening camp on 7731 that leaves about 3% of chunks, roughly one ring per 2 km².
+  - **The ring:** 11–19 pale buff mushrooms, 6–14 cm tall, round a 1.4–2.6 m circle, with now and then a small one beside.
+- **The fae (§EO.3, §EO.4):** sit inside a ring for 10 s and, if it is their hour, three small earth fairies come.
+  - **Sitting:** the game has no sit action yet, so crouched (Shift) and still counts as sitting.
+  - **Their hour:** each ring's fae are day fae or night fae (half and half). Night fae come only when the moon is at least a quarter lit (the moon's phase sets it).
+  - **Their look:** no cloak. A glowing body and head and two pairs of beating wings, each casting a small light and shedding a trail of glowing square pixels. Day fae are pale yellow-green, night fae pale teal; never fire's orange.
+  - **Trust:** hidden, per ring, kept in the world's save, never shown.
+    - The first time they are a flicker 9 m off for 4 seconds.
+    - Each time they come the ring's trust grows by one, at most once every 2 game hours, up to 5.
+    - At 5 they circle 1.2 m round you for 45 seconds.
+    - Stand up or walk off while they are out and they scatter.
+    - They come once per sitting; sit again to see them again.
+- **The gifts (§EO.5): stubs only.** `FaeRings.gift_light` and `FaeRings.lead_to_lair` read `fae.json → gifts` and return false. Nothing calls them yet. The `gifts` block is marked `[NOT WIRED YET — design §EO.5]`.
+- **Data:**
+  - **`zodiac_heads.json`:** new `peoples`, `rare` and `look` blocks (fade distances, hood shade, no-head kinds, three colours per animal).
+  - **`fae.json`:** new `ring_look`, `sitting`, `bands`, `trust` and `fae_look` blocks, each with `_help`. `gifts` gains its help line and two stub numbers.
+  - Both files are read through `Tuning`.
+- **What the code does:**
+  - New `BeastHeads` (`scripts/creatures/beast_heads.gd`) and its shader (`shaders/beast_head.gdshader`).
+  - `PlayerBody.set_beast()`: a body that isn't the player's takes the `beast` of the camp or road it stands under once it enters the scene.
+  - New `Mushroom` and `FaeRings` (`scripts/landmarks/`). Main runs FaeRings.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/fae_check.gd` gives 0 fails:
+  - all twelve heads build and fit the hood;
+  - all 17 peoples map to 11 animals; the dragon at 2.9% of 4,000 camps;
+  - the small folk get no head; the player refuses the ox;
+  - a built river camp's 6 folk and the opening camp's 5 all wear the rat;
+  - the fade distances match the data;
+  - rings are rolled in 7% of 270 chunks and kept dry and flat (3%);
+  - nothing comes before 10 s of sitting, then three glowing, lit, speck-shedding, uncloaked fae, a flicker at 9 m that leaves after its 4 s;
+  - trust 1, unchanged on an immediate second visit, scattering when you stand;
+  - a later visit closer (7.4 m) at trust 2;
+  - the day/night band; the gifts are stubs.
+  - `circle_check`, `library_check`, `sharing_check`, `workshop_check`, `hunt_check` and `third_places_check` still give 0 fails.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=beasts,fae HOURS=21`.
+  - **`fae_22h_f0.png`:** a ring 16–24 m from the opening camp, chosen with nothing solid between the eye and the ring, its trust set to 5 and the fae held out (a harness frame). It shows the three fae circling with their speck trails over a pool of teal light, the camp's fire and the full moon behind. The mushrooms are small dots at that distance.
+  - **`beasts_22h_f0.png`** (the opening camp's elder up close by the fire) does not frame a face. The folk move between the frame's setup and its capture, and the camera ended on top of the elder. The heads were checked instead in a probe render by firelight alone, where all twelve read.
+  - On the way, the heads first rendered black because their triangles faced inward; fixed.
+- **Flags for Mike:**
+  1. **There is no sit action**, so crouched and still counts as sitting. Say if you want a real sit (a key, a pose).
+  2. **Which tribe is which animal** (`zodiac_heads.json → peoples`) is my guess; 17 peoples share 11 animals. The dragon is a 3% roll per camp, not a people of its own.
+  3. **`folk_kinds.json` still has a cloaked folk kind called "fae"** ("slight, folk_scale 0.85", at old-growth, lake and rainforest camps). §EO.3 says "fae" now means the uncloaked fairies. I left that kind as it is (those camps wear their people's beast). Rename or retire it?
+  4. **"The moon's phase can set which":** I read it as "night fae need the moon at least a quarter lit". On dark-moon nights a night ring stays empty.
+  5. **Rings are sparse near the river camp** (water drops half of them): about one per 2 km². `ring_look.chance_per_chunk` is the dial.
+  6. **The thirteen of the wandering fire** are desert folk but a unique band, so I left their hoods empty. Say if they should be snakes.
+
 ## 2026-10-06 — §EN the library, the winter count, the knot cord, the record-keeper (queue 43)
 - **What changes on screen:** when a camp reaches the storage rung (the rung where the workshop comes), it builds a library 4–8 m from its fire, clear of the workshop and the third places, with its open side to the fire. A camp below storage keeps its book on the altar by the hearth, as before.
   - **Its form:** a small hut (back and side walls, a pitched roof) in the people's own workshop materials. At a camp in a ruin, or where the people's `huts.library` says lean-to, it is a lean-to instead: one old stone wall at the back, the roof leaning from it down to two posts at the front (the low edge above eye height, so you see in under it), and a screen each side. It is square-cut like the workshop hut.

@@ -1,5 +1,5 @@
 {
- "_help": "§EO.3–EO.5 (5 Oct, Mike by voice). First numbers by Claude (chat); the designer owns them. Additive: nothing reads this until the code does.",
+ "_help": "§EO.3–EO.5 (5 Oct, Mike by voice). First numbers by Claude (chat); the designer owns them. Additive. fae and rings are wired by Claude Code (6 Oct: FaeRings, Mushroom); gifts is not yet (see gifts._help).",
  "fae": {
   "cloaked": false,
   "count": 3,
@@ -12,15 +12,89 @@
   "spawn": "random",
   "sit_seconds_min": 10,
   "trust": "per ring, hidden, grows on each return",
-  "bands": ["day", "night"],
+  "bands": [
+   "day",
+   "night"
+  ],
   "moon_phase_sets_band": true,
   "needs_shape": "mushroom (none in the engine yet)"
  },
  "gifts": {
+  "_help": "[NOT WIRED YET — design §EO.5] Read by FaeRings.gift_light and FaeRings.lead_to_lair, which are stubs: they read these numbers and return false. Nothing calls them until the overrun village's restoring (§CN) hands the fae their gift.",
   "unlocked_by": "restoring an overrun village (§CN)",
-  "free_light": {"warm": true, "temporary": true},
+  "free_light": {
+   "warm": true,
+   "temporary": true
+  },
   "lead_to_lair": true,
   "scatter_if_rushed": true,
-  "lairs_per_village": "rare and uneven: most none, a few one"
+  "lairs_per_village": "rare and uneven: most none, a few one",
+  "free_light_game_h": 3.0,
+  "lead_patience_s": 20.0
+ },
+ "ring_look": {
+  "_help": "Added by Claude Code with the §EO.4 wiring (6 Oct). Where and how a fairy ring is drawn. chance_per_chunk: the share of terrain chunks (about 260 m across) holding one ring, rolled from the world seed and the chunk, so a ring is always in the same place. Never in water nor on a slope steeper than max_slope_deg. radius_m, mushrooms and height_m: the ring's size, how many mushrooms round it and how tall each stands. Colours sRGB: the caps (one per ring), the stems, the gills. sit_inside: how far in from the ring's edge counts as inside it (a share of its radius).",
+  "chance_per_chunk": 0.12,
+  "radius_m": [
+   1.4,
+   2.6
+  ],
+  "mushrooms": [
+   11,
+   19
+  ],
+  "height_m": [
+   0.06,
+   0.14
+  ],
+  "max_slope_deg": 18,
+  "cap_colours": [
+   "#C8B08A",
+   "#B89A72",
+   "#D6C6A4",
+   "#A88A66"
+  ],
+  "stem_colour": "#D8D0BC",
+  "gill_colour": "#7A6A58",
+  "sit_inside": 0.9
+ },
+ "sitting": {
+  "_help": "Added by Claude Code with the §EO.4 wiring. The game has no sit action yet, so crouched (Shift) and still (slower than still_mps) inside a ring counts as sitting in it, for rings.sit_seconds_min.",
+  "still_mps": 0.3
+ },
+ "bands": {
+  "_help": "Added by Claude Code with the §EO.4 wiring: rings.bands and moon_phase_sets_band. Each ring's fae are day fae or night fae (night_share of rings are night), rolled per ring. Day fae come while the sun is up at the ring; night fae while it is down, and (moon_phase_sets_band) only while the moon is at least night_moon_min_lit lit: on dark-moon nights they stay away.",
+  "night_share": 0.5,
+  "night_moon_min_lit": 0.25
+ },
+ "trust": {
+  "_help": "Added by Claude Code with the §EO.4 wiring: rings.trust. Hidden, per ring, kept in the world's save: one more each time the fae come to you there (at most once every grows_every_game_h), up to max. At trust 0 they show as a flicker: far_m off, for stay_s[0] seconds. At max they come to near_m and stay stay_s[1]; between, in proportion. Standing up or walking off while they are out scatters them.",
+  "max": 5,
+  "grows_every_game_h": 2.0,
+  "far_m": 9.0,
+  "near_m": 1.2,
+  "stay_s": [
+   4.0,
+   45.0
+  ]
+ },
+ "fae_look": {
+  "_help": "Added by Claude Code with the §EO.3 wiring. The three small earth fairies: size_m tall, uncloaked, glowing (they give off light, so they may glow: LOOK_REFERENCE). colours sRGB per band (day, night): never fire's orange, which stays the only warm light. Each casts a small light (light_range_m, light_energy) and sheds glowing pixel specks (specks_per_s, speck_life_s, speck_m across). They fly at fly_height_m over the ground at about speed_mps, wings beating wing_hz.",
+  "size_m": 0.14,
+  "colours": {
+   "day": "#E6F2A0",
+   "night": "#A8F2E4"
+  },
+  "light_range_m": 2.6,
+  "light_energy": 0.7,
+  "specks_per_s": 12,
+  "speck_life_s": 1.4,
+  "speck_m": 0.025,
+  "fly_height_m": [
+   0.5,
+   1.5
+  ],
+  "speed_mps": 1.4,
+  "wing_hz": 14.0
  }
 }

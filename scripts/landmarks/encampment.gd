@@ -511,6 +511,9 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	drng.seed = hash([site, "dress"])
 	var dress := Node3D.new()
 	dress.name = "Dressing"
+	# The beast under its folk's hoods (§EO.1, BeastHeads): the people's
+	# animal (the opening camp is never the rare dragon tribe).
+	dress.set_meta("beast", BeastHeads.for_camp(people_id, hash([site, "opening"]), "human", false))
 	add_child(dress)
 	dressing = dress
 	dress.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(site), site), _fire.global_position)

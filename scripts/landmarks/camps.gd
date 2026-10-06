@@ -542,6 +542,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	root.set_meta("people", people_id)
 	root.set_meta("pal", _people_pal)
 	root.set_meta("kind", kind)
+	# The beast under its folk's hoods (design 5 Oct §EO.1, BeastHeads):
+	# the people's animal, or for a rare few camps the dragon.
+	root.set_meta("beast", BeastHeads.for_camp(people_id, seed_value, kind))
 	root.set_meta("biome", biome_key)
 	root.set_meta("key", key)
 	var body := PropCollision.body(root)

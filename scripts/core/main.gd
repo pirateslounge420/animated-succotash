@@ -55,6 +55,8 @@ var long_walls: LongWalls
 var camp_sim: CampSim
 var player_fires: PlayerFires
 var travellers: Travellers
+## Fairy rings and the fae (design 5 Oct §EO.4).
+var fae_rings: FaeRings
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -340,6 +342,10 @@ func _on_planet_ready() -> void:
 	travellers.name = "Travellers"
 	add_child(travellers)
 	travellers.setup(world, chunks, player)
+	fae_rings = FaeRings.new()
+	fae_rings.name = "FaeRings"
+	add_child(fae_rings)
+	fae_rings.setup(world, chunks, player, sky)
 	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()

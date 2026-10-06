@@ -1,17 +1,139 @@
 {
  "_help": "§EO.1 (5 Oct, Mike by voice). The head under every tribe's hood; the shared cloaked rig is unchanged. Homes are Claude's first guess from each animal's real range; the designer owns them.",
  "heads": {
-  "rat": {"home": "almost anywhere folk live"},
-  "ox": {"home": "grassland, steppe"},
-  "tiger": {"home": "tropical and temperate forest of Asia, taiga edge"},
-  "rabbit": {"home": "temperate grassland and woodland edge"},
-  "dragon": {"home": "none real: rare, hidden", "mythical": true},
-  "snake": {"home": "desert, tropical forest"},
-  "horse": {"home": "steppe"},
-  "goat": {"home": "mountain, highland"},
-  "monkey": {"home": "tropical forest"},
-  "rooster": {"home": "tropical forest edge (the red junglefowl)"},
-  "dog": {"home": "with folk everywhere"},
-  "pig": {"home": "temperate and tropical forest (the wild boar)"}
+  "rat": {
+   "home": "almost anywhere folk live"
+  },
+  "ox": {
+   "home": "grassland, steppe"
+  },
+  "tiger": {
+   "home": "tropical and temperate forest of Asia, taiga edge"
+  },
+  "rabbit": {
+   "home": "temperate grassland and woodland edge"
+  },
+  "dragon": {
+   "home": "none real: rare, hidden",
+   "mythical": true
+  },
+  "snake": {
+   "home": "desert, tropical forest"
+  },
+  "horse": {
+   "home": "steppe"
+  },
+  "goat": {
+   "home": "mountain, highland"
+  },
+  "monkey": {
+   "home": "tropical forest"
+  },
+  "rooster": {
+   "home": "tropical forest edge (the red junglefowl)"
+  },
+  "dog": {
+   "home": "with folk everywhere"
+  },
+  "pig": {
+   "home": "temperate and tropical forest (the wild boar)"
+  }
+ },
+ "peoples": {
+  "_help": "Added by Claude Code with the §EO.1 wiring (6 Oct): which animal each people's folk are, a first guess from heads.*.home (the designer owns it). Seventeen peoples, eleven real animals: some share. The dragon is no people's: it is the rare tribe (rare.dragon). A people not listed keeps the empty hood.",
+  "river": "rat",
+  "marsh": "rat",
+  "rock_shelter": "rat",
+  "savanna_herders": "ox",
+  "taiga": "tiger",
+  "highland": "rabbit",
+  "lake": "rabbit",
+  "desert": "snake",
+  "mangrove": "snake",
+  "steppe": "horse",
+  "mountain": "goat",
+  "tropical_forest": "monkey",
+  "canopy": "monkey",
+  "karst": "rooster",
+  "tundra": "dog",
+  "coast": "dog",
+  "old_growth": "pig"
+ },
+ "rare": {
+  "_help": "Added by Claude Code with the §EO.1 wiring: the dragon tribe (\"rare, hidden\"). chance_per_camp: the share of the world's people's camps whose folk are dragons instead of their people's animal, rolled from the camp's seed (the opening camp never).",
+  "dragon": {
+   "chance_per_camp": 0.03
+  }
+ },
+ "look": {
+  "_help": "Added by Claude Code with the §EO.1 wiring. The face is drawn only up close: within near_m (metres from the eye) fully, fading into the hood's flat dark hollow by gone_m, so from further off the figure reads as a person (an empty hood). hood_shade: how much light reaches into the hood (1 = all of it), so a face shows best by firelight. Folk kinds that keep the empty hood: no_head_kinds (the small folk with their lanterns, §BO; not retired). Colours (sRGB) per animal: fur, the muzzle or face, the accent (nose, beak, comb, horn); the shapes are in scripts/creatures/beast_heads.gd.",
+  "near_m": 4.0,
+  "gone_m": 8.0,
+  "hood_shade": 0.6,
+  "no_head_kinds": [
+   "small_folk"
+  ],
+  "colours": {
+   "rat": [
+    "#6E6458",
+    "#8A7E70",
+    "#C98A8A"
+   ],
+   "ox": [
+    "#4A3426",
+    "#6A5442",
+    "#D8CBB0"
+   ],
+   "tiger": [
+    "#C8702A",
+    "#E8D8B8",
+    "#2A2220"
+   ],
+   "rabbit": [
+    "#9A8A74",
+    "#C8BCA8",
+    "#D29A9A"
+   ],
+   "dragon": [
+    "#2E6A58",
+    "#5E9A6E",
+    "#D8C27A"
+   ],
+   "snake": [
+    "#5E6A32",
+    "#A8A66A",
+    "#2A2A1E"
+   ],
+   "horse": [
+    "#6A4430",
+    "#4A3022",
+    "#1E1A18"
+   ],
+   "goat": [
+    "#B8AE98",
+    "#D8D0BC",
+    "#6A5E4A"
+   ],
+   "monkey": [
+    "#5A4434",
+    "#C8A688",
+    "#3A2A22"
+   ],
+   "rooster": [
+    "#A8502A",
+    "#D8A040",
+    "#C82A22"
+   ],
+   "dog": [
+    "#9A7448",
+    "#C8A880",
+    "#2A2220"
+   ],
+   "pig": [
+    "#B88A80",
+    "#D8AAA0",
+    "#8A5A52"
+   ]
+  }
  }
 }
