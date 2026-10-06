@@ -1,0 +1,187 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET \u2014 Mike, 6 Oct, for \u00a7EW] Mike's list of areas: the 52 biomes (data/biomes) gathered into cohesive places, each to become its own ruins, temples and archetypal places (one pocket world each, \u00a7EW). Recorded by Claude Code from Mike's message; Claude (chat) logs it as a design section and reconciles it with worlds.json worlds (\u00a7EW.2's named worlds). The biomes stay as they are: an area only groups them.",
+  "areas": "In Mike's order. name: Mike's words. biomes: the biomes his words name. proposed: Claude Code's suggested fold-ins, not decided, for Mike to keep or move (polar: the plain tundra between his polar desert and forest-tundra, alpine tundra, glaciers; prairie: steppe; jungle: tropical dry forest; savanna: thorn scrub; swamp: floodplain forest; dunes: hot desert; rocky shore: estuary; ocean: lagoon; volcanic: caves, for the volcano caves; canyons: badlands). rainforest: tropical, temperate, or both, is Mike's call.",
+  "unassigned": "Biomes no area takes yet, neither named nor proposed: Mike's call whether they join an area, become their own, or stay out of Torchfire 1."
+ },
+ "areas": {
+  "polar_tundra": {
+   "name": "polar desert / forest tundra",
+   "biomes": [
+    "ICE_SHEET",
+    "KRUMMHOLZ"
+   ],
+   "proposed": [
+    "TUNDRA",
+    "ALPINE_TUNDRA",
+    "GLACIER"
+   ]
+  },
+  "rainforest": {
+   "name": "rainforest",
+   "biomes": [
+    "TROPICAL_RAINFOREST",
+    "TEMPERATE_RAINFOREST"
+   ],
+   "proposed": []
+  },
+  "coniferous_forest": {
+   "name": "coniferous forest",
+   "biomes": [
+    "TAIGA"
+   ],
+   "proposed": []
+  },
+  "cloud_forest": {
+   "name": "cloud forest",
+   "biomes": [
+    "CLOUD_FOREST"
+   ],
+   "proposed": []
+  },
+  "meadow": {
+   "name": "meadow",
+   "biomes": [
+    "ALPINE_MEADOW",
+    "WET_MEADOW"
+   ],
+   "proposed": []
+  },
+  "prairie": {
+   "name": "prairie",
+   "biomes": [
+    "TALLGRASS_PRAIRIE",
+    "SHORTGRASS_PRAIRIE"
+   ],
+   "proposed": [
+    "STEPPE"
+   ]
+  },
+  "jungle": {
+   "name": "jungle",
+   "biomes": [
+    "JUNGLE"
+   ],
+   "proposed": [
+    "TROPICAL_DRY_FOREST"
+   ]
+  },
+  "savanna": {
+   "name": "savanna",
+   "biomes": [
+    "SAVANNA"
+   ],
+   "proposed": [
+    "THORN_SCRUB"
+   ]
+  },
+  "beach": {
+   "name": "beach",
+   "biomes": [
+    "BEACH"
+   ],
+   "proposed": []
+  },
+  "swamp": {
+   "name": "swamp / bayou",
+   "biomes": [
+    "SWAMP"
+   ],
+   "proposed": [
+    "FLOODPLAIN_FOREST"
+   ]
+  },
+  "marsh": {
+   "name": "marsh / bog / fen",
+   "biomes": [
+    "FRESHWATER_MARSH",
+    "SALT_MARSH",
+    "BOG",
+    "FEN"
+   ],
+   "proposed": []
+  },
+  "dunes": {
+   "name": "dunes",
+   "biomes": [
+    "DUNES"
+   ],
+   "proposed": [
+    "HOT_DESERT"
+   ]
+  },
+  "rocky_shore": {
+   "name": "rocky shore / mangrove",
+   "biomes": [
+    "ROCKY_SHORE",
+    "MANGROVE"
+   ],
+   "proposed": [
+    "ESTUARY"
+   ]
+  },
+  "oasis": {
+   "name": "oasis",
+   "biomes": [
+    "OASIS"
+   ],
+   "proposed": []
+  },
+  "ocean": {
+   "name": "coral reef / kelp forest / ocean",
+   "biomes": [
+    "CORAL_REEF",
+    "KELP_FOREST",
+    "SHELF_SEA",
+    "DEEP_OCEAN"
+   ],
+   "proposed": [
+    "LAGOON"
+   ]
+  },
+  "volcanic": {
+   "name": "volcanic field / volcano caves",
+   "biomes": [
+    "VOLCANIC_FIELD"
+   ],
+   "proposed": [
+    "CAVES"
+   ]
+  },
+  "canyons": {
+   "name": "canyons",
+   "biomes": [
+    "CANYON"
+   ],
+   "proposed": [
+    "BADLANDS"
+   ]
+  },
+  "hot_springs": {
+   "name": "hot springs",
+   "biomes": [
+    "HOT_SPRING"
+   ],
+   "proposed": []
+  },
+  "tepui": {
+   "name": "tepui",
+   "biomes": [
+    "TEPUI"
+   ],
+   "proposed": []
+  }
+ },
+ "unassigned": [
+  "COLD_DESERT",
+  "FRESHWATER",
+  "MARITIME_FOREST",
+  "MEDITERRANEAN_SCRUB",
+  "PARAMO",
+  "PUNA",
+  "SAGEBRUSH",
+  "SALT_FLAT",
+  "SEA_ICE",
+  "TEMPERATE_DECIDUOUS"
+ ]
+}

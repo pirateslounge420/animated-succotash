@@ -4,6 +4,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — Mike's areas: the 52 biomes gathered into 19 places (data only, for §EW)
+- **New file `data/areas.json`** (`[NOT WIRED YET]`): Mike's 19 areas, in his order. Each has the biomes his words name, plus Claude Code's suggested fold-ins under `proposed`, which are not decided.
+- **Unassigned:** 10 biomes fit no area yet (cold desert, fresh water, maritime forest, Mediterranean scrub, páramo, puna, sagebrush, salt flat, sea ice, temperate deciduous).
+- **Nothing in the game reads the file yet.** The biomes themselves are unchanged.
+- **For chat:** log it as a design section, and reconcile it with `worlds.json → worlds` (§EW.2). Three of §EW.2's named worlds (the mine shaft, the mountains, the desert sandstone) have no area in Mike's list.
+
+---
+
 ## 2026-10-06 — §EW.7 step 1 in the tomb: §EU fitted stone and 480 lines, §EV a vent for every built-in fire
 - **Data folded into chat's files.** The walls read `data/masonry.json` and the vents read `smoke.json → vents`; both had their `[NOT WIRED YET]` taken off.
   - My first pass earlier today had used `data/dungeon/*.json`. Those files are deleted, and their extra knobs were added to chat's blocks with help text: masonry `seed`, `aspect`, a preset's own `relief`, `dropped_m`, the overgrowth amounts, `wet` and `stand_in`; vents `surface_y_m`, daylight energies, soot `amount`, draft lean, `kink`, `mouth_offset_m`.
