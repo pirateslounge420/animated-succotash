@@ -57,7 +57,7 @@ files wholesale.
 - **Docs describe what exists.** `HOW_TO_RUN.md` and code comments describe the built
   game; unbuilt design is marked "(design §X, not built yet)". The design doc describes
   the intended game and never claims something is built.
-- **One thing at a time.** Claude Code works through §BR in order, plus whatever the
+- **One thing at a time.** Claude Code works through the order of work (§ET.11 for Torchfire 1, which replaces §BR's queue) in order, plus whatever the
   designer's Claude Code prompt lists. The design doc's other sections are context, not a
   to-do list.
 - **No screenshots after every step.** Mike plays on his Mac and reports back. A visual

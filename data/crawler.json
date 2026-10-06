@@ -1,0 +1,60 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §ET] Torchfire 1, the ambient first-person dungeon crawler. The open world is Torchfire 2 and stays in the code, switched off (§ET.2). The game runs unchanged until the code reads this file. First guesses by Claude (chat), 6 Oct; the designer owns them.",
+  "opening": "§ET.3. You wake underground in a ruin's central room by a lit hearth. exits_min / exits_max: corridors leaving it, each generated from the seed. bundle: unlit torches by the hearth (torch.json bundle, §AW). rescuer: the figure who found you and brought you here (§DE), at the hearth. teach: wordless, no tooltips. first_theme: the theme of the first ruin (a key of themes).",
+  "persistence": "§ET.10 call 3, Claude's reading, NOT confirmed by Mike: the layout is new each new game (from the seed) and the same within a game; relit lights stay lit; gates keep their state, so a code found later opens a gate passed earlier.",
+  "themes": "§ET.5. Stage themes, each a ruin of its biome. ruin_kind: the ruins.json / delves.json kind its rooms come from (open where no kind fits yet). air: still or drafty (torch.json snuff.draft). dark: how dark before you relight it. space: tight or exposed. frames: Project-sheet reference frames. Only the two Mike named are listed; §CJ's delve types and the monuments (§DN–§DZ) are the pool for more.",
+  "progress": "§ET.4. Relit fire-holders (delves.json fire_holders) stay lit for the game and are places to relight a torch. Items are keys, tools and knowledge only (item_kinds): no damage numbers, no rarity, no chests (§CJ.3).",
+  "gates": "§ET.4. Puzzle gates to rediscover, never traps to punish. kinds: the ones talked through (PSO's obelisk set; a code from a found scroll; a passage that opens once relit). How each works is Claude Code's call within §ET.",
+  "sprites": "§ET.8. Figures and creatures are sprites baked from the shared rig (painted per §ES). around: directions around the figure (Doom's eight). rows_deg: viewing heights, the camera's elevation above the figure's eye line in degrees (negative is from below); the nearest row is drawn. anim_fps: the sprite animation's own steppy rate; the game still renders at full rate. sprite / geometry: what is and is not a sprite. candidates: small things with no engine shape yet, sprite candidates (first guess)."
+ },
+ "opening": {
+  "underground": true,
+  "hearth": "lit",
+  "exits_min": 3,
+  "exits_max": 4,
+  "bundle": "torch.json bundle",
+  "rescuer": 1,
+  "teach": "wordless",
+  "first_theme": "tomb"
+ },
+ "persistence": {
+  "layout": "per_new_game",
+  "relit_stays_lit": true,
+  "gates_keep_state": true
+ },
+ "themes": {
+  "tomb": {
+   "name": "the sarcophagus tombs",
+   "ruin_kind": "tomb",
+   "air": "still",
+   "dark": "pitch",
+   "space": "tight",
+   "frames": [9]
+  },
+  "snow_ruins": {
+   "name": "the snow ruins",
+   "ruin_kind": "open",
+   "biome": "snow",
+   "air": "drafty",
+   "dark": "dim",
+   "space": "exposed",
+   "frames": []
+  }
+ },
+ "progress": {
+  "relit_is_progress": true,
+  "item_kinds": ["key", "tool", "knowledge"]
+ },
+ "gates": {
+  "kinds": ["obelisk_set", "scroll_code", "relight_to_open"]
+ },
+ "sprites": {
+  "around": 8,
+  "rows_deg": [-25, 0, 30],
+  "anim_fps": 8,
+  "sprite": ["folk", "creatures"],
+  "geometry": ["terrain", "walls", "ruins", "fire_holders"],
+  "candidates": ["lily_pads", "mushrooms", "globe_cacti"]
+ }
+}

@@ -4,6 +4,11 @@
 collaborators. This overview is for sharing: what the game is, how its systems fit, and where
 it stands. Feedback is welcome on anything. Updated 1 Oct 2026, after the ambient cut.*
 
+> **6 Oct 2026: the game has pivoted.** Torchfire 1 is now an ambient, first-person dungeon
+> crawler: torch-lit, procedurally generated ruins you reclaim by relighting them. The open
+> world this overview describes is Torchfire 2, shelved for later. See design §ET; this
+> overview will be rewritten once the crawler's first slice is played.
+
 ---
 
 ## The one-sentence version

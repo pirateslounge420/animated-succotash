@@ -1,0 +1,53 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §ET.9] The NPC maker: character creation recycled to randomize folk. Each figure rolls a kind, a cloak style and colours, proportions and a set of parts, then bakes to its own sprite sheets (crawler.json sprites, §ET.8). First guesses by Claude (chat), 6 Oct; the designer owns them. Part names are placeholders until the parts are made.",
+  "kinds": "human: hood down, hair and face show (new in §ET.9). beast: a §EO/§EQ head under a cowl, no hair or face parts. The number is the share of folk who roll each.",
+  "cloak": "styles: the shared wardrobe; every kind draws from it. Cloak and hem colours, and the player's reserved indigo with the rust hem, stay in cloaks.json (colors, avoid).",
+  "proportions": "PSO-style sliders: each is a range the roll picks within; 1.0 is the rig as built.",
+  "hair_colors": "Fire Emblem-style. A figure rolls natural or wild by weight (wild is the spice), then a colour from that list. sRGB hex.",
+  "parts": "Preset parts per slot, mixed and matched. count: how many to make first. chance: the share of humans who roll one (1 means always). Under §EH, jewellery is bone, shell, stone or wood. glasses: there is no glass (retired 5 Oct); snow-goggle slits of bone or wood fit the snow ruins, or Mike drops the slot (§ET.9). At 270 lines (§ES) earrings and nose rings are a pixel or two even close: they read up close and in the portrait.",
+  "portrait": "The HUD portrait (§ET.9): a crop of the figure's own baked sprite, front angle, eye-level row. No separate art. Whose face it shows is open (§ET.10 call 9)."
+ },
+ "kinds": {
+  "human": 0.6,
+  "beast": 0.4
+ },
+ "cloak": {
+  "styles": ["hooded_cloak", "long_robe", "short_cape", "poncho", "mantle_and_cowl"]
+ },
+ "proportions": {
+  "height": [0.92, 1.08],
+  "build": [0.85, 1.2],
+  "shoulders": [0.9, 1.1],
+  "head": [0.95, 1.08],
+  "legs": [0.95, 1.05]
+ },
+ "hair_colors": {
+  "natural": {
+   "weight": 0.65,
+   "list": ["#1b1a1f", "#3b2a20", "#6b4a2e", "#8a3b1f", "#c9a45a", "#9a958c", "#e6e2d6"]
+  },
+  "wild": {
+   "weight": 0.35,
+   "list": ["#2fb5a6", "#c2357a", "#7b4fd1", "#4fa3e6", "#4caf50", "#c62828", "#a9c4e8"]
+  }
+ },
+ "parts": {
+  "hairstyle": {"count": 8, "chance": 0.9},
+  "brows": {"count": 4, "chance": 1.0},
+  "eyes": {"count": 5, "chance": 1.0},
+  "mouth": {"count": 4, "chance": 1.0},
+  "nose": {"count": 4, "chance": 1.0},
+  "ears": {"count": 3, "chance": 1.0},
+  "hat": {"count": 5, "chance": 0.3},
+  "facial_hair": {"count": 4, "chance": 0.3},
+  "glasses": {"count": 2, "chance": 0.1},
+  "earrings": {"count": 3, "chance": 0.2},
+  "nose_ring": {"count": 2, "chance": 0.1}
+ },
+ "portrait": {
+  "source": "sprite_crop",
+  "angle": "front",
+  "row": "eye"
+ }
+}

@@ -1,9 +1,11 @@
 # animated-succotash — the brief (read at the start of every session)
 
-This repo is **the ambient open world**: a slow, first-person walk across a procedural planet
-at 1/10 Earth scale. Old, overgrown roads lead between ruins and living camps; fire is carried,
-never made; what lurks in the dark is the only enemy (§CU); and every ruin is designed to lead down into a delve
-(§CJ, not built yet). Mike Flow is the designer. He doesn't code, so explain every change in
+This repo is **Torchfire 1: an ambient, first-person dungeon crawler** (design §ET, 6 Oct, not
+built yet). You wake underground by a lit hearth and reclaim procedurally generated ruins by
+relighting them, stage by themed stage; fire is carried, never made; the dark is the only enemy;
+no combat. **The open world described below (planet, roads, ecology, weather, camp sim) is
+Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
+and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.
 
 ## Engine
@@ -37,8 +39,8 @@ ruins (§AW, §CJ).
 
 ## Sources of truth, in order
 1. `docs/design/RECONCILIATION_2026-09-30.md`: the ambient cut and every decision since (§AT
-   onward, newest sections at the bottom). **§BR at the end is the order of work.** It wins
-   over everything below.
+   onward, newest sections at the bottom). **§ET.11 is the order of work for Torchfire 1**; it
+   replaces §BR's queue until Mike reorders. It wins over everything below.
 2. `docs/design/RECONCILIATION_2026-09-27.md`: the earlier locked design (§0–§AS), for
    whatever the 30 Sept doc doesn't touch.
 3. `docs/design/LOOK_REFERENCE.md`: the look, with rules R1–R10 and the eye test, measured

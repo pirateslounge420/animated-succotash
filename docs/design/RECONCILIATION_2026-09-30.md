@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows. With §EA (4 Oct, 12:19): `data/harm.json`. With §EH–§EN (5 Oct, 16:04, the village economy by voice): `data/animal_use.json` · `camps.json → sim.needs, sim.trades, sim.sharing, sim.hunt, sim.workshop, sim.third_places, sim.library, sim.specialists.record_keeper, sim.fire_circle.idles.night_stories, sim.jobs.kinds.hunt`, and `sim.population.village_cap` 24 → 50 · `camp_books.json → object.placement, record_keeper, memory` · `villages.json → specialties` mining and glass marked retired · `techniques.json → bog_iron` marked retired · `peoples/*.json → huts` (all seventeen), and the marsh, old_growth, canopy and mangrove files lose the smith.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`. With §CK–§CM (1 Oct, night): `data/landforms.json` (gate `tools/landforms_check.py`) · `data/uniques.json` · the sacred fig, two rhododendrons and two desert ferns in the biome files, two rhododendron associations, ferns in three associations · `habitat.json → always_present.rhododendron` · `items.json → mad_honey`. With §CY–§CZ (3 Oct, 15:45): `roads.json → opening_road.dawn_start` · `camps.json → sim.fire_circle` · `look.json → fire.coals, fire.specks, fire.light.breath` (gate `tools/fire_circle_check.py`). With §DA–§DL (3 Oct, the morning voice session, written up at 17:07): `data/wind.json` · `data/senses.json` · `data/shrines.json` · `data/tomes.json` · `data/day_accents.json` · `look.json → lens_flare, shafts, moon_nights` · `hud.json → calendar, log_more` · `camps.json → wake_found` · `dread.json → full_moon` · `sky/day_cycle.json → full_moon_illumination` · `ruins.json → overgrowth, haunt` · `audio.json → ruins` · `items.json → scroll, tome`; reference maths `tools/reference/beacon_reference.py`, `tools/reference/moon_reference.py`. With §DO–§DS (3 Oct, 21:24, the monuments and the sages): `ruins.json → styles` (nine new kinds and two styles, `kind` field) and `root_trees` · `uniques.json → uniques.wandering_fire, road_regulars` · `tomes.json → tao` · `smoke.json → outlets.by_ruin` rows · `delves.json → fire_holders.by_ruin` rows. With §DT–§DZ (3 Oct, 21:48): six more kinds in `ruins.json → styles` (hanging_gardens, abbey, colonnade, temple_park, pillar_shrines, hewn_temple), `haunt.kinds` gains the abbey, `landforms.json → landforms.columnar_basalt` (two variants; gate 0 errors), and their smoke and delve rows. With §EA (4 Oct, 12:19): `data/harm.json`. With §EH–§EN (5 Oct, 16:04, the village economy by voice): `data/animal_use.json` · `camps.json → sim.needs, sim.trades, sim.sharing, sim.hunt, sim.workshop, sim.third_places, sim.library, sim.specialists.record_keeper, sim.fire_circle.idles.night_stories, sim.jobs.kinds.hunt`, and `sim.population.village_cap` 24 → 50 · `camp_books.json → object.placement, record_keeper, memory` · `villages.json → specialties` mining and glass marked retired · `techniques.json → bog_iron` marked retired · `peoples/*.json → huts` (all seventeen), and the marsh, old_growth, canopy and mangrove files lose the smith. With §ET (6 Oct, 13:15, the crawler pivot): `torch.json → snuff` · `data/crawler.json` · `data/npc_maker.json`.
 
 ---
 
@@ -3756,3 +3756,176 @@ Mike: the aesthetic moves from the current smooth polys toward 3D pixel art, aft
 ### ES.3 Performance (with §ER.1)
 - About a quarter of the pixels of 480 → large GPU saving (rain, fog, glow, water).
 - Impostors for far trees and ruins (§ER.2) are now standard, not a test.
+
+## ET. Torchfire 1 is an ambient dungeon crawler; the open world waits for Torchfire 2 — LOCKED (6 Oct, 13:15, Mike)
+
+Talked through in chat, 6 Oct, by voice. Mike: *"what if we change this to a dungeon crawler
+style game … still basically procedurally generated"*; *"it should still be an ambient dungeon
+crawler … more slow-paced … a lot of it should still rely on the torch"*; *"if we focused on
+the dungeon crawler as the first game, then maybe we could get into the ambient open world,
+build that on top of it … we'll already have established the art style"*; *"I want to pull the
+scope down so we can really hone in on the art style instead of trying to balance a bunch of
+engines like the weather … that could be for game two, like Torchfire 2"*; *"lock it in"*.
+
+**The biggest amendment since §AT: it changes what this repo builds first.** Claude flagged the
+cost (the slow open-world wandering is what gets shelved); Mike chose it. §CJ (every ruin is a
+delve) stops being one feature and becomes the whole game. Data: `torch.json → snuff`,
+`data/crawler.json`, `data/npc_maker.json` (all first guesses, not wired). Not built.
+
+### ET.1 What Torchfire 1 is
+- An **ambient, first-person dungeon crawler**: slow and torch-lit, through procedurally
+  generated ruins (corridors, rooms, courtyards). No open world.
+- **What stays:** the dark is the antagonist and light holds it back (§BA, §CJ.5); fire is
+  borrowed, never made (§AW, §CN, §CQ); no health bar, with §EA/§EC's three hits as the harm
+  model; every camp and figure friendly; the look (§ES, LOOK_REFERENCE R1–R10); the mood of
+  forgotten places found again.
+- **Not combat.** Mike: *"less about combat and more about surviving and using your torch to
+  your advantage"*; damage and hack-and-slash *"could be for a different game"*.
+
+### ET.2 Torchfire 2 is the open world; nothing is deleted
+- **Shelved for Torchfire 2:** the planet and its scale (§CR), the open roads, ecology and plant
+  ranges (§CA, §CS), weather (§BS, §CX, §DA), the seasons, the camp simulation and the village
+  economy (§BL–§BP, §EE–§EN). Torchfire 2 is built later on top of this game, once the look is
+  proven here.
+- **§AT's rule:** keep the code, set it aside. It stays compiling and tested behind a switch,
+  not built on. Claude Code picks the switch (mirroring §AU's `profile`).
+- **Reuse as dressing is fine:** a stage's plants still read as their real species, and the
+  plant and habitat data are the reference for what belongs in a stage's theme. Nothing
+  simulates ranges.
+- **Naming clash, flagged:** §ED.7 used "Torchfire 2" for a later era with the Wu Xing weapon
+  ring. Torchfire 2 is now the open world; where the ring goes is open (ET.10).
+
+### ET.3 The opening: a hearth room underground
+**Supersedes** the river camp (§ED.1), the outdoor dawn spawn (§CY, §EB.1) and the spawn camp
+on the first road (§BV, §BX) for Torchfire 1.
+- You wake **underground in a ruin, in a central room with a lit hearth.** Three or four
+  corridors leave it, each generated (ET.10 call 3 on what "fresh" means).
+- **The hook:** someone found you and brought you to their hearth (§DE's "folk found you",
+  made the start). They are struggling: the dark is closing in, they may be the last of their
+  village, and one of theirs was recently taken. They are scared to go out. You take your torch
+  and go.
+- **Quiet heroism:** not a chosen warrior, only the one who can still carry a flame for
+  frightened people. Melancholy, never a power fantasy.
+- **You start with the torch** (§AW stands: nothing laid beside you, a bundle of unlit torches
+  by the hearth). Your first act is borrowing the hearth's flame with the swing (§CN).
+- **The room teaches without words.** No tooltips. It is safe light to learn in: take a torch,
+  catch the flame, see the coal flare when you sprint, before the dark costs anything. Teach in
+  the light, test in the dark.
+- **The first ruin is the sarcophagus tombs** (Mike likes those frames; frame 9 on the Project
+  sheets, the skeleton leaning out of a mossy stone box, is the clearest; Mike to name the
+  rest). Other ruin styles can be spawn-ins too (ET.5).
+
+### ET.4 Progress is light: reclaim the ruins by relighting them
+- The survivors had settled these ruins. You push the dark back **room by room** by relighting
+  their torches, sconces and hearths (§CN's swing, `delves.json → fire_holders`). A relit light
+  **stays lit**: ground won. There is no XP bar; light is the score.
+- **Keys, not loot.** §CJ.3 stands (no chests, no random loot). Items are keys, tools and
+  knowledge: a scroll with a code, something to cross water. Never damage numbers or rarity
+  tiers. The richest key is light itself: a passage that opens only once it is relit.
+- **Puzzle gates and round trips.** PSO's ruins obelisks are the model: wake a set to open the
+  way on. Something found later (a scroll's code) opens a gate you passed earlier, so you come
+  back with new eyes. This settles §CJ's open call on puzzle doors: yes, as gates to rediscover,
+  never traps to punish.
+
+### ET.5 The shape: guided, themed stages, the PSO way
+- Phantasy Star Online's structure: a hub and **guided, themed stages**, each generated.
+  Corridors, courtyards and rooms; guided, never open. The map leads you on from stage to
+  stage and biome to biome.
+- **A stage is a ruin of its biome.** Named so far: **the sarcophagus tombs** (the crypt
+  delve, §CJ) and **the snow ruins** (in snow country). §CJ's delve types and the monuments
+  (§DN–§DZ) are the pool for more; not locked.
+- **The torch is the dial between stages** (Claude's first guess): drafty, exposed snow ruins
+  make the flame nervous; sealed tombs are dead still but pitch dark and tight. Same torch, a
+  different feel per stage, no new systems.
+- §BB's corridor, threshold and reveal, and §DM's "never leads where you can't follow", carry
+  indoors.
+
+### ET.6 The builders let the rock breathe
+- The builders were advanced: they cut **airways** through the rock so smoke leaves and
+  everything breathes. This answers §CV underground: every hearth's smoke leaves by an airway.
+- The same airways are where **drafts** come from (ET.7), and a lean in the flame points toward
+  open air, a way to find your way out (first guess).
+- Who the builders were is open (ET.10).
+
+### ET.7 The torch: forgiving, but it can go out
+- The torch is the light. Mike: *"it's called Torchfire"*. Going out is **rare and dramatic**,
+  never from ordinary walking and looking about: a flat-out sprint held too long, a strong draft
+  at an airway mouth, or wading into deep water (`douse_depth_m`, §AW). Each warns first: the
+  coal gutters. Numbers in `torch.json → snuff`.
+- **Out means out:** fire is never made. Relight at a lit hearth, any sconce you have relit, or
+  from a carried coal (§CQ). Reclaiming makes the dark smaller.
+- **Other lights, each with a trade-off,** are the direction (Mike: *"different types of
+  lighting things, which have different properties"*): an oil lamp, a candle, later a lantern.
+  Steadier but rarer fuel, say. Details open. **Flag:** a lantern needs metal and glass or
+  horn, and §EH says no metal. A clay lamp and a tallow candle fit §EH; a lantern needs §EH
+  amended, or it is a builders' relic (ET.10).
+- **Rushlights are not an item.** They live on as **set dressing**: a rushlight guttering in a
+  hut or a niche says someone lives here and is friendly. Light as wayfinding.
+
+### ET.8 Figures are sprites, baked from the shared rig
+- **Every figure and creature is a pre-rendered sprite, the Doom way.** The shared rig (§EO,
+  with §EQ's heads, painted per §ES) is animated in 3D once and rendered out to sprite sheets
+  from a grid of angles. In play it is a quad that swaps frames: no skinning, no physics on
+  figures.
+- **Depth: around and up-and-down.** Eight directions around (Doom's number) times three
+  heights (eye level, from above, from below), first guess, so looking down a stair picks the
+  from-above frame. The small snap between angles is the era's tax and part of the charm.
+  Sprite animation runs at a low, steppy rate while the game renders at full rate.
+- **Terrain, walls and ruins stay real geometry** (§ES mid-poly, painted): a billboard only holds
+  from the angle it was drawn, and you walk on and around these. Small things the engine has
+  no shape for (lily pads, mushrooms, low globe cacti) are sprite candidates; first guess.
+- **Amends §ES.2's ~1,500-triangle near figure:** that model is now the bake source, not what is
+  drawn. Extends §ER.2/§ES.3's impostors (far trees and ruins as sprites of their own models) to
+  every figure.
+- **Free movement stays** (§AU: walk, sprint, mouse look). This is Claude's reading of Mike's
+  talk of flicking the mouse and sprinting; Doom's sprites worked with free movement. Grid-step
+  is not locked (ET.10).
+
+### ET.9 People: one wardrobe, and the NPC maker
+- **One rig, one shared wardrobe of cloak styles, all recolourable** (`cloaks.json` colours; the
+  styles are new). Beast-headed folk stay (§EO, §EQ). **New: human folk with the hood down**,
+  hair and face showing. **Amends the brief's "every intelligent creature is a cloaked figure on
+  one shared rig":** still one rig, still cloaked, but some faces now show. The indigo cloak with
+  the rust hem stays the player's alone (`cloaks.json → avoid`), and the player's hood stays empty
+  (§EO.2).
+- **The NPC maker:** character creation, recycled to randomize folk (Mike may lift it for
+  another game). PSO-style proportion sliders; Fire Emblem-style random colours for cloaks and
+  hair, wild hair included; preset parts mixed and matched: hairstyles, brows, eyes, mouth,
+  nose, ear shape, hats, facial hair, glasses, earrings, nose rings. Each variant bakes to its
+  own sheets (ET.8). Numbers in `data/npc_maker.json`.
+- **The HUD portrait:** a small face in the HUD, the classic crawler way, cropped from the same
+  sprite. No separate art. Inside the low-res frame (§Y).
+- **Legibility at 270 lines (§ES):** hair, hats, beards and glasses read on a figure across a
+  corridor; an earring or a nose ring is a pixel or two even close. Cheap to include; expect
+  them to read only up close and in the portrait.
+- **§EH note:** jewellery is bone, shell, stone or wood. Glasses meet "no glass" (glass retired
+  5 Oct); snow-goggle slits of bone or wood fit the snow ruins, or Mike drops them.
+- *"All kinds of people you'll meet."* Every camp friendly; that stands.
+
+### ET.10 Open for Mike
+1. **Movement:** free (ET.8, Claude's reading) or grid-step like the classic crawlers?
+2. **The hub:** one home hearth (the opening room) you keep returning to, or a hearth of your
+   own in each ruin you reclaim?
+3. **"Generated every time":** Claude's reading is a new layout every new game, and the same
+   place within a game, because relit stays relit and a code found later must open a gate that
+   is still there.
+4. **Spear and bow:** §ED.7 locked them into Torchfire 1 for hunting, fishing and guardians, and
+   §EE.6 left it open. Mike's 6 Oct words (no damage, keys not loot) and shelving the hunt with
+   the camp economy point to the torch only, but §ED.7 stands until Mike says.
+5. **The lantern** against §EH (ET.7).
+6. **The builders:** the survivors' own ancestors, or an older people long gone?
+7. **How the rescuer tells you** what happened: words, gesture, or the camp book (§EN)?
+8. **The Wu Xing ring** (§ED.7): with the open world in Torchfire 2, or the ninja game?
+9. **The HUD portrait:** the face of whoever you are facing, or your own?
+
+### ET.11 Order of work (Claude's proposal; replaces §BR's queue until Mike reorders)
+First slice, to play:
+1. **The switch:** the open-world systems off behind a switch, compiling (ET.2).
+2. **The hearth room:** one underground room, a lit hearth, a bundle of unlit torches, three or
+   four exits; the rooms beyond generated from the seed out of a tomb kit (§CJ.8).
+3. **Relighting:** fire-holders down the corridors that stay lit; full dark between them
+   (§BA, §CJ.5).
+4. **The torch's snuff rules** (`torch.json → snuff`).
+5. **One baked sprite:** the rescuer at the hearth, eight around by three heights.
+
+Mike plays it and reports. Then the snow ruins, the NPC maker, puzzle gates.
