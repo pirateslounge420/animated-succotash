@@ -3657,7 +3657,7 @@ The pivot from scope to ambience: what makes one frame feel magical when the pla
 - The shared cloaked rig stays; **only the head changes.** From a distance a figure reads as a person; up close, by firelight, a beast's head looks out of the hood (the robed lizard, owl scholar, goat and rabbit of the reference frames).
 - **The starting set is the twelve Eastern zodiac animals:** rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog, pig. One animal per tribe. More may come later.
 - The dragon is the one beast that is not real; it is the rare tribe.
-- First guess (Claude, the designer owns it): each tribe lives where its animal really lives (§CA), in `data/peoples/zodiac_heads.json`.
+- First guess (Claude, the designer owns it): each tribe lives where its animal really lives (§CA), in `data/zodiac_heads.json`.
 - **Open:** §BO's goblin, orc and small-folk kinds are not retired by this lock; `folk_kinds.json` is unchanged until Mike says.
 
 ### EO.2 The player's hood is empty
