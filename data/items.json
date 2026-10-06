@@ -123,6 +123,30 @@
    "color": "#8a8a8a",
    "_note": "technique fat_lamp: a stone bowl of rendered fat with a moss wick"
   },
+  "pot": {
+   "name": "Pot",
+   "icon": "pot",
+   "color": "#9c5a36",
+   "_note": "Added by Claude Code with the \u00a7EJ.4 wiring: a camp's gift (camps.json sim.sharing.gift_back), from a camp with pottery. Carried; it does nothing yet."
+  },
+  "bowl_of_stew": {
+   "name": "Bowl of stew",
+   "icon": "bowl",
+   "color": "#6b4a2e",
+   "_note": "Added by Claude Code with the \u00a7EJ.4 wiring: a camp's gift while its store has food. Food: one unit on a store."
+  },
+  "cord_hank": {
+   "name": "Cord hank",
+   "icon": "cord",
+   "color": "#a8905c",
+   "_note": "Added by Claude Code with the \u00a7EJ.4 wiring: a camp's gift, from a camp with cordage and basketry. Carried; it does nothing yet."
+  },
+  "basket": {
+   "name": "Basket",
+   "icon": "basket",
+   "color": "#9a8050",
+   "_note": "Added by Claude Code with the \u00a7EJ.4 wiring: a camp's gift, from a camp with cordage and basketry. Carried; it does nothing yet."
+  },
   "mad_honey": {
    "name": "Mad honey",
    "icon": "honey",

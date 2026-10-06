@@ -79,6 +79,8 @@ var _plan: Array = []
 var _plan_t := 0.0
 var _ruin_walls := false
 var _trades_stamp := ""
+## The player's pack (Main): where the camp's gift goes (§EJ.4).
+var player_inventory: Inventory
 
 
 ## camps.json first_camp (design 1 Oct §CB): the first camp's kind rolls
@@ -675,8 +677,6 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 		if not st.is_empty():
 			if absf(float(woodpile.get_meta("units", -1.0)) - float(st.wood)) >= 0.5:
 				CampProps.refresh_woodpile(woodpile, float(st.wood))
-			if absf(float(food_store.get_meta("units", -1.0)) - float(st.food)) >= 1.0:
-				CampProps.refresh_food_store(food_store, float(st.food))
 	_time += delta
 	Campfire.flicker(_fire, _time)
 	# The opening camp has no workshop in play (Mike, 5 Oct); the
@@ -702,6 +702,7 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 	var fst := FireStore.store_of(_fire)
 	if not fst.is_empty():
 		ctx.fire_low = FireStore.units_now(fst) < float((CampSim.SIM.get("store", {}) as Dictionary).get("feed_fire_below_units", 3.0))
+		ctx["fire_out"] = str(fst.get("state", "")) in ["out", "embers"]
 	var phase := FireCircle.phase_name(world.local_clock(site).y, CubeSphere.latitude(site), world.days)
 	var circle: Array = _npcs
 	if workshop != null and is_instance_valid(workshop) and CampSim.instance != null:
@@ -714,6 +715,16 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 		Workshop.drive(_npcs, workshop, _plan, delta, _time, player_pos, player_pos.distance_to(_fire.global_position) > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)))
 		circle = Workshop.fire_sitters(_npcs)
 		Workshop.tick(workshop, hearth_props, phase == "dusk" or phase == "night", Workshop.potter_working(st3, _plan))
+	# The meal and the gift (§EJ, Sharing): the store's pieces, the
+	# carrier, the bowls, the gift walked up to you.
+	if CampSim.instance != null and food_store != null and dressing != null:
+		var st4 := CampSim.instance.state_of("opening")
+		if not st4.is_empty():
+			dressing.set_meta("key", "opening")
+			circle = Sharing.live(dressing, st4, circle, food_store, world.days, CampSim.instance.clock_h(st4, world.days), _time, delta, player_pos, player_inventory)
+			var shown := Sharing.shown(dressing, st4)
+			if int(food_store.get_meta("pieces", -1)) != shown:
+				CampProps.show_food_pieces(food_store, shown)
 	FireCircle.animate(circle, _fire, _time, delta, player_pos, phase, ctx)
 
 

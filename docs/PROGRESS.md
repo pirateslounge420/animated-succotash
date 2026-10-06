@@ -3,6 +3,52 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-06 — §EJ food passed round, the night stories, the gift (queue 41)
+- **What changes on screen:**
+  - **The food store shows pieces.** Each piece is one day's eating for that camp: strips on the rack first (up to eight), then baskets below (up to eight).
+  - **The meal:** at the end of dusk_form (an hour and a half after the gather hours end, 18:30 local), an adult walks from the circle to the store, takes a piece off it, carries it back and sits. Then everyone seated eats from a bowl. The store is one piece smaller from that moment. The carrier is never the folk who hunted that day.
+  - **What the store shows the rest of the day:** it never shrinks at other times. Gathering, a hunt or your gifts add pieces as they come in.
+  - **Your bowl:** stand within 3.6 m of the fire when the bowls go round and a bowl appears in your hands, lifted now and then, for as long as theirs. The log says "They shared their food with you." the first time at each camp. No stat changes. There is no sit action, so standing in the circle counts.
+  - **The night stories:** at night by a fed fire, one adult tells: the hands move and the hood turns to each listener in turn. Everyone else awake looks at the teller instead of the fire for the hold, then back. There is one teller at a time. Never by day, and never when the fire is low or out (a telling stops if the fire drops).
+  - **The gift:** once you have put 6 units on a camp's store or woodpile, at the next dusk with you within 30 m, an adult (the record-keeper once there is one, §EN) walks up to you, holds a thing out in both hands, and it goes in your pack. The log says, for example, "River folk gave you a torch." It happens once per camp.
+  - **What the gift is:** something the camp could make. A torch from any fire, a bowl of stew while it has food, a pot with pottery, a cord hank or a basket with cordage. Four new item kinds, with their own icons: pot, bowl of stew, cord hank, basket.
+- **What the code does:**
+  - New `scripts/peoples/sharing.gd` (Sharing).
+  - The sim's eating is unchanged. CampSim tells Sharing what was eaten each tick (`eaten_since_meal`), and once a local day at the meal hour the store's shown pieces fall by `piece_off_store_per_meal`. What came in since the last meal adds pieces.
+  - `Sharing.live` draws the meal and the gift at the opening camp and every people's camp.
+  - FireCircle has the new `night_stories` idle: teller, listeners and the fire gate.
+  - CampSim asserts one store per camp; no folk record holds food or wood.
+  - `add_food`, `add_wood` and `add_seeds` count toward the gift.
+- **dusk_form:** the camps had no dusk_form walk of their own. The workshop camps already walk back from the benches at gather end (§EL), and the opening camp sits all day. I built only the meal's walk on it, as §EJ asks, not a general walk-in-carrying for every folk.
+- **Data (additive, with help):**
+  - `camps.json → sim.sharing`: `player_in_circle_m` 3.6, `gift_back.reach_m` 30, `gift_back.hold_out_s` 2.5.
+  - `fire_circle.idles.night_stories.turn_s` 3.5 (seconds the teller faces each listener).
+  - `items.json` kinds: pot, bowl_of_stew, cord_hank, basket.
+  - The sharing and night_stories clauses of `camps.json _help.village_economy` are wired.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/sharing_check.gd` gives 0 fails:
+  - over 14 game days at a full store, the pieces fall by exactly 1 at each meal and never at other times;
+  - the meal tick eats only the tick's share (no double eating);
+  - the day's hunter never carries (forced as well);
+  - the built store drops from 3 to 2 pieces once the carrier has taken it off;
+  - all 8 seated folk eat;
+  - the player in the circle gets a bowl at both meals and one log line;
+  - night_stories ran 2073 frames by night, never by day, never at a low fire, never two tellers, and every listener looked at the teller;
+  - no gift before 6 units, then exactly one per camp (3 camps);
+  - no per-folk food or wood in the states or in CampSim's code.
+  Also run:
+  - `hunt_check`, `workshop_check`, `trades_check`, `basalt_check`, `no_metal_check` and `circle_check` give 0 fails. `circle_check`'s notice test now holds the circle still first, because a listener rightly looks at a teller rather than the fire.
+  - `camp_check`'s canopy-platforms line and `village_check`'s 5 layout lines fail on 7731 as before. That is code these prompts don't touch (CanopyVillage, the village plan).
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=meal HOURS=19` wrote `tools/reference/walkabout/7731/meal_20h_f0.png`. It is the opening camp at dusk, seen from your place in the circle (a harness frame: the meal is held at the frame's hour).
+  - The store (the rack of strips behind the fire) went from 3 pieces to 2.
+  - The carrier stands in the ring on the way back to the seat with the piece in their hands, and the others sit round the fire.
+  - **Two things in the frame I can't fully account for:**
+    - A brown shape rides just above the standing carrier's hood. A probe puts the piece in the hands at 0.86 m, and the rig measures the same as a figure built standing, so I believe it is the cloak cloth still settling a dozen frames after the carrier stands. It needs a look in play.
+    - A pale square floats right of centre. I could not identify it.
+- **Flags for Mike:**
+  1. **There is no sitting down for the player**, so "sit in the circle" is "stand within 3.6 m of the fire" (`sharing.player_in_circle_m`). If you want a real sit (a key at the spare seat), that's a new verb; say so.
+  2. **The gift waits for you.** It comes at the next dusk you are within 30 m of the camp, not at a dusk you miss.
+  3. **The store's look changed:** it now shows a day's eating per piece (up to 16), not a strip per 2 units. A camp that is short shows few pieces even though it still eats.
+
 ## 2026-10-06 — §EK the whole animal: the hunt, the hut, the six things (queue 40)
 - **What changes on screen:**
   - **The hunt:** a camp with a workshop (storage rung and up; the opening camp has none) hunts one to three times a game week, in the gather hours. An adult takes the spear: never the keeper, never a teen or a child. They walk out 400–800 m, past where the gatherers go, to where game is, and stand out there a while. The kill is never shown.

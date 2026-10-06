@@ -246,6 +246,8 @@ func _run() -> void:
 			kinds.append("pottery")
 		if only.has("hunt"):
 			kinds.append("hunt")
+		if only.has("meal"):
+			kinds.append("meal")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -493,6 +495,13 @@ func _run() -> void:
 				var cam: Vector3 = _down_the_road(camp_d, 85.0).dir
 				sites.append({"name": "hunt", "dir": cam, "look": CreatureSpawner._offset(r120, 1.2, 18.0), "hunt_at": CreatureSpawner._offset(r120, 1.2, 18.0),
 					"note": "a river camp's hunter dragging a deer home on a pole (harness: camp, rung and hunt set for the frame)"})
+			"meal":
+				# The opening camp's meal at dusk (design 5 Oct §EJ): from your
+				# own place in the circle, the carrier on the way back from
+				# the store with the piece (a harness frame: the meal is held
+				# at the frame's hour).
+				sites.append({"name": "meal", "dir": main.camp.player_spot, "look": camp_d, "meal": true,
+					"note": "the opening camp's meal at dusk, from your place in the circle (harness: the meal held now)"})
 			"pottery":
 				# A river camp at the specialist rung with pottery (design 5
 				# Oct §EI): the opening river camp set to the specialist rung
@@ -881,6 +890,34 @@ func _hunt_camp(site: Dictionary) -> void:
 		site["note"] = str(site.get("note", "")) + " · no large game in reach: no hunt"
 
 
+## Hold the opening camp's meal now (§EJ) and run the camp on until the
+## carrier is on the way back to the fire with the piece.
+func _meal_now(site: Dictionary) -> void:
+	var cs: CampSim = main.camp_sim
+	var st := cs.state_of("opening")
+	if st.is_empty() or main.camp.dressing == null:
+		return
+	var epd := cs.eat_per_day(st)
+	if float(st.food) < epd * 3.0:
+		st.food = epd * 4.0
+		st.erase("meal")
+	main.camp.update_camp(0.0, player.global_position)
+	Sharing.tick(cs, st, world.days, cs.clock_h(st, world.days))
+	var before := Sharing.pieces(st)
+	main.camp.update_camp(0.0, player.global_position)
+	if st.has("meal"):
+		(st.meal as Dictionary)["day"] = -999
+	Sharing.tick(cs, st, world.days, maxf(cs.clock_h(st, world.days), Sharing.meal_h()))
+	var leg := -1
+	for i in 600:
+		main.camp.update_camp(0.05, player.global_position)
+		var anim: Dictionary = main.camp.dressing.get_meta("meal_anim", {})
+		leg = int(anim.get("leg", -1))
+		if anim.is_empty() or (leg == 2 and float(anim.t) > 1.2):
+			break
+	print("[meal] %s: the store %d -> %d pieces, the carrier %s (leg %d)" % [site.name, before, Sharing.pieces(st), "on the way back with the piece" if leg == 2 else "not walking", leg])
+
+
 ## Time the forced hunt so the hunter is 22 m short of the back door now
 ## (clear of the camp behind, from the road).
 func _hunt_retime(site: Dictionary) -> void:
@@ -1165,6 +1202,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			world.days = Astro.days_at_solar_hour(base, hour, lon, lat)
 		if site.has("hunt_key"):
 			_hunt_retime(site)
+		if site.get("meal", false):
+			_meal_now(site)
 		# A site that looks up at something (a great range's summit) tips
 		# the first facing up to it.
 		var pitch0 := 0.0

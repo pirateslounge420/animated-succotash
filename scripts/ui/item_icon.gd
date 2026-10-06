@@ -76,6 +76,26 @@ static func draw_icon(ci: CanvasItem, c: Vector2, r: float, it: Dictionary) -> v
 			ci.draw_arc(c, r * 0.55, 0.0, TAU, 20, main, w * 1.8)
 		"fruit":
 			_fruit(ci, c, r, it, main, w)
+		"pot":
+			# A round-bellied pot with a neck (a camp's gift, §EJ.4).
+			ci.draw_colored_polygon(_ellipse(c + Vector2(0, r * 0.2), r * 0.7, r * 0.6), main)
+			ci.draw_rect(Rect2(c + Vector2(-r * 0.3, -r * 0.65), Vector2(r * 0.6, r * 0.35)), main.darkened(0.15))
+		"bowl":
+			# A bowl with the stew showing.
+			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-r * 0.85, -r * 0.1), c + Vector2(r * 0.85, -r * 0.1), c + Vector2(r * 0.45, r * 0.6), c + Vector2(-r * 0.45, r * 0.6)]), main)
+			ci.draw_colored_polygon(_ellipse(c + Vector2(0, -r * 0.1), r * 0.8, r * 0.18), Color(0.55, 0.36, 0.2))
+		"cord":
+			# A hank of cord: loops bound in the middle.
+			for k in 3:
+				ci.draw_arc(c, r * (0.35 + 0.18 * k), 0.0, TAU, 16, main.darkened(0.08 * k), w)
+			ci.draw_rect(Rect2(c + Vector2(-r * 0.12, -r * 0.8), Vector2(r * 0.24, r * 1.6)), main.darkened(0.3))
+		"basket":
+			# A basket: weave lines across a tapered body.
+			var bpts := PackedVector2Array([c + Vector2(-r * 0.75, -r * 0.4), c + Vector2(r * 0.75, -r * 0.4), c + Vector2(r * 0.5, r * 0.75), c + Vector2(-r * 0.5, r * 0.75)])
+			ci.draw_colored_polygon(bpts, main)
+			for k in 3:
+				var y := -r * 0.15 + k * r * 0.3
+				ci.draw_line(c + Vector2(-r * 0.68 + k * 0.08 * r, y), c + Vector2(r * 0.68 - k * 0.08 * r, y), main.darkened(0.3), maxf(1.0, w * 0.7))
 		_:
 			ci.draw_circle(c, r * 0.6, main)
 

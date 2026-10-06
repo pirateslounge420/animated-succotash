@@ -372,3 +372,22 @@ static func refresh_food_store(n: Node3D, units: float) -> void:
 	for i in baskets:
 		var h := 0.35
 		CreatureBodies.cone(stock, 0.2, 0.16, h, Vector3(-0.5 + i * 0.28, h * 0.5, 0.35), Color(0.6, 0.5, 0.3), 0.0, 8)
+
+
+## The store as PIECES (design 5 Oct §EJ.1, Sharing): one a day's eating
+## for the camp; the rack's eight first (strips), then eight baskets below
+## in two rows. The meal takes one off.
+static func show_food_pieces(n: Node3D, pieces: int) -> void:
+	var stock: Node3D = n.get_node("Stock")
+	for c in stock.get_children():
+		stock.remove_child(c)
+		c.queue_free()
+	n.set_meta("pieces", pieces)
+	var pal: Array = n.get_meta("pal", [])
+	var col: Color = pal[0] if not pal.is_empty() else Color(0.6, 0.45, 0.3)
+	for i in clampi(pieces, 0, 8):
+		var strip := CreatureBodies.box(stock, Vector3(0.12, 0.35, 0.03), Vector3(-0.63 + i * 0.18, 1.4, 0), col.darkened(0.1 + 0.05 * (i % 3)))
+		strip.rotation.y = 0.2 * (i % 2)
+	for i in clampi(pieces - 8, 0, 8):
+		var h := 0.35
+		CreatureBodies.cone(stock, 0.18, 0.14, h, Vector3(-0.45 + (i % 4) * 0.3, h * 0.5, 0.3 + (i / 4) * 0.36), Color(0.6, 0.5, 0.3), 0.0, 8)

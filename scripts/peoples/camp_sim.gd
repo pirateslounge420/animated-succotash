@@ -332,6 +332,7 @@ func _tick(st: Dictionary, days: float) -> void:
 		st.reach_m = base + (1.0 - float(st.woods)) * float(restraint.get("reach_grow_per_stripped_day_m", 25.0)) * 4.0
 	# --- Eat ---
 	var eat := eat_per_day(st) * th / 24.0
+	Sharing.ate(st, minf(eat, float(st.food)))
 	st.food = maxf(float(st.food) - eat, 0.0)
 	if float(st.food) <= 0.0:
 		st.food_short_days = float(st.food_short_days) + th / 24.0
@@ -403,6 +404,11 @@ func _tick(st: Dictionary, days: float) -> void:
 		# The hunt (design 5 Oct §EK, Hunt): out, home, the hut, the pieces.
 		Hunt.tick(self, st, days, h, th, world.get("planet"), player_dir)
 		Trades.update(st, world.get("planet"), chunks.rivers if chunks != null else null)
+	# The store shows what was eaten once a day, at the meal (§EJ.1).
+	Sharing.tick(self, st, days, h)
+	# One store per camp (sharing.private_stores false): no folk owns food
+	# or wood.
+	assert(Sharing.one_store(st), "a folk holds a store of its own")
 
 
 ## The fundamentals made visible (design 5 Oct §EI.1, sim.needs): water
@@ -1072,13 +1078,18 @@ func _fire_loaded(st: Dictionary) -> bool:
 
 # --- The player's part (§BL: the player's gathering goes into the same store) ---
 
+## The player's armful on the woodpile (Main); counted toward the camp's
+## gift (§EJ.4, Sharing.brought).
 func add_wood(st: Dictionary, units: float) -> void:
 	st.wood = float(st.wood) + units
+	Sharing.brought(st, units)
 	WorldSave.mark_dirty()
 
 
+## The player's food on the store (Main); counted toward the gift.
 func add_food(st: Dictionary, units: float) -> void:
 	st.food = float(st.food) + units
+	Sharing.brought(st, units)
 	WorldSave.mark_dirty()
 
 
@@ -1090,13 +1101,14 @@ func add_seeds(st: Dictionary, sp_idx: int) -> void:
 		st.seed_species = []
 	if not (st.seed_species as Array).has(sp_idx):
 		(st.seed_species as Array).append(sp_idx)
+	Sharing.brought(st, 1.0)
 	WorldSave.mark_dirty()
 
 
 ## Food units a thing in the pack is worth on the store (0: not food).
 static func food_units(it: Dictionary) -> float:
 	match str(it.get("kind", "")):
-		"fruit", "mushroom", "fish", "herb_bundle":
+		"fruit", "mushroom", "fish", "herb_bundle", "bowl_of_stew":
 			return 1.0
 	return 0.0
 

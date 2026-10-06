@@ -51,7 +51,7 @@ static var IDLES: Dictionary = D.get("idles", {})
 static var NOTICE: Dictionary = D.get("notice", {})
 
 ## The loops the circle plays (the pipe waits on §CY.4).
-const BUILT := ["watch_fire", "warm_hands", "poke_fire", "feed_fire", "pipe", "eat_bowl", "sit_work", "doze"]
+const BUILT := ["watch_fire", "warm_hands", "poke_fire", "feed_fire", "pipe", "eat_bowl", "sit_work", "doze", "night_stories"]
 ## The ones a child plays (§CY.2: never the pipe, never a job).
 const CHILD := ["watch_fire", "warm_hands", "poke_fire", "eat_bowl", "doze"]
 const WOOD := ["log", "stump", "root", "limb"]
@@ -249,12 +249,18 @@ static func pick(holder: Node3D, phase: String, ctx: Dictionary, rng: RandomNumb
 			continue
 		if n == "pipe" and int(ctx.get("pipes", 0)) >= int(e.get("max_at_once", 1)):
 			continue
+		if n == "night_stories" and int(ctx.get("tellers", 0)) >= int(e.get("max_at_once", 1)):
+			continue
 		match str(e.get("needs", "")):
 			"food_store_not_empty":
 				if not bool(ctx.get("food_ok", true)):
 					continue
 			"fire_below_feed_units":
 				if not bool(ctx.get("fire_low", false)):
+					continue
+			"fire_fed":
+				# The telling is gated on a fed fire (§EJ.3).
+				if bool(ctx.get("fire_low", false)) or bool(ctx.get("fire_out", false)):
 					continue
 		var wt := float((e.get("weight", {}) as Dictionary).get(phase, 1.0)) if e.has("weight") else 2.0
 		if wt <= 0.0:
@@ -294,24 +300,42 @@ static func animate(sitters: Array, fire: Node3D, time: float, delta: float, pp:
 	var hold := float(NOTICE.get("hold_s", 2.0))
 	var again := float(NOTICE.get("again_after_s", 40.0))
 	var rate := float(NOTICE.get("rate", 6.0))
-	# One pipe at a fire at a time.
+	# One pipe at a fire at a time; one teller (§EJ.3).
 	var pipes := 0
+	var tellers := 0
+	var teller: Node3D = null
 	for s0 in sitters:
 		if is_instance_valid(s0) and str((s0 as Node3D).get_meta("idle", "")) == "pipe":
 			pipes += 1
+		if is_instance_valid(s0) and str((s0 as Node3D).get_meta("idle", "")) == "night_stories":
+			tellers += 1
+			teller = s0
+	# Who the teller looks to in turn: the others awake.
+	var listeners: Array = []
+	for s0 in sitters:
+		if is_instance_valid(s0) and s0 != teller and str((s0 as Node3D).get_meta("idle", "")) != "doze":
+			listeners.append(s0)
 	for i in sitters.size():
 		var s: Node3D = sitters[i]
 		if not is_instance_valid(s):
 			continue
 		ctx["pipes"] = pipes
+		ctx["tellers"] = tellers
 		rng.seed = hash([i, int(time * 10.0), s.name])
 		var ph := float(s.get_meta("phase", 0.0))
 		# The loop: pick one when the last runs out.
 		var idle := str(s.get_meta("idle", ""))
 		var until := float(s.get_meta("idle_until", -1.0))
+		# The fire gone low: the telling stops (§EJ.3).
+		if idle == "night_stories" and (bool(ctx.get("fire_low", false)) or bool(ctx.get("fire_out", false))):
+			until = time
 		if idle == "" or time >= until:
 			if idle == "pipe":
 				pipes -= 1
+			if idle == "night_stories":
+				tellers -= 1
+				if teller == s:
+					teller = null
 			idle = pick(s, phase, ctx, rng)
 			s.set_meta("idle", idle)
 			s.set_meta("idle_from", time)
@@ -322,6 +346,10 @@ static func animate(sitters: Array, fire: Node3D, time: float, delta: float, pp:
 				var plan := pipe_plan(rng)
 				s.set_meta("pipe_plan", plan)
 				s.set_meta("idle_until", time + float(plan.total))
+			if idle == "night_stories":
+				tellers += 1
+				teller = s
+				listeners.erase(s)
 			_props(s, idle)
 		var t := time - float(s.get_meta("idle_from", time))
 		s.set_meta("idle_t", t)
@@ -353,7 +381,23 @@ static func animate(sitters: Array, fire: Node3D, time: float, delta: float, pp:
 		var near := s.global_position.distance_to(pp) < watch
 		var tracking := bool(s.get_meta("tracking", false))
 		var last_end := float(s.get_meta("look_end", -1000.0))
-		if near and not dozing and (tracking or time - last_end > again):
+		var hood_x: float = pose.hood
+		s.set_meta("look_target", "fire")
+		var story_to: Node3D = null
+		if idle == "night_stories" and not listeners.is_empty():
+			# The teller's hood to each listener in turn.
+			var turn := float((IDLES.get("night_stories", {}) as Dictionary).get("turn_s", 3.5))
+			story_to = listeners[int(t / maxf(turn, 0.5)) % listeners.size()]
+		elif teller != null and teller != s and not dozing and bool((IDLES.get("night_stories", {}) as Dictionary).get("listeners_look_at_teller", true)):
+			# A listener: the teller instead of the fire.
+			story_to = teller
+			hood_x = minf(hood_x, 0.12)
+		if story_to != null and is_instance_valid(story_to):
+			var to2 := s.global_transform.affine_inverse() * story_to.global_position
+			look_yaw = clampf(atan2(-to2.x, -to2.z), -max_turn, max_turn)
+			s.set_meta("look_target", str(story_to.name))
+			s.set_meta("tracking", false)
+		elif near and not dozing and (tracking or time - last_end > again):
 			# Following you while you're inside watch_m.
 			s.set_meta("tracking", true)
 			var to := s.global_transform.affine_inverse() * pp
@@ -367,9 +411,11 @@ static func animate(sitters: Array, fire: Node3D, time: float, delta: float, pp:
 				last_end = time + hold
 			if time < last_end:
 				look_yaw = float(s.get_meta("look_yaw", 0.0))
+		if s.get_meta("look_target", "fire") == "fire" and bool(s.get_meta("tracking", false)):
+			s.set_meta("look_target", "player")
 		s.set_meta("look_yaw", look_yaw)
 		head.rotation.y = lerp_angle(head.rotation.y, look_yaw, clampf(delta * rate * 0.5, 0.0, 1.0))
-		head.rotation.x = lerpf(head.rotation.x, pose.hood, clampf(delta * 4.0, 0.0, 1.0))
+		head.rotation.x = lerpf(head.rotation.x, hood_x, clampf(delta * 4.0, 0.0, 1.0))
 
 
 ## A pipe's steps (idles.pipe.steps): when each starts, `t` seconds into
@@ -475,6 +521,14 @@ static func _pose(idle: String, t: float, ph: float, plan := {}) -> Dictionary:
 				r = Vector3(0.4 + 0.15 * absf(sin(t * 9.0)), 0, 0.35)
 				l = Vector3(0.3, 0, 0)
 				hood = 0.4
+		"night_stories":
+			# Telling: the hands move, shaping the tale (§EJ.3); the hood
+			# up, turning to each listener (animate).
+			var g1 := sin(t * 1.7 + ph)
+			var g2 := sin(t * 1.3 + ph * 2.0 + 1.0)
+			l = Vector3(0.75 + 0.35 * g1, 0, -0.25 - 0.2 * maxf(g2, 0.0))
+			r = Vector3(0.8 + 0.4 * g2, 0, 0.25 + 0.2 * maxf(g1, 0.0))
+			hood = 0.04
 		"doze":
 			# The hood sinks, nods, starts, settles again.
 			var cycle := fposmod(t + ph * 3.0, 9.0)

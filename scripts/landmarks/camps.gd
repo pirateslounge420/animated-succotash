@@ -1101,6 +1101,16 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var lit := (ph_name == "dusk" or ph_name == "night") and Hunt.lamp_fed(st, world.days)
 		Workshop.tick(ws, camp.get_meta("hearth_props") if camp.has_meta("hearth_props") else null, lit, Workshop.potter_working(st, plan))
 		Workshop.lamps(camp.get_node_or_null("HuntHearth"), lit)
+	# The meal and the gift (§EJ, Sharing): the store's pieces, the carrier
+	# to the store and back, the bowls round, the gift walked up to you.
+	if camp.has_meta("food_store") and CampSim.instance != null:
+		var st5 := CampSim.instance.state_of(str(camp.get_meta("key", "")))
+		if not st5.is_empty() and str(st5.get("state", "")) == "living":
+			var fs: Node3D = camp.get_meta("food_store")
+			cloaked = Sharing.live(camp, st5, cloaked, fs, world.days, CampSim.instance.clock_h(st5, world.days), _time, delta, pp, player.inventory if player != null else null)
+			var want := Sharing.shown(camp, st5)
+			if int(fs.get_meta("pieces", -1)) != want:
+				CampProps.show_food_pieces(fs, want)
 	if not cloaked.is_empty():
 		FireCircle.animate(cloaked, camp.get_meta("fire"), _time, delta, pp, _circle_phase(camp), _circle_ctx(camp))
 	for i in sitters.size():
@@ -1163,6 +1173,7 @@ func _circle_ctx(camp: Node3D) -> Dictionary:
 	var fst := FireStore.store_of(fire)
 	if not fst.is_empty():
 		out.fire_low = FireStore.units_now(fst) < float((CampSim.SIM.get("store", {}) as Dictionary).get("feed_fire_below_units", 3.0))
+		out["fire_out"] = str(fst.get("state", "")) in ["out", "embers"]
 	return out
 
 
@@ -1209,9 +1220,6 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var wp: Node3D = camp.get_meta("woodpile")
 		if absf(float(wp.get_meta("units", -1.0)) - float(st.wood)) >= 0.5:
 			CampProps.refresh_woodpile(wp, float(st.wood))
-		var fs: Node3D = camp.get_meta("food_store")
-		if absf(float(fs.get_meta("units", -1.0)) - float(st.food)) >= 1.0:
-			CampProps.refresh_food_store(fs, float(st.food))
 		# What every camp does every day (§EI.1, CampNeeds): the water trips
 		# and the pot by the hearth, the shelter's mends.
 		if not camp.has_meta("canopy"):

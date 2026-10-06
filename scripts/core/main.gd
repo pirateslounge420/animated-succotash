@@ -231,6 +231,9 @@ func _on_planet_ready() -> void:
 	camp = Encampment.new()
 	root.add_child(camp)
 	camp.build(world, chunks, spawn_dir)
+	# The meal's bowl and the gift (§EJ, Sharing) reach the player's hands.
+	camp.player_inventory = player.inventory
+	Sharing.player_cam = player.camera()
 	# The world's kept things (WorldSave: the hearth you made, if any, and
 	# the log; design 30 Sept §AY as amended by 3 Oct §DE).
 	Hearth.setup(camp.site)

@@ -202,6 +202,11 @@ func _circle(label: String, root: Node3D, sitters: Array, fire: Node3D, biome: S
 		ok(puffs > 0, "%s: each breath out leaves puffs (up to %d in the air)" % [label, puffs])
 	# The player steps up to the first sitter, awake (watching the fire).
 	var s0: Node3D = sitters[0]
+	# Nobody telling for this (§EJ.3: a listener looks at the teller, not
+	# the fire): the others held at watching the fire.
+	for s in sitters:
+		(s as Node3D).set_meta("idle", "watch_fire")
+		(s as Node3D).set_meta("idle_until", 1e9)
 	s0.set_meta("idle", "watch_fire")
 	s0.set_meta("idle_until", 1e9)
 	s0.set_meta("look_end", -1000.0)
