@@ -11,7 +11,7 @@
   ],
   "pages": "yellowed",
   "placement": "altar or shelf by the hearth",
-  "placement_eh": "[NOT WIRED YET] §EN (5 Oct): a shelf in the camp library, kept by the record-keeper; the altar by the hearth stands only until the camp has a library (the storage rung)"
+  "placement_eh": "§EN (5 Oct): a shelf in the camp library, kept by the record-keeper; the altar by the hearth stands only until the camp has a library (the storage rung). Wired by Claude Code 6 Oct: CampBook.place_on, Library."
  },
  "lines": {
   "events": [
@@ -34,7 +34,8 @@
  },
  "memory": {
   "_design": "§EN (5 Oct). The camp's own memory needs no writing: a winter-count hide and a knot cord on the library's other wall, both rendered from the sim like the lines are. Found tomes (tomes.json) stand on the first wall.",
-  "winter_count_hide": {"one_pictogram_per_game_year": true, "from": "camps.json sim.library.winter_count", "pictograms": {"birth": "small figure", "fire_low": "a flame half drawn", "woods_stripped": "a stump", "ruin_restored": "a hearth ring", "hunt_large": "antlers", "camp_grew": "two figures", "folk_lost": "a figure lying", "wildfire": "a black band", "soak_found": "three wavy lines", "dead_camp_last": "a black square"}, "no_text": true},
+  "winter_count_hide": {"one_pictogram_per_game_year": true, "from": "camps.json sim.library.winter_count", "pictograms": {"birth": "small figure", "fire_low": "a flame half drawn", "woods_stripped": "a stump", "ruin_restored": "a hearth ring", "hunt_large": "antlers", "camp_grew": "two figures", "folk_lost": "a figure lying", "wildfire": "a black band", "soak_found": "three wavy lines", "dead_camp_last": "a black square",
+    "quiet": "a single dot (a year with none of the events; added by Claude Code with the \u00a7EN wiring)"}, "no_text": true},
   "knot_cord": {"one_knot_per_folk": true, "colour_by_stage": {"child": "undyed", "teen": "ochre", "adult": "indigo"}, "no_text": true},
   "survives_abandonment": true
  },

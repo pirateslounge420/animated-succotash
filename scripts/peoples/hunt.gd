@@ -195,6 +195,8 @@ static func _finish(st: Dictionary, hs: Dictionary, days: float) -> void:
 			st["fat_until"] = days + float(game().get("lamp_nights", 3))
 	st["hunt_pieces"] = pieces
 	st["hunts"] = int(st.get("hunts", 0)) + 1
+	if cls in ["large_hoofed", "marine_mammal"]:
+		Library.event(st, "hunt_large", days)
 	st["fat_pieces"] = int(st.get("fat_pieces", 0)) + (1 if st.has("fat_until") else 0)
 	hs["pieces_added"] = shown.size()
 	WorldSave.mark_dirty()

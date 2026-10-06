@@ -163,6 +163,35 @@ static func place(root: Node3D, world, chunks: ChunkManager, key: String, rng: R
 	return n
 
 
+## The book on a library shelf (design 5 Oct §EN, placement_eh): the book
+## open (or a scroll), the quill and the ink pot at `at` in `parent`'s
+## frame, no altar. Registered for reading like the altar's.
+static func place_on(parent: Node3D, at: Vector3, key: String, rng: RandomNumberGenerator) -> Node3D:
+	var forms: Array = (D.get("object", {}) as Dictionary).get("forms", ["bound book", "scroll"])
+	var form := str(forms[rng.randi() % maxi(forms.size(), 1)]) if not forms.is_empty() else "bound book"
+	var n := Node3D.new()
+	n.name = "CampBook"
+	parent.add_child(n)
+	n.position = at
+	if form == "scroll":
+		var roll := CreatureBodies.cone(n, 0.045, 0.045, 0.42, Vector3(0, 0.045, 0.02), PAGE.darkened(0.06), 0.0, 8)
+		roll.rotation.z = PI * 0.5
+	else:
+		CreatureBodies.box(n, Vector3(0.44, 0.02, 0.3), Vector3(0, 0.01, 0), Color(0.24, 0.13, 0.08))
+		for sx: float in [-1.0, 1.0]:
+			var pg := CreatureBodies.box(n, Vector3(0.2, 0.025, 0.27), Vector3(sx * 0.105, 0.03, 0), PAGE)
+			pg.rotation.z = -sx * 0.08
+	var pot := CreatureBodies.cone(n, 0.035, 0.028, 0.06, Vector3(0.36, 0.03, 0.0), Color(0.08, 0.08, 0.1), 0.0, 8)
+	pot.name = "InkPot"
+	var quill := CreatureBodies.cone(n, 0.006, 0.002, 0.26, Vector3(0.33, 0.08, 0.04), Color(0.86, 0.84, 0.78), 0.0, 5)
+	quill.rotation = Vector3(0.9, 0.0, 0.5)
+	n.set_meta("camp_key", key)
+	n.set_meta("form", form)
+	n.set_meta("shelf", true)
+	books.append([n, key])
+	return n
+
+
 ## The book within reach of `pos` (scene), or {}: {"node", "key"}.
 static func in_reach(pos: Vector3) -> Dictionary:
 	var best := {}

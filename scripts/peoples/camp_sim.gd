@@ -392,6 +392,7 @@ func _tick(st: Dictionary, days: float) -> void:
 		# Dawn: the night is counted.
 		if bool(st.low_tonight):
 			st.fire_low_nights = int(st.fire_low_nights) + 1
+			Library.event(st, "fire_low", days)
 		else:
 			st.fire_low_nights = 0
 		st.low_tonight = false
@@ -406,6 +407,10 @@ func _tick(st: Dictionary, days: float) -> void:
 		Trades.update(st, world.get("planet"), chunks.rivers if chunks != null else null)
 	# The store shows what was eaten once a day, at the meal (§EJ.1).
 	Sharing.tick(self, st, days, h)
+	# The woods stripped bare this year; the winter count's year turns (§EN).
+	if float(st.woods) < 0.25:
+		Library.event(st, "woods_stripped", days)
+	Library.tick(st, days)
 	# One store per camp (sharing.private_stores false): no folk owns food
 	# or wood.
 	assert(Sharing.one_store(st), "a folk holds a store of its own")
@@ -562,6 +567,7 @@ func _ladder(st: Dictionary, days: float) -> void:
 		_give_role(st, "headman", "m")
 		_give_role(st, "plantkeeper", "f")
 		_note(st, "The camp keeps a store now.", days, "store_change")
+		Library.event(st, "camp_grew", days)
 	if rung == 2:
 		# The specialist: the first who does not gather (the maker), where
 		# the site allows and there is surplus and enough hands.
@@ -586,6 +592,10 @@ func _ladder(st: Dictionary, days: float) -> void:
 	if rung != int(st.rung):
 		st.rung = rung
 		WorldSave.mark_dirty()
+	# The record-keeper, the fourth face (design 5 Oct §EN), with the
+	# headman at the storage rung.
+	if rung >= Trades.rung_of("storage") and str((SIM.get("specialists", {}) as Dictionary).get("record_keeper", "at_storage")) == "at_storage":
+		_give_role(st, "record_keeper", "")
 
 
 ## The people's fundamental (§BM), crop and fish_run only: the weir at
@@ -640,6 +650,10 @@ func _give_role(st: Dictionary, role: String, prefer_sex: String) -> void:
 ## lines.events; CampBook.write), written whether you are near or not.
 func _note(st: Dictionary, text: String, days: float, event := "") -> void:
 	CampBook.write(st, event, text, days)
+	# The winter count's events among the book's (§EN).
+	var wc := str({"birth": "birth", "gatherer_lost": "folk_lost", "hearth_relit": "ruin_restored"}.get(event, ""))
+	if wc != "":
+		Library.event(st, wc, days)
 	if world == null or Torch.instance == null or not is_instance_valid(Torch.instance):
 		return
 	var pp: Vector3 = Torch.instance.player.global_position if Torch.instance.player else Vector3.ZERO
@@ -733,6 +747,9 @@ func _nearest_lit(st: Dictionary) -> Dictionary:
 ## left lie by the fire (Camps lays them). `why`: taken, fled, left,
 ## burnt.
 func _abandon(st: Dictionary, days: float, why: String) -> void:
+	# The library keeps the hide: a black square, no more years (§EN).
+	if bool(st.get("library", false)):
+		Library.close(st, days)
 	st.state = "abandoned"
 	st.abandoned_day = days
 	st.why = why
@@ -1044,6 +1061,7 @@ func _walk_from_fire(st: Dictionary, days: float) -> void:
 	var folk: Array = st.folk
 	var wood := float(st.wood) * 0.5
 	var food := float(st.food) * 0.7
+	Library.event(st, "wildfire", days)
 	_abandon(st, days, "burnt")
 	st.scar = true
 	if best == Vector3.ZERO:

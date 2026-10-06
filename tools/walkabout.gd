@@ -250,6 +250,8 @@ func _run() -> void:
 			kinds.append("meal")
 		if only.has("soak"):
 			kinds.append("soak")
+		if only.has("library"):
+			kinds.append("library")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -497,6 +499,17 @@ func _run() -> void:
 				var cam: Vector3 = _down_the_road(camp_d, 85.0).dir
 				sites.append({"name": "hunt", "dir": cam, "look": CreatureSpawner._offset(r120, 1.2, 18.0), "hunt_at": CreatureSpawner._offset(r120, 1.2, 18.0),
 					"note": "a river camp's hunter dragging a deer home on a pole (harness: camp, rung and hunt set for the frame)"})
+			"library":
+				# A ruin camp's library in the morning (design 5 Oct §EN): a
+				# camp at the storage rung built 14 m from the ruin nearest the
+				# opening camp, the record-keeper at the shelf (a harness
+				# frame: the camp, its rung and its folk are set for it).
+				var rs := Ruins.near(world.planet, camp_d, 30000.0)
+				if not rs.is_empty():
+					var rd: Vector3 = (rs[0] as Dictionary).dir
+					var lc := CreatureSpawner._offset(rd, 0.7, 14.0)
+					sites.append({"name": "library", "dir": CreatureSpawner._offset(lc, 0.7, 10.0), "look": lc, "library_camp": lc,
+						"note": "a ruin camp's library %.1f km from the opening camp, the record-keeper at the shelf (harness: the camp built for the frame)" % (CubeSphere.surface_distance_m(rd, camp_d) / 1000.0)})
 			"soak":
 				# A hot-spring camp in the afternoon (design 5 Oct §EM): the
 				# nearest hot spring to the opening camp, a mountain camp
@@ -912,6 +925,56 @@ func _hunt_camp(site: Dictionary) -> void:
 		site["note"] = str(site.get("note", "")) + " · no large game in reach: no hunt"
 
 
+## The library's camp (§EN): a camp at a ruin (its key a ruin's: the
+## lean-to on an old wall), at the storage rung with its record-keeper;
+## the camera moved to stand before the library, looking in.
+func _library_camp(site: Dictionary) -> void:
+	var c: Vector3 = site.library_camp
+	var key := "ruin:walk:library"
+	var cs: CampSim = main.camp_sim
+	var pid := Peoples.pick(world.planet, main.chunks.rivers, c, "ruin")
+	var st := cs.ensure(key, c, pid, FireStore.biome_key(world, c), 5151, 6)
+	st.rung = maxi(int(st.rung), Workshop.rung_index())
+	st.state = "living"
+	var folk: Array = []
+	for i in 6:
+		folk.append({"sex": "m" if i % 2 == 0 else "f", "stage": "child" if i >= 5 else "adult", "born": 0.0, "role": "", "seed": i})
+	folk[0].role = "headman"
+	folk[1].role = "plantkeeper"
+	folk[2].role = "record_keeper"
+	st.folk = folk
+	# The line the sim writes as a camp reaches storage: the record-keeper
+	# is writing it up.
+	CampBook.write(st, "store_change", "The camp keeps a store now.", world.days)
+	# Six years of the camp's life behind it, as the sim records them (one
+	# event a year, a quiet third year), so the hide has its pictures.
+	st["born_day"] = world.days - 6.0 * Library.year_days()
+	st["year_events"] = {"0": {"camp_grew": 1}, "1": {"birth": 1}, "2": {}, "3": {"hunt_large": 1}, "4": {"birth": 1}, "5": {"fire_low": 1}}
+	st.erase("winter")
+	Library.tick(st, world.days)
+	Workshop.instant = true
+	Library.instant = true
+	var at: Vector3 = world.to_scene(c, PlanetConst.RADIUS_M + main.chunks.ground_height(c))
+	if main.camps._camps.has(key):
+		(main.camps._camps[key] as Node).queue_free()
+	var root: Node3D = main.camps._build(at, "tribal", 5151, key)
+	main.camps._camps[key] = root
+	if not root.has_meta("library"):
+		print("[library] %s: no library built" % site.name)
+		return
+	var lib: Node3D = root.get_meta("library")
+	# Stand just under its roof, at the front-left, looking across at the
+	# winter count on the right-hand wall (the record-keeper at the shelf).
+	var cam: Vector3 = lib.global_transform * Vector3(-0.75, 0, 0.75)
+	var hide: Node3D = lib.get_meta("hide")
+	player.spawn_at(world.dir_of(cam), world.dir_of(hide.global_position))
+	# (spawn_at stands the player 1 m up to drop in, and the walkabout's
+	# player never falls: the feet set on the ground, so the eye is at a
+	# person's height under the roof's low edge.)
+	player.global_position -= player.up * 1.0
+	print("[library] %s: %s, the %s; tomes %s; winter count %s" % [site.name, Peoples.name_of(Peoples.get_people(pid)), "lean-to" if key.begins_with("ruin:") else "hut", str(lib.get_meta("tomes", [])), str(st.get("winter", []))])
+
+
 ## The soak's camp (§EM): a mountain camp at the storage rung built at
 ## the site's soak_camp, registered with Camps (its folk go to the soak in
 ## the afternoon hours).
@@ -1132,6 +1195,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		_hunt_camp(site)
 	if site.has("soak_camp"):
 		_soak_camp(site)
+	if site.has("library_camp"):
+		_library_camp(site)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
@@ -1324,6 +1389,14 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])
+			if k == 0 and site.has("library_camp") and main.camps._camps.has("ruin:walk:library"):
+				var lroot: Node3D = main.camps._camps["ruin:walk:library"]
+				var at_shelf := "no"
+				for hv in lroot.get_meta("sitters", []):
+					var lv: Dictionary = (hv as Node3D).get_meta("rk", {})
+					if not lv.is_empty():
+						at_shelf = "%s (%s)" % [str(lv.get("leg", "")), str(lv.get("idle", ""))]
+				print("[library] %s: the record-keeper %s" % [site.name, at_shelf])
 			if k == 0 and site.has("soak_camp") and main.camps._camps.has("walk:soak"):
 				var soaking := 0
 				for hv in (main.camps._camps["walk:soak"] as Node3D).get_meta("tp_folk", []):

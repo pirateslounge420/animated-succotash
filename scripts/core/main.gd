@@ -650,6 +650,8 @@ func _process(delta: float) -> void:
 		prompt = "%s: show the %s" % [Controls.interact_word(), Inventory.title(player.inventory.carried[_scroll_to_show()]).to_lower()]
 	elif _headman_in_reach() != null:
 		prompt = "%s: the headman" % Controls.interact_word()
+	elif not Library.tome_in_reach(player.global_position).is_empty():
+		prompt = "%s: read the %s" % [Controls.interact_word(), str(Tomes.entry(str(Library.tome_in_reach(player.global_position).tome)).get("title", "tome"))]
 	elif not CampBook.in_reach(player.global_position).is_empty():
 		prompt = "%s: read the camp book" % Controls.interact_word()
 	elif shrines != null and shrines.sconce_near(player.reach_from(), Shrines.SCONCE_REACH_M, true) != null:
@@ -946,6 +948,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_say_note({"read": "They read it, and say where it points.", "shown": "They hand it back.", "read_before": "They hand it back."}.get(how, ""))
 		elif headman != null:
 			_meet_headman(headman)
+		elif not Library.tome_in_reach(player.global_position).is_empty():
+			# A tome on a library's shelf (§EN): read here, never taken.
+			tome_panel.open(str(Library.tome_in_reach(player.global_position).tome))
 		elif not CampBook.in_reach(player.global_position).is_empty():
 			# The camp book (§ED.3): the camp's own lines, and its rumour.
 			var bk := CampBook.in_reach(player.global_position)

@@ -586,6 +586,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 			# An empty camp (§BL): no folk; the needful things left by the
 			# fire, blood where the dark took them, the forest taking it.
 			_empty_camp(root, pre, d, body)
+			# A camp that went dark keeps its library (§EN).
+			if bool(pre.get("library", false)):
+				_library(root, Peoples.get_people(str(pre.get("people", people_id))), key, body)
 			root.set_meta("sitters", [] as Array[Node3D])
 			root.set_meta("guards", [] as Array[Node3D])
 			return root
@@ -594,7 +597,9 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	if canopy.is_empty() and key != "":
 		var brng := RandomNumberGenerator.new()
 		brng.seed = hash([key, "camp_book"])
-		CampBook.place(root, world, chunks, key, brng)
+		# (At a camp with a library the book is on its shelf, §EN.)
+		if not _wants_library(key):
+			CampBook.place(root, world, chunks, key, brng)
 		_maker_work(root, key, brng)
 	var count := rng.randi_range(2, 4) if st_folk.is_empty() else mini(st_folk.size(), 8)
 	if not canopy.is_empty():
@@ -711,6 +716,15 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 		var tctx := _tp_ctx(root, body, rng, people_id, biome_key)
 		root.set_meta("tp_ctx", tctx)
 		ThirdPlaces.place(root, people, tctx)
+		var stp := CampSim.instance.state_of(key)
+		if not bool(stp.get("soak_found", false)) and (root.get_meta("third_places", []) as Array).any(func(p): return str(p.kind) == "soak"):
+			stp["soak_found"] = true
+			Library.event(stp, "soak_found", world.days)
+	# The library (design 5 Oct §EN, Library): at the storage rung, near
+	# the fire and clear of the workshop and the third places (the land's
+	# own spots go first); the camp book on its shelf.
+	if canopy.is_empty() and folk != "small_folk" and folk != "dead" and _wants_library(key):
+		_library(root, people, key, body)
 	# Their talk: among the seated folk, at head height.
 	var chatter := Audio3D.make("camp_chatter", root, "Chatter")
 	chatter.position = Vector3(0, 0.9, 0)
@@ -749,6 +763,63 @@ func _hunt_pieces(camp: Node3D, st: Dictionary) -> void:
 				avoid.append([Vector3(p.x, 0, p.z), 1.3])
 	var hp := Workshop.hearth_props(camp, Peoples.get_people(str(st.people)), camp.get_meta("pal", []), rng, avoid, 3.9, hearth, false, false)
 	hp.name = "HuntHearth"
+
+
+## Does camp `key` keep a library (at its rung now, or once)?
+func _wants_library(key: String) -> bool:
+	if CampSim.instance == null or key == "":
+		return false
+	var st := CampSim.instance.state_of(key)
+	return not st.is_empty() and (Library.wanted(st) or bool(st.get("library", false)))
+
+
+## Build camp `root`'s library (§EN): clear of what stands round the fire
+## (the workshop's hut most of all); at a ruin, a lean-to on an old wall,
+## with the ruin's delve tome on its shelf while you have not taken it.
+func _library(root: Node3D, people: Dictionary, key: String, body: StaticBody3D) -> void:
+	var st := CampSim.instance.state_of(key)
+	var d: Vector3 = world.dir_of(root.global_position)
+	var avoid: Array = [[Vector3.ZERO, 3.0]]
+	for c in root.get_children():
+		if c is Node3D and c.name != "Library":
+			var p: Vector3 = (c as Node3D).position
+			var r := Vector2(p.x, p.z).length()
+			if r > 2.6 and r < 16.0:
+				avoid.append([Vector3(p.x, 0, p.z), 1.4])
+	if root.has_meta("workshop"):
+		var ws: Node3D = root.get_meta("workshop")
+		avoid.append([Vector3(ws.position.x, 0, ws.position.z), Workshop.HUT_HALF + 0.6])
+	var site := {}
+	if key.begins_with("ruin:"):
+		var near := Ruins.near(world.planet, d, 80.0)
+		if not near.is_empty():
+			site = near[0]
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([key, "library"])
+	var lib := Library.build(root, st, {"people": people, "pal": root.get_meta("pal", _people_pal), "rng": rng, "body": body, "avoid": avoid,
+		"ruin": key.begins_with("ruin:"), "stones": CreatureSpawner.den_stones(world.planet.rock[world.planet.cell_at(d)]), "ground": _ground_fn(root),
+		"tomes": Library.tomes_for(site), "key": key})
+	root.set_meta("library", lib)
+
+
+## What the record-keeper walks out to look at (§EN), in the camp's frame.
+func _looks(camp: Node3D) -> Dictionary:
+	var out := {"the_fire": Vector3.ZERO}
+	if camp.has_meta("woodpile"):
+		out["woodpile"] = (camp.get_meta("woodpile") as Node3D).position
+	if camp.has_meta("food_store"):
+		out["food_store"] = (camp.get_meta("food_store") as Node3D).position
+	var young: Node3D = null
+	for s in camp.get_meta("sitters", []):
+		if str((s as Node3D).get_meta("stage", "")) == "child":
+			young = s
+	if young != null:
+		out["new_child"] = young.position
+	if camp.has_meta("workshop"):
+		var benches: Dictionary = (camp.get_meta("workshop") as Node3D).get_meta("benches", {})
+		if benches.has("soft") and ((benches.soft as Node3D).get_meta("hunt", []) as Array).has("hide on frame"):
+			out["hide_on_frame"] = camp.to_local((benches.soft as Node3D).global_position)
+	return out
 
 
 ## What ThirdPlaces needs to place a camp's third places (§EM).
@@ -1128,6 +1199,11 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 			var want := Sharing.shown(camp, st5)
 			if int(fs.get_meta("pieces", -1)) != want:
 				CampProps.show_food_pieces(fs, want)
+	# The record-keeper's day at the library (§EN).
+	if camp.has_meta("library") and CampSim.instance != null:
+		var st7 := CampSim.instance.state_of(str(camp.get_meta("key", "")))
+		if not st7.is_empty():
+			cloaked = Library.live(camp, st7, cloaked, CampSim.instance.clock_h(st7, world.days), world.days, _time, delta, _looks(camp))
 	# Third places (§EM): by day the idle folk at the fire walk to them.
 	if camp.has_meta("third_places") and CampSim.instance != null:
 		var st6 := CampSim.instance.state_of(str(camp.get_meta("key", "")))
@@ -1251,6 +1327,9 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 		# and the pot by the hearth, the shelter's mends.
 		if not camp.has_meta("canopy"):
 			CampNeeds.live(camp, st, _needs_ctx(camp, pp))
+		# The library's hide and knots follow the sim (§EN).
+		if camp.has_meta("library"):
+			Library.refresh(camp.get_meta("library"), st)
 		# What the hunts left (§EK.1 step 3): pieces on the benches and by
 		# the hearth.
 		if camp.has_meta("workshop"):

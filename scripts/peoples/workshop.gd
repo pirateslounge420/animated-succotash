@@ -175,6 +175,9 @@ static func plan(st: Dictionary, h: float, day: int) -> Array:
 			continue
 		if CampSim.stage_of(f) == "child" or i == keeper:
 			continue
+		# The record-keeper keeps the library (§EN, Library.live).
+		if str(f.get("role", "")) == "record_keeper":
+			continue
 		var want := want_of(st, i, h, day, mb)
 		if want == "out":
 			out[i] = "out"

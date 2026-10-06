@@ -3,6 +3,54 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+
+## 2026-10-06 — §EN the library, the winter count, the knot cord, the record-keeper (queue 43)
+- **What changes on screen:** when a camp reaches the storage rung (the rung where the workshop comes), it builds a library 4–8 m from its fire, clear of the workshop and the third places, with its open side to the fire. A camp below storage keeps its book on the altar by the hearth, as before.
+  - **Its form:** a small hut (back and side walls, a pitched roof) in the people's own workshop materials. At a camp in a ruin, or where the people's `huts.library` says lean-to, it is a lean-to instead: one old stone wall at the back, the roof leaning from it down to two posts at the front (the low edge above eye height, so you see in under it), and a screen each side. It is square-cut like the workshop hut.
+  - **The camp book** (§ED.3) is on a shelf on the back wall, with a stool before it. You read it there exactly as before. The altar stands no more once a camp has its library.
+  - **The tome shelf (left wall):** up to `tomes_max` (6) found tomes, standing upright. At a ruin camp the ruin's delve tome (§DL) stands there while you have not taken it from the delve. "read the <title>" opens it in the tome panel, and it is never taken off the shelf.
+  - **The winter count (right wall):** a hide, or the people's own surface (a slab, a skin, a mat, bark, plaster, by the words of their `huts.library`). One small painted picture (3×3 texels, red-brown ink) for each game year the camp has lived, spiralling out from the middle. There are no letters and no numbers: a small figure (a birth), half a flame (the fire ran low), a stump (the woods stripped), a ring (a hearth relit), antlers (a big hunt), two figures (the camp grew), a figure lying (folk lost), a black band (wildfire), three wavy lines (a soak found), and a single dot for a quiet year.
+  - **The knot cord** beside the hide: one knot for each living folk, undyed for a child, ochre for a teen, indigo for an adult. It is re-tied as folk are born, grow up and die.
+  - **A camp that goes dark keeps its library.** The hide gets one black square and no more years, and the knots stay as they were. Nothing names what happened (§BQ).
+- **The record-keeper (the fourth face):** the sim gives the role to one adult when the camp reaches storage. In the gather hours they keep the library:
+  - writing at the shelf with a quill, always within 2 game hours (`writes_after_event_game_h`) of a new camp-book line;
+  - or walking out to look at one thing (the woodpile, the food store, the newest child, a hide on its frame at the soft bench, the fire) and back;
+  - or sitting with a tome.
+  - At dusk they go to the fire like everyone. They are the one who gives you the §EJ gift where there is one. They have no workshop bench.
+- **How a year's picture is chosen:** the sim records which of `winter_count.events` happened in each game year. The year's picture is **the first one in that list that happened** (the list order is the "biggest event" order). So far the events are: births, a fire-low night, the woods stripped, a cold hearth relit, a big hunt (large hoofed or marine), reaching storage (the camp grew), a gatherer lost, a wildfire, and a soak found.
+- **What the code does:**
+  - New `scripts/peoples/library.gd` (Library) holds the winter-count sim, building the library, painting the hide (pixel glyphs into a 24×20 texture, lit like the camp's other props), tying the knots, and the record-keeper's day.
+  - CampSim gives the role, records the events, and calls `Library.tick` hourly and `Library.close` when a camp is abandoned.
+  - Camps build it, run the record-keeper, and refresh the hide and the cord.
+  - `CampBook.place_on` puts the book on the shelf.
+  - Main shows the tome shelf's read prompt.
+- **Data:** the `library` and `specialists.record_keeper` clauses of `camps.json → _help.village_economy` are wired, and `sim.library` gets its `_help`. In `camp_books.json`, `object.placement_eh` is wired and the hide's pictograms gain `quiet` (a single dot; added with the wiring).
+- **Check:** `STAMP=1 SEED=7731 … --script tools/library_check.gd` gives 0 fails:
+  - all 17 camps at or past storage (two rings round the player) have a library and a record-keeper; none below storage has either;
+  - the camp book is on the library shelf, the only book there, and opens from it;
+  - a camp 3.5 years old has 3 pictures (birth, antlers, dot): a year with a birth and a hunt shows the birth;
+  - one knot a folk, right colours, after a birth and after a child grows;
+  - a camp gone dark keeps its library, its black square last, no pictures in the next 2 years, its 8 knots unchanged;
+  - a tome stands on the shelf and the panel opens from it;
+  - the hide uses no font.
+  - Two SKIPs on this planet: no overrun ruin is within a rumour's range of these camps, and no ruin here has a tome at its delve's heart (so the never-taken rule is untested; the shelf was tried with the I Ching).
+  - `third_places_check`, `sharing_check`, `circle_check`, `workshop_check`, `hunt_check` and `trades_check` still give 0 fails.
+  - Over its 34 camps `third_places_check` now places 25 water rocks and 33 porches (26 and 34 in the §EM entry). One fewer camp reaches storage in that run since this pass's sim changes. I didn't trace which.
+  - Third places are now placed **before** the library, so the library steps round the land's own spots. With the library first, one coast camp lost its water rock.
+- **Walkabout:** `SITES=library QUICK=1 HOURS=9` builds a ruin camp at the storage rung 14 m from the ruin nearest the opening camp (Old-growth folk, so the lean-to). It gives the camp six years on its hide (a camp grew, a birth, a quiet year, a big hunt, a birth, a fire-low night, recorded as the sim records them) and stands you just under the roof at the front-left. The frame (`tools/reference/walkabout/7731/library_09h_f0.png`) shows the stone back wall, the roof's underside, and the record-keeper at the shelf writing (`write_at_shelf`). The hide is on the right-hand screen, but at 9 in the morning it is in the lean-to's shade and reads as a dark panel: its pictures don't show in this frame.
+  - Fixed on the way:
+    - the hide was first a plain material the sun blew out white; it is now lit like the other camp props;
+    - the library first faced its back wall to the fire;
+    - its walls were rounded blobs (the creature-body box); they are now square-cut with the workshop's builder;
+    - the lean-to's low edge was below eye height.
+  - The walkabout's player stands 1 m up and never falls (physics is off), so for this one site the harness sets the feet on the ground.
+  - A small bright square shows in every frame of this site, including the first render before any of these fixes. It is not the book, the quill or the hide. I didn't track it down.
+- **Flags for Mike:**
+  1. **"The year's biggest event"** is taken as the first of `winter_count.events` that happened that year. The list as written puts birth first, so a year with a birth and a wildfire shows the birth. If you want the big disasters to win, reorder the list (e.g. wildfire, folk_lost, ruin_restored first). It is data only.
+  2. **No tome texts are in the repo yet**, and no ruin on 7731 has a delve tome near a storage camp, so in play the tome shelf is empty for now. The shelf and the panel work (tried with the I Ching).
+  3. **The opening camp gets no library.** The opening camp is built by its own code (Encampment), and the library is built only at the world's camps. Say if you want the opening camp to grow one when it reaches storage.
+  4. **The winter count is dark inside a lean-to by day** (in shade, like everything under a roof). If you want it to read from the fire, it could hang on the outside of the screen, or face the open side. Your call.
+  5. **`ruin_restored`** is recorded when a cold hearth is relit at the camp. `woods_stripped` and `fire_low` are recorded from the sim's own events. `soak_found` is recorded the first time a camp's soak is placed.
 ## 2026-10-06 — §EM third places: the soak, the great tree, the water rock, the porch (queue 42)
 - **What changes on screen:** after a camp's fire circle (and its workshop), the third places its people list (`huts.third_places`) are placed where the place has them.
   - **The soak:** at the nearest hot spring ground within 400 m, a pale pool ringed with rim stones, white steam rising slow off it. In the afternoon folk walk there and sit in it to the chest with their hoods down. This is the only time a hood is down: the plain head shows, the hood folded at the nape.
