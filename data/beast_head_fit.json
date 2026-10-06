@@ -1,0 +1,27 @@
+{
+	"_help": {
+		"about": "How each beast head sits in the hood (design 6 Oct §EQ, amends §EO.1). The head is life-sized for the animal, pushed forward so the muzzle or beak juts past the brim, and the hood drapes behind the skull like a cowl. Read by BeastHeads on top of zodiac_heads.json. The player's hood stays empty (§EO.2).",
+		"scale": "Head size against the current head that fills the hood's hollow (1.0 = today's).",
+		"forward_m": "How far the head pivot moves forward (-Z) past today's centre, in metres on a human-sized figure.",
+		"drop_m": "How far it drops (heavy heads hang lower, at the neck).",
+		"muzzle_out": "Share of the head's length that must stick out past the hood brim (z -0.13).",
+		"through_hood": "Parts that poke out through or sit on top of the cowl, never folded under it.",
+		"cowl_back_m": "How far back the hood's brim slides so it rests behind the ears and horns.",
+		"silhouette_test": "At 480 lines, pure black against the sky, the species must be nameable."
+	},
+	"defaults": { "scale": 1.4, "forward_m": 0.05, "drop_m": 0.01, "muzzle_out": 0.5, "through_hood": ["ears"], "cowl_back_m": 0.05 },
+	"heads": {
+		"rat":     { "scale": 1.15, "forward_m": 0.05, "drop_m": 0.0,  "muzzle_out": 0.55, "through_hood": ["ears", "whiskers"], "cowl_back_m": 0.04 },
+		"ox":      { "scale": 1.65, "forward_m": 0.06, "drop_m": 0.03, "muzzle_out": 0.5,  "through_hood": ["horns", "ears"], "cowl_back_m": 0.07 },
+		"tiger":   { "scale": 1.5,  "forward_m": 0.05, "drop_m": 0.01, "muzzle_out": 0.4,  "through_hood": ["ears", "ruff"], "cowl_back_m": 0.06 },
+		"rabbit":  { "scale": 1.2,  "forward_m": 0.03, "drop_m": 0.0,  "muzzle_out": 0.35, "through_hood": ["ears"], "cowl_back_m": 0.05 },
+		"dragon":  { "scale": 1.6,  "forward_m": 0.08, "drop_m": 0.01, "muzzle_out": 0.6,  "through_hood": ["horns", "frills", "whiskers"], "cowl_back_m": 0.07 },
+		"snake":   { "scale": 1.2,  "forward_m": 0.07, "drop_m": 0.0,  "muzzle_out": 0.55, "through_hood": [], "cowl_back_m": 0.03 },
+		"horse":   { "scale": 1.7,  "forward_m": 0.08, "drop_m": 0.03, "muzzle_out": 0.65, "through_hood": ["ears", "forelock"], "cowl_back_m": 0.06 },
+		"goat":    { "scale": 1.45, "forward_m": 0.06, "drop_m": 0.01, "muzzle_out": 0.55, "through_hood": ["horns", "ears", "beard"], "cowl_back_m": 0.07 },
+		"monkey":  { "scale": 1.15, "forward_m": 0.02, "drop_m": 0.0,  "muzzle_out": 0.25, "through_hood": ["ears"], "cowl_back_m": 0.04 },
+		"rooster": { "scale": 1.2,  "forward_m": 0.04, "drop_m": 0.0,  "muzzle_out": 0.4,  "through_hood": ["comb", "wattles"], "cowl_back_m": 0.05 },
+		"dog":     { "scale": 1.35, "forward_m": 0.05, "drop_m": 0.01, "muzzle_out": 0.5,  "through_hood": ["ears"], "cowl_back_m": 0.05 },
+		"pig":     { "scale": 1.45, "forward_m": 0.05, "drop_m": 0.02, "muzzle_out": 0.5,  "through_hood": ["ears", "tusks"], "cowl_back_m": 0.05 }
+	}
+}

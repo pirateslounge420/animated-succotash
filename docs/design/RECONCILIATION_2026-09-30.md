@@ -3700,3 +3700,18 @@ Mike: the screenshots look bland, "like alpha version Minecraft". The patterned 
 
 ### EP.3 Measure first
 - Before and after the grass pass, profile a frame at a dense grassland, a camp at night and a jungle, and log which systems cost the most (vegetation, the camp sim, lights and shadows are the suspects). Numbers go in PROGRESS; no guessing.
+
+## EQ. Life-sized beast heads: the hood sits behind the head — LOCKED (6 Oct, 09:16, Mike)
+
+Mike: the beast heads look shrunken because they are sized to fill a human hood. The goat in reference frame 3 (goat with bowl in rain) is the model: the head is the animal's real size, and the hood sits behind it.
+
+### EQ.1 The fit (amends §EO.1)
+- **Scale the head, not the rig.** Each animal gets its own head scale (about 1.15–1.7× today's); bodies and the shared rig stay identical.
+- **Push the head forward and a little down**, so the muzzle, beak or snout juts past the hood brim (about half the head's length for long-faced animals).
+- **The hood becomes a cowl** on beast folk: it drapes from the back of the skull and shoulders, behind the ears and horns. Ears, horns, combs and the like poke through or rest on top, never folded under.
+- **Silhouette test:** at 480 lines, in pure black against the sky, every species must be nameable.
+- Numbers per animal: `data/beast_head_fit.json` (Claude's first guess; Mike tunes by eye).
+
+### EQ.2 What changes from §EO.1
+- §EO.1 said a figure reads as a person from a distance. **Now the head's silhouette shows at any distance**; only the face's painted detail still fades in up close (look.near_m to look.gone_m). The cloak, rig and colours still say "folk".
+- The player's hood stays empty and full-sized (§EO.2), so the player stays the odd one out.
