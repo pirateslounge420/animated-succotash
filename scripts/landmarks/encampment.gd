@@ -601,6 +601,13 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		holder.set_meta("folk_i", -1 if i == 4 else i)
 		Workshop.remember_home(holder)
 		_npcs.append(holder)
+	# Third places (design 5 Oct §EM): the ones its people list that the
+	# place has (the opening camp has no workshop, so no porch).
+	var ch2 := chunks.chunk_at(site)
+	ThirdPlaces.place(dress, people, {"world": world, "chunks": chunks, "d": site, "ws": null, "ground": _ground_fn(), "body": dbody, "rng": drng,
+		"biome": biome_key, "people_id": people_id, "stones": CreatureSpawner.den_stones(world.planet.rock[world.planet.cell_at(site)]),
+		"bark": FireCircle.stand_bark(chunks, _fire.global_position), "ground_col": ch2.ground_color_at(site) if ch2 != null else Color(0.35, 0.42, 0.22),
+		"cloth": ppal[0] if not ppal.is_empty() else HIDE, "weir": null})
 	_voice = Audio3D.make("camp_chatter", self, "Chatter")
 	_voice.volume_db = -8.0
 	for i in 2:
@@ -725,6 +732,11 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 			var shown := Sharing.shown(dressing, st4)
 			if int(food_store.get_meta("pieces", -1)) != shown:
 				CampProps.show_food_pieces(food_store, shown)
+	# Third places (§EM): by day the idle folk at the fire walk to them.
+	if CampSim.instance != null and dressing != null:
+		var st5 := CampSim.instance.state_of("opening")
+		if not st5.is_empty():
+			circle = ThirdPlaces.live(dressing, circle, Workshop.keeper_of(st5), CampSim.instance.clock_h(st5, world.days), _time, delta, player_pos, _fire, player_pos.distance_to(_fire.global_position) > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)))
 	FireCircle.animate(circle, _fire, _time, delta, player_pos, phase, ctx)
 
 

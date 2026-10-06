@@ -52,6 +52,9 @@ static var NOTICE: Dictionary = D.get("notice", {})
 
 ## The loops the circle plays (the pipe waits on §CY.4).
 const BUILT := ["watch_fire", "warm_hands", "poke_fire", "feed_fire", "pipe", "eat_bowl", "sit_work", "doze", "night_stories"]
+## The third places' one set (design 5 Oct §EM, third_places.idles; the
+## line at the water rock): played when ctx.only names them.
+const THIRD := ["sit", "lean_back", "look_out", "pipe", "fish_line"]
 ## The ones a child plays (§CY.2: never the pipe, never a job).
 const CHILD := ["watch_fire", "warm_hands", "poke_fire", "eat_bowl", "doze"]
 const WOOD := ["log", "stump", "root", "limb"]
@@ -240,6 +243,16 @@ static func pick(holder: Node3D, phase: String, ctx: Dictionary, rng: RandomNumb
 	var child := str(holder.get_meta("stage", "adult")) == "child"
 	var names: Array[String] = []
 	var w: Array[float] = []
+	if ctx.has("only"):
+		# A third place (§EM): its own set, evenly; the pipe still one at a
+		# time and an adult's.
+		for n in ctx.only:
+			if str(n) == "pipe" and (child or str(holder.get_meta("stage", "adult")) != "adult" or int(ctx.get("pipes", 0)) >= int((IDLES.get("pipe", {}) as Dictionary).get("max_at_once", 1))):
+				continue
+			names.append(str(n))
+		if names.is_empty():
+			return "sit"
+		return names[rng.randi() % names.size()]
 	for n in BUILT:
 		var e: Dictionary = IDLES.get(n, {})
 		if child and not CHILD.has(n):
@@ -282,7 +295,7 @@ static func pick(holder: Node3D, phase: String, ctx: Dictionary, rng: RandomNumb
 
 ## How long a loop holds (idles.*.hold_s), in seconds.
 static func hold_s(idle: String, rng: RandomNumberGenerator) -> float:
-	var hs: Array = (IDLES.get(idle, {}) as Dictionary).get("hold_s", [6, 12])
+	var hs: Array = (IDLES.get(idle, {}) as Dictionary).get("hold_s", [20, 40] if THIRD.has(idle) else [6, 12])
 	return rng.randf_range(float(hs[0]), float(hs[1]))
 
 
@@ -529,6 +542,28 @@ static func _pose(idle: String, t: float, ph: float, plan := {}) -> Dictionary:
 			l = Vector3(0.75 + 0.35 * g1, 0, -0.25 - 0.2 * maxf(g2, 0.0))
 			r = Vector3(0.8 + 0.4 * g2, 0, 0.25 + 0.2 * maxf(g1, 0.0))
 			hood = 0.04
+		"sit":
+			# Just sitting (a third place): hands on the knees, the hood level.
+			l = Vector3(0.35 + breath, 0, -0.1)
+			r = Vector3(0.35 + breath, 0, 0.1)
+			hood = 0.08
+		"lean_back":
+			# Leaning back on the hands, the hood tipped up.
+			l = Vector3(-0.45, 0, -0.25)
+			r = Vector3(-0.45, 0, 0.25)
+			hood = -0.12 + 0.03 * sin(t * 0.2 + ph)
+		"look_out":
+			# Looking out over the view, an arm on a knee.
+			l = Vector3(0.25, 0, -0.1)
+			r = Vector3(0.6, 0, 0.15)
+			hood = 0.02 + 0.04 * sin(t * 0.15 + ph)
+		"fish_line":
+			# The line out (fishing_line, §BP): the pole held out, a twitch now
+			# and then.
+			var tw := 0.08 * maxf(sin(t * 0.7 + ph), 0.0) * maxf(sin(t * 3.1), 0.0)
+			l = Vector3(0.7, 0, -0.1)
+			r = Vector3(0.85 + tw, 0, 0.1)
+			hood = 0.22
 		"doze":
 			# The hood sinks, nods, starts, settles again.
 			var cycle := fposmod(t + ph * 3.0, 9.0)
@@ -565,6 +600,15 @@ static func _props(s: Node3D, idle: String) -> void:
 			p = CreatureBodies.cone(arms[0], 0.09, 0.06, 0.06, Vector3(0, -PlayerBody.ARM_M, 0), Color(0.42, 0.3, 0.2))
 		"sit_work":
 			p = CreatureBodies.box(hand, Vector3(0.18, 0.08, 0.14), Vector3(0, -PlayerBody.ARM_M, 0.02), Color(0.55, 0.45, 0.32))
+		"fish_line":
+			# The technique's own prop: a cane pole out over the water and its
+			# line hanging from the tip.
+			p = Node3D.new()
+			hand.add_child(p)
+			p.position = Vector3(0, -PlayerBody.ARM_M, 0)
+			var cane := CreatureBodies.cone(p, 0.014, 0.006, 2.2, Vector3(0, 0, -1.1), Color("#b99c5c"), 0.0, 6)
+			cane.rotation.x = -PI * 0.5 + 0.35
+			CreatureBodies.box(p, Vector3(0.006, 1.2, 0.006), Vector3(0, -0.25, -2.05), Color(0.9, 0.9, 0.85))
 		"pipe":
 			# The pipe: a stem and a bowl; the bowl's ember (one glowing
 			# pixel, on the draw; it casts no light); and the brand, a stick

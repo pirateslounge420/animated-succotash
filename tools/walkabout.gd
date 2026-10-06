@@ -248,6 +248,8 @@ func _run() -> void:
 			kinds.append("hunt")
 		if only.has("meal"):
 			kinds.append("meal")
+		if only.has("soak"):
+			kinds.append("soak")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -495,6 +497,26 @@ func _run() -> void:
 				var cam: Vector3 = _down_the_road(camp_d, 85.0).dir
 				sites.append({"name": "hunt", "dir": cam, "look": CreatureSpawner._offset(r120, 1.2, 18.0), "hunt_at": CreatureSpawner._offset(r120, 1.2, 18.0),
 					"note": "a river camp's hunter dragging a deer home on a pole (harness: camp, rung and hunt set for the frame)"})
+			"soak":
+				# A hot-spring camp in the afternoon (design 5 Oct §EM): the
+				# nearest hot spring to the opening camp, a mountain camp
+				# (they list the soak) built 150 m off it, the camera 7 m
+				# from the pool (a harness frame: the camp is set for it).
+				var map: PlanetData = world.planet
+				var best := -1
+				var best_m := INF
+				for c in map.biome.size():
+					if int(map.biome[c]) == BiomeTemplates.HOT_SPRING and int(map.water[c]) == PlanetData.Water.NONE:
+						var m := CubeSphere.surface_distance_m(map.dir[c], camp_d)
+						if m < best_m:
+							best_m = m
+							best = c
+				if best >= 0:
+					var sd: Vector3 = CreatureSpawner._offset(map.dir[best], 0.9, 150.0)
+					var pool := ThirdPlaces.hot_spring_near(map, sd, float(ThirdPlaces.kind_row("soak").get("hot_spring_m", 400.0)))
+					if pool != Vector3.ZERO:
+						sites.append({"name": "soak", "dir": CreatureSpawner._offset(pool, 2.4, 7.0), "look": pool, "soak_camp": sd,
+							"note": "a mountain camp's soak at a hot spring %.1f km from the opening camp, in the afternoon (harness: the camp built for the frame)" % (best_m / 1000.0)})
 			"meal":
 				# The opening camp's meal at dusk (design 5 Oct §EJ): from your
 				# own place in the circle, the carrier on the way back from
@@ -890,6 +912,36 @@ func _hunt_camp(site: Dictionary) -> void:
 		site["note"] = str(site.get("note", "")) + " · no large game in reach: no hunt"
 
 
+## The soak's camp (§EM): a mountain camp at the storage rung built at
+## the site's soak_camp, registered with Camps (its folk go to the soak in
+## the afternoon hours).
+func _soak_camp(site: Dictionary) -> void:
+	var c: Vector3 = site.soak_camp
+	var key := "walk:soak"
+	var cs: CampSim = main.camp_sim
+	var st := cs.ensure(key, c, "mountain", FireStore.biome_key(world, c), 4141, 8)
+	st.rung = maxi(int(st.rung), Workshop.rung_index())
+	st.state = "living"
+	# Folk who are idle by day (third places take no one from a job): the
+	# camp's children, and the keeper who stays.
+	var folk: Array = []
+	for i in 9:
+		folk.append({"sex": "m" if i % 2 == 0 else "f", "stage": "child" if i >= 5 else "adult", "born": 0.0, "role": "", "seed": i})
+	folk[0].role = "headman"
+	folk[1].role = "plantkeeper"
+	st.folk = folk
+	Workshop.instant = true
+	# (The walk to the soak at once: the frame is the afternoon, not the
+	# walk there.)
+	ThirdPlaces.instant = true
+	var at: Vector3 = world.to_scene(c, PlanetConst.RADIUS_M + main.chunks.ground_height(c))
+	if main.camps._camps.has(key):
+		(main.camps._camps[key] as Node).queue_free()
+	main.camps._camps[key] = main.camps._build(at, "tribal", 4141, key)
+	var kinds: Array = (main.camps._camps[key].get_meta("third_places", []) as Array).map(func(p): return str(p.kind))
+	print("[soak] %s: the camp's third places %s" % [site.name, str(kinds)])
+
+
 ## Hold the opening camp's meal now (§EJ) and run the camp on until the
 ## carrier is on the way back to the fire with the piece.
 func _meal_now(site: Dictionary) -> void:
@@ -1078,6 +1130,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 		main.camp.ensure_workshop(true)
 	if site.has("hunt_at"):
 		_hunt_camp(site)
+	if site.has("soak_camp"):
+		_soak_camp(site)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
@@ -1270,6 +1324,13 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])
+			if k == 0 and site.has("soak_camp") and main.camps._camps.has("walk:soak"):
+				var soaking := 0
+				for hv in (main.camps._camps["walk:soak"] as Node3D).get_meta("tp_folk", []):
+					var tp: Dictionary = (hv as Node3D).get_meta("tp", {})
+					if str(tp.get("kind", "")) == "soak" and int(tp.get("leg", -1)) == 1:
+						soaking += 1
+				print("[soak] %s: %d in the soak, hoods down" % [site.name, soaking])
 			if k == 0 and site.has("hunt_key") and main.camps._camps.has(str(site.hunt_key)):
 				# Where the hunter is in the frame (§EK).
 				var hc: Node3D = (main.camps._camps[str(site.hunt_key)] as Node3D).get_node_or_null("HuntCarrier")

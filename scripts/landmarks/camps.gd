@@ -705,6 +705,12 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	# fire circle; the kiln downwind where there is a potter's trade.
 	if CampSim.instance != null and key != "" and Workshop.wanted(CampSim.instance.state_of(key)):
 		_workshop(root, people, CampSim.instance.state_of(key), canopy)
+	# Third places (design 5 Oct §EM, ThirdPlaces): after the circle and
+	# the workshop, the ones its people list that the place has.
+	if CampSim.instance != null and key != "" and canopy.is_empty() and folk != "dead" and folk != "small_folk":
+		var tctx := _tp_ctx(root, body, rng, people_id, biome_key)
+		root.set_meta("tp_ctx", tctx)
+		ThirdPlaces.place(root, people, tctx)
 	# Their talk: among the seated folk, at head height.
 	var chatter := Audio3D.make("camp_chatter", root, "Chatter")
 	chatter.position = Vector3(0, 0.9, 0)
@@ -743,6 +749,17 @@ func _hunt_pieces(camp: Node3D, st: Dictionary) -> void:
 				avoid.append([Vector3(p.x, 0, p.z), 1.3])
 	var hp := Workshop.hearth_props(camp, Peoples.get_people(str(st.people)), camp.get_meta("pal", []), rng, avoid, 3.9, hearth, false, false)
 	hp.name = "HuntHearth"
+
+
+## What ThirdPlaces needs to place a camp's third places (§EM).
+func _tp_ctx(root: Node3D, body: StaticBody3D, rng: RandomNumberGenerator, people_id: String, biome_key: String) -> Dictionary:
+	var d: Vector3 = world.dir_of(root.global_position)
+	var ch := chunks.chunk_at(d)
+	return {"world": world, "chunks": chunks, "d": d, "ws": root.get_meta("workshop") if root.has_meta("workshop") else null,
+		"ground": _ground_fn(root), "body": body, "rng": rng, "biome": biome_key, "people_id": people_id,
+		"stones": CreatureSpawner.den_stones(world.planet.rock[world.planet.cell_at(d)]), "bark": FireCircle.stand_bark(chunks, root.global_position),
+		"ground_col": ch.ground_color_at(d) if ch != null else Color(0.35, 0.42, 0.22),
+		"cloth": _people_pal[0] if not _people_pal.is_empty() else Color(0.45, 0.3, 0.2), "weir": root.get_meta("weir") if root.has_meta("weir") else null}
 
 
 ## The Needs context for `camp` (§EI.1).
@@ -1111,6 +1128,11 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 			var want := Sharing.shown(camp, st5)
 			if int(fs.get_meta("pieces", -1)) != want:
 				CampProps.show_food_pieces(fs, want)
+	# Third places (§EM): by day the idle folk at the fire walk to them.
+	if camp.has_meta("third_places") and CampSim.instance != null:
+		var st6 := CampSim.instance.state_of(str(camp.get_meta("key", "")))
+		if not st6.is_empty() and str(st6.get("state", "")) == "living":
+			cloaked = ThirdPlaces.live(camp, cloaked, Workshop.keeper_of(st6), CampSim.instance.clock_h(st6, world.days), _time, delta, pp, camp.get_meta("fire"), near > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)))
 	if not cloaked.is_empty():
 		FireCircle.animate(cloaked, camp.get_meta("fire"), _time, delta, pp, _circle_phase(camp), _circle_ctx(camp))
 	for i in sitters.size():
@@ -1217,6 +1239,11 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 			camp.set_meta("plot", _plot(camp, st))
 		if bool(st.get("weir", false)) and not camp.has_meta("weir"):
 			camp.set_meta("weir", _weir(camp, st))
+			# The people's own place at the weir's lip (§EM).
+			if camp.has_meta("tp_ctx"):
+				var tctx: Dictionary = camp.get_meta("tp_ctx")
+				tctx["weir"] = camp.get_meta("weir")
+				ThirdPlaces.place_own(camp, Peoples.get_people(str(st.people)), tctx)
 		var wp: Node3D = camp.get_meta("woodpile")
 		if absf(float(wp.get_meta("units", -1.0)) - float(st.wood)) >= 0.5:
 			CampProps.refresh_woodpile(wp, float(st.wood))

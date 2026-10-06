@@ -3,6 +3,45 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-06 — §EM third places: the soak, the great tree, the water rock, the porch (queue 42)
+- **What changes on screen:** after a camp's fire circle (and its workshop), the third places its people list (`huts.third_places`) are placed where the place has them.
+  - **The soak:** at the nearest hot spring ground within 400 m, a pale pool ringed with rim stones, white steam rising slow off it. In the afternoon folk walk there and sit in it to the chest with their hoods down. This is the only time a hood is down: the plain head shows, the hood folded at the nape.
+  - **The great tree bench:** a log or a flat stone at the foot of the biggest tree within 60 m, the sitter's back to the trunk, facing the tree's open side. Used in the heat of the day, the middle third of the gather hours.
+  - **The water rock:** a flat stone on the nearest fresh-water bank within 60 m, a bank boulder behind it, facing the water. Used by day. A people who know `fishing_line` hold the pole and line out over the water.
+  - **The hut porch:** the workshop's porch seat (§EL), by day.
+  - **The people's own place:** placed only at the weir's lip ("the weir's lip at low water"), once the camp has its weir. Every other phrase is skipped because the camp has no such spot yet.
+- **Who goes:** in a place's hours, folk sitting at the fire walk there and sit, up to its `max_at_once`, then walk back when the hours end. The fire's keeper stays.
+  - Folk at a bench, out gathering, carrying the meal or the gift are never taken (jobs first).
+  - At a camp below storage (no workshop) that is everyone but the keeper. At a workshop camp by day it is the children and anyone the benches had no room for.
+  - Seated there, they play one idle set: sit, lean back, look out, the pipe (one at a time); the line at the water rock. Their hoods turn to you when you come near, as at the circle.
+  - Nothing in the sim moves.
+- **Prospect and refuge (§EG.4):** every seat has something solid within 2 m behind it (trunk, rim stone, boulder, hut wall, or a bank half a metre up) and nothing within 1.5 m in front. A spot that fails is tried round its feature, or skipped.
+- **What the code does:**
+  - New `scripts/peoples/third_places.gd` (ThirdPlaces): placing, the prospect test, who goes, the walks, the hood and the steam.
+  - Camps and the opening camp call it after the circle.
+  - FireCircle plays a third place's own idle set (`ctx.only`), with new poses: sit, lean back, look out, the fishing line.
+  - `THIRD_PLACES=0` turns it off for A/B.
+- **Data:** `camps.json → sim.third_places` gets `_help`, `tree_m` 60 and `water_m` 60 (added with the wiring). The third_places clause of `_help.village_economy` is wired.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/third_places_check.gd` gives 0 fails:
+  - 34 camps (every people, two rings round the player) placed 26 water rocks and 34 porches, and every camp whose people list a place, with the feature there, has one;
+  - no kind is placed that the people don't list;
+  - every seat passes the back-and-view test;
+  - a camp 20 m from the tallest loaded tree (80 m) has its bench at the trunk's foot, 3 seats, backs to the trunk;
+  - a mountain camp 150 m from a hot spring (2.8 km from the player) has the soak at the spring with 4 seats;
+  - through an afternoon the soak held at most 4 (its max), every soaker's hood was down and nobody else's;
+  - through a river camp's day the folk on jobs are identical with third places on and off;
+  - the sim's food, wood and folk are identical over 3 game days on and off.
+  `circle_check`, `sharing_check`, `workshop_check`, `hunt_check` and `trades_check` still give 0 fails.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=soak HOURS=15` wrote `tools/reference/walkabout/7731/soak_15h_f0.png`. It is a mountain camp's soak at the hot spring nearest the opening camp, 7 m from the pool at 15 h (a harness frame: the camp is built 150 m from the spring with five adults and three children, and the walk there is instant).
+  - The pale pool, its ring of dark rim stones and a low drift of white steam are in the middle of the frame, on open grass with the road beyond.
+  - The three children sit in it, small, hoods down.
+  - Two passes got there: the first had the steam as a 20 m column and the children sunk to the head. The steam is now 3 m high and 2.4 m wide, and the depth scales with a sitter's size.
+  - After this frame the water level was set to the rim's highest ground, because on this slope the near side of the pool sank under the grass. That fix isn't in the frame.
+- **Flags for Mike:**
+  1. **At a camp with a workshop, by day the adults are at the benches or out gathering**, so the "jobs first" rule leaves only the children and the porch overflow for the third places. Your picture of "two under the big tree, one with his feet in the river, one on the porch with a pipe" happens at camps below storage (everyone but the keeper is idle at the fire there). §EM says third places also fill "the hot midday"; the prompt says the gather hours are unchanged. If you want a real midday rest for adults at big camps, say so and I'll shift the generalists' bench and out time around it (the sim's gathering stays the same).
+  2. **Trees are thin round the opening camp on 7731** (145 in the 12 loaded chunks, none within 60 m of the test camps), so the great tree bench was only tested beside a chosen tree.
+  3. **The people's own places** ("the midden top at sunset", "the corral wall at dusk"...) need spots the camps don't build yet. Only the weir's lip is placed.
+
 ## 2026-10-06 — §EJ food passed round, the night stories, the gift (queue 41)
 - **What changes on screen:**
   - **The food store shows pieces.** Each piece is one day's eating for that camp: strips on the rack first (up to eight), then baskets below (up to eight).
