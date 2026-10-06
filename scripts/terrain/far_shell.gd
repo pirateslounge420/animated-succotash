@@ -20,8 +20,9 @@ const SINK_M := 30.0
 
 var _terrain_mat: ShaderMaterial
 var _sea_mat: ShaderMaterial
-## How far off a face's ground may be and still be drawn (m).
-const SEEN_M := 40000.0
+## How far off a face's ground may be and still be drawn (m): an 885 m
+## summit is over the horizon from eye height past ~11 km on this planet.
+const SEEN_M := 12000.0
 ## Each face's 9 x 9 sample directions (update_faces()).
 var _face_samples: Array[PackedVector3Array] = []
 var _faces_at := Vector3.ZERO
@@ -33,7 +34,9 @@ func update_faces(d: Vector3) -> void:
 	if _face_samples.is_empty() or (_faces_at != Vector3.ZERO and _faces_at.distance_to(d) * PlanetConst.RADIUS_M < 2000.0):
 		return
 	_faces_at = d
-	var reach := (SEEN_M + PlanetConst.CIRCUMFERENCE_M / 4.0 / 8.0) / PlanetConst.RADIUS_M
+	# (Plus half a sample spacing's diagonal: a face's nearest ground can
+	# lie between its samples.)
+	var reach := (SEEN_M + PlanetConst.CIRCUMFERENCE_M / 4.0 / 8.0 * 0.71) / PlanetConst.RADIUS_M
 	var show := []
 	for f in 6:
 		var near := false
@@ -62,9 +65,9 @@ func build(world: Node) -> void:
 	Look.register(_sea_mat)
 
 	# One node per cube face (§ER.1), and only the faces with ground within
-	# SEEN_M of you drawn (update_faces()): from the surface nothing farther
-	# shows (a 885 m summit's own horizon is ~11 km), and a face's box is
-	# planet-sized, so the camera never culls it alone.
+	# SEEN_M of you drawn (update_faces()): nothing farther shows over the
+	# horizon, and a face's box is planet-sized, so the camera never culls
+	# it alone.
 	for pair in [[true, "FarTerrain", _terrain_mat], [false, "FarSea", _sea_mat]]:
 		var faces := _sphere_mesh(map, pair[0])
 		for f in faces.size():

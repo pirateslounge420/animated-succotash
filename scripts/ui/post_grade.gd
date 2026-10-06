@@ -6,7 +6,7 @@ extends CanvasLayer
 ## and golds the grade leaves alone; look pass, 1 Oct); color bleed, film
 ## grain and the ordered dither always, at data/look.json retro's
 ## `bleed`, `grain`, `dither` and `bits_per_channel` (§AG: a hard 5-bit
-## dither, at the 480-line internal frame). Set `night` and `magic` 0-1;
+## dither, at the internal frame, 270 lines by default since §ES). Set `night` and `magic` 0-1;
 ## set_dither(0) turns the dither off.
 
 var _rect: ColorRect

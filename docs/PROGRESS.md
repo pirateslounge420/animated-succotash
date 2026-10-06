@@ -4,6 +4,101 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — §ER.1 performance pass and §ES 3D pixel art (270 lines, pre-lit, impostors); occlusion tested and left off
+- **The camp view Mike measured at ~7 fps** (`SCENE=rainforest_camp tools/perf_bench.gd`): a rainforest camp at a ruin 40 km from the opening, 15:00, seen from 9 m off its fire.
+  - This machine has no GPU (llvmpipe, software rendering), so its milliseconds are about 100× a real card's. Compare the rows, not the numbers.
+  - "Drawn" is what the F2 overlay counts. Godot's Forward+ draws opaque things twice (a depth pass, then colour), so the overlay counts them twice; "distinct" is the triangles actually in view.
+
+  | | lines | rain | frame ms (fps) | gpu ms | drawn tris | distinct tris | shadow pass tris |
+  |---|---|---|---|---|---|---|---|
+  | before | 480 | on | 10,874 (0.1) | 10,812 | 6,077k | — | 2,086k |
+  | before | 480 | off | 10,669 (0.1) | 10,602 | 6,608k | — | 2,090k |
+  | before | 270 | on | 11,429 (0.1) | 11,305 | 6,079k | 5,405k | 2,087k |
+  | before | 270 | off | 11,516 (0.1) | 11,406 | 6,536k | — | 2,090k |
+  | after §ER.1 steps 2–6 | 270 | on | 4,089 (0.2) | 4,025 | 2,405k | 1,696k | 836k |
+  | after §ER.1 steps 2–6 | 480 | on | 4,785 (0.2) | 4,624 | 2,404k | — | 843k |
+  | **after all** | 270 | on | **962 (1.0)** | **883** | 743k | **482k** | 360k |
+  | **after all** | 270 | off | 1,150 (0.9) | 1,068 | 746k | — | 748k |
+  | **after all** | 480 | on | 1,255 (0.8) | 1,165 | 746k | 485k | 384k |
+  | **after all** | 480 | off | 1,419 (0.7) | 1,338 | 748k | — | 778k |
+
+  - The frame is about 11× faster at 270 lines (12× fewer triangles). 270 now beats 480 by about a quarter: with the triangles cut, the pixels count.
+  - Distinct triangles are under the ~500k target. The overlay's own count (743k) is not, because it counts opaque things twice.
+  - The rain streaks cost within this machine's noise (−12 to +59 ms of ~900). They are one full-screen pass of 130k pixels, far under 2 ms on a real GPU.
+- **1. Measurement:** GPU timing is switched on from the start. If a driver still won't time the GPU (Mike's 0.0), the readout now says "gpu n/a, ≤x" instead of 0.0, with the most it can be. F2's readout is now two lines at the bottom left, off the date and biome line. It shows frame, scripts, cpu and gpu ms, everything drawn (draws and triangles), and the shadow pass.
+- **2. Render distance:** now a setting in metres (`display.render_m`).
+  - Old default: 3 chunks, a 911 m reach. New default: **455 m**. The steps are 200, 300, 455, 600, 750, 911, 1200, 1600 and 2200 m.
+  - The chunk ring is whatever covers the setting (2 chunks at 455 m).
+  - The fog reaches full just inside it: the same lighter, bluer haze, thickened over the last 40% of the distance, full at 95% (`look_draw_m`).
+  - The day haze keeps its tuned density up to 911 m and thins farther out.
+  - The far shell (the mountains past the chunks) is cut away at the render distance. A saved setting from the old chunk key is no longer read.
+- **3. Triangles:**
+  - Ground cover and shrubs are handed to the GPU only where they're in reach. Before, the shader shrank them away but the GPU still drew the whole chunk's worth.
+  - Ranges by size class (`look.json ranges`): grass 40 → 25 m, other ground cover 80 → 45 m, shrubs and young trees 150 → 70 m, full trees 120 → 60 m, light trees 350 → 200 m, then sprites.
+  - The full band's trees past 35 m use the near mesh.
+  - The 4 m ground only on the chunks round you; the far shell in six faces, drawing only those with ground within 12 km, at 64 quads a side (was 96).
+  - Fruit: 80-triangle balls (was 320), drawn to 35 m (was 60).
+- **4. Rain:** already one screen-space streak pass. It now draws at the frame's own lines (it assumed 480), and the bench measures its cost alone.
+- **5. Shadows:**
+  - The sun casts no shadow in a storm (storm over 0.35, back under 0.25) or at night, and the moon never does.
+  - Only the two fires or torches nearest you, within 24 m, cast a shadow. Each is a dual-paraboloid map, softened, in a 1024 px atlas, fading out from 60% of that reach (`look.json fire_shadows`, `FireShadows`). Every other fire lights without one.
+- **6. CPU:**
+  - No plant runs a script per frame. Plant collision is only the trunks and limbs you climb (§AM); ground cover and shrubs have none.
+  - Folk past `rig_m` (60 m) no longer pose every frame.
+  - The ruin camp's weir no longer retries its build on every refresh (a bug found on the way).
+- **7. The frame:** painted 480×270 is the default (Mike's data change).
+  - Display falls back to the file's preset, and gains **auto**: the first preset that divides the window's height exactly (painted on 1080p and 4K, default 480 on 1440p).
+  - F11 and Settings cycle through all of them, auto included.
+  - HUD text sizes are still given at the 480 reference and scale with the frame's lines before snapping to VT323's crisp sizes (10 added): 20 px body text and 10 px small text at 270. They re-size live when the preset changes. The watch scales too (never under 64 px), and so do the HUD margins.
+  - `hud_pin_check`: every HUD line fits at every preset, painted included.
+  - Fog, the grade and the dither run at the frame's lines already. The walkabout (seed 101, 270 lines): **0 fails** across the opening camp at dawn, 1 km down the first road, thorn scrub, jungle and floodplain forest. Blue owns the dawn frame and the water is its brightest thing; the dither and the lighter, bluer distance read at 270; shade goes navy on the sunset scrub.
+- **8. Pre-lit** (`Prelit`, `shaders/prelit.gdshaderinc`, `prelit_light.gdshaderinc`; `look.json prelit`; `PRELIT=0` for an A/B):
+  - **Painted in the shaders:** every model, plant and the ground is lit from the sky above, and the side facing down sinks toward navy (olive on green things). The sun and moon only tint (their colour and strength, and where they're shadowed, with no N·L). Fire still lights round what it reaches. Leaves keep a faint translucency.
+  - **Baked in as each model is built,** never grey:
+    - occlusion in the vertex colours, tinted navy or olive;
+    - the sculpted bodies' creases;
+    - a voxel-occlusion bake on the hood, cowl and capelet (the cowl's deep inside) and on every beast head;
+    - the cloak's fold valleys, the capelet's shade on the shoulders and the darkening toward the hem;
+    - each leaf cluster darker the deeper and lower it sits in the crown, and trunks darker at the foot and inside the crown;
+    - the ground's tree-foot shade.
+  - No normal maps, specular, GI or SSAO anywhere.
+- **9. Models** (budgets down, §ES.2):
+  - **A big tree:** 16k → ~2.4k triangles at the hero level, 9.5k → ~1.4k near, ~200 light. The hair-thin twigs (order 3, under a pixel at 270) are gone. Leaf clusters are capped at 120 and 60, each grown to cover the ones it stands for.
+  - **A cloaked figure:** 19.6k → ~4.4k (sculpt cells ×2.6, cloak sub-steps 3×3 → 2×1, hood 28 → 16 sides, capelet 36 → 21, beast-head balls and cones lower).
+  - **Props:** balls of 10–16 sides, not 16–28, and cones of 8–12, not 12–24.
+  - **Texels:** at 270 lines (78° view) a pixel spans 6 mm per metre of distance: 3 cm at 5 m, 6 cm at 10 m. So nothing finer than ~33 texels a metre at 5 m (~17 at 10 m) stays above a pixel. **The number for LOOK_REFERENCE: 16 texels a metre stays** (one texel a pixel at 10 m, two pixels a texel at 5 m). The same texel-to-pixel ratio as 480's 16/m would be 9/m.
+  - **The cloth weave** was ~170–200 texels a metre and crawled; it is now ~32 (0.5 repeats a metre).
+- **10. The test figure** (`PRELIT` on vs off, rendered privately at 480×270): the painted folds, cowl shadow and head form read, and the shade side goes softer and bluer. Every cloaked figure shares the builders, so all of them have it.
+- **11. Impostors:** each branchy tree species' far picture is now a sprite of its own near model. `PlantMeshes.impostor_sprite` draws it on the CPU, z-buffered, ~50–90 × 64 px, keeping the model's baked light, and the foliage shader keeps season, leaf-fall and palette. It is drawn on the chunk workers.
+  - Ruins are not impostored: one sprite turned toward you would show one face from every side, and ruins already switch to plain boxes past ~150 m.
+- **12. Occlusion** (`Occluders`; `look.json occlusion.on: false`; `OCCLUSION=1` to build and use them):
+  - Each chunk's ground is a coarse sheet sunk under it, and each run of standing ruin wall gets a box.
+  - Hilly view (a 218 m rise 300 m off, 5 km from the opening, 270 lines, 33 occluders):
+
+    | | frame ms | gpu ms | renderer cpu ms | triangles drawn |
+    |---|---|---|---|---|
+    | occlusion off | 314 | 266 | 1.21 | 281k |
+    | occlusion on | 286 | 241 | 1.55 | 277k |
+
+  - Only 1.4% fewer triangles: at a 455 m draw distance, under full fog, little stands behind a ridge. The GPU drop is within this machine's run-to-run noise, and the renderer's CPU rose 28%. **Left off.**
+- **Checks:**
+  - **Pass:** `render_distance_check` (rewritten for metres: the default is half the old reach, the fog follows, and the ring covers the setting wherever you stand). Also `hud_pin_check`, `tree_check`, `wood_normals_check`, `fae_check`, and `leaf_lod_check` (updated to the new bands, with 6 m of slack round each band's edge because the bands re-sort only every 15 m of walking).
+  - **Fail the same at the base commit, so not this pass:** `vine_check` (ivy on 0 of ~940 temperate trunks) and `growth_check` (a shrub's leaf cards know their middles).
+  - **Shaders:** every edited shader compiles in a render, and `shader_varying_check` passes.
+  - **Engine errors:** a `multimesh_set_buffer` size error repeats in every rendered run, about 1,200 a run before this pass and fewer now. It predates this work and is still to find.
+- **Data** (additive, each with its `_help`):
+  - `look.json`: `ranges` (numbers changed, with §ER.1 in the help), new `fire_shadows`, new `prelit`, new `occlusion`.
+  - `hud.json`: `text.crisp_px` gains 10.
+  - `torch.json`: `light.shadows` is marked not read.
+  - `project.godot`: the `look_draw_m` and `look_prelit_*` globals, and `positional_shadow/atlas_size` 1024.
+
+- **For Mike to call:**
+  - **Sun shadows (§ES.2 vs §ER.1):** §ES.2 says the live light only adds the time-of-day tint and the fire, while §ER.1 keeps the sun's shadow by day. I kept the sun's cast shadow as part of its tint (on in clear daylight, off in storms and at night). Say if pre-lit should mean no sun shadows at all.
+  - **The great ranges past 455 m:** with the fog full at the render distance, they now show only as pale silhouettes against the sky. A longer render distance (Settings) brings them back.
+  - **Budgets:** a figure is ~4.4k triangles against §ES's ~1,500, and a big tree at the hero level is ~2.4k against "less than a figure". Pushing figures further turns hands and legs to blobs. Say if you want that.
+  - **Ruins are not sprites:** see step 11 above.
+  - **Auto pixel size:** `look.json render.auto` says a window no preset divides falls back to default (480); I used the file's own preset (painted), per §ES.
+
 ## 2026-10-06 — §EQ life-sized beast heads; the hood becomes a cowl; the silhouette lineup
 - **What changes on screen:** the beast heads are now the animal's own size and sit out in front of the hood, with the hood draped behind them like a cowl (the goat of reference frame 3). Before, every head was shrunk to fit inside a human hood.
   - **Life-sized:** each head is scaled by its `scale` in `beast_head_fit.json` (1.15 for rat and monkey, up to 1.7 for the horse). It is pushed forward and a little down, so its muzzle, beak or snout juts past the old brim by its `muzzle_out` share of the head's length.

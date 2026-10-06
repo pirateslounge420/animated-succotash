@@ -141,8 +141,11 @@ static func _sphere(level: int) -> SphereMesh:
 		var m := SphereMesh.new()
 		m.radius = 0.5
 		m.height = 1.0
-		m.radial_segments = [8, 16, 28][level]
-		m.rings = [5, 8, 14][level]
+		# (8/16/28 round and 5/8/14 rings until design 6 Oct §ES.2: at 270
+		# lines a 28-sided ball is ~800 triangles for a few pixels' outline;
+		# these stay round at the pixel size.)
+		m.radial_segments = [6, 10, 16][level]
+		m.rings = [4, 5, 8][level]
 		_meshes[key] = m
 	return _meshes[key]
 
@@ -170,7 +173,7 @@ static func _capsule(length: float, level: int) -> ArrayMesh:
 		for k in range(cap_rings, 0, -1):
 			var a := PI * 0.5 * k / (cap_rings + 1)
 			prof.append([0.5 * sin(a), -half - 0.5 * cos(a)])
-		_meshes[key] = _revolve(prof, half + 0.5, -half - 0.5, [10, 16, 28][level])
+		_meshes[key] = _revolve(prof, half + 0.5, -half - 0.5, [8, 10, 16][level]) # (10/16/28 before §ES.2)
 	return _meshes[key]
 
 
@@ -272,7 +275,7 @@ static func ball(parent: Node3D, radii: Vector3, pos: Vector3, c: Color, glow :=
 
 static func cone(parent: Node3D, r_bottom: float, r_top: float, h: float, pos: Vector3, c: Color, glow := 0.0, sides := 0) -> MeshInstance3D:
 	if sides == 0:
-		sides = 24 if maxf(r_bottom, r_top) >= 0.08 else 12
+		sides = 12 if maxf(r_bottom, r_top) >= 0.08 else 8 # (24 and 12 before §ES.2)
 	var key := "cone_%.3f_%.3f_%.3f_%d" % [r_bottom, r_top, h, sides]
 	if not _meshes.has(key):
 		var m := CylinderMesh.new()

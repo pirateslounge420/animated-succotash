@@ -14,7 +14,7 @@ extends CanvasLayer
 ## past doesn't strobe) and toward the frame's edge over edge_fade.
 ##
 ## Drawn as flat discs on a canvas layer under PostGrade's (layer -2), so
-## it is drawn into the 480-line frame and graded, 5-bit quantised and
+## it is drawn into the internal frame and graded, 5-bit quantised and
 ## dithered with everything else: part of the picture, not a sharp overlay
 ## (§Y, R9). Soft discs with a 2 px edge at most, nothing blurred. Cool
 ## white and pale cyan (R7 keeps warm for fire); within 10° of the horizon

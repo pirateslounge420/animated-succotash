@@ -1,5 +1,5 @@
-// Rain as long straight vertical streaks in the internal 480-line frame
-// (design §BU, 1 Oct, Mike's reference frames): a canvas overlay under the
+// Rain as long straight vertical streaks in the internal frame, `lines`
+// tall (design §BU, 1 Oct, Mike's reference frames; §ER.1 the one rain): a canvas overlay under the
 // post grade, so the streaks take the grade and the dither like everything
 // else. Each screen column rolls its own streaks down at its own pace;
 // more columns light up as the rain thickens (dense in a storm), and the
