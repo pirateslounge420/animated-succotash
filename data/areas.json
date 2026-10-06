@@ -1,7 +1,7 @@
 {
  "_help": {
   "about": "[NOT WIRED YET \u2014 Mike, 6 Oct, for \u00a7EW] Mike's list of areas: the 52 biomes (data/biomes) gathered into cohesive places, each to become its own ruins, temples and archetypal places (one pocket world each, \u00a7EW). Recorded by Claude Code from Mike's message; Claude (chat) logs it as a design section and reconciles it with worlds.json worlds (\u00a7EW.2's named worlds). The biomes stay as they are: an area only groups them.",
-  "areas": "In Mike's order. name: Mike's words. biomes: the biomes his words name. proposed: Claude Code's suggested fold-ins, not decided, for Mike to keep or move (polar: the plain tundra between his polar desert and forest-tundra, alpine tundra, glaciers; prairie: steppe; jungle: tropical dry forest; savanna: thorn scrub; swamp: floodplain forest; dunes: hot desert; rocky shore: estuary; ocean: lagoon; volcanic: caves, for the volcano caves; canyons: badlands). rainforest: tropical, temperate, or both, is Mike's call.",
+  "areas": "In Mike's order. name: Mike's words. biomes: the biomes his words name. proposed: Claude Code's suggested fold-ins, not decided, for Mike to keep or move (polar: the plain tundra between his polar desert and forest-tundra, alpine tundra, glaciers; prairie: steppe; jungle: tropical dry forest; savanna: thorn scrub; swamp: floodplain forest; dunes: hot desert; rocky shore: estuary; ocean: lagoon; volcanic: caves, for the volcano caves; canyons: badlands). rainforest: both tropical and temperate (Mike, 6 Oct). boreal_forest (Mike, 6 Oct: \"we will also have boreal forest types\"): the taiga moves here from coniferous_forest; coniferous_forest is then the temperate conifer forest, which has no biome in data/biomes yet (needs: a new biome for Claude, chat, to research). types: the boreal forest's kinds, Claude Code's first guess from the real ones, for Mike to keep or change.",
   "unassigned": "Biomes no area takes yet, neither named nor proposed: Mike's call whether they join an area, become their own, or stay out of Torchfire 1."
  },
  "areas": {
@@ -27,10 +27,22 @@
   },
   "coniferous_forest": {
    "name": "coniferous forest",
+   "biomes": [],
+   "proposed": [],
+   "needs": "a temperate conifer forest biome (pine, fir, cedar; not boreal), not in data/biomes yet"
+  },
+  "boreal_forest": {
+   "name": "boreal forest",
    "biomes": [
     "TAIGA"
    ],
-   "proposed": []
+   "proposed": [],
+   "types": [
+    "dark taiga (spruce and fir, closed and shaded)",
+    "light taiga (larch and pine, open)",
+    "boreal mixed (spruce with birch and aspen)",
+    "muskeg (black spruce over bog)"
+   ]
   },
   "cloud_forest": {
    "name": "cloud forest",

@@ -4,10 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
-## 2026-10-06 — Mike's areas: the 52 biomes gathered into 19 places (data only, for §EW)
+## 2026-10-06 — Mike's areas: the 52 biomes gathered into 20 places (data only, for §EW)
 - **New file `data/areas.json`** (`[NOT WIRED YET]`): Mike's 19 areas, in his order. Each has the biomes his words name, plus Claude Code's suggested fold-ins under `proposed`, which are not decided.
 - **Unassigned:** 10 biomes fit no area yet (cold desert, fresh water, maritime forest, Mediterranean scrub, páramo, puna, sagebrush, salt flat, sea ice, temperate deciduous).
 - **Nothing in the game reads the file yet.** The biomes themselves are unchanged.
+- **Mike's follow-up:** the rainforest area takes both the tropical and temperate rainforests. A new **boreal forest** area takes the taiga, with four first-guess forest types. Coniferous forest now means temperate conifers, which has no biome file yet (chat to research one). That makes 20 areas.
 - **For chat:** log it as a design section, and reconcile it with `worlds.json → worlds` (§EW.2). Three of §EW.2's named worlds (the mine shaft, the mountains, the desert sandstone) have no area in Mike's list.
 
 ---
