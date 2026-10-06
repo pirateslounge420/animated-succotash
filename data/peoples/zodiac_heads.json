@@ -1,0 +1,17 @@
+{
+ "_help": "§EO.1 (5 Oct, Mike by voice). The head under every tribe's hood; the shared cloaked rig is unchanged. Homes are Claude's first guess from each animal's real range; the designer owns them.",
+ "heads": {
+  "rat": {"home": "almost anywhere folk live"},
+  "ox": {"home": "grassland, steppe"},
+  "tiger": {"home": "tropical and temperate forest of Asia, taiga edge"},
+  "rabbit": {"home": "temperate grassland and woodland edge"},
+  "dragon": {"home": "none real: rare, hidden", "mythical": true},
+  "snake": {"home": "desert, tropical forest"},
+  "horse": {"home": "steppe"},
+  "goat": {"home": "mountain, highland"},
+  "monkey": {"home": "tropical forest"},
+  "rooster": {"home": "tropical forest edge (the red junglefowl)"},
+  "dog": {"home": "with folk everywhere"},
+  "pig": {"home": "temperate and tropical forest (the wild boar)"}
+ }
+}

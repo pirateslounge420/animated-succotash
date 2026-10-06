@@ -1,0 +1,26 @@
+{
+ "_help": "§EO.3–EO.5 (5 Oct, Mike by voice). First numbers by Claude (chat); the designer owns them. Additive: nothing reads this until the code does.",
+ "fae": {
+  "cloaked": false,
+  "count": 3,
+  "kind": "earth fairy",
+  "flies": true,
+  "emits_light": true,
+  "specks": "glowing magic pixels shed while flying"
+ },
+ "rings": {
+  "spawn": "random",
+  "sit_seconds_min": 10,
+  "trust": "per ring, hidden, grows on each return",
+  "bands": ["day", "night"],
+  "moon_phase_sets_band": true,
+  "needs_shape": "mushroom (none in the engine yet)"
+ },
+ "gifts": {
+  "unlocked_by": "restoring an overrun village (§CN)",
+  "free_light": {"warm": true, "temporary": true},
+  "lead_to_lair": true,
+  "scatter_if_rushed": true,
+  "lairs_per_village": "rare and uneven: most none, a few one"
+ }
+}

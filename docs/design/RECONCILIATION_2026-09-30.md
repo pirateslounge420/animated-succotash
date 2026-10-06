@@ -3648,3 +3648,35 @@ Mike: *"libraries where people keep tomes and scrolls"*, and, to the question of
 - **Two walls.** One wall: the **found tomes and scrolls** (§DL's tomes.json, the philosophical texts), the relics of the old builders, kept like relics; a camp holds `library.tomes_max` and the player can read them there as anywhere. The other wall: the camp's **own memory**, which needs no writing: a **winter-count hide** (one small painted picture per game year, from the sim's biggest event that year: a birth, a fire, the year the woods were stripped, the year a ruin was restored) and a **string of knots** (one knot per folk, a coloured cord for each life stage). Both are rendered from the sim, like the camp book's lines; neither has text. Mute folk, a record in pictures.
 - **Dead camps keep their library.** A library in an overrun ruin (§CN) still has its hide and its knots; reading the hide of a camp that is gone is how the player learns what happened there, which §BQ's "the ending stays unnamed" allows because the pictures do not say either (a year with a black pictogram and then no more years).
 - The record-keeper is also who the gift of §EJ.4 comes from when the camp has one.
+
+## EO. Beast heads under the hood; the empty hood; the fae and the fairy rings — LOCKED (5 Oct, 20:04, by voice, Mike)
+
+The pivot from scope to ambience: what makes one frame feel magical when the player sits still. Sparse stays sparse; the world shows more to whoever stops and looks.
+
+### EO.1 Every people is a beast under the cloak (amends §BO, §0)
+- The shared cloaked rig stays; **only the head changes.** From a distance a figure reads as a person; up close, by firelight, a beast's head looks out of the hood (the robed lizard, owl scholar, goat and rabbit of the reference frames).
+- **The starting set is the twelve Eastern zodiac animals:** rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog, pig. One animal per tribe. More may come later.
+- The dragon is the one beast that is not real; it is the rare tribe.
+- First guess (Claude, the designer owns it): each tribe lives where its animal really lives (§CA), in `data/peoples/zodiac_heads.json`.
+- **Open:** §BO's goblin, orc and small-folk kinds are not retired by this lock; `folk_kinds.json` is unchanged until Mike says.
+
+### EO.2 The player's hood is empty
+- The player's face is only the shadow inside the hood, always. The indigo cloak with the rust hem stays the player's alone.
+
+### EO.3 The fae: a hidden species, not a tribe (the one exception to the cloak rule)
+- The fae are a hidden race, like leprechauns or gnomes in folklore, not a people. **They wear no cloak** and are the only intelligent beings without one. This is a deliberate exception to "every intelligent creature is a cloaked figure", not a contradiction.
+- **A trio of small earth fairies** that fly, shedding glowing magic pixels. They give off light, so they may glow (LOOK_REFERENCE: only light-givers glow).
+- The name "fae" now means this species. §DJ's few who speak stay cloaked small folk.
+
+### EO.4 Fairy rings
+- Mushroom rings **spawn at random** in the world. **Sit inside one for at least 10 seconds** and the fae appear.
+- Trust is **per ring**, never shown as a meter. Each return shows more: a flicker at first, then they come close.
+- Some fae come only by day, others only by night, and the moon's phase can set which (§DD).
+- Build need: the engine has no mushroom shape yet; a ring needs one.
+
+### EO.5 What the fae give
+- **Restoring a darkened village** (bringing light back to an overrun ruin, §CN) makes the fae show themselves more around it, and they may give a gift.
+- **The gift is one free light for a while**: a warm flame the player did not borrow. It fades, so "every flame is borrowed" still holds everywhere else.
+- **They lead you to secret passages.** Revisit, follow, and let them work; they open a hidden doorway to deeper ruins, a **fairy lair**. Rushing or crowding them scatters them (Claude's suggestion).
+- Lairs are rare and uneven by village, not a fixed count: most villages have none, a few have one (Claude's call).
+- Not locked here: shrine offerings to draw rare beasts, and the road events (relighting a traveller's torch, glowing insects, meteor nights). Talked through, still brewing.
