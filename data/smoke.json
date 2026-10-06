@@ -2,9 +2,10 @@
  "_help": {
   "about": "Design \u00a7CV (wired by Claude Code, 3 Oct: Smoke, shaders/smoke.gdshader, Campfire, OldHearths, NestBuilder; the swifts' chatter and the stack mouth's sparks at night are not built yet). Smoke (Mike, 3 Oct): every lit hearth sends up a column you can read from far off; the ruins' underground hearths breathe through a stack above each one; a cold stack is a place swifts roost; a wildfire has its own plume. Every number is a first guess; the designer owns them and the eye is Claude Code's. tools/smoke_check.py is the gate (0 errors before commit). Restart after editing.",
   "hearth": "The column over a lit fire. sources: which fires smoke (a camp's hearth, a rekindled old hearth, a nest's hearth, a delve's hearths through their stacks). never: lights that never smoke (emptied by Mike, 3 Oct: \"all fire should smoke based off flame size\"; torches, lamps and the pipe's brand joined sources). by_flame: a fire smokes by its flame's size against a campfire's (1.0): its column is the by_state row x size^exponent (2: the fire's heat goes with its flame's area), so the torch's burnt end (an ember, the embers row, at look.json fire.flame.torch.scale 0.32) sends up a wisp under a metre, a tomb lamp (0.14) a thread a little over a metre, a campfire its full column; the fire lights sqrt of that scale as much of it at night (wired by Claude Code, 3 Oct). by_state: one row per FireStore state (flames, flare, low, embers, out): top_m is how high the column stands in still air, width_m its width at the base, density how solid it draws (0-1). The embers row is the thin wisp that says a fire can still be saved (\u00a7BL). stack_scale: a column leaving a stack is this share of an open fire's. rise_mps: how fast the noise scrolls up. wind: the column leans lean_deg_per_mps degrees from upright for each m/s of the weather sim's wind at that place, up to max_lean_deg, and leans more toward its top (shear); below calm_below_mps it stands straight. calm_pool: in still air around dawn the smoke stops rising at at_m and spreads spread_m flat over the valley. rain: above from_mm_h the column is top_scale as tall and density_scale as solid. night: the column is not drawn (smoke gives off no light); the fire lights the first fire_lit_m of it warm and the canopy above (\u00a7BZ). look: the same family as \u00a7BZ's flame: `cards` camera-facing cards, noise scrolled upward and posterised to `bands` flat bands on a `texels` grid, nearest-filtered, cut out by dither (no soft alpha). colour_near / colour_far: pale blue-grey, never neutral grey (LOOK_REFERENCE R3), lighter and bluer with distance; colour_shade is its own shaded side. far: a camp that is not loaded still has a fire state in the sim (\u00a7BL), so its column is drawn from that number out to seen_to_m; min_px is the narrowest it may draw.",
-  "outlets": "Where a hearth's smoke leaves (Mike: primitive camps on the surface need nothing; a cave mouth clears itself; in ruins a chimney above each hearth). open: places whose fire is open to the sky. mouth: nests (landforms.json ids) whose hearth sits under rock: the smoke clears through the mouth and up the cliff, and the soot above the mouth stays when the fire is out. by_ruin: the stack above a delve's hearths, by ruin kind (the same keys as delves.json fire_holders.by_ruin). surface_old_hearth: a ruin's surface old hearth (OldHearths): a fireplace under a standing stack in a castle or tower, the open ring elsewhere. per_delve: own_stack lists the hearths that get their own flue and stack; share_nearest lists the fire-holders that vent through the nearest one. forms: each stack's shape: height_m above the ground or roof [min, max], width_m, at (where on the ruin when it is not free-standing), open_front (a fireplace you can still swing a torch into, \u00a7CN), soot_lip (black round the mouth so it reads as a chimney). soot: its colour (navy-black, never grey) and how far the streak runs. passable: a flue is never a way in or out (\u00a7CJ.4 unchanged). night_mouth: a lit hearth below shows as a faint glow and a few sparks at the stack's mouth.",
+  "outlets": "Where a hearth's smoke leaves (Mike: primitive camps on the surface need nothing; a cave mouth clears itself; in ruins a chimney above each hearth). open: places whose fire is open to the sky. mouth: nests (landforms.json ids) whose hearth sits under rock: the smoke clears through the mouth and up the cliff, and the soot above the mouth stays when the fire is out. by_ruin: the stack above a delve's hearths, by ruin kind (the same keys as delves.json fire_holders.by_ruin). surface_old_hearth: a ruin's surface old hearth (OldHearths): a fireplace under a standing stack in a castle or tower, the open ring elsewhere. per_delve: own_stack lists the hearths that get their own flue and stack; share_nearest lists the fire-holders that vent through the nearest one. forms: each stack's shape: height_m above the ground or roof [min, max], width_m, at (where on the ruin when it is not free-standing), open_front (a fireplace you can still swing a torch into, \u00a7CN), soot_lip (black round the mouth so it reads as a chimney). soot: its colour (navy-black, never grey) and how far the streak runs. passable: a flue is never a way in or out (\u00a7CJ.4 unchanged). night_mouth: a lit hearth below shows as a faint glow and a few sparks at the stack's mouth. Torchfire 1 (\u00a7EV, 6 Oct): per_delve is the open world's (Torchfire 2) and stays as it is; in the crawler every built-in fire underground gets its own vent (vents).",
   "swifts": "Chimney swifts take the cold stacks (Mike). cold_game_days: how long the hearth below must have been out. share_of_stacks: the share of suitable cold stacks that hold a flock. flock: birds per stack [min, max]. forms: which stack forms are wide enough. min_width_m: the narrowest mouth they use. climate: where they live (annual mean temperature in C, moisture 0-1); first guess until each land gets its own swift by realm (\u00a7AA, \u00a7CS). day_range_m: how far from the stack they hunt by day. dusk: the flock circles over the stack for circle_game_min, then pours in over enter_game_min while the sun is between sun_deg[0] and sun_deg[1] degrees (part of \u00a7CH's handover). dawn: they pour out over leave_game_min. sound: their chatter, a point source at the stack (\u00a7BG). lit_below: light the hearth and they leave at once, stay away while it is in any of stay_away_states, and return after it has been cold return_after_cold_game_days. overrun.roost: false means no swifts over an overrun delve (\u00a7CN: the place goes quiet), so a cold stack with no birds at dusk is a far-off hint; a first guess for the designer to confirm. species: the real bird and its sources. later: where this goes next.",
-  "wildfire_plume": "A wildfire's own smoke (proposed in chat on 3 Oct, not objected to; the designer can strike it): wide, tall and dark so it is never mistaken for a hearth's narrow pale column. top_m, width_m: its size at full burn. lean_deg_per_mps: its lean with the wind. colours: dark indigo, never grey. night_base_glow: the fire lights its base orange at night. seen_to_m: how far off it draws. \u00a7BL's wildfire rules are unchanged."
+  "wildfire_plume": "A wildfire's own smoke (proposed in chat on 3 Oct, not objected to; the designer can strike it): wide, tall and dark so it is never mistaken for a hearth's narrow pale column. top_m, width_m: its size at full burn. lean_deg_per_mps: its lean with the wind. colours: dark indigo, never grey. night_base_glow: the fire lights its base orange at night. seen_to_m: how far off it draws. \u00a7BL's wildfire rules are unchanged.",
+  "vents": "[NOT WIRED YET \u2014 design \u00a7EV] Every permanent, built-in fire placed underground gets its own vent to the surface (Mike, 6 Oct); a carried torch needs none (carried_exempt). shaft: the vent of a hearth or altar fire (for), width_m [min, max], kinks: how many bends it may take round rock or a room above. flue: a brazier's or sconce's narrow slot in the wall above it (for, width_m); it lets in no light worth drawing, so a corridor of sconces stays dark (\u00a7BA). daylight: a shaft's column of sky light beside its fire (shafts only): day_color by day, night_color by night (sRGB hex, first guesses, cool blue and moonlit blue); it fades from full at fade_depth_m[0] of shaft to nothing at fade_depth_m[1], and narrows (narrow_with_depth). holds_dark: false, Claude's first guess, open for Mike (\u00a7EV): the column does not hold the dark back. soot: the streak up the wall and ceiling into the vent's mouth, outlets' soot colour, streak_m long; it stays when the fire is out. draft: a vented fire leans toward its vent with torch.json snuff.draft's ordinary lean only (lean_only); never a snuffing gust. surface: where the vent comes out once the world has a surface (\u00a7EW): a shaft as the ruin's stack (outlets.by_ruin), a flue as a small sooted slot in the ground. passable: never a way in or out (\u00a7CV.3). First guesses by Claude (chat), 6 Oct; Mike tunes by playing."
  },
  "hearth": {
   "sources": [
@@ -319,5 +320,58 @@
   "colour_far": "#6A6CA8",
   "night_base_glow": true,
   "seen_to_m": 7500.0
+ },
+ "vents": {
+  "every_builtin_fire": true,
+  "carried_exempt": true,
+  "shaft": {
+   "for": [
+    "old_hearth",
+    "hearth_ring",
+    "altar"
+   ],
+   "width_m": [
+    0.6,
+    1.2
+   ],
+   "kinks": 2
+  },
+  "flue": {
+   "for": [
+    "brazier",
+    "sconce"
+   ],
+   "width_m": [
+    0.15,
+    0.3
+   ]
+  },
+  "daylight": {
+   "shafts_only": true,
+   "day_color": "#6f95e8",
+   "night_color": "#2a3f80",
+   "fade_depth_m": [
+    3.0,
+    25.0
+   ],
+   "narrow_with_depth": true,
+   "holds_dark": false
+  },
+  "soot": {
+   "color": "outlets.soot",
+   "streak_m": [
+    0.8,
+    2.0
+   ],
+   "stays_when_cold": true
+  },
+  "draft": {
+   "lean_only": true
+  },
+  "surface": {
+   "shaft": "outlets.by_ruin",
+   "flue": "ground_slot"
+  },
+  "passable": false
  }
 }

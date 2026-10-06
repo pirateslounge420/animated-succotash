@@ -1,0 +1,71 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET \u2014 design \u00a7EU] Walls of fitted stone for Torchfire 1's ruins: the Inca way, every stone its own polygon, fitted with no mortar; real relief, never a normal map; settled with age; overgrown only where it would really grow. First guesses by Claude (chat), 6 Oct; Claude Code matches the shape to its generator (keep the meaning, rename freely) and Mike tunes by playing. Restart after editing.",
+  "partition": "How a wall face is cut into stones. method: voronoi (one cell per stone on the wall plane). seed_per_face: every wall face takes its own seed, so joints never mirror across a corridor (Mike's 6 Oct note). relax_steps: smoothing passes so cells are rounder and more even (0 = raw, more = more regular). corner_rule: stones at a wall's corner wrap or stop at the edge (stop is the first guess; wrap if the corners look cut).",
+  "relief": "Real geometry (R-rules: no normal maps, no shine). proud_m: how far a stone's face stands out from the wall plane [min, max]. pillow_m: how much its face bulges in the middle. bevel_m: the rounded edge's width. joint_m: the gap left between stones at the face. joint_depth_m: how deep the joints sink. joint_occlusion: baked occlusion in the joints, tinted to the scene's shade colour (navy, olive in green scenes, never grey; \u00a7ES.2). The torch's live light catches the pillowed faces.",
+  "settle": "Fitted but settled (\u00a7EU.3): share of stones that have moved; offset_m: in (negative) or out (positive) [min, max]; tilt_deg [min, max]; dropped_share: stones fallen out of their place (rare; a collapsed room, crawler.json kit.kinds collapsed, is where the rubble lives).",
+  "overgrowth": "\u00a7EU.4: only where it would really grow. climate: the moisture and temperature gate is vines.json climate (moisture[0] none, moisture[1] full, fades outside temp_c, shade_boost). moss_in_joints: moss gathers in the recessed joints first. moss_low_wall_m: moss climbs the shaded lower wall to this height at full climate. vines: vines from cracks and wall tops, the biome's own vine species, drawn per vines.json. dry: where the climate gives no moss, sand and dust drift into corners (drift_corner_m deep).",
+  "presets": "\u00a7EU.5. stone_m: a stone's typical width [min, max]; course_bias: 0 = free polygons, 1 = loosely in courses (rows); tint: the stone's colour (sRGB hex) or \"theme\" for the stage's existing stone colour. megalithic: a few huge stones (Sacsayhuam\u00e1n). fitted_small: many tight stones.",
+  "by_theme": "Which preset each crawler.json theme uses (first guess, open for Mike, \u00a7EU). Per world with \u00a7EW (worlds.json)."
+ },
+ "partition": {
+  "method": "voronoi",
+  "seed_per_face": true,
+  "relax_steps": 2,
+  "corner_rule": "stop"
+ },
+ "relief": {
+  "proud_m": [
+   0.02,
+   0.06
+  ],
+  "pillow_m": 0.04,
+  "bevel_m": 0.05,
+  "joint_m": 0.012,
+  "joint_depth_m": 0.06,
+  "joint_occlusion": "scene_shade"
+ },
+ "settle": {
+  "share": 0.15,
+  "offset_m": [
+   -0.04,
+   0.06
+  ],
+  "tilt_deg": [
+   0.0,
+   4.0
+  ],
+  "dropped_share": 0.02
+ },
+ "overgrowth": {
+  "climate": "vines.json climate",
+  "moss_in_joints": true,
+  "moss_low_wall_m": 1.2,
+  "vines": "vines.json",
+  "dry": {
+   "drift_corner_m": 0.25
+  }
+ },
+ "presets": {
+  "megalithic": {
+   "stone_m": [
+    0.9,
+    2.2
+   ],
+   "course_bias": 0.2,
+   "tint": "theme"
+  },
+  "fitted_small": {
+   "stone_m": [
+    0.25,
+    0.6
+   ],
+   "course_bias": 0.4,
+   "tint": "theme"
+  }
+ },
+ "by_theme": {
+  "tomb": "fitted_small",
+  "snow_ruins": "megalithic"
+ }
+}

@@ -3929,3 +3929,214 @@ First slice, to play:
 5. **One baked sprite:** the rescuer at the hearth, eight around by three heights.
 
 Mike plays it and reports. Then the snow ruins, the NPC maker, puzzle gates.
+
+## EU. 480 lines again; walls of fitted stone, settled, overgrown where it is wet — LOCKED (6 Oct, afternoon, by voice, Mike)
+
+Talked through by voice after Mike played the first slice (§ET.11). He likes the crypt: *"I do
+like how this looks, aesthetic-wise"*, the amber glow on the walls a welcome change from the
+navy outside. Two things read as Minecraft: every wall texel was big and plain to see, and
+*"the cracks … look kind of like they're mirrored on left and right sides"*. Then: 270 lines was
+partly there to fight the open world's ~6 M triangles, *"but since we don't have the open world
+anymore … we don't have to worry about that anymore"*; *"like how the Incans did it … each stone
+was properly placed and fit right next to each other … randomized, and different dungeons and
+different areas can have different designs"*; *"fitted but settled"*; *"moss, vines creeping in,
+if applicable to the environments"*; *"go ahead and lock it in."*
+
+**Amends §ES.1** (the 270-line default) for Torchfire 1. Claude flagged it; Mike chose: 270's
+other job, holding down the open world's triangles (§ER), went with the open world (§ET.2).
+Data: `data/masonry.json` (new, not wired). Not built.
+
+### EU.1 The frame
+- **Default internal frame back to 480 lines** (the `default` preset). 270 (`painted`) and the
+  other presets stay in Settings. Nearest-neighbour, HUD inside the frame, unchanged (§Y).
+- The rest of §ES.2 stands: light painted into the textures, baked occlusion tinted to the
+  scene's shade, mid-poly forms, no normal maps, no shine. Texel density is re-measured at 480
+  (an open number for Claude Code, as in §ES.2).
+- Why resolution alone wouldn't have fixed it: in Mike's 6 Oct screenshot one wall texel
+  covered many screen pixels. The blockiness was the texture recipe (big square texels, random
+  light and dark speckle), which is Minecraft's stone. EU.2 replaces it.
+
+### EU.2 Fitted stone, in real relief
+- Each wall face is cut into irregular polygonal stones that share their edges, with no mortar:
+  the Inca way (Sacsayhuamán, the twelve-angled stone). Method: a Voronoi partition of the wall
+  plane, one cell to a stone.
+- **Real geometry, never a normal map** (R-rules). Each stone stands a little proud, its face
+  gently pillowed; the joints sink in between. That is Mike's *"parts jut out … and where the
+  cracks are, it sucks into the block"*. The joints carry baked occlusion in the scene's shade
+  colour (§ES.2); the torch's live light catches the pillowed faces.
+- **No two walls rhyme:** every wall face takes its own seed, so the joints never mirror across
+  a corridor.
+- The cost is fine now: a room of chunky bevelled stones is small beside the open world's
+  triangles, which are gone (§ET.2). Claude Code reports the count.
+
+### EU.3 Fitted but settled
+- Most stones sit flush. A minority have settled: a little proud, a little sunk, a slight tilt,
+  now and then one dropped from its place. Ancient and long-forgotten (§DI), never rubble except
+  in a collapsed room (`crawler.json → kit.kinds`).
+
+### EU.4 Overgrowth only where it would really grow
+- Moss in the recessed joints and on the shaded lower wall; vines creeping from the cracks and
+  over the wall tops. Driven by the place's moisture and warmth (`vines.json → climate`, §CE),
+  with the biome's own vine species (§CS). A damp ruin goes green; a dry one stays bare stone,
+  with sand and dust drifted into the corners.
+
+### EU.5 Every place its own masonry
+- Seed, stone size, bevel, how proud, how settled, overgrowth and tint are set per stage, and
+  per world with §EW. Two presets to start: `megalithic` (a few huge stones) and `fitted_small`
+  (many tight ones). More styles by place come later.
+
+### EU.6 The amber stays
+- Mike likes the crypt's amber: firelight warming the stone and fading into the dark. Underground,
+  firelit stone may go amber, the same exception as a lit village (§EE.1); past the fire's reach
+  the dark stays its own faint navy (`crawler.json → look`). Outside, blue owns the frame,
+  unchanged. Claude had proposed a navy fall-off; Mike's word is the amber.
+
+**Open for Mike:** which preset each place gets; whether masonry styles follow real building
+traditions by biome (Claude's thought: polygonal ashlar in the mountains, coursed sandstone
+blocks in the desert).
+
+## EV. Every built-in fire underground has its own vent to the sky — LOCKED (6 Oct, afternoon, by voice, Mike)
+
+Mike: *"as one of the rules … wherever there's like a torch or a fire supposed to be situated,
+there should be like an escape vent or an exhaust chimney that leads to the surface … for that
+particular place where the fire is supposed to be situated … if it's underground."* Claude's
+reading, which Mike confirmed (*"yep"*): every **permanent, built-in** fire placed underground
+(an old hearth, a hearth ring, an altar fire, a brazier, a sconce) gets its own vent to the
+surface. A carried torch needs none: *"there's always going to be the ambient air … it'll just
+go into the nearest vent."*
+
+**Supersedes §CV.3's first guess** for Torchfire 1 (only the first room's hearth and the heart
+got a flue of their own; rings, braziers and sconces shared the nearest, `smoke.json →
+outlets.per_delve`). Now each has its own. `per_delve` stays as it is for the open-world code
+(Torchfire 2). **Builds on §ET.6:** a vent is the airway the builders cut for a fire. §CV.1 is
+unchanged: only hearths send up a column of smoke; a brazier's or sconce's vent shows as soot.
+Data: `smoke.json → vents` (new, not wired). Not built.
+
+### EV.1 The vent
+- Carved from the fire up to the surface: straight up where it can, kinked where rock or a room
+  above is in the way. Never a way in or out (§CV.3).
+- **Sized by the fire** (Claude's first guess, so a corridor of sconces doesn't turn into a
+  corridor of skylights and the dark between lights stays dark, §BA, §CJ.5): a hearth or altar
+  fire gets a **shaft** (0.6–1.2 m); a brazier or sconce gets a narrow **flue** slot in the wall
+  above it (0.15–0.3 m).
+- **Soot** streaks the wall and ceiling up into the vent's mouth, navy-black (§CV.3), and stays
+  when the fire is out. A cold vent with soot says a fire belongs here: light as wayfinding.
+
+### EV.2 Daylight down the shaft
+- A shaft lets a column of sky light fall beside its fire: cool blue by day, a faint moonlit
+  blue at night, when the fire rules. Blue and the one warm accent in one shot (Mike's look).
+- The deeper the fire, the fainter and narrower the column: from a deep shaft it is a far-off
+  glow at the top, never a spotlight. A flue lets in no light worth drawing.
+
+### EV.3 The draft
+- A vented fire leans and flickers a little toward its vent (§ET.6's drafts, `torch.json →
+  snuff.draft`): the ordinary lean only, never a snuffing gust.
+
+### EV.4 From above (with §EW)
+- The worlds have a surface again (§EW), so every vent ends somewhere you can walk: a stack by
+  ruin kind for a shaft (§CV.3's table, `smoke.json → outlets.by_ruin`), a small sooted slot in
+  the ground for a flue. §CV.4's read from a distance comes back: smoke over a hearth you lit
+  below, a cold sooted stack over one you haven't reached. Swifts (§CV.5) stay with the open
+  world unless Mike brings them in.
+
+**Open for Mike:** the vent sizes; whether a daylight column holds the dark back (§BA). Claude's
+first guess: no, it is too faint and it's gone at night; only fire holds the dark.
+
+## EW. Pocket worlds: one bounded slice per biome, joined underground, seen on the horizon — LOCKED (6 Oct, 14:51, by voice, Mike)
+
+Talked through by voice. Mike: *"all the different biomes get their own dungeon, basically …
+unique in architecture and style"*; *"instead of the open world, we can still keep it to where
+there's a day-night cycle … utilize the ecosystem things that we built and just take the
+archetypes from it, so you might have sightings of ambient creatures in the trees … each
+quote-unquote dungeon area might even consist of ruins or some type of village or courtyard
+areas too, but it's not going to be infinitely explorable … snapshots of full-blown biomes, so
+every time you go to a different biome … it really feels unique"*; *"loosely connected … an
+overworld map to fast travel to the ones that you've already visited"*; *"if you go underground,
+you emerge on the other side, you're in a new biome now … the illusion that you've traveled a
+long distance"*; *"you can still look out towards the horizon … not as far as we used to have
+it … a microcosm of larger expansive worlds"*; *"see the land changing way in the background,
+while the immediate surroundings are immersed in that particular zone"*; *"lock."*
+
+**Amends §ET.1** ("no open world") **and §ET.5** (stages). A stage is no longer only a ruin: it
+is a pocket world, a bounded outdoor slice of one biome with its ruins above and its dungeon
+below. Still not the planet (§CR stays Torchfire 2). **Partly un-shelves §ET.2:** the day-night
+cycle comes back, and the ecology's archetypes come back as ambient life. What stays shelved is
+EW.6. Data: `data/worlds.json` (new, not wired). Not built.
+
+### EW.1 A pocket world
+- One biome, bounded, dense and composed (§EF, §EG): a snapshot of the whole biome, not a stretch
+  of it. Ruins, a village, courtyards inside it; its dungeon below and in its ruins, reclaimed by
+  relighting (§ET.4).
+- **Size:** Claude's first guess is 1–2 km across; not Mike's number yet. The edge is the land
+  itself (cliffs, water, thick forest, mountains), never an invisible wall (§DM).
+- The shot holds: a path or river running to a landmark against the sky, trees or slopes as
+  walls on both sides. §BB's corridor, threshold and reveal work outdoors again.
+- **Alive:** the biome's plants by their real silhouettes (§CS: a forest is mostly one species);
+  its creatures going about their lives in the trees and on the ground, seen in passing. The
+  ecology data's archetypes are the source (§ET.2's reuse as dressing). No population sim.
+- **The day-night cycle runs** (144-minute day, `data/sky/day_cycle.json`), and places feel
+  different by night (§DD's moon, the dark).
+
+### EW.2 Every biome its own world, its own architecture
+- **Named by Mike:** the volcano (magma flows, used somehow), the abandoned mine shaft, the
+  underwater caves, the beach, the desert sandstone, the tundra snow and ice, the swamp, the
+  mountains. Then every biome gets one.
+- **The water world** (Mike): on the coast, with seawater flowing through, or an underwater-caves
+  temple; gutters and channels built into the architecture; the feel of PSO's Caves 2, really
+  teal, water everywhere. Water is the brightest thing in view and here it lights the room.
+- Each world's ruins are its own style (§DI: dressed by their place; §EU.5: its own masonry).
+- **Claude's lens, offered, not locked:** give each world a material, a light and a verb (the
+  desert crypt: sandstone, amber firelight, managing the dark; the sea caves: teal water light,
+  flow and water level, perhaps tides that flood and drain passages; the volcano: magma glow).
+  To be talked through one world at a time.
+- The existing themes fold in: `snow_ruins` belongs to the tundra world; Mike read today's tomb
+  as desert sandstone, and which world the tomb sits in is open.
+
+### EW.3 Joined underground
+- Worlds are loosely connected. You go underground in one and come out in another: the dungeons
+  are the seams (Mike). Not one continuous generated map: each world loads on its own.
+- The passage between hides the load (a dark squeeze, a long stair; Claude's first guess); a
+  plain loading screen is allowed where it can't be hidden (Mike).
+- Coming out is the reveal (§BB): out of the dark, under a new sky, in a new biome.
+
+### EW.4 The map and fast travel
+- An overworld map, and fast travel to worlds you have already visited (Mike).
+- **Flag, fire is borrowed (§AW, §CQ):** arriving with a lit torch from nowhere bends that rule.
+  Claude's first guess: you travel from a hearth you relit to a hearth you relit, so you leave
+  one flame and borrow the next. This touches §ET.10 call 2 (the hub).
+
+### EW.5 The horizon
+- You can see a good way, not the planet's distance (§ER.1). The near ground is wholly this biome;
+  farther out the land changes and fades lighter and bluer (R-rules), hinting at the neighbours.
+- **The far landmarks are the other worlds** (Mike): the snowy peak seen from the desert is the
+  tundra world. Decorative and true at once.
+- Layers (Claude's first guess): **near**, this world's real ground; **mid**, impostors of this
+  world's edge and the neighbours' landmarks (§ES.3); **far**, a painted band and the sky.
+
+### EW.6 Still shelved for Torchfire 2, unless Mike says
+- The planet and its scale (§CR), simulated plant ranges and populations, weather (§BS, §CX,
+  §DA), the seasons, the camp sim and the village economy (§BL–§BP, §EE–§EN).
+- **Flag:** villages come back as places (Mike), but whether their life comes back (the camp
+  sim, a village relit hearth by hearth, §EE) is open. Weather wasn't mentioned; a rain world or
+  a blizzard world would want it.
+
+### EW.7 Order of work (Claude's proposal; follows §ET.11's first slice)
+1. §EU's walls and 480 lines, and §EV's vents, in the tomb.
+2. The tomb's world: a small surface above the tomb, with the day-night cycle, the layered
+   horizon, and the vents' stacks on it.
+3. A second world (the tundra, for the snow ruins) and the underground passage between them.
+4. The map and fast travel.
+
+Mike plays and reports between each.
+
+### EW.8 Open for Mike
+1. A world's size.
+2. **The clock:** one clock for every world? Claude's guess: one shared clock, with each world's
+   latitude setting its day length and the sun's path, so the tundra gets long dusks.
+3. Fast travel and the flame (EW.4).
+4. Which world the tomb sits in, and which world comes first.
+5. Villages: places only, or their life too (EW.6)? Weather per world?
+6. **The map's layout:** Claude's guess is a fixed map where neighbours sit in believable
+   directions, so if the tundra's peak shows in the desert's north, the tundra lies north.
+7. **Generated or composed:** each world from a seed every new game (as §ET.10 call 3 reads the
+   dungeons), or composed once by hand and dressed by the seed?

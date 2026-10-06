@@ -3,7 +3,10 @@
 This repo is **Torchfire 1: an ambient, first-person dungeon crawler** (design §ET, 6 Oct, not
 built yet). You wake underground by a lit hearth and reclaim procedurally generated ruins by
 relighting them, stage by themed stage; fire is carried, never made; the dark is the only enemy;
-no combat. **The open world described below (planet, roads, ecology, weather, camp sim) is
+no combat. **The stages are pocket worlds (§EW, 6 Oct, not built yet):** one bounded slice per
+biome (~1–2 km, first guess) with its ruins above and its dungeon below, a day-night cycle and
+ambient life; worlds join underground, show on each other's horizons, and a map fast-travels to
+visited ones. **The open world described below (planet, roads, ecology, weather, camp sim) is
 Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
 and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.
@@ -59,7 +62,8 @@ two of them disagree, tell Mike. Don't quietly pick one.
 ## The look, in short
 "Almost like Minecraft, except not in boxes, and everything flows better." The era is
 1999–2004 consoles.
-- **3D pixel art (§ES):** a 270-line internal frame ("painted" preset) with nearest-neighbour scaling; lighting painted into textures (diffuse-only, baked occlusion tinted navy/olive), mid-poly models. Texel density is re-measured under §ES (was 16 a metre at 480).
+- **Ruin walls (§EU, not built yet):** fitted polygonal stone in real relief (stones proud, joints sunk; no normal maps), a seed per wall face, settled with age, moss and vines only where the climate allows. Firelit stone underground may go amber (§EU.6).
+- **3D pixel art (§ES, frame amended by §EU):** a 480-line internal frame by default (§EU.1, 6 Oct; 270 "painted" stays a preset) with nearest-neighbour scaling; lighting painted into textures (diffuse-only, baked occlusion tinted navy/olive), mid-poly models. Texel density is re-measured under §ES (was 16 a metre at 480).
 - Clean silhouettes, and no normal maps or specular.
 - Dark but saturated, and blue owns the frame by default, not always: a relit village may go
   amber, one lit hearth at a time, while the wild between villages stays blue (§EE.1). The sun
