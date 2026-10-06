@@ -69,7 +69,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 37 | §EH | No metal, and a camp can be fifty | built d5dbe75 |
 | 38 | §EL | The workshop: one hut, two benches, the hearth outside | built d4b159e |
 | 39 | §EI | What a camp needs, and the trades that follow | built defc49a |
-| 40 | §EK | The whole animal: the hunt, the hut, the six things | todo |
+| 40 | §EK | The whole animal: the hunt, the hut, the six things | built 2d4b6a2 |
 | 41 | §EJ | Food passed round, the night stories, the gift | todo |
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | todo |
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | todo |
@@ -786,7 +786,7 @@ CHECK (tools/trades_check.gd, headless): on seed 7731 every camp's present trade
 
 ## 40 — The whole animal: the hunt, the hut, the six things — §EK
 
-**Status:** todo
+**Status:** built 2d4b6a2
 **Mike sees:** An adult with a spear walks out past the gatherers and comes back carrying a hare over the shoulders, or dragging a deer on a pole. The animal goes in the workshop door and you never see it again. By evening a hide is on the frame, strips are on the smoke rack, a stew is on the fire, bone awls are in a row on the hard bench, a horn cup sits on the bench edge, and a lamp burns that was filled from the fat pot. The log says so, once per species.
 
 ```text
