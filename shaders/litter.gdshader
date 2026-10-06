@@ -23,6 +23,7 @@ shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 
 uniform sampler2DArray litter_tiles : filter_nearest_mipmap, repeat_enable;
@@ -120,4 +121,8 @@ void fragment() {
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

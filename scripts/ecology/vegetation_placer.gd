@@ -1153,6 +1153,10 @@ static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMe
 		# spans its chunk, only once no plant in it can be in range.
 		mmi.set_instance_shader_parameter("draw_range_m", reach)
 		mmi.visibility_range_end = reach + TerrainChunk.CHUNK_M * 0.75
+		# And only the plants in reach are handed to the GPU at all
+		# (TerrainChunk.setup_bands/band_trees, design §ER.1): the shader
+		# alone shrank the rest to nothing but still drew them.
+		mmi.set_meta("reach", reach)
 	parent.add_child(mmi)
 	return mmi
 

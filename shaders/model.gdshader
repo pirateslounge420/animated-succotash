@@ -5,6 +5,7 @@ shader_type spatial;
 render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 
 // Nearest, at most two mips (§AG, retro_tex), like the world's tiles.
 uniform sampler2D albedo_texture : source_color, filter_nearest_mipmap, repeat_enable;
@@ -38,4 +39,8 @@ void fragment() {
 	SPECULAR = 0.0;
 	EMISSION = emission_color * emission_energy;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

@@ -14,6 +14,7 @@ shader_type spatial;
 render_mode cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
@@ -92,4 +93,8 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 1.3) + look_warm_pool_light(world_pos);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

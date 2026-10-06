@@ -44,9 +44,10 @@ const PASS_S := 1.0
 ## Work per frame (microseconds).
 const BUDGET_US := 1500
 ## Trees this near carry their crop drawn (the nearest MAX_TREES); shrubs
-## SHRUB_M (the nearest MAX_SHRUBS).
-const TREE_M := 60.0
-const SHRUB_M := 30.0
+## SHRUB_M (the nearest MAX_SHRUBS). (60 and 30 m until design 6 Oct
+## §ER.1: past ~35 m a fruit is under a pixel at 270 lines.)
+const TREE_M := 35.0
+const SHRUB_M := 25.0
 const MAX_TREES := 40
 const MAX_SHRUBS := 60
 ## Everything a little bigger than life, and bigger again far off (x2 at

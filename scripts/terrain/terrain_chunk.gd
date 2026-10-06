@@ -68,6 +68,9 @@ var heights := PackedFloat32Array()
 var fine_heights := PackedFloat32Array()
 var _coarse_mesh: MeshInstance3D
 var _fine_mesh: MeshInstance3D
+## In the detail ring (set_fine()): trunk colliders, branch graphs, the
+## near plant levels.
+var _fine := false
 ## What the plants are drawn at (PlantMeshes.LOD_*): trees start light.
 var _plant_lod := PlantMeshes.LOD_FAR
 ## Ground collision (build_collision_part): triangles not yet built into
@@ -368,6 +371,9 @@ static func prepare_meshes(data: Dictionary) -> void:
 	data["mesh_coarse"] = mesh_arrays(data, false, anchor_r)
 	var fine := mesh_arrays(data, true, anchor_r)
 	data["mesh_fine"] = fine
+	# Its ground as an occluder, sunk under it (Occluders, §ER.1).
+	if Occluders.on():
+		data["occ"] = Occluders.ground_sheet(data, QUADS, anchor_r)
 	var local: PackedVector3Array = fine[Mesh.ARRAY_VERTEX]
 	var indices: PackedInt32Array = fine[Mesh.ARRAY_INDEX]
 	var faces := PackedVector3Array()
@@ -927,6 +933,9 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	_coarse_mesh = _ground_mesh(data.mesh_coarse, "Ground", ground_mat)
 	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine", ground_mat)
 	_fine_mesh.visible = false
+	if data.has("occ"):
+		add_child(Occluders.sheet_node(data.occ))
+		data.erase("occ")
 
 	# Ground collision comes later, a strip at a time and only near the
 	# player (build_collision_part): a trimesh's BVH is slow to build, and
@@ -987,9 +996,14 @@ func _ground_mesh(arrays: Array, node_name: String, mat: ShaderMaterial) -> Mesh
 ## ground and light trees. `hero`: one of the chunks right around the
 ## player, whose trees and undergrowth get their smoothest meshes.
 func set_fine(fine: bool, hero := false) -> void:
-	if _fine_mesh and _fine_mesh.visible != fine:
-		_fine_mesh.visible = fine
-		_coarse_mesh.visible = not fine
+	# The 4 m ground only on the chunks right round you (within
+	# ChunkManager.HERO_M); the rest of the detail ring draws the 8 m ground
+	# (§ER.1: the far chunks' terrain at lower detail).
+	if _fine_mesh:
+		_fine_mesh.visible = fine and hero
+		_coarse_mesh.visible = not (fine and hero)
+	if _fine_mesh and _fine != fine:
+		_fine = fine
 		if not fine:
 			remove_graphs()
 		if not fine and _tree_body:
@@ -1027,8 +1041,10 @@ func _swap_plants(parent: Node) -> void:
 	for ch in parent.get_children():
 		if not (ch is MultiMeshInstance3D and ch.has_meta("species")):
 			continue
-		if ch.has_meta("band"):
-			# Drawn by distance (band_trees), not by the chunk's level.
+		if ch.has_meta("band") and not (ch.has_meta("reach") and not ch.has_meta("young") and not ch.has_meta("vine")):
+			# Drawn by distance (band_trees), not by the chunk's level (the
+			# ground cover and shrubs, banded only for their reach, still
+			# take the chunk's level).
 			continue
 		var mmi := ch as MultiMeshInstance3D
 		var sp: PlantSpecies = all[ch.get_meta("species")]
@@ -1094,7 +1110,7 @@ func _exit_tree() -> void:
 
 ## True while trees in the detail ring still lack trunk colliders.
 func wants_tree_colliders() -> bool:
-	return _fine_mesh != null and _fine_mesh.visible and _tree_next < trees.size()
+	return _fine_mesh != null and _fine and _tree_next < trees.size()
 
 
 ## Give up to `budget` more trees their trunk colliders: stacked cylinders
@@ -1478,15 +1494,19 @@ func setup_bands(parent: Node = null) -> void:
 		var mmi := ch as MultiMeshInstance3D
 		var sp_idx: int = ch.get_meta("species")
 		var sp: PlantSpecies = all[sp_idx]
-		if ch.has_meta("young") or ch.has_meta("vine"):
+		# (Not plants with a cycle: AroidGarden rewrites their buffers.)
+		if ch.has_meta("young") or ch.has_meta("vine") or (ch.has_meta("reach") and parent != self and sp.cycle.is_empty()):
 			var ymm := mmi.multimesh
 			# Its node's visibility range is the reach plus the chunk's
 			# reach (VegetationPlacer._instance); per plant, the reach.
 			var reach := mmi.visibility_range_end - CHUNK_M * 0.75 if mmi.visibility_range_end > 0.0 else float(RANGES.get("shrub_m", 150.0))
-			_bands[mmi] = {"buf": ymm.buffer, "n": ymm.instance_count, "mmi": mmi, "reach": reach, "where": PackedInt32Array()}
+			# (Floats per plant: the ground cover may carry no colour or
+			# custom data.)
+			var st := stride_of(ymm)
+			_bands[mmi] = {"buf": ymm.buffer, "n": ymm.instance_count, "mmi": mmi, "reach": reach, "where": PackedInt32Array(), "stride": st}
 			mmi.set_meta("band", true)
-			mmi.custom_aabb = box_of(ymm.buffer, ymm.instance_count)
-			_band_reach = maxf(_band_reach, _reach_of(ymm.buffer, ymm.instance_count))
+			mmi.custom_aabb = box_of(ymm.buffer, ymm.instance_count, st)
+			_band_reach = maxf(_band_reach, _reach_of(ymm.buffer, ymm.instance_count, st))
 			continue
 		if parent != self:
 			continue
@@ -1514,7 +1534,10 @@ func setup_bands(parent: Node = null) -> void:
 				m.set_meta("band", true)
 				m.set_meta("band_group", g)
 				m.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if g == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-				m.multimesh.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_LIGHT if g == 2 else PlantMeshes.LOD_HERO, l)
+				# The trees nearest you (the shadow band) at the hero level; the
+				# rest of the full band at the near one (§ER.1: ~9.5k triangles
+				# a big tree, not ~16k); the light tree past it.
+				m.multimesh.mesh = PlantMeshes.mesh_for(sp, [PlantMeshes.LOD_HERO, PlantMeshes.LOD_NEAR, PlantMeshes.LOD_LIGHT][g], l)
 				mmis.append(m)
 			var box := box_of(src.buffer, src.instance_count)
 			for m in mmis:
@@ -1532,14 +1555,20 @@ func setup_bands(parent: Node = null) -> void:
 ## screen: the near trees vanished (the avenue's, 5 Oct).
 const BOX_PAD := 4.0
 
-static func box_of(buf: PackedFloat32Array, n: int) -> AABB:
-	if n <= 0 or buf.size() < n * STRIDE_F:
+## Floats per instance in a MultiMesh's buffer: its transform's 12, and 4
+## each for colour and custom data when it has them.
+static func stride_of(mm: MultiMesh) -> int:
+	return 12 + (4 if mm.use_colors else 0) + (4 if mm.use_custom_data else 0)
+
+
+static func box_of(buf: PackedFloat32Array, n: int, stride := STRIDE_F) -> AABB:
+	if n <= 0 or buf.size() < n * stride:
 		return AABB()
 	var lo := Vector3(INF, INF, INF)
 	var hi := -lo
 	var size := 0.0
 	for i in n:
-		var k := i * STRIDE_F
+		var k := i * stride
 		var p := Vector3(buf[k + 3], buf[k + 7], buf[k + 11])
 		lo = lo.min(p)
 		hi = hi.max(p)
@@ -1549,10 +1578,10 @@ static func box_of(buf: PackedFloat32Array, n: int) -> AABB:
 	return AABB(lo - pad, hi - lo + pad * 2.0)
 
 
-static func _reach_of(buf: PackedFloat32Array, n: int) -> float:
+static func _reach_of(buf: PackedFloat32Array, n: int, stride := STRIDE_F) -> float:
 	var r := 0.0
 	for i in n:
-		var k := i * STRIDE_F
+		var k := i * stride
 		r = maxf(r, Vector3(buf[k + 3], buf[k + 7], buf[k + 11]).length())
 	return r
 
@@ -1595,17 +1624,20 @@ func band_trees(cam: Vector3) -> void:
 				gone.append(key)
 				continue
 			var mmi_y: MultiMeshInstance3D = e.mmi
-			var r2: float = float(e.reach) * float(e.reach)
+			# Their reach plus the walk before the next re-sort, so none
+			# pops in at the shader's fade edge (§ER.1).
+			var r2: float = (float(e.reach) + REBAND_M) * (float(e.reach) + REBAND_M)
+			var st: int = int(e.get("stride", STRIDE_F))
 			var ybuf := PackedFloat32Array()
 			var yn := 0
 			if not all_far:
 				for i in n:
-					var k := i * STRIDE_F
+					var k := i * st
 					var ex := buf[k + 3] - cam.x
 					var ey := buf[k + 7] - cam.y
 					var ez := buf[k + 11] - cam.z
 					if ex * ex + ey * ey + ez * ez < r2:
-						ybuf.append_array(buf.slice(k, k + STRIDE_F))
+						ybuf.append_array(buf.slice(k, k + st))
 						yn += 1
 			_set_band(mmi_y, ybuf, yn)
 			continue

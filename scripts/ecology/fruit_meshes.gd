@@ -56,8 +56,11 @@ static func fruit(shape: String) -> Mesh:
 		var st := SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
 		match shape:
+			# (Round and ovoid fruit at subdivision 1, 80 triangles, not
+			# 320: a fruit is a few pixels at most at 270 lines, design 6
+			# Oct §ER.1/§ES.2.)
 			"ovoid":
-				_ellipsoid(st, Vector3(0, -0.54, 0), Vector3(0.36, 0.48, 0.36), 2)
+				_ellipsoid(st, Vector3(0, -0.54, 0), Vector3(0.36, 0.48, 0.36), 1)
 			"elongated":
 				_lathe(st, [[0.0, 0.03], [0.08, 0.13], [0.3, 0.17], [0.7, 0.16], [0.92, 0.11], [1.0, 0.02]], Vector3.DOWN, 0.0)
 			"pod":
@@ -73,7 +76,7 @@ static func fruit(shape: String) -> Mesh:
 			"cone":
 				_lathe(st, [[0.0, 0.05], [0.12, 0.26], [0.35, 0.36], [0.6, 0.34], [0.85, 0.22], [1.0, 0.03]], Vector3.DOWN, 0.0)
 			_:
-				_ellipsoid(st, Vector3(0, -0.52, 0), Vector3(0.48, 0.48, 0.48), 2)
+				_ellipsoid(st, Vector3(0, -0.52, 0), Vector3(0.48, 0.48, 0.48), 1)
 		# The stalk it hangs by.
 		_lathe(st, [[0.0, 0.025], [0.1, 0.02]], Vector3.DOWN, 0.0)
 		st.generate_normals()

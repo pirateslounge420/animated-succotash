@@ -1,13 +1,20 @@
 class_name PerfReadout
 extends Label
 ## The dev frame-time readout (design §W; F2 in dev mode): so every
-## performance change is measured, not guessed. One line at the top
-## centre, refreshed twice a second:
-##   frame ms (fps) · cpu ms · gpu ms · shadows ≈ ms, draws, primitives
-## frame: the real time between frames; cpu / gpu: the root viewport's
-## measured render time (RenderingServer viewport_get_measured_render_time_*);
-## draws / primitives: what the shadow pass drew this frame
-## (VIEWPORT_RENDER_INFO_TYPE_SHADOW).
+## performance change is measured, not guessed. Two lines in the bottom
+## left corner, above the prompt line (§ER.1: off the date and biome
+## columns at the top), refreshed twice a second:
+##   frame ms (fps) · scripts ms · render cpu ms · gpu ms
+##   drawn: draws, triangles · shadows: draws, triangles, ≈ ms
+## frame: the real time between frames; scripts: process + physics;
+## cpu / gpu: the root viewport's (the internal frame's) measured render
+## time (RenderingServer viewport_get_measured_render_time_*), measured
+## from the start (§ER.1), not only once the readout is on; drawn: what
+## the whole frame drew (VIEWPORT_RENDER_INFO_TYPE_VISIBLE), shadows: what
+## the shadow passes drew (TYPE_SHADOW). A driver that times nothing on
+## the GPU (it reads 0 while frames are drawn: some drivers and the
+## Compatibility renderer) shows "gpu n/a" and the frame time not spent in
+## scripts or render CPU, the most the GPU can be taking.
 ## Godot 4.3 gives scripts no per-pass GPU timing, so the shadow pass's ms
 ## is sampled: every SAMPLE_S the sun's shadows go off for OFF_FRAMES
 ## frames and the GPU time's drop is the pass's cost (shadows blink
@@ -16,6 +23,8 @@ extends Label
 const SAMPLE_S := 4.0
 const SETTLE_FRAMES := 2
 const OFF_FRAMES := 4
+## How far above the bottom edge (internal px): clear of the prompt line.
+const BOTTOM_LIFT := 34.0
 
 var sun: DirectionalLight3D
 ## Smoothed, for tests and the line: ms per frame, cpu, gpu, shadow.
@@ -25,6 +34,12 @@ var gpu_ms := 0.0
 var shadow_ms := -1.0
 var shadow_draws := 0
 var shadow_prims := 0
+var draws := 0
+var prims := 0
+var scripts_ms := 0.0
+## Whether the GPU time has ever read above zero (else the driver times
+## nothing on the GPU).
+var gpu_timed := false
 
 var _vp: RID
 var _t := 0.0
@@ -39,18 +54,22 @@ var _n_off := 0
 func _ready() -> void:
 	name = "Perf"
 	visible = false
-	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP, Control.PRESET_MODE_MINSIZE, 4)
-	grow_horizontal = Control.GROW_DIRECTION_BOTH
+	horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 6)
+	grow_vertical = Control.GROW_DIRECTION_BEGIN
+	# Above the prompt line at the bottom.
+	position.y -= BOTTOM_LIFT
 	add_theme_color_override("font_color", Color(1.0, 0.93, 0.6))
 	add_theme_color_override("font_outline_color", Color(0.05, 0.07, 0.15))
 	add_theme_constant_override("outline_size", 3)
 	_vp = get_viewport().get_viewport_rid()
+	# GPU timing on from the start (§ER.1), so the first reading is real.
+	RenderingServer.viewport_set_measure_render_time(_vp, true)
 
 
 func toggle() -> void:
 	visible = not visible
-	RenderingServer.viewport_set_measure_render_time(_vp, visible)
+	RenderingServer.viewport_set_measure_render_time(_vp, true)
 	_sample_t = 1.0
 	_restore()
 
@@ -63,6 +82,11 @@ func _process(delta: float) -> void:
 	cpu_ms = lerpf(cpu_ms, RenderingServer.viewport_get_measured_render_time_cpu(_vp), k)
 	var gpu := RenderingServer.viewport_get_measured_render_time_gpu(_vp)
 	gpu_ms = lerpf(gpu_ms, gpu, k)
+	if gpu > 0.0:
+		gpu_timed = true
+	scripts_ms = lerpf(scripts_ms, (Performance.get_monitor(Performance.TIME_PROCESS) + Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)) * 1000.0, k)
+	draws = RenderingServer.viewport_get_render_info(_vp, RenderingServer.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, RenderingServer.VIEWPORT_RENDER_INFO_DRAW_CALLS_IN_FRAME)
+	prims = RenderingServer.viewport_get_render_info(_vp, RenderingServer.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, RenderingServer.VIEWPORT_RENDER_INFO_PRIMITIVES_IN_FRAME)
 	_sample(delta, gpu)
 	_show_t -= delta
 	if _show_t <= 0.0:
@@ -71,9 +95,10 @@ func _process(delta: float) -> void:
 
 
 func line() -> String:
-	var sh := ("%.1f ms" % shadow_ms) if shadow_ms >= 0.0 else "…"
-	return "%.1f ms (%d fps) · cpu %.1f · gpu %.1f · shadows ≈%s, %d draws, %dk tris" % [
-		frame_ms, int(round(1000.0 / maxf(frame_ms, 0.01))), cpu_ms, gpu_ms, sh, shadow_draws, shadow_prims / 1000]
+	var sh := ("≈%.1f ms" % shadow_ms) if shadow_ms >= 0.0 else "…"
+	var g := ("gpu %.1f" % gpu_ms) if gpu_timed else ("gpu n/a, ≤%.1f" % maxf(frame_ms - scripts_ms - cpu_ms, 0.0))
+	return "%.1f ms (%d fps) · scripts %.1f · cpu %.1f · %s\ndrawn %d draws, %dk tris · shadows %d draws, %dk tris %s" % [
+		frame_ms, int(round(1000.0 / maxf(frame_ms, 0.01))), scripts_ms, cpu_ms, g, draws, prims / 1000, shadow_draws, shadow_prims / 1000, sh]
 
 
 ## The shadow pass: its draws and primitives every frame it's on; its ms
@@ -106,6 +131,6 @@ func _sample(delta: float, gpu: float) -> void:
 
 func _restore() -> void:
 	if _off_f >= 0 and sun != null and is_instance_valid(sun):
-		sun.shadow_enabled = SkySystem.day_shadows() and bool(Tuning.num("look", "light", "shadows"))
+		sun.shadow_enabled = SkySystem.sun_casts
 	_off_f = -1
 	_sample_t = SAMPLE_S

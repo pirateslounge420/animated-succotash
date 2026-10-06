@@ -230,6 +230,13 @@ static func day_shadows() -> bool:
 
 
 var _day_shadows_set := -1
+## Whether the sun casts its shadow now (§ER.1: not in a storm, not at
+## night; tools that switch it off for a moment put it back to this).
+static var sun_casts := true
+## Storm strength (WeatherSim "storm", 0-1) past which the sun's shadow
+## goes, and under which it comes back.
+const STORM_SHADOW_OFF := 0.35
+const STORM_SHADOW_ON := 0.25
 ## The distance haze (data/look.json retro.fog: day and night density per
 ## metre, the clear zone start_m) and the low mist (look.json "mist").
 static var RETRO_FOG := Tuning.section("look", "retro").get("fog", {}) as Dictionary
@@ -320,7 +327,9 @@ func _ready() -> void:
 	moon.name = "Moon"
 	add_child(moon)
 	for light in [sun, moon]:
-		light.shadow_enabled = bool(LIGHT.get("shadows", true))
+		# (The moon casts none: no directional shadow at night, design 6
+		# Oct §ER.1; the sun's is switched in update_sky.)
+		light.shadow_enabled = bool(LIGHT.get("shadows", true)) and light == sun
 		light.shadow_blur = 0.0
 		light.light_angular_distance = 0.0
 		var splits := int(LIGHT.get("shadow_splits", 4))
@@ -358,9 +367,19 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# The day-shadow A/B: applied when it changes, so tools that switch the
 	# sun's shadow for a moment (PerfReadout, perf_bench) aren't fought.
 	var ds := int(day_shadows())
+	# §ER.1: the sun casts no shadow in a storm or at night (the moon never
+	# does); otherwise the setting decides. A little hysteresis so a storm
+	# hovering at the edge doesn't flick it.
+	var storm_now := float(weather.get("storm", 0.0))
+	var cast := ds == 1 and bool(LIGHT.get("shadows", true))
+	if cast:
+		cast = (storm_now < STORM_SHADOW_OFF and sun_up > 0.02) if sun_casts else (storm_now < STORM_SHADOW_ON and sun_up > 0.08)
+	if cast != sun_casts:
+		sun_casts = cast
+		sun.shadow_enabled = cast
 	if ds != _day_shadows_set:
 		_day_shadows_set = ds
-		sun.shadow_enabled = ds == 1 and bool(LIGHT.get("shadows", true))
+		sun.shadow_enabled = sun_casts
 		# §BU: the near hard cast shadow (light.day_shadows_near): within
 		# max_m only, no blur, no soft filter, two splits; the pixel frame
 		# edges it.
@@ -523,8 +542,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# night_fog, a luminous blue.
 	var day_fog := horizon.lerp(zenith, 0.5 * warm_band).lerp(FAR_HILLS, smoothstep(4.0, 12.0, sun_elevation_deg))
 	var fog_color := _scene_color(day_fog.lerp(NIGHT_FOG, night)).lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
-	# (The day haze follows the render distance, ChunkManager.fog_scale():
-	# the tuned density at the default, so the ring's edge fades out.)
+	# (The day haze thins past the render distance it was tuned at,
+	# ChunkManager.fog_scale(); the fog's far edge, look_draw_m, closes in
+	# on the render distance itself, design §ER.1.)
 	var day_density := float(RETRO_FOG.get("day_density", 0.0032)) * ChunkManager.fog_scale()
 	var density := lerpf(day_density, float(RETRO_FOG.get("night_density", 0.0025)), night) + fog_amount * 0.003 + storm * 0.002
 	# Low mist (look.json "mist"), in the fog's colour: pooled in valleys
@@ -549,6 +569,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_mist_density": mist,
 		"look_mist_scale_m": float(MIST.get("scale_m", 6.0)),
 		"look_fog_start_m": float(RETRO_FOG.get("start_m", 200.0)),
+		# The fog's far edge, just inside the render distance (§ER.1).
+		"look_draw_m": ChunkManager.render_m(),
 		"look_fog_color": fog_color,
 		"look_fog_density": density,
 		"look_up": up,

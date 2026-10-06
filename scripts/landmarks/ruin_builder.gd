@@ -159,6 +159,9 @@ var _ivy_places := 0
 var _ivy_kept := 0
 ## Boulder tops [top, out, length] (local), the same for surfaces.boulder.
 var _boulder_anchors: Array = []
+## Occluder boxes (Occluders, §ER.1): [Transform3D, size], one inside
+## each run of standing wall columns.
+var _occ: Array = []
 ## Collision triangles: plain boxes and thin slabs behind covers, much
 ## cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
@@ -291,7 +294,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 	return {"og": b.og, "og_plants": og_plants, "og_shade": b._og_shade, "ivy_places": b._ivy_places, "ivy_kept": b._ivy_kept, "site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
 		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights, "lamps": b._lamps, "delve": b._delve, "delve_off": b._delve_off, "delve_from": b._delve_from, "delve_to": b._delve_to, "vine_anchors": b._vine_anchors, "boulder_anchors": b._boulder_anchors, "lod_m": b._lod_m, "lit_per_pixel": b._lit_per_pixel, "root_trees": b._root_trees,
-		"water": {"v": b._wv, "uv": b._wuv, "uv2": b._wuv2}, "falls": {"v": b._fv, "n": b._fn, "uv": b._fuv, "uv2": b._fuv2}, "garden": b._garden}
+		"water": {"v": b._wv, "uv": b._wuv, "uv2": b._wuv2}, "falls": {"v": b._fv, "n": b._fn, "uv": b._fuv, "uv2": b._fuv2}, "garden": b._garden, "occ": b._occ}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -350,6 +353,9 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	root.set_meta("site", site)
 	root.set_meta("shelters", data.get("shelters", []))
 	root.set_meta("camp_spot", data.get("camp_spot", Vector3.ZERO))
+	# Its walls as occluders (Occluders, §ER.1).
+	if Occluders.on():
+		Occluders.boxes(root, data.get("occ", []))
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = data.v
@@ -1264,6 +1270,9 @@ func wall(a: Vector2, b: Vector2, height: float, thick: float, breaches: Array, 
 	var cols := maxi(1, int(ceil(length / 1.5)))
 	var bw := length / cols
 	var fallen := 0
+	# Runs of columns standing over OCC_MIN_H, for the occluders.
+	var run: Array = []
+	var runs: Array = []
 	for i in cols:
 		var t := (i + 0.5) / cols
 		var p := a + along * t
@@ -1276,6 +1285,11 @@ func wall(a: Vector2, b: Vector2, height: float, thick: float, breaches: Array, 
 				h = minf(h, lerpf(height, rng.randf_range(0.0, 1.2), smoothstep(0.0, 0.6, depth)))
 		h = maxf(h, 0.0)
 		fallen += int((height - h) / COURSE_M)
+		if h >= OCC_MIN_H:
+			run.append([t, g, g + h])
+		elif not run.is_empty():
+			runs.append(run)
+			run = []
 		# Footing down into the ground, then courses.
 		block(Vector3(p.x, g - 1.2, p.y), dir3, Vector3(bw, 1.6, thick * 1.1), 0.0, 0.0)
 		var y := g - 0.4
@@ -1294,7 +1308,27 @@ func wall(a: Vector2, b: Vector2, height: float, thick: float, breaches: Array, 
 			ivy(top + out * thick * 0.5, out, rng.randf_range(1.2, minf(5.0, h)))
 			if rng.randf() < 0.5:
 				ivy(top - out * thick * 0.5, -out, rng.randf_range(1.0, minf(4.0, h)))
+	if not run.is_empty():
+		runs.append(run)
+	for r in runs:
+		if r.size() < 2:
+			continue
+		var t0: float = r[0][0] - 0.5 / cols
+		var t1: float = r[-1][0] + 0.5 / cols
+		var bottom := INF
+		var top := INF
+		for c in r:
+			bottom = minf(bottom, float(c[1]))
+			top = minf(top, float(c[2]))
+		var mid := a + along * (t0 + t1) * 0.5
+		var size := Vector3(length * (t1 - t0) * 0.95, top - bottom - 0.2, thick * 0.8)
+		var basis := Basis(dir3, Vector3.UP, dir3.cross(Vector3.UP).normalized())
+		_occ.append([Transform3D(basis, Vector3(mid.x, bottom + size.y * 0.5, mid.y)), size])
 	return fallen
+
+
+## The lowest a standing column must be to go into a wall's occluder.
+const OCC_MIN_H := 2.0
 
 
 ## A round tower of block rings, `height` tall, with one side slumped.

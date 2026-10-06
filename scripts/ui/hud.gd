@@ -82,6 +82,9 @@ var perf: PerfReadout
 
 func _ready() -> void:
 	layer = 10
+	# The bottom lines' offsets follow the frame's lines (HudText.refresh()
+	# calls relayout() when the pixel-size preset changes, design §ES).
+	add_to_group("hud_relayout")
 	_left = _column(false)
 	_right = _column(true)
 	for id in LEFT_PARTS:
@@ -95,14 +98,14 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	# (The four lines of key help stay at the small size: reference, not
 	# reading.)
-	_hint.add_theme_font_size_override("font_size", HudText.px(20))
+	HudText.size(_hint, 20)
 	# (Up above the subtitle, the prompt and the weapon line: at the start
 	# it sat on the Elder's first words and the bow.)
 	# Across the frame, wrapping (Mike, 1 Oct: at 30 px a line ran off
 	# both edges of the 854 px frame).
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
-	_hint.offset_bottom = -104
-	_hint.offset_top = -104
+	_hint.offset_bottom = -104 * HudText.scale()
+	_hint.offset_top = -104 * HudText.scale()
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_hint.text = "WASD move · W W sprint · Space jump (at a wall: wall jump · as you land: bounce)\nShift crouch (in the air: drop · as you land: roll) · right click: take, climb, hold on\nleft click: draw / thrust / punch · Q tool · V view · Tab pack\nM map · O settings · F3 debug · H full HUD · Esc frees the mouse: click readouts to pin them"
@@ -112,16 +115,16 @@ func _ready() -> void:
 		_hint.text = "WASD move · W W sprint · Space jump · Shift crouch\nright click: take things, climb the tree in front of you · left click: use what's in hand\nQ tool · Tab pack · Enter log · M map · O settings · F3 debug · H full HUD\nEsc frees the mouse: click readouts to pin them"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
-	_prompt.offset_bottom = -47
-	_prompt.offset_top = -47
+	_prompt.offset_bottom = -47 * HudText.scale()
+	_prompt.offset_top = -47 * HudText.scale()
 	_prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_prompt.add_theme_font_size_override("font_size", HudText.px(30))
+	HudText.size(_prompt, 30)
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
-	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 80)
+	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, roundi(80 * HudText.scale()))
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_subtitle.add_theme_font_size_override("font_size", HudText.px(30))
+	HudText.size(_subtitle, 30)
 	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH
@@ -154,7 +157,7 @@ func _ready() -> void:
 func _label(align: HorizontalAlignment, parent: Node = null) -> Label:
 	var l := Label.new()
 	l.horizontal_alignment = align
-	l.add_theme_font_size_override("font_size", HudText.px(Tuning.num("hud", "text", "base_px")))
+	HudText.size(l, Tuning.num("hud", "text", "base_px"))
 	l.add_theme_color_override("font_color", Color(0.95, 0.97, 1.0))
 	l.add_theme_color_override("font_outline_color", Color(0.05, 0.07, 0.15))
 	l.add_theme_constant_override("outline_size", 3)
@@ -267,7 +270,7 @@ func _build_loading() -> void:
 	var title := Label.new()
 	title.text = "Generating planet"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", HudText.px(30))
+	HudText.size(title, 30)
 	box.add_child(title)
 	_loading_label = Label.new()
 	_loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -515,6 +518,18 @@ func _apply() -> void:
 	_caption.visible = pin
 	_place_columns(pin)
 	readouts.top_right_below = _right_bottom() if visible else 0.0
+
+
+## The pixel-size preset changed (HudText.refresh()): the bottom lines'
+## offsets, at the 480 reference, scaled to the frame again.
+func relayout() -> void:
+	var k := HudText.scale()
+	_hint.offset_bottom = -104 * k
+	_hint.offset_top = -104 * k
+	_prompt.offset_bottom = -47 * k
+	_prompt.offset_top = -47 * k
+	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, roundi(80 * k))
+	_place_columns(pinning)
 
 
 ## The columns MARGIN from the top, or a line lower while pinning (the

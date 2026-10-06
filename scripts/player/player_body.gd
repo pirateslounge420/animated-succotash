@@ -155,8 +155,10 @@ const FLUTTER := 0.45
 const CLOTH_R := 0.018 # how far the cloth keeps off what it lies on
 const SIM_HZ := 60.0
 ## Render sub-steps per simulated cell (around, down).
-const SUB_U := 3
-const SUB_V := 3
+## (3 and 3 until design 6 Oct §ES.2: at 270 lines two steps round and
+## one down keep the folds round for a third of the triangles.)
+const SUB_U := 2
+const SUB_V := 1
 ## The cloth's folds: how many round the cloak.
 const FOLDS := 9.0
 
@@ -500,9 +502,14 @@ func _physics_process(delta: float) -> void:
 		# Nobody's feeding the velocity (dead, a test): let it die away.
 		_vel = _vel.lerp(Vector3.ZERO, clampf(delta * 4.0, 0.0, 1.0))
 	_vel_fresh = false
-	_pose(delta)
+	var d := _cam_distance()
+	# Posed only within the rigs' reach (look.json ranges.rig_m, as
+	# creatures are; design §ER.1: no per-frame work on far folk); farther
+	# ones hold their pose as they travel.
+	if d <= Creature.RIG_M:
+		_pose(delta)
 	var t0 := Time.get_ticks_usec()
-	simulating = _should_simulate()
+	simulating = _should_simulate(d)
 	if simulating:
 		if _skipped:
 			_reset_cloth()
@@ -515,13 +522,20 @@ func _physics_process(delta: float) -> void:
 	_vel_prev = _vel
 
 
-func _should_simulate() -> bool:
+## How far the camera is (0 with none, so the body is treated as near).
+func _cam_distance() -> float:
+	if not is_inside_tree():
+		return INF
+	var cam := get_viewport().get_camera_3d()
+	return 0.0 if cam == null else cam.global_position.distance_to(global_position)
+
+
+func _should_simulate(d: float) -> bool:
 	if not is_inside_tree():
 		return false
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return true
-	var d := cam.global_position.distance_to(global_position)
 	if d > 80.0:
 		return false
 	return d < 25.0 or cam.is_position_in_frustum(global_position + global_basis.y * 0.8)
@@ -1094,7 +1108,7 @@ static func _lin(c: Color) -> Color:
 static func _sculpt(s: SculptedBodies.Spec) -> ArrayMesh:
 	for pr in s.prims + s.paints:
 		pr.color = _lin(pr.color)
-	var d: Dictionary = SculptedBodies._mesh_arrays(s, s.cell)
+	var d: Dictionary = SculptedBodies._mesh_arrays(s, s.cell * SCULPT_CELL_K)
 	var arrays: Array = d.arrays
 	arrays[Mesh.ARRAY_TEX_UV2] = null
 	arrays[Mesh.ARRAY_BONES] = null
@@ -1238,10 +1252,18 @@ const HOOD_RINGS := [
 ]
 
 
+## The figure's budget (design 6 Oct §ES.2: about 1,500 triangles for a
+## near figure; it was ~19,600): the sculpted parts meshed on cells this
+## many times their spec's, the hood (and cowl) and capelet with these
+## many sides round (28 and 36 before), the cloak's sub-steps above.
+const SCULPT_CELL_K := 2.6
+const HOOD_RADIAL := 16
+const CAPELET_RADIAL := 21
+
 static func _hood_mesh(hollow := true) -> ArrayMesh:
 	var g := Geo.new()
 	var n := HOOD_RINGS.size()
-	_lathe(g, n, 28, func(i: int, a: float) -> Array:
+	_lathe(g, n, HOOD_RADIAL, func(i: int, a: float) -> Array:
 		var h: Array = HOOD_RINGS[i]
 		var part: int = h[4]
 		var up := sin(a)
@@ -1286,7 +1308,7 @@ const CAPELET_RINGS := [
 static func _capelet_mesh() -> ArrayMesh:
 	var g := Geo.new()
 	var n := CAPELET_RINGS.size()
-	_lathe(g, n, 36, func(i: int, a: float) -> Array:
+	_lathe(g, n, CAPELET_RADIAL, func(i: int, a: float) -> Array:
 		var r: Array = CAPELET_RINGS[i]
 		var y: float = r[0]
 		var k := 1.0
@@ -1376,6 +1398,10 @@ static func _geo_mesh(g: Geo) -> ArrayMesh:
 	arrays[Mesh.ARRAY_COLOR] = g.colors
 	arrays[Mesh.ARRAY_TEX_UV] = g.uv
 	arrays[Mesh.ARRAY_INDEX] = g.idx
+	if Prelit.on():
+		# Pre-lit (design §ES.2): the hood's and capelet's own occlusion
+		# (the cowl's deep inside, the folds at the throat) in their colours.
+		Prelit.bake(arrays, 16, 4)
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	mesh.set_meta("tris", g.idx.size() / 3)
@@ -1430,8 +1456,21 @@ static func _cloak_mesh(r0: int, r1: int) -> ArrayMesh:
 					col = CLOAK * (1.0 - 0.45 * _crease(gu) * _fold_amp(gv) / _fold_amp(ROWS - 1))
 					if gv < 1.6:
 						col *= 0.85 # in the capelet's shade
+					if Prelit.on():
+						# Pre-lit (design §ES.2, the test figure): the folds'
+						# valleys, the capelet's shade over the shoulders and
+						# the darkening toward the hem painted in, toward
+						# navy; the live sun only tints the cloth.
+						var ao := 1.0 - 0.6 * _crease(gu) * _fold_amp(gv) / _fold_amp(ROWS - 1)
+						if gv < 1.6:
+							ao *= lerpf(0.72, 1.0, clampf(gv - 0.6, 0.0, 1.0))
+						ao *= lerpf(1.0, 0.8, gv / float(ROWS - 1))
+						col = Prelit.ao_tint(CLOAK, ao)
 				else:
 					col = LINING * (1.0 - 0.2 * _crease(gu))
+					if Prelit.on():
+						# The inside of the cloak, in its own shade.
+						col = Prelit.ao_tint(LINING, 0.65 * (1.0 - 0.25 * _crease(gu)))
 				grid.append(add.call(gu, gv, side * half + fold.x, side, fold.y, col, kind))
 		for j in nv - 1:
 			for i in nu - 1:

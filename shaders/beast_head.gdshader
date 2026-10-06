@@ -10,6 +10,7 @@ shader_type spatial;
 render_mode vertex_lighting, diffuse_lambert, specular_disabled, cull_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform float near_m = 4.0;
@@ -32,4 +33,8 @@ void fragment() {
 	float far = smoothstep(near_m, gone_m, distance(world_pos, CAMERA_POSITION_WORLD));
 	float g = texture(look_grain_soft, (tex_pos.xy * 1.3 + tex_pos.zy * 1.7) * 9.0).r;
 	ALBEDO = mix(COLOR.rgb, fur_color, far) * (0.7 + 0.6 * g);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

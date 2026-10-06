@@ -71,6 +71,7 @@ shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 #include "res://shaders/wind.gdshaderinc"
 // A cloud's shadow here (fragment to light; design §DA, wind_cloud_shade).
@@ -112,6 +113,11 @@ uniform sampler2D sp_leaf : filter_nearest_mipmap, repeat_disable;
 uniform sampler2D sp_leaf_autumn : filter_nearest_mipmap, repeat_disable;
 uniform sampler2D sp_leaves : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D sp_bark : filter_nearest_mipmap, repeat_enable;
+// A far tree's picture as a sprite of its own model (PlantMeshes.
+// impostor_sprite, design §ES.3): R its baked light (/1.5), A 1 leaves,
+// 0.5 wood.
+uniform sampler2D sp_impostor : filter_nearest, repeat_disable;
+uniform bool sp_has_impostor = false;
 // The vines on this tree (material 3 strands; design 1 Oct §CE): the vine
 // species' own leafy tile and leaf colour (PlantMeshes.material_for).
 uniform bool sp_vine_on = false;
@@ -551,17 +557,25 @@ void fragment() {
 		float r = imp_profile(clamp(t, 0.0, 1.0), v_imp);
 		float rim = r * (0.78 + 0.44 * n);
 		bool crown = t > 0.0 && x < rim;
-		// A ragged rim with sky through it (1 Oct, bug 1: a smooth-edged
-		// picture read as a flat dark shard at dusk): the outer half of the
-		// crown keeps only what the leaf-card cutout keeps, in cells that
-		// turn with the tree so neighbours differ.
-		if (crown && x > rim * 0.45) {
+		bool trunk = UV.y < cb + 0.08 && x < max(v_imp2.y, 0.04);
+		// A sprite of the tree's own model (design §ES.3, PlantMeshes.
+		// impostor_sprite): its leaves, its wood, and its baked light.
+		float spr_shade = -1.0;
+		if (sp_has_impostor) {
+			vec4 spr = texture(sp_impostor, vec2(UV.x, 1.0 - UV.y));
+			crown = spr.a > 0.75;
+			trunk = spr.a > 0.25 && !crown;
+			spr_shade = spr.r * 1.5;
+		} else if (crown && x > rim * 0.45) {
+			// A ragged rim with sky through it (1 Oct, bug 1: a smooth-edged
+			// picture read as a flat dark shard at dusk): the outer half of
+			// the crown keeps only what the leaf-card cutout keeps, in cells
+			// that turn with the tree so neighbours differ.
 			float holes = retro_tex(look_tex_leaf_card, UV * vec2(2.0, 3.0) + vec2(fract(inst * 0.37), fract(inst * 0.61))).a;
 			if (holes < 0.5) {
 				crown = false;
 			}
 		}
-		bool trunk = UV.y < cb + 0.08 && x < max(v_imp2.y, 0.04);
 		bool twigs = false;
 		if (crown && (v_leaf < 0.999 || dead_v > 0.5)) {
 			if (sp_hash(floor(UV * vec2(14.0, 20.0)) + inst) >= v_leaf * (1.0 - dead_v)) {
@@ -576,7 +590,7 @@ void fragment() {
 		vec3 c;
 		if (crown) {
 			c = sp_tiled ? mix(sp_leaf_color, sp_autumn_color, v_season.x) : COLOR.rgb;
-			c *= genes * (0.7 + 0.45 * n) * mix(0.72, 1.08, clamp(t, 0.0, 1.0));
+			c *= genes * (spr_shade >= 0.0 ? spr_shade * (0.85 + 0.25 * n) : (0.7 + 0.45 * n) * mix(0.72, 1.08, clamp(t, 0.0, 1.0)));
 			if (sp_deciduous) {
 				vec3 hsv = rgb_to_hsv(c);
 				float ha = rgb_to_hsv(sp_autumn_color).x;
@@ -591,7 +605,7 @@ void fragment() {
 			c = pal_pull(c, pal_grass_night, 0.7 * nk_i * g);
 			c = sport_tint(c, true);
 		} else {
-			c = pal_bark * 0.5 * (0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
+			c = pal_bark * 0.5 * (spr_shade >= 0.0 ? spr_shade : 0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
 			c = pal_pull(c, pal_bark_night, 0.6 * nk_i);
 		}
 		// Always past the shadow map: the plants' stand-in shade (below),
@@ -793,6 +807,8 @@ void fragment() {
 	EMISSION = look_glow_emission(world_pos, glow * 1.0) + ALBEDO * look_floor;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 	}
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
 
 
@@ -805,6 +821,16 @@ void fragment() {
 void light() {
 	float k = LIGHT_IS_DIRECTIONAL ? 1.0 - v_cloud : 1.0;
 	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
-	DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
-	DIFFUSE_LIGHT += LIGHT_COLOR / PI * (1.0 - ndl) * BACKLIGHT * ATTENUATION * k;
+	if (look_prelit < 0.5) {
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * (1.0 - ndl) * BACKLIGHT * ATTENUATION * k;
+	} else if (LIGHT_IS_DIRECTIONAL) {
+		// Pre-lit (§ES.2): the sun only tints; the crown's light is
+		// painted (top-lit, its heart in shade). A little translucency
+		// stays, faint.
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * look_prelit_sun * ATTENUATION * k;
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * (1.0 - ndl) * BACKLIGHT * 0.3 * ATTENUATION * k;
+	} else {
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * (0.35 + 0.65 * ndl) * ATTENUATION;
+	}
 }

@@ -21,7 +21,10 @@ void vertex() {
 }
 
 void fragment() {
-	if (distance(world_pos, CAMERA_POSITION_WORLD) < hide_radius) {
+	// Cut away where the chunks are (they cover the render distance,
+	// look_draw_m, design §ER.1, and farther).
+	float hide = look_draw_m > 0.0 ? min(hide_radius, look_draw_m * (true ? 0.86 : 0.97)) : hide_radius;
+	if (distance(world_pos, CAMERA_POSITION_WORLD) < hide) {
 		discard;
 	}
 	ALBEDO = water_color * (1.0 - 0.8 * look_night);

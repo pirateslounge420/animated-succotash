@@ -43,6 +43,11 @@ static func register(mat: ShaderMaterial) -> ShaderMaterial:
 		apply({"look_max_mips": float(RETRO.get("max_mips", 2)), "look_tile_contrast": float(RETRO.get("tile_contrast", 0.3)), "look_grass_m": float(Tuning.section("look", "ranges").get("grass_m", 40.0)),
 			"look_tile_m": Vector4(tm.get("grass", 1.5), tm.get("dirt", 2.0), tm.get("sand", 2.0), tm.get("stone", 3.0)),
 			"look_tile_m2": Vector2(tm.get("bark", 1.0), tm.get("leaves", 0.5))})
+		# Pre-lit (design §ES.2, Prelit; prelit.gdshaderinc).
+		apply({"look_prelit": 1.0 if Prelit.on() else 0.0, "look_prelit_sun": float(Prelit.P.get("sun", 0.7)),
+			"look_prelit_floor": float(Prelit.P.get("floor", 0.45)),
+			"look_prelit_navy": Color(str(Prelit.P.get("shade_navy", "#9ab0f8"))),
+			"look_prelit_olive": Color(str(Prelit.P.get("shade_olive", "#ceda95")))})
 	if not _materials.has(mat):
 		_materials.append(mat)
 		mat.set_shader_parameter("look_grain", grain())

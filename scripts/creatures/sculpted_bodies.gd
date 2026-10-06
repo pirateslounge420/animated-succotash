@@ -911,7 +911,10 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			var h := cell * (1.0 + step * 1.5)
 			occ += (h - _sdf(s, p + nrm * h)) / h / pow(2.0, step)
 		var ao := clampf(1.0 - occ * 0.9, 0.45, 1.0)
-		colors[vi] = Color(col.r * ao, col.g * ao, col.b * ao, 1.0)
+		# Pre-lit (design §ES.2): the crease's dark toward the scene's
+		# shade colour (navy, olive on greens), not grey.
+		var shaded := Prelit.ao_tint(col, ao) if Prelit.on() else Color(col.r * ao, col.g * ao, col.b * ao)
+		colors[vi] = Color(shaded.r, shaded.g, shaded.b, 1.0)
 		tints[vi] = tint * ao
 		uvs[vi] = Vector2(mat, 0.0)
 		var ranked: Array = []

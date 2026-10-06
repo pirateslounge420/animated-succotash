@@ -15,6 +15,7 @@ shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 
 uniform float hide_radius = 700.0;
@@ -45,7 +46,10 @@ vec3 crag(float scale) {
 }
 
 void fragment() {
-	if (distance(world_pos, CAMERA_POSITION_WORLD) < hide_radius) {
+	// Cut away where the chunks are (they cover the render distance,
+	// look_draw_m, design §ER.1, and farther).
+	float hide = look_draw_m > 0.0 ? min(hide_radius, look_draw_m * (false ? 0.86 : 0.97)) : hide_radius;
+	if (distance(world_pos, CAMERA_POSITION_WORLD) < hide) {
 		discard;
 	}
 	if (is_sea) {
@@ -83,4 +87,8 @@ void fragment() {
 	}
 	ROUGHNESS = 1.0;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

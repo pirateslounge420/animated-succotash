@@ -10,6 +10,9 @@ extends SceneTree
 var main
 var world
 var fails := 0
+## Metres round a band's edge left out of the band tests (leaf_lod_check
+## walks a little after the bands were last sorted).
+const SLACK_M := 6.0
 
 
 func frames(n: int) -> void:
@@ -79,10 +82,10 @@ func _initialize() -> void:
 			k, sp.name, PlantSpecies.Shape.keys()[sp.shape] if sp.shape < PlantSpecies.Shape.keys().size() else str(sp.shape), float(t[1]), d, _lod_name(lod), _lod_name(mesh_lod), TreeLayouts.layout_of(pick) if pick >= 0 else -1, cards, tiled,
 			("alpha" if tile_alpha else ("opaque" if leaf_tile != null else "missing")), ("set" if card_set != null else "MISSING"), cut])
 	ok(near.size() >= 5, "five trees stand within the loaded chunks (%d)" % near.size())
-	# Trees by distance (1 Oct, Mike's Mac): every branchy tree within
-	# ranges.tree_full_m is drawn with its full (hero) mesh, as before the
-	# bands; within tree_shadow_m its copy casts the sun's shadow; past it,
-	# within tree_light_m, the light tree; beyond, the picture.
+	# Trees by distance (1 Oct, Mike's Mac; §ER.1): every branchy tree
+	# within ranges.tree_shadow_m is drawn with its hero mesh and casts the
+	# sun's shadow, out to tree_full_m its near mesh; past it, within
+	# tree_light_m, the light tree; beyond, the picture.
 	var full_ok := 0
 	var full_n := 0
 	var shadow_bad := 0
@@ -104,9 +107,12 @@ func _initialize() -> void:
 			continue
 		var drawn: Mesh = (inst[0] as MultiMesh).mesh
 		var dc := chunk.to_local(main.player.global_position).distance_to(t[0])
-		if dc < TerrainChunk.FULL_M - 2.0:
+		if dc < TerrainChunk.FULL_M - SLACK_M and absf(dc - TerrainChunk.SHADOW_M) > SLACK_M:
+			# Within tree_shadow_m the hero mesh (and the sun's shadow); out
+			# to tree_full_m the near one (design 6 Oct §ER.1).
 			full_n += 1
-			if drawn == PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, TreeLayouts.layout_of(pick)):
+			var want := PlantMeshes.LOD_HERO if dc < TerrainChunk.SHADOW_M else PlantMeshes.LOD_NEAR
+			if drawn == PlantMeshes.mesh_for(sp, want, TreeLayouts.layout_of(pick)):
 				full_ok += 1
 			var casts := false
 			for ch in chunk.get_children():
@@ -114,12 +120,20 @@ func _initialize() -> void:
 					casts = (ch as MultiMeshInstance3D).cast_shadow != GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			if casts != (dc < TerrainChunk.SHADOW_M):
 				shadow_bad += 1
-		elif dc > TerrainChunk.FULL_M + 2.0 and dc < TerrainChunk.LIGHT_M - 2.0:
+		# (The bands re-sort after you've moved tree_reband_m, so a tree
+		# near a band's edge may still be in the last one: SLACK_M round
+		# each edge, the few metres the walk here moves you.)
+		elif dc > TerrainChunk.FULL_M + SLACK_M and dc < TerrainChunk.LIGHT_M - SLACK_M:
 			light_n += 1
 			if drawn != PlantMeshes.mesh_for(sp, PlantMeshes.LOD_LIGHT, TreeLayouts.layout_of(pick)):
 				light_bad += 1
+				var what := "?"
+				for lv in [PlantMeshes.LOD_HERO, PlantMeshes.LOD_NEAR, PlantMeshes.LOD_FAR]:
+					if drawn == PlantMeshes.mesh_for(sp, lv, TreeLayouts.layout_of(pick)):
+						what = _lod_name(lv)
+				print("[bands] light-band tree at %.1f m drawn as %s (chunk band_at %.1f m from the eye)" % [dc, what, chunk.band_at.distance_to(chunk.to_local(main.player.global_position))])
 	print("[bands] within %.0f m: %d of %d branchy trees on their full mesh; %d casting wrongly; %d light trees out to %.0f m, %d wrong" % [TerrainChunk.FULL_M, full_ok, full_n, shadow_bad, light_n, TerrainChunk.LIGHT_M, light_bad])
-	ok(full_n > 0 and full_ok == full_n, "every branchy tree within tree_full_m keeps its full leaf cards (%d of %d)" % [full_ok, full_n])
+	ok(full_n > 0 and full_ok == full_n, "every branchy tree within tree_full_m keeps its leaf cards: hero within tree_shadow_m, near past it (%d of %d)" % [full_ok, full_n])
 	ok(shadow_bad == 0, "only the trees within tree_shadow_m cast the sun's shadow (%d wrong)" % shadow_bad)
 	ok(light_bad == 0, "between tree_full_m and tree_light_m the light tree (%d of %d wrong)" % [light_bad, light_n])
 	ok(cut_all, "every near tree's leaf cards cut out (texture set, alpha present)")

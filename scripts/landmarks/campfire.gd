@@ -140,6 +140,9 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	light.omni_attenuation = ATTENUATION
 	light.position = Vector3(0, 1.0, 0)
 	root.add_child(light)
+	# One of the fires that may cast a shadow when it's among the nearest
+	# (FireShadows, §ER.1).
+	FireShadows.enlist(light)
 	root.set_meta("flick_seed", phase)
 	if seat:
 		var log_seat := CreatureBodies.cone(root, 0.18, 0.18, 1.5, Vector3(0, 0.18, 2.0), Color(0.36, 0.25, 0.16))

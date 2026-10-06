@@ -46,6 +46,7 @@ anti_aliasing/quality/msaa_3d=2
 lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+lights_and_shadows/positional_shadow/atlas_size=1024
 
 [shader_globals]
 
@@ -225,6 +226,30 @@ look_mist={
 look_fog_start_m={
 "type": "float",
 "value": 0.0
+}
+look_draw_m={
+"type": "float",
+"value": 0.0
+}
+look_prelit={
+"type": "float",
+"value": 0.0
+}
+look_prelit_sun={
+"type": "float",
+"value": 0.7
+}
+look_prelit_floor={
+"type": "float",
+"value": 0.45
+}
+look_prelit_navy={
+"type": "vec3",
+"value": Vector3(0.3, 0.42, 0.95)
+}
+look_prelit_olive={
+"type": "vec3",
+"value": Vector3(0.62, 0.7, 0.3)
 }
 look_mist_density={
 "type": "float",

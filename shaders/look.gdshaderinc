@@ -37,6 +37,10 @@ const float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
 // The haze's clear zone, metres (look.json retro.fog.start_m): the haze
 // eases in over about this distance.
 global uniform float look_fog_start_m;
+// The render distance (m; ChunkManager.render_m(), design 6 Oct §ER.1):
+// the fog reaches its full just inside it, so the world's edge is never
+// seen. 0 = no far edge.
+global uniform float look_draw_m;
 // Low mist (look.json "mist"): look_mist_density per metre at and below
 // the local ground mean (look_ground_m, its height above the planet
 // radius: main samples a 250 m ring round the player), thinning above it
@@ -145,6 +149,13 @@ vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 	// Low mist: full at and below the ground mean, thinning above it.
 	float mist = look_mist_share(hc - look_ground_m, hp - look_ground_m, look_mist_scale_m);
 	float tau = haze_d * look_fog_density * min(thin, 1.5) + dist * look_mist_density * mist;
+	// The far edge (§ER.1): more of the same haze, in the same lighter,
+	// bluer colour, easing in over the render distance's last 40% so it's
+	// full (look_fog_max) at 95% of it.
+	if (look_draw_m > 0.0) {
+		float e = smoothstep(0.55 * look_draw_m, 0.95 * look_draw_m, dist);
+		tau += 3.5 * e * e;
+	}
 	float f = min(look_band(1.0 - exp(-tau)), look_fog_max);
 	return vec4(look_fog_color, f);
 }

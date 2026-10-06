@@ -1,7 +1,7 @@
 class_name RainOverlay
 extends CanvasLayer
-## Rain drawn as long straight vertical streaks in the internal 480-line
-## frame (design §BU, 1 Oct): a full-screen canvas under the post grade
+## Rain drawn as long straight vertical streaks in the internal frame
+## (design §BU, 1 Oct; the one rain, a single full-frame pass, §ER.1): a full-screen canvas under the post grade
 ## (shaders/rain_streaks.gdshader), fed the local rain and storm each
 ## weather tick by Main. Dense in a storm, thinned under cover, leaning
 ## with the wind. Replaces the rain particles (WeatherFX keeps the snow).
@@ -35,7 +35,9 @@ func update_rain(weather: Dictionary, sheltered: bool, cam_right: Vector3) -> vo
 	var m := _rect.material as ShaderMaterial
 	m.set_shader_parameter("lean", lean)
 	m.set_shader_parameter("sheltered", 1.0 if sheltered else 0.0)
-	m.set_shader_parameter("lines", float(Tuning.section("look", "render").get("internal_lines", 480)))
+	# The frame's own lines (the pixel-size preset, Display; 270 by
+	# default since design §ES), so a streak is one pixel wide at any.
+	m.set_shader_parameter("lines", float(Display.lines()))
 
 
 func _process(delta: float) -> void:

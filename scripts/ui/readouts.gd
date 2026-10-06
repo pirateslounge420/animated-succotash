@@ -71,7 +71,7 @@ func _sec(name: String) -> Dictionary:
 ## Where a readout of size `sz` sits for its layout corner.
 func _corner(which: String, sz: Vector2) -> Vector2:
 	var layout := _sec("layout")
-	var m := float(layout.get("margin_px", 14))
+	var m := roundf(float(layout.get("margin_px", 14)) * HudText.scale())
 	match str(layout.get(which, "top_right")):
 		"top_left":
 			return Vector2(m, m)
@@ -135,9 +135,19 @@ func _speed_box() -> Rect2:
 ## crown above it.
 func _clock_box() -> Rect2:
 	var c := _sec("clock")
-	var d := float(c.get("size_px", 80))
+	var d := clock_d()
 	var h := d + (_crown_h(d) if bool(c.get("case", true)) else 0.0)
 	return Rect2(_corner("clock", Vector2(d, h)), Vector2(d, h))
+
+
+## The watch's diameter (px): size_px at the 480 reference scaled to the
+## frame's lines (HudText.scale(), design §ES), never under CLOCK_MIN_PX
+## so its numerals still fit round the dial at 270 lines.
+const CLOCK_MIN_PX := 64.0
+
+func clock_d() -> float:
+	var d := float(_sec("clock").get("size_px", 80))
+	return float(roundi(maxf(minf(d, CLOCK_MIN_PX), d * HudText.scale())))
 
 
 ## How far the crown and its pendant stand above the case (px).
@@ -235,7 +245,7 @@ const DIGITS_SMALL := {
 func _draw_clock(k: float, mk: float) -> void:
 	var c := _sec("clock")
 	var box := _clock_box()
-	var d := float(c.get("size_px", 80))
+	var d := clock_d()
 	var a := float(c.get("alpha", 0.95)) * k
 	var with_case := bool(c.get("case", true))
 	var top := _crown_h(d) if with_case else 0.0

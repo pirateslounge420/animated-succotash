@@ -14,7 +14,8 @@ extends Control
 ## all the HUD (HudText.px()).
 
 ## [key, label, kind]: "bool" switches; "lines" and "aspect" step through
-## Display's choices; "chunks" is the render distance (ChunkManager; click
+## Display's choices; "render" is the render distance in metres
+## (ChunkManager.RENDER_STEPS_M, design §ER.1; click
 ## the left half for fewer, the right half for more); "slider" a volume
 ## (AudioMix, 0-100 %); "head" is a section title.
 const ITEMS := [
@@ -31,7 +32,7 @@ const ITEMS := [
 	["", "World", "head"],
 	["world.new", "New world", "action"],
 	["", "Display", "head"],
-	["display.render_chunks", "Render distance", "chunks"],
+	["display.render_m", "Render distance", "render"],
 	["display.preset", "Pixel size", "preset"],
 	["display.aspect", "Aspect", "aspect"],
 	["display.integer", "Integer scaling", "bool"],
@@ -134,9 +135,8 @@ func _switch(item: Array, left := false) -> void:
 		return
 	_armed = ""
 	match str(item[2]):
-		"chunks":
-			var n := ChunkManager.render_chunks() + (-1 if left else 1)
-			Settings.set_value(key, clampi(n, ChunkManager.RENDER_MIN, ChunkManager.RENDER_MAX))
+		"render":
+			Settings.set_value(key, ChunkManager.step_render_m(left))
 			return
 		"preset":
 			Display.cycle_preset(left)
@@ -168,9 +168,8 @@ func _shown(item: Array) -> String:
 			return "< %s: %s >" % [item[1], Display.preset_label()]
 		"aspect":
 			return "%s: %s" % [item[1], Display.aspect()]
-		"chunks":
-			var n := ChunkManager.render_chunks()
-			return "< %s: %d (%d m) >" % [item[1], n, roundi(ChunkManager.render_reach_m(n) / 10.0) * 10]
+		"render":
+			return "< %s: %d m >" % [item[1], roundi(ChunkManager.render_m())]
 	return ("[x] " if _on(item) else "[ ] ") + str(item[1])
 
 

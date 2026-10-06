@@ -116,7 +116,14 @@ static func mesh(animal: String) -> ArrayMesh:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	_bounds = {}
 	var tris := _shape(st, animal, fur, muz, acc)
-	var m := st.commit()
+	var m: ArrayMesh
+	if Prelit.on():
+		# Pre-lit (design §ES.2): the head's own occlusion (inside the ears,
+		# under the jaw, round the eyes) baked into its colours, toward navy.
+		m = ArrayMesh.new()
+		m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, Prelit.bake(st.commit_to_arrays(), 18, 4))
+	else:
+		m = st.commit()
 	m.set_meta("tris", tris)
 	m.set_meta("parts", _bounds.duplicate())
 	m.set_meta("fur", fur)
@@ -379,8 +386,10 @@ static func _lin(c: Color) -> Color:
 
 ## A low-poly ellipsoid at `c`, radii `r`.
 static func _ball(st: SurfaceTool, c: Vector3, r: Vector3, col: Color) -> int:
-	var seg := 10
-	var rings := 6
+	# (10 x 6 until design 6 Oct §ES.2: the head is a few pixels across at
+	# 270 lines; 8 x 5 keeps it round.)
+	var seg := 8
+	var rings := 5
 	var lc := _lin(col)
 	_grow(c - r, c + r)
 	var pts: Array = []
@@ -404,7 +413,7 @@ static func _ball(st: SurfaceTool, c: Vector3, r: Vector3, col: Color) -> int:
 
 ## A tapered cone from `a` (radius ra) to `b` (radius rb), capped.
 static func _cone(st: SurfaceTool, a: Vector3, b: Vector3, ra: float, rb: float, col: Color) -> int:
-	var seg := 8
+	var seg := 6 # (8 before §ES.2)
 	var lc := _lin(col)
 	var rr := Vector3.ONE * maxf(ra, rb)
 	_grow((a.min(b)) - rr, (a.max(b)) + rr)

@@ -25,14 +25,23 @@ signal chunk_unloaded(chunk: TerrainChunk)
 @export var view_radius_chunks := 3
 @export var detail_radius_chunks := 1
 const DEFAULT_DETAIL_CHUNKS := 1
-## The render distance setting (settings panel, "display.render_chunks";
-## from play, like Minecraft's): how many chunks out the view ring goes,
-## RENDER_MIN .. RENDER_MAX, DEFAULT_RENDER the one the look was tuned at.
-## Changed live: the next update rebuilds the rings. SkySystem thins or
-## thickens the day haze with it (fog_scale()).
+## The render distance setting (settings panel, "display.render_m"; from
+## play, like Minecraft's): how far the world is drawn, in metres, one of
+## RENDER_STEPS_M. The view ring is as many chunks as cover it
+## (render_chunks(), RENDER_MIN .. RENDER_MAX), and the fog reaches its
+## full just inside it (Look's look_draw_m), so the ring's edge is never
+## seen. Changed live: the next update rebuilds the rings.
+##
+## Design 6 Oct §ER.1 halved the default: it was 3 chunks, a reach of
+## 911 m (TUNED_REACH_M, the one the day haze was tuned at), and is now
+## DEFAULT_RENDER_M, 455 m (a 2-chunk ring). SkySystem keeps the tuned day
+## haze at and under 911 m and thins it past (fog_scale()).
 const RENDER_MIN := 1
 const RENDER_MAX := 8
 const DEFAULT_RENDER := 3
+const TUNED_REACH_M := 911.0
+const DEFAULT_RENDER_M := 455.0
+const RENDER_STEPS_M := [200.0, 300.0, 455.0, 600.0, 750.0, 911.0, 1200.0, 1600.0, 2200.0]
 @export var max_attach_per_frame := 2
 ## Tree trunk colliders added per frame (detail ring only).
 @export var tree_colliders_per_frame := 60
@@ -128,12 +137,39 @@ func _exit_tree() -> void:
 	_pending_detail.clear()
 
 
-## The render distance in chunks: the setting (or RENDER_CHUNKS in the
-## environment, for tools), clamped.
+## The render distance in metres: the setting (or RENDER_M in the
+## environment, for tools; RENDER_CHUNKS=n still means n chunks' reach).
+static func render_m() -> float:
+	var env := OS.get_environment("RENDER_M")
+	if env != "":
+		return clampf(float(env), RENDER_STEPS_M[0], RENDER_STEPS_M[-1])
+	env = OS.get_environment("RENDER_CHUNKS")
+	if env != "":
+		return render_reach_m(clampi(int(env), RENDER_MIN, RENDER_MAX))
+	return clampf(float(Settings.get_value("display.render_m", DEFAULT_RENDER_M)), RENDER_STEPS_M[0], RENDER_STEPS_M[-1])
+
+
+## The next step out (or in, `left`) from the render distance now.
+static func step_render_m(left: bool) -> float:
+	var now := render_m()
+	var best: float = RENDER_STEPS_M[0] if not left else RENDER_STEPS_M[-1]
+	if left:
+		for i in range(RENDER_STEPS_M.size() - 1, -1, -1):
+			if RENDER_STEPS_M[i] < now - 1.0:
+				return RENDER_STEPS_M[i]
+		return RENDER_STEPS_M[0]
+	for v in RENDER_STEPS_M:
+		if v > now + 1.0:
+			return v
+	return RENDER_STEPS_M[-1]
+
+
+## The view ring in chunks: enough that every point within render_m() of
+## the player is on a loaded chunk wherever they stand in theirs (the
+## rings are measured from the chunk's center, up to a half diagonal off).
 static func render_chunks() -> int:
-	var env := OS.get_environment("RENDER_CHUNKS")
-	var n := int(env) if env != "" else int(Settings.get_value("display.render_chunks", DEFAULT_RENDER))
-	return clampi(n, RENDER_MIN, RENDER_MAX)
+	var size := chunk_size_m()
+	return clampi(ceili((render_m() + size * 0.7072) / size - 0.5), RENDER_MIN, RENDER_MAX)
 
 
 ## How far the view ring reaches (m) at `n` chunks: its edge, from the
@@ -142,11 +178,12 @@ static func render_reach_m(n: int) -> float:
 	return (n + 0.5) * chunk_size_m()
 
 
-## The day haze's density against the one the look was tuned at, so the
-## ring's edge always fades out: thinner at a longer render distance (you
-## see farther, like Minecraft), thicker at a shorter one.
+## The day haze's density against the one the look was tuned at: thinner
+## at a longer render distance (you see farther, like Minecraft); at and
+## under the tuned 911 m it stays as tuned, and the fog's far edge
+## (look_draw_m) does the closing in.
 static func fog_scale() -> float:
-	return render_reach_m(DEFAULT_RENDER) / render_reach_m(render_chunks())
+	return minf(1.0, TUNED_REACH_M / render_m())
 
 
 static func chunk_size_m() -> float:

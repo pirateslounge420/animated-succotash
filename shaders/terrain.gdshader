@@ -38,6 +38,7 @@ shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 #include "res://shaders/wind.gdshaderinc"
 // A cloud's shadow here (fragment to light; design §DA, wind_cloud_shade).
@@ -236,7 +237,11 @@ void fragment() {
 	// (after the palette pulls, so it isn't washed back toward the
 	// targets); a little less at night, when the floor carries the shade.
 	if (feet_on && dist < FEET_DRAW_M) {
-		ALBEDO *= 1.0 - feet_dark * tree_feet(UV) * (1.0 - 0.4 * nk) * (1.0 - smoothstep(FEET_DRAW_M * 0.7, FEET_DRAW_M, dist));
+		float feet = feet_dark * tree_feet(UV) * (1.0 - 0.4 * nk) * (1.0 - smoothstep(FEET_DRAW_M * 0.7, FEET_DRAW_M, dist));
+		// Pre-lit (§ES.2): the foot's dark toward the shade colour (navy, or
+		// olive on green ground), never grey.
+		vec3 feet_shade = look_prelit > 0.5 ? mix(look_prelit_navy, look_prelit_olive, prelit_green(ALBEDO)) : vec3(1.0);
+		ALBEDO *= mix(vec3(1.0), feet_shade * (1.0 - feet), feet);
 	}
 	ROUGHNESS = 1.0;
 	// The ambient floor, after the stack: what this ground keeps of the
@@ -249,6 +254,8 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 0.55) + floor_light + look_warm_pool_light(world_pos);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
 
 
@@ -261,5 +268,12 @@ void fragment() {
 void light() {
 	float k = LIGHT_IS_DIRECTIONAL ? 1.0 - v_cloud : 1.0;
 	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
-	DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
+	if (look_prelit < 0.5) {
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * ndl * ATTENUATION * k;
+	} else if (LIGHT_IS_DIRECTIONAL) {
+		// Pre-lit (§ES.2): the sun only tints; the slopes' light is painted.
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * look_prelit_sun * ATTENUATION * k;
+	} else {
+		DIFFUSE_LIGHT += LIGHT_COLOR / PI * (0.35 + 0.65 * ndl) * ATTENUATION;
+	}
 }

@@ -68,7 +68,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_death_label = Label.new()
 	_death_label.text = "You died"
-	_death_label.add_theme_font_size_override("font_size", HudText.px(40))
+	HudText.size(_death_label, 40)
 	_death_label.add_theme_color_override("font_color", Color(0.95, 0.4, 0.35))
 	_death_label.add_theme_color_override("font_outline_color", Color(0.1, 0.02, 0.02))
 	_death_label.add_theme_constant_override("outline_size", 5)
@@ -116,7 +116,7 @@ func set_hit_flash(color: Color, alpha: float) -> void:
 func set_taken(black: float, text_alpha: float, text: String, color: Color, size_px: int) -> void:
 	_taken_black = black
 	_taken_label.text = text
-	_taken_label.add_theme_font_size_override("font_size", HudText.px(size_px))
+	HudText.size(_taken_label, size_px)
 	_taken_label.add_theme_color_override("font_color", color)
 	_taken_label.modulate.a = text_alpha
 	_taken_label.visible = text_alpha > 0.0

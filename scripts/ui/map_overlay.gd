@@ -79,7 +79,7 @@ func setup(p_world: Node) -> void:
 
 	_legend = Label.new()
 	_legend.position = Vector2(10, 8)
-	_legend.add_theme_font_size_override("font_size", HudText.px(11))
+	HudText.size(_legend, 11)
 	add_child(_legend)
 	_build_mesh()
 

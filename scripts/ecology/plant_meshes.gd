@@ -73,6 +73,11 @@ static func material_for(sp: PlantSpecies) -> ShaderMaterial:
 	m.set_shader_parameter("sp_autumn_color", sp.autumn_color)
 	# A deciduous species runs the staged season clock (LeafSeason).
 	m.set_shader_parameter("sp_deciduous", sp.deciduous)
+	# The far picture as a sprite of the tree's own model (§ES.3).
+	var spr := impostor_sprite(sp)
+	m.set_shader_parameter("sp_has_impostor", spr != null)
+	if spr != null:
+		m.set_shader_parameter("sp_impostor", spr)
 	m.set_shader_parameter("sp_bark_tile_m", sp.bark_tile_m)
 	# A leaf cell on the near cards: the leaf's own length, but never so
 	# small that it's below a few pixels a few meters off.
@@ -135,6 +140,12 @@ const LOD_LIGHT := 3
 ## Leaf clusters a light tree keeps (spread over the crown, scaled up so
 ## they cover about the same).
 const LIGHT_CLUSTERS := 16
+## The leaf clusters the hero and near levels keep at most (design 6 Oct
+## §ES.2: big pixels hide the leaves' number, so fewer, bigger clusters;
+## a big tree ~3k triangles at the hero level, ~1.3k near, from ~16k and
+## ~9.5k).
+const HERO_CLUSTERS := 120
+const NEAR_CLUSTERS := 60
 ## Main limbs a light tree keeps (a conifer's many whorls thinned evenly).
 const LIGHT_LIMBS := 8
 ## Far trees as 2D (from play: "the distant things as 2D", for speed):
@@ -580,7 +591,50 @@ static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> 
 	# the rest.
 	var vine_col := Color(0.5, 0.55, 0.42) if sp.shape == S.CYPRESS else sp.color.darkened(0.3)
 	b.skeleton(TreeLayouts.skeleton(idx, layout), sp.color, vine_col, sp.leaf_density_of())
-	return b.commit_arrays()
+	var out := b.commit_arrays()
+	return _prelit_tree(out) if Prelit.on() else out
+
+
+## Pre-lit (design 6 Oct §ES.2): a tree's occlusion baked into its colours,
+## toward olive on the leaves and navy on the bark, never grey: each leaf
+## cluster (all its cards alike, from its centre, CUSTOM0) darker the
+## deeper it sits in the crown and the lower; the wood darker toward its
+## foot and inside the crown.
+static func _prelit_tree(arrays: Array) -> Array:
+	var v: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var c: PackedColorArray = arrays[Mesh.ARRAY_COLOR]
+	var uv2: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV2]
+	var cu: PackedFloat32Array = arrays[Mesh.ARRAY_CUSTOM0]
+	if v.is_empty() or c.size() != v.size() or uv2.size() != v.size() or cu.size() != v.size() * 4:
+		return arrays
+	var lo := INF
+	var hi := -INF
+	var reach := 0.0
+	for i in v.size():
+		if uv2[i].x > 4.5 and uv2[i].x < 5.5:
+			var y := cu[i * 4 + 1]
+			lo = minf(lo, y)
+			hi = maxf(hi, y)
+			reach = maxf(reach, Vector2(cu[i * 4], cu[i * 4 + 2]).length())
+	if lo == INF:
+		lo = 0.6
+		hi = 1.0
+	reach = maxf(reach, 0.05)
+	for i in v.size():
+		var ao := 1.0
+		if uv2[i].x > 4.5 and uv2[i].x < 5.5:
+			var out := Vector2(cu[i * 4], cu[i * 4 + 2]).length() / reach
+			var up := (cu[i * 4 + 1] - lo) / maxf(hi - lo, 1e-3)
+			ao = lerpf(0.45, 1.0, smoothstep(0.1, 0.9, out)) * lerpf(0.7, 1.0, clampf(up, 0.0, 1.0))
+		else:
+			var p := v[i]
+			ao = lerpf(0.55, 1.0, smoothstep(0.0, 0.1, p.y))
+			if p.y > lo:
+				# Wood inside the crown, in its shade.
+				ao *= lerpf(0.65, 1.0, smoothstep(0.0, reach, Vector2(p.x, p.z).length()))
+		c[i] = Prelit.ao_tint(c[i], ao)
+	arrays[Mesh.ARRAY_COLOR] = c
+	return arrays
 
 
 ## A species' far level as a picture (IMPOSTORS): one quad as wide as the
@@ -590,7 +644,11 @@ static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> 
 ## half-width in hundredths of the crown's), COLOR its mean leaf colour
 ## (sway 0: the far trees stand still). Unit frame like every plant mesh.
 static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
-	var model := _build(sp, idx, LOD_FAR)
+	# A branchy tree's picture is of its own near model (design 6 Oct §ES.3:
+	# impostors are pre-rendered sprites of the trees' own 3D models,
+	# impostor_sprite()); the rest keep the far model's outline.
+	var branchy := TreeLayouts.branchy(sp)
+	var model := arrays_for(sp, LOD_NEAR, 0) if branchy else _build(sp, idx, LOD_FAR)
 	var v: PackedVector3Array = model[Mesh.ARRAY_VERTEX]
 	var c: PackedColorArray = model[Mesh.ARRAY_COLOR]
 	var m: PackedVector2Array = model[Mesh.ARRAY_TEX_UV2]
@@ -600,7 +658,7 @@ static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
 	var leaf_col := Color(0, 0, 0)
 	for i in v.size():
 		top = maxf(top, v[i].y)
-		if m[i].x > 0.5 and v[i].y > 0.02:
+		if _imp_leafy(m[i].x, branchy) and v[i].y > 0.02:
 			base = minf(base, v[i].y)
 			leaves += 1
 			leaf_col += c[i]
@@ -619,7 +677,7 @@ static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
 	var trunk := 0.0
 	for i in v.size():
 		var r := Vector2(v[i].x, v[i].z).length()
-		var crown := m[i].x > 0.5 or base == 0.0
+		var crown := _imp_leafy(m[i].x, branchy) or base == 0.0
 		if crown:
 			var t := clampf((v[i].y - base) / maxf(top - base, 1e-3), 0.0, 0.999)
 			var b := int(t * 4.0)
@@ -653,7 +711,121 @@ static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
 	arrays[Mesh.ARRAY_TEX_UV] = quv
 	arrays[Mesh.ARRAY_TEX_UV2] = quv2
 	arrays[Mesh.ARRAY_CUSTOM0] = qcu
+	if branchy:
+		# Its sprite, drawn here on the worker (impostor_sprite() wraps it).
+		_mutex.lock()
+		_arrays[Vector3i(idx, LOD_FAR, -1)] = arrays
+		_mutex.unlock()
+		var img := _sprite_image(sp)
+		_mutex.lock()
+		_sprite_imgs[idx] = img
+		_mutex.unlock()
 	return arrays
+
+
+## Is a vertex of the picture's model leaf (its UV2.x): a branchy tree's
+## leaf cards are 5; the far models mark leaves above 0.5.
+static func _imp_leafy(code: float, branchy: bool) -> bool:
+	return (code > 4.5 and code < 5.5) if branchy else code > 0.5
+
+
+## Sprite size (px) of a far tree's picture, its height; the width follows
+## the picture's own shape.
+const SPRITE_H := 64
+static var _sprites := {} # species index -> ImageTexture (null: none)
+
+
+## A branchy tree's picture as a sprite of its own near model (design 6 Oct
+## §ES.2/§ES.3, impostors): the model drawn from the side, flat (no lens),
+## into the picture's own frame (_build_impostor's quad: the crown's
+## half-width x 1.08 either side, ground to top), z-buffered, nearest. R:
+## the model's baked light there (its vertex colours' brightness over the
+## species' leaf or bark colour, /1.5: the pre-lit occlusion, the crown's
+## shaded heart); A: 1 leaves, 0.5 wood, 0 empty (a few leaf pixels left
+## out, so sky shows through the crown as it does through the cards). The
+## foliage shader colours it with the season and the palette as before.
+## Null for anything but a branchy tree. Main thread.
+static func impostor_sprite(sp: PlantSpecies) -> ImageTexture:
+	var idx := SpeciesDB.index_of(sp)
+	if _sprites.has(idx):
+		return _sprites[idx]
+	_sprites[idx] = null
+	if not TreeLayouts.branchy(sp) or not IMPOSTORS:
+		return null
+	# Drawn on a chunk worker with the picture (_build_impostor) when it
+	# can be; here only if not yet.
+	_mutex.lock()
+	var img: Image = _sprite_imgs.get(idx)
+	_mutex.unlock()
+	if img == null:
+		img = _sprite_image(sp)
+	var tex := ImageTexture.create_from_image(img)
+	_sprites[idx] = tex
+	return tex
+
+
+static var _sprite_imgs := {} # species index -> Image (thread-safe under _mutex)
+
+
+## The sprite's image (thread-safe: plain arrays and an Image).
+static func _sprite_image(sp: PlantSpecies) -> Image:
+	var model := arrays_for(sp, LOD_NEAR, 0)
+	var v: PackedVector3Array = model[Mesh.ARRAY_VERTEX]
+	var c: PackedColorArray = model[Mesh.ARRAY_COLOR]
+	var m: PackedVector2Array = model[Mesh.ARRAY_TEX_UV2]
+	var picture := arrays_for(sp, LOD_FAR)
+	var qv: PackedVector3Array = picture[Mesh.ARRAY_VERTEX]
+	var x0 := INF
+	var x1 := -INF
+	var top := 0.05
+	for p in qv:
+		x0 = minf(x0, p.x)
+		x1 = maxf(x1, p.x)
+		top = maxf(top, p.y)
+	var hgt := SPRITE_H
+	var wid := clampi(roundi(hgt * (x1 - x0) / top), 8, 128)
+	var zb := PackedFloat32Array()
+	zb.resize(wid * hgt)
+	zb.fill(-INF)
+	var img := Image.create(wid, hgt, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	var leaf_l := maxf(sp.color.get_luminance(), 0.02)
+	var wood_l := maxf(sp.accent.get_luminance(), 0.02)
+	var idxs = model[Mesh.ARRAY_INDEX]
+	var n_tri := (idxs as PackedInt32Array).size() / 3 if idxs != null else v.size() / 3
+	for t in n_tri:
+		var ia: int = idxs[t * 3] if idxs != null else t * 3
+		var ib: int = idxs[t * 3 + 1] if idxs != null else t * 3 + 1
+		var ic: int = idxs[t * 3 + 2] if idxs != null else t * 3 + 2
+		var leafy := _imp_leafy(m[ia].x, true)
+		var pts: Array[Vector3] = []
+		for k in [ia, ib, ic]:
+			var p := v[k]
+			pts.append(Vector3((p.x - x0) / (x1 - x0) * wid, (1.0 - p.y / top) * hgt, p.z))
+		var lo := Vector2(minf(pts[0].x, minf(pts[1].x, pts[2].x)), minf(pts[0].y, minf(pts[1].y, pts[2].y)))
+		var hi := Vector2(maxf(pts[0].x, maxf(pts[1].x, pts[2].x)), maxf(pts[0].y, maxf(pts[1].y, pts[2].y)))
+		var area := (pts[1].x - pts[0].x) * (pts[2].y - pts[0].y) - (pts[2].x - pts[0].x) * (pts[1].y - pts[0].y)
+		if absf(area) < 1e-6:
+			continue
+		for py in range(maxi(0, int(lo.y)), mini(hgt, int(hi.y) + 1)):
+			for px in range(maxi(0, int(lo.x)), mini(wid, int(hi.x) + 1)):
+				var q := Vector2(px + 0.5, py + 0.5)
+				var w0 := ((pts[1].x - q.x) * (pts[2].y - q.y) - (pts[2].x - q.x) * (pts[1].y - q.y)) / area
+				var w1 := ((pts[2].x - q.x) * (pts[0].y - q.y) - (pts[0].x - q.x) * (pts[2].y - q.y)) / area
+				var w2 := 1.0 - w0 - w1
+				if w0 < 0.0 or w1 < 0.0 or w2 < 0.0:
+					continue
+				var z := pts[0].z * w0 + pts[1].z * w1 + pts[2].z * w2
+				var zi := py * wid + px
+				if z <= zb[zi]:
+					continue
+				if leafy and ((px * 7 + py * 13 + t * 3) % 11) < 2:
+					continue
+				zb[zi] = z
+				var col: Color = c[ia] * w0 + c[ib] * w1 + c[ic] * w2
+				var shade := clampf(col.get_luminance() / (leaf_l if leafy else wood_l), 0.0, 1.5) / 1.5
+				img.set_pixel(px, py, Color(shade, 0.0, 0.0, 1.0 if leafy else 0.5))
+	return img
 
 
 static func _aroid_leaf(b: _Builder, leaf: Color, wood: Color, far: bool) -> void:
@@ -1297,7 +1469,10 @@ class _Builder:
 		var limb_i := 0
 		for pc in sk.pieces:
 			var order := pc.order
-			if far and order >= 3 and not pc.frond:
+			# The twigs (order 3) are under a pixel at 270 lines (design 6
+			# Oct §ES.2: mid-poly, budgets down): drawn at no level now;
+			# their leaf clusters hang where they ended.
+			if order >= 3 and not pc.frond:
 				continue
 			if light and (order >= 2 or pc.frond):
 				continue
@@ -1310,8 +1485,11 @@ class _Builder:
 			var rad := PackedFloat32Array()
 			var sw := PackedFloat32Array()
 			for i in n:
-				if hero or i % 2 == 0 or i == n - 1:
-					if (far or light) and order >= 1 and i != 0 and i != n - 1 and i != n / 2:
+				if (hero and order == 0) or i % 2 == 0 or i == n - 1:
+					# Limbs and branches: their ends and middle only, but at
+					# the hero level for the limbs (§ES.2: rounder where it
+					# shows, not denser).
+					if not (hero and order <= 1) and order >= 1 and i != 0 and i != n - 1 and i != n / 2:
 						continue
 					pts.append(pc.pts[i])
 					var r := pc.rad[i]
@@ -1320,14 +1498,16 @@ class _Builder:
 					rad.append(r)
 					var t := float(i) / maxf(n - 1, 1)
 					sw.append(t * TWIG_SWAY if (order >= 3 or pc.frond) else 0.0)
+			# Sides (§ES.2): round where the eye is (the trunk 10 at the hero
+			# level), fewer out along the wood.
 			var ring := 3
 			match order:
 				0:
-					ring = 12 if hero else (5 if light else (8 if not far else 6))
+					ring = 10 if hero else (5 if light else (7 if not far else 6))
 				1:
-					ring = 8 if hero else (3 if light else (6 if not far else 4))
+					ring = 6 if hero else (3 if light else (4 if not far else 4))
 				2:
-					ring = 5 if hero else (4 if not far else 3)
+					ring = 4 if hero else 3
 			if pc.frond:
 				ring = 3
 			strand_key = 1.0 if pc.dead else 0.0
@@ -1337,10 +1517,11 @@ class _Builder:
 			twig_phase = -1.0
 		# The leaf clusters at the anchors.
 		var list: Array = sk.anchors
-		if far or light:
+		var cap := LIGHT_CLUSTERS if light else (HERO_CLUSTERS if hero else NEAR_CLUSTERS)
+		if far or sk.anchors.size() > cap:
 			# Every k-th anchor, its cluster grown to cover the ones it
 			# stands for (area: k times, so sqrt(k) across).
-			var k := 3 if far else maxi(2, ceili(float(sk.anchors.size()) / LIGHT_CLUSTERS))
+			var k := 3 if far else maxi(2, ceili(float(sk.anchors.size()) / cap))
 			var grow := 1.9 if far else sqrt(float(k)) * 0.95
 			list = []
 			for i in range(0, sk.anchors.size(), k):
@@ -1527,8 +1708,6 @@ class _Builder:
 			Vector3(cos(spin), 0.15, sin(spin)),
 			Vector3(cos(spin + PI * 0.5), 0.15, sin(spin + PI * 0.5)),
 		]
-		if hero:
-			facings.append(Vector3(cos(spin + PI * 0.25), 0.8, sin(spin + PI * 0.25)))
 		for k in facings.size():
 			var f := facings[k].normalized()
 			var t1 := f.cross(Vector3.UP if absf(f.y) < 0.9 else Vector3.RIGHT).normalized()

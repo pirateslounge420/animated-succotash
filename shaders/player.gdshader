@@ -21,6 +21,7 @@ shader_type spatial;
 render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/prelit.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_weave : filter_nearest_mipmap, repeat_enable;
@@ -150,11 +151,15 @@ void fragment() {
 		// each material shows its texture.
 		vec3 t;
 		float k;
+		// (2.6 and 3.2 repeats a metre until design 6 Oct §ES.2: a 64-px
+		// weave at that is ~170-200 texels a metre, finer than a 270-line
+		// pixel past a metre or two, and it crawled; ~32 now, about one
+		// texel a pixel at walking distance.)
 		if (kind == 1) {
-			t = tri(look_tex_weave, 2.6);
+			t = tri(look_tex_weave, 0.5);
 			k = 1.0;
 		} else if (kind == 2) {
-			t = tri(look_tex_weave, 3.2);
+			t = tri(look_tex_weave, 0.5);
 			k = 0.6;
 		} else {
 			t = vec3(texture(look_grain_soft, (tex_pos.xy + tex_pos.zy) * 9.0).r);
@@ -175,4 +180,8 @@ void fragment() {
 		}
 		ALBEDO = base * mix(vec3(1.0), t * 2.0, k) * (0.7 + 0.6 * g);
 	}
+	// Pre-lit (design §ES.2): the painted light, from the sky above.
+	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
+
+#include "res://shaders/prelit_light.gdshaderinc"

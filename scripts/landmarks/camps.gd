@@ -1316,10 +1316,15 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 		# The fundamentals' props: the plot and the weir (§BM).
 		if bool(st.get("plot", false)) and not camp.has_meta("plot"):
 			camp.set_meta("plot", _plot(camp, st))
-		if bool(st.get("weir", false)) and not camp.has_meta("weir"):
-			camp.set_meta("weir", _weir(camp, st))
+		if bool(st.get("weir", false)) and not camp.has_meta("weir") and not camp.has_meta("weir_tried"):
+			# (Tried once: with no water to dam _weir gives nothing, and a
+			# null meta is no meta, so it was tried again every refresh.)
+			camp.set_meta("weir_tried", true)
+			var weir = _weir(camp, st)
+			if weir != null:
+				camp.set_meta("weir", weir)
 			# The people's own place at the weir's lip (§EM).
-			if camp.has_meta("tp_ctx"):
+			if weir != null and camp.has_meta("tp_ctx"):
 				var tctx: Dictionary = camp.get_meta("tp_ctx")
 				tctx["weir"] = camp.get_meta("weir")
 				ThirdPlaces.place_own(camp, Peoples.get_people(str(st.people)), tctx)

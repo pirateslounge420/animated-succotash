@@ -23,7 +23,8 @@ extends Node3D
 ## torch lies burning. Its head is a glowing ember, not a flame (Mike,
 ## 3 Oct; ember_node): a coal with the fire's colours in its cracks and a
 ## couple of sparks. The light: a point light with the data's falloff,
-## breathing slowly with the ember (ember_glow), no shadow map; the only
+## breathing slowly with the ember (ember_glow), a soft shadow only while
+## it is among the nearest fire lights (FireShadows, §ER.1); the only
 ## warm light in the world is fire.
 ## Its state (lit, burn_left_min, burnt) lives in the item's own
 ## dictionary, so it comes and goes with the pack.
@@ -252,8 +253,9 @@ static func set_glow(ember: Node3D, glow: float, it: Dictionary) -> void:
 		(head.material_override as ShaderMaterial).set_shader_parameter("glow", glow * (float(EMBER.get("gutter_glow", 0.72)) if guttering(it) else 1.0))
 
 
-## The torch's point light from the data: Minecraft-style falloff, warm,
-## no shadow map (§AG).
+## The torch's point light from the data: Minecraft-style falloff, warm;
+## a soft shadow only while it's among the nearest fire lights
+## (FireShadows, design 6 Oct §ER.1).
 ## The torch in hand's light over a planted one's (light.held_scale; §EB.3).
 static func held_scale() -> float:
 	return float(L.get("held_scale", 1.0))
@@ -266,7 +268,9 @@ static func light_node() -> OmniLight3D:
 	l.light_energy = float(L.get("energy", 2.2))
 	l.omni_range = float(L.get("range_m", 14.0))
 	l.omni_attenuation = float(L.get("attenuation", 1.6))
-	l.shadow_enabled = bool(L.get("shadows", false))
+	# A shadow only while among the nearest fire lights (FireShadows,
+	# §ER.1; light.shadows no longer read).
+	FireShadows.enlist(l)
 	return l
 
 

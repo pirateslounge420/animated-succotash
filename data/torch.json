@@ -32,7 +32,8 @@
   "flicker_amount": 0.18,
   "sprint_flicker_scale": 2.0,
   "wind_flicker_scale": 1.5,
-  "shadows": false
+  "shadows": false,
+  "_help_shadows": "Not read since design 6 Oct \u00a7ER.1 (Claude Code): a torch casts a soft shadow only while it is among the nearest fire lights (look.json fire_shadows, FireShadows)."
  },
  "planted": {
   "stand_height_m": 0.9,

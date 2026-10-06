@@ -4,8 +4,8 @@ class_name HudText
 ## Label and every drawn string uses it. The file is text.font
 ## (assets/fonts/vt323.ttf, "VT323", SIL OFL 1.1; the old typewriter face
 ## "Special Elite" is still there); if its import is missing the TTF is
-## read from disk, and if that fails the other face, never a system font. Every size is at the internal frame's reference (design §Y:
-## 480 lines, Display): the HUD is drawn inside the low-res frame and
+## read from disk, and if that fails the other face, never a system font. Every size is given at the 480-line reference and scaled to
+## the frame's lines (scale(), design §ES): the HUD is drawn inside the low-res frame and
 ## upscaled with it, nearest-neighbour. So the font is drawn without
 ## antialiasing or hinting, on its own pixel grid: VT323's is 10 px, so
 ## it's pixel-exact at 20 px (and 40), and every size goes through px()
@@ -17,14 +17,55 @@ class_name HudText
 static var CRISP: Array = Tuning.section("hud", "text").get("crisp_px", [20, 40])
 
 
-## The crisp size for a wanted size: the largest crisp size not more than
-## `want` (never below the smallest), so nothing is drawn between grids.
+## Every size in the data is at the 480-line reference
+## (text.ref_height_px); the frame's own lines over it (Display, the
+## pixel-size preset): 0.5625 at 270, the default since design §ES, so the
+## HUD keeps its share of the frame (and fits) at every preset.
+static func scale() -> float:
+	var ref := float(Tuning.section("hud", "text").get("ref_height_px", 480))
+	return float(Display.lines()) / maxf(ref, 1.0)
+
+
+## The crisp size for a wanted size (at the 480 reference): the largest
+## crisp size not more than the want scaled to the frame (never below the
+## smallest), so nothing is drawn between grids. At 270 lines VT323's own
+## 10 px grid is the small size (§ES: legible at 270).
 static func px(want: float) -> int:
+	var w := want * scale()
 	var out := int(CRISP[0])
 	for c in CRISP:
-		if want >= float(c) * 0.8:
+		if w >= float(c) * 0.8:
 			out = int(c)
 	return out
+
+
+## Size a control's font for `want` (at the 480 reference), and remember
+## the want so refresh() re-sizes it when the pixel-size preset changes.
+static func size(c: Control, want: float, key := "font_size") -> void:
+	var wants: Dictionary = c.get_meta("hud_px", {})
+	wants[key] = want
+	c.set_meta("hud_px", wants)
+	c.add_theme_font_size_override(key, px(want))
+
+
+## The preset changed (Display.apply()): the theme's default size, every
+## control sized with size(), and whatever lays itself out by the frame
+## (the group "hud_relayout", relayout()) follow it.
+static func refresh() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null or tree.root == null:
+		return
+	var base := px(float(Tuning.section("hud", "text").get("base_px", 20)))
+	ThemeDB.get_default_theme().default_font_size = base
+	ThemeDB.fallback_font_size = base
+	for c in tree.root.find_children("*", "Control", true, false):
+		if c.has_meta("hud_px"):
+			var wants: Dictionary = c.get_meta("hud_px")
+			for key in wants:
+				(c as Control).add_theme_font_size_override(str(key), px(float(wants[key])))
+	for n in tree.get_nodes_in_group("hud_relayout"):
+		if n.has_method("relayout"):
+			n.call("relayout")
 
 
 ## How the face was loaded, for the checks and the log: "import" (the

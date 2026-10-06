@@ -57,6 +57,8 @@ var player_fires: PlayerFires
 var travellers: Travellers
 ## Fairy rings and the fae (design 5 Oct §EO.4).
 var fae_rings: FaeRings
+var fire_shadows: FireShadows
+var shell: FarShell
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -180,7 +182,7 @@ func _on_planet_ready() -> void:
 	chunks.setup(world)
 	chunks.load_blocking(spawn_dir)
 
-	var shell := FarShell.new()
+	shell = FarShell.new()
 	shell.name = "FarShell"
 	root.add_child(shell)
 	leaf_season = LeafSeason.new()
@@ -342,6 +344,14 @@ func _on_planet_ready() -> void:
 	travellers.name = "Travellers"
 	add_child(travellers)
 	travellers.setup(world, chunks, player)
+	# Occlusion culling with the ground and wall occluders (Occluders,
+	# §ER.1), when it's on.
+	get_viewport().use_occlusion_culling = Occluders.on()
+	# Fire shadows: only the nearest fires and torches cast (§ER.1).
+	fire_shadows = FireShadows.new()
+	fire_shadows.name = "FireShadows"
+	add_child(fire_shadows)
+	fire_shadows.setup(func(): return get_viewport().get_camera_3d())
 	fae_rings = FaeRings.new()
 	fae_rings.name = "FaeRings"
 	add_child(fae_rings)
@@ -544,6 +554,7 @@ func _process(delta: float) -> void:
 		player.global_position -= offset
 
 	chunks.update_around(d)
+	shell.update_faces(d)
 	# The eye, for the shaders that spend detail by distance from it
 	# (foliage: leaves cast shadows only near it, design §W).
 	var eye_cam := get_viewport().get_camera_3d()

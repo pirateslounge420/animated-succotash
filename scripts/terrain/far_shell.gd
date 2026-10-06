@@ -11,11 +11,40 @@ extends Node3D
 ## The node sits at the planet center; being a child of World.world_root,
 ## it moves with the floating origin.
 
-const RES := 96 # quads per cube-face edge (~1 km)
+## Quads per cube-face edge (~1.6 km). 96 until design 6 Oct §ER.1: past
+## the render distance the fog is full, so the shells only show as pale
+## silhouettes against the sky, and 64 draws those the same for less than
+## half the triangles.
+const RES := 64
 const SINK_M := 30.0
 
 var _terrain_mat: ShaderMaterial
 var _sea_mat: ShaderMaterial
+## How far off a face's ground may be and still be drawn (m).
+const SEEN_M := 40000.0
+## Each face's 9 x 9 sample directions (update_faces()).
+var _face_samples: Array[PackedVector3Array] = []
+var _faces_at := Vector3.ZERO
+
+
+## Show only the faces with ground within SEEN_M of `d` (the player's
+## surface direction); a sample spacing's slack (~1/8 of a face) on top.
+func update_faces(d: Vector3) -> void:
+	if _face_samples.is_empty() or (_faces_at != Vector3.ZERO and _faces_at.distance_to(d) * PlanetConst.RADIUS_M < 2000.0):
+		return
+	_faces_at = d
+	var reach := (SEEN_M + PlanetConst.CIRCUMFERENCE_M / 4.0 / 8.0) / PlanetConst.RADIUS_M
+	var show := []
+	for f in 6:
+		var near := false
+		for p in _face_samples[f]:
+			if p.angle_to(d) < reach:
+				near = true
+				break
+		show.append(near)
+	for ch in get_children():
+		if ch.has_meta("face"):
+			(ch as Node3D).visible = show[int(ch.get_meta("face"))]
 
 
 func build(world: Node) -> void:
@@ -32,22 +61,30 @@ func build(world: Node) -> void:
 	Look.register(_terrain_mat)
 	Look.register(_sea_mat)
 
-	var land := MeshInstance3D.new()
-	land.name = "FarTerrain"
-	land.mesh = _sphere_mesh(map, true)
-	land.material_override = _terrain_mat
-	land.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(land)
+	# One node per cube face (§ER.1), and only the faces with ground within
+	# SEEN_M of you drawn (update_faces()): from the surface nothing farther
+	# shows (a 885 m summit's own horizon is ~11 km), and a face's box is
+	# planet-sized, so the camera never culls it alone.
+	for pair in [[true, "FarTerrain", _terrain_mat], [false, "FarSea", _sea_mat]]:
+		var faces := _sphere_mesh(map, pair[0])
+		for f in faces.size():
+			var mi := MeshInstance3D.new()
+			mi.name = "%s%d" % [pair[1], f]
+			mi.mesh = faces[f]
+			mi.material_override = pair[2]
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mi.set_meta("face", f)
+			add_child(mi)
+	for f in 6:
+		var pts := PackedVector3Array()
+		for j in 9:
+			for i in 9:
+				pts.append(CubeSphere.to_dir(f, -1.0 + 2.0 * i / 8.0, -1.0 + 2.0 * j / 8.0))
+		_face_samples.append(pts)
 
-	var sea := MeshInstance3D.new()
-	sea.name = "FarSea"
-	sea.mesh = _sphere_mesh(map, false)
-	sea.material_override = _sea_mat
-	sea.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(sea)
 
-
-func _sphere_mesh(map: PlanetData, terrain: bool) -> ArrayMesh:
+## The shell, one mesh per cube face.
+func _sphere_mesh(map: PlanetData, terrain: bool) -> Array[ArrayMesh]:
 	var verts := PackedVector3Array()
 	var normals := PackedVector3Array()
 	var colors := PackedColorArray()
@@ -70,16 +107,24 @@ func _sphere_mesh(map: PlanetData, terrain: bool) -> ArrayMesh:
 				indices.append_array([a, a + n + 1, a + 1, a, a + n, a + n + 1])
 	if terrain:
 		normals = _smooth_normals(verts, indices)
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = normals
-	if terrain:
-		arrays[Mesh.ARRAY_COLOR] = colors
-	arrays[Mesh.ARRAY_INDEX] = indices
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return mesh
+	var out: Array[ArrayMesh] = []
+	var nv := n * n
+	var ni := RES * RES * 6
+	for f in 6:
+		var fi := indices.slice(f * ni, (f + 1) * ni)
+		for k in fi.size():
+			fi[k] -= f * nv
+		var arrays := []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = verts.slice(f * nv, (f + 1) * nv)
+		arrays[Mesh.ARRAY_NORMAL] = normals.slice(f * nv, (f + 1) * nv)
+		if terrain:
+			arrays[Mesh.ARRAY_COLOR] = colors.slice(f * nv, (f + 1) * nv)
+		arrays[Mesh.ARRAY_INDEX] = fi
+		var mesh := ArrayMesh.new()
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		out.append(mesh)
+	return out
 
 
 ## Smooth vertex normals: each vertex averages the (area-weighted) normals
