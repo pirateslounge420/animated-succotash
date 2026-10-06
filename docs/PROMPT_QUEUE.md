@@ -70,7 +70,7 @@ Built so far: 01–36. Next up: 37–43 (§EH–§EN, the village economy, locke
 | 38 | §EL | The workshop: one hut, two benches, the hearth outside | built d4b159e |
 | 39 | §EI | What a camp needs, and the trades that follow | built defc49a |
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | built 2d4b6a2 |
-| 41 | §EJ | Food passed round, the night stories, the gift | todo |
+| 41 | §EJ | Food passed round, the night stories, the gift | built 6939b24 |
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | todo |
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | todo |
 
@@ -801,7 +801,7 @@ CHECK (tools/hunt_check.gd, headless): on seed 7731 over 14 game days at a stora
 
 ## 41 — Food passed round, the night stories, the gift — §EJ
 
-**Status:** todo
+**Status:** built 6939b24
 **Mike sees:** At dusk a folk takes a piece off the food store, carries it to the fire, and everyone seated gets a bowl; the store is visibly smaller. If you sit in the circle, you are handed a bowl too. At night one folk tells, hands moving, and the others look at the teller instead of the fire. After you have brought a camp a few armfuls, someone walks up and hands you a pot, once.
 
 ```text
