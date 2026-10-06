@@ -244,6 +244,8 @@ func _run() -> void:
 			kinds.append("workshop")
 		if only.has("pottery"):
 			kinds.append("pottery")
+		if only.has("hunt"):
+			kinds.append("hunt")
 		if only.has("harm"):
 			kinds.append("harm")
 		if only.has("road_grades"):
@@ -482,6 +484,15 @@ func _run() -> void:
 				var wrd := _down_the_road(camp_d, 28.0)
 				sites.append({"name": "workshop", "dir": wrd.dir, "look": camp_d, "workshop": true,
 					"note": "the opening camp's workshop from the road (harness: the camp set to the storage rung)"})
+			"hunt":
+				# A hunter coming home to a river camp with a deer on a pole
+				# (design 5 Oct §EK), from the road: a river camp at the
+				# storage rung built beside the road 120 m on, its hunt
+				# forced (a harness frame), the camera 35 m back down the road.
+				var r120: Vector3 = _down_the_road(camp_d, 120.0).dir
+				var cam: Vector3 = _down_the_road(camp_d, 85.0).dir
+				sites.append({"name": "hunt", "dir": cam, "look": CreatureSpawner._offset(r120, 1.2, 18.0), "hunt_at": CreatureSpawner._offset(r120, 1.2, 18.0),
+					"note": "a river camp's hunter dragging a deer home on a pole (harness: camp, rung and hunt set for the frame)"})
 			"pottery":
 				# A river camp at the specialist rung with pottery (design 5
 				# Oct §EI): the opening river camp set to the specialist rung
@@ -836,6 +847,59 @@ func _random_cell_of(key: String, rng: RandomNumberGenerator) -> Dictionary:
 
 ## A point `m` metres down the nearest road from `d` (the first road), or
 ## 1 km north with a note when no road lies within 3 km.
+## The hunt site's camp (§EK): a river camp at storage built at the site's
+## hunt_at, registered with Camps, its hunt a large animal coming from
+## behind the camera.
+func _hunt_camp(site: Dictionary) -> void:
+	var c: Vector3 = site.hunt_at
+	var key := "walk:hunt"
+	var cs: CampSim = main.camp_sim
+	var st := cs.ensure(key, c, "river", FireStore.biome_key(world, c), 9191, 8)
+	st.rung = maxi(int(st.rung), Workshop.rung_index())
+	cs._give_role(st, "headman", "m")
+	cs._give_role(st, "plantkeeper", "f")
+	st.state = "living"
+	Workshop.instant = true
+	var at: Vector3 = world.to_scene(c, PlanetConst.RADIUS_M + main.chunks.ground_height(c))
+	if main.camps._camps.has(key):
+		(main.camps._camps[key] as Node).queue_free()
+	main.camps._camps[key] = main.camps._build(at, "tribal", 9191, key)
+	# The hunt comes home from beyond the camera.
+	var best := 0.0
+	var best_d := INF
+	for k in 72:
+		var a := TAU * k / 72.0
+		var dd := CubeSphere.surface_distance_m(CreatureSpawner._offset(c, a, 35.0), site.dir)
+		if dd < best_d:
+			best_d = dd
+			best = a
+	var day := int(floor(world.days))
+	if Hunt.start(st, world.days, day, world.planet, c, "large_hoofed", best):
+		(st.hunt as Dictionary)["species"] = "Deer"
+		site["hunt_key"] = key
+	else:
+		site["note"] = str(site.get("note", "")) + " · no large game in reach: no hunt"
+
+
+## Time the forced hunt so the hunter is 22 m short of the back door now
+## (clear of the camp behind, from the road).
+func _hunt_retime(site: Dictionary) -> void:
+	var st: Dictionary = main.camp_sim.state_of(str(site.hunt_key))
+	var hs: Dictionary = st.get("hunt", {})
+	if hs.is_empty():
+		return
+	var leg := (float(hs.back_day) - float(hs.lift_day))
+	var f := clampf(1.0 - 22.0 / maxf(float(hs.dist), 23.0), 0.0, 1.0)
+	var now: float = world.days
+	hs.lift_day = now - f * leg
+	hs.back_day = hs.lift_day + leg
+	hs.turn_day = hs.lift_day - 0.3 / 24.0
+	hs.out_day = hs.turn_day - leg
+	hs.done_day = hs.back_day + float(Hunt.H.get("process_game_h", 6.0)) / 24.0
+	hs.state = "out"
+	main.camp_sim.states[str(site.hunt_key)].last_tick = now
+
+
 func _down_the_road(d: Vector3, m: float) -> Dictionary:
 	var roads: RoadNetwork = main.chunks.roads
 	var near: Array = roads.links_near(d, 3000.0, true)
@@ -975,6 +1039,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			main.camp.rebuild_workshop()
 		Workshop.instant = true
 		main.camp.ensure_workshop(true)
+	if site.has("hunt_at"):
+		_hunt_camp(site)
 	await _frames(20)
 	if site.has("delve_stand"):
 		await _into_delve(site)
@@ -1097,6 +1163,8 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			world.days = spawn_days
 		else:
 			world.days = Astro.days_at_solar_hour(base, hour, lon, lat)
+		if site.has("hunt_key"):
+			_hunt_retime(site)
 		# A site that looks up at something (a great range's summit) tips
 		# the first facing up to it.
 		var pitch0 := 0.0
@@ -1163,6 +1231,18 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 			if k == 0 and main.get("shafts") != null:
 				var sf: ShaftField = main.shafts
 				print("[shafts] %s %02dh: %d (%s, air %.2f)" % [site.name, int(hour), sf.shafts.size(), "on" if bool(sf.gate_state.get("ok", false)) else str(sf.gate_state.get("why", "")), float(sf.gate_state.get("air", 0.0))])
+			if k == 0 and site.has("hunt_key") and main.camps._camps.has(str(site.hunt_key)):
+				# Where the hunter is in the frame (§EK).
+				var hc: Node3D = (main.camps._camps[str(site.hunt_key)] as Node3D).get_node_or_null("HuntCarrier")
+				var cam3: Camera3D = player.camera()
+				if hc == null or not hc.visible:
+					print("[hunt] %s: no hunter in view (state %s)" % [site.name, str((main.camp_sim.state_of(str(site.hunt_key)).get("hunt", {}) as Dictionary).get("state", ""))])
+				elif cam3.is_position_behind(hc.global_position):
+					print("[hunt] %s: the hunter is behind the camera" % site.name)
+				else:
+					var sp := cam3.unproject_position(hc.global_position + hc.global_basis.y * 1.0)
+					var vs := get_root().get_visible_rect().size
+					print("[hunt] %s: the hunter at %.0f%% across, %.0f%% down the frame, %.0f m from the camera" % [site.name, 100.0 * sp.x / vs.x, 100.0 * sp.y / vs.y, cam3.global_position.distance_to(hc.global_position)])
 			if OS.get_environment("FACE_SUN") == "1" and k == 0 and main.get("flare") != null:
 				var fl := "%s %02dh: the flare at %.2f%s" % [site.name, int(hour), float(main.flare.alpha), (" (" + str(main.flare.why) + ")") if str(main.flare.why) != "" else ""]
 				print("[flare] " + fl)

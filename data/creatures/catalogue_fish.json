@@ -1,5 +1,5 @@
 {
- "notes": "Fish and sea creatures in the creatures.json schema plus D4 fields; spawn disabled until Phase 7. Each carries `needs.water_kind` (river/lake/sea), `salt`, `depth_m`, and a `habitat` label; species appear only in their water — river fish never in the sea, reef fish never in cold water — so every biome's water has its own fish. `school.size` > 1 means shoals rendered as one instanced body of many fish. `bait` lists what each takes, and the bait table says where each bait comes from: the fishing loop reads both, so worms catch trout and only a flying fish that landed in your boat at night catches a marlin. Sharks, orcas and the wels are apex_water and hunt the schools; `scent_drawn` species come to blood and carcasses in the water; `hazard` species can hurt a wading or swimming player; `landmark` creatures (whales, whale shark, manta, giant squid) are rare boat encounters the lore system may name; whales `migration` pole-to-tropic with the seasons, and the humpback's song is audible through a boat hull at night. Flying fish glide and land in boats. Salmon run upstream in autumn (reads flow_to) and leap the waterfalls.",
+ "notes": "size_class fish on every row (added by Claude Code with the §EK hunt, 5 Oct): what a camp brings back from a fishing trip. Fish and sea creatures in the creatures.json schema plus D4 fields; spawn disabled until Phase 7. Each carries `needs.water_kind` (river/lake/sea), `salt`, `depth_m`, and a `habitat` label; species appear only in their water — river fish never in the sea, reef fish never in cold water — so every biome's water has its own fish. `school.size` > 1 means shoals rendered as one instanced body of many fish. `bait` lists what each takes, and the bait table says where each bait comes from: the fishing loop reads both, so worms catch trout and only a flying fish that landed in your boat at night catches a marlin. Sharks, orcas and the wels are apex_water and hunt the schools; `scent_drawn` species come to blood and carcasses in the water; `hazard` species can hurt a wading or swimming player; `landmark` creatures (whales, whale shark, manta, giant squid) are rare boat encounters the lore system may name; whales `migration` pole-to-tropic with the seasons, and the humpback's song is audible through a boat hull at night. Flying fish glide and land in boats. Salmon run upstream in autumn (reads flow_to) and leap the waterfalls.",
  "bait": {
   "worm": "dug from soil with hands or shovel; universal freshwater bait",
   "insect": "caught from foliage or a snag; trout, grayling, tilapia",
@@ -21,6 +21,7 @@
  "creatures": [
   {
    "name": "Brown trout",
+   "size_class": "fish",
    "genus": "Salmo",
    "species": "trutta",
    "role": "water",
@@ -75,6 +76,7 @@
   },
   {
    "name": "Rainbow trout",
+   "size_class": "fish",
    "genus": "Oncorhynchus",
    "species": "mykiss",
    "role": "water",
@@ -129,6 +131,7 @@
   },
   {
    "name": "Atlantic salmon",
+   "size_class": "fish",
    "genus": "Salmo",
    "species": "salar",
    "role": "water",
@@ -183,6 +186,7 @@
   },
   {
    "name": "Grayling",
+   "size_class": "fish",
    "genus": "Thymallus",
    "species": "thymallus",
    "role": "water",
@@ -236,6 +240,7 @@
   },
   {
    "name": "Northern pike",
+   "size_class": "fish",
    "genus": "Esox",
    "species": "lucius",
    "role": "water",
@@ -289,6 +294,7 @@
   },
   {
    "name": "European perch",
+   "size_class": "fish",
    "genus": "Perca",
    "species": "fluviatilis",
    "role": "water",
@@ -342,6 +348,7 @@
   },
   {
    "name": "Common carp",
+   "size_class": "fish",
    "genus": "Cyprinus",
    "species": "carpio",
    "role": "water",
@@ -396,6 +403,7 @@
   },
   {
    "name": "Largemouth bass",
+   "size_class": "fish",
    "genus": "Micropterus",
    "species": "salmoides",
    "role": "water",
@@ -450,6 +458,7 @@
   },
   {
    "name": "Channel catfish",
+   "size_class": "fish",
    "genus": "Ictalurus",
    "species": "punctatus",
    "role": "water",
@@ -504,6 +513,7 @@
   },
   {
    "name": "Wels catfish",
+   "size_class": "fish",
    "genus": "Silurus",
    "species": "glanis",
    "role": "water",
@@ -557,6 +567,7 @@
   },
   {
    "name": "Nile tilapia",
+   "size_class": "fish",
    "genus": "Oreochromis",
    "species": "niloticus",
    "role": "water",
@@ -611,6 +622,7 @@
   },
   {
    "name": "Peacock bass",
+   "size_class": "fish",
    "genus": "Cichla",
    "species": "ocellaris",
    "role": "water",
@@ -664,6 +676,7 @@
   },
   {
    "name": "Red-bellied piranha",
+   "size_class": "fish",
    "genus": "Pygocentrus",
    "species": "nattereri",
    "role": "water",
@@ -718,6 +731,7 @@
   },
   {
    "name": "Arapaima",
+   "size_class": "fish",
    "genus": "Arapaima",
    "species": "gigas",
    "role": "water",
@@ -771,6 +785,7 @@
   },
   {
    "name": "Electric eel",
+   "size_class": "fish",
    "genus": "Electrophorus",
    "species": "electricus",
    "role": "water",
@@ -821,6 +836,7 @@
   },
   {
    "name": "Mekong giant catfish",
+   "size_class": "fish",
    "genus": "Pangasianodon",
    "species": "gigas",
    "role": "water",
@@ -874,6 +890,7 @@
   },
   {
    "name": "Snakehead",
+   "size_class": "fish",
    "genus": "Channa",
    "species": "striata",
    "role": "water",
@@ -929,6 +946,7 @@
   },
   {
    "name": "Alligator gar",
+   "size_class": "fish",
    "genus": "Atractosteus",
    "species": "spatula",
    "role": "water",
@@ -982,6 +1000,7 @@
   },
   {
    "name": "Golden mahseer",
+   "size_class": "fish",
    "genus": "Tor",
    "species": "putitora",
    "role": "water",
@@ -1035,6 +1054,7 @@
   },
   {
    "name": "Atlantic herring",
+   "size_class": "fish",
    "genus": "Clupea",
    "species": "harengus",
    "role": "water",
@@ -1088,6 +1108,7 @@
   },
   {
    "name": "Sardine",
+   "size_class": "fish",
    "genus": "Sardina",
    "species": "pilchardus",
    "role": "water",
@@ -1142,6 +1163,7 @@
   },
   {
    "name": "Atlantic cod",
+   "size_class": "fish",
    "genus": "Gadus",
    "species": "morhua",
    "role": "water",
@@ -1195,6 +1217,7 @@
   },
   {
    "name": "Atlantic mackerel",
+   "size_class": "fish",
    "genus": "Scomber",
    "species": "scombrus",
    "role": "water",
@@ -1249,6 +1272,7 @@
   },
   {
    "name": "European sea bass",
+   "size_class": "fish",
    "genus": "Dicentrarchus",
    "species": "labrax",
    "role": "water",
@@ -1303,6 +1327,7 @@
   },
   {
    "name": "Yellowfin tuna",
+   "size_class": "fish",
    "genus": "Thunnus",
    "species": "albacares",
    "role": "water",
@@ -1357,6 +1382,7 @@
   },
   {
    "name": "Blue marlin",
+   "size_class": "fish",
    "genus": "Makaira",
    "species": "nigricans",
    "role": "water",
@@ -1411,6 +1437,7 @@
   },
   {
    "name": "Sailfish",
+   "size_class": "fish",
    "genus": "Istiophorus",
    "species": "platypterus",
    "role": "water",
@@ -1463,6 +1490,7 @@
   },
   {
    "name": "Swordfish",
+   "size_class": "fish",
    "genus": "Xiphias",
    "species": "gladius",
    "role": "water",
@@ -1516,6 +1544,7 @@
   },
   {
    "name": "Flying fish",
+   "size_class": "fish",
    "genus": "Exocoetus",
    "species": "volitans",
    "role": "water",
@@ -1569,6 +1598,7 @@
   },
   {
    "name": "Mahi-mahi",
+   "size_class": "fish",
    "genus": "Coryphaena",
    "species": "hippurus",
    "role": "water",
@@ -1621,6 +1651,7 @@
   },
   {
    "name": "Great barracuda",
+   "size_class": "fish",
    "genus": "Sphyraena",
    "species": "barracuda",
    "role": "water",
@@ -1673,6 +1704,7 @@
   },
   {
    "name": "Parrotfish",
+   "size_class": "fish",
    "genus": "Scarus",
    "species": "coeruleus",
    "role": "water",
@@ -1722,6 +1754,7 @@
   },
   {
    "name": "Grouper",
+   "size_class": "fish",
    "genus": "Epinephelus",
    "species": "marginatus",
    "role": "water",
@@ -1775,6 +1808,7 @@
   },
   {
    "name": "Reef shark",
+   "size_class": "fish",
    "genus": "Carcharhinus",
    "species": "amblyrhynchos",
    "role": "water",
@@ -1828,6 +1862,7 @@
   },
   {
    "name": "Tiger shark",
+   "size_class": "fish",
    "genus": "Galeocerdo",
    "species": "cuvier",
    "role": "water",
@@ -1882,6 +1917,7 @@
   },
   {
    "name": "Great white shark",
+   "size_class": "fish",
    "genus": "Carcharodon",
    "species": "carcharias",
    "role": "water",
@@ -1937,6 +1973,7 @@
   },
   {
    "name": "Hammerhead",
+   "size_class": "fish",
    "genus": "Sphyrna",
    "species": "lewini",
    "role": "water",
@@ -1988,6 +2025,7 @@
   },
   {
    "name": "Whale shark",
+   "size_class": "fish",
    "genus": "Rhincodon",
    "species": "typus",
    "role": "water",
@@ -2038,6 +2076,7 @@
   },
   {
    "name": "Manta ray",
+   "size_class": "fish",
    "genus": "Mobula",
    "species": "birostris",
    "role": "water",
@@ -2088,6 +2127,7 @@
   },
   {
    "name": "Humpback whale",
+   "size_class": "fish",
    "genus": "Megaptera",
    "species": "novaeangliae",
    "role": "water",
@@ -2140,6 +2180,7 @@
   },
   {
    "name": "Sperm whale",
+   "size_class": "fish",
    "genus": "Physeter",
    "species": "macrocephalus",
    "role": "water",
@@ -2191,6 +2232,7 @@
   },
   {
    "name": "Orca",
+   "size_class": "fish",
    "genus": "Orcinus",
    "species": "orca",
    "role": "water",
@@ -2242,6 +2284,7 @@
   },
   {
    "name": "Beluga",
+   "size_class": "fish",
    "genus": "Delphinapterus",
    "species": "leucas",
    "role": "water",
@@ -2292,6 +2335,7 @@
   },
   {
    "name": "Bottlenose dolphin",
+   "size_class": "fish",
    "genus": "Tursiops",
    "species": "truncatus",
    "role": "water",
@@ -2343,6 +2387,7 @@
   },
   {
    "name": "Seal",
+   "size_class": "fish",
    "genus": "Phoca",
    "species": "vitulina",
    "role": "water",
@@ -2394,6 +2439,7 @@
   },
   {
    "name": "Sea turtle",
+   "size_class": "fish",
    "genus": "Chelonia",
    "species": "mydas",
    "role": "water",
@@ -2448,6 +2494,7 @@
   },
   {
    "name": "Atlantic salmon (sea)",
+   "size_class": "fish",
    "genus": "Salmo",
    "species": "salar",
    "role": "water",
@@ -2501,6 +2548,7 @@
   },
   {
    "name": "Moray eel",
+   "size_class": "fish",
    "genus": "Gymnothorax",
    "species": "javanicus",
    "role": "water",
@@ -2553,6 +2601,7 @@
   },
   {
    "name": "Giant squid",
+   "size_class": "fish",
    "genus": "Architeuthis",
    "species": "dux",
    "role": "water",

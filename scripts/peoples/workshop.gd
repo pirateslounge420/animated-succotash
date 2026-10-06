@@ -149,8 +149,13 @@ static func plan(st: Dictionary, h: float, day: int) -> Array:
 	out.fill("fire")
 	if not wanted(st):
 		return out
+	# The hunter is out on the hunt (§EK) until home.
+	var hs: Dictionary = st.get("hunt", {})
+	var hunter := int(hs.get("hunter", -1)) if str(hs.get("state", "")) == "out" else -1
 	var gh: Array = (CampSim.SIM.get("loop", {}) as Dictionary).get("gather_hours", [7, 17])
 	if h < float(gh[0]) or h >= float(gh[1]):
+		if hunter >= 0 and hunter < out.size():
+			out[hunter] = "out"
 		return out
 	var keeper := keeper_of(st)
 	var mb := maker_station(st)
@@ -165,6 +170,9 @@ static func plan(st: Dictionary, h: float, day: int) -> Array:
 			order.append(i)
 	for i in order:
 		var f: Dictionary = folk[i]
+		if i == hunter:
+			out[i] = "out"
+			continue
 		if CampSim.stage_of(f) == "child" or i == keeper:
 			continue
 		var want := want_of(st, i, h, day, mb)
@@ -475,11 +483,16 @@ static func build(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNum
 		for bx in sb.boxes:
 			PropCollision.box(scb, bx[0], bx[1])
 	sign.set_meta("tris", sb.tris())
-	# The door: where the carcass will go (§EK.1 step 2).
+	# The door: where the carcass will go (§EK.1 step 2); the carcass goes
+	# in at the back (BackDoor), out of the fire's sight.
 	var door := Node3D.new()
 	door.name = "Door"
 	ws.add_child(door)
 	door.position = lay.door
+	var back := Node3D.new()
+	back.name = "BackDoor"
+	ws.add_child(back)
+	back.position = Vector3(0, 0, -(lay.half as Vector2).y - 0.7)
 	var mi := b.node("Hut")
 	ws.add_child(mi)
 	var body := PropCollision.body(ws, "Body")
@@ -729,7 +742,7 @@ static func shape_of(phrase: String) -> String:
 	var s := phrase.to_lower()
 	var table := [
 		["pegged out on the ground", "pegged"], ["pegged out", "pegged"], ["laid out", "pegged"], ["stretched", "frame"], ["on a frame", "frame"], ["on its frame", "frame"], ["hide on frame", "frame"],
-		["spindle", "hank"], ["cloth", "pegged"],
+		["spindle", "hank"], ["cloth", "pegged"], ["pelt", "frame"], ["gut", "hank"], ["skin", "pegged"], ["tooth", "row"], ["feather", "bundle"],
 		["loom", "frame"], ["press", "frame"], ["net", "net"], ["drill", "drill"], ["knapping", "flakes"], ["flakes", "flakes"], ["chips", "flakes"], ["curls", "flakes"],
 		["trough", "trough"], ["soaking", "trough"], ["retting", "trough"], ["hank", "hank"], ["cord", "hank"], ["rope", "hank"], ["thread", "hank"], ["sinew", "hank"], ["fibre", "hank"],
 		["basket", "basket"], ["trap", "basket"], ["box", "basket"], ["boot", "basket"], ["kamik", "basket"], ["sandal", "basket"], ["bag", "basket"], ["parka", "pegged"], ["mat", "pegged"],
@@ -770,6 +783,7 @@ static func _pieces(bn: Node3D) -> void:
 		old.queue_free()
 	var all: Array = (bn.get_meta("props", []) as Array).duplicate()
 	all.append_array(bn.get_meta("trade", []))
+	all.append_array(bn.get_meta("hunt", []))
 	all.append_array(bn.get_meta("laid", []))
 	var pal: Array = bn.get_meta("pal", [])
 	var side := float(bn.get_meta("side", 1.0))
@@ -979,13 +993,13 @@ static func _flame(parent: Node3D, at: Vector3, always: bool) -> Node3D:
 ## the stew pot on its stones, the smoke rack, the rendering pot, the lamp
 ## (unlit by day). Under `parent` (the fire at the origin) at `r_m` from
 ## the fire, clear of `avoid`. Returns the node "HearthProps".
-static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, avoid: Array, r_m := 3.2, extra: Array = []) -> Node3D:
+static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, avoid: Array, r_m := 3.2, extra: Array = [], own := true, seat := true) -> Node3D:
 	var n := Node3D.new()
 	n.name = "HearthProps"
 	parent.add_child(n)
 	var b := Build.new()
 	# huts.hearth's own, then the lighting trade's (§EI.3).
-	var list: Array = (huts(people).get("hearth", []) as Array).slice(0, 4)
+	var list: Array = (huts(people).get("hearth", []) as Array).slice(0, 4) if own else []
 	list.append_array(extra)
 	var used: Array = avoid.duplicate()
 	var lamps: Array = []
@@ -1007,7 +1021,7 @@ static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: Ra
 		used.append([best, 1.3])
 		var yaw := atan2(best.x, best.z)
 		what.append(str(list[i]))
-		if i == 0:
+		if i == 0 and seat:
 			# The hearth worker's seat (§EI.3: the lighting maker's
 			# station), a step out from the first of them, facing it.
 			var out := Vector3(best.x, 0, best.z).normalized()
@@ -1030,6 +1044,15 @@ static func hearth_props(parent: Node3D, people: Dictionary, pal: Array, rng: Ra
 				var a := TAU * k / 3.0
 				b.ybox(best + Vector3(cos(a) * 0.26, 0.09, sin(a) * 0.26), Vector3(0.2, 0.18, 0.2), a, Color(0.42, 0.42, 0.43), STONE)
 			b.ybox(best + Vector3(0, 0.36, 0), Vector3(0.44, 0.36, 0.44), 0.4, Color(0.5, 0.33, 0.22) if not _has(ph, ["griddle"]) else Color(0.4, 0.4, 0.4), STONE, true)
+		elif _has(ph, ["spit"]):
+			# A small animal on a spit over its own coals.
+			for sx in [-0.45, 0.45]:
+				b.ybox(best + Vector3(cos(yaw) * sx, 0.35, -sin(yaw) * sx), Vector3(0.05, 0.7, 0.05), yaw, Color(0.4, 0.3, 0.2), WOOD)
+			b.ybox(best + Vector3(0, 0.66, 0), Vector3(1.0, 0.04, 0.04), yaw, Color(0.4, 0.3, 0.2), WOOD)
+			b.ybox(best + Vector3(0, 0.6, 0), Vector3(0.4, 0.14, 0.16), yaw, Color(0.45, 0.25, 0.15), HIDE)
+		elif _has(ph, ["bones"]):
+			for k in 5:
+				b.ybox(best + Vector3(-0.3 + k * 0.15, 0.04, rng.randf_range(-0.1, 0.1)), Vector3(0.05, 0.05, 0.35), rng.randf_range(-0.4, 0.4), Color(0.84, 0.8, 0.68), STONE)
 		elif _has(ph, ["stack", "peat", "dung", "chips", "cakes"]):
 			for k in 6:
 				b.ybox(best + Vector3(-0.3 + (k % 3) * 0.3, 0.12 + int(k / 3) * 0.22, 0), Vector3(0.28, 0.2, 0.36), yaw, Color(0.18, 0.14, 0.11) if ph.find("peat") >= 0 else Color(0.38, 0.32, 0.22), STONE, k < 3)
@@ -1496,6 +1519,15 @@ static func tick(ws: Node3D, hearth: Node3D, night: bool, potter_working: bool) 
 	kiln.set_meta("smoking", potter_working)
 	var up := kiln.global_basis.y.normalized()
 	Smoke.tick_flame(kiln, kiln.global_position + up * 1.0, up, 0.55, "low" if potter_working else "out")
+
+
+## A hearth props node's lamps lit or not (`lit`).
+static func lamps(hearth: Node3D, lit: bool) -> void:
+	if hearth == null or not is_instance_valid(hearth):
+		return
+	for f in hearth.get_meta("lamps", []):
+		if is_instance_valid(f) and not bool((f as Node3D).get_meta("always", false)):
+			(f as Node3D).visible = lit
 
 
 ## The triangles of a workshop with all its props (hut, benches' pieces,

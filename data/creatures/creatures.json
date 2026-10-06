@@ -1,5 +1,5 @@
 {
- "notes": "Creature species (DESIGN.md 'Creature Spawning'). PLACEHOLDER roster: plausible real animals plus the spec's mythical archetypes, to be replaced/extended. Fields are explained in data/creatures/README.md. Creatures check habitat directly (climate, trees, ground cover, water), not biome names.",
+ "notes": "size_class (added by Claude Code with the §EK hunt, 5 Oct): the animal_use.json class a camp's hunters bring this species back as (small_game, small_hoofed, large_hoofed, bird, fish, marine_mammal, reptile); a row without it is never hunted (the apex, the pack, the swarm, the mythic). Creature species (DESIGN.md 'Creature Spawning'). PLACEHOLDER roster: plausible real animals plus the spec's mythical archetypes, to be replaced/extended. Fields are explained in data/creatures/README.md. Creatures check habitat directly (climate, trees, ground cover, water), not biome names.",
  "hit_parts": {
   "body": 1.0,
   "head": 2.0,
@@ -12,6 +12,7 @@
  "creatures": [
   {
    "name": "Red squirrel",
+   "size_class": "small_game",
    "genus": "Sciurus",
    "species": "vulgaris",
    "role": "canopy",
@@ -35,6 +36,7 @@
   },
   {
    "name": "Possum",
+   "size_class": "small_game",
    "genus": "Trichosurus",
    "species": "vulpecula",
    "role": "canopy",
@@ -58,6 +60,7 @@
   },
   {
    "name": "Toucan",
+   "size_class": "bird",
    "genus": "Ramphastos",
    "species": "toco",
    "role": "canopy",
@@ -82,6 +85,7 @@
   },
   {
    "name": "Songbird",
+   "size_class": "bird",
    "genus": "Cyanistes",
    "species": "caeruleus",
    "role": "canopy",
@@ -128,6 +132,7 @@
   },
   {
    "name": "Raccoon",
+   "size_class": "small_game",
    "genus": "Procyon",
    "species": "lotor",
    "role": "ground",
@@ -155,6 +160,7 @@
   },
   {
    "name": "Hare",
+   "size_class": "small_game",
    "genus": "Lepus",
    "species": "europaeus",
    "role": "ground",
@@ -181,6 +187,7 @@
   },
   {
    "name": "Deer",
+   "size_class": "large_hoofed",
    "genus": "Cervus",
    "species": "elaphus",
    "role": "ground",
@@ -207,6 +214,7 @@
   },
   {
    "name": "Capybara",
+   "size_class": "small_hoofed",
    "genus": "Hydrochoerus",
    "species": "hydrochaeris",
    "role": "ground",
@@ -233,6 +241,7 @@
   },
   {
    "name": "Tortoise",
+   "size_class": "reptile",
    "genus": "Gopherus",
    "species": "agassizii",
    "role": "ground",
@@ -259,6 +268,7 @@
   },
   {
    "name": "Arctic fox",
+   "size_class": "small_game",
    "genus": "Vulpes",
    "species": "lagopus",
    "role": "ground",
@@ -282,6 +292,7 @@
   },
   {
    "name": "Heron",
+   "size_class": "bird",
    "genus": "Ardea",
    "species": "herodias",
    "role": "water_edge",
@@ -308,6 +319,7 @@
   },
   {
    "name": "Duck",
+   "size_class": "bird",
    "genus": "Anas",
    "species": "platyrhynchos",
    "role": "water_edge",
@@ -335,6 +347,7 @@
   },
   {
    "name": "Flamingo",
+   "size_class": "bird",
    "genus": "Phoenicopterus",
    "species": "roseus",
    "role": "water_edge",
@@ -702,6 +715,7 @@
   },
   {
    "name": "Cape buffalo",
+   "size_class": "large_hoofed",
    "genus": "Syncerus",
    "species": "caffer",
    "role": "ground",
@@ -745,6 +759,7 @@
   },
   {
    "name": "Wild water buffalo",
+   "size_class": "large_hoofed",
    "genus": "Bubalus",
    "species": "arnee",
    "role": "water_edge",

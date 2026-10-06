@@ -386,6 +386,8 @@ static func cliff_site(map: PlanetData, c: Vector3i) -> Dictionary:
 ## Per frame.
 func update_camps(delta: float) -> void:
 	_time += delta
+	if CampSim.instance != null:
+		CampSim.instance.player_dir = world.dir_of(player.global_position)
 	_timer -= delta
 	if _timer <= 0.0:
 		_timer = 0.5
@@ -709,6 +711,38 @@ func _build(at: Vector3, folk: String, seed_value: int, key := "") -> Node3D:
 	chatter.volume_db = -8.0
 	root.set_meta("chatter", chatter)
 	return root
+
+
+## The hunt's pieces at `camp` (§EK): on the soft and hard benches, and a
+## second ring of them by the hearth; rebuilt when they change.
+func _hunt_pieces(camp: Node3D, st: Dictionary) -> void:
+	var stamp := str(st.get("hunt_pieces", []).map(func(p): return str(p.piece)))
+	if str(camp.get_meta("hunt_stamp", "")) == stamp:
+		return
+	camp.set_meta("hunt_stamp", stamp)
+	var ws: Node3D = camp.get_meta("workshop")
+	var benches: Dictionary = ws.get_meta("benches", {})
+	for b in benches:
+		var bn: Node3D = benches[b]
+		bn.set_meta("hunt", Hunt.pieces_for(st, str(b)))
+		Workshop._pieces(bn)
+	var old := camp.get_node_or_null("HuntHearth")
+	if old != null:
+		camp.remove_child(old)
+		old.queue_free()
+	var hearth := Hunt.pieces_for(st, "hearth")
+	if hearth.is_empty():
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([str(st.key), "hunt_hearth"])
+	var avoid: Array = [[Vector3.ZERO, 2.6]]
+	for c in camp.get_children():
+		if c is Node3D:
+			var p: Vector3 = (c as Node3D).position
+			if Vector2(p.x, p.z).length() > 2.6 and Vector2(p.x, p.z).length() < 12.0:
+				avoid.append([Vector3(p.x, 0, p.z), 1.3])
+	var hp := Workshop.hearth_props(camp, Peoples.get_people(str(st.people)), camp.get_meta("pal", []), rng, avoid, 3.9, hearth, false, false)
+	hp.name = "HuntHearth"
 
 
 ## The Needs context for `camp` (§EI.1).
@@ -1063,7 +1097,10 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		Workshop.drive(cloaked, ws, plan, delta, _time, pp, near > float((CampSim.SIM.get("jobs", {}) as Dictionary).get("near_player_m", 120.0)) or camp.has_meta("canopy"))
 		cloaked = Workshop.fire_sitters(cloaked)
 		var ph_name := _circle_phase(camp)
-		Workshop.tick(ws, camp.get_meta("hearth_props") if camp.has_meta("hearth_props") else null, ph_name == "dusk" or ph_name == "night", Workshop.potter_working(st, plan))
+		# The lamp burns only when there is fat or oil for it (§EK.1 step 3).
+		var lit := (ph_name == "dusk" or ph_name == "night") and Hunt.lamp_fed(st, world.days)
+		Workshop.tick(ws, camp.get_meta("hearth_props") if camp.has_meta("hearth_props") else null, lit, Workshop.potter_working(st, plan))
+		Workshop.lamps(camp.get_node_or_null("HuntHearth"), lit)
 	if not cloaked.is_empty():
 		FireCircle.animate(cloaked, camp.get_meta("fire"), _time, delta, pp, _circle_phase(camp), _circle_ctx(camp))
 	for i in sitters.size():
@@ -1179,8 +1216,15 @@ func _live(camp: Node3D, delta: float, pp: Vector3) -> void:
 		# and the pot by the hearth, the shelter's mends.
 		if not camp.has_meta("canopy"):
 			CampNeeds.live(camp, st, _needs_ctx(camp, pp))
+		# What the hunts left (§EK.1 step 3): pieces on the benches and by
+		# the hearth.
+		if camp.has_meta("workshop"):
+			_hunt_pieces(camp, st)
 	if not camp.has_meta("canopy"):
 		CampNeeds.tick(camp, delta, camp.get_node_or_null("Shelter"), _ground_fn(camp), _shelter_material(camp), camp.get_meta("pal", []))
+	# The hunter out and home (§EK), seen.
+	if camp.has_meta("workshop"):
+		Hunt.show(camp, st.get("hunt", {}), world.days, camp.get_meta("workshop"), world, chunks, _ground_fn(camp), camp.get_meta("pal", []))
 	camp.set_meta("store_t", t)
 	# The loop's walker.
 	# (get_meta with a null default still errors when the key is missing.)

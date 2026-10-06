@@ -3,6 +3,34 @@
 Claude Code prepends 3–6 lines every session. The designer signs off phases here.
 
 ---
+## 2026-10-06 — §EK the whole animal: the hunt, the hut, the six things (queue 40)
+- **What changes on screen:**
+  - **The hunt:** a camp with a workshop (storage rung and up; the opening camp has none) hunts one to three times a game week, in the gather hours. An adult takes the spear: never the keeper, never a teen or a child. They walk out 400–800 m, past where the gatherers go, to where game is, and stand out there a while. The kill is never shown.
+  - **Coming home:** they walk back carrying it by its size: a hare or fox over the shoulders, a bird in hand, fish on a line, a deer or buffalo on two poles dragged behind, the hunter leaning into it.
+  - **The hut:** the carcass goes in at the workshop's back door, which is out of sight from every place round the fire, and you never see it again. No blood, no cutting.
+  - **The pieces:** six game hours later the animal comes out as pieces. Up to its `things_shown` land on their benches and by the hearth, hide and meat first: a hide on its frame, sinew, bone tools in a row, meat strips on the rack, the rendering pot, a horn cup. The food store gains the class's `food_units`.
+  - **The lamp:** fat, oil or blubber keeps the hearth lamp lit for three nights, from the hearth's fire (fire carried, never made).
+  - **Decay:** the soft and food pieces are used up quietly after a game week. Bone tools, horn, antler and teeth stay.
+  - **The log:** once per species, if you are within 120 m when the hunter comes home: "The hunters brought back a deer. By evening it was a stew, a hide on the frame, and a lamp."
+- **Game counts (Mike: "it just basically respawns if they get too low"):** no ecology. New `GameCounts` keeps a count per area (a planet cell) for each huntable class: small game, bird, fish, small and large hoofed, marine mammal, reptile. Each hunt takes one. A class at its floor (2) is never hunted, and one that falls to it is back at capacity 4 game days later. The tunables are in the new `camps.json → sim.hunt.game` block.
+- **Which game lives where:** the creature catalogue's rows had no size class, so I added a `size_class` field to 15 rows of `data/creatures/creatures.json` and all 49 rows of `catalogue_fish.json`. A class is present in an area when a catalogue species of that class fits its temperature and moisture (water birds and fish need water near).
+- **What the code does:** new `scripts/peoples/hunt.gd` (Hunt: the schedule, the trip, the pieces, the lamp, the figure) and `scripts/creatures/game_counts.gd` (GameCounts). CampSim ticks the hunt. Camps draws the hunter (`HuntCarrier`) and the pieces. The workshop gets the back door. `data/animal_use.json` is read through `Tuning`, and its `_help` and the hunt clause of `camps.json _help.village_economy` are no longer `[NOT WIRED YET]`.
+- **Check:** `STAMP=1 SEED=7731 … --script tools/hunt_check.gd` gives 0 fails:
+  - 6 hunts in 14 game days at a storage camp (2–6 wanted);
+  - every hunter an adult who is not the keeper;
+  - after each hunt the pieces rise by `things_shown` and the store by `food_units`;
+  - the lamp unfed before the first hunt and fed after;
+  - one log line per species (6 lines, 6 species);
+  - no hunt when every class in reach (97 areas) is at its floor, and hunting again once they respawn;
+  - marine mammals only at tundra and coast camps (3 of 714 hunts);
+  - the back door out of sight from all 12 places round the fire, at every people's workshop (physics rays).
+  `workshop_check`, `trades_check` and `no_metal_check` still give 0 fails.
+- **Walkabout:** `SEED=7731 QUICK=1 SITES=hunt HOURS=15` wrote `tools/reference/walkabout/7731/hunt_15h_f0.png`. It is a river camp at the storage rung built 120 m down the road from the opening camp (a harness frame: the camp, its rung and the hunt are set for it), seen from the road 35 m back at 15 h. The hunter is in the middle of the frame, 22 m from the camera, walking away toward the camp with the deer on its two poles dragging behind. At that distance it reads as a small brown figure with a brown load, clear against the grass and in front of the camp's huts and smoke. (The first render drew the poles in front of the hunter; fixed, `Hunt._figure`.)
+- **Flags for Mike:**
+  1. **There are no seals or walrus in the creature catalogue.** A cold coast (under 14 °C) counts as having marine mammals, and the hunter brings back a "Seal" as a class, with no creature behind it. Add a seal row to the catalogue and it will be used.
+  2. **Only camps with a workshop hunt** (storage rung and up). The prompt said "a storage-rung camp", and the hut is where the animal goes. Below storage, camps forage only.
+  3. **Leather and the lighting trade now follow the hunt:** after its first hunt a camp has a hunt for `hunt_or_herd` and fat for `fat_or_oil_or_resin`, so those trades can appear at camps where the land alone gave them nothing.
+
 ## 2026-10-05 — Mike's calls on the village economy flags
 - **Villages:** a relit village hearth now stays lit. The villagers it draws back tend it, so it no longer burns down (`FireStore.burn`: a village hearth's store is `kept` once lit). `tools/village_check.gd` checks it: a relit village hearth is still burning after 100,000 minutes, while an ordinary old hearth burns out.
 - **The opening camp has no workshop in play.** Only the walkabout's harness frames build one there.

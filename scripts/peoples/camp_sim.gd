@@ -36,6 +36,9 @@ var world: Node
 var chunks: ChunkManager
 var states := {}
 var _time_acc := 0.0
+## The player's direction (Camps sets it each frame): the hunt's log line
+## is written only when the player is near (§EK.1 step 4).
+var player_dir := Vector3.ZERO
 
 
 func setup(p_world: Node, p_chunks: ChunkManager) -> void:
@@ -397,6 +400,8 @@ func _tick(st: Dictionary, days: float) -> void:
 	_ladder(st, days)
 	_needs(st, days, h, th)
 	if world != null:
+		# The hunt (design 5 Oct §EK, Hunt): out, home, the hut, the pieces.
+		Hunt.tick(self, st, days, h, th, world.get("planet"), player_dir)
 		Trades.update(st, world.get("planet"), chunks.rivers if chunks != null else null)
 
 
