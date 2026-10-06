@@ -4,6 +4,50 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 — §EU fitted-stone walls and 480 lines, §EV a vent for every built-in fire (Torchfire 1)
+- **480 lines (§EU.1).** `look.json → render.preset` is `default` (854×480) again. Every preset stays in Settings. `auto` now prefers 480, then 540, 360, 270, 720, so a 1440p window gets 480 ×3 and a 1080p or 4K window gets 540.
+  - **Texel density at 480 (the open number in §EU.1):** at 78° a pixel spans 3.4 mm per metre of distance.
+  - The tiles stay at 16 texels a metre, so one texel is one pixel at ~18 m and ~3.7 pixels at 5 m.
+  - On the fitted walls the joints are geometry now, so the stone tile only adds a faint grain: 7 texels a metre at 30% strength, plus a fleck on the 16-a-metre grid.
+- **Fitted stone (§EU.2–3; `scripts/crawler/fitted_stone.gd`, `data/dungeon/masonry.json`).** Every wall face you can see is cut into its own Voronoi cells, each with its own seed, and each cell is built as one stone in real geometry:
+  - a dark joint backing;
+  - a bevel running down into the joint;
+  - a face standing proud, with a pillowed middle.
+  - A minority of stones have settled: out or in, turned, or sunk.
+  - The ruin shader has a new kind (6) for this stone: grain without the tile's painted cracks.
+  - Two presets:
+
+    | Preset (seed 7) | Stones | Wall faces | Triangles |
+    |---|---|---|---|
+    | `megalithic` (the default) | 1,282 | 84 | 101,166 |
+    | `fitted_small` | 6,796 | 84 | ~259,000 |
+
+  - The tomb mesh is split into 10 m chunks so the GPU can cull it.
+- **Overgrowth by damp (§EU.4).** `masonry.json → humidity` sets how damp each place is: a base by theme, noise across the tomb, and wetter with each flight down.
+  - Damp walls: moss in the joints and on the lower stones, and thin vines from cracks and wall tops.
+  - Dry walls: bare stone, with sand and dust drifted at the wall's foot and into the corners.
+- **Vents (§EV; `TombKit._place_vents`, `TombBuild._flue`, `scripts/crawler/vents.gd`, `data/dungeon/vents.json`).** Every built-in fire gets its own vent, carved up to `surface_y_m`: straight up, or kinked round a piece of the tomb above it. The ceiling slabs are cut round each mouth.
+  - **Shafts:** a hearth, hearth ring or altar gets a 0.6–1.2 m shaft, narrower the deeper it is. Daylight comes down it beside the fire: a spot light, a seen beam and the sky's disc at the top. It is cool blue at noon and a faint moonlit blue at midnight on the world's clock, and fades with depth along `light.attenuation` (none past 16 m).
+  - **Flues:** a sconce or brazier gets a 0.15–0.3 m flue. It lets in no light (§EV.2), so the corridors are full dark by day as well.
+  - **Soot:** navy-black (`smoke.json → outlets.soot`, §CV.3), painted into the vertex colours round every vent's mouth and up a sconce's wall.
+  - **Draft:** each vented flame leans toward its vent and flickers a little more.
+- **Checks.** `crawler_check` gains the masonry and vent checks; 0 fails on seeds 7, 1 and 42 (seed 7: 20 vents, 11 with daylight).
+  - `crawler_frames` adds four frames: waking at noon, waking at midnight, looking up the hearth's shaft, and a fitted wall close by torchlight. The full-dark corridor test now runs at midday: mean 0.056 dark, 0.282 with the sconce relit. 0 fails.
+- **Flags for Mike:**
+  - **Two data files for each system.** Chat logged §EU and §EV first, with not-wired `data/masonry.json` and `smoke.json → vents`. The built game reads `data/dungeon/masonry.json` and `data/dungeon/vents.json`, as your message asked. Each of chat's blocks now has a `built_as` help line pointing to the wired file. Which pair stays is your call.
+  - **I followed §EV, where it is more specific than your message,** on three points:
+    - only shafts let daylight down;
+    - flues are 0.15–0.3 m;
+    - soot is navy-black.
+  - **Spelling:** the preset is spelled `fitted_small`, as in §EU.5, and "fitted-small" is read as the same.
+  - **Damp:** §EU.4 drives overgrowth from `vines.json → climate`. The tomb has no climate yet (no planet), so a humidity value in masonry.json stands in until §EW gives each world its own.
+  - **Not built:**
+    - which preset each place gets (chat's `by_theme` guess);
+    - §EV.4's stacks on the surface (they need §EW);
+    - the RECONCILIATION section, which chat already wrote as §EU and §EV, so I did not add a second one.
+
+---
+
 ## 2026-10-06 — §ET.11 first slice: Torchfire 1, the dungeon crawler (switch, hearth room, tomb kit, relighting, snuff rules, baked rescuer sprite)
 - **1. The switch (§ET.2).** `data/game.json` → `game`: `torchfire1` (the default) or `torchfire2`. `GAME=` in the environment overrides it for one run.
   - The project now boots `scenes/boot.tscn` (`GameMode`), which opens `scenes/crawler.tscn` for Torchfire 1 or `scenes/main.tscn` for the open world.

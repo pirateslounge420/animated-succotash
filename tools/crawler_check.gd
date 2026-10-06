@@ -56,6 +56,8 @@ func _run() -> void:
 	while not main.baked:
 		await process_frame
 	await _scene(main)
+	_masonry(main)
+	await _vents(main)
 	await _relight(main)
 	await _snuff(main)
 	_sprite(main)
@@ -177,8 +179,14 @@ func _scene(main: CrawlerMain) -> void:
 		if found < 2:
 			floors = false
 			print("  piece %d (%s): the floor found at %d of 4 spots" % [pc.id, pc.kind, found])
-		var up := _ray(Vector3(c2.x, fy + 1.2, c2.y), Vector3(c2.x, fy + float(pc.h) + 3.0, c2.y), [main.player.get_rid()])
-		if up.is_empty() and str(pc.get("room_kind", "")) != "hearth":
+		# A ceiling over it (any of the spots: one may sit under a flue).
+		var roofed := false
+		for spot2 in [[0.5, 0.3], [0.2, 0.0], [0.8, 0.0], [0.35, -0.5]]:
+			var q2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * float(spot2[0]) + Delves.perp(pc.dir) * float(spot2[1])
+			var y2 := Delves.floor_of(pc, float(pc.len) * float(spot2[0]))
+			if not _ray(Vector3(q2.x, y2 + 1.2, q2.y), Vector3(q2.x, y2 + float(pc.h) + 3.0, q2.y), [main.player.get_rid()]).is_empty():
+				roofed = true
+		if not roofed:
 			ceilings = false
 			print("  piece %d (%s): no ceiling" % [pc.id, pc.kind])
 	ok(floors, "a floor under every piece, at its height")
@@ -243,6 +251,150 @@ func _relight(main: CrawlerMain) -> void:
 	var st0 := _stand_by(main, h0)
 	_place_facing(p, st0, h0.global_position)
 	ok(not t.lit() and t.pass_flame() == "torch" and t.lit(), "a dead torch relights at a relit holder")
+
+
+## The fitted-stone walls (Mike, 6 Oct; FittedStone, masonry.json).
+func _masonry(main: CrawlerMain) -> void:
+	var stones := int(main.tomb.get_meta("stones", 0))
+	var faces := int(main.tomb.get_meta("faces", 0))
+	ok(stones > 200 and faces > 20, "fitted stones on every seen wall face (%d stones on %d faces, %s)" % [stones, faces, str(FittedStone.M.get("preset", ""))])
+	# The partition is tight: the cells fill the wall, no gaps, no overlaps.
+	var rng := RandomNumberGenerator.new()
+	var worst := 0.0
+	for preset in ["megalithic", "fitted_small"]:
+		var keep := str(FittedStone.M.get("preset", ""))
+		FittedStone.M["preset"] = preset
+		for k in 6:
+			rng.seed = 900 + k
+			var l := rng.randf_range(2.0, 11.0)
+			var h := rng.randf_range(2.5, 3.8)
+			var area := 0.0
+			for c in FittedStone.cells(l, h, rng):
+				area += FittedStone._area(c[1])
+			worst = maxf(worst, absf(area - l * h) / (l * h))
+		FittedStone.M["preset"] = keep
+	ok(worst < 0.002, "the stones' cells fill each wall exactly: shared edges, no gaps (worst %.4f of the wall)" % worst)
+	# The damp differs from place to place, and the overgrowth with it.
+	var lo := 1.0
+	var hi := 0.0
+	for pc in main.lay.pieces:
+		var c: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * 0.5
+		var hm := FittedStone.humidity(str(main.lay.theme), int(main.lay.seed), Vector3(c.x, float(pc.y0), c.y))
+		lo = minf(lo, hm)
+		hi = maxf(hi, hm)
+	print("  the tomb's damp runs %.2f to %.2f" % [lo, hi])
+	ok(hi - lo > 0.2, "the damp differs from place to place (%.2f to %.2f)" % [lo, hi])
+	ok(FittedStone.moss_of(0.2) == 0.0 and FittedStone.moss_of(0.95) > 0.9, "no moss where it's dry, full moss where it's wet")
+	# One wall dressed dry and once wet: dust and bare stone, then vines.
+	var out := {}
+	for hum in [0.1, 0.95]:
+		var tb := TombBuild.new()
+		var r2 := RandomNumberGenerator.new()
+		r2.seed = 77
+		FittedStone.face(tb, Vector3.ZERO, Vector3.RIGHT, Vector3.BACK, 8.0, -0.1, 3.0, 0.0, hum, r2)
+		var leaf := 0
+		for m in tb._m:
+			if int(round(m.x)) == RuinBuilder.LEAF_M:
+				leaf += 1
+		out[hum] = [tb._boulder_anchors.size(), leaf / 3]
+	ok(int(out[0.1][0]) > 0 and int(out[0.1][1]) == 0, "a dry wall: drifted dust at its foot and corners, no vines (%d drifts)" % out[0.1][0])
+	ok(int(out[0.95][0]) == 0 and int(out[0.95][1]) > 0, "a wet wall: vines from its top and cracks, no dust (%d leaf triangles)" % out[0.95][1])
+
+
+## The ventilation rule (Mike, 6 Oct; TombKit vents, Vents, vents.json).
+func _vents(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var vents: Array = lay.vents
+	var V: Dictionary = Tuning.table("vents")
+	var surface := float(V.get("surface_y_m", 9.0))
+	ok(vents.size() == (lay.holders as Array).size() + 1, "every permanent fire has a vent: the hearth and %d holders (%d vents)" % [(lay.holders as Array).size(), vents.size()])
+	var reach := true
+	var open := true
+	var drafts := true
+	for v in vents:
+		var legs: Array = v.legs
+		if absf(((legs[-1] as Array)[1] as Vector3).y - surface) > 0.01:
+			reach = false
+		# The way up the flue is open (straight flues: a ray up the middle).
+		if legs.size() == 1:
+			var m: Vector3 = v.mouth
+			var hit := _ray(m - Vector3(0.0, 0.3, 0.0), Vector3(m.x, surface - 0.1, m.z), [main.player.get_rid()])
+			if not hit.is_empty():
+				open = false
+				print("  vent over %s at %s: blocked at %s" % [v.kind, str(m), str(hit.position)])
+		var fire: Node3D = main.fires.hearth if int(v.fire_index) < 0 else main.fires.holders[int(v.fire_index)]
+		if not fire.has_meta("draft"):
+			drafts = false
+	ok(reach, "every flue reaches the surface (%.1f m)" % surface)
+	ok(open, "every straight flue is open from its mouth to the sky")
+	ok(drafts, "every vented fire feels the draft")
+	# Deeper: narrower and fainter.
+	var shallow: Dictionary = {}
+	var deep: Dictionary = {}
+	for v in vents:
+		if str(v.kind) != "hearth_ring":
+			continue
+		if shallow.is_empty() or float(v.depth) < float(shallow.depth):
+			shallow = v
+		if deep.is_empty() or float(v.depth) > float(deep.depth):
+			deep = v
+	if not deep.is_empty() and float(deep.depth) > float(shallow.depth) + 0.5:
+		ok(float(deep.d) < float(shallow.d) and float(deep.share) < float(shallow.share), "a deeper fire's flue is narrower and its daylight fainter (%.1f m: %.2f m wide, %.2f; %.1f m: %.2f m, %.2f)" % [shallow.depth, shallow.d, shallow.share, deep.depth, deep.d, deep.share])
+	# A shaft for a big fire, a narrow flue for a small one; only shafts
+	# let daylight down (design §EV.1-2).
+	var sized := true
+	var n_shaft := 0
+	for v in vents:
+		var wr: Array = (V.get(str(v.type), {}) as Dictionary).get("width_m", [0.0, 9.0])
+		if str(v.type) != TombKit.vent_type(str(v.kind)) or float(v.d) < float(wr[0]) - 0.001 or float(v.d) > float(wr[1]) + 0.001:
+			sized = false
+			print("  vent over %s: %s %.2f m wide" % [v.kind, v.type, v.d])
+		if str(v.type) == "shaft" and bool(v.sky):
+			n_shaft += 1
+		if str(v.type) == "flue" and bool(v.sky):
+			sized = false
+	ok(sized, "every vent is sized by its fire: shafts %s m, flues %s m" % [str((V.get("shaft", {}) as Dictionary).get("width_m")), str((V.get("flue", {}) as Dictionary).get("width_m"))])
+	ok(main.vents.shafts.size() == n_shaft and n_shaft >= 1, "daylight comes down the shafts only (%d of %d vents), never a flue" % [n_shaft, vents.size()])
+	ok(TombKit.daylight_share(float(V.get("max_carve_m", 16.0)) + 1.0) == 0.0, "past the deepest point on the curve no daylight comes down")
+	# Day and night on the world's clock.
+	ok(Vents.daylight_at(13.5) > 0.99 and Vents.daylight_at(13.0) < 0.01, "the shafts follow the clock: full day at noon, night at midnight")
+	var w := main.world
+	var keep_days: float = w.days
+	w.days = 13.5
+	await process_frame
+	var e_day := 0.0
+	for sh in main.vents.shafts:
+		e_day += (sh.light as SpotLight3D).light_energy
+	var col_day: Color = (main.vents.shafts[0].light as SpotLight3D).light_color
+	w.days = 13.0
+	await process_frame
+	var e_night := 0.0
+	for sh in main.vents.shafts:
+		e_night += (sh.light as SpotLight3D).light_energy
+	var col_night: Color = (main.vents.shafts[0].light as SpotLight3D).light_color
+	w.days = keep_days
+	ok(e_day > e_night * 3.0 and col_day.b > col_day.r and col_night.b > col_night.r, "the shafts: cool blue and strong by day (%.1f), dim moonlit blue at night (%.1f)" % [e_day, e_night])
+	# Soot: the stone round every flue's mouth darkened (TombBuild._soot).
+	var stained := 0
+	var tb_arrays: Array = []
+	for mi in main.tomb.get_children():
+		if mi is MeshInstance3D:
+			tb_arrays.append((mi as MeshInstance3D).mesh.surface_get_arrays(0))
+	for v in vents:
+		var m: Vector3 = v.mouth
+		var darkest := 1.0
+		for arr in tb_arrays:
+			var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var cc: PackedColorArray = arr[Mesh.ARRAY_COLOR]
+			for i in range(0, vv.size(), 1):
+				var p: Vector3 = vv[i]
+				if absf(p.y - m.y) < 0.7 and Vector2(p.x - m.x, p.z - m.z).length() < float(v.d) * 0.5 + 0.6:
+					darkest = minf(darkest, cc[i].get_luminance())
+		if darkest < 0.15:
+			stained += 1
+		else:
+			print("  vent %s d %.2f at %s: darkest %.3f" % [v.kind, float(v.d), str(m), darkest])
+	ok(stained == vents.size(), "soot round every flue's mouth (%d of %d)" % [stained, vents.size()])
 
 
 ## Where to stand to swing at holder `h`: a step out from a sconce's

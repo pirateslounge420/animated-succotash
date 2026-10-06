@@ -204,5 +204,24 @@ func _process(delta: float) -> void:
 			var l := n.get_node_or_null("Light") as OmniLight3D
 			if l:
 				l.light_energy *= float(n.get_meta("energy_k", 1.0))
+			if n.has_meta("draft"):
+				_draft(n, l)
 				# A cold holder's light is off, not just at nothing (§ER.1).
 				l.visible = float(n.get_meta("burn", 1.0)) > 0.0
+
+
+## A vented fire's draft (the vents rule, Vents): the flue draws the air,
+## so the flame leans toward it, breathing, and its light flickers harder.
+func _draft(n: Node3D, l: OmniLight3D) -> void:
+	var lean: Vector3 = n.get_meta("draft")
+	var hz := float(n.get_meta("draft_hz", 0.6))
+	var sd := float(n.get_meta("flick_seed", 0.0))
+	var breath := 0.55 + 0.45 * sin(_t * TAU * hz + sd) * sin(_t * TAU * hz * 0.37 + sd * 1.7)
+	var flames := n.get_node_or_null("Flames") as Node3D
+	if flames:
+		# Tilt about the horizontal axis across the lean (local to the fire).
+		var local := n.global_basis.inverse() * lean
+		var axis := Vector3.UP.cross(local.normalized()) if local.length() > 1e-4 else Vector3.RIGHT
+		flames.basis = Basis(axis.normalized(), local.length() * breath).scaled(flames.scale) if axis.length() > 0.5 else flames.basis
+	if l:
+		l.light_energy *= 1.0 + float(n.get_meta("draft_flicker", 0.2)) * (sin(_t * 11.3 + sd) * sin(_t * 4.1 + sd * 2.0))

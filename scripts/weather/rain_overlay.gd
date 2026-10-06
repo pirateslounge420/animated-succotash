@@ -35,8 +35,8 @@ func update_rain(weather: Dictionary, sheltered: bool, cam_right: Vector3) -> vo
 	var m := _rect.material as ShaderMaterial
 	m.set_shader_parameter("lean", lean)
 	m.set_shader_parameter("sheltered", 1.0 if sheltered else 0.0)
-	# The frame's own lines (the pixel-size preset, Display; 270 by
-	# default since design §ES), so a streak is one pixel wide at any.
+	# The frame's own lines (the pixel-size preset, Display; 480 by
+	# default), so a streak is one pixel wide at any.
 	m.set_shader_parameter("lines", float(Display.lines()))
 
 

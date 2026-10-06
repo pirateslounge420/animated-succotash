@@ -84,6 +84,7 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	_mark_heart(lay)
 	_wake_and_bundle(lay, rng, hearth_room)
 	_place_holders(lay, rng)
+	_place_vents(lay)
 	_place_airways(lay, rng)
 	return lay
 
@@ -305,6 +306,121 @@ static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 					(lay.holders as Array).append({"kind": "sconce", "pos": Vector3(wall.x, Delves.floor_of(pc, a) + float(HOLD.get("sconce_h_m", 1.7)), wall.y), "normal": nrm, "piece": int(pc.id)})
 					sd = -sd
 					a += every
+
+
+## The vents (Mike, 6 Oct, LOCKED: the underground fire ventilation rule;
+## data/dungeon/vents.json): every permanent fire the generator built (the
+## hearth, each hearth ring and sconce; carried torches are exempt) gets a
+## flue from its piece's ceiling straight up to the surface, kinked where
+## another piece of the tomb stands over it. Each is {"kind", "fire" (the
+## fire's place), "fire_index" (-1 the hearth, else its holder's index),
+## "piece", "mouth" (the flue's mouth in the ceiling's underside), "d"
+## (its width, narrowing with depth), "depth" (the fire under the
+## surface), "sky" (shallow enough for daylight), "share" (the daylight
+## left at that depth), "legs" ([[from, to]...], the flue's runs, up and
+## any sideways step), "top" (its opening at the surface)}.
+static func _place_vents(lay: Dictionary) -> void:
+	var V: Dictionary = Tuning.table("vents")
+	var fires: Array = [{"kind": "hearth", "pos": lay.hearth, "normal": Vector3.UP, "piece": 0, "index": -1}]
+	for i in (lay.holders as Array).size():
+		var h: Dictionary = lay.holders[i]
+		fires.append({"kind": h.kind, "pos": h.pos, "normal": h.normal, "piece": h.piece, "index": i})
+	var surface := float(V.get("surface_y_m", 9.0))
+	var max_carve := maxf(float(V.get("max_carve_m", 16.0)), 0.1)
+	var vents: Array = []
+	for f in fires:
+		var pc: Dictionary = lay.pieces[int(f.piece)]
+		var fp: Vector3 = f.pos
+		var depth := surface - fp.y
+		var k := clampf(depth / max_carve, 0.0, 1.0)
+		# A shaft for a big fire, a narrow flue for a small one (§EV.1).
+		var vtype := vent_type(str(f.kind))
+		var wr: Array = (V.get(vtype, {}) as Dictionary).get("width_m", [0.6, 1.2] if vtype == "shaft" else [0.15, 0.3])
+		var d := maxf(lerpf(float(wr[1]), float(wr[0]), k), 0.08)
+		# The mouth: beside a fire on the floor for a shaft, straight over it
+		# for a flue; over a sconce, just off its wall. Kept inside the
+		# piece's ceiling.
+		var m := Vector2(fp.x, fp.z)
+		if str(f.kind) == "sconce":
+			var nv: Vector3 = f.normal
+			m += Vector2(nv.x, nv.z) * (d * 0.5 + 0.08)
+		elif vtype == "shaft":
+			# A floor fire's flue to one side, so its daylight lands beside
+			# the fire, not in it.
+			var off: Array = V.get("mouth_offset_m", [0.7, 1.1])
+			var orng := RandomNumberGenerator.new()
+			orng.seed = hash([int(lay.seed), fp, "vent"])
+			m += Vector2.RIGHT.rotated(orng.randf() * TAU) * orng.randf_range(float(off[0]), float(off[1]))
+		var aa := Delves.along_across(pc, m)
+		aa.x = clampf(aa.x, d * 0.5 + 0.05, float(pc.len) - d * 0.5 - 0.05)
+		aa.y = clampf(aa.y, -float(pc.half) + d * 0.5 + 0.05, float(pc.half) - d * 0.5 - 0.05)
+		m = (pc.c as Vector2) + (pc.dir as Vector2) * aa.x + Delves.perp(pc.dir) * aa.y
+		var ceil_y := Delves.floor_of(pc, aa.x) + float(pc.h)
+		var mouth := Vector3(m.x, ceil_y, m.y)
+		var legs := _flue_legs(lay, int(pc.id), mouth, d, surface, V.get("kink", {}))
+		var top: Vector3 = (legs[-1] as Array)[1]
+		vents.append({"kind": f.kind, "type": vtype, "fire": fp, "fire_index": int(f.index), "piece": int(pc.id), "mouth": mouth, "d": d,
+			"depth": depth, "sky": vtype == "shaft" and depth <= max_carve, "share": daylight_share(depth), "legs": legs, "top": top})
+	lay["vents"] = vents
+
+
+## "shaft" or "flue": which vent a fire of `kind` gets (vents.json shaft.for,
+## flue.for; design §EV.1). An unlisted kind gets a flue.
+static func vent_type(kind: String) -> String:
+	var sh: Array = (Tuning.table("vents").get("shaft", {}) as Dictionary).get("for", ["hearth", "hearth_ring", "altar"])
+	return "shaft" if kind in sh else "flue"
+
+
+## The share of daylight left at `depth` m under the surface (vents.json
+## light.attenuation: straight lines between the points, nothing past the
+## last).
+static func daylight_share(depth: float) -> float:
+	var pts: Array = (Tuning.table("vents").get("light", {}) as Dictionary).get("attenuation", [[3.0, 1.0], [16.0, 0.08]])
+	if pts.is_empty():
+		return 1.0
+	if depth <= float(pts[0][0]):
+		return float(pts[0][1])
+	for i in range(1, pts.size()):
+		var a: Array = pts[i - 1]
+		var b: Array = pts[i]
+		if depth <= float(b[0]):
+			return lerpf(float(a[1]), float(b[1]), (depth - float(a[0])) / maxf(float(b[0]) - float(a[0]), 0.01))
+	return 0.0
+
+
+## The flue's runs from `mouth` up to the surface: straight up if no other
+## piece of the tomb stands over it; else up kink.clear_m, a step sideways
+## (up to kink.step_m) to clear rock, and on up.
+static func _flue_legs(lay: Dictionary, own: int, mouth: Vector3, d: float, surface: float, kink: Dictionary) -> Array:
+	var top := Vector3(mouth.x, surface, mouth.z)
+	if _column_clear(lay, own, Vector2(mouth.x, mouth.z), d, mouth.y):
+		return [[mouth, top]]
+	var rise := mouth.y + float(kink.get("clear_m", 1.2))
+	var step := float(kink.get("step_m", 2.5))
+	for r in [step * 0.5, step]:
+		for dv in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+			var at := Vector2(mouth.x, mouth.z) + (dv as Vector2) * float(r)
+			if _column_clear(lay, own, at, d, rise):
+				var a := Vector3(mouth.x, rise, mouth.z)
+				var b := Vector3(at.x, rise, at.y)
+				return [[mouth, a], [a, b], [b, Vector3(at.x, surface, at.y)]]
+	# Nowhere clear: straight up regardless (the rock keeps it).
+	return [[mouth, top]]
+
+
+## Does a flue `d` wide at (x/z) `p`, rising from `from_y`, keep clear of
+## every other piece above that height?
+static func _column_clear(lay: Dictionary, own: int, p: Vector2, d: float, from_y: float) -> bool:
+	var r := Rect2(p - Vector2(d, d) * 0.5, Vector2(d, d))
+	for pc in lay.pieces:
+		if int(pc.id) == own:
+			continue
+		var top := maxf(float(pc.y0), float(pc.y1)) + float(pc.h) + Delves.SLAB
+		if top <= from_y:
+			continue
+		if outer(pc).intersects(r):
+			return false
+	return true
 
 
 ## The airways (§ET.6): ordinary slots in corridor walls, strong marked

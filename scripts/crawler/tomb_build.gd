@@ -27,6 +27,11 @@ extends RuinBuilder
 ## rubble and goods): the tomb has no ground but its floors.
 var _floor := 0.0
 var _lay: Dictionary = {}
+## The masonry's own seed (masonry.json seed; 0: from the tomb's).
+var _mseed := 0
+## Fitted stones laid and wall faces dressed (checks).
+var stones := 0
+var faces := 0
 
 
 func ground(_x: float, _z: float) -> float:
@@ -49,6 +54,8 @@ static func build(lay: Dictionary) -> Dictionary:
 	b.ez = Vector3.BACK
 	# Damp: the tombs are deep and still (crawler.json themes.tomb).
 	b.wet = 0.75
+	var ms := int(FittedStone.M.get("seed", 0))
+	b._mseed = ms if ms != 0 else hash([int(lay.seed), "masonry"])
 	for pc in lay.pieces:
 		match str(pc.kind):
 			"room":
@@ -59,13 +66,16 @@ static func build(lay: Dictionary) -> Dictionary:
 				b._delve_stair(pc, 0.0, false, 0.0, 0.0)
 	for d in lay.doors:
 		b._doorway(d)
+	for v in lay.get("vents", []):
+		b._flue(v)
 	for pc in lay.pieces:
 		if str(pc.kind) == "room":
 			b._floor = float(pc.y0)
 			b._dress(pc)
 	for a in lay.airways:
 		b._airway_surround(a)
-	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch}
+	b._soot(lay)
+	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces}
 
 
 ## Door gaps on each wall of `pc`: side -> [[offset, half]] (offsets as
@@ -94,33 +104,9 @@ func _room(pc: Dictionary) -> void:
 	_dwall_gaps(pc, -hw, -Delves.WALL, length + Delves.WALL, gaps.right, y - 0.6, top, true)
 	_dwall_gaps(pc, -Delves.WALL * 0.5, -half, half, gaps.start, y - 0.6, top, false)
 	_dwall_gaps(pc, length + Delves.WALL * 0.5, -half, half, gaps.end, y - 0.6, top, false)
-	# The ceiling: slabs across, ochre in the heart (§BQ); the hearth
-	# room's has the smoke shaft's mouth in its middle.
-	var ochre := str(pc.get("room_kind", "")) == "heart"
-	var hole := Rect2()
-	if str(pc.get("room_kind", "")) == "hearth":
-		hole = Rect2(-0.7, -0.7, 1.4, 1.4)
-		_shaft(Vector2.ZERO, 0.7, y + h, 4.5)
-	var n := maxi(1, int(ceil(length / 1.5)))
-	var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
-	var pv := Delves.perp(pc.dir)
-	var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
-	for i in n:
-		var a0 := length * i / n
-		var a1 := length * (i + 1) / n
-		var col: Color = palette[rng.randi() % palette.size()]
-		if ochre:
-			col = col.lerp(Color(0.62, 0.3, 0.14), 0.55)
-		var w := 2.0 * (half + Delves.WALL) + 0.1
-		# Cut round the shaft: the slab in pieces either side of the hole.
-		var mid := _pp(pc, (a0 + a1) * 0.5, 0.0)
-		var slab_r := Rect2(mid - Vector2(w, a1 - a0) * 0.5, Vector2(w, a1 - a0)) if absf(d3.z) > 0.5 else Rect2(mid - Vector2(a1 - a0, w) * 0.5, Vector2(a1 - a0, w))
-		if hole.has_area() and slab_r.intersects(hole):
-			for part in _minus(slab_r, hole):
-				var r: Rect2 = part
-				box(Transform3D(Basis.IDENTITY, Vector3(r.get_center().x, y + h + Delves.SLAB * 0.5, r.get_center().y)), Vector3(r.size.x, Delves.SLAB, r.size.y), col.darkened(0.1), 0.0, 0.08, 0.03)
-			continue
-		box(Transform3D(bs, Vector3(mid.x, y + h + Delves.SLAB * 0.5, mid.y)), Vector3(w, Delves.SLAB, a1 - a0 + 0.05), col.darkened(0.1), 0.0, 0.08, 0.03)
+	# The ceiling: slabs across, ochre in the heart (§BQ), cut round its
+	# fires' flues (the vents rule, Vents).
+	_ceiling(pc, str(pc.get("room_kind", "")) == "heart")
 	_pave(Delves.rect_of(pc, 0.05), y)
 
 
@@ -140,6 +126,132 @@ static func _minus(r: Rect2, cut: Rect2) -> Array:
 	if c.end.y < r.end.y:
 		out.append(Rect2(c.position.x, c.end.y, c.size.x, r.end.y - c.end.y))
 	return out
+
+
+## Rectangle `r` less every one of `cuts`.
+static func _minus_all(r: Rect2, cuts: Array) -> Array:
+	var parts: Array = [r]
+	for cut in cuts:
+		var next: Array = []
+		for q in parts:
+			next.append_array(_minus(q, cut))
+		parts = next
+	return parts
+
+
+## A piece's ceiling: slabs across it, `ochre` in the heart, cut round the
+## mouths of its fires' flues (TombKit vents).
+func _ceiling(pc: Dictionary, ochre: bool) -> void:
+	var y := float(pc.y0)
+	var h := float(pc.h)
+	var half := float(pc.half)
+	var length := float(pc.len)
+	var holes: Array = []
+	for v in _lay.get("vents", []):
+		if int(v.piece) == int(pc.id):
+			var m: Vector3 = v.mouth
+			var r := float(v.d) * 0.5
+			holes.append(Rect2(m.x - r, m.z - r, 2.0 * r, 2.0 * r))
+	var n := maxi(1, int(ceil(length / 1.5)))
+	var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
+	var pv := Delves.perp(pc.dir)
+	var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
+	var w := 2.0 * (half + Delves.WALL) + 0.1
+	for i in n:
+		var a0 := length * i / n
+		var a1 := length * (i + 1) / n
+		var col: Color = palette[rng.randi() % palette.size()]
+		if ochre:
+			col = col.lerp(Color(0.62, 0.3, 0.14), 0.55)
+		var mid := _pp(pc, (a0 + a1) * 0.5, 0.0)
+		var span := a1 - a0 + 0.05
+		var slab_r := Rect2(mid - Vector2(w, span) * 0.5, Vector2(w, span)) if absf(d3.z) > 0.5 else Rect2(mid - Vector2(span, w) * 0.5, Vector2(span, w))
+		var cut := false
+		for hole in holes:
+			if slab_r.intersects(hole):
+				cut = true
+		if cut:
+			for part in _minus_all(slab_r, holes):
+				var r: Rect2 = part
+				if r.size.x < 0.02 or r.size.y < 0.02:
+					continue
+				box(Transform3D(Basis.IDENTITY, Vector3(r.get_center().x, y + h + Delves.SLAB * 0.5, r.get_center().y)), Vector3(r.size.x, Delves.SLAB, r.size.y), col.darkened(0.1), 0.0, 0.08, 0.03)
+			continue
+		box(Transform3D(bs, Vector3(mid.x, y + h + Delves.SLAB * 0.5, mid.y)), Vector3(w, Delves.SLAB, span), col.darkened(0.1), 0.0, 0.08, 0.03)
+
+
+## A vent's flue (the vents rule): a square stone tube from the ceiling's
+## top up to the surface, through each of its legs (a kink steps it
+## sideways where something stood over the fire), open at the top.
+func _flue(v: Dictionary) -> void:
+	var r := float(v.d) * 0.5
+	var legs: Array = v.legs
+	for i in legs.size():
+		var leg: Array = legs[i]
+		var a: Vector3 = leg[0]
+		var b2: Vector3 = leg[1]
+		if absf(b2.y - a.y) > 0.01:
+			_shaft(Vector2(a.x, a.z), r, a.y, b2.y - a.y)
+		else:
+			# A sideways step: a low passage between the two rises, roofed.
+			var mid := (a + b2) * 0.5
+			var along := Vector3(b2.x - a.x, 0.0, b2.z - a.z)
+			var size := Vector3(absf(along.x) + 2.0 * r + 0.8, 0.4, absf(along.z) + 2.0 * r + 0.8)
+			box(Transform3D(Basis.IDENTITY, mid + Vector3(0.0, 2.0 * r + 0.2, 0.0)), size, (palette[1] as Color).darkened(0.3), 0.0, 0.05, 0.02)
+			box(Transform3D(Basis.IDENTITY, mid - Vector3(0.0, 0.2, 0.0)), size, (palette[1] as Color).darkened(0.3), 0.0, 0.05, 0.02)
+
+
+## A fitted-stone wall (Mike, 6 Oct, LOCKED; FittedStone, masonry.json): a
+## run of wall from a to b (x/z), y_bot to y_top, `thick` thick. Its core
+## is one plain block (its ends the jambs at the doors), its collision a
+## plain box; every face that looks into a piece of the tomb is dressed
+## with fitted stones, overgrown by the damp there.
+func _dwall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, thick: float = 0.6) -> void:
+	var along := b2 - a
+	var length := along.length()
+	if length < 0.15 or y_top <= y_bot + 0.05:
+		return
+	var p := FittedStone.preset()
+	var jd := float(p.get("joint_depth_m", 0.06))
+	var dir2 := along / length
+	var u := Vector3(dir2.x, 0.0, dir2.y)
+	var bs := Basis(u, Vector3.UP, u.cross(Vector3.UP))
+	var mid2 := (a + b2) * 0.5
+	var center := Vector3(mid2.x, (y_bot + y_top) * 0.5, mid2.y)
+	var was_solid := solid
+	solid = false
+	plain = true
+	var core_col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(0.08)
+	box(Transform3D(bs, center), Vector3(length + 0.02, y_top - y_bot, maxf(thick - 2.0 * jd - 0.02, 0.1)), core_col, 0.0)
+	plain = false
+	solid = was_solid
+	_collision_box(Transform3D(bs, center), Vector3(length * 0.5, (y_top - y_bot) * 0.5, thick * 0.5))
+	var floor_y := y_bot + 0.6
+	var y1 := y_top - Delves.SLAB + 0.05
+	for sd: float in [-1.0, 1.0]:
+		var n2 := Vector2(dir2.y, -dir2.x) * sd
+		var probe := mid2 + n2 * (thick * 0.5 + 0.45)
+		if not _looks_into(probe, floor_y + 1.0):
+			continue
+		var n := Vector3(n2.x, 0.0, n2.y)
+		var o := Vector3(a.x, 0.0, a.y) + n * (thick * 0.5)
+		var hum := FittedStone.humidity(str(_lay.get("theme", "tomb")), int(_lay.seed), Vector3(probe.x, floor_y, probe.y))
+		var mr := RandomNumberGenerator.new()
+		mr.seed = hash([_mseed, snappedf(a.x, 0.01), snappedf(a.y, 0.01), snappedf(b2.x, 0.01), snappedf(b2.y, 0.01), sd, snappedf(y_bot, 0.01)])
+		stones += FittedStone.face(self, o, u, n, length, floor_y - 0.1, y1, floor_y, hum, mr)
+		faces += 1
+
+
+## Is (x/z) `p` at height `y` inside a piece of the tomb (a wall facing
+## it is seen)?
+func _looks_into(p: Vector2, y: float) -> bool:
+	for pc in _lay.pieces:
+		var aa := Delves.along_across(pc, p)
+		if aa.x > -0.05 and aa.x < float(pc.len) + 0.05 and absf(aa.y) < float(pc.half) + 0.05:
+			var fy := Delves.floor_of(pc, aa.x)
+			if y > fy - 1.5 and y < fy + float(pc.h) + 1.5:
+				return true
+	return false
 
 
 ## The smoke shaft (§ET.6): a square flue `inner` m half wide from the
@@ -164,15 +276,7 @@ func _corridor(pc: Dictionary) -> void:
 	var top := y + h + Delves.SLAB
 	for sd: float in [-1.0, 1.0]:
 		_dwall(_pp(pc, 0.0, sd * hw), _pp(pc, length, sd * hw), y - 0.6, top)
-	var n := maxi(1, int(ceil(length / 1.4)))
-	var d3 := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
-	var pv := Delves.perp(pc.dir)
-	var bs := Basis(Vector3(pv.x, 0.0, pv.y), Vector3.UP, d3).orthonormalized()
-	for i in n:
-		var a0 := length * i / n
-		var a1 := length * (i + 1) / n
-		var mid := _pp(pc, (a0 + a1) * 0.5, 0.0)
-		box(Transform3D(bs, Vector3(mid.x, y + h + Delves.SLAB * 0.5, mid.y)), Vector3(2.0 * (half + Delves.WALL) + 0.1, Delves.SLAB, a1 - a0 + 0.05), (palette[rng.randi() % palette.size()] as Color).darkened(0.1), 0.0, 0.08, 0.03)
+	_ceiling(pc, false)
 	_pave(Delves.rect_of(pc, 0.05), y)
 
 
@@ -341,3 +445,57 @@ func _airway_surround(a: Dictionary) -> void:
 		for k: float in [-0.15, 0.15]:
 			box(Transform3D(bs, c + Vector3.UP * (h * 0.5 + t * 0.5) + right * k + nrm * 0.08), Vector3(0.05, t * 0.7, 0.02), col.darkened(0.6), 0.0, 0.0, 0.0)
 	solid = true
+
+
+## Soot (the vents rule, vents.json soot): the smoke's stain painted into
+## the stone round every flue's mouth (the ceiling's slabs, the stones, the
+## flue's own walls there) and up a sconce's wall from its flame: the
+## vertex colours pulled toward navy-black soot, mottled, the moss burnt off.
+func _soot(lay: Dictionary) -> void:
+	var so: Dictionary = Tuning.table("vents").get("soot", {})
+	var amount := clampf(float(so.get("amount", 0.85)), 0.0, 1.0)
+	if amount <= 0.0:
+		return
+	# Navy-black, the smoke stacks' soot (smoke.json outlets.soot, §CV.3, §EV.1).
+	var soot_c: Dictionary = (Tuning.table("smoke").get("outlets", {}) as Dictionary).get("soot", {})
+	var black := Color(str(soot_c.get("colour", "#0A0C20")))
+	var wall_m := float(so.get("wall_m", 1.2))
+	var srcs: Array = []
+	for v in lay.get("vents", []):
+		var m: Vector3 = v.mouth
+		var r := float(so.get("size_m", 1.8)) * 0.5 * clampf(float(v.d) / 0.9, 0.55, 1.4)
+		srcs.append([0, m, r])
+		if str(v.kind) == "sconce":
+			var f: Vector3 = v.fire
+			var nrm := Vector3(m.x - f.x, 0.0, m.z - f.z).normalized()
+			srcs.append([1, f, nrm, minf(wall_m, m.y - f.y + 0.1)])
+	for i in _v.size():
+		var p := _v[i]
+		var k := 0.0
+		for s2 in srcs:
+			if int(s2[0]) == 0:
+				var m2: Vector3 = s2[1]
+				var dy := p.y - m2.y
+				if dy < -0.45 or dy > 0.9:
+					continue
+				var dh := Vector2(p.x - m2.x, p.z - m2.z).length()
+				k = maxf(k, smoothstep(float(s2[2]), float(s2[2]) * 0.25, dh) * (1.0 - smoothstep(-0.1, -0.45, dy) * 0.0))
+			else:
+				var f2: Vector3 = s2[1]
+				var nv: Vector3 = s2[2]
+				var rel := p - f2
+				if absf(rel.dot(nv)) > 0.5:
+					continue
+				var lat := (rel - nv * rel.dot(nv) - Vector3.UP * rel.y).length()
+				var up := rel.y
+				if up < -0.1 or up > float(s2[3]):
+					continue
+				k = maxf(k, smoothstep(0.42, 0.12, lat) * (1.0 - up / maxf(float(s2[3]), 0.1) * 0.6))
+		if k <= 0.0:
+			continue
+		var mottle := 0.75 + 0.5 * float(posmod(hash(Vector3i(roundi(p.x * 12.0), roundi(p.y * 12.0), roundi(p.z * 12.0))), 1000)) / 1000.0
+		var c := _c[i]
+		var a := c.a
+		c = c.lerp(black, clampf(amount * k * mottle, 0.0, 0.95))
+		c.a = a * (1.0 - k)
+		_c[i] = c

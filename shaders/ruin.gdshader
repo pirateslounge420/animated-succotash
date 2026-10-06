@@ -54,6 +54,14 @@ void fragment() {
 		surface = retro_tile(look_tex_leaves, uv / look_tile_m2.y).rgb;
 	} else if (kind == 5) {
 		surface = vec3(0.45 + 0.1 * texture(look_grain_soft, uv * 1.5).r);
+	} else if (kind == 6) {
+		// Fitted stone (the dungeon's walls, FittedStone, Mike 6 Oct): the
+		// joints are real geometry now, so the stone's grain without the
+		// tile's painted cracks: the stone tile large and soft, and a fleck
+		// on the 16-a-metre grid.
+		vec2 tg6 = floor(uv * 16.0) + 0.5;
+		float fl6 = fract(sin(dot(tg6, vec2(12.9898, 78.233))) * 43758.5453);
+		surface = mix(vec3(0.5), retro_tile(look_tex_stone, uv / (look_tile_m.w * 2.3)).rgb, 0.3) * (0.94 + 0.12 * fl6);
 	} else {
 		surface = retro_tile(look_tex_stone, uv / look_tile_m.w).rgb;
 	}
@@ -79,13 +87,13 @@ void fragment() {
 	// A lit village (§EE.1): its hearths ease the night's blue pull here.
 	float nk = look_night * (1.0 - look_warm(world_pos));
 	col = pal_pull(col, pal_moss, 0.5 * gw); // moss, ivy and turf toward R1a moss
-	if (kind == 0) {
+	if (kind == 0 || kind == 6) {
 		col = pal_pull(col, pal_stone_night, 0.75 * nk * (1.0 - gw));
 	} else if (kind == 1) {
 		col = pal_pull(col, pal_bark_night, 0.6 * nk * (1.0 - gw));
 	}
 	col = pal_pull(col, pal_grass_night, 0.7 * nk * gw);
-	ALBEDO = col * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
+	ALBEDO = col * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 || kind == 6 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m

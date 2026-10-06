@@ -1,7 +1,7 @@
 // Full-screen grade, the last step of the look (design reconciliation,
 // Session 2 section C: dark and moody at every hour; §AG: the reference
 // clips' hard colour). It runs at the fixed internal resolution (§Y, §ES:
-// 270 lines by default, Display), before the nearest-neighbour upscale to the window, so
+// 480 lines by default, Display), before the nearest-neighbour upscale to the window, so
 // every dither and grain pixel is a screen block.
 //
 // Two presets, day and night (data/look.json, set by PostGrade), never one

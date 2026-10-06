@@ -19,7 +19,7 @@ static var CRISP: Array = Tuning.section("hud", "text").get("crisp_px", [20, 40]
 
 ## Every size in the data is at the 480-line reference
 ## (text.ref_height_px); the frame's own lines over it (Display, the
-## pixel-size preset): 0.5625 at 270, the default since design §ES, so the
+## pixel-size preset): 0.5625 at 270 (painted), 1 at 480 (the default), so the
 ## HUD keeps its share of the frame (and fits) at every preset.
 static func scale() -> float:
 	var ref := float(Tuning.section("hud", "text").get("ref_height_px", 480))

@@ -32,6 +32,7 @@ var lay: Dictionary
 var tomb: Node3D
 var fires: CrawlerFires
 var airways: Airways
+var vents: Vents
 var player: CrawlerPlayer
 var rescuer: FigureSprite
 var post: PostGrade
@@ -64,6 +65,12 @@ func _ready() -> void:
 	fires.name = "Fires"
 	add_child(fires)
 	fires.build(world, lay)
+	# Every permanent fire's vent (the vents rule): its daylight, soot and
+	# draft.
+	vents = Vents.new()
+	vents.name = "Vents"
+	add_child(vents)
+	vents.build(world, lay, fires)
 	airways = Airways.new()
 	airways.name = "Airways"
 	add_child(airways)
@@ -91,7 +98,7 @@ func _ready() -> void:
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
-	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size()])
+	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), str(FittedStone.M.get("preset", "")), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles"))])
 	_bake_rescuer.call_deferred()
 
 
@@ -175,13 +182,16 @@ func _build_tomb() -> void:
 	arrays[Mesh.ARRAY_COLOR] = data.c
 	arrays[Mesh.ARRAY_TEX_UV] = data.m
 	RuinBuilder._flip_winding(arrays)
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.name = "Stone"
-	mi.mesh = mesh
-	mi.material_override = RuinBuilder.material_lit()
-	tomb.add_child(mi)
+	# In blocks of CHUNK_M, so what's out of view isn't drawn (the fitted
+	# stones are real geometry, masonry.json).
+	for part in _chunks(arrays):
+		var mesh := ArrayMesh.new()
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, part)
+		var mi := MeshInstance3D.new()
+		mi.name = "Stone"
+		mi.mesh = mesh
+		mi.material_override = RuinBuilder.material_lit()
+		tomb.add_child(mi)
 	var body := StaticBody3D.new()
 	body.name = "Collision"
 	body.collision_layer = PropCollision.WORLD_LAYER
@@ -197,6 +207,56 @@ func _build_tomb() -> void:
 	for h in data.ch:
 		PropCollision.hull(body, h)
 	tomb.set_meta("triangles", (data.v as PackedVector3Array).size() / 3)
+	tomb.set_meta("stones", int(data.get("stones", 0)))
+	tomb.set_meta("faces", int(data.get("faces", 0)))
+
+
+## The tomb's triangles sorted into CHUNK_M blocks by their middles:
+## [arrays...].
+const CHUNK_M := 10.0
+
+
+static func _chunks(arrays: Array) -> Array:
+	var v: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var n: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+	var c: PackedColorArray = arrays[Mesh.ARRAY_COLOR]
+	var m: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+	# Triangle indices per block first (Arrays are shared; packed arrays
+	# are copied on write, so they're filled once per block after).
+	var buckets := {}
+	for t in range(0, v.size() - 2, 3):
+		var mid := (v[t] + v[t + 1] + v[t + 2]) / 3.0
+		var key := Vector3i(floori(mid.x / CHUNK_M), floori(mid.y / CHUNK_M), floori(mid.z / CHUNK_M))
+		if not buckets.has(key):
+			buckets[key] = []
+		(buckets[key] as Array).append(t)
+	var out: Array = []
+	for key in buckets:
+		var tris: Array = buckets[key]
+		var pv := PackedVector3Array()
+		var pn := PackedVector3Array()
+		var pc := PackedColorArray()
+		var pm := PackedVector2Array()
+		pv.resize(tris.size() * 3)
+		pn.resize(tris.size() * 3)
+		pc.resize(tris.size() * 3)
+		pm.resize(tris.size() * 3)
+		var i := 0
+		for t in tris:
+			for k in 3:
+				pv[i] = v[t + k]
+				pn[i] = n[t + k]
+				pc[i] = c[t + k]
+				pm[i] = m[t + k]
+				i += 1
+		var a := []
+		a.resize(Mesh.ARRAY_MAX)
+		a[Mesh.ARRAY_VERTEX] = pv
+		a[Mesh.ARRAY_NORMAL] = pn
+		a[Mesh.ARRAY_COLOR] = pc
+		a[Mesh.ARRAY_TEX_UV] = pm
+		out.append(a)
+	return out
 
 
 ## The tomb's own sound: the delve's low drone and its drips (SoundBed's

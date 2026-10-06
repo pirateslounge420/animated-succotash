@@ -68,6 +68,13 @@ func _mean(lum: Array) -> float:
 	return s / maxf(lum.size(), 1.0)
 
 
+## A torch in hand (from the pack, wherever you stand).
+func _torch_in_hand(p: CrawlerPlayer) -> void:
+	if not p.inventory.has_kind("torch"):
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+
+
 func _run() -> void:
 	WorldSave.read_only = true
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
@@ -82,7 +89,9 @@ func _run() -> void:
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
-	# Waking.
+	# Waking, at midday: the hearth's flue lets the day down beside it.
+	var world: Node = main.world
+	world.days = 13.5
 	var w: Array = main.lay.wake
 	p.spawn_flat(w[0], float(w[1]), -0.32)
 	await _frames(10)
@@ -92,6 +101,33 @@ func _run() -> void:
 	print("  waking: warm %.3f of the frame, darkest tenth #%s, mean %.3f" % [st.warm, d.to_html(false), st.mean_l])
 	ok(float(st.warm) > 0.002, "waking: the hearth is the warm accent in view")
 	ok(d.b >= d.r and d.b >= d.g * 0.9, "waking: the dark is navy, not grey (darkest tenth #%s)" % d.to_html(false))
+	# The same at midnight: the moonlit shaft dim, the fire the light.
+	world.days = 13.0
+	await _frames(6)
+	await _shot("01b_wake_night")
+	world.days = 13.5
+	# Looking up the hearth's flue by day.
+	var hv: Dictionary = main.lay.vents[0]
+	var hm: Vector3 = hv.mouth
+	p.spawn_flat(Vector3(hm.x + 1.6, 0.0, hm.z), PI * 0.5, 0.9)
+	await _frames(6)
+	await _shot("01c_up_the_flue")
+	# The fitted stone close (a room wall by torchlight).
+	_torch_in_hand(p)
+	p.torch.light()
+	var room: Dictionary = {}
+	for pc in main.lay.pieces:
+		if str(pc.kind) == "room" and str(pc.get("room_kind", "")) not in ["hearth", ""]:
+			room = pc
+			break
+	if not room.is_empty():
+		var rd: Vector2 = room.dir
+		var pv := Delves.perp(rd)
+		var spot: Vector2 = (room.c as Vector2) + rd * float(room.len) * 0.5 + pv * (float(room.half) - 1.4)
+		p.spawn_flat(Vector3(spot.x, float(room.y0), spot.y), atan2(-pv.x, -pv.y), -0.1)
+		await _frames(8)
+		await _shot("01d_fitted_stone_%s" % str(FittedStone.M.get("preset", "")))
+	p.torch.put_out("stowed")
 	# The sheet.
 	var r := main.rescuer
 	var sheet := r.atlas.get_image()
@@ -125,7 +161,7 @@ func _run() -> void:
 		await _shot(str(v[0]))
 	# A corridor with a sconce, in full dark by torchlight, then relit.
 	var t := p.torch
-	main.take_torch()
+	_torch_in_hand(p)
 	t.light()
 	var sconce: Node3D = null
 	for h in main.fires.holders:
@@ -139,7 +175,8 @@ func _run() -> void:
 		p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
 		await _frames(10)
 		await _shot("06_corridor_by_torch")
-		# Full dark (§BA, §CJ.5): the torch out, nothing lit near.
+		# Full dark (§BA, §CJ.5): the torch out, nothing lit near, at
+		# midday (a sconce's flue lets in no light, §EV.2).
 		t.put_out("stowed")
 		await _frames(10)
 		var dark_img := await _shot("07_corridor_dark")

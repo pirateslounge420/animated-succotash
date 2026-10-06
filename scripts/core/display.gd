@@ -1,8 +1,9 @@
 class_name Display
 ## The fixed internal resolution (design §Y; data/look.json "render"):
 ## the whole frame (the 3D, the post-grade and dither, the HUD) is drawn
-## at the preset's lines (270, "painted", by default since design §ES; 720
-## at most; 1080 is never rendered), 16:9 (480x270) or 4:3, and upscaled
+## at the preset's lines (480, "default", the committed default again
+## since Mike's 6 Oct dungeon lock; 270 "painted" was §ES's; 720 at most;
+## 1080 is never rendered), 16:9 (854x480) or 4:3, and upscaled
 ## to the window with nearest-neighbour: square, honest pixels, so a
 ## bigger window only means bigger pixels. It's the root window's
 ## "viewport" content scale (project.godot [display]); every HUD px is at
@@ -15,8 +16,8 @@ class_name Display
 ## nearest.
 ##
 ## The player's settings (SettingsPanel) override the file:
-## "display.preset" (a name from render.presets: painted 270, the default
-## since design §ES / chunky 360 / default 480 / half_hd 540 / fine 720,
+## "display.preset" (a name from render.presets: painted 270 / chunky
+## 360 / default 480, the default / half_hd 540 / fine 720,
 ## design §BU; or "auto"; an older "display.lines" still
 ## counts while no preset is chosen), "display.aspect" ("16:9" / "4:3"),
 ## "display.integer" (on / off). apply() re-reads them. A dev key (F11,
@@ -46,7 +47,7 @@ static func presets() -> Dictionary:
 
 
 ## The active preset's name: the setting, else the file's render.preset
-## ("painted", 270 lines, since design §ES); "auto" is a choice too.
+## ("default", 480 lines); "auto" is a choice too.
 static func preset() -> String:
 	var p := str(Settings.get_value("display.preset", str(render().get("preset", "default"))))
 	if p == AUTO or presets().has(p):
@@ -58,8 +59,8 @@ static func preset() -> String:
 ## "auto" (look.json render.auto): the first preset in render.auto.prefer
 ## whose lines divide the window's height exactly (a whole-number upscale,
 ## so nothing crawls), at or under max_internal_lines; none does: the
-## file's own preset (painted), letterboxed. 1080 and 2160 windows get
-## painted (x4, x8), 1440 gets default (x3).
+## file's own preset (default, 480), letterboxed. 1440 windows get
+## default (x3); 1080 and 2160, half_hd (x2, x4).
 const AUTO := "auto"
 
 static func auto_preset() -> String:
