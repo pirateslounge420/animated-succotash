@@ -72,7 +72,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 40 | §EK | The whole animal: the hunt, the hut, the six things | built 2d4b6a2 |
 | 41 | §EJ | Food passed round, the night stories, the gift | built 6939b24 |
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | built 6dec101 |
-| 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | built 502ffcb |
+| 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | built c6a2bd8 |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -831,7 +831,7 @@ CHECK (tools/third_places_check.gd, headless): on seed 7731 every camp has at le
 
 ## 43 — The library: the camp book moves, the record-keeper, the winter count — §EN
 
-**Status:** built 502ffcb
+**Status:** built c6a2bd8
 **Mike sees:** A small hut, or a lean-to against the ruin wall, with the camp book on a shelf inside and a folk sitting at it with a quill, or walking round the camp looking at the woodpile and the new child before going back to write. On one wall, the tomes and scrolls the camp rescued from the ruins. On the other, a painted hide with one small picture per year, and a cord of knots, one per folk. At a dead camp the hide is still there, and the last picture is black.
 
 ```text
