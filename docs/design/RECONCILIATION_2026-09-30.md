@@ -3735,3 +3735,24 @@ Mike wants to move toward reference frame 3 (goat with bowl in rain): smooth-ish
 - **Repaint one camp figure** as the test piece: painted shading (cloak folds, hood shadow, face form) baked into its textures, a smoother cloak mesh, the §EQ head fit. No normal maps, no shine (R-rules unchanged).
 - **Impostors:** far trees and ruins drawn as pre-rendered sprites of their own 3D models, swapping in beyond a distance per size class. This serves both ER.1 (triangles) and ER.2 (the pixel illusion).
 - Mike compares `painted` 240 vs `default` 480 with F11 in his own game, then decides.
+
+## ES. 3D pixel art is the look: 270 lines, painted light — LOCKED (6 Oct, 11:34, Mike)
+
+Mike: the aesthetic moves from the current smooth polys toward 3D pixel art, after reference frame 3 (goat with bowl in rain). Locked now; Mike plays it and reports.
+
+**Amends §Y and §BU** (480 lines default) and **supersedes the 1 Oct call** ("480 stays, blockiness comes from the textures"). Claude flagged both; Mike chose to lock. §ER.2's test becomes the standard.
+
+### ES.1 The frame
+- **Default internal frame: 270 lines (480×270), preset `painted`.** Chosen over 240 because it scales by whole numbers to 1080p (×4) and 4K (×8). 480 and the other presets stay in Settings as options.
+- Nearest-neighbour, HUD inside the frame, unchanged. HUD text must stay legible at 270 (re-pick sizes).
+
+### ES.2 The models and textures
+- **Lighting is painted into the textures** (diffuse-only, "pre-lit"), as in the Dreamcast/GameCube era. The engine's live light only adds the time-of-day tint, and the fire.
+- **Baked ambient occlusion on every model**, tinted to the scene's shade colour (navy, olive in green scenes), never grey.
+- **Mid-poly forms**: rounder than today's low-poly, never post-2005 dense. Big pixels hide facets, so budgets go *down*: about 1,500 triangles for a near figure, less for plants.
+- **Texture sizes shrink** to match: no detail finer than a screen pixel at walking distance. LOOK_REFERENCE's 16 texels a metre is re-measured at 270 (an open number until Claude Code reports).
+- No normal maps, no shine, no real-time GI or SSAO (R-rules unchanged).
+
+### ES.3 Performance (with §ER.1)
+- About a quarter of the pixels of 480 → large GPU saving (rain, fog, glow, water).
+- Impostors for far trees and ruins (§ER.2) are now standard, not a test.

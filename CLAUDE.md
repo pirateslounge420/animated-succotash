@@ -57,7 +57,7 @@ two of them disagree, tell Mike. Don't quietly pick one.
 ## The look, in short
 "Almost like Minecraft, except not in boxes, and everything flows better." The era is
 1999–2004 consoles.
-- A 480-line internal frame with nearest-neighbour scaling, and 16 texels a metre.
+- **3D pixel art (§ES):** a 270-line internal frame ("painted" preset) with nearest-neighbour scaling; lighting painted into textures (diffuse-only, baked occlusion tinted navy/olive), mid-poly models. Texel density is re-measured under §ES (was 16 a metre at 480).
 - Clean silhouettes, and no normal maps or specular.
 - Dark but saturated, and blue owns the frame by default, not always: a relit village may go
   amber, one lit hearth at a time, while the wild between villages stays blue (§EE.1). The sun
