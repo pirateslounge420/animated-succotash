@@ -3680,3 +3680,23 @@ The pivot from scope to ambience: what makes one frame feel magical when the pla
 - **They lead you to secret passages.** Revisit, follow, and let them work; they open a hidden doorway to deeper ruins, a **fairy lair**. Rushing or crowding them scatters them (Claude's suggestion).
 - Lairs are rare and uneven by village, not a fixed count: most villages have none, a few have one (Claude's call).
 - Not locked here: shrine offerings to draw rare beasts, and the road events (relighting a traveller's torch, glowing insects, meteor nights). Talked through, still brewing.
+
+## EP. Grass that breaks up the ground, cheaply; measure before guessing — LOCKED (5 Oct, 20:15, by voice, Mike; the technique is Claude's call at Mike's leave)
+
+Mike: the screenshots look bland, "like alpha version Minecraft". The patterned ground is fine; it needs grass layered in where the biome calls for it. Builds on §BS "grass cards near, the tile far" and the existing `look.json → ranges.grass_m`.
+
+### EP.1 The look
+- **Clumps and tufts, not a lawn.** Each card is a clean-silhouette tuft with the detail painted into its texture (big texels, nearest filter, no normal maps, no shine). Fine single blades alias to mush at 480 lines, so they are out.
+- Colours from `look.json → retro.colors` (grass_deep, grass, grass_lit): dark but saturated, olive in shade, never grey.
+- **A slow wind sway**, from the wind system (`data/wind.json`), so a still frame still breathes.
+- **Density by biome:** thick in grassland, savanna and meadow; sparse at the woods' edge; nearly bare on a closed forest floor, in deep shade and on rock. Real grasses only where they really grow (§CA).
+
+### EP.2 Keeping it cheap (the look and the speed want the same thing)
+- **Billboard or crossed cards**, never modelled blades.
+- **One MultiMesh per chunk**, so thousands of tufts are a few draw calls.
+- **Only near the player** (within `ranges.grass_m`), thinning with distance and fading into the ground tile and the blue distance, which is the look rule anyway.
+- **Sway in the vertex shader**, so the CPU never pays for it.
+- Unshaded or near-unshaded; tufts cast no shadows.
+
+### EP.3 Measure first
+- Before and after the grass pass, profile a frame at a dense grassland, a camp at night and a jungle, and log which systems cost the most (vegetation, the camp sim, lights and shadows are the suspects). Numbers go in PROGRESS; no guessing.

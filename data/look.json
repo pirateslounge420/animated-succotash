@@ -751,7 +751,10 @@
   "pool_strength": 0.22,
   "village_ease": 0.45,
   "village_fade": 0.3,
-  "camera_fade": [0.8, 1.4],
+  "camera_fade": [
+   0.8,
+   1.4
+  ],
   "max_hearths": 16,
   "grade": {
    "pull_ease": 0.85,
@@ -760,6 +763,34 @@
    "shadow_color": "#130E0C",
    "shadow_mix": 0.65,
    "protect_chroma_scale": 0.4
+  }
+ },
+ "grass_tufts": {
+  "_help": "[NOT WIRED YET — design §EP] Grass tufts layered over the ground tile. First numbers by Claude (chat); Claude Code tunes by eye. density_by_biome: tufts per square metre at full density (0 = none). fade_start_frac: where within ranges.grass_m tufts start thinning. card: 'crossed' (two quads) or 'billboard'. sway_from_wind: sway amplitude follows wind.json.",
+  "card": "crossed",
+  "multimesh_per_chunk": true,
+  "cast_shadows": false,
+  "shaded": false,
+  "fade_start_frac": 0.5,
+  "sway_from_wind": true,
+  "sway_amp_m": 0.06,
+  "tuft_height_m": [
+   0.25,
+   0.7
+  ],
+  "density_by_biome": {
+   "grassland": 6.0,
+   "savanna": 4.0,
+   "meadow": 5.0,
+   "steppe": 3.0,
+   "woodland_edge": 2.0,
+   "temperate_forest_floor": 0.4,
+   "tropical_forest_floor": 0.2,
+   "taiga_floor": 0.6,
+   "tundra": 1.5,
+   "desert": 0.1,
+   "rock": 0.0,
+   "marsh": 3.0
   }
  }
 }
