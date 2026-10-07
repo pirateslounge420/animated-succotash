@@ -54,9 +54,10 @@ extends SceneTree
 ##     wake on the mat by the hearth, unhurt, its chase given up;
 ##  8. the rule itself, over a scripted session of a few minutes (the
 ##     skeletons free, nothing able to take you): you walk by the keys past
-##     every skeleton, looking at each as you pass, then walk on with your
-##     back to it, look back, wait with your back turned, look again, and
-##     look just past it to either side (its middle 4 and 9 degrees beyond
+##     every skeleton and back past them again, then home to the hearth,
+##     looking at each as you pass, then walk on with your back to it, look
+##     back, wait with your back turned, look again, and look just past it
+##     to either side (its middle 4 and 9 degrees beyond
 ##     the frame's edge and margin, so coming on, its arm nears your sight);
 ##     stop to relight sconces with your back to the room; and look back
 ##     now and then as you walk. Every physics frame is logged, and no
@@ -955,7 +956,7 @@ func _good_night() -> void:
 
 ## The session's length at most (s of play), and how often you look back as
 ## you walk (s).
-const SESSION_S := 200.0
+const SESSION_S := 300.0
 const LOOK_EVERY_S := 5.0
 ## Seconds into the session.
 var _s_t := 0.0
@@ -1238,10 +1239,12 @@ func _relight(nav: TombNav, h: Node3D) -> void:
 
 ## 8. A few minutes in the tomb with the skeletons free (nothing can take
 ## you: their strikes still land on you, and Harm counts none), every frame
-## logged (_boo_log): past each skeleton, nearest first, looking at it as
-## you pass; on with your back to it, a look back, a wait with your back
-## turned, another look; a sconce near by relit with your back to the room;
-## a look back over your shoulder every LOOK_EVERY_S as you walk.
+## logged (_boo_log): past each skeleton, nearest first, and back past them
+## in reverse, then home to the hearth, looking at each as you pass; on
+## with your back to it, a look back, a wait with your back turned, another
+## look, a look just past it to either side; a sconce near by relit with
+## your back to the room; a look back over your shoulder every LOOK_EVERY_S
+## as you walk.
 func _session() -> void:
 	_boo_reset()
 	_torch(true)
@@ -1258,12 +1261,19 @@ func _session() -> void:
 		left.erase(best)
 		order.append(best)
 		from = best.place.out
+	# Out past them all and back again (by then each is up, hunting you or
+	# hanging back, or home at rest to be armed again).
+	var route: Array = order.duplicate()
+	var back: Array = order.duplicate()
+	back.reverse()
+	back.pop_front()
+	route.append_array(back)
 	var lit0 := main.fires.lit_count()
 	var short0 := 0
 	for q in res.all:
 		short0 += q.stopped_short
-	for i in order.size():
-		var r: Resident = order[i]
+	for i in route.size():
+		var r: Resident = route[i]
 		if _s_t >= SESSION_S:
 			break
 		if not is_instance_valid(r) or r.state == Resident.GONE:
@@ -1271,8 +1281,8 @@ func _session() -> void:
 		await _walk_keys(nav, _pass_point(r, nav))
 		await _look_for(r, 1.0)
 		var nxt: Vector3 = main.lay.wake[0]
-		if i + 1 < order.size() and is_instance_valid(order[i + 1]):
-			nxt = _pass_point(order[i + 1], nav)
+		if i + 1 < route.size() and is_instance_valid(route[i + 1]):
+			nxt = _pass_point(route[i + 1], nav)
 		await _walk_keys(nav, nxt, 1.2)
 		await _look_for(r, 1.5)
 		await _back_to(r, 2.0)
@@ -1284,6 +1294,9 @@ func _session() -> void:
 		var h := _cold_holder_near(nav, player.global_position, 16.0)
 		if h != null:
 			await _relight(nav, h)
+	# And home to the hearth.
+	if _s_t < SESSION_S:
+		await _walk_keys(nav, main.lay.wake[0])
 	Input.action_release("move_forward")
 	player._invulnerable = 0.0
 	var short := -short0
