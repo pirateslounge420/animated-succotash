@@ -76,6 +76,7 @@ func _process(delta: float) -> void:
 		_apply()
 		return
 	_light.light_energy = Torch.energy_now(item, _t, 1.0)
+	_light.light_color = Torch.gutter_color(1.0 if Torch.guttering(item) else 0.0)
 	Torch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
 	Torch.smoke_ember(_flame, up)
 

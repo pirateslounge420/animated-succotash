@@ -91,6 +91,17 @@ uniform float warm_highlight_ease = 0.75;
 uniform vec3 warm_shadow_color = vec3(0.075, 0.055, 0.047); // #130E0C
 uniform float warm_shadow_mix = 0.65;
 uniform float warm_protect_scale = 0.4;
+// One firelight (design §EX.6; the crawler sets it, crawler.json
+// firelight): where every bright warm-or-white pixel is lit by fire (no
+// sun underground; the vents' daylight is blue), a bright pixel the fire
+// blew pale or white (its channels clipped one by one) is put back on the
+// fire's amber (`fire_white_tint`, the fire's colour lifted a little
+// toward white), the paler the more (`fire_white_chroma`), before the
+// grade, so the grade's protection keeps it: the stone right at
+// the torch stays amber, never pulled cyan-white. 0 off (the open world).
+uniform float fire_whites = 0.0;
+uniform vec3 fire_white_tint = vec3(1.0, 0.52, 0.25);
+uniform vec2 fire_white_chroma = vec2(0.3, 0.6); // chroma: fully pale .. untouched
 
 // 4x4 Bayer thresholds, 0-15.
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0,
@@ -202,6 +213,17 @@ void fragment() {
 	vec3 wide = (l + r + 2.0 * c) * 0.25;
 	float y = luma_of(c);
 	vec3 col = mix(c, wide - vec3(luma_of(wide)) + y, bleed);
+
+	// Firelit whites back to the fire's amber (§EX.6): bright, not blue,
+	// not already a protected orange; the dark and the blue untouched.
+	if (fire_whites > 0.0) {
+		// The paler the pixel, the more it goes back: white fully, pale
+		// yellow (the clip's way from amber to white) part-way, a strong
+		// colour (a flame's tongue, deep amber stone) not at all.
+		float pale = 1.0 - smoothstep(fire_white_chroma.x, fire_white_chroma.y, max3(col) - min(col.r, min(col.g, col.b)));
+		float fw = fire_whites * smoothstep(highlight_from, 1.0, max3(col)) * step(col.b, col.r + 0.02) * pale;
+		col = mix(col, col * fire_white_tint, fw);
+	}
 
 	// The two presets, each in full, crossfaded by night.
 	float prot = protect(col);

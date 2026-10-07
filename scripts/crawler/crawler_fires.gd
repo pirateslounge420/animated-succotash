@@ -123,7 +123,7 @@ func _sconce(pos: Vector3, nrm: Vector3) -> Node3D:
 	pops.volume_db = -8.0
 	var light := OmniLight3D.new()
 	light.name = "Light"
-	light.light_color = Color(str(Campfire.L.get("color", "#FF6E24")))
+	light.light_color = Torch.fire_color()  # one firelight (§EX.6)
 	light.omni_attenuation = Campfire.ATTENUATION
 	light.position = Vector3(0, 0.3, 0)
 	root.add_child(light)

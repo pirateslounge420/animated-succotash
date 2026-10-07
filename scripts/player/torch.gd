@@ -249,7 +249,8 @@ static func ember_glow(it: Dictionary, t: float, motion: float) -> float:
 
 
 ## Set an ember_node's glow (its shader's `glow`; guttering draws it
-## cooler: ember.gutter_glow).
+## lower, so fewer of its hot bands show: dimmer and redder,
+## ember.gutter_glow).
 static func set_glow(ember: Node3D, glow: float, it: Dictionary) -> void:
 	var head := ember.get_node_or_null("Head") as MeshInstance3D
 	if head and head.material_override:
@@ -264,10 +265,27 @@ static func held_scale() -> float:
 	return float(L.get("held_scale", 1.0))
 
 
+## The one firelight (design §EX.6): every fire's light is the hearth's
+## amber, look.json fire.light.color. torch.json light.color is kept equal
+## to it (its _help_color); a torch differs from a hearth in reach and
+## strength only, never in hue.
+static func fire_color() -> Color:
+	return Color(str(Campfire.L.get("color", "#FF6E24")))
+
+
+## The firelight while guttering (`k` 0 steady .. 1 fully guttering):
+## dimmer is the energy's job; the hue only reddens (green and blue fall
+## away), never cooler toward white or blue (§EX.6, §ET.7).
+static func gutter_color(k: float) -> Color:
+	var c := fire_color()
+	var red := Color(c.r, c.g * 0.6, c.b * 0.4)
+	return c.lerp(red, clampf(k, 0.0, 1.0))
+
+
 static func light_node() -> OmniLight3D:
 	var l := OmniLight3D.new()
 	l.name = "TorchLight"
-	l.light_color = Color(str(L.get("color", "#ffb347")))
+	l.light_color = fire_color()
 	l.light_energy = float(L.get("energy", 2.2))
 	l.omni_range = float(L.get("range_m", 14.0))
 	l.omni_attenuation = float(L.get("attenuation", 1.6))
@@ -566,8 +584,11 @@ func update_torch(delta: float) -> void:
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
 		var e := energy_now(it, _t, motion)
 		var g := ember_glow(it, _t, motion)
+		# Guttering (burnt low, or the snuff rules' warning) reddens the
+		# light as it dims (§EX.6).
+		_light.light_color = gutter_color(maxf(snuff.gutter, 1.0 if guttering(it) else 0.0))
 		if snuff.gutter > 0.0:
-			# The coal gutters (§ET.7 warns_first): dimmer, cooler, its
+			# The coal gutters (§ET.7 warns_first): dimmer and redder, its
 			# light failing in a harder flicker as the moment comes.
 			var k := snuff.gutter
 			var flick := 1.0 - k * (0.35 + 0.35 * sin(_t * 23.0) * sin(_t * 7.3))

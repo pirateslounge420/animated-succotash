@@ -93,6 +93,11 @@ func _ready() -> void:
 	post = PostGrade.new()
 	add_child(post)
 	post.set_night(1.0)
+	# One firelight (§EX.6, crawler.json firelight): stone the fire blows
+	# pale or white goes back to the fire's amber before the grade.
+	var fl: Dictionary = Tuning.table("crawler").get("firelight", {})
+	var pc: Array = fl.get("pale_chroma", [0.3, 0.6])
+	post.set_fire_whites(float(fl.get("pale_to_amber", 1.0)), Torch.fire_color().lerp(Color.WHITE, float(fl.get("lift", 0.15))), Vector2(float(pc[0]), float(pc[1])))
 	_sound()
 	_ui()
 	EngineReport.check_shaders()

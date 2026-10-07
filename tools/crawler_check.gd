@@ -58,6 +58,7 @@ func _run() -> void:
 	await _scene(main)
 	_masonry(main)
 	await _vents(main)
+	_firelight(main)
 	await _relight(main)
 	await _snuff(main)
 	_sprite(main)
@@ -339,6 +340,27 @@ func _masonry(main: CrawlerMain) -> void:
 	ok(int(out[1][0]) == 0 and int(out[1][1]) > 0, "a damp wall: vines from its top and cracks, no sand (%d leaf triangles)" % out[1][1])
 
 
+## One firelight (design §EX.6): every fire light in the built tomb (the
+## hearth, every holder, the torch in hand) is the hearth's amber, and
+## torch.json's colour is look.json's.
+func _firelight(main: CrawlerMain) -> void:
+	var want := Torch.fire_color()
+	var lights: Array = []
+	var stack: Array = [main]
+	while not stack.is_empty():
+		var n: Node = stack.pop_back()
+		if n is OmniLight3D:
+			lights.append(n)
+		stack.append_array(n.get_children())
+	var odd := 0
+	for l in lights:
+		if not (l as OmniLight3D).light_color.is_equal_approx(want):
+			odd += 1
+			print("  light %s: #%s" % [(l as Node).get_path(), (l as OmniLight3D).light_color.to_html(false)])
+	ok(lights.size() >= (main.lay.holders as Array).size() + 2 and odd == 0, "one firelight: all %d fire lights in the tomb (hearth, holders, the torch) are #%s" % [lights.size(), want.to_html(false)])
+	ok(Color(str(Torch.L.get("color", ""))).is_equal_approx(want), "torch.json light.color is look.json fire.light.color (#%s)" % want.to_html(false))
+
+
 ## Every built-in fire's own vent (design §EV; TombKit, Vents, smoke.json
 ## vents).
 func _vents(main: CrawlerMain) -> void:
@@ -502,8 +524,12 @@ func _snuff(main: CrawlerMain) -> void:
 	Input.action_press("sprint")
 	await _frames(int((g_after - 0.6) * 60.0))
 	ok(t.lit() and t.snuff.gutter == 0.0, "%.1f s flat out: no gutter yet" % (g_after - 0.6))
+	var steady: Color = t._light.light_color
 	await _frames(int(1.4 * 60.0))
 	ok(t.lit() and t.snuff.gutter > 0.2 and t.snuff.cause == "sprint", "past gutter_after_s (%.0f s) the coal gutters, still lit (warns first; gutter %.2f)" % [g_after, t.snuff.gutter])
+	# Guttering reddens, never cools (§EX.6).
+	var gut: Color = t._light.light_color
+	ok(gut.b / maxf(gut.r, 1e-4) <= steady.b / maxf(steady.r, 1e-4) + 1e-4 and gut.g / maxf(gut.r, 1e-4) <= steady.g / maxf(steady.r, 1e-4) + 1e-4, "a guttering torch's light is redder, never bluer (steady #%s, guttering #%s)" % [steady.to_html(false), gut.to_html(false)])
 	Input.action_release("sprint")
 	await _frames(int((recover + 0.6) * 60.0))
 	ok(t.lit() and t.snuff.gutter < 0.02 and t.snuff.sprint_s < 0.01, "stopping in the gutter, it recovers within recover_s (%.0f s)" % recover)

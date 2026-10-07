@@ -86,6 +86,19 @@ func set_warmth(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("warmth", clampf(v, 0.0, 1.0))
 
 
+## One firelight (design §EX.6, the crawler): bright pale or white pixels
+## lit by fire put back on the fire's amber before the grade. `amount` 0
+## off; `tint` the fire's colour lifted toward white, scaled so its
+## brightest channel is 1; `pale_chroma` the chroma at which a pixel goes
+## fully back (under .x) and not at all (over .y).
+func set_fire_whites(amount: float, tint: Color, pale_chroma := Vector2(0.3, 0.6)) -> void:
+	var m := _rect.material as ShaderMaterial
+	m.set_shader_parameter("fire_whites", clampf(amount, 0.0, 1.0))
+	m.set_shader_parameter("fire_white_chroma", pale_chroma)
+	var mx := maxf(tint.r, maxf(tint.g, tint.b))
+	m.set_shader_parameter("fire_white_tint", Vector3(tint.r, tint.g, tint.b) / maxf(mx, 1e-4))
+
+
 func set_magic(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("magic", v)
 
