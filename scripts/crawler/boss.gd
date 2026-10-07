@@ -53,9 +53,10 @@ extends Node3D
 ##   the strike  within its strike block's reach (§FA, CreatureStrike, the
 ##               piece every creature strikes with): the wind-up (reared
 ##               back, jaws opening, the hiss), the lunge, the draw back.
-##               Rearing and lunging, it keeps coming at up to hunt_mps
-##               (never past the light's cap), so a walker it has caught
-##               can't step out of it and a sprinter can. A lunge that reaches you is one hit
+##               Rearing, lunging and drawing back, it keeps coming at up
+##               to hunt_mps (never past the light's cap; round a corner by
+##               its way to you), so a walker it has caught can't step out
+##               of it and a sprinter can. A lunge that reaches you is one hit
 ##               (contact.strike_is_hit; Harm, harm.json: its breath between
 ##               hits holds). A lit torch swung into its wind-up staggers it
 ##               (torch.json stagger): it recoils back along its body. Three
@@ -77,7 +78,9 @@ extends Node3D
 ##               foot of the side ways' walls, one in its lair room, joined
 ##               under the floors: it goes in head first, its body
 ##               following, travels hidden at its speed (a tunnel takes its
-##               length over that speed), and comes out of the other hole;
+##               length over that speed), and comes out of the other hole
+##               (should the far hole's room be lit while it is inside, it
+##               turns back under the floor and comes out where it went in);
 ##               while inside its tell is muffled (tunnels.muffle_db and
 ##               muffle_hz) and it notices nothing.
 ##   fire pots   (design §FA.3, §FA.4, Mike's note of 7 Oct: "a pot cant
@@ -233,6 +236,9 @@ var _den_s := 30.0
 var den_t := 0.0
 ## A light changed while it was in a tunnel: it decides once it is out.
 var _after_tunnel := false
+## It turned back in a tunnel (the far hole lit while it was inside): on its
+## rounds afresh once it is out where it went in.
+var _turned_back := false
 
 var _tell: AudioStreamPlayer3D
 var _hiss: AudioStreamPlayer3D
@@ -257,9 +263,11 @@ var chase_light_peak := 0.0
 var hits_landed := 0
 ## Its tunnels (tools): transits finished, and the last one ({"s" (time
 ## inside), "m" (metres inside), "straight" (m between the two mouths),
-## "from", "to" (mouths)}); its own clock.
+## "from", "to" (mouths)}); times it turned back inside one (the far hole
+## lit); its own clock.
 var transits := 0
 var last_transit := {}
+var turned_back := 0
 var clock := 0.0
 var _inside := false
 var _in_t0 := 0.0
@@ -505,6 +513,35 @@ func _lie_coiled(id: int) -> void:
 	_sway = 0.0
 
 
+## Lying along corridor stretch `id`, head toward its far end (the checks
+## lay it here; in play it gets anywhere only by going there).
+func _lie_along(id: int) -> void:
+	var n: Dictionary = ground.nodes[id]
+	var pc: Dictionary = lay.pieces[int(n.piece)]
+	var a0 := float(n.a0)
+	var a1 := float(n.a1)
+	var pts: Array = []
+	var length := float(sub("body").get("length_m", 9.0))
+	# Back along the corridor past the stretch's start if it is short (the
+	# tail may lie in the next stretch).
+	var k := a1 - 0.3 - length
+	while k <= a1 - 0.3:
+		pts.append(BossGround.point(pc, clampf(k, 0.0, float(pc.len)), 0.0))
+		k += 0.25
+	_trail_from(pts)
+	base = pts[-1]
+	head = base
+	dir = _flat(BossGround.point(pc, a1, 0.0) - BossGround.point(pc, a0, 0.0)).normalized()
+	if dir.length() < 0.5:
+		dir = Vector3.FORWARD
+	node = ground.node_at(base)
+	target = id
+	state = "coil"
+	coiling = false
+	coil_left = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0) * 0.5
+	_set_route(PackedVector3Array())
+
+
 ## The trail laid along polyline `poly` (oldest first): newest first,
 ## TRAIL_STEP apart.
 func _trail_from(poly: Array) -> void:
@@ -675,8 +712,17 @@ func _advance(spd: float, delta: float) -> bool:
 	return route_i >= route.size()
 
 
+## The head's place kept: the trail's first point follows the head, and
+## the head's place is kept once it is TRAIL_STEP on from the last kept
+## one (so the trail is the path the head took, however small each frame's
+## step; measured from the first point it never grew at a slow slither,
+## and the body was drawn straight from its head to wherever it last kept
+## one).
 func _push_trail(p: Vector3) -> void:
-	if trail.is_empty() or (trail[0] as Vector3).distance_to(p) >= TRAIL_STEP:
+	if trail.size() < 2:
+		trail.push_front(p)
+	elif (trail[1] as Vector3).distance_to(p) >= TRAIL_STEP:
+		trail[0] = p
 		trail.push_front(p)
 	else:
 		trail[0] = p
@@ -702,7 +748,8 @@ func _in_tunnel_run() -> bool:
 
 ## Which node it is in now (not while it is in the rock), and its tally of
 ## lit nodes: never of its own accord; chasing you only under the light's
-## cap; crossing (leaving the light, fleeing home).
+## cap; crossing (leaving the light, fleeing home, or out of a tunnel into a
+## room lit while it was under the floor, both its holes lit).
 func _track_node() -> void:
 	if _in_tunnel():
 		return
@@ -719,7 +766,12 @@ func _track_node() -> void:
 			"leave", "flee", "release", "rise", "stunned", "held":
 				cross_lit_entries += 1
 			_:
-				lit_entries += 1
+				if _after_tunnel:
+					# Out of a tunnel into a room lit while it was under the
+					# floor, both its holes lit (it leaves at once).
+					cross_lit_entries += 1
+				else:
+					lit_entries += 1
 	if noticed and state in ["hunt", "hang", "strike", "watch"] and light != null:
 		chase_light_peak = maxf(chase_light_peak, light.at(base))
 
@@ -963,10 +1015,12 @@ func _floor_at(p: Vector3) -> float:
 	return _floor_y(p)
 
 
-## In its wind-up and its lunge, still coming (Mike's note of 7 Oct: as
-## fast as your walk): toward you at up to hunt_mps until you are back
-## within its reach at the distance it strikes from, never past the light's
-## cap, never through stone.
+## In its wind-up, its lunge and its draw back, still coming (Mike's note
+## of 7 Oct: as fast as your walk): toward you at up to hunt_mps until you
+## are back within its reach at the distance it strikes from, never past
+## the light's cap, never through stone: straight at you, or round a corner
+## or a door's jamb along the chase's own way to you (TombNav's capped
+## grid).
 func _creep_in(to: Vector3, delta: float) -> void:
 	var v := _flat(to - base)
 	var d := v.length()
@@ -976,12 +1030,35 @@ func _creep_in(to: Vector3, delta: float) -> void:
 	var step := minf(num("hunt_mps", 4.6) * delta, d - keep)
 	var nxt := base + v / d * step
 	nxt.y = _floor_at(nxt)
-	if not _may_stand(nxt) or _blocked(base + Vector3(0, KNEE, 0), nxt + Vector3(0, KNEE, 0)):
-		return
-	base = nxt
-	head = base
+	if _may_stand(nxt) and not _blocked(base + Vector3(0, KNEE, 0), nxt + Vector3(0, KNEE, 0)):
+		_set_route(PackedVector3Array([nxt]))
+	else:
+		_replan_t -= delta
+		if _replan_t <= 0.0 or route_i >= route.size():
+			_replan_t = 0.3
+			_set_route(_cap_path(to))
+	_creep_along(step)
 	speed = step / maxf(delta, 1e-4)
-	travelled += step
+
+
+## On along its route `m` metres, its head on its line (no slither: it is
+## reared to strike).
+func _creep_along(m: float) -> void:
+	var left := m
+	while left > 1e-6 and route_i < route.size():
+		var to := route[route_i]
+		var d := base.distance_to(to)
+		if d <= left:
+			base = to
+			left -= d
+			route_i += 1
+		else:
+			base += (to - base) / d * left
+			left = 0.0
+	if left >= m:
+		return
+	head = base
+	travelled += m - left
 	_push_trail(head)
 	_track_node()
 
@@ -1076,10 +1153,45 @@ func _refresh(force: bool) -> void:
 	if state in ["release", "lair", "gone", "stunned", "flee", "den", "rise", "held"]:
 		return
 	if _in_tunnel():
-		# In the rock: it decides once it is out.
+		# In the rock: it decides once it is out, turning back first if the
+		# hole it is making for now opens into the light.
 		_after_tunnel = true
+		_turn_back_if_lit()
 		return
 	_after_light()
+
+
+## In one of its tunnels on its rounds or leaving the light, when a light
+## catches: if the hole it is making for now opens into the light and the
+## one it went in by is still dark, it turns back under the floor (unseen)
+## and comes out where it went in (Mike's note of 7 Oct: it does its best
+## to keep to the dark). True if it turned back.
+func _turn_back_if_lit() -> bool:
+	if not _in_tunnel_run() or not (state in ["prowl", "leave"]):
+		return false
+	# The hole it went in by (its mouth at j, the floor before it at j - 1)
+	# and the one it is making for (its mouth at k, the floor at k + 1).
+	var j := route_i - 1
+	while j >= 0 and route_hidden[j] != 0:
+		j -= 1
+	var k := route_i
+	while k < route.size() and route_hidden[k] != 0:
+		k += 1
+	if j < 1 or k + 1 >= route.size():
+		return false
+	var ahead := ground.node_at(route[k + 1])
+	var behind := ground.node_at(route[j - 1])
+	if ahead < 0 or ground.is_ground(ahead) or behind < 0 or not ground.is_ground(behind):
+		return false
+	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	for i in range(route_i - 1, j - 2, -1):
+		pts.append(route[i])
+		hid.append(route_hidden[i])
+	_set_route(pts, hid)
+	_turned_back = state == "prowl"
+	turned_back += 1
+	return true
 
 
 ## The light changed round it: chasing you, it stays unless the light where
@@ -1195,14 +1307,33 @@ func fire_distance(p: Vector3) -> float:
 	var best := INF
 	if not _in_tunnel():
 		best = fire_center().distance_to(p)
-	var step := maxi(int(0.5 / TRAIL_STEP), 1)
-	var n := mini(trail.size(), int(float(sub("body").get("length_m", 9.0)) / TRAIL_STEP) + 1)
-	for i in range(0, n, step):
-		var q: Vector3 = trail[i]
+	for q: Vector3 in _body_pts(0.5):
 		if q.y < _floor_y(q) - 0.3:
 			continue
 		best = minf(best, (q + Vector3(0.0, KNEE, 0.0)).distance_to(p))
 	return best - r
+
+
+## Points along its body as drawn, `step` m apart from its head back to
+## its length_m, along the trail its head left.
+func _body_pts(step: float) -> Array:
+	if trail.is_empty():
+		return [head]
+	var length := float(sub("body").get("length_m", 9.0))
+	var out: Array = [trail[0]]
+	var want := step
+	var acc := 0.0
+	for i in range(trail.size() - 1):
+		if want > length:
+			break
+		var a: Vector3 = trail[i]
+		var b: Vector3 = trail[i + 1]
+		var l := a.distance_to(b)
+		while want <= acc + l and want <= length:
+			out.append(a.lerp(b, (want - acc) / maxf(l, 1e-4)))
+			want += step
+		acc += l
+	return out
 
 
 ## A fire pot burst on it (§FA.4; Mike's note of 7 Oct: "a pot cant kill a
@@ -1336,7 +1467,13 @@ func _next_round() -> void:
 func _prowl_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 1.0, delta)
 	lift = move_toward(lift, 0.0 if _in_tunnel() else 0.08, delta)
-	if _advance(num("speed_mps", 2.0), delta):
+	if _advance(num("speed_mps", 2.0), delta) and _turned_back:
+		# Back out where it went in: on its rounds afresh.
+		_turned_back = false
+		node = ground.node_at(base)
+		_next_round()
+		return
+	if route_i >= route.size():
 		# Arrived: coil (§EY.3: "coils in dead ends between rounds").
 		var c := _coil_spot(target)
 		var pts := PackedVector3Array()
@@ -1460,6 +1597,11 @@ func _face(p: Vector3, delta: float) -> void:
 func _hang_tick(delta: float) -> void:
 	var pp := player.global_position
 	speed = 0.0
+	if light != null and light.at(base) > light.cap:
+		# The light caught round it: back to its edge first (_hunt_tick).
+		state = "hunt"
+		_replan_t = 0.0
+		return
 	_face(pp, delta)
 	lift = move_toward(lift, 0.85, delta * 1.5)
 	hang_t += delta
@@ -1475,11 +1617,20 @@ func _hang_tick(delta: float) -> void:
 		_replan_t = 0.0
 
 
-## The strike (CreatureStrike): the pose follows its parts.
+## The strike (CreatureStrike): the pose follows its parts. Standing where
+## the light passes the chase's cap (a fire caught by it, or planted), it
+## breaks off (but for the committed lunge and a reel) and goes back to the
+## light's edge first (_hunt_tick).
 func _strike_tick(delta: float) -> void:
 	var pp := player.global_position
 	var d := _flat(pp - base).length()
 	speed = 0.0
+	if light != null and light.at(base) > light.cap and not (strike.state in ["strike", "reel"]):
+		strike.cancel()
+		_calm()
+		state = "hunt"
+		_replan_t = 0.0
+		return
 	_face(pp, delta)
 	var k := strike.pose_k()
 	match strike.state:
@@ -1498,6 +1649,8 @@ func _strike_tick(delta: float) -> void:
 			lift = move_toward(lift, 0.55, delta * 4.0)
 			mouth_open = true
 		"recover":
+			# Drawing its head back, its body still coming.
+			_creep_in(pp, delta)
 			lunge = move_toward(lunge, 0.0, delta * 3.0)
 			lift = move_toward(lift, 0.75, delta)
 			mouth_open = k < 0.3
@@ -1974,13 +2127,9 @@ func _home() -> void:
 func _all_below() -> bool:
 	if head.y > _floor_y(head) - 0.3:
 		return false
-	var length := float(sub("body").get("length_m", 9.0))
-	var s := 0.0
-	while s <= length + 1e-3:
-		var q := _seg_at(s)
+	for q: Vector3 in _body_pts(0.25):
 		if q.y > _floor_y(q) - 0.3:
 			return false
-		s += 0.25
 	return true
 
 

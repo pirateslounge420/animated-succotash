@@ -8,10 +8,16 @@ extends SceneTree
 ## its dead end to the edge of your torch's light in a corridor, reared and
 ## hissing (the torch's delay); the same frame with it hidden, to count its
 ## pixels; mid-strike, jaws open; lying coiled in its room, seen from the
-## door; the lair from its room's door and from its edge, looking down.
+## door; the lair from its room's door and from its edge, looking down,
+## once it has gone down its hole for good; and (Mike's note of 7 Oct) the
+## snake at the edge of the hearth's light, its head forward into the glow,
+## seen from by the fire through the hearth room's door, with it hidden to
+## count it; one of its tunnels' holes by torchlight.
 ## Checks: every cell of every sheet holds the body; the snake shows at
 ## the torch's edge (pixels that change when it is hidden, warm-lit); the
-## hole's mouth is the darkest thing round it.
+## hole's mouth is the darkest thing round it; the snake shows at the edge
+## of the hearth's light, never past the chase's cap; its tunnel's hole is
+## dark inside against the torchlit stone beside it.
 
 var fails := 0
 var out_dir := ""
@@ -163,8 +169,10 @@ func _run() -> void:
 	await _frames(3)
 	await _shot("11_snake_strikes")
 	ok(b.mouth_open, "mid-strike, its jaws open")
-	# Coiled in its room, from its door.
-	b.after_wake()
+	# Coiled in its room, from its door (laid there: a frames' placing).
+	b._let_go("frames")
+	b._calm()
+	b._start_far()
 	b.tick(1.0 / 30.0)
 	await _frames(2)
 	var cr: Dictionary = b.ground.nodes[b.node]
@@ -177,6 +185,13 @@ func _run() -> void:
 	await _frames(6)
 	await _shot("12_snake_coiled")
 	print("  coiled in node %d (a %s, %s)" % [b.node, cr.kind, cpc.get("room_kind", "")])
+	# At the edge of the hearth's light (Mike's note of 7 Oct: "they may
+	# show just enough of their face/body near the fire"): it in the dark
+	# outside a door of the hearth room, you by the fire 2.5 m in from that
+	# door, facing it, your torch lit.
+	await _peek(main)
+	# One of its tunnels' holes, by torchlight.
+	await _hole_frame(main)
 	# The lair: from its room's door, and at its edge looking down.
 	var l: Dictionary = main.lay.lair
 	if not l.is_empty():
@@ -185,9 +200,14 @@ func _run() -> void:
 		var lc: Vector3 = l.pos
 		var to3 := lc - le
 		p.spawn_flat(le, atan2(-to3.x, -to3.z), -0.3)
-		# It is home (the last light), breathing.
+		# It is home (the last light): it travels there and goes down its
+		# hole, breathing.
 		b.release()
-		b._home()
+		var home_t := 0.0
+		while home_t < 120.0 and b.state == "release":
+			b.tick(1.0 / 30.0)
+			home_t += 1.0 / 30.0
+		print("  it went home in %.1f s (%s)" % [home_t, b.state])
 		await _frames(6)
 		await _shot("13_lair_from_door")
 		var e := lc + (le - lc).normalized() * (float(l.r) + 0.55)
@@ -203,6 +223,112 @@ func _run() -> void:
 		ok(_luma(mouth) < _luma(rim) * 0.3 and mouth.b > mouth.r, "the hole's mouth is the dark's navy against its firelit edge")
 	print("RESULT fails: %d (frames in %s)" % [fails, out_dir])
 	quit(1 if fails > 0 else 0)
+
+
+## The snake at the edge of the hearth's light, its head forward into the
+## glow (peek_m), from by the fire; the same with it hidden, to count it.
+func _peek(main: CrawlerMain) -> void:
+	var b := main.boss
+	var p := main.player
+	var g := b.ground
+	var lf := main.residents.light
+	var hearth := g.node_at(main.lay.wake[0])
+	var outside := -1
+	var via := Vector3.ZERO
+	for l in g.nodes[hearth].links:
+		if g.is_ground(int(l.to)) and not l.has("tunnel"):
+			outside = int(l.to)
+			via = l.via
+			break
+	if outside < 0:
+		ok(false, "a stretch of its dark at the hearth room's door")
+		return
+	b._let_go("frames")
+	b._calm()
+	if str(g.nodes[outside].kind) == "room":
+		b._lie_coiled(outside)
+	else:
+		b._lie_along(outside)
+	var c: Vector3 = g.nodes[hearth].center
+	var into := Vector3(c.x - via.x, 0.0, c.z - via.z).normalized()
+	var by_fire := via + into * 2.5
+	by_fire.y = b._floor_y(by_fire)
+	p.spawn_flat(by_fire, atan2(into.x, into.z), -0.05)
+	if not p.torch.lit():
+		p.torch.light()
+	await _frames(4)
+	b.noticed = true
+	b.pursuit.notice(true)
+	b.hang_t = 99.0
+	b.struck = false
+	b.state = "hunt"
+	b._replan_t = 0.0
+	b._hunt_to = Vector3.INF
+	var peak := 0.0
+	var t := 0.0
+	while t < 20.0 and not (b.state == "watch" and b.lunge >= b.num("peek_m", 0.7) - 0.05):
+		b.tick(1.0 / 30.0)
+		t += 1.0 / 30.0
+		peak = maxf(peak, lf.at(b.base))
+	var head := b.head + b.dir * b.lunge
+	print("  at the hearth's light: %s after %.1f s, %.2f m from you, its head %.2f m forward (the light %.3f at its head, %.3f at its feet; the cap %.3f)" % [b.state, t, Vector3(b.base.x - by_fire.x, 0.0, b.base.z - by_fire.z).length(), b.lunge, lf.at(head), lf.at(b.base), lf.cap])
+	await _frames(6)
+	var shot := await _shot("15_snake_peeks_at_the_hearth_light")
+	var head_px := _px(shot, head + Vector3(0.0, b.lift + 0.2, 0.0))
+	b.body.visible = false
+	await _frames(3)
+	var bare := await _shot("15b_same_without_it")
+	b.body.visible = true
+	var box := Rect2(head_px, Vector2.ZERO)
+	for sp in b.body.segs:
+		var q := _px(shot, sp.global_position + Vector3(0.0, 0.2, 0.0))
+		if q.x >= 0.0:
+			box = box.expand(q)
+	box = box.grow(30.0)
+	var changed := 0
+	for y in range(maxi(int(box.position.y), 0), mini(int(box.end.y), shot.get_height())):
+		for x in range(maxi(int(box.position.x), 0), mini(int(box.end.x), shot.get_width())):
+			if absf(_luma(shot.get_pixel(x, y)) - _luma(bare.get_pixel(x, y))) > 0.03:
+				changed += 1
+	ok(b.state == "watch" and peak <= lf.cap + 1e-4 and changed > 150, "the snake at the edge of the hearth's light, its head forward into the glow, never past the cap (the light at its feet %.3f at most): %d pixels of it from by the fire" % [peak, changed])
+	b._let_go("frames")
+	b._calm()
+
+
+## One of its tunnels' holes (Mike's note of 7 Oct: "they may have their
+## own tunnels"), by torchlight from 1.8 m before it, looking a little
+## down: the hole dark against the lit stone beside it.
+func _hole_frame(main: CrawlerMain) -> void:
+	var b := main.boss
+	var p := main.player
+	var holes: Array = (main.lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	if holes.is_empty():
+		ok(false, "the tomb has the snake's holes")
+		return
+	# Its body out of the way, coiled in its far dead end.
+	b._let_go("frames")
+	b._calm()
+	b._start_far()
+	var h: Dictionary = holes[0]
+	for q in holes:
+		if not bool(q.get("lair", false)):
+			h = q
+			break
+	var n: Vector3 = h.n
+	var u: Vector3 = h.u
+	var at: Vector3 = (h.pos as Vector3) + n * 1.8
+	at.y = b._floor_y(at)
+	p.spawn_flat(at, atan2(n.x, n.z), -0.35)
+	if not p.torch.lit():
+		p.torch.light()
+	await _frames(8)
+	var img := await _shot("16_tunnel_hole")
+	var mid := (h.pos as Vector3) + Vector3.UP * float(h.h) * 0.4 - n * 0.05
+	var side := (h.pos as Vector3) + u * (float(h.w) * 0.5 + 0.3) + Vector3.UP * 0.25
+	var in_hole := _around(img, _px(img, mid), 3)
+	var by_it := _around(img, _px(img, side), 3)
+	print("  the hole (%s, %.2f x %.2f m): inside #%s, the stone beside it #%s" % [str(h.get("piece", "?")), float(h.w), float(h.h), in_hole.to_html(false), by_it.to_html(false)])
+	ok(_luma(in_hole) < _luma(by_it) * 0.5, "its hole reads as a way into the black: dark inside against the torchlit stone beside it")
 
 
 ## Its sheets, saved, and every cell holding the body.

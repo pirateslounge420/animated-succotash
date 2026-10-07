@@ -34,25 +34,36 @@ extends SceneTree
 ##     its coil and come at you through its dark: it reels reel_m back and
 ##     no hit counts;
 ##  5. its speed (Mike's note of 7 Oct): hunt_mps faster than your walk and
-##     slower than your sprint; on a long dark run with it 5 m behind you,
+##     slower than your sprint; on a long dark run with it 4 m behind you,
 ##     walking it catches you and its strike lands (it keeps coming through
-##     its wind-up), sprinting the gap only grows and nothing reaches you;
-##  6. the light's edge (Mike's note of 7 Oct, amending §FD): hunting you,
+##     its wind-up, its lunge and its draw back, round corners by its way to
+##     you), sprinting the gap only grows and nothing reaches you;
+##  6. the light on the floor (LightField, crawler.json light_field): at the
+##     start only the hearth's, past the chase's cap in the hearth room and
+##     under it a few metres out of its doors, nothing beyond its range;
+##     your torch in hand counts for nothing; a holder relit lights the floor
+##     before it past the cap and none through its wall; a planted torch
+##     lights the floor round it, and taken up takes its light with it;
+##     then the light's edge (Mike's note of 7 Oct, amending §FD): hunting you,
 ##     its delay spent, while you stand by the hearth and then deep in a
-##     relit room: it never stands where the light passes the chase's cap,
-##     it comes to the edge (the light at its feet near the cap), rears its
-##     head forward into the glow (brighter at its head than at its feet),
-##     no strike reaches you, you don't heal while it watches, and it gives
-##     you up after watch_s; then you at the light's dim edge, within its
-##     reach of where it may stand: its strike lands;
+##     relit room: once at or under the chase's cap it never stands where
+##     the light passes it (laid, or finding you, in a fire's spill, it goes
+##     out of it first), it comes to the edge (the light past the cap within
+##     0.75 m of where it stands nearest you), rears its head forward into
+##     the glow (brighter at its head than at its feet), no strike reaches
+##     you, you don't heal while it watches, and it gives you up after
+##     watch_s (or sooner, by its own gives_up, when the doorway hides your
+##     flame); then you at the light's dim edge, within its reach of where
+##     it may stand: its strike lands;
 ##  7. its tunnels in use: sent through one, it goes in at one hole, is
 ##     hidden inside for at least the tunnel's length over its speed (its
 ##     tell muffled), and comes out of the other; its whole side way relit
 ##     round it, it leaves under the light through a tunnel, not through
 ##     the hearth room;
 ##  8. the dimmest way: its room and the way out of it relit, it crosses
-##     the light to the dark by a way measurably dimmer than the shortest
-##     (the light along each, LightField.along);
+##     the light to the dark by a way dimmer than the shortest (the light
+##     along each, LightField.along), in a room lit unevenly enough that
+##     one exists (the light's own grid finds one a twentieth dimmer);
 ##  9. a fire pot (§FA.4, Mike's note of 7 Oct): a burst at its head stuns
 ##     it (no strike, no chase) for stun_s, then it travels to its lair's
 ##     hole and down it, out of every pot's reach, stays there
@@ -75,8 +86,11 @@ extends SceneTree
 ##     reported.
 ## And over every run where it moves on its own (5 to 11): nothing teleports
 ## (Mike's note of 7 Oct): no frame moves its head's line further than its
-## top speed (Boss.max_mps) allows, its body never jumps, and it is never
-## hidden while any of it is above the floor.
+## top speed (Boss.max_mps) allows, its body never jumps, it is never
+## hidden while any of it is above the floor, and its body as drawn lies
+## along the floor its head took, never through the stone (looked at every
+## sixth frame: in a room or corridor, a doorway, one of its holes, or down
+## in a tunnel or its den).
 
 var fails := 0
 var DT := 1.0 / 30.0
@@ -133,6 +147,9 @@ func _run() -> void:
 			await _done(main)
 		if want.call("edge"):
 			main = await _boot(sv)
+			await _light_field(main)
+			await _done(main)
+			main = await _boot(sv)
 			await _edge(main)
 			await _done(main)
 		if want.call("tunnels"):
@@ -188,8 +205,37 @@ var _mo := {}
 
 
 func _mo_reset(b: Boss) -> void:
-	_mo = {"frames": 0, "worst": 0.0, "worst_head": 0.0, "worst_tail": 0.0, "over": 0, "vanished": 0,
+	_mo = {"frames": 0, "worst": 0.0, "worst_head": 0.0, "worst_tail": 0.0, "over": 0, "vanished": 0, "stone": 0,
 		"base": b.base, "head": b.trail[0] if not b.trail.is_empty() else b.head, "tail": _tail_of(b)}
+
+
+## Is any of its body as drawn (every half metre of it) in the stone: above
+## the floor (not down in a tunnel or its den), and in no room or corridor,
+## no doorway, and none of its own holes?
+func _in_stone(b: Boss) -> bool:
+	var lay := b.lay
+	var holes: Array = (lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	for q: Vector3 in b._body_pts(0.5):
+		if q.y < b._floor_y(q) - 0.3 or TombKit.piece_at(lay, q) >= 0:
+			continue
+		var ok_here := false
+		for d in lay.doors:
+			var dn := Vector2((d.n as Vector2).x, (d.n as Vector2).y) if d.n is Vector2 else Vector2((d.n as Vector3).x, (d.n as Vector3).z)
+			var dp := Vector2((d.p as Vector2).x, (d.p as Vector2).y) if d.p is Vector2 else Vector2((d.p as Vector3).x, (d.p as Vector3).z)
+			var r := Vector2(q.x, q.z) - dp
+			if absf(r.dot(dn)) <= Delves.WALL * 0.5 + 0.15 and absf(r.dot(Vector2(-dn.y, dn.x))) <= float(d.half) + 0.1:
+				ok_here = true
+				break
+		if not ok_here:
+			for h in holes:
+				var r3 := q - (h.pos as Vector3)
+				var into := -r3.dot(h.n as Vector3)
+				if absf(r3.dot(h.u as Vector3)) <= float(h.w) * 0.5 + 0.05 and into >= -0.1 and into <= float(h.depth) + 0.15:
+					ok_here = true
+					break
+		if not ok_here:
+			return true
+	return false
 
 
 ## Where its tail's end is drawn (Boss._pose: its last length of body, laid
@@ -233,13 +279,17 @@ func _mo_step(b: Boss, dt: float) -> void:
 			print("  a step too far (%s): its line %.3f m, its head %.3f m, its tail %.3f m in %.3f s (bound %.3f m)" % [b.state, d, dh, dtl, dt, bound])
 	if not b.body.visible and b.body.baked and not b._all_below():
 		_mo.vanished = int(_mo.vanished) + 1
+	if int(_mo.frames) % 6 == 0 and b.body.visible and _in_stone(b):
+		_mo.stone = int(_mo.stone) + 1
+		if int(_mo.stone) <= 3:
+			print("  its body in the stone (%s) at %s" % [b.state, str(b.base)])
 	_mo.base = b.base
 	_mo.head = h
 	_mo.tail = tl
 
 
 func _mo_ok(how: String) -> void:
-	ok(int(_mo.over) == 0 and int(_mo.vanished) == 0 and int(_mo.frames) > 0, "%s: nothing teleports: over %d frames its fastest step %.2f m/s (its head %.2f, its tail %.2f; top speed %.1f), %d steps too far, %d frames hidden above the floor" % [how, int(_mo.frames), float(_mo.worst), float(_mo.worst_head), float(_mo.worst_tail), _b_max(), int(_mo.over), int(_mo.vanished)])
+	ok(int(_mo.over) == 0 and int(_mo.vanished) == 0 and int(_mo.stone) == 0 and int(_mo.frames) > 0, "%s: nothing teleports: over %d frames its fastest step %.2f m/s (its head %.2f, its tail %.2f; top speed %.1f), %d steps too far, %d frames hidden above the floor, %d looks with its body through the stone" % [how, int(_mo.frames), float(_mo.worst), float(_mo.worst_head), float(_mo.worst_tail), _b_max(), int(_mo.over), int(_mo.vanished), int(_mo.stone)])
 
 
 var _last_max := 6.0
@@ -804,21 +854,30 @@ func _swing_into(main: CrawlerMain, dists: Array, how: String) -> void:
 	while b.strike.state == "wind_up" and b.strike.t < 0.5 * b.strike.wind_up_s - lead and guard < 120:
 		await _step(main)
 		guard += 1
-	# It holds still in its wind-up: where its head is now is where the
-	# reel starts (measured flat: in its coil the head sits a little up).
+	# The reel is measured from where its head is as the stagger lands (it
+	# comes on through its wind-up, so not before): flat for a reel
+	# straight back over the floor, along its body for one back along it
+	# (in its coil its body climbs a little).
 	var h0 := b.head
 	var last := h0
 	var moved := 0.0
+	var moved3 := 0.0
+	var reeling := false
 	t.swing()
 	guard = 0
-	while t._swing > Torch.SWING_TOP and guard < 30:
+	while guard < 31:
+		var was := b.strike.state
 		await _step(main)
-		moved += _flat_d(b.head, last)
+		if b.strike.state == "reel" and not reeling:
+			reeling = true
+			h0 = last
+		if reeling or was == "reel":
+			moved += _flat_d(b.head, last)
+			moved3 += b.head.distance_to(last)
 		last = b.head
 		guard += 1
-	await _step(main)
-	moved += _flat_d(b.head, last)
-	last = b.head
+		if t._swing <= Torch.SWING_TOP and (reeling or guard > 30):
+			break
 	var share := b.strike.met_at_share
 	ok(t.last_contact == "staggered" and b.strike.staggers == stag0 + 1 and b.strike.state == "reel",
 		"%s: your lit swing at %.0f%% of its wind-up staggers it (%s, %s)" % [how, share * 100.0, t.last_contact, b.strike.state])
@@ -826,8 +885,11 @@ func _swing_into(main: CrawlerMain, dists: Array, how: String) -> void:
 	while b.strike.state == "reel" and guard < 120:
 		await _step(main)
 		moved += _flat_d(b.head, last)
+		moved3 += b.head.distance_to(last)
 		last = b.head
 		guard += 1
+	if b._reel_back:
+		moved = moved3
 	var d0 := _flat_d(h0, p.global_position)
 	var d1 := _flat_d(b.head, p.global_position)
 	# The whole reel_m, or straight back until the wall stops it, still on
@@ -855,41 +917,17 @@ func _flat_d(a: Vector3, b: Vector3) -> float:
 
 
 ## The snake laid in node `id` for a test (a harness's placing): coiled in a
-## room; in a corridor's stretch, its head at the stretch's middle and its
-## body straight back along the corridor, away from `away_from` (where you
-## will be). Its chase called off, quiet.
-func _lie_in(main: CrawlerMain, id: int, away_from: Vector3) -> void:
+## room, stretched along a corridor's stretch (Boss._lie_along), its chase
+## called off, quiet, lying there until something sets it going.
+func _lie_in(main: CrawlerMain, id: int) -> void:
 	var b := main.boss
 	b._let_go("check")
 	b._calm()
-	var g := b.ground
-	if str(g.nodes[id].kind) == "room":
+	if str(b.ground.nodes[id].kind) == "room":
 		b._lie_coiled(id)
-		b._pose()
-		return
-	var pc: Dictionary = main.lay.pieces[int(g.nodes[id].piece)]
-	var axis := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y).normalized()
-	var c: Vector3 = g.nodes[id].center
-	var back := axis if _flat_d(c + axis, away_from) > _flat_d(c - axis, away_from) else -axis
-	var poly: Array = []
-	var length := float(b.sub("body").get("length_m", 9.0)) + 1.5
-	var s := length
-	while s > 0.0:
-		var q := c + back * s
-		q.y = b._floor_y(q)
-		poly.append(q)
-		s -= 0.5
-	poly.append(c)
-	b._trail_from(poly)
-	b.base = c
-	b.head = c
-	b.dir = -back
-	b.node = id
-	b.target = id
-	b.state = "coil"
-	b.coiling = false
+	else:
+		b._lie_along(id)
 	b.coil_left = 999.0
-	b._set_route(PackedVector3Array())
 	b._pose()
 
 
@@ -972,7 +1010,7 @@ func _speed(main: CrawlerMain) -> void:
 		main.harm.reset()
 		p._invulnerable = 0.0
 		var v := walk if mode == "walk" else sprint
-		# It 5 m behind you on the run, its body along the run behind it,
+		# It 4 m behind you on the run, its body along the run behind it,
 		# after you, its torch's delay spent (its hold at the edge of your
 		# torchlight is tested above).
 		var s0 := float(b.sub("body").get("length_m", 9.0)) + 2.0
@@ -997,7 +1035,7 @@ func _speed(main: CrawlerMain) -> void:
 		b.state = "hunt"
 		b._replan_t = 0.0
 		b._hunt_to = Vector3.INF
-		var gap0 := 5.0
+		var gap0 := 4.0
 		var s := s0 + gap0
 		var landed0 := main.harm.landed
 		var closest := INF
@@ -1044,7 +1082,150 @@ func _speed(main: CrawlerMain) -> void:
 	main.harm.reset()
 
 
-# --- 6. The light's edge (Mike's note of 7 Oct) --------------------------------------
+# --- 6. The light on the floor, and its edge (Mike's note of 7 Oct) ------------------
+
+## The light on the floor (LightField): the hearth's at the start; your
+## torch counts for nothing; a relit holder and a planted torch light the
+## floor round them, through no stone; a torch taken up takes its light.
+func _light_field(main: CrawlerMain) -> void:
+	var lf := main.residents.light
+	var nav := main.residents.nav
+	var b := main.boss
+	var p := main.player
+	var cap := lf.cap
+	lf.refresh()
+	# The hearth's: its room's floor past the cap, the floor out of each of
+	# its doors under it within a few metres, nothing lit beyond its range.
+	var hearth := b.ground.node_at(main.lay.wake[0])
+	var hc: Vector3 = b.ground.nodes[hearth].center
+	var outs: Array = []
+	for di in main.lay.pieces[0].doors:
+		var d: Dictionary = main.lay.doors[di]
+		var dn: Vector2 = (d.n as Vector2) * (1.0 if int(d.a) == 0 else -1.0)
+		var m := 0.0
+		var edge := -1.0
+		while m < 8.0:
+			var q := Vector3((d.p as Vector2).x + dn.x * m, float(d.y), (d.p as Vector2).y + dn.y * m)
+			if nav.is_open(nav.cell_of(q)) and lf.at(q) <= cap:
+				edge = m
+				break
+			m += 0.25
+		outs.append(edge)
+	var hl := LightField.fire_light(main.fires.hearth)
+	var range_m := float(hl.range)
+	var hlp: Vector3 = hl.pos
+	var far_lit := 0
+	var lit_cells := 0
+	for y in nav.size.y:
+		for x in nav.size.x:
+			var c := Vector2i(x, y)
+			if not nav.is_open(c) or nav.light_of(c) <= 0.0:
+				continue
+			lit_cells += 1
+			var q := nav.point_of(c)
+			if q.distance_to(hlp) > range_m + 0.5:
+				far_lit += 1
+	var doors_ok := not outs.is_empty() and not outs.has(-1.0) and (outs.max() as float) <= 4.0
+	ok(lf.at(hc + Vector3(1.5, 0.0, 0.0)) > cap * 10.0 and doors_ok and far_lit == 0, "at the start only the hearth lights the floor: %.2f by it (the chase's cap %.3f), under the cap %s m out of its doors, nothing lit beyond its %.1f m (%d squares lit)" % [lf.at(hc + Vector3(1.5, 0.0, 0.0)), cap, str(outs), range_m, lit_cells])
+	# Your torch in hand counts for nothing (the snake's torch_delay is its
+	# own rule).
+	if not p.inventory.has_kind("torch"):
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	var spot := _far_dark_spot(main)
+	p.spawn_flat(spot, 0.0, 0.0)
+	await physics_frame
+	var before := lf.at(spot)
+	p.torch.light()
+	await physics_frame
+	var changed := lf.refresh()
+	ok(not changed and is_equal_approx(lf.at(spot), before), "your lit torch in hand lights none of it (%.3f at your feet, the same as before)" % lf.at(spot))
+	p.torch.put_out("check")
+	# A holder relit: the floor before it past the cap, none through its wall.
+	var tried := 0
+	var shown := false
+	for h in main.fires.holders:
+		if FireStore.is_lit(h) or int(h.get_meta("piece")) == 0 or str(h.get_meta("fire_holder")) != "sconce":
+			continue
+		var hp: Vector3 = (h as Node3D).global_position
+		var nrm: Vector3 = (h as Node3D).global_basis.z
+		nrm.y = 0.0
+		nrm = nrm.normalized()
+		var fy := hp.y - float(CrawlerFires.HOLD.get("sconce_h_m", 1.7))
+		var front := Vector3(hp.x, fy, hp.z) + nrm * 1.5
+		var behind := Vector3(hp.x, fy, hp.z) - nrm * 1.5
+		if not nav.is_open(nav.cell_of(front)) or lf.at(front) > 0.0:
+			continue
+		tried += 1
+		var behind_open := nav.is_open(nav.cell_of(behind))
+		var behind0 := lf.at(behind)
+		_light_holder(main, h)
+		var c2 := lf.refresh()
+		ok(c2 and lf.at(front) > cap and (not behind_open or is_equal_approx(lf.at(behind), behind0)), "a sconce relit (piece %d): the floor 1.5 m before it lit to %.2f, past the cap%s" % [int(h.get_meta("piece")), lf.at(front), (", and none through its wall (the floor behind it %.3f, as before)" % lf.at(behind)) if behind_open else ""])
+		shown = true
+		break
+	if not shown:
+		ok(false, "a cold sconce with dark floor before it to relight (%d tried)" % tried)
+	# A planted torch: lights the floor round it, and taken up takes it.
+	var at := _far_dark_spot(main)
+	var lv0 := lf.at(at)
+	var pt := PlantedTorch.plant(Inventory.make("torch", {"lit": true, "burn_left_min": 30.0}), main.world, at, Vector3.UP, false, main)
+	await physics_frame
+	lf.refresh()
+	var near := at + Vector3(0.75, 0.0, 0.0)
+	var lit_round := maxf(lf.at(near), lf.at(at + Vector3(-0.75, 0.0, 0.0)))
+	# (Its meshes let go of first, as NodeRelease does: the headless
+	# renderer's noise otherwise.)
+	NodeRelease.detach_all(pt)
+	pt.take()
+	await physics_frame
+	lf.refresh()
+	ok(lv0 <= 0.0 and lit_round > cap and lf.at(at) <= 0.0 and lf.at(near) <= 0.0, "a torch planted in the dark lights the floor round it (%.2f, past the cap), and taken up takes its light with it (%.3f)" % [lit_round, lf.at(near)])
+
+
+## The most light on open floor within `r` m of `p`, joined to it by open
+## floor (the glow just beyond where it stands, never through a wall).
+func _glow_near(lf: LightField, p: Vector3, r: float) -> float:
+	var nav := lf.nav
+	var c := nav.nearest_open(nav.cell_of(p), 2)
+	if c.x < 0:
+		return 0.0
+	var best := 0.0
+	var seen := {c: true}
+	var todo: Array[Vector2i] = [c]
+	while not todo.is_empty():
+		var q: Vector2i = todo.pop_back()
+		best = maxf(best, nav.light_of(q))
+		for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var nq := q + o
+			if seen.has(nq) or not nav.is_open(nq):
+				continue
+			seen[nq] = true
+			var wp := nav.point_of(nq)
+			if Vector2(wp.x - p.x, wp.z - p.z).length() <= r:
+				todo.append(nq)
+	return best
+
+
+## Open floor in a dark room far from every fire (the snake's own far dead
+## end, its coil's middle): unlit.
+func _far_dark_spot(main: CrawlerMain) -> Vector3:
+	var b := main.boss
+	b._start_far()
+	var id := b.node
+	var pc: Dictionary = main.lay.pieces[int(b.ground.nodes[id].piece)]
+	var nav := main.residents.nav
+	var best := Vector3.INF
+	var al := 1.0
+	while al < float(pc.len) - 1.0 and best == Vector3.INF:
+		var q := BossGround.point(pc, al, 0.0)
+		if nav.is_open(nav.cell_of(q)) and main.residents.light.at(q) <= 0.0 and q.distance_to(b.head) > 3.0:
+			best = q
+		al += 0.5
+	return best if best != Vector3.INF else b.ground.nodes[id].center
+
+
+# --- The light's edge (Mike's note of 7 Oct) -------------------------------------------
 
 ## A room with torches of its own (not the hearth room) beside a stretch
 ## or room of the dark once they are relit: {"room", "dark", "via"}, its
@@ -1150,7 +1331,7 @@ func _hunt_you(main: CrawlerMain, you: Vector3, secs: float) -> Dictionary:
 	b.state = "hunt"
 	b._replan_t = 0.0
 	b._hunt_to = Vector3.INF
-	var out := {"peak": 0.0, "edge": 0.0, "closest": INF, "peek": 0.0, "glow": 0.0, "feet": 0.0, "hits": 0, "gave": -1.0, "watch": 0.0, "went": []}
+	var out := {"peak": 0.0, "edge": 0.0, "closest": INF, "peek": 0.0, "glow": 0.0, "feet": 0.0, "hits": 0, "gave": -1.0, "watch": 0.0, "went": [], "under": false, "near_glow": 0.0}
 	var landed0 := main.harm.landed
 	var t := 0.0
 	var was := ""
@@ -1166,11 +1347,17 @@ func _hunt_you(main: CrawlerMain, you: Vector3, secs: float) -> Dictionary:
 			out.gave = t
 			break
 		var lv := lf.at(b.base)
-		out.peak = maxf(float(out.peak), lv)
+		# Once under the cap, never past it again (laid, or finding you, in
+		# a fire's spill, it goes out of it to the edge first).
+		if lv <= lf.cap:
+			out.under = true
+		if bool(out.under):
+			out.peak = maxf(float(out.peak), lv)
 		var d := _flat_d(b.base, you)
 		if d < float(out.closest):
 			out.closest = d
 			out.edge = lv
+			out.near_glow = _glow_near(lf, b.base, 0.75)
 		if b.state == "watch":
 			out.watch = float(out.watch) + DT
 			if b.lunge > float(out.peek):
@@ -1204,11 +1391,12 @@ func _edge(main: CrawlerMain) -> void:
 	if outside >= 0:
 		main.harm.reset()
 		var by_fire := _by_the_fire(main, hearth, reach)
-		_lie_in(main, outside, by_fire)
+		_lie_in(main, outside)
 		var r: Dictionary = await _hunt_you(main, by_fire, watch_s + 8.0)
-		ok(float(r.peak) <= cap + 1e-4 and float(r.edge) >= cap * 0.25 and int(r.hits) == 0, "you by the hearth (the light %.2f where you stand): it comes to the edge of the light and no further, the light at its feet at most %.3f (the cap %.3f; %.3f where it stood nearest you, %.1f m off), and no strike reaches you" % [lf.at(by_fire), float(r.peak), cap, float(r.edge), float(r.closest)])
+		ok(bool(r.under) and float(r.peak) <= cap + 1e-4 and float(r.near_glow) > cap and int(r.hits) == 0, "you by the hearth (the light %.2f where you stand): it comes to the edge of the light and no further, the light at its feet at most %.3f (the cap %.3f; %.3f where it stood nearest you, %.1f m off, the light past the cap within 0.75 m of it there, %.2f), and no strike reaches you" % [lf.at(by_fire), float(r.peak), cap, float(r.edge), float(r.closest), float(r.near_glow)])
 		ok(float(r.peek) >= b.num("peek_m", 0.7) - 0.05 and float(r.glow) > float(r.feet), "there it rears its head forward into the glow (%.2f m; the light %.3f at its head, %.3f at its feet)" % [float(r.peek), float(r.glow), float(r.feet)])
-		ok(float(r.gave) > 0.0 and absf(float(r.watch) - watch_s) < 1.0, "it watches you from there %.1f s, then gives you up (watch_s %.0f; gave up at %.1f s)" % [float(r.watch), watch_s, float(r.gave)])
+		var why := str(b.pursuit.why)
+		ok(float(r.gave) > 0.0 and (absf(float(r.watch) - watch_s) < 1.0 or (why == "out_of_sight" and float(r.watch) < watch_s)), "it watches you from there %.1f s, then gives you up (%s; watch_s %.0f, or sooner by its own gives_up when the doorway hides your flame from it; gave up at %.1f s)" % [float(r.watch), why, watch_s, float(r.gave)])
 		_mo_ok("the chase to the hearth's light")
 	else:
 		ok(false, "a stretch of its dark at the hearth room's door")
@@ -1226,9 +1414,9 @@ func _edge(main: CrawlerMain) -> void:
 	if deep == Vector3.INF:
 		ok(false, "a spot in the relit room out of reach of its dark edge")
 	else:
-		_lie_in(main, dark, deep)
+		_lie_in(main, dark)
 		var r2: Dictionary = await _hunt_you(main, deep, watch_s + 8.0)
-		ok(float(r2.peak) <= cap + 1e-4 and int(r2.hits) == 0 and float(r2.closest) > reach, "you deep in a relit %s (the light %.2f where you stand): it never stands where the light passes the cap (%.3f at most), comes to %.1f m and no strike reaches you" % [main.lay.pieces[int(g.nodes[room].piece)].get("room_kind", "room"), lf.at(deep), float(r2.peak), float(r2.closest)])
+		ok(bool(r2.under) and float(r2.peak) <= cap + 1e-4 and int(r2.hits) == 0 and float(r2.closest) > reach, "you deep in a relit %s (the light %.2f where you stand): it never stands where the light passes the cap (%.3f at most), comes to %.1f m and no strike reaches you" % [main.lay.pieces[int(g.nodes[room].piece)].get("room_kind", "room"), lf.at(deep), float(r2.peak), float(r2.closest)])
 		ok(float(r2.gave) > 0.0, "it watches from the light's edge (%.1f s), then gives you up" % float(r2.watch))
 		_mo_ok("the chase to a relit room")
 	# At the light's dim edge: within its reach of where it may stand.
@@ -1242,9 +1430,9 @@ func _edge(main: CrawlerMain) -> void:
 	main.harm.reset()
 	p._invulnerable = 0.0
 	var dim: Vector3 = de.at
-	_lie_in(main, int(de.dark), dim)
+	_lie_in(main, int(de.dark))
 	var r3: Dictionary = await _hunt_you(main, dim, 15.0)
-	ok(int(r3.hits) >= 1 and float(r3.peak) <= cap + 1e-4, "you at the light's dim edge (the light %.3f where you stand, past the cap): it strikes you from where it may stand (%d hit, the light at its feet %.3f at most)" % [lf.at(dim), int(r3.hits), float(r3.peak)])
+	ok(int(r3.hits) >= 1 and bool(r3.under) and float(r3.peak) <= cap + 1e-4, "you at the light's dim edge (the light %.3f where you stand, past the cap): it strikes you from where it may stand (%d hit, the light at its feet %.3f at most)" % [lf.at(dim), int(r3.hits), float(r3.peak)])
 	if int(r3.hits) < 1:
 		print("  it went: %s" % ", ".join(r3.went))
 	_mo_ok("the chase to the light's dim edge")
@@ -1409,10 +1597,16 @@ func _dimmest(main: CrawlerMain) -> void:
 		if float(theirs.max) <= lf.cap:
 			# The shortest way never met the light: nothing to keep off. Another room.
 			continue
-		ok(float(mine.mean) < float(theirs.mean) and b.node >= 0 and g.is_ground(b.node), "its room relit round it (a %s), it crosses the light to the dark by the dimmest way: the light along its way %.3f a metre on average (at most %.2f, %.1f m), against %.3f (at most %.2f, %.1f m) along the shortest" % [main.lay.pieces[int(n.piece)].get("room_kind", "room"), float(mine.mean), float(mine.max), float(mine.m), float(theirs.mean), float(theirs.max), float(theirs.m)])
+		# A room lit evenly has no dimmer way across it than the shortest:
+		# one where the light's own grid finds one a twentieth dimmer or more.
+		var dimmest := lf.along(nav.path(start, end, true, TombNav.DIM))
+		if float(dimmest.mean) > float(theirs.mean) * 0.95:
+			print("  (its room relit, a %s: lit too evenly for a dimmer way across, %.3f against %.3f a metre; another room)" % [main.lay.pieces[int(n.piece)].get("room_kind", "room"), float(dimmest.mean), float(theirs.mean)])
+			continue
+		ok(float(mine.mean) < float(theirs.mean) and b.node >= 0 and g.is_ground(b.node), "its room relit round it (a %s), it crosses the light to the dark by the dimmest way: the light along its way %.3f a metre on average (at most %.2f, %.1f m), against %.3f (at most %.2f, %.1f m) along the shortest (the light's own grid finds %.3f)" % [main.lay.pieces[int(n.piece)].get("room_kind", "room"), float(mine.mean), float(mine.max), float(mine.m), float(theirs.mean), float(theirs.max), float(theirs.m), float(dimmest.mean)])
 		_mo_ok("across the light")
 		return
-	ok(false, "a room to relight round it where the shortest way out meets the light (%d tried)" % tried)
+	ok(false, "a room to relight round it where the shortest way out meets the light and a dimmer way exists (%d tried)" % tried)
 
 
 # --- 9. A fire pot (§FA.4, Mike's note of 7 Oct) -----------------------------------
@@ -1480,6 +1674,11 @@ func _pot(main: CrawlerMain) -> void:
 
 # --- 10. The relight run ------------------------------------------------------
 
+## How long leaving the light may take in the relight run (s): across the
+## lit rooms at leave_mps, 4 m/s, the longest way out of them.
+const LEAVE_MOST_S := 12.0
+
+
 func _relight_run(main: CrawlerMain) -> void:
 	var b := main.boss
 	var p := main.player
@@ -1517,12 +1716,19 @@ func _relight_run(main: CrawlerMain) -> void:
 	var hearth_prowl := 0
 	var hearth_cross := 0
 	var transits0 := b.transits
+	var said := 0
+	var left := -1.0
 	for k in n:
 		_light_holder(main, fires.holders[k])
-		var left := -1.0
 		var steps := int((14.0 if k < n - 1 else 1.0) / DT)
 		for i in steps:
+			var e0 := b.lit_entries
+			var st0 := b.state
+			var n0 := b.node
 			_tick(main, DT)
+			if b.lit_entries > e0 and said < 4:
+				said += 1
+				print("  into the light of its own accord at holder %d: %s -> %s, node %d -> %d (%s), route %d of %d" % [k, st0, b.state, n0, b.node, b.ground.nodes[b.node].kind, b.route_i, b.route.size()])
 			if b.state in ["lair", "gone", "release"]:
 				break
 			if b.node >= 0 and bool(b.ground.nodes[b.node].hearth) and not b._in_tunnel():
@@ -1544,12 +1750,15 @@ func _relight_run(main: CrawlerMain) -> void:
 			elif left >= 0.0:
 				worst_leave = maxf(worst_leave, left)
 				left = -1.0
-		if left >= 0.0 and b.state == "leave":
+		if left >= LEAVE_MOST_S and b.state == "leave":
 			stuck += 1
+			if said < 4:
+				said += 1
+				print("  still leaving the light at holder %d's end: node %d (%s), %.1f s in the light, route %d of %d, at %s" % [k, b.node, b.ground.nodes[b.node].kind if b.node >= 0 else "-", left, b.route_i, b.route.size(), str(b.base)])
 		counts.append(b.ground.ground_count())
 	print("  dark nodes as each holder caught: %s" % _short(counts))
 	ok(b.lit_entries == lit_entries0 and in_light < 0.05, "over the whole run it never went into the light of its own accord (%d entries, %.2f s in light outside leaving it)" % [b.lit_entries - lit_entries0, in_light])
-	ok(leaves > 0 and stuck == 0, "lit round it, it left for the dark every time (%d times, the longest %.1f s through the light), under it through its tunnels %d times; it never went into the stone (there is no such thing now)" % [leaves, worst_leave, b.transits - transits0])
+	ok(leaves > 0 and stuck == 0 and worst_leave <= LEAVE_MOST_S, "lit round it, it left for the dark every time (%d times, the longest %.1f s through the light, %.0f s at most), under it through its tunnels %d times (turning back in one whose far hole was lit %d times); it never went into the stone (there is no such thing now)" % [leaves, worst_leave, LEAVE_MOST_S, b.transits - transits0, b.turned_back])
 	ok(hearth_prowl == 0, "it never set foot in the hearth room of its own accord (prowling or chasing: %d steps); crossing it with no other way to the dark, %d steps" % [hearth_prowl, hearth_cross])
 	_mo_ok("the relight run")
 	# The release: home physically.

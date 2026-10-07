@@ -525,15 +525,22 @@ func _rest(delta: float) -> void:
 ## Wake: armed and out of your sight (a waker: you came within wakes_m), or
 ## burnt where it lies (a fire pot). It climbs out, its near tell heard as
 ## it starts to move (a creeper you are watching lies there until you look
-## away), its strike ready, and hunts you from now (Pursuit, §FD).
+## away), its strike ready, and hunts you from now (Pursuit, §FD); unless
+## its place lies where the light passes the chase's cap (a relit torch of
+## its half-lit room beside it: Mike's note of 7 Oct, a chase keeps to the
+## dark), when it climbs out and goes for the dark instead, no one's
+## pursuer.
 func wake() -> void:
 	if state != REST:
 		return
 	armed = false
 	_enter(RISING)
 	_told = false
-	last_known = residents.player.global_position
 	_arm()
+	if not residents.light_ok(self, place.out):
+		_falling_back = true
+		return
+	last_known = residents.player.global_position
 	pursuit.notice(residents.torch_lit())
 
 
@@ -806,7 +813,7 @@ func _reel() -> void:
 
 func _return(delta: float) -> void:
 	_sense(delta)
-	if sensed_by != "" and residents.may_strike(self):
+	if sensed_by != "" and residents.may_strike(self) and residents.light_ok(self, global_position):
 		# It has you again (where it could reach you: by a fire it lets you
 		# be, Mike's note of 7 Oct).
 		gave_up_why = ""
@@ -889,13 +896,19 @@ func _fall_back() -> void:
 ## (Pursuit.back_to_dark_mps). Cut off from every dark it could walk to
 ## without crossing the lit hearth room (Mike's note of 7 Oct: nothing goes
 ## into the stone), it walks out through it all the same, at its walk_mps,
-## only while unseen.
+## only while unseen. In a dark room or stretch already (a fire's spill on
+## it), to its dimmest corner (_start_lurk).
 func _start_leave() -> void:
 	if strike != null:
 		strike.cancel()
 	lunging = false
 	_edge_t = 0.0
 	var at := residents.node_of(global_position)
+	if at >= 0 and residents.ground.is_ground(at):
+		# In the dark already, only a fire's spill where it stands: back into
+		# this dark's dimmest corner.
+		_start_lurk(at)
+		return
 	var way := residents.dark_way(at)
 	if way.is_empty():
 		# No dark it can reach (off the tomb's floor, a test floor; or none
@@ -973,7 +986,8 @@ func _lurk(delta: float) -> void:
 	# You came within its counterattack, where it senses you and could reach
 	# you: it strikes, lunging in as it winds up (§FF.2), and hunts you after.
 	var near := _flat_to(p.global_position) <= maxf(Residents.rule("pocket_counterattack_m", 3.0), lunge_m()) and absf(p.global_position.y - global_position.y) < 1.5
-	var bites := bool(Residents.CLEARED.get("half_lit_pockets_bite", true))
+	# (Never from where the light passes the chase's cap.)
+	var bites := bool(Residents.CLEARED.get("half_lit_pockets_bite", true)) and residents.light_ok(self, global_position)
 	if near and bites and sensed_by != "" and residents.may_strike(self) and strike != null and strike.begin():
 		lunging = true
 		_edge_t = 0.0
@@ -1171,7 +1185,9 @@ func _walk_to(target: Vector3, delta: float, mode := WALK_DARK, mps := -1.0) -> 
 	var goal := target
 	if nav != null:
 		if path.is_empty():
-			return mode == WALK_CAP
+			# Off the tomb's floor grid (a test floor): no way, and no light
+			# to hold it back.
+			return false
 		while path_i < path.size() - 1 and _flat_to(path[path_i]) < 0.15:
 			path_i += 1
 		goal = path[mini(path_i, path.size() - 1)]

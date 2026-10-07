@@ -100,21 +100,27 @@ func under_cap(p: Vector3) -> bool:
 
 ## Is there open floor within `r` m (flat) of `p` where the light is at
 ## most the cap: somewhere a chasing creature could stand and reach you
-## from (a creature's reach)?
+## from (a creature's reach)? Only floor joined to yours by open floor
+## within that reach counts (never the far side of a wall).
 func edge_within(p: Vector3, r: float) -> bool:
-	var c := nav.cell_of(p)
-	var n := ceili(r / TombNav.CELL)
-	for oy in range(-n, n + 1):
-		for ox in range(-n, n + 1):
-			if Vector2(ox, oy).length() * TombNav.CELL > r:
+	var c := nav.nearest_open(nav.cell_of(p), 2)
+	if c.x < 0:
+		return false
+	var seen := {c: true}
+	var todo: Array[Vector2i] = [c]
+	var at := Vector2(p.x, p.z)
+	while not todo.is_empty():
+		var q: Vector2i = todo.pop_back()
+		if level[q.y * nav.size.x + q.x] <= cap and absf(nav.floor_y[q.y * nav.size.x + q.x] - p.y) <= 1.2:
+			return true
+		for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+			var nq := q + o
+			if seen.has(nq) or not nav.is_open(nq):
 				continue
-			var q := c + Vector2i(ox, oy)
-			if not nav.is_open(q):
-				continue
-			if absf(nav.floor_y[q.y * nav.size.x + q.x] - p.y) > 1.2:
-				continue
-			if level[q.y * nav.size.x + q.x] <= cap:
-				return true
+			seen[nq] = true
+			var w := nav.point_of(nq)
+			if Vector2(w.x, w.z).distance_to(at) <= r:
+				todo.append(nq)
 	return false
 
 

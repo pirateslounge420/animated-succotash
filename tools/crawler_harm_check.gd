@@ -19,11 +19,11 @@ extends SceneTree
 ##    ring pulls back;
 ##  - Pursuit's rules: distance, a doused torch, a chase by sound alone not
 ##    ended by a dark torch, hide false keeping the clock still, a
-##    re-notice resetting it; a lit room open to a chase only once its
-##    strike has landed, and back to the dark within back_to_dark_s after;
-##    a freed hunter drops out; a wake
-##    (Harm.reset) clears the list and a hunter still after you is back on
-##    its next step;
+##    re-notice resetting it; with no light on the floor to go by (a test
+##    floor), a lit room open to a chase only once its strike has landed;
+##    back to the dark within back_to_dark_s; a freed hunter drops out; a
+##    wake (Harm.reset) clears the list and a hunter still after you is
+##    back on its next step;
 ##  - hit 3: "Good night" as built, the ring going under the closing black.
 ## Then the snake itself (queue 49's Boss), on SEED (SNAKE_SEEDS="1,7,42" for
 ## more), each scene booted fresh, the snake and Harm stepped together:
@@ -33,17 +33,23 @@ extends SceneTree
 ##    gives you up after its out_of_sight_s, and the hit heals one step_s
 ##    later;
 ##  - a room next to its dark relit: it strikes you in the dark, you step
-##    into the lit room, and it follows you in (§FD) and strikes you there;
-##    then it gives you up
-##    there (you far off) and is back in an unlit node within
-##    residents.json rules.back_to_dark_s;
-##  - it follows you into a lit room, never into the hearth room: by the
-##    fire in its sight nothing heals (it hasn't lost you); out of its
-##    sight there with your torch smothered (§FC.2), it gives you up and
-##    you heal;
-##  - half the tomb relit, you in the lit doorways nearest it for five
-##    minutes, torch lit: it comes after you again and again, and a snake
-##    that hasn't hit you never stands in a lit node.
+##    deep into the lit room (out of its reach of any floor the light lets
+##    it stand on), and it follows you only to the light's edge (Mike's
+##    note of 7 Oct, amending §FD's chase into the light: residents.json
+##    rules.chase_light_cap, never past it), no strike reaching you;
+##    nothing heals while it watches you from there; it gives you up after
+##    watch_s and is back in an unlit node within residents.json
+##    rules.back_to_dark_s;
+##  - never into the hearth room: hit at its door, you step in by the fire
+##    in its sight and nothing heals (it hasn't lost you); out of its sight
+##    there with your torch smothered (§FC.2), it gives you up and you
+##    heal;
+##  - half the tomb relit, you just inside the lit side of the doorways
+##    nearest it (out of its reach of the light's edge) for five minutes,
+##    torch lit: it comes after you again and again, never steps from
+##    under the chase's cap to past it (finding you in a fire's spill, it
+##    goes out of it to the edge first), never steps into a lit node of its
+##    own accord, and no strike reaches you.
 
 var fails := 0
 var main: CrawlerMain
@@ -307,7 +313,9 @@ func _rules() -> void:
 			on_still = false
 	ok(on_still, "noticing you again sets its out-of-sight clock back")
 	c2.give_up()
-	# Into the light (§FD): never prowling, only once its strike has landed.
+	# Into the light with no light on the floor to go by (a test floor;
+	# Pursuit.may_enter): never prowling, only once its strike has landed.
+	# On the tomb's floor the light's own cap decides (the snake below).
 	var lc := Pursuit.new(h, gives_up)
 	var prowl_ok := lc.may_enter(false) and not lc.may_enter(true)
 	lc.notice(true)
@@ -315,7 +323,7 @@ func _rules() -> void:
 	lc.hit(true)
 	var hit_ok := lc.may_enter(true)
 	lc.give_up()
-	ok(prowl_ok and noticed_ok and hit_ok and not lc.may_enter(true), "a lit room is closed to its prowling and to a chase until its strike lands, open to the chase after (chase_enters_light), closed again once it gives you up")
+	ok(prowl_ok and noticed_ok and hit_ok and not lc.may_enter(true), "with no light on the floor to go by: a lit room is closed to its prowling and to a chase until its strike lands, open to the chase after (chase_enters_light), closed again once it gives you up")
 	var back_s := float(Pursuit.RULES.get("back_to_dark_s", 4.0))
 	var v_near := Pursuit.back_to_dark_mps(2.0, 2.0)
 	var v_far := Pursuit.back_to_dark_mps(18.0, 2.0)
@@ -518,15 +526,20 @@ func _snake_holds(sv: int) -> void:
 	await _done(m)
 
 
-## A room next to its dark relit: it strikes you in the dark, follows you
-## into the light, and, given you up there, is back in the dark within
-## back_to_dark_s.
+## A room next to its dark relit: it strikes you in the dark; you step
+## deep into the light, and it follows you only to the light's edge (Mike's
+## note of 7 Oct: "the snake can follow you but not get close to the fire";
+## before it, §FD's chase followed you in once its strike had landed and
+## struck you there). It watches you from the edge, nothing heals, no
+## strike reaches you; it gives you up after watch_s and is back in the
+## dark within back_to_dark_s.
 func _snake_follows(sv: int) -> void:
 	var m := await _boot(sv)
 	var b := m.boss
 	var h := m.harm
 	var pl := m.player
 	var g := b.ground
+	var lf := m.residents.light
 	var pair := _room_by_dark(m)
 	if pair.is_empty():
 		ok(false, "a room to relight beside a stretch of its dark (seed %d)" % sv)
@@ -552,45 +565,103 @@ func _snake_follows(sv: int) -> void:
 	var landed0 := h.landed
 	_sim(m, 10.0, func(): return h.landed > landed0)
 	ok(h.landed == landed0 + 1 and b.pursuit.has_hit, "it strikes you in its dark: one hit, its teeth in you")
-	# Into the lit room, the torch lit (it sees you go).
-	var inside: Vector3 = g.nodes[room].center
+	# Deep into the lit room, the torch lit (it sees you go): out of its
+	# reach of any floor the light lets it stand on.
+	var deep := _deep_in(m, room, b.strike.reach_m)
+	if deep == Vector3.INF:
+		ok(false, "a spot deep in the lit room, out of its reach of the light's edge (seed %d)" % sv)
+		await _done(m)
+		return
 	_torch(pl, true)
-	_place(pl, inside, b.head)
-	var e0 := b.chase_lit_entries
-	var t_in := _sim(m, 15.0, func(): return g.node_at(b.base) == room)
-	ok(g.node_at(b.base) == room and b.chase_lit_entries > e0 and b.lit_entries == 0, "you step into the lit room and it follows you in (%.1f s; %d lit node(s) entered after you, none of its own accord)" % [t_in, b.chase_lit_entries - e0])
-	# And strikes you there (the light is no sanctuary now).
+	_place(pl, deep, b.head)
 	var landed1 := h.landed
-	var t_2 := _sim(m, 8.0, func(): return h.landed > landed1)
-	ok(h.landed == landed1 + 1 and not g.is_ground(g.node_at(pl.global_position)), "and its strike lands in the light: a second hit %.1f s on, you in the lit room" % t_2)
-	# Given up there (you far off): back to the dark within back_to_dark_s.
 	var back_s := float(Pursuit.RULES.get("back_to_dark_s", 4.0))
-	var far := _far_spot(m, float(gives_up.get("distance_m", 24.0)) + 2.0)
-	if far == Vector3.INF:
-		# A tomb too small to get that far: put the torch out instead.
-		_torch(pl, false)
-	else:
-		_place(pl, far, b.head)
-	var gave := false
-	var t_dark := 0.0
-	while t_dark < back_s + 3.0:
-		b.tick(DT)
-		h.tick(DT)
-		Engine.time_scale = 1.0
-		t_dark += DT
-		if not b.pursuit.on and not gave:
-			gave = true
-			t_dark = 0.0
-		if gave and (g.is_ground(g.node_at(b.base)) or b.state == "below"):
-			break
-	var where := "below the tomb" if b.state == "below" else "node %d" % g.node_at(b.base)
-	ok(gave and b.pursuit.why in ["distance", "torch_doused"] and t_dark <= back_s and (g.is_ground(g.node_at(b.base)) or b.state == "below"), "given you up in the light (%s), it is back in the dark in %.1f s (%s; back_to_dark_s %.1f)" % [b.pursuit.why, t_dark, where, back_s])
+	var watch_s := b.num("watch_s", 10.0)
+	var w := {"t": 0.0, "peak": 0.0, "near": INF, "watch": 0.0, "gave": -1.0, "why": "", "dark": -1.0, "healed": false, "under": false, "at": Vector3.INF}
+	_sim(m, watch_s + back_s + 12.0, func():
+		w.t += DT
+		if b.noticed or b.state == "watch":
+			# Once under the cap, never past it again (it may have been laid,
+			# or have found you, in a fire's spill, and go out of it first).
+			if lf.at(b.base) <= lf.cap:
+				w.under = true
+			if bool(w.under):
+				w.peak = maxf(float(w.peak), lf.at(b.base))
+			var dn := Vector2(b.base.x - deep.x, b.base.z - deep.z).length()
+			if dn < float(w.near):
+				w.near = dn
+				w.at = b.base
+		if b.state == "watch":
+			w.watch += DT
+		if float(w.gave) < 0.0 and not b.pursuit.on:
+			w.gave = w.t
+			w.why = b.pursuit.why
+		if float(w.gave) < 0.0 and h.hits.is_empty():
+			w.healed = true
+		if float(w.gave) >= 0.0 and float(w.dark) < 0.0 and g.is_ground(g.node_at(b.base)) and not b._in_tunnel():
+			w.dark = w.t - float(w.gave)
+		return float(w.dark) >= 0.0)
+	var cap := lf.cap
+	var glow := _glow_near(lf, w.at, 0.75) if w.at != Vector3.INF else 0.0
+	ok(bool(w.under) and float(w.peak) <= cap + 1e-4 and glow > cap and float(w.near) > b.strike.reach_m, "you step deep into the lit room (the light %.2f where you stand): it follows you to the light's edge and no further (the light at its feet %.3f at most, the cap %.3f; %.1f m from you at the nearest, the light past the cap within 0.75 m of it there, %.2f), Mike's note of 7 Oct" % [lf.at(deep), float(w.peak), cap, float(w.near), glow])
+	ok(h.landed == landed1 and not bool(w.healed) and float(w.watch) > 0.5, "it watches you from there (%.1f s): no strike reaches you in the light, and nothing heals while it does" % float(w.watch))
+	ok(float(w.gave) > 0.0 and float(w.dark) >= 0.0 and float(w.dark) <= back_s, "it gives you up (%s, %.1f s on) and is back in the dark %.1f s later (back_to_dark_s %.1f)" % [str(w.why), float(w.gave), float(w.dark), back_s])
 	await _done(m)
 
 
+## The most light on open floor within `r` m of `p`, joined to it by open
+## floor (the glow just beyond where it stands, never through a wall).
+func _glow_near(lf: LightField, p: Vector3, r: float) -> float:
+	var nav := lf.nav
+	var c := nav.nearest_open(nav.cell_of(p), 2)
+	if c.x < 0:
+		return 0.0
+	var best := 0.0
+	var seen := {c: true}
+	var todo: Array[Vector2i] = [c]
+	while not todo.is_empty():
+		var q: Vector2i = todo.pop_back()
+		best = maxf(best, nav.light_of(q))
+		for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var nq := q + o
+			if seen.has(nq) or not nav.is_open(nq):
+				continue
+			seen[nq] = true
+			var wp := nav.point_of(nq)
+			if Vector2(wp.x - p.x, wp.z - p.z).length() <= r:
+				todo.append(nq)
+	return best
+
+
+## The open floor in node `id` deepest in the light: brightest, with no
+## floor the chase may stand on (under the cap) within `reach` and a
+## half (INF if none).
+func _deep_in(m: CrawlerMain, id: int, reach: float) -> Vector3:
+	var g := m.boss.ground
+	var nav := m.residents.nav
+	var lf := m.residents.light
+	var pc: Dictionary = m.lay.pieces[int(g.nodes[id].piece)]
+	var best := Vector3.INF
+	var best_l := -INF
+	var al := 0.5
+	while al < float(pc.len) - 0.5:
+		var ac := -float(pc.half) + 0.5
+		while ac < float(pc.half) - 0.5:
+			var q := BossGround.point(pc, al, ac)
+			if nav.is_open(nav.cell_of(q)) and g.node_at(q) == id and not lf.edge_within(q, reach + 0.5):
+				var lv := lf.at(q)
+				if lv > best_l:
+					best_l = lv
+					best = q
+			ac += 0.25
+		al += 0.25
+	return best
+
+
 ## The hearth room stays shut to it even in a chase that has had you (its
-## ways never go through it, BossGround): it lies in the dark just outside
-## the hearth room's door, hits you there, you step in by the fire, and it
+## ways never go through it, BossGround, and the hearth's light passes the
+## chase's cap well outside its door): it lies in the dark just outside the
+## hearth room's door, hits you there, you step in by the fire, and it
 ## never comes in; it watches from its dark and gives you up, and you heal.
 func _snake_hearth(sv: int) -> void:
 	var m := await _boot(sv)
@@ -700,44 +771,66 @@ func _far_spot(m: CrawlerMain, d: float) -> Vector3:
 	return best if best_d >= d else Vector3.INF
 
 
-## Half the tomb relit (outward from the hearth), you in the lit doorways
-## nearest it with your torch lit, five minutes, moved every 10 s to the
-## one nearest it now: it sees you, comes to the edge of its dark, watches
-## and gives you up, again and again; a snake that hasn't hit you never
-## stands in a lit node.
+## Half the tomb relit (outward from the hearth), you just inside the lit
+## side of the doorways nearest it (the first floor past its reach of the
+## light's edge) with your torch lit, five minutes, moved every 10 s to
+## the one nearest it now: it sees you, comes to the edge of the light,
+## watches and gives you up, again and again; chasing, it never steps
+## from under the light's cap to past it (Mike's note of 7 Oct; before it,
+## it never stood in a lit node at all until its strike had landed; one
+## that finds you in a fire's spill goes out of it first), it never steps
+## into a lit node of its own accord, and no strike reaches you.
 func _snake_keeps_out(sv: int) -> void:
 	var m := await _boot(sv)
 	var b := m.boss
 	var g := b.ground
 	var pl := m.player
+	var lf := m.residents.light
+	var nav := m.residents.nav
+	var reach := b.strike.reach_m
 	var order: Array = _outward(m)
 	for k in order.size() / 2:
 		_light(m, m.fires.holders[int(order[k])])
 	b._refresh(false)
-	# The lit doorways onto its dark: 1.5 m into the lit side of each.
+	lf.refresh()
+	# The lit side of each doorway onto its dark: the first open floor in
+	# from the doorway past its reach of the light's edge (the chase's own
+	# way there, TombNav's capped grid from the dark beyond the doorway,
+	# ends further than its reach from you).
 	var doors: Array = []
 	for n in g.nodes:
-		if g.is_ground(int(n.id)):
+		if g.is_ground(int(n.id)) or bool(n.hearth):
 			continue
 		for l in n.links:
-			if not g.is_ground(int(l.to)):
+			if not g.is_ground(int(l.to)) or l.has("tunnel"):
 				continue
 			var via: Vector3 = l.via
 			var into := Vector3((n.center as Vector3).x - via.x, 0.0, (n.center as Vector3).z - via.z)
-			var q := via + into.normalized() * 1.5 if into.length() > 0.1 else (n.center as Vector3)
-			q.y = b._floor_y(q)
-			if g.node_at(q) != int(n.id):
-				q = n.center
-			doors.append(q)
+			if into.length() < 0.1:
+				continue
+			into = into.normalized()
+			var from: Vector3 = g.nodes[int(l.to)].center
+			var d := 0.5
+			while d < 12.0:
+				var q := via + into * d
+				q.y = b._floor_y(q)
+				if g.node_at(q) == int(n.id) and nav.is_open(nav.cell_of(q)) and lf.at(q) > lf.cap:
+					var pts := nav.path(from, q, true, TombNav.CAP)
+					if not pts.is_empty() and Vector2(pts[pts.size() - 1].x - q.x, pts[pts.size() - 1].z - q.z).length() > reach + 0.3:
+						doors.append(q)
+						break
+				d += 0.25
 	if doors.is_empty():
 		ok(false, "lit doorways onto its dark (seed %d)" % sv)
 		await _done(m)
 		return
 	_torch(pl, true)
-	var in_light := 0
+	var past_cap := 0
 	var steps := 0
 	var after_t := 0.0
 	var watched := 0.0
+	var peak := 0.0
+	var was_under := false
 	while steps * DT < 300.0:
 		if steps % int(round(10.0 / DT)) == 0:
 			var best: Vector3 = doors[0]
@@ -753,10 +846,18 @@ func _snake_keeps_out(sv: int) -> void:
 			after_t += DT
 		if b.state == "watch":
 			watched += DT
-		if not b.state in ["below", "lair", "gone", "release", "held"] and not g.is_ground(g.node_at(b.base)):
-			in_light += 1
-	ok(after_t >= 30.0, "five minutes in the lit doorways (%d onto its dark): it was after you %.0f s of it, %.0f s watching from the edge of its dark" % [doors.size(), after_t, watched])
-	ok(b.hits_landed == 0 and in_light == 0 and b.lit_entries == 0 and b.chase_lit_entries == 0, "a snake that hasn't hit you never stood in a lit node in five minutes (%d steps in the light, %d hits)" % [in_light, b.hits_landed])
+		if b.chasing() and not b._in_tunnel():
+			# A step past the cap from under it (finding you in a fire's spill,
+			# it goes out of it to the edge first: not a step into it).
+			var lv := lf.at(b.base)
+			if lv > lf.cap + 1e-4 and was_under:
+				past_cap += 1
+				peak = maxf(peak, lv)
+			was_under = lv <= lf.cap + 1e-4
+		else:
+			was_under = false
+	ok(after_t >= 30.0, "five minutes just inside the lit doorways (%d onto its dark): it was after you %.0f s of it, %.0f s watching from the light's edge" % [doors.size(), after_t, watched])
+	ok(past_cap == 0 and b.lit_entries == 0 and b.hits_landed == 0, "chasing, it never stepped from under the chase's cap to past it (%d steps; the light at its feet %.3f at most there, the cap %.3f), never stepped into a lit node of its own accord (%d), and no strike reached you (%d hits)" % [past_cap, peak, lf.cap, b.lit_entries, b.hits_landed])
 	await _done(m)
 
 
