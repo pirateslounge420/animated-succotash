@@ -89,7 +89,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
 | 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
-| 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | todo |
+| 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | built b21b5cd |
 | 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | built e11418b |
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | todo |
 | 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | todo |
@@ -1106,7 +1106,7 @@ CHECK (headless): over a scripted run relighting every holder, no resident stand
 
 ## 60 — Fire pots: lit off your torch, thrown, tar that clings, oil that bursts — §FA.3
 
-**Status:** todo
+**Status:** built b21b5cd
 **Mike sees:** With a fire pot in your left hand and your torch lit in your right, hold left click: your hands come together and the wick catches, you aim, release, and it lobs and bursts in amber fire. Tar clings and keeps a skeleton burning and leaves a patch alight on the floor; light oil goes off in one big flash. Lighting it lights you up too, and everything nearby knows where you are.
 
 ```text

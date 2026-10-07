@@ -4,6 +4,21 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 60, §FA.3, part 3: the skeletons burn down and are gone; burnt asleep they wake; the wick and the burst give you away to them. Queue 60 built (b21b5cd)
+- **The skeletons** (queue 58's `Resident`) are fire targets now, through the same socket as the snake:
+  - **Burnt down:** a pot's burst within `splash_m`, the tar stuck on one and a burning patch it stands in take its `fire_hp` (3) down, times its `oil_scale`. At 0 it goes up in a last flare and is gone for good (`burn_out`): off the tomb's list, its strike gone, its chase given up, so Harm no longer counts it. Light oil (4) does it at once. Tar on one lying asleep took it in 2.13 s, because climbing out it stood in the tar's own patch.
+  - **Woken by fire:** one burnt while it lies asleep wakes and climbs out, burning (the socket's new optional `fire_hit`). The tar follows it as it moves.
+  - **The pot gives you away:** awake, a skeleton sees the lit wick as your flame out to `flare_seen_m` (25 m, past its own 10 m for a torch), even with the torch smothered, and hears a burst within `burst_heard_m` (40 m). Asleep they hear nothing; one pot doesn't wake the whole tomb.
+- **Queue 60 is built:** with the snake (part 2) and queue 55's hands, every line of its BUILD and CHECK is met on the real creatures. Row 60 marked `built b21b5cd`.
+- **Checks:**
+  - `fire_pot_check` adds the real skeletons (all fire targets with `fire_hp` 3 before any pot; tar on a sleeping one; light oil on an awake one; awake 12 m off: nothing with the torch out, the wick seen as your flame, not at 28 m; a burst heard at 30 m, not 46 m): 82 lines, 0 fails, no script errors, seeds 7, 1 and 42.
+  - `residents_check`, `boss_check`, `crawler_harm_check`, `stagger_check`, `crawler_check`, `hands_check`: 0 fails.
+- **Left open:**
+  - The found pot keeps off "the spine" by the way from the hearth room to the heart until queue 46 builds the real spine; `FirePots.spine_of` reads a `lay.spine` (ids) or pieces marked `spine` when it does.
+  - Mike's two calls, unchanged: `hurts_you` (should your own fire hurt you?) and `relights_holders` (should a pot light a cold sconce, and a patch relight a torch?).
+
+---
+
 ## 2026-10-07 — Queue 61, §FG: atmosphere, not puzzles — glow-moss, wall life, daylight with the clock (e11418b)
 - **The crawler didn't run the clock.** `World` turns `days` only once a planet is generated, and the crawler builds none, so the shafts' daylight sat frozen at the start time. `CrawlerMain` now turns it at the 144-minute day (`World.day_length_s`). The sun follows §FK.3 (locked while this pass was under way): one clock everywhere, DayCycle's reference day (day 60, dusk 18, night 48, dawn 18), with no latitude, axial tilt or day of year. You wake at 15:07 on the tomb's sky with the sun 43° up; it sets about 22 minutes into play, and night falls at about 31 minutes and lasts 48. Prompt 63's clock part is therefore already in place; its check can confirm it.
 - **Daylight with the clock** (`Vents`; `smoke.json → vents.daylight`, new `sky_band_deg` [-7, 11.5] and `low_sun_share` 0.35): the colour follows the twilight (moonlit blue to day blue), the strength the sun's height (0.35 of noon's with the sun on the horizon, rising with its sine).
