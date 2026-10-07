@@ -4,6 +4,50 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Mike's second note of 7 Oct, part 1: the sneak's dashes, the hit's X, your own pot can hurt you, the fuse goes off in your hand, the way out faint from far off, the torch's 15 minutes (fc4a333)
+Mike, answering the open calls (the parts built here; the creatures' movement is part 2, below it when it lands): *"your own fire pot should be able to hurt you if you throw it way to close to yourself like a wall or floor youre right next to. when sneaking, the reticle should take away the verticle dashes and jist leave horizontal dashes to signify sneak state. the way out might not always be night- it should be relatively faint from far away but depends on time of day."* … *"a fuse held too long after lighting will explode in hand and cause 1 point of damage."* … *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes."* … *"no the crosshair shouldnt warm- that will be for the player to figure out. if you get a hit on a creature tho, there will be an X shape in the diagonal spaces between the regular crosshair to aignify a successful hit."* Numbers he didn't give are Claude Code's first guesses.
+
+- **What changes on screen:**
+  - **Sneaking**, the crosshair loses its up and down arms and keeps its two level dashes, dimmed (it was a small ring).
+  - **A hit**, your swing landing on a creature or your pot's burst catching one, flashes a small X in the corners between the crosshair's arms for 0.3 s. Nothing else marks the crosshair: it never warms near things you can light.
+  - **Your own pot** can hurt you: a burst within 1 m of you is one of your three hits, so throwing it at a wall or the floor right next to you costs you. Hold a lit pot past its 3 s fuse and it goes off in your hand: the burst, the pot gone, one hit.
+  - **The way out** shows fainter from far off and fuller as you come up the stairs, still bright blue by day and dim moonlit blue at night on the clock.
+- **The dashes** (`stealth.json → sneak.reticle.shape` dashes; `Reticle.dash_cells`): the crosshair's own left and right arms, the same length, gap, width and dark edge, dimmed by `dim` (0.75). Shape ring, the first look, is kept as an option.
+- **The hit's X** (`hud.json → reticle.hit_marker`, new: `show_s` 0.3, `from_px` 3, `length_px` 4; `Reticle.hit`, `x_cells`):
+  - Four diagonals, from 3 to 6 pixels out along each diagonal from the middle at the 480 reference (2 to 3 at 270), as wide as the arms, in their colour on a one-pixel dark edge. Its edge leaves out what the crosshair under it already draws, so no pixel is darkened twice.
+  - `Torch.swing_top` calls it when the swing meets a creature, staggered or not (the swing you already hear land). `FirePots.burst` calls it when the burst's fire reaches a creature (a resident burnt, a boss driven off). A patch or stuck tar burning one later doesn't.
+- **Your own pot** (`fire_pots.json → hurts_you` true, `hurts_you_m` new 1.0; `FirePots.burst_hurts_you`): a burst within 1 m of your body (your capsule, feet to eye, 0.35 m round), with no stone between, is one hit (`Harm`, death cause fire:pot), whichever oil. Looking level the shortest throw lands 4 m out, so it takes a wall or floor right by you, or looking down. Its burning patch and stuck tar never hurt you (first guess).
+- **The cook-off** (`fire_pots.json → cook_off_in_hand` true; `FirePots._cook_off`): held past `fuse_s` (3 s from the wick catching), the pot bursts where your hand is with its whole burst (the flash, its fire on what stands in `splash_m`, tar's patch, the sound), leaves your hand and your pack, and it is one hit (fire:pot_in_hand), never two.
+- **The way out** (`crawler.json → exit.glow`, new: `near_m` 8, `far_m` 30, `far_share` 0.55; `WayOut.far_fade`): the opening's sheet of sky shows all its glow within 8 m of your eye and eases down to 0.55 of it by 30 m. It already followed the clock (it was a night frame Mike saw). The wash falling in on the stone is the stone's own light and doesn't change with where you stand.
+- **The torch's 15 minutes** (`torch.json → crawler_burn.burn_min` 15, was 20): data only; the timer, the bundle and the three you carry are prompt 62, next in the queue. The clay oil lamp (30 minutes, found in tombs) comes later; it isn't in the data.
+- **The crypt frame** (`crawler_frames`): it now relights two crypts against their old rings, one on pillars with its four torches and one not with its two, and holds each to 0.85 of its ring on screen (Mike's "a bit darker than it was" is fine). Pass 1's fail was its picker moving to the crypt not on pillars.
+- **Checks** (on fc4a333), all 0 fails:
+  - `crawler_check` (seed 7): 247 lines. New: the hit's X shows for 0.3 s and goes; at 480 and 270 lines it is four diagonals clear of the arms, the same in every corner, its edge never over the crosshair's, standing or sneaking; crouched, the dashes, the crosshair's own two level arms alone; the way out shows all its glow on the landing and 0.55 of it from the wake spot 108 m off, by day and by night.
+  - `fire_pot_check` (seed 7): 92. New: the cook-off (still in hand just short of the fuse; past it the burst 0.5 m from your eye, the pot gone, nothing thrown, one hit); your own burst 0.5 m off one hit, 1.5 m off none, 0.55 m off behind a wall none, thrown at your feet one, thrown level none, standing in its tar none; the X on a burst that catches a creature, none on one that catches nothing. Every burst the check doesn't mean to reach you now happens with you on its far floor.
+  - `stagger_check` 63 (new: a landed swing shows the X once, a miss none), `hands_check` 61, `crawler_harm_check` 59.
+- **Frames:** rendered once at the end, with part 2.
+- **For Mike:**
+  - The X shows on any contact, staggered or not, the same moment you hear the torch land. Only when it staggers?
+  - Your pot hurts you within 1 m whichever oil. Light oil's flash is 3 m wide: should it reach you further off? And should walking into your own burning tar hurt? Today it doesn't.
+  - The way out from far off: 0.55 of its glow by 30 m.
+- **For chat** (Mike's answers to the open calls, 7 Oct; for a lettered section):
+  - Built here: the dashes, the hit's X (and no warming crosshair), your pot hurts you, the cook-off, the way out faint from far off, the torch's 15 minutes.
+  - Being built in part 2 (the creatures' movement): nothing physical sinks into the stone or teleports (only ghosts phase); a chase follows to the light's edge and peeks in, never close to a fire; physical bosses cross lit rooms on the edges of the light; the snake's own tunnels; the snake as fast as your walk, your sprint outruns it; a pot stuns a boss and sends it to its cave for a while, never kills it; skeletons lunge within 2 m.
+  - Design answers, nothing to build yet:
+    - Worlds: 1–2 km each for now; separate worlds, one per biome (§EW confirmed).
+    - "Good night" wakes you at the last hearth you lit or found, and it must be lit. One hearth per floor; the dungeon's map must agree with the surface, so a chimney comes out on top where its flue says (§EV.4 with §EW).
+    - Saves: an autosave per dungeon and save states, probably up to 3 save files. This revises prompt 63's one save.
+    - The strong airway gust never puts the torch out, for now (closes §EZ.4 call 1 as built).
+    - Clay lamps and candles come back later, found in different tombs; a torch burns 15 minutes, an oil lamp 30.
+    - The imps are 2–3 imps. The wolfman and the werewolf are one creature. The hornet lives in a jungle by a beach. The witch's wisps glow cold blue.
+    - **The warden has a metal chain, and the world moves from tribal times to more advanced.** This touches §EH ("no metal", the open world's camps) and Mike's Project brief's "tribal tech" (§FK.5's wording).
+    - Creatures are 3D like the folk (§FH). The skeletons are sprites today (their 288-cell sheet).
+    - Lairs may open later: every ruin revisitable, a secret passage opening to go deeper.
+    - Each dungeon its own building style; the Andean one is approved (§EX.1).
+    - Free movement, not grid steps (as built). No spear or bow for now (CLAUDE.md keeps their code live for §AW's rare finds).
+    - The builders are from the past and mysterious. The rescuer says little, maybe something cryptic about something lurking here (the crawler has no words today, §ET.3).
+  - CLAUDE.md's brief still calls §EY and §FA–§FH "not built yet".
+
 ## 2026-10-07 — Mike's notes of 7 Oct: the hearth sunk in a pit under its shaft, a flue slot over every wall torch, four torches in a room on pillars, and the skeletons as Boos (c2573f8; skeletons d1e9e1b, 1ec0caa, ab35be2; 0d483ff)
 Mike, answering queue 48's call and adding four notes: *"yea for pillared rooms we can do 4 torches- its also ok if theres some shadows or a bit darker than it was because it gives monsters a place to hide. also, for skeletons itd be cool if they acted similar to boos in mario- they might not activate until you pass them once and only move toward you slowly when your back is turned so you never see them moving unless they get right up on you- another fix is that for the main rooms with hearths, the exit draft vent should be situated more directly above the fire- at the moment it seems like its offset a bit. also, where the main hearths sit there should be a fire pit made into the ground i stead of jist having a campfire sitting right on the floor. also please ensure torches in the indents on the wall still have exit vents above them"*. Built as Claude Code's first guesses where he gave no numbers; no design section yet (below, for chat).
 
