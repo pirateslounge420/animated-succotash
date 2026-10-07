@@ -811,13 +811,21 @@ func _card_window(cam: Camera3D, card: Node3D, w: int, h: int) -> Rect2i:
 ## with and without its card (the coal, the sparks and the smoke hidden
 ## for that pair, so only the card differs) and boxing the pixels that
 ## change.
-func _pitch_frames(p: CrawlerPlayer, t: Torch) -> void:
+func _pitch_frames(main: CrawlerMain, p: CrawlerPlayer, t: Torch) -> void:
 	var keep := str(Settings.get_value("display.preset", ""))
+	# The snake held still (queue 49), as for the glow-moss: it would come
+	# for the torch.
+	var boss: Variant = main.get("boss")
+	var keep_auto := true
+	if boss is Boss:
+		keep_auto = (boss as Boss).auto
+		(boss as Boss).auto = false
 	t.light()
 	var head: Node3D = t._view_flame
 	var card := head.get_node("Flame/Card") as Node3D
 	var quiet: Array[Node3D] = [head.get_node("Coal") as Node3D, head.get_node("Flame/Embers") as Node3D]
 	var shot := 0
+	var stood := Vector2.ZERO
 	for lines_want in [480, 270]:
 		Settings.set_value("display.preset", _preset_of(lines_want))
 		Display.apply()
@@ -860,12 +868,17 @@ func _pitch_frames(p: CrawlerPlayer, t: Torch) -> void:
 			if pose == "stand":
 				var cx := (float(bx.x0) + float(bx.x1)) * 0.5 / w
 				ok(int(bx.n) > 0 and cx > 0.6 and float(bx.y1) / h > 0.5 and float(fh) / h > 0.1 and float(fh) / h < 0.35 and float(bx.n) > 0.3 * fh * fw, "at %d lines the flame reads at the bottom right: %d px tall (%.0f%% of the frame), %d wide, its foot at %.0f%% down, solid (%.0f%% of its box drawn)" % [lines, fh, 100.0 * fh / h, fw, 100.0 * float(bx.y1) / h, 100.0 * float(bx.n) / maxf(fh * fw, 1.0)])
+				stood = Vector2(fw, fh)
+			else:
+				ok(int(bx.n) > 0 and float(fw) > stood.x * 1.2 and float(fh) > stood.y * 0.9 and float(bx.n) > 0.2 * fh * fw, "at %d lines the flame streams back at a sprint: %d px wide against %d standing, %d tall, still solid (%.0f%% of its box drawn)" % [lines, fw, int(stood.x), fh, 100.0 * float(bx.n) / maxf(fh * fw, 1.0)])
 	p.velocity = Vector3.ZERO
 	p.sprinting = false
 	for i in 60:
 		t.update_torch(1.0 / 60.0)
 	Settings.set_value("display.preset", keep)
 	Display.apply()
+	if boss is Boss:
+		(boss as Boss).auto = keep_auto
 	await _frames(6)
 
 
@@ -1205,7 +1218,7 @@ func _run() -> void:
 			var back_yaw := p._yaw
 			var back_pitch := p._pitch
 			p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
-			await _pitch_frames(p, t)
+			await _pitch_frames(main, p, t)
 			t.douse()
 			p.spawn_flat(back_pos, back_yaw, back_pitch)
 			await _frames(6)
