@@ -3,6 +3,7 @@
   "sea_cave_boom": "Design §DX (the columns, added by Claude Code, 4 Oct): the swell striking the back of the columned sea cave, once a swell (Landmarks SWELL_S, 7-11 s; SoundSynth boom). A source at the cave's back: played only while you are within max_distance, so you hear it from the clifftop before you have found the way down; muffled with distance like any source.",
   "bench_kinds": "Design 5 Oct §EL (the workshop, added by Claude Code): scrape, cord_twist, needle_through_hide (the soft bench) and tap_tap, grind, drill_whirr (the hard bench) are the benches' work sounds (camps.json sim.workshop.benches[].sounds; Workshop, SoundSynth <kind>_loop): short quiet loops from the bench itself while a folk works at it, each idle its own (sew_with_awl the needle, twist_cord and plait_basket the cord, scrape_hide the scrape; knap the tap-tap, grind_axe and hollow_bowl_with_coal the grind, bow_drill the whirr). A source like any other (§BG): heard from the door, gone at max_distance.",
   "crown_kinds": "Design §DA (Wind II, added by Claude Code, 4 Oct): crown_hush, crown_rustle, crown_clatter, crown_rattle are the crowns round you sounding in the gusts (WindCrowns; wind.json sound.crowns): a source at each crown, voiced by its leaf (needles hush, broad leaves rustle, palm fronds clatter, dry autumn leaves rattle; SoundSynth crown_*_loop), muffled like any source so you can walk to it.",
+  "strike_tell": "Design 6 Oct §FA.2 (prompt 57, added by Claude Code): a creature's strike tell, its own sound as it winds up to strike (CreatureStrike; the creature's strike.sound names the SoundSynth voice, the snake's snake_hiss). A source at the creature's head from the wind-up's first frame: loud close by, so an ambush is heard before it is seen; dull and without direction far off, like any source.",
   "kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
   "unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
   "max_distance": "Meters past which it is not heard at all; it also fades out linearly toward this distance, so it never cuts off.",
@@ -443,6 +444,14 @@
    "model": "inverse",
    "max_db": -6,
    "muffle": [8, 22],
+   "class": "source"
+  },
+  "strike_tell": {
+   "unit_size": 4,
+   "max_distance": 30,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [10, 30],
    "class": "source"
   }
  },

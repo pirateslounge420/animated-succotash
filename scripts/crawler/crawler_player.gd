@@ -148,8 +148,22 @@ func _physics_process(delta: float) -> void:
 	var moved := Vector3(global_position.x - before.x, 0.0, global_position.z - before.z).length()
 	footsteps.step_update(self, moved, is_on_floor(), delta)
 	var move_speed := Vector3(velocity.x, 0.0, velocity.z).length()
+	_loud_t = maxf(_loud_t - delta, 0.0)
 	moving_state(move_speed)
 	torch.update_torch(delta)
+
+
+## A loud moment (a swing landing on a creature, §FA.1): it holds over
+## your steps' noise for LOUD_HOLD_S, so whatever listens hears it.
+const LOUD_HOLD_S := 0.5
+var _loud := 0.0
+var _loud_t := 0.0
+
+
+func make_noise(level: float) -> void:
+	_loud = maxf(_loud if _loud_t > 0.0 else 0.0, level)
+	_loud_t = LOUD_HOLD_S
+	noise_level = maxf(noise_level, level)
 
 
 ## What the body would be doing (for the steps and the snuff rules).
@@ -163,3 +177,5 @@ func moving_state(move_speed: float) -> void:
 	else:
 		anim_state = "sprint" if sprinting else "walk"
 	noise_level = 1.0 if anim_state == "sprint" else (0.1 if crouching else 0.35)
+	if _loud_t > 0.0:
+		noise_level = maxf(noise_level, _loud)

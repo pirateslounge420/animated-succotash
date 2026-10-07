@@ -6,7 +6,8 @@
   "lair": "\u00a7EY.1 (Mike): usually a hole in a cave somewhere in the dungeon. off_main_path, findable (Claude). breathing_heard_m: once it is driven in you can stand at the edge and hear it below. enterable: false is Claude's first guess (\u00a7EY.7 call 3).",
   "release": "\u00a7EY.2 (Claude's first guess). When the last light catches you hear it go: a long sound travelling away and down to its hole, then the dungeon's small sounds come back (bed_returns). log_line: the one log entry (no bestiary, \u00a7BA: nothing names it on screen).",
   "bosses": "\u00a7EY.3. Keyed by worlds.json worlds. creature: Mike's words. world_by: who placed it in that world (Mike, or Claude's pick, open). pattern: how it moves (each its own; Mike: 'a different algorithm'). Speeds are m/s; the ambient walk is 4.3 and the sprint 5.6 (movement.json profiles.ambient), and a sprint held too long gutters the torch (\u00a7ET.7). tell: what you hear or see before it. first: the one to build first (the tomb's). \u00a7FE.4 (6 Oct, 22:32): the swamp's boss is the witch (Mike) and the mine's the giant spider (Claude's reading, open); the hornet and the centipede moved to unplaced. \u00a7FJ.6 (Mike, 22:52): the centipede is the jungle's boss (the jungle isn't in worlds.json yet, \u00a7EW.2).",
-  "unplaced": "\u00a7FE.4: bosses with no world yet: the centipede and the hornet (moved out of the mine and the swamp), the imps (Mike, 22:39) and the warden (Mike, 22:40). chain: null until Mike answers \u00a7FI.2 call 6 (\u00a7EH: no metal; a found relic, bone or wood links, or rope). one_or_pack: null until Mike says. \u00a7FJ.6: the centipede moved to bosses.jungle; the imps go to another world, not chosen yet."
+  "unplaced": "\u00a7FE.4: bosses with no world yet: the centipede and the hornet (moved out of the mine and the swamp), the imps (Mike, 22:39) and the warden (Mike, 22:40). chain: null until Mike answers \u00a7FI.2 call 6 (\u00a7EH: no metal; a found relic, bone or wood links, or rope). one_or_pack: null until Mike says. \u00a7FJ.6: the centipede moved to bosses.jungle; the imps go to another world, not chosen yet.",
+  "strike": "\u00a7FA.1, \u00a7FA.2 (prompt 57; wired by Claude Code in the crawler, CreatureStrike). A boss strikes as a resident does: a wind-up of wind_up_s with its own tell, seen and heard (tell: the words; sound: its SoundSynth voice, played from the creature from the wind-up's first frame; its sprite's pose), then the committed strike, strike_s, which lands one hit (contact) if you are still within reach_m with nothing solid between, then recover_s before the next. A swing of a lit torch that reaches it during the wind-up (body_r: how big a target its head is) staggers it (torch.json stagger: reel_s, cooldown_s, no damage) and it reels back reel_m. Left out: strike_s 0.2, recover_s 0.8, reel_m 1.0, body_r 0.4 (CreatureStrike.DEFAULTS). bosses.desert.strike, the snake's: Claude's first guesses, 6 Oct night (the tell is Claude (chat)'s, \u00a7FA.2); reach_m is \u00a7EY's strike_m; the hiss and the head drawn back for 0.7 s, then a 0.15 s lunge."
  },
  "rule": {
   "one_per_dungeon": true,
@@ -114,6 +115,16 @@
     25.0
    ],
    "strike_m": 2.5,
+   "strike": {
+    "reach_m": 2.5,
+    "wind_up_s": 0.7,
+    "strike_s": 0.15,
+    "recover_s": 1.0,
+    "reel_m": 1.5,
+    "body_r": 0.5,
+    "tell": "a hiss and the head drawing back",
+    "sound": "snake_hiss"
+   },
    "tell": "scales dragging on stone",
    "mike": "a giant snake which slithers through the halls",
    "first": true

@@ -48,6 +48,9 @@ class_name SoundSynth
 ##   stone_wind_loop  wind in the stones: a hollow moan with a breathy edge,
 ##                swelling and easing, 6 s loop (the ruin's bed, §DI.3)
 ##   drips_loop   slow drips in a wet hall, no rumble, 7 s loop
+##   snake_hiss   the giant snake's strike tell (design §FA.2): a sharp,
+##                dry breath of a hiss, up fast and held through the
+##                wind-up (CreatureStrike stops it as the strike goes)
 ##
 ## Every one of them plays on a 3D player tuned by the falloff table,
 ## data/audio.json (Audio3D), except the hitmarker, a UI sound.
@@ -158,6 +161,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _stone_wind_loop(rng)
 		"drips_loop":
 			samples = _drips_loop(rng)
+		"snake_hiss":
+			samples = _snake_hiss(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -1232,3 +1237,30 @@ static func _drips_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 				acc += sin(TAU * f * dt) * exp(-dt * 18.0) * float(dp[2])
 		raw[i] = acc
 	return _loopify(raw, n, fade)
+
+
+## The giant snake drawing back to strike (design 6 Oct §FA.2): a breath
+## of a hiss, dry and bright (noise high-passed near 2 kHz with the very
+## top softened), up in a few hundredths of a second with a little puff at
+## its start, wavering as the breath is forced out, held long enough for
+## any wind-up the data asks (CreatureStrike cuts it as the strike goes),
+## then let go.
+static func _snake_hiss(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(1.4, 1.6))
+	var hp_k := 1.0 - TAU * rng.randf_range(1800.0, 2400.0) / RATE
+	var lp_k := 1.0 - exp(-TAU * rng.randf_range(6000.0, 7500.0) / RATE)
+	var wob_hz := rng.randf_range(5.0, 8.0)
+	var ph := rng.randf() * TAU
+	var hp := 0.0
+	var prev := 0.0
+	var lp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + hp_k * hp
+		prev = x
+		lp = lerpf(lp, hp, lp_k)
+		var puff := 1.0 + 0.6 * exp(-t / 0.05)
+		var breath := 1.0 + 0.15 * sin(TAU * wob_hz * t + ph)
+		s[i] = lp * puff * breath * _env(i, s.size(), 0.03, 0.3)
+	return s

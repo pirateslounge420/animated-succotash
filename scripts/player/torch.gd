@@ -12,8 +12,11 @@ extends Node3D
 ## (FireStore.swing_light); an unlit one swung through a lit fire, holder
 ## or planted torch catches (light). Sharing costs the torch nothing. The
 ## swing lights nothing else (never the ground, grass, a camp, folk or a
-## creature: wildfire stays a dropped torch, §BL) and does nothing to a
-## creature (no damage, knockback or flinch; §BA unchanged). Burns
+## creature: wildfire stays a dropped torch, §BL) and never wounds a
+## creature. At the top of its arc a lit one staggers a creature caught in
+## its strike's wind-up (design 6 Oct §FA.1, CreatureStrike, the crawler's
+## creatures; the open world has none, so there it still does nothing,
+## §BA). Burns
 ## burn_min real minutes, rain and storms shorten that, then gutters (the
 ## last gutter_share: dimmer, a harder flicker) and goes out: a stick
 ## (`burnt`). Water past douse_depth_m puts it out (relight it at a
@@ -60,6 +63,11 @@ var _blocked := false
 ## Swings made, and what the last one passed ("" nothing; tests).
 var swings := 0
 var last_pass := ""
+## What the last swing's top met (swing_top: "staggered", "landed", "").
+var last_contact := ""
+## The swing's top: where its arc (1 .. 0) is furthest out (_apply's
+## sin(_swing * PI)), half of Fists.STRIKE_S after the click (§FA.1).
+const SWING_TOP := 0.5
 ## A line for the player (main shows it and clears it).
 var note := ""
 
@@ -622,9 +630,26 @@ func _update_swing(delta: float) -> void:
 		swing()
 	_down = down
 	if _swing > 0.0:
+		var was := _swing
 		_swing = maxf(_swing - delta / maxf(Fists.STRIKE_S, 0.05), 0.0)
+		if was > SWING_TOP and _swing <= SWING_TOP:
+			swing_top()
 		if _swing <= 0.0:
 			pass_flame()
+
+
+## The top of the swing, as far out as it goes (§FA.1): it meets whatever
+## creature it reaches (CreatureStrike.swing_lands). A lit torch staggers
+## one in its wind-up; landing on one at all is as loud as a sprint, and
+## you hear it land. Keeps what it did (last_contact: "staggered",
+## "landed" or "").
+func swing_top() -> String:
+	last_contact = CreatureStrike.swing_lands(player, swing_point(), reach_m(), lit())
+	if last_contact != "":
+		_voice.stream = SoundSynth.stream("arrow_hit", randi())
+		_voice.pitch_scale = randf_range(0.8, 0.95)
+		_voice.play()
+	return last_contact
 
 
 ## Where the burnt end is (scene): the light at the hand (TorchSnuff
