@@ -18,14 +18,18 @@ extends Node
 ##   4. the torch's snuff rules (§ET.7, TorchSnuff, Airways).
 ##   5. the rescuer as a baked sprite (§ET.8, FigureSprite).
 ##
-## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The log keeps
-## its lines (Enter), O the settings, F11 the pixel size, F2 the frame
-## time. Right click takes a torch from the bundle; left click swings the
-## torch; Q puts it away or takes it out. No combat, no harm, no dread
+## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
+## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
+## hud), off with the Settings switch Crosshair dot and while the log or
+## the settings cover the middle of the frame. The log keeps its lines
+## (Enter), O the settings, F11 the pixel size, F2 the frame time. Right
+## click takes a torch from the bundle; left click swings the torch; Q
+## puts it away or takes it out. No combat, no harm, no dread
 ## meter yet (the dark is the absence of light in this slice).
 
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
+static var HUD: Dictionary = Tuning.table("crawler").get("hud", {})
 
 var world: Node
 var lay: Dictionary
@@ -39,6 +43,8 @@ var post: PostGrade
 var fire_shadows: FireShadows
 var environment: Environment
 var ui: CanvasLayer
+## The crosshair (§EX.7), or null when crawler.json hud.reticle is off.
+var reticle: Reticle
 var perf: PerfReadout
 var log_panel: LogPanel
 var settings_panel: SettingsPanel
@@ -283,6 +289,12 @@ func _ui() -> void:
 	ui.name = "UI"
 	ui.layer = 10
 	add_child(ui)
+	# The crosshair (§EX.7): first, so the panels and the waking dark are
+	# drawn over it.
+	if bool(HUD.get("reticle", true)):
+		reticle = Reticle.new()
+		reticle.name = "Reticle"
+		ui.add_child(reticle)
 	perf = PerfReadout.new()
 	ui.add_child(perf)
 	log_panel = LogPanel.new()
@@ -348,6 +360,9 @@ func _bake_rescuer() -> void:
 func _process(_delta: float) -> void:
 	player.typing = log_panel.visible
 	player.ui_open = settings_panel.visible or log_panel.visible
+	if reticle != null:
+		# In first person, and not over a panel: both cover the middle.
+		reticle.shown = player.first_person and not player.ui_open
 	if player.torch.note != "":
 		# Wordless (§ET.3): the torch's lines go to the log only.
 		player.torch.note = ""

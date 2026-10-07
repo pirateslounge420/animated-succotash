@@ -6,8 +6,9 @@ extends Control
 ##     never comes back on its own (PlanetPlayer: resting at a fire, food,
 ##     medicine);
 ##   * the weapon in hand above the meter;
-##   * a crosshair while aiming or in first person, with the bow's draw as
-##     a filling arc beneath it (or the spear's raise); otherwise a small
+##   * a crosshair while aiming or in first person (Reticle, the one the
+##     crawler shows too), with the bow's draw as a filling arc beneath it
+##     (or the spear's raise); otherwise a small
 ##     dot marks the middle of the view, and when it rests on an animal or
 ##     a plant near you it opens into a ring and the species' binomial
 ##     shows beneath it in small italics (LookTarget);
@@ -34,9 +35,6 @@ var draw_power := 0.0 # 0-1 bow power
 var meter := 0.0
 var overcharge := 0.0
 static var METER_HUD := Tuning.section("hud", "super_meter")
-## The crosshair (hud.json reticle, 480-line px, design §W): four arms,
-## each size_px / 2 long, starting gap_px out from the middle.
-static var RETICLE := Tuning.section("hud", "reticle")
 static var PLANT_NAME := Tuning.section("hud", "plant_name")
 ## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
 var weapon := ""
@@ -259,13 +257,9 @@ func _draw() -> void:
 	if show_crosshair and not _dead:
 		var c := size * 0.5
 		if x_left <= 0.0:
-			var col := Color(str(RETICLE.get("color", "#7FB0FF")))
-			var gap := float(RETICLE.get("gap_px", 3))
-			var tip := gap + float(RETICLE.get("size_px", 10)) * 0.5
-			var w := float(RETICLE.get("thickness_px", 1))
-			for d: Vector2 in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
-				draw_line(c + d * (gap - 1.0), c + d * (tip + 1.0), Color(0.05, 0.07, 0.15, 0.7), w + 2.0)
-				draw_line(c + d * gap, c + d * tip, col, w)
+			# The one crosshair (Reticle, hud.json reticle): the crawler's
+			# too.
+			Reticle.draw_cross(self)
 		if aiming:
 			draw_arc(c, 11.0, PI * 0.25, PI * 0.75, 12, Color(1, 1, 1, 0.3), 2.0)
 			var full := draw_power >= 1.0

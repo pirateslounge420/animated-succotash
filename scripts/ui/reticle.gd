@@ -1,0 +1,130 @@
+class_name Reticle
+extends Control
+## The crosshair (data/hud.json reticle; design §W, §Y): four arms round
+## the frame's middle pixel, each size_px / 2 long and thickness_px wide,
+## gap_px clear pixels out from the middle, in `color`, each on a
+## one-pixel dark edge. Drawn cell by cell on the frame's own pixel grid
+## (whole-pixel rects, the way the clock is), inside the internal frame
+## and nearest-scaled with it, so it is crisp and the same on all four
+## sides at every pixel-size preset. Its sizes are at the 480-line
+## reference and follow the frame's lines like the HUD's text
+## (HudText.scale(): arms 3, gap 2 at 270 lines), never under a pixel;
+## the edge is always one. One crosshair: the open world's StatusHud
+## draws it through draw_cross() too, so the two can't drift apart.
+##
+## As a node it is the crawler's whole HUD (design 6 Oct §EX.7,
+## crawler.json hud): shown in first person while the Settings switch
+## hud.reticle (Crosshair dot) is on; the scene hides it while a panel
+## covers the middle of the frame. No words (§ET.3). It gives off no
+## light: its layer is drawn over the finished frame, past the grade, the
+## dither and the bloom.
+
+static var RETICLE := Tuning.section("hud", "reticle")
+## The dark edge round every arm (StatusHud's ink, at 70 %).
+const EDGE := Color(0.05, 0.07, 0.15, 0.7)
+
+## Off while the scene says so (a panel open).
+var shown := true
+## What the last draw showed (_process redraws when it changes).
+var _key: Array = []
+## cells() for the last frame and scale asked.
+static var _cells_key: Array = []
+static var _cells: Dictionary = {}
+
+
+func _ready() -> void:
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+## On screen now: shown, in the tree and the Settings switch on.
+func showing() -> bool:
+	return shown and is_visible_in_tree() and Settings.get_bool("hud.reticle")
+
+
+## Redrawn only when what it shows changes: the switch, a panel, the
+## pixel-size preset.
+func _process(_delta: float) -> void:
+	var key := [showing(), get_viewport_rect().size, HudText.scale()]
+	if key != _key:
+		_key = key
+		queue_redraw()
+
+
+func _draw() -> void:
+	if showing():
+		draw_cross(self)
+
+
+## Its colour (hud.json reticle.color).
+static func color() -> Color:
+	return Color(str(RETICLE.get("color", "#7FB0FF")))
+
+
+## Draw the crosshair on `ci` (a canvas item in the internal frame): the
+## edge, then the arms over it.
+static func draw_cross(ci: CanvasItem) -> void:
+	var cl := cells(Vector2i(ci.get_viewport_rect().size.round()))
+	for r: Rect2i in cl.edge:
+		ci.draw_rect(Rect2(r), EDGE)
+	var col := color()
+	for r: Rect2i in cl.arms:
+		ci.draw_rect(Rect2(r), col)
+
+
+## The crosshair on a frame `frame` pixels big, its sizes at `k` (the
+## frame's lines over the 480 reference; HudText.scale() when left out):
+## {"middle": the middle pixel; "arm", "gap", "width": its sizes in
+## pixels; "arms": [left, right, up, down] as whole-pixel rects; "edge":
+## the dark edge one pixel round them, each pixel once, in runs along the
+## rows}.
+static func cells(frame: Vector2i, k := -1.0) -> Dictionary:
+	if k < 0.0:
+		k = HudText.scale()
+	var key := [frame, k]
+	if key == _cells_key:
+		return _cells
+	var arm := maxi(roundi(float(RETICLE.get("size_px", 10)) * 0.5 * k), 1)
+	var gap := maxi(roundi(float(RETICLE.get("gap_px", 3)) * k), 0)
+	var w := maxi(roundi(float(RETICLE.get("thickness_px", 1)) * k), 1)
+	# The frame's sides are even, so its centre is a pixel corner: the
+	# middle pixel is the one below and right of it. The band the arms
+	# run along is w pixels: on the middle pixel when w is odd, on the
+	# centre itself when even.
+	var mid := frame / 2
+	var lo := mid - Vector2i(w / 2, w / 2)
+	var hi := lo + Vector2i(w - 1, w - 1)
+	var arms: Array[Rect2i] = [
+		Rect2i(lo.x - gap - arm, lo.y, arm, w),
+		Rect2i(hi.x + gap + 1, lo.y, arm, w),
+		Rect2i(lo.x, lo.y - gap - arm, w, arm),
+		Rect2i(lo.x, hi.y + gap + 1, w, arm),
+	]
+	# The edge: every pixel next to an arm (sides and corners) that isn't
+	# one, once, so where two edges would meet it isn't drawn twice.
+	var on := {}
+	for a in arms:
+		for y in range(a.position.y, a.end.y):
+			for x in range(a.position.x, a.end.x):
+				on[Vector2i(x, y)] = true
+	var ring := {}
+	for a in arms:
+		var g := a.grow(1)
+		for y in range(g.position.y, g.end.y):
+			for x in range(g.position.x, g.end.x):
+				var p := Vector2i(x, y)
+				if not on.has(p):
+					ring[p] = true
+	var pts: Array = ring.keys()
+	pts.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
+	var edge: Array[Rect2i] = []
+	for p: Vector2i in pts:
+		if not edge.is_empty() and edge[-1].position.y == p.y and edge[-1].end.x == p.x:
+			var last: Rect2i = edge[-1]
+			last.size.x += 1
+			edge[-1] = last
+		else:
+			edge.append(Rect2i(p, Vector2i.ONE))
+	_cells_key = key
+	_cells = {"middle": mid, "arm": arm, "gap": gap, "width": w, "arms": arms, "edge": edge}
+	return _cells

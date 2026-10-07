@@ -25,7 +25,13 @@ extends SceneTree
 ##     douse_depth_m gutters it, past it douses it;
 ##  5. the rescuer's sprite (§ET.8): its sheet around x frames by rows,
 ##     the frame picked by where the camera stands (front, side, behind,
-##     above, below), facing the hearth.
+##     above, below), facing the hearth;
+##  6. the crosshair (§EX.7, Reticle): the one thing in the crawler's HUD
+##     (no words, nothing else of the open world's), round the frame's
+##     middle pixel and sized per hud.json reticle at the 480 and 270
+##     presets, its dark edge one pixel round it, drawn over the grade
+##     (no bloom); off with the Settings switch hud.reticle and under an
+##     open panel. (crawler_frames.gd checks its pixels on screen.)
 
 const SEEDS := 30
 
@@ -62,6 +68,7 @@ func _run() -> void:
 	await _relight(main)
 	await _snuff(main)
 	_sprite(main)
+	await _reticle(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -658,3 +665,175 @@ func _sprite(main: CrawlerMain) -> void:
 	for i in 60:
 		seen[r.idle_frame(i * 0.25)] = true
 	ok(seen.size() == n, "its idle steps through all %d frames" % n)
+
+
+## Process frames (the crosshair redraws in its own _process, after the
+## frame's signal).
+func _ticks(n: int) -> void:
+	for i in n:
+		await process_frame
+
+
+## The crosshair (design §EX.7; Reticle, crawler.json hud, hud.json
+## reticle).
+func _reticle(main: CrawlerMain) -> void:
+	var R: Dictionary = Tuning.section("hud", "reticle")
+	var H: Dictionary = CrawlerMain.HUD
+	# Waking's dark lifted (it is drawn over the crosshair while it lasts).
+	for i in 600:
+		if not main._fade.visible:
+			break
+		await process_frame
+	var ret: Reticle = main.reticle
+	var n_ret := 0
+	var open_world := 0
+	var stack: Array = [main]
+	while not stack.is_empty():
+		var n: Node = stack.pop_back()
+		if n is Reticle:
+			n_ret += 1
+		if n is StatusHud or n is Hud:
+			open_world += 1
+		stack.append_array(n.get_children())
+	ok(bool(H.get("reticle", false)) and ret != null and n_ret == 1 and ret.get_parent() == main.ui, "crawler.json hud.reticle: one crosshair, in the crawler's HUD (%d)" % n_ret)
+	if ret == null:
+		return
+	ok(open_world == 0, "nothing else of the open world's HUD comes with it: no StatusHud, no Hud (%d)" % open_world)
+	# The player's settings, put back at the end.
+	var had_preset: Variant = Settings.get_value("display.preset") if Settings.has("display.preset") else null
+	var had_switch: Variant = Settings.get_value("hud.reticle") if Settings.has("hud.reticle") else null
+	Settings.set_bool("hud.reticle", true)
+	await _ticks(2)
+	# In play: the crosshair and nothing else, no words (§ET.3).
+	var shown_now: Array = []
+	var words := 0
+	for c in main.ui.find_children("*", "Control", true, false):
+		var ctl := c as Control
+		if not ctl.is_visible_in_tree():
+			continue
+		shown_now.append(str(ctl.name))
+		var t: Variant = ctl.get("text")
+		if t is String and str(t) != "":
+			words += 1
+	ok(not bool(H.get("words", true)) and shown_now == ["Reticle"] and words == 0 and ret.showing(), "in play the crawler's HUD shows the crosshair and nothing else, and no words (shown: %s)" % [shown_now])
+	# Drawn over the finished frame (past the grade, the dither and the
+	# 3D glow, which never takes the canvas here), in a solid, ordinary
+	# colour: it gives off no light.
+	var col := Reticle.color()
+	ok(main.ui.layer > main.post.layer and main.environment.background_mode != Environment.BG_CANVAS and col.a == 1.0 and maxf(col.r, maxf(col.g, col.b)) <= 1.0, "it gives off no light: drawn over the graded frame (layer %d over the grade's %d), never in the 3D glow, solid #%s" % [main.ui.layer, main.post.layer, col.to_html(false)])
+	# Round the frame's middle pixel and sized per hud.json at 480 and
+	# 270 lines (its sizes are at the 480 reference, like the text's).
+	var ref := float(Tuning.section("hud", "text").get("ref_height_px", 480))
+	for lines_want in [480, 270]:
+		var pname := ""
+		for nm in Display.presets():
+			if int(Display.presets()[nm]) == lines_want:
+				pname = str(nm)
+		if pname == "":
+			ok(false, "a pixel-size preset of %d lines (look.json render.presets)" % lines_want)
+			continue
+		Settings.set_value("display.preset", pname)
+		Display.apply()
+		await _ticks(2)
+		var f := Display.internal_size()
+		var k := float(lines_want) / ref
+		var arm := maxi(roundi(float(R.get("size_px", 10)) * 0.5 * k), 1)
+		var gap := maxi(roundi(float(R.get("gap_px", 3)) * k), 0)
+		var w := maxi(roundi(float(R.get("thickness_px", 1)) * k), 1)
+		var cl := Reticle.cells(f)
+		var arms: Array = cl.arms
+		var bad: Array = []
+		var px := {}
+		var box := Rect2i()
+		for i in arms.size():
+			var a: Rect2i = arms[i]
+			if a.size != (Vector2i(arm, w) if i < 2 else Vector2i(w, arm)):
+				bad.append("arm %d is %s" % [i, a.size])
+			box = a if i == 0 else box.merge(a)
+			for y in range(a.position.y, a.end.y):
+				for x in range(a.position.x, a.end.x):
+					if px.has(Vector2i(x, y)):
+						bad.append("arms overlap at %s" % Vector2i(x, y))
+					px[Vector2i(x, y)] = true
+		# A plus: left and right on the up arm's rows, up and down on its
+		# columns, each gap clear of the band where they cross.
+		var l: Rect2i = arms[0]
+		var r: Rect2i = arms[1]
+		var u: Rect2i = arms[2]
+		var d: Rect2i = arms[3]
+		if l.position.y != r.position.y or u.position.x != d.position.x or l.position.y != u.end.y + gap or r.position.y != l.position.y:
+			bad.append("not a plus")
+		var gaps := [u.position.x - l.end.x, r.position.x - u.end.x, l.position.y - u.end.y, d.position.y - l.end.y]
+		for g in gaps:
+			if int(g) != gap:
+				bad.append("gaps %s" % [gaps])
+				break
+		# The same on every side: the arms mirror round the box's middle,
+		# which is the frame's (within half a pixel: a one-pixel line sits
+		# on the middle pixel, right and below the frame's centre).
+		for p: Vector2i in px:
+			if not px.has(Vector2i(box.position.x + box.end.x - 1 - p.x, p.y)) or not px.has(Vector2i(p.x, box.position.y + box.end.y - 1 - p.y)):
+				bad.append("not symmetric")
+				break
+		var mid := Vector2(box.position + box.end) * 0.5
+		var off := mid - Vector2(f) * 0.5
+		if absf(off.x) > 0.5 or absf(off.y) > 0.5 or box.size != Vector2i.ONE * (2 * (gap + arm) + w):
+			bad.append("box %s, %s off the centre" % [box, off])
+		# The dark edge: every pixel next to an arm (8 ways) that isn't
+		# one, each once, and nothing else.
+		var edge := {}
+		var twice := 0
+		for e: Rect2i in cl.edge:
+			for y in range(e.position.y, e.end.y):
+				for x in range(e.position.x, e.end.x):
+					var p := Vector2i(x, y)
+					if edge.has(p) or px.has(p):
+						twice += 1
+					edge[p] = true
+		var want_edge := {}
+		for p: Vector2i in px:
+			for dy in [-1, 0, 1]:
+				for dx in [-1, 0, 1]:
+					var q := p + Vector2i(dx, dy)
+					if not px.has(q):
+						want_edge[q] = true
+		var edge_ok := twice == 0 and edge.size() == want_edge.size()
+		for q in want_edge:
+			if not edge.has(q):
+				edge_ok = false
+		if not edge_ok:
+			bad.append("edge %d px (want %d), %d twice" % [edge.size(), want_edge.size(), twice])
+		var vp := ret.get_viewport_rect().size
+		if Vector2i(vp.round()) != f:
+			bad.append("drawn on a %s frame, not the internal %s" % [vp, f])
+		print("  %d lines (%dx%d): middle pixel %s; arms %d px x %d, %d clear of the middle, %d px across; edge %d px" % [lines_want, f.x, f.y, str(cl.middle), arm, w, gap, box.size.x, edge.size()])
+		ok(bad.is_empty(), "%d lines: the crosshair round the frame's middle pixel, four arms %d px long and %d wide, %d px clear of the middle, the same on every side, its dark edge one pixel round it (hud.json size_px %s, gap_px %s, thickness_px %s at the 480 reference)%s" % [lines_want, arm, w, gap, str(R.get("size_px")), str(R.get("gap_px")), str(R.get("thickness_px")), "" if bad.is_empty() else ": %s" % [bad]])
+	# The Settings switch (Crosshair dot) hides it, and shows it again.
+	Settings.set_bool("hud.reticle", false)
+	await _ticks(2)
+	var off_ok := not ret.showing() and not ret._key.is_empty() and not bool(ret._key[0])
+	Settings.set_bool("hud.reticle", true)
+	await _ticks(2)
+	var on_ok := ret.showing() and bool(ret._key[0])
+	ok(off_ok and on_ok, "the Settings switch hud.reticle (Crosshair dot) hides it, and brings it back")
+	# Never over an open panel: the log and the settings both cover the
+	# middle of the frame.
+	main.log_panel.open()
+	await _ticks(2)
+	var under_log := ret.showing()
+	main.log_panel.close()
+	main.settings_panel.open()
+	await _ticks(2)
+	var under_settings := ret.showing()
+	main.settings_panel.close()
+	await _ticks(2)
+	ok(not under_log and not under_settings and ret.showing(), "hidden while the log or the settings are open, back when they close")
+	if had_preset == null:
+		Settings.erase("display.preset")
+	else:
+		Settings.set_value("display.preset", had_preset)
+	if had_switch == null:
+		Settings.erase("hud.reticle")
+	else:
+		Settings.set_value("hud.reticle", had_switch)
+	Display.apply()
