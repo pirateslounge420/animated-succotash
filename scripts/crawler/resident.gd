@@ -211,6 +211,8 @@ var armed := false
 ## steps it has undone, stopping short of your sight (tools).
 var still := false
 var stopped_short := 0
+## Its bone steps heard so far (tools).
+var steps_heard := 0
 ## Its near tell has sounded for this climb (it plays as it starts to
 ## move, not before).
 var _told := false
@@ -434,6 +436,7 @@ func _bone_step() -> void:
 	if not _step_due:
 		return
 	_step_due = false
+	steps_heard += 1
 	feet.stream = SoundSynth.stream("bone_step", randi())
 	feet.play()
 

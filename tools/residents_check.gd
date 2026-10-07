@@ -559,16 +559,13 @@ func _creep() -> void:
 	player.spawn_flat(b, atan2(a.x - b.x, a.z - b.z), -0.1)
 	_hunt_at(r, a, b)
 	var pts: Array = []
-	var steps := 0
-	var stream: AudioStream = r.feet.stream
+	var heard0 := r.steps_heard
 	var t := 0.0
 	while t < 2.0:
 		await physics_frame
 		t += DT
 		pts.append(r.global_position)
-		if r.feet.stream != stream:
-			steps += 1
-			stream = r.feet.stream
+	var steps := r.steps_heard - heard0
 	var k0 := int(0.5 / DT)
 	var mps := _flat(pts[k0], pts[-1]) / ((pts.size() - 1 - k0) * DT)
 	ok(absf(mps - cmps) <= 0.03 and steps >= 2 and r.state == Resident.HUNT, "your back to it on a straight run of dark floor (piece %d), it creeps toward you at %.2f m/s (creep_mps %.1f; your walk is %.1f), its bone steps heard (%d)" % [int(line.piece), mps, cmps, PlanetPlayer.WALK_SPEED, steps])

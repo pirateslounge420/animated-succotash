@@ -606,8 +606,8 @@ func _door_view(main: CrawlerMain, pc: Dictionary) -> Array:
 ## Relight every sconce in room `pc` with the swing (a step out from each,
 ## the torch lit), then put the torch away: how many caught.
 ## A relit wall torch's flue slot (design §EV.1; Mike, 7 Oct; TombBuild
-## ._flue_slot_op), from 2.4 m off its wall and a little along it, at
-## night, the torch away: the slot's middle (a little into it) against the
+## ._flue_slot_op), from across its corridor (2.4 m off a room's wall) and
+## a little along it, at night, the torch away: the slot's middle (a little into it) against the
 ## stone beside it at the same height, both on screen.
 func _flue_slot_frame(main: CrawlerMain, p: CrawlerPlayer, sconce: Node3D, nrm: Vector3, along: Vector3) -> void:
 	var pos: Vector3 = sconce.global_position + nrm * TombBuild.sconce_inset()
@@ -621,7 +621,10 @@ func _flue_slot_frame(main: CrawlerMain, p: CrawlerPlayer, sconce: Node3D, nrm: 
 		return
 	var mid: Vector3 = ((slot.bottom as Vector3) + (slot.top as Vector3)) * 0.5
 	var floor_y := sconce.global_position.y - float(CrawlerFires.HOLD.get("sconce_h_m", 1.7))
-	var stand := Vector3(pos.x, floor_y, pos.z) + nrm * 2.4 + along * 0.6
+	# Across its corridor (or 2.4 m into a room), a little along the wall.
+	var pc: Dictionary = main.lay.pieces[int(sconce.get_meta("piece"))]
+	var off := minf(2.4, 2.0 * float(pc.half) - 0.45)
+	var stand := Vector3(pos.x, floor_y, pos.z) + nrm * off + along * 0.6
 	var to := mid - (stand + Vector3(0.0, 1.26, 0.0))
 	p.spawn_flat(stand, atan2(-to.x, -to.z), atan2(to.y, Vector2(to.x, to.z).length()))
 	await _frames(10)
