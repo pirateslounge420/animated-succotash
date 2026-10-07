@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — The hit's X on every hit you start: your tar burning a creature shows it too (81f2ac9)
+Mike, on the X: *"the X crosshair will appear on any successful hit"* and *"X should appear anytime a creature gets hit from something initiated from the player- so if a freature gets butned by tar after the pot ia thrown, it should still show the X reticle"*.
+
+- **What changes on screen:** the X flashed for a swing that lands and a pot's burst that catches a creature, as built (any swing that lands, lit or unlit, staggering it or not: his first line, unchanged). Now it also flashes once a second while your tar burns a creature: stuck to it, a patch it stands in, or a fire your pot spread to.
+- **How** (`FirePots.burn`, `mark_hit`; `hud.json → reticle.hit_marker.burn_every_s`, new, 1.0, Claude Code's first guess): every time your pot's fire reaches a creature it may mark the hit. A burst marks at once; the tar burning on marks at most once every `burn_every_s` (the X itself shows 0.3 s), so it pulses while the creature burns rather than staying lit.
+- **Checks** (on 81f2ac9): `fire_pot_check` 103, 0 fails. New: the X marks 3 times over a skeleton's 4.0 s of burning after the burst's own, and 12 times in a patch's 12 s burning one standing in it; a burst on nothing still shows none. `stagger_check` 63 and `crawler_check` 264, 0 fails.
+
 ## 2026-10-07 — Mike's note on the torch's end: 20 s of embers to light the next one, the bundle never refills, light oil's flash reaches further, your own tar burns you once (063c726)
 Mike, on queue 62 as built and the open calls: *"when a torch burns out, you have to discard it out your hand or scroll to the next- it ahould be possible for players to light their new torch with the old torches embers. a torch embers remain for ~20 seconds before sputtering out completely- this should give the player enough time to relight another unused torch. the used torch will then be dropped. also, after a game day (144 minutes) the torches dont just reup themselves- they have to be found or created. we can get into crafting a bit later. it should be bare bones crafting system (beically you can combone up to 3 items in your inventory to create a new item- for example, if holding a bottle of oil- olive oil perhaps, you can combine the empty lamp and the oil to make it fill. one bottle of oil should be good for 3 refills. and yes, a light oil flash should be slightly larger aoe while the tar style while it lasts longer after busting, the aoe isnt as large. still only hurts for 1 damage."* Also the way-out frame the other session flagged (97dd330).
 
