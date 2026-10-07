@@ -152,7 +152,8 @@ static func module_span(r, lo: float, hi: float, m: float) -> Vector2i:
 ## "airways" [{"strong", "pos", "normal", "piece"}...], "heart" (piece
 ## id), "hearth_ways" (the ways out of the hearth room), "spine" (its piece
 ## ids in order, the way out's stair and landing last), "branches" ([piece
-## ids] per way, the spine first), "exits" [way out...], "residents" (_place_residents)}. A piece has
+## ids] per way, the spine first), "exits" [way out...], "residents" (_place_residents),
+## "lair" and "tunnels" (the boss's: BossGround.place_lair, place_tunnels)}. A piece has
 ## "id", "doors", "depth" (rooms from the hearth room), "branch" (0 the
 ## spine, -1 the hearth room) and "spine". A door is {"p" (Vector2, on the
 ## wall's middle line), "n" (Vector2, through the wall from `a` to `b`),
@@ -214,6 +215,10 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	# too): a hole in the floor of a side room off the main way, never in a
 	# grave a resident sleeps in or by its lid.
 	lay["lair"] = BossGround.place_lair(lay)
+	# Its own tunnels (Mike's note of 7 Oct; BossGround.place_tunnels, its own
+	# dice): holes at the foot of the side ways' walls, one in its lair room,
+	# joined under the floors ({} for a boss with none).
+	lay["tunnels"] = BossGround.place_tunnels(lay)
 	return lay
 
 

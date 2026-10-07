@@ -7,79 +7,112 @@ extends Node3D
 ## first; it stands in the tomb as the test while the tomb's world is
 ## open). The other bosses wait for their worlds.
 ##
+## A body, never a ghost (Mike's note of 7 Oct: "creatures shouldnt 'sink'
+## into the stone- only ghosts/phantoms should have the ability to ohase
+## thru walls and floors and ceilings"; "it wont actually despawn and
+## respawn places, it needa to physically maneuvar around the ruins to make
+## it anywheres"): it goes everywhere at one of its speeds, frame by frame,
+## along the floor (the creatures' grid, TombNav, by the dimmest way: the
+## light, LightField) or through its own tunnels under the floors, its body
+## lying along the path its head took; it never goes into the stone,
+## vanishes or comes up anywhere it didn't travel to.
+##
 ##   its ground  the rooms and corridor stretches not yet relit (BossGround,
-##               rule.ground unlit), worked out again on every relight. It
-##               moves only through its ground and never goes into a lit
+##               rule.ground unlit), worked out again on every relight. Its
+##               prowling goes only through its ground and never into a lit
 ##               room or stretch (rule.relit_closes_room); the hearth room
 ##               is never its ground.
-##   its rounds  (pattern slither) along the corridors at speed_mps, from
-##               one dead-end room to another, coiling in each for coil_s
-##               (coils_in dead_ends).
+##   its rounds  (pattern slither) at speed_mps from one dead-end room of
+##               its dark to another, coiling in each for coil_s (coils_in
+##               dead_ends); now and then through its own tunnels (below),
+##               from one side way to another.
 ##   noticing    (rule.notice) your carried flame in its sight within
-##               sees_flame_m, a sprint (or anything as loud: a swing
-##               that lands on it) within hears_sprint_m, or you within
-##               feels_m whatever your light; then it hunts you through its
-##               ground at hunt_mps, not into the light: if you stand in
-##               a lit room it waits at the edge of its dark (watch_s) and
-##               gives you up. The chase is a Pursuit (§FD, bosses.json
-##               gives_up: too far, out of its sight and hearing too long,
-##               your torch going out), so while it has you, you don't
-##               heal (Harm). Once its strike has landed the chase crosses
-##               into the light (§FD, residents.json
-##               rules.chase_enters_light): it follows you into any lit
-##               room or stretch but the hearth room, and strikes there,
-##               until it gives you up; given up in the light, it is back
-##               in the dark within rules.back_to_dark_s (Pursuit).
+##               sees_flame_m, a sprint (or anything as loud: a swing that
+##               lands on it) within hears_sprint_m, or you within feels_m
+##               whatever your light; then it hunts you at hunt_mps (Mike's
+##               note of 7 Oct: as fast as your walk or faster, 4.6 against
+##               your 4.3; your sprint, 5.6, outruns it). The chase is a
+##               Pursuit (§FD, bosses.json gives_up: too far, out of its
+##               sight and hearing too long, your torch going out), so while
+##               it has you, you don't heal (Harm).
+##   the edge    (Mike's note of 7 Oct, amending §FD: "the snake can follow
+##               you but not get close to the fire"; residents.json
+##               rules.chase_light_cap) hunting you, its strike landed or
+##               not, it goes only where the light on the floor is at most
+##               the cap (TombNav's capped grid), so it comes as far as the
+##               edge of the light and no further, and there it rears its
+##               head forward into the glow (peek_m, "show just enough of
+##               their face/body near the fire") and watches you (watch_s),
+##               then gives you up. It strikes you only within its reach of
+##               where it may stand: by the hearth or a relit torch you are
+##               safe, at the light's dim edge you are not.
 ##   your torch  (rule.torch_in_hand delay) with your torch lit it hangs at
 ##               the edge of its circle (torch_delay.hang_m), reared and
 ##               hissing, for torch_delay.hang_s before it closes; with the
 ##               torch out it closes straight in.
 ##   the strike  within its strike block's reach (§FA, CreatureStrike, the
 ##               piece every creature strikes with): the wind-up (reared
-##               back, jaws opening, the hiss), the lunge, the draw back. A
-##               lunge that reaches you is one hit (contact.strike_is_hit;
-##               Harm, harm.json: its breath between hits holds), never in
-##               a lit room (rule.relit_room safe) until it has had you. A lit torch swung into
-##               its wind-up staggers it (torch.json stagger): it recoils
-##               back along its body. Three hits is "Good night", and you
-##               wake at the hearth (CrawlerMain) with every light you lit
-##               still burning (contact.relit_kept); it goes back to its
-##               rounds.
-##   the light   relight the room or stretch it is in and it leaves at once
-##               (unless it is on you with its teeth in you, §FD)
-##               for the nearest dark by the way with least light in it
-##               (rule.leaves_lit_room), at leave_mps, out across the lit
-##               stretch beyond if it must, never through the hearth room.
-##               Cut off deeper in the light than that, it goes down into
-##               the dark below the tomb (the caves its lair opens on): it
-##               slides off toward its hole while you can see it and is
-##               gone the moment you can't; after a coil's while it comes
-##               up out of its hole if that room is still dark, else in the
-##               dark nearest the hole, out of your sight.
+##               back, jaws opening, the hiss), the lunge, the draw back.
+##               Rearing, lunging and drawing back, it keeps coming at up
+##               to hunt_mps (never past the light's cap; round a corner by
+##               its way to you), so a walker it has caught can't step out
+##               of it and a sprinter can. A lunge that reaches you is one hit
+##               (contact.strike_is_hit; Harm, harm.json: its breath between
+##               hits holds). A lit torch swung into its wind-up staggers it
+##               (torch.json stagger): it recoils back along its body. Three
+##               hits is "Good night", and you wake at the hearth
+##               (CrawlerMain) with every light you lit still burning
+##               (contact.relit_kept); it lets you go where it is and goes
+##               on with its rounds from there.
+##   the light   relight the room or stretch it is in (outside a chase) and
+##               it leaves at once for the nearest dark (rule.leaves_lit_room)
+##               at leave_mps: under the light through its tunnels where
+##               they lead there, else across the lit rooms on the dimmest
+##               way, at the edges of the light (TombNav, LightField); the
+##               hearth room only when there is no other way. Given you up
+##               in the light at the edge, it is back in the dark within
+##               residents.json rules.back_to_dark_s.
+##   its tunnels (Mike's note of 7 Oct: "they may have their own tunnels-
+##               this can be the case for the snake"; bosses.json
+##               bosses.<key>.tunnels; BossGround.place_tunnels) holes at the
+##               foot of the side ways' walls, one in its lair room, joined
+##               under the floors: it goes in head first, its body
+##               following, travels hidden at its speed (a tunnel takes its
+##               length over that speed), and comes out of the other hole
+##               (should the far hole's room be lit while it is inside, it
+##               turns back under the floor and comes out where it went in);
+##               while inside its tell is muffled (tunnels.muffle_db and
+##               muffle_hz) and it notices nothing.
+##   fire pots   (design §FA.3, §FA.4, Mike's note of 7 Oct: "a pot cant
+##               kill a boss but will stun it/cause it to retreat to its
+##               cave temporarily"; FirePots) a pot that bursts on or by it
+##               (splash_m from any part of its body, or a burning tar
+##               patch it crawls into) stuns it: it reels and lies dazed for
+##               stun_s, no strike, no chase; then it flees to its lair hole
+##               at flee_mps (through its tunnels or on the dimmest way),
+##               goes down it into its den and stays there, breathing, out
+##               of the pots' reach, for fire_pots.json vs_boss.drives_off_s;
+##               then it comes up out of the hole onto its rounds. It is
+##               never burnt down or killed. The lit wick gives you away as
+##               your flame does, out to gives_away.flare_seen_m with a clear
+##               line to it, and a burst within burst_heard_m of it is heard
+##               like a sprint: either sets it hunting you.
 ##   the release when the dungeon's last holder catches (rule.last_light
-##               to_lair): if you can see it, it flees toward its lair and
-##               is gone the moment you can't (else it is gone at once); a
-##               long sound goes away along the tomb and down into the hole
-##               (release.cry_to_lair); the tomb's small sounds come back
-##               (release.bed_returns: the drips, hushed while it prowled);
-##               the log's one line (release.log_line). Then it is in its
-##               hole for good, breathing, heard within
+##               to_lair): wherever it is, it flees to its lair at flee_mps
+##               (through its tunnels or across the lit tomb on the dimmest
+##               way), the long cry going with it (release.cry_to_lair), and
+##               down its hole into the den for good; the tomb's small
+##               sounds come back (release.bed_returns: the drips, hushed
+##               while it prowled); the log's one line (release.log_line).
+##               Then it is in its hole for good, breathing, heard within
 ##               lair.breathing_heard_m.
-##   fire pots   (design §FA.3, §FA.4; FirePots) a pot that bursts on or
-##               by it (splash_m from any part of its body, or a burning
-##               tar patch it crawls into) drives it off: down below the
-##               tomb as when the light cuts it off, for fire_pots.json
-##               vs_boss.drives_off_s, and the chase is off. It is never
-##               burnt down or killed. The lit wick gives you away as your
-##               flame does, out to gives_away.flare_seen_m with a clear
-##               line to it, and a burst within burst_heard_m of it is
-##               heard like a sprint: either sets it hunting you.
 ##   its tell    scales dragging on stone (BossSounds), on a 3D player at
 ##               its body, heard well before you can see it; quieter while
 ##               it lies coiled. No name on screen (§BA).
 ##   its body    baked sprites (BossBody): a head and a chain of body
 ##               lengths, each where the head was, so it bends through the
-##               corridors and lies in a coil.
+##               corridors, lies in a coil, and slides into a hole after its
+##               head.
 
 static var B: Dictionary = Tuning.table("bosses")
 static var RULE: Dictionary = B.get("rule", {})
@@ -93,10 +126,26 @@ const TRAIL_STEP := 0.08
 const NECK := 9
 ## The body's height off the floor where rays look for what's in its way.
 const KNEE := 0.3
-## Lit round it, it slides out across at most this many more lit nodes
-## (the lit stretch outside a room); cut off deeper than that, it goes
-## down into the dark below.
-const LEAVE_LIT_MAX := 2
+## However it hurries (back to the dark within back_to_dark_s), never
+## faster than this (m/s).
+const MOST_MPS := 6.0
+## Its den under the lair's mouth (out of sight, so its body can turn
+## round in it): a shaft this deep, then turns of this radius going down
+## this much more, long enough to take its whole body (about 10 m of den
+## for its 9 m).
+const DEN_SHAFT_M := 1.0
+const DEN_R_M := 0.45
+const DEN_TURNS := 3.5
+const DEN_DROP_M := 1.2
+## How dear a lit node is to its way home when it flees (BossGround: a
+## dark way, or its tunnels, are worth this many metres more).
+const FLEE_LIT_COST := 150.0
+## The dark it hangs in its tunnels' mouths and its lair's (unlit, like
+## the airways' slots).
+const VOID := Color(0.004, 0.005, 0.012)
+## A route point inside the rock: in a tunnel, or down its den.
+const HID_TUNNEL := 1
+const HID_DEN := 2
 
 var key := ""
 var def: Dictionary = {}
@@ -106,15 +155,19 @@ var fires: CrawlerFires
 var player: CrawlerPlayer
 var ground: BossGround
 var body: BossBody
+## The creatures' floor grid and the light on it (Residents builds them;
+## CrawlerMain hands them over once the stone is in the physics world).
+var nav: TombNav
+var light: LightField
 ## Off: the checks drive tick() themselves.
 var auto := true
 ## Placed and going (a physics frame after build()).
 var started := false
 
-## coil, prowl, hunt, hang, strike, watch, leave, below (cut off in the
-## light: gone down into the dark under the tomb for a while), held (you
-## are taken), release, lair, gone (no lair: it went into the dark for
-## good).
+## coil, prowl, hunt, hang, strike, watch (at the light's edge), leave,
+## stunned (a fire pot), flee (to its hole), den (down it), rise (up out
+## of it), held (you are taken), release (the last light, to its hole),
+## lair (down it for good), gone (no lair: home in its tunnels).
 var state := "coil"
 ## The head's place on the route's middle line, and with the slither's
 ## sway (on the floor); the way it faces (flat).
@@ -122,6 +175,9 @@ var base := Vector3.ZERO
 var head := Vector3.ZERO
 var dir := Vector3.FORWARD
 var route := PackedVector3Array()
+## Which of the route's points are inside the rock: 0 on the floor,
+## HID_TUNNEL in one of its tunnels, HID_DEN down its hole.
+var route_hidden := PackedByteArray()
 var route_i := 0
 ## The head's places, newest first, TRAIL_STEP apart: the body lies on it.
 var trail: Array = []
@@ -132,7 +188,8 @@ var speed := 0.0
 var target := -1
 var coiling := false
 var coil_left := 0.0
-## The head raised (m), the lunge's reach now (m), the jaws.
+## The head raised (m), the lunge's reach now (m; at the light's edge its
+## head reared forward into the glow, peek_m), the jaws.
 var lift := 0.0
 var lunge := 0.0
 var mouth_open := false
@@ -157,39 +214,65 @@ var _reel_back := true
 var watch_t := 0.0
 var _notice_t := 0.0
 var _replan_t := 0.0
-var _player_node := -1
+## Where you were when it last found its way to you, and whether that way
+## stops at the light's edge short of you.
+var _hunt_to := Vector3.INF
+var _edge := false
 var _hiss_t := 0.0
 var _lit_n := -1
 var _rng := RandomNumberGenerator.new()
 
-## The lair (TombKit: lay.lair), its node, the release's sound path.
+## The lair (TombKit: lay.lair), its node.
 var lair: Dictionary = {}
 var lair_node := -1
 var released := false
-var _cry_path: Array = []
-var _cry_t := -1.0
-var _vanish_t := -1.0
 var _bed_t := -1.0
-## Below: how long before it comes up again.
-var below_t := 0.0
 ## How fast it is leaving the light now (m/s; _leave).
 var _leave_mps := 4.0
+## Stunned (s left), and how long it stays down its hole (a fire pot's
+## drives_off_s), and how long it has left there.
+var stun_t := 0.0
+var _den_s := 30.0
+var den_t := 0.0
+## A light changed while it was in a tunnel: it decides once it is out.
+var _after_tunnel := false
+## It turned back in a tunnel (the far hole lit while it was inside): on its
+## rounds afresh once it is out where it went in.
+var _turned_back := false
 
 var _tell: AudioStreamPlayer3D
 var _hiss: AudioStreamPlayer3D
 var _breath: AudioStreamPlayer3D
 var _cry: AudioStreamPlayer3D
+var _tell_cutoff := 5000.0
 ## The tomb's small sounds (the drips' loop; CrawlerMain), hushed while it
 ## prowls, and their own level.
 var bed: AudioStreamPlayer
 var bed_db := -20.0
 
-## The checks: times it walked into a lit node of its own accord (never),
-## and the hits it landed.
+## The checks: times it walked into a lit node of its own accord (never);
+## lit nodes it went into chasing you (only where the light is under the
+## cap), and crossing (leaving the light, fleeing home); its steps in the
+## hearth room (crossing it when there was no other way); the brightest
+## light it stood in chasing you; the hits it landed.
 var lit_entries := 0
-## The lit nodes it went into after you, its strike landed (§FD).
 var chase_lit_entries := 0
+var cross_lit_entries := 0
+var hearth_steps := 0
+var chase_light_peak := 0.0
 var hits_landed := 0
+## Its tunnels (tools): transits finished, and the last one ({"s" (time
+## inside), "m" (metres inside), "straight" (m between the two mouths),
+## "from", "to" (mouths)}); times it turned back inside one (the far hole
+## lit); its own clock.
+var transits := 0
+var last_transit := {}
+var turned_back := 0
+var clock := 0.0
+var _inside := false
+var _in_t0 := 0.0
+var _in_m0 := 0.0
+var _in_at := Vector3.ZERO
 ## Fire pots (FirePots): times a pot drove it off, and the last burst it
 ## listened for.
 var driven := 0
@@ -218,7 +301,7 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 	def = (B.get("bosses", {}) as Dictionary).get(key, {})
 	name_text = str(def.get("creature", "boss"))
 	_rng.seed = hash([int(lay.seed), "boss"])
-	ground = BossGround.build(lay)
+	ground = BossGround.build(lay, true)
 	lair = lay.get("lair", {})
 	if not lair.is_empty():
 		lair_node = ground.node_at(lair.pos)
@@ -228,6 +311,7 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 	body.setup(def)
 	_tell = Audio3D.make("boss_tell", self, "Tell")
 	_tell.stream = BossSounds.stream("scales_loop", _rng.randi())
+	_tell_cutoff = _tell.attenuation_filter_cutoff_hz
 	_hiss = Audio3D.make("strike_tell", self, "Hiss")
 	# Its strike (CreatureStrike, bosses.json bosses.<key>.strike): driven
 	# from here (tick), so the checks' stepped clock drives it too.
@@ -251,6 +335,7 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 		# Below the floor, down the hole.
 		_breath.position = (lair.pos as Vector3) - Vector3(0.0, 1.2, 0.0)
 		_mouth(lair)
+	_hole_mouths()
 	_refresh(true)
 	_begin.call_deferred()
 
@@ -261,6 +346,14 @@ func _begin() -> void:
 		await get_tree().physics_frame
 	_start_far()
 	started = true
+
+
+static func _void_mat() -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = VOID
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	return m
 
 
 ## The hole's mouth (TombBuild._lair_hole lays its broken edge): a black
@@ -285,14 +378,39 @@ func _mouth(l: Dictionary) -> void:
 	var mi := MeshInstance3D.new()
 	mi.name = "LairMouth"
 	mi.mesh = st.commit()
-	var m := StandardMaterial3D.new()
-	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	m.albedo_color = Color(0.004, 0.005, 0.012)
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mi.material_override = m
+	mi.material_override = _void_mat()
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mi)
 	mi.global_position = c + Vector3(0.0, 0.07, 0.0)
+
+
+## Its tunnels' holes (TombBuild cuts them into the walls): the dark hung
+## near the back of each, unlit, so a hole reads as a way into the black
+## and its body is lost in it as it goes in.
+func _hole_mouths() -> void:
+	var holes: Array = (lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	var m := _void_mat()
+	for hi in holes.size():
+		var h: Dictionary = holes[hi]
+		var n: Vector3 = h.n
+		var u: Vector3 = h.u
+		var c: Vector3 = (h.pos as Vector3) - n * (float(h.depth) - 0.04)
+		var arch := TombBuild._arch(0.0, float(h.w) - 0.01, -0.01, float(h.h) - 0.005)
+		var st := SurfaceTool.new()
+		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var mid := Vector2(0.0, float(h.h) * 0.45)
+		for k in arch.size():
+			var p: Vector2 = arch[k]
+			var q: Vector2 = arch[(k + 1) % arch.size()]
+			for v: Vector2 in [mid, p, q]:
+				st.add_vertex(u * v.x + Vector3.UP * v.y)
+		var mi := MeshInstance3D.new()
+		mi.name = "TunnelMouth%d" % hi
+		mi.mesh = st.commit()
+		mi.material_override = m
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(mi)
+		mi.global_position = c
 
 
 ## The numbers (bosses.json bosses.<key>), with first-guess defaults.
@@ -311,6 +429,13 @@ func _range(v: Variant, lo: float, hi: float) -> float:
 	return _rng.randf_range(lo, hi)
 
 
+## The fastest it ever moves (m/s): its hunt, its flight home, its leaving
+## the light, and a hurry back to the dark (at most MOST_MPS): the checks'
+## bound on a step.
+func max_mps() -> float:
+	return maxf(MOST_MPS, maxf(num("hunt_mps", 4.6), maxf(num("leave_mps", 4.0), num("flee_mps", 5.0))))
+
+
 # --- Its place ------------------------------------------------------------------
 
 ## The floor's height under (x/z) `p`.
@@ -326,8 +451,8 @@ func _flat(v: Vector3) -> Vector3:
 	return Vector3(v.x, 0.0, v.z)
 
 
-## Start, or start again (after you wake): coiled in the dark dead end
-## farthest from the hearth room (or the farthest dark room).
+## Start (when the tomb is built, before you see it): coiled in the dark
+## dead end farthest from the hearth room (or the farthest dark room).
 func _start_far() -> void:
 	var dist := _all_dist(_hearth_node())
 	var best := -1
@@ -383,10 +508,38 @@ func _lie_coiled(id: int) -> void:
 	state = "coil"
 	coiling = false
 	coil_left = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0)
-	route = PackedVector3Array()
-	route_i = 0
+	_set_route(PackedVector3Array())
 	lift = 0.12
 	_sway = 0.0
+
+
+## Lying along corridor stretch `id`, head toward its far end (the checks
+## lay it here; in play it gets anywhere only by going there).
+func _lie_along(id: int) -> void:
+	var n: Dictionary = ground.nodes[id]
+	var pc: Dictionary = lay.pieces[int(n.piece)]
+	var a0 := float(n.a0)
+	var a1 := float(n.a1)
+	var pts: Array = []
+	var length := float(sub("body").get("length_m", 9.0))
+	# Back along the corridor past the stretch's start if it is short (the
+	# tail may lie in the next stretch).
+	var k := a1 - 0.3 - length
+	while k <= a1 - 0.3:
+		pts.append(BossGround.point(pc, clampf(k, 0.0, float(pc.len)), 0.0))
+		k += 0.25
+	_trail_from(pts)
+	base = pts[-1]
+	head = base
+	dir = _flat(BossGround.point(pc, a1, 0.0) - BossGround.point(pc, a0, 0.0)).normalized()
+	if dir.length() < 0.5:
+		dir = Vector3.FORWARD
+	node = ground.node_at(base)
+	target = id
+	state = "coil"
+	coiling = false
+	coil_left = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0) * 0.5
+	_set_route(PackedVector3Array())
 
 
 ## The trail laid along polyline `poly` (oldest first): newest first,
@@ -510,8 +663,14 @@ func _spiral(c: Vector3, entry: Vector3) -> Array:
 
 # --- Moving ---------------------------------------------------------------------
 
-func _set_route(pts: PackedVector3Array) -> void:
+## A new route (`hidden`: which of its points are inside the rock; none
+## when left out).
+func _set_route(pts: PackedVector3Array, hidden := PackedByteArray()) -> void:
 	route = pts
+	route_hidden = hidden
+	if route_hidden.size() != route.size():
+		route_hidden.resize(route.size())
+		route_hidden.fill(0)
 	route_i = 0
 
 
@@ -540,20 +699,30 @@ func _advance(spd: float, delta: float) -> bool:
 		dir = _turn(dir, fv.normalized(), clampf(delta * 6.0, 0.0, 1.0))
 	travelled += moved
 	# The slither: the head swings side to side as it goes, so the body
-	# lies in waves behind it.
+	# lies in waves behind it (straight in a tunnel).
 	var b: Dictionary = sub("body")
-	var amp := float(b.get("undulate_m", 0.22)) * _sway
+	var amp := 0.0 if _in_tunnel() else float(b.get("undulate_m", 0.22)) * _sway
 	var wave := maxf(float(b.get("wave_m", 2.6)), 0.5)
 	var side := Vector3(-dir.z, 0.0, dir.x)
 	head = base + side * sin(travelled * TAU / wave) * amp
 	if moved > 0.0:
 		_push_trail(head)
 	_track_node()
+	_track_tunnel()
 	return route_i >= route.size()
 
 
+## The head's place kept: the trail's first point follows the head, and
+## the head's place is kept once it is TRAIL_STEP on from the last kept
+## one (so the trail is the path the head took, however small each frame's
+## step; measured from the first point it never grew at a slow slither,
+## and the body was drawn straight from its head to wherever it last kept
+## one).
 func _push_trail(p: Vector3) -> void:
-	if trail.is_empty() or (trail[0] as Vector3).distance_to(p) >= TRAIL_STEP:
+	if trail.size() < 2:
+		trail.push_front(p)
+	elif (trail[1] as Vector3).distance_to(p) >= TRAIL_STEP:
+		trail[0] = p
 		trail.push_front(p)
 	else:
 		trail[0] = p
@@ -562,27 +731,121 @@ func _push_trail(p: Vector3) -> void:
 		trail.pop_back()
 
 
-## Which node it is in now, and a count of any it walked into while lit
-## (never, but leaving or fleeing).
+## Is its head inside the rock now (going through a tunnel, or down its
+## den): on a stretch of its route with an end hidden?
+func _in_tunnel() -> bool:
+	if route_i >= route.size() or route_hidden.size() != route.size():
+		return false
+	return route_hidden[route_i] != 0 or (route_i > 0 and route_hidden[route_i - 1] != 0)
+
+
+## Is it going through one of its tunnels (not its den)?
+func _in_tunnel_run() -> bool:
+	if route_i >= route.size() or route_hidden.size() != route.size():
+		return false
+	return route_hidden[route_i] == HID_TUNNEL or (route_i > 0 and route_hidden[route_i - 1] == HID_TUNNEL)
+
+
+## Which node it is in now (not while it is in the rock), and its tally of
+## lit nodes: never of its own accord; chasing you only under the light's
+## cap; crossing (leaving the light, fleeing home, or out of a tunnel into a
+## room lit while it was under the floor, both its holes lit).
 func _track_node() -> void:
+	if _in_tunnel():
+		return
 	var was := node
 	node = ground.node_at(base)
-	if node != was and node >= 0 and not ground.is_ground(node) and not state in ["leave", "release", "held", "below"]:
-		if _into_light():
-			# After you, with its teeth in you (§FD): not of its own accord.
-			chase_lit_entries += 1
-		else:
-			lit_entries += 1
+	if node < 0:
+		return
+	if bool(ground.nodes[node].hearth):
+		hearth_steps += 1
+	if node != was and not ground.is_ground(node):
+		match state:
+			"hunt", "hang", "strike", "watch":
+				chase_lit_entries += 1
+			"leave", "flee", "release", "rise", "stunned", "held":
+				cross_lit_entries += 1
+			_:
+				if _after_tunnel:
+					# Out of a tunnel into a room lit while it was under the
+					# floor, both its holes lit (it leaves at once).
+					cross_lit_entries += 1
+				else:
+					lit_entries += 1
+	if noticed and state in ["hunt", "hang", "strike", "watch"] and light != null:
+		chase_light_peak = maxf(chase_light_peak, light.at(base))
 
 
-## The way through nodes `path` (from the one it is in) to `end`: through
-## each door square on to it, each sconce on the corridor's middle line;
-## round anything standing in the way.
-func _route_nodes(path: Array, end: Vector3) -> PackedVector3Array:
+## Into one of its tunnels or out of one (tools: transits, last_transit:
+## the time and metres it was inside, and the straight line between where
+## it went in and came out).
+func _track_tunnel() -> void:
+	var inside := _in_tunnel_run()
+	if inside and not _inside:
+		_in_t0 = clock
+		_in_m0 = travelled
+		_in_at = base
+	elif not inside and _inside:
+		transits += 1
+		last_transit = {"s": clock - _in_t0, "m": travelled - _in_m0, "straight": _flat(base - _in_at).length(), "from": _in_at, "to": base}
+	_inside = inside
+
+
+## Where its next way starts (Mike's note of 7 Oct: a tunnel, once begun, is
+## gone through): {"pos", "node", "pts", "hidden"}: in the rock, the rest of
+## it out of the far hole to the floor before it; else where it is, with
+## nothing first.
+func _plan_from() -> Dictionary:
+	if not _in_tunnel():
+		return {"pos": base, "node": node, "pts": PackedVector3Array(), "hidden": PackedByteArray()}
 	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	var i := route_i
+	# The rest of the rock...
+	while i < route.size() and route_hidden[i] != 0:
+		pts.append(route[i])
+		hid.append(route_hidden[i])
+		i += 1
+	# ...then its mouth and the floor before it.
+	var k := 0
+	while i < route.size() and k < 2:
+		pts.append(route[i])
+		hid.append(route_hidden[i])
+		i += 1
+		k += 1
+	var end: Vector3 = pts[pts.size() - 1] if not pts.is_empty() else base
+	return {"pos": end, "node": ground.node_at(end), "pts": pts, "hidden": hid}
+
+
+## A route made from `start` (_plan_from) and on through nodes `path` to
+## `end` (_route_nodes): set, the tunnel it is in first if it is in one.
+func _set_planned(start: Dictionary, path: Array, end: Vector3) -> void:
+	var r := _route_nodes(path, end, start.pos)
+	var pts: PackedVector3Array = start.pts
+	var hid: PackedByteArray = start.hidden
+	_set_route(pts + (r.pts as PackedVector3Array), hid + (r.hidden as PackedByteArray))
+
+
+## The way through nodes `path` (from the one it starts in, at `from`) to
+## `end`, along the floor by the dimmest way (TombNav, the light: the
+## edges of the light, the dark corners): through each door's middle, on
+## by each sconce's line, and through each tunnel the way takes (in at one
+## hole, under the floors, out at the other): {"pts", "hidden"}.
+func _route_nodes(path: Array, end: Vector3, from: Vector3) -> Dictionary:
+	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	var at := from
 	for k in range(path.size() - 1):
-		var l := ground.link(int(path[k]), int(path[k + 1]))
+		var l := ground.best_link(int(path[k]), int(path[k + 1]))
 		if l.is_empty():
+			continue
+		if l.has("tunnel"):
+			var tp := _tunnel_pts(l)
+			_floor_leg(pts, hid, at, tp[0])
+			for i in range(1, tp.size()):
+				pts.append(tp[i])
+				hid.append(HID_TUNNEL if bool(BossGround.TUNNEL_HIDDEN[i]) else 0)
+			at = tp[tp.size() - 1]
 			continue
 		var via: Vector3 = l.via
 		if int(l.door) >= 0:
@@ -593,22 +856,58 @@ func _route_nodes(path: Array, end: Vector3) -> PackedVector3Array:
 			var after := via + n3 * sgn * 0.75
 			before.y = _floor_y(before)
 			after.y = _floor_y(after)
-			pts.append(before)
+			_floor_leg(pts, hid, at, before)
 			pts.append(via)
+			hid.append(0)
 			pts.append(after)
+			hid.append(0)
+			at = after
 		else:
-			pts.append(via)
-	pts.append(end)
-	return _around(pts)
+			_floor_leg(pts, hid, at, via)
+			at = via
+	_floor_leg(pts, hid, at, end)
+	return {"pts": pts, "hidden": hid}
+
+
+## Tunnel link `l`'s way (lay.tunnels links' pts), from this end's hole.
+func _tunnel_pts(l: Dictionary) -> PackedVector3Array:
+	var t: Dictionary = (lay.tunnels.links as Array)[int(l.tunnel)]
+	var pts: PackedVector3Array = t.pts
+	if int(t.a) == int(l.from_hole):
+		return pts
+	var out := PackedVector3Array()
+	for i in range(pts.size() - 1, -1, -1):
+		out.append(pts[i])
+	return out
+
+
+## The floor from `a` to `b` by the dimmest way (TombNav, DIM; round what
+## stands in the way without a grid), onto `pts` (its own first square
+## left out where it is there already), ending at `b` exactly.
+func _floor_leg(pts: PackedVector3Array, hid: PackedByteArray, a: Vector3, b: Vector3) -> void:
+	if nav == null:
+		for p in _around(PackedVector3Array([b]), a):
+			pts.append(p)
+			hid.append(0)
+		return
+	var leg := nav.path(a, b, true, TombNav.DIM)
+	for i in leg.size():
+		if i == 0 and leg[i].distance_to(a) < 0.35:
+			continue
+		pts.append(leg[i])
+		hid.append(0)
+	if leg.is_empty() or leg[leg.size() - 1].distance_to(b) > 0.05:
+		pts.append(b)
+		hid.append(0)
 
 
 ## Round what stands in the way (a coffin, the heart's box, a fire on the
-## floor): a leg that hits something gets a step aside.
-func _around(pts: PackedVector3Array) -> PackedVector3Array:
+## floor), without the floor grid: a leg that hits something gets a step
+## aside.
+func _around(pts: PackedVector3Array, from: Vector3) -> PackedVector3Array:
 	if not is_inside_tree():
 		return pts
 	var out := PackedVector3Array()
-	var from := base
 	for p in pts:
 		var guard := 0
 		while guard < 2:
@@ -682,6 +981,88 @@ func _trim(pts: PackedVector3Array, from_end: float) -> PackedVector3Array:
 	return all
 
 
+## How far its route runs on from where it is (m, flat).
+func _route_left() -> float:
+	var m := 0.0
+	var at := base
+	for i in range(route_i, route.size()):
+		m += _flat(route[i] - at).length()
+		at = route[i]
+	return m
+
+
+## Nothing of the stone between its body and you, at the height it rears.
+func _clear_to(p: Vector3) -> bool:
+	return not _blocked(base + Vector3(0, 0.6, 0), p + Vector3(0, 0.6, 0), false)
+
+
+## May it stand at `p` chasing you: on the floor its grid knows, and no
+## brighter there than the chase's cap (Mike's note of 7 Oct)?
+func _may_stand(p: Vector3) -> bool:
+	if nav != null:
+		var c := nav.cell_of(p)
+		if nav.inside(c) and not nav.is_open(c):
+			return false
+	return light == null or light.under_cap(p)
+
+
+## The floor's height under `p` (the grid's, else its piece's).
+func _floor_at(p: Vector3) -> float:
+	if nav != null:
+		var fy := nav.floor_at(p)
+		if not is_nan(fy):
+			return fy
+	return _floor_y(p)
+
+
+## In its wind-up, its lunge and its draw back, still coming (Mike's note
+## of 7 Oct: as fast as your walk): toward you at up to hunt_mps until you
+## are back within its reach at the distance it strikes from, never past
+## the light's cap, never through stone: straight at you, or round a corner
+## or a door's jamb along the chase's own way to you (TombNav's capped
+## grid).
+func _creep_in(to: Vector3, delta: float) -> void:
+	var v := _flat(to - base)
+	var d := v.length()
+	var keep := strike.reach_m * 0.7
+	if d <= keep + 0.02:
+		return
+	var step := minf(num("hunt_mps", 4.6) * delta, d - keep)
+	var nxt := base + v / d * step
+	nxt.y = _floor_at(nxt)
+	if _may_stand(nxt) and not _blocked(base + Vector3(0, KNEE, 0), nxt + Vector3(0, KNEE, 0)):
+		_set_route(PackedVector3Array([nxt]))
+	else:
+		_replan_t -= delta
+		if _replan_t <= 0.0 or route_i >= route.size():
+			_replan_t = 0.3
+			_set_route(_cap_path(to))
+	_creep_along(step)
+	speed = step / maxf(delta, 1e-4)
+
+
+## On along its route `m` metres, its head on its line (no slither: it is
+## reared to strike).
+func _creep_along(m: float) -> void:
+	var left := m
+	while left > 1e-6 and route_i < route.size():
+		var to := route[route_i]
+		var d := base.distance_to(to)
+		if d <= left:
+			base = to
+			left -= d
+			route_i += 1
+		else:
+			base += (to - base) / d * left
+			left = 0.0
+	if left >= m:
+		return
+	head = base
+	travelled += m - left
+	_push_trail(head)
+	_track_node()
+
+
 # --- Every tick ------------------------------------------------------------------
 
 func _physics_process(delta: float) -> void:
@@ -692,6 +1073,11 @@ func _physics_process(delta: float) -> void:
 func tick(delta: float) -> void:
 	if not started:
 		return
+	clock += delta
+	if light != null:
+		# (Its own step too: the checks drive it by hand, between the
+		# residents' physics steps.)
+		light.refresh()
 	if state == "lair" or state == "gone":
 		_bed_tick(delta)
 		_sound_tick(delta)
@@ -703,7 +1089,7 @@ func tick(delta: float) -> void:
 		_bed_tick(delta)
 		_sound_tick(delta)
 		return
-	if Harm.instance != null and Harm.instance.taking:
+	if Harm.instance != null and Harm.instance.taking and not (state in ["stunned", "flee", "den", "rise"]):
 		# You are taken: it holds where it is, quiet, until you wake.
 		if state != "held":
 			state = "held"
@@ -732,8 +1118,17 @@ func tick(delta: float) -> void:
 			_watch_tick(delta)
 		"leave":
 			_leave_tick(delta)
-		"below":
-			_below_tick(delta)
+		"stunned":
+			_stunned_tick(delta)
+		"flee":
+			_flee_tick(delta)
+		"den":
+			_den_tick(delta)
+		"rise":
+			_rise_tick(delta)
+	if _after_tunnel and not _in_tunnel():
+		_after_tunnel = false
+		_after_light()
 	_pose()
 	_bed_tick(delta)
 	_sound_tick(delta)
@@ -755,22 +1150,79 @@ func _refresh(force: bool) -> void:
 	if ground.ground_count() == 0:
 		release()
 		return
-	if state in ["release", "lair", "gone", "below"]:
+	if state in ["release", "lair", "gone", "stunned", "flee", "den", "rise", "held"]:
 		return
+	if _in_tunnel():
+		# In the rock: it decides once it is out, turning back first if the
+		# hole it is making for now opens into the light.
+		_after_tunnel = true
+		_turn_back_if_lit()
+		return
+	_after_light()
+
+
+## In one of its tunnels on its rounds or leaving the light, when a light
+## catches: if the hole it is making for now opens into the light and the
+## one it went in by is still dark, it turns back under the floor (unseen)
+## and comes out where it went in (Mike's note of 7 Oct: it does its best
+## to keep to the dark). True if it turned back.
+func _turn_back_if_lit() -> bool:
+	if not _in_tunnel_run() or not (state in ["prowl", "leave"]):
+		return false
+	# The hole it went in by (its mouth at j, the floor before it at j - 1)
+	# and the one it is making for (its mouth at k, the floor at k + 1).
+	var j := route_i - 1
+	while j >= 0 and route_hidden[j] != 0:
+		j -= 1
+	var k := route_i
+	while k < route.size() and route_hidden[k] != 0:
+		k += 1
+	if j < 1 or k + 1 >= route.size():
+		return false
+	var ahead := ground.node_at(route[k + 1])
+	var behind := ground.node_at(route[j - 1])
+	if ahead < 0 or ground.is_ground(ahead) or behind < 0 or not ground.is_ground(behind):
+		return false
+	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	for i in range(route_i - 1, j - 2, -1):
+		pts.append(route[i])
+		hid.append(route_hidden[i])
+	_set_route(pts, hid)
+	_turned_back = state == "prowl"
+	turned_back += 1
+	return true
+
+
+## The light changed round it: chasing you, it stays unless the light where
+## it stands is now past the chase's cap (then it gives you up and leaves);
+## else, its room or stretch lit, it leaves for the dark; its way gone into
+## the light, it thinks again.
+func _after_light() -> void:
 	node = ground.node_at(base)
-	if not ground.is_ground(node) and not _into_light():
-		# (A chase that has had you stays on you in the light, §FD.)
+	if noticed and state in ["hunt", "hang", "strike", "watch"]:
+		if light != null and light.at(base) > light.cap:
+			# The light caught round it: back to its edge (_hunt_tick).
+			_calm()
+			state = "hunt"
+		# The edge may have moved: find the way again.
+		_replan_t = 0.0
+		_hunt_to = Vector3.INF
+		return
+	if node >= 0 and not ground.is_ground(node):
 		_leave()
 		return
-	# The way it was going may have gone into the light: think again.
+	if state == "leave":
+		_leave()
+		return
 	_replan_t = 0.0
 	if state == "prowl":
-		for p in route.slice(route_i):
-			if not ground.is_ground(ground.node_at(p)):
+		for i in range(route_i, route.size()):
+			if route_hidden.size() == route.size() and route_hidden[i] != 0:
+				continue
+			if not ground.is_ground(ground.node_at(route[i])):
 				_next_round()
 				break
-	elif state == "watch":
-		_go_watch(ground.node_at(player.global_position))
 
 
 # --- Noticing ----------------------------------------------------------------
@@ -781,9 +1233,11 @@ func _eye() -> Vector3:
 
 func _notice(delta: float) -> void:
 	_notice_t -= delta
-	if state == "below":
-		# Down below it hears no burst (none waits for it to come up).
+	if state in ["stunned", "flee", "den", "rise"] or _in_tunnel():
+		# Dazed, fleeing, down its hole or in its tunnels: it notices nothing
+		# (and hears no burst that waits for it).
 		_hears_burst()
+		perceives = false
 		return
 	if _notice_t > 0.0:
 		return
@@ -843,38 +1297,72 @@ func fire_center() -> Vector3:
 
 
 ## How far `p` is from its body (m; under 0 inside it): its head and its
-## length along the trail, girth_m thick. INF while it isn't in the tomb
-## (below, home, gone).
+## length along the trail, girth_m thick, but what is down in the rock (a
+## tunnel's run, its den). INF while all of it is out of reach (down its
+## hole, home, gone).
 func fire_distance(p: Vector3) -> float:
-	if state in ["below", "lair", "gone"] or (body != null and not body.visible):
+	if state in ["den", "lair", "gone"] or (body != null and not body.visible):
 		return INF
 	var r := float(sub("body").get("girth_m", 0.38)) * 0.5 + 0.1
-	var best := fire_center().distance_to(p)
-	var step := maxi(int(0.5 / TRAIL_STEP), 1)
-	var n := mini(trail.size(), int(float(sub("body").get("length_m", 9.0)) / TRAIL_STEP) + 1)
-	for i in range(0, n, step):
-		best = minf(best, ((trail[i] as Vector3) + Vector3(0.0, KNEE, 0.0)).distance_to(p))
+	var best := INF
+	if not _in_tunnel():
+		best = fire_center().distance_to(p)
+	for q: Vector3 in _body_pts(0.5):
+		if q.y < _floor_y(q) - 0.3:
+			continue
+		best = minf(best, (q + Vector3(0.0, KNEE, 0.0)).distance_to(p))
 	return best - r
 
 
-## A fire pot burst on it (§FA.4: a pot never kills a boss; fire_pots.json
-## vs_boss): driven off into the dark for `seconds`, down below the tomb as
-## when the light cuts it off (sliding off toward its hole while you can
-## see it, gone the moment you can't), the chase off; then up again, out of
-## its hole or the dark nearest it. Nothing to drive off at home, taken or
-## gone.
+## Points along its body as drawn, `step` m apart from its head back to
+## its length_m, along the trail its head left.
+func _body_pts(step: float) -> Array:
+	if trail.is_empty():
+		return [head]
+	var length := float(sub("body").get("length_m", 9.0))
+	var out: Array = [trail[0]]
+	var want := step
+	var acc := 0.0
+	for i in range(trail.size() - 1):
+		if want > length:
+			break
+		var a: Vector3 = trail[i]
+		var b: Vector3 = trail[i + 1]
+		var l := a.distance_to(b)
+		while want <= acc + l and want <= length:
+			out.append(a.lerp(b, (want - acc) / maxf(l, 1e-4)))
+			want += step
+		acc += l
+	return out
+
+
+## A fire pot burst on it (§FA.4; Mike's note of 7 Oct: "a pot cant kill a
+## boss but will stun it/cause it to retreat to its cave temporarily";
+## fire_pots.json vs_boss): stunned where it lies for stun_s, the chase
+## off; then it flees to its lair hole and down it for `seconds`, and comes
+## up again (_flee_home, _den_tick). Nothing to drive off at home, taken,
+## or already going.
 func drive_off(seconds: float, _from: Vector3) -> void:
-	if state in ["release", "lair", "gone", "held", "below"]:
+	if state in ["release", "lair", "gone", "held", "stunned", "flee", "den", "rise"]:
 		return
 	driven += 1
-	_go_below()
-	below_t = seconds
+	_let_go("pot")
+	_calm()
+	_den_s = seconds
+	stun_t = num("stun_s", 1.5)
+	state = "stunned"
+	speed = 0.0
+	if not _in_tunnel():
+		# Where it was going, forgotten (in a hole, it goes on through).
+		_set_route(PackedVector3Array())
+	# It reels: a sharp hiss, its head thrown down.
+	_play_hiss(str(sub("strike").get("sound", "snake_hiss")))
 
 
 ## The chase's own rules (Pursuit, bosses.json gives_up): too far, out of
 ## its sight and hearing too long, your torch put out. Given up, it goes
-## back to its rounds; given up in the light it had followed you into
-## (§FD), back to the dark first, there within residents.json
+## back to its rounds; given up at the light's edge in a lit room or
+## stretch, back to the dark first, there within residents.json
 ## rules.back_to_dark_s.
 func _chase(delta: float) -> void:
 	if not noticed:
@@ -882,34 +1370,25 @@ func _chase(delta: float) -> void:
 	var d := _flat(player.global_position - head).length()
 	if pursuit.step(delta, perceives, d, _torch_lit()):
 		noticed = false
-		if state in ["leave", "below"]:
+		if not (state in ["hunt", "hang", "strike", "watch"]):
 			return
-		if not ground.is_ground(node):
+		_calm()
+		if node >= 0 and not ground.is_ground(node):
 			_leave(true)
-		elif state in ["hunt", "hang", "strike", "watch"]:
+		else:
 			_next_round()
 
 
-## Gives you up (the watch ran out, it was taken home, you woke).
+## Gives you up (the watch ran out, it was driven off, taken home, you
+## woke).
 func _let_go(why: String) -> void:
 	noticed = false
 	pursuit.give_up(why)
 
 
-## May it go into the light after you now? Its prowling never does; a
-## chase whose strike has landed does, until it gives you up (§FD,
-## Pursuit.may_enter, rules.chase_enters_light). Never into the hearth
-## room: its ways never go through it (BossGround).
-func _into_light() -> bool:
-	return noticed and pursuit != null and pursuit.may_enter(true)
-
-
-## Close enough to rear at you: one stretch of its dark, or next to each
-## other in it (_same_dark); in a chase that has had you, in the light too.
-func _within(pn: int) -> bool:
-	if _same_dark(pn):
-		return true
-	return _into_light() and pn >= 0 and not bool(ground.nodes[pn].hearth) and not ground.link(node, pn).is_empty()
+## Hunting you (its chase on, and after you)?
+func chasing() -> bool:
+	return noticed and state in ["hunt", "hang", "strike", "watch"]
 
 
 ## Whatever strike was under way, off.
@@ -937,14 +1416,23 @@ func _coil_tick(delta: float) -> void:
 
 
 ## The next round: to another dark dead end it can reach through the dark
-## (the farther the likelier), else the farthest dark it can reach.
+## and its tunnels (the farther the likelier), else the farthest dark it
+## can reach. Standing in the light (a chase given up at its edge), out of
+## it first.
 func _next_round() -> void:
 	_calm()
-	var reach := ground.reach(node)
+	var from := _plan_from()
+	var at := int(from.node)
+	if at < 0:
+		return
+	if not ground.is_ground(at):
+		_leave()
+		return
+	var reach := ground.reach(at)
 	var cands: Array = []
 	var total := 0.0
 	for id in reach:
-		if int(id) == node or not ground.dead_end(int(id)):
+		if int(id) == at or not ground.dead_end(int(id)):
 			continue
 		cands.append(int(id))
 		total += float(reach[id]) + 5.0
@@ -961,25 +1449,31 @@ func _next_round() -> void:
 	else:
 		var far := 0.0
 		for id in reach:
-			if int(id) != node and float(reach[id]) > far and str(ground.nodes[id].kind) == "room":
+			if int(id) != at and float(reach[id]) > far and str(ground.nodes[id].kind) == "room":
 				far = float(reach[id])
 				pick = int(id)
 	if pick < 0:
-		# Nowhere else in its dark: coil where it is.
+		# Nowhere else in its dark: coil where it is (out of the tunnel first).
+		_set_route(from.pts, from.hidden)
 		state = "coil"
-		coiling = false
+		coiling = not route.is_empty()
 		coil_left = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0) * 0.5
 		return
 	target = pick
-	var path := ground.path(node, pick, true)
-	_set_route(_route_nodes(path, _room_entry(pick)))
+	_set_planned(from, ground.path(at, pick, true), _room_entry(pick))
 	state = "prowl"
 
 
 func _prowl_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 1.0, delta)
-	lift = move_toward(lift, 0.08, delta)
-	if _advance(num("speed_mps", 2.0), delta):
+	lift = move_toward(lift, 0.0 if _in_tunnel() else 0.08, delta)
+	if _advance(num("speed_mps", 2.0), delta) and _turned_back:
+		# Back out where it went in: on its rounds afresh.
+		_turned_back = false
+		node = ground.node_at(base)
+		_next_round()
+		return
+	if route_i >= route.size():
 		# Arrived: coil (§EY.3: "coils in dead ends between rounds").
 		var c := _coil_spot(target)
 		var pts := PackedVector3Array()
@@ -990,23 +1484,77 @@ func _prowl_tick(delta: float) -> void:
 		coiling = true
 
 
+## The way to you for the chase (Mike's note of 7 Oct): TombNav's capped
+## grid, never onto floor brighter than the cap, so with you in the light
+## it ends at the edge of it nearest you.
+func _cap_path(to: Vector3) -> PackedVector3Array:
+	if nav == null:
+		return PackedVector3Array([Vector3(to.x, _floor_y(to), to.z)])
+	return _from_here(nav.path(base, to, true, TombNav.CAP))
+
+
+## A grid way from where it is, without the middle of its own square first
+## (no step back to it each time it finds the way again).
+func _from_here(pts: PackedVector3Array) -> PackedVector3Array:
+	if pts.size() >= 2 and _flat(pts[0] - base).length() < 0.36:
+		pts.remove_at(0)
+	return pts
+
+
+## The way out of the light to its nearest edge (open floor no brighter
+## than the chase's cap, within 8 m), by the dimmest way; [] if none.
+func _to_edge() -> PackedVector3Array:
+	if nav == null or light == null:
+		return PackedVector3Array()
+	var c := nav.cell_of(base)
+	for r in range(1, 33):
+		var best := Vector2i(-1, -1)
+		var best_d := INF
+		for oy in range(-r, r + 1):
+			for ox in range(-r, r + 1):
+				if maxi(absi(ox), absi(oy)) != r:
+					continue
+				var q := c + Vector2i(ox, oy)
+				if not nav.is_open(q) or nav.light_of(q) > light.cap:
+					continue
+				var d := Vector2(ox, oy).length()
+				if d < best_d:
+					best_d = d
+					best = q
+		if best.x >= 0:
+			return _from_here(nav.path(base, nav.point_of(best), true, TombNav.DIM))
+	return PackedVector3Array()
+
+
 func _hunt_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 0.7, delta)
 	var pp := player.global_position
-	var pn := ground.node_at(pp)
-	# Into the light only after you, and only once it has had you (§FD).
-	var into := _into_light()
-	if not ground.is_ground(pn) and not into:
-		_go_watch(pn)
-		return
 	var torch_lit := _torch_lit()
 	var delay := sub("torch_delay")
 	var hang_m := float(delay.get("hang_m", 3.5))
 	var hang_s := float(delay.get("hang_s", 4.0))
 	var holding := torch_lit and not struck and hang_t < hang_s
-	var stop := hang_m if holding else strike.reach_m * 0.7
+	# It strikes from within 0.8 of its reach, its way aimed nearer (half
+	# its reach short of you), so a walker it gains on is caught.
+	var stop := hang_m if holding else strike.reach_m * 0.8
 	var d := _flat(pp - base).length()
-	if d <= stop + 0.1 and _within(pn):
+	if light != null and light.at(base) > light.cap:
+		# In the light past the chase's cap (it found you going through a
+		# fire's spill, or a fire caught or was planted by it): out to the
+		# light's edge first, never deeper in.
+		_replan_t -= delta
+		if _replan_t <= 0.0 or route_i >= route.size():
+			_replan_t = 0.4
+			_hunt_to = Vector3.INF
+			var out := _to_edge()
+			if out.is_empty():
+				_let_go("light")
+				_leave(true)
+				return
+			_set_route(out)
+		_advance(num("hunt_mps", 4.6), delta)
+		return
+	if absf(pp.y - base.y) < 1.5 and d <= stop + 0.1 and _clear_to(pp):
 		if holding:
 			state = "hang"
 		else:
@@ -1014,25 +1562,21 @@ func _hunt_tick(delta: float) -> void:
 			strike.begin()
 		return
 	_replan_t -= delta
-	if _replan_t <= 0.0 or pn != _player_node:
+	if _replan_t <= 0.0 or pp.distance_to(_hunt_to) > 0.75:
 		_replan_t = 0.4
-		_player_node = pn
-		var path := ground.path(node, pn, not into)
-		if path.is_empty():
-			_go_watch(pn)
+		_hunt_to = pp
+		var pts := _cap_path(pp)
+		if pts.is_empty():
+			_start_watch()
 			return
-		var pts := _route_nodes(path, Vector3(pp.x, _floor_y(pp), pp.z))
-		_set_route(_trim(pts, stop))
+		# A way that stops short of you stops at the light's edge: all the
+		# way to it, then it watches you from there.
+		_edge = not TombNav.reaches(pts, pp, 0.6)
+		_set_route(pts if _edge else _trim(pts, hang_m if holding else strike.reach_m * 0.5))
 	lift = move_toward(lift, 0.35, delta)
-	_advance(num("hunt_mps", 3.6), delta)
-
-
-## You and it in one stretch of dark (or next to each other in it): close
-## enough to rear at, nothing lit between.
-func _same_dark(pn: int) -> bool:
-	if pn == node:
-		return true
-	return not ground.link(node, pn).is_empty() and ground.is_ground(pn)
+	if _advance(num("hunt_mps", 4.6), delta) and _edge:
+		# The light between: it has come as far as the light lets it.
+		_start_watch()
 
 
 ## Flat direction `from` turned toward `to` by share `k` (0-1).
@@ -1052,8 +1596,12 @@ func _face(p: Vector3, delta: float) -> void:
 
 func _hang_tick(delta: float) -> void:
 	var pp := player.global_position
-	var pn := ground.node_at(pp)
 	speed = 0.0
+	if light != null and light.at(base) > light.cap:
+		# The light caught round it: back to its edge first (_hunt_tick).
+		state = "hunt"
+		_replan_t = 0.0
+		return
 	_face(pp, delta)
 	lift = move_toward(lift, 0.85, delta * 1.5)
 	hang_t += delta
@@ -1063,39 +1611,46 @@ func _hang_tick(delta: float) -> void:
 		_play_hiss()
 	var delay := sub("torch_delay")
 	var d := _flat(pp - base).length()
-	if not ground.is_ground(pn) and not _into_light():
-		_go_watch(pn)
-	elif not _torch_lit() or hang_t >= float(delay.get("hang_s", 4.0)) or d > float(delay.get("hang_m", 3.5)) + 1.2:
+	if not _torch_lit() or hang_t >= float(delay.get("hang_s", 4.0)) or d > float(delay.get("hang_m", 3.5)) + 1.2:
 		# The flame has held it long enough (or there is none): it comes.
 		state = "hunt"
 		_replan_t = 0.0
 
 
-## The strike (CreatureStrike): the pose follows its parts.
+## The strike (CreatureStrike): the pose follows its parts. Standing where
+## the light passes the chase's cap (a fire caught by it, or planted), it
+## breaks off (but for the committed lunge and a reel) and goes back to the
+## light's edge first (_hunt_tick).
 func _strike_tick(delta: float) -> void:
 	var pp := player.global_position
-	var pn := ground.node_at(pp)
 	var d := _flat(pp - base).length()
 	speed = 0.0
+	if light != null and light.at(base) > light.cap and not (strike.state in ["strike", "reel"]):
+		strike.cancel()
+		_calm()
+		state = "hunt"
+		_replan_t = 0.0
+		return
 	_face(pp, delta)
 	var k := strike.pose_k()
-	if strike.winding_up() and not ground.is_ground(pn) and not _into_light():
-		# You stepped into the light in its wind-up: it breaks off (not
-		# once it has had you, §FD).
-		_calm()
-		_go_watch(pn)
-		return
 	match strike.state:
 		"wind_up":
 			# Reared back, jaws opening: its tell (the hiss is the strike's).
+			# And still coming, as fast as your walk (Mike's note of 7 Oct).
+			_creep_in(pp, delta)
 			lift = move_toward(lift, 0.95, delta * 2.5)
 			lunge = lerpf(lunge, -0.3, clampf(delta * 6.0, 0.0, 1.0))
 			mouth_open = k > 0.5
 		"strike":
+			# The lunge carries its body on after you too.
+			_creep_in(pp, delta)
+			d = _flat(pp - base).length()
 			lunge = lerpf(-0.3, clampf(d - 0.35, 0.0, strike.reach_m), k)
 			lift = move_toward(lift, 0.55, delta * 4.0)
 			mouth_open = true
 		"recover":
+			# Drawing its head back, its body still coming.
+			_creep_in(pp, delta)
 			lunge = move_toward(lunge, 0.0, delta * 3.0)
 			lift = move_toward(lift, 0.75, delta)
 			mouth_open = k < 0.3
@@ -1108,9 +1663,7 @@ func _strike_tick(delta: float) -> void:
 		_:
 			mouth_open = false
 			lunge = move_toward(lunge, 0.0, delta * 3.0)
-			if not ground.is_ground(pn) and not _into_light():
-				_go_watch(pn)
-			elif d <= strike.reach_m * 1.05 and _within(pn):
+			if d <= strike.reach_m * 1.05 and absf(pp.y - base.y) < 1.5 and _clear_to(pp):
 				strike.begin()
 			else:
 				state = "hunt"
@@ -1118,14 +1671,11 @@ func _strike_tick(delta: float) -> void:
 
 
 ## A strike reached you (CreatureStrike.on_hit): one hit
-## (contact.strike_is_hit; Harm's breath between hits holds), unless you
-## stand in the light (rule.relit_room safe) and it hasn't had you yet: a
-## chase whose strike has landed follows you into the light (§FD), and
-## its strikes land there too.
+## (contact.strike_is_hit; Harm's breath between hits holds). It strikes
+## only from where it may stand (the light's edge at most), so wherever
+## its lunge finds you counts.
 func _on_strike_hit(_target: Node3D) -> void:
 	if not bool(CONTACT.get("strike_is_hit", true)):
-		return
-	if not ground.is_ground(ground.node_at(player.global_position)) and not _into_light():
 		return
 	var before := Harm.instance.landed if Harm.instance != null else 0
 	player.death_cause = "creature:%s" % name_text
@@ -1137,10 +1687,10 @@ func _on_strike_hit(_target: Node3D) -> void:
 
 ## Staggered: this frame's share `v` of the reel (flat, away from the
 ## swing; CreatureStrike.take_reel). Back along its own body when the body
-## leads away from the swing (it came at you along it) and lies in its
-## dark; when it doesn't (it struck from its coil, or round a corner),
+## leads away from the swing (it came at you along it) and lies where it
+## may stand; when it doesn't (it struck from its coil, or round a corner),
 ## straight away from the swing, its body following, stopping at stone and
-## at the edge of its dark. Chosen once for each reel.
+## where the light passes the chase's cap. Chosen once for each reel.
 func _reel(v: Vector3) -> void:
 	var m := v.length()
 	if strike.stagger_frame != _reel_frame:
@@ -1149,7 +1699,7 @@ func _reel(v: Vector3) -> void:
 		_push_trail(head)
 		var from := strike.reel_from
 		var back := _back_along(strike.reel_m)
-		_reel_back = _flat(back - from).length() >= _flat(head - from).length() + strike.reel_m * 0.5 and _dark_along(strike.reel_m)
+		_reel_back = _flat(back - from).length() >= _flat(head - from).length() + strike.reel_m * 0.5 and _stands_along(strike.reel_m)
 	if m < 1e-5:
 		return
 	if _reel_back:
@@ -1158,12 +1708,20 @@ func _reel(v: Vector3) -> void:
 	var to := head + v
 	to.y = _floor_y(to)
 	var tn := ground.node_at(to)
-	if tn < 0 or not ground.is_ground(tn) or not _on_floor(to, tn) or _blocked(head + Vector3(0, 0.3, 0), to + Vector3(0, 0.3, 0)):
+	if tn < 0 or not _may_reel(to, tn) or not _on_floor(to, tn) or _blocked(head + Vector3(0, 0.3, 0), to + Vector3(0, 0.3, 0)):
 		return
 	head = to
 	base = to
 	_push_trail(head)
 	_track_node()
+
+
+## May its reel take it to `p` (in node `tn`): in its dark, or under the
+## light's cap.
+func _may_reel(p: Vector3, tn: int) -> bool:
+	if light != null:
+		return light.under_cap(p)
+	return ground.is_ground(tn)
 
 
 ## `p` on node `id`'s floor, off its walls by the body's girth (queue 57:
@@ -1192,11 +1750,14 @@ func _back_along(m: float) -> Vector3:
 	return at
 
 
-## Whether the first `m` metres of its body lie all in its dark.
-func _dark_along(m: float) -> bool:
+## Whether the first `m` metres of its body lie where it may stand (its
+## dark, or under the light's cap).
+func _stands_along(m: float) -> bool:
 	var s := 0.0
 	while s <= m + 1e-3:
-		if not ground.is_ground(ground.node_at(_seg_at(s))):
+		var q := _seg_at(s)
+		var id := ground.node_at(q)
+		if id < 0 or not _may_reel(q, id):
 			return false
 		s += 0.25
 	return true
@@ -1221,204 +1782,116 @@ func _recoil(m: float) -> void:
 		_track_node()
 
 
-## You are in the light: to the edge of its dark nearest you, and wait.
-func _go_watch(pn: int) -> void:
-	var reach := ground.reach(node)
-	var pp := player.global_position
-	var best := {}
-	var best_d := INF
-	for id in reach:
-		for l in ground.nodes[id].links:
-			if ground.is_ground(int(l.to)):
-				continue
-			var dd := (l.via as Vector3).distance_to(pp)
-			if dd < best_d:
-				best_d = dd
-				best = {"from": int(id), "via": l.via, "to": int(l.to), "door": int(l.door)}
-	_calm()
-	if best.is_empty():
-		_next_round()
-		return
-	var path := ground.path(node, int(best.from), true)
-	var via: Vector3 = best.via
-	var into := _flat(via - (ground.nodes[int(best.from)].center as Vector3)).normalized()
-	var stand := via - into * 0.9
-	stand.y = _floor_y(stand)
-	_set_route(_route_nodes(path, stand))
+## At the edge of the light (or no way to you): it stops where it is and
+## watches you.
+func _start_watch() -> void:
 	if state != "watch":
 		watch_t = 0.0
 	state = "watch"
+	_set_route(PackedVector3Array())
+	_replan_t = 0.4
 
 
+## Watching you from the edge of the light (Mike's note of 7 Oct): reared,
+## its head forward into the glow (peek_m), hissing its warning now and
+## then; it strikes if you come within its reach of where it stands, comes
+## on if the light lets it nearer, and after watch_s gives you up.
 func _watch_tick(delta: float) -> void:
-	_sway = move_toward(_sway, 0.4, delta)
+	_sway = move_toward(_sway, 0.3, delta)
 	var pp := player.global_position
-	var pn := ground.node_at(pp)
-	var back_in := ground.is_ground(pn)
-	if not back_in and _into_light() and pn >= 0 and not bool(ground.nodes[pn].hearth):
-		# Out of the hearth room into light it may follow you through
-		# (§FD): looked for now and then, not every step.
-		_replan_t -= delta
-		if _replan_t <= 0.0:
-			_replan_t = 0.4
-			back_in = not ground.path(node, pn, false).is_empty()
-	if back_in and noticed:
+	var d := _flat(pp - base).length()
+	speed = 0.0
+	_face(pp, delta)
+	lift = move_toward(lift, 0.85, delta * 1.5)
+	lunge = move_toward(lunge, num("peek_m", 0.7) if perceives or d < 8.0 else 0.0, delta * 1.2)
+	_hiss_t -= delta
+	if _hiss_t <= 0.0:
+		_hiss_t = _rng.randf_range(1.6, 3.0)
+		if perceives:
+			_play_hiss()
+	if light != null and light.at(base) > light.cap:
+		# A fire caught or was planted by it: back to the light's edge.
 		state = "hunt"
 		_replan_t = 0.0
 		return
-	if route_i < route.size():
-		_advance(num("hunt_mps", 3.6), delta)
-		lift = move_toward(lift, 0.3, delta)
-	else:
-		speed = 0.0
-		_face(pp, delta)
-		lift = move_toward(lift, 0.6, delta)
-		watch_t += delta
-		if watch_t >= num("watch_s", 10.0):
-			# It gives you up and goes back to its rounds.
-			_let_go("watch")
+	var delay := sub("torch_delay")
+	if _torch_lit() and not struck and hang_t < float(delay.get("hang_s", 4.0)) and d <= float(delay.get("hang_m", 3.5)) + 0.1:
+		# Your flame holds it a while first, here as anywhere (the torch's
+		# delay).
+		state = "hang"
+		return
+	if d <= strike.reach_m * 0.95 and absf(pp.y - base.y) < 1.5 and _clear_to(pp):
+		# You came within its reach of where it may stand.
+		state = "strike"
+		strike.begin()
+		return
+	_replan_t -= delta
+	if _replan_t <= 0.0:
+		_replan_t = 0.4
+		var pts := _cap_path(pp)
+		if not pts.is_empty():
+			var e := pts[pts.size() - 1]
+			if TombNav.reaches(pts, pp, 0.6) or _flat(e - pp).length() < d - 0.6:
+				# The light lets it nearer now.
+				state = "hunt"
+				_replan_t = 0.0
+				_hunt_to = Vector3.INF
+				return
+	watch_t += delta
+	if watch_t >= num("watch_s", 10.0):
+		# It gives you up and goes back to its rounds: out of the light first,
+		# back in the dark within back_to_dark_s (§FD).
+		_let_go("watch")
+		node = ground.node_at(base)
+		if node >= 0 and not ground.is_ground(node):
+			_leave(true)
+		else:
 			_next_round()
 
 
-## Its node was lit round it: off to the nearest dark at once, across no
-## more than LEAVE_LIT_MAX more lit nodes; cut off deeper in the light, down
-## into the dark below. `hurry` (§FD: it gave you up in the light it had
-## followed you into): fast enough to be back in the dark within
-## residents.json rules.back_to_dark_s (Pursuit.back_to_dark_mps), or gone
-## below by then.
+## Out of the light (its node lit round it, or it gave you up at the
+## light's edge in a lit node): to the nearest dark at once at leave_mps,
+## under the light through its tunnels where they lead there, else across
+## it on the dimmest way, the hearth room only when there is no other way
+## (BossGround.nearest_dark). `hurry` (§FD: it gave you up in the light):
+## fast enough to be in the dark within residents.json
+## rules.back_to_dark_s, never faster than MOST_MPS.
 func _leave(hurry := false) -> void:
-	var path := ground.nearest_dark(node)
 	_calm()
+	var from := _plan_from()
+	var at := int(from.node)
 	_leave_mps = num("leave_mps", 4.0)
-	if path.is_empty() or ground.lit_on(path) > LEAVE_LIT_MAX + 1:
-		_go_below()
-		if hurry and _vanish_t > 0.0:
-			_vanish_t = minf(_vanish_t, float(Pursuit.RULES.get("back_to_dark_s", 4.0)) * 0.9)
+	if at >= 0 and ground.is_ground(at):
+		# In the dark already (or out of the tunnel into it).
+		_set_route(from.pts, from.hidden)
+		state = "leave"
+		target = at
+		return
+	var path := ground.nearest_dark(at, BossGround.HEARTH_COST) if at >= 0 else []
+	if path.is_empty():
+		# No dark it can reach: it coils where it is (the last light sends
+		# it home).
+		_set_route(from.pts, from.hidden)
+		state = "coil"
+		coiling = not route.is_empty()
+		coil_left = 2.0
 		return
 	var to := int(path[-1])
 	var end: Vector3 = ground.nodes[to].center
 	if str(ground.nodes[to].kind) == "room":
 		end = _room_entry(to)
-	_set_route(_route_nodes(path, end))
+	_set_planned(from, path, end)
 	if hurry:
-		_leave_mps = Pursuit.back_to_dark_mps(_route_left(), _leave_mps)
+		_leave_mps = minf(Pursuit.back_to_dark_mps(_route_left(), _leave_mps), MOST_MPS)
 	state = "leave"
 	target = to
 
 
-## How far its route runs on from where it is (m, flat).
-func _route_left() -> float:
-	var m := 0.0
-	var at := base
-	for i in range(route_i, route.size()):
-		m += _flat(route[i] - at).length()
-		at = route[i]
-	return m
-
-
-## Cut off in the light: it goes down into the dark under the tomb. While
-## you can see it, it slides off toward its hole; the moment you can't (at
-## once, if you can't now), it is gone.
-func _go_below() -> void:
-	state = "below"
-	_let_go("below")
-	_calm()
-	below_t = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0)
-	var path: Array = []
-	if lair_node >= 0:
-		path = ground.path(node, lair_node, false)
-	if not path.is_empty() and _in_view():
-		_set_route(_route_nodes(path, lair.pos))
-		_vanish_t = 6.0
-	else:
-		_vanish()
-
-
-func _below_tick(delta: float) -> void:
-	if _vanish_t >= 0.0:
-		_sway = move_toward(_sway, 1.0, delta)
-		_vanish_t -= delta
-		var done := _advance(num("leave_mps", 4.0), delta)
-		if done or _vanish_t <= 0.0 or not _in_view():
-			_vanish()
-		return
-	below_t -= delta
-	if below_t <= 0.0:
-		_come_up()
-
-
-## Up again from below: out of its hole if the hole's room is dark, else in
-## the dark nearest the hole, out of your sight.
-func _come_up() -> void:
-	if ground.ground_count() == 0:
-		return
-	if lair_node >= 0 and ground.is_ground(lair_node):
-		# Out of the hole: the body still down it, the head at its mouth.
-		var c: Vector3 = lair.pos
-		var pts: Array = []
-		var depth := float(sub("body").get("length_m", 9.0)) + 1.0
-		var k := depth
-		while k >= 0.0:
-			pts.append(c - Vector3(0.0, k, 0.0))
-			k -= 0.25
-		_trail_from(pts)
-		base = c
-		head = c
-		node = lair_node
-		body.visible = body.baked
-		_next_round()
-		return
-	var from := lair_node if lair_node >= 0 else node
-	var dist := _all_dist(from)
-	var best := -1
-	var best_d := INF
-	for id in dist:
-		if ground.is_ground(int(id)) and float(dist[id]) < best_d:
-			best_d = float(dist[id])
-			best = int(id)
-	if best < 0:
-		return
-	if str(ground.nodes[best].kind) == "room":
-		_lie_coiled(best)
-	else:
-		_lie_along(best)
-	body.visible = body.baked
-
-
-## Lying along corridor stretch `id`, head toward its far end.
-func _lie_along(id: int) -> void:
-	var n: Dictionary = ground.nodes[id]
-	var pc: Dictionary = lay.pieces[int(n.piece)]
-	var a0 := float(n.a0)
-	var a1 := float(n.a1)
-	var pts: Array = []
-	var length := float(sub("body").get("length_m", 9.0))
-	# Back along the corridor past the stretch's start if it is short (the
-	# tail may lie in the next stretch).
-	var k := a1 - 0.3 - length
-	while k <= a1 - 0.3:
-		pts.append(BossGround.point(pc, clampf(k, 0.0, float(pc.len)), 0.0))
-		k += 0.25
-	_trail_from(pts)
-	base = pts[-1]
-	head = base
-	dir = _flat(BossGround.point(pc, a1, 0.0) - BossGround.point(pc, a0, 0.0)).normalized()
-	if dir.length() < 0.5:
-		dir = Vector3.FORWARD
-	node = ground.node_at(base)
-	target = id
-	state = "coil"
-	coiling = false
-	coil_left = _range(def.get("coil_s", [10.0, 25.0]), 10.0, 25.0) * 0.5
-	route = PackedVector3Array()
-	route_i = 0
-
-
 func _leave_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 1.0, delta * 2.0)
-	lift = move_toward(lift, 0.1, delta)
-	if _advance(_leave_mps, delta) or (ground.is_ground(node) and route_i >= route.size() - 1):
-		if not ground.is_ground(node):
+	lift = move_toward(lift, 0.0 if _in_tunnel() else 0.1, delta)
+	if _advance(_leave_mps, delta) or (not _in_tunnel() and node >= 0 and ground.is_ground(node) and route_i >= route.size() - 1):
+		if node < 0 or not ground.is_ground(node):
 			_leave()
 			return
 		state = "hunt" if noticed else "prowl"
@@ -1427,97 +1900,237 @@ func _leave_tick(delta: float) -> void:
 		_replan_t = 0.0
 
 
+## Stunned by a fire pot (§FA.4, Mike's note of 7 Oct): lying dazed, its
+## head down, for stun_s; then it flees to its hole.
+func _stunned_tick(delta: float) -> void:
+	speed = 0.0
+	_sway = move_toward(_sway, 0.0, delta * 3.0)
+	lift = move_toward(lift, 0.0, delta * 2.0)
+	lunge = move_toward(lunge, 0.0, delta * 3.0)
+	mouth_open = false
+	if _in_tunnel():
+		# Caught going into a hole: on through it, dazed.
+		_advance(num("speed_mps", 2.0) * 0.5, delta)
+	stun_t -= delta
+	if stun_t <= 0.0:
+		_flee_home()
+
+
+## Off to its lair hole and down it (a fire pot drove it off): through its
+## tunnels or across the light on the dimmest way, at flee_mps.
+func _flee_home() -> void:
+	state = "flee"
+	_set_home_route()
+
+
+## Its way home (_flee_home, release): to the floor by its lair's hole by
+## the way with the least light and the most tunnel (BossGround: lit
+## nodes dear, the hearth room only if there is no other way), then into
+## the hole and down round its den, its whole body under the floor. With
+## no lair, into the nearest of its tunnels' holes and down it.
+func _set_home_route() -> void:
+	var from := _plan_from()
+	var at := int(from.node)
+	if lair.is_empty() or lair_node < 0 or at < 0:
+		_home_by_tunnel(from)
+		return
+	var path: Array = [at]
+	if at != lair_node:
+		path = ground.path(at, lair_node, false, FLEE_LIT_COST, BossGround.HEARTH_COST)
+	if path.is_empty():
+		_home_by_tunnel(from)
+		return
+	var c: Vector3 = lair.pos
+	var rim := _rim_point()
+	var r := _route_nodes(path, rim, from.pos)
+	var pts: PackedVector3Array = (from.pts as PackedVector3Array) + (r.pts as PackedVector3Array)
+	var hid: PackedByteArray = (from.hidden as PackedByteArray) + (r.hidden as PackedByteArray)
+	pts.append(Vector3(c.x, c.y, c.z))
+	hid.append(0)
+	var den := _den_pts(rim)
+	_set_route(pts + (den[0] as PackedVector3Array), hid + (den[1] as PackedByteArray))
+
+
+## The floor by the lair's hole where it goes in and comes out: toward the
+## room's way in, on open floor.
+func _rim_point() -> Vector3:
+	var c: Vector3 = lair.pos
+	var toward := _room_entry(lair_node) if lair_node >= 0 else c + Vector3.FORWARD
+	var v := _flat(toward - c)
+	if v.length() < 0.01:
+		v = Vector3.FORWARD
+	v = v.normalized()
+	var r := float(lair.r)
+	for k in 8:
+		var a := floorf((k + 1) * 0.5) * (0.6 if k % 2 == 1 else -0.6)
+		var q := c + v.rotated(Vector3.UP, a) * (r + 0.75)
+		q.y = _floor_at(q)
+		if nav == null or nav.is_open(nav.cell_of(q)):
+			return q
+	var p := c + v * (r + 0.75)
+	p.y = _floor_at(p)
+	return p
+
+
+## Down its hole from the floor by it (`rim`): the mouth's middle on the
+## floor, then the den under it, the whole body taken under the floor:
+## [PackedVector3Array, PackedByteArray (hidden)].
+func _den_pts(rim: Vector3) -> Array:
+	var c: Vector3 = lair.pos
+	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	pts.append(c - Vector3(0.0, DEN_SHAFT_M, 0.0))
+	hid.append(HID_DEN)
+	var a0 := atan2(c.z - rim.z, c.x - rim.x)
+	var steps := int(DEN_TURNS * 16.0)
+	for k in range(steps + 1):
+		var u := float(k) / steps
+		var a := a0 + u * DEN_TURNS * TAU
+		pts.append(c + Vector3(cos(a) * DEN_R_M, -DEN_SHAFT_M - u * DEN_DROP_M, sin(a) * DEN_R_M))
+		hid.append(HID_DEN)
+	return [pts, hid]
+
+
+## With no lair (or no way to it): into the nearest of its tunnels' holes,
+## and its body after it: at home in its tunnels ("gone"), never vanished.
+## With no tunnel either, it coils where it is.
+func _home_by_tunnel(from: Dictionary) -> void:
+	var holes: Array = (lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	var best := {}
+	var best_d := INF
+	for h in holes:
+		var d := (from.pos as Vector3).distance_to(h.out)
+		if d < best_d:
+			best_d = d
+			best = h
+	if best.is_empty():
+		_set_route(from.pts, from.hidden)
+		return
+	var pts: PackedVector3Array = from.pts
+	var hid: PackedByteArray = from.hidden
+	var r := _route_nodes([], best.out, from.pos)
+	pts = pts + (r.pts as PackedVector3Array)
+	hid = hid + (r.hidden as PackedByteArray)
+	var n: Vector3 = best.n
+	var back: Vector3 = (best.pos as Vector3) - n * (float(best.depth) - 0.05)
+	# In, and straight down behind the wall, its length and more under the
+	# floor.
+	pts.append(best.pos)
+	hid.append(0)
+	for p: Vector3 in [back, back - Vector3(0.0, float(sub("body").get("length_m", 9.0)) + 1.5, 0.0)]:
+		pts.append(p)
+		hid.append(HID_DEN)
+	_set_route(pts, hid)
+
+
+func _flee_tick(delta: float) -> void:
+	_sway = move_toward(_sway, 0.0 if _in_tunnel() else 1.0, delta * 2.0)
+	lift = move_toward(lift, 0.0 if _in_tunnel() else 0.1, delta)
+	if _advance(num("flee_mps", 5.0), delta):
+		# Down its hole: out of everything's reach, breathing, for the pot's
+		# while.
+		state = "den"
+		den_t = _den_s
+		if not lair.is_empty():
+			Audio3D.play(_breath)
+
+
+## Down its hole (driven off by a pot): it stays drives_off_s, breathing,
+## then comes up.
+func _den_tick(delta: float) -> void:
+	speed = 0.0
+	den_t -= delta
+	if den_t <= 0.0:
+		_breath.stop()
+		_rise_up()
+
+
+## Up out of its hole: from its den, up the shaft to the mouth and out onto
+## the floor by it, then on its rounds (out of the room first if it was
+## lit meanwhile).
+func _rise_up() -> void:
+	state = "rise"
+	if lair.is_empty():
+		_set_route(PackedVector3Array())
+		return
+	var c: Vector3 = lair.pos
+	var pts := PackedVector3Array()
+	var hid := PackedByteArray()
+	var top := Vector3(base.x, c.y - 0.4, base.z)
+	for p: Vector3 in [top, c - Vector3(0.0, 0.3, 0.0)]:
+		pts.append(p)
+		hid.append(HID_DEN)
+	pts.append(Vector3(c.x, c.y, c.z))
+	hid.append(0)
+	pts.append(_rim_point())
+	hid.append(0)
+	_set_route(pts, hid)
+
+
+func _rise_tick(delta: float) -> void:
+	_sway = move_toward(_sway, 0.6, delta)
+	lift = move_toward(lift, 0.15, delta)
+	if _advance(num("speed_mps", 2.0), delta):
+		node = ground.node_at(base)
+		_next_round()
+
+
 # --- The last light -------------------------------------------------------------
 
 ## The dungeon's last holder has caught (rule.last_light to_lair): it goes
-## home, and the tomb hears it go.
+## home, physically, and the tomb hears it go (Mike's note of 7 Oct: it
+## never vanishes).
 func release() -> void:
 	if released:
 		return
 	released = true
-	state = "release"
+	var was := state
 	_calm()
 	_let_go("home")
 	var line := str(RELEASE.get("log_line", "Drove the {boss} into its hole")).format({"boss": name_text})
 	GameLog.add(line + ".", "boss")
-	# The way home: along the tomb to the hole and down it.
-	var pts: Array = [head]
-	if lair_node >= 0:
-		for p in _route_nodes(ground.path(node, lair_node, false), lair.pos):
-			pts.append(p)
-	else:
-		pts.append(head + dir * 8.0)
-	var bottom: Vector3 = (pts[-1] as Vector3) - Vector3(0.0, 2.5, 0.0)
-	pts.append(bottom)
-	_cry_path = pts
-	_cry_t = 0.0
 	if bool(RELEASE.get("cry_to_lair", true)):
 		_cry.global_position = head
 		Audio3D.play(_cry)
-	# Seen: it flees toward the hole, gone the moment you can't see it;
-	# else it is gone now.
-	if _in_view() and lair_node >= 0:
-		var flee := PackedVector3Array()
-		for k in range(1, pts.size()):
-			flee.append(pts[k])
-		_set_route(flee)
-		_vanish_t = 6.0
-	else:
-		_vanish()
-
-
-func _vanish() -> void:
-	_vanish_t = -1.0
-	body.visible = false
-	route = PackedVector3Array()
-	route_i = 0
+	if was == "den":
+		# Down its hole already (a pot drove it there): it stays.
+		_home()
+		return
+	state = "release"
+	_set_home_route()
 
 
 func _release_tick(delta: float) -> void:
-	if _vanish_t >= 0.0:
-		_sway = move_toward(_sway, 1.0, delta)
-		_vanish_t -= delta
-		var done := _advance(num("leave_mps", 4.0) * 1.3, delta)
-		if done or _vanish_t <= 0.0 or not _in_view():
-			_vanish()
-	# The cry goes along the way home and down the hole.
-	if _cry_t >= 0.0:
-		var cs := float(RELEASE.get("cry_s", 5.0))
-		_cry_t += delta
-		_cry.global_position = _along(_cry_path, clampf(_cry_t / cs, 0.0, 1.0))
-		if _cry_t >= cs:
-			_cry_t = -1.0
-			_home()
+	_sway = move_toward(_sway, 0.0 if _in_tunnel() else 1.0, delta)
+	lift = move_toward(lift, 0.0, delta)
+	var done := _advance(num("flee_mps", 5.0), delta)
+	# The long cry goes with it, along the tomb and down its hole.
+	_cry.global_position = head
+	if done:
+		_home()
 
 
-## In its hole for good: breathing, below.
+## In its hole for good (or its tunnel, with no lair): breathing, below;
+## its body all under the floor, so it is drawn no more.
 func _home() -> void:
-	_vanish()
-	if lair.is_empty():
-		state = "gone"
-	else:
-		state = "lair"
-		base = lair.pos
-		head = base
-		node = lair_node
+	state = "gone" if lair.is_empty() else "lair"
+	speed = 0.0
+	if not lair.is_empty():
 		Audio3D.play(_breath)
+	if _all_below():
+		body.visible = false
 	_bed_t = 0.0
 
 
-## The point `u` (0-1) of the way along polyline `pts`.
-func _along(pts: Array, u: float) -> Vector3:
-	if pts.size() < 2:
-		return pts[0] if not pts.is_empty() else Vector3.ZERO
-	var total := 0.0
-	for i in range(pts.size() - 1):
-		total += (pts[i] as Vector3).distance_to(pts[i + 1])
-	var want := total * u
-	for i in range(pts.size() - 1):
-		var l := (pts[i] as Vector3).distance_to(pts[i + 1])
-		if want <= l:
-			return (pts[i] as Vector3).lerp(pts[i + 1], want / maxf(l, 1e-4))
-		want -= l
-	return pts[-1]
+## Is all of it under the floor (its head and every length of its body as
+## drawn, length_m along its trail)?
+func _all_below() -> bool:
+	if head.y > _floor_y(head) - 0.3:
+		return false
+	for q: Vector3 in _body_pts(0.25):
+		if q.y > _floor_y(q) - 0.3:
+			return false
+	return true
 
 
 ## Can you see it: in the frame, nothing between.
@@ -1535,17 +2148,23 @@ func _in_view() -> bool:
 
 # --- You were taken --------------------------------------------------------------
 
-## You wake at the hearth (CrawlerMain): it lets you go and goes back to its
-## rounds, from far off.
+## You wake at the hearth (CrawlerMain): it lets you go where it is (Mike's
+## note of 7 Oct: it doesn't reappear anywhere) and goes on with its
+## rounds from there, out of the light first; a tunnel it was in, it
+## finishes.
 func after_wake() -> void:
 	_let_go("wake")
 	_calm()
 	hang_t = 0.0
 	struck = false
-	if state in ["release", "lair", "gone"]:
+	if state in ["release", "lair", "gone", "stunned", "flee", "den", "rise"]:
 		return
+	if _in_tunnel():
+		state = "prowl"
+		return
+	node = ground.node_at(base)
 	state = "coil"
-	_start_far()
+	_next_round()
 
 
 # --- The body and the sound -------------------------------------------------
@@ -1566,7 +2185,7 @@ func _seg_at(s: float) -> Vector3:
 func _pose() -> void:
 	if body == null:
 		return
-	if not body.visible and not (state in ["release", "lair", "gone", "below"]) and body.baked:
+	if not body.visible and not (state in ["lair", "gone"]) and body.baked:
 		body.visible = true
 	var seg_pos: Array = []
 	var seg_dir: Array = []
@@ -1596,7 +2215,8 @@ func _pose() -> void:
 			var end: Vector3 = trail[-1] if not trail.is_empty() else head
 			p = end + last_dir * (want - acc)
 			dv = -last_dir
-		# The neck rises with the head and reaches with the lunge.
+		# The neck rises with the head and reaches with the lunge (and, at the
+		# light's edge, into the glow).
 		if i < NECK:
 			var w := pow(1.0 - float(i) / NECK, 1.6)
 			p += Vector3.UP * lift * w + dir * lunge * w * 0.6
@@ -1609,7 +2229,7 @@ func _pose() -> void:
 	# Where a swing has to reach to stagger it, and where its strike comes
 	# from: its head. Its reach is measured from its body where it struck
 	# from (base), not from the head as it lunges out (queue 57), so a step
-	# back out of reach_m in its wind-up still makes it miss.
+	# back out of reach_m that it can't follow still makes it miss.
 	strike.global_position = hp + Vector3(0.0, 0.2, 0.0)
 	strike.origin = base
 	# The tell sits in the body's thick, behind the head.
@@ -1621,29 +2241,38 @@ func _pose() -> void:
 ## Its hiss at your flame while it holds off: a low, slow warning of its
 ## own (bosses.json torch_delay.sound, SoundSynth snake_warn), never its
 ## strike's sharp hiss (strike.sound), so that one always means the strike
-## is coming (§FA.2, queue 57).
-func _play_hiss() -> void:
+## is coming (§FA.2, queue 57); `which` another voice (a fire pot's stun:
+## the sharp hiss, as it reels).
+func _play_hiss(which := "") -> void:
 	if _hiss == null:
 		return
-	_hiss.stream = SoundSynth.stream(str(sub("torch_delay").get("sound", "snake_warn")), _rng.randi())
-	Audio3D.play(_hiss)
+	var kind := which if which != "" else str(sub("torch_delay").get("sound", "snake_warn"))
+	_hiss.stream = SoundSynth.stream(kind, _rng.randi())
+	if _hiss.is_inside_tree():
+		Audio3D.play(_hiss)
 
 
-## The tell: loud on the move, softer reared and still, quiet coiled; none
-## once it has gone home.
+## The tell: loud on the move, softer reared and still, quiet coiled,
+## muffled in its tunnels (tunnels.muffle_db, muffle_hz); none down its
+## hole or once it has gone home.
 func _sound_tick(delta: float) -> void:
 	if _tell == null:
 		return
 	var want := -INF
 	match state:
-		"prowl", "hunt", "leave":
+		"prowl", "hunt", "leave", "flee", "release", "rise":
 			want = 0.0
 		"coil":
 			want = -2.0 if coiling else -14.0
 		"hang", "strike", "watch", "held":
 			want = -8.0 if speed < 0.1 else -2.0
-		"release", "below":
-			want = -2.0 if _vanish_t >= 0.0 else -INF
+		"stunned":
+			want = -12.0
+	var tun := sub("tunnels")
+	var inside := _in_tunnel()
+	if inside and want > -INF:
+		want += float(tun.get("muffle_db", -14.0))
+	_tell.attenuation_filter_cutoff_hz = float(tun.get("muffle_hz", 700.0)) if inside else _tell_cutoff
 	if want == -INF:
 		if _tell.playing:
 			_tell.stop()

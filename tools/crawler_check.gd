@@ -22,7 +22,10 @@ extends SceneTree
 ##     (exit.check): the player's own body (its capsule, floor rules and
 ##     step, CrawlerPlayer) walks from the wake spot to the way out in each
 ##     tomb's real collision with every holder cold, or the seed fails with
-##     what stopped it; the median walk reported; in the scene: a floor
+##     what stopped it; the median walk reported; the snake's holes (Mike's
+##     note of 7 Oct, BossGround.place_tunnels) never in your body's way:
+##     the floor before every one of them open to your capsule in each
+##     tomb's real collision; in the scene: a floor
 ##     under every piece and a ceiling over it, and you standing on the
 ##     floor;
 ##  2b. one hearth, wall torches in the other rooms (design §EX.4;
@@ -456,9 +459,13 @@ func _walks(seeds: Array) -> void:
 	var world_node := get_root().get_node("World")
 	var walked: Array = []
 	var failed: Array = []
+	var holes := 0
+	var holes_open := 0
 	var t0 := Time.get_ticks_msec()
 	for s in seeds:
 		var r: Dictionary = await _walk_out_of(int(s), world_node)
+		holes += int(r.get("holes", 0))
+		holes_open += int(r.get("holes_open", 0))
 		if bool(r.ok):
 			walked.append(float(r.m))
 		else:
@@ -467,6 +474,7 @@ func _walks(seeds: Array) -> void:
 	walked.sort()
 	var med := float(walked[walked.size() / 2]) if not walked.is_empty() else 0.0
 	ok(failed.is_empty(), "%d seeds: your body (its capsule, floor rules and step) walks from the wake spot to the way out every time, every holder cold, no gate (none built)%s" % [seeds.size(), "" if failed.is_empty() else (": failed %s" % str(failed))])
+	ok(holes > 0 and holes_open == holes, "the snake's holes never in your way (Mike's note of 7 Oct): the floor before every one open to your capsule (%d of %d over %d tombs)" % [holes_open, holes, seeds.size()])
 	if not walked.is_empty():
 		print("  the walk out: median %.0f m (shortest %.0f, longest %.0f; %d s for %d tombs)" % [med, walked[0], walked[-1], (Time.get_ticks_msec() - t0) / 1000, seeds.size()])
 
@@ -513,8 +521,10 @@ func _walk_out_of(seed_v: int, world_node: Node) -> Dictionary:
 	var r := _route(lay, ex, space)
 	if not bool(r.ok):
 		NodeRelease.free_later(vp)
-		return {"ok": false, "m": 0.0, "why": r.why}
+		return {"ok": false, "m": 0.0, "why": r.why, "holes": r.get("holes", 0), "holes_open": r.get("holes_open", 0)}
 	var result := await _walk_body(lay, ex, root, r.path)
+	result["holes"] = r.get("holes", 0)
+	result["holes_open"] = r.get("holes_open", 0)
 	NodeRelease.free_later(vp)
 	return result
 
@@ -533,7 +543,8 @@ func _where(lay: Dictionary, p: Vector3) -> String:
 
 
 ## The route (_walk_out_of): {"ok", "path" [Vector3 cell middles on their
-## floors], "why"}.
+## floors], "why", "holes" (the snake's), "holes_open" (the floor before
+## each open to your capsule)}.
 func _route(lay: Dictionary, ex: Dictionary, space: PhysicsDirectSpaceState3D) -> Dictionary:
 	var g := WALK_CELL_M
 	var bounds := Delves.rect_of(lay.pieces[0], 2.0)
@@ -620,10 +631,18 @@ func _route(lay: Dictionary, ex: Dictionary, space: PhysicsDirectSpaceState3D) -
 		if space.intersect_shape(qs, 1).is_empty():
 			astar.set_point_solid(c, false)
 			open += 1
+	# The snake's holes: the floor before each open to your capsule.
+	var holes: Array = (lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	var holes_open := 0
+	for hd in holes:
+		var ho: Vector3 = hd.out
+		var hc: Vector2i = cell.call(ho.x, ho.z)
+		if hc.x >= 0 and hc.y >= 0 and hc.x < w and hc.y < h and not astar.is_point_solid(hc):
+			holes_open += 1
 	var wk: Vector3 = (lay.wake as Array)[0]
 	var start: Vector2i = cell.call(wk.x, wk.z)
 	if astar.is_point_solid(start):
-		return {"ok": false, "why": "your capsule doesn't fit at the wake spot (%s)" % str(wk)}
+		return {"ok": false, "why": "your capsule doesn't fit at the wake spot (%s)" % str(wk), "holes": holes.size(), "holes_open": holes_open}
 	var goal := Vector2i(-1, -1)
 	var od := Vector2((ex.p as Vector3).x, (ex.p as Vector3).z)
 	var best := INF
@@ -633,18 +652,18 @@ func _route(lay: Dictionary, ex: Dictionary, space: PhysicsDirectSpaceState3D) -
 			best = dd
 			goal = c
 	if goal.x < 0:
-		return {"ok": false, "why": "your capsule doesn't fit in the opening (%d goal cells)" % goal_cells.size()}
+		return {"ok": false, "why": "your capsule doesn't fit in the opening (%d goal cells)" % goal_cells.size(), "holes": holes.size(), "holes_open": holes_open}
 	var ids := astar.get_id_path(start, goal, true)
 	if ids.is_empty() or ids[-1] != goal:
 		var last: Vector2i = ids[-1] if not ids.is_empty() else start
 		var lq: Vector2 = mid.call(last)
 		var lp := Vector3(lq.x, floor_at[last.y * w + last.x], lq.y)
-		return {"ok": false, "why": "no route for your capsule: it gets as far as %s at %s (%d open cells)" % [_where(lay, lp), str(lp.snapped(Vector3.ONE * 0.01)), open]}
+		return {"ok": false, "why": "no route for your capsule: it gets as far as %s at %s (%d open cells)" % [_where(lay, lp), str(lp.snapped(Vector3.ONE * 0.01)), open], "holes": holes.size(), "holes_open": holes_open}
 	var path: Array = []
 	for c in ids:
 		var q: Vector2 = mid.call(c)
 		path.append(Vector3(q.x, floor_at[c.y * w + c.x], q.y))
-	return {"ok": true, "path": path}
+	return {"ok": true, "path": path, "holes": holes.size(), "holes_open": holes_open}
 
 
 ## Your body along `path` (_route) until it steps into way out `ex`'s

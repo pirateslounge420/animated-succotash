@@ -41,23 +41,30 @@ extends Node3D
 ## Cleared by light (design §FF.2; residents.json rules, crawler.json
 ## cleared). Until floors exist (§FF.1) a floor is the whole dungeon. The
 ## light is 49's graph of the tomb's rooms and corridor stretches
-## (BossGround, `ground`), worked out again whenever a holder catches:
+## (BossGround, `ground`), worked out again whenever a holder catches, and
+## the light on the floor itself (LightField, `light`, on the floor grid:
+## Mike's note of 7 Oct, "creatures that are actively chasing will chase
+## near the fire but stay somewhat in the darkness if they can"):
 ##
-##   the light     a resident keeps to dark nodes unless it is chasing you
-##                 (§FD: its strike has landed, so its chase may follow you
-##                 into the light, Pursuit.may_enter). Relight the node one
-##                 rests or stands in and it falls back into the nearest
-##                 dark (light_changed); no strike reaches you in the light
-##                 until one has hit you (may_strike, as the snake's
-##                 relit_room safe);
+##   the light     a resident keeps to dark nodes unless it is chasing you;
+##                 chasing (its strike landed or not), it may stand only
+##                 where the light is at most rules.chase_light_cap
+##                 (may_be_at): it comes as far as the light's edge, and it
+##                 strikes you only within its reach of where it may stand
+##                 (may_strike), so by a fire you are safe. Relight the node
+##                 one rests or stands in and it falls back into the
+##                 nearest dark (light_changed) by the dimmest way;
+##                 cut off from every dark but through the lit hearth room,
+##                 it crosses that too (dark_way), only unseen;
 ##   dark pockets  on a half-lit floor they hang back in what dark is left
 ##                 (pocket_spot), and strike at you when you come within
 ##                 rules.pocket_counterattack_m (Resident's lunge);
 ##   cleared       when the floor's last light catches (clear_floor), every
-##                 one leaves by its retreat_to, into its niche or the
-##                 nearest hole (the tomb's open niches and graves, holes),
-##                 seen going if you can see it, gone at once if you can't,
-##                 and gone for good; and the log's one line.
+##                 one leaves by its retreat_to: home to its own niche or
+##                 grave, or a nearer one left open (claim_hole), by the
+##                 dimmest way, seen or not, to lie down there as bones for
+##                 good (Mike's note of 7 Oct: nothing sinks into the stone);
+##                 and the log's one line.
 
 static var D: Dictionary = Tuning.table("residents")
 static var RULES: Dictionary = D.get("rules", {})
@@ -81,6 +88,9 @@ const NAV_RADIUS := 0.25
 var lay: Dictionary
 var player: CrawlerPlayer
 var nav: TombNav
+## The light on the floor (LightField; with the nav, once the tomb's fires
+## are in): the chase's edge and the dimmest way (the snake reads it too).
+var light: LightField
 var all: Array[Resident] = []
 ## Points on the stone your torch lights (sense()).
 var glow: Array = []
@@ -97,7 +107,8 @@ var cleared := false
 ## holes a resident can go back into when the floor is cleared.
 var holes: Array = []
 ## Seconds of play (not counting "Good night"), when the floor was cleared
-## (-1 not yet), and who has gone for good: [{"name", "at", "seen"}] (tools).
+## (-1 not yet), and who has gone off the roll for good, lying in its niche
+## or grave as bones: [{"name", "at", "seen"}] (tools).
 var clock := 0.0
 var cleared_at := -1.0
 var gone: Array = []
@@ -117,12 +128,14 @@ func build(p_lay: Dictionary, p_player: CrawlerPlayer, p_fires: CrawlerFires = n
 		all.append(res)
 
 
-## The floor's grid: call once the tomb's stone is in the physics world.
-## A resting place's way out that something stands on (an urn, a lid) moves
-## to the nearest open floor.
+## The floor's grid, and the light on it: call once the tomb's stone is in
+## the physics world. A resting place's way out that something stands on
+## (an urn, a lid) moves to the nearest open floor.
 func build_nav() -> void:
 	var ex: Array[RID] = [player.get_rid()]
 	nav = TombNav.build(lay, get_world_3d().direct_space_state, NAV_RADIUS, ex)
+	if fires != null:
+		light = LightField.build(nav, fires, self, ex)
 	for r in all:
 		var out: Vector3 = r.place.out
 		var c := nav.cell_of(out)
@@ -355,11 +368,14 @@ func player_woke() -> void:
 # --- Cleared by light (design §FF.2) ---------------------------------------------
 
 ## The light again whenever a holder catches (relit stays lit, so the count
-## only rises): the graph worked out afresh, then the floor cleared if that
-## was its last light, else every resident told (light_changed).
+## only rises): the light on the floor and the graph worked out afresh,
+## then the floor cleared if that was its last light, else every resident
+## told (light_changed).
 func refresh_light() -> void:
 	if fires == null or ground == null:
 		return
+	if light != null:
+		light.refresh()
 	var n := fires.lit_count()
 	if n == _lit_n:
 		return
@@ -387,9 +403,11 @@ func floor_lit() -> bool:
 
 ## The floor's last light has caught (§FF.2): it is cleared. The log's one
 ## line (crawler.json cleared.log_line: no creature named, §BA), and every
-## resident leaves by its retreat_to, seen going if you can see it, gone
-## for good either way (residents.json rules.retreat_on_floor_lit). The
-## boss's release is its own (Boss.release, §EY.2).
+## resident leaves by its retreat_to (residents.json
+## rules.retreat_on_floor_lit): home to lie down as bones for good, seen
+## going if you can see it, walking on there unseen however far (Resident
+## .retreat; Mike's note of 7 Oct). The boss's release is its own
+## (Boss.release, §EY.2).
 func clear_floor() -> void:
 	if cleared:
 		return
@@ -402,7 +420,8 @@ func clear_floor() -> void:
 		r.retreat()
 
 
-## `r` has gone for good (Resident._gone): off the roll.
+## `r` lies in its niche or grave as bones for good (Resident._lay_down, the
+## last light): off the roll, its node kept where it lies.
 func went(r: Resident, seen: bool) -> void:
 	all.erase(r)
 	gone.append({"name": str(r.name), "at": clock, "seen": seen})
@@ -433,25 +452,57 @@ func dark_at(pos: Vector3) -> bool:
 	return n < 0 or ground.is_ground(n)
 
 
-## May `r` stand at `pos`: in the dark, or anywhere while its chase has its
-## teeth in you (§FD, rules.chase_enters_light)?
+## May `r`, chasing you, stand at `pos` (Mike's note of 7 Oct, amending
+## §FD): only where the light on the floor is at most rules.chase_light_cap
+## (the light's edge, whether its strike has landed or not). Without the
+## light on the floor (a test floor), in the dark, or anywhere while its
+## chase has its teeth in you (queue 59's rule).
 func may_be_at(r: Resident, pos: Vector3) -> bool:
+	if light != null:
+		return light.under_cap(pos)
 	return r.chasing() or dark_at(pos)
 
 
-## May `r` strike at you where you stand? Not into the light until it has
-## hit you (the snake's relit_room safe, §EY.2; §FD once it has).
+## May `r` stand at `pos` hunting you (may_be_at)?
+func light_ok(r: Resident, pos: Vector3) -> bool:
+	return may_be_at(r, pos)
+
+
+## May `r` come for you where you stand: is there floor no brighter than
+## the chase's cap within its reach of you, joined to you by open floor,
+## that its own way under the cap gets it to (Mike's note of 7 Oct: it
+## strikes only within its reach of where it may stand, so by a fire you
+## are safe, a shadow beside you that the light cuts off from it too)?
+## Without the light on the floor, queue 59's rule: in the dark, or once it
+## has hit you.
 func may_strike(r: Resident) -> bool:
+	if light != null:
+		var reach := r.strike.reach_m if r.strike != null else float(r.strike_def().get("reach_m", 1.6))
+		var you := player.global_position
+		if not light.edge_within(you, reach):
+			return false
+		var pts := nav.path(r.global_position, you, true, TombNav.CAP)
+		if pts.is_empty():
+			return false
+		var e := pts[pts.size() - 1]
+		return Vector2(e.x - you.x, e.z - you.z).length() <= reach
 	return r.chasing() or dark_at(player.global_position)
 
 
-## The nearest dark node to node `from` by the way with least light in it,
-## never through the hearth room (BossGround.nearest_dark), or -1 when no
+## The way from node `from` to the nearest dark node by the way with least
+## light in it (BossGround.nearest_dark), crossing the lit hearth room only
+## when there is no other (a branch all relit: Mike's note of 7 Oct,
+## nothing goes into the stone, so it walks out): [node ids], [] when no
 ## dark is left that it can reach.
-func nearest_dark(from: int) -> int:
+func dark_way(from: int) -> Array:
 	if ground == null or from < 0:
-		return -1
-	var path := ground.nearest_dark(from)
+		return []
+	return ground.nearest_dark(from, BossGround.HEARTH_COST)
+
+
+## The nearest dark node to node `from` (dark_way's end), or -1.
+func nearest_dark(from: int) -> int:
+	var path := dark_way(from)
 	return int(path[-1]) if not path.is_empty() else -1
 
 
@@ -509,36 +560,15 @@ func pocket_spot(id: int, r: Resident) -> Vector3:
 			for tp in taken:
 				if (tp as Vector3).distance_to(p) < 1.4:
 					crowd += 2.0
-			var s := d_light - crowd - 0.03 * Vector2(p.x - r.global_position.x, p.z - r.global_position.z).length()
+			# Out of whatever light spills in (the floor's own light).
+			var glare := 0.0
+			if light != null:
+				glare = minf(light.at(p) / maxf(light.cap, 1e-4), 10.0) * 2.0
+			var s := d_light - crowd - glare - 0.03 * Vector2(p.x - r.global_position.x, p.z - r.global_position.z).length()
 			if s > best_s:
 				best_s = s
 				best = p
 	return best if best != Vector3.INF else (n.center as Vector3)
-
-
-## Where `r`, gone into the stone because the light cut it off (Resident
-## below), comes up: a spot to hang back in, in the dark node nearest it
-## through the rock, never where you would see it come up nor near enough
-## to strike at you at once. {"node", "pos"}, or {} when there is nowhere
-## like that just now.
-func come_up_spot(r: Resident) -> Dictionary:
-	if ground == null:
-		return {}
-	var best := {}
-	var best_d := INF
-	var keep_off := rule("pocket_counterattack_m", 3.0) * 2.0
-	for n in ground.nodes:
-		if bool(n.lit):
-			continue
-		var d := (n.center as Vector3).distance_to(r.global_position)
-		if d >= best_d:
-			continue
-		var spot := pocket_spot(int(n.id), r)
-		if spot.distance_to(player.global_position) < keep_off or seen_at(spot, r.creep()):
-			continue
-		best_d = d
-		best = {"node": int(n.id), "pos": spot}
-	return best
 
 
 ## Would you see something standing at `p` (its feet, middle and head):
@@ -562,19 +592,34 @@ func light_way(id: int, at: Vector3) -> Vector3:
 	return best
 
 
-## The hole `r` goes back into when the floor is cleared (its retreat_to:
-## the skeleton's back_into_its_niche, "back into its niche or the nearest
-## hole"): its own resting place unless another of the tomb's open niches
-## and graves is much nearer.
-func nearest_hole(r: Resident) -> Dictionary:
+## The resting place `r` goes back into when the floor is cleared (its
+## retreat_to: the skeleton's back_into_its_niche, "back into its niche or
+## the nearest hole"; Mike's note of 7 Oct: it lies down there for good):
+## its own, unless a niche or grave left open (its sleeper burnt out) is
+## much nearer; never one another lies in or is going back to.
+func claim_hole(r: Resident) -> Dictionary:
 	var best: Dictionary = r.place
 	var best_d := (r.place.out as Vector3).distance_to(r.global_position) * 0.6
 	for h in holes:
+		if h == r.place or _hole_taken(h, r):
+			continue
 		var d := (h.out as Vector3).distance_to(r.global_position)
 		if d < best_d:
 			best_d = d
 			best = h
 	return best
+
+
+## Is resting place `h` someone else's (a resident still in the tomb whose
+## own it is, or who is going back into it or lies in it)?
+func _hole_taken(h: Dictionary, r: Resident) -> bool:
+	for c in get_children():
+		var q := c as Resident
+		if q == null or q == r or not is_instance_valid(q) or q.is_queued_for_deletion():
+			continue
+		if q.place == h or q.hole == h:
+			return true
+	return false
 
 
 ## residents.json rules (the §FF.2 numbers), with their defaults.

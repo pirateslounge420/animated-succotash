@@ -40,13 +40,14 @@ extends SceneTree
 ## heart toward the dead and the flight past them, and from the foot of
 ## the way out's flight looking up it, at noon and at midnight with the
 ## torch out, and by torchlight.
-## Last, the floor cleared by light (design §FF.2, queue 59; 26-26d): every
-## other light relit, you before a skeleton at rest in its niche (else its
-## grave) with its room's light still cold, then that last light caught
-## and the skeleton sinking back into the stone (its first moment, then a
-## third of the way), and the niche empty (checks: it is in view on screen
-## as the light catches, its bone lit amber; then gone for good, and the
-## log's line).
+## Last, the floor cleared by light (design §FF.2, queue 59; Mike's note
+## of 7 Oct: nothing sinks into the stone; 26-26d): every other light
+## relit, a skeleton up and about before its niche (else its grave) in its
+## room's dark, its room's light still cold; then that last light caught
+## and the skeleton walking home in plain view, climbing back in, and lying
+## in its niche as bones for good (checks: it is in view on screen as it
+## goes, its bone lit amber; then it lies in its place, drawn, every one of
+## them home, and the log's line).
 ## Checks: every cell of the sheets holds the figure (its pixels drawn),
 ## the skeleton caught halfway out of its place with its bone lit amber
 ## on screen,
@@ -1855,14 +1856,20 @@ func _skeleton(main: CrawlerMain) -> void:
 
 
 
-## The floor cleared by light (design §FF.2; queue 59): every light but the
-## last relit (the skeletons asleep through it, as the tour keeps them),
-## you before a skeleton at rest in its wall niche (else its grave), its
-## room's light still cold (26a); then that last light caught and the
-## floor cleared: the skeleton, in view, sinks back into the stone (26b,
-## the moment it catches; 26c a third of the way, held for the frame: on a slow
-## renderer the game runs on between frames, so it is posed there, a
-## harness frame); then the niche empty and the room lit (26d).
+## `a` and `b` (x/z) apart.
+func _flat_m(a: Vector3, b: Vector3) -> float:
+	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
+## The floor cleared by light (design §FF.2; queue 59; Mike's note of 7
+## Oct: nothing sinks into the stone): every light but the last relit (the
+## skeletons asleep through it, as the tour keeps them), a skeleton up and
+## about in its dark room a couple of metres from its wall niche (else its
+## grave), you before it, its room's light still cold (26a: a frames'
+## placing); then that last light caught and the floor cleared: the
+## skeleton, in view, walks home (26b), climbs back in (26c; each held for
+## its frame: on a slow renderer the game runs on between frames) and lies
+## in its niche as bones for good, the room lit (26d).
 func _cleared(main: CrawlerMain) -> void:
 	var res := main.residents
 	var fires := main.fires
@@ -1884,22 +1891,31 @@ func _cleared(main: CrawlerMain) -> void:
 		q.set_physics_process(true)
 		q._show_pose()
 	# A skeleton at rest in a wall niche (else a grave) whose room has a
-	# light of its own, and floor before it to stand on, close (it sleeps on
-	# through the setup: the tour keeps them asleep, and it is held once the
-	# last light is lit).
+	# light of its own, open floor beside its way out for it to stand on
+	# and before it for you (it sleeps on through the setup: the tour keeps
+	# them asleep).
 	var r: Resident = null
 	var stand := Vector3.INF
+	var up_at := Vector3.INF
 	for kind in ["wall_niche", "grave"]:
 		for q in res.all:
 			if str(q.place.rests_in) != kind or not fires.holders.any(func(h) -> bool: return int(h.get_meta("piece")) == int(q.place.piece)):
 				continue
 			var out: Vector3 = q.place.out
 			var inward := Vector3(out.x - (q.place.pos as Vector3).x, 0.0, out.z - (q.place.pos as Vector3).z).normalized()
-			for m: float in [1.6, 2.1, 1.2, 2.7]:
+			var side := inward.cross(Vector3.UP).normalized()
+			for m: float in [3.2, 2.8, 3.6, 2.4]:
 				var at := _floor_at(main, out + inward * m)
-				if at != Vector3.INF and main.residents.nav.is_open(main.residents.nav.cell_of(at)):
-					r = q
-					stand = at
+				if at == Vector3.INF or not main.residents.nav.is_open(main.residents.nav.cell_of(at)):
+					continue
+				for sd: float in [1.8, -1.8, 1.3, -1.3]:
+					var it := _floor_at(main, out + side * sd + inward * 0.4)
+					if it != Vector3.INF and main.residents.nav.is_open(main.residents.nav.cell_of(it)) and it.distance_to(at) > 2.3:
+						r = q
+						stand = at
+						up_at = it
+						break
+				if r != null:
 					break
 			if r != null:
 				break
@@ -1922,20 +1938,28 @@ func _cleared(main: CrawlerMain) -> void:
 					break
 	await _frames(4)
 	ok(fires.lit_count() == fires.holders.size() - 1 and not res.cleared, "the last light: every other light relit (%d of %d), the floor not yet cleared" % [fires.lit_count(), fires.holders.size()])
-	# You before it by torchlight, the last light in view too.
+	# It up and about beside its way out, hanging back in its room's dark
+	# (a frames' placing); you before it by torchlight.
+	r._arm()
+	r.state = Resident.LURK
+	r.t = 0.0
+	r.global_position = up_at
+	r.pocket = up_at
+	r.pocket_node = res.node_of(up_at)
+	r.yaw = TombKit.yaw_facing(Vector2(stand.x - up_at.x, stand.z - up_at.z))
+	r._show_pose()
 	var world: Node = main.world
 	world.days = 13.0
 	_torch_in_hand(p)
 	p.torch.light()
 	p.hands.hold_left({})
-	var look := (r.place.eye as Vector3).lerp(last.global_position + Vector3(0.0, 0.4, 0.0), 0.3)
+	var look := (up_at + Vector3(0.0, 0.9, 0.0)).lerp(r.place.eye as Vector3, 0.35)
 	_look_at_from(p, stand, look)
 	await _frames(10)
 	await _shot("26a_last_light_cold_%s" % str(r.place.rests_in))
 	# The last light: it catches, the floor is cleared, and the skeleton in
-	# view goes (held at each moment for its frame).
+	# view walks home.
 	Residents.stay_asleep = false
-	r.set_physics_process(false)
 	FireStore.swing_light(last, float(world.get("days")))
 	for i in 600:
 		FireStore.tick(self, 1.0 / 60.0, last.global_position)
@@ -1945,39 +1969,44 @@ func _cleared(main: CrawlerMain) -> void:
 	while not res.cleared and n < 60:
 		await physics_frame
 		n += 1
-	var seen := r.state == Resident.RETREAT and r.seen_going
-	var wd := maxf(Residents.rule("withdraw_s", 1.2), 0.05)
-	var into := Resident._into_stone(r.hole if not r.hole.is_empty() else r.place)
-	var from: Vector3 = (r.hole.get("pos", r.place.pos) as Vector3)
-	r.global_position = from + into * smoothstep(0.0, 1.0, 0.08)
-	r._show_pose()
+	var from := r.global_position
+	n = 0
+	while r.state == Resident.RETREAT and r._rphase == "walk" and _flat_m(r.global_position, from) < 0.9 and n < 240:
+		await physics_frame
+		n += 1
+	r.set_physics_process(false)
 	await _frames(4)
-	var img := await _shot("26b_last_light_catches")
+	var img := await _shot("26b_last_light_walks_home")
 	var cam := p.camera()
-	var mid := r.global_position + Vector3(0.0, 0.5, 0.0)
+	var mid := r.global_position + Vector3(0.0, 0.9, 0.0)
 	var on := cam.is_position_in_frustum(mid)
 	var at := cam.unproject_position(mid) / cam.get_viewport().get_visible_rect().size
 	var bone := _brightest(img, at, Vector2(0.06, 0.12), 0.15)
 	print("  the last light caught: the floor cleared %s, the skeleton (%s, %s) at %s of the frame, its brightest pixels luma %.3f, hue %.1f" % [str(res.cleared), r.state_name(), r._rphase, str(at), bone.luma, bone.hue])
-	ok(res.cleared and seen and on and at.x > 0.0 and at.x < 1.0 and at.y > 0.0 and at.y < 1.0, "the last light caught, the floor cleared, and the skeleton in view goes: it sinks back into the stone where you see it (%s)" % r._rphase)
+	ok(res.cleared and r.state == Resident.RETREAT and r.seen_going and _flat_m(r.global_position, from) > 0.3 and on and at.x > 0.0 and at.x < 1.0 and at.y > 0.0 and at.y < 1.0, "the last light caught, the floor cleared, and the skeleton in view walks home to its %s in plain view (%s, %.1f m on)" % [str(r.hole.get("rests_in", "?")), r._rphase, _flat_m(r.global_position, from)])
 	ok(float(bone.luma) > 0.2 and float(bone.hue) >= -20.0 and float(bone.hue) <= 62.0, "its bone lit amber as it goes (luma %.3f, hue %.1f)" % [bone.luma, bone.hue])
-	# A third of the way: deep in its niche (or down in its grave), the
-	# stone about to take it.
-	r.global_position = from + into * smoothstep(0.0, 1.0, 0.33)
-	r._show_pose()
+	# Climbing back in, part way.
+	r.set_physics_process(true)
+	n = 0
+	var climb := float(r.def.get("rise_s", 1.6)) * Resident.CLIMB_IN_K
+	while r.state == Resident.RETREAT and not (r._rphase == "climb" and r._rt >= climb * 0.4) and n < 600:
+		await physics_frame
+		n += 1
+	r.set_physics_process(false)
 	await _frames(4)
-	await _shot("26c_into_the_stone_harness")
-	# On it goes; then the place is empty.
+	await _shot("26c_climbing_back_in")
+	ok(r.state == Resident.RETREAT and r._rphase == "climb", "it climbs back into its %s (%s)" % [str(r.hole.get("rests_in", "?")), SkeletonRig.POSES[r.sprite.pose]])
+	# In, and lying there for good; every one of them home.
 	r.set_physics_process(true)
 	var w := 0
-	while is_instance_valid(r) and r.state != Resident.GONE and w < 600:
+	while (r.state != Resident.BONES or not res.all.is_empty()) and w < 3600:
 		await physics_frame
 		w += 1
 	await _frames(10)
-	await _shot("26d_gone")
+	await _shot("26d_bones_in_its_%s" % str(r.hole.get("rests_in", "place")))
 	var line := str(Residents.CLEARED.get("log_line", ""))
 	var logged := GameLog.entries.any(func(e) -> bool: return str(e.get("text", "")) == line)
-	ok((not is_instance_valid(r) or r.state == Resident.GONE) and res.all.is_empty() and logged, "then it is gone for good, every one of them, and the log says \"%s\"" % line)
+	ok(r.state == Resident.BONES and is_instance_valid(r) and r.sprite.visible and r.global_position.distance_to(r.hole.pos) < 0.01 and res.all.is_empty() and logged, "then it lies in its %s as bones for good, drawn there (never sinking, never vanishing), every one of them home, and the log says \"%s\"" % [str(r.hole.get("rests_in", "?")), line])
 	Residents.stay_asleep = true
 	if boss is Boss:
 		(boss as Boss).auto = keep_auto

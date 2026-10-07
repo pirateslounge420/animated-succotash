@@ -31,11 +31,15 @@ extends SceneTree
 ##     first frame, its pose (reared, the head drawn back, the jaws
 ##     opening), then the lunge and one hit; a swing in the committed
 ##     strike, or with the torch unlit, staggers nothing and the hit
-##     counts; a second stagger inside cooldown_s fails; stepped back out
-##     of reach_m in its wind-up, the lunge misses (its reach is measured
-##     from its body, not its lunging head); the hiss it holds off with at
-##     your flame is its own low warning, darker and slower than the
-##     strike's (bosses.json torch_delay.sound).
+##     counts; a second stagger inside cooldown_s fails; stepped back in
+##     its wind-up as far as a walk takes you, it keeps coming through the
+##     wind-up and the lunge (Mike's note of 7 Oct: as fast as your walk;
+##     before it, it held still and the lunge missed) and the lunge lands;
+##     stepped back further than it can follow at hunt_mps in what is left
+##     of its strike, the lunge misses (its reach is measured from its
+##     body, not its lunging head); the hiss it holds off with at your
+##     flame is its own low warning, darker and slower than the strike's
+##     (bosses.json torch_delay.sound).
 
 var main: CrawlerMain
 var player: CrawlerPlayer
@@ -672,7 +676,13 @@ func _snake_cooldown(b: Boss) -> void:
 	await _frames(1)
 	ok(torch.last_contact == "staggered" and b.strike.staggers == s0 + 1,
 		"the snake: a lit swing at %.0f%% of its wind-up staggers it (%s)" % [b.strike.met_at_share * 100.0, _sees(b)])
-	await _snake_to(b, "ready")
+	# The reel out (still in its reach, it may wind up again at once: it
+	# comes on through its wind-up now, Mike's note of 7 Oct, so it can end
+	# its reel nearer you than reach_m).
+	var guard := 0
+	while b.strike.state == "reel" and guard < 240:
+		await _frames(1)
+		guard += 1
 	var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[b.node].piece)]
 	var aa := Delves.along_across(pc, Vector2(b.base.x, b.base.z))
 	var edge := minf(minf(aa.x, float(pc.len) - aa.x), float(pc.half) - absf(aa.y))
@@ -696,23 +706,42 @@ func _snake_cooldown(b: Boss) -> void:
 	_snake_rest(b)
 
 
+## Stepped back in its wind-up (queue 57; Mike's note of 7 Oct): it keeps
+## coming through the wind-up and the lunge at up to hunt_mps, so a step a
+## walk would take in that time still meets the lunge; a step further than
+## it can follow before the lunge ends makes it miss (its reach is measured
+## from its body, not its lunging head).
 func _snake_steps_back(b: Boss) -> void:
-	var spot := _snake_spot(b, 2.0, b.strike.reach_m + 0.9)
-	ok(not spot.is_empty(), "the snake: a line in its dark to step back along")
-	if spot.is_empty():
-		return
-	b.strike.cooldown_left = 0.0
-	var h0 := harm.landed
-	var landed0 := b.strike.landed
-	await _snake_begin(b, spot.near, true)
-	while b.strike.state == "wind_up" and b.strike.t < 0.5 * b.strike.wind_up_s:
-		await _frames(1)
-	player.global_position = spot.far
-	await _snake_to(b, "recover")
-	var d := Vector2(player.global_position.x - b.base.x, player.global_position.z - b.base.z).length()
-	ok(harm.landed == h0 and b.strike.landed == landed0 and b.strike.strikes > 0,
-		"the snake: stepped back to %.1f m in its wind-up, its lunge misses (reach_m %.1f from its body; Harm %d -> %d)" % [d, b.strike.reach_m, h0, harm.landed])
-	_snake_rest(b)
+	var left_s := 0.5 * b.strike.wind_up_s + b.strike.strike_s
+	var follow := b.num("hunt_mps", 4.6) * left_s
+	for k in 2:
+		var lands := k == 0
+		# A walker's step (4.3 m/s over what is left of the wind-up, about
+		# reach_m + 0.9 from its body), then one past its reach and all it
+		# can follow.
+		var far_m := b.strike.reach_m + 0.9 if lands else b.strike.reach_m + follow + 0.8
+		var spot := _snake_spot(b, 2.0, far_m)
+		ok(not spot.is_empty(), "the snake: a line in its dark to step back along (%.1f m)" % far_m)
+		if spot.is_empty():
+			return
+		b.strike.cooldown_left = 0.0
+		var h0 := harm.landed
+		var landed0 := b.strike.landed
+		await _snake_begin(b, spot.near, true)
+		while b.strike.state == "wind_up" and b.strike.t < 0.5 * b.strike.wind_up_s:
+			await _frames(1)
+		var base0 := b.base
+		player.global_position = spot.far
+		await _snake_to(b, "recover")
+		var d := Vector2(player.global_position.x - b.base.x, player.global_position.z - b.base.z).length()
+		var came := Vector2(b.base.x - base0.x, b.base.z - base0.z).length()
+		if lands:
+			ok(harm.landed == h0 + 1 and b.strike.landed == landed0 + 1 and came > 0.5,
+				"the snake: stepped back to %.1f m in its wind-up, it comes on after you %.1f m (to %.1f m) and its lunge lands (Harm %d -> %d)" % [far_m, came, d, h0, harm.landed])
+		else:
+			ok(harm.landed == h0 and b.strike.landed == landed0 and b.strike.strikes > 0,
+				"the snake: stepped back to %.1f m in its wind-up, more than it can follow (%.1f m at hunt_mps), its lunge misses: %.1f m from its body (reach_m %.1f; Harm %d -> %d)" % [far_m, follow, d, b.strike.reach_m, h0, harm.landed])
+		_snake_rest(b)
 
 
 ## The hiss it holds off with at your flame (torch_delay.sound): its own,

@@ -11,8 +11,26 @@ extends RefCounted
 ## is built).
 ## Paths by A* (AStarGrid2D), pulled straight wherever the straight line
 ## stays on open squares.
+##
+## The light (Mike's note of 7 Oct; LightField, attached once the tomb's
+## fires are in): every square then carries the firelight on it, and the
+## grid is walked two ways (path's `mode`):
+##   DIM  the dimmest way: each square costs 1 + light_field.dim_weight
+##        times its light over the chase's cap (at most dim_max times), so
+##        a way across lit ground keeps to the edges of the light and the
+##        dark corners; a line is pulled straight only where it is no
+##        brighter than the way it replaces;
+##   CAP  the chase's grid (residents.json rules.chase_light_cap): the same
+##        weights, and no square brighter than the cap at all, so a way to
+##        you in the light ends at the edge of it nearest you.
+## Without a light field (the checks' own walks) every square costs the
+## same.
 
 const CELL := 0.25
+## The ways to walk the grid (path's mode): the dimmest way, and the
+## chase's (never past the light's cap).
+const DIM := 0
+const CAP := 1
 ## How far over the floor a cast may stop and still count as the floor
 ## (m): what your capsule rides over (its round foot climbs about this
 ## much under the 45° it can walk); a stair's collision is its ramp. The
@@ -36,6 +54,10 @@ var open := PackedByteArray()
 var open_count := 0
 ## Open squares closed because no door reaches them (_close_islands; tools).
 var closed_islands := 0
+## The light on the floor (LightField; null until attached), and the
+## chase's grid: open squares no brighter than its cap.
+var light: LightField
+var astar_cap: AStarGrid2D
 
 
 ## The grid for `p_lay`, cast against `space` (the tomb's stone), for a
@@ -161,17 +183,59 @@ func _build(space: PhysicsDirectSpaceState3D, exclude: Array[RID]) -> void:
 				open[i] = 1
 				open_count += 1
 	_close_islands()
-	astar.region = Rect2i(Vector2i.ZERO, size)
-	astar.cell_size = Vector2.ONE
-	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
-	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_OCTILE
-	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_OCTILE
-	astar.update()
-	astar.fill_solid_region(astar.region, true)
+	_grid(astar)
+
+
+## Set `g` up over the grid: its open squares walkable, the rest solid.
+func _grid(g: AStarGrid2D) -> void:
+	g.region = Rect2i(Vector2i.ZERO, size)
+	g.cell_size = Vector2.ONE
+	g.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	g.default_compute_heuristic = AStarGrid2D.HEURISTIC_OCTILE
+	g.default_estimate_heuristic = AStarGrid2D.HEURISTIC_OCTILE
+	g.update()
+	g.fill_solid_region(g.region, true)
 	for cy in size.y:
 		for cx in size.x:
 			if open[cy * size.x + cx] == 1:
-				astar.set_point_solid(Vector2i(cx, cy), false)
+				g.set_point_solid(Vector2i(cx, cy), false)
+
+
+# --- The light (LightField) ----------------------------------------------------
+
+## The light on the floor from now on (LightField.build): the chase's grid
+## made, every square's weight its light's.
+func attach_light(lf: LightField) -> void:
+	light = lf
+	astar_cap = AStarGrid2D.new()
+	_grid(astar_cap)
+
+
+## Squares `cells` (indices) have new light (LightField.refresh): their
+## weights in both grids, and in the chase's grid whether they are past the
+## cap.
+func light_changed(cells: Array, lf: LightField) -> void:
+	var w := LightField.num("dim_weight", 2.0)
+	var most := LightField.num("dim_max", 30.0)
+	var cap := maxf(lf.cap, 1e-4)
+	for i in cells:
+		var idx := int(i)
+		if open[idx] != 1:
+			continue
+		var c := Vector2i(idx % size.x, idx / size.x)
+		var lv := lf.level[idx]
+		var ws := 1.0 + w * minf(lv / cap, most)
+		astar.set_point_weight_scale(c, ws)
+		if astar_cap != null:
+			astar_cap.set_point_weight_scale(c, ws)
+			astar_cap.set_point_solid(c, lv > lf.cap)
+
+
+## The light on square `c` (0 without a light field).
+func light_of(c: Vector2i) -> float:
+	if light == null or not inside(c):
+		return 0.0
+	return light.level[_index(c)]
 
 
 ## Close every open square no door's gap reaches over open squares: a patch
@@ -251,8 +315,9 @@ func nearest_open(c: Vector2i, within := 8) -> Vector2i:
 
 
 ## Do the squares on the straight line from `a` to `b` all stay open
-## (and, going diagonally, the squares beside each step)?
-func line_open(a: Vector2i, b: Vector2i) -> bool:
+## (and, going diagonally, the squares beside each step), none of them
+## brighter than `most` (the light field's level)?
+func line_open(a: Vector2i, b: Vector2i, most := INF) -> bool:
 	var d := b - a
 	var steps := maxi(absi(d.x), absi(d.y))
 	if steps == 0:
@@ -261,10 +326,12 @@ func line_open(a: Vector2i, b: Vector2i) -> bool:
 	for s in steps + 1:
 		var t := float(s) / steps
 		var c := Vector2i(roundi(lerpf(a.x, b.x, t)), roundi(lerpf(a.y, b.y, t)))
-		if not is_open(c):
+		if not is_open(c) or (most < INF and light_of(c) > most):
 			return false
-		if c.x != prev.x and c.y != prev.y and (not is_open(Vector2i(c.x, prev.y)) or not is_open(Vector2i(prev.x, c.y))):
-			return false
+		if c.x != prev.x and c.y != prev.y:
+			for side: Vector2i in [Vector2i(c.x, prev.y), Vector2i(prev.x, c.y)]:
+				if not is_open(side) or (most < INF and light_of(side) > most):
+					return false
 		prev = c
 	return true
 
@@ -272,25 +339,76 @@ func line_open(a: Vector2i, b: Vector2i) -> bool:
 ## A walkable way from `from` to `to` (scene): points on the floor, the
 ## first where `from`'s nearest open square is, the last `to`'s (or, if
 ## `to` can't be reached, the nearest square to it that can: `partial`);
-## pulled straight where the line stays open. Empty when there is no way.
-func path(from: Vector3, to: Vector3, partial := true) -> PackedVector3Array:
+## pulled straight where the line stays open (and, with a light field, no
+## brighter than the way it replaces). Empty when there is no way. `mode`:
+## DIM, the dimmest way (with a light field; else every square alike), or
+## CAP, the chase's, never onto a square brighter than the light's cap: a
+## way to `to` past the cap ends at the edge of the light nearest it (the
+## search may start from a square past the cap, the creature's own, so it
+## can step out of it).
+func path(from: Vector3, to: Vector3, partial := true, mode := DIM) -> PackedVector3Array:
 	var out := PackedVector3Array()
 	var a := nearest_open(cell_of(from))
 	var b := nearest_open(cell_of(to))
 	if a.x < 0 or b.x < 0:
 		return out
-	var ids := astar.get_id_path(a, b, partial)
+	var capped := mode == CAP and light != null and astar_cap != null
+	var g := astar_cap if capped else astar
+	# AStarGrid2D finds no way to a solid square, not even part of one: the
+	# two ends are opened for the search, and a way that ends past the cap
+	# is cut back to the edge.
+	var opened: Array[Vector2i] = []
+	if capped:
+		for c: Vector2i in [a, b]:
+			if g.is_point_solid(c):
+				g.set_point_solid(c, false)
+				opened.append(c)
+	var ids := g.get_id_path(a, b, partial)
+	for c in opened:
+		g.set_point_solid(c, true)
+	if capped:
+		while ids.size() > 1 and light_of(ids[-1]) > light.cap:
+			ids.remove_at(ids.size() - 1)
 	if ids.is_empty():
 		return out
+	var lit := light != null
 	var i := 0
 	out.append(point_of(ids[0]))
 	while i < ids.size() - 1:
 		var j := mini(i + 48, ids.size() - 1)
-		while j > i + 1 and not line_open(ids[i], ids[j]):
-			j -= 1
+		# The brightest square on the way from i to each j: a straight line
+		# may be no brighter (the dimmest way stays dim); on the chase's grid
+		# never past the cap.
+		var most := INF
+		if lit:
+			var run := PackedFloat32Array()
+			run.resize(j - i + 1)
+			var m := 0.0
+			for k in range(i, j + 1):
+				m = maxf(m, light_of(ids[k]))
+				run[k - i] = m
+			while j > i + 1:
+				most = run[j - i] + 1e-4
+				if capped:
+					most = minf(most, light.cap)
+				if line_open(ids[i], ids[j], most):
+					break
+				j -= 1
+		else:
+			while j > i + 1 and not line_open(ids[i], ids[j]):
+				j -= 1
 		out.append(point_of(ids[j]))
 		i = j
 	return out
+
+
+## Whether `path` reached `to` (its last point within `near` m of it, flat)
+## or stopped short of it (no way, or the light's edge: CAP).
+static func reaches(pts: PackedVector3Array, to: Vector3, near := 0.6) -> bool:
+	if pts.is_empty():
+		return false
+	var e := pts[pts.size() - 1]
+	return Vector2(e.x - to.x, e.z - to.z).length() <= near
 
 
 ## The length of `pts` along the floor (m).

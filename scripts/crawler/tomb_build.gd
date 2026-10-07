@@ -25,6 +25,11 @@ extends RuinBuilder
 ##             stone: the Inca signature
 ##   niches    the same trapezoid: a sconce's (a stone cup in it; the flame
 ##             is CrawlerFires'), the catacomb's bone niches
+##   holes     the boss's own (Mike's note of 7 Oct; lay.tunnels,
+##             BossGround.place_tunnels): round-topped, at the foot of a
+##             wall, cut into its fitted stone like the niches, dark inside,
+##             a few fallen stones and the scratches of its scales before
+##             them; the wall's collision stays whole across them
 ##   stairs    each step one block, settled like the walls (block_steps)
 ##   dressing  coffins, the heart's box, the fallen slab, rubble, the
 ##             hearth's kerb, the airways' carved surrounds, the vents' flues
@@ -731,6 +736,7 @@ func _room(pc: Dictionary) -> void:
 			if str(s[0]) == side:
 				ops.append({"kind": "door", "c": _run_c(pc, side, float(s[1])), "f": _door_frame(d)})
 		ops.append_array(_niche_ops(pc, side))
+		ops.append_array(_burrow_ops(pc, side))
 		# Only the room's own face is dressed (its back is rock, or a
 		# corridor's lane where the door frame's own stones are all that
 		# shows), and it stops under the room's corbel course.
@@ -990,9 +996,10 @@ func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array
 	for r: Rect2 in _minus_all(whole, frames + recesses):
 		if r.size.x > 0.01 and r.size.y > 0.01:
 			box(Transform3D(bs, a3 + u * r.get_center().x + Vector3.UP * r.get_center().y), Vector3(r.size.x + 0.02, r.size.y, ct), core_col, 0.0)
-	# Behind each niche, what is left of the core.
+	# Behind each niche (and each of the boss's holes), what is left of the
+	# core.
 	for op in ops:
-		if str(op.kind) != "niche":
+		if not str(op.kind) in ["niche", "burrow"]:
 			continue
 		var n2v: Vector2 = op.n
 		var sdn := signf(Vector3(n2v.x, 0.0, n2v.y).dot(nx))
@@ -1023,7 +1030,10 @@ func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array
 				holes.append_array(_frame_holes(float(op.c), f, y0))
 				clear.append([float(op.c) - float(f.lhalf), float(op.c) + float(f.lhalf)])
 			elif (op.n as Vector2).dot(n2) > 0.9:
-				holes.append(_trapezoid(float(op.c), float(op.fw), float(op.tw), float(op.y0) - y0, float(op.y1) - y0))
+				if str(op.kind) == "burrow":
+					holes.append(_arch(float(op.c), float(op.fw), float(op.y0) - y0, float(op.y1) - y0))
+				else:
+					holes.append(_trapezoid(float(op.c), float(op.fw), float(op.tw), float(op.y0) - y0, float(op.y1) - y0))
 				clear.append([float(op.c) - float(op.fw) * 0.5 - 0.15, float(op.c) + float(op.fw) * 0.5 + 0.15])
 		var cl := FittedStone.climate_at(str(_lay.get("theme", "tomb")), int(_lay.seed), Vector3(probe.x, floor_y, probe.y))
 		# Every wall face its own seed (partition.seed_per_face), so nothing
@@ -1044,6 +1054,8 @@ func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array
 		for op in ops:
 			if str(op.kind) == "niche" and (op.n as Vector2).dot(n2) > 0.9:
 				_hollow(o, u, n, op)
+			elif str(op.kind) == "burrow" and (op.n as Vector2).dot(n2) > 0.9:
+				_burrow(o, u, n, op)
 	_stone_mode()
 
 
@@ -1121,6 +1133,112 @@ func _hollow(o: Vector3, u: Vector3, n: Vector3, op: Dictionary) -> void:
 	var nr := (tr0 - br0).cross(n).normalized()
 	_inside_quad([br0, tr0, trd, brd], [mouth, mouth, deep, deep], nr if nr.dot(hollow - br0) > 0.0 else -nr, hollow)
 	_inside_quad([bld, brd, trd, tld], [deep, deep, deep, deep], n, hollow)
+	_stone_mode()
+
+
+## The boss's own holes in piece `pc`'s wall `side` (Mike's note of 7 Oct:
+## "they may have their own tunnels"; BossGround.place_tunnels, lay
+## tunnels): each an opening for _stone_wall, round-topped, from the floor
+## up h_m, w_m wide, cut depth_m in (along the wall's run from its `a`).
+func _burrow_ops(pc: Dictionary, side: String) -> Array:
+	var ops: Array = []
+	var holes: Array = (_lay.get("tunnels", {}) as Dictionary).get("holes", [])
+	for i in holes.size():
+		var h: Dictionary = holes[i]
+		if int(h.piece) != int(pc.id) or str(h.side) != side:
+			continue
+		var c := _run_c(pc, side, float(h.off)) if str(pc.kind) in ["room", "landing"] else float(h.off) + float(pc.len) * 0.5
+		var fy := float((h.pos as Vector3).y)
+		var n: Vector3 = h.n
+		ops.append({"kind": "burrow", "c": c, "fw": float(h.w), "tw": float(h.w), "y0": fy - 0.02, "y1": fy + float(h.h), "depth": float(h.depth), "n": Vector2(n.x, n.z), "hole": i})
+	return ops
+
+
+## A round-topped opening (counter-clockwise, convex): `w` wide, its middle
+## at `c`, from `yb` up to `yt`, the top a half circle.
+static func _arch(c: float, w: float, yb: float, yt: float) -> PackedVector2Array:
+	var r := w * 0.5
+	var spring := maxf(yt - r, yb + 0.02)
+	var out := PackedVector2Array([Vector2(c - r, yb), Vector2(c + r, yb)])
+	var steps := 8
+	for k in steps + 1:
+		var a := PI * float(k) / steps
+		out.append(Vector2(c + r * cos(a), spring + r * sin(a)))
+	return out
+
+
+## The inside of one of the boss's holes (Mike's note of 7 Oct; op from
+## _burrow_ops) cut into a wall's face at `o` (n out of it): its sill on
+## the floor, its sides and round vault going depth_m in, darker the
+## deeper, and its back (the boss hangs its dark in front of it, Boss), in
+## the style's stone; round its foot a few loose stones, and the scratches
+## of scales on the floor before it. None of it solid: the wall's collision
+## stays whole across the hole, so you can't fit. Its own dice (the
+## builder's are kept for the rest of the tomb).
+func _burrow(o: Vector3, u: Vector3, n: Vector3, op: Dictionary) -> void:
+	var keep_rng := rng
+	rng = RandomNumberGenerator.new()
+	rng.seed = hash([int(_lay.seed), "burrow", int(op.get("hole", 0))])
+	var was_solid := solid
+	solid = false
+	_stone_mode()
+	var c := float(op.c)
+	var w := float(op.fw)
+	var fy := float(op.y0) + 0.02
+	var yt := float(op.y1)
+	var d := float(op.depth)
+	var col := RuinStyle.stone(rng)
+	var mouth: Color = col if bare else Prelit.ao_tint(col, 0.7)
+	var deep: Color = col if bare else Prelit.ao_tint(col, 0.3)
+	mouth.a = 0.0
+	deep.a = 0.0
+	var arch := _arch(c, w, fy, yt)
+	var w0 := 0.01
+	var at := func(q: Vector2, depth: float) -> Vector3:
+		return o + u * q.x + Vector3.UP * q.y + n * (w0 - depth)
+	var mid := Vector2(c, (fy + yt) * 0.5)
+	var hollow: Vector3 = at.call(mid, d * 0.5)
+	# The sides and the vault: the outline but its foot, taken in.
+	var nv := arch.size()
+	for k in range(1, nv):
+		var p: Vector2 = arch[k]
+		var q: Vector2 = arch[(k + 1) % nv]
+		var e := (q - p)
+		var inward := Vector2(-e.y, e.x).normalized()
+		if inward.dot(mid - (p + q) * 0.5) < 0.0:
+			inward = -inward
+		var nrm := (u * inward.x + Vector3.UP * inward.y).normalized()
+		_inside_quad([at.call(p, 0.0), at.call(q, 0.0), at.call(q, d + w0), at.call(p, d + w0)], [mouth, mouth, deep, deep], nrm, hollow)
+	# The sill, on the floor from the face in.
+	_inside_quad([at.call(arch[0], 0.0), at.call(arch[1], 0.0), at.call(arch[1], d + w0), at.call(arch[0], d + w0)], [mouth, mouth, deep, deep], Vector3.UP, hollow)
+	# The back: the outline at its depth, facing out.
+	var back_mid: Vector3 = at.call(Vector2(c, (fy + yt) * 0.5), d + w0)
+	var behind := back_mid - n * 1.0
+	for k in nv:
+		var p2: Vector2 = arch[k]
+		var q2: Vector2 = arch[(k + 1) % nv]
+		_tri_n(back_mid, at.call(p2, d + w0), at.call(q2, d + w0), n, n, n, deep, deep, deep, behind)
+	# A few stones fallen at its foot, either side of its mouth.
+	var foot := o + u * c + Vector3.UP * fy
+	for k in rng.randi_range(3, 5):
+		var sgn := 1.0 if k % 2 == 0 else -1.0
+		var p3 := foot + u * sgn * rng.randf_range(w * 0.5 + 0.08, w * 0.5 + 0.45) + n * rng.randf_range(0.05, 0.4)
+		var size := Vector3(rng.randf_range(0.07, 0.14), rng.randf_range(0.04, 0.08), rng.randf_range(0.06, 0.12))
+		var bs := Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, rng.randf_range(-0.3, 0.3)))
+		var sc := RuinStyle.stone(rng)
+		box(Transform3D(bs, p3 + Vector3.UP * size.y * 0.4), size, sc if bare else Prelit.ao_tint(sc, 0.85), 0.0, 0.02, 0.01)
+	# Its scales' scratches: thin grooves on the floor before it, fanning out
+	# from its mouth, in the floor's shade.
+	for k in rng.randi_range(4, 6):
+		var ang := rng.randf_range(-0.35, 0.35)
+		var along := n.rotated(Vector3.UP, ang)
+		var start := foot + u * rng.randf_range(-w * 0.35, w * 0.35) + n * rng.randf_range(0.02, 0.12)
+		var length := rng.randf_range(0.3, 0.6)
+		var gb := Basis(along.cross(Vector3.UP).normalized(), Vector3.UP, along)
+		var gc := RuinStyle.stone(rng)
+		box(Transform3D(gb, start + along * length * 0.5 + Vector3.UP * 0.011), Vector3(0.014, 0.01, length), gc if bare else Prelit.ao_tint(gc, 0.45), 0.0, 0.0, 0.0)
+	solid = was_solid
+	rng = keep_rng
 	_stone_mode()
 
 
@@ -1579,6 +1697,7 @@ func _corridor(pc: Dictionary) -> void:
 				ops.append(op)
 				# Its flue slot up the wall into the ceiling (the face's top).
 				ops.append(_flue_slot_op(hd, op, y + h + 0.05))
+		ops.append_array(_burrow_ops(pc, "left" if sd > 0.0 else "right"))
 		_stone_wall(_pp(pc, 0.0, sd * hw), _pp(pc, length, sd * hw), y - 0.6, top, ops)
 	_pave_flags(pc)
 	_ceiling(pc, false)

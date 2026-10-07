@@ -40,12 +40,16 @@ extends SceneTree
 ##     ghost's light_oil 1.5);
 ##  9. a boss (a stand-in: drive_off) hit by a pot is driven off for
 ##     vs_boss.drives_off_s and comes back, never killed, never burnt; and
-##     the real one, prompt 49's snake: a pot at its head and one by its
-##     tail drive it down below, the chase off, out of the pots' reach
-##     while it's down there; it comes up after drives_off_s and never
-##     dies; a burning tar patch it lies in drives it off; the lit wick
-##     alone (the torch smothered) gives you away to it; a burst is heard
-##     within burst_heard_m of it, not past it;
+##     the real one, prompt 49's snake (Mike's note of 7 Oct: "a pot cant
+##     kill a boss but will stun it/cause it to retreat to its cave
+##     temporarily"): a pot at its head stuns it, the chase off, for
+##     bosses.json stun_s without a step; then it goes along the floor or
+##     through its tunnels to its lair's hole and down it, out of the
+##     pots' reach while it's down there, stays drives_off_s, comes up out
+##     of the hole and never dies; a pot by its tail does the same (its
+##     whole length is in reach); a burning tar patch it lies in drives it
+##     off; the lit wick alone (the torch smothered) gives you away to it;
+##     a burst is heard within burst_heard_m of it, not past it;
 ##  9b. the real skeletons (prompt 58's Resident): fire targets with
 ##     residents.json's fire_hp; tar on a sleeping one wakes it, burns it
 ##     down and it is gone, its chase off (Harm no longer counts it); light
@@ -1031,8 +1035,7 @@ func _hold_snake(b: Boss) -> void:
 	b.state = "coil"
 	b.coiling = false
 	b.coil_left = 999.0
-	b.route = PackedVector3Array()
-	b.route_i = 0
+	b._set_route(PackedVector3Array())
 	b.speed = 0.0
 
 
@@ -1050,8 +1053,12 @@ func _real_snake() -> void:
 	# What it heard before now, it heard.
 	b._hears_burst()
 	ok(b.is_in_group(FirePots.TARGET_GROUP) and FirePots.is_boss(b), "the snake is a fire target, and a boss: driven off, never burnt down")
-	if b.state == "below":
-		_tick_snake(b, 60.0, func() -> bool: return b.state != "below")
+	var away_states := ["stunned", "flee", "den", "rise"]
+	if b.state in away_states:
+		_tick_snake(b, 120.0, func() -> bool: return not b.state in away_states)
+	# Laid coiled in its far dead end (a harness's placing: on its rounds
+	# it may be anywhere, a tunnel's run included).
+	b._start_far()
 	_hold_snake(b)
 	var spot := Vector3.INF
 	for d in [6.0, 5.0, 4.0, 3.0]:
@@ -1101,42 +1108,68 @@ func _real_snake() -> void:
 	await _frames(3)
 	_hold_snake(b)
 	_tick_snake(b, 0.5)
-	# A pot at its head: driven off, the chase off, out of reach below.
+	# A pot at its head: stunned where it lies, the chase off (Mike's note
+	# of 7 Oct: "a pot cant kill a boss but will stun it/cause it to retreat
+	# to its cave temporarily").
 	var s := float((FirePots.D.get("vs_boss", {}) as Dictionary).get("drives_off_s", 30.0))
+	var stun_s := b.num("stun_s", 1.5)
 	var driven := b.driven
 	b.pursuit.notice(false)
+	var at := b.base
 	fp.burst(b.fire_center(), "tar", b, Vector3.UP)
-	ok(b.state == "below" and b.driven == driven + 1 and not b.pursuit.on and is_instance_valid(b), "a pot at the snake's head drives it off down below (%s), the chase off" % b.state)
-	ok(FirePots.distance_to(b, b.fire_center()) == INF, "down there no pot reaches it")
+	ok(b.state == "stunned" and b.driven == driven + 1 and not b.pursuit.on and is_instance_valid(b), "a pot at the snake's head stuns it (%s), the chase off, never burnt" % b.state)
+	var dazed := _tick_snake(b, stun_s + 2.0, func() -> bool: return b.state != "stunned")
+	ok(absf(dazed - stun_s) < 0.05 and b.base.distance_to(at) < 0.05 and b.state == "flee", "it lies dazed %.2f s (bosses.json stun_s %.1f) without a step, then flees" % [dazed, stun_s])
+	# To its lair's hole along the floor or through its tunnels, and down it.
+	var fled := _tick_snake(b, 120.0, func() -> bool: return b.state != "flee")
+	var reach_down := FirePots.distance_to(b, b.fire_center())
+	ok(b.state == "den" and b._all_below() and reach_down == INF, "it goes to its lair's hole (%.1f s at flee_mps %.1f) and down it, all of it under the floor: down there no pot reaches it" % [fled, b.num("flee_mps", 5.0)])
 	b.remove_meta("pot_driven_until")
-	var up_after := _tick_snake(b, s + 20.0, func() -> bool: return b.state != "below")
-	ok(b.state != "below" and up_after >= s - 0.1 and not b.state in ["release", "lair", "gone"] and is_instance_valid(b), "it comes up again after drives_off_s (%.0f s; up after %.1f s), back on its rounds, never dead" % [s, up_after])
-	# By its tail: the body counts, not only the head (it slithers out
-	# first, so all of it lies on the floor).
-	_tick_snake(b, 6.0)
-	var tail_at := Vector3.INF
+	var down := _tick_snake(b, s + 20.0, func() -> bool: return b.state != "den")
+	var up := _tick_snake(b, 30.0, func() -> bool: return b.state != "rise")
+	ok(absf(down - s) < 0.1 and not b.state in away_states and not b.state in ["release", "lair", "gone"] and is_instance_valid(b), "it stays down drives_off_s (%.0f s; down %.1f s), comes up out of the hole (%.1f s) and goes on its rounds (%s), never dead" % [s, down, up, b.state])
+	# By its tail: the body counts, not only the head (laid out along a
+	# corridor of its dark, stretched: a harness's placing).
+	var laid := _lay_out(b)
+	_hold_snake(b)
 	var length := float(b.sub("body").get("length_m", 9.0))
-	var i_tail := mini(b.trail.size() - 1, int(length * 0.85 / Boss.TRAIL_STEP))
-	if i_tail > 0:
-		tail_at = (b.trail[i_tail] as Vector3) + Vector3(0.0, 0.3, 0.0)
-	var gap := tail_at.distance_to(b.fire_center()) if tail_at.is_finite() else -1.0
+	var tail_at := b._seg_at(length * 0.85) + Vector3(0.0, 0.3, 0.0)
+	var gap := tail_at.distance_to(b.fire_center())
 	driven = b.driven
-	if tail_at.is_finite() and b.state != "below":
+	if laid:
 		fp.burst(tail_at, "light_oil", null, Vector3.UP)
-	ok(gap > float(FirePots.oil("light_oil").get("splash_m", 3.0)) + 0.3 and b.driven == driven + 1 and b.state == "below", "a pot by its tail, %.1f m from its head, drives it off too (its whole length is in reach)" % gap)
+	ok(laid and gap > float(FirePots.oil("light_oil").get("splash_m", 3.0)) + 0.3 and b.driven == driven + 1 and b.state == "stunned", "a pot by its tail, %.1f m from its head, stuns it too (its whole length is in reach)" % gap)
 	b.remove_meta("pot_driven_until")
-	_tick_snake(b, s + 20.0, func() -> bool: return b.state != "below")
-	# A burning tar patch it lies in.
-	_tick_snake(b, 1.0)
+	_tick_snake(b, s + 150.0, func() -> bool: return not b.state in away_states)
+	# A burning tar patch it lies in (laid coiled in its far dead end).
+	b._start_far()
+	_hold_snake(b)
 	driven = b.driven
 	var under := fp.floor_under(b.fire_center())
-	if under.is_finite() and b.state != "below":
+	if under.is_finite() and not b.state in away_states:
 		var patch := PotFire.patch(fp, under, "tar")
 		fp.fires.append(patch)
 		await _frames(3)
-	ok(b.driven == driven + 1, "a burning tar patch under it drives it off")
+	ok(b.driven == driven + 1 and b.state == "stunned", "a burning tar patch under it stuns it and drives it off (%s)" % b.state)
 	b.remove_meta("pot_driven_until")
 	b.auto = true
+
+
+## Laid out along a stretch of corridor in its dark (Boss._lie_along: a
+## harness's placing), stretched, its tail well past a light-oil burst's
+## splash_m from its head; false if no stretch is long enough.
+func _lay_out(b: Boss) -> bool:
+	var splash := float(FirePots.oil("light_oil").get("splash_m", 3.0))
+	var length := float(b.sub("body").get("length_m", 9.0))
+	for n in b.ground.nodes:
+		if str(n.kind) != "stretch" or not b.ground.is_ground(int(n.id)):
+			continue
+		b._let_go("check")
+		b._calm()
+		b._lie_along(int(n.id))
+		if b._seg_at(length * 0.85).distance_to(b.head) >= splash + 0.6:
+			return true
+	return false
 
 
 ## Before any pot is thrown: every skeleton a fire target, with

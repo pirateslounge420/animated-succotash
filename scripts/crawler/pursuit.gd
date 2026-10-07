@@ -19,9 +19,13 @@ extends RefCounted
 ##                   waits while you are only hidden from it);
 ##   torch_doused    true: your torch going out while it chases you loses
 ##                   you at once (dousing it, prompt 54; deep water).
-## Each rule a block leaves out never ends the chase. A hunter whose strike
-## has landed (has_hit) may follow you into the light until it gives you
-## up (§FD, residents.json rules.chase_enters_light); prowling never does.
+## Each rule a block leaves out never ends the chase. Where a chase may go
+## in the light is the light's own since Mike's note of 7 Oct: the snake and
+## the skeletons, their strike landed or not, stand only where the light
+## on the floor is at most residents.json rules.chase_light_cap (LightField:
+## the light's edge, never close to a fire). has_hit (its strike landed
+## this chase, may_enter) is kept for what has no light on the floor (a
+## test floor) and the tools.
 
 ## residents.json rules: chase_enters_light, back_to_dark_s (§FD).
 static var RULES: Dictionary = Tuning.section("residents", "rules")
@@ -89,9 +93,10 @@ func step(delta: float, perceives: bool, dist_m: float, torch_lit: bool, hidden 
 	return false
 
 
-## May it step into a room or corridor stretch that is lit? Its prowling
-## never does; a chase does, once its strike has landed (§FD,
-## rules.chase_enters_light).
+## May it step into a room or corridor stretch that is lit, with no light
+## on the floor to go by? Its prowling never does; a chase does, once its
+## strike has landed (§FD, rules.chase_enters_light; with the light on the
+## floor, the chase's cap decides instead: Residents.may_be_at).
 func may_enter(lit: bool) -> bool:
 	return not lit or (on and has_hit and bool(RULES.get("chase_enters_light", true)))
 

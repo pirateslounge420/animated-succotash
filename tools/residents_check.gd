@@ -24,10 +24,12 @@ extends SceneTree
 ##     on a straight run of dark floor), its bone steps heard; face it and it
 ##     stops within one physics frame, and stays stopped while you stare at
 ##     it longer than out_of_sight_s, still your pursuer (it senses you: you
-##     heal only once it gives you up, §FD); your back to it again, it comes
-##     right up on you, and within its reach it winds up in plain view while
-##     you look straight at it: your lit torch's swing at half its wind-up
-##     staggers it, and no hit lands (§FA.1);
+##     heal only once it gives you up, §FD); your back to it again, it creeps
+##     up on you, and within creep.lunge_m (Mike, 7 Oct: "skeletons should
+##     lunge at the player within 2 meters"; before it, only within its
+##     strike's reach) it lunges at you in plain view, winding up as it
+##     comes, while you look straight at it: your lit torch's swing at half
+##     its wind-up staggers it, and no hit lands (§FA.1);
 ##  3c. a fire pot's fire reaching one at rest while you watch it (§FA.3;
 ##     FirePots' socket, fire_hit): it wakes, its chase on, but lies there
 ##     still until you look away; then it climbs out;
@@ -61,18 +63,27 @@ extends SceneTree
 ##     the frame's edge and margin, so coming on, its arm nears your sight);
 ##     stop to relight sconces with your back to the room; and look back
 ##     now and then as you walk. Every physics frame is logged, and no
-##     skeleton farther than its strike's reach, outside its strike (the
-##     wind-up, strike, recovery and reel run in plain view, Mike's
-##     "unless they get right up on you") and not going at the floor's last
-##     light, may change its place, turn or pose on a frame where you could
-##     see it, by Residents.points_watched's test, at the frame's start (as
-##     it decided) or at its end (as it was drawn). The log reports how many
-##     frames it checked and the nearest call;
-##  9. the one exception (§FF.2's reveal): one up and about 4.5 m before
-##     you, held still while you watch it; the floor's last light catches
-##     (Residents.clear_floor) and it hurries back into the stone in plain
-##     view, seen going, gone for good within retreat_seen_s, every other
-##     one gone too.
+##     skeleton farther than its creep.lunge_m (2 m, Mike's 7 Oct note),
+##     outside its strike (the wind-up, strike, recovery and reel run in
+##     plain view, Mike's "unless they get right up on you") and not going
+##     at the floor's last light, may change its place, turn or pose on a
+##     frame where you could see it, by Residents.points_watched's test, at
+##     the frame's start (as it decided) or at its end (as it was drawn);
+##     and every move is a walk (Mike's note of 7 Oct: nothing physical
+##     goes through stone or jumps): no skeleton's step on any frame is
+##     longer than its fastest pace (Resident.LEAVE_MAX_MPS) allows. The log
+##     reports how many frames it checked and the nearest call;
+##  9. the floor's last light (§FF.2; Mike's note of 7 Oct: nothing sinks
+##     into the stone): one up and about 4.5 m before you, held still while
+##     you watch it; the floor's last light catches (Residents.clear_floor):
+##     the floor is cleared at once, and it walks home in plain view (seen
+##     going, the one exception), climbs into its niche or grave and lies
+##     down as bones; every other one does the same, each into its own place
+##     or a nearer open one; then all of them are off the roll, every one
+##     still there and drawn lying in its place (none vanished, none
+##     sinking), no strike, no chase, no fire target, every step on the way
+##     a walk; and bones never wake: your head within arms_m of one, your
+##     back turned, it lies still.
 
 var fails := 0
 var main: CrawlerMain
@@ -319,7 +330,9 @@ func _settle() -> void:
 		r._edge_t = 0.0
 		r.pocket = Vector3.INF
 		r.pocket_node = -1
-		r._for_good = true
+		r.cut_off = false
+		r._path_short = false
+		r.hole = {}
 		r._rphase = ""
 		r.seen_going = false
 		r.set_physics_process(true)
@@ -584,28 +597,32 @@ func _creep() -> void:
 			kept = false
 	ok(after <= cmps * DT + 1e-4, "face it and it stops within one physics frame: %.4f m after you turned (one frame's creep is %.4f m)" % [after, cmps * DT])
 	ok(after == 0.0 and kept and r.sensed_by != "", "and holds dead still all %.0f s you stare at it, %.1f m off, longer than out_of_sight_s: it keeps sensing you (%s), still your pursuer, so you don't heal (§FD)" % [stare, _flat(r.global_position, player.global_position), r.sensed_by])
-	# Your back to it again: it comes right up on you; within its reach you
-	# face it, and it winds up in plain view.
+	# Your back to it again: it creeps up on you, and within its lunge_m it
+	# lunges at you in plain view, winding up as it comes (Mike, 7 Oct:
+	# "skeletons should lunge at the player within 2 meters").
 	_look_away(r)
 	var reach: float = r.strike.reach_m
-	t = 0.0
-	while t < 8.0 and _flat(r.global_position, player.global_position) > reach - 0.08:
-		await physics_frame
-		t += DT
-	var came := _flat(r.global_position, player.global_position)
-	_look_at(r)
-	var hits0 := main.harm.landed
+	var lunge := r.lunge_m()
 	var w0: int = r.strike.wind_ups
 	t = 0.0
-	while t < 2.0 and not r.winding_up():
+	while t < 8.0 and not r.winding_up():
 		await physics_frame
 		t += DT
-	var seen_wind := res.watched(r) and r.winding_up() and r.strike.wind_ups == w0 + 1
+	var from_m := _flat(r.global_position, player.global_position)
+	# You face it as it comes: it keeps coming (the lunge runs in plain
+	# view), and your lit swing meets it at half its wind-up.
+	_look_at(r)
+	var hits0 := main.harm.landed
+	var p0 := r.global_position
 	while r.winding_up() and r.strike.t < r.strike.wind_up_s * 0.5:
 		await physics_frame
+		_look_at(r)
+	var lunged := _flat(r.global_position, p0)
+	var seen_wind := res.watched(r) and r.winding_up() and r.strike.wind_ups == w0 + 1
+	ok(r.strike.wind_ups == w0 + 1 and from_m <= lunge + 0.05 and from_m > reach and seen_wind and lunged > 0.2, "your back to it again, it creeps up on you and lunges from %.2f m (creep.lunge_m %.1f, past its reach_m %.1f), winding up as it comes: you face it and it comes on in plain view (%.2f m by half its wind-up), the jaw's creak its tell" % [from_m, lunge, reach, lunged])
 	var did := player.torch.swing_top()
 	await _frames(int((CreatureStrike.reel_s() + 0.3) / DT))
-	ok(came <= reach and seen_wind and did == "staggered" and main.harm.landed == hits0, "your back to it, it comes right up on you (%.2f m, within reach_m %.1f); you face it and it winds up in plain view, the jaw's creak its tell, and your lit torch's swing at half its wind-up staggers it (%s): no hit (%d)" % [came, reach, did, main.harm.landed - hits0])
+	ok(did == "staggered" and main.harm.landed == hits0, "your lit torch's swing at half its wind-up staggers it (%s): no hit (%d)" % [did, main.harm.landed - hits0])
 
 
 ## 3c. A fire pot's fire on one at rest while you watch it (FirePots'
@@ -968,7 +985,7 @@ var _bt := {}
 func _boo_reset() -> void:
 	_s_t = 0.0
 	_was = {}
-	_bt = {"frames": 0, "logged": 0, "moved": 0, "held": 0, "strike": 0, "reach": 0, "last_light": 0, "bad": 0, "near_share": INF, "near_deg": INF, "behind_stone": 0, "closest_m": INF, "fastest": 0.0, "rose": 0, "struck": 0, "below": 0}
+	_bt = {"frames": 0, "logged": 0, "moved": 0, "held": 0, "strike": 0, "lunge": 0, "last_light": 0, "bad": 0, "near_share": INF, "near_deg": INF, "behind_stone": 0, "closest_m": INF, "fastest": 0.0, "rose": 0, "struck": 0, "step_m": 0.0, "jumps": 0}
 
 
 ## One physics frame of the session, then its log.
@@ -988,7 +1005,8 @@ func _within(at: Vector3, you: Vector3, reach: float) -> bool:
 ## its pose, and could you see it (Residents.points_watched, its creep
 ## block) as it began the frame (its view points then: what it went by) or
 ## as it ended it (what was drawn)? Let off: in its strike, within its
-## strike's reach, going at the floor's last light.
+## lunge_m (Mike's 2 m), going at the floor's last light. And every step a
+## walk: none longer than Resident.LEAVE_MAX_MPS allows (flat).
 func _boo_log() -> void:
 	_bt.frames += 1
 	var you := player.global_position
@@ -996,7 +1014,7 @@ func _boo_log() -> void:
 		if not is_instance_valid(r):
 			continue
 		var id := r.get_instance_id()
-		var now := {"pos": r.global_position, "yaw": r.yaw, "pose": r.sprite.pose if r.sprite != null else -1, "pts": r.view_points(), "state": r.state, "last": r.state == Resident.RETREAT and r._for_good}
+		var now := {"pos": r.global_position, "yaw": r.yaw, "pose": r.sprite.pose if r.sprite != null else -1, "pts": r.view_points(), "state": r.state, "last": r.state == Resident.RETREAT}
 		var was: Dictionary = _was.get(id, {})
 		_was[id] = now
 		if was.is_empty():
@@ -1008,19 +1026,21 @@ func _boo_log() -> void:
 			_bt.rose += 1
 		if st0 != Resident.STRIKING and st == Resident.STRIKING:
 			_bt.struck += 1
-		if st0 != Resident.BELOW and st == Resident.BELOW:
-			_bt.below += 1
+		var step := _flat(now.pos, was.pos)
+		_bt.step_m = maxf(float(_bt.step_m), step)
+		if step > Resident.LEAVE_MAX_MPS * DT + 0.01:
+			_bt.jumps += 1
 		var moved := (now.pos as Vector3).distance_to(was.pos) > 1e-5 or absf(wrapf(float(now.yaw) - float(was.yaw), -PI, PI)) > 1e-5 or int(now.pose) != int(was.pose)
 		var cr := r.creep()
 		var seen := res.points_watched(was.pts, cr) or res.points_watched(now.pts, cr)
-		var reach := r.strike.reach_m if r.strike != null else float(r.strike_def().get("reach_m", 1.6))
+		var lunge := r.lunge_m()
 		var why := ""
 		if st0 == Resident.STRIKING or st == Resident.STRIKING:
 			why = "strike"
 		elif bool(was.last) or bool(now.last):
 			why = "last_light"
-		elif _within(was.pos, you, reach) or _within(now.pos, you, reach):
-			why = "reach"
+		elif _within(was.pos, you, lunge) or _within(now.pos, you, lunge):
+			why = "lunge"
 		if not moved:
 			if seen and why == "" and st != Resident.REST:
 				_bt.held += 1
@@ -1303,14 +1323,16 @@ func _session() -> void:
 	var near := "none came within %.0f m with a clear line" % Resident.SEEN_M
 	if _bt.near_share < INF:
 		near = "a moving one %.1f%% of the frame (%.1f°) outside its edge" % [float(_bt.near_share) * 100.0, float(_bt.near_deg)]
-	print("  the session: %.1f s, %d frames (%d skeleton-frames logged), %d sconces relit; %d rose behind you, %d strikes, %d into the stone; %d skeleton-frames moved where you couldn't see them (hunting, at most %.2f m/s), %d held still in your view, %d steps undone just short of your sight; let off: %d in its strike, %d within its reach, %d at the last light" % [_s_t, _bt.frames, _bt.logged, main.fires.lit_count() - lit0, _bt.rose, _bt.struck, _bt.below, _bt.moved - _bt.strike - _bt.reach - _bt.last_light, _bt.fastest, _bt.held, short, _bt.strike, _bt.reach, _bt.last_light])
-	ok(_bt.bad == 0 and _bt.frames > 0, "THE rule, over %d frames (%d skeleton-frames): no skeleton beyond its reach, outside its strike and the last light's going, changed its place, turn or pose on a frame you could see it in (%d did)" % [_bt.frames, _bt.logged, _bt.bad])
-	ok(_bt.rose > 0 and _bt.moved > _bt.strike + _bt.reach + _bt.last_light and _bt.held > 0, "the session put it to the test (%d rose, %d moving frames unseen, %d held in view); the nearest call: %s, the nearest %.2f m from you; %d moving frames had part of it inside the frame with stone between" % [_bt.rose, _bt.moved - _bt.strike - _bt.reach - _bt.last_light, _bt.held, near, float(_bt.closest_m), _bt.behind_stone])
+	print("  the session: %.1f s, %d frames (%d skeleton-frames logged), %d sconces relit; %d rose behind you, %d strikes; %d skeleton-frames moved where you couldn't see them (hunting, at most %.2f m/s), %d held still in your view, %d steps undone just short of your sight; let off: %d in its strike, %d within its lunge_m, %d at the last light" % [_s_t, _bt.frames, _bt.logged, main.fires.lit_count() - lit0, _bt.rose, _bt.struck, _bt.moved - _bt.strike - _bt.lunge - _bt.last_light, _bt.fastest, _bt.held, short, _bt.strike, _bt.lunge, _bt.last_light])
+	ok(_bt.bad == 0 and _bt.frames > 0, "THE rule, over %d frames (%d skeleton-frames): no skeleton beyond its lunge_m, outside its strike and the last light's going, changed its place, turn or pose on a frame you could see it in (%d did)" % [_bt.frames, _bt.logged, _bt.bad])
+	ok(_bt.rose > 0 and _bt.moved > _bt.strike + _bt.lunge + _bt.last_light and _bt.held > 0, "the session put it to the test (%d rose, %d moving frames unseen, %d held in view); the nearest call: %s, the nearest %.2f m from you; %d moving frames had part of it inside the frame with stone between" % [_bt.rose, _bt.moved - _bt.strike - _bt.lunge - _bt.last_light, _bt.held, near, float(_bt.closest_m), _bt.behind_stone])
+	ok(int(_bt.jumps) == 0, "every move a walk (Mike's note of 7 Oct: nothing jumps or goes through stone): no skeleton's step on any frame was longer than %.2f m (Resident.LEAVE_MAX_MPS %.1f; the longest %.3f m)" % [Resident.LEAVE_MAX_MPS * DT + 0.01, Resident.LEAVE_MAX_MPS, float(_bt.step_m)])
 
 
-## 9. The one exception (§FF.2's reveal, left as built by Mike's 7 Oct
-## note): at the floor's last light the ones you can see hurry back into
-## the stone in plain view.
+## 9. The floor's last light (§FF.2; Mike's note of 7 Oct: nothing sinks
+## into the stone): every one walks home to its own niche or grave (or a
+## nearer one left open), climbs in and lies down, bones for good. The one
+## you watch goes in plain view (§FF.2's reveal, the one exception).
 func _last_light() -> void:
 	var line := _open_line(4.5)
 	var r: Resident = res.all[0] if not res.all.is_empty() else null
@@ -1327,29 +1349,62 @@ func _last_light() -> void:
 	var held := r.state == Resident.HUNT and r.still and _flat(r.global_position, a) < 0.05
 	ok(held, "one up and about, %.1f m before you, holds still while you watch it (%s)" % [_flat(r.global_position, player.global_position), r.state_name()])
 	var n0 := res.all.size()
+	var everyone: Array = res.all.duplicate()
 	var who := str(r.name)
+	var last := {}
+	for q in everyone:
+		last[q.get_instance_id()] = q.global_position
 	res.clear_floor()
+	ok(res.cleared, "the floor's last light catches: the floor is cleared at once (Residents.clear_floor)")
 	var phases := {}
 	var moved_seen := 0
-	var gone_at := -1.0
-	var was := r.global_position
-	var seen_s := float(Residents.CLEARED.get("retreat_seen_s", 6.0))
+	var vanished := 0
+	var jumps := 0
+	var longest := 0.0
 	var t := 0.0
-	while t < seen_s + 1.0:
+	while t < 120.0 and not res.all.is_empty():
 		await physics_frame
 		t += DT
-		if not is_instance_valid(r) or r.state == Resident.GONE:
-			gone_at = t
-			break
-		if r.state == Resident.RETREAT:
+		for q in everyone:
+			if not is_instance_valid(q) or not q.is_inside_tree() or q.sprite == null or not q.sprite.visible:
+				vanished += 1
+				continue
+			var was: Vector3 = last[q.get_instance_id()]
+			var step := _flat(q.global_position, was)
+			longest = maxf(longest, step)
+			if step > Resident.LEAVE_MAX_MPS * DT + 0.01:
+				jumps += 1
+			if q == r and step > 1e-5 and res.watched(r):
+				moved_seen += 1
+			last[q.get_instance_id()] = q.global_position
+		if is_instance_valid(r) and r.state == Resident.RETREAT:
 			phases[r._rphase] = true
-		if r.global_position.distance_to(was) > 1e-5 and res.watched(r):
-			moved_seen += 1
-		was = r.global_position
 	var seen := false
 	for g in res.gone:
 		if str(g.name) == who:
 			seen = bool(g.seen)
-	ok(seen and moved_seen > 0 and gone_at > 0.0 and gone_at <= seen_s + 2.0 * DT, "the floor's last light catches and it hurries back into the stone in plain view, the one exception: seen going (%s), moving on %d frames you watched, gone for good %.2f s on (retreat_seen_s %.0f)" % [", ".join(phases.keys()), moved_seen, gone_at, seen_s])
-	await _frames(int(seen_s / DT))
-	ok(res.cleared and res.all.is_empty() and res.gone.size() >= n0, "and every one of them is gone for good (%d of %d)" % [res.gone.size(), n0])
+	var into := str(r.hole.get("rests_in", "?")) if is_instance_valid(r) else "?"
+	ok(seen and moved_seen > 0 and phases.has("walk") and phases.has("climb") and is_instance_valid(r) and r.state == Resident.BONES, "and the one you watch walks home in plain view, the one exception: seen going (%s), moving on %d frames you watched, and lies down in its %s as bones (%s)" % [", ".join(phases.keys()), moved_seen, into, r.state_name() if is_instance_valid(r) else "freed"])
+	var bones := 0
+	var in_place := 0
+	var set_dressing := 0
+	for q in everyone:
+		if not is_instance_valid(q) or q.state != Resident.BONES:
+			continue
+		bones += 1
+		if not q.hole.is_empty() and q.global_position.distance_to(q.hole.pos) < 0.01:
+			in_place += 1
+		if q.strike == null and not q.pursuit.on and not q.is_in_group(FirePots.TARGET_GROUP) and q.view_points().is_empty():
+			set_dressing += 1
+	ok(res.all.is_empty() and res.gone.size() >= n0 and bones == n0 and in_place == n0 and set_dressing == n0, "every one of them (%d) walks home and lies in a niche or grave as bones within %.1f s: off the roll (%d), each lying in its place (%d), set dressing (no strike, no chase, nothing a pot can reach: %d)" % [n0, t, res.gone.size(), in_place, set_dressing])
+	ok(vanished == 0 and jumps == 0, "none of them vanished or sank on the way (%d frames gone from view), and every step was a walk (the longest %.3f m; %d longer than LEAVE_MAX_MPS allows)" % [vanished, longest, jumps])
+	# Bones never wake: your head within arms_m of one, your back turned.
+	var q0: Resident = everyone[0] if not everyone.is_empty() else null
+	if q0 != null and is_instance_valid(q0):
+		var e: Vector3 = q0.hole.get("eye", q0.place.eye)
+		var out: Vector3 = q0.hole.get("out", q0.place.out)
+		player.spawn_flat(out, 0.0, -0.1)
+		_look_away(q0)
+		var p0 := q0.global_position
+		await _frames(int(3.0 / DT))
+		ok(q0.state == Resident.BONES and q0.global_position == p0 and not q0.armed and e.distance_to(player.eye_position()) < q0.waking_m(), "and bones never wake: your head %.1f m from one, your back turned 3 s, it lies still (%s)" % [e.distance_to(player.eye_position()), q0.state_name()])

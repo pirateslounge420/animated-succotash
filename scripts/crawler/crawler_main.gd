@@ -31,10 +31,13 @@ extends Node
 ##      follows the sun (Vents).
 ##
 ## And the dungeon's boss (design §EY, Boss; bosses.json): the snake,
-## prowling only the rooms and stretches not yet relit, driven into its
-## hole by the last light. Its strikes are hits (Harm, §EA, with §FD's
-## ring in the crawler): three and "Good night", and you wake on the mat
-## by the hearth with every light you lit still burning.
+## prowling only the rooms and stretches not yet relit (and its own
+## tunnels under them), driven into its hole by the last light. Its
+## strikes are hits (Harm, §EA, with §FD's ring in the crawler): three and
+## "Good night", and you wake on the mat by the hearth with every light you
+## lit still burning. Like everything that lives down here it moves only
+## physically, and a chase stops at the edge of the light (Mike's note of 7
+## Oct; LightField on the residents' floor grid).
 ##
 ## Then what lives in its dark below the boss (design §FE, queue 58;
 ## Residents): the tomb's skeletons, resting in its niches and coffins
@@ -505,9 +508,15 @@ func _rescuer(fade_in_s := 2.5) -> void:
 	if boss != null:
 		await boss.body.bake(self)
 	# The residents: the floor they walk (the stone is in the physics world
-	# by now) and their sheets (ResidentSprite), before the dark lifts too.
+	# by now) and the light on it, and their sheets (ResidentSprite), before
+	# the dark lifts too. The snake walks the same floor by the same light
+	# (Mike's note of 7 Oct: it moves only physically, at the edges of the
+	# light).
 	await get_tree().physics_frame
 	residents.build_nav()
+	if boss != null:
+		boss.nav = residents.nav
+		boss.light = residents.light
 	await residents.bake(self)
 	baked = true
 	var tw := create_tween()
@@ -608,7 +617,8 @@ func _unhandled_input(event: InputEvent) -> void:
 ## you fell and is in your pack, both hands empty (a fire pot back on its
 ## strip), as when you first woke;
 ## a breath before anything can touch you again (PlanetPlayer.revive); the
-## boss goes back to its rounds, far off, and the skeletons home.
+## boss lets you go where it is and goes on with its rounds from there, and
+## the skeletons home.
 func _on_taken() -> void:
 	_fade.visible = true
 	_fade.color.a = 1.0
