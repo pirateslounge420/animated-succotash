@@ -4,6 +4,18 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 49 with 46 and 47 in: the lair off the spine, and the walk out with the snake loose (b654d7c)
+- **Queue 46's spine** (28dafd4) is what the snake's lair keeps off now. `BossGround.main_path` already read a spine when the layout had one: the pieces marked `spine`, from the hearth room through the heart to the way out's flight and landing. The lair is off it on seeds 1, 7 and 42 and over the check's 30 layouts, all dead ends (19 catacombs, 6 crypts in a coffin's place, 5 ossuaries).
+- **46's walk to the way out** (its own check, your body in 203 tombs) runs on the game's collision exactly, the hole's ring included, and passes. The snake's body has no collision, so it can never stand in your way. The way out's door, open to the outside, joins no node of the snake's ground, and its landing is a stretch, never a room it coils in.
+- **The walk out with the snake loose** (new in `boss_check`): you walk from the wake spot along the spine into the way out, torch lit, set down frame by frame, with the snake and Harm on their own clocks. You get out every time.
+  - From where it starts: 93–116 m in 21.6–26.9 s. It never noticed you.
+  - With it lying coiled in the heart, across your way: it noticed you 14.0–20.7 s in and landed no hit. Your torch held it at the edge of your light for its 4 s, and by then you were past it. It hunts slower than you walk.
+- **Queue 47's wall torches** (6578210): the snake's ground holds with them. The dark never grows and is gone only at the last of 54, 46 and 40 holders (seeds 1, 7, 42).
+- **Checks, on 46's and 47's tombs:** `boss_check` 115 lines, 0 fails. `crawler_check` 215 (46's 203 walks among them), `residents_check` 123, `stagger_check` 61, `fire_pot_check` 82, `crawler_harm_check` 59 and `hands_check` 61: 0 fails each. `boss_frames` (seed 7) 0 fails.
+- **Still to come:** queue 48's stone. The hole's broken flags take the room's palette, as the rest of the dressing does now, so they should follow the walls' style when 48 cuts the dressing from it.
+
+---
+
 ## 2026-10-07 — Queue 49 follow-up, §EY.1: the snake's hole kept off the crypts' coffins (97d9628)
 - **The bug (mine, from 827805b):** the hole was placed clear of a room's doors, fires and airways, but never looked at what stands on its floor. Dead-end crypts were where it usually went, and their coffins stand in rows 2.35 m out from both long walls. In 18 of 33 layouts the hole's middle was inside a coffin, seed 1 among them. My frames rendered only seed 7, which happened to be clear.
 - **The fix** (`BossGround._lair_spot`):
