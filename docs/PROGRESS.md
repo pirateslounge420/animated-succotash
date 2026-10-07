@@ -4,6 +4,62 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Mike's second note of 7 Oct, part 2: how the creatures move (§EY, §FD, §FE, §FF.2, §FA.3): nothing goes through the stone, the light has edges, the snake's own tunnels, the 2 m lunge (helper session 5e998ec, cf15aee, 285049b, a077343; merged c7fe09c, ce46ff2; follow-up ffd5dc2)
+Mike: *"the snake can follow you but not get close to the fire- in other words, creatures that are actively chasing will chase near the fire but stay somewhat in the darkness if they can- they may show just enough of their face/body near the fire if chasing"*; *"creatures shouldnt "sink" into the stone- only ghosts/phantoms should have the ability to ohase thru walls and floors and ceilings. the snake and other physical bosses have to move thru lit room while doing their best to stay at the edges of the light. depending on the ruins boss type as well, they may have their own tunnels- this can be the case for the snake. it wont actually despawn and respawn places"*; *"the snake should be faster or just as fast as a walk and if you sprint you can outrun it"*; *"a pot cant kill a boss but will stun it/cause it to retreat to its cave temporarily"*; *"skeletons should lu ge at the player within 2 meters"*. Built by a helper session in its own worktree (its commits above, its merges of the shared branch 11f37d7 and 9f84e24), merged here. Numbers he didn't give are Claude Code's first guesses.
+
+- **What changes on screen:**
+  - **Nothing goes through the stone or pops up elsewhere:** the snake and the skeletons get everywhere by moving there, frame by frame, at their own speeds. The snake no longer "goes below", and skeletons no longer sink into their niches. Only ghosts may ever phase (none are built).
+  - **The light has an edge** (`residents.json → rules.chase_light_cap` 0.12, on the light on the floor):
+    - Where it falls: a chase comes toward a fire only as far as the floor stays dim. That's about 1.5–1.75 m outside the hearth room's doors, about 5.5 m from a corridor torch and about 6 m from a room torch, whether or not it has hit you.
+    - What it does there: the snake rears and pushes its head 0.7 m forward into the glow (`peek_m`) and watches for 10 s; a skeleton watches for 6 s. Then each gives you up.
+    - Where you're safe: by a fire you're safe. At the dim edge you aren't: it strikes from where it may stand.
+  - **The snake hunts at 4.6 m/s** (Mike; you walk 4.3 and sprint 5.6). Walk away and it catches you (it keeps coming as it rears and lunges, round corners too); sprint and you get away.
+    - Measured: walking, it closed from 4 m to 1.84 m and struck 7.5 s on.
+    - Measured: sprinting, the gap grew from 4 m to 13.4 m in 12 s.
+  - **Its tunnels:** 3–5 dark, round-topped holes a tomb (0.6 × 0.45 m) at the foot of walls.
+    - Where: one in its lair's room, the rest in the side ways; none in the hearth room, on the spine or on the way out. Each is cut into the wall's own stone, with loose stones and scale scratches in front, and you can't fit.
+    - Travel: it goes in head first and travels hidden at its own speed, muffled. It comes out of another hole.
+    - Use: it uses them to get round the light and now and then on its rounds, and turns back if the far end is lit.
+  - **Crossing light**, it takes the dimmest way: along the light's edges and through the dark corners.
+  - **A fire pot stuns the snake for 1.5 s** (`stun_s`).
+    - Then it flees home (`flee_mps` 5) by floor or tunnel and goes down its hole for 30 s.
+    - Then it comes back up onto its rounds. It is never burnt or killed.
+  - **The last light:** the snake flees home with its long cry and goes down its hole for good, breathing.
+  - **Skeletons lunge within 2 m:**
+    - Up and about (`creep.lunge_m` 2.0, in place of the 1.6 m strike reach the Boo rule let off), one lunges in plain view, winding up its strike as it comes.
+    - In a dark pocket, the bite is at 2 m too (`rules.pocket_counterattack_m` 3 to 2: set here at the merge, since his "within 2 meters" answered the open call on the pockets' 3 m).
+    - Cut off, a skeleton walks out through the light, unseen, by the dimmest way. At the last light every skeleton walks home to its niche or grave and settles as bones for good: still drawn, never waking.
+  - **A bug fixed:** at a slow slither the snake's body was drawn as a straight line from its head to an old point on its path, through walls and floors. It now lies along its path. This may be the "sinking" Mike saw.
+- **How:**
+  - `LightField` (new, `light_field.gd`) gives the fire light on each quarter-metre floor square of `TombNav`'s grid: the hearth, relit holders and planted torches (never your own torch), with the renderer's falloff and rays that stop at stone. It's rebuilt when a fire is lit or goes out.
+  - `TombNav` gains the dimmest way (A* weighted by the light, `light_field.dim_weight` 2) and the chase's way, which never steps past the cap.
+  - `BossGround.place_tunnels` and `TombBuild._burrow` lay and cut the holes from the tomb's own dice; the snake's den is a helix under its lair's mouth.
+  - `Boss` and `Resident` move only physically; skeletons gain `BONES`. `Residents.may_strike` lets one strike only from an edge its own way reaches.
+- **Data:**
+  - `bosses.json → desert`: `hunt_mps` 3.6 → 4.6 (Mike); `stun_s` 1.5; `flee_mps` 5; `peek_m` 0.7; the `tunnels` block (holes [3, 5], 0.6 × 0.45 m, muffled −14 dB under 700 Hz).
+  - `residents.json`: `rules.chase_light_cap` 0.12; `creatures.skeleton.creep.lunge_m` 2.0 (Mike); `rules.pocket_counterattack_m` 3 → 2 (Mike).
+  - `crawler.json → light_field`.
+  - No longer read: `below_s`, `withdraw_s`, `retreat_seen_s`.
+  - `fire_pots.json → _help.vs_boss` says what a pot now does to the snake.
+- **Checks** (on ffd5dc2, the merged code with everything since, all 0 fails):
+  - `crawler_check` 265 (seed 7; new: the snake's holes never in your way); `boss_check` 227 (seeds 1, 7, 42); `residents_check` 176; `cleared_check` 90.
+  - `crawler_harm_check` 59 (seed 7); `fire_pot_check` 104; `stagger_check` 65; `hands_check` 61.
+  - The helper's own runs on its branch (`SNAKE_SEEDS=1,7,42`, `WALK_SEEDS=20`) were 0 fails too: crawler_harm_check 87, fire_pot_check and stagger_check on seeds 1, 7 and 42.
+  - `cleared_check` with the pockets at 2 m first failed 3 lines, one a seed: the hit landed 5.4 s on, not at the end of the strike. The walk in stopped at 1.6 m, exactly the strike's reach, and the first strike missed. Walking in to just inside the bite (1.9 m), outside the reach as the old walk was, it lands at 0.85 s on every seed.
+- **Frames** (once, at the end, on ffd5dc2, seed 7, lavapipe):
+  - `boss_frames`: 13 frames, 0 fails, new `15` (the snake's head pushed into the glow at the edge of the hearth's light, its whole 9 m of body behind it in the dark, the light at its feet 0.100 against the cap of 0.12) and `16` (a tunnel's hole: every sight in through its mouth the dark's navy).
+  - `crawler_frames`: 72 frames, 54 lines, 0 fails. The crypt not on pillars reads 0.89 of its old ring, and the crypt on pillars, with its four torches, 0.91 (it was 0.67 with two). The way out at night from the foot of its stairs reads 0.104 against the stone's 0.072. At the last light the skeleton in view walks home to its niche and lies there as bones (`26b`–`26d`).
+  - I looked at `15` and `16` (the snake), and at `09` on pillars and `26d` (the bones, its niche's torch and soot slot above it).
+- **For Mike** (the helper's open calls, all first guesses):
+  - The cap (0.12) sets where the edge falls. Raise it and creatures come closer to fires.
+  - `dim_weight` 2 trades light against distance. On seed 1 the snake, leaving a relit room after giving you up, crossed light up to about 14× the cap instead of the longer dark way it came in by; higher hugs the dark harder.
+  - Cut-off skeletons cross the lit hearth room, unseen, when it is their only way out. A skeleton woken in the light goes to its dark's dimmest corner instead of hunting you.
+  - Bones stay as set dressing and never wake. Your earlier "out windows and running away" became "walk home".
+  - The lair can't be entered yet.
+  - The holes: 3–5 a tomb, 0.6 × 0.45 m. The snake turns back in a tunnel whose far end gets lit.
+  - Fleeing home after a pot can take up to about 15 s.
+- **For chat:** log the note as a lettered section. It amends §FD (a chase follows you into the light → to its edge), §EY (the snake's speed, its tunnels, the pot's stun, no going below), §FE/§FF.2 (no sinking; cut-off skeletons walk out; the last light sends them home as bones) and §FA.4 (a pot stuns and sends the boss home). Mike also said: only ghosts may phase; physical bosses cross lit rooms at the edges of the light; tunnels depend on the boss type; lairs may open later.
+
 ## 2026-10-07 — The hit's X on every hit you start: your tar burning a creature shows it too (81f2ac9)
 Mike, on the X: *"the X crosshair will appear on any successful hit"* and *"X should appear anytime a creature gets hit from something initiated from the player- so if a freature gets butned by tar after the pot ia thrown, it should still show the X reticle"*.
 
