@@ -14,7 +14,7 @@ wind-up staggers it (never wounds), and rare fire pots, lit off your torch, burn
 (Shift), hiding and dousing your own torch stay the default. Each ruin kind has its residents
 (`data/residents.json`) below its boss; a lit floor is cleared; three hits with a red first edge,
 and a chase can follow you into the light. The wheel and Tab-and-wheel replace Q (`data/hands.json`);
-the hearth folk are live 3D, not sprites (§FH). **§FJ (22:52):** torches burn down again (a timer, three at most, from the hearth's bundle; relight from any flame); the first ruin is drawn at random from the roster; the fire pot is clay. **The open world described below (planet, roads, ecology, weather, camp sim) is
+the hearth folk are live 3D, not sprites (§FH). **§FJ (22:52):** torches burn down again (a timer, three at most, from the hearth's bundle; relight from any flame); the first ruin is drawn at random from the roster; the fire pot is clay. **§FK (7 Oct, not built yet):** a new game rolls one seed and every world and dungeon comes from it, unique to that playthrough and then kept for good (a save; relit and restored stay so); one 144-minute clock, the same in every world (no latitude). **The open world described below (planet, roads, ecology, weather, camp sim) is
 Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
 and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.
@@ -27,6 +27,8 @@ plain English: what it reads, what it writes, what changes on screen.
   Godot lives are all in `docs/HOW_TO_RUN.md`.
 
 ## Scale
+**Torchfire 2's planet (the open world, shelved; §ET.2, §FK.1).** Torchfire 1 has no planet: bounded
+pocket worlds (§EW) and one clock (§FK.3). What follows is the open world's, as built.
 **1/100 Earth in distance, 1/10 in height and time** (design §CR, built 3 Oct): **400 km around**
 (radius ~63.7 km, `data/world_scale.json` → `planet.circumference_m`), **heights 1/10** (an
 Everest-class summit is ~885 m; `HEIGHT_SCALE` 0.1), and a **144-minute day** (1/10 of a real day).

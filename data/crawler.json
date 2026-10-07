@@ -2,7 +2,7 @@
  "_help": {
   "about": "Torchfire 1, the ambient first-person dungeon crawler. The open world is Torchfire 2 and stays in the code, switched off (§ET.2). First guesses by Claude (chat), 6 Oct; the designer owns them. Wired 6 Oct (Claude Code, the first slice, §ET.11): data/game.json picks the game; scenes/crawler.tscn builds the hearth room and the tomb (scripts/crawler/).",
   "opening": "§ET.3. You wake underground in a ruin's central room by a lit hearth. exits_min / exits_max: corridors leaving it, each generated from the seed. bundle: unlit torches by the hearth (torch.json bundle, §AW). rescuer: the figure who found you and brought you here (§DE), at the hearth. teach: wordless, no tooltips. first_theme: the theme of the first ruin (a key of themes). Built: exits_min..exits_max corridors from the seed; the bundle by the hearth (torch.json bundle.count_at_camp torches), taken one at a time with the interact button; the rescuer standing at the hearth as a baked sprite (sprites, rescuer); since §FH (7 Oct) sitting at the hearth on a low stone, live in 3D (folk_3d, rescuer).",
-  "persistence": "[NOT WIRED YET — design §ET] §ET.10 call 3, Claude's reading, NOT confirmed by Mike: the layout is new each new game (from the seed) and the same within a game; relit lights stay lit; gates keep their state, so a code found later opens a gate passed earlier. (First slice: each start of the game is a new tomb from a new seed, SEED= in the environment pins one; relit holders stay lit for the session. No save yet.)",
+  "persistence": "[NOT WIRED YET — design §FK.2] Confirmed by Mike 7 Oct (§FK.2; was §ET.10 call 3, Claude's reading): a new game rolls one seed (seed: one_per_new_game) and every world and dungeon comes from it; the layout is new each new game and the same within a game, kept for good. relit_stays_lit, gates_keep_state: restored stays restored. dungeon_seeds: from_game_seed, each dungeon's seed drawn from the game's, so the same game always makes the same next dungeon (replaces exit.stand_in's new seed). save: world_save, the seed and what changed (lights relit, gates, ruins restored, worlds found) in a save (scripts/core/world_save.gd is the open world's, reuse it if it fits). continue: last_world, Continue opens your world where you left it, New game rolls a new seed (Claude's first guess; one world or slots open, §FK.5 call 3). (Built today: each start of the game is a new tomb from a new seed, SEED= in the environment pins one; relit holders stay lit for the session. No save yet.)",
   "themes": "§ET.5. Stage themes, each a ruin of its biome. ruin_kind: the ruins.json / delves.json kind its rooms come from (open where no kind fits yet). air: still or drafty (torch.json snuff.draft). dark: how dark before you relight it. space: tight or exposed. frames: Project-sheet reference frames. Only the two Mike named are listed; §CJ's delve types and the monuments (§DN–§DZ) are the pool for more. Built: tomb only (the first slice). air still: only ordinary drafts plus airways.still strong mouths; dark pitch: crawler.json look.",
   "progress": "§ET.4. Relit fire-holders (delves.json fire_holders) stay lit for the game and are places to relight a torch. Items are keys, tools and knowledge only (item_kinds): no damage numbers, no rarity, no chests (§CJ.3). Built: relit_is_progress (the log counts the holders relit). item_kinds and gates are not built yet.",
   "gates": "§ET.4. Puzzle gates to rediscover, never traps to punish. kinds: the ones talked through (PSO's obelisk set; a code from a found scroll; a passage that opens once relit). How each works is Claude Code's call within §ET.",
@@ -38,7 +38,11 @@
  "persistence": {
   "layout": "per_new_game",
   "relit_stays_lit": true,
-  "gates_keep_state": true
+  "gates_keep_state": true,
+  "seed": "one_per_new_game",
+  "dungeon_seeds": "from_game_seed",
+  "save": "world_save",
+  "continue": "last_world"
  },
  "themes": {
   "tomb": {

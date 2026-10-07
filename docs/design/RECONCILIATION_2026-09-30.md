@@ -5000,3 +5000,88 @@ pitch look).
 builds FJ.3's ring and heartbeat; **62** (new) is the torch's timer, the hearth bundle and the
 three-torch limit, after 50. The random first ruin and the mummy come with the second ruin kind
 (§EW.7).
+
+## FK. One world per new game: rolled from a seed, kept for good; one clock everywhere; the planet stays out — LOCKED (7 Oct, 00:39, by voice, Mike)
+
+Talked through by voice, late 6 Oct. Mike: *"since it's not open world, we're not going to worry
+about global wind cycle, global water cycle, or any of that. Or the … tectonics, or having a
+walkable sphere"*; *"a bounded, handcrafted region … but it'll still have some procedurally
+generated aspects … once you discover different dungeons you'll be able to access them through the
+map so you don't have to … walk back all the way"*; *"the dungeons and the world … procedurally
+generated so each dungeon and ruins and area will basically have certain rules and certain things to
+consider during the generation"*; *"in your world, it'll stay restored, but … the initial generation
+will be unique … each one that's already been unique in your specific world or playthrough will stay
+that"*; *"lock it in"*.
+
+**Mostly confirms §ET and §EW (6 Oct). New:** FK.2's save (generated once, kept for good) and FK.3's
+one clock. **Answers** §ET.10 call 3, §EW.8 call 2 and §EW.8 call 7. Claude, in chat, first spoke of
+the cut as a fresh reversal of the 27 Sept "keep" calls; §ET.2 had already made it. Data:
+`worlds.json → generation` (new), `worlds.json → clock`, `crawler.json → persistence`. Not built.
+
+### FK.1 Not in Torchfire 1: the sphere and the world machines (Mike)
+- No walkable sphere, no global wind or jetstream, no global water cycle, no plate tectonics.
+  **Confirms §ET.2 and §EW.6**, and names the 27 Sept "keep" calls (the wind field, the water cycle,
+  the baked tectonics) outright so nobody reads them as still in.
+- §AT's rule stands (§ET.2): their code stays switched off behind `data/game.json`, compiling, not
+  deleted. Mike said not to worry about them, not to delete them.
+- **Nothing is computed from a place on a planet any more.** §EG's "everything comes from the
+  specific site the planet computed" now reads: from the site the world's generator laid out
+  (FK.2).
+
+### FK.2 Every world rolled from a seed, then kept (Mike)
+- A new game rolls **one seed**, and every pocket world (§EW) comes from it: its surface, its
+  ruins, its village and its dungeon. Every playthrough's worlds are its own.
+- **Then they are yours for good.** One seed and the same places for the whole playthrough: relit
+  stays relit, a restored ruin stays restored, gates keep their state, and a world you come back to
+  is the one you left. **Confirms Claude's reading of §ET.10 call 3** (`crawler.json → persistence`)
+  **and answers §EW.8 call 7: generated from the seed, not composed once by hand.** Mike's
+  "handcrafted" is read as *composed*: made by rules so it looks made on purpose, not placed by hand.
+- **Rules per kind (Mike):** each kind of dungeon, ruin and area has its own rules and things the
+  generator weighs. The kits (§CJ.8's tomb kit), the plan (§EX.2), one stone per ruin (§EX.1) and the
+  composition rules (§EF, §EG) are those rules; each new world kind brings its own.
+- **Bounded:** each world is a bounded slice (§EW.1; its size is still §EW.8 call 1). Claude reads
+  "a bounded region" as each pocket world, with §EW's set of worlds joined underground standing
+  (FK.5 call 2).
+- **That needs a save.** Today each start is a fresh tomb from a new seed and nothing is kept
+  (`crawler.json → _help.persistence`, the first slice). The save holds the seed and what you have
+  changed: lights relit, gates opened, ruins restored, worlds found. Every dungeon's own seed is drawn
+  from the game's seed, so the same game always makes the same next dungeon (it replaces §EX.5's
+  stand-in, "the next dungeon from a new seed"). `SEED=` keeps pinning one for the checks.
+- **Continue and New game** (Claude's first guess): Continue opens your world where you left it; New
+  game rolls a new seed and a new world. One world or several save slots: open (FK.5 call 3).
+
+### FK.3 One clock, the same in every world (Claude's proposal, in the summary Mike locked)
+- The 144-minute day (`sky/day_cycle.json`: day 60, dusk 18, night 48, dawn 18) runs the same in
+  every world and at every spot. No latitude, no axial tilt, no year: the tundra and the desert share
+  one sunset.
+- **Answers §EW.8 call 2**, against Claude's earlier guess that each world's latitude set its day
+  (`worlds.json → clock.day_length_from_latitude`, now false). **Supersedes, for Torchfire 1,** the
+  27 Sept latitude rule (day length from latitude and day of year, polar night, midnight sun); that
+  waits with the planet for Torchfire 2. Seasons were already shelved (§ET.2).
+- The moon (§DD, §EW.1) is untouched: its phases count days, not latitude.
+
+### FK.4 Found on foot, then on the map (Mike)
+- Once you have discovered a dungeon, the map takes you back to it, so you never walk the long way
+  twice. **Confirms §EW.4.** Claude's reading: discovering means reaching it on foot the first time,
+  through the underground seams (§EW.3); the map holds only what you have found, and the first walk
+  stays sacred.
+- Still open: how the flame travels with you (§EW.4's hearth-to-hearth guess, §EW.8 call 3).
+
+### FK.5 Claude's flags, open for Mike
+1. **The shot is the generator's bar.** The look rests on a path or river running straight to a
+   landmark against the sky, walls on both sides (the brief, R10). A generator that only scatters
+   gives texture, not intent. §EF.2 (terminate every vista) and §EG are the start; Claude suggests
+   each world kind's check fails any seed whose first view on arrival ends on nothing. Not locked.
+2. **Region or regions:** if Mike meant one single region in place of §EW's per-biome worlds, that
+   reverses §EW and he should say so.
+3. **One world at a time, or save slots** (FK.2)?
+4. **The Project brief** still says "A walkable sphere at 1/100 Earth (400 km around, heights 1/10, a
+   144-minute day)". Mike's line to edit. A suggestion: "Pocket worlds: bounded slices, one per
+   biome, joined underground, rolled from a seed each new game and kept for good. A 144-minute day,
+   the same everywhere. Real biomes; each world's plants read as their real species."
+5. `CLAUDE.md`'s Scale section described the planet as this game's; marked Torchfire 2 in this
+   commit.
+
+### FK.6 Order of work
+`docs/PROMPT_QUEUE.md` **63** (new): one seed per new game, a save, Continue and New game, and the
+fixed clock in the crawler. After 46 (the exit and its stand-in).
