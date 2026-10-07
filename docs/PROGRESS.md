@@ -4,6 +4,45 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 60 follow-up, §FA.3 with §FI.2 call 4 answered: a pot's fire relights a cold sconce, and a burning patch relights your torch (0af1b69)
+- **Mike, 7 Oct:** "a pot should relight an old sconce and a burning patch can relight torch."
+  - `fire_pots.json → relights_holders` goes from null to true, and a new `relights_torch` is true. `_help.light` quotes him.
+  - **For Claude (chat):** this answers §FI.2 call 4, for the design doc. (Mike's second note's answers, `hurts_you` and the cook-off among them, are fc4a333's, below.)
+- **What changes on screen:**
+  - **A pot lights a dark sconce.** Throw one at the wall by a sconce: it bursts on the stone, and the sconce catches a moment later, as when you swing a lit torch through it. It then burns for good and counts toward the lights relit. The log gets a new line, "The pot's fire caught a cold light.", then the usual "N of M lights burn again." A light lit this way counts like any other, so the skeletons' clearing (§FF.2) and the snake's release (§EY.2) still follow the last light, whatever lit it.
+  - **How far it reaches:** as far as it burns (`splash_m`: tar 1.5 m, light oil 3 m), measured to the sconce's flame in its niche.
+  - **Never through stone:** it needs a clear line from the burst to the niche's mouth. A burst behind the sconce's wall leaves it cold.
+  - **Tar on the floor:** a tar pot that lands on the floor under a sconce, 1.7 m below it, doesn't reach it. Its fireball stops about 0.9 m up. Light oil's reaches about 2.3 m and does.
+  - **A tar patch** lights a holder on the floor within its reach. The tomb has none now: every holder is a wall sconce (§EX.4). The patch doesn't reach a sconce on the wall above it.
+  - **Your torch relights from the pot's fire.** With your torch out, swing it by a burning tar patch and it catches, as at the hearth: within the swing's reach (2.2 m) of the patch's edge. The same goes for anything the pot set alight (the reed mat, the bedroll) and tar burning on a creature. The burst's flash is over too fast to count.
+- **How:**
+  - **`FirePots.relight_near(at, reach, max_dy)`** goes through the tomb's fire-holders. It lights each cold one in reach through `FireStore.swing_light`, the torch's own path.
+    - **Who calls it:** the burst, from 4 cm off the face it burst on; and every patch and thing alight (`PotFire`), four times a second, within its radius plus 0.3 m and no more than 1 m above or below its flames.
+    - **Line of sight:** it skips a holder unless a ray from the fire to the holder's mouth (`mouth_of`) is clear of the tomb's stone. For a sconce the mouth is 8 cm out from the wall: the niche is cut in the stone you see, not in the wall's collision. For a holder on the floor it is 0.6 m above it. The holder's own stones are left out of the ray.
+  - **`FirePots.flame_near(pos, radius)`** is true for any burning pot fire except a flash, within `radius` plus the fire's own reach (`PotFire.flame_point`).
+    - `Torch.flame_near` asks it alongside the fires, planted torches and sconces, so the swing catches from it.
+    - It returns false where there are no fire pots: in the open world, which shares `torch.gd`.
+  - **`Resident.burn_out`** frees a burnt skeleton through `NodeRelease`, as the tomb's are. It no longer prints the headless renderer's "m is null" (queue 59's note below).
+- **Checks:**
+  - **`fire_pot_check`:** the test that said a pot never lights a holder is replaced by a fire-to-fire test. It runs last, so the lights it relights change nothing before it. It checks:
+    - A tar pot thrown at the wall by a cold sconce (a real throw, the pot's own flight) bursts on the stone 0.47 m from the flame; the sconce catches and burns for good, with the lights relit one more.
+    - A light-oil burst behind a cold sconce's wall, 0.9–1.0 m from its flame, leaves it cold, and the same burst 1.1 m in front of it lights it.
+    - An unlit torch swung 2 m from a burning tar patch catches; with no patch, or after the patch burnt out, nothing happens.
+    - The patch under a cold sconce doesn't light it.
+    - A patch 1 m from a holder on a corridor's floor lights it.
+    - The pot's fire is the hearth's amber.
+
+    On the code as pushed, with fc4a333's cook-off and self-harm tests in: 99 lines, 0 fails, seeds 7, 1 and 42, with no engine errors in the logs. The skeleton test no longer asks a freed skeleton's list about itself.
+  - **On the first seed 42 run** the floor holder sat on a coffin 0.9 m up, and the ray hit its own ring stones. The check now uses corridor sconces and checks the floor's height, and the game leaves a holder's own stones out of the ray.
+  - **Seed 42's lights relit went from 0 to 2** after one throw. The second sconce had been catching since the snake's tests, 15 m away (a pot thrown at the snake lit it). Each pot lit only what was in its reach.
+  - **Other checks** (seed 7):
+    - Before the merge with fc4a333, all 0 fails: `residents_check`, `boss_check`, `crawler_harm_check`, `stagger_check`, `hands_check`, `crawler_check` (240 lines) and `cleared_check` (84 lines). In the open world, `swing_check` (its own seed, 7731: 18 lines) and `scene_load_check` have 0 fails. Both still crash at shutdown after their results, as before.
+    - On the code as pushed: `stagger_check`, `hands_check` and `crawler_harm_check` have 0 fails. `crawler_check`, `boss_check`, `residents_check` and `cleared_check` were still running at the push, with 0 fails so far; their result follows here.
+  - **Found on the way:** `swing_check` with `SEED=7` fails 3 lines (a swing at the ground lights a fire, no wildfire, a swing at a creature). The code from before this change fails the same way. Its own seed passes. Not looked into: the open world is shelved.
+  - **The frames:** not rendered yet for this change. `crawler_frames` runs next, on the code as pushed, and its result follows here.
+- **Merged with fc4a333** (Mike's second note, part 1, pushed while this ran): `burst` takes their `in_hand` and keeps the face it burst on (`normal`) for the relight. A pot that cooks off in your hand by a cold sconce lights it too. The fire-to-fire check's thrown pot now flies with you on the far floor, out of your own burst's reach (`hurts_you`).
+- **Left open, a call for Mike if he wants it:** a tar patch burning on the floor under a sconce doesn't light it; only a burst that reaches it does.
+
 ## 2026-10-07 — Mike's second note of 7 Oct, part 1: the sneak's dashes, the hit's X, your own pot can hurt you, the fuse goes off in your hand, the way out faint from far off, the torch's 15 minutes (fc4a333)
 Mike, answering the open calls (the parts built here; the creatures' movement is part 2, below it when it lands): *"your own fire pot should be able to hurt you if you throw it way to close to yourself like a wall or floor youre right next to. when sneaking, the reticle should take away the verticle dashes and jist leave horizontal dashes to signify sneak state. the way out might not always be night- it should be relatively faint from far away but depends on time of day."* … *"a fuse held too long after lighting will explode in hand and cause 1 point of damage."* … *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes."* … *"no the crosshair shouldnt warm- that will be for the player to figure out. if you get a hit on a creature tho, there will be an X shape in the diagonal spaces between the regular crosshair to aignify a successful hit."* Numbers he didn't give are Claude Code's first guesses.
 
