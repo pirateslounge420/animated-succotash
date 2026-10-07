@@ -48,7 +48,8 @@ extends SceneTree
 ##     in a lit room or stretch but on its way out of one (climbing out of
 ##     a relit place, leaving) and for no longer than rise_s +
 ##     back_to_dark_s of the time it could move (not held still in your
-##     view, nor stopped short of it), save one cut off walking out through
+##     view, nor stopped short of it; each way out afresh, when the dark it
+##     made for is lit as it goes), save one cut off walking out through
 ##     the hearth room; skeletons resting in relit rooms fall back into the
 ##     dark pockets; none beyond its lunge_m, outside its strike and the
 ##     last light's going, moves, turns or changes its pose on a frame you
@@ -692,6 +693,7 @@ var _cut_worst := 0.0
 var _steps := {}
 var _longest := 0.0
 var _jumps := 0
+var _leave_to := {}
 ## The rule (Mike's 7 Oct note): each one as the last frame ended (by
 ## instance id: place, turn, pose, view points, state, going at the last
 ## light), and the tally.
@@ -703,7 +705,8 @@ var _boo := {}
 ## the chase's cap; outside a chase none in a lit room or stretch but on
 ## its way out (climbing out of a relit place, leaving, going home at the
 ## last light) and not for long (counting only the frames it could move:
-## not held still in your view, nor stopped short of it), save one cut off
+## not held still in your view, nor stopped short of it; a new way out,
+## the dark it made for lit as it went, counting afresh), save one cut off
 ## walking out through the hearth room; every step a walk; and none seen
 ## moving (_boo_track).
 func _track() -> void:
@@ -712,6 +715,12 @@ func _track() -> void:
 		if not is_instance_valid(r):
 			continue
 		var nm := str(r.name)
+		# A new way out of the light (the dark it was making for lit as it
+		# went: the run lights them one after another) starts the clock
+		# again.
+		if r.state == Resident.LEAVE and int(_leave_to.get(nm, -2)) != r.pocket_node:
+			_t_light[nm] = 0.0
+		_leave_to[nm] = r.pocket_node if r.state == Resident.LEAVE else -2
 		var step := _flat(r.global_position, _steps.get(nm, r.global_position))
 		_steps[nm] = r.global_position
 		_longest = maxf(_longest, step)
@@ -817,6 +826,7 @@ func _relight_run() -> void:
 	_steps = {}
 	_longest = 0.0
 	_jumps = 0
+	_leave_to = {}
 	_was = {}
 	_boo = {"logged": 0, "moved": 0, "held": 0, "let_off": 0, "bad": 0}
 	var fires := main.fires

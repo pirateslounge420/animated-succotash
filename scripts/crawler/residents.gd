@@ -469,14 +469,23 @@ func light_ok(r: Resident, pos: Vector3) -> bool:
 
 
 ## May `r` come for you where you stand: is there floor no brighter than
-## the chase's cap within its reach of you (Mike's note of 7 Oct: it
+## the chase's cap within its reach of you, joined to you by open floor,
+## that its own way under the cap gets it to (Mike's note of 7 Oct: it
 ## strikes only within its reach of where it may stand, so by a fire you
-## are safe)? Without the light on the floor, queue 59's rule: in the dark,
-## or once it has hit you.
+## are safe, a shadow beside you that the light cuts off from it too)?
+## Without the light on the floor, queue 59's rule: in the dark, or once it
+## has hit you.
 func may_strike(r: Resident) -> bool:
 	if light != null:
 		var reach := r.strike.reach_m if r.strike != null else float(r.strike_def().get("reach_m", 1.6))
-		return light.edge_within(player.global_position, reach)
+		var you := player.global_position
+		if not light.edge_within(you, reach):
+			return false
+		var pts := nav.path(r.global_position, you, true, TombNav.CAP)
+		if pts.is_empty():
+			return false
+		var e := pts[pts.size() - 1]
+		return Vector2(e.x - you.x, e.z - you.z).length() <= reach
 	return r.chasing() or dark_at(player.global_position)
 
 

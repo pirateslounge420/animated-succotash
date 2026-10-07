@@ -574,15 +574,21 @@ func _snake_follows(sv: int) -> void:
 		return
 	_torch(pl, true)
 	_place(pl, deep, b.head)
+	# As near as the light lets it come: the end of its own way to you on
+	# the chase's grid (TombNav, CAP).
+	var way := m.residents.nav.path(b.base, deep, true, TombNav.CAP)
+	var edge_m := Vector2(way[way.size() - 1].x - deep.x, way[way.size() - 1].z - deep.z).length() if not way.is_empty() else INF
 	var landed1 := h.landed
 	var back_s := float(Pursuit.RULES.get("back_to_dark_s", 4.0))
 	var watch_s := b.num("watch_s", 10.0)
 	var w := {"t": 0.0, "peak": 0.0, "near": INF, "watch": 0.0, "gave": -1.0, "why": "", "dark": -1.0, "healed": false, "under": false, "at": Vector3.INF}
 	_sim(m, watch_s + back_s + 12.0, func():
 		w.t += DT
-		if b.noticed or b.state == "watch":
+		if b.chasing():
 			# Once under the cap, never past it again (it may have been laid,
-			# or have found you, in a fire's spill, and go out of it first).
+			# or have found you, in a fire's spill, and go out of it first;
+			# given you up, it leaves the light by the dimmest way, however
+			# bright, and is no longer chasing even if it sees you again).
 			if lf.at(b.base) <= lf.cap:
 				w.under = true
 			if bool(w.under):
@@ -603,7 +609,7 @@ func _snake_follows(sv: int) -> void:
 		return float(w.dark) >= 0.0)
 	var cap := lf.cap
 	var glow := _glow_near(lf, w.at, 0.75) if w.at != Vector3.INF else 0.0
-	ok(bool(w.under) and float(w.peak) <= cap + 1e-4 and glow > cap and float(w.near) > b.strike.reach_m, "you step deep into the lit room (the light %.2f where you stand): it follows you to the light's edge and no further (the light at its feet %.3f at most, the cap %.3f; %.1f m from you at the nearest, the light past the cap within 0.75 m of it there, %.2f), Mike's note of 7 Oct" % [lf.at(deep), float(w.peak), cap, float(w.near), glow])
+	ok(bool(w.under) and float(w.peak) <= cap + 1e-4 and float(w.near) <= edge_m + 0.6 and float(w.near) > b.strike.reach_m, "you step deep into the lit room (the light %.2f where you stand): it follows you to the light's edge and no further (the light at its feet %.3f at most, the cap %.3f; %.1f m from you at the nearest, its way on the chase's grid ending %.1f m from you; the most light within 0.75 m of it there %.2f), Mike's note of 7 Oct" % [lf.at(deep), float(w.peak), cap, float(w.near), edge_m, glow])
 	ok(h.landed == landed1 and not bool(w.healed) and float(w.watch) > 0.5, "it watches you from there (%.1f s): no strike reaches you in the light, and nothing heals while it does" % float(w.watch))
 	ok(float(w.gave) > 0.0 and float(w.dark) >= 0.0 and float(w.dark) <= back_s, "it gives you up (%s, %.1f s on) and is back in the dark %.1f s later (back_to_dark_s %.1f)" % [str(w.why), float(w.gave), float(w.dark), back_s])
 	await _done(m)
