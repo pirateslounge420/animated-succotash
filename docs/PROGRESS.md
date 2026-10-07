@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 62, §FJ.4: torches burn down — 15 minutes each, three at most, the bundle by the hearth (56dc352)
+Built in order after Mike's notes, with his number from today: *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes"* (the lamp comes later).
+
+- **What changes on screen:**
+  - A lit torch lasts 15 minutes of lit time. Over its last 12% (about the last 1 min 50 s) it gutters, dimmer and redder, still lit. Then it's burnt out: the charred stick drops to the floor at your feet and lies there, and your next torch is in your hand, unlit, ready to relight at any flame. With none left your hand is empty.
+  - You carry three torches at most, the one in your hand counted. With three, right click by the bundle takes nothing and says nothing: only a soft rustle of the sticks.
+  - Once you've emptied the bundle by the hearth, it lies bound again a game day later (144 minutes), with a line in the log.
+  - Put away or smothered, a torch keeps what it has; running costs it nothing.
+- **The burn** (`torch.json → crawler_burn.burn_min` 15; `Torch.full_burn_min`): the crawler's torches (Torchfire 1, `GameMode.crawler_running`) burn this, the open world keeps the top-level `burn_min` (50). The burn step, the gutter's start (`gutter_share` of it) and a fresh torch's, a planted torch's and a relit one's full burn all read it.
+- **Burnt out in your hand** (`Torch._drop_burnt`, the `burnt_out` signal; `CrawlerFires.lay_stick`): the item leaves your pack (so burnt sticks never fill it), a charred stick (the bundle's stick in the hearth's charred logs' colour, its head gone) is laid by your feet in this tomb, on the floor you stand on (a first try laid it 0.45 m ahead, and by the hearth that was over the pit, on its guard), and `Torch.item()` finds your next torch. `light()` no longer lights a burnt one (the swing never did). The swing, smothering and the water are as built.
+- **Three at most** (`crawler_burn.carry_max` 3, `carry_counts_hand` true; `Torch.carried_count`, `at_carry_max`): torches with burn left in your pack, the one in hand among them. `CrawlerMain.take_torch` refuses at the limit with `CrawlerFires.refuse_torch` (the synth's rustle at the bundle, pitched down, no log line).
+- **The bundle laid again** (`torch.json → bundle.remake_h_game` 24; `CrawlerFires._remake_bundle`): emptied, it is laid again with its three torches 24 game hours later on the crawler's clock (`world.days`, the 144-minute day). Of `later_sources`, this is the one wired; relit ruins' gifts wait for §FF.3. `pitch_scale` is carried, unused, until the pitch technique exists.
+- **The frame tools** (`crawler_frames`, `boss_frames`) turn the burn off (`Torch.burn_down` false, as `Residents.stay_asleep` keeps the skeletons asleep): their pictures aren't a burn test, and a long render would burn the torch out mid-run.
+- **Data:** `[NOT WIRED YET]` off `torch.json → _help.crawler_burn`, its wiring added; `_help.snuff` notes the crawler's burn moved.
+- **Checks** (on 56dc352), all 0 fails:
+  - `crawler_check` (seed 7): 259 lines. New: crawler_burn wired and 15 minutes; stepped a second at a time a lit torch starts to gutter 13.2 min in and is out at 15.0; lit at the hearth a fresh torch has 15.00 min; in its last 12% it gutters, still lit; burnt out, its charred stick lies 0.20 m from your feet at their height, out of your pack, and your next torch is in hand unlit; a burnt stick never catches by hand or swing; smothered at 7.49 min it keeps it 10 s out and relights at a sconce with it; three held, the bundle gives nothing and says nothing (a rustle), two held it gives the third; emptied, the bundle is laid again 24 game hours on, not at 12; and the 120 s sprint cost its torch exactly 2.000 min.
+  - A first run had two fails, both mine: the stick was laid 0.45 m ahead of you, which by the hearth is over the pit, on its guard; and its colour was a new literal the one-stone grep caught (it is the hearth's charred logs' now).
+  - `boss_check` 115, `cleared_check` 84, `residents_check` 161, `stagger_check` 63, `fire_pot_check` 92, `crawler_harm_check` 59, `hands_check` 61: none of their runs burns a torch out at 15 minutes.
+- **For Mike:**
+  - When a torch burns out, the charred stick drops and your next torch comes to hand by itself, unlit. Would you rather keep holding the dead stick until you swap?
+  - The bundle comes back a game day (144 minutes) after you empty it (`bundle.remake_h_game`, Claude's first guess).
+  - Burnt sticks stay on the floor where they fell, a trail of where you've been. Fine, or should they crumble away?
+
 ## 2026-10-07 — Queue 60 follow-up, §FA.3 with §FI.2 call 4 answered: a pot's fire relights a cold sconce, and a burning patch relights your torch (0af1b69)
 - **Mike, 7 Oct:** "a pot should relight an old sconce and a burning patch can relight torch."
   - `fire_pots.json → relights_holders` goes from null to true, and a new `relights_torch` is true. `_help.light` quotes him.
