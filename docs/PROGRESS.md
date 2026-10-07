@@ -4,6 +4,28 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 57, §FA.1–§FA.2, part 1: the torch staggers a strike's wind-up (the general strike; the snake waits for 49)
+- **A strike in two parts** (`CreatureStrike`, `scripts/crawler/creature_strike.gd`), for any creature with a `strike` block (`bosses.json`, `residents.json`; the skeletons of queue 58 use the same piece):
+  - first the **wind-up** (`wind_up_s`), with the creature's own tell (§FA.2): a pose for its sprite, and its own sound, played from a 3D player at its head from the wind-up's first frame;
+  - then the **committed strike** (`strike_s`). At its end the hit lands through the player's `take_hit` (Harm counts it), if you are still in reach with nothing solid between;
+  - then `recover_s` before the next strike.
+- **The stagger** (`torch.json → stagger`; `[NOT WIRED YET]` is off its help): a lit torch's swing that reaches the creature during the wind-up breaks the strike. The creature reels back `reel_m` over `reel_s` (0.8 s) and can't be staggered again for `cooldown_s` (3 s). It takes no damage, ever.
+  - A swing during the committed strike does nothing to it, and the hit lands. An unlit torch staggers nothing.
+  - The swing meets a creature at the top of its arc (`Torch.swing_top`, 0.125 s after the click), within the swing's reach, in front of you, with nothing solid between. The flame still passes at the arc's end, as built (§CN).
+- **Loud:** a swing that lands on a creature is as loud as a sprint (noise level 1). The crawler player now holds a loud moment for 0.5 s (`CrawlerPlayer.make_noise`); until now its steps reset its noise every frame.
+- **The snake's data and voice:** a strike block in `bosses.json → bosses.desert` (reach 2.5 m, wind-up 0.7 s, lunge 0.15 s, recover 1 s, reels back 1.5 m; tell "a hiss and the head drawing back", with a `_help.strike` line), and its hiss in the synth (`snake_hiss`). New `audio.json → kinds.strike_tell` row.
+- **Nothing in the tomb strikes yet.** Queue 49's snake is being built in parallel. Wiring it to this (its wind-up pose and hiss, a loud swing it can hear) is part 2, so row 57 stays `todo`.
+- **Checks:**
+  - `tools/stagger_check.gd` (new): 41 lines, 0 fails, seed 7. It uses a stand-in with the snake's numbers in a real tomb, a real torch, and Harm counting the hits.
+    - Measured: the swing lands at 48% of the wind-up and staggers; it reels 0.78 s and 1.50 m; no hit counts.
+    - Inside the cooldown a second stagger fails and the hit counts. In the lunge the hit counts. Unlit, the hit counts.
+    - A landed swing holds noise 1.0 for 0.42 s and more.
+  - `crawler_check`: 77 lines, 0 fails. `swing_check` (the open world): 18 lines, 0 fails; there a swing still does nothing to animals.
+  - That check segfaults as Godot quits, after its result, and so does the code before this pass.
+- **My slip, put right:** I first wrote my check over `tools/strike_check.gd`, the ninja game's momentum-combat check. I restored it from git, unchanged, before this commit.
+
+---
+
 ## 2026-10-07 — Queue 45, §EX.7: a reticle in the crawler (475c143)
 - **The crosshair is on in the crawler.** It is the open world's (`hud.json → reticle`), now drawn by one piece of code, `Reticle` (`scripts/ui/reticle.gd`). The crawler and the open world's `StatusHud` both draw it with that code, so the two can't drift apart.
   - It is the only thing in the crawler's HUD: no words, meter, names or prompts (§ET.3). `crawler.json → hud.reticle` puts it there. `[NOT WIRED YET]` is off `_help.hud`; `warms_near_flame` stays false and is not built.
