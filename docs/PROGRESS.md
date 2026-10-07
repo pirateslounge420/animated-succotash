@@ -4,7 +4,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
-## 2026-10-07 — Queue 49, §EY.1, §EY.2, §EY.8 step 1: a boss in the dungeon, the snake (827805b, 35538ea)
+## 2026-10-07 — Queue 49, §EY.1, §EY.2, §EY.8 step 1: a boss in the dungeon, the snake (827805b, 4a963ed)
 - **Built in parallel with its prerequisites.** The prompt says "after 44–48", and Mike started 45–53 at the same time. So I built against the branch as each pass landed (45, 50, 52–57 and 60's part 1) and rebased onto them.
   - 46, 47 and 48 haven't landed yet, so three things wait for them. Until 46's spine is in, the lair's "main way" is the doors from the hearth room to the tomb's heart; `BossGround.main_path` reads the spine as soon as the layout has one.
   - 46's walk-to-the-exit check with the snake loose runs once that check exists.
@@ -68,7 +68,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - At the torch's edge, 3.5 m down a corridor, reared and hissing: 1003 pixels of the 854×480 frame, 81 of them warm from your torch. Mid-strike its jaws are open.
     - The hole's mouth is the dark's navy (#080c4a) against its firelit edge (#b8521d).
   - On the branch with queue 61 and 60 part 2 in: `crawler_check` (152 lines), `crawler_harm_check` (45), `stagger_check` (41), `fire_pot_check` (73) and `hands_check` (61), 0 fails each, and `boss_check` as above. `crawler_check` prints four "Parameter "m" is null" errors from the headless renderer during the half-dark checks; the branch prints the same four without this pass.
-  - **Found by the stagger check and fixed (35538ea):** struck at from its coil, "back along its own body" first wound its head round the coil, 0.4 m closer to you. On seed 1 the check's swing also relit a sconce beside you with its passing flame (§CN), and the snake rightly left the room. So the check now swings out of reach of any unlit holder.
+  - **Found by the stagger check and fixed (4a963ed):** struck at from its coil, "back along its own body" first wound its head round the coil, 0.4 m closer to you. On seed 1 the check's swing also relit a sconce beside you with its passing flame (§CN), and the snake rightly left the room. So the check now swings out of reach of any unlit holder.
 
 ---
 
