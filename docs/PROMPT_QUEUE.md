@@ -75,7 +75,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | built c6a2bd8 |
 | 44 | §EX.6 | One firelight: the torch takes the hearth's amber | built cb946c1 |
 | 45 | §EX.7 | A reticle in the crawler | built 475c143 |
-| 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | todo |
+| 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | built 28dafd4 |
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | built 6578210 |
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | built 827805b |
@@ -896,7 +896,7 @@ CHECK (headless): the crawler's frame at seed 7 has the reticle's pixels at the 
 
 ## 46 — The plan and the way out: a spine, the module, an exit every time — §EX.2, §EX.5
 
-**Status:** todo. Found while building 58 (7 Oct): seed 126's crypt (piece 16) can't be walked through by your body, with or without the skeletons. Its coffins and hearth ring close off the aisle, so this pass's walk check should catch it. `tools/residents_check.gd` walks your body from the wake spot into the heart as a stand-in, and `TombNav` (a floor grid at your body's size) may help here.
+**Status:** built 28dafd4 (follow-up b7956e0). Found while building 58 (7 Oct): seed 126's crypt (piece 16) can't be walked through by your body, with or without the skeletons. Its coffins and hearth ring close off the aisle, so this pass's walk check should catch it. `tools/residents_check.gd` walks your body from the wake spot into the heart as a stand-in, and `TombNav` (a floor grid at your body's size) may help here. (46: on the new layouts seed 126 walks out and all three of its crypts can be crossed; see its PROGRESS entry.)
 **Mike sees:** Every tomb now has a way on: one main passage (the spine) runs from the hearth room through the heart to a long stair climbing out, with faint daylight at its top you can see from below. Walking up it fades to a fresh tomb. Side passages are shorter and end in a room. Rooms line up and doors face each other, so you often look straight down a passage to the next light.
 
 ```text

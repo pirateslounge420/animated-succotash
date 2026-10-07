@@ -4,6 +4,84 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 46, §EX.2 and §EX.5: the plan and the way out (a spine, the module, an exit every time) (28dafd4; follow-up b7956e0)
+- **The module (§EX.2).** Every size in the tomb is now a whole number of its style's unit (`masonry.json → styles → andean_tomb → module_m`, 2 m, the corridor's width; the style comes from `style_by_theme`, now read). Rooms are 6, 8 or 10 m a side, corridors and flights 6, 8 or 10 m, the hearth room 10 × 10 m (its 9 m snapped). The ceilings are the style's `heights_m` (corridor 2.6, room 3.2, hearth room 3.6 m, the same as before).
+- **The spine (§EX.2).** One of the hearth room's 3–4 ways is grown first: 4 or 5 rooms (`crawler.json → plan.spine.rooms`, new), dead straight, every room's two doors facing each other, so from its doorway you look straight down the passage to the next door and the next light. Its last room is the heart, at least 8 m long (`plan.spine.heart_min_m`, new). Over 203 tombs: 108 have 4 spine rooms, 95 have 5.
+- **Side ways.** The other ways have at most 60% of the spine's rooms (`side_share`), and each ends in a room. They go straight on through facing doors, but turn at a room by `kit.turn_chance`, or where straight on won't fit. Of all two-door rooms, 1,257 of 1,509 face; every spine room does. Every door is centred on its wall, the hearth room's too.
+- **The way out (§EX.5).** From a door centred in the heart's far wall, a 10 m flight climbs 6 m (`exit.rise_m`, at the kit's stair slope), then a door into a 2 × 4 m landing (`exit.landing_m`, new), and the opening in its far wall. The threshold runs out under the daylight to a stop, with the stone carried out either side.
+  - **The daylight** (`WayOut`, `exit.glow`, new) has two parts. A sheet of sky stands just outside the opening, and a soft wash falls over the landing and the top steps. Both take §EV.2's colours from the twilight and their strength from the sun's height, as the shafts now do (§FG):
+    - at noon: the wash at 0.96 (a hearth's shaft is 2.49), the opening's sheet #5774b5;
+    - at midnight: 0.14 and #141d3c (`sheet_night` keeps the opening faintly visible).
+  - It is seen from the foot of the flight. First render: only a sliver showed from the foot, because looking up through the opening your eye met the underside of the stone I had carried out over it. That roof is gone, and the sheet now reaches 2 m over the opening's head.
+  - **The stand-in** (`CrawlerMain.walk_out`): stepping into the opening:
+    - fades to black over `fade_s` (2 s);
+    - logs "Up the old stair and out. Another tomb, another hearth." (`exit.stand_in.log`, new);
+    - builds the next tomb, whose seed follows from this one, so a pinned SEED always walks the same tombs;
+    - stands you on its mat by its lit hearth, carrying exactly what you carried, the torch lit or not as it was.
+
+    Only the tomb's own nodes are rebuilt: its stone, fires, vents, airways, way out, glow-moss, beetles, skeletons, rescuer and snake. You, what you carry, the grade, the HUD and the log stay. Each mesh is let go before its node is freed (otherwise the headless renderer printed about a hundred errors per walk-out).
+  - **Never gated:** no gates exist yet. TombKit marks every spine piece and door, and its header says gates go only on side ways and shortcuts.
+- **Kept clear, found by the walk check:**
+  - **Crypts** only go in rooms at least 8 m wide, so an aisle stays clear between the coffins' askew lids.
+  - **The heart:** the dead lie across the room 3 m in from the far wall (`TombKit.HEART_BOX_M`), their goods before them, the way out's door behind them. You walk round them. Queue 47's four sconces flank them there.
+  - **Stairs.** At the top of a steep flight, the threshold stone stood 3–4 cm proud of the walked slope. On a 30° climb that edge acts as a wall (the contact is at 57°; the limit is 45°). So nobody could climb out of the way-out flight, nor back up the steepest flights of the old tombs. The tomb's flights now ride 5 cm over their steps (`RuinBuilder.ramp_lift`, 0 in the open world).
+  - **Far fires.** A cold holder's light stayed on until you came within 60 m of it. That was invisible in the old compact tombs but wrong down a 100 m spine; it is now off from the start.
+- **Checks:** `crawler_check` (seed 7) has 215 lines and 0 fails.
+  - **The plan, over seeds 1, 7, 42 and 200 more** (a fixed draw; `WALK_SEEDS` changes the count):
+    - 3–4 ways out of the hearth room;
+    - a way out in every tomb, past the heart at the spine's end;
+    - the spine running through the heart, door to door;
+    - side ways shorter than the spine, each ending in a room;
+    - whole modules, the style's heights;
+    - doors centred, and the spine's doors facing;
+    - queue 47's room torches by its rules in all 2,002 rooms.
+  - **The walk.** In each of the 203 tombs, a capsule walks from the mat to the opening with every holder cold. It is your body exactly: shape, floor rules and step (`CrawlerPlayer.body_shape`, `floor_rules`, `step_body`, which the player now uses too). It walks through the tomb's real collision and fires, round the rescuer and the snake's hole.
+    - The route is an A* over a 25 cm grid where your capsule fits; then the body walks it.
+    - The collision comes from a collision-only build, checked identical to the game's: 0.36 s instead of 5 s.
+    - A failure names where the body stopped.
+    - **All 203 walked out: median 96 m** (shortest 82, longest 126; 163 s for the 203).
+  - **The way out:**
+    - its daylight is blue at noon and at midnight, faint against a shaft, and follows the clock;
+    - nothing stands between your eye at the foot of the flight and the opening;
+    - walking into it twice (torch lit, then unlit) arrives each time on a new tomb's mat by its lit hearth, with the torch as it was and the log line.
+  - **Upstream checks taught about the new layouts:**
+    - the 120 s run round the tomb (queue 50) crossed every door, the opening too, and walked out into the next tomb, where it stalled (21 s at a sprint, 90 needed); the check after it then found no relit sconce. Its tour now turns on the landing: 109 s at a sprint, nothing skipped.
+    - sneaking (queue 53) crouched through every door, the opening too; the doors after it were tried in the next tomb, and 7 found no floor there. It now skips the opening, and walks the way out's flight (the first that climbs) from its top, down: all 26 doors, all 5 flights, the guard never holding you.
+    - `residents_check` (queue 58) sets the heart's coffin aside from the way-through rule, as the placement now does. Its waking test also picks a skeleton where your body fits at both of its spots: in an 8 m crypt, just beyond `wakes_m` in front of a coffin is the far row's coffins.
+    - `boss_check` (queue 49) picks its spots with a clear line from the snake's eye to your flame, off the hole's ring.
+  - **Seed 126** (queue 58's note on this prompt's status: its crypt, piece 16, closed off by its coffins and hearth ring): on the new layouts it walks out (97 m), and each of its three crypts can be crossed by your body, door to door or door to its middle. Crypts are 8 m wide now, and queue 47 took the rings.
+  - **Also run, 0 fails:** `residents_check` (123 lines), `boss_check` (109), `stagger_check` (61), `fire_pot_check` (82), `hands_check` (61) and `crawler_harm_check` (59). `crawler_check` prints 16 headless renderer warnings ("Parameter m is null"): 4 in the half-dark checks and 12 in the pitch torch's, where torches are freed. Both sets were there before this pass (see queue 51's entry).
+- **Merged with queues 45, 47, 49 (and its follow-up), 50, 51, 52, 53, 54, 55, 56, 57, 58, 60 and 61** and the master-volume fix, all pushed while this pass ran:
+  - **Walking out with fire pots** (queue 60): what you carry stays (the pack, the pot in your left hand, its wick as it was). What lay or burnt on the old tomb's floor goes: its found pot, the fires, their char, a pot still in the air. The new tomb gets its own found pot (`FirePots.retomb`).
+  - **The rescuer** (queue 52) sits by each new tomb's hearth too, the live 3D rig, rolled from that tomb's seed. The walk check has its body to bump into (its blocker, §FH), as in the game.
+  - **The snake** (queue 49) is built with each tomb. Walking out leaves the old tomb's snake behind: its chase ends with it, and the drips it hushed come back to their level. The next tomb has its own, its hole in a side room off the spine (`BossGround` already read the spine). Its sprites bake while the screen is still black.
+  - **Sneaking** (queue 53): your step is now worked out in two parts (`CrawlerPlayer.step_velocity`, then the move), so the ledge guard still sits between them.
+  - **The atmosphere** (queue 61): the glow-moss and the beetles live on each tomb's walls, so they come and go with it. The shafts brighten and dim with the sun's height now, and so does the way out. Its checks and frames are taken at solar noon and midnight (the clock is warped: clock 0.5 is mid-afternoon).
+  - **The skeletons** (queue 58) rest in each tomb's niches and coffins and come and go with it. Their places come from TombKit (`coffin_spots`, `niche_spots`, `heart_box`):
+    - the heart's coffin lies 3 m in from the far wall, the way out behind it;
+    - the heart's coffin always holds its skeleton, as `residents.json → heart_holds_one` says. The rule keeping skeletons off the way through (`off_line_m`) would have emptied it, because the way through the heart now runs past the coffin to the way out;
+    - nothing rests by the snake's hole (`TombKit._by_lair`, the margin FirePots keeps the found pot from it): its ring hid a niche's skeleton in seed 42.
+  - **The room torches** (queue 47) replace each room's hearth ring with wall sconces, so this pass's rule for rings (beside a long wall, off the walk) went with them. The heart's sconces flank the dead where they now lie (`HEART_DEAD_M` follows `HEART_BOX_M`).
+  - **Frames:** the two hands took 17 and 18, the atmosphere 19 and 20, the skeletons 21 and the pitch torch 22, so the plan and the way out are frames 23–25.
+- **Frames (crawler_frames, seed 7, on 28dafd4):** 45 lines, 0 fails, 62 frames. New:
+  - `23`, down the spine from the hearth room's doorway: straight on past a sconce to the next doorway;
+  - `24`, into the heart by torchlight: its four sconces relit, the mossy coffin with its skeleton toward the far end, the goods before it, and the way out's door dark in the far wall behind;
+  - `25` and `25b`, from the foot of the way out's flight with the torch out, at noon and at midnight. At noon the opening is #698ace (luma 0.53) against stone at 0.074 round it; at midnight #0e174a (0.101) against 0.075, 0.026 over (the bar is 0.02). The relit heart behind you counts as a flame near, so the half-dark is off and the flight is black: only the opening shows, a pale slot above the crosshair;
+  - `25c`, the same by torchlight: the steps up to the slot.
+  - The run printed one `Condition "multimesh->mesh.is_null()" is true` from the renderer as the game quit, as every render since this pass's first merge did (queue 59's entry flagged it). It was this pass's, and b7956e0 removes it (below).
+- **Follow-up (b7956e0):** this pass had made `NodeRelease` empty particle systems' meshes too, to quiet a headless warning on walking out. It wasn't needed: `crawler_check` prints the same 16 headless warnings without it, its two walk-outs adding none. Under the real renderer an emptied particle mesh is an error, once per walk-out and once as the game quits. `NodeRelease` is upstream's again. A rendered boot, walk-out and quit (xvfb, lavapipe) now prints no renderer error. `crawler_check` 215 lines, `cleared_check` 78 and `residents_check` 123, 0 fails each.
+- **Cost:** the tombs are bigger (the spine and the way out).
+  - Seed 7 is now 617k triangles (it was 422k); a typical room is still 25–39k.
+  - A tomb builds in 4.4–6.1 s here (was 2.6–3.2 s). That time falls inside the black of waking or walking out.
+- **Contradictions and open calls for Mike:**
+  - Queue 47 put the dead 1.6 m from the heart's far wall (§EX.3, prompt 47). The way out now leaves through that wall, so they lie 3 m in, with the door behind them, and its four sconces flank them there.
+  - The way out's top sits rise_m (6 m) above the heart, so its depth varies with the spine's flights. When §EW.7 step 2 builds the surface, one of the two must meet the other. With no flight on the spine, the landing's roof is 0.1 m above the vents' stand-in surface (9 m).
+  - At night the opening is faint: about #0f184a against stone at the frame's black, from the foot of the flight. That is readable by the half-dark's own measure (0.03 luma over the stone round it; 0.02 is the bar), but easy to miss, and the steps by you in the half-dark are brighter. `exit.glow.sheet_night` raises it: 1.0 gives about #1e2c5c, 1.5 about #314787 (at noon it is about #698acf).
+  - The snake's hole (queue 49) is ringed by an invisible cylinder as tall as you, so it blocks sight as well as feet. The snake can't see your torch across its own hole, and a skeleton resting behind it can't see you. To block feet only, it would need a shorter ring or a collision layer of its own; that is queue 49's call.
+  - §FK.2 (new) draws every dungeon's seed from the game's seed and replaces the stand-in's "new seed". The stand-in already chains each next tomb's seed from the last (`CrawlerMain.next_seed`), so the same start walks the same tombs. Queue 63 roots the chain in the game's seed and keeps what you changed; today the tomb you leave is gone.
+
+---
+
 ## 2026-10-07 — Queue 59, §FF.2: cleared by light — the skeletons keep to the dark, bite from its pockets, and go for good at the last light (828e1fa)
 - **Built on 49, 56, 57 and 58, and merged over 46, 47, 51 and 60.** The light is queue 49's map of the tomb (`BossGround`: each room, and each corridor stretch between sconces, lit or dark). `Residents` works it out again whenever a holder catches. Until floors exist (§FF.1), a floor is the whole tomb.
 - **The light keeps them out** (`residents.json → rules`):
