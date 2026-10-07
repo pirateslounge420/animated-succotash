@@ -980,7 +980,9 @@ func _torch_meet() -> Vector3:
 	var head := Vector3(0.05, 0.17, -0.06)
 	var ef: Node3D = player.torch._view_flame
 	if ef != null:
-		head = ef.position + Vector3(0.0, 0.03, 0.0)
+		# The pitch head's coal at the top of its wrap (§EZ.2, its origin is
+		# the wrap's foot); the burnt end's glowing tip.
+		head = ef.transform * Vector3(0.0, PitchTorch.length_m(), 0.0) if ef.has_meta("pitch_head") else ef.position + Vector3(0.0, 0.03, 0.0)
 	var wick := MEET + Basis(Vector3(0, 0, 1), -0.25) * PotMesh.wick_tip()
 	return wick + Vector3(0.012, 0.008, 0.0) - Basis(Vector3(0, 0, 1), TORCH_LEAN) * head
 

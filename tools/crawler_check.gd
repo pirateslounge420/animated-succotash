@@ -74,7 +74,19 @@ extends SceneTree
 ##     comes out again later in the dark; the bugs favour damp, dark walls,
 ##     none in the hearth room or on the stairs; the crawler runs the
 ##     world's clock (the 144-minute day) and the shafts' daylight climbs and
-##     sinks with the sun, moonlit blue at night.
+##     sinks with the sun, moonlit blue at night;
+## 11. the pitch torch (§EZ.2, PitchTorch): every lit torch in the built
+##     tomb (in hand, planted) has one flame card and one coal on its
+##     pitch head, every unlit one (the bundle's, one put out with burn
+##     left) none, a burnt-out one is a bare stick; the wrap six-sided,
+##     flat-topped, its bands steps (a vertex test), the coal six-sided;
+##     no shine on the head or the stick (no specular, roughness 1, no
+##     normal map); the flame's lean 0 standing still and within max_deg
+##     at a sprint, leaning back and stretched, settling when you stop,
+##     toward an ordinary airway's draft, flat out at max_deg in a strong
+##     mouth's gust, never putting it out; the light flickering with the
+##     flame on top of the coal's breath, held_scale kept; the smoke
+##     darker toward soot and never grey.
 
 const SEEDS := 30
 
@@ -113,7 +125,9 @@ func _run() -> void:
 	_firelight(main)
 	await _ambience(main)
 	await _relight(main)
+	await _pitch(main)
 	await _snuff(main)
+	await _lean(main)
 	await _douse(main)
 	await _half_dark(main)
 	await _rescuer(main)
@@ -310,6 +324,312 @@ func _relight(main: CrawlerMain) -> void:
 	var st0 := _stand_by(main, h0)
 	_place_facing(p, st0, h0.global_position)
 	ok(not t.lit() and t.pass_flame() == "torch" and t.lit(), "a dead torch relights at a relit holder")
+
+
+## The pitch torch's parts showing on one head: (flame cards, coals).
+func _fire_parts(head: Node3D) -> Vector2i:
+	var n := Vector2i.ZERO
+	for c in head.find_children("*", "Node3D", true, false):
+		if not (c as Node3D).is_visible_in_tree():
+			continue
+		if c.name == "Card":
+			n.x += 1
+		elif c.name == "Coal":
+			n.y += 1
+	return n
+
+
+## The wrap's shape (PitchTorch's mesh, surface 0): "" when every corner
+## sits on one of the six sides, the top is flat (nothing above it, its
+## faces flat up or the sides', no dome), there are only the bands' own
+## heights, and each band's lower edge stands out over the one below (a
+## step); else what is wrong.
+func _wrap_shape(head: Node3D) -> String:
+	var L := PitchTorch.length_m()
+	var n := PitchTorch.sides()
+	var nb := PitchTorch.bands()
+	var wrap := head.get_node_or_null("Wrap") as MeshInstance3D
+	if wrap == null:
+		return "no wrap"
+	var arr := (wrap.mesh as ArrayMesh).surface_get_arrays(0)
+	var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var nm: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+	var radii := {}
+	for i in v.size():
+		var q := v[i]
+		if q.y > L + 1e-5:
+			return "a vertex above the flat top (y %.4f)" % q.y
+		var lv := snappedf(q.y, 1e-4)
+		var r := Vector2(q.x, q.z).length()
+		if r > 1e-5:
+			var a := fposmod(atan2(q.x, q.z), TAU / n)
+			if a > 1e-3 and a < TAU / n - 1e-3:
+				return "a corner off the %d sides (%.3f rad)" % [n, a]
+			if not radii.has(lv):
+				radii[lv] = []
+			if not (radii[lv] as Array).any(func(x): return absf(float(x) - r) < 1e-5):
+				(radii[lv] as Array).append(r)
+		if absf(q.y - L) < 1e-5 and nm[i].y > 0.2 and nm[i].y < 0.99:
+			return "a sloping face at the top (normal y %.2f): rounded" % nm[i].y
+	var heights := radii.keys()
+	heights.sort()
+	if heights.size() != nb + 1:
+		return "%d heights, not the bands' %d" % [heights.size(), nb + 1]
+	for k in range(1, nb):
+		var rs: Array = radii[heights[k]]
+		if rs.size() != 2 or float(rs.max()) < float(rs.min()) * 1.08:
+			return "band %d: no step at its lower edge (%s)" % [k, str(rs)]
+	return ""
+
+
+## No shine (the R-rules): "" for a material with no specular, roughness 1
+## and no normal map (an unshaded one has no light at all); else why.
+func _shine(m: Material) -> String:
+	if m is BaseMaterial3D:
+		var b := m as BaseMaterial3D
+		if b.normal_enabled:
+			return "a normal map"
+		if b.shading_mode == BaseMaterial3D.SHADING_MODE_UNSHADED:
+			return ""
+		if b.specular_mode != BaseMaterial3D.SPECULAR_DISABLED and b.metallic_specular > 0.0:
+			return "specular %.2f" % b.metallic_specular
+		if b.roughness < 1.0:
+			return "roughness %.2f" % b.roughness
+		if b.metallic > 0.0:
+			return "metallic %.2f" % b.metallic
+		return ""
+	if m is ShaderMaterial and (m as ShaderMaterial).shader != null:
+		var code := (m as ShaderMaterial).shader.code
+		if code.contains("NORMAL_MAP"):
+			return "a normal map"
+		var rm := ""
+		for line in code.split("\n"):
+			if line.strip_edges().begins_with("render_mode"):
+				rm = line
+		if rm.contains("unshaded"):
+			return ""
+		if not rm.contains("specular_disabled"):
+			return "specular (no specular_disabled)"
+		var re := RegEx.new()
+		re.compile("ROUGHNESS\\s*=\\s*([0-9.]+)")
+		for mt in re.search_all(code):
+			if float(mt.get_string(1)) < 1.0:
+				return "roughness %s" % mt.get_string(1)
+		return ""
+	return "no material"
+
+
+## The pitch torch (design 6 Oct §EZ.2; PitchTorch, torch.json
+## pitch_head): every torch in the built tomb.
+func _pitch(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var fires := main.fires
+	await _frames(2)
+	# The bundle's torches: the pitch head alone.
+	var bundle_heads: Array = []
+	for c in fires.bundle.get_children():
+		if c.has_meta("pitch_head") and not c.is_queued_for_deletion():
+			bundle_heads.append(c)
+	var none := true
+	for h in bundle_heads:
+		if _fire_parts(h) != Vector2i.ZERO or not (h as Node3D).is_visible_in_tree():
+			none = false
+	ok(bundle_heads.size() == fires.bundle_left and fires.bundle_left > 0 and none, "the bundle's %d torches: the pitch head alone, no coal, no flame (unlit)" % bundle_heads.size())
+	# In hand: lit, put out with burn left, burnt out.
+	var vh: Node3D = t._view_flame
+	ok(t.pitch and t.lit() and vh.has_meta("pitch_head") and _fire_parts(vh) == Vector2i(1, 1), "the torch in hand, lit: one flame card and one coal on its pitch head (%s)" % str(_fire_parts(vh)))
+	var card := vh.get_node("Flame/Card") as MeshInstance3D
+	var tx: Vector2 = (card.material_override as ShaderMaterial).get_shader_parameter("texels")
+	ok(tx.is_equal_approx(PitchTorch.flame_texels()) and tx.y < float((Campfire.FL.get("texels", [32, 48]) as Array)[1]), "its flame card is on a coarser texel grid than the campfire's (%dx%d)" % [int(tx.x), int(tx.y)])
+	t.put_out("doused")
+	ok(not t.lit() and _fire_parts(vh) == Vector2i.ZERO and vh.is_visible_in_tree(), "put out with burn left: the pitch head alone in hand, no coal, no flame")
+	var it := t.item()
+	t.put_out("burnt")
+	ok(not vh.is_visible_in_tree() and (t._view.get_node("Stick") as Node3D).is_visible_in_tree(), "burnt out: a bare stick, as built")
+	it.erase("burnt")
+	it["burn_left_min"] = float(Torch.D.get("burn_min", 50.0))
+	t.light()
+	# Planted in the tomb: lit, out with burn left, burnt out.
+	var at := p.global_position + Vector3(0.0, 0.0, 0.0)
+	var pl := PlantedTorch.plant(Inventory.make("torch", {"lit": true, "burn_left_min": 30.0}), main.world, at + Vector3(0.6, 0.0, 0.0), Vector3.UP, false, main)
+	var po := PlantedTorch.plant(Inventory.make("torch", {"lit": false, "burn_left_min": 12.0}), main.world, at + Vector3(1.2, 0.0, 0.0), Vector3.UP, false, main)
+	var pb := PlantedTorch.plant(Inventory.make("torch", {"lit": false, "burnt": true}), main.world, at + Vector3(1.8, 0.0, 0.0), Vector3.UP, false, main)
+	await _frames(3)
+	ok(pl.pitch and pl._flame.has_meta("pitch_head") and _fire_parts(pl._flame) == Vector2i(1, 1), "a planted torch, lit: one flame card and one coal (%s)" % str(_fire_parts(pl._flame)))
+	ok(_fire_parts(po._flame) == Vector2i.ZERO and po._flame.is_visible_in_tree(), "a planted torch out with burn left: the pitch head alone")
+	ok(not pb._flame.is_visible_in_tree(), "a burnt-out planted torch: a bare stick, as built")
+	# The shape: six flat sides, a flat top, the bands as steps; the coal too.
+	var shapes: Array = [["in hand", vh], ["planted", pl._flame]]
+	for h in bundle_heads:
+		shapes.append(["in the bundle", h])
+	var bad := ""
+	for e in shapes:
+		var why := _wrap_shape(e[1])
+		if why != "":
+			bad += "%s: %s; " % [e[0], why]
+	ok(bad == "", "every wrap: six flat sides, a flat top (no dome), the %d bands as steps in its silhouette%s" % [PitchTorch.bands(), "" if bad == "" else " (" + bad + ")"])
+	var cv: PackedVector3Array = ((vh.get_node("Coal") as MeshInstance3D).mesh as ArrayMesh).surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var coal_ok := true
+	for q in cv:
+		if Vector2(q.x, q.z).length() > 1e-5:
+			var a := fposmod(atan2(q.x, q.z), TAU / PitchTorch.sides())
+			coal_ok = coal_ok and (a < 1e-3 or a > TAU / PitchTorch.sides() - 1e-3)
+	ok(coal_ok, "the coal: six-sided, the glowing top of the wrap")
+	var dv: PackedVector3Array = ((vh.get_node("Wrap") as MeshInstance3D).mesh as ArrayMesh).surface_get_arrays(1)[Mesh.ARRAY_VERTEX]
+	var lowest := 0.0
+	for q in dv:
+		lowest = minf(lowest, q.y)
+	var dr: Dictionary = PitchTorch.H.get("drips", {})
+	ok(dv.size() > 0 and -lowest >= float((dr.get("length_m", [0.02, 0.07]) as Array)[0]) - 1e-4 and -lowest <= float((dr.get("length_m", [0.02, 0.07]) as Array)[1]) + 1e-4, "drips of pitch run down the stick below the wrap (the longest %.0f mm)" % (-lowest * 1000.0))
+	# No shine on any head or stick.
+	var shiny := ""
+	var roots: Array = [t._view, pl, po, fires.bundle]
+	for r in roots:
+		for g in (r as Node).find_children("*", "GeometryInstance3D", true, false):
+			var gi := g as GeometryInstance3D
+			var mat: Material = gi.material_override
+			if mat == null and gi is MeshInstance3D and (gi as MeshInstance3D).mesh != null:
+				mat = (gi as MeshInstance3D).mesh.surface_get_material(0)
+			var why := _shine(mat)
+			if why != "":
+				shiny += "%s %s; " % [gi.name, why]
+	ok(shiny == "", "no shine on the heads or the sticks: no specular, roughness 1, no normal map%s" % ("" if shiny == "" else " (" + shiny + ")"))
+	for x in [pl, po, pb]:
+		(x as PlantedTorch).take()
+	await _frames(2)
+
+
+## The flame's lean, its light and its smoke (§EZ.2), on the floor of
+## _snuff's own (the torch in hand).
+func _lean(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var LN: Dictionary = PitchTorch.P.get("lean", {})
+	var per_mps := float(LN.get("per_mps", 6.0))
+	var max_deg := float(LN.get("max_deg", 50.0))
+	var settle := float(LN.get("settle_s", 0.4))
+	p.spawn_flat(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
+	await _frames(5)
+	t.light()
+	await _frames(120)
+	var drawn := PitchTorch.drawn_lean_deg(t._view_flame, p.up)
+	ok(t.lit() and t.lean.deg() == 0.0 and drawn < 0.01, "standing still (0 m/s): the flame upright, lean 0 (drawn %.2f deg)" % drawn)
+	# The light: the flame's flicker on top of the coal's breath (the light
+	# over what the coal's breath alone gives it is the flame's share).
+	var ks: Array[float] = []
+	var sum := 0.0
+	for i in 120:
+		await physics_frame
+		var coal := Torch.energy_now(t.item(), t._t, 1.0) * Torch.held_scale()
+		ks.append(t._light.light_energy / maxf(coal, 1e-4))
+		sum += ks[-1]
+	var mean := sum / ks.size()
+	ok(ks.max() - ks.min() > 0.06 and absf(mean - 1.0) < 0.05, "the light flickers with the flame (x%.2f to x%.2f over 2 s) on top of the coal's breath" % [ks.min(), ks.max()])
+	ok(absf(t._light.omni_range - float(Torch.L.get("range_m", 14.0)) * Torch.held_scale()) < 1e-3, "the torch in hand still reaches held_scale further (%.1f m, §EB.3)" % t._light.omni_range)
+	# The smoke: darker toward soot, never a neutral grey.
+	var col: Node3D = t._view_flame.get_meta("smoke_col") if t._view_flame.has_meta("smoke_col") else null
+	var sooty := col != null
+	var worst := ""
+	if col != null:
+		var m: ShaderMaterial = col.get_meta("mat")
+		var night_v: Vector3 = m.get_shader_parameter("colour_night")
+		var night_def := PitchTorch.smoke_night(m)
+		var pairs := [[Color(night_v.x, night_v.y, night_v.z), Color(night_def.x, night_def.y, night_def.z), "night"]]
+		for key in ["colour_near", "colour_far", "colour_shade"]:
+			pairs.append([m.get_shader_parameter(key), Color(str(Smoke.LOOK.get(key, "#8FA0C8"))).srgb_to_linear(), key])
+		for pr in pairs:
+			var c: Color = pr[0]
+			var base: Color = pr[1]
+			var grey := c.b - maxf(c.r, c.g) < 0.005
+			if c.get_luminance() >= base.get_luminance() or grey:
+				sooty = false
+				worst += "%s #%s; " % [pr[2], c.to_html(false)]
+	ok(sooty, "its smoke: darker toward soot than the hearth's, still blue, never a neutral grey%s" % ("" if worst == "" else " (" + worst + ")"))
+	# Sprinting (well short of the sprint rule's gutter).
+	Input.action_press("move_forward")
+	Input.action_press("sprint")
+	await _frames(int(2.5 * 60.0))
+	var v := Vector3(p.velocity.x, 0.0, p.velocity.z)
+	var deg := t.lean.deg()
+	var want := minf(v.length() * per_mps, max_deg)
+	var fl := t._view_flame.get_node("Flame") as Node3D
+	var top := fl.global_basis.y
+	var back := Vector3(top.x, 0.0, top.z).dot(v) < 0.0
+	drawn = PitchTorch.drawn_lean_deg(t._view_flame, p.up)
+	var stretch := t.lean.stretch
+	var height_k := fl.global_basis.y.length()
+	Input.action_release("sprint")
+	Input.action_release("move_forward")
+	ok(t.lit() and deg > 1.0 and deg <= max_deg + 1e-3 and absf(deg - want) < 1.0 and absf(drawn - deg) < 0.5 and back, "sprinting (%.1f m/s): the flame leans back %.1f deg, within max_deg %.0f (drawn %.1f)" % [v.length(), deg, max_deg, drawn])
+	ok(absf(stretch - float(LN.get("sprint_stretch", 1.3))) < 0.02 and absf(height_k - stretch) < 0.02, "and stretches to sprint_stretch (%.2f of its height)" % stretch)
+	await _frames(int((settle * 3.0 + 0.6) * 60.0))
+	ok(t.lit() and t.lean.deg() == 0.0 and absf(t.lean.stretch - 1.0) < 1e-3, "stopped, it settles upright within settle_s's three time constants (%.1f s)" % (settle * 3.0))
+	# An ordinary airway's draft leans it toward the slot, and it holds.
+	var aw := main.airways
+	var slot: Dictionary = {}
+	var si := -1
+	for i in aw.mouths.size():
+		if not bool(aw.mouths[i].strong):
+			slot = aw.mouths[i]
+			si = i
+			break
+	if not slot.is_empty():
+		var mp: Vector3 = slot.pos
+		var nrm: Vector3 = slot.normal
+		var piece: Dictionary = main.lay.pieces[int((main.lay.airways as Array)[si].piece)]
+		var face := -nrm
+		var stand := mp + nrm * 1.0 - Basis(Vector3.UP, atan2(-face.x, -face.z)) * Vector3(0.3, 0.0, -0.4)
+		stand.y = Delves.floor_of(piece, 0.0)
+		p.spawn_flat(stand, atan2(-face.x, -face.z), 0.0)
+		await _frames(150)
+		var d := aw.draft_at(t.flame_position())
+		# The slot is high in the wall: the flame tips with the draft's
+		# sideways part (an upward draw only draws it up).
+		var push: Vector3 = d.lean
+		push.y = 0.0
+		var to_slot := mp - t.flame_position()
+		var tilt := t.lean.tilt
+		ok(t.lit() and push.length() > 0.05 and tilt.length() > 0.2 and tilt.normalized().dot(Vector3(to_slot.x, 0.0, to_slot.z).normalized()) > 0.5 and absf(tilt.length() - minf(push.length() * per_mps, max_deg)) < 0.5, "an ordinary airway's draft leans the flame toward its slot (%.1f deg from %.2f m/s across), and it holds" % [tilt.length(), push.length()])
+	# A strong mouth's gust whips it flat out, at max_deg, away from the
+	# mouth (§EZ.5), and it holds; standing 2.5 m out on its line.
+	var strong: Dictionary = {}
+	var gi := -1
+	for i in aw.mouths.size():
+		if bool(aw.mouths[i].strong):
+			strong = aw.mouths[i]
+			gi = i
+			break
+	if not strong.is_empty():
+		var gp: Vector3 = strong.pos
+		var gn: Vector3 = strong.normal
+		var gpiece: Dictionary = main.lay.pieces[int((main.lay.airways as Array)[gi].piece)]
+		var gface := -gn
+		var gstand := gp + gn * 2.5 - Basis(Vector3.UP, atan2(-gface.x, -gface.z)) * Vector3(0.3, 0.0, -0.4)
+		gstand.y = Delves.floor_of(gpiece, 0.0)
+		strong.t = 30.0
+		p.spawn_flat(gstand, atan2(-gface.x, -gface.z), 0.0)
+		await _frames(5)
+		t.light()
+		var warn_s := float(Airways.SN.get("warn_s", 1.5))
+		var gust_s := float(Airways.A.get("gust_s", 2.2))
+		strong.t = warn_s + 0.4
+		var most := 0.0
+		var drawn_most := 0.0
+		var away := false
+		var held := true
+		for i in int((warn_s + 0.4 + gust_s + 0.5) * 60.0):
+			await physics_frame
+			held = held and t.lit()
+			if t.snuff.gust and t.lean.deg() > most:
+				most = t.lean.deg()
+				drawn_most = PitchTorch.drawn_lean_deg(t._view_flame, p.up)
+				away = t.lean.tilt.dot(Vector3(gn.x, 0.0, gn.z)) > 0.0
+		strong.t = 30.0
+		ok(held and absf(most - max_deg) < 0.5 and absf(drawn_most - most) < 0.5 and away, "a strong mouth's gust whips the flame flat out, %.1f deg (max_deg %.0f), away from the mouth (drawn %.1f), and it holds" % [most, max_deg, drawn_most])
+	# Out by water, as _snuff left it, for _douse.
+	t.put_out("doused")
+	await _frames(2)
 
 
 ## The fitted-stone walls (design §EU; FittedStone, masonry.json).

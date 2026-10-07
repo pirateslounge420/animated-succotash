@@ -26,12 +26,15 @@ extends Node3D
 ## crawler you can smother it on purpose (design 6 Oct §FC.3, douse(): F)
 ## and keep holding it, its burn kept; that is not water. Right
 ## click the ground with it lit to plant it (PlantedTorch); a dropped lit
-## torch lies burning. Its head is a glowing ember, not a flame (Mike,
-## 3 Oct; ember_node): a coal with the fire's colours in its cracks and a
-## couple of sparks. The light: a point light with the data's falloff,
-## breathing slowly with the ember (ember_glow), a soft shadow only while
-## it is among the nearest fire lights (FireShadows, §ER.1); the only
-## warm light in the world is fire.
+## torch lies burning. In the open world its head is a glowing ember, not a
+## flame (Mike, 3 Oct; ember_node): a coal with the fire's colours in its
+## cracks and a couple of sparks. In Torchfire 1 it is the pitch torch
+## (design 6 Oct §EZ.2, PitchTorch): a wrapped, tarred head, its coal, and a
+## pixel flame on top that leans against your motion. The light: a point
+## light with the data's falloff, breathing slowly with the ember
+## (ember_glow; the pitch torch's flickers with its flame too), a soft
+## shadow only while it is among the nearest fire lights (FireShadows,
+## §ER.1); the only warm light in the world is fire.
 ## Its state (lit, burn_left_min, burnt) lives in the item's own
 ## dictionary, so it comes and goes with the pack.
 
@@ -57,8 +60,16 @@ var player: PlanetPlayer
 ## §EZ.5; TorchSnuff): only deep water puts it out, warned by the gutter;
 ## the airways' drafts lean and flicker it.
 var snuff := TorchSnuff.new()
+## Torchfire 1's torch is the pitch torch (design 6 Oct §EZ.2, PitchTorch);
+## the open world keeps the burnt end (§CP). Set at setup().
+var pitch := false
+## The pitch torch's flame leaning against your motion and the draft.
+var lean := PitchTorch.Lean.new()
 var _view: Node3D
+## The head in view: the burnt end (ember_node), or the pitch head
+## (PitchTorch.head_node: the wrap, its coal and its flame).
 var _view_flame: Node3D
+var _seed := randf() * 100.0
 var _light: OmniLight3D
 var _voice: AudioStreamPlayer3D
 var _t := 0.0
@@ -88,11 +99,13 @@ var note := ""
 func setup(p: PlanetPlayer) -> void:
 	player = p
 	instance = self
+	pitch = GameMode.crawler_running
 	# In view (first person): a stick low right, the flame at its head.
 	_view = Node3D.new()
 	_view.name = "TorchView"
 	p.camera().add_child(_view)
 	var stick := MeshInstance3D.new()
+	stick.name = "Stick"
 	var cm := CylinderMesh.new()
 	cm.top_radius = 0.018
 	cm.bottom_radius = 0.022
@@ -102,15 +115,24 @@ func setup(p: PlanetPlayer) -> void:
 	var sm := StandardMaterial3D.new()
 	sm.albedo_color = Color(0.36, 0.25, 0.14)
 	sm.roughness = 1.0
+	# No shine (the R-rules: no specular).
+	sm.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
 	stick.material_override = sm
 	stick.rotation = Vector3(0.35, 0.0, -0.25)
 	_view.add_child(stick)
-	# The stick's top few centimetres are its burnt end (Mike, 3 Oct: an
-	# ember, the burned end of the stick, not a ball).
-	_view_flame = ember_node(cm.top_radius, 0.06, 0.2)
-	# (The stick ends inside the burnt end's wide lower half, so it never
-	# pokes out where the end narrows to its tip.)
-	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - 0.06 * 0.4, 0)
+	if pitch:
+		# The pitch head (§EZ.2): the wrap round the stick's last length_m
+		# (the stick ends inside it), the coal and the flame on top, the
+		# flame at its size for the view (pitch_head.flame.view_scale).
+		_view_flame = PitchTorch.head_node(cm.top_radius, randi(), true, PitchTorch.flame_size(true))
+		_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - PitchTorch.length_m() * 0.9, 0)
+	else:
+		# The stick's top few centimetres are its burnt end (Mike, 3 Oct: an
+		# ember, the burned end of the stick, not a ball).
+		_view_flame = ember_node(cm.top_radius, 0.06, 0.2)
+		# (The stick ends inside the burnt end's wide lower half, so it never
+		# pokes out where the end narrows to its tip.)
+		_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - 0.06 * 0.4, 0)
 	_view_flame.rotation = stick.rotation
 	_view.add_child(_view_flame)
 	_view.position = Vector3(0.34, -0.3, -0.56)
@@ -624,6 +646,10 @@ func update_torch(delta: float) -> void:
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
 		var e := energy_now(it, _t, motion)
 		var g := ember_glow(it, _t, motion)
+		if pitch:
+			# The pitch torch's light flickers with its flame (§BZ's noise)
+			# as well as breathing with its coal (§EZ.2).
+			e *= PitchTorch.flicker(_t, _seed, lean.air_share)
 		if snuff.flicker > 0.0:
 			# A draft quickens the flicker (§EV.3, as a vented fire's),
 			# never a gutter: no dimming toward out, no reddening.
@@ -642,18 +668,41 @@ func update_torch(delta: float) -> void:
 			e = lerpf(e, float(L.get("gutter_energy", 0.9)) * 0.6, k) * flick
 			g *= lerpf(1.0, float(EMBER.get("gutter_glow", 0.72)) * 0.7, k) * flick
 		_light.light_energy = e * held_scale()
-		set_glow(_view_flame, g, it)
+		if pitch:
+			PitchTorch.set_glow(_view_flame, g, it)
+			# The flame gutters with the coal: lower and redder.
+			PitchTorch.set_low(_view_flame, maxf(snuff.gutter, PitchTorch.GUTTER_LOW if guttering(it) else 0.0))
+		else:
+			set_glow(_view_flame, g, it)
+	if pitch:
+		# The flame leans the way the air goes past it: against your motion,
+		# with an airway's draft (§EZ.2, §EV.3), whipped flat out at
+		# max_deg in a strong mouth's gust (§EZ.5); only the flame moves.
+		var flat := player.velocity - player.up * player.velocity.dot(player.up)
+		var draft := snuff.lean if lit() and PitchTorch.toward_draft() else Vector3.ZERO
+		lean.step(draft - flat, player.up, delta, lit() and snuff.gust)
 	_apply(lit())
 	if lit() and _view_flame.visible:
-		# A draft leans the burnt end's smoke: toward open air at a slot
-		# (§ET.6), streaming flat away from a strong mouth in its gust
-		# (§EZ.5, the coal's whip until the pitch head's flame, §EZ.2).
-		smoke_ember(_view_flame, player.up, -player.velocity + snuff.lean)
+		if pitch:
+			PitchTorch.pose(_view_flame, lean, player.up)
+			# Its smoke trails behind it and leans with the draft: toward
+			# open air at a slot (§ET.6), streaming flat away from a strong
+			# mouth in its gust (§EZ.5); sootier for the pitch (§EZ.2, §CV).
+			PitchTorch.smoke(_view_flame, player.up, -player.velocity + snuff.lean)
+		else:
+			# The burnt end's smoke (the open world) trails behind it.
+			smoke_ember(_view_flame, player.up, -player.velocity + snuff.lean)
 
 
 func _apply(on: bool) -> void:
 	_view.visible = in_hand() and player.first_person and not player.climbing
-	_view_flame.visible = _view.visible and on
+	if pitch:
+		# The pitch head shows lit or not (unlit: the wrap alone, §EZ.2);
+		# burnt out, a bare stick, as built.
+		_view_flame.visible = _view.visible and not bool(item().get("burnt", false))
+		PitchTorch.set_lit(_view_flame, on)
+	else:
+		_view_flame.visible = _view.visible and on
 	_light.visible = on and not player.climbing
 	# The swing's arc, the fist's (Fists._carry): out along the aim and back.
 	var s := sin(_swing * PI) if _swing > 0.0 else 0.0

@@ -22,7 +22,10 @@ extends SceneTree
 ## (the strip low left, then the right hand's low right), and Settings'
 ## Controls and Settings pages; and the tomb's skeletons (design §FE,
 ## queue 58; 21-21c): their sheet, one at rest in its wall niche (else
-## its grave), climbing out of it in your torchlight, and out.
+## its grave), climbing out of it in your torchlight, and out; the pitch
+## torch (§EZ.2): the bundle's unlit heads by the hearth (01h), and the
+## torch in hand in the dark corridor standing and at a sprint's lean, at
+## 480 lines and at 270 (22a-22d).
 ## Checks: every cell of the sheets holds the figure (its pixels drawn),
 ## the skeleton caught halfway out of its place with its bone lit amber
 ## on screen,
@@ -34,7 +37,8 @@ extends SceneTree
 ## 15 m off at it, and blue), the torchlit frame the same with the
 ## half-dark on as off, and one firelight (§EX.6): the torchlit and
 ## sconce-lit stone the same amber, and the stone right at the torch kept
-## amber by the grade.
+## amber by the grade; the torch's flame reads as a flame at the bottom
+## right (its size on screen measured, in pixels, at both presets).
 ## The crosshair (§EX.7, Reticle), in the frames as you see it: its arms'
 ## pixels round the frame's middle pixel, sized per hud.json, at the 480
 ## preset (waking in the hearth room) and the 270 one (01g); nothing else
@@ -646,6 +650,115 @@ func _atmosphere(main: CrawlerMain) -> void:
 	await _frames(4)
 
 
+## The pixels that differ between two frames of the same view (one with
+## the torch's flame card, one without) inside `win` (frame pixels; other
+## fires down the corridor flicker between the two): their box {"x0",
+## "y0", "x1", "y1", "n"} in frame pixels, n of them.
+func _diff_box(a: Image, b: Image, win: Rect2i) -> Dictionary:
+	var w := a.get_width()
+	var h := a.get_height()
+	var box := {"x0": w, "y0": h, "x1": -1, "y1": -1, "n": 0}
+	win = win.intersection(Rect2i(0, 0, w, h))
+	for y in range(win.position.y, win.end.y):
+		for x in range(win.position.x, win.end.x):
+			var ca := a.get_pixel(x, y)
+			var cb := b.get_pixel(x, y)
+			if maxf(absf(ca.r - cb.r), maxf(absf(ca.g - cb.g), absf(ca.b - cb.b))) > 0.12:
+				box.x0 = mini(box.x0, x)
+				box.y0 = mini(box.y0, y)
+				box.x1 = maxi(box.x1, x)
+				box.y1 = maxi(box.y1, y)
+				box.n += 1
+	return box
+
+
+## Where the flame card can be on screen (frame pixels): its foot and top
+## (the card turns to face the camera about its up axis only, so those
+## stay put) and its width either side, leaning, with half again round it.
+func _card_window(cam: Camera3D, card: Node3D, w: int, h: int) -> Rect2i:
+	var xf := card.global_transform
+	var foot := xf.origin
+	var top := xf * Vector3(0.0, 1.0, 0.0)
+	var a := cam.unproject_position(foot)
+	var b := cam.unproject_position(top)
+	# The viewport's own pixels to the frame's (the same at the internal size).
+	var vs := Vector2(cam.get_viewport().get_visible_rect().size)
+	var k := Vector2(w, h) / vs
+	a *= k
+	b *= k
+	var tall := maxf((b - a).length(), 4.0)
+	var half_w := tall * xf.basis.x.length() / maxf(xf.basis.y.length(), 1e-4) * 0.5
+	var lo := Vector2(minf(a.x, b.x) - half_w, minf(a.y, b.y))
+	var hi := Vector2(maxf(a.x, b.x) + half_w, maxf(a.y, b.y))
+	var pad := (hi - lo) * 0.5
+	return Rect2i(Vector2i(lo - pad), Vector2i(hi - lo + pad * 2.0))
+
+
+## The pitch torch in hand where nothing else is lit (design 6 Oct §EZ.2):
+## standing, then at a sprint's lean (the frames run with physics off, so
+## the player's velocity is set and the torch stepped), at 480 lines and
+## at 270. The flame's size on screen is measured by drawing the same view
+## with and without its card (the coal, the sparks and the smoke hidden
+## for that pair, so only the card differs) and boxing the pixels that
+## change.
+func _pitch_frames(p: CrawlerPlayer, t: Torch) -> void:
+	var keep := str(Settings.get_value("display.preset", ""))
+	t.light()
+	var head: Node3D = t._view_flame
+	var card := head.get_node("Flame/Card") as Node3D
+	var quiet: Array[Node3D] = [head.get_node("Coal") as Node3D, head.get_node("Flame/Embers") as Node3D]
+	var shot := 0
+	for lines_want in [480, 270]:
+		Settings.set_value("display.preset", _preset_of(lines_want))
+		Display.apply()
+		await _frames(6)
+		var lines := Display.lines()
+		for pose in ["stand", "sprint"]:
+			p.velocity = Vector3.ZERO if pose == "stand" else -p.global_basis.z * PlanetPlayer.SPRINT_SPEED
+			p.sprinting = pose == "sprint"
+			for i in 90:
+				t.update_torch(1.0 / 60.0)
+				await process_frame
+			await _shot("22%s_torch_dark_%s_%d" % ["abcd"[shot], pose, lines])
+			shot += 1
+			# The measuring pair: everything that moves on its own hidden but
+			# the card.
+			var hidden: Array[Node3D] = quiet.duplicate()
+			if head.has_meta("smoke_col"):
+				hidden.append(head.get_meta("smoke_col"))
+			var was: Array[bool] = []
+			for q in hidden:
+				was.append(q.visible)
+				q.visible = false
+			await _frames(2)
+			await RenderingServer.frame_post_draw
+			var with_card := get_root().get_texture().get_image()
+			card.visible = false
+			await _frames(1)
+			await RenderingServer.frame_post_draw
+			var without := get_root().get_texture().get_image()
+			card.visible = true
+			for i in hidden.size():
+				hidden[i].visible = was[i]
+			var w := with_card.get_width()
+			var h := with_card.get_height()
+			var bx := _diff_box(with_card, without, _card_window(p.camera(), card, w, h))
+			var fh := int(bx.y1) - int(bx.y0) + 1
+			var fw := int(bx.x1) - int(bx.x0) + 1
+			var rows := PitchTorch.flame_texels().y
+			print("  the flame in hand, %s at %d lines: %d px tall, %d px wide (x %d-%d, y %d-%d of %dx%d), %d px drawn; about %.1f px a texel; lean %.1f deg" % [pose, lines, fh, fw, bx.x0, bx.x1, bx.y0, bx.y1, w, h, bx.n, float(fh) / (rows * 0.85), t.lean.deg()])
+			if pose == "stand":
+				var cx := (float(bx.x0) + float(bx.x1)) * 0.5 / w
+				ok(int(bx.n) > 0 and cx > 0.6 and float(bx.y1) / h > 0.5 and float(fh) / h > 0.1 and float(fh) / h < 0.35 and float(bx.n) > 0.3 * fh * fw, "at %d lines the flame reads at the bottom right: %d px tall (%.0f%% of the frame), %d wide, its foot at %.0f%% down, solid (%.0f%% of its box drawn)" % [lines, fh, 100.0 * fh / h, fw, 100.0 * float(bx.y1) / h, 100.0 * float(bx.n) / maxf(fh * fw, 1.0)])
+	p.velocity = Vector3.ZERO
+	p.sprinting = false
+	for i in 60:
+		t.update_torch(1.0 / 60.0)
+	Settings.set_value("display.preset", keep)
+	Display.apply()
+	await _frames(6)
+
+
 ## A torch in hand (from the pack, wherever you stand).
 func _torch_in_hand(p: CrawlerPlayer) -> void:
 	if not p.inventory.has_kind("torch"):
@@ -822,6 +935,13 @@ func _run() -> void:
 	p.spawn_flat(Vector3(hm.x + 1.6, 0.0, hm.z), PI * 0.5, 0.9)
 	await _frames(6)
 	await _shot("01c_up_the_flue")
+	# The bundle by the hearth, close: unlit pitch heads (§EZ.2).
+	var bp: Vector3 = main.fires.bundle.global_position
+	var hp0: Vector3 = main.fires.hearth.global_position
+	var from_b := Vector3(bp.x - hp0.x, 0.0, bp.z - hp0.z).normalized() * 0.9
+	p.spawn_flat(Vector3(bp.x, 0.0, bp.z) + from_b, atan2(from_b.x, from_b.z), -0.95)
+	await _frames(6)
+	await _shot("01h_bundle_pitch_heads")
 	# The fitted stone close (a room wall by torchlight).
 	_torch_in_hand(p)
 	p.torch.light()
@@ -965,6 +1085,17 @@ func _run() -> void:
 		p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
 		await _frames(6)
 		await _half_dark(main)
+		# The pitch torch in hand in this dark corridor (§EZ.2), then the
+		# view and the smothered torch as they were.
+		if t.pitch:
+			var back_pos := p.global_position - Vector3(0.0, 0.05, 0.0)
+			var back_yaw := p._yaw
+			var back_pitch := p._pitch
+			p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
+			await _pitch_frames(p, t)
+			t.douse()
+			p.spawn_flat(back_pos, back_yaw, back_pitch)
+			await _frames(6)
 		# Relight its sconce, then put the torch away again.
 		var keep_pos := p.global_position
 		var keep_yaw := p._yaw

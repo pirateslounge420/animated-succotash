@@ -147,7 +147,9 @@ func _sconce(pos: Vector3, nrm: Vector3) -> Node3D:
 
 
 ## The bundle of unlit torches by the hearth (§AW, torch.json bundle):
-## sticks bound with a cord, lying on the floor.
+## sticks bound with a cord, lying on the floor, each with its unlit pitch
+## head (design 6 Oct §EZ.2, PitchTorch: the wrap alone, no coal, no
+## flame).
 func _bundle(pos: Vector3) -> void:
 	bundle_left = int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
 	bundle = Node3D.new()
@@ -156,13 +158,19 @@ func _bundle(pos: Vector3) -> void:
 	bundle.position = pos
 	bundle.rotation.y = randf() * TAU
 	var wood := Color(0.36, 0.25, 0.14)
+	const STICK_M := 0.62
+	const TOP_R := 0.018
 	for i in bundle_left:
-		var stick := CreatureBodies.cone(bundle, 0.022, 0.018, 0.62, Vector3((i - (bundle_left - 1) * 0.5) * 0.05, 0.03, 0.0), wood.darkened(0.05 * i))
+		# Six-sided like the torch in hand, so the wrap's sides line up.
+		var stick := CreatureBodies.cone(bundle, 0.022, TOP_R, STICK_M, Vector3((i - (bundle_left - 1) * 0.5) * 0.05, 0.03, 0.0), wood.darkened(0.05 * i), 0.0, 6)
 		stick.rotation = Vector3(PI * 0.5, 0.06 * (i - 1), 0.0)
 		stick.name = "Stick%d" % i
-		var tip := CreatureBodies.cone(bundle, 0.03, 0.026, 0.07, Vector3((i - (bundle_left - 1) * 0.5) * 0.05, 0.03, 0.31), Color(0.1, 0.08, 0.06))
-		tip.rotation = stick.rotation
+		# The wrap round the stick's last length_m, the stick's end inside it.
+		var tip := PitchTorch.head_node(TOP_R, hash([pos, i]), false)
 		tip.name = "Tip%d" % i
+		bundle.add_child(tip)
+		var axis := stick.basis.y.normalized()
+		tip.transform = Transform3D(stick.basis, stick.position + axis * (STICK_M * 0.5 - PitchTorch.length_m() * 0.9))
 	CreatureBodies.cone(bundle, 0.07, 0.07, 0.04, Vector3(0.0, 0.03, -0.05), Color(0.5, 0.42, 0.28)).rotation = Vector3(PI * 0.5, 0.0, 0.0)
 
 

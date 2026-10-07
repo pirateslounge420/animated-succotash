@@ -6,23 +6,33 @@ extends Node3D
 ## hand (Torch.burn_step); a light source for the dark (§BA) and an ember
 ## another torch can be lit at. Right click within pickup_reach_m takes it
 ## back (take()). Under World.world_root, so it rides the floating origin.
+## In Torchfire 1 its head is the pitch torch's (design 6 Oct §EZ.2,
+## PitchTorch): the wrap, and lit, its coal and a true-size flame that
+## leans toward an airway's draft; the tombs have no world_root, so it
+## stands under the scene it is given.
 
 static var all: Array[PlantedTorch] = []
 
 var item: Dictionary
 var lying := false
 var up := Vector3.UP
+## The pitch torch (Torchfire 1, §EZ.2): its head is PitchTorch's.
+var pitch := false
+var lean := PitchTorch.Lean.new()
+## The head: the burnt end (open world) or the pitch head.
 var _flame: Node3D
 var _light: OmniLight3D
 var _t := randf() * 10.0
 
 
-static func plant(it: Dictionary, world, scene_pos: Vector3, planet_up: Vector3, lie := false) -> PlantedTorch:
+## Stand `it` at `scene_pos` under World.world_root, or under `parent` when
+## given (the tombs have no world_root, design 6 Oct §ET).
+static func plant(it: Dictionary, world, scene_pos: Vector3, planet_up: Vector3, lie := false, parent: Node = null) -> PlantedTorch:
 	var p := PlantedTorch.new()
 	p.item = it
 	p.lying = lie
 	p.up = planet_up
-	world.world_root.add_child(p)
+	(parent if parent != null else world.world_root).add_child(p)
 	p.global_position = scene_pos
 	p.global_basis = Basis.looking_at(CubeSphere.north(planet_up), planet_up)
 	if lie:
@@ -43,13 +53,22 @@ func _ready() -> void:
 	var sm := StandardMaterial3D.new()
 	sm.albedo_color = Color(0.36, 0.25, 0.14)
 	sm.roughness = 1.0
+	# No shine (the R-rules: no specular).
+	sm.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
 	stick.material_override = sm
 	stick.position = Vector3(0, h * 0.5 - (0.15 if not lying else 0.0), 0)
 	stick.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(stick)
-	# The head: the stick's burnt end, smouldering (Mike, 3 Oct).
-	_flame = Torch.ember_node(cm.top_radius, 0.09, 0.32)
-	_flame.position = Vector3(0, stick.position.y + h * 0.5 - 0.09 * 0.4, 0)
+	pitch = GameMode.crawler_running
+	if pitch:
+		# The pitch head (§EZ.2) round the stick's last length_m, its flame
+		# at the torch's true size (look.json fire.flame.torch.scale).
+		_flame = PitchTorch.head_node(cm.top_radius, int(_t * 1000.0), true)
+		_flame.position = Vector3(0, stick.position.y + h * 0.5 - PitchTorch.length_m() * 0.9, 0)
+	else:
+		# The head: the stick's burnt end, smouldering (Mike, 3 Oct).
+		_flame = Torch.ember_node(cm.top_radius, 0.09, 0.32)
+		_flame.position = Vector3(0, stick.position.y + h * 0.5 - 0.09 * 0.4, 0)
 	add_child(_flame)
 	_light = Torch.light_node()
 	_light.position = Vector3(0, h + 0.05, 0)
@@ -62,7 +81,12 @@ func lit() -> bool:
 
 
 func _apply() -> void:
-	_flame.visible = lit()
+	if pitch:
+		# The wrap shows lit or not; burnt out, a bare stick, as built.
+		_flame.visible = not bool(item.get("burnt", false))
+		PitchTorch.set_lit(_flame, lit())
+	else:
+		_flame.visible = lit()
 	_light.visible = lit()
 
 
@@ -77,8 +101,25 @@ func _process(delta: float) -> void:
 		return
 	_light.light_energy = Torch.energy_now(item, _t, 1.0)
 	_light.light_color = Torch.gutter_color(1.0 if Torch.guttering(item) else 0.0)
-	Torch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
-	Torch.smoke_ember(_flame, up)
+	if pitch:
+		# Still in the ground, only an airway's draft leans its flame
+		# (§EV.3; flat out in a strong mouth's gust, §EZ.5); the light
+		# flickers with the flame and breathes with the coal (§EZ.2).
+		var draft := Vector3.ZERO
+		var whip := false
+		if PitchTorch.toward_draft() and TorchSnuff.drafts != null and is_instance_valid(TorchSnuff.drafts):
+			var d: Dictionary = TorchSnuff.drafts.call("draft_at", _flame.global_position)
+			draft = d.get("lean", Vector3.ZERO)
+			whip = bool(d.get("gust", false))
+		lean.step(draft, up, delta, whip)
+		_light.light_energy *= PitchTorch.flicker(_t, float(get_instance_id() % 1000), lean.air_share)
+		PitchTorch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
+		PitchTorch.set_low(_flame, PitchTorch.GUTTER_LOW if Torch.guttering(item) else 0.0)
+		PitchTorch.pose(_flame, lean, up)
+		PitchTorch.smoke(_flame, up)
+	else:
+		Torch.set_glow(_flame, Torch.ember_glow(item, _t, 1.0), item)
+		Torch.smoke_ember(_flame, up)
 
 
 ## The nearest planted torch within `radius` of `pos`, or null.
