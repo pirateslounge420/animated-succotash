@@ -956,10 +956,11 @@ func _gone() -> void:
 	remove_from_group(FirePots.TARGET_GROUP)
 	residents.went(self, seen_going)
 	set_physics_process(false)
+	# Its meshes let go of first (NodeRelease), as the tomb's are.
 	if voice.playing:
-		voice.finished.connect(queue_free, CONNECT_ONE_SHOT)
+		voice.finished.connect(func() -> void: NodeRelease.free_later(self), CONNECT_ONE_SHOT)
 	else:
-		queue_free()
+		NodeRelease.free_later(self)
 
 
 ## Can you see it: in the frame, near enough, nothing of the stone between
