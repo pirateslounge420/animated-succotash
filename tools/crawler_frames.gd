@@ -10,7 +10,9 @@ extends SceneTree
 ## rescuer's sheet; the rescuer from in front, its side and above; a
 ## corridor in full dark by torchlight; the same with its sconce relit, 1 m
 ## from that sconce's wall and with the torch beside it; a room with its
-## hearth ring relit. Checks: every cell of the
+## hearth ring relit; the red ring after one hit and after two (§FD, §FJ.3:
+## its depth in pixels at 480 lines, darker and deeper on two, the heart
+## beating from hit 1). Checks: every cell of the
 ## sheet holds the figure (its pixels drawn), the waking frame shows the
 ## fire warm against the dark (warm pixels, and the frame's darkest share
 ## navy, not grey), the corridor's dark is dark, and one firelight
@@ -626,6 +628,7 @@ func _run() -> void:
 			continue
 		var rc: Dictionary = cross[key]
 		ok(float(rc.edge_cr) >= 3.0, "readable %s: its arms %.1f:1 against their dark edge, the edge %.1f:1 against what's behind it (the arms alone against that: %.1f:1)" % [where[key], rc.edge_cr, rc.edge_out_cr, rc.out_cr])
+	await _harm_ring(main, p)
 	for key in keep:
 		if keep[key] == null:
 			Settings.erase(key)
@@ -634,3 +637,104 @@ func _run() -> void:
 	print("[crawler_frames] %s" % out_dir)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+## Harm's ring (design §FD, §FJ.3; queue 56), after one hit and after two:
+## measured in a cold corridor in full dark (the torch out, so no flicker
+## changes the frame but the ring), where it reaches in from the middle of
+## the left and top edges (the frame against the unhurt one) and its rim
+## colour (darker on two); and seen in the hearth room by torchlight. The
+## heartbeat plays from hit 1.
+func _harm_ring(main: CrawlerMain, p: CrawlerPlayer) -> void:
+	var harm := main.get("harm") as Harm
+	var made := false
+	if harm == null:
+		# Until the boss's pass (queue 49) puts Harm in the crawler.
+		harm = Harm.new()
+		harm.name = "Harm"
+		main.add_child(harm)
+		harm.setup(p, main.post, null)
+		made = true
+	harm.set_process(false)
+	harm.reset()
+	# A cold corridor: 3.5 m along from a sconce nobody has lit.
+	var cold: Node3D = null
+	for h in main.fires.holders:
+		if str(h.get_meta("fire_holder")) == "sconce" and not FireStore.is_lit(h):
+			cold = h
+			break
+	if cold == null:
+		ok(false, "harm's ring: a cold corridor to measure it in")
+		return
+	var nrm := cold.global_basis.z
+	var along := nrm.cross(Vector3.UP).normalized()
+	var dark_at := cold.global_position - Vector3(0.0, float(CrawlerFires.HOLD.get("sconce_h_m", 1.7)), 0.0) + nrm * 0.7 - along * 3.5
+	_torch_in_hand(p)
+	var w: Array = main.lay.wake
+	var shots := {}
+	p.torch.put_out("stowed")
+	p.spawn_flat(dark_at, atan2(-along.x, -along.z), -0.05)
+	await _frames(10)
+	var none := await _shot("11_harm_none_dark")
+	for n in [1, 2]:
+		harm.hit("creature:giant snake")
+		Engine.time_scale = 1.0
+		for i in 12:
+			harm.tick(0.1)
+		p.torch.put_out("stowed")
+		p.spawn_flat(dark_at, atan2(-along.x, -along.z), -0.05)
+		await _frames(6)
+		shots[n] = await _shot("1%d_harm_hit_%d_dark" % [n + 1, n])
+		print("  hit %d: the heart %s at %.0f bpm (%d beats so far), the ring at level %.2f" % [n, "beating" if harm.heart else "still", harm.heart_bpm, harm.beats, harm.ring])
+		if n == 1:
+			ok(harm.heart and harm.beats > 0, "the heartbeat plays from hit 1 (%d beats in its first 1.2 s)" % harm.beats)
+		# The same by torchlight, at the hearth.
+		p.torch.light()
+		p.spawn_flat(w[0], float(w[1]), -0.25)
+		await _frames(8)
+		await _shot("1%db_harm_hit_%d_at_the_hearth" % [n + 1, n])
+	var scale := 480.0 / float(none.get_height())
+	var rim := {}
+	var depth := {}
+	for n in [1, 2]:
+		var img: Image = shots[n]
+		var dl := _ring_depth(img, none, true) * scale
+		var dt := _ring_depth(img, none, false) * scale
+		depth[n] = dl
+		rim[n] = _patch(img, 0.0, 0.45, 0.012, 0.55)
+		var rc: Color = rim[n].color
+		print("  hit %d's ring: %.0f px deep at the left edge, %.0f px at the top (at 480 lines; the frame %dx%d), rim #%s (luma %.3f)" % [n, dl, dt, none.get_width(), none.get_height(), rc.to_html(false), rim[n].luma])
+		ok(dl > 4.0 and rc.r > rc.g * 1.5 and rc.r > rc.b * 1.5, "hit %d: the red ring is on the frame's edge (%.0f px deep)" % [n, dl])
+	ok(float(depth[2]) > float(depth[1]) and float(rim[2].luma) < float(rim[1].luma), "hit 2: the ring darker (rim luma %.3f against %.3f) and deeper (%.0f px against %.0f)" % [rim[2].luma, rim[1].luma, depth[2], depth[1]])
+	harm.reset()
+	await _frames(2)
+	if made:
+		harm.queue_free()
+
+
+## How far in (frame px) the ring reaches from the middle of the left edge
+## (`left`) or the top edge: scanning in from the edge, the first pixel of
+## three in a row that match the unhurt frame (averaged over 9 lines
+## across the middle, so the grain doesn't count; past the ring's inner
+## edge only the scene's own flicker could differ, and it is never
+## reached).
+func _ring_depth(img: Image, none: Image, left: bool) -> float:
+	var w := img.get_width()
+	var h := img.get_height()
+	var reach := (w if left else h) / 2
+	var same := 0
+	for i in reach:
+		var d := 0.0
+		for k in range(-4, 5):
+			var x := i if left else w / 2 + k
+			var y := h / 2 + k if left else i
+			var a := img.get_pixel(x, y)
+			var b := none.get_pixel(x, y)
+			d += maxf(absf(a.r - b.r), maxf(absf(a.g - b.g), absf(a.b - b.b)))
+		if d / 9.0 <= 0.03:
+			same += 1
+			if same == 3:
+				return float(i - 2)
+		else:
+			same = 0
+	return float(reach)

@@ -2,7 +2,7 @@
   "_help": "§EA (4 Oct; wired by Claude Code: Harm, scripts/player/harm.gd): three hits, no bar, ambient profile only. The ninja game keeps PlanetPlayer.hp and the status bar. Amended by §EC (4 Oct, 19:33): per-hit regen every 5 s with the timer reset by any hit, i-frames after a hit, and a clear hit signal; window_s is retired.",
   "hits_to_take": 3,
   "recover": {
-    "_note": "§EC: one hit heals every step_s. Any new hit resets the timer to a full step_s. No 'break contact' condition; it ticks even while chased.",
+    "_note": "§EC: one hit heals every step_s. Any new hit resets the timer to a full step_s. No 'break contact' condition; it ticks even while chased (the open world). In the crawler (§FD, fd.recover_starts) it waits at zero while anything is chasing you and counts from when the last pursuer gives you up.",
     "step_s": 5.0,
     "reset_on_hit": true,
     "heart_first": true
@@ -46,7 +46,7 @@
     "hitstop_s": 0.05
   },
   "fd": {
-    "_note": "[NOT WIRED YET — design §FD] Mike, 6 Oct, 22:32. hit_1_edge: hit 1 puts a red edge round the frame (amends §EC's 'never red'); a dull dark red so 'Good night' stays the reddest thing (first guess). light_heals: false. recover_starts: recovery (recover.step_s) only counts once the pursuer has given you up (amends §EC's 'no break contact'); any new hit resets it. chase_enters_light: a creature that has hit you can follow you into lit rooms (residents.json, bosses.json). [§FJ.3, 6 Oct 22:52, Mike] hit 1: a red ring round the edge of the view and the heartbeat starts; hit 2: the ring goes darker red (and a little wider, Claude) and the heartbeat beats harder and faster; hit 3 'Good night' as built. Supersedes the thin dull hit-1 edge, and amends §EA/§EC's stages (heartbeat from hit 1). width_frac: the ring's depth as a share of the frame's short side. Colours and numbers are first guesses.",
+    "_note": "Design §FD, Mike, 6 Oct, 22:32; wired in the crawler (Torchfire 1) by Claude Code, queue 56 (Harm, HarmRing, Pursuit); the open world keeps §EA/§EC's stages. hit_1_edge: hit 1 puts a red edge round the frame (amends §EC's 'never red'); a dull dark red so 'Good night' stays the reddest thing (first guess). light_heals: false. recover_starts: recovery (recover.step_s) only counts once the pursuer has given you up (amends §EC's 'no break contact'); any new hit resets it. chase_enters_light: a creature that has hit you can follow you into lit rooms (residents.json, bosses.json). [§FJ.3, 6 Oct 22:52, Mike] hit 1: a red ring round the edge of the view and the heartbeat starts; hit 2: the ring goes darker red (and a little wider, Claude) and the heartbeat beats harder and faster; hit 3 'Good night' as built. Supersedes the thin dull hit-1 edge, and amends §EA/§EC's stages (heartbeat from hit 1). width_frac: the ring's depth as a share of the frame's short side. Colours and numbers are first guesses.",
     "hit_1_edge": {
       "shape": "ring",
       "color": "#B01818",

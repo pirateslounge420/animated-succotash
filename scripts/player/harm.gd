@@ -24,9 +24,36 @@ extends Node
 ## Recovery mirrors it: a hit heals every step_s (the timer reset by any
 ## hit); healing from 2 to 1 the heartbeat slows and stops first, then the
 ## dark pulls back (the stage's look eases to the next one down).
+##
+## In the crawler (Torchfire 1; design 6 Oct §FD, with §FJ.3's ring and
+## heartbeat, harm.json fd) the stages look and sound different, and you
+## heal only once nothing is chasing you; the open world keeps all of the
+## above:
+##   hit 1  a red ring closes round the edge of the view (fd.hit_1_edge:
+##          its colour, its depth as a share of the frame's short side,
+##          its alpha; HarmRing, inside the 480-line frame) and the
+##          heartbeat starts (heart_bpm, heart_db);
+##   hit 2  the ring goes darker red and reaches a little further in
+##          (fd.hit_2_edge), the heart beats harder and faster;
+##   hit 3  "Good night", as above.
+## The ring and the heart replace the darkening, the drain and the muffle
+## (no grade, no Master-bus muffle in the crawler); §EC's navy flash on
+## every hit stays. Healing steps back down the same way: 2 to 1 the ring
+## eases back to hit 1's and the heart slows and softens; 1 to 0 the heart
+## settles and stops first, then the ring pulls back to the edge.
+## Pursuit (§FD): whatever hunts you (Pursuit: the boss now, residents
+## later) registers when it notices or hits you and clears when it gives
+## you up; recover.step_s counts only while nothing is (fd.recover_starts
+## "pursuer_gives_up"), held at zero until then, and any new hit resets it
+## as built. Light doesn't heal (fd.light_heals false): nothing here looks
+## at the light.
 
 static var instance: Harm = null
 static var D: Dictionary = Tuning.table("harm")
+static var FD: Dictionary = D.get("fd", {})
+## The ring's canvas layer: over the grade (PostGrade, -1), under the
+## crawler's UI (10: the log, the settings, the fades).
+const RING_LAYER := 5
 
 var player: PlanetPlayer
 var post: PostGrade
@@ -64,6 +91,18 @@ var flash := 0.0
 var landed := 0
 var _bus_fx := -1
 var _lpf: AudioEffectLowPassFilter
+## §FD in the crawler (setup(): while GameMode.crawler_running): the ring,
+## the heartbeat from hit 1, recovery only once nothing pursues you.
+var fd := false
+## Who is chasing you now (§FD): the hunters' nodes, by pursue(); a freed
+## one drops out by itself.
+var pursuers: Array = []
+## The ring now: 0 none, 1 hit 1's, 2 hit 2's, eased between (_fd_look).
+var ring := 0.0
+## The heartbeat's loudness now (dB; fd.hit_N_edge heart_db).
+var heart_db := 0.0
+var _ring_layer: CanvasLayer
+var _ring: HarmRing
 
 
 static func active() -> bool:
@@ -82,6 +121,18 @@ func setup(p_player: PlanetPlayer, p_post: PostGrade, p_hud: Hud) -> void:
 	_thud = AudioStreamPlayer.new()
 	_thud.name = "HitThud"
 	add_child(_thud)
+	fd = GameMode.crawler_running and not FD.is_empty()
+	if fd:
+		# §FJ.3: the ring, not the grade's dark nor the muffle (the Master
+		# bus stays the volume slider's alone).
+		_ring_layer = CanvasLayer.new()
+		_ring_layer.name = "HarmRingLayer"
+		_ring_layer.layer = RING_LAYER
+		add_child(_ring_layer)
+		_ring = HarmRing.new()
+		_ring.name = "HarmRing"
+		_ring_layer.add_child(_ring)
+		return
 	# The muffle: a low-pass on the Master bus, wide open until a hit.
 	_lpf = AudioEffectLowPassFilter.new()
 	_lpf.cutoff_hz = 20000.0
@@ -99,6 +150,29 @@ func _exit_tree() -> void:
 
 func stage_of(n: int) -> Dictionary:
 	return (D.get("stages", {}) as Dictionary).get(str(n), {})
+
+
+## A hunter has you, or has given you up (§FD; `who` the hunter's node,
+## `on` false when it gives you up; Pursuit, the residents): while any
+## has you, you don't heal (fd.recover_starts). Harmless twice.
+func pursue(who: Object, on := true) -> void:
+	if who == null:
+		return
+	if not on:
+		pursuers.erase(who)
+	elif not pursuers.has(who):
+		pursuers.append(who)
+
+
+## Anything chasing you now (a hunter freed mid-chase drops out).
+func chased() -> bool:
+	pursuers = pursuers.filter(func(o) -> bool: return is_instance_valid(o))
+	return not pursuers.is_empty()
+
+
+## The stage's ring and heartbeat in the crawler (§FJ.3), {} at 0.
+static func edge_of(n: int) -> Dictionary:
+	return FD.get("hit_%d_edge" % n, {}) if n > 0 else {}
 
 
 ## Inside invuln_s of the last hit (§EC): a new one doesn't land.
@@ -178,6 +252,10 @@ func reset() -> void:
 	muffle_db = 0.0
 	heart = false
 	heart_bpm = 0.0
+	ring = 0.0
+	# Waking, nothing has you (a hunter still after you says so again on
+	# its next step, Pursuit.step).
+	pursuers.clear()
 	if player != null:
 		player.typing = false
 	if hud != null:
@@ -197,12 +275,21 @@ func tick(delta: float) -> void:
 	if taking:
 		_taken(delta)
 	elif not hits.is_empty():
-		# One hit heals every step_s; any hit set the timer back (§EC).
-		_step_t += delta
+		# One hit heals every step_s; any hit set the timer back (§EC). In
+		# the crawler the timer waits at zero while anything is chasing you
+		# (§FD: you heal by losing it, counted from when it gives you up).
+		if fd and str(FD.get("recover_starts", "")) == "pursuer_gives_up" and chased():
+			_step_t = 0.0
+		else:
+			_step_t += delta
 		if _step_t >= float(rec.get("step_s", 5.0)):
 			_step_t = 0.0
 			hits.pop_front()
 			stage = mini(hits.size(), 2)
+	if fd:
+		_fd_look(delta)
+		_apply()
+		return
 	# The look eases toward the stage's (the dark comes in fast, pulls back
 	# slowly); the heart goes first on the way down (recover.heart_first).
 	var st := stage_of(stage)
@@ -238,6 +325,69 @@ func tick(delta: float) -> void:
 				_heart.volume_db = -2.0
 				_heart.play()
 	_apply()
+
+
+## The crawler's stages (§FD, §FJ.3): the ring eases toward the stage's
+## (closing in fast, pulling back slowly) and the heart takes the stage's
+## edge: hit 1's pace and loudness, hit 2's harder and faster. Healing from
+## 1 to 0 the heart settles and stops first, then the ring pulls back
+## (recover.heart_first, as in the open world).
+func _fd_look(delta: float) -> void:
+	var edge := edge_of(stage)
+	var want_heart := bool(edge.get("heartbeat", false))
+	var k_in := 1.0 - exp(-delta * 6.0)
+	var k_out := 1.0 - exp(-delta * 0.8)
+	var target := float(stage)
+	if heart and not want_heart:
+		# Hold the ring while the heart settles.
+		target = maxf(target, minf(ring, 1.0))
+	ring = lerpf(ring, target, k_in if target > ring else k_out)
+	if absf(ring - target) < 0.002:
+		ring = target
+	if want_heart:
+		var bpm := float(edge.get("heart_bpm", 105.0))
+		var db := float(edge.get("heart_db", 0.0))
+		if not heart:
+			# It starts with the hit: the thud and the breath, then the
+			# first beat.
+			heart = true
+			heart_bpm = bpm
+			heart_db = db
+			_beat_t = 0.3
+		else:
+			heart_bpm = lerpf(heart_bpm, bpm, k_in if bpm > heart_bpm else k_out * 2.0)
+			heart_db = lerpf(heart_db, db, k_in if db > heart_db else k_out * 2.0)
+			if absf(heart_db - db) < 0.05:
+				heart_db = db
+	elif heart:
+		# The heart settles: slower, then still.
+		heart_bpm = lerpf(heart_bpm, 60.0, k_out * 2.0)
+		if heart_bpm < 75.0:
+			heart = false
+			heart_bpm = 0.0
+	if heart:
+		_beat_t -= delta
+		if _beat_t <= 0.0:
+			_beat_t = 60.0 / maxf(heart_bpm, 30.0)
+			beats += 1
+			if _heart.is_inside_tree():
+				_heart.volume_db = heart_db
+				_heart.play()
+
+
+## The ring's look at `level` (0-2, §FJ.3): {color, alpha, width_frac}. Up
+## to 1 it closes in from the edge to hit 1's depth, fading in over the
+## first third of the way; past 1 it darkens and reaches toward hit 2's.
+static func ring_look(level: float) -> Dictionary:
+	var e1 := edge_of(1)
+	var c1 := Color(str(e1.get("color", "#B01818")))
+	var a1 := float(e1.get("alpha", 0.6))
+	var w1 := float(e1.get("width_frac", 0.1))
+	if level <= 1.0:
+		return {"color": c1, "alpha": a1 * smoothstep(0.0, 0.35, level), "width_frac": w1 * maxf(level, 0.0)}
+	var e2 := edge_of(2)
+	var t := clampf(level - 1.0, 0.0, 1.0)
+	return {"color": c1.lerp(Color(str(e2.get("color", "#6A0A0E"))), t), "alpha": lerpf(a1, float(e2.get("alpha", 0.8)), t), "width_frac": lerpf(w1, float(e2.get("width_frac", 0.16)), t)}
 
 
 ## Hit 3: the frame closes to black, "Good night", held, faded; then the
@@ -277,6 +427,12 @@ func _apply() -> void:
 	if hud != null:
 		var ef: Dictionary = (D.get("hit_feedback", {}) as Dictionary).get("edge_flash", {})
 		hud.set_hit_flash(Color(str(ef.get("color", "#0A1440"))), flash * float(ef.get("alpha", 0.55)))
+	if fd:
+		# The ring (no muffle in the crawler); the closing black covers it.
+		if _ring != null:
+			var look := ring_look(ring)
+			_ring.show_ring(look.color, float(look.alpha) * (1.0 - black), float(look.width_frac))
+		return
 	AudioServer.set_bus_volume_db(0, muffle_db)
 	if _lpf != null:
 		# 0 dB wide open; each -4 dB takes the top off a little more.
