@@ -4472,10 +4472,25 @@ Data: `torch.json → pitch_head` and `snuff.moving_fast` (new, not wired). Not 
 `docs/PROMPT_QUEUE.md` 50 (the snuff rule) and 51 (the pitch head and flame), after 44 (one
 amber firelight), since 51 lights the flame in 44's colour. 50 is small and can run any time.
 
-### EZ.4 Open for Mike
+### EZ.4 Open for Mike (both answered in EZ.5)
 1. **Does anything else put it out?** Mike's words could mean never at all. If so, the strong
    airway gusts and deep water stop snuffing it too, and §ET.7's "rare and dramatic" moments are
    gone (the boss, §EY, is then the only danger to you, and nothing endangers the light). Claude
    left both in until Mike says.
 2. **Does it still burn down?** `torch.json → burn_min` is 50 real minutes (§AW: about one night,
    the night being 48). A torch that burns out also goes dark; the bundle by the hearth is the spare.
+
+### EZ.5 Only water puts it out, for now — LOCKED (6 Oct, 21:47, Mike)
+Mike, answering EZ.4: *"just water for now."*
+- **Deep water is the one thing that puts the torch out** (`douse_depth_m`, §AW): wading toward it
+  gutters it first, as built. Out still means out: relight at the hearth or any relit light.
+- **The strong airway gust no longer puts it out.** The marked mouths stay (§ET.6), heard and seen
+  as built, and a gust whips the flame hard sideways (§EZ.2's lean, at its full `max_deg`), but it
+  holds. Ordinary drafts lean it, as before (§EV.3).
+- **It no longer burns down** in Torchfire 1: `burn_min` doesn't count down in the crawler, and no
+  torch there burns out. The bundle by the hearth stays (a spare, and set dressing).
+- **Amends §ET.7** (water is now the only one of its three), **§AW's** "burns about one night" for
+  Torchfire 1, and **§EY.2:** the boss's "torch out" case now comes only from water. The open
+  world (Torchfire 2) keeps its own rules.
+- **"For now":** §ET.7's other lights with trade-offs (a clay lamp, a candle; steadier, rarer
+  fuel) would need burn time back to mean anything. That waits for Mike.
