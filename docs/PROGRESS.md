@@ -4,6 +4,74 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 49, §EY.1, §EY.2, §EY.8 step 1: a boss in the dungeon, the snake (827805b, 35538ea)
+- **Built in parallel with its prerequisites.** The prompt says "after 44–48", and Mike started 45–53 at the same time. So I built against the branch as each pass landed (45, 50, 52–57 and 60's part 1) and rebased onto them.
+  - 46, 47 and 48 haven't landed yet, so three things wait for them. Until 46's spine is in, the lair's "main way" is the doors from the hearth room to the tomb's heart; `BossGround.main_path` reads the spine as soon as the layout has one.
+  - 46's walk-to-the-exit check with the snake loose runs once that check exists.
+  - The dark is worked out from whatever holders the layout has, so 47's wall torches join it with no change. I'll check that, and the lair's rim in 48's stone, when they land.
+- **Its ground** (`BossGround`, `bosses.json → rule`): the tomb as a graph. Each room is one node. Each corridor or stair is cut at its sconces into stretches, and each stretch is a node too.
+  - A room is lit once every torch in it is lit (`room_relit_when all_torches_lit`); the hearth room always is.
+  - A stretch is lit when every end of it is: a lit sconce, or a door into a lit node. An end with nothing there (a dead end, the way out) never darkens it.
+  - So every holder is some node's light, and the dark reaches nothing exactly at the last holder, never before. It is worked out again on every relight.
+- **The snake** (`Boss`, `bosses.json → bosses.desert`, the one marked `first`):
+  - **Its rounds:** it slithers the corridors at `speed_mps` (2) from dead-end room to dead-end room and coils in each for `coil_s`. It never goes into a lit node, and never into the hearth room at all.
+  - **Noticing** (`rule.notice`): your lit torch in its line of sight within `sees_flame_m` (20 m); a sprint (or a swing landing on it, queue 57's "as loud as a sprint") within `hears_sprint_m` (15 m); or you within `feels_m` (1.5 m, new) whatever your light.
+  - **The hunt:** through its dark at `hunt_mps` (3.6, new; slower than your walk). If you stand in a lit room it waits at the edge of its dark for `watch_s` (10 s, new), then gives you up.
+  - **Your torch is a delay** (`rule.torch_in_hand`): torch lit, it rears at `torch_delay.hang_m` (3.5 m, new), hissing at the flame, for `hang_s` (4 s, new) in all, then closes. Torch out, it comes straight in.
+  - **The strike** is queue 57's `CreatureStrike` with the snake's own `strike` block (wind-up 0.7 s, lunge 0.15 s, reach 2.5 m). It rears back with its jaws opening and a hiss, then lunges. A lunge that reaches you is one hit through `take_hit`, so `harm.json → invuln_s` holds. No strike reaches you in a lit node (`rule.relit_room safe`).
+  - **The torch's stagger** works on it. A lit swing into the rear-back breaks the strike, and it reels `reel_m` (1.5 m) away from you. It goes back along its own body when it came at you along it; otherwise (it struck from its coil) it goes straight back with its body following. It never reels into the light.
+  - This is queue 57's part 2 for the snake: its rear-back and jaws, its hiss, and a landed swing it hears.
+  - **Light the node it is in** and it leaves at once for the nearest dark (`leave_mps` 4, new), crossing at most two lit nodes beyond its own (the lit stretch outside a room).
+- **Harm in the crawler:** `CrawlerMain` now makes queue 56's `Harm` (its ring and heartbeat), and a small view (`CrawlerHarmView`) for its navy hit flash, the black and "Good night".
+  - Three hits: you wake on the mat by the hearth. Every relit holder is still lit, your torch is out and in your pack, and both hands are empty. The snake goes back to coiling at the far end of its dark.
+  - The camera kick of a hit now shows underground (`CrawlerPlayer`). `revive`'s three-second breath after waking now runs out there too (it never ran down in the crawler).
+  - Its chase is a `Pursuit` (queue 56, `gives_up`), so while it has you, you don't heal.
+- **The lair** (`BossGround.place_lair`, `TombBuild._lair_hole`; `lair.hole_r_m` 0.7, new): a side room off the main way has its floor broken through. It was a dead end in all 33 layouts checked.
+  - It is a black mouth 1.4 m across, with flags tipped into it and broken stone and small bones round it. It keeps clear of the room's doors and fires, and of the line between its doors.
+  - The black is its own unlit disc. The stone shader pulls even black vertex colour toward stone at night, so the first try drew mossy floor.
+  - A ring of collision keeps you at the edge (`enterable false`). The found fire pot keeps 1.5 m clear of it (one line in `FirePots`).
+- **The release:** when the last holder catches, it goes home.
+  - If you can see it, it flees toward the hole and is gone the moment you can't; otherwise it is gone at once.
+  - A long sound (`BossSounds retreat`) travels along the tomb to the hole and down it over `release.cry_s` (5 s).
+  - The drips, hushed by `bed_hush_db` (−18 dB) while it prowled, come back over `bed_return_s` (4 s).
+  - The log says "Drove the giant snake into its hole." Its breathing plays from under the hole, heard within `lair.breathing_heard_m` (12 m).
+- **Its tell and its body:**
+  - The scales on stone are a 4 s loop (`BossSounds scales_loop`) at its body. You hear it to 34 m (`audio.json → kinds.boss_tell`, new), and it drops 14 dB while it lies coiled. Nothing names it on screen.
+  - The body is baked sprites (`BossBody`, through `FigureSprite.bake`): a head with its jaws shut, one with them open, a plain length of body and a banded one, each 8 ways round by 3 heights.
+  - In play it is a chain of about 50 overlapping lengths on the path the head took, rounded at the ends so they read as one body, swinging side to side as it goes and lying in a coil.
+- **My calls, for Mike:**
+  1. **Cut off in the light** (its room lit when the stretch outside is too), it goes down into the dark under the tomb, gone the moment you can't see it, and comes up a coil's while later. It comes up out of its hole if that room is dark, else in the dark nearest the hole. I read "if none is left it goes to its lair" as that, rather than trekking it through the lit tomb (my first try did, once through the hearth room).
+  2. `hunt_mps` 3.6 is below your walk (4.3): you can always walk away; dead ends are where it catches you.
+  3. Waking, your torch is out and in your pack, both hands empty.
+  4. The drips go quiet while it is abroad, so their coming back is the release's "small sounds".
+  5. Its look is a placeholder: olive-brown with a dark band every third length.
+- **Not in this pass:** following you into the light once it has hit you (`rule.chase_enters_light`) is queue 56 part 2. Fire pots driving it off is queue 60 part 2, which landed on this snake while this entry was written (4370e02, below). The other seven bosses come with their worlds. Row 57 still reads `todo`: with its snake part in here, it can be marked when Mike says.
+- **Data:**
+  - `[NOT WIRED YET]` is off `bosses.json → _help.about`, which now says what is wired and that the other bosses aren't. `_help.rule`, `contact`, `lair`, `release` and `bosses` each gain a "Built" note.
+  - New tunables with help lines: `bosses.desert` `hunt_mps`, `leave_mps`, `torch_delay`, `feels_m`, `watch_s`, `body`; `lair.hole_r_m`; `release.cry_s`, `bed_hush_db`, `bed_return_s`.
+  - `audio.json` gets `boss_tell`, `boss_breath` and `boss_cry`. `Tuning` loads `bosses`.
+- **Edits outside my files** (for the merges):
+  - `CrawlerMain`: makes `Harm`, the view and the boss; wakes you.
+  - `CrawlerPlayer`: the kick, the breath and `fall_taken`.
+  - `TombKit`: one line places the lair. `TombBuild`: one line and `_lair_hole`. `FirePots`: one clearance line.
+  - Three checks: `crawler_check`'s "no FigureSprite in the tomb" now leaves the boss's own sprites out; `crawler_harm_check` points at the crawler's Harm and holds the snake still; `fire_pot_check`'s stand-in class is renamed `BossStandIn` so it doesn't hide `Boss`.
+- **Checks:**
+  - `tools/boss_check.gd` (new), seeds 1, 7, 42: 106 lines, 0 fails.
+    - The dark as each holder caught (seed 1, 22 holders): 34 33 31 30 28 27 25 24 22 21 19 18 16 15 13 12 10 8 7 5 4 2 0. Seeds 7 and 42 start at 29 and 23, and all three reach 0 only at the last holder, in three relight orders.
+    - The lair is in a dead-end crypt in all three seeds and in 30 more layouts.
+    - Contact: it noticed you at 0.10 s and held at the torch's edge for 4.0 s. The hits came at 5.37, 7.23 and 9.10 s (1.87 s apart against `invuln_s` 0.6), then "Good night", and you woke at the hearth with your two lights still lit. Torch out, its first strike landed at 0.97 s.
+    - A lit swing at 48% of its wind-up staggers it, and no hit counts. Struck at from its coil it reels 1.50 m straight back (2.60 → 4.10 m from you); come at you down a corridor, 1.50 m back along its body (1.77 → 3.22 m).
+    - Each full relight run with it loose: 0 entries into the light and 0 steps in the hearth room. It went below once a seed when cut off, and ended in its lair breathing, with the drips back at −20 dB.
+    - Its tell: 0 dB on the move, −14 dB coiled; the drips hushed to −38 dB while it prowled.
+  - `tools/boss_frames.gd` (new), seed 7, once at the end: 7 lines, 0 fails.
+    - Its four sheets fill all 24 cells each (fewest 260 px).
+    - At the torch's edge, 3.5 m down a corridor, reared and hissing: 1003 pixels of the 854×480 frame, 81 of them warm from your torch. Mid-strike its jaws are open.
+    - The hole's mouth is the dark's navy (#080c4a) against its firelit edge (#b8521d).
+  - On the branch with queue 61 and 60 part 2 in: `crawler_check` (152 lines), `crawler_harm_check` (45), `stagger_check` (41), `fire_pot_check` (73) and `hands_check` (61), 0 fails each, and `boss_check` as above. `crawler_check` prints four "Parameter "m" is null" errors from the headless renderer during the half-dark checks; the branch prints the same four without this pass.
+  - **Found by the stagger check and fixed (35538ea):** struck at from its coil, "back along its own body" first wound its head round the coil, 0.4 m closer to you. On seed 1 the check's swing also relit a sconce beside you with its passing flame (§CN), and the snake rightly left the room. So the check now swings out of reach of any unlit holder.
+
+---
+
 ## 2026-10-07 — Queue 60, §FA.3–§FA.4, part 2: the snake through the fire pots' socket: driven off, never killed; the wick and the burst give you away (4370e02)
 - **Queue 55's two hands** were wired to the pots by that pass itself (the pots live on the left hand's strip, my Tab-and-wheel stand-in is gone); the fire pot check passed there, and here.
 - **The snake** (queue 49's `Boss`) is a fire target now:

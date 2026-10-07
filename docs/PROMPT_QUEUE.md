@@ -78,7 +78,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | todo |
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | todo |
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
-| 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | todo |
+| 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | built 827805b |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | built 8c409e6 |
@@ -941,7 +941,7 @@ CHECK (headless, seeds 1, 7, 42): no vertex colour in the tomb's stone falls out
 
 ## 49 — A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole — §EY.1, §EY.2
 
-**Status:** todo
+**Status:** built 827805b
 **Mike sees:** Something long moves in the tomb's dark. You hear scales dragging on stone before you see it. It slithers the unlit corridors, coils in dead ends, and comes for you when it sees your flame. It never enters a room you have relit, and if you relight the room it is in, it slides away into the dark. Let it reach you and each strike is a hit; three is "Good night", and you wake at the hearth with every torch you lit still burning. Light the last torch and you hear it go, a long sound travelling away and down into a hole in a side room, and then the tomb's small sounds come back. Stand at the edge of that hole and you can hear it breathing below.
 
 ```text
