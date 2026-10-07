@@ -90,7 +90,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
 | 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
 | 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | todo |
-| 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | todo |
+| 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | built e11418b |
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | todo |
 | 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | todo |
 
@@ -1121,7 +1121,7 @@ CHECK (headless): no pot lights with the torch unlit; a scripted throw lands wit
 
 ## 61 — Atmosphere, not puzzles: glow-moss that dims at your flame, beetles that scatter, daylight that follows the clock — §FG
 
-**Status:** todo
+**Status:** built e11418b
 **Mike sees:** On damp stone in the dark there's a faint blue-green glow of moss that fades as your torch comes near and creeps back after you pass. Beetles and the odd scarab crawl the walls and scatter from your light into the cracks. The daylight down the hearth's shaft brightens and dims with the time of day. None of it is a puzzle; it's just there.
 
 ```text

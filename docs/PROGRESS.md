@@ -4,6 +4,41 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 61, §FG: atmosphere, not puzzles — glow-moss, wall life, daylight with the clock (e11418b)
+- **The crawler didn't run the clock.** `World` turns `days` only once a planet is generated, and the crawler builds none, so the shafts' daylight sat frozen at the start time. `CrawlerMain` now turns it at the 144-minute day (`World.day_length_s`). The sun follows §FK.3 (locked while this pass was under way): one clock everywhere, DayCycle's reference day (day 60, dusk 18, night 48, dawn 18), with no latitude, axial tilt or day of year. You wake at 15:07 on the tomb's sky with the sun 43° up; it sets about 22 minutes into play, and night falls at about 31 minutes and lasts 48. Prompt 63's clock part is therefore already in place; its check can confirm it.
+- **Daylight with the clock** (`Vents`; `smoke.json → vents.daylight`, new `sky_band_deg` [-7, 11.5] and `low_sun_share` 0.35): the colour follows the twilight (moonlit blue to day blue), the strength the sun's height (0.35 of noon's with the sun on the horizon, rising with its sine).
+
+  | Seed 7, 11 shafts summed | midnight | sunrise | 9:00 | noon | 15:00 | 17:00 |
+  |---|---|---|---|---|---|---|
+  | light energy | 3.7 | 6.3 | 22.2 | 26.6 | 22.2 | 15.6 |
+- **Glow-moss** (`GlowMoss`; `crawler.json → ambience.glow_moss`):
+  - **Where.** On the tomb's dressed wall faces (TombBuild now records each one: its plane, its stones and their heights), low on the wall, in front of its own piece's floor. Only where the stone is damp: the wet field the moss itself grows by (§EU.4, `FittedStone.climate_at`) plus `airway_damp` near an airway, at `damp_min` 0.62 or over. Never on dry stone, never within 1.5 m of a fire (its soot burnt the moss off), never in the hearth room or on a stair. 6–16 patches a tomb over six seeds (seed 7: 10).
+  - **Drawn** in the stone's own shader (`ruin.gdshader → glow_moss`: a small data texture of the patches, no light node). The moss tile's own texels are the patch, thickest at its heart and ragged at its rim, worked out at each texel's middle and mip. They glow in `color` at `energy` (0.15, kept: it reads as a faint glow) and take a moss tint, so by torchlight the patch is moss on the stone. A faint light falls on the stone round it (`light_m` 0.9, `light_strength` 4: at 1 it can't be seen, at 10 it is a lamp).
+  - **Dims.** Any flame within `dims_near_flame_m` whose light reaches it fades it to `dim_to` over `dims_s` (0.6 s, new); once the flame has gone it creeps back over `returns_s`. "Any flame" is the set HalfDark counts (`CrawlerFires.flame_points`): the hearth, relit holders and sconces, the torch in hand, a planted torch, a fire pot's burning fire and its lit wick; "reaches" is a ray with no stone between (`CrawlerFires.lit_on`).
+  - Nothing the rules read sees it: `Torch.light_at`, the fires, the snake's dark and the full-dark check (still one light burning) are unchanged.
+- **Wall life** (`WallLife`; `ambience.wall_life`):
+  - 10–16 beetles a tomb, a fifth of them scarabs. They are small meshes with two leg poses, not sprites: at 2–6 pixels the two look alike, and a mesh lies on the wall at any heading. Matte and dark, lit like the world (`CreatureBodies.mat`).
+  - Each rides the actual stone under it (each stone's rim and pillowed face, recorded by FittedStone), on the stretch of wall seen from its own piece. Faces are picked by length, damp and distance from every fire.
+  - In a flame's light within 3 m one runs to the nearest joint of the stone it is on (the wall's real joints, from the stones' Voronoi cells) and squeezes in, gone within `gone_within_s` 0.85 s. After `hide_s` (8–22 s) it comes out onto that stone again once the spot is dark.
+- **Checks** on the pushed build (`crawler_check`, seeds 7 and 1: 152 and 154 passes, 0 fails; with all this in the tomb, `boss_check` 82, `hands_check` 61, `stagger_check` 41, `crawler_harm_check` 45 and `fire_pot_check` 63 passes, 0 fails, no script errors):
+  - glow-moss only on damp stone (none in a dry tomb, 24 in a wet one), no light node, nothing the rules read sees it;
+  - a torch 0.9 m off: 0.0150 = 0.1 × 0.15, and the stone's data says the same; 0.0825 halfway through `returns_s`, at rest 6 s after;
+  - a beetle stays out in the dark with you beside it, is gone 0.27–0.32 s after the torch is lit, into a joint (0.0000 m off its line), and comes out again 13.2–14.6 s later;
+  - the bugs favour damp, dark walls; the clock turns 2 s in 2 s of play; the shafts climb and sink with the sun, moonlit blue at night;
+  - the snake is held still (`Boss.auto`) through these, as `crawler_harm_check` does.
+- **Frames** (`crawler_frames`, seed 7, the pushed build: 35 passes, 0 fails, 45 frames):
+  - `01a`: waking at sunrise. The hearth's shaft is a faint trace, against noon's clear blue column in `01`.
+  - `19a`–`19c`: a corridor's glow-moss (r 0.26 m), held at midnight. In the dark, with the half-dark letting the near walls read in navy, it glows teal down the corridor (196 blue-green pixels). By torchlight from 4.1 m it is a teal patch on the amber wall at full glow (238). Walked up to 1.8 m it has dimmed to a tenth: plain moss in the torchlight (0).
+  - `20`: a beetle close by torchlight, small and dark on a stone's face (a harness frame: its scatter held off for the picture).
+  - The smothered corridor stays dark (mean 0.090, the half-dark's own level).
+- **Merged with the passes that landed meanwhile** (45, 49, 50, 52–57, 60 and the §FK design): my frames are `01a` and `19a`–`20`, after theirs; HOW_TO_RUN's Torchfire 1 block keeps theirs with the atmosphere added.
+- **Fixed in passing:**
+  - The vents' day/night check read the lights one frame early (before the vents had updated), so its "day" was really the start time. It passed because the old daylight was flat all afternoon. It now waits the frame and reads noon (26.6, not 21.8).
+  - Seed 1 caught a glow-moss patch in a room's corner: a side wall runs on past the room's ends behind the end walls. Patches and beetles now keep to the stretch seen from their own piece.
+  - `flame_points` first cast a burnt-out fire pot's freed fire (3,730 script errors in `fire_pot_check`); it checks before the cast now. HalfDark's `flame_near` has the same cast-before-check; it doesn't fire while the torch is lit, so it went unseen. Flagged, not changed here.
+
+---
+
 ## 2026-10-07 — Queue 58, §FE and §FC.2: the tomb's skeletons, and somewhere to hide (43688cb)
 - **On top of the other sessions' work.** The skeletons' strike is 57's `CreatureStrike`, their chase is 56's `Pursuit`, and their hits go through 49's Harm in the crawler. So the stagger, the tells, giving up and being taken work the same for the skeletons as for the snake. While I built this, the other sessions built 45, 49, 50, 52, 53, 54, 55, 56 part 1, 57 part 1, 60 parts 1 and 2, and 61. My own stand-ins for the strike, the stagger, the chase and Harm in the crawler went in the merge.
 - **Where they rest** (`TombKit._place_residents`, its own seed, so the rest of the tomb is unchanged): 3–6 skeletons a tomb (`per_dungeon`).
