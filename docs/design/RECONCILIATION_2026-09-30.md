@@ -4417,3 +4417,65 @@ After §EX.8's five passes (`docs/PROMPT_QUEUE.md` 44–48), as prompt 49:
 2. Each world's boss as that world is built (the tundra's yeti with §EW.7 step 3).
 
 Mike plays and reports between each.
+
+## EZ. The torch: moving fast never puts it out; a pitch-wrapped head with a pixel flame — LOCKED (6 Oct, 21:41, Mike's playtest notes)
+
+Mike, after the first dungeon: *"the torch should not go out, even with moving it around
+quickly"*; *"the tip of the torch should look as if it's been rolled in pitch, and the tip of it a
+bit more pixelated fire rather than just the embers."* Taken as locked, as §EX was. What is
+certain is locked; the one reading that isn't (whether drafts and deep water still put it out) is
+EZ.4 call 1.
+
+### EZ.1 Moving fast never puts it out
+- **Speed costs the torch nothing.** Walking, sprinting flat out for as long as you like, turning,
+  whipping the view about and swinging it (§CN) never gutter it and never put it out.
+- **Removes §ET.7's sprint rule** (`torch.json → snuff.sprint`: a sprint held 6 s guttered it,
+  9 s put it out; built as `TorchSnuff`). It was the only movement rule in the code.
+- **Speed still shows:** running feeds the coal air and the flame flares a little brighter
+  (`ember.air_brighten`, as built), and the flame streams back against your motion (EZ.2). You see
+  your speed in the fire; it never costs the light.
+- **Amends §EY.2's "Running" line:** running from a boss no longer risks the torch. The chase is
+  the risk, not the flame.
+- **Unchanged until Mike says (EZ.4 call 1):** a strong gust at a marked airway mouth (§ET.6,
+  §ET.7, warned 1.5 s ahead) and deep water (`douse_depth_m`) still put it out. Out still means
+  out: relight at the hearth or any relit light (§AW, §CQ).
+
+### EZ.2 A pitch torch: the wrapped head and a pixel flame
+- **The head (Mike's "rolled in pitch"):** the stick's top wrapped in bands of fibre or bark and
+  soaked in pitch: a near-black brown, a little thicker than the stick, straight-sided (six flat
+  sides like the burnt end of §CP: never a ball, never rounded), the bands showing as steps, and a
+  few drips of pitch run down the stick below it. Pine pitch and birch tar are stone-age materials
+  (§EH: no metal).
+- **The tarry look is painted, not lit** (R-rules: no shine, no specular): near-black where the
+  pitch is thick, dark amber where it is thin and bubbling just under the flame.
+- **The flame comes back** (Mike's "more pixelated fire rather than just the embers"): the
+  campfire's one flame card (§BZ, `Campfire.flame_node`, `look.json → fire.flame.torch`) on top of
+  the head, drawn on a coarser texel grid than the campfire's so it reads chunky and pixelated
+  even close in first person, in the same posterised bands, with its couple of single-pixel
+  sparks. **Amends §CP:** the torch carried a coal and no flame since 3 Oct. The coal stays as the
+  glowing top of the wrap under the flame, so it is pitch, coal and flame, bottom to top.
+- **The flame moves with you** (Claude's first guess): it leans back against your motion and
+  stretches a little at a sprint, toward an airway's draft (§EV.3), and settles when you stop.
+  Never out (EZ.1).
+- **Its light** is §EX.6's amber; it flickers with the flame (§BZ's noise) as well as breathing
+  with the coal (§CP). Claude Code's call on the mix.
+- **Unlit** (the bundle by the hearth, §ET.3): the pitch head, no flame, no coal. **Burnt out:**
+  the charred stub, as built.
+- **Its smoke** stays as built (`Smoke.tick_flame`, by the flame's size), a little darker and
+  sootier for pitch (first guess), never a neutral grey (R3).
+- **Every torch in Torchfire 1 is this pitch torch.** §CQ's torch kinds stay with the open world
+  (Torchfire 2).
+
+Data: `torch.json → pitch_head` and `snuff.moving_fast` (new, not wired). Not built.
+
+### EZ.3 Order of work
+`docs/PROMPT_QUEUE.md` 50 (the snuff rule) and 51 (the pitch head and flame), after 44 (one
+amber firelight), since 51 lights the flame in 44's colour. 50 is small and can run any time.
+
+### EZ.4 Open for Mike
+1. **Does anything else put it out?** Mike's words could mean never at all. If so, the strong
+   airway gusts and deep water stop snuffing it too, and §ET.7's "rare and dramatic" moments are
+   gone (the boss, §EY, is then the only danger to you, and nothing endangers the light). Claude
+   left both in until Mike says.
+2. **Does it still burn down?** `torch.json → burn_min` is 50 real minutes (§AW: about one night,
+   the night being 48). A torch that burns out also goes dark; the bundle by the hearth is the spare.
