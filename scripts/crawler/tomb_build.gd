@@ -407,6 +407,10 @@ func _dress(pc: Dictionary) -> void:
 			# lies open (residents, §FE).
 			var yaw := atan2(pv.x, pv.y)
 			for s in TombKit.coffin_spots(_lay, pc):
+				# The boss's lair is where this one stood (TombKit.lair_took):
+				# it fell through with the floor (_lair_hole).
+				if TombKit.lair_took(_lay, int(pc.id), int(s.i)):
+					continue
 				var a := float(s.along)
 				var sd := float(s.sd)
 				coffins += 1

@@ -110,12 +110,13 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	_place_holders(lay, rng)
 	_place_vents(lay)
 	_place_airways(lay, rng)
-	# The boss's lair (design §EY.1; BossGround.place_lair, its own dice):
-	# a hole in the floor of a side room off the main way.
-	lay["lair"] = BossGround.place_lair(lay)
 	# What lives in its dark (design §FE): where the residents rest (its
-	# own dice too).
+	# own dice).
 	_place_residents(lay)
+	# The boss's lair (design §EY.1; BossGround.place_lair, its own dice
+	# too): a hole in the floor of a side room off the main way, never in a
+	# grave a resident sleeps in or by its lid.
+	lay["lair"] = BossGround.place_lair(lay)
 	return lay
 
 
@@ -791,6 +792,14 @@ static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
 		for a in row(lay, pc, sd, 1.6, 2.4, float(pc.len) - 1.4, 1.2, 1.9, 1.4, 0.0):
 			out.append({"along": a, "sd": sd, "i": out.size()})
 	return out
+
+
+## Whether the boss's lair took coffin spot `spot` of piece `piece`: in a
+## crypt the hole is where a coffin stood, fallen through with the floor
+## (BossGround.place_lair, never a resident's; TombBuild leaves it out).
+static func lair_took(lay: Dictionary, piece: int, spot: int) -> bool:
+	var l: Dictionary = lay.get("lair", {})
+	return l.has("coffin") and int(l.get("piece", -1)) == piece and int(l.coffin) == spot
 
 
 ## A catacomb's niche stacks (three shelves each, down both long walls

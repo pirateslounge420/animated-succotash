@@ -25,6 +25,14 @@ extends RefCounted
 ## (place_lair), so the generator (TombKit) and the builder (TombBuild)
 ## share it.
 
+## In a crypt the lair is where a coffin stood (_coffin_spot): its rim this
+## far (m) off the wall the coffin stood against.
+const COFFIN_WALL_M := 0.75
+## ...and its rim this far along the row from an open grave's middle (the
+## grave itself, its lid shoved off onto the floor beside it, out to about
+## 1.5 m, and room to spare).
+const OPEN_GRAVE_M := 2.1
+
 ## [{"id", "kind" ("room" / "stretch"), "piece", "a0", "a1" (the stretch's
 ## span along its piece; a room 0..len), "holders" (a room's torches,
 ## indices into lay.holders), "ends" (a stretch's: [{"type": "sconce",
@@ -396,11 +404,13 @@ static func main_path(p_lay: Dictionary) -> Array:
 ## The lair (design §EY.1: "a hole in a cave somewhere in the dungeon";
 ## bosses.json lair: kind hole, off_main_path): a side room off the main
 ## way (main_path), a dead end if there is one, and in it a spot of floor
-## clear of its doors, its fires, its airways and the way between its
-## doors, where the floor has broken through into the dark below.
+## clear of its doors, its fires, its airways, the way between its doors
+## and what stands on its floor, where the floor has broken through into
+## the dark below; in a crypt, where one of its coffins stood (_lair_spot).
 ## {"piece", "pos" (Vector3, the hole's middle on the floor), "r" (its
-## radius, bosses.json lair.hole_r_m)}, or {} if no side room has room for
-## it. Its own RNG, so the rest of the layout's dice are untouched.
+## radius, bosses.json lair.hole_r_m)[, "coffin" (the crypt's coffin spot
+## it took, TombKit.coffin_spots' "i")]}, or {} if no side room has room
+## for it. Its own RNG, so the rest of the layout's dice are untouched.
 static func place_lair(p_lay: Dictionary, r_m := -1.0) -> Dictionary:
 	if r_m < 0.0:
 		r_m = float((Tuning.table("bosses").get("lair", {}) as Dictionary).get("hole_r_m", 0.7))
@@ -423,36 +433,53 @@ static func place_lair(p_lay: Dictionary, r_m := -1.0) -> Dictionary:
 		if score > best_score:
 			best_score = score
 			best = {"piece": int(pc.id), "pos": spot.pos, "r": r_m}
+			if spot.has("coffin"):
+				best["coffin"] = int(spot.coffin)
 	return best
 
 
 ## The clearest spot for a hole `r` across in room `pc`: {"pos", "clear"
-## (m to the nearest thing it must keep off)} or {}.
+## (m to the nearest thing it must keep off)[, "coffin" (the coffin spot it
+## took)]} or {}. In a crypt it is where one of its coffins stood
+## (_coffin_spot); elsewhere the clearest floor toward a wall, off the
+## room's doors, fires, airways, the line between its doors and its
+## dressing (_dressing).
 static func _lair_spot(p_lay: Dictionary, pc: Dictionary, r: float) -> Dictionary:
 	var length := float(pc.len)
 	var half := float(pc.half)
+	# [point, metres the rim keeps off it, and where a coffin stood]: a
+	# door as far either way; a fire or an airway half as far there (the
+	# coffin stood that near them).
 	var keep: Array = []
 	for di in pc.doors:
 		var d: Dictionary = p_lay.doors[di]
-		keep.append([d.p as Vector2, 2.0])
+		keep.append([d.p as Vector2, 2.0, 2.0])
 	for h in p_lay.get("holders", []):
 		if int(h.piece) == int(pc.id):
-			keep.append([Vector2((h.pos as Vector3).x, (h.pos as Vector3).z), 1.3])
+			keep.append([Vector2((h.pos as Vector3).x, (h.pos as Vector3).z), 1.3, 0.65])
 	for a in p_lay.get("airways", []):
 		if int(a.piece) == int(pc.id):
-			keep.append([Vector2((a.pos as Vector3).x, (a.pos as Vector3).z), 1.2])
+			keep.append([Vector2((a.pos as Vector3).x, (a.pos as Vector3).z), 1.2, 0.6])
 	var lines: Array = []
 	for i in (pc.doors as Array).size():
 		for j in range(i + 1, (pc.doors as Array).size()):
 			lines.append([p_lay.doors[pc.doors[i]].p, p_lay.doors[pc.doors[j]].p])
+	if str(pc.get("room_kind", "")) == "crypt":
+		var coffins := TombKit.coffin_spots(p_lay, pc)
+		if not coffins.is_empty():
+			return _coffin_spot(p_lay, pc, coffins, keep, lines, r)
+	keep.append_array(_dressing(p_lay, pc))
 	var best := {}
 	var best_c := -INF
 	var m := r + 0.75
+	# A catacomb's long walls are niches and shelves, standing up to 0.64 m
+	# out of them: further off those.
+	var ms := m + (0.6 if str(pc.get("room_kind", "")) == "catacomb" else 0.0)
 	for ka in 7:
 		for kc in 5:
 			var along := lerpf(m, length - m, ka / 6.0)
-			var across := lerpf(-(half - m), half - m, kc / 4.0)
-			if length - 2.0 * m < 0.0 or half - m < 0.0:
+			var across := lerpf(-(half - ms), half - ms, kc / 4.0)
+			if length - 2.0 * m < 0.0 or half - ms < 0.0:
 				continue
 			var q: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * along + Delves.perp(pc.dir) * across
 			var clear := INF
@@ -475,3 +502,79 @@ static func _lair_spot(p_lay: Dictionary, pc: Dictionary, r: float) -> Dictionar
 				best_c = c
 				best = {"pos": Vector3(q.x, float(pc.y0), q.y), "clear": clear}
 	return best
+
+
+## A crypt's floor is rows of coffins down both long walls, with no floor
+## between them wide enough for the hole: so the hole is where one of them
+## stood, fallen through with the floor (TombBuild leaves that coffin out,
+## and no skeleton rests in it: TombKit.lair_took). Its middle a little in
+## from the coffin's, so its rim keeps COFFIN_WALL_M off the wall; the
+## coffin whose place is clearest of the doors, the line between them, the
+## fires and the airways (keep's third margin), toward the room's far end.
+## Never a grave a resident sleeps in (TombKit lays them first), nor beside
+## one: TombBuild shoves an open grave's lid off onto the floor along its
+## row, toward the room's middle or away from a sconce, so either
+## neighbour may have it (OPEN_GRAVE_M).
+static func _coffin_spot(p_lay: Dictionary, pc: Dictionary, coffins: Array, keep: Array, lines: Array, r: float) -> Dictionary:
+	var length := float(pc.len)
+	var half := float(pc.half)
+	var open: Array = []
+	for rp in p_lay.get("residents", []):
+		if int(rp.piece) != int(pc.id) or str(rp.rests_in) != "grave" or int(rp.spot) < 0 or int(rp.spot) >= coffins.size():
+			continue
+		open.append(coffins[int(rp.spot)])
+	var best := {}
+	var best_c := -INF
+	for s in coffins:
+		var by_open := false
+		for g in open:
+			if float(g.sd) == float(s.sd) and absf(float(s.along) - float(g.along)) < r + OPEN_GRAVE_M:
+				by_open = true
+		if by_open:
+			continue
+		var along := float(s.along)
+		var across := float(s.sd) * (half - r - COFFIN_WALL_M)
+		var q: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * along + Delves.perp(pc.dir) * across
+		var clear := INF
+		var ok := true
+		for k in keep:
+			var dd := q.distance_to(k[0]) - r
+			clear = minf(clear, dd)
+			if dd < float(k[2]):
+				ok = false
+		for ln in lines:
+			var dl := q.distance_to(Geometry2D.get_closest_point_to_segment(q, ln[0], ln[1])) - r
+			clear = minf(clear, dl)
+			if dl < 1.2:
+				ok = false
+		if not ok:
+			continue
+		var c := clear + along / maxf(length, 1.0) * 0.3
+		if c > best_c:
+			best_c = c
+			best = {"pos": Vector3(q.x, float(pc.y0), q.y), "clear": clear, "coffin": int(s.i)}
+	return best
+
+
+## What a room's dressing may stand on its floor, as TombBuild lays it, as
+## [point, metres the hole's rim keeps off it]: an ossuary's piles of bones
+## in its corners; a fallen room's slab and rubble in one of its four
+## corners (the one farthest from its doors and its sconces' bays: any of
+## them, here). (A catacomb's niches and shelves line its long walls:
+## _lair_spot keeps further off those.)
+static func _dressing(_p_lay: Dictionary, pc: Dictionary) -> Array:
+	var out: Array = []
+	var length := float(pc.len)
+	var half := float(pc.half)
+	match str(pc.get("room_kind", "")):
+		"ossuary":
+			for k in 4:
+				var ca := 0.9 if k < 2 else length - 0.9
+				var cs := (half - 0.9) * (1.0 if k % 2 == 0 else -1.0)
+				var q := point(pc, ca, cs)
+				out.append([Vector2(q.x, q.z), 0.8])
+		"collapsed":
+			for k in 4:
+				var q := point(pc, length * (0.22 if k < 2 else 0.78), half * (0.6 if k % 2 == 0 else -0.6))
+				out.append([Vector2(q.x, q.z), 1.7])
+	return out

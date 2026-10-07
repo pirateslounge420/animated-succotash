@@ -9,8 +9,11 @@ extends SceneTree
 ##     and shuffled) and reaches nothing at the last holder, never before;
 ##     the hearth room is never its ground;
 ##  2. the lair: placed, in a room off the main way (BossGround.main_path:
-##     the spine, or hearth room to heart), clear of that room's doors and
-##     of the line between them; and over 30 more layouts;
+##     the spine, or hearth room to heart), clear of that room's doors, the
+##     line between them, its walls and (in a crypt, where it takes one
+##     coffin's place) its other coffins, no skeleton resting in that one;
+##     over 30 more layouts too; and in the built tomb nothing solid stands
+##     round its rim;
 ##  3. contact: you standing still in the dark beside it with your torch
 ##     lit: it holds at the torch's edge (torch_delay), then strikes; the
 ##     hits land no closer together than harm.json's invuln_s; the third is
@@ -180,21 +183,60 @@ func _lair_ok(lay: Dictionary) -> String:
 			var b: Vector2 = lay.doors[pc.doors[j]].p
 			if c.distance_to(Geometry2D.get_closest_point_to_segment(c, a, b)) < float(l.r) + 1.1:
 				return "in the way between its doors"
+	# Off the walls, and off a crypt's coffins but the one whose place it
+	# took (it fell through with the floor), no one resting in that one.
+	var aa := Delves.along_across(pc, c)
+	var wall := minf(minf(aa.x, float(pc.len) - aa.x), float(pc.half) - absf(aa.y)) - float(l.r)
+	if wall < 0.5:
+		return "%.2f m from a wall" % wall
+	if str(pc.get("room_kind", "")) == "crypt":
+		var coffins := TombKit.coffin_spots(lay, pc)
+		if not coffins.is_empty() and not l.has("coffin"):
+			return "on a crypt's floor, not where a coffin stood"
+		for s in coffins:
+			if TombKit.lair_took(lay, int(pc.id), int(s.i)):
+				continue
+			var mid := float(s.sd) * (float(pc.half) - TombKit.COFFIN_IN)
+			var dx := maxf(absf(aa.x - float(s.along)) - TombKit.COFFIN_SIZE.x * 0.5, 0.0)
+			var dy := maxf(absf(aa.y - mid) - TombKit.COFFIN_SIZE.z * 0.5, 0.0)
+			var gap := Vector2(dx, dy).length() - float(l.r)
+			if gap < 0.5:
+				return "%.2f m from coffin %d" % [gap, int(s.i)]
+	# Never a skeleton's grave, nor beside one (its lid lies on the floor
+	# beside it, either way along the row: TombBuild._open_coffin).
+	if l.has("coffin"):
+		var coffins := TombKit.coffin_spots(lay, pc)
+		var mine: Dictionary = coffins[int(l.coffin)]
+		for rp in lay.get("residents", []):
+			if int(rp.piece) != int(l.piece) or str(rp.rests_in) != "grave" or int(rp.spot) < 0:
+				continue
+			if int(rp.spot) == int(l.coffin):
+				return "a skeleton rests where it is"
+			var g: Dictionary = coffins[int(rp.spot)]
+			if float(g.sd) == float(mine.sd) and absf(float(mine.along) - float(g.along)) < float(l.r) + 1.5 + 0.3:
+				return "beside an open grave (%.2f m along)" % absf(float(mine.along) - float(g.along))
 	return ""
 
 
 func _lairs() -> void:
 	var bad := 0
 	var dead_ends := 0
+	var kinds := {}
+	var in_coffins := 0
 	for s in 30:
 		var lay := TombKit.layout(5000 + s * 7919)
 		var why := _lair_ok(lay)
 		if why != "":
 			bad += 1
 			print("  seed %d: lair %s" % [lay.seed, why])
-		elif (lay.pieces[int(lay.lair.piece)].doors as Array).size() == 1:
+			continue
+		if (lay.pieces[int(lay.lair.piece)].doors as Array).size() == 1:
 			dead_ends += 1
-	ok(bad == 0, "30 layouts: a lair in a side room off the main way every time, clear of its doors (%d in dead ends)" % dead_ends)
+		var k := str(lay.pieces[int(lay.lair.piece)].get("room_kind", ""))
+		kinds[k] = int(kinds.get(k, 0)) + 1
+		if lay.lair.has("coffin"):
+			in_coffins += 1
+	ok(bad == 0, "30 layouts: a lair in a side room off the main way every time, clear of its doors, its walls and the coffins (%d in dead ends; rooms %s; %d where a coffin stood)" % [dead_ends, str(kinds), in_coffins])
 
 
 func _lair_of(main: CrawlerMain) -> void:
@@ -208,6 +250,24 @@ func _lair_of(main: CrawlerMain) -> void:
 		q.exclude = [main.player.get_rid()]
 		var hit := get_root().get_world_3d().direct_space_state.intersect_ray(q)
 		ok(not hit.is_empty() and (hit.position as Vector3).distance_to(c) > float(l.r) - 0.05, "you can stand at the hole's edge but not step in (enterable false)")
+		# Nothing stands round its rim (a coffin or its lid, a slab, a pile
+		# of bones): the floor there is bare but for its own broken flags and
+		# stones. Straight down from 2 m (the stone's collision is faces,
+		# which a point inside them never meets).
+		var space := get_root().get_world_3d().direct_space_state
+		var solid := 0
+		var probes := 0
+		for out: float in [0.2, 0.45]:
+			for k in 16:
+				var a := TAU * k / 16.0
+				var p := c + Vector3(cos(a), 0.0, sin(a)) * (float(l.r) + out)
+				var rq := PhysicsRayQueryParameters3D.create(p + Vector3(0.0, 2.0, 0.0), p + Vector3(0.0, 0.08, 0.0))
+				rq.collision_mask = PropCollision.WORLD_LAYER
+				probes += 1
+				if not space.intersect_ray(rq).is_empty():
+					solid += 1
+		var took := " (where coffin %d stood)" % int(l.coffin) if l.has("coffin") else ""
+		ok(solid == 0, "nothing stands round its rim%s: %d of %d spots within 0.45 m of it have anything on them" % [took, solid, probes])
 
 
 # --- 3. Contact ------------------------------------------------------------------
