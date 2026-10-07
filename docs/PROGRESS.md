@@ -4,6 +4,25 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 56, §FD with §FJ.3, part 1: a red ring and a heartbeat; you heal once nothing pursues you (the snake's chase waits for 49) (d14f7d8)
+- **Harm in the crawler** (`Harm.fd`, on while the crawler runs; the open world keeps §EA/§EC, and `harm_check` gives the same 31 lines as before):
+  - **Hit 1:** a red ring closes round the edge of the view, in four stepped bands like §EC's navy flash (`harm.json → fd.hit_1_edge`: #B01818, 0.6 at the rim, a tenth of the frame's short side). It is drawn on its own layer over the grade (`HarmRing`, `shaders/harm_ring.gdshader`), inside the 480-line frame. The heartbeat starts: 105 bpm, −6 dB.
+  - **Hit 2:** darker red (#6A0A0E, 0.8) and deeper (0.16 of the short side); the heart harder and faster (150 bpm, 0 dB).
+  - **Hit 3:** "Good night" as built; the ring goes under the closing black.
+  - **Replaced in the crawler:** §EA's grade darkening, drain and Master-bus muffle; Harm doesn't touch the Master bus there. §EC's navy flash on every hit stays.
+  - **Healing steps back down:** 2 → 1 the ring eases back and the heart slows and softens; 1 → 0 the heart stops first, then the ring pulls back to the edge.
+- **You heal by losing it** (`fd.recover_starts`): `Harm.pursue(who, on)` keeps who is chasing you. The 5 s step timer waits at zero while anything is, and counts from when the last one gives you up; a new hit resets it; light never heals.
+- **`Pursuit`** (`scripts/crawler/pursuit.gd`): the chase any hunter holds. It is on when the hunter notices or hits you, and off by the hunter's own `gives_up` block (distance, time out of its sight, hiding, your torch going out). It also has `may_enter(lit)` (a lit room opens to a chase only once its strike has landed) and `back_to_dark_mps()` (back in the dark within `residents.json → rules.back_to_dark_s`) for the snake to use.
+- **Data:** `bosses.json → bosses.desert.gives_up` (24 m, 6 s, hide, torch_doused; Claude Code's first guesses) with a `_help.gives_up` line; `_help.rule` says `chase_enters_light` is wired (the snake's side lands in part 2); `harm.json → fd._note` is no longer `[NOT WIRED YET]`, and `recover._note` says the crawler waits for the pursuer. `residents.json` is registered with Tuning. `Harm.pursue(who, on)` has the form the skeletons' pass (58) already calls, `Harm.instance.pursue(r, on)`.
+- **Checks** (seed 7, all 0 fails):
+  - `tools/crawler_harm_check.gd` (new, 45 lines) runs a stand-in hunter with the snake's numbers. It checks each hit's ring and heartbeat, no grade darkening and no muffle, the navy flash, and no healing in 15 s while chased, beside the lit hearth too. Out of its sight it gives you up at 6.1 s, and a hit heals 5.0 s later. It also checks the steps back down, every give-up rule, a freed hunter, the wake, and the ring under "Good night".
+  - `crawler_frames` ends with frames 11–13b. In a cold corridor the ring measures 48 px deep at hit 1 and 77 px at hit 2, at both edges, and its rim is darker on two (luma 0.136 against 0.185). Frames 12b and 13b show it at the hearth by torchlight. 45's crosshair checks still pass, and nothing else is drawn over the frame while unhurt.
+  - `crawler_check` passes.
+- **Nothing in the tomb hits you yet:** the snake (queue 49) brings Harm into the crawler. Part 2 wires its chase into this: it follows you into the light once it has hit you, gives up by its `gives_up`, and is back in the dark within 4 s. Row 56 stays `todo`.
+- **Setting up this machine:** the cloud container had no Godot and no Vulkan. I installed Godot 4.3 at `/root/bin/godot` (checked against the official checksums) and `mesa-vulkan-drivers` (lavapipe) for the rendered frames, as 45's HOW_TO_RUN note says.
+
+---
+
 ## 2026-10-07 — Queue 50, §EZ.1 and §EZ.5: the torch stays lit; only deep water puts it out (dacd5d3)
 - **The sprint rule is gone** (`TorchSnuff`). Walking, sprinting for any length of time, turning, whipping the view round and swinging never gutter the torch or put it out.
   - Deleted, since the design no longer mandates them: `torch.json → snuff.sprint`, and `crawler.json → snuff_log` (its sprint and draft lines).
