@@ -4,6 +4,61 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Mike's notes of 7 Oct: the hearth sunk in a pit under its shaft, a flue slot over every wall torch, four torches in a room on pillars, and the skeletons as Boos (c2573f8; skeletons d1e9e1b, 1ec0caa, ab35be2; 0d483ff)
+Mike, answering queue 48's call and adding four notes: *"yea for pillared rooms we can do 4 torches- its also ok if theres some shadows or a bit darker than it was because it gives monsters a place to hide. also, for skeletons itd be cool if they acted similar to boos in mario- they might not activate until you pass them once and only move toward you slowly when your back is turned so you never see them moving unless they get right up on you- another fix is that for the main rooms with hearths, the exit draft vent should be situated more directly above the fire- at the moment it seems like its offset a bit. also, where the main hearths sit there should be a fire pit made into the ground i stead of jist having a campfire sitting right on the floor. also please ensure torches in the indents on the wall still have exit vents above them"*. Built as Claude Code's first guesses where he gave no numbers; no design section yet (below, for chat).
+
+- **What changes on screen:**
+  - **The hearth** burns down in a pit in the middle of the floor: twelve-sided, 32 cm deep and 1.24 m across inside, lined with the tomb's stone going navy as it goes down, its logs and coals on a bed of ash. A kerb of twelve pillowed stones, 24 cm wide and 6 cm proud, is set into the floor round its lip, and the floor's flags are cut round it. You can walk up to the kerb but not into the fire.
+  - **Its shaft** stands straight over the fire (it stood about a metre to one side: 0.93 m on seed 7). The column of daylight falls on the fire, the smoke goes straight up, and the flame stands straight in the draft instead of leaning.
+  - **Every wall torch** has a narrow slot cut up the wall from just over its niche into its vent's mouth in the ceiling, which now sits right against the wall. The slot is the flue's width (15–30 cm) and sooted inside.
+  - **A room on pillars** gets four wall torches, two facing pairs, instead of two.
+  - **The skeletons** move only when you can't see them (below).
+
+- **The hearth pit** (`masonry.json → styles → andean_tomb → hearth`, new: `method` sunk_pit, `sides` 12, `r_m` 0.62, `depth_m` 0.32, `kerb_w_m` 0.24, `kerb_proud_m` 0.06, `guard_m` 0.45, `ash`; `TombBuild.pit`, `_hearth_pit`). The real model is the Mito tradition's sunken hearths (Kotosh, La Galgada), added to the style's `models`.
+  - **The floor:** `FittedStone.flags` takes holes now. A flag crossing the pit's outline is cut along it on the same rolls, so every other flag lies as before. The hearth room's floor collision is the room's slab less the pit, in convex pieces.
+  - **The kerb and lining:** each kerb stone is a pillowed trapezoid with a face down over the pit; under it the lining, one block a side, toward the scene's shade (navy) as it goes down; the joints' back under the kerb; at the foot a bed of ash (not stone). All the style's stone but the ash, on the pit's own dice.
+  - **The fire** (`CrawlerFires`): the campfire sits on the pit's floor, 0.32 m down. Its light stays 1 m over the room's floor (`light_y`), so the room is lit as before and the pit's lip shadows nothing, and its pool of firelight stays on the floor round it.
+  - **The guard:** collision over the kerb's footprint from the pit's floor to 0.45 m over the room's floor, under every eye (yours crouched is 0.78 m). Each side reaches a little past its corners, because a first try left hairline seams a ray slipped through at one corner. The pit has its own floor, so a thrown pot falls in.
+  - **The snow ruins' style** gets a square pit of slabs in its data (Skara Brae's hearths), not built.
+- **The shaft over the fire** (`smoke.json → vents.shaft.over_fire`, new, true): `TombKit._place_vents` puts a shaft's mouth straight over its fire (`mouth_offset_m` applies only when it is false). `Vents._draft` gives a vent straight overhead no lean, only the flicker; it used to pick a random lean.
+- **The flue slots** (`TombBuild._flue_slot_op`): one over every sconce's niche, in rooms and corridors.
+  - It runs from 5 cm over the niche's top to the wall face's top: under the corbel course in a room (whose stone over it was already left out), into the ceiling in a corridor.
+  - It is its vent's own width (within the niche's top) and as deep as the niche.
+  - Its inside is drawn as soot lying on the stone (`DUST_M`, as the drifts are, tagged not-stone). Painted onto the stone, the soot came out pale: the crawler's night grade pulls every stone colour 75% toward slate (`ruin.gdshader`), which lifts it.
+  - A sconce's vent mouth now sits against its wall (it stood 8 cm off), so the slot runs straight into it.
+  - **Honest limit:** the sconce's own light hangs just below the slot and lights straight up into it. So on screen the slot reads as a darker, redder stripe climbing from the lit niche, not black: on seed 7's corridor sconce, luma 0.634 inside against 0.864 on the stone beside it.
+- **Four torches in a room on pillars** (`crawler.json → room_torches.pillared`, new, 4; `TombBuild.on_pillars`): whether a room stands on pillars is worked out from the layout alone (its shorter span past its corbels over `max_span_m`), so `TombKit._room_sconces` can give it its two facing pairs before it is built. `_plan_room` uses the same test. On seeds 1, 7 and 42, all 16 rooms that stand on pillars as built have four.
+- **The skeletons are Boos** (the helper session's work, merged as d1e9e1b, 1ec0caa, ab35be2; `residents.json → creatures.skeleton`, `pattern` creeper and a new `creep` block):
+  - **Passing arms one:** come within 3 m of its head (`arms_m`) and nothing happens. The moment you look away or walk on past, you hear bone grinding behind you as it climbs out. Turn round and it is frozen half out; look away and it carries on.
+  - **It moves only while you can't see it:** out, it creeps after you at 1.4 m/s (`creep_mps`; you walk 4.3), its bone steps clicking. Face it and it stands dead still however long you stare. It still knows you are there: staring at it within its sight keeps its chase on, so you don't heal.
+  - **"Seeing" it:** any of its feet, middle or head, or its middle 35 cm to either side (`side_m`), in your frame or within 8% of the frame past its edge (`view_margin`), within 60 m (`seen_m`), with no stone between. The dark doesn't hide it. A step that would bring it into view is undone, so it waits just out of sight.
+  - **In plain view all the same:** its whole strike within its 1.6 m reach (the wind-up and the jaw's creak; your lit swing still staggers it), a dark pocket's lunge from 3 m (§FF.2), and the floor's last light, when the ones you can see still hurry back into the stone (§FF.2's reveal: the one time you see them move).
+  - **The light's rules hold, but its moves wait until you look away:** leaving a relit room, walking home, and going into the stone when cut off.
+  - **A fire pot** still wakes a resting one; watched, it lies there burning until you look away.
+- **Checks** (on 0d483ff, the merged code as pushed), all 0 fails:
+  - `crawler_check` (seed 7): 240 lines. New: the pit (the fire 0.32 m down, its floor, the flags cut round it, the guard stopping your body from 1.35 m and at a crossing), the shaft 0.00 m off the fire and its daylight on it, 48 of 48 flue slots each its flue's width under its vent's mouth, and all 16 rooms on pillars (seeds 1, 7 and 42) with four torches.
+  - `residents_check` (seeds 1, 7 and 42): 161. The first run had one flaky line, the creep's bone steps counted by the sound's stream changing; it counts `Resident.steps_heard` now (0d483ff).
+  - `cleared_check` 84, `boss_check` 115, `stagger_check` 61, `fire_pot_check` 82, `crawler_harm_check` 59, `hands_check` 61.
+- **Frames** (`crawler_frames`, seed 7, lavapipe, once at the end): 70 frames, 52 lines, 1 fail.
+  - New and passing: `01i` down into the pit at night (its fire warm in it), `08d` the slot over a relit corridor torch (darker than the stone beside it).
+  - **The fail is the frames' own room picker, not the light.** It looks for a crypt with two torches. With the rooms on pillars at four, it moved from seed 7's crypt on pillars to one that isn't, which from its doorway reads 0.303 against its old ring's 0.337 (0.90). The slots aren't why: their few pixels move the frame's mean by about a thousandth. The ring stood in the middle and lit the floor nearest the door; the torches light the walls. The next pass measures both kinds of crypt and holds every room to "a bit darker is fine" (0.85).
+  - I looked at `01` (the pit, its kerb and the column of daylight on the fire), `08d` (the slot), `09` and `09a` (the crypt) and `21b` (a skeleton frozen half out of its niche).
+- **For Mike:**
+  - Your second note of 7 Oct is being built next: nothing physical sinks into the stone, a chase stops at the light's edge, the snake as fast as your walk with its own tunnels, the 2 m lunge, your own pot can hurt you, the sneak's dashes and the hit's X. It answers or changes some of the skeleton calls below.
+  - The pit's size, depth and kerb are first guesses: `masonry.json → styles → andean_tomb → hearth`.
+  - The flue slots read darker and redder than the stone, not black, because the torch's own light falls up into them. If you want them black, the sconce's light would have to sit lower or further out (your call; it changes how the room is lit).
+  - Skeletons, all first guesses:
+    - The last light is the one time you see them move. Keep that reveal, or make them Boo-like even then? (Your second note ends their sinking into the stone there.)
+    - Creep speed 1.4 m/s.
+    - Arming distance 3 m.
+    - Should a burning one thrash in plain view?
+    - "Right up on you" means its strike reach, 1.6 m (since answered: they lunge within 2 m).
+    - Should the dark hide them? Today one in your frame 40 m down a black corridor still freezes.
+    - One whose way passes through your view waits at the edge of it until you look away, and one can stand frozen in a room you just relit while you watch it.
+- **For chat:**
+  - Log Mike's 7 Oct notes as a lettered section. They amend §FE.2 (the skeletons wake as you pass, then move only unseen), §EV.2 (the hearth's column falls on the fire, not beside it), §EX.4 (four torches in a room on pillars) and §EX.1/§EX.3 (the hearth a sunk pit, the sconce's flue a slot up the wall).
+  - CLAUDE.md's brief still calls §EY and §FA–§FH "not built yet".
+
 ## 2026-10-07 — Queue 48, §EX.1 and §EX.3: one ruin, one stone — floor, ceiling, doors, stairs and sconces in the walls' style (8799b26)
 - **What changes on screen:** the tomb looks cut from one quarry.
   - The floor is fitted many-sided flags of the walls' own stone, and the ceiling is long single slabs with one step of corbel over the walls.
