@@ -27,13 +27,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   | **falloff 0, fill_energy 3.0 (taken)** | **0.098** | **0.083** | **0.077** | **0.068** | **0.103** |
 
   The near walls come out at about #101a5a, just under `readable_color`, hue 232. The readable floor the frames tool checks is 0.02 over the black at 3 m (picked: about two 5-bit steps of green).
-- **Unchanged:** by torchlight the long view is the same frame with the half-dark on as off (before the merge: mean 0.2801 both; the worst band 0.0007 apart). The hearth room on waking, the relit corridor and room, and every torchlit frame show no half-dark. The torch's reach is untouched.
+- **Unchanged:** by torchlight the long view is the same frame with the half-dark on as off (mean 0.2803 against 0.2804; the worst band 0.0004 apart). The hearth room on waking, the relit corridor and room, and every torchlit frame show no half-dark. The torch's reach is untouched.
 - **Merged with queues 45, 50, 56, 57 and 60**, pushed while this pass ran. The fire-pot and harm-ring frames now let the half-dark settle before their dark shots, so each before-and-after pair differs only by what it measures.
 - **Checks:**
   - `crawler_check`: seed 7, 102 lines, 0 fails (25 of them new); seed 1, 103 lines, 0 fails.
   - `fire_pot_check` 63, `stagger_check` 41, `crawler_harm_check` 45: 0 fails.
   - The open world's `swing_check` (18) and `senses_check` (11), with the change to which torch is in hand: 0 fails. Both crash with signal 11 at shutdown, after their results. The code from before this pass does the same, so it isn't this pass.
-  - `crawler_frames` (seed 7): 0 fails on this pass before the merge, with the half-dark numbers above. The render of the merged commit (972a2d5) is running as this is written; its result follows in a line below.
+  - `crawler_frames` (seed 7, on 972a2d5): 30 lines, 0 fails. The half-dark numbers are the table's last row again. By torchlight the long view is the same frame with the half-dark on as off (mean 0.2803 against 0.2804). The crosshair reads 6.6:1 against the half-dark's navy wall (3:1 is the floor). The tar patch and the light-oil burst still light their dark in amber, and the harm ring is 48 px deep after one hit and 80 px after two. New frames: `07d` (the long view in the old full dark), `07e` (the same in the half-dark), `07f` and `07g` (by torchlight, the half-dark off and on).
 - **Flagged for Mike:**
   - Freeing a torch's ember in a headless check prints a renderer warning ("Parameter m is null"). It was already there, and it's harmless.
 
