@@ -4,7 +4,8 @@ extends SceneTree
 ## end of a pass (no screenshots between steps):
 ##   SEED=7 xvfb-run -a -s "-screen 0 1280x720x24" ~/bin/godot --path . \
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
-## ONLY=skeleton renders just the skeletons' sheet and frames.
+## ONLY=skeleton renders just the skeletons' sheet and frames. The snake
+## (queue 49) is held still for the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
 ## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); a sheet
@@ -1014,6 +1015,14 @@ func _run() -> void:
 	get_root().add_child(main)
 	while not main.baked:
 		await process_frame
+	# The snake held still for the whole tour (queue 49), as _pitch_frames
+	# and _atmosphere hold it for theirs: it comes for a lit torch in the
+	# dark, and since queue 56 a chase follows you into the light. Free, on
+	# seed 7 it lay coiled beside you through the heart's frames (10, 10b),
+	# or its strikes took you back to the hearth mid-tour.
+	var boss: Variant = main.get("boss")
+	if boss is Boss:
+		(boss as Boss).auto = false
 	if OS.get_environment("ONLY") == "skeleton":
 		# Just the skeletons' sheet and frames (a quick look; also for a
 		# machine with no GPU, where every frame takes seconds).
