@@ -31,6 +31,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Frames** (`crawler_frames` with `ONLY=cleared`, lavapipe; seeds 7 and 1, 0 fails each):
   - Seed 7. `26a`: a skeleton at rest in its wall niche, its room's sconce the last light still cold (45 of 46 relit). `26b`: the sconce catches and the skeleton, on screen, starts back into the stone, its bone lit amber (brightest pixels luma 0.532, hue 21.5). `26c`: a third of the way in (a harness frame, held for the shot). `26d`: the niche empty, every skeleton gone, and the log's line.
   - Seed 1 lays all four of its skeletons in graves, so its frames show one sinking into its coffin (luma 0.542, hue 23.9).
+- **Follow-up (7aa3ca1):** a skeleton gone for good was freed with a plain `queue_free`, and under the headless dummy renderer that printed `Parameter "m" is null` once per skeleton (14 lines a run of `cleared_check`). It now goes through `NodeRelease.free_later`, its meshes let go of first, as the tomb's nodes are. Nothing changes on screen. `cleared_check` again: 78 lines, 0 fails, none of those lines.
+- **Flagged, not mine:** queue 60's `burn_out` still frees a burnt skeleton with a plain `queue_free`, so it prints the same line headless (one line to change, in its pass's code).
 - **For Mike:** the numbers are first guesses: the 6 s watch, the 3.5 m/s lunge, the 6–12 s in the stone, the 6 s limit on being seen going, and the log line's words. Cut off going into the stone and coming up elsewhere is my reading of "they retreat to those places", not a decision of yours.
 
 ---
