@@ -4,6 +4,28 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 44, §EX.6: one firelight, the torch takes the hearth's amber (cb946c1)
+- **One colour.** `Torch.fire_color()` reads `look.json → fire.light.color` (#FF6E24), and the torch in hand, planted torches, the sconces and the hearth all take it. `torch.json → light.color` agrees, and the check confirms it.
+- **Guttering** (burnt low, or the snuff rules' warning) dims and reddens the torch's light (`Torch.gutter_color`: steady #FF6E24, guttering #FF5719). The coal's shader already reddens as its glow drops.
+- **Measured (seed 7, the frames tool, mean hue of the lit wall patch):**
+
+  | | Torchlit wall, 1 m | Sconce-lit wall, 1 m |
+  |---|---|---|
+  | Old torch colour #FFB347 | hue 42, chroma 0.53 | hue 25 |
+  | Amber #FF6E24 | hue 23, chroma 0.68 | hue 25 |
+
+  The old pale colour was the main cause.
+- **Right at the stone the light still blew out.** At half a metre each colour channel clips in turn (amber → yellow → white), and the night grade pulled those near-white pixels cyan-white, with the bloom spreading it: 40% of the frame's brightest pixels fell outside the grade's protected orange and 21% were bluer than red.
+  - **Fix, at the cause and only in the crawler:** `post_grade.gdshader → fire_whites`. Bright, non-blue pixels the fire blew pale or white go back on the fire's amber before the grade, the paler the more. Strong colours (flame tongues, deep amber stone) are untouched.
+  - Now 0% outside the orange and none blue. The open world is unchanged (`fire_whites` is 0 there).
+  - Tunables in `crawler.json → firelight`: `pale_to_amber` (1), `lift` (0.15), `pale_chroma` ([0.3, 0.6]). `[NOT WIRED YET]` is off `_help.firelight`.
+- **Unchanged:** the corridor's full dark (mean 0.056) and the vent's daylight column (blue by day and by night, checked).
+- **Checks:**
+  - `crawler_check` passes with 0 fails on seeds 7 and 1. New lines: all 21 fire lights in the tomb share one colour; `torch.json` equals `look.json`; a guttering torch is redder, never bluer.
+  - `crawler_frames` (seed 7) has 0 fails, with new frames: the torch 1 m and 0.45 m from a wall, 1 m from a relit sconce, and the torch beside a relit sconce. The torchlit and sconce-lit patches are within 2° of hue (the limit is 8°), both inside −20..62.
+
+---
+
 ## 2026-10-06 — Mike's areas: the 52 biomes gathered into 20 places (data only, for §EW)
 - **New file `data/areas.json`** (`[NOT WIRED YET]`): Mike's 19 areas, in his order. Each has the biomes his words name, plus Claude Code's suggested fold-ins under `proposed`, which are not decided.
 - **Unassigned:** 10 biomes fit no area yet (cold desert, fresh water, maritime forest, Mediterranean scrub, páramo, puna, sagebrush, salt flat, sea ice, temperate deciduous).

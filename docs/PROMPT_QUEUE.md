@@ -73,7 +73,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 41 | §EJ | Food passed round, the night stories, the gift | built 6939b24 |
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | built 6dec101 |
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | built c6a2bd8 |
-| 44 | §EX.6 | One firelight: the torch takes the hearth's amber | todo |
+| 44 | §EX.6 | One firelight: the torch takes the hearth's amber | built cb946c1 |
 | 45 | §EX.7 | A reticle in the crawler | todo |
 | 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | todo |
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | todo |
@@ -854,7 +854,7 @@ CHECK (tools/library_check.gd, headless): on seed 7731 every camp at or past sto
 
 ## 44 — One firelight: the torch takes the hearth's amber — §EX.6
 
-**Status:** todo
+**Status:** built cb946c1
 **Mike sees:** The torch in your hand lights the stone the same amber as the hearth: walls near you go warm orange, never pale or blue-white, and a guttering coal goes dimmer and redder. The navy dark past the light, and the blue daylight down the hearth's shaft, are unchanged.
 
 ```text
