@@ -11,7 +11,9 @@ extends PlanetPlayer
 ## Left click swings the torch (§CN); F smothers it and you keep holding
 ## it (§FC.3); no bow, no spear, no fists, no climbing, no combat (§ET.1).
 ## Gravity is straight down (-y): the tomb is its own flat world, no planet
-## under it. Footsteps sound on stone. Nothing hurts you in this slice.
+## under it. Footsteps sound on stone. The dungeon's boss can hurt you
+## (design §EY, Boss): three hits (Harm, §EA) and you wake at the hearth
+## (CrawlerMain).
 
 ## How far the bundle and the holders answer the interact button (m).
 const REACH_M := 1.8
@@ -194,6 +196,21 @@ func _physics_process(delta: float) -> void:
 	moving_state(move_speed)
 	torch.update_torch(delta)
 	hands.update(delta)
+	# A hit's kick (design §EC, Harm) eases back; the breath after waking
+	# runs out.
+	_hit_kick = _hit_kick.lerp(Vector2.ZERO, 1.0 - exp(-delta * 9.0))
+	_camera.rotation = Vector3(_hit_kick.x, _hit_kick.y, 0.0)
+	_invulnerable = maxf(_invulnerable - delta, 0.0)
+
+
+## Taken by the third hit (Harm, §EA), after "Good night": down, for
+## CrawlerMain to wake you at the hearth. (The open world's version also
+## lets go of a bow, a spear and a climb, none of which the crawler has.)
+func fall_taken() -> void:
+	if dead:
+		return
+	dead = true
+	died.emit()
 
 
 ## A loud moment (a swing landing on a creature, §FA.1): it holds over

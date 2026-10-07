@@ -1,11 +1,11 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET \u2014 design \u00a7EY] A boss in every dungeon (Mike, 6 Oct, 21:20): one unique, creepy mythical creature per pocket world's dungeon (\u00a7EW). It prowls only the dark: the rooms and corridors not yet relit. Every relight shrinks its ground; the last light drives it back into its lair, a hole in a cave somewhere in the dungeon. Not a fight: no health bar, nothing to kill (\u00a7ET.1). The creatures are Mike's; moves, tells and numbers are Claude (chat)'s first guesses, 6 Oct; the designer owns them.",
-  "rule": "\u00a7EY.1 (Mike). one_per_dungeon. ground: unlit, the rooms and corridors not yet relit (crawler.json holders; \u00a7EX.4: one hearth per dungeon, torches in every other room). A room counts as relit once every torch in it is lit; a corridor stretch between two lit sconces counts as lit; the hearth room is never its ground (Claude). never_blocks_exit: \u00a7EX.5 holds, it is a danger, never a gate. relit_closes_room: a relit room is closed to it for good (\u00a7ET.4, relit stays lit). puts_out_relit: never. leaves_lit_room: if you relight the room it is in, it leaves for the nearest dark (Claude). torch_in_hand: delay, relit_room: safe (\u00a7BA's rule made the boss's). last_light: to_lair. notice: how far it sees a carried flame and hears a sprint (Claude's first guess). chase_enters_light (\u00a7FD, Mike): a boss that has hit you can follow you into the light; a relit room stays closed to its prowling, not to a chase in progress. Wired (queue 56, Pursuit): once its strike has landed it may follow you into lit rooms until it gives you up (gives_up), then it is back in the nearest unlit room or corridor within residents.json rules.back_to_dark_s; its prowling still never enters a lit one.",
-  "contact": "\u00a7EY.2 (Claude's first guess, open for Mike, \u00a7EY.7 call 2). A strike is one hit in harm.json (\u00a7EA, \u00a7EC): three and it's 'Good night'. You wake at the hearth (\u00a7ET.3) and every light you relit is still lit.",
-  "lair": "\u00a7EY.1 (Mike): usually a hole in a cave somewhere in the dungeon. off_main_path, findable (Claude). breathing_heard_m: once it is driven in you can stand at the edge and hear it below. enterable: false is Claude's first guess (\u00a7EY.7 call 3).",
-  "release": "\u00a7EY.2 (Claude's first guess). When the last light catches you hear it go: a long sound travelling away and down to its hole, then the dungeon's small sounds come back (bed_returns). log_line: the one log entry (no bestiary, \u00a7BA: nothing names it on screen).",
-  "bosses": "\u00a7EY.3. Keyed by worlds.json worlds. creature: Mike's words. world_by: who placed it in that world (Mike, or Claude's pick, open). pattern: how it moves (each its own; Mike: 'a different algorithm'). Speeds are m/s; the ambient walk is 4.3 and the sprint 5.6 (movement.json profiles.ambient), and a sprint held too long gutters the torch (\u00a7ET.7). tell: what you hear or see before it. first: the one to build first (the tomb's). \u00a7FE.4 (6 Oct, 22:32): the swamp's boss is the witch (Mike) and the mine's the giant spider (Claude's reading, open); the hornet and the centipede moved to unplaced. \u00a7FJ.6 (Mike, 22:52): the centipede is the jungle's boss (the jungle isn't in worlds.json yet, \u00a7EW.2).",
+  "about": "A boss in every dungeon (Mike, 6 Oct, 21:20): one unique, creepy mythical creature per pocket world's dungeon (\u00a7EW). It prowls only the dark: the rooms and corridors not yet relit. Every relight shrinks its ground; the last light drives it back into its lair, a hole in a cave somewhere in the dungeon. Not a fight: no health bar, nothing to kill (\u00a7ET.1). The creatures are Mike's; moves, tells and numbers are Claude (chat)'s first guesses, 6 Oct; the designer owns them. Wired 7 Oct (Claude Code, queue 49, \u00a7EY.8 step 1; Boss, BossGround, BossBody, BossSounds in scripts/crawler/): rule, contact, lair, release and bosses.desert, the snake, which stands in the tomb as the test while the tomb's world is open (the boss marked first). The other bosses are NOT WIRED YET: each comes with its world (\u00a7EY.8 step 2). The snake strikes through queue 57's CreatureStrike (its strike block; the torch's stagger works on its wind-up) and holds queue 56's Pursuit while it hunts you (its gives_up block; you don't heal while it has you). rule.chase_enters_light is not the snake's yet (queue 56 part 2): in this pass it never follows you into a lit room or stretch.",
+  "rule": "\u00a7EY.1 (Mike). one_per_dungeon. ground: unlit, the rooms and corridors not yet relit (crawler.json holders; \u00a7EX.4: one hearth per dungeon, torches in every other room). A room counts as relit once every torch in it is lit; a corridor stretch between two lit sconces counts as lit; the hearth room is never its ground (Claude). never_blocks_exit: \u00a7EX.5 holds, it is a danger, never a gate. relit_closes_room: a relit room is closed to it for good (\u00a7ET.4, relit stays lit). puts_out_relit: never. leaves_lit_room: if you relight the room it is in, it leaves for the nearest dark (Claude). torch_in_hand: delay, relit_room: safe (\u00a7BA's rule made the boss's). last_light: to_lair. notice: how far it sees a carried flame and hears a sprint (Claude's first guess). chase_enters_light (\u00a7FD, Mike): a boss that has hit you can follow you into the light; a relit room stays closed to its prowling, not to a chase in progress. Wired (queue 56, Pursuit): once its strike has landed it may follow you into lit rooms until it gives you up (gives_up), then it is back in the nearest unlit room or corridor within residents.json rules.back_to_dark_s; its prowling still never enters a lit one. Built for the snake (queue 49; Boss, BossGround): a room is one node and a corridor or stair is cut at each sconce into stretches; a stretch is lit when every end of it is (a lit sconce, or a door into a lit node; an end with nothing there, a dead end or the way out, never darkens it), and a room with no torch of its own takes the light round it, so the ground reaches nothing exactly at the last holder. It moves only through dark nodes and never through the hearth room; if the node it is in is lit round it, it leaves at once for the nearest dark by the way with least light in it, out across at most two more lit nodes; cut off deeper than that, it goes down into the dark below the tomb out of your sight and comes up again in its dark later (out of its hole if that room is still dark). notice: your lit torch in its line of sight within sees_flame_m, you sprinting within hears_sprint_m, or (bosses.<world>.feels_m) you close enough to touch whatever your light. relit_room safe: no strike reaches you while you stand in a lit node. Its chase into the light (chase_enters_light) waits for queue 56 part 2.",
+  "contact": "\u00a7EY.2 (Claude's first guess, open for Mike, \u00a7EY.7 call 2). A strike is one hit in harm.json (\u00a7EA, \u00a7EC): three and it's 'Good night'. You wake at the hearth (\u00a7ET.3) and every light you relit is still lit. Built: its strike lands through CreatureStrike, the player's take_hit, so harm.json's invuln_s holds between hits; the third plays 'Good night' (Harm), then you wake on the mat by the hearth (CrawlerMain) with your torches in your pack (the lit one went out as you fell), every relit holder still lit, and the boss back on its rounds from the far end of its dark.",
+  "lair": "\u00a7EY.1 (Mike): usually a hole in a cave somewhere in the dungeon. off_main_path, findable (Claude). breathing_heard_m: once it is driven in you can stand at the edge and hear it below. enterable: false is Claude's first guess (\u00a7EY.7 call 3). Built (BossGround.place_lair, TombBuild._lair_hole, Boss): the tomb has no caves, so the hole is the floor of a side room off the main way (a dead end where there is one) broken through into the dark below, placed clear of its doors, fires, airways and the line between its doors: a black mouth hole_r_m across (Claude Code, 7 Oct), flags tipped into it, broken stone and small bones round it. A ring of collision keeps you at the edge (enterable false). The breathing plays from below the floor there once the boss is home.",
+  "release": "\u00a7EY.2 (Claude's first guess). When the last light catches you hear it go: a long sound travelling away and down to its hole, then the dungeon's small sounds come back (bed_returns). log_line: the one log entry (no bestiary, \u00a7BA: nothing names it on screen). Built (Boss.release): if you can see it when the last light catches it flees toward the hole and is gone the moment you can't (else at once); the cry travels along the tomb to the hole and down it over cry_s; the tomb's small sounds (the drips) are hushed by bed_hush_db while it prowls and come back over bed_return_s once it is home (Claude Code's numbers, 7 Oct). The log line gets a full stop.",
+  "bosses": "\u00a7EY.3. Keyed by worlds.json worlds. creature: Mike's words. world_by: who placed it in that world (Mike, or Claude's pick, open). pattern: how it moves (each its own; Mike: 'a different algorithm'). Speeds are m/s; the ambient walk is 4.3 and the sprint 5.6 (movement.json profiles.ambient), and a sprint held too long gutters the torch (\u00a7ET.7). tell: what you hear or see before it. first: the one to build first (the tomb's). \u00a7FE.4 (6 Oct, 22:32): the swamp's boss is the witch (Mike) and the mine's the giant spider (Claude's reading, open); the hornet and the centipede moved to unplaced. \u00a7FJ.6 (Mike, 22:52): the centipede is the jungle's boss (the jungle isn't in worlds.json yet, \u00a7EW.2). Built: desert only (the snake). Its extra numbers (hunt_mps, leave_mps, torch_delay, feels_m, watch_s, body) are Claude Code's first guesses, 7 Oct; desert._help says what each does.",
   "gives_up": "\u00a7FD (Claude Code's first guess, 7 Oct, queue 56; Mike tunes it): how a boss gives up a chase, its own mix of residents.json rules.gives_up, read by Pursuit (scripts/crawler/pursuit.gd). distance_m: you got farther from it than this (the snake's is past its sight of a flame, rule.notice.sees_flame_m 20). out_of_sight_s: it hasn't seen your flame or heard you run for this long. hide: true, crouched out of its sight behind cover you are as lost to it as anywhere out of sight (\u00a7FC.2). torch_doused: true, it hunts your flame, so your torch going out while it chases you loses you at once. Until it gives you up you don't heal (harm.json fd.recover_starts), and once it has hit you it may follow you into a lit room (rule.chase_enters_light); after giving up it is back in the dark within residents.json rules.back_to_dark_s.",
   "unplaced": "\u00a7FE.4: bosses with no world yet: the centipede and the hornet (moved out of the mine and the swamp), the imps (Mike, 22:39) and the warden (Mike, 22:40). chain: null until Mike answers \u00a7FI.2 call 6 (\u00a7EH: no metal; a found relic, bone or wood links, or rope). one_or_pack: null until Mike says. \u00a7FJ.6: the centipede moved to bosses.jungle; the imps go to another world, not chosen yet.",
   "strike": "\u00a7FA.1, \u00a7FA.2 (prompt 57; wired by Claude Code in the crawler, CreatureStrike). A boss strikes as a resident does: a wind-up of wind_up_s with its own tell, seen and heard (tell: the words; sound: its SoundSynth voice, played from the creature from the wind-up's first frame; its sprite's pose), then the committed strike, strike_s, which lands one hit (contact) if you are still within reach_m with nothing solid between, then recover_s before the next. A swing of a lit torch that reaches it during the wind-up (body_r: how big a target its head is) staggers it (torch.json stagger: reel_s, cooldown_s, no damage) and it reels back reel_m. Left out: strike_s 0.2, recover_s 0.8, reel_m 1.0, body_r 0.4 (CreatureStrike.DEFAULTS). bosses.desert.strike, the snake's: Claude's first guesses, 6 Oct night (the tell is Claude (chat)'s, \u00a7FA.2); reach_m is \u00a7EY's strike_m; the hiss and the head drawn back for 0.7 s, then a 0.15 s lunge."
@@ -38,12 +38,16 @@
   "in": "cave",
   "off_main_path": true,
   "breathing_heard_m": 12.0,
-  "enterable": false
+  "enterable": false,
+  "hole_r_m": 0.7
  },
  "release": {
   "cry_to_lair": true,
   "bed_returns": true,
-  "log_line": "Drove the {boss} into its hole"
+  "log_line": "Drove the {boss} into its hole",
+  "cry_s": 5.0,
+  "bed_hush_db": -18.0,
+  "bed_return_s": 4.0
  },
  "bosses": {
   "mine": {
@@ -109,6 +113,8 @@
    "world_by": "Claude",
    "pattern": "slither",
    "speed_mps": 2.0,
+   "hunt_mps": 3.6,
+   "leave_mps": 4.0,
    "follows": "corridors",
    "coils_in": "dead_ends",
    "coil_s": [
@@ -132,9 +138,27 @@
     "hide": true,
     "torch_doused": true
    },
+   "torch_delay": {
+    "hang_m": 3.5,
+    "hang_s": 4.0
+   },
+   "feels_m": 1.5,
+   "watch_s": 10.0,
    "tell": "scales dragging on stone",
    "mike": "a giant snake which slithers through the halls",
-   "first": true
+   "first": true,
+   "body": {
+    "length_m": 9.0,
+    "girth_m": 0.38,
+    "head_m": 0.55,
+    "spacing_m": 0.17,
+    "coil_r_m": 0.9,
+    "undulate_m": 0.22,
+    "wave_m": 2.6,
+    "px_head": 40,
+    "px_seg": 28
+   },
+   "_help": "Claude Code's first guesses (7 Oct, queue 49; Mike tunes by playing). speed_mps: its rounds, slow and steady. hunt_mps: hunting you, slower than your walk (4.3) so you can always walk away from it, faster than its rounds; a dead end is where it catches you. leave_mps: sliding away from a room or stretch you lit round it. strike (queue 57's block, CreatureStrike): it rears back (wind-up) when you are within reach_m; strike_m is the same reach. torch_delay (rule.torch_in_hand delay, 'your torch is a delay'): with your torch lit it holds hang_m from you, at the edge of the torch's bright circle, reared and hissing, for hang_s in all before it closes; once it has struck it doesn't hold again until it has given you up; torch out, it closes straight in. feels_m: closer than this it knows you are there whatever your light (so a narrow corridor can't hide you). gives_up (queue 56's block, Pursuit): when it gives you up and goes back to its rounds. watch_s: how long it waits at the edge of its dark while you stand in a lit room before it gives you up. body (BossBody): length_m nose to tail, girth_m thick, head_m the head's length; spacing_m between its body sprites (they overlap two or three deep); coil_r_m the coil's outer radius; undulate_m and wave_m the slither's side-to-side swing and its wavelength; px_head and px_seg the sprites' frame heights in pixels (the bake)."
   },
   "volcano": {
    "creature": "dragon",

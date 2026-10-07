@@ -74,6 +74,8 @@ static func build(lay: Dictionary) -> Dictionary:
 		if str(pc.kind) == "room":
 			b._floor = float(pc.y0)
 			b._dress(pc)
+	if not (lay.get("lair", {}) as Dictionary).is_empty():
+		b._lair_hole(lay.lair)
 	for a in lay.airways:
 		b._airway_surround(a)
 	b._soot(lay)
@@ -531,3 +533,57 @@ func _soot(lay: Dictionary) -> void:
 		c = c.lerp(black, clampf(amount * k * mottle, 0.0, 0.95))
 		c.a = a * (1.0 - k)
 		_c[i] = c
+
+
+## The lair (design §EY.1, §EY.2; bosses.json lair; BossGround.place_lair):
+## the floor of a side room broken through into the dark below, where the
+## boss goes home: flags tipped down round its mouth (the mouth's black is
+## the boss's, Boss), broken stone thrown out round it, a few small bones.
+## Its stone is the tomb's own (the palette the walls are cut from). Not a
+## way down (lair.enterable false): a ring of collision round the mouth
+## keeps you at its edge, and the floor under it is whole.
+func _lair_hole(l: Dictionary) -> void:
+	var c: Vector3 = l.pos
+	var r := float(l.r)
+	var keep_rng := rng
+	rng = RandomNumberGenerator.new()
+	rng.seed = hash([int(_lay.seed), "lair_hole"])
+	solid = false
+	# The mouth itself is no stone: a black void the boss draws (Boss), as
+	# the airways' slots are.
+	# The broken edge: flags round the mouth, tipped down into it.
+	var n_flags := 9
+	for k in n_flags:
+		var a := TAU * (k + rng.randf_range(-0.25, 0.25)) / n_flags
+		var out := Vector3(cos(a), 0.0, sin(a))
+		var tangent := Vector3(-out.z, 0.0, out.x)
+		var tip := rng.randf_range(0.35, 0.7)
+		# Long side round the rim (local z along the tangent), the inner edge
+		# tipped down into the dark.
+		var size := Vector3(rng.randf_range(0.3, 0.42), 0.12, rng.randf_range(0.42, 0.62))
+		var bs := Basis(tangent, tip) * Basis(Vector3.UP, atan2(tangent.x, tangent.z))
+		var p := c + out * (r + 0.08) + Vector3(0.0, 0.02, 0.0)
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.05, 0.2))
+		# Freshly broken: no moss.
+		box(Transform3D(bs, p), size, col, 0.0, 0.03, 0.02)
+	# Stone thrown out round it, and the small bones of what it ate.
+	for k in 10:
+		var a := rng.randf() * TAU
+		var d := r + rng.randf_range(0.35, 1.2)
+		var p := c + Vector3(cos(a), 0.0, sin(a)) * d
+		var rad := Vector3(rng.randf_range(0.06, 0.16), rng.randf_range(0.04, 0.1), rng.randf_range(0.06, 0.15))
+		boulder(p + Vector3(0.0, rad.y * 0.6, 0.0), rad, Basis(Vector3.UP, rng.randf() * TAU), (palette[rng.randi() % palette.size()] as Color).darkened(0.1), 0.0)
+	for k in 5:
+		var a := rng.randf() * TAU
+		var p := c + Vector3(cos(a), 0.0, sin(a)) * (r + rng.randf_range(0.3, 1.0))
+		box(Transform3D(Basis(Vector3.UP, rng.randf() * TAU), p + Vector3(0.0, 0.025, 0.0)), Vector3(rng.randf_range(0.12, 0.26), 0.035, 0.035), BONE.darkened(rng.randf_range(0.1, 0.3)), 0.0, 0.01, 0.005)
+	solid = true
+	rng = keep_rng
+	# You stand at its edge, never in it.
+	var ring := PackedVector3Array()
+	for k in 12:
+		var a := TAU * k / 12.0
+		var q := c + Vector3(cos(a), 0.0, sin(a)) * (r + 0.05)
+		ring.append(q + Vector3(0.0, -0.3, 0.0))
+		ring.append(q + Vector3(0.0, 1.8, 0.0))
+	_ch.append(ring)

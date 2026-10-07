@@ -27,7 +27,8 @@ extends SceneTree
 ##     douse_depth_m gutters it (redder, never bluer), past it douses it;
 ##  5. the one who found you (§FH): the live shared rig, not a sprite: a
 ##     HearthFolk holding a seated PlayerBody with its beast head, real
-##     geometry (its triangles) and no FigureSprite anywhere in the tomb;
+##     geometry (its triangles) and no FigureSprite in the tomb but the
+##     boss's body (§EY.5);
 ##     facing the hearth on its stone (the stone in the tomb's collision,
 ##     right under its hips); painted per §ES (no material on it with
 ##     specular above 0, roughness under 1 or a normal map; its painted
@@ -1147,13 +1148,14 @@ func _rescuer(main: CrawlerMain) -> void:
 	var w: Array = main.lay.wake
 	p.spawn_flat(w[0], float(w[1]), -0.32)
 	await _frames(30)
-	# The live rig, not a sprite (§FH).
+	# The live rig, not a sprite (§FH); the boss's body stays sprites
+	# (creatures and bosses keep theirs, §EY.5, queue 49).
 	var sprites := 0
 	for n in main.find_children("*", "", true, false):
-		if n is FigureSprite:
+		if n is FigureSprite and not (main.boss != null and main.boss.is_ancestor_of(n)):
 			sprites += 1
 	var body := r.body if r != null else null
-	ok(r is HearthFolk and body is PlayerBody and r.get_parent() == main and sprites == 0, "the rescuer is the live 3D rig (a HearthFolk holding the shared PlayerBody), and no FigureSprite in the tomb (%d)" % sprites)
+	ok(r is HearthFolk and body is PlayerBody and r.get_parent() == main and sprites == 0, "the rescuer is the live 3D rig (a HearthFolk holding the shared PlayerBody), and no FigureSprite in the tomb but the boss's (%d)" % sprites)
 	if body == null:
 		return
 	var beast_mi := body.head.get_node_or_null("Beast") as MeshInstance3D

@@ -59,9 +59,10 @@ class Resident:
 		queue_free()
 
 
-## A boss stand-in (prompt 49's snake): driven off into the dark for the
-## time given, then back to where it was.
-class Boss:
+## A boss stand-in (prompt 49's snake; named so as not to hide the real
+## one, Boss): driven off into the dark for the time given, then back to
+## where it was.
+class BossStandIn:
 	extends Node3D
 	var fire_creature := "giant snake"
 	var home := Vector3.ZERO
@@ -495,7 +496,7 @@ func _light_oil() -> void:
 
 
 func _boss() -> void:
-	var b := Boss.new()
+	var b := BossStandIn.new()
 	b.add_to_group(FirePots.TARGET_GROUP)
 	main.add_child(b)
 	b.global_position = Vector3(120.0, -200.0, 0.0)

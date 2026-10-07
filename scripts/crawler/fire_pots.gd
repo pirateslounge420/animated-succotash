@@ -844,6 +844,10 @@ func _found_spot(pc: Dictionary) -> Vector3:
 		for a in lay.airways:
 			if Vector2((a.pos as Vector3).x - p.x, (a.pos as Vector3).z - p.z).length() < 1.2:
 				near = true
+		# Clear of the boss's hole and the stone broken round it (queue 49).
+		var lair: Dictionary = lay.get("lair", {})
+		if not lair.is_empty() and Vector2((lair.pos as Vector3).x - p.x, (lair.pos as Vector3).z - p.z).length() < float(lair.r) + 1.5:
+			near = true
 		if near:
 			continue
 		var down := PhysicsRayQueryParameters3D.create(p + Vector3.UP * 1.4, p - Vector3.UP * 0.5)

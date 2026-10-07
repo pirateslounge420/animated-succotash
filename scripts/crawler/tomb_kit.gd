@@ -86,6 +86,9 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	_place_holders(lay, rng)
 	_place_vents(lay)
 	_place_airways(lay, rng)
+	# The boss's lair (design §EY.1; BossGround.place_lair, its own dice):
+	# a hole in the floor of a side room off the main way.
+	lay["lair"] = BossGround.place_lair(lay)
 	return lay
 
 

@@ -79,6 +79,16 @@ func _run() -> void:
 	_open_world_untouched()
 	await process_frame
 	harm = main.get("harm") as Harm
+	if harm != null:
+		# The crawler's own (queue 49 puts it there): the open world's test
+		# Harm above was the instance for a moment and took it with it as it
+		# went; this one is the crawler's.
+		Harm.instance = harm
+	# The snake held still (queue 49): this check runs its own stand-in
+	# hunter, and the snake must not join the chase.
+	var boss: Variant = main.get("boss")
+	if boss is Boss:
+		(boss as Boss).auto = false
 	if harm == null:
 		# Until the boss's pass (queue 49) puts Harm in the crawler: the
 		# same node, set up the same way main.gd does.

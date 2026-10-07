@@ -23,6 +23,12 @@ extends Node
 ##      in 3D (§FH, HearthFolk; amends §ET.8 for folk, whose baked sprites,
 ##      FigureSprite, stay for creatures and bosses).
 ##
+## And the dungeon's boss (design §EY, Boss; bosses.json): the snake,
+## prowling only the rooms and stretches not yet relit, driven into its
+## hole by the last light. Its strikes are hits (Harm, §EA, with §FD's
+## ring in the crawler): three and "Good night", and you wake on the mat
+## by the hearth with every light you lit still burning.
+##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), closing into a dim ring while you sneak (§FC.1), off with the
@@ -33,8 +39,9 @@ extends Node
 ## swings the torch; the mouse wheel puts it away or takes it out, and
 ## with Tab held the wheel steps the left hand through its strip of fire
 ## pots, shown while Tab is held (§FB: Hands, HandStrip; FirePots); F
-## smothers the torch. No combat, no harm, no dread meter yet (the dark is
-## the absence of light in this slice).
+## smothers the torch. When you are hurt, Harm's ring and, on the third
+## hit, "Good night" (CrawlerHarmView). No dread meter (the dark is the
+## absence of light, and the boss is the dark's body).
 
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
@@ -63,6 +70,12 @@ var log_panel: LogPanel
 var settings_panel: SettingsPanel
 ## The strip Tab shows (§FB).
 var hand_strip: HandStrip
+## Three hits, "Good night" (§EA, §EC) and its view; the dungeon's boss
+## (§EY); the tomb's small sounds (the drips), which the boss hushes.
+var harm: Harm
+var harm_view: CrawlerHarmView
+var boss: Boss
+var drips: AudioStreamPlayer
 var _fade: ColorRect
 var _lit_logged := 0
 ## The one who found you is at the hearth and the dark lifting (tests
@@ -130,6 +143,14 @@ func _ready() -> void:
 	post.set_fire_whites(float(fl.get("pale_to_amber", 1.0)), Torch.fire_color().lerp(Color.WHITE, float(fl.get("lift", 0.15))), Vector2(float(pc[0]), float(pc[1])))
 	_sound()
 	_ui()
+	harm = Harm.new()
+	harm.name = "Harm"
+	add_child(harm)
+	harm.setup(player, post, null)
+	player.died.connect(_on_taken)
+	boss = Boss.new()
+	add_child(boss)
+	boss.build(lay, fires, player, drips)
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
@@ -307,6 +328,8 @@ func _sound() -> void:
 		a.bus = AudioMix.bus("ambience")
 		add_child(a)
 		a.play()
+		if str(pair[0]) == "drips_loop":
+			drips = a
 
 
 func _ui() -> void:
@@ -333,6 +356,8 @@ func _ui() -> void:
 	settings_panel = SettingsPanel.new()
 	settings_panel.name = "Settings"
 	ui.add_child(settings_panel)
+	harm_view = CrawlerHarmView.new()
+	ui.add_child(harm_view)
 	# Waking: the dark lifts once the hearth room is ready (_rescuer).
 	_fade = ColorRect.new()
 	_fade.color = Color(0.0, 0.0, 0.01)
@@ -356,6 +381,10 @@ func _rescuer() -> void:
 		var all := BeastHeads.animals()
 		beast = str(all[rng.randi_range(0, all.size() - 1)]) if not all.is_empty() else ""
 	rescuer = HearthFolk.make(self, "Rescuer", r[0], float(r[1]), height, pal, beast)
+	# The boss's sprites before the dark lifts (FigureSprite.bake has the
+	# view to itself).
+	if boss != null:
+		await boss.body.bake(self)
 	baked = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
@@ -402,6 +431,34 @@ func _unhandled_input(event: InputEvent) -> void:
 		perf.toggle()
 	elif event.is_action_pressed("interact"):
 		take_torch()
+
+
+## Taken by the third hit (Harm, §EA): "Good night" has played and the
+## frame is black. You wake on the mat by the hearth (bosses.json
+## contact.wake, §ET.3), every light you lit still burning
+## (contact.relit_kept: nothing here touches them); the torch went out when
+## you fell and is in your pack, both hands empty (a fire pot back on its
+## strip), as when you first woke;
+## a breath before anything can touch you again (PlanetPlayer.revive); the
+## boss goes back to its rounds, far off.
+func _on_taken() -> void:
+	_fade.visible = true
+	_fade.color.a = 1.0
+	if player.torch.lit():
+		player.torch.put_out("taken")
+	player.weapon = "hands"
+	if player.hands != null and not Hands.left_busy():
+		player.hands.hold_left({})
+	player.death_cause = ""
+	player.revive()
+	var w: Array = lay.wake
+	player.spawn_flat(w[0], float(w[1]), -0.32)
+	harm.reset()
+	boss.after_wake()
+	GameLog.add("Taken in the dark. You wake by the hearth, and every light you lit still burns.", "death_cause")
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", 0.0, 2.5)
+	tw.tween_callback(func(): _fade.visible = false)
 
 
 ## Right click by the bundle: one unlit torch into your hand (§AW); a
