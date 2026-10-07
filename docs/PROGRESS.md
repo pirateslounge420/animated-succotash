@@ -4,6 +4,45 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 51, §EZ.2: the pitch torch, a wrapped, tarred head and a pixel flame (afac6a9)
+- **Every torch in Torchfire 1 is the pitch torch** (`PitchTorch`, new; `torch.json → pitch_head`, wired): in your hand, planted, and in the bundle by the hearth. The open world (Torchfire 2) keeps §CP's burnt end: my call, since it is shelved and its checks still test the burnt end.
+  - **The wrap:** six flat sides lined up with the stick's, 1.35 times its radius, 12 cm long, a flat top. Four bands, each strip's lower edge standing 7% proud, so they show as steps. Two to four drips of pitch run 2–7 cm down the stick.
+  - **Painted, not lit** (`shaders/pitch_head.gdshader`): near-black pitch, the strips' edges a shade lighter; lit, the top band thins to dark amber, bubbling, under the coal. Light only reveals the paint (the same on every face, never brighter than the paint, no specular), so in the dark it is dark (R8).
+  - **The coal** is the top band's last two texel rows, drawn by the burnt end's shader and breath. **The flame** is the campfire's card on a 20×30 grid (32×48 over `texel_scale` 1.6), with its two sparks. Bottom to top: pitch, coal, flame.
+- **The flame in hand is drawn at 0.55** of a planted torch's (`pitch_head.flame.view_scale`, new, added with its `_help`). At the true size (32 cm, half a metre from the eye) it would stand about 195 px tall at 480 and stream past your face when it leans back. Planted torches keep the true size.
+  - **Measured (seed 7, `crawler_frames`, the flame drawn with and without its card in a dark corridor):**
+
+    | Torch in hand | 480 lines (854×480) | 270 lines (480×270) |
+    |---|---|---|
+    | Standing | 119 px tall × 74 wide (25% of the frame), ~4.7 px a texel | 57 × 43 px (21%), ~2.2 px a texel |
+    | Sprinting (34° lean, stretched 1.3) | 138 × 109 px | 71 × 68 px |
+
+  - It sits at the bottom right, its foot about two thirds of the way down the frame.
+- **The lean** (`PitchTorch.Lean`): 6° per m/s against your motion, at most 50°, stretching to 1.3 at a sprint, toward an airway's draft, settling over 0.4 s.
+  - In this game's movement profile that is 26° walking (4.3 m/s) and 34° sprinting (5.6 m/s).
+  - A strong mouth's gust lays it flat out at `max_deg` (50°) away from the mouth, and the torch holds (§EZ.5; queue 50 left the flame's whip to this prompt). Planted torches lean and whip the same way.
+  - Nothing about it can put the torch out.
+- **The light:** amber as before, `held_scale` kept. It flickers with the flame (Campfire's value noise at `light.flicker_hz`: half of `flicker_amount` standing, the full amount at a sprint) on top of the coal's breath, and a draft's flicker on top of that (queue 50's). A torch burnt low, or guttering toward deep water, drops its flame toward the low fire's reds.
+- **Smoke:** as built (the embers row, by the flame's size), its colours pulled 25% toward the vents' soot (#0A0C20). Darker navy, never grey; hidden the moment the torch goes out.
+- **The bundle by the hearth:** the hearth's ground-glow decal is drawn 0.9 m toward the camera, so it painted its orange over anything lying by the fire, the old bundle included. The wrap now draws after it, so the bundle's heads read dark against their sticks.
+- **Merged with the queues that landed while this was built** (45, 49, 50, 52–58, 60, 61):
+  - Lighting a fire pot brings the pitch head's coal to the wick: `FirePots._torch_meet` aimed at the burnt end's tip, which on the pitch head is the foot of the wrap. A one-line fix in another session's file.
+  - My frames are `01h` and `22a`–`22d` (the others were taken).
+- **Small fixes:** the sticks have no specular (both games). `PlantedTorch.plant` takes a parent, since the tombs have no `world_root`.
+- **Checks:**
+  - `crawler_check` passes with 0 fails on seeds 7 and 1 (173 and 175 lines). New lines:
+    - every lit torch (in hand, planted) has one flame card and one coal, and every unlit one (the bundle's, one put out with burn left) has none; a burnt-out one is a bare stick;
+    - every wrap is six-sided and flat-topped with its bands as steps (a vertex test); the coal is six-sided; the drips are 2–7 cm; no specular, roughness under 1 or normal map on any head or stick;
+    - the lean is 0 standing, 33.6° sprinting (within 50°) and stretched 1.3, settled again after stopping, 5° toward an ordinary airway, and 50° away from a strong mouth in its gust, while the torch holds;
+    - the flame's flicker on the light (×0.94–1.08 over 2 s); the smoke darker and still blue.
+  - `crawler_frames` (seed 7) had 0 fails over 46 frames, rendered before queues 49, 58 and 61 landed; its render on this commit follows below. New: the bundle's heads by the hearth (`01h`), and the torch in hand in a dark corridor standing and at a sprint, at 480 and 270 (`22a`–`22d`), measured as above. That is the walkabout for Torchfire 1.
+  - Also 0 fails: `fire_pot_check`, `hands_check`, `stagger_check`, `crawler_harm_check`, `residents_check` and `boss_check` (seed 7), and the open world's `swing_check` (seed 7731).
+- **Noted:**
+  - The night grade lifts every near-black to navy (R3), so the pitch shows as the frame's darkest navy, not brown-black. Browner darks by a fire would be the grade's warmth (§EE.1), not the torch.
+  - Headless runs print `Parameter "m" is null` when a code-built mesh is freed (a taken bundle head; the check's own planted torches). It is a Godot 4.3 dummy-renderer quirk (freeing the burnt end does the same); the Vulkan renderer is silent.
+
+---
+
 ## 2026-10-07 — Queue 60, §FA.3, part 3: the skeletons burn down and are gone; burnt asleep they wake; the wick and the burst give you away to them. Queue 60 built (b21b5cd)
 - **The skeletons** (queue 58's `Resident`) are fire targets now, through the same socket as the snake:
   - **Burnt down:** a pot's burst within `splash_m`, the tar stuck on one and a burning patch it stands in take its `fire_hp` (3) down, times its `oil_scale`. At 0 it goes up in a last flare and is gone for good (`burn_out`): off the tomb's list, its strike gone, its chase given up, so Harm no longer counts it. Light oil (4) does it at once. Tar on one lying asleep took it in 2.13 s, because climbing out it stood in the tar's own patch.

@@ -80,7 +80,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | built 827805b |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
-| 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
+| 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | built afac6a9 |
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | built 8c409e6 |
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | built c40b2da |
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
@@ -971,7 +971,7 @@ CHECK (headless, in tools/crawler_check.gd): a scripted 120 s flat-out sprint ro
 
 ## 51 — The pitch torch: a wrapped, tarred head and a pixel flame — §EZ.2
 
-**Status:** todo
+**Status:** built afac6a9
 **Mike sees:** The torch's tip is wrapped in bands soaked black with pitch, a few drips running down the stick, glowing coal at the top of the wrap, and a small chunky pixel flame on top, in the hearth's amber. The flame leans back when you walk and streams a little when you run. Unlit torches by the hearth show the black pitch head and no flame.
 
 ```text
