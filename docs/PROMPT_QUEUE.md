@@ -81,7 +81,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | todo |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
-| 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | todo |
+| 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | built 8c409e6 |
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
@@ -985,7 +985,7 @@ CHECK (headless): every lit torch in a built tomb has one flame card and one coa
 
 ## 52 — The folk at the hearth in 3D, made pixel by the frame — §FH
 
-**Status:** todo
+**Status:** built 8c409e6
 **Mike sees:** The person sitting at the hearth when you wake is a solid little 3D figure now, not a flat cut-out: walk round them and they stay solid from every side, chunky with painted pixels like the goat with the bowl in frame 3, lit amber by the fire against the blue.
 
 ```text

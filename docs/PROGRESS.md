@@ -4,6 +4,53 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 52, §FH: the folk at the hearth in 3D, made pixel by the frame (8c409e6)
+- **What changes on screen:** the one who found you is a solid 3D figure now, the shared rig itself, not a flat sprite. It sits on a low stone across the hearth, a little to one side, facing the fire. Walk round it and it stays solid from every side.
+  - The hearth lights the side that faces the fire, in the cloak's own colour warmed by the amber: a red cloak glows, an indigo one goes deep maroon. Its back is navy.
+  - Its shadow, horns and ears included, goes over the floor and up the wall.
+  - It breathes slowly, and turns its head to watch you while you're in front of it.
+- **How it's built:** `HearthFolk` (`scripts/crawler/hearth_folk.gd`) seats the shared rig (`CloakedFigure`).
+  - Its beast head and cloak colours are rolled from the seed exactly as before (seed 7 is still the dragon in indigo).
+  - Its cloak is the rig's own cloth, in still air.
+  - It has a blocker, so you bump into it instead of walking through it.
+  - `TombBuild` lays the stone under it (`HearthFolk.seat`), in the room's stone like the rest of its dressing.
+- **Where it sits:** seated, its head barely clears the flame, so straight across the fire (where the standing sprite was) hid it when you woke. It now sits 30° round the hearth (`rescuer.round_deg`), on whichever side keeps it and its things farther from the doors, still 2.1 m from the hearth's middle (`stand_m`).
+- **Painted per §ES:**
+  - Diffuse only, roughness 1, no normal maps: checked on all 21 materials on it. Its occlusion was already baked toward navy (`Prelit`, from the §ES pass).
+  - **New, big texels:** `folk_3d.texels_per_m` 16, the walls' own fitted-stone grid. Each texel gets one fleck and one mottle value. The paint (the cloak's folds, the baked occlusion) is read at the texel's middle, so its shading steps texel by texel like painted pixels. (The shader carries each pixel's colour along its own slope on the screen to the texel's middle, at most 6 pixels.)
+  - The head gets its own copy of its material, so no other head changes.
+  - It's opt-in (`PlayerBody.set_texels`): the open world's folk keep the rig's fine weave. `wanderer_check`'s cloth and hem numbers are identical before and after.
+- **Its idle, on the rig:** a slow breath when seated (`PlayerBody.breath`; `rescuer.breath` 0.02, `breath_s` 4.5). Its neck rises and falls 2.5 cm.
+  - **Smooth, not stepped (my call, as the prompt asked):** real geometry at 480 lines already moves a whole pixel at a time, and stepped head turns read as jerky. `folk_3d.step_fps` 8 steps it as the sprites stepped (`PlayerBody.pose_fps`).
+  - Its head-look is the rig's own: the crawler hands it your eyes (`PlayerBody.watch_point`).
+- **Sprites kept** for creatures and bosses (§FI.2 call 11): `FigureSprite` and its bake are untouched. `crawler_check` tests its frame picking on a test sprite, and `crawler_frames` bakes a sheet (all 24 cells hold the figure).
+- **Frame time** (seed 7, the hearth room, 480 lines; `perf_bench.gd SCENE=crawler_hearth`, 240 frames each). This machine draws with a software Vulkan (llvmpipe), so only the comparisons mean anything:
+
+  | | Before: the sprite | After: live 3D |
+  |---|---|---|
+  | From the mat | 865.8 ms, 71 draws, 255k triangles | 881.3 ms, 85 draws, 259k triangles |
+  | Same, rescuer hidden | 869.8 ms, 70 draws | 884.2 ms, 70 draws |
+  | 1.6 m in front of it | 747.9 ms, 49 draws, 217k | 758.4 ms, 50 draws, 174k |
+
+  - **The figure itself costs nothing measurable here:** shown against hidden is within 0.5% in both builds. It adds 15 draws and about 5k triangles.
+  - The ~15 ms both "after" rows gained is there with the rescuer hidden too, so it's the room (the moved seat, the stone) and run-to-run noise. The 1.6 m view isn't like for like: the rescuer moved, so that view sees another part of the room.
+  - Its cloth costs about 0.3 ms a physics step on this machine's processor.
+- **Triangles:** 4,468 for the dragon, 4,284 for the horse. That's the shared rig's own count; §ES.2's ~1,500 is still Mike's open call from the §ES pass.
+- **Merged with the passes that landed meanwhile** (45, 50, 54, 56, 57, 60): `CrawlerMain.baked` keeps its name (their checks wait on it), and the bedroll that fire pots can set alight follows the rescuer's new place (both read `lay.rescuer`).
+- **Checks:**
+  - `crawler_check`: 0 fails on seeds 7 and 1 (113 and 114 lines on the merged branch). New lines: the rescuer is the live rig, not a sprite; seated on its stone (in the tomb's collision, right under its hips); facing the hearth; no shine, no normal maps; big texels (its head's its own); every part casts the fire's shadow; it breathes; it turns its hood to you; its blocker 0.82 m in from 1 m; and the kept sprite's frames.
+  - `stagger_check`, `crawler_harm_check` and `fire_pot_check` still pass with it in the room (41, 45 and 63 lines, 0 fails).
+  - `crawler_frames` (seed 7, on the merged branch): 32 lines, 0 fails, every pass's frames drawn. New frames 03a–03e circle the rescuer at 480 lines (front, left, back, right, close). Its fire side is brighter and warmer than its back, and its back is navy.
+  - `wanderer_check` identical; `shader_varying_check` ok.
+- **Data** (additive): `crawler.json → rescuer` gains `round_deg`, `seat_h_m`, `breath`, `breath_s`; `folk_3d` gains `texels_per_m`, `step_fps`. `[NOT WIRED YET]` is off `_help.folk_3d`, and the help for `opening`, `rescuer` and `sprites` says what's built. `perf_bench.gd` gains `SCENE=crawler_hearth`.
+- **For Mike to call:**
+  - **Sitting:** the prompt says "sitting by the fire", so it sits now (the sprite stood).
+  - **Watching you:** it turns its head to you while you're within about 12 m and in front of it (the rig's head-look). Say if it should mostly watch the fire instead.
+  - **Dark cloaks:** a blue or violet cloak goes nearly black in the amber, as it would by a real fire. The cloak is rolled from `cloaks.json`.
+  - **Data note for Claude (chat):** `crawler.json → sprites.sprite` still lists "folk" (§ET.8's word); §FH takes folk out. The help says so; the value is yours to change.
+
+---
+
 ## 2026-10-07 — Queue 55, §FB: two hands (the wheel, and Tab with the wheel) and a Controls page (5402764)
 - **The right hand** (`Hands`, `hands.json → right`): in the crawler the mouse wheel steps through what your right hand can hold: the torch (while you carry one), bare hands, and later a spear once found. Scrolling a lit torch away puts it out, as built. **Q does nothing in the crawler** (`q_swaps` false, now read). The open world keeps Q and its tool swap.
 - **The left hand** (`hands.json → left`): left-hand things sit in their own strip of the pack (`Inventory.strip`, 3 places, `left.strip_slots`), not in the carry slots. Hold Tab and scroll to step the left hand through them and back to empty.
