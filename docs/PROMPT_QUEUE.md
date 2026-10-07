@@ -76,7 +76,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 44 | §EX.6 | One firelight: the torch takes the hearth's amber | built cb946c1 |
 | 45 | §EX.7 | A reticle in the crawler | built 475c143 |
 | 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | todo |
-| 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | todo |
+| 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | built 6578210 |
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | built 827805b |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
@@ -911,7 +911,7 @@ CHECK (tools/crawler_check.gd, headless, seeds 1, 7, 42 and 200 more random seed
 
 ## 47 — One hearth per dungeon; wall torches in the other rooms — §EX.4
 
-**Status:** todo
+**Status:** built 6578210
 **Mike sees:** The hearth room is the only room with a hearth. Every other room has wall torches to relight instead: two facing each other in a small room, four in a big one, four in the heart (two either side of the dead). Only the hearth has the shaft with daylight; each wall torch has its own little flue and soot streak.
 
 ```text

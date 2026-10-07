@@ -4,6 +4,59 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 47, §EX.4: one hearth per dungeon, wall torches in the other rooms (6578210)
+- **What changes on screen:** the hearth room is the only room with a hearth, and its shaft is the only column of daylight in the tomb. Every other room has cold wall torches (sconces) on its walls instead of a hearth ring in the middle:
+  - two facing each other in a room whose long walls are up to 8 m;
+  - four in a longer room (two facing pairs);
+  - four in the heart, two on each side wall flanking the dead.
+  - Each has its own flue and soot streak. They look like the corridor sconces for now (queue 48 restyles them).
+- **Where they go** (`TombKit._room_sconces`, `crawler.json → room_torches`):
+  - On the room's long walls. Pairs are a whole number of 2 m modules apart (`masonry.json → styles.module_m`, the first key of the styles read), spread down the wall.
+  - Each bracket keeps 0.6 m from a doorway's edge and from the corners (`clear_m`, new). Where a door is in the way, a pair steps along a quarter metre at a time and stays facing, so a door in the middle of a wall ends up flanked.
+  - If no facing spot clears the doors, the pair takes another whole-module spacing; failing that, each long wall finds its own spot. That happens to about 77 pairs in 400 tombs (under 1%).
+  - Corridors keep their sconces as built. The airways now keep clear of every sconce.
+- **Light:** a room's torch gives 1.5 times a corridor sconce's light (`light_scale`, new; same flame, same reach).
+  - Measured (`tools/crawler_check.gd`, seeds 1, 7, 42): the light on each room's floor and walls as Godot lights them, each spot counted no brighter than white (share of white; plain mean light in brackets).
+
+    | Rooms | Old hearth ring | Its sconces relit |
+    |---|---|---|
+    | small (2 sconces) | 0.21 (0.92) | 0.24 (1.53) |
+    | large (4) | 0.12 (0.55) | 0.31 (1.97) |
+    | the heart (4) | 0.17 (0.77) | 0.37 (2.65) |
+
+  - The dimmest small room comes out 1.13 times its old ring. At `light_scale` 1.0 it would be 0.81 times, at 1.25 0.97 times.
+  - On screen (`crawler_frames`, seed 7, the crypt from its door at night): the frame's mean brightness is 0.221 with the old hearth ring (built for the frame, then taken away) and 0.274 with the crypt's two torches relit.
+  - Large rooms and the heart are now about twice as lit as with their ring. Lower `light_scale` if that's too bright.
+- **The rooms make room**, measured over 80 tombs:
+  - The crypts' coffin rows and the catacombs' niche stacks are set round the sconces (`TombKit.coffin_spots` and `niche_spots`, where queue 58's skeletons rest too).
+  - The torches cost the crypts no coffin (1,169 of 1,169). Each wall's row is set so its first torch falls between two coffins wherever that costs no coffin. A torch over a coffin's head is swung at from the gap beside it. (Since queue 49's follow-up, 97d9628, the snake's hole can take one coffin's place in a crypt.)
+  - A catacomb leaves out the niche stack where a torch hangs, and keeps every other stack 0.95 m from a torch, room for a burial niche's frame. That is 1,749 stacks of 2,151.
+  - A skeleton's open coffin drops its lid away from a torch's bay. Bone heaps, a collapse's slab and rubble, and grave goods keep the bay clear.
+  - Every room torch (2,502 of 2,502) can be reached from 0.5 m in front of its wall.
+- **Counts (before queue 46):** seed 7 now has 43 cold lights (34 room sconces and 9 corridor ones; it had 19) and 44 vents, 1 with daylight (it had 20 vents, 11 with daylight). The tomb grows from 422,373 triangles to 429,661 (2% more: the sconces, their flues and soot, less the rings). The log's "N of M lights burn again" counts the sconces.
+- **Checks** (on the pushed code, 6578210, before queue 46 landed on top of it, unless said):
+  - `crawler_check` passes with 0 fails on seeds 1, 7 and 42 (187–188 lines each, run again on 97d9628 with queue 56 and queue 49's follow-up in). New lines: one hearth per tomb, in the hearth room; 2 or 4 sconces per room and the heart's 4 flanking the dead; the long walls, whole modules apart, the facing share; no sconce within 0.6 m of a door's edge (nearest 0.77 m); one shaft and one flue per sconce; the airways clear; each room's light against its old ring; every room sconce in reach (a capsule search); the built lights matching the measure.
+  - `boss_check` (seeds 1, 7, 42) and `residents_check` (seeds 1, 7, 42) pass with 0 fails. The snake's ground already counts a room relit once all its torches are (§EX.4's two or four), so the dark shrinks room by room as they catch, and its lair keeps clear of the sconces.
+  - `crawler_harm_check`, `fire_pot_check` and `hands_check` (seed 7), and `stagger_check` (seeds 7, 1, 42) pass with 0 fails.
+  - `boss_frames` (seed 7) has 0 fails.
+  - `crawler_frames` (seed 7), the walkabout, on 97d9628: 43 lines, 0 fails, 55 frames. New frames: `09a_crypt_old_hearth_ring` (the ring built for the frame, then taken away), `09_crypt_sconces_relit` and `10b_heart_relit`. I looked at them once: the crypt's two torches face each other across its coffins, each with its soot above it, and the heart's four flank the dead at its end.
+    - The first render, on 6578210, had 2 fails, neither of them the torches'. The snake (queue 49) reached you in the dark corridor during the pitch torch's frames (queue 51) and took you back to the hearth with empty hands, so the swing at that corridor's sconce found no torch in hand. A headless run without queue 47 shows the same take at the same moment. Queue 51's session held the snake still for those frames (2060cc2).
+    - This pass now holds it still for the whole tour (a few lines in `crawler_frames`, and HOW_TO_RUN says so). In the 97d9628 render it was still free: with queue 56's chase into the light, it came for the torch in the dark heart and lay coiled beside you through `10` and `10b`. A render with the hold was still running when this was pushed.
+  - **On the code as pushed, with queue 46 in:** `crawler_check` passes with 0 fails on seeds 7, 1 and 42 (215 lines each). Over the three seeds: 35 rooms and 140 room torches, all 56 pairs facing exactly, the nearest door 0.85 m off, every room torch in reach.
+    - The light, share of white with the plain mean in brackets: small rooms (14) 0.17 (0.77) with the old ring, 0.21 (1.32) relit; large (18) 0.12 (0.52), 0.31 (1.93); the heart (3) 0.10 (0.44), 0.27 (1.74). The dimmest room is again 1.13 times its old ring.
+    - Seed 7 has 46 cold lights, 38 of them room torches, and 47 vents, 1 with daylight.
+    - `crawler_frames` on this code: still rendering when this was written.
+- **Other sessions' checks that leaned on the old rings**, changed a few lines each:
+  - `crawler_frames`: the corridor and harm-ring frames now pick a corridor's sconce, since the first sconce can now be a room's.
+  - `crawler_frames`: the half-dark's long view (queue 54) now needs real walls about 15 m off, and accepts a far wall from 13.5 m. On seed 7 its "walls 15 m off" had been the old hearth ring's stones in the room down the corridor; with the ring gone the band was empty. It now looks the other way down the same corridor, at a wall 14.6 m off (3,112 px at the black).
+  - `residents_check` (queue 58): its waking test picks a skeleton with no other one within waking reach of the spot it stands at. With the niches reshuffled, seed 1's first pick had a neighbour that woke.
+  - `stagger_check` (queue 57): it holds the tomb's cold holders unlaid while it tests the snake, then lays them again, so its swings can't relight one. It still prefers a spot out of every cold holder's reach. With cold sconces on every room's walls, the snake's reel can leave it where there is none (seeds 7 and 42).
+- **For Mike:**
+  - Built before 46 (you named 47), and 46 landed on top of it this morning: the heart's dead now lie 3 m in from its far wall, and its four torches flank them there; the way out's door past the heart is a door like any other, so the torches keep 0.6 m from it. The counts, light and on-screen numbers above are from the tombs before 46. The checks on the code as pushed, with 46 in, are under Checks.
+  - §EX.9 call 2 (two and four) is as built.
+
+---
+
 ## 2026-10-07 — Queue 49 with 46 and 47 in: the lair off the spine, and the walk out with the snake loose (b654d7c)
 - **Queue 46's spine** (28dafd4) is what the snake's lair keeps off now. `BossGround.main_path` already read a spine when the layout had one: the pieces marked `spine`, from the hearth room through the heart to the way out's flight and landing. The lair is off it on seeds 1, 7 and 42 and over the check's 30 layouts, all dead ends (19 catacombs, 6 crypts in a coffin's place, 5 ossuaries).
 - **46's walk to the way out** (its own check, your body in 203 tombs) runs on the game's collision exactly, the hole's ring included, and passes. The snake's body has no collision, so it can never stand in your way. The way out's door, open to the outside, joins no node of the snake's ground, and its landing is a stretch, never a room it coils in.
