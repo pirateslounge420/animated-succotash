@@ -88,7 +88,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | built b998d05 |
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | built a4f1b00 |
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
-| 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
+| 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | built 828e1fa |
 | 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | built b21b5cd |
 | 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | built e11418b |
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | todo |
@@ -1091,7 +1091,7 @@ CHECK (headless, seeds 1, 7, 42): every skeleton rests off the spine's walkable 
 
 ## 59 — Cleared by light: the retreat, and the half-lit floor that bites — §FF.2
 
-**Status:** todo
+**Status:** built 828e1fa
 **Mike sees:** Relight the last torch on a floor and you catch the skeletons going: climbing back into their niches and holes, gone for good. While parts of the floor are still dark, they hang back in those dark pockets, and if you walk too close to one, it lunges.
 
 ```text

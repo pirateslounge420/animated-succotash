@@ -4,6 +4,37 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 59, §FF.2: cleared by light — the skeletons keep to the dark, bite from its pockets, and go for good at the last light (828e1fa)
+- **Built on 49, 56, 57 and 58, and merged over 46, 47, 51 and 60.** The light is queue 49's map of the tomb (`BossGround`: each room, and each corridor stretch between sconces, lit or dark). `Residents` works it out again whenever a holder catches. Until floors exist (§FF.1), a floor is the whole tomb.
+- **The light keeps them out** (`residents.json → rules`):
+  - A skeleton keeps to the dark unless its strike has landed this chase (§FD, `chase_enters_light`, `Pursuit.may_enter`). Then it can follow you into the light until it gives you up, and it is back in the dark within `back_to_dark_s` (4 s).
+  - Hunting you without having hit you, it stops at the edge of its dark, in the doorway, and watches you for `edge_watch_s` (6 s, new), then gives you up. No strike reaches you in the light until one has hit you, as with the snake.
+  - Relight the room a skeleton lies or stands in and it climbs out (bone grinding) and goes for the nearest dark (`BossGround.nearest_dark`), walking fast enough (up to 6 m/s) to be out of the light within 4 s of setting off.
+  - Given up, it walks home only by a way through the dark to a resting place still dark. The hearth room is always lit, so it never crosses it; otherwise it hangs back in the dark.
+- **Dark pockets bite** (`pocket_counterattack_m` 3; `pocket_lunge_mps` 3.5, new): skeletons the light has moved on stand in what dark is left, as far from where the light comes in as the pocket allows (`Residents.pocket_spot`), and are no one's pursuer there. Come within 3 m where one senses you and it strikes: 57's normal wind-up (the jaw's creak from its first frame; a lit torch's swing staggers it) while it lunges in to bring you into reach. Then it hunts you.
+- **Cut off** (`below_s` 6–12 s, new; my reading, like the snake going below): when a whole branch is relit, its skeletons can't reach any dark without crossing the lit hearth room. They go into the stone through the nearest niche or coffin (seen going if you're looking, the same climb and sink as at the end), then come up 6–12 s later in the dark nearest them, out of your sight and at least 6 m from you. So the tomb's skeletons gather in the last of the dark, and the last light's reveal has them all. Without it, someone relighting branch by branch would see most of them vanish before the end: on the layout before 46, seed 7 lost 4 of its 5 that way.
+- **Cleared** (`crawler.json → cleared`; new: `retreat_seen_s` 6, `log_line`; `retreat_mps` 3.2 and `withdraw_s` 1.2 in `residents.json`): when the last light catches, every skeleton leaves by its `retreat_to` (the skeleton's `back_into_its_niche`).
+  - One you can see hurries back into its niche or coffin (or a much nearer one), climbs in and sinks back into the stone.
+  - One you can't see is gone at once, and one that leaves your sight is gone then; none later than 6 s.
+  - It is gone for good: off the roll and freed, never back.
+  - The log reads "N of N lights burn again.", then "Banished the dark. What lived in it fled." (no creature named, §BA). The snake's release (queue 49) plays as before. The count line moved into CrawlerMain's physics step so it comes first.
+- **Data:** `[NOT WIRED YET]` is off `crawler.json → _help.cleared`; `residents.json → _help.rules` and `_help.about` say what is wired (queue 60's fire wording kept).
+- **Checks:**
+  - `tools/cleared_check.gd` (new), seeds 1, 7 and 42, on the final code (46's layout in): 78 lines, 0 fails, no script errors.
+    - It stops 9 cm from the doorway's middle and gives you up exactly `edge_watch_s` after it stopped (7.62 s, stopped at 1.62 s). Once it has hit you, it follows you into the lit hearth room; given up there, it is back in the dark within 4 s (0.02 s here).
+    - The pocket strike starts as you cross 2.96–3.00 m and lunges to 0.83 m; the hit lands 0.85 s after the wind-up began (0.7 + 0.15). Your swing at half the wind-up staggers it, and no hit lands.
+    - Cut off in view, it climbs into its own grave and sinks in 1.52 s, then comes up 6.5–10.0 s later, 70–95 m off and out of sight.
+    - The relight run (the heart's lights last; 47's sconces, 46's spine and way out): no skeleton stands in the light outside a chase except on its way out, 4.7 s at worst (its climb out included). Each seed had a pocket strike and chases into the light.
+    - At the last light every skeleton is still there (4–5); 3, 3 and 5 are seen going, and all are gone within 1.8–2.3 s. Over 5 minutes more, none comes back.
+  - `residents_check` (58): its hiding test follows the new rule. On seed 7 the skeleton's niche lies past the lit hearth room, so it hangs back in the dark instead of walking home; on seeds 1 and 42 it walks home.
+  - The other sessions' checks on the final code, all 0 fails and no script errors: `crawler_check` 215 lines on seed 7 and 215 on seed 1, `boss_check` 109, `residents_check` 123, `stagger_check` 61, `crawler_harm_check` 59, `hands_check` 61, `fire_pot_check` 82.
+- **Frames** (`crawler_frames` with `ONLY=cleared`, lavapipe; seeds 7 and 1, 0 fails each):
+  - Seed 7. `26a`: a skeleton at rest in its wall niche, its room's sconce the last light still cold (45 of 46 relit). `26b`: the sconce catches and the skeleton, on screen, starts back into the stone, its bone lit amber (brightest pixels luma 0.532, hue 21.5). `26c`: a third of the way in (a harness frame, held for the shot). `26d`: the niche empty, every skeleton gone, and the log's line.
+  - Seed 1 lays all four of its skeletons in graves, so its frames show one sinking into its coffin (luma 0.542, hue 23.9).
+- **For Mike:** the numbers are first guesses: the 6 s watch, the 3.5 m/s lunge, the 6–12 s in the stone, the 6 s limit on being seen going, and the log line's words. Cut off going into the stone and coming up elsewhere is my reading of "they retreat to those places", not a decision of yours.
+
+---
+
 ## 2026-10-07 — Queue 47, §EX.4: one hearth per dungeon, wall torches in the other rooms (6578210)
 - **What changes on screen:** the hearth room is the only room with a hearth, and its shaft is the only column of daylight in the tomb. Every other room has cold wall torches (sconces) on its walls instead of a hearth ring in the middle:
   - two facing each other in a room whose long walls are up to 8 m;
