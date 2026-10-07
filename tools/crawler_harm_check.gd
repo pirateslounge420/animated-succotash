@@ -63,6 +63,8 @@ func _hit() -> bool:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The tomb's skeletons sleep through this check (design §FE; queue 58).
+	Residents.stay_asleep = true
 	Bow.need_capture = false
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))

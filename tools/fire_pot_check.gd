@@ -54,7 +54,8 @@ var p: CrawlerPlayer
 
 
 ## A resident stand-in (prompt 58's skeletons): the fire-target socket.
-class Resident:
+## (Named so as not to hide the real one, Resident, queue 58.)
+class ResidentStandIn:
 	extends Node3D
 	var fire_hp := 3.0
 	var fire_creature := "skeleton"
@@ -111,6 +112,8 @@ func _frames(n: int) -> void:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The tomb's skeletons sleep through this check (design §FE; queue 58).
+	Residents.stay_asleep = true
 	Bow.need_capture = false
 	_data()
 	_found_layouts()
@@ -374,8 +377,8 @@ func _fuse() -> void:
 
 ## A stand-in resident hung `at` (far from any floor unless asked), its
 ## fire_hp and kind.
-func _resident(at: Vector3, hp: float, kind := "skeleton") -> Resident:
-	var r := Resident.new()
+func _resident(at: Vector3, hp: float, kind := "skeleton") -> ResidentStandIn:
+	var r := ResidentStandIn.new()
 	r.fire_hp = hp
 	r.fire_creature = kind
 	r.add_to_group(FirePots.TARGET_GROUP)

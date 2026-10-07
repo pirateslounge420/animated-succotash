@@ -53,6 +53,8 @@ func _initialize() -> void:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The tomb's skeletons sleep through this check (design §FE; queue 58).
+	Residents.stay_asleep = true
 	Bow.need_capture = false
 	Controls.path = "user://controls_check.cfg"
 	_wipe()

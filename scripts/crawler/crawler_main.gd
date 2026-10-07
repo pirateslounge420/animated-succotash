@@ -34,6 +34,12 @@ extends Node
 ## ring in the crawler): three and "Good night", and you wake on the mat
 ## by the hearth with every light you lit still burning.
 ##
+## Then what lives in its dark below the boss (design §FE, queue 58;
+## Residents): the tomb's skeletons, resting in its niches and coffins
+## until you come too close, and hiding from them (§FC.2). Their strikes
+## are hits too, and you heal only once nothing is after you (§FD); taken,
+## every one after you gives you up and goes home.
+##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), closing into a dim ring while you sneak (§FC.1), off with the
@@ -41,7 +47,8 @@ extends Node
 ## the middle of the frame. The log keeps its lines (Enter), O the
 ## settings (with their Controls page, §FB), F11 the pixel size, F2 the
 ## frame time. Right click takes a torch from the bundle; left click
-## swings the torch; the mouse wheel puts it away or takes it out, and
+## swings the torch (lit, into a creature's wind-up, it staggers it:
+## §FA.1, CreatureStrike); the mouse wheel puts it away or takes it out, and
 ## with Tab held the wheel steps the left hand through its strip of fire
 ## pots, shown while Tab is held (§FB: Hands, HandStrip; FirePots); F
 ## smothers the torch. When you are hurt, Harm's ring and, on the third
@@ -69,6 +76,8 @@ var player: CrawlerPlayer
 ## The dark you can half see in (§FC.4).
 var half_dark: HalfDark
 var rescuer: HearthFolk
+## What lives in the dark below the boss (§FE): the tomb's skeletons.
+var residents: Residents
 var post: PostGrade
 var fire_shadows: FireShadows
 var environment: Environment
@@ -148,6 +157,11 @@ func _ready() -> void:
 	wall_life.name = "WallLife"
 	add_child(wall_life)
 	wall_life.build(lay, walls, fires)
+	# What lives in the dark (§FE): asleep in their places.
+	residents = Residents.new()
+	residents.name = "Residents"
+	add_child(residents)
+	residents.build(lay, player)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"
@@ -174,7 +188,7 @@ func _ready() -> void:
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
-	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
+	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight), %d residents; %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), residents.all.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
 	_rescuer()
 
 
@@ -406,6 +420,11 @@ func _rescuer() -> void:
 	# view to itself).
 	if boss != null:
 		await boss.body.bake(self)
+	# The residents: the floor they walk (the stone is in the physics world
+	# by now) and their sheets (ResidentSprite), before the dark lifts too.
+	await get_tree().physics_frame
+	residents.build_nav()
+	await residents.bake(self)
 	baked = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
@@ -423,7 +442,8 @@ func _process(delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam != null:
 		PlayerBody.watch_point = cam.global_position
-	player.typing = log_panel.visible
+	# (Taken, the keys let go while "Good night" plays: Harm.)
+	player.typing = log_panel.visible or (harm != null and harm.taking)
 	player.ui_open = settings_panel.visible or log_panel.visible
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
@@ -466,7 +486,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## you fell and is in your pack, both hands empty (a fire pot back on its
 ## strip), as when you first woke;
 ## a breath before anything can touch you again (PlanetPlayer.revive); the
-## boss goes back to its rounds, far off.
+## boss goes back to its rounds, far off, and the skeletons home.
 func _on_taken() -> void:
 	_fade.visible = true
 	_fade.color.a = 1.0
@@ -481,6 +501,8 @@ func _on_taken() -> void:
 	player.spawn_flat(w[0], float(w[1]), -0.32)
 	harm.reset()
 	boss.after_wake()
+	# Every skeleton after you gives you up and goes home (§FD).
+	residents.player_woke()
 	GameLog.add("Taken in the dark. You wake by the hearth, and every light you lit still burns.", "death_cause")
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)

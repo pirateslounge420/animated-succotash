@@ -4,6 +4,7 @@ extends SceneTree
 ## end of a pass (no screenshots between steps):
 ##   SEED=7 xvfb-run -a -s "-screen 0 1280x720x24" ~/bin/godot --path . \
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
+## ONLY=skeleton renders just the skeletons' sheet and frames.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
 ## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); a sheet
@@ -19,8 +20,12 @@ extends SceneTree
 ## lines, darker and deeper on two, the heart beating from hit 1); the two
 ## hands (§FB): the torch in the right, a fire pot in the left, Tab held
 ## (the strip low left, then the right hand's low right), and Settings'
-## Controls and Settings pages.
-## Checks: every cell of the sheet holds the figure (its pixels drawn),
+## Controls and Settings pages; and the tomb's skeletons (design §FE,
+## queue 58; 21-21c): their sheet, one at rest in its wall niche (else
+## its grave), climbing out of it in your torchlight, and out.
+## Checks: every cell of the sheets holds the figure (its pixels drawn),
+## the skeleton caught halfway out of its place with its bone lit amber
+## on screen,
 ## the rescuer's chest brighter and warmer from in front (past the fire)
 ## than from behind, its back navy, the waking frame shows the fire warm
 ## against the dark (warm pixels, and the frame's darkest share navy, not
@@ -133,6 +138,37 @@ func _patch(img: Image, x0: float, y0: float, x1: float, y1: float) -> Dictionar
 			sum += img.get_pixel(x, y)
 			n += 1
 	var c := sum / float(maxi(n, 1))
+	var mx := maxf(c.r, maxf(c.g, c.b))
+	var mn := minf(c.r, minf(c.g, c.b))
+	var hue := 0.0
+	if mx - mn > 1e-5:
+		if mx == c.r:
+			hue = 60.0 * fposmod((c.g - c.b) / (mx - mn), 6.0)
+		elif mx == c.g:
+			hue = 60.0 * ((c.b - c.r) / (mx - mn) + 2.0)
+		else:
+			hue = 60.0 * ((c.r - c.g) / (mx - mn) + 4.0)
+	if hue > 180.0:
+		hue -= 360.0
+	return {"hue": hue, "chroma": mx - mn, "luma": c.r * 0.3 + c.g * 0.59 + c.b * 0.11, "color": c}
+
+
+## The brightest `share` of the pixels in the box `half` (fractions of the
+## frame) round `at` (a fraction of the frame): their mean, as _patch's.
+func _brightest(img: Image, at: Vector2, half: Vector2, share: float) -> Dictionary:
+	var w := img.get_width()
+	var h := img.get_height()
+	var px: Array = []
+	for y in range(int(clampf(at.y - half.y, 0.0, 1.0) * h), int(clampf(at.y + half.y, 0.0, 1.0) * h)):
+		for x in range(int(clampf(at.x - half.x, 0.0, 1.0) * w), int(clampf(at.x + half.x, 0.0, 1.0) * w)):
+			var c := img.get_pixel(x, y)
+			px.append([c.r * 0.3 + c.g * 0.59 + c.b * 0.11, c])
+	px.sort_custom(func(a, b): return a[0] > b[0])
+	var n := maxi(int(px.size() * share), 1)
+	var sum := Color(0, 0, 0)
+	for i in mini(n, px.size()):
+		sum += px[i][1]
+	var c := sum / float(maxi(mini(n, px.size()), 1))
 	var mx := maxf(c.r, maxf(c.g, c.b))
 	var mn := minf(c.r, minf(c.g, c.b))
 	var hue := 0.0
@@ -716,6 +752,9 @@ func _in_room(pc: Dictionary, p: Vector3, margin: float) -> bool:
 func _run() -> void:
 	WorldSave.read_only = true
 	Controls.path = "user://controls_frames.cfg"
+	# The skeletons sleep through the tour (design §FE); one is woken at
+	# the end for its frames.
+	Residents.stay_asleep = true
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	out_dir = OS.get_environment("OUT") if OS.get_environment("OUT") != "" else "user://crawler_frames/%d" % seed_v
@@ -732,6 +771,14 @@ func _run() -> void:
 	get_root().add_child(main)
 	while not main.baked:
 		await process_frame
+	if OS.get_environment("ONLY") == "skeleton":
+		# Just the skeletons' sheet and frames (a quick look; also for a
+		# machine with no GPU, where every frame takes seconds).
+		await _frames(30)
+		main.player.set_physics_process(false)
+		await _skeleton(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -1019,6 +1066,13 @@ func _run() -> void:
 		ok(float(rc.edge_cr) >= 3.0, "readable %s: its arms %.1f:1 against their dark edge, the edge %.1f:1 against what's behind it (the arms alone against that: %.1f:1)" % [where[key], rc.edge_cr, rc.edge_out_cr, rc.out_cr])
 	await _harm_ring(main, p)
 	await _hands(main, p)
+	await _skeleton(main)
+	_finish(keep)
+
+
+## The player's own settings back and the run's controls file gone; the
+## result; quit.
+func _finish(keep: Dictionary) -> void:
 	if FileAccess.file_exists(Controls.path):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(Controls.path))
 	for key in keep:
@@ -1202,3 +1256,84 @@ func _hands(main: CrawlerMain, p: CrawlerPlayer) -> void:
 	main._toggle_settings(false)
 	p.torch.put_out("stowed")
 	world.days = keep_days
+
+
+## The skeletons (design §FE, queue 58): their sheet, every cell drawn;
+## then one climbing out of its niche (else its grave) in your torchlight,
+## caught halfway out, and its bone lit amber on screen.
+func _skeleton(main: CrawlerMain) -> void:
+	var res := main.residents
+	if res.all.is_empty():
+		ok(false, "the tomb has skeletons")
+		return
+	var r: Resident = res.all[0]
+	for q in res.all:
+		if str(q.place.rests_in) == "wall_niche":
+			r = q
+			break
+	if r.sprite == null:
+		ok(false, "the skeleton's sheet is baked")
+		return
+	var sheet := r.sprite.atlas.get_image()
+	sheet.save_png(out_dir.path_join("21_skeleton_sheet.png"))
+	var spr := r.sprite
+	var cols := spr.around
+	var rows := spr.rows_deg.size() * spr.poses
+	var cw := sheet.get_width() / cols
+	var ch := sheet.get_height() / rows
+	var empty := 0
+	var least := 1 << 30
+	for row in rows:
+		for col in cols:
+			var n := 0
+			for y in range(0, ch, 2):
+				for x in range(0, cw, 2):
+					if sheet.get_pixel(col * cw + x, row * ch + y).a > 0.5:
+						n += 1
+			least = mini(least, n)
+			if n < 25:
+				empty += 1
+	ok(empty == 0, "every one of the skeleton sheet's %d cells (%d poses x %d heights x %d around) holds it (fewest drawn: %d px at half size)" % [cols * rows, spr.poses, spr.rows_deg.size(), cols, least])
+	# In torchlight, from in front of its place, as it climbs out.
+	var p := main.player
+	var world: Node = main.world
+	world.days = 13.0
+	var e: Vector3 = r.place.eye
+	var out: Vector3 = r.place.out
+	var inward := Vector3(out.x - (r.place.pos as Vector3).x, 0.0, out.z - (r.place.pos as Vector3).z).normalized()
+	var side := inward.cross(Vector3.UP).normalized()
+	var stand := Vector3(e.x, out.y, e.z) + inward * 2.7 + side * 0.6
+	var to := Vector3(e.x, stand.y, e.z) - stand
+	_torch_in_hand(p)
+	p.torch.light()
+	# Nothing in the left hand (the hands' frames leave a pot there).
+	p.hands.hold_left({})
+	p.spawn_flat(stand, atan2(-to.x, -to.z), -0.12)
+	await _frames(10)
+	await _shot("21a_skeleton_at_rest_%s" % str(r.place.rests_in))
+	r.wake()
+	var rise := float(r.def.get("rise_s", 1.6))
+	while r.state == Resident.RISING and r.t < rise * 0.6:
+		await process_frame
+	var img := await _shot("21b_skeleton_climbing_out_%s" % str(r.place.rests_in))
+	# Its bone on screen: the brightest pixels round where it is (the lit
+	# bone, not the wall behind its ribs), against the frame's size.
+	var cam := p.camera()
+	var mid := r.global_position + Vector3(0.0, 0.7, 0.0)
+	var at := cam.unproject_position(mid) / cam.get_viewport().get_visible_rect().size
+	var bone := _brightest(img, at, Vector2(0.07, 0.16), 0.15)
+	print("  the skeleton climbing out (%s, pose %s) at %s of the frame: its brightest pixels luma %.3f, hue %.1f, chroma %.3f (#%s)" % [r.state_name(), SkeletonRig.POSES[r.sprite.pose], str(at), bone.luma, bone.hue, bone.chroma, (bone.color as Color).to_html(false)])
+	ok(r.state == Resident.RISING and SkeletonRig.POSES[r.sprite.pose] in ["rise_a", "rise_b", "rise_c"], "caught halfway out of its %s (%s)" % [r.place.rests_in, SkeletonRig.POSES[r.sprite.pose]])
+	ok(float(bone.luma) > 0.25 and float(bone.hue) >= -20.0 and float(bone.hue) <= 62.0, "its bone shows in your torchlight, amber (luma %.3f, hue %.1f)" % [bone.luma, bone.hue])
+	# Out on the floor, held there for its frame (on a slow renderer the
+	# game runs on between frames, and it would be on you already).
+	var n := 0
+	while r.state == Resident.RISING and n < 600:
+		await process_frame
+		n += 1
+	r.set_physics_process(false)
+	await _frames(4)
+	await _shot("21c_skeleton_out")
+	r.set_physics_process(true)
+	p.torch.put_out("stowed")
+

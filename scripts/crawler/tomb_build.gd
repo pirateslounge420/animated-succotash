@@ -19,6 +19,11 @@ extends RuinBuilder
 ##              goods, and at its end the mossy stone box with a skeleton
 ##              leaning out of it (Mike's frame 9)
 ##
+## Where a skeleton rests (TombKit residents, design §FE) its place is
+## drawn for it: a crypt coffin open, its lid shoved off onto the floor; a
+## catacomb niche framed with jambs and a lintel, its middle shelf gone;
+## the heart's box hollow. The skeleton itself is a sprite (Residents).
+##
 ## and the airways' carved surrounds (§ET.6). Flat: the tomb is its own
 ## world, the hearth room's floor at y 0 (no planet under it). Pure; the
 ## arrays come back for CrawlerMain to make into a mesh and collision.
@@ -324,22 +329,7 @@ func _at(pc: Dictionary, along: float, across: float, lift := 0.0) -> Vector3:
 
 ## Is (along) on a side wall of `pc` near a door on that side?
 func _near_door(pc: Dictionary, side: String, along: float, within: float) -> bool:
-	for di in pc.doors:
-		var s: Array = TombKit.door_side(pc, _lay.doors[di])
-		if str(s[0]) == side and absf(float(s[1]) + float(pc.len) * 0.5 - along) < within:
-			return true
-	return false
-
-
-## Is (along) near an airway on that side of `pc`?
-func _near_airway(pc: Dictionary, sd: float, along: float, within: float) -> bool:
-	for a in _lay.airways:
-		if int(a.piece) != int(pc.id):
-			continue
-		var aa := Delves.along_across(pc, Vector2((a.pos as Vector3).x, (a.pos as Vector3).z))
-		if signf(aa.y) == sd and absf(aa.x - along) < within:
-			return true
-	return false
+	return TombKit.near_door(_lay, pc, side, along, within)
 
 
 func _dress(pc: Dictionary) -> void:
@@ -368,30 +358,36 @@ func _dress(pc: Dictionary) -> void:
 			var seat := HearthFolk.seat(rp, float(r[1]))
 			box(seat.xf, seat.size, (palette[2] as Color).darkened(0.05), 0.0, 0.04, 0.02)
 		"crypt":
-			if half < 2.4:
-				return
+			# The coffins (TombKit.coffin_spots); one a skeleton rests in
+			# lies open (residents, §FE).
 			var yaw := atan2(pv.x, pv.y)
-			for sd: float in [-1.0, 1.0]:
-				var side := "left" if sd > 0.0 else "right"
-				var a := 1.6
-				while a < length - 1.4:
-					if not _near_door(pc, side, a, 1.9) and not _near_airway(pc, sd, a, 1.4):
-						_sarcophagus(_at(pc, a, sd * (half - 1.25)), yaw, palette[rng.randi() % palette.size()])
-						if rng.randf() < 0.35:
-							_grave_goods(_at(pc, a + 0.9, sd * (half - 2.3), 0.03), 0.3, 1)
-					a += 2.4
+			for s in TombKit.coffin_spots(_lay, pc):
+				var a := float(s.along)
+				var sd := float(s.sd)
+				var col: Color = palette[rng.randi() % palette.size()]
+				if TombKit.resting_at(_lay, int(pc.id), int(s.i)).is_empty():
+					_sarcophagus(_at(pc, a, sd * (half - TombKit.COFFIN_IN)), yaw, col)
+				else:
+					# Its lid falls toward the room's middle, clear of the end
+					# walls' doors (the coffin's +x looks back toward the
+					# room's start).
+					_open_coffin(_at(pc, a, sd * (half - TombKit.COFFIN_IN)), yaw, col, TombKit.COFFIN_SIZE, -1.0 if a < length * 0.5 else 1.0)
+				if rng.randf() < 0.35:
+					_grave_goods(_at(pc, a + 0.9, sd * (half - 2.3), 0.03), 0.3, 1)
 		"catacomb":
-			for sd: float in [-1.0, 1.0]:
-				var side := "left" if sd > 0.0 else "right"
-				var a := 1.0
-				while a < length - 0.8:
-					if not _near_door(pc, side, a, 1.5) and not _near_airway(pc, sd, a, 1.2):
-						for k in 3:
-							var sh := _at(pc, a, sd * (half - 0.22), 0.45 + 0.55 * k)
-							box(Transform3D(Basis(Vector3.UP, atan2(pv.x, pv.y)), sh), Vector3(1.1, 0.1, 0.44), palette[1], _growth(0.15), 0.03, 0.01)
-							if rng.randf() < 0.7:
-								_grave_goods(sh + Vector3(0.0, 0.06, 0.0), 0.15, 1)
-					a += 1.4
+			# The niche stacks (TombKit.niche_spots); the one a skeleton sits
+			# in is a burial niche.
+			for s in TombKit.niche_spots(_lay, pc):
+				var a := float(s.along)
+				var sd := float(s.sd)
+				if not TombKit.resting_at(_lay, int(pc.id), int(s.i)).is_empty():
+					_burial_niche(pc, a, sd)
+					continue
+				for k in 3:
+					var sh := _at(pc, a, sd * (half - 0.22), 0.45 + 0.55 * k)
+					box(Transform3D(Basis(Vector3.UP, atan2(pv.x, pv.y)), sh), Vector3(1.1, 0.1, 0.44), palette[1], _growth(0.15), 0.03, 0.01)
+					if rng.randf() < 0.7:
+						_grave_goods(sh + Vector3(0.0, 0.06, 0.0), 0.15, 1)
 		"ossuary":
 			for k in 4:
 				var ca := 0.9 if k < 2 else length - 0.9
@@ -417,20 +413,27 @@ func _dress(pc: Dictionary) -> void:
 			box(Transform3D(Basis.from_euler(Vector3(0.45, rng.randf() * TAU, 0.2)), p + Vector3(0.0, 0.8, 0.0)), Vector3(2.6, 0.45, 1.5), palette[2], _growth(0.4), 0.12, 0.08)
 			rubble(p, 1.4, 6)
 		"heart":
-			var yaw := atan2((pc.dir as Vector2).x, (pc.dir as Vector2).y) + PI * 0.5
-			_heart_box(_at(pc, length - 1.6, 0.0), yaw)
+			var hb := TombKit.heart_box(pc)
+			_heart_box(hb.pos, float(hb.yaw), not TombKit.resting_at(_lay, int(pc.id), -1).is_empty())
 			_grave_goods(_at(pc, length * 0.35, 0.0, 0.03), 1.4, 6)
 
 
 ## The heart's coffin (Mike's frame 9): a mossy stone box, its lid shoved
 ## half off, the one buried there leaning out over its side: skull, ribs,
-## an arm hanging down the stone.
-func _heart_box(p: Vector3, yaw: float) -> void:
+## an arm hanging down the stone. When that one is a resident (`open`,
+## residents.json skeleton heart_holds_one) the box is hollow and the
+## skeleton is its sprite (Residents), not stone.
+func _heart_box(p: Vector3, yaw: float, open := false) -> void:
 	var bs := Basis(Vector3.UP, yaw)
 	var col: Color = palette[3]
-	box(Transform3D(bs, p + Vector3(0.0, 0.5, 0.0)), Vector3(1.05, 1.0, 2.3), col.darkened(0.05), 0.75, 0.08, 0.03)
+	if open:
+		_open_box(bs, p, TombKit.HEART_BOX, col.darkened(0.05), 0.75)
+	else:
+		box(Transform3D(bs, p + Vector3(0.0, 0.5, 0.0)), Vector3(1.05, 1.0, 2.3), col.darkened(0.05), 0.75, 0.08, 0.03)
 	# The lid, shoved off one side and down against the box.
 	box(Transform3D(bs * Basis.from_euler(Vector3(0.0, 0.12, 0.42)), p + bs * Vector3(-0.85, 0.72, 0.15)), Vector3(1.1, 0.18, 2.35), col.lightened(0.04), 0.85, 0.06, 0.02)
+	if open:
+		return
 	solid = false
 	# The skeleton: ribs leaning out over the rim, the skull past them, an
 	# arm down the outside.
@@ -440,6 +443,54 @@ func _heart_box(p: Vector3, yaw: float) -> void:
 	box(Transform3D(bs * Basis.from_euler(Vector3(0.0, 0.0, 0.15)), p + bs * Vector3(0.6, 0.62, 0.35)), Vector3(0.05, 0.62, 0.05), BONE, 0.0, 0.015, 0.005)
 	box(Transform3D(bs * Basis.from_euler(Vector3(0.3, 0.0, 0.1)), p + bs * Vector3(0.62, 0.22, 0.42)), Vector3(0.05, 0.3, 0.05), BONE, 0.0, 0.015, 0.005)
 	solid = true
+
+
+## An open stone box `size` (x wide, y tall, z long, in `bs`) standing on
+## `p`: four walls round a dark hollow filled up to where a skeleton
+## kneels (TombKit.grave_floor: its head and an arm clear the rim), a
+## grave (residents.json skeleton rests_in).
+func _open_box(bs: Basis, p: Vector3, size: Vector3, col: Color, moss: float) -> void:
+	var t := 0.1
+	var fill := TombKit.grave_floor(size.y)
+	box(Transform3D(bs, p + Vector3(0.0, fill * 0.5, 0.0)), Vector3(size.x, fill, size.z), col.darkened(0.45), moss * 0.5, 0.03, 0.02)
+	for sx: float in [-1.0, 1.0]:
+		box(Transform3D(bs, p + bs * Vector3(sx * (size.x - t) * 0.5, size.y * 0.5, 0.0)), Vector3(t, size.y, size.z), col, moss, 0.04, 0.02)
+	for sz: float in [-1.0, 1.0]:
+		box(Transform3D(bs, p + bs * Vector3(0.0, size.y * 0.5, sz * (size.z - t) * 0.5)), Vector3(size.x - 2.0 * t, size.y, t), col, moss, 0.04, 0.02)
+
+
+## A crypt coffin a skeleton rests in (§FE.2: it climbs out of its grave):
+## _sarcophagus's box, open, and its lid shoved off its `side` long side
+## (+1 its +x), down on the floor against it. Draws on the same rolls as
+## _sarcophagus, so the rest of the room is as it would be.
+func _open_coffin(p: Vector3, yaw: float, col: Color, size: Vector3, side: float) -> void:
+	var bs := Basis(Vector3.UP, yaw)
+	_open_box(bs, p, size, col.darkened(0.05), _growth(0.15))
+	var turn := rng.randf_range(-0.25, 0.25)
+	rng.randf_range(-0.15, 0.15)
+	var slide := rng.randf_range(-0.2, 0.2)
+	# Tipped so its edge by the box rests up against it.
+	var lid := bs * Basis(Vector3.UP, turn * 0.3) * Basis(Vector3.BACK, -side * 0.38)
+	box(Transform3D(lid, p + bs * Vector3(side * (size.x * 0.5 + 0.5), 0.27, slide)), Vector3(size.x + 0.1, 0.2, size.z + 0.1), col.lightened(0.05), _growth(0.2), 0.06, 0.02)
+
+
+## A burial niche a skeleton sits in (§FE.2: it climbs out of the wall):
+## the catacomb's shelf stack at `along` on side `sd` of `pc` with its
+## middle shelf gone and its bottom shelf deeper, framed by two jambs and a
+## lintel standing out from the wall, so it reads as cut into it.
+func _burial_niche(pc: Dictionary, along: float, sd: float) -> void:
+	var half := float(pc.half)
+	var pv := Delves.perp(pc.dir)
+	var bs := Basis(Vector3.UP, atan2(pv.x, pv.y))
+	box(Transform3D(bs, _at(pc, along, sd * (half - 0.3), 0.45)), Vector3(1.1, 0.1, 0.6), palette[1], _growth(0.15), 0.03, 0.01)
+	var top := _at(pc, along, sd * (half - 0.22), 1.55)
+	box(Transform3D(bs, top), Vector3(1.1, 0.1, 0.44), palette[1], _growth(0.15), 0.03, 0.01)
+	if rng.randf() < 0.7:
+		_grave_goods(top + Vector3(0.0, 0.06, 0.0), 0.15, 1)
+	var fc: Color = (palette[2] as Color).darkened(0.05)
+	for e: float in [-1.0, 1.0]:
+		box(Transform3D(bs, _at(pc, along + e * 0.64, sd * (half - 0.32), 0.85)), Vector3(0.18, 1.7, 0.64), fc, _growth(0.2), 0.04, 0.02)
+	box(Transform3D(bs, _at(pc, along, sd * (half - 0.32), 1.78)), Vector3(1.46, 0.22, 0.64), fc, _growth(0.25), 0.04, 0.02)
 
 
 ## An airway's carved surround (§ET.6): a slot in the wall's face with

@@ -43,6 +43,8 @@ func _initialize() -> void:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The tomb's skeletons sleep through this check (design §FE; queue 58).
+	Residents.stay_asleep = true
 	Bow.need_capture = false
 	var seeds: Array = [1, 7, 42]
 	var env := OS.get_environment("BOSS_SEEDS")

@@ -28,7 +28,7 @@ extends SceneTree
 ##  5. the one who found you (§FH): the live shared rig, not a sprite: a
 ##     HearthFolk holding a seated PlayerBody with its beast head, real
 ##     geometry (its triangles) and no FigureSprite in the tomb but the
-##     boss's body (§EY.5);
+##     boss's body (§EY.5) and the skeletons' (ResidentSprite, §ET.8);
 ##     facing the hearth on its stone (the stone in the tomb's collision,
 ##     right under its hips); painted per §ES (no material on it with
 ##     specular above 0, roughness under 1 or a normal map; its painted
@@ -94,6 +94,9 @@ func _initialize() -> void:
 func _run() -> void:
 	WorldSave.read_only = true
 	Bow.need_capture = false
+	# The residents (design §FE) stay asleep for these checks, which put
+	# you all over the tomb; tools/residents_check.gd wakes them.
+	Residents.stay_asleep = true
 	_switch()
 	_layouts()
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
@@ -1411,10 +1414,12 @@ func _rescuer(main: CrawlerMain) -> void:
 	# (creatures and bosses keep theirs, §EY.5, queue 49).
 	var sprites := 0
 	for n in main.find_children("*", "", true, false):
-		if n is FigureSprite and not (main.boss != null and main.boss.is_ancestor_of(n)):
+		# The boss's body and the residents' stay sprites (creatures and
+		# bosses keep theirs, §ET.8, §EY.5; queues 49 and 58).
+		if n is FigureSprite and not (main.boss != null and main.boss.is_ancestor_of(n)) and not (n is ResidentSprite):
 			sprites += 1
 	var body := r.body if r != null else null
-	ok(r is HearthFolk and body is PlayerBody and r.get_parent() == main and sprites == 0, "the rescuer is the live 3D rig (a HearthFolk holding the shared PlayerBody), and no FigureSprite in the tomb but the boss's (%d)" % sprites)
+	ok(r is HearthFolk and body is PlayerBody and r.get_parent() == main and sprites == 0, "the rescuer is the live 3D rig (a HearthFolk holding the shared PlayerBody), and no FigureSprite in the tomb but the boss's and the skeletons' (%d)" % sprites)
 	if body == null:
 		return
 	var beast_mi := body.head.get_node_or_null("Beast") as MeshInstance3D

@@ -100,6 +100,8 @@ func _run() -> void:
 ## each, LABEL first.
 func _crawler_hearth() -> void:
 	WorldSave.read_only = true
+	# The tomb's skeletons sleep through this check (design §FE; queue 58).
+	Residents.stay_asleep = true
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()

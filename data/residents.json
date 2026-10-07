@@ -1,8 +1,9 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FE] What lurks in a ruin's dark, below its one boss (§EY.1 stays): each ruin kind has its own plan and its own residents, and each creature its own algorithm (Mike, 6 Oct, 22:32). The creatures and their 'mike' lines are Mike's; ranks, answers, tells and every number are Claude (chat)'s first guesses, 6 Oct night. Speeds in m/s: the ambient walk is 4.3, the sprint 5.6 (movement.json profiles.ambient). §FJ.2 (Mike, 22:52): the desert tomb's mummy, waking in its sarcophagus (rank and numbers Claude's first guesses).",
-  "rules": "§FD, §FF.2. gives_up: the ways a chase can end; each creature lists its own. chase_enters_light: a creature that has hit you may follow you into lit rooms (§FD, amends §EY.1 for chases); back_to_dark_s: once it gives you up in the light, how long before it is gone back into the dark. retreat_on_floor_lit: a floor with every light relit is cleared; its residents leave by retreat_to, seen going (§FF.2). pocket_counterattack_m: on a half-lit floor they fall back into dark pockets and strike at anyone who comes within this (§FF.2). light_heals: false (§FD, Mike).",
-  "creatures": "§FE.2. Per creature: where (the ruin kind), rank (resident / boss / open), pattern (its algorithm), speeds, notice (sees_flame_m, hears_step_m: how far it sees a carried flame and hears a walking step; a sneak is heard at a tenth, as built), gives_up (its mix of rules.gives_up, with numbers), strike (reach_m, wind_up_s: the window in which a torch swing staggers it, §FA.1), tells (near: the sound it makes about the place; wind_up: its own strike tell, seen head-on or heard when it ambushes, §FA.2), fire_hp (burnt down by fire_pots.json bursts and burn), oil_scale (§FA.3: some oils do more), retreat_to (§FF.2)."
+  "about": "(design §FE) What lurks in a ruin's dark, below its one boss (§EY.1 stays): each ruin kind has its own plan and its own residents, and each creature its own algorithm (Mike, 6 Oct, 22:32). The creatures and their 'mike' lines are Mike's; ranks, answers, tells and every number are Claude (chat)'s first guesses, 6 Oct night. Speeds in m/s: the ambient walk is 4.3, the sprint 5.6 (movement.json profiles.ambient). §FJ.2 (Mike, 22:52): the desert tomb's mummy, waking in its sarcophagus (rank and numbers Claude's first guesses). Wired for the skeleton (Claude Code, 7 Oct, queue 58; scripts/crawler/residents.gd, resident.gd): what a resident senses (notice), its chase (gives_up: Pursuit, queue 56) and its strike (strike: CreatureStrike, queue 57, with the torch's stagger) are shared by every creature; the one algorithm built is the waker's (pattern waker: wakes_m, rise_s, walk_mps, eye_m; it always walks home to rest, returns_to_rest), and its two tells are the skeleton's own sounds (near: bone grinding, SoundSynth bone_grind; wind_up: the jaw's creak and knock, strike.sound jaw_creak, with the jaw open on its sprite); the tomb's generator lays the skeletons (skeleton_built). [NOT WIRED YET — design §FE.2, §FJ.2] the ghost, the temple cat, the zombie, the were-mole and the mummy wait for their worlds; fire_hp and oil_scale are carried, but no resident is a fire pot's target yet (queue 60's second part); retreat_to is queue 59's.",
+  "rules": "§FD, §FF.2. gives_up: the ways a chase can end; each creature lists its own. chase_enters_light: a creature that has hit you may follow you into lit rooms (§FD, amends §EY.1 for chases); back_to_dark_s: once it gives you up in the light, how long before it is gone back into the dark. retreat_on_floor_lit: a floor with every light relit is cleared; its residents leave by retreat_to, seen going (§FF.2). pocket_counterattack_m: on a half-lit floor they fall back into dark pockets and strike at anyone who comes within this (§FF.2). light_heals: false (§FD, Mike). Wired for the residents (queue 58, through queue 56's Pursuit): gives_up, each creature's own mix (distance_m: past it the chase ends at once; out_of_sight_s: it hasn't seen you, your light or heard you that long; hide: true when being out of its sight line behind low cover hides you, false when it finds you behind cover; torch_doused: true when smothering your torch ends the chase at once); light_heals false (harm.json fd.recover_starts: you heal only once nothing is pursuing you). [NOT WIRED YET — design §FF.2, queue 59] for the residents, chase_enters_light, back_to_dark_s, retreat_on_floor_lit, pocket_counterattack_m and each creature's retreat_to: until then nothing keeps a resident out of the light, so a skeleton follows you into lit rooms whether it has hit you or not, and walks home through them.",
+  "creatures": "§FE.2. Per creature: where (the ruin kind), rank (resident / boss / open), pattern (its algorithm), speeds, notice (sees_flame_m, hears_step_m: how far it sees a carried flame and hears a walking step; a sneak is heard at a tenth, as built), gives_up (its mix of rules.gives_up, with numbers), strike (reach_m, wind_up_s: the window in which a torch swing staggers it, §FA.1), tells (near: the sound it makes about the place; wind_up: its own strike tell, seen head-on or heard when it ambushes, §FA.2), fire_hp (burnt down by fire_pots.json bursts and burn), oil_scale (§FA.3: some oils do more), retreat_to (§FF.2).",
+  "skeleton_built": "(Claude Code, 7 Oct, queue 58, first guesses; Mike tunes by playing) The tomb's skeletons. per_dungeon: how many a tomb lays [min, max], fewer if it has fewer niches and graves; heart_holds_one: the heart's coffin (Mike's frame 9, the skeleton leaning out of the mossy box) always holds one; toward_heart: a room's draw weight is its depth (rooms from the hearth room) to this power, so more lie toward the heart; none in the hearth room. rests_in: wall_niche is a catacomb shelf stack with a stone frame round it and the middle shelf gone (the skeleton sits hunched on the bottom shelf), grave a crypt coffin with its lid shoved off (it kneels inside, slumped over the end). off_line_m: a resting place keeps this far from the line through the rooms' doors (the way through, §EX.5 until the spine is built); apart_m: two never rest closer than this. eye_m: its eyes standing. notice.sees_you_m: how far it sees you yourself in the dark with a clear line from its eyes to your head (cover breaks it, §FC.2); sees_flame_m: your lit torch's flame, or the stone it lights round you (stealth.json hide.glow_reach_m), with a clear line; hears_step_m: a walking step, scaled by your noise (a sprint, or a swing that lands on a creature, about three times as far; a sneak under a third). strike (queue 57's CreatureStrike, the keys as bosses.json _help.strike): within reach_m, sensing you there, it winds up for wind_up_s (the jaw drops open on its sprite and you hear sound, the jaw's creak and knock, from its first frame; a lit torch swung into it now staggers it, torch.json stagger, and it reels back reel_m); then the committed strike, strike_s, and the hit (harm.json) lands at its end if you are still within reach_m with nothing solid between; recover_s before it can wind up again; body_r: how big a target its head is for a swing. sprite: the baked sheet (§ET.8, eight around by three heights): height_m standing, px a frame's height."
  },
  "rules": {
   "gives_up": [
@@ -27,12 +28,22 @@
     "wall_niche",
     "grave"
    ],
+   "per_dungeon": [
+    3,
+    6
+   ],
+   "heart_holds_one": true,
+   "toward_heart": 1.5,
+   "off_line_m": 1.0,
+   "apart_m": 2.0,
    "wakes_m": 3.0,
    "rise_s": 1.6,
    "walk_mps": 2.2,
+   "eye_m": 1.5,
    "notice": {
     "sees_flame_m": 10.0,
-    "hears_step_m": 6.0
+    "hears_step_m": 6.0,
+    "sees_you_m": 6.0
    },
    "gives_up": {
     "distance_m": 16.0,
@@ -43,7 +54,12 @@
    "returns_to_rest": true,
    "strike": {
     "reach_m": 1.6,
-    "wind_up_s": 0.7
+    "wind_up_s": 0.7,
+    "strike_s": 0.15,
+    "recover_s": 1.2,
+    "reel_m": 0.6,
+    "body_r": 0.4,
+    "sound": "jaw_creak"
    },
    "tells": {
     "near": "bone grinding on stone as one starts to move",
@@ -54,7 +70,11 @@
     "tar": 1.0,
     "light_oil": 1.0
    },
-   "retreat_to": "back_into_its_niche"
+   "retreat_to": "back_into_its_niche",
+   "sprite": {
+    "height_m": 1.68,
+    "px": 112
+   }
   },
   "ghost": {
    "where": "haunted_ruins",

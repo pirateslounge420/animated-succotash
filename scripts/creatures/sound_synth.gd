@@ -169,6 +169,12 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _drips_loop(rng)
 		"snake_hiss":
 			samples = _snake_hiss(rng)
+		"bone_grind":
+			samples = _bone_grind(rng)
+		"jaw_creak":
+			samples = _jaw_creak(rng)
+		"bone_step":
+			samples = _bone_step(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -1292,4 +1298,68 @@ static func _snake_hiss(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var puff := 1.0 + 0.6 * exp(-t / 0.05)
 		var breath := 1.0 + 0.15 * sin(TAU * wob_hz * t + ph)
 		s[i] = lp * puff * breath * _env(i, s.size(), 0.03, 0.3)
+	return s
+
+
+## Bone grinding on stone as a skeleton climbs out of its niche or its
+## grave (design §FE.2's near tell): a low gritty drag that swells and lets
+## off two or three times, a groan in it, dry knocks of bone on stone.
+static func _bone_grind(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(1.2, 1.5))
+	var n := s.size()
+	var lp := 0.0
+	var lp2 := 0.0
+	var phase := 0.0
+	var drags := rng.randf_range(2.0, 3.0)
+	for i in n:
+		var t := float(i) / RATE
+		var k := float(i) / n
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.08)
+		lp2 = lerpf(lp2, lp, 0.3)
+		var drag := absf(sin(k * PI * drags + 0.4)) * sin(k * PI)
+		var grit := (rng.randf_range(-1, 1) if rng.randf() < 0.03 * drag else 0.0) * 0.8
+		phase += TAU * (55.0 + 25.0 * sin(t * 7.0)) / RATE
+		s[i] = (lp2 * 2.2 + grit) * drag + sin(phase) * 0.25 * drag
+	for kn in rng.randi_range(5, 8):
+		var i0 := int(rng.randf_range(0.05, 0.95) * n)
+		var f := rng.randf_range(300.0, 700.0)
+		for j in int(0.04 * RATE):
+			if i0 + j < n:
+				var tt := float(j) / RATE
+				s[i0 + j] += sin(TAU * f * tt) * exp(-tt * 90.0) * 0.9 + rng.randf_range(-1, 1) * exp(-tt * 250.0) * 0.5
+	return s
+
+
+## The jaw dropping open (design §FE.2's wind-up tell, §FA.2): a dry creak
+## of the hinge sliding down in pitch, then a hollow knock as it falls
+## open.
+static func _jaw_creak(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.5)
+	var n := s.size()
+	var phase := 0.0
+	var lp := 0.0
+	var clack := int(rng.randf_range(0.3, 0.34) * RATE)
+	for i in n:
+		var t := float(i) / RATE
+		var f := lerpf(420.0, 260.0, clampf(t / 0.32, 0.0, 1.0))
+		phase += TAU * f / RATE
+		var slip := 1.0 if fmod(t * 38.0, 1.0) < 0.35 else 0.3
+		var creak := (sin(phase) + 0.5 * sin(phase * 2.03)) * slip * (1.0 - smoothstep(0.26, 0.34, t)) * smoothstep(0.0, 0.03, t)
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.5)
+		var v := creak * 0.6 + lp * 0.1 * creak
+		if i >= clack:
+			var tt := float(i - clack) / RATE
+			v += sin(TAU * 230.0 * tt) * exp(-tt * 60.0) * 0.9 + rng.randf_range(-1, 1) * exp(-tt * 300.0) * 0.6
+		s[i] = v
+	return s
+
+
+## A bare bone foot on stone: a dry, light knock with a rattle in it.
+static func _bone_step(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.16)
+	var f := rng.randf_range(500.0, 800.0)
+	for i in s.size():
+		var t := float(i) / RATE
+		var rattle := rng.randf_range(-1, 1) * (exp(-t * 60.0) * 0.4 + (0.3 if rng.randf() < 0.02 else 0.0) * exp(-t * 20.0))
+		s[i] = sin(TAU * f * t) * exp(-t * 70.0) * 0.7 + rattle
 	return s

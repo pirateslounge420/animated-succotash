@@ -23,9 +23,14 @@ class_name TombKit
 ## corridor longer than holders.sconce_first_m a wall sconce every
 ## sconce_every_m; stairs none (fire_holders.skip). The airways
 ## (airways.per_air by the theme's air): ordinary slots in corridor walls,
-## strong marked mouths in room walls.
+## strong marked mouths in room walls. The residents (design §FE,
+## residents.json): the tomb's skeletons rest in the catacombs' wall
+## niches and the crypts' coffins, more toward the heart, and the heart's
+## own coffin holds one (Mike's frame 9); none in the hearth room, none by
+## the way through the rooms.
 
 static var K: Dictionary = Tuning.table("crawler").get("kit", {})
+static var RESIDENTS: Dictionary = Tuning.table("residents")
 static var HOLD: Dictionary = Tuning.table("crawler").get("holders", {})
 static var AIR: Dictionary = Tuning.table("crawler").get("airways", {})
 static var OPEN: Dictionary = Tuning.table("crawler").get("opening", {})
@@ -56,7 +61,8 @@ static func _irange(rng: RandomNumberGenerator, v, lo: int, hi: int) -> int:
 ## "bundle" (Vector3), "rescuer" ([Vector3, yaw]), "holders"
 ## [{"kind": "hearth_ring"/"sconce", "pos", "normal", "piece"}...],
 ## "airways" [{"strong", "pos", "normal", "piece"}...], "heart" (piece
-## id), "exits" (the hearth room's corridors)}. A door is {"p" (Vector2,
+## id), "exits" (the hearth room's corridors), "residents" (_place_residents)}.
+## A door is {"p" (Vector2,
 ## on the wall's middle line), "n" (Vector2, through the wall from `a`
 ## to `b`), "half", "y" (its floor), "h" (its opening), "a", "b" (piece
 ## ids)}.
@@ -89,6 +95,9 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	# The boss's lair (design §EY.1; BossGround.place_lair, its own dice):
 	# a hole in the floor of a side room off the main way.
 	lay["lair"] = BossGround.place_lair(lay)
+	# What lives in its dark (design §FE): where the residents rest (its
+	# own dice too).
+	_place_residents(lay)
 	return lay
 
 
@@ -504,3 +513,241 @@ static func piece_at(lay: Dictionary, pos: Vector3) -> int:
 			if pos.y > fy - 1.0 and pos.y < fy + float(pc.h) + 0.5:
 				return int(pc.id)
 	return -1
+
+
+# --- The residents' resting places (design §FE, residents.json) ---------------
+
+## Is (along) on wall `side` of `pc` within `within` of one of its doors?
+static func near_door(lay: Dictionary, pc: Dictionary, side: String, along: float, within: float) -> bool:
+	for di in pc.doors:
+		var s: Array = door_side(pc, lay.doors[di])
+		if str(s[0]) == side and absf(float(s[1]) + float(pc.len) * 0.5 - along) < within:
+			return true
+	return false
+
+
+## Is (along) within `within` of an airway on side `sd` of `pc`?
+static func near_airway(lay: Dictionary, pc: Dictionary, sd: float, along: float, within: float) -> bool:
+	for a in lay.airways:
+		if int(a.piece) != int(pc.id):
+			continue
+		var aa := Delves.along_across(pc, Vector2((a.pos as Vector3).x, (a.pos as Vector3).z))
+		if signf(aa.y) == sd and absf(aa.x - along) < within:
+			return true
+	return false
+
+
+## A crypt's stone coffins (TombBuild draws them): rows down both long
+## walls every 2.4 m, clear of the doors and airways, each 2.2 m long
+## across the room from its wall (COFFIN_IN its middle's distance in from
+## the wall): [{"along", "sd" (the wall's side, +1 left), "i"}...] in the
+## order they are drawn. None in a room under 4.8 m wide.
+const COFFIN_IN := 1.25
+const COFFIN_SIZE := Vector3(0.95, 0.9, 2.2)
+
+
+static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
+	var out: Array = []
+	if float(pc.half) < 2.4:
+		return out
+	for sd: float in [-1.0, 1.0]:
+		var side := "left" if sd > 0.0 else "right"
+		var a := 1.6
+		while a < float(pc.len) - 1.4:
+			if not near_door(lay, pc, side, a, 1.9) and not near_airway(lay, pc, sd, a, 1.4):
+				out.append({"along": a, "sd": sd, "i": out.size()})
+			a += 2.4
+	return out
+
+
+## A catacomb's niche stacks (three shelves each, down both long walls
+## every 1.4 m, clear of the doors and airways): [{"along", "sd", "i"}...].
+static func niche_spots(lay: Dictionary, pc: Dictionary) -> Array:
+	var out: Array = []
+	for sd: float in [-1.0, 1.0]:
+		var side := "left" if sd > 0.0 else "right"
+		var a := 1.0
+		while a < float(pc.len) - 0.8:
+			if not near_door(lay, pc, side, a, 1.5) and not near_airway(lay, pc, sd, a, 1.2):
+				out.append({"along": a, "sd": sd, "i": out.size()})
+			a += 1.4
+	return out
+
+
+## The heart's coffin (Mike's frame 9): its middle on the floor, its yaw
+## (long across the room at its far end), and the way it opens toward the
+## room's way in.
+const HEART_BOX := Vector3(1.05, 1.0, 2.3)
+## A grave's rim over what its skeleton kneels on: the inside is filled to
+## its height less this (bones and dust), so the head and an arm clear the
+## rim (SkeletonRig rest_grave).
+const GRAVE_RIM_OVER := 0.58
+
+
+## The height inside a coffin `box_h` tall that a skeleton kneels on.
+static func grave_floor(box_h: float) -> float:
+	return maxf(box_h - GRAVE_RIM_OVER, 0.12)
+
+
+static func heart_box(pc: Dictionary) -> Dictionary:
+	var length := float(pc.len)
+	var q: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * (length - 1.6)
+	return {"pos": Vector3(q.x, Delves.floor_of(pc, length - 1.6), q.y), "yaw": atan2((pc.dir as Vector2).x, (pc.dir as Vector2).y) + PI * 0.5}
+
+
+## The yaw that faces a figure (its front -z at yaw 0) along x/z `f`.
+static func yaw_facing(f: Vector2) -> float:
+	return atan2(-f.x, -f.y)
+
+
+## The way through the rooms (design §EX.5 until the spine is built,
+## §EX.2): in every piece, from each of its doors to its middle:
+## [[Vector2, Vector2]...]. What a resting place keeps off (off_line_m).
+static func walk_lines(lay: Dictionary) -> Array:
+	var out: Array = []
+	for pc in lay.pieces:
+		var mid: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * 0.5
+		for di in pc.doors:
+			var d: Dictionary = lay.doors[di]
+			var into: Vector2 = (d.n as Vector2) * (1.0 if int(d.b) == int(pc.id) else -1.0)
+			out.append([(d.p as Vector2) + into * (WALL * 0.5 + 0.3), mid])
+	return out
+
+
+## How far x/z `p` is from the nearest of `lines` (walk_lines).
+static func line_distance(lines: Array, p: Vector2) -> float:
+	var best := INF
+	for l in lines:
+		var a: Vector2 = l[0]
+		var b: Vector2 = l[1]
+		var ab := b - a
+		var t := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 1e-6), 0.0, 1.0)
+		best = minf(best, p.distance_to(a + ab * t))
+	return best
+
+
+## A resting place in piece `pc` (TombBuild draws it, Residents wakes it):
+## {"kind" (the creature), "rests_in" ("wall_niche" / "grave"), "piece",
+## "spot" (its coffin_spots / niche_spots index; -1 the heart's coffin),
+## "pos" (where it rests: the shelf's top in a niche, the coffin's floor
+## in a grave), "yaw" (it faces into the room), "out" (the floor where it
+## stands once it has climbed out), "eye" (its head as it rests: what it
+## wakes to), "depth"}.
+static func rest_place(lay: Dictionary, pc: Dictionary, kind: String, rests_in: String, spot: Dictionary) -> Dictionary:
+	var half := float(pc.half)
+	var pv := Delves.perp(pc.dir)
+	var fy := Delves.floor_of(pc, float(spot.get("along", 0.0)))
+	var r := {"kind": kind, "rests_in": rests_in, "piece": int(pc.id), "spot": int(spot.get("i", -1)), "depth": int(pc.get("depth", 0))}
+	if int(spot.get("i", -1)) < 0:
+		# The heart's coffin: it kneels inside, slumped over the side that
+		# faces the way in.
+		var hb := heart_box(pc)
+		var hp: Vector3 = hb.pos
+		var toward := -(pc.dir as Vector2)
+		var t3 := Vector3(toward.x, 0.0, toward.y)
+		r["pos"] = Vector3(hp.x, hp.y + grave_floor(HEART_BOX.y), hp.z) + t3 * 0.12
+		r["out"] = Vector3(hp.x, hp.y, hp.z) + t3 * (HEART_BOX.x * 0.5 + 0.65)
+		r["yaw"] = yaw_facing(toward)
+		r["eye"] = (r.pos as Vector3) + Vector3(0.0, 0.86, 0.0) + t3 * 0.45
+		return r
+	var a := float(spot.along)
+	var sd := float(spot.sd)
+	var inward := -pv * sd
+	if rests_in == "grave":
+		# A crypt coffin: kneeling inside near its inner end, slumped over it.
+		var c: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * a + pv * sd * (half - COFFIN_IN)
+		var p := c + inward * (COFFIN_SIZE.z * 0.5 - 0.5)
+		var o := c + inward * (COFFIN_SIZE.z * 0.5 + 0.6)
+		r["pos"] = Vector3(p.x, fy + grave_floor(COFFIN_SIZE.y), p.y)
+		r["out"] = Vector3(o.x, fy, o.y)
+		r["eye"] = (r.pos as Vector3) + Vector3(0.0, 0.86, 0.0) + Vector3(inward.x, 0.0, inward.y) * 0.45
+	else:
+		# A niche: sitting hunched on the bottom shelf, facing the room.
+		var p2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * a + pv * sd * (half - 0.32)
+		var o2: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * a + pv * sd * (half - 1.15)
+		r["pos"] = Vector3(p2.x, fy + 0.5, p2.y)
+		r["out"] = Vector3(o2.x, fy, o2.y)
+		r["eye"] = Vector3(p2.x, fy + 0.5 + 0.62, p2.y) + Vector3(inward.x, 0.0, inward.y) * 0.24
+	r["yaw"] = yaw_facing(inward)
+	return r
+
+
+## The residents' resting places (design §FE.1-2, residents.json): for the
+## tomb, its skeletons (rests_in wall_niche and grave): per_dungeon of them
+## when there are places enough, the heart's coffin holding one
+## (heart_holds_one), the rest drawn room by room weighted by depth to the
+## toward_heart power, none in the hearth room, none within off_line_m of
+## the way through (walk_lines), none within apart_m of another. Its own
+## seed, so the rest of the tomb is as it was. lay.residents [rest_place...].
+static func _place_residents(lay: Dictionary) -> void:
+	lay["residents"] = []
+	var kind := "skeleton"
+	var cr: Dictionary = (RESIDENTS.get("creatures", {}) as Dictionary).get(kind, {})
+	if cr.is_empty():
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([int(lay.seed), "residents"])
+	var lines := walk_lines(lay)
+	var off := float(cr.get("off_line_m", 1.0))
+	var apart := float(cr.get("apart_m", 2.0))
+	var rests: Array = cr.get("rests_in", ["wall_niche", "grave"])
+	var power := float(cr.get("toward_heart", 1.5))
+	var heart: Dictionary = {}
+	var cands: Array = []
+	for pc in lay.pieces:
+		if str(pc.kind) != "room":
+			continue
+		var places: Array = []
+		match str(pc.get("room_kind", "")):
+			"crypt":
+				if "grave" in rests:
+					for s in coffin_spots(lay, pc):
+						places.append(rest_place(lay, pc, kind, "grave", s))
+			"catacomb":
+				if "wall_niche" in rests:
+					for s in niche_spots(lay, pc):
+						places.append(rest_place(lay, pc, kind, "wall_niche", s))
+			"heart":
+				if "grave" in rests and bool(cr.get("heart_holds_one", true)):
+					heart = rest_place(lay, pc, kind, "grave", {"i": -1})
+		for p in places:
+			var at: Vector3 = p.pos
+			if line_distance(lines, Vector2(at.x, at.z)) >= off:
+				cands.append(p)
+	var span: Array = cr.get("per_dungeon", [3, 6])
+	var want := rng.randi_range(int(span[0]), int(span[1]))
+	var picked: Array = []
+	if not heart.is_empty():
+		var hp: Vector3 = heart.pos
+		if line_distance(lines, Vector2(hp.x, hp.z)) >= off:
+			picked.append(heart)
+	while picked.size() < want and not cands.is_empty():
+		var total := 0.0
+		for c in cands:
+			total += pow(maxf(float(c.depth), 1.0), power)
+		var roll := rng.randf() * total
+		var pick := 0
+		for i in cands.size():
+			roll -= pow(maxf(float(cands[i].depth), 1.0), power)
+			if roll <= 0.0:
+				pick = i
+				break
+		var chosen: Dictionary = cands[pick]
+		cands.remove_at(pick)
+		var ok := true
+		for q in picked:
+			if (q.pos as Vector3).distance_to(chosen.pos) < apart:
+				ok = false
+				break
+		if ok:
+			picked.append(chosen)
+	lay["residents"] = picked
+
+
+## The resting place in piece `piece` at spot `spot` (-1 the heart's
+## coffin), or {} if nothing rests there (TombBuild).
+static func resting_at(lay: Dictionary, piece: int, spot: int) -> Dictionary:
+	for r in lay.get("residents", []):
+		if int(r.piece) == piece and int(r.spot) == spot:
+			return r
+	return {}

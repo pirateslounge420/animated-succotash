@@ -4,16 +4,18 @@ extends PlanetPlayer
 ## (PlanetPlayer) on flat stone instead of a round planet. Free movement
 ## stays (§AU, §ET.8; grid-step is an open call, §ET.10): WASD walk, W W
 ## or the sprint button to sprint (movement.json's speeds), Shift held to
-## sneak (§FC.1, below), Space jump, the mouse looks, first person only.
-## Two hands (§FB, Hands): the mouse wheel takes the torch out or puts it
-## away (a lit one put away goes out), and held, Tab turns the wheel to
-## the left hand and its strip of left-hand things; Q does nothing here.
-## Left click swings the torch (§CN); F smothers it and you keep holding
-## it (§FC.3); no bow, no spear, no fists, no climbing, no combat (§ET.1).
-## Gravity is straight down (-y): the tomb is its own flat world, no planet
-## under it. Footsteps sound on stone. The dungeon's boss can hurt you
-## (design §EY, Boss): three hits (Harm, §EA) and you wake at the hearth
-## (CrawlerMain).
+## sneak (§FC.1, below; low behind cover it hides you, §FC.2), Space
+## jump, the mouse looks, first person only. Two hands (§FB, Hands): the
+## mouse wheel takes the torch out or puts it away (a lit one put away
+## goes out), and held, Tab turns the wheel to the left hand and its strip
+## of left-hand things; Q does nothing here. Left click swings the torch
+## (§CN), and a lit torch swung into a creature's wind-up staggers it
+## (§FA.1, CreatureStrike); F smothers it and you keep holding it (§FC.3);
+## no bow, no spear, no fists, no climbing (§ET.1). Gravity is straight
+## down (-y): the tomb is its own flat world, no planet under it.
+## Footsteps sound on stone. The dungeon's boss and the tomb's skeletons
+## can hurt you (design §EY, §FE): three hits (Harm, §EA) and you wake at
+## the hearth (CrawlerMain).
 
 ## How far the bundle and the holders answer the interact button (m).
 const REACH_M := 1.8
