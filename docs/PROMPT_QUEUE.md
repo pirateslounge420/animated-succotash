@@ -83,7 +83,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | todo |
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
-| 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | todo |
+| 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | todo |
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
@@ -1015,7 +1015,7 @@ CHECK (headless, tools/crawler_check.gd): the eye height over the first 0.3 s of
 
 ## 54 — Douse your own torch, and a dark you can half see in — §FC.3, §FC.4
 
-**Status:** todo
+**Status:** built 972a2d5
 **Mike sees:** Press F and you smother your torch: the flame dies, you're still holding it, and whatever was watching for your light loses you. Swing it to any lit sconce, planted torch or the hearth and it catches again. With no flame near you the dark isn't blind: the walls and floor close by show faintly in navy, and only farther off does it go fully black.
 
 ```text

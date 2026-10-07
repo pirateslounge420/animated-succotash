@@ -4,6 +4,34 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 54, §FC.3 and §FC.4: smother your own torch, and a dark you can half see in (972a2d5)
+- **F smothers the torch** (`Torch.douse`; the Controls action `douse`: F, or the d-pad's down on a pad). A lit torch in hand goes out with a new reason, `smothered`, a short new hiss (`SoundSynth smother_hiss`) and one log line ("You smothered the torch.", `stealth.json → douse.log_line`). It stays in your hand with its burn. It isn't water: `doused` stays the water's reason, and `Torch.last_out` says which.
+  - The torch in your hand is now remembered (`Torch.item`), so with a spare in the pack the smothered torch, not the spare, is the one you relight. A burnt stick isn't remembered, so a spare can still come to hand after a burn-out.
+  - Nothing that watches for a flame sees it any more: Senses reads the torch's lit state (checked with a lurker that saw the light, then nothing), and a chase whose rules have `torch_doused` (queue 56's `Pursuit`) gives you up at once. The boss (49) isn't built, so its `sees_flame_m` waits for it.
+  - Relighting is as built (§CN): the hearth, a relit sconce or ring, a planted torch, all checked. The crawler has no way to plant a torch yet, so the check stands its own.
+- **The half-dark** (`HalfDark`, `crawler.json → dark`): one faint light at your eye in `readable_color` (#141c5c), with no shadow and no shine. Its reach is `black_m` (12 m): nearly even out to `readable_m` (5 m), then fading to nothing. It is on only with no flame near you, easing in over `adjust_s` (1.2 s). It is off at once with your torch lit, and eases off (`fade_s` 0.4 s) when a lit fire, a planted torch, or a fire pot's fire or lit wick (queue 60) is within its own light's reach of you with a clear line. A fire round a corner doesn't count.
+- **Tuned by measurement** (seed 7, a long cold corridor at midnight, torch smothered; wall pixels by distance, luma). The frame's black is not black: it is the grade's navy floor (`look.json → retro.colors.shadow_floor` #080C4A, luma 0.068), and anything fainter than that floor is swallowed. So a weak fill shows nothing at all, and one with a steep falloff glares close and is gone by 4 m:
+
+  | | 3 m | 5 m | 8 m | 15 m | A wall facing you 5 m off |
+  |---|---|---|---|---|---|
+  | Off (the old full dark) | 0.068 | 0.068 | 0.068 | 0.068 | 0.068 |
+  | falloff 1, fill_energy 1.0 | 0.075 | 0.068 | 0.068 | 0.068 | 0.068 |
+  | falloff 0.5, fill_energy 2.0 | 0.091 | 0.071 | 0.069 | 0.068 | 0.079 |
+  | **falloff 0, fill_energy 3.0 (taken)** | **0.098** | **0.083** | **0.077** | **0.068** | **0.103** |
+
+  The near walls come out at about #101a5a, just under `readable_color`, hue 232. The readable floor the frames tool checks is 0.02 over the black at 3 m (picked: about two 5-bit steps of green).
+- **Unchanged:** by torchlight the long view is the same frame with the half-dark on as off (before the merge: mean 0.2801 both; the worst band 0.0007 apart). The hearth room on waking, the relit corridor and room, and every torchlit frame show no half-dark. The torch's reach is untouched.
+- **Merged with queues 45, 50, 56, 57 and 60**, pushed while this pass ran. The fire-pot and harm-ring frames now let the half-dark settle before their dark shots, so each before-and-after pair differs only by what it measures.
+- **Checks:**
+  - `crawler_check`: seed 7, 102 lines, 0 fails (25 of them new); seed 1, 103 lines, 0 fails.
+  - `fire_pot_check` 63, `stagger_check` 41, `crawler_harm_check` 45: 0 fails.
+  - The open world's `swing_check` (18) and `senses_check` (11), with the change to which torch is in hand: 0 fails. Both crash with signal 11 at shutdown, after their results. The code from before this pass does the same, so it isn't this pass.
+  - `crawler_frames` (seed 7): 0 fails on this pass before the merge, with the half-dark numbers above. The render of the merged commit (972a2d5) is running as this is written; its result follows in a line below.
+- **Flagged for Mike:**
+  - Freeing a torch's ember in a headless check prints a renderer warning ("Parameter m is null"). It was already there, and it's harmless.
+
+---
+
 ## 2026-10-07 — Queue 60, §FA.3, part 1: fire pots, lit off the torch and thrown (the general pot; the creatures and the left hand wire in when 49, 55 and 58 land) (e607b24, 1f5897e)
 - **Built ahead of its prerequisites, at Mike's word** ("do what you can as if those other prompts were completed"): queue 55 (two hands), 57 (the stagger, part 1 in) and 58 (the skeletons) are being built in parallel. So, like queue 57's part 1, this is the pot itself plus a socket the creatures plug into. Part 2 wires the snake, the skeletons and queue 55's left hand when they land, and row 60 stays `todo` until then.
 - **The pot** (`PotMesh`, §FJ.5): a sealed fired-clay pot, about 15 cm to the tip of its fibre wick, 8-sided, painted (navy occlusion under the belly and in the neck) and drawn in the tomb's own matte material. The oil shows by eye: tar's plug is black pitch with drips down the shoulder; light oil's is a pale seal.
