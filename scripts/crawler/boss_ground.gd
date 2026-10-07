@@ -24,6 +24,19 @@ extends RefCounted
 ## the boss walks it (Boss). The lair's place is chosen here too
 ## (place_lair), so the generator (TombKit) and the builder (TombBuild)
 ## share it.
+##
+## Its own tunnels (Mike's note of 7 Oct: "depending on the ruins boss type
+## as well, they may have their own tunnels- this can be the case for the
+## snake"; bosses.json bosses.<key>.tunnels; place_tunnels): a few holes at
+## the foot of the walls, one in its lair room, the rest in the side ways'
+## rooms and corridors (none in the hearth room, none on the spine or the
+## way out), joined under the floors by tunnels only it fits through. Built
+## with_tunnels (the boss's graph; the skeletons' has none), each tunnel is
+## a link between the nodes its holes open into, as long as the tunnel, so
+## a way may go under the light. Every way here goes round the hearth room
+## unless a caller allows it at hearth_cost (a creature cut off from every
+## dark it could reach otherwise crosses it, Mike's note: nothing goes
+## through the stone).
 
 ## In a crypt the lair is where a coffin stood (_coffin_spot): its rim this
 ## far (m) off the wall the coffin stood against.
@@ -39,18 +52,23 @@ const OPEN_GRAVE_M := 2.1
 ## "holder"} / {"type": "door", "node"} / {"type": "open"}]), "hearth",
 ## "lit", "center" (Vector3, on its floor), "doors" (how many doors it
 ## has: a room with one is a dead end), "links" ([{"to", "via" (Vector3),
-## "cost", "door" (door id, -1 at a sconce)}])}]
+## "cost", "door" (door id, -1 at a sconce or a tunnel)[, "tunnel"
+## (lay.tunnels.links index), "from_hole", "to_hole" (lay.tunnels.holes
+## indices, this end first)]}])}]
 var nodes: Array = []
 var lay: Dictionary = {}
 ## piece id -> [node ids], a corridor's stretches in order along it.
 var by_piece: Dictionary = {}
 ## The holders' lit flags the graph was last worked out from.
 var holders_lit: Array = []
+## Built with the boss's own tunnels as links.
+var with_tunnels := false
 
 
-static func build(p_lay: Dictionary) -> BossGround:
+static func build(p_lay: Dictionary, p_with_tunnels := false) -> BossGround:
 	var g := BossGround.new()
 	g.lay = p_lay
+	g.with_tunnels = p_with_tunnels
 	g._make()
 	var cold: Array = []
 	cold.resize((p_lay.get("holders", []) as Array).size())
@@ -134,6 +152,25 @@ func _make() -> void:
 	for n in nodes:
 		if str(n.kind) == "stretch" and (n.ends as Array).size() < 2:
 			(n.ends as Array).append({"type": "open"})
+	# The boss's own tunnels (place_tunnels): each a link between the nodes
+	# its two holes open into, costing its length and the walk to each hole.
+	if with_tunnels:
+		var tun: Dictionary = lay.get("tunnels", {})
+		var holes: Array = tun.get("holes", [])
+		var tl: Array = tun.get("links", [])
+		for ti in tl.size():
+			var t: Dictionary = tl[ti]
+			var ha: Dictionary = holes[int(t.a)]
+			var hb: Dictionary = holes[int(t.b)]
+			var na := node_at(ha.out)
+			var nb := node_at(hb.out)
+			if na < 0 or nb < 0 or na == nb:
+				continue
+			var a: Dictionary = nodes[na]
+			var b: Dictionary = nodes[nb]
+			var cost := (a.center as Vector3).distance_to(ha.out) + float(t.len) + (hb.out as Vector3).distance_to(b.center)
+			(a.links as Array).append({"to": nb, "via": ha.out, "cost": cost, "door": -1, "tunnel": ti, "from_hole": int(t.a), "to_hole": int(t.b)})
+			(b.links as Array).append({"to": na, "via": hb.out, "cost": cost, "door": -1, "tunnel": ti, "from_hole": int(t.b), "to_hole": int(t.a)})
 
 
 ## The node of piece `pid` that door `d` opens from.
@@ -258,11 +295,12 @@ func node_at(pos: Vector3) -> int:
 
 
 ## The cheapest way from node `from` to `to` ([node ids], from first), or
-## [] if there is none, never through the hearth room. ground_only:
+## [] if there is none, never through the hearth room unless `hearth_cost`
+## is given (0 or more: entering it costs that much more). ground_only:
 ## through dark nodes only (`from` itself may be lit: the way out of a room
-## just relit).
-func path(from: int, to: int, ground_only := true) -> Array:
-	var r := _dijkstra(from, ground_only, 0.0)
+## just relit); else each lit node entered costs `lit_cost` more.
+func path(from: int, to: int, ground_only := true, lit_cost := 0.0, hearth_cost := -1.0) -> Array:
+	var r := _dijkstra(from, ground_only, lit_cost, hearth_cost)
 	if not (r.dist as Dictionary).has(to):
 		return []
 	return _walk_back(r.prev, from, to)
@@ -274,11 +312,19 @@ func reach(from: int) -> Dictionary:
 	return _dijkstra(from, true, 0.0).dist
 
 
+## How dear a lit node is to a way that would rather keep to the dark
+## (nearest_dark), and the hearth room to one that has no other way.
+const LIT_COST := 1000.0
+const HEARTH_COST := 20000.0
+
+
 ## The nearest dark node to `from` by a way that crosses as little light
-## as it can (the way out of a room just relit, rule.leaves_lit_room), never
-## through the hearth room: [the path], or [] when there is none.
-func nearest_dark(from: int) -> Array:
-	var r := _dijkstra(from, false, 1000.0)
+## as it can (the way out of a room just relit, rule.leaves_lit_room; the
+## boss's tunnels under it, where it has them), never through the hearth
+## room unless `hearth_cost` (0 or more) lets it, as a last resort: [the
+## path], or [] when there is none.
+func nearest_dark(from: int, hearth_cost := -1.0) -> Array:
+	var r := _dijkstra(from, false, LIT_COST, hearth_cost)
 	var best := -1
 	var best_d := INF
 	for id in r.dist:
@@ -292,6 +338,24 @@ func nearest_dark(from: int) -> Array:
 	return _walk_back(r.prev, from, best)
 
 
+## Does the way through nodes `p` cross the hearth room?
+func crosses_hearth(p: Array) -> bool:
+	for id in p:
+		if bool(nodes[int(id)].hearth):
+			return true
+	return false
+
+
+## The cheapest link from node `a` to node `b` ({} if they don't touch):
+## the one a way between them takes (a door, a sconce, or a tunnel).
+func best_link(a: int, b: int) -> Dictionary:
+	var best := {}
+	for l in nodes[a].links:
+		if int(l.to) == b and (best.is_empty() or float(l.cost) < float(best.cost)):
+			best = l
+	return best
+
+
 ## How many of the nodes on `p` are lit.
 func lit_on(p: Array) -> int:
 	var k := 0
@@ -303,8 +367,10 @@ func lit_on(p: Array) -> int:
 
 ## Dijkstra from `from`: {"dist", "prev"}. ground_only: lit nodes are not
 ## entered; else each lit node entered costs `lit_cost` more. The hearth
-## room is never entered (the boss's way never goes through it, §EY.2).
-func _dijkstra(from: int, ground_only: bool, lit_cost: float) -> Dictionary:
+## room is never entered (the boss's way never goes through it, §EY.2)
+## unless `hearth_cost` is 0 or more: then it costs that much more (a
+## creature cut off from every other way to the dark, Mike's 7 Oct note).
+func _dijkstra(from: int, ground_only: bool, lit_cost: float, hearth_cost := -1.0) -> Dictionary:
 	var dist := {from: 0.0}
 	var prev := {}
 	var done := {}
@@ -321,9 +387,14 @@ func _dijkstra(from: int, ground_only: bool, lit_cost: float) -> Dictionary:
 		for l in nodes[u].links:
 			var v := int(l.to)
 			var lit_v := bool(nodes[v].lit)
-			if (ground_only and lit_v) or bool(nodes[v].hearth):
+			if ground_only and lit_v:
 				continue
-			var nd := ud + float(l.cost) + (lit_cost if lit_v else 0.0)
+			var extra := 0.0
+			if bool(nodes[v].hearth):
+				if hearth_cost < 0.0:
+					continue
+				extra = hearth_cost
+			var nd := ud + float(l.cost) + (lit_cost if lit_v else 0.0) + extra
 			if not dist.has(v) or nd < float(dist[v]):
 				dist[v] = nd
 				prev[v] = u
@@ -591,3 +662,321 @@ static func _dressing(_p_lay: Dictionary, pc: Dictionary) -> Array:
 			var q := point(pc, (col[0] as Vector2).x, (col[0] as Vector2).y)
 			out.append([Vector2(q.x, q.z), maxf(float(col[1]), float(col[2]) * 0.5) + 0.5])
 	return out
+
+
+# --- Its own tunnels (Mike's note of 7 Oct) ----------------------------------------
+
+## The boss the tomb stands in for (bosses.json bosses, the one marked
+## first)'s tunnels block: {} for a boss with none.
+static func tunnels_def() -> Dictionary:
+	var bs: Dictionary = Tuning.table("bosses").get("bosses", {})
+	for k in bs:
+		if bool((bs[k] as Dictionary).get("first", false)):
+			var t: Variant = (bs[k] as Dictionary).get("tunnels", {})
+			return t if t is Dictionary else {}
+	return {}
+
+
+## The boss's own tunnels (bosses.json bosses.<key>.tunnels; Mike's note of
+## 7 Oct: "they may have their own tunnels- this can be the case for the
+## snake"): {"holes": [hole...], "links": [{"a", "b" (hole indices), "pts"
+## (PackedVector3Array: a's floor before it, a's mouth, in to its back,
+## down under every floor on the way, across, up behind b and out of b's
+## mouth to its floor), "len" (m along them)}]}, or {} for a boss with none.
+## A hole is {"piece", "side", "off" (along that wall from its middle,
+## TombKit.face_point), "pos" (Vector3: its foot's middle on the wall's
+## face, on the floor), "n" (Vector3: out of the wall into the piece), "u"
+## (Vector3: along the wall), "out" (the floor before it, out_m out), "w",
+## "h", "depth", "lair" (the one in its lair room)}. holes [least, most] of
+## them (its own dice): the first in the lair room, then one in each other
+## side way, then any side room or corridor, apart_m apart; each at the
+## foot of a wall clear of its doors and their frames, its corners, its
+## torches, its airways, a catacomb's niches and a crypt's coffins (never
+## on their long walls), an ossuary's bone piles, a fallen room's slab, the
+## pillars and the lair's hole (_hole_spot); none in the hearth room, on
+## the spine or the way out (main_path), nor on a stair. The holes are
+## joined in a tree, each to its nearest, and each to the lair room's.
+static func place_tunnels(p_lay: Dictionary) -> Dictionary:
+	var td := tunnels_def()
+	if td.is_empty():
+		return {}
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([int(p_lay.seed), "tunnels"])
+	var span: Array = td.get("holes", [3, 5])
+	var want := rng.randi_range(int(span[0]), int(span[1]))
+	var apart := float(td.get("apart_m", 6.0))
+	var main := main_path(p_lay)
+	var lair: Dictionary = p_lay.get("lair", {})
+	var spots := {}
+	for pc in p_lay.pieces:
+		if not str(pc.kind) in ["room", "corridor"]:
+			continue
+		if str(pc.get("room_kind", "")) in ["hearth", "heart"] or int(pc.id) in main or bool(pc.get("spine", false)):
+			continue
+		var s := _hole_spot(p_lay, pc, td, lair)
+		if not s.is_empty():
+			spots[int(pc.id)] = s
+	var holes: Array = []
+	# The lair room's first.
+	if not lair.is_empty() and spots.has(int(lair.piece)):
+		var s0: Dictionary = spots[int(lair.piece)]
+		s0["lair"] = true
+		holes.append(s0)
+	# One in each side way that has none yet: its best piece.
+	var branches: Array = p_lay.get("branches", [])
+	for bi in range(1, branches.size()):
+		var br: Array = branches[bi]
+		var has := false
+		for h in holes:
+			if int(h.piece) in br:
+				has = true
+		if has:
+			continue
+		var best := {}
+		var best_s := -INF
+		for pid in br:
+			if not spots.has(int(pid)):
+				continue
+			var s: Dictionary = spots[int(pid)]
+			var sc := _hole_score(p_lay, s)
+			if sc > best_s and _apart(holes, s, apart):
+				best_s = sc
+				best = s
+		if not best.is_empty():
+			holes.append(best)
+	# Then any other side piece, the best first (its own dice break ties).
+	var rest: Array = []
+	for pid in spots:
+		var s: Dictionary = spots[pid]
+		var used := false
+		for h in holes:
+			if int(h.piece) == int(pid):
+				used = true
+		if not used:
+			rest.append([_hole_score(p_lay, s) + rng.randf() * 2.0, s])
+	rest.sort_custom(func(x, y): return float(x[0]) > float(y[0]))
+	for e in rest:
+		if holes.size() >= want:
+			break
+		if _apart(holes, e[1], apart):
+			holes.append(e[1])
+	for h in holes:
+		if not h.has("lair"):
+			h["lair"] = false
+	# The tunnels: a tree joining each hole to its nearest (Prim), and each to
+	# the lair room's.
+	var pairs := {}
+	if holes.size() >= 2:
+		var inside: Array = [0]
+		while inside.size() < holes.size():
+			var bi2 := -1
+			var bj := -1
+			var bd := INF
+			for i in inside:
+				for j in holes.size():
+					if j in inside:
+						continue
+					var d := _flat_d(holes[i].pos, holes[j].pos)
+					if d < bd:
+						bd = d
+						bi2 = i
+						bj = j
+			inside.append(bj)
+			pairs[Vector2i(mini(bi2, bj), maxi(bi2, bj))] = true
+		if bool(holes[0].lair):
+			for j in range(1, holes.size()):
+				pairs[Vector2i(0, j)] = true
+	var links: Array = []
+	for pr: Vector2i in pairs:
+		var pts := tunnel_pts(p_lay, holes[pr.x], holes[pr.y], td)
+		var length := 0.0
+		for k in range(1, pts.size()):
+			length += pts[k - 1].distance_to(pts[k])
+		links.append({"a": pr.x, "b": pr.y, "pts": pts, "len": length})
+	return {"holes": holes, "links": links}
+
+
+static func _flat_d(a: Vector3, b: Vector3) -> float:
+	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
+static func _apart(holes: Array, s: Dictionary, apart: float) -> bool:
+	for h in holes:
+		if _flat_d(h.pos, s.pos) < apart:
+			return false
+	return true
+
+
+## How good a hole spot is: off by itself, in a room (a dead end best),
+## deep.
+static func _hole_score(p_lay: Dictionary, s: Dictionary) -> float:
+	var pc: Dictionary = p_lay.pieces[int(s.piece)]
+	var sc := minf(float(s.clear), 2.0) + float(pc.get("depth", 0)) * 0.3
+	if str(pc.kind) == "room":
+		sc += 1.0
+		if (pc.doors as Array).size() == 1:
+			sc += 2.0
+	return sc
+
+
+## The tunnel from hole `ha` to hole `hb` (place_tunnels' "pts"): a's floor
+## before it, its mouth, in to its back, straight down under every floor
+## the way crosses (under_m beneath the lowest), across, up behind b, its
+## mouth, its floor. Always longer than the straight line between them.
+static func tunnel_pts(p_lay: Dictionary, ha: Dictionary, hb: Dictionary, td: Dictionary) -> PackedVector3Array:
+	var depth_in := maxf(float(td.get("depth_m", 0.45)) - 0.05, 0.1)
+	var under := float(td.get("under_m", 1.2))
+	var back_a: Vector3 = (ha.pos as Vector3) - (ha.n as Vector3) * depth_in
+	var back_b: Vector3 = (hb.pos as Vector3) - (hb.n as Vector3) * depth_in
+	var y := minf((ha.pos as Vector3).y, (hb.pos as Vector3).y)
+	var a2 := Vector2(back_a.x, back_a.z)
+	var b2 := Vector2(back_b.x, back_b.z)
+	var steps := maxi(int(ceil(a2.distance_to(b2) / 0.5)), 1)
+	for k in steps + 1:
+		var q := a2.lerp(b2, float(k) / steps)
+		for pc in p_lay.pieces:
+			if Delves.rect_of(pc, Delves.WALL + 0.3).has_point(q):
+				y = minf(y, minf(float(pc.y0), float(pc.y1)))
+	y -= under
+	return PackedVector3Array([ha.out, ha.pos, back_a, Vector3(back_a.x, y, back_a.z), Vector3(back_b.x, y, back_b.z), back_b, hb.pos, hb.out])
+
+
+## Which of a tunnel's points are inside the rock (tunnel_pts: its back,
+## the two drops and the run between): the snake there is hidden.
+const TUNNEL_HIDDEN := [false, false, true, true, true, true, false, false]
+
+
+## The best spot for one of the boss's holes in piece `pc` (place_tunnels'
+## hole), or {}: on any of a room's walls (a crypt's or catacomb's end
+## walls only: coffins and niches line its long walls), on a corridor's
+## side walls, a quarter metre at a time, the one clearest of everything.
+static func _hole_spot(p_lay: Dictionary, pc: Dictionary, td: Dictionary, lair: Dictionary) -> Dictionary:
+	var w := float(td.get("w_m", 0.6))
+	var corner := float(td.get("corner_clear_m", 0.9))
+	var room := str(pc.kind) == "room"
+	var kind := str(pc.get("room_kind", ""))
+	var sides: Array = ["left", "right"]
+	if room:
+		sides = ["start", "end"] if kind in ["crypt", "catacomb"] else ["start", "end", "left", "right"]
+	if kind == "ossuary":
+		# Its bone piles stand 0.9 m in from each corner.
+		corner += 1.0
+	var best := {}
+	var best_c := -INF
+	# What stands on the room's floor, worked out once (_hole_clear).
+	var floor_things := {"pillars": TombBuild.pillars_for(p_lay, pc), "coffins": TombKit.coffin_spots(p_lay, pc) if kind == "crypt" else [],
+		"collapse": TombBuild.collapse_for(p_lay, pc) if kind == "collapsed" else []}
+	for side in sides:
+		var length := TombKit.wall_len(pc, side)
+		var lo := -length * 0.5 + (corner if room else 1.0) + w * 0.5
+		var hi := length * 0.5 - (corner if room else 1.0) - w * 0.5
+		var off := lo
+		while off <= hi + 1e-4:
+			var clear := _hole_clear(p_lay, pc, side, off, w, td, lair, floor_things)
+			if clear >= 0.0:
+				# The clearest spot: the middle of the widest free stretch.
+				var c := clear
+				if c > best_c:
+					best_c = c
+					var fp := TombKit.face_point(pc, side, off)
+					var n2: Vector2 = fp[1]
+					var at: Vector2 = fp[0]
+					var aa := Delves.along_across(pc, at)
+					var fy := Delves.floor_of(pc, clampf(aa.x, 0.0, float(pc.len)))
+					var n := Vector3(n2.x, 0.0, n2.y)
+					var pos := Vector3(at.x, fy, at.y)
+					var out := pos + n * float(td.get("out_m", 0.7))
+					best = {"piece": int(pc.id), "side": side, "off": off, "pos": pos, "n": n, "u": Vector3.UP.cross(n).normalized(),
+						"out": out, "w": w, "h": float(td.get("h_m", 0.45)), "depth": float(td.get("depth_m", 0.45)), "clear": clear}
+			off += 0.25
+	return best
+
+
+## How clear a hole `w` wide `off` along wall `side` of `pc` is (m to the
+## nearest thing it keeps off, past its margin), or -1 where it may not go.
+## `things`: what stands on the floor ({"pillars", "coffins", "collapse"},
+## _hole_spot's).
+static func _hole_clear(p_lay: Dictionary, pc: Dictionary, side: String, off: float, w: float, td: Dictionary, lair: Dictionary, things: Dictionary) -> float:
+	var clear := 3.0
+	var jamb := RuinStyle.num("doors.jamb_w_m", 0.32, str(p_lay.get("theme", "")))
+	var dc := float(td.get("door_clear_m", 0.8))
+	for di in pc.doors:
+		var d: Dictionary = p_lay.doors[di]
+		var ds := TombKit.door_side(pc, d)
+		if str(ds[0]) != side:
+			continue
+		var gap := absf(off - float(ds[1])) - (float(d.half) + jamb + dc + w * 0.5)
+		if gap < 0.0:
+			return -1.0
+		clear = minf(clear, gap)
+	# The wall's torches (their niches and flue slots) and airways.
+	for h in p_lay.get("holders", []):
+		if int(h.piece) != int(pc.id):
+			continue
+		var hs := _wall_of(pc, Vector2((h.pos as Vector3).x, (h.pos as Vector3).z))
+		if str(hs[0]) != side:
+			continue
+		var gap := absf(off - float(hs[1])) - (0.2 + 0.6 + w * 0.5)
+		if gap < 0.0:
+			return -1.0
+		clear = minf(clear, gap)
+	for a in p_lay.get("airways", []):
+		if int(a.piece) != int(pc.id):
+			continue
+		var as2 := _wall_of(pc, Vector2((a.pos as Vector3).x, (a.pos as Vector3).z))
+		if str(as2[0]) != side:
+			continue
+		var gap := absf(off - float(as2[1])) - (float(TombKit.AIRWAY_HALF[0 if bool(a.strong) else 1]) + 0.3 + w * 0.5)
+		if gap < 0.0:
+			return -1.0
+		clear = minf(clear, gap)
+	# The floor before it: off the pillars, the lair's hole, a crypt's
+	# coffins, a fallen room's slab.
+	var fp := TombKit.face_point(pc, side, off)
+	var out2: Vector2 = (fp[0] as Vector2) + (fp[1] as Vector2) * float(td.get("out_m", 0.7))
+	for q: Vector2 in things.get("pillars", []):
+		var gap := out2.distance_to(q) - 1.2
+		if gap < 0.0:
+			return -1.0
+		clear = minf(clear, gap)
+	if not lair.is_empty() and int(lair.piece) == int(pc.id):
+		var lc := Vector2((lair.pos as Vector3).x, (lair.pos as Vector3).z)
+		var gap := minf(out2.distance_to(lc), (fp[0] as Vector2).distance_to(lc)) - (float(lair.r) + 1.0)
+		if gap < 0.0:
+			return -1.0
+		clear = minf(clear, gap)
+	match str(pc.get("room_kind", "")):
+		"crypt":
+			var oa := Delves.along_across(pc, out2)
+			for s in things.get("coffins", []):
+				var sd := float(s.sd)
+				var r := Rect2(float(s.along) - TombKit.COFFIN_SIZE.x * 0.5, minf(sd * float(pc.half), sd * (float(pc.half) - TombKit.COFFIN_IN * 2.0 + 0.15)), TombKit.COFFIN_SIZE.x, TombKit.COFFIN_IN * 2.0 - 0.15)
+				var gap := (oa - oa.clamp(r.position, r.end)).length() - 0.7
+				if gap < 0.0:
+					return -1.0
+				clear = minf(clear, gap)
+		"collapsed":
+			var col: Array = things.get("collapse", [])
+			if col.size() >= 3:
+				var q := point(pc, (col[0] as Vector2).x, (col[0] as Vector2).y)
+				var gap := out2.distance_to(Vector2(q.x, q.z)) - (maxf(float(col[1]), float(col[2]) * 0.5) + 1.2)
+				if gap < 0.0:
+					return -1.0
+				clear = minf(clear, gap)
+	return clear
+
+
+## Which wall of piece `pc` the point `p` (x/z, on a wall's face) is on, and
+## how far along it from its middle (TombKit.face_point's offset): [side,
+## off], or ["", 0] if it is on none.
+static func _wall_of(pc: Dictionary, p: Vector2) -> Array:
+	var aa := Delves.along_across(pc, p)
+	var half := float(pc.half)
+	var length := float(pc.len)
+	if absf(aa.y) >= half - 0.08:
+		return ["left" if aa.y > 0.0 else "right", aa.x - length * 0.5]
+	if aa.x <= 0.08:
+		return ["start", aa.y]
+	if aa.x >= length - 0.08:
+		return ["end", aa.y]
+	return ["", 0.0]

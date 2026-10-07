@@ -26,7 +26,10 @@ extends Node3D
 ##             to your head: cover hides you, §FC.2), your lit torch's flame
 ##             or the stone it lights seen (sees_flame_m), or heard
 ##             (hears_step_m by your noise: your steps, a swing that lands);
-##             in reach of you, sensing you there, it strikes;
+##             within creep.lunge_m of you (Mike, 7 Oct: "skeletons should
+##             lunge at the player within 2 meters"), sensing you, it lunges
+##             at you in plain view at rules.pocket_lunge_mps as it winds up
+##             its strike, to bring you into its reach;
 ##   striking  its strike (prompt 57's CreatureStrike, a child at its head
 ##             while it is up): the wind-up, wind_up_s, the jaw dropping
 ##             open on its sprite and the jaw's creak and knock its own
@@ -54,47 +57,51 @@ extends Node3D
 ## (stare at it within its sight and it keeps you, §FD), and the light's
 ## rules still say where it may go; it goes only once you look away. In
 ## plain view all the same: its strike (the wind-up, the committed strike,
-## the recovery, a stagger's reel, a dark pocket's lunge: §FA.1, §FF.2);
-## up and about, anything within strike.reach_m of you (it got right up on
-## you); and the floor's last light, when the ones you can see hurry back
-## into the stone (§FF.2's reveal, the one exception).
+## the recovery, a stagger's reel, the lunge: §FA.1, §FF.2); up and about,
+## anything within creep.lunge_m of you (it got right up on you: Mike's 2
+## m); and the floor's last light, when the ones you can see hurry home to
+## their niches and graves (§FF.2's reveal, the one exception).
 ##
-## Cleared by light (design §FF.2; Residents keeps the light, 49's graph):
+## Nothing goes into the stone (Mike's note of 7 Oct: "creatures shouldnt
+## 'sink' into the stone- only ghosts/phantoms should have the ability to
+## ohase thru walls and floors and ceilings"): every move is a walk, a
+## creep, a lunge, a climb or a reel along the floor (TombNav), and nothing
+## vanishes. Cleared by light (design §FF.2; Residents keeps the light,
+## 49's graph, and the light on the floor, LightField):
 ##
-##   the light   it keeps to the dark unless it is chasing you (§FD: its
-##               strike has landed): hunting you, it stops at the edge of
-##               its dark and watches you in the light for
-##               rules.edge_watch_s (watched or not), then gives you up; no
-##               strike reaches you in the light until it has hit you.
-##               Given up, it goes home only by a way through the dark to a
-##               resting place still dark, else it hangs back in the dark;
-##   leave       the node it rests or stands in relit (or it gave you up in
-##               the light): it climbs out if it was resting (its near tell)
-##               and goes for the nearest dark (BossGround.nearest_dark),
-##               fast enough to be out of the light within
-##               rules.back_to_dark_s (Pursuit.back_to_dark_mps) of your
-##               not watching it: watched, a creeper stands where it is,
-##               even in the light;
-##   below       cut off from any dark it could walk to (the lit hearth room
-##               between the branches), it goes into the stone through the
-##               nearest hole as it would at the last light (seen going if
-##               you can see it; a creeper you can see stands where it is
-##               until you look away, then is into the stone at once), and
-##               rules.below_s later comes up in the dark nearest it, out of
-##               your sight, to hang back there: the floor's residents end
-##               up in what dark is left;
+##   the light   chasing you (its strike landed or not), it comes toward
+##               the light only as far as its edge (residents.json
+##               rules.chase_light_cap: TombNav's capped grid) and watches
+##               you from there for rules.edge_watch_s (watched or not),
+##               then gives you up; it strikes you only within its reach of
+##               where it may stand. Given up, it goes home only by a way
+##               through the dark to a resting place still dark, else it
+##               hangs back in the dark;
+##   leave       the node it rests or stands in relit (or it gave you up at
+##               the light's edge in a lit node): it climbs out if it was
+##               resting (its near tell) and goes for the nearest dark
+##               (BossGround.nearest_dark) by the dimmest way (TombNav,
+##               LightField: the edges of the light, the dark corners), fast
+##               enough to be out of the light within rules.back_to_dark_s
+##               (Pursuit.back_to_dark_mps) of your not watching it. Cut off
+##               from every dark it could walk to (its whole way of rooms
+##               lit, the lit hearth room between it and the rest), it walks
+##               out through the light all the same, at its walk_mps, the
+##               hearth room's edges included: only while you can't see it,
+##               so the floor's residents end up in what dark is left;
 ##   lurk        hanging back in a dark pocket (Residents.pocket_spot),
 ##               facing the way the light comes in, no one's pursuer; come
 ##               within rules.pocket_counterattack_m where it can sense you
 ##               and it strikes, a normal strike with its wind-up (so a
 ##               stagger works), lunging in at rules.pocket_lunge_mps to
 ##               bring you into its reach; then it hunts you;
-##   retreat     the floor's last light caught (retreat_to): seen, it
-##               hurries (rules.retreat_mps) to its niche or the nearest
-##               hole, climbs in and sinks back into the stone
-##               (rules.withdraw_s); unseen, or out of your sight, or past
-##               crawler.json cleared.retreat_seen_s, it is gone at once;
-##   gone        for good: off the roll and freed.
+##   retreat     the floor's last light caught (retreat_to): every one, seen
+##               or not, hurries (rules.retreat_mps, by the dimmest way) to
+##               its own niche or grave, or a nearer one left open
+##               (Residents.claim_hole), climbs in and lies down; however
+##               far it has to go, it keeps going;
+##   bones       lying in it for good: set dressing, off the roll (the
+##               floor is cleared), never waking, nothing a pot can wake.
 ##
 ## It is a sprite (ResidentSprite) with no body: nothing walks into it, it
 ## walks through nothing (its path keeps it to the floor).
@@ -104,13 +111,14 @@ extends Node3D
 ## stands in burn its fire_hp down (times its oil_scale); burnt while it
 ## lies at rest, it wakes and climbs out burning (a creeper you are
 ## watching lies there burning until you look away); at 0 it burns out and
-## is gone for good, the chase with it. Awake, it sees a pot's lit wick as
-## your flame out to gives_away.flare_seen_m, and hears a burst within
-## burst_heard_m (Residents.sense).
+## is gone for good in its last flare, the chase with it. Awake, it sees a
+## pot's lit wick as your flame out to gives_away.flare_seen_m, and hears a
+## burst within burst_heard_m (Residents.sense).
 
-enum { REST, RISING, HUNT, STRIKING, RETURN, LYING, LEAVE, LURK, RETREAT, GONE, BELOW }
-const STATE_NAMES := ["rest", "rising", "hunt", "striking", "return", "lying", "leave", "lurk", "retreat", "gone", "below"]
-## Leaving the light, never faster than this (m/s), however far the dark.
+enum { REST, RISING, HUNT, STRIKING, RETURN, LYING, LEAVE, LURK, RETREAT, GONE, BONES }
+const STATE_NAMES := ["rest", "rising", "hunt", "striking", "return", "lying", "leave", "lurk", "retreat", "gone", "bones"]
+## Leaving the light, never faster than this (m/s), however far the dark
+## (the checks' bound on a step too: nothing it does is faster).
 const LEAVE_MAX_MPS := 6.0
 ## How far off it can still be seen going (m), in a lit floor.
 const SEEN_M := 30.0
@@ -128,6 +136,12 @@ const VIEW_FEET_M := 0.1
 const VIEW_HEAD_M := 1.6
 ## Its sprite's pose for each part of a strike (CreatureStrike.pose()).
 const STRIKE_POSES := {"wind_up": "wind_up", "strike": "strike", "recover": "rise_c", "reel": "reel"}
+## How it may walk (_walk_to): only into the dark (the graph's dark rooms
+## and stretches), chasing (only where the light is under the chase's cap,
+## Mike's note of 7 Oct), or anywhere by the dimmest way.
+const WALK_DARK := 0
+const WALK_CAP := 1
+const WALK_ANY := 2
 
 var residents: Residents
 var kind := "skeleton"
@@ -165,6 +179,9 @@ var path := PackedVector3Array()
 var path_i := 0
 var _repath_t := 0.0
 var _path_to := Vector3.INF
+## The way it found ends short of where it was going (the light's edge, a
+## chase's way, WALK_CAP).
+var _path_short := false
 var _sense_t := 0.0
 var _walked := 0.0
 var _step_d := 0.0
@@ -179,8 +196,8 @@ var _lie_from := Vector3.INF
 ## The light (§FF.2): its rise is a fall back out of the light, not a
 ## waking; the dark node it is making for or hangs back in, and its spot
 ## there; how fast it is leaving the light; how long it has watched you
-## from the edge of its dark; this strike is a pocket's counterattack (it
-## lunges in as it winds up); a strike of its reached you where it may.
+## from the edge of the light; this strike lunges in as it winds up (a
+## pocket's counterattack, or within lunge_m); a strike of its reached you.
 var _falling_back := false
 var pocket_node := -1
 var pocket := Vector3.INF
@@ -190,19 +207,17 @@ var _leave_mps := 0.0
 var _edge_t := 0.0
 var lunging := false
 var _reached := false
-## The retreat (§FF.2): the hole it goes into, its part ("walk", "climb",
-## "withdraw"), how long it has been going and into its part; whether you
-## saw it go.
+## Leaving the light cut off from every dark it could walk to (through the
+## lit hearth room): at its walk, not hurrying (tools).
+var cut_off := false
+## The retreat (§FF.2): the resting place it goes back into, its part
+## ("walk", "climb"), how long it has been going and into its part; whether
+## you saw it go.
 var hole: Dictionary = {}
 var _rphase := ""
 var _retreat_t := 0.0
 var _rt := 0.0
 var seen_going := false
-## Into the stone for good (the floor cleared) or only for a while (cut
-## off: below); how long before it comes up; how often it has.
-var _for_good := true
-var _below_left := 0.0
-var came_up := 0
 ## Passed (Mike's 7 Oct note): your head came within creep.arms_m of it at
 ## rest, with a clear line; it climbs out the first moment you can't see
 ## it. (Not its strike: _arm() makes that as it climbs out.)
@@ -292,14 +307,23 @@ func hunt_mps() -> float:
 	return float(creep().get("creep_mps", walk)) if creeps() else walk
 
 
+## How near you it lunges (m; Mike, 7 Oct: "skeletons should lunge at the
+## player within 2 meters"): creep.lunge_m, else its strike's reach.
+func lunge_m() -> float:
+	var reach := strike.reach_m if strike != null else float(strike_def().get("reach_m", 1.6))
+	return maxf(float(creep().get("lunge_m", reach)), reach)
+
+
 ## Where its eyes are now: at rest its head in its niche or grave, else
 ## eye_m over its feet.
 func eye() -> Vector3:
 	if state == REST:
 		return place.eye
+	if state == BONES:
+		return hole.get("eye", place.eye)
 	if state == RISING or state == LYING:
 		return global_position + Vector3(0.0, lerpf(0.7, float(def.get("eye_m", 1.5)), clampf(t / maxf(float(def.get("rise_s", 1.6)), 0.01), 0.0, 1.0)), 0.0)
-	if state == RETREAT and _rphase != "walk":
+	if state == RETREAT and _rphase == "climb":
 		return global_position + Vector3(0.0, 0.7, 0.0)
 	return global_position + Vector3(0.0, float(def.get("eye_m", 1.5)), 0.0)
 
@@ -320,8 +344,8 @@ func fire_hit(_amount: float, _from: Vector3) -> void:
 
 
 ## Burnt down to nothing by a fire pot (§FA.3: a resident at 0 fire_hp
-## burns out and is gone): the chase off (Harm no longer counts it), out
-## of the tomb for good.
+## burns out and is gone, in its last flare): the chase off (Harm no
+## longer counts it), out of the tomb for good.
 func burn_out() -> void:
 	gave_up_why = "burnt"
 	pursuit.give_up("burnt")
@@ -345,9 +369,9 @@ func hears_burst() -> bool:
 	return out
 
 
-## Is it out of its rest (awake, up or on its way)?
+## Is it out of its rest (awake, up or on its way)? Bones are not.
 func awake() -> bool:
-	return state != REST
+	return state != REST and state != BONES
 
 
 ## Hunting you (rising to, hunting, striking: not resting, not going home,
@@ -356,9 +380,10 @@ func hunting() -> bool:
 	return state in [HUNT, STRIKING] or (state == RISING and not _falling_back)
 
 
-## Its chase has its teeth in you (§FD): its strike has landed this chase,
-## so it may follow you into the light (Pursuit.may_enter,
-## rules.chase_enters_light). Nothing else lets it stand in the light.
+## Its chase has its teeth in you (§FD): its strike has landed this chase
+## (Pursuit.may_enter, rules.chase_enters_light). Where the light lets it
+## stand is the same either way since Mike's note of 7 Oct (the chase's
+## cap, Residents.may_be_at).
 func chasing() -> bool:
 	return pursuit.may_enter(true)
 
@@ -370,7 +395,7 @@ func winding_up() -> bool:
 
 
 func _physics_process(delta: float) -> void:
-	if residents == null or residents.paused():
+	if residents == null or residents.paused() or state == BONES:
 		return
 	# Unseen only (Mike's 7 Oct note): watched, it holds still this step,
 	# its clock stopped; its senses, its chase and the light's rules go on.
@@ -406,10 +431,7 @@ func _physics_process(delta: float) -> void:
 			_lurk(delta)
 		RETREAT:
 			_retreat(delta)
-		BELOW:
-			_below(delta)
-			return
-		GONE:
+		GONE, BONES:
 			return
 	var changed := state != was_state
 	if still and not changed:
@@ -448,31 +470,35 @@ func _enter(s: int) -> void:
 
 ## Does it hold still this step (Mike's 7 Oct note): a creeper you can see
 ## (Residents.watched), unless it is in its strike (which runs in plain
-## view, §FA.1), up and about within strike.reach_m of you (it got right
-## up on you), or going at the floor's last light (§FF.2's reveal). At rest
-## there is nothing to hold (armed, it waits there until you look away);
-## below in the stone, or gone, it can't be seen.
+## view, §FA.1), up and about within lunge_m of you (it got right up on
+## you: Mike's 2 m), or going home at the floor's last light (§FF.2's
+## reveal). At rest there is nothing to hold (armed, it waits there until
+## you look away); laid down as bones for good, nothing moves.
 func holds_still() -> bool:
 	if not creeps():
 		return false
 	match state:
-		REST, STRIKING, BELOW, GONE:
+		REST, STRIKING, RETREAT, GONE, BONES:
 			return false
-		RETREAT:
-			if _for_good:
-				return false
 		HUNT, RETURN, LEAVE, LURK:
-			if within_reach():
+			if within_lunge():
 				return false
 	return residents.watched(self)
 
 
 ## You within its strike's reach (strike.reach_m, flat, and not a storey
-## off): near enough that, up and about, it may move in plain view.
+## off).
 func within_reach() -> bool:
 	var p := residents.player.global_position
 	var reach := strike.reach_m if strike != null else float(strike_def().get("reach_m", 1.6))
 	return _flat_to(p) <= reach and absf(p.y - global_position.y) < 1.2
+
+
+## You within its lunge_m (flat, and not a storey off): near enough that,
+## up and about, it lunges at you and may move in plain view (Mike, 7 Oct).
+func within_lunge() -> bool:
+	var p := residents.player.global_position
+	return _flat_to(p) <= lunge_m() and absf(p.y - global_position.y) < 1.2
 
 
 ## At rest. A creeper is armed by your passing (your head within
@@ -546,10 +572,11 @@ func _sound(which: String) -> void:
 
 
 ## Its strike reached you (CreatureStrike.on_hit): one hit, as
-## CreatureStrike's own (take_hit, Harm counts it), unless you stand in the
-## light and it hasn't hit you yet (§FF.2, Residents.may_strike).
+## CreatureStrike's own (take_hit, Harm counts it). It strikes only from
+## where it may stand (the light's edge at most, Mike's note of 7 Oct), so
+## wherever its strike finds you counts.
 func _on_hit(target: Node3D) -> void:
-	if not residents.may_strike(self) or not target is PlanetPlayer:
+	if not target is PlanetPlayer:
 		return
 	var p := target as PlanetPlayer
 	p.death_cause = "creature:" + kind
@@ -602,7 +629,7 @@ func _rise(back: bool) -> void:
 			_start_leave()
 		else:
 			_enter(HUNT)
-			if not chasing() and not residents.dark_at(global_position):
+			if not residents.light_ok(self, global_position):
 				# Woken where the light has come since: it won't hunt you in it.
 				give_up("light")
 
@@ -641,7 +668,7 @@ func give_up(why: String) -> void:
 		strike.cancel()
 	lunging = false
 	_edge_t = 0.0
-	if state in [REST, LYING, LEAVE, LURK, RETREAT, GONE]:
+	if state in [REST, LYING, LEAVE, LURK, RETREAT, GONE, BONES]:
 		return
 	if state == RISING:
 		if _falling_back or not residents.dark_at(place.pos):
@@ -678,23 +705,27 @@ func _hunt(delta: float) -> void:
 	var p := residents.player
 	var reach := strike.reach_m if strike != null else float(strike_def().get("reach_m", 1.6))
 	var flat := _flat_to(p.global_position)
-	var close := flat <= reach * 0.9 and absf(p.global_position.y - global_position.y) < 1.2
-	if close and sensed_by in ["sight", "touch", "flame", "glow"] and residents.may_strike(self) and residents.clear_line(eye(), p.eye_position()) and strike != null and strike.begin():
+	# Within lunge_m of you, sensing you (Mike, 7 Oct: it lunges within 2
+	# m): it winds up its strike in plain view, lunging in as it does
+	# (_lunge, never past the light's edge) to bring you into its reach.
+	var near := flat <= lunge_m() and absf(p.global_position.y - global_position.y) < 1.2
+	if near and sensed_by in ["sight", "touch", "flame", "glow"] and residents.clear_line(eye(), p.eye_position()) and strike != null and strike.begin():
+		lunging = flat > reach * 0.6
 		_edge_t = 0.0
 		_enter(STRIKING)
 		return
-	# On toward where it last sensed you (a creeper creeping, creep_mps);
-	# when it can see you, only up to its reach.
+	# On toward where it last sensed you (a creeper creeping, creep_mps),
+	# only as far as the light's edge (Mike's note of 7 Oct); when it can
+	# see you, only up to its reach.
 	var target := last_known if last_known != Vector3.INF else global_position
 	var stop := reach * 0.75 if sensed_by != "" else 0.3
 	var held := false
 	if _flat_to(target) > stop:
-		held = _walk_to(target, delta, true, hunt_mps())
+		held = _walk_to(target, delta, WALK_CAP, hunt_mps())
 	elif sensed_by != "":
 		_face(p.global_position, delta, 120.0)
-		held = not residents.may_strike(self)
-	# The light between you (§FF.2): it watches you from the edge of its
-	# dark, then gives you up.
+	# The light between you: it watches you from its edge, then gives you
+	# up.
 	if held:
 		_face(p.global_position, delta, 120.0)
 		_edge_t += delta
@@ -705,8 +736,9 @@ func _hunt(delta: float) -> void:
 
 
 ## Its strike under way (CreatureStrike runs the clock): it turns to you
-## in the wind-up, holds through the committed strike, senses and may
-## give you up as it draws back, and is pushed back as it reels.
+## in the wind-up (lunging in, if it is lunging), holds through the
+## committed strike, senses and may give you up as it draws back, and is
+## pushed back as it reels.
 func _striking(delta: float) -> void:
 	var p := residents.player
 	var s := strike.state if strike != null else "ready"
@@ -717,14 +749,6 @@ func _striking(delta: float) -> void:
 		_strike_was = s
 	match s:
 		"wind_up":
-			if not residents.may_strike(self):
-				# You stepped into the light in its wind-up: it breaks off
-				# (§FF.2, as the snake does).
-				strike.cancel()
-				lunging = false
-				_strike_was = ""
-				_enter(HUNT)
-				return
 			_face(p.global_position, delta, 140.0)
 			if lunging:
 				_lunge(delta)
@@ -744,9 +768,9 @@ func _striking(delta: float) -> void:
 			_enter(HUNT)
 
 
-## A dark pocket's counterattack (§FF.2): in at rules.pocket_lunge_mps as
-## it winds up, until you are well inside its reach, over open floor and
-## never into the light.
+## The lunge (Mike, 7 Oct; §FF.2's pocket counterattack too): in at
+## rules.pocket_lunge_mps as it winds up, until you are well inside its
+## reach, over open floor and never past the light's edge.
 func _lunge(delta: float) -> void:
 	var p := residents.player
 	var to := Vector2(p.global_position.x - global_position.x, p.global_position.z - global_position.z)
@@ -764,7 +788,7 @@ func _lunge(delta: float) -> void:
 
 
 ## The stagger's push back (CreatureStrike.take_reel), along the floor:
-## where stone is behind it, less or none; never into the light (§FF.2).
+## where stone is behind it, less or none; never past the light's edge.
 func _reel() -> void:
 	var push := strike.take_reel()
 	if push.length() < 0.0001:
@@ -782,7 +806,8 @@ func _reel() -> void:
 func _return(delta: float) -> void:
 	_sense(delta)
 	if sensed_by != "" and residents.may_strike(self):
-		# It has you again (in the dark: in the light it lets you be, §FF.2).
+		# It has you again (where it could reach you: by a fire it lets you
+		# be, Mike's note of 7 Oct).
 		gave_up_why = ""
 		pursuit.notice(residents.torch_lit())
 		_enter(HUNT)
@@ -802,7 +827,8 @@ func _return(delta: float) -> void:
 # --- The light, the pockets, the retreat (design §FF.2) ---------------------------
 
 ## A holder has caught and the floor is not yet cleared (Residents): it
-## keeps to the dark unless it is chasing you.
+## keeps to the dark unless it is chasing you, and then not past the
+## light's cap.
 func light_changed() -> void:
 	match state:
 		REST:
@@ -817,15 +843,19 @@ func light_changed() -> void:
 				_falling_back = true
 				_told = true
 		RISING:
-			if not _falling_back and not chasing() and not residents.dark_at(place.pos):
+			if not _falling_back and not residents.dark_at(place.pos):
 				# Waking as its place is relit: it gives you up, and once out
 				# it goes for the dark.
 				gave_up_why = "light"
 				pursuit.give_up("light")
 				_falling_back = true
 		HUNT, STRIKING:
-			if not chasing() and not residents.dark_at(global_position):
+			if not residents.light_ok(self, global_position):
+				# The light caught round it, past the chase's cap.
 				give_up("light")
+			else:
+				# The edge may have moved: find the way again.
+				_repath_t = 0.0
 		RETURN:
 			if not residents.dark_at(global_position) or not residents.can_go_home(self):
 				_after_give_up()
@@ -853,31 +883,33 @@ func _fall_back() -> void:
 
 
 ## Out of the light (rules.back_to_dark_s, §FD): for the nearest dark by the
-## way with least light in it (Residents.nearest_dark), fast enough to be
-## out of the light within back_to_dark_s (Pursuit.back_to_dark_mps). Cut
-## off from any dark it can walk to, into the stone through the nearest
-## hole, to come up in the dark elsewhere (retreat, below).
+## way with least light in it (Residents.dark_way, the dimmest way on the
+## floor), fast enough to be out of the light within back_to_dark_s
+## (Pursuit.back_to_dark_mps). Cut off from every dark it could walk to
+## without crossing the lit hearth room (Mike's note of 7 Oct: nothing goes
+## into the stone), it walks out through it all the same, at its walk_mps,
+## only while unseen.
 func _start_leave() -> void:
 	if strike != null:
 		strike.cancel()
 	lunging = false
 	_edge_t = 0.0
 	var at := residents.node_of(global_position)
-	var to := residents.nearest_dark(at)
-	if to < 0:
-		if at < 0:
-			# Off the tomb's floor (a test floor): no light there to leave.
-			_start_lurk(-1)
-		else:
-			retreat(false)
+	var way := residents.dark_way(at)
+	if way.is_empty():
+		# No dark it can reach (off the tomb's floor, a test floor; or none
+		# left): it hangs back where it is.
+		_start_lurk(at if at >= 0 and residents.ground.is_ground(at) else -1)
 		return
+	var to := int(way[-1])
+	cut_off = residents.ground.crosses_hearth(way)
 	pocket_node = to
 	pocket = residents.pocket_spot(to, self)
 	_face_to = residents.light_way(to, pocket)
 	path = PackedVector3Array()
 	_path_to = Vector3.INF
 	var walk := float(def.get("walk_mps", 2.2))
-	_leave_mps = clampf(Pursuit.back_to_dark_mps(_light_m(pocket), walk), walk, LEAVE_MAX_MPS)
+	_leave_mps = walk if cut_off else clampf(Pursuit.back_to_dark_mps(_light_m(pocket), walk), walk, LEAVE_MAX_MPS)
 	_enter(LEAVE)
 
 
@@ -905,6 +937,7 @@ func _leave(delta: float) -> void:
 	if residents.dark_at(global_position):
 		# Out of the light: home, if a way through the dark leads there; else
 		# it hangs back in this dark.
+		cut_off = false
 		if residents.can_go_home(self):
 			path = PackedVector3Array()
 			_path_to = Vector3.INF
@@ -912,10 +945,11 @@ func _leave(delta: float) -> void:
 		else:
 			_start_lurk(residents.node_of(global_position))
 		return
-	_walk_to(pocket, delta, false, _leave_mps)
-	# No way out over the floor: it goes into the stone where it is.
-	if t > Residents.rule("back_to_dark_s", 4.0) * 2.0 + 2.0:
-		retreat(false)
+	_walk_to(pocket, delta, WALK_ANY, _leave_mps)
+	if path.is_empty() and residents.nav != null and t > REPATH_S * 3.0:
+		# No way over the floor to that dark at all: it hangs back where it
+		# is (it never goes into the stone).
+		_start_lurk(-1)
 
 
 ## Hang back in dark node `id` (§FF.2: the dark pockets): to its spot there
@@ -935,9 +969,9 @@ func _start_lurk(id: int) -> void:
 func _lurk(delta: float) -> void:
 	_sense(delta)
 	var p := residents.player
-	# You came within its counterattack, where it senses you, in the dark:
-	# it strikes, lunging in as it winds up (§FF.2), and hunts you after.
-	var near := _flat_to(p.global_position) <= Residents.rule("pocket_counterattack_m", 3.0) and absf(p.global_position.y - global_position.y) < 1.5
+	# You came within its counterattack, where it senses you and could reach
+	# you: it strikes, lunging in as it winds up (§FF.2), and hunts you after.
+	var near := _flat_to(p.global_position) <= maxf(Residents.rule("pocket_counterattack_m", 3.0), lunge_m()) and absf(p.global_position.y - global_position.y) < 1.5
 	var bites := bool(Residents.CLEARED.get("half_lit_pockets_bite", true))
 	if near and bites and sensed_by != "" and residents.may_strike(self) and strike != null and strike.begin():
 		lunging = true
@@ -958,64 +992,31 @@ func _lurk(delta: float) -> void:
 
 
 ## The floor's last light has caught (§FF.2; its retreat_to, the skeleton's
-## back_into_its_niche): seen, it goes back into its niche or the nearest
-## hole and sinks into the stone; unseen, it is gone now. For good
-## (`for_good`), or, cut off from every dark it could walk to
-## (_start_leave), only into the stone for a while (below): a creeper cut
-## off where you can see it stands where it is ("held") until you look
-## away, then is into the stone at once (Mike's 7 Oct note; only the last
-## light's going is seen).
-func retreat(for_good := true) -> void:
-	if state == GONE:
+## back_into_its_niche; Mike's note of 7 Oct: no sinking): it goes home to
+## its own niche or grave, or a nearer one left open (Residents
+## .claim_hole), by the dimmest way at rules.retreat_mps, climbs in and
+## lies down, bones for good. Lying in its place already, it is bones
+## where it lies; climbing out, it climbs back; climbing in, it goes on in.
+## Seen or not; however far.
+func retreat() -> void:
+	if state in [RETREAT, GONE, BONES]:
 		return
-	if state == RETREAT:
-		# On its way into the stone already (or held there, cut off, until
-		# you look away): for good now, if so.
-		_for_good = _for_good or for_good
-		return
-	if state == BELOW:
-		# In the stone already: for good now, unseen.
-		if for_good:
-			_for_good = true
-			seen_going = false
-			_gone()
-		return
-	_for_good = for_good
-	seen_going = false
+	seen_going = in_view()
 	if strike != null:
 		strike.cancel()
 	lunging = false
-	gave_up_why = "cleared" if for_good else "cut_off"
-	pursuit.give_up(gave_up_why)
+	gave_up_why = "cleared"
+	pursuit.give_up("cleared")
 	_retreat_t = 0.0
 	_rt = 0.0
-	if not for_good and creeps():
-		# Cut off, a creeper still goes only unseen: watched, it is held
-		# where it stands; unwatched, into the stone now.
-		if residents.watched(self):
-			_rphase = "held"
-			_enter(RETREAT)
-		else:
-			_done_retreat()
-		return
-	if not bool(Residents.CLEARED.get("retreat_seen", true)) or not in_view():
-		_done_retreat()
-		return
-	_go_seen()
-
-
-## Seen going (§FF.2's reveal): sinking back into its niche or grave if it
-## lies in it, climbing back in if it is on its way out or in, else
-## hurrying to the nearest hole; its near tell heard as it goes.
-func _go_seen() -> void:
-	seen_going = true
 	var climb := maxf(float(def.get("rise_s", 1.6)), 0.05) * CLIMB_IN_K
 	var k := clampf(t / maxf(float(def.get("rise_s", 1.6)), 0.05), 0.0, 1.0)
 	match state:
 		REST:
-			# In its niche or grave already: it sinks back into the stone.
+			# In its niche or grave already: bones where it lies.
 			hole = place
-			_rphase = "withdraw"
+			_lay_down()
+			return
 		LYING:
 			# Climbing in already: on in.
 			hole = place
@@ -1028,7 +1029,7 @@ func _go_seen() -> void:
 			_lie_from = place.out
 			_rt = (1.0 - k) * climb
 		_:
-			hole = residents.nearest_hole(self)
+			hole = residents.claim_hole(self)
 			_rphase = "walk"
 			path = PackedVector3Array()
 			_path_to = Vector3.INF
@@ -1039,22 +1040,8 @@ func _go_seen() -> void:
 
 
 func _retreat(delta: float) -> void:
-	if _rphase == "held":
-		# Cut off where you could see it: while you still can, it stands;
-		# once you can't, it is into the stone at once. Or the floor's last
-		# light has caught since (for good): it goes as any other does then.
-		if still:
-			return
-		if _for_good and bool(Residents.CLEARED.get("retreat_seen", true)) and in_view():
-			_go_seen()
-		else:
-			_done_retreat()
-		return
 	_retreat_t += delta
 	_rt += delta
-	if _retreat_t >= float(Residents.CLEARED.get("retreat_seen_s", 6.0)) or not in_view():
-		_done_retreat()
-		return
 	var climb := maxf(float(def.get("rise_s", 1.6)), 0.05) * CLIMB_IN_K
 	match _rphase:
 		"walk":
@@ -1065,62 +1052,35 @@ func _retreat(delta: float) -> void:
 				_rt = 0.0
 				_sound("near")
 			else:
-				_walk_to(to, delta, false, Residents.rule("retreat_mps", 3.2))
+				_walk_to(to, delta, WALK_ANY, Residents.rule("retreat_mps", 3.2))
 		"climb":
 			var k := clampf(_rt / climb, 0.0, 1.0)
 			global_position = _arc(hole, _lie_from, 1.0 - k)
 			yaw = float(hole.yaw)
 			if k >= 1.0:
-				_rphase = "withdraw"
-				_rt = 0.0
-		"withdraw":
-			var k2 := clampf(_rt / maxf(Residents.rule("withdraw_s", 1.2), 0.05), 0.0, 1.0)
-			global_position = (hole.pos as Vector3) + _into_stone(hole) * smoothstep(0.0, 1.0, k2)
-			yaw = float(hole.yaw)
-			if k2 >= 1.0:
-				_done_retreat()
+				_lay_down()
 
 
-## Into the stone: gone for good, or below for a while (cut off).
-func _done_retreat() -> void:
-	if _for_good:
-		_gone()
-	else:
-		_go_below()
-
-
-## In the stone under the tomb for rules.below_s, unseen and inert: no one's
-## pursuer, nothing to swing at, nothing a fire pot can reach.
-func _go_below() -> void:
+## Home at the last light (§FF.2, Mike's note of 7 Oct): lying in its niche
+## or grave, bones from now on, set dressing for good: its strike and chase
+## given up, off the roll (Residents.went), never waking, nothing a fire
+## pot reaches. Its node stays, drawn at rest.
+func _lay_down() -> void:
+	if hole.is_empty():
+		hole = place
+	state = BONES
+	t = 0.0
 	if strike != null:
 		strike.cancel()
 	_disarm()
-	pursuit.give_up("below")
-	if sprite != null:
-		sprite.visible = false
+	pursuit.give_up("cleared")
+	global_position = hole.pos
+	yaw = float(hole.yaw)
 	feet.stop()
 	remove_from_group(FirePots.TARGET_GROUP)
-	var b: Array = Residents.RULES.get("below_s", [6.0, 12.0])
-	_below_left = randf_range(float(b[0]), float(b[1]))
-	_enter(BELOW)
-
-
-## Up again in the dark nearest it, out of your sight (Residents.come_up_spot),
-## to hang back there; with nowhere like that just now, a while more.
-func _below(delta: float) -> void:
-	_below_left -= delta
-	if _below_left > 0.0:
-		return
-	var up := residents.come_up_spot(self)
-	if up.is_empty():
-		_below_left = 2.0
-		return
-	global_position = up.pos
-	if sprite != null:
-		sprite.visible = true
-	add_to_group(FirePots.TARGET_GROUP)
-	came_up += 1
-	_start_lurk(int(up.node))
+	residents.went(self, seen_going)
+	_show_pose()
+	set_physics_process(false)
 
 
 ## A point on the climb between resting in `pl` (u 0) and standing on the
@@ -1135,45 +1095,12 @@ func _arc(pl: Dictionary, floor_pt: Vector3, u: float) -> Vector3:
 	return from.lerp(mid, e).lerp(mid.lerp(floor_pt, e), e)
 
 
-## The way it sinks into the stone from resting in `pl`: back into the wall
-## behind a niche, down into a grave.
-static func _into_stone(pl: Dictionary) -> Vector3:
-	if str(pl.rests_in) == "grave":
-		return Vector3(0.0, -1.05, 0.0)
-	var back := (pl.pos as Vector3) - (pl.out as Vector3)
-	back.y = 0.0
-	return back.normalized() * 0.9 + Vector3(0.0, -0.1, 0.0)
-
-
-## Gone for good (§FF.2: relit stays lit, so it never comes back): its
-## strike and chase given up, off the roll, freed once its last sound ends.
-func _gone() -> void:
-	if state == GONE:
-		return
-	state = GONE
-	if strike != null:
-		strike.cancel()
-	_disarm()
-	pursuit.give_up("cleared")
-	if sprite != null:
-		sprite.visible = false
-	feet.stop()
-	remove_from_group(FirePots.TARGET_GROUP)
-	residents.went(self, seen_going)
-	set_physics_process(false)
-	# Its meshes let go of first (NodeRelease), as the tomb's are.
-	if voice.playing:
-		voice.finished.connect(func() -> void: NodeRelease.free_later(self), CONNECT_ONE_SHOT)
-	else:
-		NodeRelease.free_later(self)
-
-
 ## Where you might see it (Residents.watched, Mike's 7 Oct note): its feet,
 ## its middle and its head as it is now (lying in its place, climbing out
-## or in, standing); none while it is below in the stone or gone, when
-## nothing of it is drawn.
+## or in, standing); none once it lies down as bones for good (nothing of
+## it moves again), or when nothing of it is drawn.
 func view_points() -> Array:
-	if state in [BELOW, GONE] or (sprite != null and not sprite.visible):
+	if state in [GONE, BONES] or (sprite != null and not sprite.visible):
 		return []
 	var up := Vector3(0.0, VIEW_HEAD_M, 0.0)
 	var head := global_position + up
@@ -1188,8 +1115,8 @@ func view_points() -> Array:
 				k = 1.0 - k
 			head = global_position + ((place.eye as Vector3) - (place.pos as Vector3)).lerp(up, k)
 		RETREAT:
-			if not hole.is_empty() and _rphase in ["climb", "withdraw"]:
-				var k2 := 0.0 if _rphase == "withdraw" else 1.0 - clampf(_rt / (rise_s * CLIMB_IN_K), 0.0, 1.0)
+			if not hole.is_empty() and _rphase == "climb":
+				var k2 := 1.0 - clampf(_rt / (rise_s * CLIMB_IN_K), 0.0, 1.0)
 				head = global_position + ((hole.eye as Vector3) - (hole.pos as Vector3)).lerp(up, k2)
 	var feet := global_position + Vector3(0.0, VIEW_FEET_M, 0.0)
 	return [feet, feet.lerp(head, 0.5), head]
@@ -1224,24 +1151,34 @@ func _flat_to(at: Vector3) -> float:
 
 ## Walk toward `target` at walk_mps (or `mps`) along the tomb's floor
 ## (TombNav), finding a new way every REPATH_S or when the target has
-## moved. keep_dark: never a step into the light unless it is chasing you
-## (§FF.2, Residents.may_be_at); returns true when the light held it back
-## (held still, it still knows that). Held still (watched), no step.
-func _walk_to(target: Vector3, delta: float, keep_dark := true, mps := -1.0) -> bool:
+## moved. `mode`: WALK_DARK, never a step into a lit room or stretch
+## (§FF.2); WALK_CAP, chasing (Mike's note of 7 Oct): the chase's way
+## (TombNav CAP), never a step where the light passes its cap
+## (Residents.may_be_at); WALK_ANY, anywhere by the dimmest way. Returns
+## true when the light held it back (at the end of a chase's way short of
+## you: the light's edge; or a step into the light it may not take); held
+## still (watched), no step, but it still knows.
+func _walk_to(target: Vector3, delta: float, mode := WALK_DARK, mps := -1.0) -> bool:
 	var nav := residents.nav
 	_repath_t -= delta
 	if nav != null and (_repath_t <= 0.0 or _path_to.distance_to(target) > 0.75 or path_i >= path.size()):
 		_repath_t = REPATH_S
 		_path_to = target
-		path = nav.path(global_position, target)
+		path = nav.path(global_position, target, true, TombNav.CAP if mode == WALK_CAP else TombNav.DIM)
 		path_i = 1 if path.size() > 1 else 0
+		_path_short = mode == WALK_CAP and not TombNav.reaches(path, target, 0.6)
 	var goal := target
 	if nav != null:
 		if path.is_empty():
-			return false
+			return mode == WALK_CAP
 		while path_i < path.size() - 1 and _flat_to(path[path_i]) < 0.15:
 			path_i += 1
 		goal = path[mini(path_i, path.size() - 1)]
+		if _path_short and path_i >= path.size() - 1 and _flat_to(goal) < 0.15:
+			# At the end of its way, short of where it was going: the light's
+			# edge. As far as it may come.
+			_face_dir(Vector2(target.x - global_position.x, target.z - global_position.z), delta, 240.0)
+			return true
 	var to := Vector2(goal.x - global_position.x, goal.z - global_position.z)
 	var d := to.length()
 	if d < 0.01:
@@ -1249,7 +1186,7 @@ func _walk_to(target: Vector3, delta: float, keep_dark := true, mps := -1.0) -> 
 	var step := minf((mps if mps > 0.0 else float(def.get("walk_mps", 2.2))) * delta, d)
 	var move := to / d * step
 	var nxt := global_position + Vector3(move.x, 0.0, move.y)
-	if keep_dark and not residents.may_be_at(self, nxt):
+	if (mode == WALK_DARK and not residents.dark_at(nxt)) or (mode == WALK_CAP and not residents.may_be_at(self, nxt)):
 		_face_dir(to, delta, 240.0)
 		return true
 	if still:
@@ -1299,6 +1236,8 @@ func _show_pose() -> void:
 	match state:
 		REST:
 			pname = "rest_grave" if str(place.rests_in) == "grave" else "rest_niche"
+		BONES:
+			pname = "rest_grave" if str(hole.get("rests_in", place.rests_in)) == "grave" else "rest_niche"
 		RISING, LYING:
 			var k := clampf(t / rise_s, 0.0, 1.0)
 			if state == LYING:
@@ -1315,8 +1254,6 @@ func _show_pose() -> void:
 				"climb":
 					var k2 := clampf(_rt / (rise_s * CLIMB_IN_K), 0.0, 1.0)
 					pname = [into, "rise_a", "rise_b", "rise_c"][mini(int((1.0 - k2) * 4.0), 3)]
-				"withdraw":
-					pname = into
 				_:
 					pname = "walk_%d" % (int(_walked / STRIDE_M) % 4)
 	sprite.pose = SkeletonRig.POSES.find(pname)
