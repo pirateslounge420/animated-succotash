@@ -8,7 +8,13 @@ biome (~1–2 km, first guess) with its ruins above and its dungeon below, a day
 ambient life; worlds join underground, show on each other's horizons, and a map fast-travels to
 visited ones. **Each world's dungeon has one boss (§EY, 6 Oct, not built yet):** a creepy
 mythical creature that prowls only the rooms not yet relit and is never fought; the last light
-drives it back into its lair (`data/bosses.json`). **The open world described below (planet, roads, ecology, weather, camp sim) is
+drives it back into its lair (`data/bosses.json`). **Fire fights back (§FA–§FH, 6 Oct night, not built
+yet; amends "no combat"):** a little combat, all of it fire: a lit torch swung into a creature's
+wind-up staggers it (never wounds), and rare fire pots, lit off your torch, burn; running, sneaking
+(Shift), hiding and dousing your own torch stay the default. Each ruin kind has its residents
+(`data/residents.json`) below its boss; a lit floor is cleared; three hits with a red first edge,
+and a chase can follow you into the light. The wheel and Tab-and-wheel replace Q (`data/hands.json`);
+the hearth folk are live 3D, not sprites (§FH). **The open world described below (planet, roads, ecology, weather, camp sim) is
 Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
 and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.

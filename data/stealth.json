@@ -1,0 +1,41 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FC] Sneaking, hiding and dousing in the crawler (Mike, 6 Oct, 22:32; his Amnesia: A Machine for Pigs and Minecraft references). Brings §DF (your light gives you away) underground. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "sneak": "§FC.1 (Mike): Shift held sneaks (the crawler's crouch, as built: crouch speed, noise_level 0.1). camera_ease_s: the view eases down to crouched eye height and back up, never a snap. reticle: the sneak look of hud.json's reticle (ring = the dot opens into a small ring; dim = its alpha scale). footstep_volume: a share of the walk's step volume. ledge_guard: while sneaking you can't walk off a drop deeper than ledge_drop_m; let go of Shift to step off (Minecraft).",
+  "hide": "§FC.2 (Mike): things to hide behind and in. Claude's first guess: no hide button and no prompt; hidden means out of a creature's sight line (cover lists the kinds the tomb kit should leave room behind). A lit torch gives you away behind cover too (§DF).",
+  "douse": "§FC.3 (Mike): put your own torch out on purpose and keep holding it (key in hands.json douse_key). log_line: the one log line. Relight from any lit flame, as built (§CN, §ET.7)."
+ },
+ "sneak": {
+  "key": "crouch",
+  "camera_ease_s": 0.18,
+  "reticle": {
+   "shape": "ring",
+   "dim": 0.75
+  },
+  "footstep_volume": 0.25,
+  "ledge_guard": true,
+  "ledge_drop_m": 0.5
+ },
+ "hide": {
+  "button": false,
+  "hidden_when": "out_of_sight_line",
+  "cover": [
+   "sarcophagus",
+   "pillar",
+   "niche",
+   "alcove",
+   "fallen_slab"
+  ],
+  "lit_torch_gives_away": true
+ },
+ "douse": {
+  "keep_holding": true,
+  "sound": "smother_hiss",
+  "log_line": "You smothered the torch.",
+  "relight_from": [
+   "hearth",
+   "relit_holder",
+   "planted_torch"
+  ]
+ }
+}

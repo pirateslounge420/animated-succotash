@@ -4,6 +4,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 night — Design §FA–§FI: fire fights back, sneaking, what lurks (Claude, chat; design and data only)
+- **Locked by Mike at 22:32** ("go ahead and lock it in"): a little combat, all of it fire (the torch staggers a creature's wind-up, rare fire pots burn; amends §ET.1); two hands on the wheel and Tab-and-wheel, Q retired, a Controls page; Shift sneak with an eased camera, a sneak reticle, quiet feet and Minecraft's ledge guard; hiding; dousing your own torch; a dark you can half see in; hit 1's edge goes red (amends §EC), a chase can follow you into the light (amends §EY.1), recovery only once it gives you up; residents below each boss, a roster (skeletons, ghosts, the mine's spider, temple cats, zombies, the were-mole, the swamp witch, and at 22:39–22:40 the imps and the warden); a lit floor is cleared; relit ruins' people come home and teach; atmosphere never puzzles; the hearth folk live 3D (amends §ET.8 for folk).
+- **New data, all `[NOT WIRED YET]`:** `fire_pots.json`, `hands.json`, `stealth.json`, `residents.json`; new blocks `crawler.json → dark, floors, cleared, restored, ambience, folk_3d`, `harm.json → fd`, `torch.json → stagger`. `bosses.json`: the swamp is the witch and the mine the spider; the hornet and the centipede move to `unplaced` with the imps and the warden; `rule.chase_enters_light`.
+- **Flagged, not changed:** the pitch technique needs burn time, which §EZ.5 turned off (§FF.4); a glass fire-bottle and the warden's chain are past §EH (§FA.5, §FE.4). Twelve open calls in §FI.2.
+- **Queued:** prompts 52–61 in `docs/PROMPT_QUEUE.md`.
+
+---
+
 ## 2026-10-07 — Queue 44, §EX.6: one firelight, the torch takes the hearth's amber (cb946c1)
 - **One colour.** `Torch.fire_color()` reads `look.json → fire.light.color` (#FF6E24), and the torch in hand, planted torches, the sconces and the hearth all take it. `torch.json → light.color` agrees, and the check confirms it.
 - **Guttering** (burnt low, or the snuff rules' warning) dims and reddens the torch's light (`Torch.gutter_color`: steady #FF6E24, guttering #FF5719). The coal's shader already reddens as its glow drops.

@@ -1,0 +1,49 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FB] Two hands (Mike, 6 Oct, 22:32): the mouse wheel cycles the right hand, holding Tab and scrolling cycles the left; Q no longer swaps (replaces the crawler's weapon_swap). Every action rebindable on a Controls page in Settings. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "right": "§FB (Mike): what the right hand holds; the wheel alone cycles it. 'spear' only once found (§ED.7). Scrolling a lit torch away puts it out, as built (Torch.stow).",
+  "left": "§FB (Mike): left-hand things live in their own small strip of the pack; hold Tab and scroll to cycle them, and to 'empty'.",
+  "wheel_drives": "§FB (Mike): the wheel drives the right hand by default; the player can switch it to the left in Controls (wheel_drives_options).",
+  "tab_hold": "§FB first guess: holding Tab shows the left-hand strip, wordless, inside the 480-line frame (§Y); tapping Tab alone does nothing in the crawler for now (no inventory screen there).",
+  "clicks": "§FB (Mike): left click swings the right hand's thing (§CN), right click interacts. left_with_pot is Claude's first guess (§FI.2 call 12): hold to bring the hands together and light the wick (fire_pots.json), keep holding to aim, release to throw; the torch doesn't swing while a pot is in the left hand.",
+  "douse_key": "§FC.3 first guess (§FI.2 call 12): smother your own torch and keep holding it. Rebindable.",
+  "rebind": "§FB (Mike): a Controls page in Settings; every action rebindable, saved per player (Claude Code picks where)."
+ },
+ "right": {
+  "holds": [
+   "torch",
+   "bare",
+   "spear"
+  ],
+  "cycle": "wheel"
+ },
+ "left": {
+  "holds": [
+   "fire_pot",
+   "empty"
+  ],
+  "cycle": "tab_hold_and_wheel",
+  "own_strip": true
+ },
+ "wheel_drives": "right",
+ "wheel_drives_options": [
+  "right",
+  "left"
+ ],
+ "q_swaps": false,
+ "tab_hold": {
+  "shows_strip": true,
+  "tap_alone": "nothing"
+ },
+ "clicks": {
+  "left": "swing_right_hand",
+  "left_with_pot": "hold_light_aim_release_throw",
+  "right": "interact"
+ },
+ "douse_key": "F",
+ "rebind": {
+  "page": "Controls",
+  "every_action": true,
+  "per_player": true
+ }
+}

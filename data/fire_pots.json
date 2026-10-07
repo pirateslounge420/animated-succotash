@@ -1,0 +1,75 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FA.3] Fire pots (Mike, 6 Oct, 22:32): a small sealed vessel of oil with a wick, lit off the torch in your right hand and thrown. Rare; you never craft them (§BN): restored ruins' folk give them (§FF.3). The only ranged way to fight back in Torchfire 1, and it is fire (§ED.7: only fire answers what lurks in the dark). First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "vessel": "§FA.5, open: 'pot' (fired clay, fits §EH) until Mike chooses between clay and found glass bottles.",
+  "sources": "§FA.3 / §FF.3. gift: the folk of a fully relit ruin give some, with the way of using them (Mike). found: a few lie in ruins (Claude's first guess, open).",
+  "carry_max": "How many fit the left-hand strip (§FB). Rarity is the point: there won't be many (Mike).",
+  "lit_from": "§FA.3 (Mike): the wick is lit off the lit torch in the right hand only. No lit torch, no pot (§AW: fire is borrowed, never made). light_anim_s: the hands-come-together animation, in view.",
+  "fuse_s": "Seconds from the wick catching to the burst (Claude's first guess). cook_off_in_hand: null until Mike answers §FI.2 call 2; true would make a pot held past fuse_s burst in your hand as one hit (harm.json).",
+  "throw": "§FB first guess: hold left click to light and aim (the §N hold-to-charge), release to lob. Range grows with the hold from min_m to max_m over charge_s.",
+  "gives_away": "§FA.3 first guess (§DF): the wick's flare is seen by creatures within flare_seen_m with a line of sight; the burst is heard within burst_heard_m.",
+  "spreads_to": "§FA.3 first guess: what catches from a burst or a burning patch (webs, the temple cats' wooden runs, dry rushes, cloth).",
+  "light": "Its fire lights in the hearth's amber (§EX.6, look.json fire.light.color). relights_holders: null until Mike answers §FI.2 call 4 (can a thrown pot light a cold sconce?).",
+  "oils": "§FA.3 (Mike): tar sticks and keeps burning (damage over time, a patch on the floor); light oil has a low flash point and bursts once with no lingering fire. burst is fire damage at once, burn_dps fire damage per second while stuck, in the units of residents.json fire_hp.",
+  "vs_creature": "§FA.3 (Mike): some oils do more to certain creatures: residents.json → creatures.<name>.oil_scale.",
+  "vs_boss": "§FA.4, open (§FI.2 call 3). Claude's first guess: a pot never kills a boss; a hit drives it off into the dark for drives_off_s."
+ },
+ "vessel": "pot",
+ "crafted": false,
+ "sources": [
+  "gift",
+  "found"
+ ],
+ "carry_max": 3,
+ "lit_from": "torch_in_right_hand",
+ "light_anim_s": 0.6,
+ "fuse_s": 3.0,
+ "cook_off_in_hand": null,
+ "throw": {
+  "hold_to_charge": true,
+  "min_m": 4.0,
+  "max_m": 14.0,
+  "charge_s": 0.8,
+  "arc": "lob"
+ },
+ "gives_away": {
+  "flare_seen_m": 25.0,
+  "burst_heard_m": 40.0
+ },
+ "spreads_to": [
+  "web",
+  "dry_wood",
+  "rushes",
+  "cloth"
+ ],
+ "light": "look.json fire.light.color",
+ "relights_holders": null,
+ "oils": {
+  "tar": {
+   "burst": 1.0,
+   "splash_m": 1.5,
+   "sticks": true,
+   "burn_s": 8.0,
+   "burn_dps": 0.5,
+   "floor_patch_s": 12.0,
+   "patch_radius_m": 1.2,
+   "mike": "do more damage over time and keeps them on fire"
+  },
+  "light_oil": {
+   "burst": 4.0,
+   "splash_m": 3.0,
+   "sticks": false,
+   "burn_s": 0.0,
+   "burn_dps": 0.0,
+   "floor_patch_s": 0.0,
+   "patch_radius_m": 0.0,
+   "flash_point": "low",
+   "mike": "more damage in one burst, but no lingering damage over time"
+  }
+ },
+ "vs_creature": "residents.json creatures.<name>.oil_scale",
+ "vs_boss": {
+  "kills": false,
+  "drives_off_s": 30.0
+ }
+}

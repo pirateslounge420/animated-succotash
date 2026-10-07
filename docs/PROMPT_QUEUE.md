@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44.
+Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -81,6 +81,16 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | todo |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | todo |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
+| 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | todo |
+| 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
+| 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | todo |
+| 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | todo |
+| 56 | §FD | Harm: a red edge; a chase follows you into the light; heal once it gives you up | todo |
+| 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
+| 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | todo |
+| 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
+| 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | todo |
+| 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -970,4 +980,154 @@ READ: §EZ.2; §CP (the ember head, built 9e3e7ef and b7ebed5: the burnt end's s
 BUILD: (1) The head: replace the burnt end on every torch in the crawler (in hand in first person, planted, and in the bundle by the hearth) with the pitch head from pitch_head.head: six flat sides, straight, swell times the stick's radius, length_m long, bands showing as small steps in the silhouette, and drips (count, length_m) of pitch running down the stick below it, all as geometry plus painted vertex colour or texture at texels_m; colours from pitch_head.colors, painted not lit (no specular, no shine, no normal map); the head's top band shades to colors.thin just under the flame. (2) The coal: the ember shader's glow and breath (ember block) move to the top of the wrap, under the flame (pitch_head.coal). (3) The flame: when lit, the campfire's one flame card (Campfire.flame_node via Torch.flame_node, look.json fire.flame.torch for size and scroll) sits on the head, its texel grid pitch_head.flame.texel_scale times coarser than the campfire's so it reads chunky in first person at the 480 and 270 presets, in the flame's own bands, with the torch's couple of single-pixel sparks. It must read as a flame at the bottom right of the first-person view, not a smear: check its on-screen size in pixels at 480 and report it. (4) The lean: the flame leans back against the player's velocity by pitch_head.lean.per_mps degrees per m/s up to max_deg, stretches to sprint_stretch of its height at a sprint, leans toward an airway draft (Airways' lean, as the coal does now), and settles over settle_s; nothing about it can put the torch out (§EZ.1). (5) The light: §EX.6's amber; flicker from the flame's noise (§BZ) plus the coal's breath (§CP), your mix; the held_scale brightness (§EB.3) unchanged. (6) Unlit (the bundle, a doused torch with burn left): the pitch head only, no coal, no flame. Burnt out: as built. (7) Smoke: as built by the flame's size, pulled pitch_head.smoke.soot_scale toward soot, never a neutral grey. (8) The open world (Torchfire 2) may keep the ember head; your call, say which in PROGRESS.
 
 CHECK (headless): every lit torch in a built tomb has one flame card and one coal, and every unlit one none; the head's silhouette has six sides and no rounded cap (vertex test); no material on the head or stick has specular or roughness under 1; the flame's lean at a 0 m/s stand is 0 and at a sprint within max_deg; the flame's on-screen height in pixels at 480 and at 270 reported from tools/crawler_frames.gd with the torch in hand. Walkabout once: the torch in hand in a dark corridor, standing and then sprinting.
+```
+
+## 52 — The folk at the hearth in 3D, made pixel by the frame — §FH
+
+**Status:** todo
+**Mike sees:** The person sitting at the hearth when you wake is a solid little 3D figure now, not a flat cut-out: walk round them and they stay solid from every side, chunky with painted pixels like the goat with the bowl in frame 3, lit amber by the fire against the blue.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §FH of docs/design/RECONCILIATION_2026-09-30.md, the hearth folk as live 3D figures. Torchfire 1, the crawler (scripts/crawler/). No screenshots after every step: check with headless numbers, and run the walkabout or tools/crawler_frames.gd once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off crawler.json _help.folk_3d, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FH; §ET.8 (baked sprites; amended for folk only), §ET.9 (one rig, one wardrobe), §ES (3D pixel art: light painted into textures, diffuse only, navy/olive occlusion), §EO and §EQ (beast heads, the hood behind the head), §EX.6 (amber firelight), §ER (performance); crawler.json folk_3d, rescuer, sprites; scripts/crawler/crawler_main.gd (_bake_rescuer and where the rescuer is placed), scripts/crawler/figure_sprite.gd, the CloakedFigure rig and its beast heads.
+
+BUILD: (1) The rescuer (and any later folk at a hearth, folk_3d.who) is drawn as the live shared rig, CloakedFigure with its beast head and cloak colours as now, in the scene as real geometry, instead of a FigureSprite quad. (2) Paint it per §ES: diffuse only, no specular, no normal map, the light baked into its texture or vertex colour with the occlusion tinted the scene's shade (navy), texels sized so it pixelates like the walls at the 480 preset; the hearth's amber light falls on it live. Target: ozavry_ frame 3, the goat with the bowl (docs/references). (3) Its idle (the slow breath, sitting by the fire) plays on the rig; whether it steps at sprites.anim_fps for the era feel or runs smooth is your call, say which in PROGRESS. (4) Keep FigureSprite and its bake for creatures and bosses (folk_3d.sprites_stay_for); don't delete it. (5) Report the frame time in the hearth room before and after (PerfReadout, §ER).
+
+CHECK (headless): in a built crawler the rescuer is a 3D rig node, not a FigureSprite; no material on it has specular above 0 or roughness under 1; the hearth room's frame time before and after, in PROGRESS. Walkabout once: circling the hearth at 480, the rescuer from front, side and back.
+```
+
+## 53 — Sneak: the view eases down, the reticle changes, quiet feet, and you can't step off a ledge — §FC.1
+
+**Status:** todo
+**Mike sees:** Hold Shift and the view glides down into a crouch instead of snapping, the dot of the reticle opens into a small dim ring, and your steps go soft. Creep to the edge of a drop and you stop right at the lip, however hard you push; let go of Shift and you can step off.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §FC.1 of docs/design/RECONCILIATION_2026-09-30.md, sneaking in the crawler. Nothing else from §FC. Torchfire 1, the crawler; the open world and the ninja profile keep their crouch as built. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off stealth.json _help.about for the sneak block, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FC.1 (Mike: Amnesia's sneaking, Minecraft's ledge); §EX.7 and hud.json reticle (the crawler's reticle, prompt 45); stealth.json sneak; scripts/crawler/crawler_player.gd (crouching, CROUCH_SPEED, noise_level, moving_state), PlanetPlayer._set_crouch and _apply_view, scripts/player/footsteps.gd.
+
+BUILD: (1) Shift is still crouch (Controls "crouch"). The camera's eye height eases between standing and crouched over sneak.camera_ease_s, both ways (smoothstep), never a snap; the collision shape may change at once, but standing up under a low ceiling must not push the view through it. (2) While crouched, the reticle takes sneak.reticle: the dot opens into a small ring and dims to its dim scale; back on standing. If prompt 45 isn't built yet, build the reticle swap on top of hud.json's reticle anyway and say so. (3) Footsteps while crouched play at sneak.footstep_volume of the walk's volume; noise_level stays 0.1 as built. (4) The ledge guard: while crouched and on the floor, no move may carry you off a drop deeper than sneak.ledge_drop_m: test the ground under the capsule's leading edge each physics tick and cancel the part of the move that would leave support, per axis, so you can slide along an edge. Let go of Shift and you step off normally. Not in the air.
+
+CHECK (headless, tools/crawler_check.gd): the eye height over the first 0.3 s of a crouch rises or falls monotonically and reaches its target by camera_ease_s; a scripted crouched walk straight at a 2 m drop for 10 s stops within 0.35 m of the lip and never falls; the same walk diagonally along the edge slides and never falls; the same walk standing falls; the reticle reports the ring while crouched; a crouched step's volume is footstep_volume times a walking step's.
+```
+
+## 54 — Douse your own torch, and a dark you can half see in — §FC.3, §FC.4
+
+**Status:** todo
+**Mike sees:** Press F and you smother your torch: the flame dies, you're still holding it, and whatever was watching for your light loses you. Swing it to any lit sconce, planted torch or the hearth and it catches again. With no flame near you the dark isn't blind: the walls and floor close by show faintly in navy, and only farther off does it go fully black.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 50 (the torch's snuff rules). This pass builds ONE thing: design §FC.3 and §FC.4 of docs/design/RECONCILIATION_2026-09-30.md: dousing your own torch, and the half-dark. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and run tools/crawler_frames.gd once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off crawler.json _help.dark and stealth.json's douse note, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FC.3, §FC.4; §DF (your light gives you away); §ET.7 and §EZ.5 (out means out; water is the only thing in the world that puts it out); §CN (the swing passes the flame); stealth.json douse; hands.json douse_key; crawler.json dark and look; scripts/player/torch.gd (put_out, stow, pass_flame), scripts/core/controls.gd (DEFAULTS), and the boss's notice if prompt 49 is built (bosses.json rule.notice).
+
+BUILD: (1) A "douse" action in Controls.DEFAULTS (hands.json douse_key, F; a pad button of your choice): with a lit torch in hand it goes out (a new put_out reason, "smothered", logging stealth.json douse.log_line, with a short smother hiss) and stays in your hand with its burn unchanged. Nothing in the world counts it as water. (2) Relighting stays as built: swing the cold torch to the hearth, a relit sconce or a planted torch; check each. (3) A doused torch gives nothing away: anything that notices a carried flame (the boss's sees_flame_m if built, dread/senses where they run in the crawler) stops seeing it at once. (4) The half-dark: with no flame near you, surfaces within dark.readable_m read faintly in dark.readable_color and fall to black by dark.black_m. How is your call (a weak player-centred fill light that never adds warmth, the fog curve, or both); shade stays navy, never grey; it must not change how far the torch reaches or how the lit rooms look.
+
+CHECK: douse with a lit torch → lit false, burn_left_min unchanged, still in hand, one log line; a swing at a relit sconce relights it; with prompt 49 built, the snake that saw your flame loses it on the douse. From tools/crawler_frames.gd with the torch doused in a cold corridor: mean luminance of wall pixels at about 3 m above a readable floor you pick, at about 15 m near black, and their hue blue (report the numbers). Same frame with the torch lit unchanged from before this pass.
+```
+
+## 55 — Two hands: the wheel, Tab and the wheel, and a Controls page — §FB
+
+**Status:** todo
+**Mike sees:** Q no longer swaps anything. The mouse wheel cycles what's in your right hand (torch, bare hands). Holding Tab and scrolling cycles your left hand through the left-hand things you carry, and back to empty, with a small wordless strip showing while Tab is held. In Settings there's a Controls page where every key can be rebound, including which hand the wheel drives.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §FB of docs/design/RECONCILIATION_2026-09-30.md, the two hands and rebinding. Throwing a fire pot is prompt 60, not this pass. Torchfire 1, the crawler; the open world keeps Q and its weapon swap as built. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true (it lists the controls), take [NOT WIRED YET] off hands.json _help.about, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and how to rebind.
+
+READ: §FB; §CN (left click swings the right hand's thing); hands.json; scripts/core/controls.gd (DEFAULTS, MOUSE_BUTTONS, ensure: Project Settings bindings win), scripts/crawler/crawler_player.gd (_unhandled_input, weapon_swap, swap_weapon), scripts/player/torch.gd (stow: a lit torch put away goes out), scripts/ui/settings_panel.gd, the 480-line HUD (§Y).
+
+BUILD: (1) Right hand: in the crawler the mouse wheel cycles hands.json right.holds that you have (torch, bare hands; the spear once found). Q does nothing in the crawler. Scrolling a lit torch away puts it out, as built. (2) Left hand: a left-hand slot and its own small strip in the pack (left.holds; fire pots arrive in prompt 60, so give dev_items, F9, a placeholder left-hand item to test with). Holding Tab and scrolling cycles the strip and "empty"; holding Tab shows the strip, icons only, inside the 480-line frame; Tab tapped alone does nothing in the crawler. (3) wheel_drives: right by default; set to left, the plain wheel drives the left hand and Tab-and-wheel the right. (4) A Controls page in Settings: every Controls action with its key, mouse button or wheel; click one and press a new input to rebind; a reset to defaults; wheel_drives as a toggle. Saved per player (a file under user://, your choice) and applied by Controls.ensure at start, so a saved binding wins over DEFAULTS. Keyboard, mouse buttons and wheel at least; pad optional.
+
+CHECK (headless): with only the torch, the wheel goes torch → bare hands → torch; Q changes nothing in the crawler; with the placeholder left item, Tab+wheel goes item → empty → item; wheel_drives left swaps them; a binding saved, the game restarted (or Controls re-run), and the new binding in force; reset restores DEFAULTS.
+```
+
+## 56 — Harm: a red edge on the first hit; a chase follows you into the light; you heal only once it gives you up — §FD
+
+**Status:** todo
+**Mike sees:** Take a hit and a thin dark red edge creeps round the screen; a second and your heart races; a third is "Good night". Running into a lit room doesn't save you: the thing that hit you follows you in. You only start to recover once you've lost it, by getting far enough away, out of its sight long enough, into a hiding place, or by dousing your torch. Then it slinks back to the dark.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 49 (the boss). This pass builds ONE thing: design §FD of docs/design/RECONCILIATION_2026-09-30.md. Torchfire 1, the crawler; the open world keeps §EA/§EC as built. No screenshots after every step: check with headless numbers, and run tools/crawler_frames.gd once at the end for the red edge. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off harm.json fd._note and say in bosses.json _help.rule that chase_enters_light is wired, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FD; §EA and §EC (three hits, the stages, i-frames, the per-hit flash, the 5 s step); §EY.1 and §EY.2 (amended: a relit room is closed to the boss's prowling, not to a chase); harm.json (recover, stages, fd); residents.json rules (gives_up, chase_enters_light, back_to_dark_s); bosses.json rule and bosses.desert; scripts/player/harm.gd and the boss code from prompt 49.
+
+BUILD: (1) Hit 1's lasting edge is harm.json fd.hit_1_edge, a thin dull dark red at the frame's edge, inside the 480-line frame; hit 2 adds the racing heart as built; hit 3 "Good night" as built, its letters staying the reddest thing on screen. §EC's quick navy flash on every hit stays. (2) Pursuit: anything that hunts you (the boss now, residents from prompt 58) registers as pursuing when it notices or hits you and clears it when it gives you up. It gives up by its own mix of residents.json rules.gives_up: distance, out of its sight for long enough, you hidden (out of its sight line, §FC.2), your torch doused (prompt 54). Give the snake its numbers in bosses.json bosses.desert (a gives_up block, with a _help line). (3) Recovery: Harm's step timer (recover.step_s) counts only while nothing is pursuing you (fd.recover_starts); a new hit resets it as built. Light doesn't heal (fd.light_heals false). (4) The chase crosses into light: a boss that has hit you may follow you into lit nodes until it gives you up, then returns to the nearest unlit node within residents.json rules.back_to_dark_s. Its prowling never enters a lit node, as prompt 49 built.
+
+CHECK (headless): one scripted hit, the snake kept in sight and close: no recovery after 15 s; break its sight for its out_of_sight time, it gives up, the hit heals one step_s later; after a hit the snake follows into a lit room; a snake that hasn't hit you never enters a lit node over a 5-minute scripted run; after giving up in a lit room it is in an unlit node within back_to_dark_s. Frame once with one hit: the red edge visible, report its pixel width at 480.
+```
+
+## 57 — The torch staggers, and every creature has its own strike tell — §FA.1, §FA.2
+
+**Status:** todo
+**Mike sees:** When the snake draws its head back to strike, you hear its hiss; swing your lit torch into it right then and it reels away, its strike broken, giving you a second to run. Swing too late, once it's already lunging, and the bite lands anyway. The torch never hurts it.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 49 (the boss) and prompt 56 (harm). This pass builds ONE thing: design §FA.1 and §FA.2 of docs/design/RECONCILIATION_2026-09-30.md, the stagger and the strike tells, on the snake. Fire pots are prompt 60. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off torch.json _help.stagger, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FA.1, §FA.2; §CN (the swing, which still passes the flame); §DF (a swing that lands is loud); torch.json stagger and swing; bosses.json bosses.desert; residents.json _help.creatures (strike.reach_m, wind_up_s, tells); scripts/player/torch.gd (swing, swing_target) and the boss code from prompt 49.
+
+BUILD: (1) A creature's strike has two parts: a wind-up of strike.wind_up_s, then the committed strike (its active frames). Give the snake a strike block in bosses.json bosses.desert (reach_m, wind_up_s, and a wind_up tell: Claude's first guess "a hiss and the head drawing back", put it in with a _help line). (2) A swing of the lit torch (torch.json stagger.lit_only) that reaches the creature during its wind-up staggers it: the strike is cancelled, it reels back for stagger.reel_s, and it can't be staggered again for stagger.cooldown_s. No damage, ever (stagger.damage 0). A swing during the committed strike does nothing to it: the hit lands as normal. (3) The tells: the wind-up is visible on the creature (a pose on its sprite: your call) and audible as its own positional sound, so an ambush is heard before it is seen. (4) A swing that lands makes noise like a sprint (stagger.noise) for anything that hears. (5) Make it general (any creature with a strike block), since prompt 58 adds skeletons.
+
+CHECK (headless): a scripted swing landing at 50% of the snake's wind-up staggers it and no hit counts; one landing after the wind-up ends doesn't, and the hit counts; the same swing with the torch unlit staggers nothing; a second stagger inside cooldown_s fails; the wind-up sound starts at the wind-up's first frame.
+```
+
+## 58 — The tomb's residents: skeletons that climb out of the walls, and somewhere to hide — §FE, §FC.2
+
+**Status:** todo
+**Mike sees:** Skeletons lie still in the tomb's wall niches and graves. Walk too close and you hear bone grinding as one climbs out and comes after you, slow; its jaw drops open just before it swings. Duck out of its sight behind a sarcophagus or pillar, or get far enough away, and it gives up and goes back to lie in its niche.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompts 49, 56 and 57. This pass builds ONE thing: the residents framework from design §FE.1 of docs/design/RECONCILIATION_2026-09-30.md with its first resident, the tomb's skeletons (§FE.2), and hiding (§FC.2). The other creatures wait for their worlds. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and run the walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off residents.json _help.about for the parts you wire (say the other creatures are not wired) and off stealth.json's hide note, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FE (all), §FC.2; §FD and prompt 56's pursuit; §FA.1–2 and prompt 57's strike, stagger and tells; §EX.2–5 (the plan, the spine, the way out: never blocked); §ET.8 and §EY.5 (sprites for creatures); §DF; residents.json (rules, creatures.skeleton); stealth.json hide; the tomb kit and its niches and sarcophagi (frame 9 on the Project sheets: a skeleton leaning out of a mossy stone box).
+
+BUILD: (1) A resident framework driven by residents.json: pattern, notice (sees_flame_m, hears_step_m, a sneak heard at noise_level as built), gives_up, strike (prompt 57's), tells, retreat_to; residents register as pursuers for Harm (prompt 56). Fire hp is for prompt 60; carry it but don't use it. (2) Skeletons in the tomb: the generator lays some in wall niches and graves (first guess 3–6 a tomb, more toward the heart, none in the hearth room, none in the way out's path); asleep they are set dressing. Within wakes_m they rise over rise_s with the near tell, walk at walk_mps, hunt per notice, strike with the wind-up tell, give up per gives_up, and walk back to lie in their niche (returns_to_rest). (3) Hiding: a creature sees you only with a clear line from its eyes to your head (raycasts); crouched behind low cover is out of sight. No hide button, no prompt. A lit torch gives you away round cover: a creature within sees_flame_m with a line to any lit surface within your torch's reach notices you (your call how, cheaply). (4) Placeholder sprites per §ET.8 are fine (lying, rising, walking, wind-up).
+
+CHECK (headless, seeds 1, 7, 42): every skeleton rests off the spine's walkable line and prompt 46's walk-to-exit check passes; a scripted approach wakes one at wakes_m; a scripted hide behind a sarcophagus, crouched, with the torch doused breaks its sight and it gives up after out_of_sight_s and returns to its niche; the same with the torch lit, it finds you; a strike lands as one hit at the end of its wind-up, and a stagger in the wind-up cancels it. Walkabout once: a skeleton climbing out of a niche in torchlight.
+```
+
+## 59 — Cleared by light: the retreat, and the half-lit floor that bites — §FF.2
+
+**Status:** todo
+**Mike sees:** Relight the last torch on a floor and you catch the skeletons going: climbing back into their niches and holes, gone for good. While parts of the floor are still dark, they hang back in those dark pockets, and if you walk too close to one, it lunges.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 58. This pass builds ONE thing: design §FF.2 of docs/design/RECONCILIATION_2026-09-30.md. Floors (§FF.1) and the people coming home (§FF.3) are later. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and run the walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off crawler.json _help.cleared, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FF.2; §EY.1–2 (the boss's ground: the unlit nodes, and the last light sending it home; prompt 49's graph); residents.json rules (retreat_on_floor_lit, pocket_counterattack_m) and creatures.skeleton.retreat_to; crawler.json cleared.
+
+BUILD: (1) Until floors exist (§FF.1), a floor is the whole dungeon. When its last light is relit, every resident retreats: it goes to its retreat_to (a skeleton back into its niche or the nearest hole) where you can see it go if it's in view, and is then gone for good (relit stays lit; it doesn't come back). The boss's release (prompt 49) still plays. (2) Half-lit: residents that aren't chasing you keep to unlit nodes (prompt 49's graph); one in a dark pocket strikes anyone who comes within pocket_counterattack_m, as a normal strike with its wind-up (so a stagger works). (3) One log line when a floor is cleared, in the log's voice (your words; no creature named on screen, §BA).
+
+CHECK (headless): over a scripted run relighting every holder, no resident stands in a lit node unless chasing; after the last light, every resident has gone within a few seconds and none returns over 5 minutes; a scripted walk to 2 m from a resident in a dark pocket draws a strike with its wind-up. Walkabout once: the last torch catching with a skeleton in view going back into the wall.
+```
+
+## 60 — Fire pots: lit off your torch, thrown, tar that clings, oil that bursts — §FA.3
+
+**Status:** todo
+**Mike sees:** With a fire pot in your left hand and your torch lit in your right, hold left click: your hands come together and the wick catches, you aim, release, and it lobs and bursts in amber fire. Tar clings and keeps a skeleton burning and leaves a patch alight on the floor; light oil goes off in one big flash. Lighting it lights you up too, and everything nearby knows where you are.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompts 55 (two hands), 57 (the stagger) and 58 (the residents). This pass builds ONE thing: design §FA.3 of docs/design/RECONCILIATION_2026-09-30.md, fire pots. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and run tools/crawler_frames.gd once at the end for the burst and a tar patch. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off fire_pots.json _help.about, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FA.3, §FA.4, §FA.5 (the vessel is "pot" until Mike chooses clay or glass: make it read as a small sealed clay pot with a wick); §AW (fire is borrowed: no lit torch, no pot); §ED.7 (only fire answers the dark); §EX.6 (amber); §DF; §N (hold to charge); fire_pots.json; hands.json clicks.left_with_pot; residents.json creatures.<name>.fire_hp and oil_scale; bosses.json (§FA.4: a pot drives a boss off, never kills it); prompt 55's left hand.
+
+BUILD: (1) Fire pots as left-hand items (prompt 55's strip), up to carry_max. (2) With a pot in the left hand: left click held with a lit torch in the right brings the hands together in view over light_anim_s and the wick catches (no lit torch: nothing happens); keep holding to aim, the lob's range growing from throw.min_m to max_m over charge_s, with a faint arc if you have one (aim_arc.gd); release throws; it bursts on impact or when fuse_s runs out. cook_off_in_hand is null: it never goes off in your hand this pass. (3) The burst, per oils.<kind>: burst fire damage within splash_m against residents' fire_hp (times oil_scale); tar sticks to what it hits and burns it at burn_dps for burn_s, and leaves a floor patch burning patch_radius_m for floor_patch_s; light oil only the burst. A resident at 0 fire_hp burns out and is gone. A boss hit is driven off into the dark for vs_boss.drives_off_s and never killed. (4) All its fire lights amber (§EX.6), glows, and smokes as fire does; a tar patch is a light that goes out; it never lights a holder (relights_holders null). (5) It gives you away: the wick's flare is seen within gives_away.flare_seen_m and the burst heard within burst_heard_m by anything that sees or hears. (6) Fire spreads to things tagged as spreads_to (tag the tomb's dry wood and cloth dressing if it has any). (7) Sources: dev_items (F9) gives carry_max; place one found pot in a side room per dungeon for now (sources: found, a first guess), never on the spine.
+
+CHECK (headless): no pot lights with the torch unlit; a scripted throw lands within the charged range; a tar hit on a skeleton burns it for burn_s and kills it if its fire_hp runs out; a light-oil burst does its burst once and leaves no patch; the snake hit by a pot leaves for the dark and returns later, never dies; a creature beyond flare_seen_m doesn't notice the wick, one within does. Frame once: the burst and a tar patch at 480.
+```
+
+## 61 — Atmosphere, not puzzles: glow-moss that dims at your flame, beetles that scatter, daylight that follows the clock — §FG
+
+**Status:** todo
+**Mike sees:** On damp stone in the dark there's a faint blue-green glow of moss that fades as your torch comes near and creeps back after you pass. Beetles and the odd scarab crawl the walls and scatter from your light into the cracks. The daylight down the hearth's shaft brightens and dims with the time of day. None of it is a puzzle; it's just there.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §FG of docs/design/RECONCILIATION_2026-09-30.md, the parts that fit the tomb now: glow-moss, wall life, and daylight that follows the clock. Windows over the wilderness wait for surface ruins (§EW.7), swaying vines for a jungle style. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and run the walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off crawler.json _help.ambience for the parts you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes on screen and what he can tune.
+
+READ: §FG (Mike: atmosphere, never a puzzle); the R-rules (only things that give off light glow; no shine; shade navy); §EU.4 (moss only where it's wet); §EV.2 (the hearth's shaft and its column of daylight); crawler.json ambience; the day clock (DayCycle) and whether the crawler runs it.
+
+BUILD: (1) Glow-moss: small patches on damp stone in the tomb (near airways, drips or water; your rule from §EU.4's wetness), drawn in the moss's texels, emitting a faint cold light (ambience.glow_moss color and energy, never amber). When any flame comes within dims_near_flame_m it fades to dim_to, and it returns over returns_s once the flame has gone. No light from it touches gameplay. (2) Wall life: a few beetles and the odd scarab crawling the walls (tiny sprites or meshes, your call), more in damp and dark places; when torchlight within scatter_from_light_m falls on them they scuttle to the nearest crack and vanish, and come out again later in the dark. (3) Daylight follows the clock: the hearth shaft's column of daylight (§EV.2) brightens and dims with the sun's height on the game clock and is moonlit blue at night. If the crawler doesn't run the clock yet, run DayCycle there (the 144-minute day) and say so. (4) Nothing here is ever required to progress, and nothing marks a way.
+
+CHECK (headless): glow-moss energy near a held torch is dim_to times its rest and back to rest returns_s after the torch leaves; no glow-moss patch sits on dry stone; a beetle in torchlight is gone from view within a second; the shaft's light energy at noon is above dawn's and night's is blue. Walkabout once: a damp corridor with moss glowing ahead and dimming as you walk up.
 ```

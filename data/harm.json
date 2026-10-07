@@ -44,5 +44,16 @@
     "camera_kick_deg": 4.0,
     "sound": "thud_and_breath",
     "hitstop_s": 0.05
+  },
+  "fd": {
+    "_note": "[NOT WIRED YET — design §FD] Mike, 6 Oct, 22:32. hit_1_edge: hit 1 puts a red edge round the frame (amends §EC's 'never red'); a dull dark red so 'Good night' stays the reddest thing (first guess). light_heals: false. recover_starts: recovery (recover.step_s) only counts once the pursuer has given you up (amends §EC's 'no break contact'); any new hit resets it. chase_enters_light: a creature that has hit you can follow you into lit rooms (residents.json, bosses.json).",
+    "hit_1_edge": {
+      "color": "#5A0E12",
+      "width_px": 6,
+      "alpha": 0.7
+    },
+    "light_heals": false,
+    "recover_starts": "pursuer_gives_up",
+    "chase_enters_light": true
   }
 }

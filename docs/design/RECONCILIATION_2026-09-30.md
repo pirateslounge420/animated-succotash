@@ -4494,3 +4494,428 @@ Mike, answering EZ.4: *"just water for now."*
   world (Torchfire 2) keeps its own rules.
 - **"For now":** §ET.7's other lights with trade-offs (a clay lamp, a candle; steadier, rarer
   fuel) would need burn time back to mean anything. That waits for Mike.
+
+## FA. Fire fights back: the torch staggers, fire pots burn — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Talked through in chat, 6 Oct night, after §EZ. Mike: *"it is going to tip the game over into
+combat. But we're going to do it in a way that essentially plays on our fire"*; *"it's also going
+to be rare to get it. And the player is going to have to make decisions on how they use it. There
+won't be many"*; *"little bombs almost … that have like a wick, and so you can light the wick and
+then throw it"*; *"you can hit things with your torch … it's very dangerous to get close to things
+… it's usually just better to like run from them"*; *"it's not actually going to damage the
+creature. It's more just a way to stagger it if you time it properly"*; *"go ahead and lock it
+in"*. §FA–§FH were locked together in that one word; §FI holds what they amend, the open calls and
+the order of work.
+
+**Amends §ET.1 ("Not combat"):** Torchfire 1 now has a little combat, and all of it is fire.
+Running, hiding and relighting stay the default answer (§FC); a fight is the exception, and it
+costs you. §ED.7 holds and is why this fits: nothing with an edge touches what lurks in the dark;
+only fire answers it. Data: `data/fire_pots.json` (new), `torch.json → stagger` (new). Not built.
+
+### FA.1 The torch staggers; it never wounds (Mike)
+- Left click swings what is in your right hand (§CN's swing, unchanged: it still passes the flame).
+- A swing of the torch that lands on a creature **during its wind-up** (before it starts charging
+  its strike, or while it charges) **staggers** it: it reels back and its strike is broken. That
+  moment is yours to break away. **No damage:** nothing dies to a torch.
+- **Once the strike is committed** (its active frames), the swing doesn't stop it: the hit goes
+  through. A mistimed swing isn't neutral; it costs you a hit.
+- Getting close is dangerous by design: each creature's attack has a reach and a shape you have to
+  get round to land the swing. Running is usually better (Mike).
+- Claude's first guesses, open: only a **lit** torch staggers (an unlit one is a stick, and fire is
+  what answers the dark, §ED.7); the reel is short (`torch.json → stagger.reel_s`, 0.8 s) and the
+  same creature can't be staggered again for a few seconds (`stagger.cooldown_s`); a swing that
+  lands is as loud as a sprint (§DF).
+
+### FA.2 Every creature has its own tell (Mike)
+- **Each creature has its own wind-up tell** (Mike: *"each creature should have its own tell"*),
+  never one shared "about to strike" cue.
+- **Head-on, you read it by eye:** facing a creature with your torch up, you see the wind-up.
+  **Blindsided, you read it by ear:** an ambusher's tell is a sound just before it commits (a
+  scrape, a hiss, a growl), because by the time you see it, it is already striking. Learning the
+  sounds is the skill (Claude: you hear one scrape and know "cat, above me, now").
+- §EY.3's tells say a boss is near; this is a second tell per creature, for the strike (§FE.2).
+
+### FA.3 Fire pots: rare, lit off your own torch, thrown (Mike)
+- A small sealed vessel of oil with a wick (Mike: *"a glass jar or … a glass bottle"*; FA.5). You
+  **light the wick off the torch in your right hand** and throw it.
+- **The lighting (Mike):** with the pot in your left hand (§FB) and a lit torch in your right, a
+  click brings your hands together in view and the torch touches the wick. Fire stays borrowed
+  (§AW): the pot's fire comes from your torch, which came from a hearth. No lit torch, no pot.
+- **Rare.** There won't be many, and each is a decision. You never craft them (§BN): the folk of
+  restored ruins give them and teach their use (§FF.3). Claude's first guess: a few can be found.
+- **The oils (Mike):**
+  - **Tar (pitch):** it sticks and keeps whatever it hits burning: damage over time, and a patch
+    that burns on the floor for a while.
+  - **Light oil, low flash point:** one big burst, no lingering fire.
+  - Some oils do more to certain creatures (a multiplier per creature, §FE.2).
+- Claude's first guesses, open:
+  - **Lighting it gives you away:** the wick's flare and the burst draw whatever can see or hear
+    them (§DF). Hiding and throwing don't mix.
+  - **Fire spreads to what burns:** webs, the cats' old wooden runs, dry rushes, cloth. A pot can
+    clear a space, not only a creature.
+  - **The fuse:** about 3 s from catching (`fire_pots.json → fuse_s`). Open: held too long, does it
+    go off in your hand (a hit)?
+  - **Its light is §EX.6's amber** while it burns; a tar patch is a light that goes out. Open: can a
+    thrown pot light a cold sconce out of reach, as §ED.7's fire arrow would?
+
+### FA.4 A pot against a boss: open
+§EY.1 locks a boss as nothing to kill: the last light drives it home. Claude's first guess: a pot
+burns and can kill a resident (§FE), but a boss it only drives off for a while, never kills.
+
+### FA.5 Glass or clay: flagged against §EH
+§EH (5 Oct) closed the craft ceiling at pottery, bone, stone, wood and fibre, with glass only as
+found architecture, so a glass bottle is past it. Two ways, Mike's call: **fired-clay pots**
+(Claude's suggestion: hand-thrown clay fire-pots are a real medieval weapon, the Byzantine and
+Islamic ceramic fire grenades), which fit §EH and the potters Mike wants back (§FF.3); or **glass
+bottles as found relics** of the builders. The data says "pot" until Mike says.
+
+## FB. Two hands: the wheel for the right, Tab and the wheel for the left; every key rebindable — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Mike: *"you could either hold tab, and use your mouse wheel to scroll, and that'll change weapons,
+instead of having Q to swap our weapons like we used to have"*; *"the mouse wheel will
+automatically map to … your right hand, and for whatever reason, if players want to map it to
+their left hand, they can"*; *"an options … screen, that … players can map different hotkeys how
+they want"*; *"WASD to move, the mouse to look around, left click is going to be to swing whatever
+you got in your hand and then right click can be … some type of interaction"*; *"you'll have a
+right and a left hand … if you have a bomb … it'll be in its own little inventory area, and you
+can press tab, and then use the mouse wheel, and it'll put it into your left hand … press tab
+again, scroll, and it'll empty your left hand."*
+
+**Amends** the crawler's Q (`weapon_swap`: torch in hand or bare hands, `CrawlerPlayer`). Data:
+`data/hands.json` (new). Not built.
+
+- **Two hands.** Right: the torch (later a found spear, §ED.7). Left: left-hand things, starting
+  with fire pots, which sit in their own small strip of the pack.
+- **Defaults:** WASD move, mouse look, left click swings what's in the right hand (§CN), right
+  click interacts (as built), Shift sneaks (§FC.1), Space jumps.
+- **The wheel alone** cycles the right hand: torch, bare hands, anything else held there. Q no
+  longer swaps.
+- **Hold Tab and scroll** to cycle the left hand: through what you carry for it, and to empty. With
+  one pot, Tab-scroll puts it in your hand; Tab-scroll again empties it (Mike).
+- **Rebinding (Mike):** a Controls page in Settings where every action can be rebound, including
+  which hand the wheel drives (right by default, left if the player wants). Saved per player.
+- Claude's first guesses, open:
+  - **The left-hand click:** with a pot in the left hand and a lit torch in the right, hold left
+    click: the hands come together and the wick catches (§FA.3); keep holding to aim the lob (§N's
+    hold-to-charge); release to throw. While a pot is in the left hand the torch doesn't swing;
+    empty the hand to swing again.
+  - **Tab tapped alone** does nothing in the crawler for now (it has no inventory screen); holding
+    it shows the left-hand strip, wordless, inside the 480-line frame (§Y).
+- **As built, kept:** scrolling a lit torch away to bare hands puts it out (`Torch.stow`). Dousing
+  it and still holding it is its own key (§FC.3).
+
+## FC. Sneaking, hiding, dousing, and a dark you can half see in — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Mike: *"maybe similar to Amnesia: A Machine for Pigs, where like there might be different things
+that you could try to like hide behind … sneak based too … some bosses you might be able to sneak
+past"*; *"hold shift to sneak, it should slightly change the reticle … make it to where you don't
+make as much noise … instead of just snapping … a more clean camera shift view from top to
+bottom"*; *"that Minecraft did … when you're sneaking and you're on the ledge … you won't fall off
+… unleash shift and you could fall off"*; *"you should definitely be able to douse your torch …
+make it to where the dark is a little bit easier to see through, so only a little bit farther off
+would it go completely pitch black, and you'd have to basically rely on sounds"*; *"relighting it
+is a little bit easier and you can … use any form of torch that you've already lit to relight your
+own … you wouldn't have to go all the way back to the main hearth."*
+
+Brings §DF (your light gives you away; putting it out is a real choice) into the crawler. Data:
+`data/stealth.json` (new), `crawler.json → dark` (new). Not built.
+
+### FC.1 Sneak (Mike)
+- **Shift held sneaks.** It is the crawler's crouch (as built: crouch speed, a tenth of the noise),
+  finished.
+- **The view eases down** from standing to crouched eye height and back up, never a snap (first
+  guess 0.18 s each way).
+- **The reticle changes** while you sneak (first guess: the dot opens into a small ring and dims a
+  little). No words.
+- **Quieter feet:** footsteps play softer (first guess a quarter of the walk's volume), and
+  creatures hear less (`noise_level`, as built).
+- **The ledge guard (Minecraft):** sneaking, you can walk right up to a drop and never off it; you
+  stop at the lip. Let go of Shift and you can step off.
+
+### FC.2 Hiding (Mike's Amnesia)
+- Things to hide behind and in: sarcophagi, pillars, niches, alcoves, a fallen slab. Out of a
+  creature's sight, you're hidden. Some creatures, bosses included, can be sneaked past; how each
+  searches is its own algorithm (§FE.1).
+- Claude's first guesses: no hide button and no prompt: hiding is being out of sight, low and quiet.
+  A lit torch gives you away behind cover too (§DF), which is what dousing is for.
+
+### FC.3 Douse your own torch; relight from any flame (Mike)
+- **You can put your own torch out on purpose** (Claude's first guess: its own key, F, rebindable;
+  you smother it and keep holding it). Dark, it no longer gives you away (§DF).
+- **Relighting is easy:** swing the cold torch to any flame you have lit: a relit sconce, a planted
+  torch, the hearth (§CN, §ET.7, as built). Never back to the hearth unless it's the nearest. Claude:
+  your relit sconces become relight stations, so dousing is a gamble without being a punishment.
+- **Fire is still never made** (§AW). And no lit torch, no fire pot (§FA.3): douse to hide and you
+  can't throw.
+- **Sharpens §EZ.5** ("deep water is the one thing that puts the torch out"): water stays the only
+  thing in the world that puts it out; now you can choose to.
+
+### FC.4 A dark you can half see in (Mike)
+- Near you, without a flame, the dark is readable: the walls, the floor, an opening, in faint navy.
+  It goes completely black only farther off, and out there you go by sound.
+- First guesses (`crawler.json → dark`): readable to about 5 m, black by about 12 m; shade navy,
+  never grey (R-rules). The torch's reach is unchanged. Claude Code tunes it by eye.
+- **Amends** the crawler's "full dark between" the fire-holders (§CJ.5, §ET.11 step 3): still dark,
+  no longer blind at arm's length.
+
+## FD. Harm: a red edge, a racing heart, "Good night"; a chase follows you into the light — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Mike: *"there's also things that hide in the dark essentially that could potentially hurt the
+player. And we could do the three hit rule … your screen kind of gets like an edge of red around
+it if you get hit once, you get twice your heart starts beating quickly and then the third time
+would be good night."* Claude offered healing at a flame; Mike: *"No, that feels too powerful …
+if something already like gets you in the dark, like hits you once, it would probably chase you
+into the light as well."* On what makes it break off, Claude offered distance, time out of sight
+and slipping into a hide; Mike: *"all those things you said are totally valid … also maybe …
+dousing … your flame"*, and *"different creatures might have different algorithms."*
+
+On the pillar, Mike: *"it's always been supposed to have been the medium in which the creatures
+hide."* The dark is the medium; the things in it are the danger (§CU's wording, confirmed: the
+brief's "the dark is the only antagonist" means this).
+
+Data: `harm.json → fd` (new). Not built.
+
+- **Three hits, as §EA and §EC.** Hit 1: **a red edge** round the frame. Hit 2: the heart races.
+  Hit 3: "Good night".
+- **Amends §EC's** "never red; the red stays Good night's alone": hit 1's edge is red now (Mike).
+  Claude's first guess: a thin, dark, dull red at the very edge, so "Good night"'s letters stay the
+  reddest thing on screen.
+- **Light doesn't heal** (Mike). A lit room is no sanctuary once something has its teeth in you.
+- **A chase crosses into the light** (Mike). A creature that has hit you can follow you into lit
+  rooms. **Amends §EY.1** ("a relit room is closed to it for good"): a relit room stays closed to
+  its prowling, not to a chase already running. Once it gives you up it goes back to the dark
+  (§EY.2's "it never stays in the light", after the chase).
+- **You heal by losing it.** It breaks off by its own rules (§FE.1): distance, time out of its
+  sight, you in a hide, your torch doused. Recovery starts only then. **Amends §EC** ("no break
+  contact condition; it ticks even while chased"). Claude's merge: §EC's one hit back every 5 s,
+  counted from when the pursuer gives up; any new hit resets it.
+- **Waking** is at the dungeon's hearth with every relit light still lit (§EY.2, §ET.3). The
+  witch's lure takes you there at once (§FE.3).
+
+## FE. What lurks: every ruin kind has its plan and its residents; every creature its own algorithm — LOCKED (6 Oct, 22:32, by voice, Mike; the imps 22:39, the warden 22:40)
+
+Mike: *"another dungeon type that we need is like haunted ruins … different type of ghosts"*;
+*"another boss or creature we might have in another ruin might be skeletons. And so, like,
+different tombs … kind of like they have in Skyrim, if you get too close to them they come out of
+the wall or out of the graves"*; *"in a mine shaft, an abandoned mine shaft, there'd be a giant
+spider, and so there might be some webs hanging around … that could creep throughout the walls and
+ceiling and even on the floor, similar to the centipede"*; *"some type of cat creature … shelves
+along the edges of the ceiling … like those kitty things that people make for cats … as if it was
+an ancient Egyptian style pyramid … since the people are gone, the cats have survived and gone
+rogue … but they still use those tunnels … super vicious"*; *"zombies wandering the halls"*;
+*"like in Courage the Cowardly Dog, the were-mole … pop out of the ground … a particular ruin where
+it's got a tunnel system of its own … that the player can't actually fit through"*; *"a creepy
+witch lady that roams the halls and tries to get you to make her stew"*; at 22:39, *"another boss
+style creature should be the imp or imps: they are bipedal but use their wings to do flying jumps
+and leaps and launches"*; at 22:40, *"another could be the 'warden' who uses a chain, you hear
+him dragging [it] ominously through the halls"*; and *"it would be nice to implement randomized architectural design
+principles into the way that different ruins … are laid out."*
+
+Builds on §EX.2 (every ruin type has a plan), §EY (one boss per dungeon), §DI.3 (the ghost at the
+corner). Data: `data/residents.json` (new); `bosses.json` (the swamp and the mine changed, FE.4).
+Not built.
+
+### FE.1 The shape of it
+- **A ruin kind is a plan and what lives in its dark.** Each kind has its own layout grammar
+  (§EX.2's module and spine, made per kind) and its own residents. New every time, but by that
+  kind's rules, so the shuffle still reads as a real place. Claude's examples: a tomb built round
+  one long processional aisle with burial niches off it; a mine branching where the ore veins ran,
+  galleries at different heights joined by shafts; a pyramid's narrow ramps under the cats' runs.
+- **Residents** are the things that hide in the dark, often several, below the boss. **One boss
+  per dungeon stays** (§EY.1).
+- **Every creature has its own algorithm** (Mike): how it moves, what it notices, when it gives up
+  (distance, time out of sight, a hide, a doused torch: each its own mix), its tells (§FA.2).
+- **One tool each** (Claude's principle, which Mike built on): each creature is best answered by a
+  different one of your tools, so no trick works everywhere, and you have to read which monster
+  you're in before you know how to live through it.
+
+### FE.2 The roster so far
+The creatures and Mike's lines are his; the rank, the answer and the tells are Claude's first
+guesses unless marked. Numbers in `residents.json`.
+
+| Where | Creature | Rank | How it moves | What answers it | Its strike tell |
+|---|---|---|---|---|---|
+| tombs | **skeletons** | residents | Lie still in their niches and graves until you come too close, then climb out of the wall or the grave (Mike, Skyrim's draugr). Slow once up. Frame 9 on the sheets is one. | Distance; a staggering swing buys the step back. | Bone grinding on stone, then the jaw dropping open. |
+| haunted ruins | **ghosts**, several kinds | residents | Presences that drift through the unlit rooms and pass through walls; they shrink back from a flame (Claude). The kinds are open. | Your flame, then distance. | A cold draft: your flame leans toward it. |
+| the abandoned mine | **giant spider** | boss (FE.4) | Runs floor, walls and ceiling like the centipede (Mike); webs hang in its galleries (Mike). | A pot: webs burn. Watch the ceiling. | Silk ticking on stone, then silence. |
+| a desert pyramid | **feral temple cats** | residents | The temple's sacred cats, survived and gone feral (Mike); they still run the shelves and coves the priests built along the tops of the walls (Mike). They own the walls and the ceiling line; the open middle of a room is your lane (Claude). | Keep to the middle; a pot burns their old wooden runs. | A scrabble overhead, then a low yowl before the drop. |
+| undead halls | **zombies** | residents | Wander the halls (Mike). Slow. | Distance and quiet. | Feet dragging; a moan rising. |
+| a ruin with its own tunnels | **were-mole** | open | Tunnels through floor and walls in passages too small for you (Mike); bursts out at you (Mike). Blind: hunts your footsteps through the ground, so your torch means nothing to it (Claude). | Sneak (§FC.1). Dousing does nothing. | The floor trembling; grit trickling from a crack. |
+| the swamp | **the witch** | boss (Mike) | Roams the halls; lures you in for her stew (Mike; FE.3). | Hold your nerve, then run. | Her voice. |
+| world open | **imps** | boss-style (Mike); one or a pack, open | Bipedal, but they use their wings for flying jumps, leaps and launches (Mike). Claude: they bound between floor, ledges and high shelves and launch at you from height; they need room to fly, so low passages and tight doors cut their leaps short. | Get under a low ceiling; stagger the crouch before the launch. | A leathery wing-snap before the launch. |
+| world open | **the warden** | boss-style (Mike) | Drags a chain through the halls, heard long before he is seen (Mike). Claude: a fixed, slow, unhurried round through the halls, the Amnesia patrol you learn and time; he doesn't run, he cuts you off. | Learn his round by the chain and slip past between passes; hide (§FC.2). | The chain going quiet: he has stopped, and is listening. Then the chain swung up. |
+
+### FE.3 The swamp witch (Mike)
+- She **roams the halls** and wants you for her stew.
+- **Her room has its own performance:** walk in and a unique animation plays, her "come here,
+  sweetie" lure.
+- **Get too close while she performs and she gets you:** taken at once, and you wake at the start
+  of the dungeon (its hearth, §FD). The test is holding your nerve and keeping your distance.
+- **When the performance ends** she snaps, and the chase is on (her strikes are hits, §FD).
+- Claude's framing, which Mike took: every real camp is friendly, so warmth reads as safety; she
+  is the false camp, the one welcoming voice in the dark that is a trap.
+- Claude's ideas, not decided: false wisp-lights in her fog, cold and green against your warm
+  torch (lights that aren't fire underground; they give off light, so they glow), and her flame
+  burning through her glamour (Mike chose the performance and nearness as the trigger instead).
+
+### FE.4 Two bosses change worlds
+- **The swamp's boss is the witch** (Mike). The giant hornet (§EY.3, placed there by Claude) has no
+  world now.
+- **The abandoned mine's boss is the giant spider** (Claude's reading: the centipede was Claude's
+  placement, and the spider moves the way Mike described it). The centipede has no world now.
+  Open: the spider as the mine's boss, or a resident under the centipede?
+- The hornet and the centipede move to `bosses.json → unplaced`, and the imps and the warden join
+  them, until Mike gives them worlds. Every biome still gets a world (§EW.2), so homes are coming.
+- **The warden's chain, flagged against §EH (no metal):** a forged chain is metal. Three ways, Mike's
+  call: a builders' relic (found metal, as §EH allows found glass in the architecture); a chain of
+  bone, horn or wooden links; or a heavy rope. Claude's first guess for his body, open: a big
+  hooded figure, but he is a thing of the dark, not folk, so not the shared rig's friendly folk
+  (§ET.9); a creature body that only looks cloaked.
+
+### FE.5 Not decided in the talk
+- **The first tomb's world** (§EW.8 call 4): Mike now reads its pillowed stone with vines as
+  **jungle**, or as **desert** sandstone.
+- Haunted ruins, undead halls and the were-mole's ruin: kinds of their own, and in which worlds.
+- The ghosts' kinds and look (Claude offered a pale, cold glow: the first cold light underground).
+
+## FF. Cleared by light: floors, the retreat, the half-lit floor that bites, and the people coming home — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Mike: *"different ruins could have different floors … in levels to it, and maybe in the beginning
+you start off on one floor and you work your way up to the … surface, and other ones you might
+work your way down"*; *"whenever you essentially banish the dark, you might catch glimpses of
+those creepy critters that were in there before, retreating either into holes in the wall or out
+windows and just running away"*; *"if you don't fully have a floor completely lit they retreat to
+those places but it also gives them a chance to make a counterattack on you if you get too
+close"*; *"once you restore the ruins and clear them out and relight everything, then it might
+bring those people back … you can maybe go back and learn how they made a particular thing or
+they might give you a technique … or give you an item which will be helpful to you on your
+journey"*; *"these ruins … archetypal places where different villages might have done a
+particular thing in there, for example made pottery."*
+
+Extends §EY.1 (the last light drives the boss home) to every resident, and answers §EE.2's open
+call ("do people return when a village is relit?"): yes. Data: `crawler.json → floors`, `cleared`,
+`restored` (new). Not built.
+
+### FF.1 Floors
+- A ruin can have several floors. In some you start at the bottom and climb toward the surface; in
+  some you start near the top and go down (Mike). §EX.5's exit is at the far end: the surface for a
+  climbing ruin, the way on down for a descending one.
+- Claude: climbing feels like relief, air and daylight getting closer; going down winds tighter.
+- Open: one hearth per dungeon (§EX.4), or one per floor?
+
+### FF.2 A lit floor is cleared
+- **Clearing is lighting.** A floor with every light relit is cleared, and its residents leave.
+- **The retreat is the reveal** (Mike): as a floor's last light catches you glimpse them going, into
+  holes in the walls, out of windows, away. Claude: often the only clean look you ever get at them.
+- **A half-lit floor bites** (Mike): while some of a floor is unlit, its residents fall back into
+  those dark pockets, and come too close and they counterattack. Push on fast and leave pockets
+  behind, or light every corner and go slower: the player weighs it.
+
+### FF.3 A relit ruin comes back to life
+- When a whole ruin is relit, **its people come back** (Mike): it becomes a living place you can
+  return to, its folk at work, friendly and mute (§ET.9), and a fire to relight from.
+- **Every ruin was a workplace** (Mike): an archetypal place where a village did one thing, a
+  potters' works, say (Claude's further examples: a tar-boilers', a ropewalk). Its people take
+  that work up again.
+- **They teach or give** (Mike; §BN's headman): a technique, or an item for the road. Mike's
+  examples: fire pots and oil, with a way of using them; rolling your torch in pitch, and pitch.
+- You never craft (§BN): techniques are permanent and weightless; items are gifts.
+
+### FF.4 Flagged: pitch to make a torch last longer
+Mike's example: *"you could … get a regular torch and light it and it'll only last for … a certain
+amount of time, but then if you … roll your torch in pitch it'll make it last longer."* **That
+needs burn-down, which §EZ.5 turned off in the crawler at 21:47 tonight.** Not changed here: §EZ.5
+stands until Mike says. If burn time comes back, the pitch technique is how a torch is stretched
+and the bare torch is the short one. (§EZ.2 already draws every crawler torch with a pitch head.)
+
+## FG. Atmosphere, not puzzles — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Claude offered glow-marks you read only in the dark and sunlight as a timed key; Mike: *"I don't
+want that to be part of the puzzle. So I'd rather that just be like part of the atmosphere"*;
+*"maybe a phosphorescent moss might lose its glow whenever you light up something next to it"*;
+*"light might get dimmer or brighter based on the time of day … it might be shining through a
+particular window"*; *"particular ruins aren't always underground, maybe you could go up a
+stairwell and then there'd be a window and you could see out into the wilderness"*; *"we need
+more ambient stuff, like maybe beetles or something that crawl on the wall, or like a scarab."*
+Data: `crawler.json → ambience` (new). Not built.
+
+- **Glow-moss (Mike):** a faint glow on damp stone in the dark that **dims when a flame comes near**
+  and returns once you've passed. Never a guide. Real cousins: foxfire fungi on rotting wood, and
+  cave glow-worms, which dim when disturbed. It gives off light, so it glows (R-rules): a faint cold
+  blue-green, never amber.
+- **Daylight with the clock (Mike):** light through windows, shafts and vents (§EV.2) brightens and
+  dims with the time of day, falling through a given window at its hour. Flavour, never a key.
+- **A stair up to a window (Mike):** not every ruin is underground; a stair climbs to a window over
+  the wilderness. Claude: the bright framed view is the exhale after the close dark, and through it
+  you can see a far landmark, maybe where you're going (§EW.5's horizon).
+- **Crawling life (Mike's beetles and scarabs):** beetles on the walls that scatter from your
+  torchlight, a scarab trundling into a crack, vines that sway as you push through. Claude: the
+  world answers your presence and your light; you never "use" any of it.
+- Claude's third idea (carrying one flame in and routing it sconce to sconce) is just relighting,
+  as built; its use as relight stations is §FC.3.
+
+## FH. The folk at the hearth are 3D, made pixel by the frame, not flat sprites — LOCKED (6 Oct, 22:32, by voice, Mike)
+
+Mike, on the folk round the fire when you wake: *"I do like the pixel sprite of the guy that is
+there. However, I was less talking about … a flat pixel sprite, similar to … Paper Mario, and more
+like the goat pixel guy. So … while he's made of pixels, he still has … a 3D rendering"* (the
+ozavry_ frame 3, the goat with the bowl in the rain, §ES's target).
+
+- **The folk at the hearth are real 3D models:** the shared rig (§EO, §EQ's heads, §ET.9's
+  wardrobe), painted per §ES (light in the texture, big texels), drawn live in the scene and made
+  pixel by the 480-line frame and their own texels, like frame 3. Not baked billboards.
+- **Amends §ET.8 for folk.** In chat Claude said they were "already proper 3D"; that was wrong:
+  §ET.8 made every figure a baked sprite (`FigureSprite`, the rescuer). Sprites stay for creatures
+  and bosses (§EY.5) until Mike says (§FI call 11).
+- Fire is the one warm accent, so they sit lit amber against the blue (§EX.6).
+- Performance (§ER): a handful of figures at one fire. Claude Code's call on how far they stay 3D.
+
+## FI. Tonight's lock (§FA–§FH): against what was locked, open calls, order of work
+
+### FI.1 Against what is already locked
+- **§ET.1 "Not combat":** amended by §FA (fire only: a stagger, and rare fire pots).
+- **§ED.7 "only fire answers what lurks in the dark":** holds; it is why §FA fits.
+- **Q swaps the torch (`weapon_swap`):** replaced by the wheel and Tab-and-wheel (§FB).
+- **§CJ.5 / §ET.11's full dark between holders:** amended for the crawler by §FC.4.
+- **§EZ.5 "only water puts it out":** water stays the only thing in the world; you can now douse it
+  yourself (§FC.3).
+- **§EZ.5 "it no longer burns down":** stands. Mike's pitch example needs burn time (§FF.4).
+- **§EC "never red":** hit 1's edge is red (§FD).
+- **§EC "no break contact; it ticks even while chased":** amended: recovery starts when the pursuer
+  gives up (§FD).
+- **§EY.1 "a relit room is closed to it for good":** closed to its prowling, not to a chase (§FD).
+- **§EY.3's swamp hornet and mine centipede:** the witch and the spider take those worlds (§FE.4).
+- **§ET.8 "every figure is a baked sprite":** not for folk (§FH).
+- **§EH (no glass in the craft, no metal):** a glass fire-bottle is past it (§FA.5), and so is the
+  warden's chain (§FE.4).
+- **The Project brief** still says "the dark is the only antagonist … no health-bar fight" and
+  "tribal tech": Mike's lines to edit if he wants (the dark as the medium, §FD; no bar, still true;
+  the architecture ceiling is §EE/§EH's).
+
+### FI.2 Open for Mike
+1. **Fire pots:** clay pots, or found glass bottles (§FA.5)?
+2. **A fuse held too long:** does it go off in your hand (§FA.3)?
+3. **A pot against a boss:** drives it off only, or can it kill one (§FA.4)?
+4. **A pot as a light:** can a thrown pot light a cold sconce out of reach (§FA.3)?
+5. **The spider:** the mine's boss, or a resident under the centipede? And worlds for the
+   centipede, the hornet and the imps (§FE.4).
+6. **The imps:** one, or a pack? Their world (§FE.2). **The warden:** his world, and his chain:
+   a found relic, bone or wood links, or rope (§FE.4)?
+7. **The first tomb's world:** jungle or desert (§FE.5)?
+8. **The ghosts and the witch's wisps:** a cold light underground, or none (§FE.3, §FE.5)?
+9. **Hearths:** one per dungeon or one per floor (§FF.1)?
+10. **Burn time** back for the pitch technique (§FF.4)?
+11. **Creatures and bosses in 3D too,** like the folk, or baked sprites (§FH)?
+12. **First-guess keys:** F to douse, hold left click to light and throw a pot (§FB, §FC.3).
+
+### FI.3 Order of work (Claude's proposal)
+Each its own Claude Code pass, `docs/PROMPT_QUEUE.md` 52–61:
+- **Any time:** 52 the folk in 3D (§FH); 53 sneak (§FC.1); 54 douse and the half-dark (§FC.3–4,
+  after 50); 55 two hands and rebinding (§FB); 61 the atmosphere (§FG).
+- **After 49 (the boss):** 56 harm and the chase (§FD); 57 the stagger and the tells (§FA.1–2);
+  58 the tomb's skeletons and hiding (§FE, §FC.2); 59 cleared by light (§FF.2, after 58); 60 fire
+  pots (§FA.3, after 55, 57 and 58).
+- **With their worlds (§EW.7):** the witch, the spider, the cats, the zombies, the were-mole, the
+  ghosts, the imps and the warden; floors (§FF.1) and the people coming home (§FF.3).
+
+Mike plays and reports between each.
