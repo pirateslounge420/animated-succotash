@@ -59,6 +59,15 @@ extends Node3D
 ##               the log's one line (release.log_line). Then it is in its
 ##               hole for good, breathing, heard within
 ##               lair.breathing_heard_m.
+##   fire pots   (design §FA.3, §FA.4; FirePots) a pot that bursts on or
+##               by it (splash_m from any part of its body, or a burning
+##               tar patch it crawls into) drives it off: down below the
+##               tomb as when the light cuts it off, for fire_pots.json
+##               vs_boss.drives_off_s, and the chase is off. It is never
+##               burnt down or killed. The lit wick gives you away as your
+##               flame does, out to gives_away.flare_seen_m with a clear
+##               line to it, and a burst within burst_heard_m of it is
+##               heard like a sprint: either sets it hunting you.
 ##   its tell    scales dragging on stone (BossSounds), on a 3D player at
 ##               its body, heard well before you can see it; quieter while
 ##               it lies coiled. No name on screen (§BA).
@@ -167,6 +176,10 @@ var bed_db := -20.0
 ## and the hits it landed.
 var lit_entries := 0
 var hits_landed := 0
+## Fire pots (FirePots): times a pot drove it off, and the last burst it
+## listened for.
+var driven := 0
+var _burst_id := 0
 
 
 ## The boss of this dungeon (§EY.8: the tomb's world is open, so the one
@@ -213,6 +226,8 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 	strike.on_hit = _on_strike_hit
 	strike.struck.connect(func(_landed: bool) -> void: struck = true)
 	pursuit = Pursuit.new(self, sub("gives_up"))
+	# A fire pot's burst can reach it (FirePots' fire-target socket).
+	add_to_group(FirePots.TARGET_GROUP)
 	_breath = Audio3D.make("boss_breath", self, "Breath")
 	_breath.stream = BossSounds.stream("breath_loop", _rng.randi())
 	_breath.max_distance = float(LAIR.get("breathing_heard_m", 12.0))
@@ -747,7 +762,11 @@ func _eye() -> Vector3:
 
 func _notice(delta: float) -> void:
 	_notice_t -= delta
-	if _notice_t > 0.0 or state == "below":
+	if state == "below":
+		# Down below it hears no burst (none waits for it to come up).
+		_hears_burst()
+		return
+	if _notice_t > 0.0:
 		return
 	_notice_t = 0.2
 	perceives = false
@@ -764,7 +783,12 @@ func _notice(delta: float) -> void:
 	# A sprint, or anything as loud (a swing that lands on it, §FA.1).
 	var heard := player.noise_level >= 0.99 and flat_d <= float(n.get("hears_sprint_m", 15.0))
 	var felt := flat_d <= num("feels_m", 1.5)
-	perceives = seen or heard or felt
+	# A fire pot gives you away (§FA.3, FirePots): the lit wick's flare in
+	# its sight within gives_away.flare_seen_m, the burst within its
+	# burst_heard_m.
+	var flared := not FirePots.flare_seen_from(_eye(), get_world_3d().direct_space_state).is_empty()
+	var burst := _hears_burst()
+	perceives = seen or heard or felt or flared or burst
 	if perceives:
 		if not noticed:
 			hang_t = 0.0
@@ -780,6 +804,52 @@ func _notice(delta: float) -> void:
 
 func _torch_lit() -> bool:
 	return player != null and player.torch != null and player.torch.lit()
+
+
+## A pot's burst within its heard_m since it last listened (FirePots).
+func _hears_burst() -> bool:
+	var out := false
+	for b in FirePots.bursts_since(_burst_id):
+		_burst_id = int(b.id)
+		if _flat((b.pos as Vector3) - head).length() <= float(b.heard_m):
+			out = true
+	return out
+
+
+# --- Fire pots (FirePots' fire-target socket; design §FA.3, §FA.4) ------------
+
+## Where a pot meets its head (the sphere a thrown pot hits).
+func fire_center() -> Vector3:
+	return head + Vector3(0.0, KNEE + lift, 0.0)
+
+
+## How far `p` is from its body (m; under 0 inside it): its head and its
+## length along the trail, girth_m thick. INF while it isn't in the tomb
+## (below, home, gone).
+func fire_distance(p: Vector3) -> float:
+	if state in ["below", "lair", "gone"] or (body != null and not body.visible):
+		return INF
+	var r := float(sub("body").get("girth_m", 0.38)) * 0.5 + 0.1
+	var best := fire_center().distance_to(p)
+	var step := maxi(int(0.5 / TRAIL_STEP), 1)
+	var n := mini(trail.size(), int(float(sub("body").get("length_m", 9.0)) / TRAIL_STEP) + 1)
+	for i in range(0, n, step):
+		best = minf(best, ((trail[i] as Vector3) + Vector3(0.0, KNEE, 0.0)).distance_to(p))
+	return best - r
+
+
+## A fire pot burst on it (§FA.4: a pot never kills a boss; fire_pots.json
+## vs_boss): driven off into the dark for `seconds`, down below the tomb as
+## when the light cuts it off (sliding off toward its hole while you can
+## see it, gone the moment you can't), the chase off; then up again, out of
+## its hole or the dark nearest it. Nothing to drive off at home, taken or
+## gone.
+func drive_off(seconds: float, _from: Vector3) -> void:
+	if state in ["release", "lair", "gone", "held", "below"]:
+		return
+	driven += 1
+	_go_below()
+	below_t = seconds
 
 
 ## The chase's own rules (Pursuit, bosses.json gives_up): too far, out of

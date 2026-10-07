@@ -25,8 +25,14 @@ extends SceneTree
 ##     goes out and char is left;
 ##  8. light oil: one burst, nothing after, no patch; oil_scale counts (the
 ##     ghost's light_oil 1.5);
-##  9. a boss (a stand-in until prompt 49: drive_off) hit by a pot is driven
-##     off for vs_boss.drives_off_s and comes back, never killed, never burnt;
+##  9. a boss (a stand-in: drive_off) hit by a pot is driven off for
+##     vs_boss.drives_off_s and comes back, never killed, never burnt; and
+##     the real one, prompt 49's snake: a pot at its head and one by its
+##     tail drive it down below, the chase off, out of the pots' reach
+##     while it's down there; it comes up after drives_off_s and never
+##     dies; a burning tar patch it lies in drives it off; the lit wick
+##     alone (the torch smothered) gives you away to it; a burst is heard
+##     within burst_heard_m of it, not past it;
 ## 10. it gives you away: the lit wick is seen within flare_seen_m, not past
 ##     it, not through stone; the burst is heard within burst_heard_m
 ##     (bursts_since, NoiseEvents);
@@ -131,6 +137,7 @@ func _run() -> void:
 	await _light_oil()
 	await _boss()
 	await _gives_away()
+	await _real_snake()
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -675,3 +682,143 @@ func _found_in_scene() -> void:
 	ok(fp.take_found() and fp.found == null and fp.pots_carried().size() == 1 and str(fp.pots_carried()[0].oil) == oil, "right click by it takes it into the pack (%s)" % oil)
 	for it in fp.pots_carried():
 		fp._remove(it)
+
+
+## A spot `d` m from the snake's head in its own dark (boss_check's).
+func _beside_snake(b: Boss, d: float) -> Vector3:
+	for k in 16:
+		var a := TAU * k / 16.0
+		var q := b.head + Vector3(cos(a), 0.0, sin(a)) * d
+		q.y = b._floor_y(q)
+		var id := b.ground.node_at(q)
+		if id >= 0 and b.ground.is_ground(id) and (id == b.node or not b.ground.link(id, b.node).is_empty()) and not b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
+			var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]
+			var aa := Delves.along_across(pc, Vector2(q.x, q.z))
+			if aa.x > 0.4 and aa.x < float(pc.len) - 0.4 and absf(aa.y) < float(pc.half) - 0.45:
+				return q
+	return Vector3.INF
+
+
+func _tick_snake(b: Boss, secs: float, stop: Callable = Callable()) -> float:
+	var t := 0.0
+	while t < secs:
+		b.tick(1.0 / 60.0)
+		t += 1.0 / 60.0
+		if stop.is_valid() and bool(stop.call()):
+			break
+	return t
+
+
+## Hold it coiled where it lies, calm (its noticing still runs).
+func _hold_snake(b: Boss) -> void:
+	b._let_go("check")
+	b._calm()
+	b.state = "coil"
+	b.coiling = false
+	b.coil_left = 999.0
+	b.route = PackedVector3Array()
+	b.route_i = 0
+	b.speed = 0.0
+
+
+## The real snake (prompt 49's Boss) through the fire-target socket.
+func _real_snake() -> void:
+	var b: Boss = main.get("boss")
+	ok(b != null, "the tomb has its snake (prompt 49)")
+	if b == null:
+		return
+	for i in 120:
+		if b.started:
+			break
+		await physics_frame
+	b.auto = false
+	# What it heard before now, it heard.
+	b._hears_burst()
+	ok(b.is_in_group(FirePots.TARGET_GROUP) and FirePots.is_boss(b), "the snake is a fire target, and a boss: driven off, never burnt down")
+	if b.state == "below":
+		_tick_snake(b, 60.0, func() -> bool: return b.state != "below")
+	_hold_snake(b)
+	var spot := Vector3.INF
+	for d in [6.0, 5.0, 4.0, 3.0]:
+		spot = _beside_snake(b, d)
+		if spot != Vector3.INF:
+			break
+	ok(spot != Vector3.INF, "a spot in the snake's dark a few metres from it")
+	if spot == Vector3.INF:
+		return
+	_torch(false)
+	fp.left = {}
+	var to := b.head - spot
+	p.spawn_flat(spot, atan2(-to.x, -to.z), 0.0)
+	await _frames(3)
+	_tick_snake(b, 1.0)
+	var calm := not b.noticed
+	# The lit wick alone: the pot caught off the torch, then the torch
+	# smothered.
+	Bow.need_capture = false
+	_torch(true)
+	var pot := _pot_in_hand("tar")
+	Input.action_press("shoot")
+	fp._catch(pot)
+	p.torch.put_out("smothered")
+	await _frames(2)
+	_tick_snake(b, 0.5)
+	var by_wick := b.noticed and b.pursuit.on and not p.torch.lit()
+	fp._set_state("idle")
+	fp.left = {}
+	Input.action_release("shoot")
+	fp._remove(pot)
+	ok(calm and by_wick, "your torch out, it hadn't noticed you %.1f m off; with only the pot's lit wick in its sight it does, and the chase is on" % spot.distance_to(b.head))
+	# A burst heard: within burst_heard_m of it, and past it (high over
+	# the tomb, so it is only heard).
+	var heard_m := float((FirePots.D.get("gives_away", {}) as Dictionary).get("burst_heard_m", 40.0))
+	_hold_snake(b)
+	_tick_snake(b, 1.0)
+	var away := Vector3(1.0, 0.0, 0.0)
+	fp.burst(b.head + away * (heard_m + 6.0) + Vector3(0.0, 40.0, 0.0), "light_oil", null, Vector3.UP)
+	_tick_snake(b, 0.5)
+	var far_heard := b.noticed
+	fp.burst(b.head + away * (heard_m - 10.0) + Vector3(0.0, 40.0, 0.0), "light_oil", null, Vector3.UP)
+	_tick_snake(b, 0.5)
+	ok(not far_heard and b.noticed, "a burst %.0f m off it hears (burst_heard_m %.0f) and hunts you; one %.0f m off it doesn't" % [heard_m - 10.0, heard_m, heard_m + 6.0])
+	# You away (out of its dark), for the rest.
+	_stand(Vector3(0.0, -300.0, 0.0))
+	await _frames(3)
+	_hold_snake(b)
+	_tick_snake(b, 0.5)
+	# A pot at its head: driven off, the chase off, out of reach below.
+	var s := float((FirePots.D.get("vs_boss", {}) as Dictionary).get("drives_off_s", 30.0))
+	var driven := b.driven
+	b.pursuit.notice(false)
+	fp.burst(b.fire_center(), "tar", b, Vector3.UP)
+	ok(b.state == "below" and b.driven == driven + 1 and not b.pursuit.on and is_instance_valid(b), "a pot at the snake's head drives it off down below (%s), the chase off" % b.state)
+	ok(FirePots.distance_to(b, b.fire_center()) == INF, "down there no pot reaches it")
+	b.remove_meta("pot_driven_until")
+	var up_after := _tick_snake(b, s + 20.0, func() -> bool: return b.state != "below")
+	ok(b.state != "below" and up_after >= s - 0.1 and not b.state in ["release", "lair", "gone"] and is_instance_valid(b), "it comes up again after drives_off_s (%.0f s; up after %.1f s), back on its rounds, never dead" % [s, up_after])
+	# By its tail: the body counts, not only the head (it slithers out
+	# first, so all of it lies on the floor).
+	_tick_snake(b, 6.0)
+	var tail_at := Vector3.INF
+	var length := float(b.sub("body").get("length_m", 9.0))
+	var i_tail := mini(b.trail.size() - 1, int(length * 0.85 / Boss.TRAIL_STEP))
+	if i_tail > 0:
+		tail_at = (b.trail[i_tail] as Vector3) + Vector3(0.0, 0.3, 0.0)
+	var gap := tail_at.distance_to(b.fire_center()) if tail_at.is_finite() else -1.0
+	driven = b.driven
+	if tail_at.is_finite() and b.state != "below":
+		fp.burst(tail_at, "light_oil", null, Vector3.UP)
+	ok(gap > float(FirePots.oil("light_oil").get("splash_m", 3.0)) + 0.3 and b.driven == driven + 1 and b.state == "below", "a pot by its tail, %.1f m from its head, drives it off too (its whole length is in reach)" % gap)
+	b.remove_meta("pot_driven_until")
+	_tick_snake(b, s + 20.0, func() -> bool: return b.state != "below")
+	# A burning tar patch it lies in.
+	_tick_snake(b, 1.0)
+	driven = b.driven
+	var under := fp.floor_under(b.fire_center())
+	if under.is_finite() and b.state != "below":
+		var patch := PotFire.patch(fp, under, "tar")
+		fp.fires.append(patch)
+		await _frames(3)
+	ok(b.driven == driven + 1, "a burning tar patch under it drives it off")
+	b.remove_meta("pot_driven_until")
+	b.auto = true

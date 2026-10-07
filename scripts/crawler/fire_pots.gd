@@ -52,7 +52,9 @@ extends Node3D
 ##   * drive_off(seconds: float, from: Vector3): a boss's; then nothing
 ##     burns it down, it leaves for the dark for that long;
 ##   * optionally fire_center() (where fire meets it; else its origin plus
-##     meta fire_center_y, 0.9 m) and meta fire_radius_m (its body, 0.45 m).
+##     meta fire_center_y, 0.9 m) and meta fire_radius_m (its body, 0.45 m),
+##     or for a long body fire_distance(p) (how far p is from it, under 0
+##     inside: the snake's whole length; INF while it isn't there).
 ## What sees and hears reads flare_seen_from() and bursts_since().
 
 const FILE := "res://data/fire_pots.json"
@@ -425,7 +427,7 @@ func burst(at: Vector3, p_oil: String, hit: Node3D, _normal: Vector3) -> void:
 	fires.append(PotFire.flash(self, at, p_oil))
 	var splash := float(o.get("splash_m", 1.5))
 	for t in targets(get_tree()):
-		if t != hit and center_of(t).distance_to(at) - radius_of(t) > splash:
+		if t != hit and distance_to(t, at) > splash:
 			continue
 		burn(t, float(o.get("burst", 1.0)), p_oil, at)
 		if bool(o.get("sticks", false)) and float(o.get("burn_s", 0.0)) > 0.0 and not is_boss(t) and not burnt_out(t):
@@ -459,7 +461,7 @@ func floor_under(at: Vector3) -> Vector3:
 ## again, it doesn't stack).
 func stick(t: Node3D, p_oil: String) -> void:
 	var old: Variant = t.get_meta("pot_stuck") if t.has_meta("pot_stuck") else null
-	if old is PotFire and is_instance_valid(old) and not (old as PotFire).done:
+	if is_instance_valid(old) and old is PotFire and not (old as PotFire).done:
 		(old as PotFire).t = 0.0
 		return
 	var f := PotFire.stuck(self, t, p_oil)
@@ -492,6 +494,15 @@ static func center_of(t: Node3D) -> Vector3:
 
 static func radius_of(t: Node3D) -> float:
 	return float(t.get_meta("fire_radius_m", 0.45))
+
+
+## How far `p` is from `t`'s body (m, under 0 inside): its own
+## fire_distance() (a long body: the snake's length), else a ball of
+## fire_radius_m round its fire_center.
+static func distance_to(t: Node3D, p: Vector3) -> float:
+	if t.has_method("fire_distance"):
+		return float(t.call("fire_distance", p))
+	return center_of(t).distance_to(p) - radius_of(t)
 
 
 ## A boss: driven off, never burnt down (§FA.4, vs_boss.kills false).
@@ -540,8 +551,13 @@ func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> void:
 ## floor, a metre up).
 func burn_what_stands_in(at: Vector3, radius: float, amount: float, p_oil: String, _src: PotFire) -> void:
 	for t in targets(get_tree()):
-		var c := center_of(t)
-		if Vector2(c.x - at.x, c.z - at.z).length() <= radius + radius_of(t) * 0.5 and absf(t.global_position.y - at.y) < 1.0:
+		var inside := false
+		if t.has_method("fire_distance"):
+			inside = float(t.call("fire_distance", at)) <= radius
+		else:
+			var c := center_of(t)
+			inside = Vector2(c.x - at.x, c.z - at.z).length() <= radius + radius_of(t) * 0.5 and absf(t.global_position.y - at.y) < 1.0
+		if inside:
 			burn(t, amount, p_oil, at)
 
 

@@ -220,6 +220,13 @@ func _ready() -> void:
 		Audio3D.play(_hiss, randf() * 2.0)
 
 
+## Gone however it went (burnt out, or freed with the creature it burnt
+## on): off the pots' list, so nothing reads a freed fire.
+func _exit_tree() -> void:
+	if pots != null and is_instance_valid(pots):
+		pots.fire_ended(self)
+
+
 ## 0 burning steady .. 1 out: how far it has guttered (the last
 ## look.gutter_share of its life; a flash collapses all the way).
 func gutter() -> float:

@@ -7,7 +7,8 @@ extends Node3D
 ## on the first thing it meets: one ray a physics step over the tomb's
 ## stone (PropCollision.WORLD_LAYER: walls, floors, the holders' stones),
 ## and the step tested against every fire target's body
-## (FirePots.TARGET_GROUP: a sphere fire_radius_m round its middle); or in
+## (FirePots.TARGET_GROUP: a sphere fire_radius_m round its middle, or a
+## long body's own fire_distance, the snake's); or in
 ## the air when its fuse runs out (fuse_left; a fuse already spent in your
 ## hand waits for the impact, since cook_off_in_hand is null and it never
 ## goes off in your hand). Longer than throw.flight_max_s in the air, it
@@ -111,6 +112,9 @@ func _physics_process(delta: float) -> void:
 	var who: Node3D = null
 	for t in FirePots.targets(get_tree()):
 		var k := segment_sphere(a, b, FirePots.center_of(t), FirePots.radius_of(t))
+		if k < 0.0 and t.has_method("fire_distance") and FirePots.distance_to(t, b) <= 0.0:
+			# A long body (the snake's) under it by the step's end.
+			k = 1.0
 		if k >= 0.0 and k < best:
 			best = k
 			who = t
