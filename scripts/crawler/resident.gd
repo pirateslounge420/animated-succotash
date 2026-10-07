@@ -354,7 +354,8 @@ func burn_out() -> void:
 	_disarm()
 	if residents != null:
 		residents.all.erase(self)
-	queue_free()
+	# Its meshes let go of first (NodeRelease), as the tomb's are.
+	NodeRelease.free_later(self)
 
 
 ## A fire pot's burst within its burst_heard_m since it last listened

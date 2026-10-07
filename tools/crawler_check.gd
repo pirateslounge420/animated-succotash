@@ -67,7 +67,10 @@ extends SceneTree
 ##     middle pixel and sized per hud.json reticle at the 480 and 270
 ##     presets, its dark edge one pixel round it, drawn over the grade
 ##     (no bloom); off with the Settings switch hud.reticle and under an
-##     open panel (crawler_frames.gd checks its pixels on screen);
+##     open panel (crawler_frames.gd checks its pixels on screen); a hit
+##     (Mike, 7 Oct; hud.json reticle.hit_marker) shows its X for show_s,
+##     four diagonals in the corners between the arms at 480 and 270
+##     lines, clear of the arms, its dark edge never drawn twice;
 ##  7. dousing your own torch (§FC.3, Torch.douse): F is the douse key;
 ##     pressed with a lit torch in hand it goes out and stays in your hand
 ##     (the same torch, a spare in the pack ahead of it), its burn
@@ -83,8 +86,11 @@ extends SceneTree
 ##     so does a fire pot's tar burning on the floor;
 ##  9. sneaking (§FC.1, stealth.json sneak): the eye eases down and back up
 ##     over camera_ease_s, never a snap, and stays down under a low
-##     ceiling; the crosshair closes into the dim ring and back, the ring
-##     one clean pixel line round the frame's middle at 480 and 270 lines;
+##     ceiling; the crosshair takes its dim sneak look and back: its two
+##     level dashes alone (shape dashes, Mike 7 Oct), the crosshair's own
+##     left and right arms on their dark edge, at 480 and 270 lines (and
+##     the first look, the ring, still one clean pixel line round the
+##     frame's middle);
 ##     a crouched step at footstep_volume of a walking one's; the ledge
 ##     guard: a crouched walk at a 2 m drop stops at the lip, a diagonal
 ##     one slides along it, neither falls, a standing one falls, and
@@ -110,12 +116,24 @@ extends SceneTree
 ##     toward an ordinary airway's draft, flat out at max_deg in a strong
 ##     mouth's gust, never putting it out; the light flickering with the
 ##     flame on top of the coal's breath, held_scale kept; the smoke
-##     darker toward soot and never grey;
+##     darker toward soot and never grey; 120 s flat out costs the torch
+##     its 120 s of burn and no more;
+## 11b. torches burn down (§FJ.4, torch.json crawler_burn, prompt 62): a
+##     torch's whole burn is crawler_burn.burn_min (15, Mike), it starts to
+##     gutter at its last gutter_share and is burnt out at the end; in your
+##     hand the charred stick drops to the floor at your feet, out of your
+##     pack, your next torch in your hand unlit; a burnt one never catches;
+##     smothered at half its burn it keeps it and relights at a relit
+##     sconce; three held, the bundle gives no fourth (no words, a rustle),
+##     two held it gives the third; the empty bundle is laid again
+##     bundle.remake_h_game game hours on, not before;
 ## 12. the way out (§EX.5, WayOut): faint daylight in the opening, cool
 ##     blue by day and fainter at night, seen from the bottom of the
-##     flight (nothing between); stepping into it fades to the next tomb
-##     (exit.stand_in): a new seed, you on the mat by its lit hearth, the
-##     torch you carried lit or not as it was, the log's line;
+##     flight (nothing between), fainter from far off (exit.glow far_fade:
+##     all of it on the landing, less from the wake spot, Mike 7 Oct);
+##     stepping into it fades to the next tomb (exit.stand_in): a new seed,
+##     you on the mat by its lit hearth, the torch you carried lit or not
+##     as it was, the log's line;
 ## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
 ##     on seeds 1, 7 and 42 every stone vertex within the style's tint +-
 ##     spread before occlusion, ochre, soot, moss and drift, none from
@@ -191,6 +209,7 @@ func _run() -> void:
 	await _snuff(main)
 	await _lean(main)
 	await _douse(main)
+	await _burn_down(main)
 	await _half_dark(main)
 	await _rescuer(main)
 	_sprite_kept(main)
@@ -1173,7 +1192,7 @@ func _pitch(main: CrawlerMain) -> void:
 	t.put_out("burnt")
 	ok(not vh.is_visible_in_tree() and (t._view.get_node("Stick") as Node3D).is_visible_in_tree(), "burnt out: a bare stick, as built")
 	it.erase("burnt")
-	it["burn_left_min"] = float(Torch.D.get("burn_min", 50.0))
+	it["burn_left_min"] = Torch.full_burn_min()
 	t.light()
 	# Planted in the tomb: lit, out with burn left, burnt out.
 	var at := p.global_position + Vector3(0.0, 0.0, 0.0)
@@ -2191,7 +2210,10 @@ func _snuff(main: CrawlerMain) -> void:
 	var last := p.global_position
 	gmax = 0.0
 	lit_all = true
+	var burn0 := float(t.item().get("burn_left_min", -1.0))
+	var ran := 0
 	for i in 7200:
+		ran += 1
 		var target: Vector3 = pts[wi]
 		var to := Vector3(target.x - p.global_position.x, 0.0, target.z - p.global_position.z)
 		if to.length() < 0.6:
@@ -2279,6 +2301,8 @@ func _snuff(main: CrawlerMain) -> void:
 	Input.action_release("move_forward")
 	print("  the run: %d points on the tour, %d reached; %d times round something in the way, %d points skipped to %s; %.1f s in an airway's draft (flicker up to %.2f), %.1f s in a strong gust" % [pts.size(), got, detours, skips, str(stuck_in), in_draft / 60.0, flick_max, gust_frames / 60.0])
 	ok(lit_all and gmax == 0.0 and not burn_gutter, "120 s flat out round the tomb (%.0f m, %d whip turns): lit, gutter 0 throughout (§EZ.1 moving_fast never)" % [dist, whips])
+	var cost := burn0 - float(t.item().get("burn_left_min", -1.0))
+	ok(absf(cost - ran / 3600.0) < 1e-3, "and it cost the torch its %.0f s of burn and no more (%.3f min of %.3f)" % [ran / 60.0, cost, ran / 3600.0])
 	# A real sprint, not a runner stuck against a wall (the turns, the
 	# whips and the odd prop cost 10-20 s of the 120).
 	ok(at_sprint / 60.0 >= 90.0 and old_out > 0.0, "a real sprint: %.0f s of the 120 at a sprint by the removed rule's own measure, which would have put the torch out %.1f s in" % [at_sprint / 60.0, old_out])
@@ -2574,6 +2598,139 @@ func _douse(main: CrawlerMain) -> void:
 	await _frames(2)
 	ok(t.douse() and not t.lit() and t.pass_flame() == "torch" and t.lit(), "smothered by a planted torch, it relights at the planted torch")
 	_unplant(pt)
+	await _frames(2)
+
+
+## Every torch out of your pack (_burn_down).
+func _clear_torches(p: CrawlerPlayer) -> void:
+	for i in p.inventory.carried.size():
+		var c: Variant = p.inventory.carried[i]
+		if c is Dictionary and str((c as Dictionary).get("kind", "")) == "torch":
+			p.inventory.carried[i] = null
+
+
+## Torches burn down (design 6 Oct §FJ.4, torch.json crawler_burn; prompt
+## 62).
+func _burn_down(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var fires := main.fires
+	var w := main.world
+	var CB: Dictionary = Torch.D.get("crawler_burn", {})
+	var full := float(CB.get("burn_min", 15.0))
+	var share := float(Torch.D.get("gutter_share", 0.12))
+	var help := str((Torch.D.get("_help", {}) as Dictionary).get("crawler_burn", ""))
+	ok(is_equal_approx(Torch.full_burn_min(), full) and not help.begins_with("[NOT WIRED YET"), "a crawler torch burns crawler_burn.burn_min, %.0f minutes (Mike, 7 Oct; the open world keeps its %.0f), and crawler_burn is wired" % [full, float(Torch.D.get("burn_min", 50.0))])
+	# The timer: a fresh torch, lit, stepped a second at a time.
+	var fresh := Inventory.make("torch", {"lit": true, "burn_left_min": Torch.full_burn_min()})
+	var gutter_s := -1
+	var out_s := -1
+	for sec in int(full * 60.0) + 10:
+		var what := Torch.burn_step(fresh, 1.0, {}, true)
+		if what == "gutter":
+			gutter_s = sec + 1
+		elif what == "out":
+			out_s = sec + 1
+			break
+	ok(absf(gutter_s - full * (1.0 - share) * 60.0) <= 1.0 and absf(out_s - full * 60.0) <= 1.0 and bool(fresh.get("burnt", false)) and not bool(fresh.get("lit", true)), "lit, a torch starts to gutter %.1f min in (its last %.0f%%) and is burnt out at %.1f min" % [gutter_s / 60.0, share * 100.0, out_s / 60.0])
+	# In your hand by the hearth, a spare in the pack.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch"))
+	p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	var hp := fires.hearth.global_position
+	_place_facing(p, hp + Vector3(0.0, 0.0, 1.0), hp)
+	await _frames(5)
+	var first := t.item()
+	ok(t.pass_flame() == "torch" and t.lit() and absf(float(first.get("burn_left_min", -1.0)) - full) < 0.01, "a fresh torch lit at the hearth has its whole burn (%.2f min)" % float(first.get("burn_left_min", -1.0)))
+	# Two seconds short of its gutter.
+	first["burn_left_min"] = full * share + 2.0 / 60.0
+	await _frames(180)
+	ok(t.lit() and Torch.guttering(first) and Torch.share_now(first) < 1.0, "in its last %.0f%% it gutters, still lit, at %.2f of its light" % [share * 100.0, Torch.share_now(first)])
+	# A second left.
+	first["burn_left_min"] = 1.0 / 60.0
+	var burnt0 := t.burnt_count
+	var sticks0 := fires.sticks.size()
+	var feet := p.global_position
+	await _frames(90)
+	var in_pack := false
+	for c in p.inventory.carried:
+		if is_same(c, first):
+			in_pack = true
+	var stick: Node3D = fires.sticks[-1] if fires.sticks.size() > sticks0 else null
+	var off := Vector2(stick.global_position.x - feet.x, stick.global_position.z - feet.z).length() if stick != null else -1.0
+	ok(t.burnt_count == burnt0 + 1 and bool(first.get("burnt", false)) and not in_pack and stick != null and off < 0.5 and absf(stick.global_position.y - feet.y) < 0.1, "burnt out, its charred stick falls to the floor by your feet (%.2f m off, %.2f m from their height) and leaves your pack" % [off, absf(stick.global_position.y - feet.y) if stick != null else -1.0])
+	var second := t.item()
+	ok(t.in_hand() and not t.lit() and not second.is_empty() and not is_same(second, first) and not bool(second.get("burnt", false)), "your next torch is in your hand, unlit")
+	# A burnt one never catches.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch", {"burnt": true, "burn_left_min": 0.0}))
+	p.weapon = "torch"
+	await _frames(2)
+	t.light()
+	var lit_by_hand := t.lit()
+	var how := t.pass_flame()
+	ok(not lit_by_hand and not t.lit() and how != "torch", "a burnt stick never catches, lit or swung through the hearth ('%s')" % how)
+	# Smothered at half its burn, it keeps it, and relights at a sconce.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch", {"burn_left_min": full * 0.5}))
+	p.weapon = "torch"
+	await _frames(2)
+	var relit := t.pass_flame() == "torch" and t.lit()
+	await _frames(30)
+	t.douse()
+	var kept := float(t.item().get("burn_left_min", -1.0))
+	await _frames(600)
+	var still := float(t.item().get("burn_left_min", -1.0))
+	var sconce: Node3D = null
+	for h in fires.holders:
+		if str(h.get_meta("fire_holder")) == "sconce" and FireStore.is_lit(h):
+			sconce = h
+			break
+	var again := false
+	if sconce != null:
+		_place_facing(p, _stand_by(main, sconce), sconce.global_position)
+		await _frames(5)
+		again = t.pass_flame() == "torch" and t.lit() and absf(float(t.item().get("burn_left_min", -1.0)) - kept) < 0.01
+	ok(relit and absf(kept - full * 0.5) < 0.02 and still == kept and again, "smothered at half its burn (%.2f min) it keeps it, 10 s out, and relights at a relit sconce with it" % kept)
+	# Three at most, the one in hand counted.
+	_clear_torches(p)
+	for i in 3:
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	_place_facing(p, fires.bundle.global_position + Vector3(1.0, 0.0, 0.0), fires.bundle.global_position)
+	await _frames(3)
+	var left0 := fires.bundle_left
+	var logs0 := GameLog.entries.size()
+	var ref0 := fires.refusals
+	var took := main.take_torch()
+	ok(left0 > 0 and not took and fires.bundle_left == left0 and Torch.carried_count(p.inventory, true) == 3 and GameLog.entries.size() == logs0 and fires.refusals == ref0 + 1, "three held, the one in hand counted, the bundle gives no fourth: nothing taken, no words, a soft rustle (crawler_burn.carry_max %d)" % Torch.carry_max())
+	for i in p.inventory.carried.size():
+		var c: Variant = p.inventory.carried[i]
+		if c is Dictionary and str((c as Dictionary).get("kind", "")) == "torch" and not is_same(c, t.item()):
+			p.inventory.carried[i] = null
+			break
+	ok(main.take_torch() and fires.bundle_left == left0 - 1 and Torch.carried_count(p.inventory, true) == 3, "with two held it gives the third")
+	# The empty bundle is laid again remake_h_game game hours on.
+	_clear_torches(p)
+	while fires.bundle_left > 0:
+		fires.take_torch()
+	var keep_days: float = w.days
+	var wait := float((Torch.D.get("bundle", {}) as Dictionary).get("remake_h_game", 24.0)) / 24.0
+	var made0 := fires.bundles_remade
+	await _frames(2)
+	var empty_ok := fires.bundle_left == 0 and fires.bundle_out_at >= 0.0
+	w.days = fires.bundle_out_at + wait * 0.5
+	await _frames(2)
+	var half_ok := fires.bundle_left == 0 and fires.bundles_remade == made0
+	w.days = fires.bundle_out_at + wait + 0.001
+	await _frames(2)
+	var count := int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
+	ok(empty_ok and half_ok and fires.bundle_left == count and fires.bundles_remade == made0 + 1 and fires.bundle_out_at < 0.0, "the empty bundle is laid again %.0f game hours on (bundle.remake_h_game), not halfway: %d torches" % [wait * 24.0, fires.bundle_left])
+	w.days = keep_days
+	# As the rest expects: one fresh torch in hand.
+	p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
 	await _frames(2)
 
 
@@ -2997,6 +3154,25 @@ func _reticle(main: CrawlerMain) -> void:
 	main.settings_panel.close()
 	await _ticks(2)
 	ok(not under_log and not under_settings and ret.showing(), "hidden while the log or the settings are open, back when they close")
+	# A hit (Mike, 7 Oct; hud.json reticle.hit_marker): its X for show_s.
+	var HM: Dictionary = R.get("hit_marker", {})
+	var show_s := float(HM.get("show_s", 0.3))
+	var x_before := ret.hit_showing()
+	Reticle.hit()
+	await _ticks(2)
+	var x_on := ret.hit_showing() and ret._key.size() > 4 and bool(ret._key[4])
+	await _ticks(int(show_s * 60.0) + 4)
+	ok(not x_before and x_on and not ret.hit_showing(), "a hit (Reticle.hit) shows the X, and it goes again after show_s (%.2f s)" % show_s)
+	for lines_n in [480, 270]:
+		var k := float(lines_n) / ref
+		var fw := int(round(lines_n * 16.0 / 9.0))
+		var f := Vector2i(fw + (fw & 1), lines_n)
+		var faults: Array = []
+		for under in ["cross", "dashes"]:
+			for e in _x_faults(f, k, under):
+				faults.append("over the %s: %s" % [under, e])
+		var xc := Reticle.x_cells(f, k)
+		ok(faults.is_empty(), "%d lines: the hit's X is four diagonals in the corners between the arms, %d to %d px out along each from the middle (from_px %s, length_px %s at the 480 reference), the same in every corner, clear of the arms and their edge, its own edge one pixel round it and never over the crosshair's (standing or sneaking)%s" % [lines_n, int(xc.from), int(xc.from) + int(xc.length) - 1, str(HM.get("from_px")), str(HM.get("length_px")), "" if faults.is_empty() else ": %s" % [faults]])
 	if had_preset == null:
 		Settings.erase("display.preset")
 	else:
@@ -3059,6 +3235,127 @@ func _eased(track: Array, from: float, to: float, down: bool) -> Dictionary:
 			at = (i + 1) / 60.0
 		prev = y
 	return {"mono": mono, "at": at, "big": big}
+
+
+## The sneak's dashes on a frame `f` at scale `k` (Reticle.dash_cells):
+## what is wrong with them, or nothing. The crosshair's own two level arms
+## and no up or down arm; their dark edge one pixel round them, each pixel
+## once.
+func _dash_faults(f: Vector2i, k: float) -> Array:
+	var dc := Reticle.dash_cells(f, k)
+	var cl := Reticle.cells(f, k)
+	var bad: Array = []
+	var arms: Array = dc.arms
+	if arms.size() != 2 or arms[0] != cl.arms[0] or arms[1] != cl.arms[1]:
+		bad.append("not the crosshair's two level arms: %s" % [arms])
+	var px := {}
+	for a: Rect2i in arms:
+		if a.size.x <= a.size.y:
+			bad.append("an arm not level: %s" % a)
+		for y in range(a.position.y, a.end.y):
+			for x in range(a.position.x, a.end.x):
+				px[Vector2i(x, y)] = true
+	var edge := {}
+	var twice := 0
+	for e: Rect2i in dc.edge:
+		for y in range(e.position.y, e.end.y):
+			for x in range(e.position.x, e.end.x):
+				var q := Vector2i(x, y)
+				if px.has(q) or edge.has(q):
+					twice += 1
+				edge[q] = true
+	var want_edge := {}
+	for p: Vector2i in px:
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var q := p + Vector2i(dx, dy)
+				if not px.has(q):
+					want_edge[q] = true
+	if twice > 0 or edge.size() != want_edge.size():
+		bad.append("edge %d px (want %d), %d over a dash or twice" % [edge.size(), want_edge.size(), twice])
+	return bad
+
+
+## The hit's X on a frame `f` at scale `k` over the crosshair's `under`
+## shape (Reticle.x_cells): what is wrong with it, or nothing. Four
+## diagonals, one in each corner between the arms, from_px to from_px +
+## length_px - 1 pixels out from the arms' band along each, as wide as the
+## arms, the same in every corner; none of it on the arms' band, an arm or
+## the arms' dark edge; its own dark edge one pixel round it, each pixel
+## once, never over what the shape under it draws.
+func _x_faults(f: Vector2i, k: float, under: String) -> Array:
+	var HM: Dictionary = Tuning.section("hud", "reticle").get("hit_marker", {})
+	var xc := Reticle.x_cells(f, k, under)
+	var cl := Reticle.cells(f, k)
+	var bad: Array = []
+	var from := maxi(roundi(float(HM.get("from_px", 3)) * k), 1)
+	var length := maxi(roundi(float(HM.get("length_px", 4)) * k), 1)
+	if int(xc.from) != from or int(xc.length) != length:
+		bad.append("from %d, length %d (want %d, %d)" % [xc.from, xc.length, from, length])
+	var w := int(cl.width)
+	var px := {}
+	for r: Rect2i in xc.x:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				px[Vector2i(x, y)] = true
+	if px.size() != 4 * length * w:
+		bad.append("%d px (want %d)" % [px.size(), 4 * length * w])
+	var box := Rect2i()
+	var drawn := {}
+	for i in (cl.arms as Array).size():
+		var a: Rect2i = cl.arms[i]
+		box = a if i == 0 else box.merge(a)
+	var shape_rects: Array = cl.arms + cl.edge
+	if under == "dashes":
+		var dc := Reticle.dash_cells(f, k)
+		shape_rects = dc.arms + dc.edge
+	for r: Rect2i in shape_rects:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				drawn[Vector2i(x, y)] = true
+	var all_cross := {}
+	for r: Rect2i in cl.arms + cl.edge:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				all_cross[Vector2i(x, y)] = true
+	var lo: Vector2i = (cl.middle as Vector2i) - Vector2i(w / 2, w / 2)
+	var hi := lo + Vector2i(w - 1, w - 1)
+	for p: Vector2i in px:
+		if not px.has(Vector2i(box.position.x + box.end.x - 1 - p.x, p.y)) or not px.has(Vector2i(p.x, box.position.y + box.end.y - 1 - p.y)):
+			bad.append("not the same in every corner")
+			break
+	for p: Vector2i in px:
+		if (p.x >= lo.x and p.x <= hi.x) or (p.y >= lo.y and p.y <= hi.y):
+			bad.append("on the arms' band at %s" % p)
+			break
+		if all_cross.has(p):
+			bad.append("on an arm or its edge at %s" % p)
+			break
+		if p.x > hi.x and p.y > hi.y:
+			var dx := p.x - hi.x
+			var dy := p.y - hi.y
+			if dx < from or dx > from + length - 1 or dy - dx < 0 or dy - dx > w - 1:
+				bad.append("off its diagonal at %s" % p)
+				break
+	var edge := {}
+	var twice := 0
+	for e: Rect2i in xc.edge:
+		for y in range(e.position.y, e.end.y):
+			for x in range(e.position.x, e.end.x):
+				var q := Vector2i(x, y)
+				if px.has(q) or edge.has(q) or drawn.has(q):
+					twice += 1
+				edge[q] = true
+	var want_edge := {}
+	for p: Vector2i in px:
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var q := p + Vector2i(dx, dy)
+				if not px.has(q) and not drawn.has(q):
+					want_edge[q] = true
+	if twice > 0 or edge.size() != want_edge.size():
+		bad.append("edge %d px (want %d), %d over the X, the crosshair or twice" % [edge.size(), want_edge.size(), twice])
+	return bad
 
 
 ## The sneak's ring on a frame `f` at scale `k` (Reticle.ring_cells): what
@@ -3145,7 +3442,8 @@ func _sneak(main: CrawlerMain) -> void:
 	ok(dn.mono and float(dn.at) > 0.0 and float(dn.at) <= ease + 1.0 / 60.0 + 1e-6, "Shift: over the first 0.3 s the eye eases down, never back up, and is at %.2f m by %.3f s, the first tick past camera_ease_s %.2f" % [crouch_eye, dn.at, ease])
 	ok(float(dn.big) < (stand_eye - crouch_eye) * 0.25, "never a snap: the biggest one-frame step %.3f m of the %.2f m" % [dn.big, stand_eye - crouch_eye])
 	ok(p.crouching and is_equal_approx(p._shape.height, PlanetPlayer.CROUCH_HEIGHT), "the collision crouches at once (%.2f m tall)" % p._shape.height)
-	ok(shape.call() == "ring" and is_equal_approx(alpha.call(), dim) and r._key.size() > 1 and bool(r._key[1]), "crouched, the crosshair closes into the ring, dimmed to %.2f (%s)" % [alpha.call(), shape.call()])
+	var want_shape := str(look.get("shape", "dashes"))
+	ok(shape.call() == want_shape and is_equal_approx(alpha.call(), dim) and r._key.size() > 1 and bool(r._key[1]), "crouched, the crosshair takes its sneak look, %s (%s), dimmed to %.2f" % [want_shape, "the up and down arms gone, the two level dashes left" if want_shape == "dashes" else "stealth.json sneak.reticle.shape", alpha.call()])
 	# Up again.
 	Input.action_release("crouch")
 	track = await _eye_track(p, 18)
@@ -3161,7 +3459,9 @@ func _sneak(main: CrawlerMain) -> void:
 		var f := Vector2i(fw + (fw & 1), lines_n)
 		var want_r := maxi(roundi(float(look.get("ring_px", 4)) * k), maxi(roundi(float(Tuning.section("hud", "reticle").get("thickness_px", 1)) * k), 1) + 1)
 		var faults := _ring_faults(f, k, want_r)
-		ok(faults.is_empty(), "%d lines: the ring is one clean pixel line %d px out from the crosshair's middle, the same on every side, the middle clear, its dark edge one pixel round it%s" % [lines_n, want_r, "" if faults.is_empty() else ": %s" % [faults]])
+		ok(faults.is_empty(), "%d lines: the ring (shape ring, the first look) is one clean pixel line %d px out from the crosshair's middle, the same on every side, the middle clear, its dark edge one pixel round it%s" % [lines_n, want_r, "" if faults.is_empty() else ": %s" % [faults]])
+		var dfaults := _dash_faults(f, k)
+		ok(dfaults.is_empty(), "%d lines: the dashes (shape dashes) are the crosshair's own two level arms and nothing else, on their dark edge one pixel round them, each pixel once%s" % [lines_n, "" if dfaults.is_empty() else ": %s" % [dfaults]])
 	# Under a low ceiling the view stays down.
 	Input.action_press("crouch")
 	await _frames(20)
@@ -3338,6 +3638,38 @@ func _way_out(main: CrawlerMain) -> void:
 	var aim := (ex.p as Vector3) + Vector3.UP * (float(ex.h) - 0.3) + n * 0.4
 	var hit := _ray(eye, aim, [main.player.get_rid()])
 	ok(hit.is_empty(), "from the foot of the flight, looking up %.1f m over %.1f m, nothing stands between your eye and the opening's daylight%s" % [aim.y - eye.y, Vector2(aim.x - eye.x, aim.z - eye.z).length(), "" if hit.is_empty() else (" (hit at %s)" % str(hit.position))])
+	# Faint from far off (Mike, 7 Oct; exit.glow near_m, far_m, far_share):
+	# the opening's sheet shows all its glow within near_m of your eye,
+	# easing down to far_share of it by far_m; by day as by night.
+	var gl: Dictionary = WayOut.G
+	var near_m := float(gl.get("near_m", 8.0))
+	var far_m := float(gl.get("far_m", 30.0))
+	var far_share := float(gl.get("far_share", 0.55))
+	var mid_k := WayOut.far_fade((near_m + far_m) * 0.5)
+	ok(is_equal_approx(WayOut.far_fade(near_m * 0.5), 1.0) and is_equal_approx(WayOut.far_fade(far_m + 5.0), far_share) and mid_k < 1.0 and mid_k > far_share, "faint from far off: all its glow within %.0f m, %.2f of it halfway out, %.2f of it past %.0f m (exit.glow near_m, far_share, far_m)" % [near_m, mid_k, far_share, far_m])
+	var p := main.player
+	var shares: Array = []
+	for when in [Vents.days_at_solar_hour(13.0, 12.0), Vents.days_at_solar_hour(13.0, 0.0)]:
+		w.days = when
+		p.spawn_flat((ex.p as Vector3) - n * 2.0, atan2(-n.x, -n.z), 0.0)
+		await process_frame
+		await process_frame
+		var near_share := wo.seen_share
+		var near_l := mat.albedo_color.get_luminance()
+		var wk: Array = lay.wake
+		p.spawn_flat(wk[0], float(wk[1]), 0.0)
+		await process_frame
+		await process_frame
+		var far_d := (ex.p as Vector3).distance_to(p.camera().global_position)
+		shares.append([near_share, wo.seen_share, far_d, WayOut.far_fade(far_d), mat.albedo_color.get_luminance() / maxf(near_l, 1e-6)])
+	w.days = keep
+	await process_frame
+	var fade_ok := true
+	for sh in shares:
+		if not is_equal_approx(float(sh[0]), 1.0) or absf(float(sh[1]) - float(sh[3])) > 0.01 or absf(float(sh[4]) - float(sh[1])) > 0.02 or (float(sh[2]) > near_m + 1.0 and float(sh[1]) >= 1.0):
+			fade_ok = false
+	print("  the way out's sheet from the landing and from the wake spot, by day and by night: %s" % [shares])
+	ok(fade_ok and shares.size() == 2, "on the landing the opening shows all its glow; from the wake spot %.0f m off it shows %.2f of it, by day and by night" % [float(shares[0][2]), float(shares[0][1])])
 
 
 ## Stepping into the opening (design §EX.5's stand-in, exit.stand_in): the
@@ -3402,9 +3734,10 @@ func _pack(p: CrawlerPlayer) -> String:
 const STYLE_SEEDS := [1, 7, 42]
 ## The crawler's scripts may hold these colours of their own, none of them
 ## built stone: the heart's ochre (paint), the checks' poison, the charred
-## logs, the torch bundle's wood, tips and cord, an airway's void and dust,
-## the waking fade, a sprite's clear background, RuinStyle's grey for a
-## theme with no stone at all (missing data).
+## logs (and a burnt torch's stick, §FJ.4), the torch bundle's wood, tips
+## and cord, an airway's void and dust, the waking fade, a sprite's clear
+## background, RuinStyle's grey for a theme with no stone at all (missing
+## data).
 ## The scripts that lay the tomb's stone (TombBuild, the masonry it cuts,
 ## the style, the fires' holders, the layout): the colour search looks in
 ## these. Every crawler script is searched for the general palette by name.

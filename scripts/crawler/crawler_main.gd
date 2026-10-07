@@ -164,6 +164,11 @@ func _ready() -> void:
 	add_child(harm)
 	harm.setup(player, post, null)
 	player.died.connect(_on_taken)
+	# A torch burnt out in your hand drops its charred stick on this tomb's
+	# floor (§FJ.4).
+	player.torch.burnt_out.connect(func(at: Vector3) -> void:
+		if fires != null and is_instance_valid(fires):
+			fires.lay_stick(at))
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	_load_tomb(_seed())
@@ -637,9 +642,15 @@ func _on_taken() -> void:
 
 
 ## Right click by the bundle: one unlit torch into your hand (§AW); a
-## second while you hold one goes into your pack as a spare.
+## second while you hold one goes into your pack as a spare. With three
+## held already (design 6 Oct §FJ.4, torch.json crawler_burn.carry_max, the
+## one in hand counted) nothing is taken: no words, a soft rustle at the
+## bundle (CrawlerFires.refuse_torch).
 func take_torch() -> bool:
 	if not fires.bundle_in_reach(player.global_position, CrawlerPlayer.REACH_M + 0.4):
+		return false
+	if player.torch.at_carry_max():
+		fires.refuse_torch()
 		return false
 	var it := fires.take_torch()
 	if it.is_empty() or not player.inventory.add(it):

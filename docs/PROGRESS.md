@@ -4,6 +4,171 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 62, §FJ.4: torches burn down — 15 minutes each, three at most, the bundle by the hearth (56dc352)
+Built in order after Mike's notes, with his number from today: *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes"* (the lamp comes later).
+
+- **What changes on screen:**
+  - A lit torch lasts 15 minutes of lit time. Over its last 12% (about the last 1 min 50 s) it gutters, dimmer and redder, still lit. Then it's burnt out: the charred stick drops to the floor at your feet and lies there, and your next torch is in your hand, unlit, ready to relight at any flame. With none left your hand is empty.
+  - You carry three torches at most, the one in your hand counted. With three, right click by the bundle takes nothing and says nothing: only a soft rustle of the sticks.
+  - Once you've emptied the bundle by the hearth, it lies bound again a game day later (144 minutes), with a line in the log.
+  - Put away or smothered, a torch keeps what it has; running costs it nothing.
+- **The burn** (`torch.json → crawler_burn.burn_min` 15; `Torch.full_burn_min`): the crawler's torches (Torchfire 1, `GameMode.crawler_running`) burn this, the open world keeps the top-level `burn_min` (50). The burn step, the gutter's start (`gutter_share` of it) and a fresh torch's, a planted torch's and a relit one's full burn all read it.
+- **Burnt out in your hand** (`Torch._drop_burnt`, the `burnt_out` signal; `CrawlerFires.lay_stick`): the item leaves your pack (so burnt sticks never fill it), a charred stick (the bundle's stick in the hearth's charred logs' colour, its head gone) is laid by your feet in this tomb, on the floor you stand on (a first try laid it 0.45 m ahead, and by the hearth that was over the pit, on its guard), and `Torch.item()` finds your next torch. `light()` no longer lights a burnt one (the swing never did). The swing, smothering and the water are as built.
+- **Three at most** (`crawler_burn.carry_max` 3, `carry_counts_hand` true; `Torch.carried_count`, `at_carry_max`): torches with burn left in your pack, the one in hand among them. `CrawlerMain.take_torch` refuses at the limit with `CrawlerFires.refuse_torch` (the synth's rustle at the bundle, pitched down, no log line).
+- **The bundle laid again** (`torch.json → bundle.remake_h_game` 24; `CrawlerFires._remake_bundle`): emptied, it is laid again with its three torches 24 game hours later on the crawler's clock (`world.days`, the 144-minute day). Of `later_sources`, this is the one wired; relit ruins' gifts wait for §FF.3. `pitch_scale` is carried, unused, until the pitch technique exists.
+- **The frame tools** (`crawler_frames`, `boss_frames`) turn the burn off (`Torch.burn_down` false, as `Residents.stay_asleep` keeps the skeletons asleep): their pictures aren't a burn test, and a long render would burn the torch out mid-run.
+- **Data:** `[NOT WIRED YET]` off `torch.json → _help.crawler_burn`, its wiring added; `_help.snuff` notes the crawler's burn moved.
+- **Checks** (on 56dc352), all 0 fails:
+  - `crawler_check` (seed 7): 259 lines. New: crawler_burn wired and 15 minutes; stepped a second at a time a lit torch starts to gutter 13.2 min in and is out at 15.0; lit at the hearth a fresh torch has 15.00 min; in its last 12% it gutters, still lit; burnt out, its charred stick lies 0.20 m from your feet at their height, out of your pack, and your next torch is in hand unlit; a burnt stick never catches by hand or swing; smothered at 7.49 min it keeps it 10 s out and relights at a sconce with it; three held, the bundle gives nothing and says nothing (a rustle), two held it gives the third; emptied, the bundle is laid again 24 game hours on, not at 12; and the 120 s sprint cost its torch exactly 2.000 min.
+  - A first run had two fails, both mine: the stick was laid 0.45 m ahead of you, which by the hearth is over the pit, on its guard; and its colour was a new literal the one-stone grep caught (it is the hearth's charred logs' now).
+  - `boss_check` 115, `cleared_check` 84, `residents_check` 161, `stagger_check` 63, `fire_pot_check` 92, `crawler_harm_check` 59, `hands_check` 61: none of their runs burns a torch out at 15 minutes.
+- **For Mike:**
+  - When a torch burns out, the charred stick drops and your next torch comes to hand by itself, unlit. Would you rather keep holding the dead stick until you swap?
+  - The bundle comes back a game day (144 minutes) after you empty it (`bundle.remake_h_game`, Claude's first guess).
+  - Burnt sticks stay on the floor where they fell, a trail of where you've been. Fine, or should they crumble away?
+
+## 2026-10-07 — Queue 60 follow-up, §FA.3 with §FI.2 call 4 answered: a pot's fire relights a cold sconce, and a burning patch relights your torch (0af1b69)
+- **Mike, 7 Oct:** "a pot should relight an old sconce and a burning patch can relight torch."
+  - `fire_pots.json → relights_holders` goes from null to true, and a new `relights_torch` is true. `_help.light` quotes him.
+  - **For Claude (chat):** this answers §FI.2 call 4, for the design doc. (Mike's second note's answers, `hurts_you` and the cook-off among them, are fc4a333's, below.)
+- **What changes on screen:**
+  - **A pot lights a dark sconce.** Throw one at the wall by a sconce: it bursts on the stone, and the sconce catches a moment later, as when you swing a lit torch through it. It then burns for good and counts toward the lights relit. The log gets a new line, "The pot's fire caught a cold light.", then the usual "N of M lights burn again." A light lit this way counts like any other, so the skeletons' clearing (§FF.2) and the snake's release (§EY.2) still follow the last light, whatever lit it.
+  - **How far it reaches:** as far as it burns (`splash_m`: tar 1.5 m, light oil 3 m), measured to the sconce's flame in its niche.
+  - **Never through stone:** it needs a clear line from the burst to the niche's mouth. A burst behind the sconce's wall leaves it cold.
+  - **Tar on the floor:** a tar pot that lands on the floor under a sconce, 1.7 m below it, doesn't reach it. Its fireball stops about 0.9 m up. Light oil's reaches about 2.3 m and does.
+  - **A tar patch** lights a holder on the floor within its reach. The tomb has none now: every holder is a wall sconce (§EX.4). The patch doesn't reach a sconce on the wall above it.
+  - **Your torch relights from the pot's fire.** With your torch out, swing it by a burning tar patch and it catches, as at the hearth: within the swing's reach (2.2 m) of the patch's edge. The same goes for anything the pot set alight (the reed mat, the bedroll) and tar burning on a creature. The burst's flash is over too fast to count.
+- **How:**
+  - **`FirePots.relight_near(at, reach, max_dy)`** goes through the tomb's fire-holders. It lights each cold one in reach through `FireStore.swing_light`, the torch's own path.
+    - **Who calls it:** the burst, from 4 cm off the face it burst on; and every patch and thing alight (`PotFire`), four times a second, within its radius plus 0.3 m and no more than 1 m above or below its flames.
+    - **Line of sight:** it skips a holder unless a ray from the fire to the holder's mouth (`mouth_of`) is clear of the tomb's stone. For a sconce the mouth is 8 cm out from the wall: the niche is cut in the stone you see, not in the wall's collision. For a holder on the floor it is 0.6 m above it. The holder's own stones are left out of the ray.
+  - **`FirePots.flame_near(pos, radius)`** is true for any burning pot fire except a flash, within `radius` plus the fire's own reach (`PotFire.flame_point`).
+    - `Torch.flame_near` asks it alongside the fires, planted torches and sconces, so the swing catches from it.
+    - It returns false where there are no fire pots: in the open world, which shares `torch.gd`.
+  - **`Resident.burn_out`** frees a burnt skeleton through `NodeRelease`, as the tomb's are. It no longer prints the headless renderer's "m is null" (queue 59's note below).
+- **Checks:**
+  - **`fire_pot_check`:** the test that said a pot never lights a holder is replaced by a fire-to-fire test. It runs last, so the lights it relights change nothing before it. It checks:
+    - A tar pot thrown at the wall by a cold sconce (a real throw, the pot's own flight) bursts on the stone 0.47 m from the flame; the sconce catches and burns for good, with the lights relit one more.
+    - A light-oil burst behind a cold sconce's wall, 0.9–1.0 m from its flame, leaves it cold, and the same burst 1.1 m in front of it lights it.
+    - An unlit torch swung 2 m from a burning tar patch catches; with no patch, or after the patch burnt out, nothing happens.
+    - The patch under a cold sconce doesn't light it.
+    - A patch 1 m from a holder on a corridor's floor lights it.
+    - The pot's fire is the hearth's amber.
+
+    On the code as pushed, with fc4a333's cook-off and self-harm tests in: 99 lines, 0 fails, seeds 7, 1 and 42, with no engine errors in the logs. The skeleton test no longer asks a freed skeleton's list about itself.
+  - **On the first seed 42 run** the floor holder sat on a coffin 0.9 m up, and the ray hit its own ring stones. The check now uses corridor sconces and checks the floor's height, and the game leaves a holder's own stones out of the ray.
+  - **Seed 42's lights relit went from 0 to 2** after one throw. The second sconce had been catching since the snake's tests, 15 m away (a pot thrown at the snake lit it). Each pot lit only what was in its reach.
+  - **Other checks** (seed 7):
+    - Before the merge with fc4a333, all 0 fails: `residents_check`, `boss_check`, `crawler_harm_check`, `stagger_check`, `hands_check`, `crawler_check` (240 lines) and `cleared_check` (84 lines). In the open world, `swing_check` (its own seed, 7731: 18 lines) and `scene_load_check` have 0 fails. Both still crash at shutdown after their results, as before.
+    - On the code as pushed, all 0 fails: `crawler_check` (247 lines), `cleared_check` (84), `boss_check`, `residents_check`, `crawler_harm_check`, `stagger_check` and `hands_check`. No script errors in any log.
+  - **Found on the way:** `swing_check` with `SEED=7` fails 3 lines (a swing at the ground lights a fire, no wildfire, a swing at a creature). The code from before this change fails the same way. Its own seed passes. Not looked into: the open world is shelved.
+  - **The frames** (`crawler_frames`, seed 7, on 59f37d4): 70 frames, 52 lines, 1 fail, no script errors.
+    - The fire pots pass: the tar patch lights its dark corridor in amber (hue 18.9) and the light-oil burst fills its dark room (hue 17.5). The tar patch's corridor sconce, 1.7 m over it, stays cold.
+    - The skeletons (`21a`–`21c`) and the floor cleared by light (`26a`–`26d`, the last light 48th of 48) pass.
+    - **The fail isn't this change:** from the foot of the way out's flight at night (`25b`), the opening reads 0.085 against the stone's 0.071, 0.014 over where the check wants 0.02. Before fc4a333 it read 0.100 against 0.075. That is fc4a333's fade from far off (`exit.glow`: all of the glow within 8 m, 0.55 of it by 30 m), seen from about 15 m below. The frame comes before any fire pot in the run.
+    - **For Mike:** you asked for the way out to be faint from far off, and this frame wants it readable from the foot of the stairs. Either `exit.glow.far_share` goes up, or the frame's bar comes down. Left for the session building part 2, which renders the frames next.
+- **Merged with fc4a333** (Mike's second note, part 1, pushed while this ran): `burst` takes their `in_hand` and keeps the face it burst on (`normal`) for the relight. A pot that cooks off in your hand by a cold sconce lights it too. The fire-to-fire check's thrown pot now flies with you on the far floor, out of your own burst's reach (`hurts_you`).
+- **Left open, a call for Mike if he wants it:** a tar patch burning on the floor under a sconce doesn't light it; only a burst that reaches it does.
+
+## 2026-10-07 — Mike's second note of 7 Oct, part 1: the sneak's dashes, the hit's X, your own pot can hurt you, the fuse goes off in your hand, the way out faint from far off, the torch's 15 minutes (fc4a333)
+Mike, answering the open calls (the parts built here; the creatures' movement is part 2, below it when it lands): *"your own fire pot should be able to hurt you if you throw it way to close to yourself like a wall or floor youre right next to. when sneaking, the reticle should take away the verticle dashes and jist leave horizontal dashes to signify sneak state. the way out might not always be night- it should be relatively faint from far away but depends on time of day."* … *"a fuse held too long after lighting will explode in hand and cause 1 point of damage."* … *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes."* … *"no the crosshair shouldnt warm- that will be for the player to figure out. if you get a hit on a creature tho, there will be an X shape in the diagonal spaces between the regular crosshair to aignify a successful hit."* Numbers he didn't give are Claude Code's first guesses.
+
+- **What changes on screen:**
+  - **Sneaking**, the crosshair loses its up and down arms and keeps its two level dashes, dimmed (it was a small ring).
+  - **A hit**, your swing landing on a creature or your pot's burst catching one, flashes a small X in the corners between the crosshair's arms for 0.3 s. Nothing else marks the crosshair: it never warms near things you can light.
+  - **Your own pot** can hurt you: a burst within 1 m of you is one of your three hits, so throwing it at a wall or the floor right next to you costs you. Hold a lit pot past its 3 s fuse and it goes off in your hand: the burst, the pot gone, one hit.
+  - **The way out** shows fainter from far off and fuller as you come up the stairs, still bright blue by day and dim moonlit blue at night on the clock.
+- **The dashes** (`stealth.json → sneak.reticle.shape` dashes; `Reticle.dash_cells`): the crosshair's own left and right arms, the same length, gap, width and dark edge, dimmed by `dim` (0.75). Shape ring, the first look, is kept as an option.
+- **The hit's X** (`hud.json → reticle.hit_marker`, new: `show_s` 0.3, `from_px` 3, `length_px` 4; `Reticle.hit`, `x_cells`):
+  - Four diagonals, from 3 to 6 pixels out along each diagonal from the middle at the 480 reference (2 to 3 at 270), as wide as the arms, in their colour on a one-pixel dark edge. Its edge leaves out what the crosshair under it already draws, so no pixel is darkened twice.
+  - `Torch.swing_top` calls it when the swing meets a creature, staggered or not (the swing you already hear land). `FirePots.burst` calls it when the burst's fire reaches a creature (a resident burnt, a boss driven off). A patch or stuck tar burning one later doesn't.
+- **Your own pot** (`fire_pots.json → hurts_you` true, `hurts_you_m` new 1.0; `FirePots.burst_hurts_you`): a burst within 1 m of your body (your capsule, feet to eye, 0.35 m round), with no stone between, is one hit (`Harm`, death cause fire:pot), whichever oil. Looking level the shortest throw lands 4 m out, so it takes a wall or floor right by you, or looking down. Its burning patch and stuck tar never hurt you (first guess).
+- **The cook-off** (`fire_pots.json → cook_off_in_hand` true; `FirePots._cook_off`): held past `fuse_s` (3 s from the wick catching), the pot bursts where your hand is with its whole burst (the flash, its fire on what stands in `splash_m`, tar's patch, the sound), leaves your hand and your pack, and it is one hit (fire:pot_in_hand), never two.
+- **The way out** (`crawler.json → exit.glow`, new: `near_m` 8, `far_m` 30, `far_share` 0.55; `WayOut.far_fade`): the opening's sheet of sky shows all its glow within 8 m of your eye and eases down to 0.55 of it by 30 m. It already followed the clock (it was a night frame Mike saw). The wash falling in on the stone is the stone's own light and doesn't change with where you stand.
+- **The torch's 15 minutes** (`torch.json → crawler_burn.burn_min` 15, was 20): data only; the timer, the bundle and the three you carry are prompt 62, next in the queue. The clay oil lamp (30 minutes, found in tombs) comes later; it isn't in the data.
+- **The crypt frame** (`crawler_frames`): it now relights two crypts against their old rings, one on pillars with its four torches and one not with its two, and holds each to 0.85 of its ring on screen (Mike's "a bit darker than it was" is fine). Pass 1's fail was its picker moving to the crypt not on pillars.
+- **Checks** (on fc4a333), all 0 fails:
+  - `crawler_check` (seed 7): 247 lines. New: the hit's X shows for 0.3 s and goes; at 480 and 270 lines it is four diagonals clear of the arms, the same in every corner, its edge never over the crosshair's, standing or sneaking; crouched, the dashes, the crosshair's own two level arms alone; the way out shows all its glow on the landing and 0.55 of it from the wake spot 108 m off, by day and by night.
+  - `fire_pot_check` (seed 7): 92. New: the cook-off (still in hand just short of the fuse; past it the burst 0.5 m from your eye, the pot gone, nothing thrown, one hit); your own burst 0.5 m off one hit, 1.5 m off none, 0.55 m off behind a wall none, thrown at your feet one, thrown level none, standing in its tar none; the X on a burst that catches a creature, none on one that catches nothing. Every burst the check doesn't mean to reach you now happens with you on its far floor.
+  - `stagger_check` 63 (new: a landed swing shows the X once, a miss none), `hands_check` 61, `crawler_harm_check` 59.
+- **Frames:** rendered once at the end, with part 2.
+- **For Mike:**
+  - The X shows on any contact, staggered or not, the same moment you hear the torch land. Only when it staggers?
+  - Your pot hurts you within 1 m whichever oil. Light oil's flash is 3 m wide: should it reach you further off? And should walking into your own burning tar hurt? Today it doesn't.
+  - The way out from far off: 0.55 of its glow by 30 m.
+- **For chat** (Mike's answers to the open calls, 7 Oct; for a lettered section):
+  - Built here: the dashes, the hit's X (and no warming crosshair), your pot hurts you, the cook-off, the way out faint from far off, the torch's 15 minutes.
+  - Being built in part 2 (the creatures' movement): nothing physical sinks into the stone or teleports (only ghosts phase); a chase follows to the light's edge and peeks in, never close to a fire; physical bosses cross lit rooms on the edges of the light; the snake's own tunnels; the snake as fast as your walk, your sprint outruns it; a pot stuns a boss and sends it to its cave for a while, never kills it; skeletons lunge within 2 m.
+  - Design answers, nothing to build yet:
+    - Worlds: 1–2 km each for now; separate worlds, one per biome (§EW confirmed).
+    - "Good night" wakes you at the last hearth you lit or found, and it must be lit. One hearth per floor; the dungeon's map must agree with the surface, so a chimney comes out on top where its flue says (§EV.4 with §EW).
+    - Saves: an autosave per dungeon and save states, probably up to 3 save files. This revises prompt 63's one save.
+    - The strong airway gust never puts the torch out, for now (closes §EZ.4 call 1 as built).
+    - Clay lamps and candles come back later, found in different tombs; a torch burns 15 minutes, an oil lamp 30.
+    - The imps are 2–3 imps. The wolfman and the werewolf are one creature. The hornet lives in a jungle by a beach. The witch's wisps glow cold blue.
+    - **The warden has a metal chain, and the world moves from tribal times to more advanced.** This touches §EH ("no metal", the open world's camps) and Mike's Project brief's "tribal tech" (§FK.5's wording).
+    - Creatures are 3D like the folk (§FH). The skeletons are sprites today (their 288-cell sheet).
+    - Lairs may open later: every ruin revisitable, a secret passage opening to go deeper.
+    - Each dungeon its own building style; the Andean one is approved (§EX.1).
+    - Free movement, not grid steps (as built). No spear or bow for now (CLAUDE.md keeps their code live for §AW's rare finds).
+    - The builders are from the past and mysterious. The rescuer says little, maybe something cryptic about something lurking here (the crawler has no words today, §ET.3).
+  - CLAUDE.md's brief still calls §EY and §FA–§FH "not built yet".
+
+## 2026-10-07 — Mike's notes of 7 Oct: the hearth sunk in a pit under its shaft, a flue slot over every wall torch, four torches in a room on pillars, and the skeletons as Boos (c2573f8; skeletons d1e9e1b, 1ec0caa, ab35be2; 0d483ff)
+Mike, answering queue 48's call and adding four notes: *"yea for pillared rooms we can do 4 torches- its also ok if theres some shadows or a bit darker than it was because it gives monsters a place to hide. also, for skeletons itd be cool if they acted similar to boos in mario- they might not activate until you pass them once and only move toward you slowly when your back is turned so you never see them moving unless they get right up on you- another fix is that for the main rooms with hearths, the exit draft vent should be situated more directly above the fire- at the moment it seems like its offset a bit. also, where the main hearths sit there should be a fire pit made into the ground i stead of jist having a campfire sitting right on the floor. also please ensure torches in the indents on the wall still have exit vents above them"*. Built as Claude Code's first guesses where he gave no numbers; no design section yet (below, for chat).
+
+- **What changes on screen:**
+  - **The hearth** burns down in a pit in the middle of the floor: twelve-sided, 32 cm deep and 1.24 m across inside, lined with the tomb's stone going navy as it goes down, its logs and coals on a bed of ash. A kerb of twelve pillowed stones, 24 cm wide and 6 cm proud, is set into the floor round its lip, and the floor's flags are cut round it. You can walk up to the kerb but not into the fire.
+  - **Its shaft** stands straight over the fire (it stood about a metre to one side: 0.93 m on seed 7). The column of daylight falls on the fire, the smoke goes straight up, and the flame stands straight in the draft instead of leaning.
+  - **Every wall torch** has a narrow slot cut up the wall from just over its niche into its vent's mouth in the ceiling, which now sits right against the wall. The slot is the flue's width (15–30 cm) and sooted inside.
+  - **A room on pillars** gets four wall torches, two facing pairs, instead of two.
+  - **The skeletons** move only when you can't see them (below).
+
+- **The hearth pit** (`masonry.json → styles → andean_tomb → hearth`, new: `method` sunk_pit, `sides` 12, `r_m` 0.62, `depth_m` 0.32, `kerb_w_m` 0.24, `kerb_proud_m` 0.06, `guard_m` 0.45, `ash`; `TombBuild.pit`, `_hearth_pit`). The real model is the Mito tradition's sunken hearths (Kotosh, La Galgada), added to the style's `models`.
+  - **The floor:** `FittedStone.flags` takes holes now. A flag crossing the pit's outline is cut along it on the same rolls, so every other flag lies as before. The hearth room's floor collision is the room's slab less the pit, in convex pieces.
+  - **The kerb and lining:** each kerb stone is a pillowed trapezoid with a face down over the pit; under it the lining, one block a side, toward the scene's shade (navy) as it goes down; the joints' back under the kerb; at the foot a bed of ash (not stone). All the style's stone but the ash, on the pit's own dice.
+  - **The fire** (`CrawlerFires`): the campfire sits on the pit's floor, 0.32 m down. Its light stays 1 m over the room's floor (`light_y`), so the room is lit as before and the pit's lip shadows nothing, and its pool of firelight stays on the floor round it.
+  - **The guard:** collision over the kerb's footprint from the pit's floor to 0.45 m over the room's floor, under every eye (yours crouched is 0.78 m). Each side reaches a little past its corners, because a first try left hairline seams a ray slipped through at one corner. The pit has its own floor, so a thrown pot falls in.
+  - **The snow ruins' style** gets a square pit of slabs in its data (Skara Brae's hearths), not built.
+- **The shaft over the fire** (`smoke.json → vents.shaft.over_fire`, new, true): `TombKit._place_vents` puts a shaft's mouth straight over its fire (`mouth_offset_m` applies only when it is false). `Vents._draft` gives a vent straight overhead no lean, only the flicker; it used to pick a random lean.
+- **The flue slots** (`TombBuild._flue_slot_op`): one over every sconce's niche, in rooms and corridors.
+  - It runs from 5 cm over the niche's top to the wall face's top: under the corbel course in a room (whose stone over it was already left out), into the ceiling in a corridor.
+  - It is its vent's own width (within the niche's top) and as deep as the niche.
+  - Its inside is drawn as soot lying on the stone (`DUST_M`, as the drifts are, tagged not-stone). Painted onto the stone, the soot came out pale: the crawler's night grade pulls every stone colour 75% toward slate (`ruin.gdshader`), which lifts it.
+  - A sconce's vent mouth now sits against its wall (it stood 8 cm off), so the slot runs straight into it.
+  - **Honest limit:** the sconce's own light hangs just below the slot and lights straight up into it. So on screen the slot reads as a darker, redder stripe climbing from the lit niche, not black: on seed 7's corridor sconce, luma 0.634 inside against 0.864 on the stone beside it.
+- **Four torches in a room on pillars** (`crawler.json → room_torches.pillared`, new, 4; `TombBuild.on_pillars`): whether a room stands on pillars is worked out from the layout alone (its shorter span past its corbels over `max_span_m`), so `TombKit._room_sconces` can give it its two facing pairs before it is built. `_plan_room` uses the same test. On seeds 1, 7 and 42, all 16 rooms that stand on pillars as built have four.
+- **The skeletons are Boos** (the helper session's work, merged as d1e9e1b, 1ec0caa, ab35be2; `residents.json → creatures.skeleton`, `pattern` creeper and a new `creep` block):
+  - **Passing arms one:** come within 3 m of its head (`arms_m`) and nothing happens. The moment you look away or walk on past, you hear bone grinding behind you as it climbs out. Turn round and it is frozen half out; look away and it carries on.
+  - **It moves only while you can't see it:** out, it creeps after you at 1.4 m/s (`creep_mps`; you walk 4.3), its bone steps clicking. Face it and it stands dead still however long you stare. It still knows you are there: staring at it within its sight keeps its chase on, so you don't heal.
+  - **"Seeing" it:** any of its feet, middle or head, or its middle 35 cm to either side (`side_m`), in your frame or within 8% of the frame past its edge (`view_margin`), within 60 m (`seen_m`), with no stone between. The dark doesn't hide it. A step that would bring it into view is undone, so it waits just out of sight.
+  - **In plain view all the same:** its whole strike within its 1.6 m reach (the wind-up and the jaw's creak; your lit swing still staggers it), a dark pocket's lunge from 3 m (§FF.2), and the floor's last light, when the ones you can see still hurry back into the stone (§FF.2's reveal: the one time you see them move).
+  - **The light's rules hold, but its moves wait until you look away:** leaving a relit room, walking home, and going into the stone when cut off.
+  - **A fire pot** still wakes a resting one; watched, it lies there burning until you look away.
+- **Checks** (on 0d483ff, the merged code as pushed), all 0 fails:
+  - `crawler_check` (seed 7): 240 lines. New: the pit (the fire 0.32 m down, its floor, the flags cut round it, the guard stopping your body from 1.35 m and at a crossing), the shaft 0.00 m off the fire and its daylight on it, 48 of 48 flue slots each its flue's width under its vent's mouth, and all 16 rooms on pillars (seeds 1, 7 and 42) with four torches.
+  - `residents_check` (seeds 1, 7 and 42): 161. The first run had one flaky line, the creep's bone steps counted by the sound's stream changing; it counts `Resident.steps_heard` now (0d483ff).
+  - `cleared_check` 84, `boss_check` 115, `stagger_check` 61, `fire_pot_check` 82, `crawler_harm_check` 59, `hands_check` 61.
+- **Frames** (`crawler_frames`, seed 7, lavapipe, once at the end): 70 frames, 52 lines, 1 fail.
+  - New and passing: `01i` down into the pit at night (its fire warm in it), `08d` the slot over a relit corridor torch (darker than the stone beside it).
+  - **The fail is the frames' own room picker, not the light.** It looks for a crypt with two torches. With the rooms on pillars at four, it moved from seed 7's crypt on pillars to one that isn't, which from its doorway reads 0.303 against its old ring's 0.337 (0.90). The slots aren't why: their few pixels move the frame's mean by about a thousandth. The ring stood in the middle and lit the floor nearest the door; the torches light the walls. The next pass measures both kinds of crypt and holds every room to "a bit darker is fine" (0.85).
+  - I looked at `01` (the pit, its kerb and the column of daylight on the fire), `08d` (the slot), `09` and `09a` (the crypt) and `21b` (a skeleton frozen half out of its niche).
+- **For Mike:**
+  - Your second note of 7 Oct is being built next: nothing physical sinks into the stone, a chase stops at the light's edge, the snake as fast as your walk with its own tunnels, the 2 m lunge, your own pot can hurt you, the sneak's dashes and the hit's X. It answers or changes some of the skeleton calls below.
+  - The pit's size, depth and kerb are first guesses: `masonry.json → styles → andean_tomb → hearth`.
+  - The flue slots read darker and redder than the stone, not black, because the torch's own light falls up into them. If you want them black, the sconce's light would have to sit lower or further out (your call; it changes how the room is lit).
+  - Skeletons, all first guesses:
+    - The last light is the one time you see them move. Keep that reveal, or make them Boo-like even then? (Your second note ends their sinking into the stone there.)
+    - Creep speed 1.4 m/s.
+    - Arming distance 3 m.
+    - Should a burning one thrash in plain view?
+    - "Right up on you" means its strike reach, 1.6 m (since answered: they lunge within 2 m).
+    - Should the dark hide them? Today one in your frame 40 m down a black corridor still freezes.
+    - One whose way passes through your view waits at the edge of it until you look away, and one can stand frozen in a room you just relit while you watch it.
+- **For chat:**
+  - Log Mike's 7 Oct notes as a lettered section. They amend §FE.2 (the skeletons wake as you pass, then move only unseen), §EV.2 (the hearth's column falls on the fire, not beside it), §EX.4 (four torches in a room on pillars) and §EX.1/§EX.3 (the hearth a sunk pit, the sconce's flue a slot up the wall).
+  - CLAUDE.md's brief still calls §EY and §FA–§FH "not built yet".
+
 ## 2026-10-07 — Queue 48, §EX.1 and §EX.3: one ruin, one stone — floor, ceiling, doors, stairs and sconces in the walls' style (8799b26)
 - **What changes on screen:** the tomb looks cut from one quarry.
   - The floor is fitted many-sided flags of the walls' own stone, and the ceiling is long single slabs with one step of corbel over the walls.

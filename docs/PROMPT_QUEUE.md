@@ -1136,7 +1136,7 @@ CHECK (headless): glow-moss energy near a held torch is dim_to times its rest an
 
 ## 62 — Torches burn down: a timer, the hearth's bundle, three at most — §FJ.4
 
-**Status:** todo
+**Status:** built 56dc352
 **Mike sees:** A torch burns for a while and then gutters, dims and goes out, leaving a charred stick. Torches come from the bundle by the hearth, and you can carry three at most. A torch with burn left catches again from any flame, and smothering it saves what's left, so the light you carry is something to spend carefully.
 
 ```text

@@ -12,7 +12,11 @@ extends Node3D
 ## as the vents' sky is, sheet_share of a shaft's sky; at night it keeps
 ## sheet_night of that on the night's blue, so it still shows) and a soft
 ## wash of it falls in over the landing and the top of the flight
-## (light_share of a shaft's daylight, reaching reach_m).
+## (light_share of a shaft's daylight, reaching reach_m). From far off the
+## opening shows less of its glow (Mike, 7 Oct: "it should be relatively
+## faint from far away but depends on time of day"): all of it within
+## near_m of your eye, easing down to far_share by far_m; the wash is
+## the stone's own light and stays as it is.
 ##
 ## Stepping into the opening is the way out: CrawlerMain asks stepped_in()
 ## and, until §EW.3's seam or §EW.7's surface is built, fades to the next
@@ -26,6 +30,9 @@ var world: Node
 var openings: Array = []
 ## 0-1 now: day (1) or night (0) on the world's clock (tests read it).
 var daylight := 1.0
+## The share of its glow the first opening shows from where you stand now
+## (far_fade; tests read it).
+var seen_share := 1.0
 
 
 func build(p_world: Node, lay: Dictionary) -> void:
@@ -94,12 +101,25 @@ func _update() -> void:
 	# At night the opening keeps sheet_night of its glow (on the night's
 	# darker blue), so the way out still shows, faint, from below.
 	var glow := float(L.get("sky_glow", 1.3)) * lerpf(float(G.get("sheet_night", 0.6)), 1.0, sun) * float(G.get("sheet_share", 0.6))
-	for o in openings:
+	var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
+	for i in openings.size():
+		var o: Dictionary = openings[i]
 		var sp: SpotLight3D = o.light
 		sp.light_color = col
 		sp.light_energy = energy
+		var k := 1.0 if cam == null else far_fade((o.exit.p as Vector3).distance_to(cam.global_position))
+		if i == 0:
+			seen_share = k
 		var m: StandardMaterial3D = o.mat
-		m.albedo_color = Color(col.r * glow, col.g * glow, col.b * glow)
+		m.albedo_color = Color(col.r * glow * k, col.g * glow * k, col.b * glow * k)
+
+
+## The share of its glow an opening shows from `d` m off (exit.glow): all
+## of it within near_m, easing down to far_share by far_m.
+static func far_fade(d: float) -> float:
+	var near := float(G.get("near_m", 8.0))
+	var far := maxf(float(G.get("far_m", 30.0)), near + 0.1)
+	return lerpf(1.0, clampf(float(G.get("far_share", 0.55)), 0.0, 1.0), smoothstep(near, far, d))
 
 
 ## The way out whose opening `pos` (feet, scene) has stepped into, or -1.

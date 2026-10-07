@@ -14,10 +14,12 @@ extends Node3D
 ##           alight for spread.burn_s, then charred
 ## Every one lights in the hearth's amber (§EX.6, Torch.fire_color),
 ## reddening as it dies (Torch.gutter_color), glows (the flame card's bands,
-## §BZ) and smokes by its size (Smoke.tick_flame, §CV). None is a fire a
-## torch catches from or a holder is lit by (relights_holders null): they
-## are not campfires (Campfire.GROUP), so FireStore, the torch's swing and
-## Torch.flame_near never see them.
+## §BZ) and smokes by its size (Smoke.tick_flame, §CV). A patch or a
+## thing alight relights a cold holder on the floor within its reach, and
+## any of them but a flash is a flame an unlit torch catches from (Mike,
+## 7 Oct; FirePots.relight_near, FirePots.flame_near). They are not
+## campfires (Campfire.GROUP): FireStore never burns them down, and a lit
+## torch's swing never tries to light them.
 
 var kind := "flash"
 var oil := "tar"
@@ -40,6 +42,7 @@ var size := 1.0
 var foot := Vector3.ZERO
 ## Burnt out (its light gone, freed this frame).
 var done := false
+var _relight_t := 0.0
 
 var _flames: Array[Node3D] = []
 var _light: OmniLight3D
@@ -246,6 +249,16 @@ func light() -> OmniLight3D:
 	return _light
 
 
+## Where its flames are (scene): a patch's or a thing alight's middle, a
+## little over the floor; tar's on the creature it burns; a flash's ball.
+func flame_point() -> Vector3:
+	if kind == "stuck":
+		return global_position + Vector3.UP * 0.35
+	if kind == "flash":
+		return global_position
+	return foot + Vector3.UP * 0.2
+
+
 func _physics_process(delta: float) -> void:
 	if done:
 		return
@@ -258,6 +271,12 @@ func _physics_process(delta: float) -> void:
 	elif kind == "patch" or kind == "spread":
 		pots.burn_what_stands_in(foot, radius, dps * delta, oil, self)
 		pots.ignite_near(foot, radius)
+		_relight_t -= delta
+		if _relight_t <= 0.0:
+			# A cold holder on the floor within its reach catches (Mike,
+			# 7 Oct; relights_holders), a quarter second at a time.
+			_relight_t = 0.25
+			pots.relight_near(flame_point(), radius + 0.3, 1.0)
 	if t >= life_s:
 		_end()
 

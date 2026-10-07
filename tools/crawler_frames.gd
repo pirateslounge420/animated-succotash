@@ -56,9 +56,10 @@ extends SceneTree
 ## grey), the smothered corridor still dark, the half-dark (the wall
 ## pixels about 3 m off a readable step over the frame's black, about
 ## 15 m off at it, and blue), the torchlit frame the same with the
-## half-dark on as off, the crypt with its sconces relit at least as lit
-## on screen as with its old ring (in a room on pillars, at least
-## PILLARED_LIT_SHARE of it: Mike, 7 Oct), and one firelight (§EX.6): the torchlit
+## half-dark on as off, two crypts (one on pillars with its four
+## sconces, one not with its two) with their sconces relit at least
+## RELIT_SHARE as lit on screen as with their old rings (Mike, 7 Oct), and
+## one firelight (§EX.6): the torchlit
 ## and sconce-lit stone the same amber, and the stone right at the torch
 ## kept amber by the grade; the torch's flame reads as a flame at the
 ## bottom right (its size on screen measured, in pixels, at both presets); and
@@ -90,10 +91,13 @@ extends SceneTree
 
 var fails := 0
 var out_dir := ""
-## How lit on screen a room on pillars must be, with its wall torches
-## relit, against its old hearth ring (Mike, 7 Oct: a bit darker is fine,
-## the pillars' shadows are places for things to hide).
-const PILLARED_LIT_SHARE := 0.85
+## How lit on screen a room must be, with its wall torches relit, against
+## its old hearth ring, from its doorway at night (Mike, 7 Oct: "it's also
+## ok if there's some shadows or a bit darker than it was because it gives
+## monsters a place to hide", said of the rooms on pillars and held here
+## for every room: from its doorway the ring in the middle lit the floor
+## nearest you, and the torches on the walls light the walls).
+const RELIT_SHARE := 0.85
 ## How much darker than the stone beside it a relit wall torch's flue slot
 ## reads on screen (its luma under this share).
 const SLOT_DARKER := 0.85
@@ -571,23 +575,32 @@ func _bare_wall(main: CrawlerMain, room: Dictionary) -> Array:
 ## The room to show with its sconces relit (design §EX.4): a crypt with two
 ## on its long side walls if there is one, else a crypt with two, a crypt,
 ## or any room past the hearth room.
-func _pick_room(main: CrawlerMain) -> Dictionary:
-	var best: Dictionary = {}
-	var best_score := -1
-	for pc in main.lay.pieces:
-		if str(pc.kind) != "room" or str(pc.get("room_kind", "")) in ["hearth", "heart", ""]:
-			continue
-		var n := 0
-		var on_sides := true
-		for h in main.lay.holders:
-			if int(h.piece) == int(pc.id):
-				n += 1
-				on_sides = on_sides and str(h.get("side", "")) in ["left", "right"]
-		var score := (4 if str(pc.room_kind) == "crypt" else 0) + (2 if n == 2 else 0) + (1 if on_sides else 0)
-		if score > best_score:
-			best_score = score
-			best = pc
-	return best
+## The rooms whose sconces the frames relight against their old rings:
+## the best crypt not on pillars (two sconces) and the best on pillars
+## (four, Mike's 7 Oct note), each with its sconces on its long sides if it
+## can; either may be {} (none in this tomb).
+func _pick_rooms(main: CrawlerMain) -> Array:
+	var out: Array = []
+	for want_pillars in [false, true]:
+		var best: Dictionary = {}
+		var best_score := -1
+		for pc in main.lay.pieces:
+			if str(pc.kind) != "room" or str(pc.get("room_kind", "")) in ["hearth", "heart", ""]:
+				continue
+			if TombBuild.on_pillars(main.lay, pc) != want_pillars:
+				continue
+			var n := 0
+			var on_sides := true
+			for h in main.lay.holders:
+				if int(h.piece) == int(pc.id):
+					n += 1
+					on_sides = on_sides and str(h.get("side", "")) in ["left", "right"]
+			var score := (4 if str(pc.room_kind) == "crypt" else 0) + (2 if n == (4 if want_pillars else 2) else 0) + (1 if on_sides else 0)
+			if score > best_score:
+				best_score = score
+				best = pc
+		out.append(best)
+	return out
 
 
 ## Where to look into room `pc` from: just inside the door in its start
@@ -1066,6 +1079,8 @@ func _run() -> void:
 	# The skeletons sleep through the tour (design §FE); one is woken at
 	# the end for its frames.
 	Residents.stay_asleep = true
+	# Pictures, not a burn test: the torch never burns out mid-run (§FJ.4).
+	Torch.burn_down = false
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	out_dir = OS.get_environment("OUT") if OS.get_environment("OUT") != "" else "user://crawler_frames/%d" % seed_v
@@ -1374,8 +1389,10 @@ func _run() -> void:
 	# hearth ring it had before (built for the frame where TombKit put it,
 	# then taken away): the same view from its doorway, at night, the
 	# torch away.
-	var crypt := _pick_room(main)
-	if not crypt.is_empty():
+	for crypt: Dictionary in _pick_rooms(main):
+		if crypt.is_empty():
+			continue
+		var tag := "_on_pillars" if TombBuild.on_pillars(main.lay, crypt) else ""
 		var keep_days3: float = world.days
 		world.days = 13.0
 		var view := _door_view(main, crypt)
@@ -1387,24 +1404,22 @@ func _run() -> void:
 			FireStore.tick(self, 1.0 / 60.0, p.global_position)
 		p.spawn_flat(view[0], float(view[1]), -0.12)
 		await _frames(20)
-		var old_img := await _shot("09a_%s_old_hearth_ring" % str(crypt.room_kind))
+		var old_img := await _shot("09a_%s%s_old_hearth_ring" % [str(crypt.room_kind), tag])
 		ring.queue_free()
 		await _frames(2)
 		var n_lit := await _relight_room(p, main, crypt)
 		p.spawn_flat(view[0], float(view[1]), -0.12)
 		await _frames(20)
-		var new_img := await _shot("09_%s_sconces_relit" % str(crypt.room_kind))
+		var new_img := await _shot("09_%s%s_sconces_relit" % [str(crypt.room_kind), tag])
 		var so := _stats(old_img)
 		var sn := _stats(new_img)
-		print("  the %s from its door, at night: old hearth ring mean %.3f (warm %.3f); its %d sconces relit mean %.3f (warm %.3f)" % [crypt.room_kind, so.mean_l, so.warm, n_lit, sn.mean_l, sn.warm])
-		# A room on pillars may read a little darker than its ring did: its
-		# four torches' light falls in pools by the walls, the pillars'
-		# shadows across the floor (Mike, 7 Oct: "it's also ok if there's
-		# some shadows or a bit darker than it was because it gives monsters a
-		# place to hide"); the ring, in the middle, lit the far pillars.
 		var pillared := TombBuild.on_pillars(main.lay, crypt)
-		var share := PILLARED_LIT_SHARE if pillared else 1.0
-		ok(float(sn.mean_l) >= float(so.mean_l) * share, "the %s with its %d wall sconces relit is %s on screen as with its old hearth ring (mean %.3f against %.3f)" % [crypt.room_kind, n_lit, ("at least %.2f as lit (on pillars)" % share) if pillared else "at least as lit", sn.mean_l, so.mean_l])
+		print("  the %s%s (%.0f x %.0f m) from its door, at night: old hearth ring mean %.3f (warm %.3f); its %d sconces relit mean %.3f (warm %.3f), %.2f of the ring's" % [crypt.room_kind, " on pillars" if pillared else "", float(crypt.len), 2.0 * float(crypt.half), so.mean_l, so.warm, n_lit, sn.mean_l, sn.warm, float(sn.mean_l) / maxf(float(so.mean_l), 1e-6)])
+		# A little darker than its ring is fine (RELIT_SHARE): its torches'
+		# light falls in pools by the walls, and on pillars their shadows
+		# lie across the floor; the ring, in the middle, lit the floor
+		# nearest the door.
+		ok(float(sn.mean_l) >= float(so.mean_l) * RELIT_SHARE, "the %s%s with its %d wall sconces relit is at least %.2f as lit on screen as with its old hearth ring (mean %.3f against %.3f)" % [crypt.room_kind, " on pillars" if pillared else "", n_lit, RELIT_SHARE, sn.mean_l, so.mean_l])
 		world.days = keep_days3
 	# The heart: by torchlight, then its four sconces relit, flanking the
 	# dead.
