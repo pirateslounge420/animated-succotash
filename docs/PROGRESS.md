@@ -4,6 +4,26 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 53, §FC.1: sneak — the view eases down, the crosshair closes into a ring, quiet feet, the ledge guard (c40b2da)
+- **The view eases.** Shift still crouches (Controls `crouch`, which `stealth.json → sneak.key` names). The collision drops at once and the eye glides from 1.26 m to 0.78 m over `camera_ease_s` (0.18 s, a smoothstep), then back up the same way when you let go. Standing up still waits for headroom, so the view never rises into a low ceiling. Measured: there by 0.183 s (the first tick past 0.18 s); the biggest one-frame step is 0.066 m of the 0.48 m. The torch in hand and the half-dark's light hang off the camera, so they ride down with the view. `eye_position()` follows the eased eye too.
+- **The crosshair's ring.** Prompt 45's crosshair landed from another session while this pass was under way (475c143), and so did 50, 52, 54, 55, 56, 57 and 60; this pass is rebased onto them. The sneak look is built on prompt 45's `Reticle`, cell by cell on the frame's pixel grid like its cross.
+  - While you sneak, the four arms close into a small ring round the same middle pixel, in the arms' colour, width and one-pixel dark edge, all of it at `dim` (0.75). Standing, the cross is back. No words.
+  - The ring is the outer pixel line of a disk `ring_px` out (4 px at 480 lines, my first guess; 2 px at 270, following the frame's lines like the arms). It is one clean pixel line, the same on every side, with the middle clear.
+  - The scene sets `Reticle.sneak` from the stance each frame. The open world's crosshair is unchanged (`draw_cross` gained an alpha that defaults to whole).
+- **Quieter feet.** A crouched step plays at `footstep_volume` (0.25) of a walking step's: −23.0 dB against −11.0 (it was −21). `noise_level` stays 0.1. The open world keeps its own crouch volume (only the crawler sets `Footsteps.crouch_share`).
+- **The ledge guard** (Minecraft's). While you sneak on the floor, each tick's move is tried one share at a time, x then z, against the ground under the capsule's leading edge. The probe is a ray from 0.45 m above your feet to `ledge_drop_m` (0.5 m) below them, 2 cm inside the capsule's rim. A share that would leave support is cut back to the lip. You stop with your front at the edge (your middle 0.33 m back), and pushing sideways slides you along it. It never acts in the air or standing: let go of Shift and you step off.
+- **Data:** `stealth.json → sneak.reticle.ring_px` is new (4). `_help.about` now marks only hide as not wired; `_help.sneak` keeps its text and gains a "Wired 7 Oct" note, as the douse note did. `crawler.json → _help.hud` says the crosshair takes the sneak look.
+- **Checks:** `crawler_check` passes with 0 fails on seeds 7, 1 and 42 (132, 134 and 134 lines), the other sessions' rescuer, crosshair, smother and half-dark lines included. New lines:
+  - the eye eases down and back up (0.183 s, never back the other way, no snap), and it stays down under a ceiling 1.0 m up;
+  - the ring at 0.75 while crouched and the cross back when standing; the ring's pixels at 480 and 270 lines (radius 4 and 2, one clean line, the same on every side, the middle clear, the edge one pixel round it);
+  - a crouched step at 0.250 of a walking one's;
+  - at a 2 m drop, a crouched walk stops 0.330 m short of the lip and never falls, a 45° one slides 5.7 m along it, a standing one falls 2 m, and letting go of Shift steps off;
+  - crouched through every door (20, 24 and 18) and down every flight of stairs (none, 2 and 4: 2.25–2.29 m of each 2.4 m), the guard never holds once.
+- **Also run:** on the final tree, `hands_check`, `crawler_harm_check`, `stagger_check` and `fire_pot_check` (seed 7) have 0 fails. Before the last rebase (onto 52 and 55): `crawler_frames` (seed 7, rendered once on this machine's software Vulkan) had 0 fails over its 30 lines, the crosshair's pixel checks at 480 and 270 lines unchanged (20 and 12 arm pixels round the middle), and the open world's `audio_mix_check` 0 fails. `play_fixes_check` (run before the first rebase; the open-world code this pass changes is the same) varies from run to run: 13 fails on the base commit, 14 and 15 on two runs of this pass. Every line that moved is one of the ninja kit's movement tests (speeds, the sprint bound, the bounce's foot), which the ambient profile switches off, and this pass changes no movement code in the open world. No walkabout: the prompt asks for none.
+- **Flagged for Mike:** §FC.1 says "the dot opens into a small ring", but the crawler's crosshair (§EX.7, `hud.json → reticle`) is four short arms with no dot, so I read it as the cross closing into a ring. If you'd rather the standing reticle were a dot, that's a small change.
+
+---
+
 ## 2026-10-07 — Queue 52, §FH: the folk at the hearth in 3D, made pixel by the frame (8c409e6)
 - **What changes on screen:** the one who found you is a solid 3D figure now, the shared rig itself, not a flat sprite. It sits on a low stone across the hearth, a little to one side, facing the fire. Walk round it and it stays solid from every side.
   - The hearth lights the side that faces the fire, in the cloak's own colour warmed by the amber: a red cloak glows, an indigo one goes deep maroon. Its back is navy.

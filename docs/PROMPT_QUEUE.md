@@ -82,7 +82,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | built 8c409e6 |
-| 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
+| 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | built c40b2da |
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
@@ -1000,7 +1000,7 @@ CHECK (headless): in a built crawler the rescuer is a 3D rig node, not a FigureS
 
 ## 53 — Sneak: the view eases down, the reticle changes, quiet feet, and you can't step off a ledge — §FC.1
 
-**Status:** todo
+**Status:** built c40b2da
 **Mike sees:** Hold Shift and the view glides down into a crouch instead of snapping, the dot of the reticle opens into a small dim ring, and your steps go soft. Creep to the edge of a drop and you stop right at the lip, however hard you push; let go of Shift and you can step off.
 
 ```text
