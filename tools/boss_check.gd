@@ -28,7 +28,13 @@ extends SceneTree
 ##     last light it is in its lair, breathing (heard within
 ##     lair.breathing_heard_m), the log has release.log_line and the tomb's
 ##     small sounds come back;
-##  5. its tell plays as it prowls, quieter while it lies coiled.
+##  5. its tell plays as it prowls, quieter while it lies coiled;
+##  6. the walk to the way out (queue 46's check) with it loose: you, your
+##     torch lit, at a walking pace from the wake spot through the spine's
+##     doors into the opening, the snake on its own clock, from where it
+##     starts and again lying coiled in the heart, across your way: you walk
+##     out (CrawlerMain.walk_out), never taken; the hits it lands are
+##     reported.
 
 var fails := 0
 var DT := 1.0 / 30.0
@@ -70,6 +76,11 @@ func _run() -> void:
 		await _relight_run(main)
 		main.queue_free()
 		await process_frame
+		for in_heart in [false, true]:
+			main = await _boot(sv)
+			await _walk_out_run(main, in_heart)
+			main.queue_free()
+			await process_frame
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -624,3 +635,111 @@ func _sim_boss(b: Boss, secs: float) -> void:
 	while t < secs:
 		b.tick(DT)
 		t += DT
+
+
+# --- 6. The way out with it loose (queue 46) -------------------------------------
+
+## The walk to the way out (design §EX.5; queue 46's check walks your body
+## there in 203 tombs, the hole's ring of collision and all) with the snake
+## loose: its body has no collision and its hole is off the spine, so it
+## can never stand in your way. This walks you there, your torch lit, at a
+## walking pace (WALK_SPEED) from the wake spot through the middle of each
+## of the spine's doors (round the heart's dead) and into the opening, set
+## down frame by frame, the snake and Harm on their own clocks, and
+## reports what it does to a walk that doesn't stop. `in_heart`: the snake
+## lies coiled in the heart first, across your way.
+func _walk_out_run(main: CrawlerMain, in_heart := false) -> void:
+	var b := main.boss
+	var p := main.player
+	var lay := main.lay
+	var how := "from where it starts"
+	if in_heart:
+		var hc: Vector3 = BossGround.point(lay.pieces[int(lay.heart)], float(lay.pieces[int(lay.heart)].len) * 0.5, 0.0)
+		b._lie_coiled(b.ground.node_at(hc))
+		b._pose()
+		how = "lying coiled in the heart, across your way"
+	if (lay.get("exits", []) as Array).is_empty() or (lay.get("spine", []) as Array).is_empty():
+		ok(false, "the walk out with it loose: no spine or way out to walk")
+		return
+	var ex: Dictionary = lay.exits[0]
+	var chain: Array = (lay.spine as Array).duplicate()
+	if int(chain[0]) != 0:
+		chain.push_front(0)
+	var pts: Array = [(lay.wake[0] as Vector3)]
+	for k in range(chain.size() - 1):
+		var pa := int(chain[k])
+		var pb := int(chain[k + 1])
+		if pa == int(lay.get("heart", -1)):
+			# Round the heart's dead (TombKit.heart_box), on the roomier side.
+			var pc: Dictionary = lay.pieces[pa]
+			var hb := TombKit.heart_box(pc)
+			var aa := Delves.along_across(pc, Vector2((hb.pos as Vector3).x, (hb.pos as Vector3).z))
+			var side := 1.8 if aa.y <= 0.0 else -1.8
+			pts.append(BossGround.point(pc, aa.x - 1.6, side))
+			pts.append(BossGround.point(pc, aa.x + 1.6, side))
+		for d in lay.doors:
+			if (int(d.a) == pa and int(d.b) == pb) or (int(d.a) == pb and int(d.b) == pa):
+				pts.append(Vector3((d.p as Vector2).x, float(d.y), (d.p as Vector2).y))
+				break
+	var op: Vector3 = ex.p
+	pts.append(op + (ex.n as Vector3) * 0.4)
+	var t := p.torch
+	if not p.inventory.has_kind("torch"):
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	t.light()
+	b.auto = true
+	var landed0 := main.harm.landed
+	var noticed_at := -1.0
+	var taken := false
+	var clock := 0.0
+	var walked := 0.0
+	var at: Vector3 = pts[0]
+	var i := 1
+	var step := CrawlerPlayer.WALK_SPEED / 60.0
+	while i < pts.size() and clock < 120.0 and main.walked_out == 0:
+		var to: Vector3 = pts[i]
+		var left := step
+		while left > 0.0 and i < pts.size():
+			to = pts[i]
+			var dd := at.distance_to(to)
+			if dd <= left:
+				at = to
+				left -= dd
+				walked += dd
+				i += 1
+			else:
+				at += (to - at) / dd * left
+				walked += left
+				left = 0.0
+		var fl := Vector3(to.x - at.x, 0.0, to.z - at.z)
+		if fl.length() > 0.01:
+			p.set_view(0.0, atan2(-fl.x, -fl.z))
+		p.global_position = at
+		p.velocity = Vector3.ZERO
+		await physics_frame
+		clock += 1.0 / 60.0
+		if b.noticed and noticed_at < 0.0:
+			noticed_at = clock
+		if main.harm.taking:
+			taken = true
+			break
+	# Held in the opening until CrawlerMain walks you out, then its next
+	# tomb's build.
+	var guard := 0
+	while not taken and main.walked_out == 0 and not main.leaving and guard < 120:
+		p.global_position = at
+		p.velocity = Vector3.ZERO
+		await physics_frame
+		guard += 1
+	guard = 0
+	while main.leaving and guard < 1200:
+		await physics_frame
+		guard += 1
+	var hits := main.harm.landed - landed0
+	var seen := "it never noticed you" if noticed_at < 0.0 else "it noticed you at %.1f s" % noticed_at
+	ok(not taken and main.walked_out == 1, "the walk out with it loose (%s): your torch lit, at a walk from the wake spot along the spine (%.0f m, %.1f s) you get out (%s, %d hit%s landed)" % [how, walked, clock, seen, hits, "" if hits == 1 else "s"])
+	main.harm.reset()
+	for k in 4:
+		await process_frame
+
