@@ -4,6 +4,22 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 49 follow-up, §EY.1: the snake's hole kept off the crypts' coffins (97d9628)
+- **The bug (mine, from 827805b):** the hole was placed clear of a room's doors, fires and airways, but never looked at what stands on its floor. Dead-end crypts were where it usually went, and their coffins stand in rows 2.35 m out from both long walls. In 18 of 33 layouts the hole's middle was inside a coffin, seed 1 among them. My frames rendered only seed 7, which happened to be clear.
+- **The fix** (`BossGround._lair_spot`):
+  - **In a crypt** the hole is where one of its coffins stood, fallen through with the floor (`_coffin_spot`). A narrow crypt has no open floor wide enough for it between its rows, so a coffin's place always fits. That coffin isn't built (`TombKit.lair_took`, one line in `TombBuild`). Its rim keeps 0.75 m off the wall, and the full door margins hold.
+  - **Never a skeleton's grave, nor beside one:** queue 58's sleeping skeletons lie in open coffins, each lid shoved off onto the floor along the row (either way since queue 47 keeps it out of a torch's bay). So `TombKit.layout` now lays the residents first and the lair after, and the hole keeps `OPEN_GRAVE_M` along the row from any open grave. Seed 12919 put a lid 0.2 m from the rim before this. The skeletons' own places are unchanged; they never read the lair.
+  - **Elsewhere,** the hole keeps clear of an ossuary's corner bone piles and of every corner a fallen room's slab may take (`_dressing`), and 0.6 m further off a catacomb's niche walls.
+- **The check** (`boss_check`) now holds the hole off the walls, the coffins and the open graves over all 33 layouts. In each built tomb it casts rays straight down round the rim. (A point query never finds itself inside the stone's collision, which is faces: my first probe said "clear" even on the broken code.) On the old code the rays hit a coffin lid at 1.10 m on seed 1.
+- **With queue 47's wall torches** (which landed meanwhile), the snake's ground holds: the dark never grows and is gone only at the last of 56, 43 and 41 holders (seeds 1, 7, 42). Over the full relight run it never went into the light of its own accord.
+- **Checks, on 47's tombs:**
+  - `boss_check` 109 lines, 0 fails. Its 30 layouts put the lair in 16 catacombs, 9 crypts (each in a coffin's place) and 5 ossuaries, all dead ends. Seeds 1, 7 and 42: a catacomb, a crypt (coffin 1's place) and an ossuary, with nothing round any rim.
+  - Probed in all 33 built tombs: nothing stands round any rim.
+  - `crawler_check` 187, `residents_check` 123, `stagger_check` 61, `fire_pot_check` 82, `crawler_harm_check` 59 and `hands_check` 61: 0 fails each.
+  - `boss_frames`, 0 fails on seeds 7 and 1: on seed 7 the hole is in its coffin's place by the corner; on seed 1 it is in open catacomb floor.
+
+---
+
 ## 2026-10-07 — Queue 56, §FD with §FJ.3, part 2: the snake's chase follows you into the light; queue 56 built (d14f7d8, b998d05)
 - **The light is no refuge once it has hit you.** This is §FD's amendment of §EY.1 on the snake (queue 49's `Boss`, whose chase already holds a `Pursuit`): a relit room stays closed to its prowling, not to a chase in progress. Once its strike has landed (`Pursuit.has_hit`, `residents.json → rules.chase_enters_light`), until it gives you up:
   - it hunts you into any relit room or stretch, and its strikes land there (`rule.relit_room` safe holds only until it has had you);
@@ -213,7 +229,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - The camera kick of a hit now shows underground (`CrawlerPlayer`). `revive`'s three-second breath after waking now runs out there too (it never ran down in the crawler).
   - Its chase is a `Pursuit` (queue 56, `gives_up`), so while it has you, you don't heal.
 - **The lair** (`BossGround.place_lair`, `TombBuild._lair_hole`; `lair.hole_r_m` 0.7, new): a side room off the main way has its floor broken through. It was a dead end in all 33 layouts checked.
-  - It is a black mouth 1.4 m across, with flags tipped into it and broken stone and small bones round it. It keeps clear of the room's doors and fires, and of the line between its doors.
+  - It is a black mouth 1.4 m across, with flags tipped into it and broken stone and small bones round it. It keeps clear of the room's doors and fires, and of the line between its doors. (Corrected later the same day: it also sat on the crypts' coffins; see the follow-up entry above.)
   - The black is its own unlit disc. The stone shader pulls even black vertex colour toward stone at night, so the first try drew mossy floor.
   - A ring of collision keeps you at the edge (`enterable false`). The found fire pot keeps 1.5 m clear of it (one line in `FirePots`).
 - **The release:** when the last holder catches, it goes home.
@@ -231,7 +247,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   3. Waking, your torch is out and in your pack, both hands empty.
   4. The drips go quiet while it is abroad, so their coming back is the release's "small sounds".
   5. Its look is a placeholder: olive-brown with a dark band every third length.
-- **Not in this pass:** following you into the light once it has hit you (`rule.chase_enters_light`) is queue 56 part 2. Fire pots driving it off is queue 60 part 2, which landed on this snake while this entry was written (4370e02, below). The other seven bosses come with their worlds. Row 57 still reads `todo`: with its snake part in here, it can be marked when Mike says.
+- **Not in this pass:** following you into the light once it has hit you (`rule.chase_enters_light`) came with queue 56 part 2 (b998d05), and fire pots driving it off with queue 60 part 2 (4370e02), both on this snake after it landed. The other seven bosses come with their worlds. Queue 57's part 2 has since checked the strike on this snake and marked row 57 (a4f1b00).
 - **Data:**
   - `[NOT WIRED YET]` is off `bosses.json → _help.about`, which now says what is wired and that the other bosses aren't. `_help.rule`, `contact`, `lair`, `release` and `bosses` each gain a "Built" note.
   - New tunables with help lines: `bosses.desert` `hunt_mps`, `leave_mps`, `torch_delay`, `feels_m`, `watch_s`, `body`; `lair.hole_r_m`; `release.cry_s`, `bed_hush_db`, `bed_return_s`.
