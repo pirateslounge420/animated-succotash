@@ -6,20 +6,23 @@ extends SceneTree
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
-## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); the
-## rescuer's sheet; the rescuer from in front, its side and above; a
-## corridor by torchlight, then with the torch smothered (F, §FC.3); a long
-## view down a cold corridor with the torch smothered, in the old full
-## dark (the half-dark off) and in the half-dark (§FC.4), and by torchlight
-## with the half-dark off and on; the corridor with its sconce relit, 1 m
-## from that sconce's wall and with the torch beside it; a room with its
-## hearth ring relit; the red ring after one hit and after two (§FD, §FJ.3:
-## its depth in pixels at 480 lines, darker and deeper on two, the heart
-## beating from hit 1). Checks: every cell of the
-## sheet holds the figure (its pixels drawn), the waking frame shows the
-## fire warm against the dark (warm pixels, and the frame's darkest share
-## navy, not grey), the smothered corridor still dark, the half-dark (the
-## wall pixels about 3 m off a readable step over the frame's black, about
+## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); a sheet
+## baked with FigureSprite (kept for creatures and bosses); circling the
+## one who found you, live in 3D (§FH): from in front, its left, behind,
+## its right and close; a corridor by torchlight, then with the torch
+## smothered (F, §FC.3); a long view down a cold corridor with the torch
+## smothered, in the old full dark (the half-dark off) and in the
+## half-dark (§FC.4), and by torchlight with the half-dark off and on; the
+## corridor with its sconce relit, 1 m from that sconce's wall and with
+## the torch beside it; a room with its hearth ring relit; the red ring
+## after one hit and after two (§FD, §FJ.3: its depth in pixels at 480
+## lines, darker and deeper on two, the heart beating from hit 1).
+## Checks: every cell of the sheet holds the figure (its pixels drawn),
+## the rescuer's chest brighter and warmer from in front (past the fire)
+## than from behind, its back navy, the waking frame shows the fire warm
+## against the dark (warm pixels, and the frame's darkest share navy, not
+## grey), the smothered corridor still dark, the half-dark (the wall
+## pixels about 3 m off a readable step over the frame's black, about
 ## 15 m off at it, and blue), the torchlit frame the same with the
 ## half-dark on as off, and one firelight (§EX.6): the torchlit and
 ## sconce-lit stone the same amber, and the stone right at the torch kept
@@ -532,6 +535,12 @@ func _pots(main: CrawlerMain) -> void:
 	world.days = keep_days
 
 
+## Is `p` (scene) inside room piece `pc`, `margin` m clear of its walls?
+func _in_room(pc: Dictionary, p: Vector3, margin: float) -> bool:
+	var aa := Delves.along_across(pc, Vector2(p.x, p.z))
+	return aa.x >= margin and aa.x <= float(pc.len) - margin and absf(aa.y) <= float(pc.half) - margin
+
+
 func _run() -> void:
 	WorldSave.read_only = true
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
@@ -627,18 +636,25 @@ func _run() -> void:
 		ok(float(hot.outside) < 0.02 and float(hot.blue) == 0.0, "the stone right at the torch stays amber: its brightest pixels inside the grade's protected orange (%.1f%% outside), none blue" % (float(hot.outside) * 100.0))
 		world.days = 13.5
 	p.torch.put_out("stowed")
-	# The sheet.
+	# FigureSprite's bake, kept for creatures and bosses (§ET.8,
+	# folk_3d.sprites_stay_for): the shared rig with the rescuer's head,
+	# standing, baked to a sheet (one idle frame) as the rescuer once was.
 	var r := main.rescuer
-	var sheet := r.atlas.get_image()
+	var fig := CloakedFigure.build(1.62, Color("4f5e2c"), Color("a8792e"))
+	var fbody: PlayerBody = fig.root
+	var holder := Node3D.new()
+	holder.add_child(fbody)
+	fbody.ready.connect(func(): fbody.set_beast(r.beast), CONNECT_ONE_SHOT)
+	var sheet := await FigureSprite.bake(main, holder, 1.62, 96, 1, Callable())
 	sheet.save_png(out_dir.path_join("02_sheet.png"))
-	var around := r.around
-	var rows := r.rows_deg.size()
-	var cw := sheet.get_width() / (around * r.frames)
+	var around := int(FigureSprite.SP.get("around", 8))
+	var rows := (FigureSprite.SP.get("rows_deg", [-25, 0, 30]) as Array).size()
+	var cw := sheet.get_width() / around
 	var ch := sheet.get_height() / rows
 	var empty := 0
 	var least := 1 << 30
 	for row in rows:
-		for col in around * r.frames:
+		for col in around:
 			var n := 0
 			for y in range(0, ch, 2):
 				for x in range(0, cw, 2):
@@ -647,17 +663,41 @@ func _run() -> void:
 			least = mini(least, n)
 			if n < 40:
 				empty += 1
-	ok(empty == 0, "every one of the sheet's %d cells holds the figure (fewest drawn: %d px at half size)" % [around * r.frames * rows, least])
-	# The rescuer close: in front, at its side, from above.
+	ok(empty == 0, "FigureSprite's bake still works: every one of a sheet's %d cells holds the figure (fewest drawn: %d px at half size)" % [around * rows, least])
+	# Circling the hearth at 480 (§FH): the one who found you, live in 3D,
+	# from in front of it (past the fire), its left, behind it and its right,
+	# then close in front; each a beat for its hood to turn (it looks to you
+	# while you're in front of it). On its chest: amber from the fire's side,
+	# navy, never grey, from behind.
+	var hr: Dictionary = main.lay.pieces[0]
 	var foot := r.global_position
-	var front := Vector3(-sin(r.yaw), 0.0, -cos(r.yaw))
-	var side := front.cross(Vector3.UP)
-	for v in [["03_rescuer_front", front * 2.6, -0.12], ["04_rescuer_side", side * 2.6, -0.12], ["05_rescuer_above", front * 1.6, -0.75]]:
-		var at: Vector3 = foot + (v[1] as Vector3)
-		var to: Vector3 = foot - at
-		p.spawn_flat(Vector3(at.x, 0.0, at.z), atan2(-to.x, -to.z), float(v[2]))
-		await _frames(6)
-		await _shot(str(v[0]))
+	var front := r.front()
+	var right := front.cross(Vector3.UP)
+	var cam := get_root().get_camera_3d()
+	var chests := {}
+	for v in [["03a_rescuer_front", 0.45, 2.6, -0.28], ["03b_rescuer_left", -PI * 0.5, 2.2, -0.3], ["03c_rescuer_back", PI, 2.0, -0.32], ["03d_rescuer_right", PI * 0.5, 2.2, -0.3], ["03e_rescuer_close", 0.2, 1.35, -0.5]]:
+		var a := float(v[1])
+		var dir := front * cos(a) + right * sin(a)
+		var dist := float(v[2])
+		# Inside the room, clear of its walls.
+		while dist > 1.0 and not _in_room(hr, foot + dir * dist, 0.6):
+			dist -= 0.1
+		var at: Vector3 = foot + dir * dist
+		p.spawn_flat(Vector3(at.x, 0.0, at.z), atan2(dir.x, dir.z), float(v[3]))
+		await _frames(12)
+		var img := await _shot(str(v[0]))
+		var c2 := cam.unproject_position(foot + Vector3(0.0, 0.78, 0.0)) / get_root().get_visible_rect().size
+		var chest := _patch(img, c2.x - 0.012, c2.y - 0.03, c2.x + 0.012, c2.y + 0.03)
+		var col: Color = chest.color
+		print("  %s (%.1f m): its chest #%s (hue %.0f, luma %.3f)" % [v[0], dist, col.to_html(false), chest.hue, chest.luma])
+		chests[str(v[0])] = chest
+	# Lit by the fire on the side that faces it, its cloak's own colour in
+	# the amber (an indigo cloak goes maroon, a yellow one gold); its back
+	# in the dark's navy.
+	var fc: Color = chests["03a_rescuer_front"].color
+	var bc: Color = chests["03c_rescuer_back"].color
+	ok(float(chests["03a_rescuer_front"].luma) > float(chests["03c_rescuer_back"].luma) * 1.8 and fc.r / maxf(fc.b, 0.01) > bc.r / maxf(bc.b, 0.01) + 0.5, "the hearth lights it from in front: brighter and warmer than its back (front #%s, back #%s)" % [fc.to_html(false), bc.to_html(false)])
+	ok(bc.b >= bc.r and bc.b >= bc.g, "from behind, its back to the fire: in shade, navy, never grey (#%s)" % bc.to_html(false))
 	# A corridor with a sconce, in full dark by torchlight, then relit.
 	var t := p.torch
 	_torch_in_hand(p)

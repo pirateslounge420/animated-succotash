@@ -350,6 +350,10 @@ func _dress(pc: Dictionary) -> void:
 			solid = false
 			box(Transform3D(Basis(Vector3.UP, float(r[1]) + 0.4), rp + back + Vector3(0.8, 0.12, 0.2)), Vector3(0.5, 0.24, 1.4), HIDE.darkened(0.2), 0.0, 0.06, 0.03)
 			solid = true
+			# The low stone they sit on by the fire (§FH, HearthFolk), the
+			# room's own stone, as the rest of its dressing.
+			var seat := HearthFolk.seat(rp, float(r[1]))
+			box(seat.xf, seat.size, (palette[2] as Color).darkened(0.05), 0.0, 0.04, 0.02)
 		"crypt":
 			if half < 2.4:
 				return

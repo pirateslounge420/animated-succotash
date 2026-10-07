@@ -28,6 +28,12 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	# SCENE=crawler_hearth (design 6 Oct §FH, §ER): Torchfire 1's hearth
+	# room, not the open world.
+	if OS.get_environment("SCENE") == "crawler_hearth":
+		await _crawler_hearth()
+		quit(0)
+		return
 	var world = get_root().get_node("World")
 	world.pin(42, 0)
 	seed(42)
@@ -84,6 +90,48 @@ func _run() -> void:
 	print("[perf] %s internal %s: frame %.1f ms, scripts %.1f, cpu %.1f, gpu %.1f | shadows off: frame %.1f, gpu %.1f | shadow pass ≈ %.1f ms gpu, %d draws, %dk tris; total draws %d, %dk tris" % [
 		label, get_root().content_scale_size, on.frame, on.proc, on.cpu, on.gpu, off.frame, off.gpu, on.gpu - off.gpu, on.sdraws, on.sprims / 1000, on.draws, on.prims / 1000])
 	quit()
+
+
+## Torchfire 1's hearth room (design 6 Oct §FH, §ER): SEED's tomb (7 by
+## default) at the default internal frame, measured from the mat where you
+## wake, looking across the hearth at the one who found you; the same with
+## the rescuer hidden and stopped (its own cost is the difference); and
+## from 1.6 m in front of the rescuer, where it fills the frame. One line
+## each, LABEL first.
+func _crawler_hearth() -> void:
+	WorldSave.read_only = true
+	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
+	OS.set_environment("SEED", str(seed_v))
+	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
+	get_root().add_child(main)
+	while not main.baked:
+		await process_frame
+	var vp := get_root().get_viewport_rid()
+	RenderingServer.viewport_set_measure_render_time(vp, true)
+	var p := main.player
+	p.set_physics_process(false)
+	var w: Array = main.lay.wake
+	p.spawn_flat(w[0], float(w[1]), -0.32)
+	var r: Node3D = main.rescuer
+	var label := OS.get_environment("LABEL")
+	var say := func(what: String, m: Dictionary) -> void:
+		print("[perf] %s crawler hearth %s, internal %s: frame %.1f ms (%.0f fps), scripts %.2f, cpu %.2f, gpu %.2f ms; %d draws, %dk tris" % [
+			label, what, get_root().content_scale_size, m.frame, 1000.0 / maxf(m.frame, 0.01), m.proc, m.cpu, m.gpu, m.draws, m.prims / 1000])
+	await _measure(vp, WARM)
+	say.call("waking view", await _measure(vp, MEASURE))
+	r.visible = false
+	r.process_mode = Node.PROCESS_MODE_DISABLED
+	await _measure(vp, mini(60, WARM))
+	say.call("waking view, rescuer hidden", await _measure(vp, MEASURE))
+	r.visible = true
+	r.process_mode = Node.PROCESS_MODE_INHERIT
+	var rp: Vector3 = (main.lay.rescuer as Array)[0]
+	var ry := float((main.lay.rescuer as Array)[1])
+	var front := Vector3(-sin(ry), 0.0, -cos(ry))
+	var at := rp + front * 1.6
+	p.spawn_flat(at, atan2(front.x, front.z), -0.15)
+	await _measure(vp, mini(60, WARM))
+	say.call("1.6 m in front of the rescuer", await _measure(vp, MEASURE))
 
 
 ## The rainforest camp view (§ER.1): found, built, measured rain on and

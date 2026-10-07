@@ -246,9 +246,11 @@ static func door_side(pc: Dictionary, d: Dictionary) -> Array:
 
 
 ## Where you wake (a mat by the hearth, facing it), the bundle, the
-## rescuer (across the hearth, facing you): clear of the room's doors.
+## rescuer (across the hearth, facing it and you): clear of the room's
+## doors.
 static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: Dictionary) -> void:
-	var stand := float((Tuning.table("crawler").get("rescuer", {}) as Dictionary).get("stand_m", 2.1))
+	var res: Dictionary = Tuning.table("crawler").get("rescuer", {})
+	var stand := float(res.get("stand_m", 2.1))
 	# The way from the hearth with the most room: away from the doors.
 	var best_a := 0.0
 	var best_score := -INF
@@ -269,7 +271,21 @@ static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: 
 	var side := Vector2(-v.y, v.x)
 	var b := v * 0.9 + side * 0.85
 	lay["bundle"] = Vector3(b.x, 0.0, b.y)
-	var r := -v * stand + side * 0.3
+	# Across the hearth, a little way round it (rescuer.round_deg, §FH: it
+	# sits, lower than the flame, so not straight across), on whichever
+	# side keeps it and its things behind it farther from the doors.
+	var ra := deg_to_rad(float(res.get("round_deg", 30.0)))
+	var r := Vector2.ZERO
+	var best_clear := -INF
+	for sgn: float in [1.0, -1.0]:
+		var rr := (-v * cos(ra) + side * (sin(ra) * sgn)) * stand
+		var clear := INF
+		for di in room.doors:
+			var dp: Vector2 = (lay.doors[di] as Dictionary).p
+			clear = minf(clear, minf(dp.distance_to(rr), dp.distance_to(rr * (1.0 + 1.3 / maxf(stand, 0.1)))))
+		if clear > best_clear:
+			best_clear = clear
+			r = rr
 	# Facing the hearth (a yaw of 0 faces -z): its front is -r.
 	lay["rescuer"] = [Vector3(r.x, 0.0, r.y), atan2(r.x, r.y)]
 

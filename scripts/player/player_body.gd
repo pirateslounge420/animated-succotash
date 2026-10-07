@@ -215,6 +215,16 @@ var ride_sway := 0.0
 ## Stride length as a share of the player's: bigger figures take longer,
 ## slower strides, smaller ones quicker, shorter ones (set to the scale).
 var stride_scale := 1.0
+## Seated, a slow breath (design 6 Oct §FH, the hearth folk's idle): the
+## chest's rise, as a share of its height (the shoulders and the hood ride
+## it), one breath every `breath_s` seconds; 0 sits still, as camp folk do.
+var breath := 0.0
+var breath_s := 4.5
+## The pose steps this many times a second, the era's steppy animation
+## (§FH; the sprites stepped at crawler.json sprites.anim_fps); 0 poses
+## every physics frame, smooth. The cloth still moves every frame.
+var pose_fps := 0.0
+var _pose_dt := 0.0
 ## The trailing arms' elbow bend (radians), set by whoever trails them
 ## (PlanetPlayer's ninja run): added to the elbows over their rest pose.
 var trail_elbow := 0.0
@@ -359,7 +369,41 @@ func set_beast(animal: String) -> void:
 	cowl.transform = fit.cowl
 	head.add_child(cowl)
 	beast = animal
+	if texel_m > 0.0:
+		_texel_head()
 	CloakedFigure.fit_head_hitbox(self)
+
+
+## The painted detail's texels a metre (set_texels(); 0 the rig's own).
+var texel_m := 0.0
+
+
+## Paint the figure in big texels (design 6 Oct §FH, §ES; the folk at a
+## hearth): its painted detail one value a texel on a grid of `per_m`
+## texels a metre in each part's own space, as the tomb's walls carry
+## theirs, so it pixelates like the walls at the 480-line frame. Its beast
+## head too, on its own copy of the head's material (the heads' are shared
+## by animal). 0 puts back the rig's fine weave and soft grain.
+func set_texels(per_m: float) -> void:
+	texel_m = maxf(per_m, 0.0)
+	for m in [_mat, _cloth_mat]:
+		m.set_shader_parameter("texel_m", texel_m)
+	_texel_head()
+
+
+func _texel_head() -> void:
+	var mi := head.get_node_or_null("Beast") as MeshInstance3D
+	if mi == null:
+		return
+	var shared := BeastHeads.material(beast)
+	if texel_m <= 0.0:
+		mi.material_override = shared
+		return
+	var own := mi.material_override as ShaderMaterial
+	if own == null or own == shared:
+		own = Look.register(shared.duplicate() as ShaderMaterial)
+		mi.material_override = own
+	own.set_shader_parameter("texel_m", texel_m)
 
 
 ## The cowl (§EQ): the hood with its hollow lined like the rest of its
@@ -507,7 +551,10 @@ func _physics_process(delta: float) -> void:
 	# creatures are; design §ER.1: no per-frame work on far folk); farther
 	# ones hold their pose as they travel.
 	if d <= Creature.RIG_M:
-		_pose(delta)
+		_pose_dt += delta
+		if pose_fps <= 0.0 or _pose_dt >= 1.0 / pose_fps:
+			_pose(_pose_dt)
+			_pose_dt = 0.0
 	var t0 := Time.get_ticks_usec()
 	simulating = _should_simulate(d)
 	if simulating:
@@ -624,6 +671,13 @@ func _pose(delta: float) -> void:
 		_hips.position = Vector3(0.0, SHIN_M + 0.06, 0.05)
 		_update_look(delta)
 		_torso.rotation = Vector3(-0.18, _torso_yaw * 0.5, 0.0)
+		if breath > 0.0:
+			# The slow breath (§FH): the chest rises and fills, the back
+			# straightening a little with it; the shoulders, the arms, the
+			# hood and the cloak's neck ride the torso.
+			var b := sin(_time * TAU / maxf(breath_s, 0.5))
+			_torso.scale = Vector3(1.0 + 0.4 * breath * b, 1.0 + breath * b, 1.0 + 0.6 * breath * b)
+			_torso.rotation.x += 1.2 * breath * b
 		head.rotation = Vector3(0.12 + _head_pitch, _head_yaw - _torso_yaw * 0.5, 0.0)
 		for s in 2:
 			_legs[s].rotation = Vector3(1.5, 0.0, 0.08 * (-1.0 if s == 0 else 1.0))

@@ -25,9 +25,18 @@ extends SceneTree
 ##     holds, unguttered and whipped hard (not out of the line or behind
 ##     cover), the moan and the dust as built; wading toward
 ##     douse_depth_m gutters it (redder, never bluer), past it douses it;
-##  5. the rescuer's sprite (§ET.8): its sheet around x frames by rows,
-##     the frame picked by where the camera stands (front, side, behind,
-##     above, below), facing the hearth;
+##  5. the one who found you (§FH): the live shared rig, not a sprite: a
+##     HearthFolk holding a seated PlayerBody with its beast head, real
+##     geometry (its triangles) and no FigureSprite anywhere in the tomb;
+##     facing the hearth on its stone (the stone in the tomb's collision,
+##     right under its hips); painted per §ES (no material on it with
+##     specular above 0, roughness under 1 or a normal map; its painted
+##     detail in big texels, folk_3d.texels_per_m); casting the fire's
+##     shadow; breathing (its neck rises and falls); turning its hood to
+##     you in front of it; something to bump into. And FigureSprite, kept
+##     for creatures and bosses (§ET.8): a sheet's frame picked by where
+##     the camera stands (front, side, behind, above, below), its idle
+##     stepping;
 ##  6. the crosshair (§EX.7, Reticle): the one thing in the crawler's HUD
 ##     (no words, nothing else of the open world's), round the frame's
 ##     middle pixel and sized per hud.json reticle at the 480 and 270
@@ -84,7 +93,8 @@ func _run() -> void:
 	await _snuff(main)
 	await _douse(main)
 	await _half_dark(main)
-	_sprite(main)
+	await _rescuer(main)
+	_sprite_kept(main)
 	await _reticle(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
@@ -1068,13 +1078,172 @@ func _half_dark(main: CrawlerMain) -> void:
 	ok(hd.strength == 0.0, "by the lit hearth: nothing added (%.2f)" % hd.strength)
 
 
-func _sprite(main: CrawlerMain) -> void:
+## The materials on every mesh under `n`: [GeometryInstance3D, Material].
+func _materials_under(n: Node) -> Array:
+	var out: Array = []
+	for c in n.find_children("*", "GeometryInstance3D", true, false):
+		var g := c as GeometryInstance3D
+		if g.material_override != null:
+			out.append([g, g.material_override])
+		var mi := g as MeshInstance3D
+		if mi != null and mi.mesh != null and g.material_override == null:
+			for si in mi.mesh.get_surface_count():
+				var m: Material = mi.get_surface_override_material(si)
+				if m == null:
+					m = mi.mesh.surface_get_material(si)
+				if m != null:
+					out.append([g, m])
+	return out
+
+
+## Diffuse only (§ES.2): "" if `m` has no specular above 0, no roughness
+## under 1 and no normal map; else what's wrong.
+func _diffuse_only(m: Material) -> String:
+	if m is BaseMaterial3D:
+		var b := m as BaseMaterial3D
+		if b.specular_mode != BaseMaterial3D.SPECULAR_DISABLED and b.metallic_specular > 0.0:
+			return "specular %.2f" % b.metallic_specular
+		if b.roughness < 1.0:
+			return "roughness %.2f" % b.roughness
+		if b.normal_enabled:
+			return "a normal map"
+		return ""
+	if m is ShaderMaterial:
+		var sh := (m as ShaderMaterial).shader
+		if sh == null:
+			return "no shader"
+		var code := sh.code
+		var rm := RegEx.create_from_string("render_mode([^;]*);").search(code)
+		var modes := rm.get_string(1) if rm != null else ""
+		if not modes.contains("specular_disabled") and not modes.contains("unshaded"):
+			return "%s: specular not disabled" % sh.resource_path
+		for a in RegEx.create_from_string("ROUGHNESS\\s*=\\s*([^;]+);").search_all(code):
+			if a.get_string(1).strip_edges() != "1.0":
+				return "%s: ROUGHNESS = %s" % [sh.resource_path, a.get_string(1)]
+		for a in RegEx.create_from_string("SPECULAR\\s*=\\s*([^;]+);").search_all(code):
+			if a.get_string(1).strip_edges() != "0.0":
+				return "%s: SPECULAR = %s" % [sh.resource_path, a.get_string(1)]
+		if code.contains("NORMAL_MAP"):
+			return "%s: a normal map" % sh.resource_path
+		return ""
+	return "a %s" % m.get_class()
+
+
+func _rescuer(main: CrawlerMain) -> void:
 	var r := main.rescuer
+	var p := main.player
+	# Back on the mat, across the fire from it (the rig poses only near the
+	# eyes, as every figure does).
+	var w: Array = main.lay.wake
+	p.spawn_flat(w[0], float(w[1]), -0.32)
+	await _frames(30)
+	# The live rig, not a sprite (§FH).
+	var sprites := 0
+	for n in main.find_children("*", "", true, false):
+		if n is FigureSprite:
+			sprites += 1
+	var body := r.body if r != null else null
+	ok(r is HearthFolk and body is PlayerBody and r.get_parent() == main and sprites == 0, "the rescuer is the live 3D rig (a HearthFolk holding the shared PlayerBody), and no FigureSprite in the tomb (%d)" % sprites)
+	if body == null:
+		return
+	var beast_mi := body.head.get_node_or_null("Beast") as MeshInstance3D
+	ok(body.seated and r.beast != "" and body.beast == r.beast and beast_mi != null and beast_mi.is_visible_in_tree(), "seated, wearing its beast's head: %s (§EO, §EQ)" % r.beast)
+	var tris := body.triangles
+	if beast_mi != null:
+		tris += int(beast_mi.mesh.get_meta("tris", 0))
+	var parts := 0
+	for g in r.find_children("*", "GeometryInstance3D", true, false):
+		if (g as GeometryInstance3D).is_visible_in_tree():
+			parts += 1
+	print("  the rescuer: %s, %d triangles in %d parts, scale %.2f, its cloth %.0f µs a step" % [r.beast, tris, parts, r.k, body.sim_usec_avg])
+	# (The rig is ~4.4k against §ES.2's ~1,500, an open call for Mike since
+	# the §ES pass; this only holds it there.)
+	ok(tris >= 600 and tris <= 6000, "real geometry, the shared rig's own: %d triangles (§ES.2's ~1,500 is Mike's open call)" % tris)
+	# Facing the hearth, on its stone.
+	var to_hearth := main.fires.hearth.global_position - r.global_position
+	to_hearth.y = 0.0
+	ok(r.front().dot(to_hearth.normalized()) > 0.9, "it sits facing the hearth")
+	var blockers: Array[RID] = [p.get_rid()]
+	for b in r.find_children("Blocker", "StaticBody3D", true, false):
+		blockers.append((b as StaticBody3D).get_rid())
+	# Chest high, from 1 m in front of it: the blocker stops the ray at it.
+	var chest := r.global_position + Vector3.UP * 0.7
+	var bump := _ray(chest + r.front() * 1.0, chest - r.front() * 0.3, [p.get_rid()])
+	var bump_m := (bump.position as Vector3).distance_to(chest + r.front() * 1.0) if not bump.is_empty() else INF
+	ok(blockers.size() == 2 and not bump.is_empty() and Hitboxes.creature_of(bump.collider) == r and bump_m > 0.5 and bump_m < 0.9, "something to bump into, round it (the rig's blocker, %.2f m in from 1 m)" % bump_m)
+	var seat := HearthFolk.seat((main.lay.rescuer as Array)[0], float((main.lay.rescuer as Array)[1]))
+	var sc: Vector3 = (seat.xf as Transform3D).origin
+	var hit := _ray(Vector3(sc.x, 1.5, sc.z), Vector3(sc.x, -0.5, sc.z), blockers)
+	var hips := (body.get_node("Hips") as Node3D).global_position
+	var under := hips.y - 0.075 * r.k
+	var top := float((hit.get("position", Vector3.ZERO) as Vector3).y)
+	print("  its stone: top %.3f m, under its hips %.3f m (hips %.3f)" % [top, under, hips.y])
+	ok(not hit.is_empty() and absf(top - float(HearthFolk.RES.get("seat_h_m", 0.32))) < 0.04 and absf(under - top) < 0.03 and Vector2(hips.x - sc.x, hips.z - sc.z).length() < 0.15, "it sits on its stone: the stone in the tomb's collision right under its hips (%.2f m)" % top)
+	# Painted per §ES: diffuse only, big texels, casting the fire's shadow.
+	var mats := _materials_under(r)
+	var bad: Array = []
+	var texel_ok := true
+	var want_texels := float(HearthFolk.F3D.get("texels_per_m", 16.0))
+	var shadowless := 0
+	for e in mats:
+		var why := _diffuse_only(e[1])
+		if why != "":
+			bad.append("%s: %s" % [(e[0] as Node).name, why])
+		if e[1] is ShaderMaterial and absf(float((e[1] as ShaderMaterial).get_shader_parameter("texel_m")) - want_texels) > 0.01:
+			texel_ok = false
+		if (e[0] as GeometryInstance3D).is_visible_in_tree() and (e[0] as GeometryInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			shadowless += 1
+	ok(mats.size() > 0 and bad.is_empty(), "no material on it has specular above 0, roughness under 1 or a normal map (§ES.2; %d checked)%s" % [mats.size(), (": " + ", ".join(bad)) if not bad.is_empty() else ""])
+	ok(texel_ok, "its painted detail in big texels, %.0f a metre, the walls' grid (folk_3d.texels_per_m), its head too" % want_texels)
+	ok(shadowless == 0, "every part of it casts the fire's shadow, its head too (%d without)" % shadowless)
+	var shared_head := BeastHeads.material(r.beast)
+	var shared_texels: Variant = shared_head.get_shader_parameter("texel_m")
+	ok(beast_mi != null and beast_mi.material_override != shared_head and (shared_texels == null or absf(float(shared_texels)) < 0.001), "its head's big texels are its own: the %s heads elsewhere keep theirs" % r.beast)
+	# Its idle (§FH): a slow breath, the neck rising and falling with it.
+	var neck := body.head
+	var lo := INF
+	var hi := -INF
+	var breath_s := float(HearthFolk.RES.get("breath_s", 4.5))
+	for i in int(breath_s * 60.0 * 1.2):
+		await physics_frame
+		lo = minf(lo, neck.global_position.y)
+		hi = maxf(hi, neck.global_position.y)
+	ok(hi - lo > 0.008 and hi - lo < 0.06, "it breathes: its neck rises and falls %.1f cm over a breath (%.1f s)" % [(hi - lo) * 100.0, breath_s])
+	# Its hood to you, in front of it and off to one side.
+	var front := r.front()
+	var side := front.cross(Vector3.UP)
+	var at := r.global_position + (front * cos(0.6) + side * sin(0.6)) * 2.2
+	_place_facing(p, Vector3(at.x, 0.0, at.z), r.global_position)
+	await _frames(90)
+	var cam := get_root().get_viewport().get_camera_3d().global_position
+	var to_cam := cam - neck.global_position
+	to_cam.y = 0.0
+	var hood := -neck.global_basis.z
+	hood.y = 0.0
+	var a_hood := rad_to_deg(hood.angle_to(to_cam))
+	var a_body := rad_to_deg(front.angle_to(to_cam))
+	print("  you %.0f° off its front: its hood %.0f° from you" % [a_body, a_hood])
+	ok(a_hood < a_body - 15.0, "it turns its hood to you while you're near and in front of it (%.0f° off, from %.0f°)" % [a_hood, a_body])
+	p.spawn_flat(w[0], float(w[1]), -0.32)
+	await _frames(10)
+
+
+## FigureSprite stays for creatures and bosses (§ET.8, folk_3d.
+## sprites_stay_for): a sheet (blank here: no renderer) on a test sprite,
+## the frame picked by where the camera stands, its idle stepping.
+func _sprite_kept(main: CrawlerMain) -> void:
 	var rows: Array = FigureSprite.SP.get("rows_deg", [-25, 0, 30])
 	var around := int(FigureSprite.SP.get("around", 8))
-	var n := r.frames
-	var px := int(CrawlerMain.RES.get("px", 96))
-	ok(r.atlas.get_width() == int(round(px * 0.75)) * around * n and r.atlas.get_height() == px * rows.size(), "the rescuer's sheet: %d around x %d heights x %d idle frames (%dx%d)" % [around, rows.size(), n, r.atlas.get_width(), r.atlas.get_height()])
+	var n := 4
+	var px := 96
+	var r := FigureSprite.new()
+	r.name = "SpriteCheck"
+	main.add_child(r)
+	r.global_position = Vector3(0.0, -300.0, 40.0)
+	var yaw := 0.7
+	var sheet := Image.create(int(round(px * 0.75)) * around * n, px * rows.size(), false, Image.FORMAT_RGBA8)
+	r.setup(sheet, 1.62, n, 1.62 * 0.93, yaw)
+	ok(r.atlas.get_width() == int(round(px * 0.75)) * around * n and r.atlas.get_height() == px * rows.size(), "FigureSprite kept for creatures and bosses: a sheet %d around x %d heights x %d idle frames (%dx%d)" % [around, rows.size(), n, r.atlas.get_width(), r.atlas.get_height()])
 	var foot := r.global_position
 	var front := Vector3(-sin(r.yaw), 0.0, -cos(r.yaw))
 	var left := front.cross(Vector3.UP) * -1.0
@@ -1085,19 +1254,16 @@ func _sprite(main: CrawlerMain) -> void:
 				return i
 		return -1
 	var row0: int = row_of.call(0.0)
-	print("  frames: front %s left %s behind %s above %s below %s (yaw %.2f eye %.2f)" % [r.frame_for(eye + front * 3.0), r.frame_for(eye + left * 3.0), r.frame_for(eye - front * 3.0), r.frame_for(eye + front * 2.0 + Vector3(0.0, 2.0, 0.0)), r.frame_for(eye + front * 3.0 - Vector3(0.0, 1.6, 0.0)), r.yaw, r.eye_m])
-	ok(r.frame_for(eye + front * 3.0) == Vector2i(0, row0), "in front at eye height: frame 0, the level row")
+	ok(r.frame_for(eye + front * 3.0) == Vector2i(0, row0), "a sprite in front at eye height: frame 0, the level row")
 	ok(r.frame_for(eye + left * 3.0) == Vector2i(2, row0), "at its left: frame 2 of 8")
 	ok(r.frame_for(eye - front * 3.0) == Vector2i(4, row0), "behind it: frame 4 of 8")
 	ok(r.frame_for(eye + front * 2.0 + Vector3(0.0, 2.0, 0.0)).y == row_of.call(30.0), "from above: the row from above")
 	ok(r.frame_for(eye + front * 3.0 - Vector3(0.0, 1.6, 0.0)).y == row_of.call(-25.0), "from below: the row from below")
-	var to_hearth := (main.fires.hearth.global_position - foot)
-	to_hearth.y = 0.0
-	ok(front.dot(to_hearth.normalized()) > 0.9, "the rescuer stands facing the hearth")
 	var seen := {}
 	for i in 60:
 		seen[r.idle_frame(i * 0.25)] = true
 	ok(seen.size() == n, "its idle steps through all %d frames" % n)
+	NodeRelease.free_later(r)
 
 
 ## Process frames (the crosshair redraws in its own _process, after the

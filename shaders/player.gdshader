@@ -36,6 +36,13 @@ uniform vec3 main_color = vec3(0.016, 0.023, 0.15);
 uniform vec3 trim_color = vec3(0.37, 0.06, 0.024);
 uniform float base_lum = 0.03;
 uniform float trim_lum = 0.12;
+// Big texels (design 6 Oct §FH, §ES; PlayerBody.set_texels(), the folk at
+// a hearth): the painted detail one value a texel, on a grid of texel_m
+// texels a metre in the part's own space (the cloak's: its grid), on the
+// face's own plane as the tomb's walls pick theirs (ruin.gdshader's fitted
+// stone: a fleck on the 16-a-metre grid), so a figure pixelates like the
+// walls at the 480-line frame. 0: the fine weave and the soft grain.
+uniform float texel_m = 0.0;
 
 const int COLS = 16;
 const int ROWS = 8;
@@ -66,6 +73,25 @@ vec3 node_ex(int r, int c) {
 		p = 2.0 * p - node_row(r, cc + (c < 0 ? 1 : -1));
 	}
 	return p;
+}
+
+// The colour `c` (this pixel's) carried to `mid` on the texel plane (`uv`
+// here) along its own slope on the screen: the plane's slopes give the
+// pixel step that reaches the texel's middle, at most a few pixels (where
+// the plane runs edge-on, nothing to go by).
+vec3 texel_paint(vec3 c, vec2 uv, vec2 mid) {
+	vec2 ux = dFdx(uv);
+	vec2 uy = dFdy(uv);
+	vec3 cx = dFdx(c);
+	vec3 cy = dFdy(c);
+	float det = ux.x * uy.y - ux.y * uy.x;
+	if (abs(det) < 1e-14) {
+		return c;
+	}
+	vec2 d = mid - uv;
+	vec2 s = vec2(uy.y * d.x - uy.x * d.y, ux.x * d.y - ux.y * d.x) / det;
+	s = clamp(s, vec2(-6.0), vec2(6.0));
+	return max(c + cx * s.x + cy * s.y, vec3(0.0));
 }
 
 vec4 cr_w(float t) {
@@ -143,31 +169,24 @@ void fragment() {
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
+	// Big texels (§FH): the texel this pixel is in, on the face's own plane
+	// as the walls pick theirs, and the paint (the vertex colour: its folds
+	// and its baked occlusion) read at the texel's middle, carried there
+	// along its own slope on the screen, so it steps texel by texel. Out
+	// here, where every pixel runs it: the slopes need their neighbours.
+	vec3 paint = COLOR.rgb;
+	vec2 tg = vec2(0.0);
+	if (texel_m > 0.0) {
+		vec3 an = abs(tex_nrm);
+		vec2 uv = an.y > 0.6 ? tex_pos.xz : (an.x > an.z ? tex_pos.zy : tex_pos.xy);
+		tg = floor(uv * texel_m) + 0.5;
+		paint = texel_paint(COLOR.rgb, uv, tg / texel_m);
+	}
 	if (kind == 3) {
 		ALBEDO = vec3(0.0);
 		EMISSION = hollow_color;
 	} else {
-		// Textures are gray around 0.5 (no change); `k` is how strongly
-		// each material shows its texture.
-		vec3 t;
-		float k;
-		// (2.6 and 3.2 repeats a metre until design 6 Oct §ES.2: a 64-px
-		// weave at that is ~170-200 texels a metre, finer than a 270-line
-		// pixel past a metre or two, and it crawled; ~32 now, about one
-		// texel a pixel at walking distance.)
-		if (kind == 1) {
-			t = tri(look_tex_weave, 0.5);
-			k = 1.0;
-		} else if (kind == 2) {
-			t = tri(look_tex_weave, 0.5);
-			k = 0.6;
-		} else {
-			t = vec3(texture(look_grain_soft, (tex_pos.xy + tex_pos.zy) * 9.0).r);
-			k = 0.45;
-		}
-		// Broad painted mottling over everything.
-		float g = texture(look_grain_soft, (tex_pos.xy * 1.3 + tex_pos.zy * 1.7) * 2.2).r;
-		vec3 base = COLOR.rgb;
+		vec3 base = paint;
 		if (recolor && kind > 0) {
 			float l = dot(base, vec3(0.2126, 0.7152, 0.0722));
 			if (kind == 1) {
@@ -178,7 +197,36 @@ void fragment() {
 				base = trim_color * clamp(l / trim_lum, 0.3, 1.6);
 			}
 		}
-		ALBEDO = base * mix(vec3(1.0), t * 2.0, k) * (0.7 + 0.6 * g);
+		if (texel_m > 0.0) {
+			// A fleck of each texel's own (the walls' hash), strongest on
+			// the cloth, and the broad mottling read once at its middle.
+			float fl = fract(sin(dot(tg, vec2(12.9898, 78.233))) * 43758.5453);
+			float g = texture(look_grain_soft, tg / texel_m * 0.35 + 0.17).r;
+			float k = kind == 1 ? 0.3 : (kind == 2 ? 0.2 : 0.16);
+			ALBEDO = base * (1.0 + k * (fl - 0.5)) * (0.75 + 0.5 * g);
+		} else {
+			// Textures are gray around 0.5 (no change); `k` is how strongly
+			// each material shows its texture.
+			vec3 t;
+			float k;
+			// (2.6 and 3.2 repeats a metre until design 6 Oct §ES.2: a 64-px
+			// weave at that is ~170-200 texels a metre, finer than a 270-line
+			// pixel past a metre or two, and it crawled; ~32 now, about one
+			// texel a pixel at walking distance.)
+			if (kind == 1) {
+				t = tri(look_tex_weave, 0.5);
+				k = 1.0;
+			} else if (kind == 2) {
+				t = tri(look_tex_weave, 0.5);
+				k = 0.6;
+			} else {
+				t = vec3(texture(look_grain_soft, (tex_pos.xy + tex_pos.zy) * 9.0).r);
+				k = 0.45;
+			}
+			// Broad painted mottling over everything.
+			float g = texture(look_grain_soft, (tex_pos.xy * 1.3 + tex_pos.zy * 1.7) * 2.2).r;
+			ALBEDO = base * mix(vec3(1.0), t * 2.0, k) * (0.7 + 0.6 * g);
+		}
 	}
 	// Pre-lit (design §ES.2): the painted light, from the sky above.
 	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);

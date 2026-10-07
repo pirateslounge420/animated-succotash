@@ -8,7 +8,7 @@ extends Node
 ##      camp sim) is not built here at all; it stays in scenes/main.tscn,
 ##      compiling and checked (GameMode).
 ##   2. the hearth room (§ET.3): you wake underground on a mat by a lit
-##      hearth, the one who found you standing across it, a bundle of
+##      hearth, the one who found you sitting across it, a bundle of
 ##      unlit torches beside it, three or four ways out; the tomb beyond
 ##      generated from the seed out of the tomb kit (TombKit, TombBuild).
 ##   3. relighting (§ET.4): cold fire-holders down the tomb, lit with the
@@ -19,7 +19,9 @@ extends Node
 ##   4. the torch's snuff rules (§ET.7 as amended by §EZ.1 and §EZ.5:
 ##      only deep water puts it out; the airways lean it; TorchSnuff,
 ##      Airways), and F to smother it yourself (§FC.3, Torch.douse).
-##   5. the rescuer as a baked sprite (§ET.8, FigureSprite).
+##   5. the one who found you, sitting at the hearth: the shared rig live
+##      in 3D (§FH, HearthFolk; amends §ET.8 for folk, whose baked sprites,
+##      FigureSprite, stay for creatures and bosses).
 ##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
@@ -45,7 +47,7 @@ var vents: Vents
 var player: CrawlerPlayer
 ## The dark you can half see in (§FC.4).
 var half_dark: HalfDark
-var rescuer: FigureSprite
+var rescuer: HearthFolk
 var post: PostGrade
 var fire_shadows: FireShadows
 var environment: Environment
@@ -57,7 +59,8 @@ var log_panel: LogPanel
 var settings_panel: SettingsPanel
 var _fade: ColorRect
 var _lit_logged := 0
-## The rescuer's sheet is baked (tests wait on it).
+## The one who found you is at the hearth and the dark lifting (tests
+## wait on it; the name is from when the rescuer was baked to a sprite).
 var baked := false
 
 
@@ -125,11 +128,12 @@ func _ready() -> void:
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
 	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles"))])
-	_bake_rescuer.call_deferred()
+	_rescuer()
 
 
 func _exit_tree() -> void:
 	GameMode.crawler_running = false
+	PlayerBody.watch_point = Vector3(INF, INF, INF)
 	FireShadows.mode = ""
 	TorchSnuff.drafts = null
 	NodeRelease.detach_all(self)
@@ -318,7 +322,7 @@ func _ui() -> void:
 	settings_panel = SettingsPanel.new()
 	settings_panel.name = "Settings"
 	ui.add_child(settings_panel)
-	# Waking: the dark lifts once the rescuer is ready (FigureSprite's bake).
+	# Waking: the dark lifts once the hearth room is ready (_rescuer).
 	_fade = ColorRect.new()
 	_fade.color = Color(0.0, 0.0, 0.01)
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -326,46 +330,21 @@ func _ui() -> void:
 	ui.add_child(_fade)
 
 
-## The one who found you (§ET.3), standing across the hearth: built on the
-## shared rig, baked to its sheet (§ET.8), then shown as the sprite.
-func _bake_rescuer() -> void:
+## The one who found you (§ET.3), sitting across the hearth on a low
+## stone, facing it: the shared rig live in the scene (§FH, HearthFolk),
+## its cloak rolled and its head picked from the seed as the sprite's were
+## (rescuer.beast "seed"), so a seed keeps its rescuer.
+func _rescuer() -> void:
 	var r: Array = lay.rescuer
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([int(lay.seed), "rescuer"])
 	var height := float(RES.get("height_m", 1.62))
 	var pal := CloakedFigure.roll_palette(rng, CloakedFigure.tribe_family(int(lay.seed)))
-	var b := CloakedFigure.build(height, pal[0], pal[1])
-	var body: PlayerBody = b.root
 	var beast := str(RES.get("beast", "seed"))
 	if beast == "seed":
 		var all := BeastHeads.animals()
 		beast = str(all[rng.randi_range(0, all.size() - 1)]) if not all.is_empty() else ""
-	var n_frames := maxi(int(RES.get("idle_frames", 4)), 1)
-	var px := int(RES.get("px", 96))
-	var base := body.scale
-	var pose := func(n: Node3D, f: int, n_all: int) -> void:
-		# The idle: a slow breath, the shoulders rising a little.
-		var k := sin(TAU * f / maxf(n_all, 1.0))
-		n.scale = Vector3(base.x, base.y * (1.0 + 0.014 * k), base.z)
-	var sheet: Image
-	if DisplayServer.get_name() == "headless":
-		# No renderer: an empty sheet of the right size (the checks).
-		var cols := int(FigureSprite.SP.get("around", 8)) * n_frames
-		var rows := (FigureSprite.SP.get("rows_deg", [-25, 0, 30]) as Array).size()
-		sheet = Image.create(int(round(px * 0.75)) * cols, px * rows, false, Image.FORMAT_RGBA8)
-		body.queue_free()
-	else:
-		# The head goes on once the body is in its little world.
-		var holder := Node3D.new()
-		holder.add_child(body)
-		body.ready.connect(func(): body.set_beast(beast), CONNECT_ONE_SHOT)
-		sheet = await FigureSprite.bake(self, holder, height, px, n_frames, pose)
-	rescuer = FigureSprite.new()
-	rescuer.name = "Rescuer"
-	add_child(rescuer)
-	rescuer.global_position = r[0]
-	rescuer.setup(sheet, height, n_frames, height * 0.93, float(r[1]))
-	rescuer.set_meta("beast", beast)
+	rescuer = HearthFolk.make(self, "Rescuer", r[0], float(r[1]), height, pal, beast)
 	baked = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
@@ -373,6 +352,11 @@ func _bake_rescuer() -> void:
 
 
 func _process(_delta: float) -> void:
+	# The folk at the hearth look to you while you're near and in front of
+	# them (the rig's head-look watches the player's head; here, your eyes).
+	var cam := get_viewport().get_camera_3d()
+	if cam != null:
+		PlayerBody.watch_point = cam.global_position
 	player.typing = log_panel.visible
 	player.ui_open = settings_panel.visible or log_panel.visible
 	if reticle != null:
