@@ -25,15 +25,16 @@ extends Node
 ##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
-## hud), off with the Settings switch Crosshair dot and while the log or
-## the settings cover the middle of the frame. The log keeps its lines
-## (Enter), O the settings (with their Controls page, §FB), F11 the pixel
-## size, F2 the frame time. Right click takes a torch from the bundle;
-## left click swings the torch; the mouse wheel puts it away or takes it
-## out, and with Tab held the wheel steps the left hand through its strip
-## of fire pots, shown while Tab is held (§FB: Hands, HandStrip;
-## FirePots); F smothers the torch. No combat, no harm, no dread meter yet
-## (the dark is the absence of light in this slice).
+## hud), closing into a dim ring while you sneak (§FC.1), off with the
+## Settings switch Crosshair dot and while the log or the settings cover
+## the middle of the frame. The log keeps its lines (Enter), O the
+## settings (with their Controls page, §FB), F11 the pixel size, F2 the
+## frame time. Right click takes a torch from the bundle; left click
+## swings the torch; the mouse wheel puts it away or takes it out, and
+## with Tab held the wheel steps the left hand through its strip of fire
+## pots, shown while Tab is held (§FB: Hands, HandStrip; FirePots); F
+## smothers the torch. No combat, no harm, no dread meter yet (the dark is
+## the absence of light in this slice).
 
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
@@ -372,6 +373,8 @@ func _process(_delta: float) -> void:
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
 		reticle.shown = player.first_person and not player.ui_open
+		# Sneaking (§FC.1): the arms close into the dim ring.
+		reticle.sneak = player.crouching
 	if player.torch.note != "":
 		# Wordless (§ET.3): the torch's lines go to the log only.
 		player.torch.note = ""

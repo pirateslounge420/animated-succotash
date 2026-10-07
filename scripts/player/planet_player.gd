@@ -388,6 +388,9 @@ var surface_dir := Vector3.UP
 var swimming := false
 var sprinting := false
 var crouching := false
+## The action held to crouch (Controls; the crawler's sneak names it,
+## stealth.json sneak.key).
+var crouch_action := "crouch"
 var climbing := false
 ## On a rope ladder (§BT, Main.start_ladder): a scripted climb from one
 ## end to the other, hands busy, no steering.
@@ -1582,7 +1585,7 @@ func _update_stance() -> void:
 	# slows you on the ground instead: the movement step).
 	if not Input.is_action_pressed("move_forward"):
 		_sprint_latched = false
-	var want_crouch := Input.is_action_pressed("crouch") and not swimming
+	var want_crouch := Input.is_action_pressed(crouch_action) and not swimming
 	if want_crouch != crouching:
 		if want_crouch or _headroom():
 			_set_crouch(want_crouch)

@@ -17,6 +17,12 @@ const VOLUME_DB := {"crouch": -21.0, "walk": -11.0, "sprint": -4.0}
 ## What the last step landed on (grass, dirt, sand, stone, snow, wood,
 ## water).
 var ground := "grass"
+## A crouched step's volume as a share of a walking step's (the crawler's
+## sneak, design §FC.1: stealth.json sneak.footstep_volume); below 0, the
+## crouch's own VOLUME_DB, as built (the open world, the ninja profile).
+var crouch_share := -1.0
+## The last step's volume before its small random spread (dB; the checks).
+var last_db := 0.0
 
 var _dist := 0.0
 var _count := 0
@@ -60,9 +66,17 @@ func _step(player: PlanetPlayer, gait: String) -> void:
 	if ground == "water":
 		player.foot_splash(_count)
 	stream = SoundSynth.stream("step_" + ground, _count)
-	volume_db = VOLUME_DB[gait] + randf_range(-1.5, 1.5)
+	last_db = base_db(gait)
+	volume_db = last_db + randf_range(-1.5, 1.5)
 	pitch_scale = randf_range(0.92, 1.08)
 	play()
+
+
+## A step's volume for `gait` before the spread (dB).
+func base_db(gait: String) -> float:
+	if gait == "crouch" and crouch_share >= 0.0:
+		return VOLUME_DB["walk"] + linear_to_db(maxf(crouch_share, 0.0001))
+	return VOLUME_DB[gait]
 
 
 ## A scuff: a wall jump's kick or the skid of a sharp turn, on its own 3D

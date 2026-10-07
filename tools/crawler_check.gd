@@ -55,7 +55,16 @@ extends SceneTree
 ##     shadow, no shine, reaching black_m; off with the torch lit and
 ##     beside a lit fire in sight; on, eased in, with no flame near; a lit
 ##     torch behind a wall doesn't count, the same torch in sight does, and
-##     so does a fire pot's tar burning on the floor.
+##     so does a fire pot's tar burning on the floor;
+##  9. sneaking (§FC.1, stealth.json sneak): the eye eases down and back up
+##     over camera_ease_s, never a snap, and stays down under a low
+##     ceiling; the crosshair closes into the dim ring and back, the ring
+##     one clean pixel line round the frame's middle at 480 and 270 lines;
+##     a crouched step at footstep_volume of a walking one's; the ledge
+##     guard: a crouched walk at a 2 m drop stops at the lip, a diagonal
+##     one slides along it, neither falls, a standing one falls, and
+##     letting go of Shift steps off; and crouched through every door and
+##     down every flight of the tomb, the guard never holds you.
 
 const SEEDS := 30
 
@@ -96,6 +105,7 @@ func _run() -> void:
 	await _rescuer(main)
 	_sprite_kept(main)
 	await _reticle(main)
+	await _sneak(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -1436,3 +1446,277 @@ func _reticle(main: CrawlerMain) -> void:
 	else:
 		Settings.set_value("hud.reticle", had_switch)
 	Display.apply()
+
+
+## A box of solid ground under `parent`: `size`, centred at `at`.
+func _box(parent: Node, size: Vector3, at: Vector3) -> StaticBody3D:
+	var body := StaticBody3D.new()
+	var cs := CollisionShape3D.new()
+	var b := BoxShape3D.new()
+	b.size = size
+	cs.shape = b
+	body.add_child(cs)
+	body.position = at
+	parent.add_child(body)
+	return body
+
+
+## A walk with `keys` held for `n` frames: the lowest your feet went.
+func _walk(p: CrawlerPlayer, keys: Array, n: int) -> float:
+	for k in keys:
+		Input.action_press(k)
+	var low := p.global_position.y
+	for i in n:
+		await process_frame
+		low = minf(low, p.global_position.y)
+	for k in keys:
+		Input.action_release(k)
+	return low
+
+
+## The eye height each frame for `n` frames.
+func _eye_track(p: CrawlerPlayer, n: int) -> Array:
+	var out: Array = []
+	for i in n:
+		await process_frame
+		out.append(p._spring.position.y)
+	return out
+
+
+## The eye track's verdict: monotonic toward `to` (falling if `down`), its
+## first frame at `to` (s, -1 never) and its biggest one-frame step (m).
+func _eased(track: Array, from: float, to: float, down: bool) -> Dictionary:
+	var mono := true
+	var prev := from
+	var at := -1.0
+	var big := 0.0
+	for i in track.size():
+		var y: float = track[i]
+		if (down and y > prev + 1e-6) or (not down and y < prev - 1e-6):
+			mono = false
+		big = maxf(big, absf(y - prev))
+		if at < 0.0 and absf(y - to) < 1e-4:
+			at = (i + 1) / 60.0
+		prev = y
+	return {"mono": mono, "at": at, "big": big}
+
+
+## The sneak's ring on a frame `f` at scale `k` (Reticle.ring_cells): what
+## is wrong with it, or nothing. One clean pixel line `want_r` out from the
+## arms' crossing, the same on every side, the middle clear, its dark edge
+## one pixel round it inside and out.
+func _ring_faults(f: Vector2i, k: float, want_r: int) -> Array:
+	var rc := Reticle.ring_cells(f, k)
+	var bad: Array = []
+	var px := {}
+	var box := Rect2i()
+	var first := true
+	for r: Rect2i in rc.ring:
+		box = r if first else box.merge(r)
+		first = false
+		for x in range(r.position.x, r.end.x):
+			px[Vector2i(x, r.position.y)] = true
+	var w := int(rc.width)
+	if int(rc.radius) != want_r or box.size != Vector2i.ONE * (2 * want_r + w):
+		bad.append("radius %d, box %s (want %d, %d across)" % [rc.radius, box.size, want_r, 2 * want_r + w])
+	for p: Vector2i in px:
+		if not px.has(Vector2i(box.position.x + box.end.x - 1 - p.x, p.y)) or not px.has(Vector2i(p.x, box.position.y + box.end.y - 1 - p.y)) or not px.has(Vector2i(p.y - box.position.y + box.position.x, p.x - box.position.x + box.position.y)):
+			bad.append("not the same on every side")
+			break
+	var off := Vector2(box.position + box.end) * 0.5 - Vector2(f) * 0.5
+	if absf(off.x) > 0.5 or absf(off.y) > 0.5:
+		bad.append("%s off the frame's centre" % off)
+	var m: Vector2i = rc.middle
+	if px.has(m):
+		bad.append("the middle not clear")
+	# One pixel line: no 2x2 block of ring pixels anywhere (w 1).
+	if w == 1:
+		for p: Vector2i in px:
+			if px.has(p + Vector2i.RIGHT) and px.has(p + Vector2i.DOWN) and px.has(p + Vector2i.ONE):
+				bad.append("a 2x2 lump at %s" % p)
+				break
+	var edge := {}
+	for e: Rect2i in rc.edge:
+		for x in range(e.position.x, e.end.x):
+			var q := Vector2i(x, e.position.y)
+			if px.has(q) or edge.has(q):
+				bad.append("edge over the ring or twice at %s" % q)
+			edge[q] = true
+	var want_edge := {}
+	for p: Vector2i in px:
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var q := p + Vector2i(dx, dy)
+				if not px.has(q):
+					want_edge[q] = true
+	if edge.size() != want_edge.size():
+		bad.append("edge %d px, want %d" % [edge.size(), want_edge.size()])
+	return bad
+
+
+## Sneaking (design §FC.1, stealth.json sneak).
+func _sneak(main: CrawlerMain) -> void:
+	var p := main.player
+	var sn: Dictionary = CrawlerPlayer.SNEAK
+	var ease := float(sn.get("camera_ease_s", 0.18))
+	var share := float(sn.get("footstep_volume", 0.25))
+	var look: Dictionary = sn.get("reticle", {})
+	var dim := float(look.get("dim", 0.75))
+	for k in ["move_forward", "sprint", "crouch"]:
+		Input.action_release(k)
+	# A platform of its own, far below the tomb: its top at y0, its lip at
+	# x = 10 over a floor 2 m down.
+	var y0 := -800.0
+	var lip := 10.0
+	var plat := _box(main, Vector3(20.0, 2.0, 20.0), Vector3(0.0, y0 - 1.0, 0.0))
+	var below := _box(main, Vector3(200.0, 2.0, 200.0), Vector3(0.0, y0 - 3.0, 0.0))
+	p.spawn_flat(Vector3(-4.0, y0, -6.0), 0.0, 0.0)
+	await _frames(20)
+	var stand_eye := PlanetPlayer.EYE_Y
+	var crouch_eye := PlanetPlayer.CROUCH_EYE_Y
+	var r := main.reticle
+	var shape := func() -> String: return r.shape_now() if r != null else "none"
+	var alpha := func() -> float: return r.alpha_now() if r != null else 0.0
+	ok(not p.crouching and absf(p._spring.position.y - stand_eye) < 1e-4 and shape.call() == "cross" and is_equal_approx(alpha.call(), 1.0), "standing: the eye at %.2f m and the crosshair whole (%s)" % [stand_eye, shape.call()])
+	# Down, and the collision at once.
+	Input.action_press("crouch")
+	var track := await _eye_track(p, 18)
+	var dn := _eased(track, stand_eye, crouch_eye, true)
+	ok(dn.mono and float(dn.at) > 0.0 and float(dn.at) <= ease + 1.0 / 60.0 + 1e-6, "Shift: over the first 0.3 s the eye eases down, never back up, and is at %.2f m by %.3f s, the first tick past camera_ease_s %.2f" % [crouch_eye, dn.at, ease])
+	ok(float(dn.big) < (stand_eye - crouch_eye) * 0.25, "never a snap: the biggest one-frame step %.3f m of the %.2f m" % [dn.big, stand_eye - crouch_eye])
+	ok(p.crouching and is_equal_approx(p._shape.height, PlanetPlayer.CROUCH_HEIGHT), "the collision crouches at once (%.2f m tall)" % p._shape.height)
+	ok(shape.call() == "ring" and is_equal_approx(alpha.call(), dim) and r._key.size() > 1 and bool(r._key[1]), "crouched, the crosshair closes into the ring, dimmed to %.2f (%s)" % [alpha.call(), shape.call()])
+	# Up again.
+	Input.action_release("crouch")
+	track = await _eye_track(p, 18)
+	var rise := _eased(track, crouch_eye, stand_eye, false)
+	ok(rise.mono and float(rise.at) > 0.0 and float(rise.at) <= ease + 1.0 / 60.0 + 1e-6 and float(rise.big) < (stand_eye - crouch_eye) * 0.25, "let go: the eye eases back up, never back down, and is at %.2f m by %.3f s (biggest step %.3f m)" % [stand_eye, rise.at, rise.big])
+	ok(shape.call() == "cross" and is_equal_approx(alpha.call(), 1.0), "standing again, the crosshair is whole")
+	# The ring's pixels at 480 and 270 lines (ring_px at the 480 reference).
+	var ref := float(Tuning.section("hud", "text").get("ref_height_px", 480))
+	for lines_n in [480, 270]:
+		var k := float(lines_n) / ref
+		# The 16:9 frame of that many lines (Display.internal_size).
+		var fw := int(round(lines_n * 16.0 / 9.0))
+		var f := Vector2i(fw + (fw & 1), lines_n)
+		var want_r := maxi(roundi(float(look.get("ring_px", 4)) * k), maxi(roundi(float(Tuning.section("hud", "reticle").get("thickness_px", 1)) * k), 1) + 1)
+		var faults := _ring_faults(f, k, want_r)
+		ok(faults.is_empty(), "%d lines: the ring is one clean pixel line %d px out from the crosshair's middle, the same on every side, the middle clear, its dark edge one pixel round it%s" % [lines_n, want_r, "" if faults.is_empty() else ": %s" % [faults]])
+	# Under a low ceiling the view stays down.
+	Input.action_press("crouch")
+	await _frames(20)
+	var lid := _box(main, Vector3(3.0, 0.2, 3.0), p.global_position + Vector3(0.0, 1.1, 0.0))
+	await _frames(2)
+	Input.action_release("crouch")
+	await _frames(30)
+	ok(p.crouching and absf(p._spring.position.y - crouch_eye) < 1e-4, "under a ceiling 1.0 m up, letting go of Shift keeps you down: the eye stays at %.2f m, under it" % p._spring.position.y)
+	lid.queue_free()
+	await _frames(int(ease * 60.0) + 4)
+	ok(not p.crouching and absf(p._spring.position.y - stand_eye) < 1e-4, "out from under it you stand and the eye rises to %.2f m" % p._spring.position.y)
+	# Quieter feet.
+	var fs := p.footsteps
+	_place_facing(p, Vector3(-8.0, y0, 3.0), Vector3(0.0, y0, 3.0))
+	await _frames(10)
+	var n0 := fs._count
+	await _walk(p, ["move_forward"], 120)
+	var walk_db := fs.last_db
+	var n1 := fs._count
+	Input.action_press("crouch")
+	await _frames(10)
+	Input.action_press("move_forward")
+	await _frames(170)
+	var noise := p.noise_level
+	Input.action_release("move_forward")
+	Input.action_release("crouch")
+	var sneak_db := fs.last_db
+	var n2 := fs._count
+	var ratio := db_to_linear(sneak_db - walk_db)
+	ok(n1 - n0 >= 4 and n2 - n1 >= 3 and absf(ratio - share) < 0.001, "a crouched step plays at %.3f of a walking step's volume (%.1f dB against %.1f; footstep_volume %.2f; %d and %d steps)" % [ratio, sneak_db, walk_db, share, n1 - n0, n2 - n1])
+	ok(is_equal_approx(noise, 0.1), "crouched, the noise you make stays a tenth (noise_level %.2f, as built)" % noise)
+	var plain := Footsteps.new()
+	ok(is_equal_approx(plain.base_db("crouch"), float(Footsteps.VOLUME_DB.crouch)), "the open world's crouched step keeps its own volume (%.0f dB)" % plain.base_db("crouch"))
+	plain.free()
+	await _frames(int(ease * 60.0) + 4)
+	# The ledge guard: straight at the lip.
+	_place_facing(p, Vector3(lip - 2.5, y0, 0.0), Vector3(lip, y0, 0.0))
+	await _frames(10)
+	Input.action_press("crouch")
+	await _frames(20)
+	var low := await _walk(p, ["move_forward"], 600)
+	var short := lip - p.global_position.x
+	ok(low > y0 - 0.1 and p.is_on_floor() and short >= 0.0 and short <= 0.35, "a crouched walk straight at a 2 m drop for 10 s stops %.3f m short of the lip and never falls (lowest %.2f m)" % [short, low - y0])
+	Input.action_release("crouch")
+	low = await _walk(p, ["move_forward"], 90)
+	ok(low < y0 - 1.5, "let go of Shift and you step off (down %.1f m)" % (y0 - low))
+	# Diagonally along it.
+	_place_facing(p, Vector3(lip - 2.5, y0, -5.0), Vector3(lip - 1.5, y0, -4.0))
+	await _frames(10)
+	Input.action_press("crouch")
+	await _frames(20)
+	var z0 := p.global_position.z
+	low = await _walk(p, ["move_forward"], 600)
+	Input.action_release("crouch")
+	short = lip - p.global_position.x
+	ok(low > y0 - 0.1 and p.is_on_floor() and short >= 0.0 and short <= 0.35 and p.global_position.z - z0 > 4.0, "the same walk at 45 degrees slides along the lip (%.1f m along it, %.3f m short of it) and never falls" % [p.global_position.z - z0, short])
+	await _frames(int(ease * 60.0) + 4)
+	# Standing, you go over.
+	_place_facing(p, Vector3(lip - 2.5, y0, 5.0), Vector3(lip, y0, 5.0))
+	await _frames(10)
+	low = await _walk(p, ["move_forward"], 120)
+	ok(low < y0 - 1.5, "the same walk standing goes over the lip and falls (down %.1f m)" % (y0 - low))
+	plat.queue_free()
+	below.queue_free()
+	# The tomb's own floor never trips it: crouched through every door,
+	# and down every flight of stairs.
+	var lay := main.lay
+	var holds0 := p.ledge_holds
+	var held: Array = []
+	var gone: Array = []
+	Input.action_press("crouch")
+	for d in lay.doors:
+		var n2d: Vector2 = d.n
+		var q: Vector2 = (d.p as Vector2) - n2d * 1.3
+		var hit := _ray(Vector3(q.x, float(d.y) + 1.6, q.y), Vector3(q.x, float(d.y) - 2.0, q.y), [p.get_rid()])
+		if hit.is_empty():
+			continue
+		var from := Vector3(q.x, (hit.position as Vector3).y, q.y)
+		_place_facing(p, from, from + Vector3(n2d.x, 0.0, n2d.y))
+		await _frames(8)
+		var h0 := p.ledge_holds
+		await _walk(p, ["move_forward"], 230)
+		gone.append(Vector2(p.global_position.x - from.x, p.global_position.z - from.z).dot(n2d))
+		if p.ledge_holds != h0:
+			held.append("door %d (pieces %d-%d)" % [d.id, d.a, d.b])
+	var flights := 0
+	var drops: Array = []
+	for pc in lay.pieces:
+		if str(pc.kind) != "stair":
+			continue
+		flights += 1
+		var dir: Vector2 = pc.dir
+		var a: Vector2 = (pc.c as Vector2) + dir * 0.5
+		var top := Vector3(a.x, Delves.floor_of(pc, 0.5), a.y)
+		_place_facing(p, top, top + Vector3(dir.x, 0.0, dir.y))
+		await _frames(8)
+		var h1 := p.ledge_holds
+		var y_top := p.global_position.y
+		await _walk(p, ["move_forward"], int((float(pc.len) - 1.0) / PlanetPlayer.CROUCH_SPEED * 60.0) + 30)
+		drops.append([y_top - p.global_position.y, float(pc.y0) - float(pc.y1)])
+		if p.ledge_holds != h1:
+			held.append("stair %d" % pc.id)
+	Input.action_release("crouch")
+	gone.sort()
+	var down_ok := true
+	for dr in drops:
+		if float(dr[0]) < float(dr[1]) * 0.6:
+			down_ok = false
+	ok(held.is_empty() and gone.size() >= (lay.doors as Array).size() - 2, "crouched through all %d doors of the tomb (median %.1f m on through), the guard never holds you%s" % [gone.size(), gone[gone.size() / 2] if not gone.is_empty() else 0.0, "" if held.is_empty() else ": held at " + ", ".join(held)])
+	if flights == 0:
+		print("  no flights of stairs in this tomb (seeds 1 and 42 have them)")
+	else:
+		var went: Array = []
+		for dr in drops:
+			went.append("%.2f of %.1f m" % [dr[0], dr[1]])
+		ok(down_ok, "crouched down all %d flights of stairs, all the way down (%s)" % [flights, ", ".join(went)])
+	print("  the ledge guard held %d ticks at the test platform's lip, %d in the tomb" % [holds0, p.ledge_holds - holds0])
+	await _frames(int(ease * 60.0) + 4)

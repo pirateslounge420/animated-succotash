@@ -1,7 +1,7 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FC.1, §FC.2: sneak and hide; douse, §FC.3, is wired] Sneaking, hiding and dousing in the crawler (Mike, 6 Oct, 22:32; his Amnesia: A Machine for Pigs and Minecraft references). Brings §DF (your light gives you away) underground. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
-  "sneak": "§FC.1 (Mike): Shift held sneaks (the crawler's crouch, as built: crouch speed, noise_level 0.1). camera_ease_s: the view eases down to crouched eye height and back up, never a snap. reticle: the sneak look of hud.json's reticle (ring = the dot opens into a small ring; dim = its alpha scale). footstep_volume: a share of the walk's step volume. ledge_guard: while sneaking you can't walk off a drop deeper than ledge_drop_m; let go of Shift to step off (Minecraft).",
+  "about": "[NOT WIRED YET — design §FC.2: hide; sneak, §FC.1, and douse, §FC.3, are wired] Sneaking, hiding and dousing in the crawler (Mike, 6 Oct, 22:32; his Amnesia: A Machine for Pigs and Minecraft references). Brings §DF (your light gives you away) underground. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "sneak": "§FC.1 (Mike): Shift held sneaks (the crawler's crouch, as built: crouch speed, noise_level 0.1). camera_ease_s: the view eases down to crouched eye height and back up, never a snap. reticle: the sneak look of hud.json's reticle (ring = the dot opens into a small ring; dim = its alpha scale). footstep_volume: a share of the walk's step volume. ledge_guard: while sneaking you can't walk off a drop deeper than ledge_drop_m; let go of Shift to step off (Minecraft). Wired 7 Oct (Claude Code, prompt 53: CrawlerPlayer, Reticle, Footsteps): key names the Controls action held to sneak (crouch: Shift, the pad's B). The collision crouches at once and the eye eases over camera_ease_s by a smoothstep both ways; standing up still waits for headroom, so the view never rises into a low ceiling. The crawler's crosshair has four arms and no dot, so shape ring closes the arms into a small ring round the same middle, ring_px its radius at the 480 reference (Claude Code's first guess, 7 Oct; it follows the pixel-size preset like the arms), in the arms' colour, width and dark edge; shape cross keeps the cross and only dims it; dim scales the whole of it. A crouched step plays at footstep_volume of a walking step's volume (the open world keeps its own crouch volume). The ledge guard tests the ground under the capsule's leading edge, from 0.45 m above your feet to ledge_drop_m below them, and cuts the part of a move that would leave support, x and z apart: you stop with your front at the lip and slide along it if you push sideways. Not in the air.",
   "hide": "§FC.2 (Mike): things to hide behind and in. Claude's first guess: no hide button and no prompt; hidden means out of a creature's sight line (cover lists the kinds the tomb kit should leave room behind). A lit torch gives you away behind cover too (§DF).",
   "douse": "§FC.3 (Mike): put your own torch out on purpose and keep holding it (key in hands.json douse_key). log_line: the one log line. Relight from any lit flame, as built (§CN, §ET.7). Wired 7 Oct (Claude Code, Torch.douse): F (the d-pad's down on a pad; Controls action douse) smothers a lit torch in hand: it goes out with the reason smothered (never counted as water), logs log_line once, plays sound (SoundSynth smother_hiss), and stays in your hand with the burn it had; nothing that watches for a carried flame sees it any more (Senses reads the torch's lit state). F with no lit torch does nothing. keep_holding and relight_from describe the build and aren't read as switches."
  },
@@ -10,7 +10,8 @@
   "camera_ease_s": 0.18,
   "reticle": {
    "shape": "ring",
-   "dim": 0.75
+   "dim": 0.75,
+   "ring_px": 4
   },
   "footstep_volume": 0.25,
   "ledge_guard": true,
