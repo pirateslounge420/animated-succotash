@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-06 night — Design §FJ: Mike's answers (Claude, chat; design and data only)
+- **Locked 22:52:** the first ruin is drawn at random from the roster (amends §ET.3); the desert tomb's mummy wakes in its sarcophagus; hit 1 is a red ring with a heartbeat, hit 2 darker red and a harder heart; torches burn down again (reverses §EZ.5's no burn-down: a timer, three at most, from the hearth's bundle, relight from any flame); fire pots are clay; the centipede is the jungle's boss.
+- **Data:** `torch.json → snuff.burns_down` true, new `crawler_burn`; `harm.json → fd` rings; `fire_pots.json → vessel` clay_pot; `bosses.json → bosses.jungle`; `residents.json → creatures.mummy`; `crawler.json → opening_pick`.
+- **Queue:** prompt 50's no-burn-down step withdrawn in its text; 56 rewritten for the ring and heartbeat; 62 added (the torch timer and the three-torch limit).
+
+---
+
 ## 2026-10-06 night — Design §FA–§FI: fire fights back, sneaking, what lurks (Claude, chat; design and data only)
 - **Locked by Mike at 22:32** ("go ahead and lock it in"): a little combat, all of it fire (the torch staggers a creature's wind-up, rare fire pots burn; amends §ET.1); two hands on the wheel and Tab-and-wheel, Q retired, a Controls page; Shift sneak with an eased camera, a sneak reticle, quiet feet and Minecraft's ledge guard; hiding; dousing your own torch; a dark you can half see in; hit 1's edge goes red (amends §EC), a chase can follow you into the light (amends §EY.1), recovery only once it gives you up; residents below each boss, a roster (skeletons, ghosts, the mine's spider, temple cats, zombies, the were-mole, the swamp witch, and at 22:39–22:40 the imps and the warden); a lit floor is cleared; relit ruins' people come home and teach; atmosphere never puzzles; the hearth folk live 3D (amends §ET.8 for folk).
 - **New data, all `[NOT WIRED YET]`:** `fire_pots.json`, `hands.json`, `stealth.json`, `residents.json`; new blocks `crawler.json → dark, floors, cleared, restored, ambience, folk_3d`, `harm.json → fd`, `torch.json → stagger`. `bosses.json`: the swamp is the witch and the mine the spider; the hornet and the centipede move to `unplaced` with the imps and the warden; `rule.chase_enters_light`.

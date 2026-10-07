@@ -23,7 +23,8 @@
   "cleared": "[NOT WIRED YET — design §FF.2] A floor with every light relit is cleared: its residents leave, seen going into holes and out of windows (Mike). Half-lit, they fall back into the dark pockets and counterattack anyone who comes close (residents.json rules).",
   "restored": "[NOT WIRED YET — design §FF.3] When a whole ruin is relit its people come back (Mike): a living workplace you can return to, a fire to relight from, and folk who teach a technique or give an item (§BN). You never craft.",
   "ambience": "[NOT WIRED YET — design §FG] Atmosphere, never puzzles (Mike): glow-moss on damp stone that dims when a flame comes near and comes back after; daylight through windows and vents that follows the clock; stairs up to windows over the wilderness; beetles and scarabs that scatter from torchlight; vines that sway as you pass. glow_moss colour and numbers are first guesses (it gives off light, so it glows; never amber).",
-  "folk_3d": "[NOT WIRED YET — design §FH] The folk at the hearth are real 3D models of the shared rig, painted per §ES and made pixel by the 480-line frame and their texels (Mike: 'more like the goat pixel guy', frame 3), not baked billboards. Amends §ET.8 for folk; creatures and bosses stay sprites until Mike says (§FI.2 call 11)."
+  "folk_3d": "[NOT WIRED YET — design §FH] The folk at the hearth are real 3D models of the shared rig, painted per §ES and made pixel by the 480-line frame and their texels (Mike: 'more like the goat pixel guy', frame 3), not baked billboards. Amends §ET.8 for folk; creatures and bosses stay sprites until Mike says (§FI.2 call 11).",
+  "opening_pick": "[NOT WIRED YET — design §FJ.1] Mike, 6 Oct 22:52: 'first tomb should be randomly selected from the entire roster'. A new game's first dungeon is any built ruin kind (a key of themes), picked at random from the new game's seed; opening.first_theme stays the fallback until this is wired. Amends §ET.3. Each new kind joins the draw as it's built."
  },
  "opening": {
   "underground": true,
@@ -308,5 +309,10 @@
    "creatures",
    "bosses"
   ]
+ },
+ "opening_pick": {
+  "first": "random_from_roster",
+  "roster": "built_themes",
+  "seeded_per_new_game": true
  }
 }

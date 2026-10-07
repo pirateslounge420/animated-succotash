@@ -1,6 +1,6 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FE] What lurks in a ruin's dark, below its one boss (§EY.1 stays): each ruin kind has its own plan and its own residents, and each creature its own algorithm (Mike, 6 Oct, 22:32). The creatures and their 'mike' lines are Mike's; ranks, answers, tells and every number are Claude (chat)'s first guesses, 6 Oct night. Speeds in m/s: the ambient walk is 4.3, the sprint 5.6 (movement.json profiles.ambient).",
+  "about": "[NOT WIRED YET — design §FE] What lurks in a ruin's dark, below its one boss (§EY.1 stays): each ruin kind has its own plan and its own residents, and each creature its own algorithm (Mike, 6 Oct, 22:32). The creatures and their 'mike' lines are Mike's; ranks, answers, tells and every number are Claude (chat)'s first guesses, 6 Oct night. Speeds in m/s: the ambient walk is 4.3, the sprint 5.6 (movement.json profiles.ambient). §FJ.2 (Mike, 22:52): the desert tomb's mummy, waking in its sarcophagus (rank and numbers Claude's first guesses).",
   "rules": "§FD, §FF.2. gives_up: the ways a chase can end; each creature lists its own. chase_enters_light: a creature that has hit you may follow you into lit rooms (§FD, amends §EY.1 for chases); back_to_dark_s: once it gives you up in the light, how long before it is gone back into the dark. retreat_on_floor_lit: a floor with every light relit is cleared; its residents leave by retreat_to, seen going (§FF.2). pocket_counterattack_m: on a half-lit floor they fall back into dark pockets and strike at anyone who comes within this (§FF.2). light_heals: false (§FD, Mike).",
   "creatures": "§FE.2. Per creature: where (the ruin kind), rank (resident / boss / open), pattern (its algorithm), speeds, notice (sees_flame_m, hears_step_m: how far it sees a carried flame and hears a walking step; a sneak is heard at a tenth, as built), gives_up (its mix of rules.gives_up, with numbers), strike (reach_m, wind_up_s: the window in which a torch swing staggers it, §FA.1), tells (near: the sound it makes about the place; wind_up: its own strike tell, seen head-on or heard when it ambushes, §FA.2), fire_hp (burnt down by fire_pots.json bursts and burn), oil_scale (§FA.3: some oils do more), retreat_to (§FF.2)."
  },
@@ -193,6 +193,43 @@
     "light_oil": 1.0
    },
    "retreat_to": "its_tunnels"
+  },
+  "mummy": {
+   "where": "desert_tomb",
+   "rank": "resident",
+   "pattern": "waker",
+   "mike": "desert tomb can have a mummy in a sarcophagus that awakens",
+   "rests_in": [
+    "sarcophagus"
+   ],
+   "wakes_m": 3.0,
+   "rise_s": 2.4,
+   "walk_mps": 1.8,
+   "notice": {
+    "sees_flame_m": 10.0,
+    "hears_step_m": 6.0
+   },
+   "gives_up": {
+    "distance_m": 14.0,
+    "out_of_sight_s": 10.0,
+    "hide": true,
+    "torch_doused": false
+   },
+   "returns_to_rest": true,
+   "strike": {
+    "reach_m": 1.6,
+    "wind_up_s": 0.9
+   },
+   "tells": {
+    "near": "a stone lid grinding aside",
+    "wind_up": "a dry rasp of breath"
+   },
+   "fire_hp": 3.0,
+   "oil_scale": {
+    "tar": 2.0,
+    "light_oil": 1.5
+   },
+   "retreat_to": "back_into_its_sarcophagus"
   }
  }
 }

@@ -4919,3 +4919,84 @@ Each its own Claude Code pass, `docs/PROMPT_QUEUE.md` 52–61:
   ghosts, the imps and the warden; floors (§FF.1) and the people coming home (§FF.3).
 
 Mike plays and reports between each.
+
+## FJ. Answers: the first ruin is random, the mummy, a red ring that darkens, torches burn down again (carry three), clay pots, the centipede in the jungle — LOCKED (6 Oct, 22:52, Mike)
+
+Mike, answering §FI.2: *"first tomb should be randomly selected from the entire roster — desert tomb
+can have a mummy in a sarcophagus that awakens"*; *"there will be a red ring around your field of
+view on hit one with a heartbeat, and hit 2 it gets darker red and heartbeat gets more intense"*;
+*"torches should be on a timer and can go out just like in real life, so it makes it to where you
+should only be able to get a torch from the hearth initially and only hold up to 3. You can still
+relight from any flame"*; *"the clay pot bomb sounds good"*; *"the centipede can be the jungle
+boss and the imps can be a different one, not sure yet."* Direct answers, taken as locked (as
+§EZ.5 was).
+
+### FJ.1 The first ruin is drawn at random from the whole roster (Mike)
+- A new game's first dungeon is **any ruin kind on the roster, picked at random** (seeded per new
+  game), not always the sarcophagus tombs. **Amends §ET.3** ("the first ruin is the sarcophagus
+  tombs") and **answers §EW.8 call 4 / §FE.5** (the tomb's world): every kind can open the game.
+- Until a second kind is built only the tomb exists, so the pick is from the built kinds
+  (`crawler.json → opening_pick`, new; `opening.first_theme` stays the fallback until it's wired).
+  Each new kind joins the draw as it's built (§EW.7).
+
+### FJ.2 The desert tomb's mummy (Mike)
+- The **desert tomb** has a **mummy in a sarcophagus that awakens**: the skeletons' waker
+  (§FE.2), in a wrapped body, in the desert tomb's sarcophagi. Claude's first guesses: a resident
+  (the desert's boss stays the snake, §EY.3); the lid grinds aside as it wakes (its near tell);
+  slower than a skeleton, and tar takes it badly, being wrapped in old linen and resin
+  (`residents.json → creatures.mummy`, new).
+- **Two tombs now:** the Andean tomb (§EX.3, the one built) with its skeletons, and the desert
+  tomb with its mummies. The desert tomb's style is open (§EX.9 call 5).
+
+### FJ.3 Harm on screen: a red ring and a heartbeat from the first hit (Mike)
+- **Hit 1:** a **red ring round the edge of your view**, and **the heartbeat starts**.
+- **Hit 2:** the ring goes **darker red** (and closes in a little, Claude) and the heartbeat **beats
+  harder and faster**.
+- **Hit 3:** "Good night", as built.
+- **Amends §FD** (hit 1's thin dull edge) and **§EA/§EC's stages** (the heartbeat now starts on hit
+  1, not hit 2; §EA's darkening and muffle become this ring). Recovery runs back down the same
+  steps (§FD). `harm.json → fd` updated.
+
+### FJ.4 Torches burn down again: a timer, a bundle at the hearth, three at most (Mike)
+- **Every torch burns on a timer and goes out when it's spent**, like a real one. It gutters first
+  (§ET.7's warning, as built), then it's a charred stick that can't be relit. **Reverses §EZ.5's
+  "it no longer burns down"** for the crawler (`torch.json → snuff.burns_down` back to true).
+- **Unchanged from §EZ:** moving fast never puts it out (§EZ.1); deep water does (§EZ.5). Open:
+  whether "go out just like in real life" brings back the strong airway gust (§EZ.5 took it away).
+- **Where torches come from:** at first, only the bundle by the hearth (§ET.3). Claude's first
+  guess: the hearth's keeper makes more over time (`torch.json → bundle.remake_h_game`), and relit
+  ruins' folk give more (§FF.3); sconces give flame, never torches.
+- **You hold three at most** (Mike; Claude's reading: three in all, the lit one in your hand
+  included).
+- **Relight from any flame** (Mike, as built): a torch with burn left catches from the hearth, a
+  relit sconce, a planted torch. Dousing (§FC.3) stops the clock, so smothering it saves light.
+- **The light budget:** Claude's first guess is 20 real minutes of burn per torch in the crawler
+  (`torch.json → crawler_burn.burn_min`; the open world keeps its 50), so three are an hour of
+  carried light, stretched by relit sconces and dousing. Mike tunes it by playing.
+- **§FF.4 is live again:** the pitch technique (§FF.3) stretches a torch's burn
+  (`crawler_burn.pitch_scale`, first guess 1.5). **Flag:** §EZ.2 draws every crawler torch with a
+  pitch head. Claude's reading: the bundle's torches keep that look; the technique is rolling on a
+  fresh, thicker coat, so the look stays and the burn grows. Mike's call.
+
+### FJ.5 Clay pots (Mike)
+- The fire pot is a **sealed clay pot** (answers §FA.5; fits §EH). `fire_pots.json → vessel`
+  `clay_pot`. Glass stays out of the craft.
+
+### FJ.6 The centipede is the jungle's boss; the imps wait (Mike)
+- The **giant centipede** is the **jungle**'s boss (from `bosses.json → unplaced` to
+  `bosses.jungle`). The jungle isn't in `worlds.json` yet; it gets a world as §EW.2 says every biome
+  does.
+- The **imps** belong to another world, not chosen yet (unplaced). One or a pack is still open. The
+  spider stays the mine's boss (Claude's reading: the centipede has moved out, §FE.4).
+
+### FJ.7 What's still open from §FI.2
+2 (a fuse held too long), 3 (a pot against a boss), 4 (a pot lighting a sconce), 6 (the imps' world
+and number; the warden's world and chain), 8 (cold lights: ghosts, wisps), 9 (a hearth per floor),
+11 (creatures and bosses in 3D), 12 (the first-guess keys), and FJ.4's two (the airway gust; the
+pitch look).
+
+### FJ.8 Order of work
+`docs/PROMPT_QUEUE.md`: prompt 50's no-burn-down step is withdrawn (its text says so); 56 now
+builds FJ.3's ring and heartbeat; **62** (new) is the torch's timer, the hearth bundle and the
+three-torch limit, after 50. The random first ruin and the mummy come with the second ruin kind
+(§EW.7).

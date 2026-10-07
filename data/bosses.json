@@ -5,8 +5,8 @@
   "contact": "\u00a7EY.2 (Claude's first guess, open for Mike, \u00a7EY.7 call 2). A strike is one hit in harm.json (\u00a7EA, \u00a7EC): three and it's 'Good night'. You wake at the hearth (\u00a7ET.3) and every light you relit is still lit.",
   "lair": "\u00a7EY.1 (Mike): usually a hole in a cave somewhere in the dungeon. off_main_path, findable (Claude). breathing_heard_m: once it is driven in you can stand at the edge and hear it below. enterable: false is Claude's first guess (\u00a7EY.7 call 3).",
   "release": "\u00a7EY.2 (Claude's first guess). When the last light catches you hear it go: a long sound travelling away and down to its hole, then the dungeon's small sounds come back (bed_returns). log_line: the one log entry (no bestiary, \u00a7BA: nothing names it on screen).",
-  "bosses": "\u00a7EY.3. Keyed by worlds.json worlds. creature: Mike's words. world_by: who placed it in that world (Mike, or Claude's pick, open). pattern: how it moves (each its own; Mike: 'a different algorithm'). Speeds are m/s; the ambient walk is 4.3 and the sprint 5.6 (movement.json profiles.ambient), and a sprint held too long gutters the torch (\u00a7ET.7). tell: what you hear or see before it. first: the one to build first (the tomb's). \u00a7FE.4 (6 Oct, 22:32): the swamp's boss is the witch (Mike) and the mine's the giant spider (Claude's reading, open); the hornet and the centipede moved to unplaced.",
-  "unplaced": "\u00a7FE.4: bosses with no world yet: the centipede and the hornet (moved out of the mine and the swamp), the imps (Mike, 22:39) and the warden (Mike, 22:40). chain: null until Mike answers \u00a7FI.2 call 6 (\u00a7EH: no metal; a found relic, bone or wood links, or rope). one_or_pack: null until Mike says."
+  "bosses": "\u00a7EY.3. Keyed by worlds.json worlds. creature: Mike's words. world_by: who placed it in that world (Mike, or Claude's pick, open). pattern: how it moves (each its own; Mike: 'a different algorithm'). Speeds are m/s; the ambient walk is 4.3 and the sprint 5.6 (movement.json profiles.ambient), and a sprint held too long gutters the torch (\u00a7ET.7). tell: what you hear or see before it. first: the one to build first (the tomb's). \u00a7FE.4 (6 Oct, 22:32): the swamp's boss is the witch (Mike) and the mine's the giant spider (Claude's reading, open); the hornet and the centipede moved to unplaced. \u00a7FJ.6 (Mike, 22:52): the centipede is the jungle's boss (the jungle isn't in worlds.json yet, \u00a7EW.2).",
+  "unplaced": "\u00a7FE.4: bosses with no world yet: the centipede and the hornet (moved out of the mine and the swamp), the imps (Mike, 22:39) and the warden (Mike, 22:40). chain: null until Mike answers \u00a7FI.2 call 6 (\u00a7EH: no metal; a found relic, bone or wood links, or rope). one_or_pack: null until Mike says. \u00a7FJ.6: the centipede moved to bosses.jungle; the imps go to another world, not chosen yet."
  },
  "rule": {
   "one_per_dungeon": true,
@@ -169,12 +169,10 @@
    "_tide_note": "One semidiurnal tide (12.42 h) on the game clock: one game hour is 6 real minutes (sky/day_cycle.json, 144-minute day), so 12.42 x 6 = 74.52 real minutes.",
    "tell": "shell plates clicking, the sand shifting before it surfaces",
    "mike": "some sort of horseshoe crab / trilobite creeper"
-  }
- },
- "unplaced": {
-  "centipede": {
+  },
+  "jungle": {
    "creature": "giant centipede / millipede",
-   "world_by": "Claude",
+   "world_by": "Mike",
    "pattern": "wall_runner",
    "surfaces": [
     "floor",
@@ -190,7 +188,9 @@
    "dart_s": 1.2,
    "tell": "legs clicking on stone",
    "mike": "climbs on walls and ceilings and moves with creepy precision and speed"
-  },
+  }
+ },
+ "unplaced": {
   "hornet": {
    "creature": "giant hornet",
    "world_by": "Claude",

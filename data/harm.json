@@ -46,14 +46,27 @@
     "hitstop_s": 0.05
   },
   "fd": {
-    "_note": "[NOT WIRED YET — design §FD] Mike, 6 Oct, 22:32. hit_1_edge: hit 1 puts a red edge round the frame (amends §EC's 'never red'); a dull dark red so 'Good night' stays the reddest thing (first guess). light_heals: false. recover_starts: recovery (recover.step_s) only counts once the pursuer has given you up (amends §EC's 'no break contact'); any new hit resets it. chase_enters_light: a creature that has hit you can follow you into lit rooms (residents.json, bosses.json).",
+    "_note": "[NOT WIRED YET — design §FD] Mike, 6 Oct, 22:32. hit_1_edge: hit 1 puts a red edge round the frame (amends §EC's 'never red'); a dull dark red so 'Good night' stays the reddest thing (first guess). light_heals: false. recover_starts: recovery (recover.step_s) only counts once the pursuer has given you up (amends §EC's 'no break contact'); any new hit resets it. chase_enters_light: a creature that has hit you can follow you into lit rooms (residents.json, bosses.json). [§FJ.3, 6 Oct 22:52, Mike] hit 1: a red ring round the edge of the view and the heartbeat starts; hit 2: the ring goes darker red (and a little wider, Claude) and the heartbeat beats harder and faster; hit 3 'Good night' as built. Supersedes the thin dull hit-1 edge, and amends §EA/§EC's stages (heartbeat from hit 1). width_frac: the ring's depth as a share of the frame's short side. Colours and numbers are first guesses.",
     "hit_1_edge": {
-      "color": "#5A0E12",
-      "width_px": 6,
-      "alpha": 0.7
+      "shape": "ring",
+      "color": "#B01818",
+      "width_frac": 0.1,
+      "alpha": 0.6,
+      "heartbeat": true,
+      "heart_bpm": 105,
+      "heart_db": -6.0
     },
     "light_heals": false,
     "recover_starts": "pursuer_gives_up",
-    "chase_enters_light": true
+    "chase_enters_light": true,
+    "hit_2_edge": {
+      "shape": "ring",
+      "color": "#6A0A0E",
+      "width_frac": 0.16,
+      "alpha": 0.8,
+      "heartbeat": true,
+      "heart_bpm": 150,
+      "heart_db": 0.0
+    }
   }
 }

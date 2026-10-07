@@ -14,7 +14,7 @@ wind-up staggers it (never wounds), and rare fire pots, lit off your torch, burn
 (Shift), hiding and dousing your own torch stay the default. Each ruin kind has its residents
 (`data/residents.json`) below its boss; a lit floor is cleared; three hits with a red first edge,
 and a chase can follow you into the light. The wheel and Tab-and-wheel replace Q (`data/hands.json`);
-the hearth folk are live 3D, not sprites (§FH). **The open world described below (planet, roads, ecology, weather, camp sim) is
+the hearth folk are live 3D, not sprites (§FH). **§FJ (22:52):** torches burn down again (a timer, three at most, from the hearth's bundle; relight from any flame); the first ruin is drawn at random from the roster; the fire pot is clay. **The open world described below (planet, roads, ecology, weather, camp sim) is
 Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
 and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.
