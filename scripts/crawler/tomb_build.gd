@@ -32,6 +32,15 @@ var _mseed := 0
 ## Fitted stones laid and wall faces dressed (checks).
 var stones := 0
 var faces := 0
+## Every dressed wall face, for what lives on the stone (design §FG:
+## GlowMoss, WallLife): {"o" (the face's plane at y 0), "u" (along it),
+## "n" (out of it, into the tomb), "length", "y0", "y1" (the stones'
+## span), "floor_y", "seed" (its stones' own seed: FittedStone.cells with
+## an RNG seeded so gives its stones again), "probe" (a point in front of
+## its middle, on the floor), "cells" (its stones' polygons in (along, up
+## from y0): where its joints run), "heights" (each stone's face off the
+## wall's face: Vector2(rim, pillowed middle))}.
+var wall_faces: Array = []
 
 
 func ground(_x: float, _z: float) -> float:
@@ -79,7 +88,7 @@ static func build(lay: Dictionary) -> Dictionary:
 	for a in lay.airways:
 		b._airway_surround(a)
 	b._soot(lay)
-	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces}
+	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces, "walls": b.wall_faces}
 
 
 ## Door gaps on each wall of `pc`: side -> [[offset, half]] (offsets as
@@ -243,8 +252,10 @@ func _dwall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, thick: float = 
 		# mirrors across a corridor.
 		var mr := RandomNumberGenerator.new()
 		mr.seed = hash([_mseed, snappedf(a.x, 0.01), snappedf(a.y, 0.01), snappedf(b2.x, 0.01), snappedf(b2.y, 0.01), sd, snappedf(y_bot, 0.01)])
-		stones += FittedStone.face(self, o, u, n, length, floor_y - 0.1, y1, floor_y, cl, mr)
+		var laid := {}
+		stones += FittedStone.face(self, o, u, n, length, floor_y - 0.1, y1, floor_y, cl, mr, laid)
 		faces += 1
+		wall_faces.append({"o": o, "u": u, "n": n, "length": length, "y0": floor_y - 0.1, "y1": y1, "floor_y": floor_y, "seed": mr.seed, "probe": Vector3(probe.x, floor_y, probe.y), "cells": laid.get("cells", []), "heights": laid.get("heights", PackedVector2Array())})
 
 
 ## Is (x/z) `p` at height `y` inside a piece of the tomb (a wall facing

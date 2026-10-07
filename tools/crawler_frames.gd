@@ -46,6 +46,12 @@ extends SceneTree
 ## settings back at the end. The hands' strip is drawn where its layout
 ## says, inside the frame. The player's controls file is
 ## user://controls_frames.cfg here, removed after.
+## Atmosphere (§FG): waking at sunrise (01a: the shaft's daylight dimmer
+## than noon's); a damp corridor with glow-moss ahead, in the dark, by
+## torchlight from about 4 m and walked up to about 1.5 m (19a-19c;
+## checks: its blue-green texels show in the dark and by the far torch,
+## and fade once the torch is near); a beetle close by torchlight (20, a
+## harness frame: its scatter held off for the picture).
 
 var fails := 0
 var out_dir := ""
@@ -443,6 +449,167 @@ func _half_dark(main: CrawlerMain) -> void:
 	await _settle(main)
 
 
+## Blue-green pixels (the glow-moss's colour: green well over red, as green
+## as blue, not dark) within `half` px of `c` (the frame's pixels).
+func _teal(img: Image, c: Vector2, half: int) -> int:
+	var n := 0
+	for y in range(maxi(int(c.y) - half, 0), mini(int(c.y) + half, img.get_height())):
+		for x in range(maxi(int(c.x) - half, 0), mini(int(c.x) + half, img.get_width())):
+			var px := img.get_pixel(x, y)
+			if px.g > 0.1 and px.g > px.r * 1.4 and px.g >= px.b * 0.85:
+				n += 1
+	return n
+
+
+## Where `pos` lands in a shot (the frame's pixels, which may be the
+## window's size rather than the viewport's).
+func _on_shot(main: CrawlerMain, img: Image, pos: Vector3) -> Vector2:
+	var cam := main.player.camera()
+	var vs := get_root().get_visible_rect().size
+	return cam.unproject_position(pos) * Vector2(img.get_width() / vs.x, img.get_height() / vs.y)
+
+
+## Stand at `at` looking at `target` (the eye about 1.55 m up).
+func _look_at_from(p: CrawlerPlayer, at: Vector3, target: Vector3) -> void:
+	var flat := Vector3(target.x - at.x, 0.0, target.z - at.z)
+	p.spawn_flat(at, atan2(-flat.x, -flat.z), atan2(target.y - (at.y + 1.55), maxf(flat.length(), 0.01)))
+
+
+## A spot on the floor of a corridor or room (not the hearth room), or
+## Vector3.INF.
+func _floor_at(main: CrawlerMain, at: Vector3) -> Vector3:
+	var pid := TombKit.piece_at(main.lay, at)
+	if pid < 0 or str(main.lay.pieces[pid].kind) not in ["corridor", "room"] or str(main.lay.pieces[pid].get("room_kind", "")) == "hearth":
+		return Vector3.INF
+	var pc: Dictionary = main.lay.pieces[pid]
+	return Vector3(at.x, Delves.floor_of(pc, Delves.along_across(pc, Vector2(at.x, at.z)).x), at.z)
+
+
+## Nothing solid between the eye at `from` and `to`?
+func _clear(main: CrawlerMain, from: Vector3, to: Vector3) -> bool:
+	var q := PhysicsRayQueryParameters3D.create(from, to)
+	q.collision_mask = PropCollision.WORLD_LAYER
+	q.exclude = [main.player.get_rid()]
+	return get_root().get_world_3d().direct_space_state.intersect_ray(q).is_empty()
+
+
+## Atmosphere (design §FG): glow-moss ahead in a damp corridor, in the dark,
+## by torchlight from about 4 m (too far to dim it) and walked up to about
+## 1.5 m
+## (dimmed); then a beetle close by torchlight.
+func _atmosphere(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var gm := main.glow_moss
+	var G: Dictionary = GlowMoss.G
+	# At midnight (no shaft's daylight near), the torch in hand; all put
+	# back after.
+	var keep_days: float = main.world.days
+	var keep_pos := p.global_position
+	var keep_yaw := p._yaw
+	var keep_pitch := p._pitch
+	var keep_lit := t.lit()
+	var keep_weapon := p.weapon
+	main.world.days = 13.0
+	_torch_in_hand(p)
+	# The snake held still (queue 49): it would come for the torch.
+	var boss: Variant = main.get("boss")
+	var keep_auto := true
+	if boss is Boss:
+		keep_auto = (boss as Boss).auto
+		(boss as Boss).auto = false
+	var flames := main.fires.flame_points()
+	var pick: Dictionary = {}
+	var far := Vector3.INF
+	var near := Vector3.INF
+	for want_corridor in [true, false]:
+		for pp in gm.patches:
+			var pos: Vector3 = pp.pos
+			var n: Vector3 = pp.n
+			var pid := TombKit.piece_at(main.lay, pos + n * 0.5)
+			if pid < 0 or (str(main.lay.pieces[pid].kind) == "corridor") != want_corridor:
+				continue
+			# Nothing burning near it (a relit holder would keep it dim).
+			var lit_by := false
+			for f in flames:
+				if f.distance_to(pos) < 6.0:
+					lit_by = true
+			if lit_by:
+				continue
+			# Ahead down its wall from across the way, about 4 m off, and
+			# then walked up to about 1.5 m.
+			var u: Vector3 = Vector3.UP.cross(n).normalized()
+			for sd: float in [1.0, -1.0]:
+				var a := _floor_at(main, pos + n * 1.6 + u * sd * 3.6)
+				var b := _floor_at(main, pos + n * 1.2 + u * sd * 0.9)
+				if a != Vector3.INF and b != Vector3.INF and _clear(main, a + Vector3.UP * 1.55, pos + n * 0.1) and _clear(main, b + Vector3.UP * 1.55, pos + n * 0.1):
+					pick = pp
+					far = a
+					near = b
+					break
+			if not pick.is_empty():
+				break
+		if not pick.is_empty():
+			break
+	if pick.is_empty():
+		print("  no glow-moss patch with a view along its wall; no atmosphere frames")
+	else:
+		var target: Vector3 = (pick.pos as Vector3) + (pick.n as Vector3) * 0.04
+		pick.level = 1.0
+		t.put_out("stowed")
+		_look_at_from(p, far, target)
+		await _frames(10)
+		var img_a := await _shot("19a_glow_moss_dark")
+		var teal_a := _teal(img_a, _on_shot(main, img_a, target), int(img_a.get_height() * 0.08))
+		t.light()
+		await _frames(10)
+		var lvl_b := float(pick.level)
+		var img_b := await _shot("19b_glow_moss_torch_far")
+		var teal_b := _teal(img_b, _on_shot(main, img_b, target), int(img_b.get_height() * 0.08))
+		_look_at_from(p, near, target)
+		await _frames(int((float(G.get("dims_s", 0.6)) + 0.4) * 60.0))
+		var lvl_c := float(pick.level)
+		var img_c := await _shot("19c_glow_moss_walked_up")
+		var teal_c := _teal(img_c, _on_shot(main, img_c, target), int(img_c.get_height() * 0.16))
+		print("  glow-moss (r %.2f m, at %s): blue-green pixels %d in the dark, %d by torchlight from %.1f m (glow %.2f of rest), %d walked up to %.1f m (glow %.2f)" % [float(pick.r), str(pick.pos), teal_a, teal_b, (far + Vector3.UP * 1.55).distance_to(target), lvl_b, teal_c, (near + Vector3.UP * 1.55).distance_to(target), lvl_c])
+		ok(teal_a >= 6 and teal_b >= 6, "the glow-moss shows blue-green in the dark (%d px) and by torchlight from afar (%d px)" % [teal_a, teal_b])
+		ok(lvl_b > 0.999 and absf(lvl_c - float(G.get("dim_to", 0.1))) < 1e-3 and teal_c < teal_a / 2, "walked up to it with the torch it has dimmed (%d px, glow %.2f of rest)" % [teal_c, lvl_c])
+	# A beetle close by torchlight: a harness frame (in play it would be
+	# gone into a joint; its scatter held off for the picture).
+	var wl := main.wall_life
+	for b in wl.bugs:
+		if not (b.node as Node3D).visible:
+			continue
+		var f: Dictionary = main.walls[int(b.face)]
+		var bp := wl.world_pos(b)
+		var at := _floor_at(main, bp + (f.n as Vector3) * 0.75)
+		if at == Vector3.INF or not _clear(main, at + Vector3.UP * 1.55, bp + (f.n as Vector3) * 0.05):
+			continue
+		var keep_fires := wl.fires
+		wl.fires = null
+		b.state = "rest"
+		b.t = 60.0
+		if not t.lit():
+			t.light()
+		_look_at_from(p, at, bp)
+		await _frames(8)
+		await _shot("20_%s_close_harness" % str(b.kind))
+		wl.fires = keep_fires
+		break
+	# As it was for what comes next.
+	if t.lit() and not keep_lit:
+		t.put_out("stowed")
+	p.weapon = keep_weapon
+	if keep_lit and not t.lit():
+		t.light()
+	# (spawn_flat stands you 5 cm up; the physics are off here.)
+	p.spawn_flat(keep_pos - Vector3(0.0, 0.05, 0.0), keep_yaw, keep_pitch)
+	main.world.days = keep_days
+	if boss is Boss:
+		(boss as Boss).auto = keep_auto
+	await _frames(4)
+
+
 ## A torch in hand (from the pack, wherever you stand).
 func _torch_in_hand(p: CrawlerPlayer) -> void:
 	if not p.inventory.has_kind("torch"):
@@ -592,6 +759,11 @@ func _run() -> void:
 	Settings.set_value("display.preset", _preset_of(480))
 	Display.apply()
 	await _frames(8)
+	# At sunrise: the shaft's daylight follows the sun (§FG), dimmer than
+	# noon's.
+	world.days = Vents.days_at_solar_hour(13.0, 6.0)
+	await _frames(6)
+	await _shot("01a_wake_sunrise")
 	# The same at midnight: the moonlit shaft dim, the fire the light.
 	world.days = 13.0
 	await _frames(6)
@@ -814,6 +986,7 @@ func _run() -> void:
 		await _frames(20)
 		await _shot("10_heart_by_torch")
 	await _pots(main)
+	await _atmosphere(main)
 	# One firelight (§EX.6): the torchlit and the sconce-lit stone the same
 	# amber, both inside the grade's orange band.
 	if firelit.has("torch") and firelit.has("sconce"):

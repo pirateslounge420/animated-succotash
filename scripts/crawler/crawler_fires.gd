@@ -31,7 +31,11 @@ var holders: Array[Node3D] = []
 ## The bundle by the hearth: [node, torches left].
 var bundle: Node3D
 var bundle_left := 0
+## What never blocks a flame's light in lit_on (the player's own body).
+var ray_exclude: Array[RID] = []
 var _t := 0.0
+var _flames := PackedVector3Array()
+var _flames_frame := -1
 
 
 ## A store key for a point in the flat tomb (FireStore keys by surface
@@ -177,6 +181,62 @@ func take_torch() -> Dictionary:
 		if c:
 			c.queue_free()
 	return Inventory.make("torch")
+
+
+## Every flame burning now, where its light sits (design §FG: what dims
+## the glow-moss and sends the beetles into the joints; the same flames
+## HalfDark counts): the hearth, each relit holder and sconce, the torch in
+## hand once lit, a planted torch, a fire pot's burning patch, burst or
+## caught fire, and a lit wick (§FA.3). Gathered once a frame.
+func flame_points() -> PackedVector3Array:
+	var frame := Engine.get_process_frames()
+	if frame == _flames_frame:
+		return _flames
+	_flames_frame = frame
+	_flames = PackedVector3Array()
+	for f in get_tree().get_nodes_in_group(Campfire.GROUP):
+		var n := f as Node3D
+		if n == null or not n.is_inside_tree() or not FireStore.is_lit(n):
+			continue
+		var l := n.get_node_or_null("Light") as Node3D
+		_flames.append(l.global_position if l else n.global_position + Vector3.UP * 0.3)
+	if Torch.instance != null and is_instance_valid(Torch.instance) and Torch.instance.lit():
+		_flames.append(Torch.instance.flame_position())
+	for p in PlantedTorch.all:
+		if is_instance_valid(p) and p.is_inside_tree() and p.lit():
+			_flames.append(p.global_position + p.up * float(Tuning.section("torch", "planted").get("stand_height_m", 0.9)))
+	var fp := FirePots.instance
+	if fp != null and is_instance_valid(fp):
+		for f in fp.fires:
+			# One gone out may already be freed: no cast before the check.
+			if not is_instance_valid(f):
+				continue
+			var pf := f as PotFire
+			if pf == null or not pf.burning():
+				continue
+			var pl := pf.light()
+			if pl != null and pl.is_inside_tree():
+				_flames.append(pl.global_position)
+		for w in FirePots.flares():
+			_flames.append(w.pos)
+	return _flames
+
+
+## Does a flame's light fall on `pos` (design §FG): a flame within
+## `radius` with no stone between them? `nrm` is the surface's outward
+## normal there; the light is tested to a point a hand off it.
+func lit_on(pos: Vector3, nrm: Vector3, radius: float) -> bool:
+	var at := pos + nrm * 0.12
+	var space := get_world_3d().direct_space_state
+	for f in flame_points():
+		if f.distance_to(pos) > radius:
+			continue
+		var q := PhysicsRayQueryParameters3D.create(f, at)
+		q.collision_mask = PropCollision.WORLD_LAYER
+		q.exclude = ray_exclude
+		if space.intersect_ray(q).is_empty():
+			return true
+	return false
 
 
 ## How many holders are lit now (§ET.4: light is the score).

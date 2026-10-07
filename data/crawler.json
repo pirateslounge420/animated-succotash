@@ -21,7 +21,7 @@
   "floors": "[NOT WIRED YET — design §FF.1] A ruin can have several floors; in some you climb toward the surface, in some you go down (Mike). §EX.5's exit is at the far end. hearth_per: 'dungeon' (§EX.4) until Mike answers §FI.2 call 9.",
   "cleared": "[NOT WIRED YET — design §FF.2] A floor with every light relit is cleared: its residents leave, seen going into holes and out of windows (Mike). Half-lit, they fall back into the dark pockets and counterattack anyone who comes close (residents.json rules).",
   "restored": "[NOT WIRED YET — design §FF.3] When a whole ruin is relit its people come back (Mike): a living workplace you can return to, a fire to relight from, and folk who teach a technique or give an item (§BN). You never craft.",
-  "ambience": "[NOT WIRED YET — design §FG] Atmosphere, never puzzles (Mike): glow-moss on damp stone that dims when a flame comes near and comes back after; daylight through windows and vents that follows the clock; stairs up to windows over the wilderness; beetles and scarabs that scatter from torchlight; vines that sway as you pass. glow_moss colour and numbers are first guesses (it gives off light, so it glows; never amber).",
+  "ambience": "Design §FG. Atmosphere, never puzzles (Mike): glow-moss on damp stone that dims when a flame comes near and comes back after; daylight through windows and vents that follows the clock; stairs up to windows over the wilderness; beetles and scarabs that scatter from torchlight; vines that sway as you pass. glow_moss colour and numbers are first guesses (it gives off light, so it glows; never amber). Built 7 Oct (Claude Code, queue 61): glow_moss, wall_life and daylight_follows_clock. glow_moss (GlowMoss): patches on the tomb's dressed walls, height_m up from the floor, only where the stone is damp: the wet field the moss itself grows by (§EU.4: masonry.json overgrowth.wet over the theme's climate) plus airway_damp at an airway's mouth, falling to nothing by near_airway_m, at damp_min or over; never on dry stone, never within clear_of_fire_m of a fire (its soot burnt the moss off), never in the hearth room or on the stairs. per_m patches to a metre of damp wall, spacing_m apart, at most max, radius_m across. Drawn in the stone's own shader, with no light node, so nothing the game's rules read (the torch's light, the fires, the dark) knows it is there: the moss's own texels glow in color at energy, thickest at a patch's heart and ragged at its rim, and a faint light falls on the stone and floor within light_m of it, light_strength times as strong on them as its own texels' glow (tuned by eye in the walkabout: 4 picks out the stones round a patch in faint teal; 1 can't be seen; 10 is a lamp). Any flame (the torch in hand, a planted torch, the hearth, a relit holder or sconce) within dims_near_flame_m whose light reaches it (no stone between) fades it to dim_to of its rest over dims_s; once the flame has gone it creeps back to rest over returns_s. wall_life (WallLife): count beetles and scarabs a tomb (scarab_share of them scarabs) on its walls, more where it's damp and away from the fires, size_m long by kind, crawling at crawl_mps (by kind) for crawl_s, resting rest_s, height_m up the wall. When a flame's light falls on one within scatter_from_light_m it scuttles at flee_mps (faster if it must) to the nearest joint of the stone it is on (the wall's real joints) and squeezes in over sink_s, gone from view within gone_within_s; it waits hide_s, then comes out of its crack again over emerge_s once no flame's light is on it. colors: shell and legs, by kind. daylight_follows_clock: the crawler runs the world's clock (the 144-minute day; World turns it only once a planet is generated), and a shaft's daylight follows the sun's height over the tomb (smoke.json vents.daylight sky_band_deg, low_sun_share). puzzles false: none of it is ever needed to go on, and none of it marks a way. [NOT WIRED YET — design §FG, §EW.7] window_views (a stair up to a window over the wilderness, with the surface ruins) and vines_sway_on_pass (with a jungle style).",
   "folk_3d": "The folk at the hearth are real 3D models of the shared rig, painted per §ES and made pixel by the 480-line frame and their texels (Mike: 'more like the goat pixel guy', frame 3), not baked billboards. Amends §ET.8 for folk; creatures and bosses stay sprites until Mike says (§FI.2 call 11). Built 7 Oct (Claude Code): the rescuer (who: hearth_folk; HearthFolk) is the shared rig in the scene, CloakedFigure with its beast head and cloak colours as before, seated on a low stone facing the hearth (rescuer). Painted per §ES: diffuse only, roughness 1, no normal maps, its occlusion baked toward navy (Prelit), lit live by the hearth's amber, casting the fire's shadow, its head's too. texels_per_m: its painted detail one value a texel on a grid of this many texels a metre in each part's own space (16: the tomb walls' fitted-stone grid, so it pixelates like them at 480 lines); its head on its own copy of the head's material, so no other head changes; 0 puts back the rig's fine weave and soft grain. step_fps: 0 runs its idle smooth at the frame rate (Claude Code's call: real geometry already moves a whole pixel at a time at 480 lines, and stepped head turns read as jerky); 8 steps it as the sprites stepped (sprites.anim_fps). render, painted, target: what it is, for the record.",
   "opening_pick": "[NOT WIRED YET — design §FJ.1] Mike, 6 Oct 22:52: 'first tomb should be randomly selected from the entire roster'. A new game's first dungeon is any built ruin kind (a key of themes), picked at random from the new game's seed; opening.first_theme stays the fallback until this is wired. Amends §ET.3. Each new kind joins the draw as it's built."
  },
@@ -290,7 +290,25 @@
    "energy": 0.15,
    "dims_near_flame_m": 3.0,
    "dim_to": 0.1,
-   "returns_s": 6.0
+   "returns_s": 6.0,
+   "dims_s": 0.6,
+   "damp_min": 0.62,
+   "near_airway_m": 3.5,
+   "airway_damp": 0.12,
+   "height_m": [
+    0.08,
+    1.0
+   ],
+   "radius_m": [
+    0.18,
+    0.4
+   ],
+   "per_m": 0.08,
+   "spacing_m": 2.5,
+   "max": 24,
+   "clear_of_fire_m": 1.5,
+   "light_m": 0.9,
+   "light_strength": 4.0
   },
   "daylight_follows_clock": true,
   "window_views": true,
@@ -300,7 +318,62 @@
     "scarab"
    ],
    "scatter_from_light_m": 3.0,
-   "into_cracks": true
+   "into_cracks": true,
+   "count": [
+    10,
+    16
+   ],
+   "scarab_share": 0.2,
+   "size_m": {
+    "beetle": [
+     0.024,
+     0.036
+    ],
+    "scarab": [
+     0.04,
+     0.055
+    ]
+   },
+   "crawl_mps": {
+    "beetle": [
+     0.04,
+     0.09
+    ],
+    "scarab": [
+     0.02,
+     0.045
+    ]
+   },
+   "height_m": [
+    0.05,
+    2.0
+   ],
+   "crawl_s": [
+    2.0,
+    7.0
+   ],
+   "rest_s": [
+    1.0,
+    5.0
+   ],
+   "flee_mps": 0.8,
+   "sink_s": 0.15,
+   "gone_within_s": 0.85,
+   "hide_s": [
+    8.0,
+    22.0
+   ],
+   "emerge_s": 0.4,
+   "colors": {
+    "beetle": [
+     "#1c140f",
+     "#0f0b08"
+    ],
+    "scarab": [
+     "#1b2c25",
+     "#0d1512"
+    ]
+   }
   },
   "vines_sway_on_pass": true,
   "puzzles": false

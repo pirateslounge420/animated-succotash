@@ -22,6 +22,11 @@ extends Node
 ##   5. the one who found you, sitting at the hearth: the shared rig live
 ##      in 3D (§FH, HearthFolk; amends §ET.8 for folk, whose baked sprites,
 ##      FigureSprite, stay for creatures and bosses).
+##   6. atmosphere, never a puzzle (§FG): glow-moss on damp stone that
+##      dims when a flame comes near (GlowMoss), beetles and scarabs on
+##      the walls that scatter from the light into the joints (WallLife),
+##      and the world's clock running, so the daylight down the shafts
+##      follows the sun (Vents).
 ##
 ## And the dungeon's boss (design §EY, Boss; bosses.json): the snake,
 ## prowling only the rooms and stretches not yet relit, driven into its
@@ -55,6 +60,11 @@ var fires: CrawlerFires
 var fire_pots: FirePots
 var airways: Airways
 var vents: Vents
+## Atmosphere (§FG): the glow-moss and the life on the walls, on the
+## tomb's dressed wall faces (TombBuild wall_faces).
+var glow_moss: GlowMoss
+var wall_life: WallLife
+var walls: Array = []
 var player: CrawlerPlayer
 ## The dark you can half see in (§FC.4).
 var half_dark: HalfDark
@@ -128,6 +138,16 @@ func _ready() -> void:
 	half_dark.name = "HalfDark"
 	add_child(half_dark)
 	half_dark.setup(player)
+	fires.ray_exclude = [player.get_rid()]
+	# Atmosphere, never a puzzle (§FG).
+	glow_moss = GlowMoss.new()
+	glow_moss.name = "GlowMoss"
+	add_child(glow_moss)
+	glow_moss.build(lay, walls, fires)
+	wall_life = WallLife.new()
+	wall_life.name = "WallLife"
+	add_child(wall_life)
+	wall_life.build(lay, walls, fires)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"
@@ -154,7 +174,7 @@ func _ready() -> void:
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
-	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles"))])
+	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight); %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
 	_rescuer()
 
 
@@ -266,6 +286,7 @@ func _build_tomb() -> void:
 	tomb.set_meta("triangles", (data.v as PackedVector3Array).size() / 3)
 	tomb.set_meta("stones", int(data.get("stones", 0)))
 	tomb.set_meta("faces", int(data.get("faces", 0)))
+	walls = data.get("walls", [])
 
 
 ## The tomb's triangles sorted into CHUNK_M blocks by their middles:
@@ -391,7 +412,12 @@ func _rescuer() -> void:
 	tw.tween_callback(func(): _fade.visible = false)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# The world's clock, the 144-minute day (DayCycle; World.day_length_s):
+	# World turns it only once a planet is generated and the crawler builds
+	# none, so the crawler turns it (design §FG: the daylight down the
+	# shafts follows it).
+	world.days = float(world.get("days")) + delta / maxf(float(world.get("day_length_s")), 1.0)
 	# The folk at the hearth look to you while you're near and in front of
 	# them (the rig's head-look watches the player's head; here, your eyes).
 	var cam := get_viewport().get_camera_3d()

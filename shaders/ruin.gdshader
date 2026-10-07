@@ -24,9 +24,74 @@ uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
 
+// Glow-moss (design §FG, GlowMoss; the crawler only, 0 patches anywhere
+// else): glow_moss_count patches in glow_moss_data, row 0 a patch's middle
+// (xyz, in the stone's own space: the tomb stands at the origin) and its
+// radius, row 1 its wall's normal and its glow now. Colour linear.
+// glow_moss_light: x how far its faint light reaches past the patch (m),
+// y how strong that light is on the stone against the glow itself.
+uniform sampler2D glow_moss_data : filter_nearest;
+uniform int glow_moss_count = 0;
+uniform vec3 glow_moss_color = vec3(0.05, 0.52, 0.36);
+uniform vec2 glow_moss_light = vec2(0.9, 4.0);
+
 varying vec3 world_pos;
 varying vec3 obj_pos;
 varying vec3 obj_normal;
+
+// The glow-moss at `p` (normal `nrm`; `uv` the planar map on `axes`: 0 xz,
+// 1 zy, 2 xy), where the moss tile reads `moss_v` (0-1), on stone of
+// colour `albedo`: rgb its light, a how much of this texel is the patch's
+// own moss (0 or 1). Worked out at the middle of the moss texel there, at
+// the mip it's drawn at, so the patch keeps the moss's own texels: a texel
+// is moss, and glows, where the moss tile is brighter than the patch's
+// share asks (thickest at its heart, ragged at its rim); its light falls on
+// the stone and floor round it, stepped texel by texel, never behind its
+// wall.
+vec4 glow_moss(vec3 p, vec3 nrm, vec2 uv, int axes, float moss_v, vec3 albedo) {
+	vec2 tsz = vec2(textureSize(look_tex_leaves, 0));
+	vec2 st = uv / look_tile_m2.y * tsz;
+	vec2 dx = dFdx(st);
+	vec2 dy = dFdy(st);
+	float lod = clamp(floor(0.5 * log2(max(max(dot(dx, dx), dot(dy, dy)), 1e-8))), 0.0, look_max_mips);
+	float tpm = tsz.x / look_tile_m2.y / exp2(lod);
+	vec2 mid = (floor(uv * tpm) + 0.5) / tpm;
+	vec3 q = p;
+	if (axes == 0) {
+		q.xz = mid;
+	} else if (axes == 1) {
+		q.zy = mid;
+	} else {
+		q.xy = mid;
+	}
+	vec3 e = vec3(0.0);
+	float cover = 0.0;
+	for (int i = 0; i < 64; i++) {
+		if (i >= glow_moss_count) {
+			break;
+		}
+		vec4 c = texelFetch(glow_moss_data, ivec2(i, 0), 0);
+		float reach = c.w + glow_moss_light.x;
+		float d = distance(q, c.xyz);
+		if (d > reach) {
+			continue;
+		}
+		vec4 m = texelFetch(glow_moss_data, ivec2(i, 1), 0);
+		// Nothing behind the patch's own wall (its joints are a hand back).
+		float front = step(-0.12, dot(q - c.xyz, m.xyz));
+		// The patch: the moss's texels on its wall, by their brightness.
+		float share = 1.0 - smoothstep(0.3 * c.w, c.w, d);
+		float on = step(1.0 - 0.85 * share, moss_v) * step(0.04, share) * smoothstep(0.25, 0.6, dot(nrm, m.xyz)) * front;
+		cover = max(cover, on);
+		e += glow_moss_color * m.w * on;
+		// Its faint light, from a hand off the wall.
+		vec3 to = c.xyz + m.xyz * 0.15 - q;
+		float ndl = dot(nrm, normalize(to));
+		float k = 1.0 - clamp(length(to) / reach, 0.0, 1.0);
+		e += albedo * glow_moss_color * m.w * glow_moss_light.y * k * k * (ndl > 0.0 ? 0.35 + 0.65 * ndl : 0.0) * front;
+	}
+	return vec4(e, cover);
+}
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -100,6 +165,12 @@ void fragment() {
 	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 1.3) + look_warm_pool_light(world_pos);
+	if (glow_moss_count > 0) {
+		vec4 gm = glow_moss(obj_pos, normalize(obj_normal), uv, an.y > 0.6 ? 0 : (an.x > an.z ? 1 : 2), dot(moss, vec3(0.3333)), ALBEDO);
+		// The patch is moss: its texels take the moss's colour (R1a).
+		ALBEDO = mix(ALBEDO, pal_moss * moss * 2.0, gm.a * 0.6);
+		EMISSION += gm.rgb;
+	}
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 	// Pre-lit (design §ES.2): the painted light, from the sky above.
 	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);

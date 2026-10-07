@@ -65,7 +65,16 @@ extends SceneTree
 ##     guard: a crouched walk at a 2 m drop stops at the lip, a diagonal
 ##     one slides along it, neither falls, a standing one falls, and
 ##     letting go of Shift steps off; and crouched through every door and
-##     down every flight of the tomb, the guard never holds you.
+##     down every flight of the tomb, the guard never holds you;
+## 10. atmosphere, never a puzzle (§FG): glow-moss only on damp stone
+##     (none in a dry tomb), no light node, nothing the rules read seeing
+##     it; at a torch in hand it falls to dim_to of its rest and creeps back
+##     to rest returns_s after the torch has gone; a beetle stays out in the
+##     dark but in torchlight is gone into a real joint within a second and
+##     comes out again later in the dark; the bugs favour damp, dark walls,
+##     none in the hearth room or on the stairs; the crawler runs the
+##     world's clock (the 144-minute day) and the shafts' daylight climbs and
+##     sinks with the sun, moonlit blue at night.
 
 const SEEDS := 30
 
@@ -99,6 +108,7 @@ func _run() -> void:
 	_masonry(main)
 	await _vents(main)
 	_firelight(main)
+	await _ambience(main)
 	await _relight(main)
 	await _snuff(main)
 	await _douse(main)
@@ -482,12 +492,15 @@ func _vents(main: CrawlerMain) -> void:
 	var w := main.world
 	var keep_days: float = w.days
 	w.days = 13.5
+	# Two frames: the vents read the clock in their own frame's _process.
+	await process_frame
 	await process_frame
 	var e_day := 0.0
 	for sh in main.vents.shafts:
 		e_day += (sh.light as SpotLight3D).light_energy
 	var col_day: Color = (main.vents.shafts[0].light as SpotLight3D).light_color
 	w.days = 13.0
+	await process_frame
 	await process_frame
 	var e_night := 0.0
 	for sh in main.vents.shafts:
@@ -516,6 +529,252 @@ func _vents(main: CrawlerMain) -> void:
 		else:
 			print("  vent %s d %.2f at %s: darkest %.3f" % [v.kind, float(v.d), str(m), darkest])
 	ok(stained == vents.size(), "soot round every flue's mouth (%d of %d)" % [stained, vents.size()])
+
+
+## Where the torch in hand's flame would be if you stood at `stand` facing
+## `target` (the light sits at (0.3, 1.25, -0.4) in your frame).
+func _flame_from(stand: Vector3, target: Vector3) -> Vector3:
+	var flat := Vector3(target.x - stand.x, 0.0, target.z - stand.z)
+	return stand + Basis(Vector3.UP, atan2(-flat.x, -flat.z)) * Vector3(0.3, 1.25, -0.4)
+
+
+## A spot on the floor `out_m` in front of `pos` on its wall (normal `n`)
+## from which the torch's light would reach it with nothing between; Vector3.INF
+## if there's none (not in a corridor or room, or something in the way).
+func _stand_before(main: CrawlerMain, pos: Vector3, n: Vector3, out_m: float) -> Vector3:
+	var at := pos + n * out_m
+	var pid := TombKit.piece_at(main.lay, at)
+	if pid < 0 or str(main.lay.pieces[pid].kind) not in ["corridor", "room"] or str(main.lay.pieces[pid].get("room_kind", "")) == "hearth":
+		return Vector3.INF
+	var pc: Dictionary = main.lay.pieces[pid]
+	at.y = Delves.floor_of(pc, Delves.along_across(pc, Vector2(at.x, at.z)).x)
+	var q := PhysicsRayQueryParameters3D.create(_flame_from(at, pos), pos + n * 0.12)
+	q.collision_mask = PropCollision.WORLD_LAYER
+	q.exclude = [main.player.get_rid()]
+	if not get_root().get_world_3d().direct_space_state.intersect_ray(q).is_empty():
+		return Vector3.INF
+	return at
+
+
+## The torch out of your hand and out of your pack again.
+func _drop_torches(p: CrawlerPlayer) -> void:
+	p.torch.put_out("stowed")
+	for i in p.inventory.carried.size():
+		var it = p.inventory.carried[i]
+		if it is Dictionary and str(it.get("kind", "")) == "torch":
+			p.inventory.take(i)
+	p.weapon = "hands"
+
+
+## Atmosphere, never a puzzle (design §FG): the glow-moss (GlowMoss), the
+## beetles and scarabs (WallLife) and the world's clock in the crawler (the
+## shafts' daylight, Vents). Run before the holders are relit (only the
+## hearth burns); the torch is handed over and taken back again.
+func _ambience(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var p := main.player
+	var t := p.torch
+	var gm := main.glow_moss
+	var G: Dictionary = GlowMoss.G
+	var rest := GlowMoss.rest_energy()
+	var dim_to := float(G.get("dim_to", 0.1))
+	var returns_s := float(G.get("returns_s", 6.0))
+	var w: Array = lay.wake
+	# The snake held still (queue 49): it would come for the torch in the
+	# dark while this stands about there.
+	var boss: Variant = main.get("boss")
+	var keep_auto := true
+	if boss is Boss:
+		keep_auto = (boss as Boss).auto
+		(boss as Boss).auto = false
+	# Where it grows: damp stone, never dry.
+	var off := 0
+	var misplaced := 0
+	for pp in gm.patches:
+		var pos: Vector3 = pp.pos
+		var cl := FittedStone.climate_at(str(lay.theme), int(lay.seed), pos)
+		if FittedStone.dry_of(cl) > 0.0 or FittedStone.moss_of(cl) <= 0.0 or not GlowMoss.damp_enough(lay, pos):
+			off += 1
+		var pid := TombKit.piece_at(lay, pos + (pp.n as Vector3) * 0.5)
+		if pid < 0 or str(lay.pieces[pid].kind) == "stair" or str(lay.pieces[pid].get("room_kind", "")) == "hearth":
+			misplaced += 1
+		for fp in GlowMoss.fire_spots(lay):
+			if (fp as Vector3).distance_to(pos) < float(G.get("clear_of_fire_m", 1.5)) - 0.01:
+				misplaced += 1
+	ok(gm.patches.size() >= 3, "glow-moss grows on this tomb's damp stone (%d patches)" % gm.patches.size())
+	ok(off == 0, "no glow-moss patch sits on dry stone: every one damp (damp_min %.2f), mossy, not dry (%d off)" % [float(G.get("damp_min", 0.62)), off])
+	ok(misplaced == 0, "none in the hearth room or on a stair, none within clear_of_fire_m of a fire (%d)" % misplaced)
+	# A dry tomb (a desert's climate) grows none; a wet one grows more.
+	var th := str(lay.theme)
+	var keep_cl: Variant = FittedStone._climates.get(th)
+	FittedStone._climates[th] = {"moisture": 0.3, "temp_c": 24.0, "from": "check"}
+	var dry_n := GlowMoss.place(lay, main.walls).size()
+	FittedStone._climates[th] = {"moisture": 0.8, "temp_c": 14.0, "from": "check"}
+	var wet_n := GlowMoss.place(lay, main.walls).size()
+	if keep_cl == null:
+		FittedStone._climates.erase(th)
+	else:
+		FittedStone._climates[th] = keep_cl
+	ok(dry_n == 0 and wet_n > gm.patches.size(), "a dry tomb grows no glow-moss and a wet one more (dry %d, as built %d, wet %d)" % [dry_n, gm.patches.size(), wet_n])
+	# Nothing the game's rules read knows it is there.
+	var seen := 0
+	for pp in gm.patches:
+		var eye: Vector3 = (pp.pos as Vector3) + (pp.n as Vector3) * 0.3
+		if Torch.light_at(eye) > 0.0 or Campfire.lit_near(self, eye, 0.6) or main.fires.lit_on(pp.pos, pp.n, 0.25):
+			seen += 1
+	ok(gm.find_children("*", "Light3D", true, false).is_empty() and seen == 0, "the glow-moss is no light node and nothing the rules read (the torch's light, the fires) sees it")
+	# Dims at a flame: a torch in hand a metre off its wall.
+	var target: Dictionary = {}
+	var stand := Vector3.INF
+	for pp in gm.patches:
+		# Far from where you're sent after (the wake spot).
+		if (pp.pos as Vector3).distance_to(w[0]) < 6.0:
+			continue
+		var at := _stand_before(main, pp.pos, pp.n, 1.1)
+		if at != Vector3.INF:
+			target = pp
+			stand = at
+			break
+	ok(not target.is_empty(), "a glow-moss patch with open floor before it")
+	if not target.is_empty():
+		_place_facing(p, stand, target.pos)
+		await _frames(3)
+		var i_t := gm.patches.find(target)
+		ok(absf(gm.energy_of(target) - rest) < 1e-5, "unlit, it glows at its rest (energy %.3f, %s)" % [gm.energy_of(target), str(G.get("color", ""))])
+		if not p.inventory.has_kind("torch"):
+			p.inventory.add(Inventory.make("torch"))
+		p.weapon = "torch"
+		t.light()
+		await _frames(int((float(G.get("dims_s", 0.6)) + 0.4) * 60.0))
+		var e_near := gm.energy_of(target)
+		var drawn := gm._img.get_pixel(i_t, 1).a
+		print("  the torch's flame %.2f m from the patch" % t.flame_position().distance_to(target.pos))
+		ok(absf(e_near - dim_to * rest) < 1e-4 and absf(drawn - e_near) < 1e-4, "a torch in hand a metre off: the glow-moss falls to dim_to of its rest (%.4f = %.2f x %.3f; the stone draws %.4f)" % [e_near, dim_to, rest, drawn])
+		# The torch goes (back to the hearth room, still lit).
+		p.spawn_flat(w[0], float(w[1]), -0.32)
+		await _frames(int(returns_s * 0.5 * 60.0))
+		var e_half := gm.energy_of(target)
+		await _frames(int(returns_s * 0.5 * 60.0) + 2)
+		var e_back := gm.energy_of(target)
+		ok(e_half > e_near and e_half < rest * 0.8 and absf(e_back - rest) < 1e-4, "once the torch has gone it creeps back: %.4f halfway through returns_s, at rest again (%.4f) %.0f s after" % [e_half, e_back, returns_s])
+	_drop_torches(p)
+	# The beetles and scarabs: where they live.
+	var wl := main.wall_life
+	var fire_at := GlowMoss.fire_spots(lay)
+	var bad := 0
+	for b in wl.bugs:
+		var f: Dictionary = main.walls[int(b.face)]
+		# On a wall it may live on, on the stretch seen from its own piece.
+		if WallLife.face_weight(lay, f, fire_at) <= 0.0 or TombKit.piece_at(lay, wl.world_pos(b) + (f.n as Vector3) * 0.3) != TombKit.piece_at(lay, f.probe):
+			bad += 1
+	var sum_w := 0.0
+	var sum_l := 0.0
+	var wd := 0.0
+	var ld := 0.0
+	var wf := 0.0
+	var lf := 0.0
+	for f in main.walls:
+		var wgt := WallLife.face_weight(lay, f, fire_at)
+		if wgt <= 0.0:
+			continue
+		var mid: Vector3 = (f.o as Vector3) + (f.u as Vector3) * float(f.length) * 0.5 + Vector3.UP * (float(f.floor_y) + 0.8)
+		var near := INF
+		for fp in fire_at:
+			near = minf(near, (fp as Vector3).distance_to(mid))
+		var damp := GlowMoss.dampness(lay, mid)
+		sum_w += wgt
+		wd += wgt * damp
+		wf += wgt * near
+		sum_l += float(f.length)
+		ld += float(f.length) * damp
+		lf += float(f.length) * near
+	ok(wl.bugs.size() >= 6 and bad == 0, "%d beetles and scarabs on the walls where they are seen, none in the hearth room or on a stair (%d off)" % [wl.bugs.size(), bad])
+	if sum_w > 0.0:
+		ok(wd / sum_w > ld / sum_l and wf / sum_w > lf / sum_l, "more on damp, dark walls: their walls' dampness %.3f against %.3f for any wall, %.1f m from a fire against %.1f" % [wd / sum_w, ld / sum_l, wf / sum_w, lf / sum_l])
+	# A beetle in torchlight is gone from view within a second.
+	var bug: Dictionary = {}
+	var bstand := Vector3.INF
+	for kind in ["beetle", "scarab"]:
+		for b in wl.bugs:
+			if str(b.kind) != kind or str(b.state) not in ["crawl", "rest"] or wl.world_pos(b).distance_to(w[0]) < 6.0:
+				continue
+			var f: Dictionary = main.walls[int(b.face)]
+			var at := _stand_before(main, wl.world_pos(b), f.n, 1.1)
+			if at != Vector3.INF:
+				bug = b
+				bstand = at
+				break
+		if not bug.is_empty():
+			break
+	ok(not bug.is_empty(), "a beetle out on a wall with open floor before it")
+	if not bug.is_empty():
+		# Held still (resting) so it waits for the light.
+		bug.state = "rest"
+		bug.t = 60.0
+		var bp := wl.world_pos(bug)
+		_place_facing(p, bstand, bp)
+		if not p.inventory.has_kind("torch"):
+			p.inventory.add(Inventory.make("torch"))
+		p.weapon = "torch"
+		await _frames(30)
+		ok((bug.node as Node3D).visible and str(bug.state) == "rest", "in the dark it stays out on the wall, you a metre off with the torch unlit")
+		var at0: Vector2 = bug.at
+		t.light()
+		var gone := -1.0
+		for i in 90:
+			await process_frame
+			if not (bug.node as Node3D).visible:
+				gone = (i + 1) / 60.0
+				break
+		print("  the %s %.2f m from the flame, %.2f m from its joint" % [bug.kind, t.flame_position().distance_to(bp), (bug.crack as Vector2).distance_to(at0)])
+		ok(gone > 0.0 and gone <= 1.0, "a %s in torchlight is gone from view within a second (%.2f s)" % [bug.kind, gone])
+		var cells: Array = (main.walls[int(bug.face)] as Dictionary).get("cells", [])
+		var jd := INF
+		for c in cells:
+			var poly: PackedVector2Array = c[1]
+			for k in poly.size():
+				jd = minf(jd, Geometry2D.get_closest_point_to_segment(bug.crack, poly[k], poly[(k + 1) % poly.size()]).distance_to(bug.crack))
+		ok(jd < 0.002, "it went into a joint of the stone it was on (%.4f m off the joint's line)" % jd)
+		# Out again later, in the dark.
+		_drop_torches(p)
+		p.spawn_flat(w[0], float(w[1]), -0.32)
+		var hide: Array = WallLife.W.get("hide_s", [8.0, 22.0])
+		var back := -1.0
+		for i in int((float(hide[1]) + 2.0) * 60.0):
+			await process_frame
+			if (bug.node as Node3D).visible:
+				back = (i + 1) / 60.0
+				break
+		ok(back >= float(hide[0]) - 0.1 and back <= float(hide[1]) + 0.5, "it comes out of its crack again later, in the dark (after %.1f s; hide_s %s)" % [back, str(hide)])
+	# The world's clock runs in the crawler: the 144-minute day.
+	var world := main.world
+	var d0: float = world.days
+	for i in 120:
+		await process_frame
+	var ran := (float(world.days) - d0) * float(world.day_length_s)
+	ok(absf(ran - 2.0) < 0.05 and absf(float(world.day_length_s) - DayCycle.day_length_min() * 60.0) < 1.0, "the crawler runs the world's clock: 2 s of play turn its %.0f-minute day by %.3f s" % [float(world.day_length_s) / 60.0, ran])
+	# The shafts' daylight with the sun over the tomb.
+	var keep_days: float = world.days
+	var e := {}
+	var col_night := Color()
+	for hh: float in [0.0, 6.0, 9.0, 12.0, 15.0, 17.0]:
+		world.days = Vents.days_at_solar_hour(13.0, hh)
+		await process_frame
+		await process_frame
+		var s := 0.0
+		for sh in main.vents.shafts:
+			s += (sh.light as SpotLight3D).light_energy
+		e[hh] = s
+		if hh == 0.0:
+			col_night = (main.vents.shafts[0].light as SpotLight3D).light_color
+	world.days = keep_days
+	await process_frame
+	print("  the shafts' light (summed): midnight %.1f, sunrise %.1f, 9:00 %.1f, noon %.1f, 15:00 %.1f, 17:00 %.1f" % [e[0.0], e[6.0], e[9.0], e[12.0], e[15.0], e[17.0]])
+	ok(e[12.0] > e[9.0] and e[9.0] > e[6.0] and e[6.0] > e[0.0], "the shafts' daylight climbs with the sun: noon (%.1f) over 9:00 (%.1f) over sunrise (%.1f) over midnight (%.1f)" % [e[12.0], e[9.0], e[6.0], e[0.0]])
+	ok(e[15.0] > e[17.0] and e[17.0] > e[0.0], "and sinks with it: 15:00 (%.1f) over 17:00 (%.1f)" % [e[15.0], e[17.0]])
+	ok(col_night.b > col_night.r and col_night.b > col_night.g, "at night the shafts are moonlit blue (#%s)" % col_night.to_html(false))
+	if boss is Boss:
+		(boss as Boss).auto = keep_auto
 
 
 ## Where to stand to swing at holder `h`: a step out from a sconce's

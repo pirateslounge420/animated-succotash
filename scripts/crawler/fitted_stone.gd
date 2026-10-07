@@ -310,8 +310,10 @@ static func _inradius(poly: PackedVector2Array, c: Vector2) -> float:
 ## y 0) + `u` * along + up * y + `n` * out (n: out of the wall, into the
 ## room); `length` along, stones from y `y0` to `y1`, the floor at
 ## `floor_y`; `cl` the climate there (moisture, temp_c: climate_at). Returns
-## the stones laid.
-static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, floor_y: float, cl: Vector2, rng: RandomNumberGenerator) -> int:
+## the stones laid; `out` gets the face's "cells" (its stones' polygons,
+## cells(): where its joints run) and "heights" (each one's face off the
+## wall's face: Vector2(rim, pillowed middle)), for the beetles (WallLife).
+static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, floor_y: float, cl: Vector2, rng: RandomNumberGenerator, out: Dictionary = {}) -> int:
 	if length < 0.3 or y1 - y0 < 0.3:
 		return 0
 	var p := preset()
@@ -349,7 +351,14 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 	var share := float(st.get("share", 0.15))
 	var offs: Array = st.get("offset_m", [-0.04, 0.06])
 	var tilts: Array = st.get("tilt_deg", [0.0, 4.0])
-	for cell in cells(length, y1 - y0, rng):
+	var all := cells(length, y1 - y0, rng)
+	# Each stone's face off the wall's face: (its rim, its pillowed middle);
+	# a sliver left as joint stays down at the joints' back.
+	var heights := PackedVector2Array()
+	heights.resize(all.size())
+	heights.fill(Vector2(-jd, -jd))
+	for ci in all.size():
+		var cell: Array = all[ci]
 		var poly: PackedVector2Array = cell[1]
 		if _area(poly) < 0.004:
 			continue
@@ -368,6 +377,7 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 		if rng.randf() < float(st.get("dropped_share", 0.02)):
 			sink = float(st.get("dropped_m", 0.05))
 			rot = deg_to_rad(float(tilts[1])) * 2.0 * (1.0 if rng.randf() < 0.5 else -1.0)
+		heights[ci] = Vector2(proud + off, proud + off + pillow)
 		var cs := c - Vector2(0, sink)
 		var s0 := maxf(0.2, 1.0 - joint * 0.5 / r_in)
 		var s1 := maxf(0.12, 1.0 - (joint * 0.5 + bevel) / r_in)
@@ -415,6 +425,8 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 				b._tri_n(r1[k], r1[k2], top, n1[k], n1[k2], n, c1[k], c1[k2], ct, behind)
 		laid += 1
 	b.mat = was_mat
+	out["cells"] = all
+	out["heights"] = heights
 	# Vines grow up the wall into half shade.
 	_vines(b, o, u, n, length, y0, y1, moss_of(cl, 0.5), float((rl.get("proud_m", [0.02, 0.06]) as Array)[1]) + pillow, rng)
 	_dust(b, o, u, n, length, floor_y, dry_of(cl), rng)

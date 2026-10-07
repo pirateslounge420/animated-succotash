@@ -11,8 +11,11 @@ extends Node3D
 ##                 falling to the floor beside the fire (a spot light, a
 ##                 seen beam of lit air, the sky's disc up the shaft), cool
 ##                 blue by day and a faint moonlit blue by night on the
-##                 world's clock (the 144-minute day), so blue owns the
-##                 frame and the fire is the one warm accent; fainter and
+##                 world's clock (the 144-minute day, which CrawlerMain
+##                 runs), so blue owns the frame and the fire is the one
+##                 warm accent; brightening and dimming with the sun's
+##                 height over the tomb (design §FG: flavour, never a key;
+##                 daylight.sky_band_deg, low_sun_share); fainter and
 ##                 narrower the deeper the shaft (daylight.fade_depth_m)
 ##   the draft     the air the vent draws leans the fire's flame toward it
 ##                 and quickens its flicker, the ordinary lean only (§EV.3;
@@ -28,12 +31,41 @@ var world: Node
 var shafts: Array = []
 ## 0-1 now: day (1) or night (0) on the world's clock (tests read it).
 var daylight := 1.0
+## 0-1 now: how much of noon's light comes down a shaft (sun_light_at).
+var sun := 1.0
 
 
-## The day's share (0 night - 1 day) at world time `days` (0.5 noon).
+## The sun's height (degrees) over the tomb at world time `days`. One
+## clock everywhere (design §FK.3): no latitude, no axial tilt, no day of
+## the year, so every day is DayCycle's reference day (the equator on an
+## equinox: day 60, dusk 18, night 48, dawn 18 of the 144 minutes), the
+## sky turning on its warp, the sun 90° up at noon and its hour angle off
+## the overhead after.
+static func sun_deg(days: float) -> float:
+	return 90.0 - absf(DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5) * 360.0
+
+
+## The world time on the day of `base_days` when the tomb's sky reaches
+## solar hour `hour` (0-24, 12 the sun overhead; sun_deg's day).
+static func days_at_solar_hour(base_days: float, hour: float) -> float:
+	return floorf(base_days) + DayCycle.unwarp(hour / 24.0, 0.0, 0.0)
+
+
+## The day's share (0 night - 1 day) at world time `days`: the sky's blue
+## coming up as the sun climbs through daylight.sky_band_deg (twilight).
 static func daylight_at(days: float) -> float:
-	var e := sin(TAU * (fposmod(days, 1.0) - 0.25))
-	return smoothstep(-0.12, 0.2, e)
+	var b: Array = L.get("sky_band_deg", [-7.0, 11.5])
+	return smoothstep(float(b[0]), float(b[1]), sun_deg(days))
+
+
+## How much of noon's light comes down a shaft at world time `days` (0-1):
+## the twilight's share times the sun's height (with the sun on the
+## horizon daylight.low_sun_share of it, rising with the sine of the sun's
+## height to all of it overhead), so the column brightens through the
+## morning and dims through the afternoon (design §FG).
+static func sun_light_at(days: float) -> float:
+	var low := clampf(float(L.get("low_sun_share", 0.35)), 0.0, 1.0)
+	return daylight_at(days) * lerpf(low, 1.0, clampf(sin(deg_to_rad(sun_deg(days))), 0.0, 1.0))
 
 
 func build(p_world: Node, lay: Dictionary, fires: CrawlerFires) -> void:
@@ -114,15 +146,18 @@ func _process(_delta: float) -> void:
 	_update(false)
 
 
-## The shafts by the world's clock and their depth.
+## The shafts by the world's clock and their depth: the colour by the
+## twilight (moonlit blue to day blue), the strength by the sun's height.
 func _update(_force: bool) -> void:
 	if world == null:
 		return
-	daylight = daylight_at(float(world.get("days")))
+	var days := float(world.get("days"))
+	daylight = daylight_at(days)
+	sun = sun_light_at(days)
 	var day_c := Color(str(L.get("day_color", "#6f95e8")))
 	var night_c := Color(str(L.get("night_color", "#2a3f80")))
 	var col := night_c.lerp(day_c, daylight)
-	var energy := lerpf(float(L.get("night_energy", 0.45)), float(L.get("day_energy", 3.2)), daylight)
+	var energy := lerpf(float(L.get("night_energy", 0.45)), float(L.get("day_energy", 3.2)), sun)
 	var ref_d := float(((V.get("shaft", {}) as Dictionary).get("width_m", [0.6, 1.2]) as Array)[1])
 	for s in shafts:
 		var v: Dictionary = s.vent
@@ -133,8 +168,8 @@ func _update(_force: bool) -> void:
 		sp.light_color = col
 		sp.light_energy = energy * share * width_k
 		var bm: StandardMaterial3D = s.beam_mat
-		var a := float(L.get("beam_alpha", 0.2)) * share * lerpf(0.25, 1.0, daylight) * sqrt(width_k)
+		var a := float(L.get("beam_alpha", 0.2)) * share * lerpf(0.25, 1.0, sun) * sqrt(width_k)
 		bm.albedo_color = Color(col.r, col.g, col.b, a)
 		var sm: StandardMaterial3D = s.sky_mat
-		var glow := float(L.get("sky_glow", 1.3)) * lerpf(0.18, 1.0, daylight)
+		var glow := float(L.get("sky_glow", 1.3)) * lerpf(0.18, 1.0, sun)
 		sm.albedo_color = Color(col.r * glow, col.g * glow, col.b * glow)
