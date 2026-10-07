@@ -39,8 +39,13 @@ extends Node3D
 ##    runs out burns out and is gone; a boss is driven off into the dark for
 ##    vs_boss.drives_off_s, never killed (§FA.4). Fire catches what burns
 ##    (spreads_to). Every flame of it is PotFire's: amber, glowing, smoking.
-##    A burst that catches a creature shows the crosshair's X (Reticle.hit;
-##    Mike, 7 Oct).
+##    Your fire reaching a creature shows the crosshair's X (Reticle.hit;
+##    Mike, 7 Oct: "X should appear anytime a creature gets hit from
+##    something initiated from the player- so if a creature gets burned by
+##    tar after the pot is thrown, it should still show the X reticle"):
+##    a burst's at once, and while its tar burns one (stuck to it, a patch
+##    it stands in, or a fire the pot spread to) every
+##    hud.json reticle.hit_marker.burn_every_s (mark_hit).
 ##  * It can hurt you (hurts_you; Mike, 7 Oct: "your own fire pot should
 ##    be able to hurt you if you throw it way too close to yourself, like a
 ##    wall or floor you're right next to"): your own burst within its
@@ -110,6 +115,8 @@ var charge := 0.0
 var fuse_left := 0.0
 ## Throws made; the last one's [from, velocity, charge] (checks).
 var throws := 0
+## When your fire last showed the crosshair's X (clock; mark_hit).
+var _marked_at := -INF
 ## Pots that went off in your hand, and your own bursts that hit you
 ## (checks).
 var cook_offs := 0
@@ -499,12 +506,12 @@ func burst(at: Vector3, p_oil: String, hit: Node3D, normal: Vector3, in_hand := 
 	for t in targets(get_tree()):
 		if t != hit and distance_to(t, at) > splash:
 			continue
-		if burn(t, float(o.get("burst", 1.0)), p_oil, at):
+		if burn(t, float(o.get("burst", 1.0)), p_oil, at, false):
 			caught = true
 		if bool(o.get("sticks", false)) and float(o.get("burn_s", 0.0)) > 0.0 and not is_boss(t) and not burnt_out(t):
 			stick(t, p_oil)
 	if caught:
-		Reticle.hit()
+		mark_hit(true)
 	var hurt := in_hand or burst_hurts_you(at, p_oil)
 	if hurt:
 		hurt_you(at, "fire:pot_in_hand" if in_hand else "fire:pot")
@@ -678,15 +685,21 @@ static func oil_scale(t: Node3D, p_oil: String) -> float:
 
 ## Fire on `t`: `amount` (fire_hp units) times its oil_scale off its
 ## fire_hp, and at 0 it burns out and is gone; a boss is driven off
-## instead, never killed (§FA.4). True when the fire reached a creature.
-func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> bool:
+## instead, never killed (§FA.4). True when the fire reached a creature;
+## with `mark` that shows the crosshair's X (mark_hit; a burst shows its
+## own).
+func burn(t: Node3D, amount: float, p_oil: String, from: Vector3, mark := true) -> bool:
 	if t == null or not is_instance_valid(t) or burnt_out(t):
 		return false
 	if is_boss(t):
+		if mark:
+			mark_hit()
 		drive_off(t, from)
 		return true
 	if not "fire_hp" in t:
 		return false
+	if mark:
+		mark_hit()
 	var a := amount * oil_scale(t, p_oil)
 	t.set("fire_hp", maxf(float(t.get("fire_hp")) - a, 0.0))
 	t.set_meta("fire_taken", float(t.get_meta("fire_taken", 0.0)) + a)
@@ -695,6 +708,16 @@ func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> bool:
 	elif t.has_method("fire_hit"):
 		t.call("fire_hit", a, from)
 	return true
+
+
+## The crosshair's X for your fire reaching a creature (Mike, 7 Oct;
+## Reticle.hit): `now` for a burst; for the tar burning on after it, once
+## every hud.json reticle.hit_marker.burn_every_s while it burns one.
+func mark_hit(now := false) -> void:
+	if not now and clock - _marked_at < float(Reticle.HIT.get("burn_every_s", 1.0)):
+		return
+	_marked_at = clock
+	Reticle.hit()
 
 
 ## Fire on what stands in a burning patch round `at` (`radius` m on the

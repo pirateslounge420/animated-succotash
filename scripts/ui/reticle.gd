@@ -30,12 +30,14 @@ extends Control
 ## A hit (Mike, 7 Oct: "if you get a hit on a creature tho, there will be
 ## an X shape in the diagonal spaces between the regular crosshair to
 ## signify a successful hit"; hud.json reticle.hit_marker): when your swing
-## meets a creature (Torch, CreatureStrike.swing_lands) or your pot's burst
-## catches one (FirePots), hit() shows an X for show_s: four short
-## diagonals in the corners between the arms, from_px out from the middle
-## and length_px long (at the 480 reference), in the crosshair's colour on
-## its dark edge. It never warms or shows anything else (Mike: what you
-## can light is the player's to find out).
+## meets a creature (Torch, CreatureStrike.swing_lands) or your pot's fire
+## reaches one (FirePots.mark_hit: the burst at once, its tar burning on
+## every burn_every_s; Mike, 7 Oct: "anytime a creature gets hit from
+## something initiated from the player"), hit() shows an X for show_s:
+## four short diagonals in the corners between the arms, from_px out from
+## the middle and length_px long (at the 480 reference), in the
+## crosshair's colour on its dark edge. It never warms or shows anything
+## else (Mike: what you can light is the player's to find out).
 
 static var RETICLE := Tuning.section("hud", "reticle")
 static var SNEAK_LOOK: Dictionary = (Tuning.table("stealth").get("sneak", {}) as Dictionary).get("reticle", {})

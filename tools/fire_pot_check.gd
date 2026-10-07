@@ -30,7 +30,8 @@ extends SceneTree
 ##  7. tar: a hit on a skeleton (a stand-in until prompt 58: residents.json
 ##     skeleton fire_hp and oil_scale) takes the burst, shows the
 ##     crosshair's X (Reticle.hit; Mike, 7 Oct; a burst on nothing
-##     doesn't), and burns at burn_dps:
+##     doesn't) and again every burn_every_s while its tar burns a
+##     creature, stuck to it or in its patch, and burns at burn_dps:
 ##     at 0 fire_hp it burns out and is gone; a sturdier one burns for burn_s
 ##     and then stops; a thrown pot meets a target in its path; the patch on
 ##     the floor burns what stands in it for floor_patch_s, then its light
@@ -555,6 +556,7 @@ func _tar() -> void:
 	fp.burst(FirePots.center_of(sk), "tar", sk, Vector3.UP)
 	await _frames(1)
 	ok(Reticle.hits == x0 + 1, "a burst that catches a creature shows the crosshair's X, once (Reticle.hit; Mike, 7 Oct: %d)" % (Reticle.hits - x0))
+	var x_burn := Reticle.hits
 	var after_burst := sk.fire_hp
 	var stuck: Variant = sk.get_meta("pot_stuck") if sk.has_meta("pot_stuck") else null
 	ok(absf(after_burst - (hp - burst)) < 0.02 and stuck is PotFire, "tar on a skeleton: the burst takes %.1f of its %.1f fire_hp and the tar sticks" % [burst, hp])
@@ -566,6 +568,9 @@ func _tar() -> void:
 			gone_at = (i + 1) / 60.0
 			break
 	ok(gone_at > need - 0.2 and gone_at < need + 0.3, "it burns at burn_dps (%.1f a second) and at 0 fire_hp burns out and is gone (after %.2f s; %.2f s expected)" % [dps, gone_at, need])
+	var every := float(Reticle.HIT.get("burn_every_s", 1.0))
+	var marks := Reticle.hits - x_burn
+	ok(marks >= int(gone_at / every) - 1 and marks <= int(gone_at / every) + 1, "while its tar burns it the X shows again every burn_every_s (%d times in %.1f s; Mike, 7 Oct: \"anytime a creature gets hit from something initiated from the player\")" % [marks, gone_at])
 	# A sturdier one burns for burn_s, then stops.
 	var big := _resident(Vector3(44.0, -200.0, 0.0), 20.0)
 	fp.burst(FirePots.center_of(big), "tar", big, Vector3.UP)
@@ -603,6 +608,7 @@ func _tar() -> void:
 	ok(patch != null and _count("patch") == n_patch + 1 and absf(patch.radius - float(o.get("patch_radius_m", 1.2))) < 0.01, "tar leaves a patch burning on the floor (%.1f m round)" % float(o.get("patch_radius_m", 1.2)))
 	var walker := _resident(foot + Vector3(0.5, 0.0, 0.0), 20.0)
 	walker.set_meta("fire_center_y", 0.9)
+	var x_patch := Reticle.hits
 	var lights_ok := true
 	var e_mid := 0.0
 	var e_late := 0.0
@@ -619,6 +625,8 @@ func _tar() -> void:
 				lights_ok = false
 	var took := 20.0 - walker.fire_hp
 	ok(absf(took - dps * life) < 0.25, "the patch burns what stands in it at burn_dps for floor_patch_s (%.2f taken over %.0f s)" % [took, life])
+	var patch_marks := Reticle.hits - x_patch
+	ok(patch_marks >= int(life / every) - 1 and patch_marks <= int(life / every) + 2, "and the X shows every burn_every_s while it burns one standing in it (%d times in %.0f s)" % [patch_marks, life])
 	ok(not is_instance_valid(patch) and e_late < e_mid * 0.6 and lights_ok, "the patch is a light that goes out: dimmer and redder at the end (%.2f from %.2f), then gone" % [e_late, e_mid])
 	var charred := false
 	for c in fp.chars:
