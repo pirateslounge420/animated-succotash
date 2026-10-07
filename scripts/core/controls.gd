@@ -43,6 +43,9 @@ const DEFAULTS := {
 	# The next tool to hand: the bow, the spear, bare hands (whichever you
 	# have).
 	"weapon_swap": [KEY_Q],
+	# Smother your own torch and keep holding it (design 6 Oct §FC.3,
+	# hands.json douse_key; the crawler, Torch.douse).
+	"douse": [KEY_F],
 	# Read a tome you carry (design 3 Oct §DL, TomePanel); R or Esc closes.
 	"read_tome": [KEY_R],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
@@ -72,9 +75,10 @@ const MOUSE_BUTTONS := {
 ## holds on: climb, cling, swing), B crouches (and rolls), Y swaps tools,
 ## the left stick held in sprints, the right trigger draws and shoots the
 ## bow, the right stick clicked switches first/third person, Back opens the
-## map.
+## map, the d-pad's down smothers the torch (the crawler).
 const PAD_BUTTONS := {
 	"weapon_swap": JOY_BUTTON_Y,
+	"douse": JOY_BUTTON_DPAD_DOWN,
 	"toggle_view": JOY_BUTTON_RIGHT_STICK,
 	"jump": JOY_BUTTON_A,
 	"interact": JOY_BUTTON_X,

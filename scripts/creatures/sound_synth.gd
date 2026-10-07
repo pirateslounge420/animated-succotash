@@ -37,6 +37,10 @@ class_name SoundSynth
 ##                ring (Campfire, on its own random clock)
 ##   fire_crackle a softer crackle: a cluster of small pops with a low
 ##                thump under the first (Campfire, the same clock)
+##   smother_hiss a torch smothered under the hand (design 6 Oct §FC.3,
+##                stealth.json douse.sound): a soft press, then a hiss
+##                that darkens and dies as the air is cut off, a few
+##                embers crushed in it (half a second)
 ##
 ##   owl          two or three soft low hoots, the last held (a ruin's window
 ##                at night, design 3 Oct §DI.3)
@@ -147,6 +151,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _fire_snap(rng)
 		"fire_crackle":
 			samples = _fire_crackle(rng)
+		"smother_hiss":
+			samples = _smother_hiss(rng)
 		"owl":
 			samples = _owl(rng)
 		"bats":
@@ -872,6 +878,29 @@ static func _fire_crackle(rng: RandomNumberGenerator) -> PackedFloat32Array:
 			acc += float(p[5]) * float(p[2])
 		var thump := sin(TAU * thump_hz * t) * exp(-t / 0.03) * 0.3
 		s[i] = (acc + thump) * _env(i, s.size(), 0.001, 0.01)
+	return s
+
+
+## A torch smothered under the hand (design 6 Oct §FC.3): a soft low
+## press as the hand closes on the head, then a hiss that starts bright
+## and darkens as the air is cut off, dying within half a second, with a
+## few crushed embers ticking in its first part (0.45-0.6 s).
+static func _smother_hiss(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.45, 0.6))
+	var press_hz := rng.randf_range(70.0, 110.0)
+	var lp := 0.0
+	var lp2 := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var u := float(i) / s.size()
+		var x := rng.randf_range(-1, 1)
+		# The air cut off: the hiss's one-pole closes from bright to dark.
+		lp = lerpf(lp, x, lerpf(0.55, 0.04, sqrt(u)))
+		lp2 = lerpf(lp2, lp, 0.35)
+		var hiss := lp2 * minf(t / 0.012, 1.0) * exp(-t * 6.5)
+		var press := sin(TAU * press_hz * t) * exp(-t / 0.05) * 0.45
+		var tick := rng.randf_range(-1, 1) * 1.4 if t < 0.2 and rng.randf() < 0.004 else 0.0
+		s[i] = (hiss * 1.6 + press + tick * exp(-t * 9.0)) * _env(i, s.size(), 0.002, 0.06)
 	return s
 
 

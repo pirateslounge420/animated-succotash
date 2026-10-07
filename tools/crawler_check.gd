@@ -33,7 +33,20 @@ extends SceneTree
 ##     middle pixel and sized per hud.json reticle at the 480 and 270
 ##     presets, its dark edge one pixel round it, drawn over the grade
 ##     (no bloom); off with the Settings switch hud.reticle and under an
-##     open panel. (crawler_frames.gd checks its pixels on screen.)
+##     open panel (crawler_frames.gd checks its pixels on screen);
+##  7. dousing your own torch (§FC.3, Torch.douse): F is the douse key;
+##     pressed with a lit torch in hand it goes out and stays in your hand
+##     (the same torch, a spare in the pack ahead of it), its burn
+##     unchanged, one log line (stealth.json douse.log_line), not water;
+##     nothing that watches for a carried flame sees it (Senses), and a
+##     hunter's chase gives you up (Pursuit, torch_doused); F with
+##     no flame does nothing; the cold torch relights at the hearth, a
+##     relit sconce and a planted torch, as built;
+##  8. the half-dark (§FC.4, HalfDark): its light navy, never warm, no
+##     shadow, no shine, reaching black_m; off with the torch lit and
+##     beside a lit fire in sight; on, eased in, with no flame near; a lit
+##     torch behind a wall doesn't count, the same torch in sight does, and
+##     so does a fire pot's tar burning on the floor.
 
 const SEEDS := 30
 
@@ -69,6 +82,8 @@ func _run() -> void:
 	_firelight(main)
 	await _relight(main)
 	await _snuff(main)
+	await _douse(main)
+	await _half_dark(main)
 	_sprite(main)
 	await _reticle(main)
 	print("RESULT fails: %d" % fails)
@@ -358,7 +373,8 @@ func _firelight(main: CrawlerMain) -> void:
 	var stack: Array = [main]
 	while not stack.is_empty():
 		var n: Node = stack.pop_back()
-		if n is OmniLight3D:
+		# (The half-dark's light at your eye is no fire: _half_dark.)
+		if n is OmniLight3D and not n.has_meta("half_dark"):
 			lights.append(n)
 		stack.append_array(n.get_children())
 	var odd := 0
@@ -876,6 +892,180 @@ func _tour_from(lay: Dictionary, id: int, seen: Dictionary, pts: Array) -> void:
 		_tour_from(lay, o, seen, pts)
 		pts.append(far)
 		pts.append(near)
+
+
+## Press F as the player would: the key through the input, a couple of
+## frames for it to land.
+func _press_f() -> void:
+	for down in [true, false]:
+		var ev := InputEventKey.new()
+		ev.physical_keycode = KEY_F
+		ev.keycode = KEY_F
+		ev.pressed = down
+		Input.parse_input_event(ev)
+		for i in 2:
+			await process_frame
+
+
+## A lit torch stood at `at` (scene), as PlantedTorch.plant stands one (the
+## crawler has no world root to hang it from).
+func _planted(main: CrawlerMain, at: Vector3) -> PlantedTorch:
+	var pt := PlantedTorch.new()
+	pt.item = Inventory.make("torch", {"lit": true, "burn_left_min": 40.0})
+	main.add_child(pt)
+	pt.global_position = at
+	PlantedTorch.all.append(pt)
+	return pt
+
+
+func _unplant(pt: PlantedTorch) -> void:
+	PlantedTorch.all.erase(pt)
+	pt.queue_free()
+
+
+## Dousing your own torch (design 6 Oct §FC.3; Torch.douse, F).
+func _douse(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var fires := main.fires
+	var hands = JSON.parse_string(FileAccess.get_file_as_string("res://data/hands.json"))
+	var keyed := false
+	for ev in InputMap.action_get_events("douse"):
+		if ev is InputEventKey and (ev as InputEventKey).physical_keycode == KEY_F:
+			keyed = true
+	ok(keyed and str((hands as Dictionary).get("douse_key", "")) == "F", "the douse action is on F (hands.json douse_key)")
+	# The torch is out (the water, at the end of the snuff rules): relit at
+	# the hearth.
+	var hp := fires.hearth.global_position
+	_place_facing(p, hp + Vector3(0.0, 0.0, 1.0), hp)
+	await _frames(5)
+	ok(not t.lit() and t.pass_flame() == "torch" and t.lit(), "the torch the water put out relights at the hearth")
+	# A spare in the pack ahead of the torch in hand.
+	var held := t.item()
+	var slots: Array = p.inventory.carried
+	for i in slots.size():
+		if is_same(slots[i], held):
+			slots[i] = null
+	p.inventory.add(Inventory.make("torch"))
+	p.inventory.add(held)
+	ok(is_same(t.item(), held) and t.lit(), "a spare goes in the pack ahead of the lit torch in hand")
+	# Watchers by night (Senses: a lurker 20 m off sees a lit torch from
+	# light_sight_m; it neither sees you dark nor smells you).
+	Senses.override = {"daylight": 0.0, "moonlight": 0.0}
+	var eye := p.eye_position() + Vector3(20.0, 0.0, 0.0)
+	var sensed_lit := Senses.can_sense("lurker", eye, p, 0.0)
+	var lights_lit := Senses.lights().size()
+	# F, the physics held still so the burn can't move.
+	p.set_physics_process(false)
+	var burn := float(held.get("burn_left_min", -1.0))
+	var n_log := GameLog.entries.size()
+	var line := str(Torch.DOUSE.get("log_line", ""))
+	# A hunter's chase (§FD, Pursuit): one whose gives_up says
+	# torch_doused loses you the moment your torch goes out.
+	var chase := Pursuit.new(main, {"torch_doused": true})
+	chase.notice(t.lit())
+	var chased := not chase.step(0.1, true, 5.0, t.lit())
+	await _press_f()
+	ok(not t.lit() and t.in_hand() and p.weapon == "torch" and is_same(t.item(), held), "F smothers the lit torch: out, and still the one in your hand")
+	ok(float(held.get("burn_left_min", -2.0)) == burn, "its burn is unchanged (%.4f min)" % burn)
+	ok(GameLog.entries.size() == n_log + 1 and str(GameLog.entries[-1].get("text", "")) == line and line != "", "one log line: \"%s\"" % line)
+	ok(t.last_out == "smothered" and not str(GameLog.entries[-1].get("text", "")).contains("water"), "smothered, not water (its reason '%s')" % t.last_out)
+	ok(sensed_lit == "light" and lights_lit >= 1 and Senses.lights().is_empty() and Senses.can_sense("lurker", eye, p, 0.0) == "" and Torch.light_at(p.global_position) == 0.0, "a doused torch gives nothing away: the lurker saw its light (%s), now nothing (%s)" % [sensed_lit, Senses.can_sense("lurker", eye, p, 0.0)])
+	Senses.override = {}
+	var lost := chase.step(0.1, true, 5.0, t.lit())
+	ok(chased and lost and chase.why == "torch_doused" and not chase.on, "a hunter's chase gives you up the moment you smother it (Pursuit, gives_up torch_doused: '%s')" % chase.why)
+	await _press_f()
+	ok(not t.lit() and GameLog.entries.size() == n_log + 1, "F with no flame does nothing")
+	p.set_physics_process(true)
+	await _frames(60)
+	ok(float(held.get("burn_left_min", -2.0)) == burn, "out, it keeps its burn")
+	# Relight: the hearth, a relit sconce, a planted torch (§CN, as built).
+	ok(t.pass_flame() == "torch" and t.lit() and is_same(t.item(), held) and float(held.get("burn_left_min", -2.0)) == burn, "the smothered torch relights at the hearth, the same torch, its burn as it was")
+	var sconce: Node3D = null
+	for h in fires.holders:
+		if str(h.get_meta("fire_holder")) == "sconce" and FireStore.is_lit(h):
+			sconce = h
+			break
+	ok(sconce != null, "a relit sconce to relight at")
+	if sconce != null:
+		_place_facing(p, _stand_by(main, sconce), sconce.global_position)
+		await _frames(5)
+		ok(t.douse() and not t.lit() and t.pass_flame() == "torch" and t.lit(), "smothered by a relit sconce, it relights at the sconce")
+	p.spawn_flat(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
+	await _frames(5)
+	var pt := _planted(main, Vector3(0.0, -300.0, -1.0))
+	await _frames(2)
+	ok(t.douse() and not t.lit() and t.pass_flame() == "torch" and t.lit(), "smothered by a planted torch, it relights at the planted torch")
+	_unplant(pt)
+	await _frames(2)
+
+
+## The half-dark (design 6 Oct §FC.4; HalfDark, crawler.json dark).
+func _half_dark(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var hd := main.half_dark
+	var l := hd.light
+	var c := l.light_color
+	ok(c.is_equal_approx(HalfDark.color()) and c.b > c.r * 2.0 and c.b > c.g * 2.0, "the half-dark's light is the dark's navy (#%s), never warm" % c.to_html(false))
+	ok(not l.shadow_enabled and l.light_specular == 0.0 and is_equal_approx(l.omni_range, HalfDark.black_m()), "no shadow, no shine, nothing past black_m (%.0f m)" % HalfDark.black_m())
+	var adjust := float(HalfDark.DARK.get("adjust_s", 1.2))
+	var fade := float(HalfDark.DARK.get("fade_s", 0.4))
+	# Away from every fire (the floor of its own below the tomb).
+	p.spawn_flat(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
+	if not t.lit():
+		t.light()
+	await _frames(int(adjust * 60.0) + 10)
+	ok(hd.strength == 0.0 and not l.visible, "your torch lit: nothing added (strength %.2f)" % hd.strength)
+	t.douse()
+	await _frames(int(adjust * 30.0))
+	var half := hd.strength
+	await _frames(int(adjust * 30.0) + 10)
+	ok(half > 0.2 and half < 0.8 and hd.strength == 1.0 and l.visible and is_equal_approx(l.light_energy, HalfDark.energy()), "doused with no flame near, the dark eases readable over adjust_s (%.2f halfway, then %.2f; energy %.2f)" % [half, hd.strength, l.light_energy])
+	t.light()
+	await _frames(1)
+	ok(hd.strength == 0.0 and not l.visible, "the torch relit: off at once")
+	# A lit planted torch 3 m off: behind a wall it doesn't count, in sight
+	# it does.
+	t.douse()
+	var pt := _planted(main, Vector3(0.0, -300.0, -3.0))
+	var wall := StaticBody3D.new()
+	wall.collision_layer = PropCollision.WORLD_LAYER
+	var cs := CollisionShape3D.new()
+	var bx := BoxShape3D.new()
+	bx.size = Vector3(4.0, 4.0, 0.3)
+	cs.shape = bx
+	wall.add_child(cs)
+	main.add_child(wall)
+	wall.global_position = Vector3(0.0, -299.0, -1.5)
+	await _frames(int(adjust * 60.0) + 10)
+	ok(hd.strength == 1.0, "a lit torch 3 m off behind a wall is no flame near: the dark readable (%.2f)" % hd.strength)
+	wall.queue_free()
+	await _frames(int(fade * 60.0) + 10)
+	ok(hd.strength == 0.0 and not l.visible, "the same torch in sight: nothing added (%.2f)" % hd.strength)
+	_unplant(pt)
+	# A fire pot's tar burning on the floor 3 m off (§FA.3): fire too.
+	await _frames(int(adjust * 60.0) + 10)
+	var back := hd.strength
+	main.fire_pots.burst(Vector3(0.0, -299.75, -3.0), "tar", null, Vector3.UP)
+	await _frames(int(fade * 60.0) + 10)
+	ok(back == 1.0 and hd.strength == 0.0 and not l.visible, "a fire pot's tar burning 3 m off is a flame near too: nothing added (%.2f, from %.2f)" % [hd.strength, back])
+	# Beside a relit sconce, doused: its light is on you.
+	var sconce: Node3D = null
+	for h in main.fires.holders:
+		if str(h.get_meta("fire_holder")) == "sconce" and FireStore.is_lit(h):
+			sconce = h
+			break
+	if sconce != null:
+		await _frames(int(adjust * 60.0) + 10)
+		_place_facing(p, _stand_by(main, sconce), sconce.global_position)
+		await _frames(int(fade * 60.0) + 10)
+		ok(hd.strength == 0.0, "beside a relit sconce, doused: the sconce's light, nothing added (%.2f)" % hd.strength)
+	# Waking by the hearth.
+	var w: Array = main.lay.wake
+	p.spawn_flat(w[0], float(w[1]), -0.32)
+	await _frames(int(fade * 60.0) + 10)
+	ok(hd.strength == 0.0, "by the lit hearth: nothing added (%.2f)" % hd.strength)
 
 
 func _sprite(main: CrawlerMain) -> void:

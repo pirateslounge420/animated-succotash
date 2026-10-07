@@ -8,16 +8,22 @@ extends SceneTree
 ## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
 ## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); the
 ## rescuer's sheet; the rescuer from in front, its side and above; a
-## corridor in full dark by torchlight; the same with its sconce relit, 1 m
+## corridor by torchlight, then with the torch smothered (F, §FC.3); a long
+## view down a cold corridor with the torch smothered, in the old full
+## dark (the half-dark off) and in the half-dark (§FC.4), and by torchlight
+## with the half-dark off and on; the corridor with its sconce relit, 1 m
 ## from that sconce's wall and with the torch beside it; a room with its
 ## hearth ring relit; the red ring after one hit and after two (§FD, §FJ.3:
 ## its depth in pixels at 480 lines, darker and deeper on two, the heart
 ## beating from hit 1). Checks: every cell of the
 ## sheet holds the figure (its pixels drawn), the waking frame shows the
 ## fire warm against the dark (warm pixels, and the frame's darkest share
-## navy, not grey), the corridor's dark is dark, and one firelight
-## (§EX.6): the torchlit and sconce-lit stone the same amber, and the
-## stone right at the torch kept amber by the grade.
+## navy, not grey), the smothered corridor still dark, the half-dark (the
+## wall pixels about 3 m off a readable step over the frame's black, about
+## 15 m off at it, and blue), the torchlit frame the same with the
+## half-dark on as off, and one firelight (§EX.6): the torchlit and
+## sconce-lit stone the same amber, and the stone right at the torch kept
+## amber by the grade.
 ## The crosshair (§EX.7, Reticle), in the frames as you see it: its arms'
 ## pixels round the frame's middle pixel, sized per hud.json, at the 480
 ## preset (waking in the hearth room) and the 270 one (01g); nothing else
@@ -269,6 +275,166 @@ func _say_cross(what: String, r: Dictionary) -> void:
 	print("  crosshair, %s (%dx%d): %d of its %d arm pixels in its colour, where they belong (%d of its colour in the frame); %d pixels drawn over the grade, %d outside it; luminance arms %.3f, edge %.3f, round it %.3f: arms against edge %.1f:1, against the frame %.1f:1, edge against the frame %.1f:1" % [what, f.x, f.y, r.at, r.want, r.found, r.drawn, r.stray, r.l_arm, r.l_edge, r.l_out, r.edge_cr, r.out_cr, r.edge_out_cr])
 
 
+## The frame's wall pixels from `lo` to `hi` m off (the half-dark, §FC.4):
+## a ray from the eye through the middle of each 2x2 block of the frame
+## (so the dither's 4x4 pattern averages out); a wall (its normal within
+## 0.3 of level) that far adds the block's four pixels. The crosshair's
+## box is left out. {"n" pixels, "luma", "hue" (0-360, blue about 240),
+## "color"}.
+func _wall_band(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Array) -> Dictionary:
+	var vs := cam.get_viewport().get_visible_rect().size
+	var sx := vs.x / img.get_width()
+	var sy := vs.y / img.get_height()
+	var space := cam.get_world_3d().direct_space_state
+	var hud := _hud_rect(img).grow(1)
+	var sum := Color(0, 0, 0)
+	var n := 0
+	for y in range(0, img.get_height() - 1, 2):
+		for x in range(0, img.get_width() - 1, 2):
+			if hud.has_point(Vector2i(x, y)) or hud.has_point(Vector2i(x + 1, y + 1)):
+				continue
+			var sp := Vector2((x + 1.0) * sx, (y + 1.0) * sy)
+			var from := cam.project_ray_origin(sp)
+			var q := PhysicsRayQueryParameters3D.create(from, from + cam.project_ray_normal(sp) * (hi + 2.0), PropCollision.WORLD_LAYER)
+			q.exclude = exclude
+			var h := space.intersect_ray(q)
+			if h.is_empty() or absf((h.normal as Vector3).y) > 0.3:
+				continue
+			var d := from.distance_to(h.position)
+			if d < lo or d > hi:
+				continue
+			for k in 4:
+				sum += img.get_pixel(x + (k & 1), y + (k >> 1))
+			n += 4
+	var c := sum / float(maxi(n, 1))
+	return {"n": n, "luma": c.r * 0.3 + c.g * 0.59 + c.b * 0.11, "hue": c.h * 360.0, "color": c}
+
+
+## The whole frame's mean luma (every pixel but the crosshair's box).
+func _mean_luma(img: Image) -> float:
+	var hud := _hud_rect(img)
+	var s := 0.0
+	var n := 0
+	for y in img.get_height():
+		for x in img.get_width():
+			if hud.has_point(Vector2i(x, y)):
+				continue
+			var c := img.get_pixel(x, y)
+			s += c.r * 0.3 + c.g * 0.59 + c.b * 0.11
+			n += 1
+	return s / float(maxi(n, 1))
+
+
+## A long view down a cold corridor (§FC.4's frames): a corridor's end,
+## looking along it, with 16-30 m clear ahead (a far wall about 15 m off
+## and more) and the hearth over 14 m away: [feet, yaw], or [] if none.
+func _long_view(main: CrawlerMain) -> Array:
+	var p := main.player
+	var space := p.get_world_3d().direct_space_state
+	var hp: Vector3 = main.fires.hearth.global_position
+	for pc in main.lay.pieces:
+		if str(pc.kind) != "corridor":
+			continue
+		for end in 2:
+			var dv: Vector2 = pc.dir
+			var along := 0.4 if end == 0 else float(pc.len) - 0.4
+			var at2: Vector2 = (pc.c as Vector2) + dv * along
+			var face := dv if end == 0 else -dv
+			var fy := Delves.floor_of(pc, along)
+			var eye := Vector3(at2.x, fy + 1.6, at2.y)
+			var q := PhysicsRayQueryParameters3D.create(eye, eye + Vector3(face.x, 0.0, face.y) * 40.0, PropCollision.WORLD_LAYER)
+			q.exclude = [p.get_rid()]
+			var h := space.intersect_ray(q)
+			var clear := 40.0 if h.is_empty() else eye.distance_to(h.position)
+			if clear >= 16.0 and clear <= 30.0 and eye.distance_to(hp) > 14.0:
+				return [Vector3(at2.x, fy, at2.y), atan2(-face.x, -face.y)]
+	return []
+
+
+## Wait until the half-dark has settled where it's going (off with the
+## torch lit or a flame near, else fully on; at most 600 frames), then a
+## few frames more.
+func _settle(main: CrawlerMain) -> void:
+	var hd := main.half_dark
+	for i in 600:
+		var want := 0.0 if not hd.enabled or main.player.torch.lit() or hd.flame_near() else 1.0
+		if hd.strength == want:
+			break
+		await process_frame
+	await _frames(6)
+
+
+## The readable floor (§FC.4's check; picked by Claude Code): the wall
+## pixels about 3 m off at least this much luma over the frame's black
+## (the grade's navy floor, look.json retro.colors.shadow_floor, which the
+## old full dark sits at): about two of the frame's 5-bit steps of green,
+## a wall you can make out.
+const READABLE := 0.02
+
+
+## The half-dark (design 6 Oct §FC.4; HalfDark, crawler.json dark): a long
+## view down a cold corridor at midnight with the torch smothered, first
+## with the half-dark off (the old full dark: the frame's black), then on;
+## the wall pixels by how far off they are. Then the torch lit, the
+## half-dark off and on: the same frame. Leaves you where you stood, the
+## torch out.
+func _half_dark(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var hd := main.half_dark
+	var v := _long_view(main)
+	ok(not v.is_empty(), "a long view down a cold corridor (16-30 m clear ahead, the hearth over 14 m off)")
+	if v.is_empty():
+		return
+	var keep_pos := p.global_position
+	var keep_yaw := p._yaw
+	var keep_days: float = main.world.days
+	main.world.days = 13.0
+	p.spawn_flat(v[0], float(v[1]), -0.05)
+	var cam := p.get_viewport().get_camera_3d()
+	var ex: Array = [p.get_rid()]
+	# The old full dark: the frame's black.
+	t.douse()
+	hd.enabled = false
+	await _settle(main)
+	var off_img := await _shot("07d_long_full_dark")
+	var black := float(_wall_band(off_img, cam, 1.0, 30.0, ex).luma)
+	# The half-dark.
+	hd.enabled = true
+	await _settle(main)
+	var img := await _shot("07e_long_half_dark")
+	var got: Array = []
+	var line := "  the half-dark (fill_energy %.1f, falloff %.2f, readable_m %.0f, black_m %.0f; the frame's black %.3f):" % [float(HalfDark.DARK.get("fill_energy", 0.0)), float(HalfDark.DARK.get("falloff", 0.0)), HalfDark.readable_m(), HalfDark.black_m(), black]
+	for b in [[2.5, 3.5], [4.5, 5.5], [7.5, 8.5], [13.5, 16.5]]:
+		var r := _wall_band(img, cam, b[0], b[1], ex)
+		got.append(r)
+		line += "  %.0f m: luma %.3f #%s hue %.0f (%d px)" % [(float(b[0]) + float(b[1])) * 0.5, r.luma, (r.color as Color).to_html(false), r.hue, r.n]
+	print(line)
+	var near: Dictionary = got[0]
+	var far: Dictionary = got[3]
+	var nc: Color = near.color
+	ok(int(near.n) > 0 and float(near.luma) >= black + READABLE, "smothered in a cold corridor, the walls about 3 m off read: luma %.3f, %.3f over the frame's black %.3f (readable floor %.2f)" % [near.luma, float(near.luma) - black, black, READABLE])
+	ok(int(far.n) > 0 and float(far.luma) <= black + 0.005, "the walls about 15 m off are at the black (luma %.3f)" % far.luma)
+	ok(float(near.hue) >= 200.0 and float(near.hue) <= 260.0 and nc.b > nc.g * 2.0, "the near walls are navy, never grey (hue %.0f, #%s)" % [near.hue, nc.to_html(false)])
+	# The torch lit: the half-dark adds nothing, so the frame is the one
+	# before it.
+	t.light()
+	hd.enabled = false
+	await _settle(main)
+	var lit_off := await _shot("07f_long_by_torch_no_half_dark")
+	hd.enabled = true
+	await _settle(main)
+	var lit_on := await _shot("07g_long_by_torch")
+	var worst := absf(_mean_luma(lit_on) - _mean_luma(lit_off))
+	for b in [[2.5, 3.5], [7.5, 8.5], [13.5, 16.5]]:
+		worst = maxf(worst, absf(float(_wall_band(lit_on, cam, b[0], b[1], ex).luma) - float(_wall_band(lit_off, cam, b[0], b[1], ex).luma)))
+	ok(worst < 0.003 and hd.strength == 0.0, "by torchlight the frame is as it was without the half-dark (mean %.4f against %.4f; worst difference %.4f)" % [_mean_luma(lit_on), _mean_luma(lit_off), worst])
+	t.douse()
+	main.world.days = keep_days
+	p.spawn_flat(keep_pos, keep_yaw, -0.05)
+	await _settle(main)
+
+
 ## A torch in hand (from the pack, wherever you stand).
 func _torch_in_hand(p: CrawlerPlayer) -> void:
 	if not p.inventory.has_kind("torch"):
@@ -312,7 +478,9 @@ func _pots(main: CrawlerMain) -> void:
 		var d: Vector2 = cor.dir
 		var s2: Vector2 = (cor.c as Vector2) + d * 0.8
 		p.spawn_flat(Vector3(s2.x, Delves.floor_of(cor, 0.8), s2.y), atan2(-d.x, -d.y), -0.2)
-		await _frames(8)
+		# (The half-dark settled first, §FC.4, so before and after are like
+		# for like.)
+		await _settle(main)
 		var before := _stats(await _shot("14a_corridor_before_the_pot"))
 		var f2: Vector2 = (cor.c as Vector2) + d * 4.0
 		fp.burst(Vector3(f2.x, Delves.floor_of(cor, 4.0) + 0.25, f2.y), "tar", null, Vector3.UP)
@@ -326,7 +494,7 @@ func _pots(main: CrawlerMain) -> void:
 		var d3: Vector2 = room.dir
 		var s3: Vector2 = (room.c as Vector2) + d3 * 1.0
 		p.spawn_flat(Vector3(s3.x, float(room.y0), s3.y), atan2(-d3.x, -d3.y), 0.0)
-		await _frames(8)
+		await _settle(main)
 		var before3 := _stats(await _shot("15a_room_before_the_burst"))
 		var b3: Vector2 = (room.c as Vector2) + d3 * minf(5.0, float(room.len) - 1.0)
 		fp.burst(Vector3(b3.x, float(room.y0) + 1.3, b3.y), "light_oil", null, Vector3.UP)
@@ -506,13 +674,14 @@ func _run() -> void:
 		p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
 		await _frames(10)
 		await _shot("06_corridor_by_torch")
-		# Full dark (§BA, §CJ.5): the torch out, nothing lit near, at
-		# midday (a sconce's flue lets in no light, §EV.2).
-		t.put_out("stowed")
-		await _frames(10)
-		var dark_img := await _shot("07_corridor_dark")
+		# The torch smothered (F, §FC.3), nothing lit near, at midday (a
+		# sconce's flue lets in no light, §EV.2): still dark between the
+		# lights (§BA, §CJ.5), no longer blind near you (§FC.4).
+		t.douse()
+		await _settle(main)
+		var dark_img := await _shot("07_corridor_doused")
 		var ds := _stats(dark_img)
-		ok(float(ds.mean_l) < 0.06, "with the torch out, the corridor between the lights is full dark (mean %.3f)" % ds.mean_l)
+		ok(not t.lit() and t.in_hand() and float(ds.mean_l) < 0.12, "smothered, the torch is out and still in hand, and the corridor between the lights is still dark (mean %.3f)" % ds.mean_l)
 		# The crosshair down the dark corridor (on the far hearth's lit
 		# doorway), then on the corridor's own dark wall a step from the
 		# cold sconce: navy, with the Settings switch on and off.
@@ -530,6 +699,7 @@ func _run() -> void:
 		Settings.set_bool("hud.reticle", true)
 		p.spawn_flat(stand, atan2(-along.x, -along.z), -0.05)
 		await _frames(6)
+		await _half_dark(main)
 		# Relight its sconce, then put the torch away again.
 		var keep_pos := p.global_position
 		var keep_yaw := p._yaw
@@ -674,7 +844,9 @@ func _harm_ring(main: CrawlerMain, p: CrawlerPlayer) -> void:
 	var shots := {}
 	p.torch.put_out("stowed")
 	p.spawn_flat(dark_at, atan2(-along.x, -along.z), -0.05)
-	await _frames(10)
+	# (The half-dark settled before each dark shot, §FC.4, so the hit
+	# frames and the unhurt one differ only by the ring.)
+	await _settle(main)
 	var none := await _shot("11_harm_none_dark")
 	for n in [1, 2]:
 		harm.hit("creature:giant snake")
@@ -683,7 +855,7 @@ func _harm_ring(main: CrawlerMain, p: CrawlerPlayer) -> void:
 			harm.tick(0.1)
 		p.torch.put_out("stowed")
 		p.spawn_flat(dark_at, atan2(-along.x, -along.z), -0.05)
-		await _frames(6)
+		await _settle(main)
 		shots[n] = await _shot("1%d_harm_hit_%d_dark" % [n + 1, n])
 		print("  hit %d: the heart %s at %.0f bpm (%d beats so far), the ring at level %.2f" % [n, "beating" if harm.heart else "still", harm.heart_bpm, harm.beats, harm.ring])
 		if n == 1:

@@ -13,11 +13,12 @@ extends Node
 ##      generated from the seed out of the tomb kit (TombKit, TombBuild).
 ##   3. relighting (§ET.4): cold fire-holders down the tomb, lit with the
 ##      torch's swing (§CN), staying lit, and a torch relights at any of
-##      them; between them full dark (§BA, §CJ.5: no sun, no sky, only a
-##      faint navy so nothing is grey).
+##      them; between them the dark (§BA, §CJ.5: no sun, no sky, only a
+##      faint navy so nothing is grey), half readable near you when no
+##      flame is (§FC.4, HalfDark).
 ##   4. the torch's snuff rules (§ET.7 as amended by §EZ.1 and §EZ.5:
 ##      only deep water puts it out; the airways lean it; TorchSnuff,
-##      Airways).
+##      Airways), and F to smother it yourself (§FC.3, Torch.douse).
 ##   5. the rescuer as a baked sprite (§ET.8, FigureSprite).
 ##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
@@ -26,8 +27,8 @@ extends Node
 ## the settings cover the middle of the frame. The log keeps its lines
 ## (Enter), O the settings, F11 the pixel size, F2 the frame time. Right
 ## click takes a torch from the bundle; left click swings the torch; Q
-## puts it away or takes it out. No combat, no harm, no dread
-## meter yet (the dark is the absence of light in this slice).
+## puts it away or takes it out; F smothers it. No combat, no harm, no
+## dread meter yet (the dark is the absence of light in this slice).
 
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
@@ -42,6 +43,8 @@ var fire_pots: FirePots
 var airways: Airways
 var vents: Vents
 var player: CrawlerPlayer
+## The dark you can half see in (§FC.4).
+var half_dark: HalfDark
 var rescuer: FigureSprite
 var post: PostGrade
 var fire_shadows: FireShadows
@@ -99,6 +102,10 @@ func _ready() -> void:
 	fire_pots.name = "FirePots"
 	add_child(fire_pots)
 	fire_pots.build(world, lay, player)
+	half_dark = HalfDark.new()
+	half_dark.name = "HalfDark"
+	add_child(half_dark)
+	half_dark.setup(player)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"

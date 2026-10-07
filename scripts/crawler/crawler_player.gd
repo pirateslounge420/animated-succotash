@@ -5,7 +5,8 @@ extends PlanetPlayer
 ## stays (§AU, §ET.8; grid-step is an open call, §ET.10): WASD walk, W W
 ## or the sprint button to sprint (movement.json's speeds), Shift crouch,
 ## Space jump, the mouse looks, first person only. The torch is the one
-## tool (Q: torch in hand or bare hands; left click swings it, §CN); no
+## tool (Q: torch in hand or bare hands; left click swings it, §CN; F
+## smothers it and you keep holding it, §FC.3); no
 ## bow, no spear, no fists, no climbing, no combat (§ET.1). Gravity is
 ## straight down (-y): the tomb is its own flat world, no planet under it.
 ## Footsteps sound on stone. Nothing hurts you in this slice.
@@ -103,6 +104,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		torch.block_until_release()
 	elif event.is_action_pressed("weapon_swap"):
 		swap_weapon()
+	elif event.is_action_pressed("douse") and not ui_open and not dead:
+		# F (design 6 Oct §FC.3): smother the lit torch in hand.
+		torch.douse()
 	elif event.is_action_pressed("release_mouse"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

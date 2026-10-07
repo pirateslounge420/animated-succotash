@@ -21,7 +21,9 @@ extends Node3D
 ## last gutter_share: dimmer, a harder flicker) and goes out: a stick
 ## (`burnt`). Water past douse_depth_m puts it out (relight it at a
 ## flame); so does stowing it (Q away from it) and starting a climb with
-## no ground to plant it in; with ground there, a climb plants it. Right
+## no ground to plant it in; with ground there, a climb plants it. In the
+## crawler you can smother it on purpose (design 6 Oct §FC.3, douse(): F)
+## and keep holding it, its burn kept; that is not water. Right
 ## click the ground with it lit to plant it (PlantedTorch); a dropped lit
 ## torch lies burning. Its head is a glowing ember, not a flame (Mike,
 ## 3 Oct; ember_node): a coal with the fire's colours in its cracks and a
@@ -45,6 +47,9 @@ static var instance: Torch = null
 ## Torch bundles laid by fires (lay_bundle): [WorldItem or null, dir,
 ## ground, world day it ran out (or -1)], remade after bundle.remake_h_game.
 static var bundles: Array = []
+## Smothering your own torch (design 6 Oct §FC.3, stealth.json douse):
+## its log line and its sound.
+static var DOUSE: Dictionary = Tuning.table("stealth").get("douse", {})
 
 var player: PlanetPlayer
 ## The crawler's snuff rules (design 6 Oct §ET.7, amended by §EZ.1 and
@@ -69,6 +74,12 @@ var last_contact := ""
 ## The swing's top: where its arc (1 .. 0) is furthest out (_apply's
 ## sin(_swing * PI)), half of Fists.STRIKE_S after the click (§FA.1).
 const SWING_TOP := 0.5
+## Why it last went out (put_out's reason: "smothered" by your own hand,
+## "doused" by water, "stowed", "burnt", ...; "" not yet).
+var last_out := ""
+## The torch last in your hand (item()): it stays the one in hand once it
+## goes out, so a smothered torch is the one you relight.
+var _held: Dictionary = {}
 ## A line for the player (main shows it and clears it).
 var note := ""
 
@@ -306,16 +317,22 @@ static func light_node() -> OmniLight3D:
 
 # --- The torch in hand ------------------------------------------------------------
 
-## The carried torch in hand (the lit one first), or {} with none.
+## The carried torch in hand (the lit one first; else the one last in
+## hand, while you carry it and it isn't a burnt stick; else the first),
+## or {} with none.
 func item() -> Dictionary:
 	var best := {}
+	var held := {}
 	for it in player.inventory.carried:
 		if it is Dictionary and str(it.get("kind", "")) == "torch":
 			if bool(it.get("lit", false)):
+				_held = it
 				return it
 			if best.is_empty():
 				best = it
-	return best
+			if is_same(it, _held) and not bool(it.get("burnt", false)):
+				held = it
+	return held if not held.is_empty() else best
 
 
 func in_hand() -> bool:
@@ -479,20 +496,37 @@ func stow() -> void:
 		put_out("stowed")
 
 
+## Smother it on purpose (design 6 Oct §FC.3, the douse key, F): a lit
+## torch in hand goes out and stays in your hand with the burn it had.
+## Dark, it no longer gives you away (Senses reads lit()); relight it at
+## any flame by the swing, as built. Not water (put_out "smothered").
+## Returns whether there was a flame to smother.
+func douse() -> bool:
+	if not lit():
+		return false
+	put_out("smothered")
+	return true
+
+
 func put_out(why: String) -> void:
 	var it := item()
 	if it.is_empty():
 		return
 	it["lit"] = false
+	last_out = why
 	match why:
 		"burnt":
 			it["burnt"] = true
 			GameLog.add("The torch has burnt out: a stick now.", "torch")
 		"doused":
 			GameLog.add("The water put the torch out.", "torch")
+		"smothered":
+			GameLog.add(str(DOUSE.get("log_line", "You smothered the torch.")), "torch")
 		_:
 			GameLog.add("The torch is out.", "torch")
-	_play("torch")
+	# Smothered: a short hiss under your hand (stealth.json douse.sound);
+	# any other way out, the scuff.
+	_play(str(DOUSE.get("sound", "smother_hiss")) if why == "smothered" else "torch")
 	_apply(false)
 
 
@@ -672,8 +706,8 @@ func sputter() -> void:
 
 
 func _play(kind: String) -> void:
-	# The synth has no torch sounds yet: a crack for the lighting, a scuff
-	# for going out (SoundSynth kinds).
+	# The synth has few torch sounds yet: a crack for the lighting, a scuff
+	# for going out, its own hiss for a smothered one (SoundSynth kinds).
 	_voice.stream = SoundSynth.stream({"torch_light": "crack", "torch": "scuff"}.get(kind, kind), randi())
 	_voice.play()
 

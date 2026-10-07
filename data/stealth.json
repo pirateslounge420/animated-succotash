@@ -1,9 +1,9 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FC] Sneaking, hiding and dousing in the crawler (Mike, 6 Oct, 22:32; his Amnesia: A Machine for Pigs and Minecraft references). Brings §DF (your light gives you away) underground. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "about": "[NOT WIRED YET — design §FC.1, §FC.2: sneak and hide; douse, §FC.3, is wired] Sneaking, hiding and dousing in the crawler (Mike, 6 Oct, 22:32; his Amnesia: A Machine for Pigs and Minecraft references). Brings §DF (your light gives you away) underground. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
   "sneak": "§FC.1 (Mike): Shift held sneaks (the crawler's crouch, as built: crouch speed, noise_level 0.1). camera_ease_s: the view eases down to crouched eye height and back up, never a snap. reticle: the sneak look of hud.json's reticle (ring = the dot opens into a small ring; dim = its alpha scale). footstep_volume: a share of the walk's step volume. ledge_guard: while sneaking you can't walk off a drop deeper than ledge_drop_m; let go of Shift to step off (Minecraft).",
   "hide": "§FC.2 (Mike): things to hide behind and in. Claude's first guess: no hide button and no prompt; hidden means out of a creature's sight line (cover lists the kinds the tomb kit should leave room behind). A lit torch gives you away behind cover too (§DF).",
-  "douse": "§FC.3 (Mike): put your own torch out on purpose and keep holding it (key in hands.json douse_key). log_line: the one log line. Relight from any lit flame, as built (§CN, §ET.7)."
+  "douse": "§FC.3 (Mike): put your own torch out on purpose and keep holding it (key in hands.json douse_key). log_line: the one log line. Relight from any lit flame, as built (§CN, §ET.7). Wired 7 Oct (Claude Code, Torch.douse): F (the d-pad's down on a pad; Controls action douse) smothers a lit torch in hand: it goes out with the reason smothered (never counted as water), logs log_line once, plays sound (SoundSynth smother_hiss), and stays in your hand with the burn it had; nothing that watches for a carried flame sees it any more (Senses reads the torch's lit state). F with no lit torch does nothing. keep_holding and relight_from describe the build and aren't read as switches."
  },
  "sneak": {
   "key": "crouch",
