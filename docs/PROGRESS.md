@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — The open world's master volume holds under the hurt muffle (§EA; Mike asked for it, found during queue 56) (f48f587)
+- **The bug:** Harm's muffle (§EA) wrote the Master bus's volume every frame, at 0 dB when unhurt, so in the open world the Settings master-volume slider did nothing while Harm ran (only 0 % still muted). Leaving, Harm also put the bus back to 0 dB rather than the slider's level.
+- **The fix:** `AudioMix` owns the Master level. `AudioMix.set_master_trim(db)` lays a trim on top of the slider's level, Harm sets its muffle through it, and takes it off when it goes. The muffle's low-pass is unchanged. The crawler's Harm (queue 56) never touches the Master bus.
+- **Checks:** `harm_check` (seed 7731) has 33 lines, 0 fails. Two are new: with the slider at 50 %, the Master bus sits at −6.0 dB unhurt and −10.0 dB at hit 1. Both fail on the old code. The check puts the setting back. `audio_mix_check` and `crawler_harm_check` pass.
+
+---
+
 ## 2026-10-07 — Queue 54, §FC.3 and §FC.4: smother your own torch, and a dark you can half see in (972a2d5)
 - **F smothers the torch** (`Torch.douse`; the Controls action `douse`: F, or the d-pad's down on a pad). A lit torch in hand goes out with a new reason, `smothered`, a short new hiss (`SoundSynth smother_hiss`) and one log line ("You smothered the torch.", `stealth.json → douse.log_line`). It stays in your hand with its burn. It isn't water: `doused` stays the water's reason, and `Torch.last_out` says which.
   - The torch in your hand is now remembered (`Torch.item`), so with a spare in the pack the smothered torch, not the spare, is the one you relight. A burnt stick isn't remembered, so a spare can still come to hand after a burn-out.
