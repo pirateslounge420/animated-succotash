@@ -5,28 +5,39 @@ extends SceneTree
 ## residents.json rules, crawler.json cleared), headless:
 ##   SEEDS=1,7,42 godot --headless --path . --fixed-fps 60 --script tools/cleared_check.gd
 ## For each seed (1, 7 and 42 unless SEEDS says), the snake held still
-## (Boss.auto false) until the last light:
+## (Boss.auto false) until the last light. The skeletons move only while
+## you can't see them (Mike's 7 Oct note; Resident.holds_still), so where a
+## test wants one to come to you, your back is turned:
 ##  1. the light's edge: a skeleton hunting you, its strike not landed,
 ##     comes to the edge of its dark while you stand in the lit hearth room,
-##     never a step into the light and no strike at you there; it watches
-##     you edge_watch_s, then gives you up ("light") and keeps to the dark;
+##     your back to it, never a step into the light and no strike at you
+##     there; you turn round and it stands frozen at the edge, watching
+##     you, and gives you up all the same edge_watch_s after it got there
+##     ("light"), and keeps to the dark;
 ##  2. the chase into the light (§FD): one that has hit you follows you
-##     into the lit hearth room; given up there (you far off), it is back in
-##     the dark within back_to_dark_s;
-##  3. a dark pocket's bite: one hanging back in a dark pocket lets you be
-##     at pocket_counterattack_m + 1 m; a scripted walk in to 2 m draws a
-##     strike with its wind-up (its tell from the wind-up's first frame),
-##     lunging in as it winds up, and the hit lands at the end of its
-##     committed strike; the same walk again, your lit torch's swing at half
-##     its wind-up staggers it and no hit lands;
+##     into the lit hearth room, your back to it; given up there (you far
+##     off), it is back in the dark within back_to_dark_s;
+##  3. a dark pocket's bite (it moves in plain view: you got right up on
+##     it): one hanging back in a dark pocket lets you be, still, at
+##     pocket_counterattack_m + 1 m; a scripted walk in to 2 m, looking at
+##     it, draws a strike with its wind-up (its tell from the wind-up's
+##     first frame), lunging in as it winds up, and the hit lands at the end
+##     of its committed strike; the same walk again, your lit torch's swing
+##     at half its wind-up staggers it and no hit lands;
+##  3b. cut off where you can see it (below): it stands where it is while
+##     you watch it, and the moment you look away it is into the stone; it
+##     comes up below_s later in the dark, out of your sight;
 ##  4. a scripted run relighting every holder (the layout's order, the
 ##     heart's own lights last, so it is the last dark), you by each with
 ##     your torch lit and then a while,
 ##     the skeletons free (nothing takes you on this run): no resident
 ##     stands in a lit room or stretch unless it is chasing you, but on its
 ##     way out of one (climbing out of a relit place, leaving) and for no
-##     longer than rise_s + back_to_dark_s; skeletons resting in relit rooms
-##     fall back into the dark pockets;
+##     longer than rise_s + back_to_dark_s of the time it could move (not
+##     held still in your view, nor stopped short of it); skeletons resting
+##     in relit rooms fall back into the dark pockets; and none beyond its
+##     reach, outside its strike and the last light's going, moves, turns
+##     or changes its pose on a frame you could see it in;
 ##  5. the last light: the floor is cleared and the log has its line once,
 ##     after the count of lights; every resident has gone within
 ##     cleared.retreat_seen_s (the ones in view seen going back into the
@@ -146,9 +157,14 @@ func _settle() -> void:
 		r._for_good = true
 		r.seen_going = false
 		r.came_up = 0
+		r.armed = false
+		r.still = false
+		r._told = false
+		r._rphase = ""
 		r.set_physics_process(true)
 		if r.sprite != null:
 			r.sprite.visible = true
+		r._show_pose()
 	main.harm.reset()
 	main.harm._last_hit = -INF
 	player._invulnerable = 0.0
@@ -194,6 +210,14 @@ func _place_facing(at: Vector3, target: Vector3) -> void:
 	player.spawn_flat(at, atan2(-flat.x, -flat.z), -0.1)
 
 
+## Look at `r` (its middle) from where you stand.
+func _look_at(r: Resident) -> void:
+	var pts := r.view_points()
+	var mid: Vector3 = pts[1] if pts.size() > 1 else r.global_position + Vector3(0.0, 0.8, 0.0)
+	var d := mid - player.camera().global_position
+	player.set_view(atan2(d.y, Vector2(d.x, d.z).length()), atan2(-d.x, -d.z))
+
+
 ## A doorway out of the hearth room: {"door", "out" (Vector3, flat, from
 ## the hearth room into the corridor), "mid" (the door's middle on its
 ## floor), "cor" (the corridor piece)}.
@@ -231,11 +255,14 @@ func _edge() -> void:
 	if hd.is_empty() or r == null:
 		ok(false, "a corridor out of the hearth room and a skeleton for the light's edge")
 		return
-	var you := _from_door(hd, -1.6)
+	# You farther in than its reach from the doorway, so at the edge it is
+	# still a step beyond reach (it holds still while you look at it).
+	var you := _from_door(hd, -2.6)
 	var it := _from_door(hd, 3.5)
-	ok(not res.dark_at(you) and res.dark_at(it), "you in the lit hearth room 1.6 m in from a doorway, a skeleton 3.5 m out in the dark corridor beyond it")
+	ok(not res.dark_at(you) and res.dark_at(it), "you in the lit hearth room 2.6 m in from a doorway, a skeleton 3.5 m out in the dark corridor beyond it")
 	_torch(true)
-	_place_facing(you, it)
+	# Your back to it.
+	_place_facing(you, you + (you - it))
 	_hunt_at(r, it, you)
 	var w0 := r.strike.wind_ups
 	var hits0 := main.harm.landed
@@ -243,6 +270,8 @@ func _edge() -> void:
 	var closest := INF
 	var held_at := -1.0
 	var gave := -1.0
+	var at_edge := Vector3.INF
+	var drift := 0.0
 	var t := 0.0
 	var watch := _rule("edge_watch_s", 6.0)
 	while t < watch + 8.0:
@@ -253,12 +282,17 @@ func _edge() -> void:
 		closest = minf(closest, Vector2(r.global_position.x - hd.mid.x, r.global_position.z - hd.mid.z).length())
 		if held_at < 0.0 and r._edge_t > 0.0:
 			held_at = t
+			# You turn round to it: it stands there, watching you.
+			_look_at(r)
+			at_edge = r.global_position
+		if at_edge != Vector3.INF:
+			drift = maxf(drift, r.global_position.distance_to(at_edge))
 		if gave < 0.0 and r.gave_up_why != "":
 			gave = t
 			break
 	ok(in_light == 0 and r.strike.wind_ups == w0 and main.harm.landed == hits0, "hunting you, its strike not landed, it never steps into the light (%d frames) and no strike comes at you there (%d wind-ups, %d hits)" % [in_light, r.strike.wind_ups - w0, main.harm.landed - hits0])
-	ok(closest <= 1.0, "it comes to the edge of its dark: %.2f m from the doorway's middle at its closest" % closest)
-	ok(gave > 0.0 and held_at > 0.0 and r.gave_up_why == "light" and absf(gave - held_at - watch) <= 0.25, "it watches you from the edge for edge_watch_s %.0f s, then gives you up (held at %.2f s, gave you up at %.2f s, %s)" % [watch, held_at, gave, r.gave_up_why])
+	ok(closest <= 1.0, "your back to it, it comes to the edge of its dark: %.2f m from the doorway's middle at its closest" % closest)
+	ok(gave > 0.0 and held_at > 0.0 and r.gave_up_why == "light" and absf(gave - held_at - watch) <= 0.25 and drift == 0.0, "you turn round as it reaches the edge: it stands frozen there (moved %.4f m) watching you for edge_watch_s %.0f s, then gives you up (held at %.2f s, gave you up at %.2f s, %s)" % [drift, watch, held_at, gave, r.gave_up_why])
 	await _frames(int(2.0 / DT))
 	ok(not r.pursuit.on and res.dark_at(r.global_position) and r.state in [Resident.LURK, Resident.RETURN, Resident.LYING, Resident.REST], "given up, it is no one's pursuer and keeps to the dark (%s)" % r.state_name())
 
@@ -285,7 +319,8 @@ func _into_light() -> void:
 	# Nothing more lands on this test.
 	player._invulnerable = 1.0e9
 	var inside := _from_door(hd, -3.0)
-	_place_facing(inside, it)
+	# Into the lit hearth room, your back to it.
+	_place_facing(inside, inside + (inside - it))
 	var followed := false
 	t = 0.0
 	while t < 4.0 and not followed:
@@ -293,7 +328,7 @@ func _into_light() -> void:
 		t += DT
 		if r.chasing() and not res.dark_at(r.global_position):
 			followed = true
-	ok(followed, "you step into the lit hearth room and it follows you in (%.2f s; §FD, chase_enters_light)" % t)
+	ok(followed, "you step into the lit hearth room, your back to it, and it follows you in (%.2f s; §FD, chase_enters_light)" % t)
 	# You far off: it gives you up there, in the light.
 	player.spawn_flat(Vector3(TEST_XZ.x, TEST_Y, TEST_XZ.y), 0.0, 0.0)
 	var gave := -1.0
@@ -464,21 +499,35 @@ func _cut_off() -> void:
 	_place_facing(you, spot)
 	_lurk_at(r, res.node_of(spot), spot)
 	await _frames(int(1.0 / DT))
-	var seen0 := r.in_view()
+	_look_at(r)
+	await _frames(2)
+	var seen0 := res.watched(r)
+	var pos0 := r.global_position
+	# Cut off where you can see it (Mike's 7 Oct note: it goes only unseen):
+	# it stands where it is while you watch it.
 	r.retreat(false)
-	var phases := {}
+	var held := r.state == Resident.RETREAT and r._rphase == "held"
+	var drift := 0.0
 	var t := 0.0
-	var went_below := -1.0
-	var hole: Dictionary = r.hole
-	while t < float(Residents.CLEARED.get("retreat_seen_s", 6.0)) + 0.5 and went_below < 0.0:
+	var watch := 3.0
+	while t < watch:
 		await physics_frame
 		t += DT
-		if r.state == Resident.RETREAT:
-			phases[r._rphase] = true
+		drift = maxf(drift, r.global_position.distance_to(pos0))
+		if r.state != Resident.RETREAT or r._rphase != "held":
+			held = false
+	ok(seen0 and held and drift == 0.0 and r.sprite.visible and not r.seen_going and not r.pursuit.on and res.all.has(r), "cut off where you can see it, it stands where it is all %.0f s you watch it (moved %.4f m; %s, %s), no one's pursuer: nothing of its going is seen (it was, before Mike's 7 Oct note)" % [watch, drift, r.state_name(), r._rphase])
+	# You look away: into the stone at once.
+	var away := r.global_position - player.global_position
+	player.set_view(-0.1, atan2(away.x, away.z))
+	var went_below := -1.0
+	t = 0.0
+	while t < 1.0 and went_below < 0.0:
+		await physics_frame
+		t += DT
 		if r.state == Resident.BELOW:
 			went_below = t
-	var into: Vector3 = hole.get("pos", Vector3.INF)
-	ok(seen0 and r.seen_going and phases.has("climb") and phases.has("withdraw") and went_below > 0.0, "cut off where you can see it, it goes into the stone: %s, into the %s at %s (%s), %.2f s" % [", ".join(phases.keys()), str(hole.get("rests_in", "?")), str(into), "its own" if hole == r.place else "the nearest", went_below])
+	ok(went_below > 0.0 and went_below <= 2.5 * DT and r.global_position.distance_to(pos0) < 0.001, "you look away and it is into the stone at once, where it stood (%.2f s)" % went_below)
 	ok(r.state == Resident.BELOW and (r.sprite == null or not r.sprite.visible) and r.strike == null and not r.pursuit.on and res.all.has(r), "in the stone it is out of sight, nothing to swing at, no one's pursuer, and still on the roll (below, not gone for good)")
 	# You walk off (out of the room); it comes up in the dark nearest it, out
 	# of your sight, below_s later.
@@ -493,7 +542,7 @@ func _cut_off() -> void:
 		if r.state != Resident.BELOW:
 			up = t
 	var d_you := Vector2(r.global_position.x - player.global_position.x, r.global_position.z - player.global_position.z).length()
-	ok(up >= float(b[0]) - DT and up <= float(b[1]) + 2.5 and r.state == Resident.LURK and r.came_up == 1 and res.dark_at(r.global_position) and r.sprite.visible and not res.seen_at(r.global_position) and d_you >= _rule("pocket_counterattack_m", 3.0) * 2.0 - 0.05, "and comes up %.2f s later (below_s %s) in the dark (node %d), out of your sight, %.1f m from you, to hang back there (%s)" % [up, str(b), res.node_of(r.global_position), d_you, r.state_name()])
+	ok(up >= float(b[0]) - DT and up <= float(b[1]) + 2.5 and r.state == Resident.LURK and r.came_up == 1 and res.dark_at(r.global_position) and r.sprite.visible and not res.seen_at(r.global_position, r.creep()) and d_you >= _rule("pocket_counterattack_m", 3.0) * 2.0 - 0.05, "and comes up %.2f s later (below_s %s) in the dark (node %d), out of your sight (its creep's test), %.1f m from you, to hang back there (%s)" % [up, str(b), res.node_of(r.global_position), d_you, r.state_name()])
 
 
 # --- 4 and 5. Every holder relit, then the last -------------------------------------
@@ -527,17 +576,29 @@ var _lurked := {}
 var _bites := 0
 var _bite_was := {}
 var _chased_in := 0
+var _held_light := 0
+var _short := {}
+## The rule (Mike's 7 Oct note): each one as the last frame ended (by
+## instance id: place, turn, pose, view points, state, going at the last
+## light), and the tally.
+var _was := {}
+var _boo := {}
 
 
 ## One frame of the run: no resident in a lit room or stretch unless it is
 ## chasing you, or on its way out (climbing out of a relit place, leaving,
-## going for good) and not for long.
+## going for good) and not for long (counting only the frames it could
+## move: not held still in your view, nor stopped short of it); and none
+## seen moving (_boo_track).
 func _track() -> void:
+	_boo_track()
 	for r in res.all:
 		# In the stone (cut off, below) it stands nowhere.
 		if not is_instance_valid(r) or r.state == Resident.BELOW:
 			continue
 		var nm := str(r.name)
+		var short := int(_short.get(nm, r.stopped_short)) != r.stopped_short
+		_short[nm] = r.stopped_short
 		if r._falling_back or r.state == Resident.LEAVE:
 			_fell_back[nm] = true
 		if r.state == Resident.LURK:
@@ -552,7 +613,12 @@ func _track() -> void:
 			_t_light[nm] = 0.0
 			continue
 		var going := r.state == Resident.LEAVE or (r.state == Resident.RISING and r._falling_back) or r.state == Resident.RETREAT
-		_t_light[nm] = float(_t_light.get(nm, 0.0)) + DT
+		if r.still or short:
+			# Held in your view (or just short of it): it goes once you look
+			# away, so this frame isn't counted against it.
+			_held_light += 1
+		else:
+			_t_light[nm] = float(_t_light.get(nm, 0.0)) + DT
 		if r.state != Resident.RETREAT:
 			_worst = maxf(_worst, float(_t_light[nm]))
 		if not going:
@@ -560,6 +626,45 @@ func _track() -> void:
 			if not _bad_seen.has(nm):
 				_bad_seen[nm] = true
 				print("  %s in the light outside a chase: %s at %s (node %d)" % [nm, r.state_name(), str(r.global_position), res.node_of(r.global_position)])
+
+
+## The rule over the run (Mike's 7 Oct note; residents_check's log, in
+## short): for the frame just stepped (the camera still as it stood for that
+## step), a skeleton that changed its place, turn or pose must not have
+## been where you could see it (Residents.points_watched) as the frame began
+## or as it ended; let off in its strike, within its strike's reach and
+## going at the last light.
+func _boo_track() -> void:
+	var you := player.global_position
+	for r in res.all:
+		if not is_instance_valid(r):
+			continue
+		var id := r.get_instance_id()
+		var now := {"pos": r.global_position, "yaw": r.yaw, "pose": r.sprite.pose if r.sprite != null else -1, "pts": r.view_points(), "state": r.state, "last": r.state == Resident.RETREAT and r._for_good}
+		var was: Dictionary = _was.get(id, {})
+		_was[id] = now
+		if was.is_empty():
+			continue
+		_boo.logged += 1
+		var moved := (now.pos as Vector3).distance_to(was.pos) > 1e-5 or absf(wrapf(float(now.yaw) - float(was.yaw), -PI, PI)) > 1e-5 or int(now.pose) != int(was.pose)
+		var seen := res.points_watched(was.pts, r.creep()) or res.points_watched(now.pts, r.creep())
+		var reach := r.strike.reach_m if r.strike != null else float(r.strike_def().get("reach_m", 1.6))
+		var near := false
+		for at: Vector3 in [was.pos, now.pos]:
+			if Vector2(at.x - you.x, at.z - you.z).length() <= reach and absf(you.y - at.y) < 1.2:
+				near = true
+		var let_off := int(was.state) == Resident.STRIKING or int(now.state) == Resident.STRIKING or bool(was.last) or bool(now.last) or near
+		if not moved:
+			if seen and not let_off and int(now.state) != Resident.REST:
+				_boo.held += 1
+			continue
+		_boo.moved += 1
+		if let_off:
+			_boo.let_off += 1
+		elif seen:
+			_boo.bad += 1
+			if _boo.bad <= 5:
+				print("  SEEN MOVING: %s %s -> %s, %s to %s" % [r.name, Resident.STATE_NAMES[int(was.state)], Resident.STATE_NAMES[int(now.state)], str(was.pos), str(now.pos)])
 
 
 func _relight_run() -> void:
@@ -572,6 +677,10 @@ func _relight_run() -> void:
 	_bites = 0
 	_bite_was = {}
 	_chased_in = 0
+	_held_light = 0
+	_short = {}
+	_was = {}
+	_boo = {"logged": 0, "moved": 0, "held": 0, "let_off": 0, "bad": 0}
 	var fires := main.fires
 	var heart := int(main.lay.get("heart", -1))
 	var order: Array = []
@@ -610,7 +719,7 @@ func _relight_run() -> void:
 	for r in res.all:
 		ups += r.came_up
 	print("  %d skeletons; before the last light: %d fell back out of a relit place or the light, %d hung back in a dark pocket, %d pocket strikes, %d frames of a chase in the light; cut off by the light, into the stone and up in the dark elsewhere %d times" % [n0, _fell_back.size(), _lurked.size(), _bites, _chased_in, ups])
-	ok(_bad == 0 and _worst <= rise + b2d + 0.5, "over the run no resident stood in the light outside a chase but on its way out, and none for longer than %.1f s (rise_s + back_to_dark_s; %.2f s at worst)" % [rise + b2d + 0.5, _worst])
+	ok(_bad == 0 and _worst <= rise + b2d + 0.5, "over the run no resident stood in the light outside a chase but on its way out, and none for longer than %.1f s of the time it could move (rise_s + back_to_dark_s; %.2f s at worst; %d frames held still in your view or just short of it, not counted)" % [rise + b2d + 0.5, _worst, _held_light])
 	ok(not _fell_back.is_empty(), "skeletons resting or standing in relit rooms fell back into the dark (%d)" % _fell_back.size())
 	ok(not res.cleared and res.gone.is_empty() and res.all.size() == n0, "the floor is not cleared while a light is still cold, and none has gone for good (%d of %d still on the roll)" % [res.all.size(), n0])
 	# The last light: the heart's own, with what is left there in view.
@@ -648,6 +757,7 @@ func _relight_run() -> void:
 		print("  %s gone %.2f s after the last light (%s)" % [g.name, float(g.at) - res.cleared_at, "seen going" if bool(g.seen) else "out of sight"])
 	ok(gone_by >= 0.0 and gone_by <= seen_s + 2.0 * DT, "every resident has gone within %.2f s of it (retreat_seen_s %.0f): %d left at the last light, %d of all %d seen going back into the stone, the rest gone at once out of sight" % [gone_by, seen_s, left, seen, res.gone.size()])
 	ok(_residents_in_scene() == 0, "none is left in the scene (%d)" % _residents_in_scene())
+	ok(_boo.bad == 0 and int(_boo.logged) > 0, "and over the run, the last light included, none beyond its reach, outside its strike and the last light's going, moved, turned or changed its pose on a frame you could see it in (%d did; %d skeleton-frames logged: %d moved, %d held still in your view, %d let off)" % [_boo.bad, _boo.logged, _boo.moved, _boo.held, _boo.let_off])
 	var line := str(Residents.CLEARED.get("log_line", ""))
 	var at_line := -1
 	var at_count := -1
@@ -703,5 +813,5 @@ func _say_states() -> void:
 	var parts: Array = []
 	for r in res.all:
 		if is_instance_valid(r):
-			parts.append("%s %s%s" % [r.name, r.state_name(), " (in view)" if r.in_view() else ""])
+			parts.append("%s %s %.1f m off%s" % [r.name, r.state_name(), r.global_position.distance_to(player.global_position), " (in view)" if r.in_view() else ""])
 	print("  at the last light: %s" % ", ".join(parts))

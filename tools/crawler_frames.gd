@@ -30,7 +30,9 @@ extends SceneTree
 ## left, Tab held (the strip low left, then the right hand's low right),
 ## and Settings' Controls and Settings pages; and the tomb's skeletons
 ## (design §FE, queue 58; 21-21c): their sheet, one at rest in its wall
-## niche (else its grave), climbing out of it in your torchlight, and out;
+## niche (else its grave), caught part way out of it in your torchlight,
+## frozen there as you turned back to it (it climbs out only while you
+## can't see it, Mike's 7 Oct note), and out;
 ## the pitch torch (§EZ.2): the bundle's unlit heads by the hearth (01h),
 ## and the torch in hand in the dark corridor standing and at a sprint's
 ## lean, at 480 lines and at 270 (22a-22d); the plan and the way out (§EX.2,
@@ -1744,8 +1746,9 @@ func _hands(main: CrawlerMain, p: CrawlerPlayer) -> void:
 
 
 ## The skeletons (design §FE, queue 58): their sheet, every cell drawn;
-## then one climbing out of its niche (else its grave) in your torchlight,
-## caught halfway out, and its bone lit amber on screen.
+## then one climbing out of its niche (else its grave) behind your back and
+## caught part way out as you turn back to it in your torchlight, frozen
+## there (Mike's 7 Oct note), and its bone lit amber on screen.
 func _skeleton(main: CrawlerMain) -> void:
 	var res := main.residents
 	if res.all.is_empty():
@@ -1796,10 +1799,16 @@ func _skeleton(main: CrawlerMain) -> void:
 	p.spawn_flat(stand, atan2(-to.x, -to.z), -0.12)
 	await _frames(10)
 	await _shot("21a_skeleton_at_rest_%s" % str(r.place.rests_in))
+	# It climbs out only while you can't see it (Mike's 7 Oct note): your back
+	# to it, it starts (woken here: the tour keeps them asleep), and you turn
+	# back to it part way out. Watched, it freezes there (the Boos' moment).
+	p.spawn_flat(stand, atan2(to.x, to.z), -0.12)
 	r.wake()
 	var rise := float(r.def.get("rise_s", 1.6))
 	while r.state == Resident.RISING and r.t < rise * 0.6:
 		await process_frame
+	p.spawn_flat(stand, atan2(-to.x, -to.z), -0.12)
+	await _frames(4)
 	var img := await _shot("21b_skeleton_climbing_out_%s" % str(r.place.rests_in))
 	# Its bone on screen: the brightest pixels round where it is (the lit
 	# bone, not the wall behind its ribs), against the frame's size.
@@ -1808,15 +1817,19 @@ func _skeleton(main: CrawlerMain) -> void:
 	var at := cam.unproject_position(mid) / cam.get_viewport().get_visible_rect().size
 	var bone := _brightest(img, at, Vector2(0.07, 0.16), 0.15)
 	print("  the skeleton climbing out (%s, pose %s) at %s of the frame: its brightest pixels luma %.3f, hue %.1f, chroma %.3f (#%s)" % [r.state_name(), SkeletonRig.POSES[r.sprite.pose], str(at), bone.luma, bone.hue, bone.chroma, (bone.color as Color).to_html(false)])
-	ok(r.state == Resident.RISING and SkeletonRig.POSES[r.sprite.pose] in ["rise_a", "rise_b", "rise_c"], "caught halfway out of its %s (%s)" % [r.place.rests_in, SkeletonRig.POSES[r.sprite.pose]])
+	ok(r.state == Resident.RISING and SkeletonRig.POSES[r.sprite.pose] in ["rise_a", "rise_b", "rise_c"] and main.residents.watched(r), "caught part way out of its %s, frozen there as you turned back to it (%s, %.0f%% of its climb; Mike's 7 Oct note)" % [r.place.rests_in, SkeletonRig.POSES[r.sprite.pose], r.t / rise * 100.0])
 	ok(float(bone.luma) > 0.25 and float(bone.hue) >= -20.0 and float(bone.hue) <= 62.0, "its bone shows in your torchlight, amber (luma %.3f, hue %.1f)" % [bone.luma, bone.hue])
-	# Out on the floor, held there for its frame (on a slow renderer the
-	# game runs on between frames, and it would be on you already).
+	# Out on the floor: your back to it while it climbs on out; then, held
+	# there for its frame (watched it holds still, but this near it may
+	# strike, and on a slow renderer the game runs on between frames), you
+	# face it.
+	p.spawn_flat(stand, atan2(to.x, to.z), -0.12)
 	var n := 0
 	while r.state == Resident.RISING and n < 600:
 		await process_frame
 		n += 1
 	r.set_physics_process(false)
+	p.spawn_flat(stand, atan2(-to.x, -to.z), -0.12)
 	await _frames(4)
 	await _shot("21c_skeleton_out")
 	r.set_physics_process(true)
@@ -1846,6 +1859,7 @@ func _cleared(main: CrawlerMain) -> void:
 		q._disarm()
 		q.pursuit.give_up()
 		q.state = Resident.REST
+		q.armed = false
 		q.t = 0.0
 		q.global_position = q.place.pos
 		q.yaw = float(q.place.yaw)
