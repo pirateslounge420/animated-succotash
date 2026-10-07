@@ -1,34 +1,65 @@
 class_name TombKit
 ## The sarcophagus tombs' layout (design 6 Oct §ET.3, §ET.5; §CJ.8:
 ## "generated, never hand-placed: assembled from the seed out of a kit of
-## rooms"; data/crawler.json kit, holders, airways). Pure: the seed in, a
-## dictionary out (TombBuild draws it, CrawlerMain lights and fills it).
+## rooms"; data/crawler.json kit, plan, exit, holders, airways). Pure: the
+## seed in, a dictionary out (TombBuild draws it, CrawlerMain lights and
+## fills it).
 ##
 ## The hearth room sits at the origin, its floor at y 0: the lit hearth in
 ## its middle, a smoke shaft over it (§ET.6), the bundle of unlit torches
-## by it and the rescuer across it. From three or four of its walls
-## (opening.exits_min..max) a branch goes out: a corridor (sometimes a
-## flight of stairs down), a room, a corridor, a room... (kit.branch_rooms
-## rooms), straight on or turning left or right at each room. Every piece
-## is an axis-aligned straight lane (Delves.piece: `c` the middle of its
-## start edge, `dir` along it, `len`, `half` wide each side, floor y0 to
-## y1, `h` to the ceiling); walls stand outside the lanes, Delves.WALL
-## thick, and two pieces meet at a door in the wall between them. Nothing
-## overlaps: a piece that would is tried shorter, shifted or turned, and a
-## branch that can't go on ends at its last room.
+## by it and the rescuer across it. Every piece is an axis-aligned straight
+## lane (Delves.piece: `c` the middle of its start edge, `dir` along it,
+## `len`, `half` wide each side, floor y0 to y1, `h` to the ceiling); walls
+## stand outside the lanes, Delves.WALL thick, and two pieces meet at a
+## door in the wall between them. Nothing overlaps: a piece that would is
+## tried shorter or turned, and a branch that can't go on ends at its last
+## room.
 ##
-## Rooms are of the kit's kinds (crypt, catacomb, ossuary, collapsed); the
-## deepest room of all is the heart (§CJ.3). The hearth room's hearth is
-## the tomb's one hearth (design §EX.4); every other room has cold wall
-## sconces in facing pairs (crawler.json room_torches), and every corridor
-## longer than holders.sconce_first_m a wall sconce every sconce_every_m;
-## stairs none (fire_holders.skip). The airways (airways.per_air by the
-## theme's air): ordinary slots in corridor walls, strong marked mouths in
-## room walls, both clear of the sconces. The residents (design §FE,
+## The plan (design §EX.2, crawler.json plan; the builders' module and
+## heights from the theme's style, masonry.json styles by style_by_theme):
+##   the module   rooms' sides, corridors and flights are whole numbers of
+##                the style's module_m (the tomb's 2 m, its corridor's
+##                width), the hearth room's sides snapped to it too; the
+##                ceilings take the style's heights_m
+##   the spine    of the three or four ways out of the hearth room
+##                (opening.exits_min..max), one is grown first and longest
+##                (plan.spine.rooms rooms): straight on through every room,
+##                its two doors facing, the main axis; its last room is the
+##                heart (§CJ.3), and past the heart it carries on to the
+##                way out (§EX.5, `exits`), so it is never a dead end
+##   the way out  a door centred in the heart's far wall, a long flight
+##                climbing exit.rise_m in the tomb's stone, a landing, and
+##                the old way in: an opening in the landing's far wall with
+##                daylight beyond it (WayOut draws the daylight)
+##   side ways    the other ways: at most plan.side_branches.side_share of
+##                the spine's rooms each, each a chain corridor, room,
+##                corridor, room... straight on through facing doors, but
+##                turning left or right at a room by kit.turn_chance (free-
+##                form turning stays); each ends in a room, never in a bare
+##                corridor (a corridor is only laid with its room)
+##   doors        centred on the wall they cut (plan.doors), so where a
+##                room's two doors face each other you look straight
+##                through it down the next passage to the next light
+##
+## Rooms are of the kit's kinds (crypt, catacomb, ossuary, collapsed; a
+## crypt wants CRYPT_MIN_HALF); the spine's last is the heart (§CJ.3). The
+## hearth room's hearth is the tomb's one hearth (design §EX.4); every
+## other room has cold wall sconces in facing pairs (crawler.json
+## room_torches), and every corridor longer than holders.sconce_first_m a
+## wall sconce every sconce_every_m; stairs none (fire_holders.skip). The
+## airways (airways.per_air by the theme's air): ordinary slots in corridor
+## walls, strong marked mouths in room walls, both clear of the sconces.
+## The residents (design §FE,
 ## residents.json): the tomb's skeletons rest in the catacombs' wall
 ## niches and the crypts' coffins, more toward the heart, and the heart's
 ## own coffin holds one (Mike's frame 9); none in the hearth room, none by
 ## the way through the rooms.
+##
+## Gates (§ET.4: relight gates, scroll gates; none built yet) go only on
+## the side ways and on shortcuts, never on the spine: nothing may ever
+## stand between the wake spot and a way out (§EX.5, crawler.json
+## exit.never_gated). Every spine piece and door is marked `spine` for
+## whoever builds them.
 
 static var K: Dictionary = Tuning.table("crawler").get("kit", {})
 static var RESIDENTS: Dictionary = Tuning.table("residents")
@@ -37,7 +68,8 @@ static var RT: Dictionary = Tuning.table("crawler").get("room_torches", {})
 static var AIR: Dictionary = Tuning.table("crawler").get("airways", {})
 static var OPEN: Dictionary = Tuning.table("crawler").get("opening", {})
 static var THEMES: Dictionary = Tuning.table("crawler").get("themes", {})
-static var MAS: Dictionary = Tuning.table("masonry")
+static var PLAN: Dictionary = Tuning.table("crawler").get("plan", {})
+static var EXIT: Dictionary = Tuning.table("crawler").get("exit", {})
 
 const WALL := Delves.WALL
 ## A door's half width (the corridors' lanes are a little wider).
@@ -45,10 +77,19 @@ const DOOR_HALF := 0.75
 ## Clearance kept between pieces' walls.
 const GAP := 0.25
 const SIDES := ["end", "left", "right", "start"]
-## Where the heart's dead lie: the stone box across the room's end, its
-## middle this far from the end wall (TombBuild draws it there; the heart's
-## sconces flank it, design §EX.4).
-const HEART_DEAD_M := 1.6
+## A crypt's rows of coffins down both long walls leave an aisle clear
+## between their askew lids only in a room this wide (half, m: 4 modules).
+const CRYPT_MIN_HALF := 4.0
+## The heart (§CJ.3), laid from its far wall, where the way out leaves: the
+## dead's box lying across the room HEART_BOX_M in (its lid shoved off
+## toward the way out, a walk left clear behind it), their goods before it
+## at HEART_GOODS_M.
+const HEART_BOX_M := 3.0
+const HEART_GOODS_M := 4.25
+## Where the heart's dead lie: the stone box across the room, its middle
+## HEART_BOX_M from the far wall, the way out's door behind it (§EX.5;
+## TombBuild draws it there; the heart's sconces flank it, design §EX.4).
+const HEART_DEAD_M := HEART_BOX_M
 ## A wall sconce's half width along its wall (CrawlerFires' bracket and
 ## cup): kept room_torches.clear_m from a door's edge, a corner and an
 ## airway's surround.
@@ -61,11 +102,6 @@ const AIRWAY_HALF := [0.63, 0.43]
 const SHIFT_M := 0.25
 
 
-static func _range(rng: RandomNumberGenerator, v, lo: float, hi: float) -> float:
-	if v is Array and (v as Array).size() == 2:
-		return rng.randf_range(float(v[0]), float(v[1]))
-	return rng.randf_range(lo, hi)
-
 
 static func _irange(rng: RandomNumberGenerator, v, lo: int, hi: int) -> int:
 	if v is Array and (v as Array).size() == 2:
@@ -73,39 +109,100 @@ static func _irange(rng: RandomNumberGenerator, v, lo: int, hi: int) -> int:
 	return rng.randi_range(lo, hi)
 
 
-## The tomb for `seed_value`: {"seed", "theme", "pieces" [piece...],
-## "doors" [door...], "hearth" (Vector3), "wake" ([Vector3, yaw]),
-## "bundle" (Vector3), "rescuer" ([Vector3, yaw]), "holders"
+## The theme's style: the ruin type's whole kit (design §EX.1;
+## masonry.json styles, picked by style_by_theme, default for the rest).
+static func style_of(theme: String) -> Dictionary:
+	var m := Tuning.table("masonry")
+	var by: Dictionary = m.get("style_by_theme", {})
+	return (m.get("styles", {}) as Dictionary).get(str(by.get(theme, by.get("default", ""))), {})
+
+
+## The builders' module for `theme` (design §EX.2: the style's module_m;
+## 2 m, the tomb corridor's width, where a style names none).
+static func module_of(theme: String) -> float:
+	return maxf(float(style_of(theme).get("module_m", 2.0)), 0.5)
+
+
+## A ceiling from the style's short list (heights_m: corridor, room,
+## hearth_room), else the kit's own `fallback`.
+static func height_of(theme: String, kind: String, fallback: float) -> float:
+	return float((style_of(theme).get("heights_m", {}) as Dictionary).get(kind, fallback))
+
+
+## `v` m as a whole number of modules `m` (at least one).
+static func snap(v: float, m: float) -> float:
+	return maxf(roundf(v / m), 1.0) * m
+
+
+## The whole modules `m` that fit in the kit's range `r` ([min, max] m;
+## `lo`..`hi` without one): Vector2i(least, most), at least one.
+static func module_span(r, lo: float, hi: float, m: float) -> Vector2i:
+	if r is Array and (r as Array).size() == 2:
+		lo = float(r[0])
+		hi = float(r[1])
+	var n0 := maxi(1, ceili(lo / m - 1e-4))
+	return Vector2i(n0, maxi(n0, floori(hi / m + 1e-4)))
+
+
+## The tomb for `seed_value`: {"seed", "theme", "module" (m), "pieces"
+## [piece...], "doors" [door...], "hearth" (Vector3), "wake" ([Vector3,
+## yaw]), "bundle" (Vector3), "rescuer" ([Vector3, yaw]), "holders"
 ## [{"kind": "sconce", "pos", "normal", "piece", "room" (a room's wall
 ## torch, not a corridor's)}...],
 ## "airways" [{"strong", "pos", "normal", "piece"}...], "heart" (piece
-## id), "exits" (the hearth room's corridors), "residents" (_place_residents)}.
-## A door is {"p" (Vector2,
-## on the wall's middle line), "n" (Vector2, through the wall from `a`
-## to `b`), "half", "y" (its floor), "h" (its opening), "a", "b" (piece
-## ids)}.
+## id), "hearth_ways" (the ways out of the hearth room), "spine" (its piece
+## ids in order, the way out's stair and landing last), "branches" ([piece
+## ids] per way, the spine first), "exits" [way out...], "residents" (_place_residents)}. A piece has
+## "id", "doors", "depth" (rooms from the hearth room), "branch" (0 the
+## spine, -1 the hearth room) and "spine". A door is {"p" (Vector2, on the
+## wall's middle line), "n" (Vector2, through the wall from `a` to `b`),
+## "half", "y" (its floor), "h" (its opening), "a", "b" (piece ids; -1 for
+## b: out of the tomb, a way out's opening), "spine"}. A way out is {"door"
+## (its opening), "heart", "stair", "landing" (piece ids), "p" (Vector3,
+## the opening's middle on its floor and the wall's middle line), "n"
+## (Vector3, out through it), "half", "h", "y", "rise", "leads_to"}.
 static func layout(seed_value: int, theme := "") -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var th := theme if theme != "" else str(OPEN.get("first_theme", "tomb"))
-	var lay := {"seed": seed_value, "theme": th, "pieces": [], "doors": [], "holders": [], "airways": [], "exits": 0}
+	var mod := module_of(th)
+	var lay := {"seed": seed_value, "theme": th, "module": mod, "pieces": [], "doors": [], "holders": [], "airways": [],
+		"hearth_ways": 0, "spine": [], "branches": [], "exits": []}
 	var hr: Dictionary = K.get("hearth_room", {})
-	var hl := float(hr.get("len_m", 9.0))
-	var hw := float(hr.get("width_m", 9.0)) * 0.5
-	var hearth_room := _add(lay, Delves.piece("room", Vector2(0.0, -hl * 0.5), Vector2(0, 1), hl, hw, 0.0, 0.0, float(hr.get("h_m", 3.6))))
+	var hl := snap(float(hr.get("len_m", 9.0)), mod)
+	var hw := snap(float(hr.get("width_m", 9.0)), mod) * 0.5
+	var hearth_room := _add(lay, Delves.piece("room", Vector2(0.0, -hl * 0.5), Vector2(0, 1), hl, hw, 0.0, 0.0, height_of(th, "hearth_room", float(hr.get("h_m", 3.6)))))
 	hearth_room["room_kind"] = "hearth"
 	hearth_room["depth"] = 0
+	hearth_room["branch"] = -1
+	hearth_room["spine"] = true
 	lay["hearth"] = Vector3.ZERO
-	# The exits: three or four walls, in a seeded order.
+	# The ways: three or four walls, in a seeded order; the first is the
+	# spine (§EX.2), grown first so it always runs its full length.
 	var want := _irange(rng, [int(OPEN.get("exits_min", 3)), int(OPEN.get("exits_max", 4))], 3, 4)
 	var sides: Array = SIDES.duplicate()
 	_shuffle(rng, sides)
-	for side in sides:
-		if int(lay.exits) >= want:
+	var sp: Dictionary = PLAN.get("spine", {})
+	var spine_rooms := maxi(_irange(rng, sp.get("rooms", [4, 5]), 4, 5), 1)
+	var spine := _branch(lay, rng, hearth_room, str(sides[0]), spine_rooms, 0)
+	if not spine.is_empty():
+		lay.hearth_ways = 1
+		var heart: Dictionary = spine[-1]
+		heart["room_kind"] = "heart"
+		lay["heart"] = int(heart.id)
+		# Past the heart, on: the way out (§EX.5), before the side ways
+		# claim the ground.
+		_way_out(lay, heart)
+	# The side ways, shorter (plan.side_branches.side_share of the spine's
+	# rooms at most). Gates (§ET.4), when built, go on these and on
+	# shortcuts only; the spine and the way out stay open (exit.never_gated).
+	var cap := maxi(floori(float((PLAN.get("side_branches", {}) as Dictionary).get("side_share", 0.6)) * spine.size() + 1e-4), 1)
+	for i in range(1, sides.size()):
+		if int(lay.hearth_ways) >= want:
 			break
-		if _branch(lay, rng, hearth_room, str(side)):
-			lay.exits = int(lay.exits) + 1
-	_mark_heart(lay)
+		var n := mini(_irange(rng, K.get("branch_rooms", [2, 3]), 2, 3), cap)
+		if not _branch(lay, rng, hearth_room, str(sides[i]), n, (lay.branches as Array).size()).is_empty():
+			lay.hearth_ways = int(lay.hearth_ways) + 1
 	_wake_and_bundle(lay, rng, hearth_room)
 	_place_holders(lay, rng)
 	_place_vents(lay)
@@ -153,12 +250,6 @@ static func wall_point(pc: Dictionary, side: String, off: float) -> Array:
 	return [c + d * (length * 0.5 + off) - p * (half + WALL * 0.5), -p]
 
 
-## How far a door may sit from the middle of wall `side`.
-static func wall_slack(pc: Dictionary, side: String) -> float:
-	var span := float(pc.half) if side in ["start", "end"] else float(pc.len) * 0.5
-	return maxf(span - DOOR_HALF - 0.45, 0.0)
-
-
 ## A piece's footprint with its walls and the gap kept round them.
 static func outer(pc: Dictionary) -> Rect2:
 	return Delves.rect_of(pc, WALL + GAP)
@@ -173,74 +264,156 @@ static func _free(lay: Dictionary, r: Rect2, skip: Array) -> bool:
 	return true
 
 
-## One branch out of `from` through its wall `side`: corridor, room,
-## corridor, room... Returns whether the first corridor and room fitted.
-static func _branch(lay: Dictionary, rng: RandomNumberGenerator, from: Dictionary, side: String) -> bool:
-	var rooms := _irange(rng, K.get("branch_rooms", [2, 3]), 2, 3)
+## One way out of `from` through its wall `side` (design §EX.2): a
+## corridor (sometimes a flight of stairs down, never the first), a room,
+## a corridor, a room... `n_rooms` rooms, sized in whole modules, every
+## door centred on the wall it cuts. Branch 0, the spine, goes straight on
+## through every room (its two doors facing: the main axis; its last room,
+## the heart, at least plan.spine.heart_min_m long). A side way goes
+## straight on too (plan.facing) but turns left or right at a room by
+## kit.turn_chance, and turns where straight on won't fit. A piece that
+## won't fit is tried shorter, a module at a time (a corridor down to one,
+## a room down to the kit's least); a way that can't go on ends at its last
+## room, never in a bare corridor (a corridor is only laid with its room).
+## The rooms laid, in order.
+static func _branch(lay: Dictionary, rng: RandomNumberGenerator, from: Dictionary, side: String, n_rooms: int, branch: int) -> Array:
+	var spine := branch == 0
+	var mod := float(lay.module)
+	var th := str(lay.theme)
+	var cspan := module_span(K.get("corridor_m", []), 5.0, 11.0, mod)
+	var rspan := module_span(K.get("room_m", []), 6.0, 11.0, mod)
+	var ch := height_of(th, "corridor", float(K.get("corridor_h_m", 2.6)))
+	var rh := height_of(th, "room", float(K.get("room_h_m", 3.2)))
+	var chalf := float(K.get("corridor_half_m", 1.0))
+	var drop := float(K.get("stair_drop_m", 2.4))
+	# A flight is long enough for its drop at the kit's slope, in modules.
+	var flight := ceilf(drop / maxf(float(K.get("stair_slope", 0.6)), 0.1) / mod - 1e-4) * mod
+	var heart_n := ceili(float((PLAN.get("spine", {}) as Dictionary).get("heart_min_m", 8.0)) / mod - 1e-4)
+	var facing := bool(PLAN.get("facing", true))
+	var ids: Array = []
+	(lay.branches as Array).append(ids)
+	var rooms: Array = []
 	var cur := from
-	var cur_side := side
-	var first := true
-	for k in rooms:
+	var ways: Array = [side]
+	for k in n_rooms:
+		var heart := spine and k == n_rooms - 1
 		var placed := false
-		for attempt in 14:
-			var slack := wall_slack(cur, cur_side)
-			var off := rng.randf_range(-slack, slack) * (0.5 if attempt < 7 else 1.0)
-			var wp := wall_point(cur, cur_side, off)
-			var n: Vector2 = wp[1]
-			var start: Vector2 = (wp[0] as Vector2) + n * (WALL * 0.5)
-			var y := float(cur.y1)
-			var stair := rng.randf() < float(K.get("stair_chance", 0.3)) and not first
-			var clen := _range(rng, K.get("corridor_m", [5.0, 11.0]), 5.0, 11.0) * (1.0 - 0.06 * attempt)
-			var drop := 0.0
-			if stair:
-				drop = float(K.get("stair_drop_m", 2.4))
-				clen = maxf(clen, drop / maxf(float(K.get("stair_slope", 0.6)), 0.1))
-			var ch := float(K.get("corridor_h_m", 2.6))
-			var cor := Delves.piece("stair" if stair else "corridor", start, n, clen, float(K.get("corridor_half_m", 1.0)), y, y - drop, ch)
-			var rl := _range(rng, K.get("room_m", [6.0, 11.0]), 6.0, 11.0) * (1.0 - 0.04 * attempt)
-			var rw := _range(rng, K.get("room_m", [6.0, 11.0]), 6.0, 11.0) * 0.5 * (1.0 - 0.04 * attempt)
-			rw = maxf(rw, 3.0)
-			var shift := rng.randf_range(-1.0, 1.0) * maxf(rw - DOOR_HALF - 0.6, 0.0)
-			var rc: Vector2 = start + n * (clen + WALL) - Delves.perp(n) * shift
-			var room := Delves.piece("room", rc, n, rl, rw, y - drop, y - drop, float(K.get("room_h_m", 3.2)))
-			if not _free(lay, outer(cor), [cur.id]):
-				continue
-			# The room touches only its corridor (not added yet): not even
-			# the room the corridor leaves.
-			if not _free(lay, outer(room), []):
-				continue
-			_add(lay, cor)
-			_add(lay, room)
-			cor["depth"] = int(cur.get("depth", 0))
-			room["depth"] = int(cur.get("depth", 0)) + 1
-			room["room_kind"] = _room_kind(rng)
-			room["branch_of"] = int(from.id)
-			_door(lay, wp[0], n, float(cor.half) - 0.1, y, minf(ch, float(cur.h)) - 0.2, cur, cor)
-			_door(lay, start + n * (clen + WALL * 0.5), n, float(cor.half) - 0.1, y - drop, ch - 0.2, cor, room)
-			cur = room
-			placed = true
-			break
+		for way in ways:
+			for attempt in 9:
+				# A module less every third try (corridor, then room).
+				var less := attempt / 3
+				var wp := wall_point(cur, str(way), 0.0)
+				var n: Vector2 = wp[1]
+				var start: Vector2 = (wp[0] as Vector2) + n * (WALL * 0.5)
+				var y := float(cur.y1)
+				var stair := k > 0 and rng.randf() < float(K.get("stair_chance", 0.3))
+				var clen := maxi(rng.randi_range(cspan.x, cspan.y) - less, 1) * mod
+				var dy := 0.0
+				if stair:
+					dy = drop
+					clen = maxf(clen, flight)
+				var cor := Delves.piece("stair" if stair else "corridor", start, n, clen, chalf, y, y - dy, ch)
+				var nl := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
+				var nw := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
+				if heart:
+					nl = maxi(nl, heart_n)
+				var rc: Vector2 = start + n * (clen + WALL)
+				var room := Delves.piece("room", rc, n, nl * mod, nw * mod * 0.5, y - dy, y - dy, rh)
+				if not _free(lay, outer(cor), [cur.id]):
+					continue
+				# The room touches only its corridor (not added yet): not even
+				# the room the corridor leaves.
+				if not _free(lay, outer(room), []):
+					continue
+				for pc in [cor, room]:
+					_add(lay, pc)
+					pc["branch"] = branch
+					pc["spine"] = spine
+					ids.append(int(pc.id))
+				cor["depth"] = int(cur.get("depth", 0))
+				room["depth"] = int(cur.get("depth", 0)) + 1
+				room["room_kind"] = _room_kind(rng, float(room.half))
+				room["branch_of"] = int(from.id)
+				_door(lay, wp[0], n, float(cor.half) - 0.1, y, minf(ch, float(cur.h)) - 0.2, cur, cor)
+				_door(lay, start + n * (clen + WALL * 0.5), n, float(cor.half) - 0.1, y - dy, ch - 0.2, cor, room)
+				rooms.append(room)
+				cur = room
+				placed = true
+				break
+			if placed:
+				break
 		if not placed:
-			return not first
-		first = false
-		# On: straight ahead, or turning.
-		if rng.randf() < float(K.get("turn_chance", 0.45)):
-			cur_side = "left" if rng.randf() < 0.5 else "right"
-		else:
-			cur_side = "end"
-	return true
+			break
+		# On (§EX.2): straight through the wall facing the way in, the
+		# spine always; a side way turns by turn_chance, and either turns
+		# where straight on won't fit.
+		var lr := "left" if rng.randf() < 0.5 else "right"
+		var rl := "right" if lr == "left" else "left"
+		var turn := (not spine or not facing) and rng.randf() < float(K.get("turn_chance", 0.45))
+		ways = [lr, "end", rl] if turn else ["end", lr, rl]
+	if ids.is_empty():
+		(lay.branches as Array).pop_back()
+	elif spine:
+		lay.spine = ids.duplicate()
+	return rooms
+
+
+## The way out (design §EX.5; crawler.json exit): past the heart, from a
+## door centred in its far wall (facing its way in), a long flight
+## climbing exit.rise_m at the kit's stair slope (in whole modules), on
+## into a landing (exit.landing_m: long, wide; snapped to modules) through
+## a door, and the old way in: an opening centred in the landing's far
+## wall, daylight beyond it (WayOut). Every piece of it is spine.
+static func _way_out(lay: Dictionary, heart: Dictionary) -> void:
+	var mod := float(lay.module)
+	var th := str(lay.theme)
+	var rise := float(EXIT.get("rise_m", 6.0))
+	var run := ceilf(rise / maxf(float(K.get("stair_slope", 0.6)), 0.1) / mod - 1e-4) * mod
+	var ch := height_of(th, "corridor", float(K.get("corridor_h_m", 2.6)))
+	var chalf := float(K.get("corridor_half_m", 1.0))
+	var lm: Array = EXIT.get("landing_m", [2.0, 4.0])
+	var wp := wall_point(heart, "end", 0.0)
+	var n: Vector2 = wp[1]
+	var start: Vector2 = (wp[0] as Vector2) + n * (WALL * 0.5)
+	var y := float(heart.y1)
+	var stair := _add(lay, Delves.piece("stair", start, n, run, chalf, y, y + rise, ch))
+	var landing := _add(lay, Delves.piece("landing", start + n * (run + WALL), n, snap(float(lm[0]), mod), snap(float(lm[1]), mod) * 0.5, y + rise, y + rise, ch))
+	for pc in [stair, landing]:
+		pc["branch"] = 0
+		pc["spine"] = true
+		pc["exit"] = true
+		pc["depth"] = int(heart.depth)
+		(lay.spine as Array).append(int(pc.id))
+		((lay.branches as Array)[0] as Array).append(int(pc.id))
+	_door(lay, wp[0], n, chalf - 0.1, y, minf(ch, float(heart.h)) - 0.2, heart, stair)
+	_door(lay, start + n * (run + WALL * 0.5), n, chalf - 0.1, y + rise, ch - 0.2, stair, landing)
+	# The opening: out of the tomb (b -1), the size of a door.
+	var op := wall_point(landing, "end", 0.0)
+	var d := {"p": op[0], "n": op[1], "half": DOOR_HALF + 0.15, "y": y + rise, "h": ch - 0.2, "a": int(landing.id), "b": -1, "spine": true, "exit": (lay.exits as Array).size()}
+	d["id"] = (lay.doors as Array).size()
+	(lay.doors as Array).append(d)
+	(landing.doors as Array).append(d.id)
+	var o2: Vector2 = op[0]
+	(lay.exits as Array).append({"door": int(d.id), "heart": int(heart.id), "stair": int(stair.id), "landing": int(landing.id),
+		"p": Vector3(o2.x, y + rise, o2.y), "n": Vector3(n.x, 0.0, n.y), "half": float(d.half), "h": float(d.h), "y": y + rise,
+		"rise": rise, "leads_to": str(EXIT.get("leads_to", ""))})
 
 
 static func _door(lay: Dictionary, p: Vector2, n: Vector2, half: float, y: float, h: float, a: Dictionary, b: Dictionary) -> void:
-	var d := {"p": p, "n": n, "half": minf(half, DOOR_HALF + 0.15), "y": y, "h": h, "a": int(a.id), "b": int(b.id)}
+	var d := {"p": p, "n": n, "half": minf(half, DOOR_HALF + 0.15), "y": y, "h": h, "a": int(a.id), "b": int(b.id),
+		"spine": bool(a.get("spine", false)) and bool(b.get("spine", false))}
 	d["id"] = (lay.doors as Array).size()
 	(lay.doors as Array).append(d)
 	(a.doors as Array).append(d.id)
 	(b.doors as Array).append(d.id)
 
 
-static func _room_kind(rng: RandomNumberGenerator) -> String:
-	var kinds: Dictionary = K.get("kinds", {"crypt": 1})
+## A room's kind by the kit's weights; a crypt only where its rows of
+## coffins leave an aisle (CRYPT_MIN_HALF).
+static func _room_kind(rng: RandomNumberGenerator, half: float) -> String:
+	var kinds: Dictionary = (K.get("kinds", {"crypt": 1}) as Dictionary).duplicate()
+	if half < CRYPT_MIN_HALF - 0.01 and kinds.size() > 1:
+		kinds.erase("crypt")
 	var total := 0.0
 	for k in kinds:
 		total += float(kinds[k])
@@ -250,19 +423,6 @@ static func _room_kind(rng: RandomNumberGenerator) -> String:
 		if r <= 0.0:
 			return str(k)
 	return str(kinds.keys()[0])
-
-
-## The heart: the deepest room (the lowest floor breaks a tie).
-static func _mark_heart(lay: Dictionary) -> void:
-	var best: Dictionary = {}
-	for pc in lay.pieces:
-		if str(pc.kind) != "room" or str(pc.get("room_kind", "")) == "hearth":
-			continue
-		if best.is_empty() or int(pc.depth) > int(best.depth) or (int(pc.depth) == int(best.depth) and float(pc.y0) < float(best.y0)):
-			best = pc
-	if not best.is_empty():
-		best["room_kind"] = "heart"
-		lay["heart"] = int(best.id)
 
 
 ## Which of piece `pc`'s walls (side, offset along it) door `d` is on.
@@ -351,19 +511,6 @@ static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 					a += every
 
 
-## The theme's masonry style (design §EX.1; masonry.json style_by_theme ->
-## styles; {} when it has none).
-static func style(theme: String) -> Dictionary:
-	var by: Dictionary = MAS.get("style_by_theme", {})
-	return (MAS.get("styles", {}) as Dictionary).get(str(by.get(theme, by.get("default", ""))), {})
-
-
-## The builders' module for `theme` (m; design §EX.2, its style's
-## module_m): a room's sconces stand whole modules apart.
-static func module_m(theme: String) -> float:
-	return maxf(float(style(theme).get("module_m", 2.0)), 0.5)
-
-
 ## The point on the inside face of wall `side` of piece `pc`, `off` along
 ## that wall from its middle (along the piece on its side walls, across it
 ## on its end walls), and the way into the piece from there.
@@ -411,7 +558,7 @@ static func door_gap(d: Dictionary, q: Vector2) -> float:
 ## own places (the pairs then not quite facing); and only failing that,
 ## the other two walls.
 static func _room_sconces(lay: Dictionary, pc: Dictionary) -> Array:
-	var module := module_m(str(lay.theme))
+	var module := module_of(str(lay.theme))
 	var length := float(pc.len)
 	var width := 2.0 * float(pc.half)
 	var clear := float(RT.get("clear_m", 0.6)) + SCONCE_HALF
@@ -773,7 +920,7 @@ static func near_airway(lay: Dictionary, pc: Dictionary, sd: float, along: float
 
 
 ## A crypt's stone coffins (TombBuild draws them): rows down both long
-## walls every 2.4 m, clear of the doors and airways, each 2.2 m long
+## walls every 2.4 m, clear of the doors, airways and the room's fire, each 2.2 m long
 ## across the room from its wall (COFFIN_IN its middle's distance in from
 ## the wall): [{"along", "sd" (the wall's side, +1 left), "i"}...] in the
 ## order they are drawn. None in a room under 4.8 m wide.
@@ -803,7 +950,8 @@ static func lair_took(lay: Dictionary, piece: int, spot: int) -> bool:
 
 
 ## A catacomb's niche stacks (three shelves each, down both long walls
-## every 1.4 m, clear of the doors and airways): [{"along", "sd", "i"}...].
+## every 1.4 m, clear of the doors and airways, and of the room's fire,
+## where one climbing out would step into it): [{"along", "sd", "i"}...].
 static func niche_spots(lay: Dictionary, pc: Dictionary) -> Array:
 	var out: Array = []
 	for sd: float in [-1.0, 1.0]:
@@ -870,8 +1018,8 @@ static func near_sconce(lay: Dictionary, pc: Dictionary, sd: float, along: float
 
 
 ## The heart's coffin (Mike's frame 9): its middle on the floor, its yaw
-## (long across the room at its far end), and the way it opens toward the
-## room's way in.
+## (long across the room, HEART_BOX_M in from its far wall, the way out's
+## door behind it, §EX.5), and the way it opens toward the room's way in.
 const HEART_BOX := Vector3(1.05, 1.0, 2.3)
 ## A grave's rim over what its skeleton kneels on: the inside is filled to
 ## its height less this (bones and dust), so the head and an arm clear the
@@ -972,7 +1120,8 @@ static func rest_place(lay: Dictionary, pc: Dictionary, kind: String, rests_in: 
 ## when there are places enough, the heart's coffin holding one
 ## (heart_holds_one), the rest drawn room by room weighted by depth to the
 ## toward_heart power, none in the hearth room, none within off_line_m of
-## the way through (walk_lines), none within apart_m of another. Its own
+## the way through (walk_lines; the heart's coffin aside), none by the
+## boss's hole (_by_lair), none within apart_m of another. Its own
 ## seed, so the rest of the tomb is as it was. lay.residents [rest_place...].
 static func _place_residents(lay: Dictionary) -> void:
 	lay["residents"] = []
@@ -1007,15 +1156,16 @@ static func _place_residents(lay: Dictionary) -> void:
 					heart = rest_place(lay, pc, kind, "grave", {"i": -1})
 		for p in places:
 			var at: Vector3 = p.pos
-			if line_distance(lines, Vector2(at.x, at.z)) >= off:
+			if line_distance(lines, Vector2(at.x, at.z)) >= off and not _by_lair(lay, at):
 				cands.append(p)
 	var span: Array = cr.get("per_dungeon", [3, 6])
 	var want := rng.randi_range(int(span[0]), int(span[1]))
 	var picked: Array = []
+	# The heart's always holds one (heart_holds_one): the way through the
+	# heart goes round its coffin to the way out (§EX.5), so no line keeps
+	# it empty.
 	if not heart.is_empty():
-		var hp: Vector3 = heart.pos
-		if line_distance(lines, Vector2(hp.x, hp.z)) >= off:
-			picked.append(heart)
+		picked.append(heart)
 	while picked.size() < want and not cands.is_empty():
 		var total := 0.0
 		for c in cands:
@@ -1037,6 +1187,18 @@ static func _place_residents(lay: Dictionary) -> void:
 		if ok:
 			picked.append(chosen)
 	lay["residents"] = picked
+
+
+## Is `at` by the boss's hole (lay.lair, BossGround.place_lair): within its
+## r and 1.5 m of the stone broken round it, as FirePots keeps the found
+## pot? Nothing rests there: its ring of collision would hide the place,
+## and one climbing out would climb into it.
+static func _by_lair(lay: Dictionary, at: Vector3) -> bool:
+	var l: Dictionary = lay.get("lair", {})
+	if l.is_empty():
+		return false
+	var c: Vector3 = l.pos
+	return Vector2(at.x - c.x, at.z - c.z).length() < float(l.r) + 1.5
 
 
 ## The resting place in piece `piece` at spot `spot` (-1 the heart's

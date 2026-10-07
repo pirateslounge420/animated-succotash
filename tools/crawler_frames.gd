@@ -27,7 +27,11 @@ extends SceneTree
 ## niche (else its grave), climbing out of it in your torchlight, and out;
 ## the pitch torch (§EZ.2): the bundle's unlit heads by the hearth (01h),
 ## and the torch in hand in the dark corridor standing and at a sprint's
-## lean, at 480 lines and at 270 (22a-22d).
+## lean, at 480 lines and at 270 (22a-22d); the plan and the way out (§EX.2,
+## §EX.5; 23-25): down the spine from the hearth room's door, into the
+## heart toward the dead and the flight past them, and from the foot of
+## the way out's flight looking up it, at noon and at midnight with the
+## torch out, and by torchlight.
 ## Checks: every cell of the sheets holds the figure (its pixels drawn),
 ## the skeleton caught halfway out of its place with its bone lit amber
 ## on screen,
@@ -41,7 +45,10 @@ extends SceneTree
 ## on screen as with its old ring, and one firelight (§EX.6): the torchlit
 ## and sconce-lit stone the same amber, and the stone right at the torch
 ## kept amber by the grade; the torch's flame reads as a flame at the
-## bottom right (its size on screen measured, in pixels, at both presets).
+## bottom right (its size on screen measured, in pixels, at both presets); and
+## the way out's opening, seen from the foot of its flight with the torch
+## out, cool blue and a readable step (READABLE) brighter than the stone
+## round it at the top of the flight, by day and at night.
 ## The crosshair (§EX.7, Reticle), in the frames as you see it: its arms'
 ## pixels round the frame's middle pixel, sized per hud.json, at the 480
 ## preset (waking in the hearth room) and the 270 one (01g); nothing else
@@ -1305,6 +1312,77 @@ func _run() -> void:
 		await _frames(20)
 		await _shot("10b_heart_relit")
 		print("  the heart: %d sconces relit" % n_h)
+	# The plan and the way out (§EX.2, §EX.5), the torch away: down the
+	# spine from the hearth room's door; into the heart from its way in,
+	# toward the dead and the flight past them; from the foot of the flight,
+	# looking up at the opening, by day and at night.
+	t.put_out("stowed")
+	var lay: Dictionary = main.lay
+	if not (lay.spine as Array).is_empty():
+		var d0: Dictionary = lay.doors[int((lay.pieces[0].doors as Array).filter(func(di): return bool(lay.doors[di].get("spine", false)))[0])]
+		var dn: Vector2 = d0.n
+		var at0: Vector2 = (d0.p as Vector2) - dn * 1.6
+		p.spawn_flat(Vector3(at0.x, 0.0, at0.y), atan2(-dn.x, -dn.y), -0.02)
+		await _frames(12)
+		await _shot("23_down_the_spine")
+	if (lay.exits as Array).size() > 0 and lay.has("heart"):
+		var ex: Dictionary = lay.exits[0]
+		var hpc2: Dictionary = lay.pieces[int(lay.heart)]
+		var hd2: Vector2 = hpc2.dir
+		var hin: Vector2 = (hpc2.c as Vector2) + hd2 * 0.6
+		t.light()
+		p.spawn_flat(Vector3(hin.x, float(hpc2.y0), hin.y), atan2(-hd2.x, -hd2.y), 0.08)
+		await _frames(12)
+		await _shot("24_heart_to_the_way_out")
+		t.put_out("stowed")
+		var stair: Dictionary = lay.pieces[int(ex.stair)]
+		var sd: Vector2 = stair.dir
+		var stair_foot: Vector2 = (stair.c as Vector2) + sd * 0.3
+		var eye_y := float(stair.y0) + CrawlerPlayer.EYE_Y
+		# Up the flight at the opening's sill (behind the top step from
+		# here), so the opening shows over the crosshair, not under it.
+		var op: Vector3 = ex.p
+		var pitch := atan2(op.y - eye_y, Vector2(op.x - stair_foot.x, op.z - stair_foot.y).length())
+		var vs := Vector2(get_root().get_visible_rect().size)
+		var side := Vector3.UP.cross(ex.n as Vector3).normalized()
+		var oh := float(ex.h)
+		var ohalf := float(ex.half)
+		# The patch of the screen over the opening's plane from s0 to s1
+		# across (m from its middle) and h0 to h1 up (shares of its height).
+		var on_screen := func(s0: float, s1: float, h0: float, h1: float) -> Rect2:
+			var a := cam.unproject_position(op + side * s0 + Vector3.UP * oh * h0) / vs
+			var b := cam.unproject_position(op + side * s1 + Vector3.UP * oh * h1) / vs
+			return Rect2(a, Vector2.ZERO).expand(b)
+		# Noon and midnight by the sun (the clock is warped: Vents).
+		var noon := Vents.days_at_solar_hour(13.0, 12.0)
+		for when in [[noon, "25_way_out_from_below_day", "day"], [Vents.days_at_solar_hour(13.0, 0.0), "25b_way_out_from_below_night", "night"]]:
+			world.days = float(when[0])
+			p.spawn_flat(Vector3(stair_foot.x, float(stair.y0), stair_foot.y), atan2(-sd.x, -sd.y), pitch)
+			# (The half-dark settled, §FC.4: as you'd see it.)
+			await _settle(main)
+			var img := await _shot(str(when[1]))
+			# The opening on screen: the middle of its width, the upper part
+			# of its height (from here the top step hides the lower part),
+			# against the stone round it at the top of the flight, as far
+			# off: either side of it and over it. (The steps by you are the
+			# half-dark's, readable by design, §FC.4: not the dark the
+			# opening has to show against.)
+			var ro: Rect2 = on_screen.call(-ohalf * 0.6, ohalf * 0.6, 0.8, 0.9)
+			var glow := _patch(img, ro.position.x, ro.position.y, ro.end.x, ro.end.y)
+			var round_l := 0.0
+			for q: Rect2 in [on_screen.call(-ohalf - 0.7, -ohalf - 0.3, 0.8, 0.9), on_screen.call(ohalf + 0.3, ohalf + 0.7, 0.8, 0.9), on_screen.call(-ohalf * 0.6, ohalf * 0.6, 1.1, 1.2)]:
+				round_l = maxf(round_l, float(_patch(img, q.position.x, q.position.y, q.end.x, q.end.y).luma))
+			var near := _patch(img, 0.25, 0.8, 0.75, 0.95)
+			var gc: Color = glow.color
+			print("  the way out from below (%s): the opening #%s (luma %.3f) at %s; the stone round it at the top, luma %.3f at most; the steps by you %.3f" % [when[1], gc.to_html(false), glow.luma, str(ro.get_center().snapped(Vector2.ONE * 0.01)), round_l, near.luma])
+			ok(gc.b > gc.r and float(glow.luma) >= round_l + READABLE, "from the foot of the flight (%s), the opening at its top is a cool blue, readable against the stone round it (%.2f luma or more over it)" % [str(when[2]), READABLE])
+		# The same by day with the torch in hand: the flight itself.
+		world.days = noon
+		t.light()
+		p.spawn_flat(Vector3(stair_foot.x, float(stair.y0), stair_foot.y), atan2(-sd.x, -sd.y), pitch)
+		await _frames(12)
+		await _shot("25c_way_out_from_below_torch")
+		t.put_out("stowed")
 	await _pots(main)
 	await _atmosphere(main)
 	# One firelight (§EX.6): the torchlit and the sconce-lit stone the same

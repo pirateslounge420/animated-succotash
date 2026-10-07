@@ -139,7 +139,9 @@ func _layout(s: int) -> void:
 			in_hearth = true
 		if int(r.spot) < 0:
 			heart_one = true
-		var d := TombKit.line_distance(lines, Vector2((r.pos as Vector3).x, (r.pos as Vector3).z))
+		# (The heart's coffin aside: the way through the heart runs past it
+		# to the way out, §EX.5, and it always holds one.)
+		var d := TombKit.line_distance(lines, Vector2((r.pos as Vector3).x, (r.pos as Vector3).z)) if int(r.spot) >= 0 else INF
 		worst = minf(worst, d)
 		if d < off - 1e-3:
 			off_ok = false
@@ -164,7 +166,7 @@ func _layout(s: int) -> void:
 	ok(heart_one, "the heart's coffin holds one (Mike's frame 9)")
 	ok(not in_hearth, "none rests in the hearth room")
 	ok(apart_ok, "none rests within %.1f m of another" % apart)
-	ok(off_ok, "every one rests %.1f m or more off the way through the rooms (nearest %.2f m)" % [off, worst])
+	ok(off_ok, "every one but the heart's rests %.1f m or more off the way through the rooms (nearest %.2f m)" % [off, worst])
 
 
 ## The distance from `p` (x/z) to the polyline `pts`.
@@ -195,8 +197,10 @@ func _walk() -> void:
 	var off := float(_skel().get("off_line_m", 1.0))
 	var worst := INF
 	for r in res.all:
-		worst = minf(worst, _poly_distance(path, r.place.pos))
-	ok(worst >= off, "every skeleton rests %.1f m or more off that walkable line (nearest %.2f m)" % [off, worst])
+		# (Not the heart's: the way runs up to its coffin, §EX.5.)
+		if int(r.place.spot) >= 0:
+			worst = minf(worst, _poly_distance(path, r.place.pos))
+	ok(worst >= off, "every skeleton but the heart's rests %.1f m or more off that walkable line (nearest %.2f m)" % [off, worst])
 	# Walk it by the keys, every holder cold, every skeleton at rest.
 	var first := path[1] - path[0]
 	player.spawn_flat(path[0], atan2(-first.x, -first.z), -0.2)
@@ -280,7 +284,9 @@ func _pick(kinds: Array) -> Resident:
 ## As _pick, but one whose waking test spot (_wake: just beyond its
 ## wakes_m, in front of it) is out of every other skeleton's wakes_m, so
 ## only it is tested there (two in one catacomb can rest close, design
-## §EX.4 setting the niches round the sconces); else _pick's.
+## §EX.4 setting the niches round the sconces), and where your body fits
+## at both of _wake's spots (in an 8 m crypt, just beyond wakes_m in front
+## of a coffin is the far row's coffins, design §EX.2); else _pick's.
 func _pick_alone(kinds: Array) -> Resident:
 	for k in kinds:
 		for r in res.all:
@@ -295,6 +301,9 @@ func _pick_alone(kinds: Array) -> Resident:
 			var alone := true
 			for q in res.all:
 				if q != r and (q.place.eye as Vector3).distance_to(eye) <= float(q.def.get("wakes_m", 3.0)) + 0.3:
+					alone = false
+			for dd: float in [d, d - 0.7]:
+				if not _fits(Vector3(e.x, out.y, e.z) + inward * sqrt(maxf(dd * dd - dy * dy, 0.0))):
 					alone = false
 			if alone:
 				return r

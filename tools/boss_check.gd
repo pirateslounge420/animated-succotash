@@ -518,6 +518,14 @@ func _beside(b: Boss, d: float, clear_m := 0.0) -> Vector3:
 		q.y = b._floor_y(q)
 		if clear_m > 0.0 and _near_unlit(b, q, clear_m):
 			continue
+		# Clear of its hole: the hole's ring of collision stands as tall as
+		# you (TombBuild._lair_hole) and would come between you and it, its
+		# eye and your flame (on queue 46's layouts it can lie by the coil).
+		var l: Dictionary = b.lay.get("lair", {})
+		if not l.is_empty() and Vector2(q.x - (l.pos as Vector3).x, q.z - (l.pos as Vector3).z).length() < float(l.r) + 0.6:
+			continue
+		if b._blocked(b._eye(), q + Vector3(0, 1.3, 0), false):
+			continue
 		var id := b.ground.node_at(q)
 		if id >= 0 and b.ground.is_ground(id) and (id == b.node or not b.ground.link(id, b.node).is_empty()) and not b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
 			var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]

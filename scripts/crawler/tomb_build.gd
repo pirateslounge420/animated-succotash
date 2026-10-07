@@ -15,18 +15,25 @@ extends RuinBuilder
 ##              bones and skulls on them
 ##   ossuary    bones heaped in the corners
 ##   collapsed  a ceiling slab come down in one corner, and its rubble
-##   heart      the deepest room (§CJ.3): ochre on the ceiling, the dead's
-##              goods, and at its end the mossy stone box with a skeleton
-##              leaning out of it (Mike's frame 9)
+##   heart      the spine's last room (§CJ.3): ochre on the ceiling, the
+##              dead's goods, and toward its far end the mossy stone box
+##              with a skeleton leaning out of it (Mike's frame 9), lying
+##              across the room with the way out beyond it
+##
+## and the way out (§EX.5): the long flight up past the heart, the landing
+## at its top, and in the landing's far wall the opening, its threshold
+## stone running on into a strip of floor outside, closed beyond the
+## daylight (WayOut) so nobody walks off the world. The heart's dead lie
+## TombKit.HEART_BOX_M in from its far wall, their goods before them, so
+## the walk goes round them to the way out's door behind them.
+## The airways' carved surrounds (§ET.6). Flat: the tomb is its own world,
+## the hearth room's floor at y 0 (no planet under it). Pure; the arrays
+## come back for CrawlerMain to make into a mesh and collision.
 ##
 ## Where a skeleton rests (TombKit residents, design §FE) its place is
 ## drawn for it: a crypt coffin open, its lid shoved off onto the floor; a
 ## catacomb niche framed with jambs and a lintel, its middle shelf gone;
 ## the heart's box hollow. The skeleton itself is a sprite (Residents).
-##
-## and the airways' carved surrounds (§ET.6). Flat: the tomb is its own
-## world, the hearth room's floor at y 0 (no planet under it). Pure; the
-## arrays come back for CrawlerMain to make into a mesh and collision.
 
 ## The floor under what is being dressed (RuinBuilder.ground() for its
 ## rubble and goods): the tomb has no ground but its floors.
@@ -34,6 +41,10 @@ var _floor := 0.0
 var _lay: Dictionary = {}
 ## The masonry's own seed (masonry.json seed; 0: from the tomb's).
 var _mseed := 0
+## How far a flight's walked slope rides over its steps' line (RuinBuilder.
+## ramp_lift): over a threshold's overhang at the top of the steepest
+## flight (6 cm at the kit's slope, 0.6) and its stone's settle.
+const RAMP_LIFT_M := 0.05
 ## Fitted stones laid and wall faces dressed (checks).
 var stones := 0
 var faces := 0
@@ -49,6 +60,8 @@ var wall_faces: Array = []
 ## Coffins laid in the crypts and bone-niche bays in the catacombs (checks).
 var coffins := 0
 var niches := 0
+## The collision alone (build's collision_only).
+var _collision_only := false
 
 
 func ground(_x: float, _z: float) -> float:
@@ -61,14 +74,22 @@ func surface(_x: float, _z: float) -> float:
 
 ## The tomb's geometry: RuinBuilder's arrays ({"v", "n", "c", "m", "cv",
 ## "ch"}; local is scene, the tomb at the origin), and "shaft_top" (the
-## smoke shaft's mouth over the hearth).
-static func build(lay: Dictionary) -> Dictionary:
+## smoke shaft's mouth over the hearth). `collision_only` (the checks'
+## walks): the fitted stones' faces and the soot, which are drawn only and
+## never touch the builder's own dice (FittedStone.face), are left out, so
+## the collision ("cv", "ch") is the game's exactly.
+static func build(lay: Dictionary, collision_only := false) -> Dictionary:
 	var b := TombBuild.new()
 	b._lay = lay
+	b._collision_only = collision_only
 	b.rng.seed = hash([int(lay.seed), "stone"])
 	b.up = Vector3.UP
 	b.ex = Vector3.RIGHT
 	b.ez = Vector3.BACK
+	# Every flight walkable both ways (§EX.5: the way out climbs one): its
+	# slope rides a little over the steps' line, so the threshold stone
+	# at the top of a steep flight is never a lip to climb.
+	b.ramp_lift = RAMP_LIFT_M
 	# Damp: the tombs are deep and still (crawler.json themes.tomb).
 	b.wet = 0.75
 	# The walls' masonry: the preset and climate by the tomb's theme.
@@ -77,7 +98,7 @@ static func build(lay: Dictionary) -> Dictionary:
 	b._mseed = ms if ms != 0 else hash([int(lay.seed), "masonry"])
 	for pc in lay.pieces:
 		match str(pc.kind):
-			"room":
+			"room", "landing":
 				b._room(pc)
 			"corridor":
 				b._corridor(pc)
@@ -95,7 +116,8 @@ static func build(lay: Dictionary) -> Dictionary:
 		b._lair_hole(lay.lair)
 	for a in lay.airways:
 		b._airway_surround(a)
-	b._soot(lay)
+	if not collision_only:
+		b._soot(lay)
 	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces, "walls": b.wall_faces, "coffins": b.coffins, "niches": b.niches}
 
 
@@ -246,6 +268,8 @@ func _dwall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, thick: float = 
 	plain = false
 	solid = was_solid
 	_collision_box(Transform3D(bs, center), Vector3(length * 0.5, (y_top - y_bot) * 0.5, thick * 0.5))
+	if _collision_only:
+		return
 	var floor_y := y_bot + 0.6
 	var y1 := y_top - Delves.SLAB + 0.05
 	for sd: float in [-1.0, 1.0]:
@@ -305,14 +329,15 @@ func _corridor(pc: Dictionary) -> void:
 
 
 ## A door through a wall: the threshold flag across the wall's thickness
-## and the lintel over the opening, up to the taller side's wall top.
+## and the lintel over the opening, up to the taller side's wall top. A
+## way out's opening (b -1, §EX.5) runs its threshold on outside.
 func _doorway(d: Dictionary) -> void:
 	var p: Vector2 = d.p
 	var nv: Vector2 = d.n
 	var half := float(d.half)
 	var y := float(d.y)
 	var a: Dictionary = _lay.pieces[int(d.a)]
-	var b: Dictionary = _lay.pieces[int(d.b)]
+	var b: Dictionary = _lay.pieces[int(d.b)] if int(d.b) >= 0 else a
 	var top := maxf(float(a.y0) + float(a.h), float(b.y0) + float(b.h)) + Delves.SLAB
 	top = maxf(top, maxf(float(a.y1) + float(a.h), float(b.y1) + float(b.h)) + Delves.SLAB)
 	var along_n := absf(nv.x) > 0.5
@@ -322,6 +347,49 @@ func _doorway(d: Dictionary) -> void:
 	if top > lb + 0.1:
 		var size3 := Vector3(size2.x, top - lb, size2.y)
 		box(Transform3D(Basis.IDENTITY, Vector3(p.x, (lb + top) * 0.5, p.y)), size3, (palette[2] as Color).darkened(0.05), 0.0, 0.08, 0.03)
+	if int(d.b) < 0:
+		_outside(d, top)
+
+
+## Beyond a way out's opening (design §EX.5): the floor runs on OUTSIDE_M
+## past the wall under the daylight (WayOut hangs it OUTSIDE_M out), the
+## wall's stone carried on out either side so the daylight's edges never
+## show, and a stop past the daylight (collision only): stepping into the
+## opening is the way out, so nobody walks on into nothing. Nothing roofs
+## it: looking up the flight, your eye passes up through the opening, and
+## it must meet the daylight there, not the underside of a stone.
+const OUTSIDE_M := 1.2
+## How far over the opening's head the daylight and its stone reach (m).
+const OUTSIDE_UP_M := 2.0
+
+
+func _outside(d: Dictionary, top: float) -> void:
+	var p: Vector2 = d.p
+	var nv: Vector2 = d.n
+	var y := float(d.y)
+	var half := float(d.half)
+	var side := Delves.perp(nv)
+	var wall := Delves.WALL * 0.5
+	# The floor outside: from the wall's outer face past the daylight.
+	var f0 := p + nv * wall
+	var f1 := p + nv * (wall + OUTSIDE_M + 0.3)
+	var fr := Rect2(f0 - side * (half + 0.9), Vector2.ZERO).expand(f0 + side * (half + 0.9)).expand(f1 - side * (half + 0.9)).expand(f1 + side * (half + 0.9))
+	_pave(fr, y)
+	# The opening's reveal: the wall's stone on out past the daylight,
+	# either side of it, as high as the daylight reaches.
+	var depth := OUTSIDE_M + 0.3
+	var mid := p + nv * (wall + depth * 0.5)
+	var u3 := Vector3(side.x, 0.0, side.y)
+	var n3 := Vector3(nv.x, 0.0, nv.y)
+	var bs := Basis(u3, Vector3.UP, n3)
+	var col: Color = (palette[2] as Color).darkened(0.1)
+	var up_to := maxf(top, y + float(d.h) + OUTSIDE_UP_M + 0.2)
+	for sd: float in [-1.0, 1.0]:
+		var c := mid + side * sd * (half + 0.05 + 0.45)
+		box(Transform3D(bs, Vector3(c.x, (y - 0.3 + up_to) * 0.5, c.y)), Vector3(0.9, up_to - y + 0.3, depth), col, 0.0, 0.06, 0.02)
+	# The stop, past the daylight.
+	var s := p + nv * (wall + OUTSIDE_M + 0.15)
+	_collision_box(Transform3D(bs, Vector3(s.x, y + 1.5, s.y)), Vector3(half + 0.2, 1.6, 0.1))
 
 
 ## A point in piece `pc` at (along, across), on its floor, as a Vector3.
@@ -477,16 +545,20 @@ func _dress(pc: Dictionary) -> void:
 					break
 			_rubble_clear(pc, p, 1.4, 6, bays)
 		"heart":
+			# The dead lie across the room toward its far end, their goods
+			# before them, the way out beyond them (§EX.5): the walk goes
+			# round them on either side and along the far wall behind the
+			# lid to the door (TombKit.heart_box, HEART_*).
 			var hb := TombKit.heart_box(pc)
 			_heart_box(hb.pos, float(hb.yaw), not TombKit.resting_at(_lay, int(pc.id), -1).is_empty())
-			# The dead's goods, spread no nearer the sconces' bays than they
-			# reach.
-			var g := Vector2(length * 0.35, 0.0)
-			var room_for := 1.4 + GOODS_REACH
+			# The dead's goods before them (HEART_GOODS_M from the far wall),
+			# spread no nearer the sconces' bays than they reach.
+			var g := Vector2(length - TombKit.HEART_GOODS_M, 0.0)
+			var room_for := 0.6 + GOODS_REACH
 			for b in bays:
 				var r: Rect2 = b
 				room_for = minf(room_for, (g - g.clamp(r.position, r.end)).length())
-			_grave_goods(_at(pc, g.x, g.y, 0.03), clampf(room_for - GOODS_REACH, 0.3, 1.4), 6)
+			_grave_goods(_at(pc, g.x, g.y, 0.03), clampf(room_for - GOODS_REACH, 0.3, 0.6), 6)
 
 
 ## The side (+1 / -1 along the coffin's x) an open coffin's lid falls to

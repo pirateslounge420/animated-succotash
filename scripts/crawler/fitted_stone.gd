@@ -504,6 +504,11 @@ static func _dust(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: fl
 	var col := Color(str(dr.get("color", "#a89a7c")))
 	var was_solid := b.solid
 	var was_mat := b.mat
+	# The face's own dice, not the builder's: a face never shifts what the
+	# builder rolls after it (TombBuild's collision_only leaves the faces
+	# out and must lay every other stone the same).
+	var was_rng := b.rng
+	b.rng = rng
 	b.solid = false
 	b.mat = DUST_M
 	var spots: Array = [0.2, length - 0.2]
@@ -519,3 +524,4 @@ static func _dust(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: fl
 		b.boulder(c, Vector3(rng.randf_range(0.35, 0.8), h, depth), Basis(u, Vector3.UP, u.cross(Vector3.UP)).orthonormalized(), col.darkened(rng.randf_range(0.0, 0.12)), 0.0)
 	b.solid = was_solid
 	b.mat = was_mat
+	b.rng = was_rng

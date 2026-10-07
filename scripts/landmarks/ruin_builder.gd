@@ -94,6 +94,11 @@ var palette: Array = STONES
 var solid := true
 ## Boxes drawn plain (box()): set for a big build's insides.
 var plain := false
+## How far a stair's walked slope (_dramp) rides over the line of its
+## steps (m; 0 everywhere but the crawler's tombs, TombBuild: a threshold
+## stone overhanging the top of a steep flight would stand proud of the
+## slope there and stop you climbing out onto it).
+var ramp_lift := 0.0
 ## Where the near mesh gives way to the far LOD (a big build reaches
 ## further: its middle is far from the walls you stand by).
 var _lod_m := LOD_M
@@ -3468,6 +3473,8 @@ func _delve_stair(pc: Dictionary, off: float, first: bool, open_to: float, floor
 ## A walkable slope (collision only) from `lo` up to `hi`, `w` wide, in
 ## any direction (RuinBuilder._ramp runs only along z).
 func _dramp(lo: Vector3, hi: Vector3, w: float) -> void:
+	lo.y += ramp_lift
+	hi.y += ramp_lift
 	var foot := lo - (hi - lo).normalized() * 0.6 - Vector3(0.0, 0.05, 0.0)
 	var dirv := (hi - foot).normalized()
 	var flat := Vector3(dirv.x, 0.0, dirv.z).normalized()

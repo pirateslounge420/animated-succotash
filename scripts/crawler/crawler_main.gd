@@ -42,6 +42,14 @@ extends Node
 ## are hits too, and you heal only once nothing is after you (§FD); taken,
 ## every one after you gives you up and goes home.
 ##
+## And always a way out (§EX.5, crawler.json exit): at the top of the long
+## flight past the heart the old way in glows with faint daylight
+## (WayOut). Stepping into it is the stand-in (exit.stand_in) until
+## §EW.3's seam or §EW.7's surface is built: the screen fades out over
+## fade_s, the next tomb is built from a new seed (next_seed: the same
+## after a pinned SEED), and you arrive in its hearth room by its lit
+## hearth, carrying what you carried, the torch lit or not as it was.
+##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), closing into a dim ring while you sneak (§FC.1), off with the
@@ -60,8 +68,11 @@ extends Node
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
 static var HUD: Dictionary = Tuning.table("crawler").get("hud", {})
+static var EXIT: Dictionary = Tuning.table("crawler").get("exit", {})
 
 var world: Node
+## The tomb now: its seed and layout (TombKit), and what's built of it.
+var seed_value := 0
 var lay: Dictionary
 var tomb: Node3D
 var fires: CrawlerFires
@@ -74,6 +85,7 @@ var vents: Vents
 var glow_moss: GlowMoss
 var wall_life: WallLife
 var walls: Array = []
+var way_out: WayOut
 var player: CrawlerPlayer
 ## The dark you can half see in (§FC.4).
 var half_dark: HalfDark
@@ -102,6 +114,11 @@ var _lit_logged := 0
 ## The one who found you is at the hearth and the dark lifting (tests
 ## wait on it; the name is from when the rescuer was baked to a sprite).
 var baked := false
+## Walking out: the fade to the next tomb has begun (tests wait on it
+## ending).
+var leaving := false
+## Tombs walked out of this session.
+var walked_out := 0
 
 
 func _ready() -> void:
@@ -113,57 +130,17 @@ func _ready() -> void:
 	Look.prepare()
 	world = get_node("/root/World")
 	GameLog.entries.clear()
-	var seed_value := _seed()
-	lay = TombKit.layout(seed_value)
 	_environment()
-	_build_tomb()
-	fires = CrawlerFires.new()
-	fires.name = "Fires"
-	add_child(fires)
-	fires.build(world, lay)
-	# Every permanent fire's vent (the vents rule): its daylight, soot and
-	# draft.
-	vents = Vents.new()
-	vents.name = "Vents"
-	add_child(vents)
-	vents.build(world, lay, fires)
-	airways = Airways.new()
-	airways.name = "Airways"
-	add_child(airways)
-	airways.build(lay)
-	TorchSnuff.drafts = airways
 	Torch.weather = {}
 	Campfire.night = 1.0
 	player = CrawlerPlayer.new()
 	player.name = "Player"
 	player.world = world
 	add_child(player)
-	var w: Array = lay.wake
-	player.spawn_flat(w[0], float(w[1]), -0.32)
-	airways.exclude = [player.get_rid()]
-	fire_pots = FirePots.new()
-	fire_pots.name = "FirePots"
-	add_child(fire_pots)
-	fire_pots.build(world, lay, player)
 	half_dark = HalfDark.new()
 	half_dark.name = "HalfDark"
 	add_child(half_dark)
 	half_dark.setup(player)
-	fires.ray_exclude = [player.get_rid()]
-	# Atmosphere, never a puzzle (§FG).
-	glow_moss = GlowMoss.new()
-	glow_moss.name = "GlowMoss"
-	add_child(glow_moss)
-	glow_moss.build(lay, walls, fires)
-	wall_life = WallLife.new()
-	wall_life.name = "WallLife"
-	add_child(wall_life)
-	wall_life.build(lay, walls, fires)
-	# What lives in the dark (§FE): asleep in their places.
-	residents = Residents.new()
-	residents.name = "Residents"
-	add_child(residents)
-	residents.build(lay, player)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"
@@ -184,14 +161,98 @@ func _ready() -> void:
 	add_child(harm)
 	harm.setup(player, post, null)
 	player.died.connect(_on_taken)
+	EngineReport.check_shaders()
+	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
+	_load_tomb(_seed())
+	_rescuer()
+
+
+## One tomb, all of it (TombKit's layout from `s`, its stone, fires,
+## vents, airways and way out, the life on its walls, its residents, its
+## fire pots' found pot and its boss), you standing on the mat by its
+## hearth. The session's own (you and what you carry and
+## hold, the grade, the HUD, the log) stays.
+func _load_tomb(s: int) -> void:
+	seed_value = s
+	lay = TombKit.layout(s)
+	_build_tomb()
+	fires = CrawlerFires.new()
+	fires.name = "Fires"
+	add_child(fires)
+	fires.build(world, lay)
+	# Every permanent fire's vent (the vents rule): its daylight, soot and
+	# draft.
+	vents = Vents.new()
+	vents.name = "Vents"
+	add_child(vents)
+	vents.build(world, lay, fires)
+	airways = Airways.new()
+	airways.name = "Airways"
+	add_child(airways)
+	airways.build(lay)
+	airways.exclude = [player.get_rid()]
+	TorchSnuff.drafts = airways
+	way_out = WayOut.new()
+	way_out.name = "WayOut"
+	add_child(way_out)
+	way_out.build(world, lay)
+	fires.ray_exclude = [player.get_rid()]
+	# Atmosphere, never a puzzle (§FG).
+	glow_moss = GlowMoss.new()
+	glow_moss.name = "GlowMoss"
+	add_child(glow_moss)
+	glow_moss.build(lay, walls, fires)
+	wall_life = WallLife.new()
+	wall_life.name = "WallLife"
+	add_child(wall_life)
+	wall_life.build(lay, walls, fires)
+	# What lives in the dark (§FE): asleep in their places.
+	residents = Residents.new()
+	residents.name = "Residents"
+	add_child(residents)
+	residents.build(lay, player)
+	var w: Array = lay.wake
+	player.spawn_flat(w[0], float(w[1]), -0.32)
+	if fire_pots == null:
+		fire_pots = FirePots.new()
+		fire_pots.name = "FirePots"
+		add_child(fire_pots)
+		fire_pots.build(world, lay, player)
+	else:
+		fire_pots.retomb(lay)
+	# The dungeon's boss (§EY): its ground, its lair, this tomb's.
 	boss = Boss.new()
 	add_child(boss)
 	boss.build(lay, fires, player, drips)
-	EngineReport.check_shaders()
-	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
-	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [seed_value, int(lay.exits), fires.holders.size()], "world")
-	print("[crawler] seed %d: %d pieces, %d exits, %d holders, %d airways, %d vents (%d with daylight), %d residents; %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [seed_value, (lay.pieces as Array).size(), int(lay.exits), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), residents.all.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
-	_rescuer()
+	_lit_logged = 0
+	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [s, int(lay.hearth_ways), fires.holders.size()], "world")
+	print("[crawler] seed %d: %d pieces, %d ways from the hearth room, %d way out, %d holders, %d airways, %d vents (%d with daylight), %d residents; %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [s, (lay.pieces as Array).size(), int(lay.hearth_ways), (lay.exits as Array).size(), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), residents.all.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
+
+
+## The tomb's nodes gone (out of the tree at once, so nothing that walks
+## the fire or light groups meets them again), for the next; their meshes
+## let go of first (NodeRelease).
+func _clear_tomb() -> void:
+	# The drips back as they were before its prowl hushed them.
+	if boss != null and is_instance_valid(boss) and drips != null:
+		drips.volume_db = boss.bed_db
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, boss]:
+		var node := n as Node
+		if node == null or not is_instance_valid(node):
+			continue
+		remove_child(node)
+		NodeRelease.free_later(node)
+	rescuer = null
+	boss = null
+	baked = false
+	TorchSnuff.drafts = null
+
+
+## The tomb after `s` (the stand-in's new seed, exit.stand_in): a seeded
+## step, so a pinned SEED walks the same tombs every time.
+static func next_seed(s: int) -> int:
+	var n := posmod(hash([s, "the next tomb"]), 999999) + 1
+	return n if n != s else posmod(n, 999999) + 1
 
 
 func _exit_tree() -> void:
@@ -285,10 +346,19 @@ func _build_tomb() -> void:
 		mi.mesh = mesh
 		mi.material_override = RuinBuilder.material_lit()
 		tomb.add_child(mi)
+	tomb.add_child(collision_body(data))
+	tomb.set_meta("triangles", (data.v as PackedVector3Array).size() / 3)
+	tomb.set_meta("stones", int(data.get("stones", 0)))
+	tomb.set_meta("faces", int(data.get("faces", 0)))
+	walls = data.get("walls", [])
+
+
+## The tomb's collision (TombBuild.build's "cv" faces and "ch" hulls) as
+## one static body on the world's layer (the checks' walks use it too).
+static func collision_body(data: Dictionary) -> StaticBody3D:
 	var body := StaticBody3D.new()
 	body.name = "Collision"
 	body.collision_layer = PropCollision.WORLD_LAYER
-	tomb.add_child(body)
 	var faces: PackedVector3Array = data.cv
 	var step := RuinBuilder.COLLISION_PIECE * 3
 	for from in range(0, faces.size(), step):
@@ -299,10 +369,7 @@ func _build_tomb() -> void:
 		body.add_child(cs)
 	for h in data.ch:
 		PropCollision.hull(body, h)
-	tomb.set_meta("triangles", (data.v as PackedVector3Array).size() / 3)
-	tomb.set_meta("stones", int(data.get("stones", 0)))
-	tomb.set_meta("faces", int(data.get("faces", 0)))
-	walls = data.get("walls", [])
+	return body
 
 
 ## The tomb's triangles sorted into CHUNK_M blocks by their middles:
@@ -406,8 +473,9 @@ func _ui() -> void:
 ## The one who found you (§ET.3), sitting across the hearth on a low
 ## stone, facing it: the shared rig live in the scene (§FH, HearthFolk),
 ## its cloak rolled and its head picked from the seed as the sprite's were
-## (rescuer.beast "seed"), so a seed keeps its rescuer.
-func _rescuer() -> void:
+## (rescuer.beast "seed"), so a seed keeps its rescuer; then the dark
+## lifts over `fade_in_s`.
+func _rescuer(fade_in_s := 2.5) -> void:
 	var r: Array = lay.rescuer
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([int(lay.seed), "rescuer"])
@@ -429,7 +497,7 @@ func _rescuer() -> void:
 	await residents.bake(self)
 	baked = true
 	var tw := create_tween()
-	tw.tween_property(_fade, "color:a", 0.0, 2.5)
+	tw.tween_property(_fade, "color:a", 0.0, fade_in_s)
 	tw.tween_callback(func(): _fade.visible = false)
 
 
@@ -444,8 +512,9 @@ func _process(delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam != null:
 		PlayerBody.watch_point = cam.global_position
-	# (Taken, the keys let go while "Good night" plays: Harm.)
-	player.typing = log_panel.visible or (harm != null and harm.taking)
+	# (Taken, the keys let go while "Good night" plays: Harm; walking out,
+	# you stand still in the opening while the dark comes.)
+	player.typing = log_panel.visible or (harm != null and harm.taking) or leaving
 	player.ui_open = settings_panel.visible or log_panel.visible
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
@@ -455,10 +524,39 @@ func _process(delta: float) -> void:
 	if player.torch.note != "":
 		# Wordless (§ET.3): the torch's lines go to the log only.
 		player.torch.note = ""
+	if leaving:
+		return
 	var lit := fires.lit_count()
 	if lit > _lit_logged:
 		_lit_logged = lit
 		GameLog.add("%d of %d lights burn again." % [lit, fires.holders.size()], "relit")
+	if baked and way_out.stepped_in(player.global_position) >= 0:
+		walk_out()
+
+
+## Into the opening at the top of the way out (§EX.5): the stand-in until
+## §EW.3's seam or §EW.7's surface is built (exit.stand_in). The dark
+## comes over fade_s, the next tomb is built from a new seed, and you
+## arrive in its hearth room by its lit hearth (§EX.9 call 3's stand-in
+## answer), carrying what you carried, the torch lit or not as it was.
+func walk_out() -> void:
+	if leaving:
+		return
+	leaving = true
+	var si: Dictionary = EXIT.get("stand_in", {})
+	var fade_s := maxf(float(si.get("fade_s", 2.0)), 0.05)
+	GameLog.add(str(si.get("log", "Up the old stair and out. Another tomb, another hearth.")), "world")
+	_fade.visible = true
+	_fade.color.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", 1.0, fade_s)
+	await tw.finished
+	_clear_tomb()
+	_load_tomb(next_seed(seed_value))
+	walked_out += 1
+	# (Still in the black while the new boss's sprites bake.)
+	await _rescuer(fade_s)
+	leaving = false
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -5,14 +5,26 @@ extends SceneTree
 ##  1. the switch (§ET.2): data/game.json boots the crawler (the project's
 ##     main scene is the boot scene, which opens GameMode.scene()), GAME
 ##     overrides it, the open world's scene is still there;
-##  2. the tomb kit (§ET.3, §CJ.8), over SEEDS seeds: three or four exits
-##     from the hearth room, every piece reachable from it through doors,
-##     no two pieces overlapping unless a door joins them, a heart, every
-##     room past the hearth room with its wall sconces (§EX.4) and no
-##     hearth but the hearth room's, the airways placed, the mat, the
-##     bundle and the rescuer in the hearth room clear of the hearth; in
-##     the scene: a floor under every piece and a ceiling over it, and you
-##     standing on the floor;
+##  2. the tomb kit (§ET.3, §CJ.8) and its plan (§EX.2, §EX.5), over seeds
+##     1, 7, 42 and WALK_SEEDS more (env WALK_SEEDS; default 200, drawn
+##     from a fixed seed so a failure can be run again): three or four ways
+##     out of the hearth room, every piece reachable from it through doors,
+##     no two pieces overlapping unless a door joins them, every room past
+##     the hearth room with its wall sconces (§EX.4) and no hearth but the
+##     hearth room's, the airways placed, the mat, the bundle and the
+##     rescuer in the hearth room clear of the hearth; at
+##     least one way out (exit.min), at the end of the spine past the
+##     heart; the spine through the heart, its last room, and the longest
+##     way; the side ways at most side_share of its rooms, each ending in
+##     a room; every room's sides, every corridor and flight a whole number
+##     of the style's modules, the ceilings the style's heights; every door
+##     centred on its wall, the spine's rooms' doors facing; then the walk
+##     (exit.check): the player's own body (its capsule, floor rules and
+##     step, CrawlerPlayer) walks from the wake spot to the way out in each
+##     tomb's real collision with every holder cold, or the seed fails with
+##     what stopped it; the median walk reported; in the scene: a floor
+##     under every piece and a ceiling over it, and you standing on the
+##     floor;
 ##  2b. one hearth, wall torches in the other rooms (design §EX.4;
 ##     crawler.json room_torches), on seeds 1, 7 and 42: one hearth, in the
 ##     hearth room; two or four sconces in every other room by the rule
@@ -98,9 +110,13 @@ extends SceneTree
 ##     toward an ordinary airway's draft, flat out at max_deg in a strong
 ##     mouth's gust, never putting it out; the light flickering with the
 ##     flame on top of the coal's breath, held_scale kept; the smoke
-##     darker toward soot and never grey.
+##     darker toward soot and never grey;
+## 12. the way out (§EX.5, WayOut): faint daylight in the opening, cool
+##     blue by day and fainter at night, seen from the bottom of the
+##     flight (nothing between); stepping into it fades to the next tomb
+##     (exit.stand_in): a new seed, you on the mat by its lit hearth, the
+##     torch you carried lit or not as it was, the log's line.
 
-const SEEDS := 30
 ## The seeds §EX.4's room torches are checked on (queue 47).
 const TORCH_SEEDS := [1, 7, 42]
 ## The lit level's sample spacing over a room's floor and walls (m).
@@ -112,6 +128,12 @@ const LIT_STEP := 0.25
 ## seen, so a sample counts at most this much (the hot patch on the wall
 ## right at a sconce counts as white, no more).
 const LIT_WHITE := 4.0
+## Seeds walked beyond 1, 7 and 42 (env WALK_SEEDS overrides).
+const WALK_SEEDS := 200
+## The walk's grid (m a cell), and how far over its floor your capsule is
+## tried (clear of a flag's settled corner).
+const WALK_CELL_M := 0.25
+const WALK_LIFT_M := 0.1
 
 var fails := 0
 
@@ -133,8 +155,10 @@ func _run() -> void:
 	# you all over the tomb; tools/residents_check.gd wakes them.
 	Residents.stay_asleep = true
 	_switch()
-	_layouts()
+	var seeds := _walk_seeds()
+	_layouts(seeds)
 	_room_torches()
+	await _walks(seeds)
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
@@ -161,6 +185,8 @@ func _run() -> void:
 	await _sneak(main)
 	# The room sconces' lights, every holder still lit from _relight.
 	await _torch_lights(main)
+	await _way_out(main)
+	await _stand_in(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -175,25 +201,64 @@ func _switch() -> void:
 	OS.set_environment("GAME", want)
 
 
-func _layouts() -> void:
-	var exits_ok := true
+## The seeds the plan and the walk run over: 1, 7, 42 and WALK_SEEDS more
+## from a fixed draw.
+func _walk_seeds() -> Array:
+	var n := WALK_SEEDS
+	if OS.get_environment("WALK_SEEDS").is_valid_int():
+		n = maxi(int(OS.get_environment("WALK_SEEDS")), 0)
+	var out: Array = [1, 7, 42]
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 46
+	while out.size() < 3 + n:
+		var s := rng.randi_range(1, 999999)
+		if not out.has(s):
+			out.append(s)
+	return out
+
+
+## Is `v` m a whole number of modules `m`?
+func _whole(v: float, m: float) -> bool:
+	return absf(v / m - roundf(v / m)) < 1e-3 and roundf(v / m) >= 1.0
+
+
+func _layouts(seeds: Array) -> void:
+	var ways_ok := true
 	var reach_ok := true
 	var overlap_ok := true
 	var heart_ok := true
 	var holders_ok := true
 	var spots_ok := true
+	var exit_ok := true
+	var spine_ok := true
+	var longest_ok := true
+	var share_ok := true
+	var ends_ok := true
+	var module_ok := true
+	var heights_ok := true
+	var centred_ok := true
+	var facing_ok := true
 	var strong := 0
 	var rooms_n := 0
 	var pieces_n := 0
 	var stairs := 0
+	var two_door := 0
+	var facing_n := 0
+	var spine_rooms := {}
 	var kinds := {}
-	for s in SEEDS:
-		var lay := TombKit.layout(1000 + s * 7919)
+	var share := float((TombKit.PLAN.get("side_branches", {}) as Dictionary).get("side_share", 0.6))
+	var want_exits := int(TombKit.EXIT.get("min", 1))
+	var t0 := Time.get_ticks_msec()
+	for s in seeds:
+		var lay := TombKit.layout(int(s))
 		var pieces: Array = lay.pieces
+		var m := float(lay.module)
+		var st := TombKit.style_of(str(lay.theme))
+		var hs: Dictionary = st.get("heights_m", {})
 		pieces_n += pieces.size()
-		if int(lay.exits) < 3 or int(lay.exits) > 4:
-			exits_ok = false
-			print("  seed %d: %d exits" % [lay.seed, lay.exits])
+		if int(lay.hearth_ways) < 3 or int(lay.hearth_ways) > 4 or (pieces[0].doors as Array).size() != int(lay.hearth_ways):
+			ways_ok = false
+			print("  seed %d: %d ways out of the hearth room" % [lay.seed, lay.hearth_ways])
 		# Reachable through doors from the hearth room.
 		var seen := {0: true}
 		var stack := [0]
@@ -202,7 +267,7 @@ func _layouts() -> void:
 			for di in pieces[id].doors:
 				var d: Dictionary = lay.doors[di]
 				for o in [int(d.a), int(d.b)]:
-					if not seen.has(o):
+					if o >= 0 and not seen.has(o):
 						seen[o] = true
 						stack.append(o)
 		if seen.size() != pieces.size():
@@ -220,8 +285,60 @@ func _layouts() -> void:
 				if TombKit.outer(pieces[i]).grow(-0.02).intersects(TombKit.outer(pieces[j]).grow(-0.02)):
 					overlap_ok = false
 					print("  seed %d: pieces %d and %d overlap" % [lay.seed, i, j])
-		if not lay.has("heart"):
+		# The spine (§EX.2): from the hearth room through every one of its
+		# rooms, the heart its last, on to the way out; never a dead end.
+		var spine: Array = lay.spine
+		var branches: Array = lay.branches
+		if not lay.has("heart") or not spine.has(int(lay.heart)) or branches.is_empty() or (branches[0] as Array) != spine:
 			heart_ok = false
+			print("  seed %d: the heart %s is not on the spine %s" % [lay.seed, str(lay.get("heart")), str(spine)])
+		var spine_room_ids: Array = []
+		for id in spine:
+			if str(pieces[id].kind) == "room":
+				spine_room_ids.append(int(id))
+		if spine_room_ids.is_empty() or int(spine_room_ids[-1]) != int(lay.get("heart", -1)):
+			spine_ok = false
+			print("  seed %d: the heart is not the spine's last room (%s)" % [lay.seed, str(spine_room_ids)])
+		spine_rooms[spine_room_ids.size()] = int(spine_rooms.get(spine_room_ids.size(), 0)) + 1
+		# Each spine piece joins the next through a door (one passage).
+		var prev := 0
+		for id in spine:
+			var joined := false
+			for di in pieces[prev].doors:
+				var d: Dictionary = lay.doors[di]
+				if (int(d.a) == prev and int(d.b) == int(id)) or (int(d.b) == prev and int(d.a) == int(id)):
+					joined = true
+			if not joined:
+				spine_ok = false
+				print("  seed %d: spine piece %d does not open off %d" % [lay.seed, id, prev])
+			prev = int(id)
+		# The way out (§EX.5): at least exit.min, at the spine's end, past the
+		# heart, its opening out of the tomb.
+		var exits: Array = lay.exits
+		if exits.size() < want_exits:
+			exit_ok = false
+			print("  seed %d: %d ways out" % [lay.seed, exits.size()])
+		for ex in exits:
+			var od: Dictionary = lay.doors[int(ex.door)]
+			if int(ex.heart) != int(lay.get("heart", -2)) or int(od.b) != -1 or int(od.a) != int(spine[-1]) or str(pieces[int(ex.stair)].kind) != "stair" \
+					or float(pieces[int(ex.stair)].y1) - float(pieces[int(ex.stair)].y0) < float(TombKit.EXIT.get("rise_m", 6.0)) - 0.01:
+				exit_ok = false
+				print("  seed %d: way out %s is not past the heart at the spine's end" % [lay.seed, str(ex)])
+		# The side ways: shorter, each ending in a room.
+		for bi in range(1, branches.size()):
+			var b: Array = branches[bi]
+			var n := 0
+			for id in b:
+				if str(pieces[id].kind) == "room":
+					n += 1
+			if n >= spine_room_ids.size():
+				longest_ok = false
+			if n > floori(share * spine_room_ids.size() + 1e-4):
+				share_ok = false
+				print("  seed %d: side way %d has %d rooms, the spine %d" % [lay.seed, bi, n, spine_room_ids.size()])
+			if b.is_empty() or str(pieces[int(b[-1])].kind) != "room":
+				ends_ok = false
+				print("  seed %d: side way %d ends in a %s" % [lay.seed, bi, pieces[int(b[-1])].kind if not b.is_empty() else "nothing"])
 		# §EX.4: every holder a wall sconce (no hearth ring anywhere), each
 		# room past the hearth room with its count.
 		var in_room := {}
@@ -231,7 +348,21 @@ func _layouts() -> void:
 			elif bool(h.get("room", false)):
 				in_room[int(h.piece)] = int(in_room.get(int(h.piece), 0)) + 1
 		for pc in pieces:
-			if str(pc.kind) == "room":
+			var k := str(pc.kind)
+			# The module (§EX.2): a room's sides, a corridor's or flight's length.
+			if k in ["room", "landing"]:
+				if not _whole(float(pc.len), m) or not _whole(2.0 * float(pc.half), m):
+					module_ok = false
+					print("  seed %d: %s %d is %.2f x %.2f m, not whole %.1f m modules" % [lay.seed, k, pc.id, pc.len, 2.0 * float(pc.half), m])
+			elif k in ["corridor", "stair"] and not _whole(float(pc.len), m):
+				module_ok = false
+				print("  seed %d: %s %d is %.2f m long, not whole %.1f m modules" % [lay.seed, k, pc.id, pc.len, m])
+			# The style's heights.
+			var hk := "hearth_room" if str(pc.get("room_kind", "")) == "hearth" else ("room" if k == "room" else "corridor")
+			if hs.has(hk) and absf(float(pc.h) - float(hs[hk])) > 1e-4:
+				heights_ok = false
+				print("  seed %d: %s %d is %.2f m high, the style says %.2f" % [lay.seed, k, pc.id, pc.h, float(hs[hk])])
+			if k == "room":
 				kinds[str(pc.room_kind)] = int(kinds.get(str(pc.room_kind), 0)) + 1
 				if str(pc.room_kind) != "hearth":
 					rooms_n += 1
@@ -239,7 +370,23 @@ func _layouts() -> void:
 						holders_ok = false
 				elif in_room.has(int(pc.id)):
 					holders_ok = false
-			elif str(pc.kind) == "stair":
+				# Doors centred on the walls they cut; two facing on the spine.
+				var walls: Array = []
+				for di in pc.doors:
+					var sd: Array = TombKit.door_side(pc, lay.doors[di])
+					walls.append(str(sd[0]))
+					if absf(float(sd[1])) > 0.01:
+						centred_ok = false
+						print("  seed %d: door %d sits %.2f m off the middle of room %d's %s wall" % [lay.seed, di, float(sd[1]), pc.id, sd[0]])
+				if walls.size() == 2:
+					two_door += 1
+					var faces := (walls.has("start") and walls.has("end")) or (walls.has("left") and walls.has("right"))
+					if faces:
+						facing_n += 1
+					elif bool(pc.get("spine", false)):
+						facing_ok = false
+						print("  seed %d: spine room %d's doors don't face (%s)" % [lay.seed, pc.id, str(walls)])
+			elif k == "stair":
 				stairs += 1
 		for a in lay.airways:
 			if bool(a.strong):
@@ -249,14 +396,269 @@ func _layouts() -> void:
 			var aa := Delves.along_across(hr, Vector2((spot as Vector3).x, (spot as Vector3).z))
 			if aa.x < 0.5 or aa.x > float(hr.len) - 0.5 or absf(aa.y) > float(hr.half) - 0.5 or (spot as Vector3).length() < 0.8:
 				spots_ok = false
-	ok(exits_ok, "%d seeds: three or four ways out of the hearth room every time" % SEEDS)
+	var n_s := seeds.size()
+	ok(ways_ok, "%d seeds: three or four ways out of the hearth room every time" % n_s)
 	ok(reach_ok, "every piece reachable from the hearth room through doors")
 	ok(overlap_ok, "no two pieces overlap except through a door")
-	ok(heart_ok, "every tomb has a heart (its deepest room)")
+	ok(exit_ok, "every tomb has at least %d way out (exit.min): a flight climbing %.0f m from the heart's far wall at the spine's end, an opening out of the tomb at its top" % [want_exits, float(TombKit.EXIT.get("rise_m", 6.0))])
+	ok(heart_ok and spine_ok, "the spine runs from the hearth room through the heart, its last room, door to door, on to the way out (spine rooms per tomb: %s)" % str(spine_rooms))
+	ok(longest_ok and share_ok, "the spine is the longest way; every side way has at most %.0f%% of its rooms" % (share * 100.0))
+	ok(ends_ok, "no side way ends in a bare corridor: each ends in a room")
+	ok(module_ok, "every room's sides, every corridor and flight a whole number of the style's modules (%.1f m)" % float(TombKit.module_of("tomb")))
+	ok(heights_ok, "every ceiling one of the style's heights (masonry.json heights_m)")
+	ok(centred_ok, "every door centred on the wall it cuts")
+	ok(facing_ok, "every spine room's two doors face each other (all two-door rooms: %d of %d facing)" % [facing_n, two_door])
 	ok(holders_ok, "every room past the hearth room has its wall sconces by the rule, and no hearth ring anywhere (§EX.4; %d rooms)" % rooms_n)
 	ok(spots_ok, "the mat, the bundle and the rescuer stand in the hearth room, clear of the hearth")
-	ok(strong >= SEEDS * 0.8, "strong airway mouths placed (%d in %d tombs)" % [strong, SEEDS])
-	print("  %d pieces in %d tombs (%.1f each), %d flights of stairs; rooms by kind %s" % [pieces_n, SEEDS, float(pieces_n) / SEEDS, stairs, str(kinds)])
+	ok(strong >= n_s * 0.8, "strong airway mouths placed (%d in %d tombs)" % [strong, n_s])
+	print("  %d pieces in %d tombs (%.1f each), %d flights of stairs; rooms by kind %s (%d ms)" % [pieces_n, n_s, float(pieces_n) / n_s, stairs, str(kinds), Time.get_ticks_msec() - t0])
+
+
+## The walk to the way out (design §EX.5, crawler.json exit.check) in
+## every seed's tomb: PASS only if your body got out of every one.
+func _walks(seeds: Array) -> void:
+	var world_node := get_root().get_node("World")
+	var walked: Array = []
+	var failed: Array = []
+	var t0 := Time.get_ticks_msec()
+	for s in seeds:
+		var r: Dictionary = await _walk_out_of(int(s), world_node)
+		if bool(r.ok):
+			walked.append(float(r.m))
+		else:
+			failed.append(s)
+			print("  seed %d: your body did not get out: %s" % [s, r.why])
+	walked.sort()
+	var med := float(walked[walked.size() / 2]) if not walked.is_empty() else 0.0
+	ok(failed.is_empty(), "%d seeds: your body (its capsule, floor rules and step) walks from the wake spot to the way out every time, every holder cold, no gate (none built)%s" % [seeds.size(), "" if failed.is_empty() else (": failed %s" % str(failed))])
+	if not walked.is_empty():
+		print("  the walk out: median %.0f m (shortest %.0f, longest %.0f; %d s for %d tombs)" % [med, walked[0], walked[-1], (Time.get_ticks_msec() - t0) / 1000, seeds.size()])
+
+
+## The player's own body from the wake spot to the way out of tomb `seed_v`
+## (exit.check: every holder cold, every gate shut; none are built), in
+## the tomb's real collision (TombBuild's collision_only build: the game's
+## faces and hulls exactly) and its cold fires (CrawlerFires), in a world
+## of its own. First a route: a grid over the tomb's floors, WALK_CELL_M a
+## cell, open where your capsule stands clear on the floor there (the same
+## capsule, as a shape query: walls, lintels, coffins, rubble, fire rings;
+## on stairs and through doorways the floor is found by a ray, the flight's
+## ramp), A* over the open cells to the opening. Then your body walks it
+## (CrawlerPlayer.step_body at WALK_SPEED, its floor rules: the slopes it
+## can climb, the snap that holds it down) until it steps into the opening
+## (WayOut.in_opening, the game's own test). {"ok", "m" (walked), "why"}.
+func _walk_out_of(seed_v: int, world_node: Node) -> Dictionary:
+	var lay := TombKit.layout(seed_v)
+	if (lay.exits as Array).is_empty():
+		return {"ok": false, "m": 0.0, "why": "no way out"}
+	var ex: Dictionary = lay.exits[0]
+	var vp := SubViewport.new()
+	vp.own_world_3d = true
+	vp.size = Vector2i(4, 4)
+	vp.render_target_update_mode = SubViewport.UPDATE_DISABLED
+	get_root().add_child(vp)
+	var root := Node3D.new()
+	vp.add_child(root)
+	root.add_child(CrawlerMain.collision_body(TombBuild.build(lay, true)))
+	var fires := CrawlerFires.new()
+	fires.process_mode = Node.PROCESS_MODE_DISABLED
+	root.add_child(fires)
+	fires.build(world_node, lay)
+	# The one who found you, sitting across the hearth: something to bump
+	# into (§FH, HearthFolk's blocker), rolled as CrawlerMain rolls it.
+	var seat: Array = lay.rescuer
+	var rr := RandomNumberGenerator.new()
+	rr.seed = hash([int(lay.seed), "rescuer"])
+	var pal := CloakedFigure.roll_palette(rr, CloakedFigure.tribe_family(int(lay.seed)))
+	HearthFolk.make(root, "Rescuer", seat[0], float(seat[1]), float(CrawlerMain.RES.get("height_m", 1.62)), pal, "")
+	await physics_frame
+	await physics_frame
+	var space := vp.find_world_3d().direct_space_state
+	var r := _route(lay, ex, space)
+	if not bool(r.ok):
+		NodeRelease.free_later(vp)
+		return {"ok": false, "m": 0.0, "why": r.why}
+	var result := await _walk_body(lay, ex, root, r.path)
+	NodeRelease.free_later(vp)
+	return result
+
+
+## Where `p` (x/z) is: the piece or doorway, for a report.
+func _where(lay: Dictionary, p: Vector3) -> String:
+	var id := TombKit.piece_at(lay, p)
+	if id < 0:
+		for d in lay.doors:
+			var dp: Vector2 = d.p
+			if Vector2(p.x, p.z).distance_to(dp) < float(d.half) + 0.6:
+				return "the doorway from piece %d to %d" % [d.a, d.b]
+		return "outside every piece"
+	var pc: Dictionary = lay.pieces[id]
+	return "piece %d (%s%s%s)" % [id, pc.kind, (" " + str(pc.room_kind)) if pc.has("room_kind") else "", ", spine" if bool(pc.get("spine", false)) else ""]
+
+
+## The route (_walk_out_of): {"ok", "path" [Vector3 cell middles on their
+## floors], "why"}.
+func _route(lay: Dictionary, ex: Dictionary, space: PhysicsDirectSpaceState3D) -> Dictionary:
+	var g := WALK_CELL_M
+	var bounds := Delves.rect_of(lay.pieces[0], 2.0)
+	for pc in lay.pieces:
+		bounds = bounds.merge(Delves.rect_of(pc, 2.0))
+	bounds = bounds.grow(TombBuild.OUTSIDE_M + 1.0)
+	var w := ceili(bounds.size.x / g) + 1
+	var h := ceili(bounds.size.y / g) + 1
+	var cell := func(x: float, z: float) -> Vector2i:
+		return Vector2i(roundi((x - bounds.position.x) / g), roundi((z - bounds.position.y) / g))
+	var mid := func(c: Vector2i) -> Vector2:
+		return bounds.position + Vector2(c) * g
+	# Each cell's floor: a piece's own (rooms, corridors, the landing: flat),
+	# or a ray's (stairs and doorways: the flight's ramp runs through them);
+	# NAN off the floors.
+	var fy := PackedFloat32Array()
+	fy.resize(w * h)
+	fy.fill(NAN)
+	var by_ray := PackedByteArray()
+	by_ray.resize(w * h)
+	var goal_cells: Array = []
+	for pc in lay.pieces:
+		var rr := Delves.rect_of(pc, 0.0)
+		var c0: Vector2i = cell.call(rr.position.x, rr.position.y)
+		var c1: Vector2i = cell.call(rr.end.x, rr.end.y)
+		for j in range(c0.y, c1.y + 1):
+			for i in range(c0.x, c1.x + 1):
+				var q: Vector2 = mid.call(Vector2i(i, j))
+				var aa := Delves.along_across(pc, q)
+				if aa.x < 0.0 or aa.x > float(pc.len) or absf(aa.y) > float(pc.half):
+					continue
+				fy[j * w + i] = Delves.floor_of(pc, aa.x)
+				by_ray[j * w + i] = 1 if str(pc.kind) == "stair" else 0
+	for d in lay.doors:
+		var dp: Vector2 = d.p
+		var dn: Vector2 = d.n
+		var out := Delves.WALL * 0.5 + (TombBuild.OUTSIDE_M if int(d.b) < 0 else 0.05)
+		var reach := Vector2(Delves.WALL * 0.5 + 0.05, out)
+		var ext := float(d.half) + 0.1
+		var corners := [dp - dn * reach.x - Delves.perp(dn) * ext, dp + dn * reach.y + Delves.perp(dn) * ext]
+		var rr := Rect2(corners[0], Vector2.ZERO).expand(corners[1])
+		var c0: Vector2i = cell.call(rr.position.x, rr.position.y)
+		var c1: Vector2i = cell.call(rr.end.x, rr.end.y)
+		for j in range(c0.y, c1.y + 1):
+			for i in range(c0.x, c1.x + 1):
+				var q: Vector2 = mid.call(Vector2i(i, j))
+				var rel := q - dp
+				var along := rel.dot(dn)
+				if along < -reach.x or along > reach.y or absf(rel.dot(Delves.perp(dn))) > float(d.half):
+					continue
+				if is_nan(fy[j * w + i]):
+					fy[j * w + i] = float(d.y)
+					by_ray[j * w + i] = 1
+				if int(d.b) < 0 and WayOut.in_opening(ex, Vector3(q.x, float(d.y), q.y)):
+					goal_cells.append(Vector2i(i, j))
+	# Open where your capsule stands clear.
+	var shape := CrawlerPlayer.body_shape()
+	var qs := PhysicsShapeQueryParameters3D.new()
+	qs.shape = shape
+	qs.collision_mask = 1
+	var astar := AStarGrid2D.new()
+	astar.region = Rect2i(0, 0, w, h)
+	astar.cell_size = Vector2(g, g)
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	astar.update()
+	astar.fill_solid_region(astar.region, true)
+	var floor_at := PackedFloat32Array()
+	floor_at.resize(w * h)
+	var open := 0
+	for k in w * h:
+		if is_nan(fy[k]):
+			continue
+		var c := Vector2i(k % w, k / w)
+		var q: Vector2 = mid.call(c)
+		var y := fy[k]
+		if by_ray[k] == 1:
+			var rq := PhysicsRayQueryParameters3D.create(Vector3(q.x, y + 1.0, q.y), Vector3(q.x, y - 0.8, q.y))
+			var hit := space.intersect_ray(rq)
+			if hit.is_empty():
+				continue
+			y = (hit.position as Vector3).y
+		floor_at[k] = y
+		qs.transform = Transform3D(Basis.IDENTITY, Vector3(q.x, y + WALK_LIFT_M + CrawlerPlayer.STAND_HEIGHT * 0.5, q.y))
+		if space.intersect_shape(qs, 1).is_empty():
+			astar.set_point_solid(c, false)
+			open += 1
+	var wk: Vector3 = (lay.wake as Array)[0]
+	var start: Vector2i = cell.call(wk.x, wk.z)
+	if astar.is_point_solid(start):
+		return {"ok": false, "why": "your capsule doesn't fit at the wake spot (%s)" % str(wk)}
+	var goal := Vector2i(-1, -1)
+	var od := Vector2((ex.p as Vector3).x, (ex.p as Vector3).z)
+	var best := INF
+	for c in goal_cells:
+		var dd := (mid.call(c) as Vector2).distance_to(od)
+		if not astar.is_point_solid(c) and dd < best:
+			best = dd
+			goal = c
+	if goal.x < 0:
+		return {"ok": false, "why": "your capsule doesn't fit in the opening (%d goal cells)" % goal_cells.size()}
+	var ids := astar.get_id_path(start, goal, true)
+	if ids.is_empty() or ids[-1] != goal:
+		var last: Vector2i = ids[-1] if not ids.is_empty() else start
+		var lq: Vector2 = mid.call(last)
+		var lp := Vector3(lq.x, floor_at[last.y * w + last.x], lq.y)
+		return {"ok": false, "why": "no route for your capsule: it gets as far as %s at %s (%d open cells)" % [_where(lay, lp), str(lp.snapped(Vector3.ONE * 0.01)), open]}
+	var path: Array = []
+	for c in ids:
+		var q: Vector2 = mid.call(c)
+		path.append(Vector3(q.x, floor_at[c.y * w + c.x], q.y))
+	return {"ok": true, "path": path}
+
+
+## Your body along `path` (_route) until it steps into way out `ex`'s
+## opening: {"ok", "m", "why"}.
+func _walk_body(lay: Dictionary, ex: Dictionary, root: Node3D, path: Array) -> Dictionary:
+	var body := CharacterBody3D.new()
+	body.collision_layer = 0
+	body.collision_mask = 1
+	var cs := CollisionShape3D.new()
+	cs.shape = CrawlerPlayer.body_shape()
+	cs.position = Vector3(0.0, CrawlerPlayer.STAND_HEIGHT * 0.5, 0.0)
+	body.add_child(cs)
+	CrawlerPlayer.floor_rules(body)
+	root.add_child(body)
+	var wk: Vector3 = (lay.wake as Array)[0]
+	body.global_position = wk + Vector3(0.0, 0.05, 0.0)
+	await physics_frame
+	var dt := 1.0 / 60.0
+	var k := 0
+	var walked := 0.0
+	var best := INF
+	var stall := 0
+	var left := 0.0
+	for i in range(1, path.size()):
+		left += (path[i] as Vector3).distance_to(path[i - 1])
+	var steps := int(left / maxf(CrawlerPlayer.WALK_SPEED, 0.5) * 60.0 * 2.0) + 600
+	for i in steps:
+		var pos := body.global_position
+		# The next point at least 0.35 m off (cells are 0.25 m).
+		while k < path.size() - 1 and Vector2(pos.x - (path[k] as Vector3).x, pos.z - (path[k] as Vector3).z).length() < 0.35:
+			k += 1
+		var to: Vector3 = (path[k] as Vector3) - pos
+		to.y = 0.0
+		var wish := to.normalized() if to.length() > 0.02 else Vector3.ZERO
+		CrawlerPlayer.step_body(body, wish, CrawlerPlayer.WALK_SPEED, dt)
+		walked += body.global_position.distance_to(pos)
+		if WayOut.in_opening(ex, body.global_position):
+			return {"ok": true, "m": walked, "why": ""}
+		# Stuck: no nearer the end of the route in two seconds.
+		var togo := float(path.size() - k) * WALK_CELL_M + to.length()
+		if togo < best - 0.05:
+			best = togo
+			stall = 0
+		else:
+			stall += 1
+			if stall > 120:
+				return {"ok": false, "m": walked, "why": "your body stuck in %s at %s, on the floor %s" % [_where(lay, body.global_position), str(body.global_position.snapped(Vector3.ONE * 0.01)), body.is_on_floor()]}
+		if body.global_position.y < float(ex.y) - 30.0:
+			return {"ok": false, "m": walked, "why": "your body fell out of the tomb near %s" % _where(lay, pos)}
+	return {"ok": false, "m": walked, "why": "your body ran out of time in %s" % _where(lay, body.global_position)}
 
 
 ## How many wall sconces room `pc` should have (design §EX.4, crawler.json
@@ -383,7 +785,7 @@ func _room_torches() -> void:
 	var t0 := Time.get_ticks_msec()
 	for seed_v in TORCH_SEEDS:
 		var lay := TombKit.layout(int(seed_v))
-		var module := TombKit.module_m(str(lay.theme))
+		var module := TombKit.module_of(str(lay.theme))
 		# One hearth, the hearth room's; every holder a sconce.
 		var hearth_rooms := 0
 		for pc in lay.pieces:
@@ -503,7 +905,7 @@ func _room_torches() -> void:
 	ok(hearths_ok, "seeds %s: one hearth per tomb, in the hearth room; every other fire a wall sconce (§EX.4)" % str(TORCH_SEEDS))
 	ok(counts_ok, "every other room has its sconces: %d up to %.0f m long, %d longer, the heart %d (%d rooms, %d sconces in all)" % [int(rt.get("small", 2)), float(rt.get("small_room_max_m", 8.0)), int(rt.get("large", 4)), int(rt.get("heart", 4)), n_rooms, n_sconces])
 	ok(heart_ok, "the heart's: %d on each side wall, flanking the dead" % flank)
-	ok(long_ok and spaced_ok, "the rooms' sconces stand on their long walls, whole modules apart (%.0f m, masonry.json styles module_m)" % TombKit.module_m("tomb"))
+	ok(long_ok and spaced_ok, "the rooms' sconces stand on their long walls, whole modules apart (%.0f m, masonry.json styles module_m)" % TombKit.module_of("tomb"))
 	ok(faced >= n_pairs * 0.9, "and in facing pairs where the doors allow: %d of %d pairs face each other exactly (the rest step apart to clear a door)" % [faced, n_pairs])
 	ok(least_gap >= clear - 0.001, "no sconce within %.1f m of a door's edge (the nearest %.2f m)" % [clear, least_gap])
 	ok(vents_ok, "vents: one shaft per tomb (the hearth's, its daylight the only column), one flue per sconce")
@@ -1874,7 +2276,9 @@ func _piece_at(lay: Dictionary, pos: Vector3) -> String:
 
 
 ## A run round the tomb: every door crossed depth-first from the hearth
-## room and back, as points a step either side of it at its floor.
+## room and back, as points a step either side of it at its floor; not the
+## way out's opening (stepping into it walks you out, §EX.5): the run turns
+## on its landing.
 func _tour(lay: Dictionary) -> Array:
 	var pts: Array = []
 	_tour_from(lay, 0, {0: true}, pts)
@@ -1885,7 +2289,7 @@ func _tour_from(lay: Dictionary, id: int, seen: Dictionary, pts: Array) -> void:
 	for di in lay.pieces[id].doors:
 		var d: Dictionary = lay.doors[di]
 		var o := int(d.b) if int(d.a) == id else int(d.a)
-		if seen.has(o):
+		if o < 0 or seen.has(o):
 			continue
 		seen[o] = true
 		var n: Vector2 = (d.n as Vector2) if int(d.a) == id else -(d.n as Vector2)
@@ -2661,8 +3065,14 @@ func _sneak(main: CrawlerMain) -> void:
 	var holds0 := p.ledge_holds
 	var held: Array = []
 	var gone: Array = []
+	var doors_n := 0
 	Input.action_press("crouch")
 	for d in lay.doors:
+		# Not the way out's opening (§EX.5): through it you walk out of the
+		# tomb.
+		if int(d.b) < 0:
+			continue
+		doors_n += 1
 		var n2d: Vector2 = d.n
 		var q: Vector2 = (d.p as Vector2) - n2d * 1.3
 		var hit := _ray(Vector3(q.x, float(d.y) + 1.6, q.y), Vector3(q.x, float(d.y) - 2.0, q.y), [p.get_rid()])
@@ -2682,15 +3092,19 @@ func _sneak(main: CrawlerMain) -> void:
 		if str(pc.kind) != "stair":
 			continue
 		flights += 1
-		var dir: Vector2 = pc.dir
-		var a: Vector2 = (pc.c as Vector2) + dir * 0.5
-		var top := Vector3(a.x, Delves.floor_of(pc, 0.5), a.y)
+		# Down every flight from its top: the way out's climbs (§EX.5), so
+		# it is walked from its far end back.
+		var up := float(pc.y1) > float(pc.y0)
+		var along := float(pc.len) - 0.5 if up else 0.5
+		var dir: Vector2 = -(pc.dir as Vector2) if up else (pc.dir as Vector2)
+		var a: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * along
+		var top := Vector3(a.x, Delves.floor_of(pc, along), a.y)
 		_place_facing(p, top, top + Vector3(dir.x, 0.0, dir.y))
 		await _frames(8)
 		var h1 := p.ledge_holds
 		var y_top := p.global_position.y
 		await _walk(p, ["move_forward"], int((float(pc.len) - 1.0) / PlanetPlayer.CROUCH_SPEED * 60.0) + 30)
-		drops.append([y_top - p.global_position.y, float(pc.y0) - float(pc.y1)])
+		drops.append([y_top - p.global_position.y, absf(float(pc.y0) - float(pc.y1))])
 		if p.ledge_holds != h1:
 			held.append("stair %d" % pc.id)
 	Input.action_release("crouch")
@@ -2699,7 +3113,7 @@ func _sneak(main: CrawlerMain) -> void:
 	for dr in drops:
 		if float(dr[0]) < float(dr[1]) * 0.6:
 			down_ok = false
-	ok(held.is_empty() and gone.size() >= (lay.doors as Array).size() - 2, "crouched through all %d doors of the tomb (median %.1f m on through), the guard never holds you%s" % [gone.size(), gone[gone.size() / 2] if not gone.is_empty() else 0.0, "" if held.is_empty() else ": held at " + ", ".join(held)])
+	ok(held.is_empty() and gone.size() >= doors_n - 2, "crouched through all %d doors of the tomb (median %.1f m on through), the guard never holds you%s" % [gone.size(), gone[gone.size() / 2] if not gone.is_empty() else 0.0, "" if held.is_empty() else ": held at " + ", ".join(held)])
 	if flights == 0:
 		print("  no flights of stairs in this tomb (seeds 1 and 42 have them)")
 	else:
@@ -2709,3 +3123,108 @@ func _sneak(main: CrawlerMain) -> void:
 		ok(down_ok, "crouched down all %d flights of stairs, all the way down (%s)" % [flights, ", ".join(went)])
 	print("  the ledge guard held %d ticks at the test platform's lip, %d in the tomb" % [holds0, p.ledge_holds - holds0])
 	await _frames(int(ease * 60.0) + 4)
+
+
+## The way out in the scene (design §EX.5; WayOut): faint daylight in the
+## opening by the world's clock, seen from the bottom of the flight.
+func _way_out(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var wo := main.way_out
+	ok(wo != null and wo.openings.size() == (lay.exits as Array).size() and wo.openings.size() >= 1, "the way out is built: %d opening with daylight in it" % (wo.openings.size() if wo != null else 0))
+	if wo == null or wo.openings.is_empty():
+		return
+	var o: Dictionary = wo.openings[0]
+	var ex: Dictionary = o.exit
+	var sp: SpotLight3D = o.light
+	var mat: StandardMaterial3D = o.mat
+	var w := main.world
+	var keep: float = w.days
+	# Noon and midnight by the sun (the clock is warped: Vents); two
+	# frames, as the way out reads the clock in its own frame's _process.
+	w.days = Vents.days_at_solar_hour(13.0, 12.0)
+	await process_frame
+	await process_frame
+	var day_c := sp.light_color
+	var day_e := sp.light_energy
+	var day_sheet := mat.albedo_color
+	var shaft_e := 0.0
+	for sh in main.vents.shafts:
+		shaft_e = maxf(shaft_e, (sh.light as SpotLight3D).light_energy)
+	w.days = Vents.days_at_solar_hour(13.0, 0.0)
+	await process_frame
+	await process_frame
+	var night_c := sp.light_color
+	var night_e := sp.light_energy
+	var night_sheet := mat.albedo_color
+	w.days = keep
+	await process_frame
+	print("  the way out's daylight: day #%s %.2f (the opening #%s), night #%s %.2f (#%s); the brightest shaft by day %.2f" % [day_c.to_html(false), day_e, day_sheet.to_html(false), night_c.to_html(false), night_e, night_sheet.to_html(false), shaft_e])
+	ok(day_c.b > day_c.r and night_c.b > night_c.r and day_sheet.b > day_sheet.r and night_sheet.b > night_sheet.r, "its daylight is the shafts' cool blue (§EV.2), by day and by night")
+	ok(day_e > night_e * 2.0 and day_sheet.get_luminance() > night_sheet.get_luminance() * 2.0, "it follows the world's clock: day %.2f, night %.2f" % [day_e, night_e])
+	ok(day_e < shaft_e and maxf(day_sheet.r, maxf(day_sheet.g, day_sheet.b)) < 1.0, "faint, never a spotlight: its wash (%.2f) is weaker than a shaft's daylight (%.2f), the opening never blown white" % [day_e, shaft_e])
+	# Seen from below: nothing between your eye at the foot of the flight and
+	# the opening's daylight under its lintel.
+	var stair: Dictionary = lay.pieces[int(ex.stair)]
+	var foot: Vector2 = (stair.c as Vector2) + (stair.dir as Vector2) * 0.4
+	var eye := Vector3(foot.x, float(stair.y0) + CrawlerPlayer.EYE_Y, foot.y)
+	var n: Vector3 = ex.n
+	var aim := (ex.p as Vector3) + Vector3.UP * (float(ex.h) - 0.3) + n * 0.4
+	var hit := _ray(eye, aim, [main.player.get_rid()])
+	ok(hit.is_empty(), "from the foot of the flight, looking up %.1f m over %.1f m, nothing stands between your eye and the opening's daylight%s" % [aim.y - eye.y, Vector2(aim.x - eye.x, aim.z - eye.z).length(), "" if hit.is_empty() else (" (hit at %s)" % str(hit.position))])
+
+
+## Stepping into the opening (design §EX.5's stand-in, exit.stand_in): the
+## fade, the next tomb from a new seed, you on the mat by its lit hearth
+## carrying the torch you carried, lit or not as it was, and the log's line.
+func _stand_in(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var si: Dictionary = TombKit.EXIT.get("stand_in", {})
+	for lit_case in [true, false]:
+		var ex: Dictionary = main.lay.exits[0]
+		var old_seed := main.seed_value
+		if not p.inventory.has_kind("torch"):
+			p.inventory.add(Inventory.make("torch"))
+		p.weapon = "torch"
+		if lit_case and not t.lit():
+			t.light()
+		elif not lit_case and t.lit():
+			t.put_out("stowed")
+		var n: Vector3 = ex.n
+		p.spawn_flat((ex.p as Vector3) - n * 1.3, atan2(-n.x, -n.z), 0.0)
+		await _frames(5)
+		var pack := _pack(p)
+		Input.action_press("move_forward")
+		var began := false
+		for i in 240:
+			await physics_frame
+			if main.leaving:
+				began = true
+				break
+		Input.action_release("move_forward")
+		ok(began, "walking into the opening begins the way out (torch %s)" % ("lit" if lit_case else "unlit"))
+		if not began:
+			return
+		var line := str(GameLog.entries[-1].get("text", ""))
+		var t0 := Time.get_ticks_msec()
+		for i in 3000:
+			await process_frame
+			if not main.leaving:
+				break
+		var took := Time.get_ticks_msec() - t0
+		var piece := TombKit.piece_at(main.lay, p.global_position)
+		ok(not main.leaving and main.seed_value != old_seed and main.seed_value == CrawlerMain.next_seed(old_seed) and int(main.lay.seed) == main.seed_value, "it fades to the next tomb from a new seed (%d after %d; %d ms)" % [main.seed_value, old_seed, took])
+		ok(piece == 0 and absf(p.global_position.y) < 0.3 and (p.global_position - (main.lay.wake[0] as Vector3)).length() < 0.6, "you arrive in its hearth room, on the mat (%s)" % str(p.global_position.snapped(Vector3.ONE * 0.01)))
+		ok(FireStore.is_lit(main.fires.hearth) and main.fires.lit_count() == 0, "its hearth lit, its lights below cold")
+		ok(t.in_hand() and t.lit() == lit_case and _pack(p) == pack, "the torch you carried, %s as it was, and nothing else changed" % ("lit" if lit_case else "unlit"))
+		ok(line == str(si.get("log", "")) and line != "", "the log says so: \"%s\"" % line)
+		await _frames(int(float(si.get("fade_s", 2.0)) * 60.0) + 10)
+		ok(main.baked and main.rescuer != null and is_instance_valid(main.rescuer) and not main._fade.visible, "its rescuer at its hearth, the dark lifted")
+
+
+## What you carry, kind by kind (the stand-in changes none of it).
+func _pack(p: CrawlerPlayer) -> String:
+	var kinds: Array = []
+	for it in p.inventory.carried:
+		kinds.append(str((it as Dictionary).get("kind", "")) if it is Dictionary else "-")
+	return ",".join(kinds)

@@ -22,5 +22,7 @@ static func _detach(n: Node) -> void:
 		(n as MeshInstance3D).mesh = null
 	elif n is MultiMeshInstance3D:
 		(n as MultiMeshInstance3D).multimesh = null
+	elif n is CPUParticles3D:
+		(n as CPUParticles3D).mesh = null
 	for c in n.get_children():
 		_detach(c)

@@ -93,6 +93,12 @@ func _holder(h: Dictionary) -> Node3D:
 	fire.set_meta("range_m", float(FH.get("light_radius_m", 8.0)))
 	fire.set_meta("piece", int(h.piece))
 	FireStore.apply(fire)
+	# Dark from the start, however far off: only the fires near you are
+	# flickered each frame (_process), so a cold holder down a long spine
+	# must not keep the light it was built with.
+	var cold := fire.get_node_or_null("Light") as OmniLight3D
+	if cold:
+		cold.visible = false
 	# Its logs are charred (a cold holder, OldHearths' look).
 	for c in fire.get_children():
 		if c is MeshInstance3D and c.name != "Coals" and (c as MeshInstance3D).mesh is CylinderMesh:
@@ -280,10 +286,10 @@ func _process(delta: float) -> void:
 			var l := n.get_node_or_null("Light") as OmniLight3D
 			if l:
 				l.light_energy *= float(n.get_meta("energy_k", 1.0))
-			if n.has_meta("draft"):
-				_draft(n, l)
 				# A cold holder's light is off, not just at nothing (§ER.1).
 				l.visible = float(n.get_meta("burn", 1.0)) > 0.0
+			if n.has_meta("draft"):
+				_draft(n, l)
 
 
 ## A vented fire's draft (§EV.3, Vents): the vent draws the air,

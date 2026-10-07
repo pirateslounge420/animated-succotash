@@ -19,6 +19,58 @@ extends PlanetPlayer
 
 ## How far the bundle and the holders answer the interact button (m).
 const REACH_M := 1.8
+## Your body: a capsule this wide (radius) and STAND_HEIGHT tall, kept to
+## the floor this far down (floor_snap_length) and walking up nothing
+## steeper than WALK_MAX_DEG. The checks walk the same body (§EX.5's walk
+## from the wake spot to the way out).
+const RADIUS_M := 0.35
+const SNAP_M := 0.4
+
+
+## Your capsule, standing.
+static func body_shape() -> CapsuleShape3D:
+	var s := CapsuleShape3D.new()
+	s.radius = RADIUS_M
+	s.height = STAND_HEIGHT
+	return s
+
+
+## Your floor rules on `body`: straight down is down, slopes up to
+## WALK_MAX_DEG are floor, held to it SNAP_M.
+static func floor_rules(body: CharacterBody3D) -> void:
+	body.floor_max_angle = deg_to_rad(WALK_MAX_DEG)
+	body.floor_snap_length = SNAP_M
+	body.up_direction = Vector3.UP
+
+
+## One physics step of `body` on its feet toward `wish` (flat, length up
+## to 1) at `speed`: step_velocity, then the slide. The checks' walker
+## takes these steps; yours are the same with the sneak's ledge guard
+## between the two (it holds only while you sneak, never upright).
+static func step_body(body: CharacterBody3D, wish: Vector3, speed: float, delta: float, jump := false) -> void:
+	step_velocity(body, wish, speed, delta, jump)
+	body.move_and_slide()
+
+
+## `body`'s velocity for one physics step toward `wish` at `speed`: the
+## ground's pull to that speed (ACCEL_MPS2, and FRICTION_MPS2 to a stop; a
+## quarter of it in the air), and the fall.
+static func step_velocity(body: CharacterBody3D, wish: Vector3, speed: float, delta: float, jump := false) -> void:
+	var flat := Vector3(body.velocity.x, 0.0, body.velocity.z)
+	var target := wish * speed
+	var rate := ACCEL_MPS2 if wish.length() > 0.05 else FRICTION_MPS2
+	if body.is_on_floor() or wish.length() > 0.05:
+		flat = flat.move_toward(target, rate * delta * (1.0 if body.is_on_floor() else 0.25))
+	var vy := body.velocity.y
+	if body.is_on_floor():
+		vy = minf(vy, 0.0)
+		if jump:
+			vy = JUMP_SPEED
+	else:
+		vy -= (GRAVITY_UP if vy > 0.0 else GRAVITY_DOWN) * delta
+		vy = maxf(vy, -MAX_FALL_MPS)
+	body.velocity = Vector3(flat.x, vy, flat.z)
+
 
 ## The two hands (§FB): the wheel, Tab and the wheel, the left hand's strip.
 var hands: Hands
@@ -49,14 +101,10 @@ var ledge_holds := 0
 
 
 func _ready() -> void:
-	floor_max_angle = deg_to_rad(WALK_MAX_DEG)
-	floor_snap_length = 0.4
+	floor_rules(self)
 	up = Vector3.UP
-	up_direction = Vector3.UP
 	surface_dir = Vector3.UP
-	_shape = CapsuleShape3D.new()
-	_shape.radius = 0.35
-	_shape.height = STAND_HEIGHT
+	_shape = body_shape()
 	_shape_node = CollisionShape3D.new()
 	_shape_node.shape = _shape
 	_shape_node.position = Vector3(0, STAND_HEIGHT * 0.5, 0)
@@ -174,20 +222,7 @@ func _physics_process(delta: float) -> void:
 	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var wish := (right * input.x - fwd * input.y).limit_length(1.0)
 	var speed := CROUCH_SPEED if crouching else (SPRINT_SPEED if sprinting else WALK_SPEED)
-	var flat := Vector3(velocity.x, 0.0, velocity.z)
-	var target := wish * speed
-	var rate := ACCEL_MPS2 if wish.length() > 0.05 else FRICTION_MPS2
-	if is_on_floor() or wish.length() > 0.05:
-		flat = flat.move_toward(target, rate * delta * (1.0 if is_on_floor() else 0.25))
-	var vy := velocity.y
-	if is_on_floor():
-		vy = minf(vy, 0.0)
-		if Input.is_action_pressed("jump") and not crouching:
-			vy = JUMP_SPEED
-	else:
-		vy -= (GRAVITY_UP if vy > 0.0 else GRAVITY_DOWN) * delta
-		vy = maxf(vy, -MAX_FALL_MPS)
-	velocity = Vector3(flat.x, vy, flat.z)
+	step_velocity(self, wish, speed, delta, Input.is_action_pressed("jump") and not crouching)
 	_ledge_guard(delta)
 	var before := global_position
 	move_and_slide()

@@ -210,6 +210,27 @@ func _exit_tree() -> void:
 		instance = null
 
 
+## A new tomb (the way out's stand-in, design §EX.5; CrawlerMain): what lay
+## or burnt on the old tomb's floor goes (the found pot, the fires, their
+## char, a pot still in the air); what you carry and hold stays (the pack,
+## the pot in your left hand, its wick as it was); the new tomb's burnables
+## and its found pot.
+func retomb(p_lay: Dictionary) -> void:
+	lay = p_lay
+	for n in get_children():
+		if n != _arc:
+			remove_child(n)
+			NodeRelease.free_later(n)
+	flying.clear()
+	fires.clear()
+	chars.clear()
+	found = null
+	_bursts.clear()
+	burnables = burnables_of(lay)
+	found_room = found_room_of(lay)
+	_place_found.call_deferred()
+
+
 # --- Carrying ------------------------------------------------------------------
 
 ## A new pot of `p_oil` (an item of the pack).
