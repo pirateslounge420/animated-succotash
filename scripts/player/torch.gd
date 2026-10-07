@@ -47,8 +47,9 @@ static var instance: Torch = null
 static var bundles: Array = []
 
 var player: PlanetPlayer
-## The crawler's snuff rules (design 6 Oct §ET.7, TorchSnuff): the gutter
-## warning, the draft's lean.
+## The crawler's snuff rules (design 6 Oct §ET.7, amended by §EZ.1 and
+## §EZ.5; TorchSnuff): only deep water puts it out, warned by the gutter;
+## the airways' drafts lean and flicker it.
 var snuff := TorchSnuff.new()
 var _view: Node3D
 var _view_flame: Node3D
@@ -489,10 +490,6 @@ func put_out(why: String) -> void:
 			GameLog.add("The torch has burnt out: a stick now.", "torch")
 		"doused":
 			GameLog.add("The water put the torch out.", "torch")
-		"sprint":
-			GameLog.add(str(TorchSnuff.LOG.get("sprint", "Running flat out, the coal guttered and went out.")), "torch")
-		"draft":
-			GameLog.add(str(TorchSnuff.LOG.get("draft", "The draft from the airway put the torch out.")), "torch")
 		_:
 			GameLog.add("The torch is out.", "torch")
 	_play("torch")
@@ -581,23 +578,29 @@ func update_torch(delta: float) -> void:
 		if player.swimming or depth > float(D.get("douse_depth_m", 0.6)):
 			put_out("doused")
 			return
-		# The crawler's snuff rules (design 6 Oct §ET.7, torch.json snuff):
-		# a long flat-out sprint, a strong airway draft or deep water put
-		# it out, each warned first by the coal guttering.
+		# The crawler's snuff rules (design 6 Oct §ET.7, amended by §EZ.1
+		# and §EZ.5; torch.json snuff): moving never gutters it or puts it
+		# out; wading toward the douse depth gutters it (and past it the
+		# water puts it out, above); the airways only lean and flicker it.
 		if GameMode.crawler_running:
-			var why := snuff.step(self, delta, depth)
-			if why != "":
-				put_out(why)
-				return
+			snuff.step(self, delta, depth)
+		# Running feeds the coal air (§EZ.1): a little brighter at a run.
 		var motion := float(L.get("sprint_flicker_scale", 2.0)) if player.sprinting else 1.0
 		var e := energy_now(it, _t, motion)
 		var g := ember_glow(it, _t, motion)
-		# Guttering (burnt low, or the snuff rules' warning) reddens the
-		# light as it dims (§EX.6).
+		if snuff.flicker > 0.0:
+			# A draft quickens the flicker (§EV.3, as a vented fire's),
+			# never a gutter: no dimming toward out, no reddening.
+			var fk := 1.0 + snuff.flicker * sin(_t * 11.3) * sin(_t * 4.1)
+			e *= fk
+			g *= fk
+		# Guttering (burnt low, or wading toward the douse depth) reddens
+		# the light as it dims (§EX.6).
 		_light.light_color = gutter_color(maxf(snuff.gutter, 1.0 if guttering(it) else 0.0))
 		if snuff.gutter > 0.0:
-			# The coal gutters (§ET.7 warns_first): dimmer and redder, its
-			# light failing in a harder flicker as the moment comes.
+			# The coal gutters (§ET.7 warns_first; only the water now,
+			# §EZ.5): dimmer and redder, its light failing in a harder
+			# flicker as the moment comes.
 			var k := snuff.gutter
 			var flick := 1.0 - k * (0.35 + 0.35 * sin(_t * 23.0) * sin(_t * 7.3))
 			e = lerpf(e, float(L.get("gutter_energy", 0.9)) * 0.6, k) * flick
@@ -606,7 +609,9 @@ func update_torch(delta: float) -> void:
 		set_glow(_view_flame, g, it)
 	_apply(lit())
 	if lit() and _view_flame.visible:
-		# A draft leans the burnt end's smoke toward open air (§ET.6).
+		# A draft leans the burnt end's smoke: toward open air at a slot
+		# (§ET.6), streaming flat away from a strong mouth in its gust
+		# (§EZ.5, the coal's whip until the pitch head's flame, §EZ.2).
 		smoke_ember(_view_flame, player.up, -player.velocity + snuff.lean)
 
 

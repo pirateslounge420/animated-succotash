@@ -16,13 +16,15 @@ extends SceneTree
 ##     every holder dark (full dark: no light but the hearth's); a torch
 ##     from the bundle, lit at the hearth by the swing; every holder lit by
 ##     the swing, staying lit an hour on; a dead torch relit at a holder;
-##  4. the snuff rules (§ET.7, torch.json snuff): walking and looking about
-##     a minute never gutter it; a flat-out sprint gutters it at
-##     gutter_after_s and puts it out at out_after_s; stopping in the
-##     gutter recovers over recover_s; a strong airway warns (gutter) and
-##     its gust puts out a torch in its line, not one out of its line or
-##     behind cover; an ordinary airway only leans it; wading toward
-##     douse_depth_m gutters it, past it douses it;
+##  4. the snuff rules (§ET.7 as amended by §EZ.1 and §EZ.5, torch.json
+##     snuff): walking and looking about a minute never gutter it; it
+##     glows brighter at a run; a minute of swinging it, and 120 s flat
+##     out round the tomb whipping round every 4 s, leave it lit with no
+##     gutter; an ordinary airway leans it and flickers it, never a
+##     gutter; standing in a strong mouth's line through three gusts it
+##     holds, unguttered and whipped hard (not out of the line or behind
+##     cover), the moan and the dust as built; wading toward
+##     douse_depth_m gutters it (redder, never bluer), past it douses it;
 ##  5. the rescuer's sprite (§ET.8): its sheet around x frames by rows,
 ##     the frame picked by where the camera stands (front, side, behind,
 ##     above, below), facing the hearth;
@@ -512,10 +514,6 @@ func _snuff(main: CrawlerMain) -> void:
 	await _frames(10)
 	if not t.lit():
 		t.light()
-	var sp := TorchSnuff.sprint_rule()
-	var g_after := float(sp.get("gutter_after_s", 6.0))
-	var out_after := float(sp.get("out_after_s", 9.0))
-	var recover := float(sp.get("recover_s", 2.0))
 	# Walking and looking about a minute.
 	Input.action_press("move_forward")
 	var gmax := 0.0
@@ -526,34 +524,175 @@ func _snuff(main: CrawlerMain) -> void:
 		gmax = maxf(gmax, t.snuff.gutter)
 		if not t.lit():
 			break
+	Input.action_release("move_forward")
 	ok(t.lit() and gmax == 0.0, "a minute of walking and looking about: lit, never guttering (§ET.7 walking_and_looking never)")
-	# A sprint into the gutter, then stopping.
-	Input.action_press("sprint")
-	await _frames(int((g_after - 0.6) * 60.0))
-	ok(t.lit() and t.snuff.gutter == 0.0, "%.1f s flat out: no gutter yet" % (g_after - 0.6))
-	var steady: Color = t._light.light_color
-	await _frames(int(1.4 * 60.0))
-	ok(t.lit() and t.snuff.gutter > 0.2 and t.snuff.cause == "sprint", "past gutter_after_s (%.0f s) the coal gutters, still lit (warns first; gutter %.2f)" % [g_after, t.snuff.gutter])
-	# Guttering reddens, never cools (§EX.6).
-	var gut: Color = t._light.light_color
-	ok(gut.b / maxf(gut.r, 1e-4) <= steady.b / maxf(steady.r, 1e-4) + 1e-4 and gut.g / maxf(gut.r, 1e-4) <= steady.g / maxf(steady.r, 1e-4) + 1e-4, "a guttering torch's light is redder, never bluer (steady #%s, guttering #%s)" % [steady.to_html(false), gut.to_html(false)])
-	Input.action_release("sprint")
-	await _frames(int((recover + 0.6) * 60.0))
-	ok(t.lit() and t.snuff.gutter < 0.02 and t.snuff.sprint_s < 0.01, "stopping in the gutter, it recovers within recover_s (%.0f s)" % recover)
-	# Flat out to the end.
-	Input.action_press("sprint")
-	var went := -1.0
-	for i in int((out_after + 2.0) * 60.0):
+	# Running feeds the coal air (§EZ.1): the light over 4 s (two of the
+	# coal's breaths) standing, then 4 s flat out.
+	await _frames(30)
+	var e_stand := 0.0
+	for i in 240:
 		await physics_frame
+		e_stand += t._light.light_energy / 240.0
+	Input.action_press("move_forward")
+	Input.action_press("sprint")
+	var e_run := 0.0
+	for i in 240:
+		await physics_frame
+		e_run += t._light.light_energy / 240.0
+	Input.action_release("sprint")
+	Input.action_release("move_forward")
+	ok(t.lit() and e_run > e_stand * 1.03, "the torch glows brighter at a run: mean light energy %.2f flat out, %.2f standing (x%.3f; ember.air_brighten %.2f, §EZ.1)" % [e_run, e_stand, e_run / maxf(e_stand, 1e-4), float(Torch.EMBER.get("air_brighten", 0.18))])
+	await _frames(30)
+	# A minute of swinging it (§CN), looking about as you swing.
+	var swings0 := t.swings
+	var held := false
+	var lit_all := true
+	gmax = 0.0
+	for i in 3600:
+		p._yaw += 0.03 * sin(i * 0.02)
+		p._pitch = 0.5 * sin(i * 0.017)
+		if held:
+			Input.action_release("shoot")
+			held = false
+		elif t._swing <= 0.0:
+			Input.action_press("shoot")
+			held = true
+		await physics_frame
+		gmax = maxf(gmax, t.snuff.gutter)
+		lit_all = lit_all and t.lit()
+	Input.action_release("shoot")
+	ok(lit_all and gmax == 0.0 and t.swings - swings0 >= 30, "a minute of swinging it (%d swings, §CN): lit, never guttering (§EZ.1)" % (t.swings - swings0))
+	# 120 s flat out round the tomb (every door depth-first from the hearth
+	# room and back, again and again), whipping round every 4 s. Beside it,
+	# §ET.7's removed sprint rule is kept on paper (a sprint held 6 s
+	# guttered the torch, 9 s put it out, stopping drained it in 2 s), to
+	# show when it would have put the torch out.
+	var pts := _tour(main.lay)
+	var w: Array = main.lay.wake
+	p.spawn_flat(w[0], float(w[1]), 0.0)
+	await _frames(5)
+	if not t.lit():
+		t.light()
+	Input.action_press("move_forward")
+	Input.action_press("sprint")
+	var wi := 0
+	var on_point := 0
+	var stalls_here := 0
+	var side := 1.0
+	var window := 0
+	var mark_d := INF
+	var follow := false
+	var follow_for := 0
+	var detours := 0
+	var skips := 0
+	var stuck_in := {}
+	var spin := 0
+	var whips := 0
+	var got := 0
+	var at_sprint := 0
+	var bank := 0.0
+	var old_out := -1.0
+	var dist := 0.0
+	var in_draft := 0
+	var flick_max := 0.0
+	var gust_frames := 0
+	var burn_gutter := false
+	var last := p.global_position
+	gmax = 0.0
+	lit_all = true
+	for i in 7200:
+		var target: Vector3 = pts[wi]
+		var to := Vector3(target.x - p.global_position.x, 0.0, target.z - p.global_position.z)
+		if to.length() < 0.6:
+			wi = (wi + 1) % pts.size()
+			got += 1
+			on_point = 0
+			stalls_here = 0
+			side = 1.0
+			window = 0
+			mark_d = INF
+			follow = false
+			target = pts[wi]
+			to = Vector3(target.x - p.global_position.x, 0.0, target.z - p.global_position.z)
+		if i % 240 == 120:
+			spin = 15
+			whips += 1
+		if spin > 0:
+			# A full turn in a quarter of a second.
+			p._yaw += TAU / 15.0
+			spin -= 1
+		elif follow:
+			# Round what's in the way: the clear heading nearest the point,
+			# turning to one side, until the straight line is clear again.
+			follow_for += 1
+			if _clear_ahead(p, to, minf(to.length(), 1.5)):
+				follow = false
+				p._yaw = atan2(-to.x, -to.z)
+			else:
+				p._yaw = _clear_heading(p, to, side)
+			if follow_for == 180:
+				side = -side
+		elif to.length() > 0.01:
+			p._yaw = atan2(-to.x, -to.z)
+		p._pitch = 0.5 * sin(i * 0.05)
+		await physics_frame
+		var now := p.global_position
+		dist += Vector2(now.x - last.x, now.z - last.z).length()
+		last = now
+		var flat := Vector3(p.velocity.x, 0.0, p.velocity.z).length()
+		if p.sprinting and flat > PlanetPlayer.WALK_SPEED * 0.9:
+			at_sprint += 1
+			bank += 1.0 / 60.0
+		else:
+			bank = maxf(bank - 1.0 / 60.0 * 6.0 / 2.0, 0.0)
+		if bank >= 9.0 and old_out < 0.0:
+			old_out = (i + 1) / 60.0
+		gmax = maxf(gmax, t.snuff.gutter)
+		lit_all = lit_all and t.lit()
+		burn_gutter = burn_gutter or Torch.guttering(t.item())
+		if t.snuff.lean.length() > 0.05:
+			in_draft += 1
+		flick_max = maxf(flick_max, t.snuff.flicker)
+		if t.snuff.gust:
+			gust_frames += 1
+		# No headway for a moment (the hearth, a coffin, rubble): follow round
+		# it; after 6 s on one point, skip to it.
+		on_point += 1
+		var d_now := Vector2(target.x - now.x, target.z - now.z).length()
+		if spin > 0 or follow:
+			window = 0
+			mark_d = INF
+		else:
+			window += 1
+			if window >= 18:
+				if d_now > mark_d - 0.25:
+					stalls_here += 1
+					if stalls_here > 1:
+						side = -side
+					follow = true
+					follow_for = 0
+					detours += 1
+				mark_d = d_now
+				window = 0
+		if on_point > 360:
+			skips += 1
+			var where := _piece_at(main.lay, now)
+			stuck_in[where] = int(stuck_in.get(where, 0)) + 1
+			p.spawn_flat(target, p._yaw, p._pitch)
+			last = target
+			on_point = 0
+			follow = false
 		if not t.lit():
-			went = i / 60.0
 			break
 	Input.action_release("sprint")
 	Input.action_release("move_forward")
-	ok(went > out_after - 0.5 and went < out_after + 1.0, "held flat out, it goes out at out_after_s (%.0f s): out at %.2f s" % [out_after, went])
-	ok(str(GameLog.entries[-1].get("text", "")).contains("guttered"), "the log says how it went out")
+	print("  the run: %d points on the tour, %d reached; %d times round something in the way, %d points skipped to %s; %.1f s in an airway's draft (flicker up to %.2f), %.1f s in a strong gust" % [pts.size(), got, detours, skips, str(stuck_in), in_draft / 60.0, flick_max, gust_frames / 60.0])
+	ok(lit_all and gmax == 0.0 and not burn_gutter, "120 s flat out round the tomb (%.0f m, %d whip turns): lit, gutter 0 throughout (§EZ.1 moving_fast never)" % [dist, whips])
+	# A real sprint, not a runner stuck against a wall (the turns, the
+	# whips and the odd prop cost 10-20 s of the 120).
+	ok(at_sprint / 60.0 >= 90.0 and old_out > 0.0, "a real sprint: %.0f s of the 120 at a sprint by the removed rule's own measure, which would have put the torch out %.1f s in" % [at_sprint / 60.0, old_out])
 	await _frames(30)
-	# The airways.
+	# The airways move the flame and never put it out (§EZ.5).
 	var aw := main.airways
 	var strong: Dictionary = {}
 	var ordinary: Dictionary = {}
@@ -562,9 +701,27 @@ func _snuff(main: CrawlerMain) -> void:
 			strong = m
 		elif not bool(m.strong) and ordinary.is_empty():
 			ordinary = m
+	var most := float(Airways.A.get("flicker", 0.25))
 	if not ordinary.is_empty():
 		var d := aw.draft_at((ordinary.pos as Vector3) + (ordinary.normal as Vector3) * 1.0)
-		ok((d.lean as Vector3).length() > 0.1 and float(d.gutter) <= float(Airways.A.get("gutter", 0.25)) + 0.001 and not bool(d.out), "an ordinary airway only leans the flame (lean %.2f m/s, gutter %.2f)" % [(d.lean as Vector3).length(), float(d.gutter)])
+		ok((d.lean as Vector3).length() > 0.1 and float(d.flicker) > 0.0 and float(d.flicker) <= most + 0.001 and not d.has("out") and not d.has("gutter"), "an ordinary airway leans the flame and quickens its flicker, never a gutter (lean %.2f m/s, flicker %.2f)" % [(d.lean as Vector3).length(), float(d.flicker)])
+		# Stand under it with the torch lit.
+		var opc: Dictionary = main.lay.pieces[int((main.lay.airways as Array)[aw.mouths.find(ordinary)].piece)]
+		var under := (ordinary.pos as Vector3) + (ordinary.normal as Vector3) * 0.9
+		under.y = Delves.floor_of(opc, Delves.along_across(opc, Vector2(under.x, under.z)).x)
+		var onrm: Vector3 = ordinary.normal
+		p.spawn_flat(under, atan2(onrm.x, onrm.z), 0.0)
+		await _frames(5)
+		t.light()
+		var e_lo := INF
+		var e_hi := 0.0
+		gmax = 0.0
+		for i in 120:
+			await physics_frame
+			gmax = maxf(gmax, t.snuff.gutter)
+			e_lo = minf(e_lo, t._light.light_energy)
+			e_hi = maxf(e_hi, t._light.light_energy)
+		ok(t.lit() and gmax == 0.0 and t.snuff.flicker > 0.0 and t.snuff.lean.length() > 0.1, "under it the torch leans and flickers (flicker %.2f, light %.2f-%.2f) and never gutters" % [t.snuff.flicker, e_lo, e_hi])
 	ok(not strong.is_empty(), "this tomb has a strong airway mouth")
 	if not strong.is_empty():
 		var mp: Vector3 = strong.pos
@@ -583,28 +740,51 @@ func _snuff(main: CrawlerMain) -> void:
 		t.light()
 		var fp := t.flame_position()
 		print("  the flame %.2f m out from the mouth, %.2f m off its line" % [(fp - mp).dot(nrm), ((fp - mp) - nrm * (fp - mp).dot(nrm)).length()])
-		strong.t = 0.6
-		await _frames(6)
-		print("  warn: phase %s t %.2f draft %s gutter %.2f cause %s lit %s" % [strong.phase, strong.t, str(aw.draft_at(t.flame_position())), t.snuff.gutter, t.snuff.cause, t.lit()])
-		ok(str(strong.phase) == "warn" and t.lit() and t.snuff.gutter > 0.2, "a strong mouth warns first: the moan, the dust, the coal guttering (gutter %.2f)" % t.snuff.gutter)
-		ok((strong.dust as CPUParticles3D).emitting, "dust streams out of the mouth before the gust")
-		await _frames(60)
-		ok(not t.lit() and str(GameLog.entries[-1].get("text", "")).contains("draft"), "its gust puts out a torch in its line (§ET.7)")
-		# Out of its line.
+		var warn_s := float(Airways.SN.get("warn_s", 1.5))
+		var gust_s := float(Airways.A.get("gust_s", 2.2))
+		var voice: AudioStreamPlayer3D = strong.voice
+		var lit_g := true
+		var g_g := 0.0
+		var lean_max := 0.0
+		var whipped := 0
+		var dusty := 0
+		var moaned := 0
+		for k in 3:
+			strong.t = warn_s + 0.4
+			var saw_gust := false
+			var saw_dust := false
+			var loud := -80.0
+			for i in int((warn_s + 0.4 + gust_s + 1.0) * 60.0):
+				await physics_frame
+				lit_g = lit_g and t.lit()
+				g_g = maxf(g_g, t.snuff.gutter)
+				if str(strong.phase) == "warn":
+					saw_dust = saw_dust or (strong.dust as CPUParticles3D).emitting
+					loud = maxf(loud, voice.volume_db)
+				if t.snuff.gust:
+					saw_gust = true
+					lean_max = maxf(lean_max, t.snuff.lean.length())
+			whipped += 1 if saw_gust else 0
+			dusty += 1 if saw_dust else 0
+			moaned += 1 if loud > -12.0 else 0
+		ok(lit_g and g_g == 0.0 and whipped == 3, "standing in a strong mouth's line through three gusts: lit, never guttering (§EZ.5; %d of 3 gusts reached the flame)" % whipped)
+		ok(lean_max > 3.0, "each gust whips the torch hard away from the mouth (%.1f m/s at the flame: the coal's smoke streams flat)" % lean_max)
+		ok(dusty == 3 and moaned == 3, "the mouth still moans and streams dust before every gust, as built (%d of 3, %d of 3)" % [moaned, dusty])
+		# Out of its line, and behind cover, the gust doesn't reach it.
 		strong.t = 30.0
 		await _frames(2)
 		p.spawn_flat(stand + nrm.cross(Vector3.UP).normalized() * 2.2, atan2(-face.x, -face.z), 0.0)
 		await _frames(5)
-		t.light()
 		strong.t = -0.1
-		await _frames(30)
-		ok(t.lit(), "out of its line, the torch holds through the gust")
-		# Behind cover: a stone between the mouth and the flame.
+		var reached := false
+		for i in 30:
+			await physics_frame
+			reached = reached or t.snuff.gust
+		ok(t.lit() and not reached, "out of its line the gust passes the torch by")
 		strong.t = 30.0
 		await _frames(2)
 		p.spawn_flat(stand, atan2(-face.x, -face.z), 0.0)
 		await _frames(5)
-		t.light()
 		var block := StaticBody3D.new()
 		var bcs := CollisionShape3D.new()
 		var bb := BoxShape3D.new()
@@ -612,27 +792,90 @@ func _snuff(main: CrawlerMain) -> void:
 		bcs.shape = bb
 		block.add_child(bcs)
 		main.add_child(block)
-		block.global_transform = Transform3D(Basis.looking_at(nrm, Vector3.UP), mp + nrm * 1.2 + Vector3(0.0, 0.0, 0.0))
+		block.global_transform = Transform3D(Basis.looking_at(nrm, Vector3.UP), mp + nrm * 1.2)
 		await _frames(2)
 		strong.t = -0.1
-		await _frames(2)
+		reached = false
+		for i in 30:
+			await physics_frame
+			reached = reached or t.snuff.gust
 		print("  cover: lit %s draft %s covered %s" % [t.lit(), str(aw.draft_at(t.flame_position())), aw._covered(mp + nrm * 0.35, t.flame_position())])
-		await _frames(28)
-		ok(t.lit(), "behind cover, the torch holds through the gust")
+		ok(t.lit() and not reached, "behind cover the gust doesn't reach it (§ET.7 shelter)")
 		block.queue_free()
 		strong.t = 30.0
-	# Water.
+	# Water: the one thing that puts it out (§EZ.5), warning first.
 	p.spawn_flat(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
 	await _frames(5)
 	t.light()
+	await _frames(5)
+	var steady: Color = t._light.light_color
 	var douse := float(Torch.D.get("douse_depth_m", 0.6))
 	p.water_depth_m = douse - 0.08
 	await _frames(30)
-	ok(t.lit() and t.snuff.gutter > 0.3 and t.snuff.cause == "water", "wading toward douse_depth_m gutters it (gutter %.2f)" % t.snuff.gutter)
+	ok(t.lit() and t.snuff.gutter > 0.3 and t.snuff.cause == "water", "wading toward douse_depth_m gutters it, still lit (gutter %.2f)" % t.snuff.gutter)
+	# Guttering reddens, never cools (§EX.6).
+	var gut: Color = t._light.light_color
+	ok(gut.b / maxf(gut.r, 1e-4) <= steady.b / maxf(steady.r, 1e-4) + 1e-4 and gut.g / maxf(gut.r, 1e-4) <= steady.g / maxf(steady.r, 1e-4) + 1e-4, "a guttering torch's light is redder, never bluer (steady #%s, guttering #%s)" % [steady.to_html(false), gut.to_html(false)])
 	p.water_depth_m = douse + 0.1
 	await _frames(3)
-	ok(not t.lit(), "past douse_depth_m the water puts it out (§AW)")
+	ok(not t.lit() and str(GameLog.entries[-1].get("text", "")).contains("water"), "past douse_depth_m the water puts it out (§AW; the one way out now, §EZ.5)")
 	p.water_depth_m = -INF
+
+
+## Can your own body move `m` metres along `toward` (flat), lifted clear
+## of the floor's lips?
+func _clear_ahead(p: CrawlerPlayer, toward: Vector3, m: float) -> bool:
+	var dir := Vector3(toward.x, 0.0, toward.z).normalized()
+	return not p.test_move(p.global_transform.translated(Vector3(0.0, 0.15, 0.0)), dir * maxf(m, 0.3))
+
+
+## The clear heading (0.7 m along it) nearest `toward`, turning to `side`
+## (+1 left, -1 right) in 15° steps: so a body following it slides round
+## what's in the way.
+func _clear_heading(p: CrawlerPlayer, toward: Vector3, side: float) -> float:
+	var base := atan2(-toward.x, -toward.z)
+	var from := p.global_transform.translated(Vector3(0.0, 0.15, 0.0))
+	for k in range(1, 13):
+		var yaw: float = base + side * deg_to_rad(15.0 * k)
+		if not p.test_move(from, Vector3(-sin(yaw), 0.0, -cos(yaw)) * 0.7):
+			return yaw
+	return base + PI
+
+
+## Which piece `pos` is in: its room's kind, or corridor / stair.
+func _piece_at(lay: Dictionary, pos: Vector3) -> String:
+	for pc in lay.pieces:
+		var aa := Delves.along_across(pc, Vector2(pos.x, pos.z))
+		if aa.x >= -0.05 and aa.x <= float(pc.len) + 0.05 and absf(aa.y) <= float(pc.half) + 0.05:
+			return str(pc.get("room_kind", pc.kind))
+	return "between"
+
+
+## A run round the tomb: every door crossed depth-first from the hearth
+## room and back, as points a step either side of it at its floor.
+func _tour(lay: Dictionary) -> Array:
+	var pts: Array = []
+	_tour_from(lay, 0, {0: true}, pts)
+	return pts
+
+
+func _tour_from(lay: Dictionary, id: int, seen: Dictionary, pts: Array) -> void:
+	for di in lay.pieces[id].doors:
+		var d: Dictionary = lay.doors[di]
+		var o := int(d.b) if int(d.a) == id else int(d.a)
+		if seen.has(o):
+			continue
+		seen[o] = true
+		var n: Vector2 = (d.n as Vector2) if int(d.a) == id else -(d.n as Vector2)
+		var dp: Vector2 = d.p
+		var y := float(d.y)
+		var near := Vector3(dp.x - n.x * 0.9, y, dp.y - n.y * 0.9)
+		var far := Vector3(dp.x + n.x * 0.9, y, dp.y + n.y * 0.9)
+		pts.append(near)
+		pts.append(far)
+		_tour_from(lay, o, seen, pts)
+		pts.append(far)
+		pts.append(near)
 
 
 func _sprite(main: CrawlerMain) -> void:

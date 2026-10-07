@@ -1,21 +1,24 @@
 class_name Airways
 extends Node3D
-## The builders' airways (design 6 Oct §ET.6, §ET.7; crawler.json airways,
-## torch.json snuff.draft): dark slots in the walls through which the
-## rock breathes. TorchSnuff asks draft_at() each frame:
+## The builders' airways (design 6 Oct §ET.6, §ET.7, amended by §EZ.5;
+## crawler.json airways, torch.json snuff.draft): dark slots in the walls
+## through which the rock breathes. They move the torch's flame and never
+## put it out (§EZ.5: only deep water does). TorchSnuff asks draft_at()
+## each frame:
 ##
 ##   ordinary  a slot high in a corridor wall, a faint stone wind in it:
 ##             within reach_m the flame leans toward it (the air going out
 ##             to the open, a way to find your way out) at up to lean_mps,
-##             and gutters a little (gutter), never out (lean_only).
+##             and its light flickers a little harder (flicker; §EV.3).
 ##   strong    a marked mouth low in a room's wall (a carved surround, two
 ##             notches cut in its lintel): every every_s it blows for
 ##             gust_s. warn_s before, it is heard (the moan rising) and
 ##             seen (dust streaming out of the mouth). When it blows, a
 ##             torch flame in its line (line_m out from the mouth,
 ##             line_half_m either side, about the mouth's height) and not
-##             behind cover (stone between it and the mouth) goes out.
-##             Out of the line, or behind a coffin, it holds.
+##             behind cover (stone between it and the mouth) is whipped
+##             hard away from the mouth (its smoke streams flat, its light
+##             flickers hard), and it holds.
 
 static var A: Dictionary = Tuning.table("crawler").get("airways", {})
 static var SN: Dictionary = (Tuning.table("torch").get("snuff", {}) as Dictionary).get("draft", {})
@@ -126,12 +129,14 @@ func _process(delta: float) -> void:
 
 
 ## What the airways do to a flame at `pos` (scene): {"lean" (m/s, the
-## push on it), "gutter" (0-1), "out" (a strong gust has it)}.
+## push on it), "flicker" (0-1, how much harder its light flickers),
+## "gust" (a strong gust has it: whipped hard, never out, §EZ.5)}.
 func draft_at(pos: Vector3) -> Dictionary:
 	var lean := Vector3.ZERO
-	var gutter := 0.0
-	var out := false
+	var flicker := 0.0
+	var gust := false
 	var reach := float(A.get("reach_m", 5.0))
+	var most := float(A.get("flicker", 0.25))
 	for m in mouths:
 		var mp: Vector3 = m.pos
 		var nrm: Vector3 = m.normal
@@ -143,7 +148,7 @@ func draft_at(pos: Vector3) -> Dictionary:
 				var k := 1.0 - d / reach
 				# Toward the slot: the air going out to the open (§ET.6).
 				lean += -rel.normalized() * float(A.get("lean_mps", 1.4)) * k
-				gutter = maxf(gutter, float(A.get("gutter", 0.25)) * k)
+				flicker = maxf(flicker, most * k)
 			continue
 		if str(m.phase) == "idle":
 			continue
@@ -154,12 +159,14 @@ func draft_at(pos: Vector3) -> Dictionary:
 			continue
 		var k2 := 1.0 - ahead / line_m * 0.5
 		if str(m.phase) == "warn":
-			gutter = maxf(gutter, 0.45)
+			# The air starts to move with the moan and the dust.
 			lean += nrm * 1.5 * k2
 		else:
+			# The gust whips it hard away from the mouth; it holds.
 			lean += nrm * 6.0 * k2
-			out = true
-	return {"lean": lean, "gutter": gutter, "out": out}
+			flicker = most
+			gust = true
+	return {"lean": lean, "flicker": flicker, "gust": gust}
 
 
 ## Is there stone between the mouth and the flame (cover, §ET.7 shelter)?

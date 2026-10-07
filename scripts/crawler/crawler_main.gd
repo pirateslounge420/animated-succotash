@@ -15,7 +15,9 @@ extends Node
 ##      torch's swing (§CN), staying lit, and a torch relights at any of
 ##      them; between them full dark (§BA, §CJ.5: no sun, no sky, only a
 ##      faint navy so nothing is grey).
-##   4. the torch's snuff rules (§ET.7, TorchSnuff, Airways).
+##   4. the torch's snuff rules (§ET.7 as amended by §EZ.1 and §EZ.5:
+##      only deep water puts it out; the airways lean it; TorchSnuff,
+##      Airways).
 ##   5. the rescuer as a baked sprite (§ET.8, FigureSprite).
 ##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing

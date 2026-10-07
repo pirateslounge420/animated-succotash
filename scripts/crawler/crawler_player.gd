@@ -166,7 +166,7 @@ func make_noise(level: float) -> void:
 	noise_level = maxf(noise_level, level)
 
 
-## What the body would be doing (for the steps and the snuff rules).
+## What the body would be doing (for the steps, and how loud you are).
 func moving_state(move_speed: float) -> void:
 	if not is_on_floor():
 		anim_state = "air"
