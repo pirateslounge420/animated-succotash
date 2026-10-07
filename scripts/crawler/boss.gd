@@ -144,6 +144,10 @@ var strike: CreatureStrike
 ## found you.
 var hang_t := 0.0
 var struck := false
+## The stagger's reel under way (the strike's stagger_frame) and which way
+## it goes: back along its body, or straight away from the swing.
+var _reel_frame := -1
+var _reel_back := true
 var watch_t := 0.0
 var _notice_t := 0.0
 var _replan_t := 0.0
@@ -1056,9 +1060,8 @@ func _strike_tick(delta: float) -> void:
 			lift = move_toward(lift, 0.75, delta)
 			mouth_open = k < 0.3
 		"reel":
-			# Staggered (§FA.1): thrown back from the swing, along its own
-			# body, jaws shut.
-			_recoil(strike.take_reel().length())
+			# Staggered (§FA.1): thrown back from the swing, jaws shut.
+			_reel(strike.take_reel())
 			lift = move_toward(lift, 0.3, delta * 3.0)
 			lunge = move_toward(lunge, 0.0, delta * 4.0)
 			mouth_open = false
@@ -1088,6 +1091,63 @@ func _on_strike_hit(_target: Node3D) -> void:
 	if Harm.instance != null and Harm.instance.landed > before:
 		hits_landed += 1
 	pursuit.hit(_torch_lit())
+
+
+## Staggered: this frame's share `v` of the reel (flat, away from the
+## swing; CreatureStrike.take_reel). Back along its own body when the body
+## leads away from the swing (it came at you along it) and lies in its
+## dark; when it doesn't (it struck from its coil, or round a corner),
+## straight away from the swing, its body following, stopping at stone and
+## at the edge of its dark. Chosen once for each reel.
+func _reel(v: Vector3) -> void:
+	var m := v.length()
+	if strike.stagger_frame != _reel_frame:
+		_reel_frame = strike.stagger_frame
+		# The body starts where the head is drawn, so the head never jumps.
+		_push_trail(head)
+		var from := strike.reel_from
+		var back := _back_along(strike.reel_m)
+		_reel_back = _flat(back - from).length() >= _flat(head - from).length() + strike.reel_m * 0.5 and _dark_along(strike.reel_m)
+	if m < 1e-5:
+		return
+	if _reel_back:
+		_recoil(m)
+		return
+	var to := head + v
+	to.y = _floor_y(to)
+	var tn := ground.node_at(to)
+	if tn < 0 or not ground.is_ground(tn) or _blocked(head + Vector3(0, 0.3, 0), to + Vector3(0, 0.3, 0)):
+		return
+	head = to
+	base = to
+	_push_trail(head)
+	_track_node()
+
+
+## Where its head would be `m` metres back along its own body.
+func _back_along(m: float) -> Vector3:
+	if trail.size() < 2:
+		return base
+	var left := m
+	var at: Vector3 = trail[0]
+	for i in range(1, trail.size()):
+		var nxt: Vector3 = trail[i]
+		var l := at.distance_to(nxt)
+		if l >= left:
+			return at.lerp(nxt, left / maxf(l, 1e-4))
+		left -= l
+		at = nxt
+	return at
+
+
+## Whether the first `m` metres of its body lie all in its dark.
+func _dark_along(m: float) -> bool:
+	var s := 0.0
+	while s <= m + 1e-3:
+		if not ground.is_ground(ground.node_at(_seg_at(s))):
+			return false
+		s += 0.25
+	return true
 
 
 ## Drawn back `m` metres along its own body (a stagger's reel).

@@ -16,7 +16,9 @@ extends SceneTree
 ##     hits land no closer together than harm.json's invuln_s; the third is
 ##     "Good night", and you wake on the mat by the hearth with the holders
 ##     you lit still lit, your hands empty; it goes back to its rounds; then
-##     with your torch out it comes straight in (no hold);
+##     with your torch out it comes straight in (no hold); and a lit
+##     swing at half its wind-up staggers it (queue 57's CreatureStrike): it
+##     reels reel_m back along its own body and no hit counts;
 ##  4. a scripted run relighting every holder in the layout's order, the
 ##     snake free between relights (you in the hearth room): it never walks
 ##     into a lit node, it leaves one lit round it at once, and after the
@@ -56,6 +58,7 @@ func _run() -> void:
 		var main := await _boot(sv)
 		_lair_of(main)
 		await _contact(main)
+		await _stagger(main)
 		main.queue_free()
 		await process_frame
 		main = await _boot(sv)
@@ -327,13 +330,124 @@ func _contact(main: CrawlerMain) -> void:
 		await process_frame
 
 
+## One physics frame, the snake stepped with it (the torch's swing and Harm
+## run on real frames).
+func _step(main: CrawlerMain) -> void:
+	await physics_frame
+	main.boss.tick(1.0 / 60.0)
+
+
+## 3b. The torch's stagger on the snake itself (§FA.1, queue 57's
+## CreatureStrike), twice: struck at from its coil (you 2.2-2.6 m off),
+## then come at you through its dark (you 4-5 m off), each spot out of the
+## swing's reach of any unlit holder. Your torch lit, it closes
+## after its delay and winds up; a swing whose arc tops out at half the
+## wind-up breaks the strike, it reels reel_m away from you (back along its
+## body when that leads away, else straight back, its body following),
+## and no hit counts.
+func _stagger(main: CrawlerMain) -> void:
+	var p := main.player
+	main.harm.reset()
+	if not p.inventory.has_kind("torch"):
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	p.torch.light()
+	await _swing_into(main, [2.6, 2.4, 2.2], "struck at from its coil")
+	await _swing_into(main, [5.0, 4.5, 4.0], "come at you through its dark")
+	p.torch.put_out("check")
+	p.weapon = "hands"
+	main.harm.reset()
+	for i in 4:
+		await process_frame
+
+
+func _swing_into(main: CrawlerMain, dists: Array, how: String) -> void:
+	var b := main.boss
+	var p := main.player
+	var t := p.torch
+	var spot := Vector3.INF
+	# Out of the swing's reach of any unlit holder: a swing passes the
+	# flame (§CN), and a holder relit beside it would send it off (§EY.1).
+	for d in dists:
+		spot = _beside(b, float(d), Torch.reach_m() + 0.6)
+		if spot != Vector3.INF:
+			break
+	ok(spot != Vector3.INF, "%s: a spot in its dark %.1f m from it, for the swing" % [how, float(dists[0])])
+	if spot == Vector3.INF:
+		return
+	main.harm.reset()
+	p._invulnerable = 0.0
+	b.strike.cooldown_left = 0.0
+	_place(p, spot, b.head)
+	await physics_frame
+	var c := 0.0
+	while c < 15.0 and b.strike.state != "wind_up" and not main.harm.taking:
+		_sim(main, DT)
+		c += DT
+	if b.strike.state != "wind_up":
+		ok(false, "%s: with your torch lit it closes and winds up (%s after %.1f s)" % [how, b.strike.state, c])
+		return
+	var landed0 := main.harm.landed
+	var stag0 := b.strike.staggers
+	# Face its head, then swing so the arc's top meets half its wind-up.
+	_place(p, p.global_position, b.strike.global_position)
+	var lead := Fists.STRIKE_S * (1.0 - Torch.SWING_TOP) + 1.0 / 60.0
+	var guard := 0
+	while b.strike.state == "wind_up" and b.strike.t < 0.5 * b.strike.wind_up_s - lead and guard < 120:
+		await _step(main)
+		guard += 1
+	# It holds still in its wind-up: where its head is now is where the
+	# reel starts (measured flat: in its coil the head sits a little up).
+	var h0 := b.head
+	var last := h0
+	var moved := 0.0
+	t.swing()
+	guard = 0
+	while t._swing > Torch.SWING_TOP and guard < 30:
+		await _step(main)
+		moved += _flat_d(b.head, last)
+		last = b.head
+		guard += 1
+	await _step(main)
+	moved += _flat_d(b.head, last)
+	last = b.head
+	var share := b.strike.met_at_share
+	ok(t.last_contact == "staggered" and b.strike.staggers == stag0 + 1 and b.strike.state == "reel",
+		"%s: your lit swing at %.0f%% of its wind-up staggers it (%s, %s)" % [how, share * 100.0, t.last_contact, b.strike.state])
+	guard = 0
+	while b.strike.state == "reel" and guard < 120:
+		await _step(main)
+		moved += _flat_d(b.head, last)
+		last = b.head
+		guard += 1
+	var d0 := _flat_d(h0, p.global_position)
+	var d1 := _flat_d(b.head, p.global_position)
+	ok(absf(moved - b.strike.reel_m) < 0.1 and d1 > d0 + 0.5,
+		"%s: it reels %.2f m %s (reel_m %.2f), %.2f -> %.2f m from you" % [how, moved, "back along its body" if b._reel_back else "straight back, its body following", b.strike.reel_m, d0, d1])
+	ok(main.harm.landed == landed0, "%s: no hit counts from the broken strike (%d)" % [how, main.harm.landed - landed0])
+
+
+func _near_unlit(b: Boss, q: Vector3, r: float) -> bool:
+	for h in b.fires.holders:
+		if not FireStore.is_lit(h) and (h as Node3D).global_position.distance_to(q) < r:
+			return true
+	return false
+
+
+func _flat_d(a: Vector3, b: Vector3) -> float:
+	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
 ## A spot in the snake's own dark `d` m in front of its head (Vector3.INF if
-## none): in the node it lies in, on its floor.
-func _beside(b: Boss, d: float) -> Vector3:
+## none): in the node it lies in, on its floor; with `clear_m`, that far
+## from any unlit holder (a swing there passes the flame to nothing).
+func _beside(b: Boss, d: float, clear_m := 0.0) -> Vector3:
 	for k in 16:
 		var a := TAU * k / 16.0
 		var q := b.head + Vector3(cos(a), 0.0, sin(a)) * d
 		q.y = b._floor_y(q)
+		if clear_m > 0.0 and _near_unlit(b, q, clear_m):
+			continue
 		var id := b.ground.node_at(q)
 		if id >= 0 and b.ground.is_ground(id) and (id == b.node or not b.ground.link(id, b.node).is_empty()) and not b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
 			var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]
