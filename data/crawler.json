@@ -12,7 +12,12 @@
   "look": "(Claude Code, 6 Oct, §ET.11 3: full dark between the lights, §BA, §CJ.5) Underground there is no sun or sky: ambient_color / ambient_energy are the dark's own faint navy (never grey, never quite black), fog_color / fog_density its depth. The tomb is lit only by fire. fire_shadow_mode: the casting fires' shadow kind (look.json fire_shadows picks which cast): cube (six faces) here, because a torch or sconce in a corridor is always a step from a big flat wall, where the open world's cheaper dual_paraboloid warps into curved dark blots; the two nearest still cast only.",
   "airways": "(Claude Code, 6 Oct, §ET.6, §ET.7; torch.json snuff.draft) The builders' airways: slots in corridor walls breathing toward open air. per_air: how many of each kind a tomb gets by its theme's air (still / drafty): ordinary ones only lean the flame (lean_mps at the mouth, falling to nothing by reach_m) and gutter it a little (gutter); strong ones are marked (a carved surround and a dust fan below) and blow on a cycle every_s [min, max] for gust_s, heard (a rising moan) and seen (dust streaming) snuff.draft.warn_s before; the gust reaches line_m out from the mouth, line_half_m either side of its line; a wall between the mouth and the flame shelters it.",
   "rescuer": "(Claude Code, 6 Oct, §ET.3, §ET.8) The one who found you, standing at the hearth: a cloaked figure on the shared rig (CloakedFigure), its cloak rolled from cloaks.json by the seed, beast: a zodiac head (zodiac_heads.json) or \"\" for the empty hood; \"seed\" picks one from the seed. height_m. Baked to sprites (sprites): px the sheet's frame height in pixels (a frame is px tall, px*0.75 wide), idle_frames frames of its idle (a slow breath), played at sprites.anim_fps. stand_m: how far from the hearth's middle it stands.",
-  "snuff_log": "(Claude Code, 6 Oct, §ET.7) The log's lines when the torch goes out by a snuff rule."
+  "snuff_log": "(Claude Code, 6 Oct, §ET.7) The log's lines when the torch goes out by a snuff rule.",
+  "plan": "[NOT WIRED YET — design §EX.2] A thoughtful layout. module: the style's module_m (masonry.json styles, by the theme's style_by_theme); kit.room_m, kit.corridor_m and the hearth room's sides snap to whole modules. spine: one of the hearth room's ways is the main axis, the longest branch, through the heart to the exit (crawler.json exit); never a dead end. side_branches: the other ways, at most side_share of the spine's rooms each, and each ends in a room (end_in room), never a bare corridor. doors: centred on the wall they cut; facing: where a room has two doors, they face each other so you look through one to the next light. The style's plan (masonry.json styles plan) shapes the rest: gallery_and_chambers, side chambers off a main gallery; passage_and_chambers, fewer larger chambers off a long low passage. First guesses by Claude (chat), 6 Oct.",
+  "exit": "[NOT WIRED YET — design §EX.5] Always a way out (Mike, 6 Oct: \"at least one exit whether all the lights are activated or not\"). min: exits a dungeon has at least. never_gated: no gate, puzzle or count of relit lights between the wake spot and an exit; gates (§ET.4) may close only side ways and shortcuts. place: spine_end_past_heart, the far end of the spine beyond the heart. form: stair_up, the old way in, a long flight climbing out (rise_m in all, first guess). daylight_at_top: a faint cool glow at the top (§EV.2's colours), seen from below. leads_to: §EW.3's seam to the next world, or the surface above (§EW.7 step 2). stand_in: until either is built, walking out fades (fade_s) to the next dungeon from a new seed, arriving in its hearth room, the hearth lit (§EX.9 call 3 is the real answer). check: the build fails any seed where the player's own body cannot walk from the wake spot to an exit with every holder cold and every gate shut (stairs climbable, doors wide and tall enough, nothing across a doorway). First guesses by Claude (chat), 6 Oct.",
+  "room_torches": "[NOT WIRED YET — design §EX.4] One hearth per dungeon; every other room gets wall torches (Mike, 6 Oct: \"only one main hearth room with the other rooms just having torch areas to light\"). hearth_rooms: per dungeon. room_holder: sconce (in the style's own sconce, masonry.json styles sconce). small_room_max_m: a room up to this long gets small sconces, a longer one large; heart: the heart's count, heart_flank_dead of them either side of the dead. placement: facing pairs on the long walls, on the module. Corridors keep holders as built. For Torchfire 1 this replaces delves.json fire_holders.by_ruin (a hearth ring in every room); delves.json is unchanged for the open world. With §EV only the hearth gets a shaft, every sconce a flue. First guesses by Claude (chat), 6 Oct (§EX.9 call 2).",
+  "firelight": "[NOT WIRED YET — design §EX.6] One firelight: amber (Mike, 6 Oct: \"always amber colored instead of the bluer spectrum\"). color: every fire's light, the hearth's (look.json fire.light.color); torch.json light.color now matches it. one_hue: a torch, a planted torch, a sconce, a brazier and a hearth differ in reach and strength only. grade: firelit surfaces are left to the fire as hearth light is (look.json grade protect_*), the bright stone right at the torch included; the night grade's cyan-white pull and teal never reach them. gutter: guttering dims and reddens the coal, never cooler toward white or blue. unchanged: the dark past the fire's reach (look) and a vent's daylight column (§EV.2, sky not fire) stay blue.",
+  "hud": "[NOT WIRED YET — design §EX.7] reticle: the crosshair shows in first person in the crawler, the open world's (from: hud.json reticle), inside the 480-line frame (§Y); the Settings switch hud.reticle still turns it off. words: none (§ET.3 stands). warms_near_flame: an idea, not locked (§EX.9 call 4): the reticle warms when a cold holder, or a lit one for an unlit torch, is in swing reach."
  },
  "opening": {
   "underground": true,
@@ -169,5 +174,63 @@
  "snuff_log": {
   "sprint": "Running flat out, the coal guttered and went out.",
   "draft": "The draft from the airway put the torch out."
+ },
+ "plan": {
+  "module": "masonry.json styles",
+  "spine": {
+   "through_heart": true,
+   "to_exit": true,
+   "longest": true,
+   "dead_end": false
+  },
+  "side_branches": {
+   "side_share": 0.6,
+   "end_in": "room"
+  },
+  "doors": "centred",
+  "facing": true
+ },
+ "exit": {
+  "min": 1,
+  "never_gated": true,
+  "place": "spine_end_past_heart",
+  "form": "stair_up",
+  "rise_m": 6.0,
+  "daylight_at_top": true,
+  "leads_to": "EW.3_seam_or_EW.7_surface",
+  "stand_in": {
+   "action": "next_dungeon_new_seed",
+   "fade_s": 2.0,
+   "arrive": "hearth_room",
+   "hearth": "lit"
+  },
+  "check": {
+   "walk_from": "wake",
+   "holders": "all_cold",
+   "gates": "all_shut",
+   "body": "player"
+  }
+ },
+ "room_torches": {
+  "hearth_rooms": 1,
+  "room_holder": "sconce",
+  "small_room_max_m": 8.0,
+  "small": 2,
+  "large": 4,
+  "heart": 4,
+  "heart_flank_dead": 2,
+  "placement": "facing_pairs_long_walls"
+ },
+ "firelight": {
+  "color": "look.json fire.light.color",
+  "one_hue": true,
+  "grade": "protected_like_hearth",
+  "gutter": "dims_and_reddens"
+ },
+ "hud": {
+  "reticle": true,
+  "from": "hud.json reticle",
+  "words": false,
+  "warms_near_flame": false
  }
 }

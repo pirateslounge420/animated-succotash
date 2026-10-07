@@ -43,7 +43,7 @@ ruins (§AW, §CJ).
 ## Sources of truth, in order
 1. `docs/design/RECONCILIATION_2026-09-30.md`: the ambient cut and every decision since (§AT
    onward, newest sections at the bottom). **§ET.11 is the order of work for Torchfire 1**; it
-   replaces §BR's queue until Mike reorders. It wins over everything below.
+   replaces §BR's queue until Mike reorders. §EW.7 and §EX.8 follow it (`docs/PROMPT_QUEUE.md` 44–48 first). It wins over everything below.
 2. `docs/design/RECONCILIATION_2026-09-27.md`: the earlier locked design (§0–§AS), for
    whatever the 30 Sept doc doesn't touch.
 3. `docs/design/LOOK_REFERENCE.md`: the look, with rules R1–R10 and the eye test, measured
@@ -62,7 +62,8 @@ two of them disagree, tell Mike. Don't quietly pick one.
 ## The look, in short
 "Almost like Minecraft, except not in boxes, and everything flows better." The era is
 1999–2004 consoles.
-- **Ruin walls (§EU, not built yet):** fitted polygonal stone in real relief (stones proud, joints sunk; no normal maps), a seed per wall face, settled with age, moss and vines only where the climate allows. Firelit stone underground may go amber (§EU.6).
+- **Ruin walls (§EU, built 6 Oct in the tomb):** fitted polygonal stone in real relief (stones proud, joints sunk; no normal maps), a seed per wall face, settled with age, moss and vines only where the climate allows. Firelit stone underground may go amber (§EU.6).
+- **One ruin, one stone (§EX.1, not built yet):** every ruin type has one style (`masonry.json → styles`), and its floor, ceiling, doors, stairs, niches, sconces and stone dressing are cut from the walls' own stone in the same way. Nothing built of stone takes the general palette.
 - **3D pixel art (§ES, frame amended by §EU):** a 480-line internal frame by default (§EU.1, 6 Oct; 270 "painted" stays a preset) with nearest-neighbour scaling; lighting painted into textures (diffuse-only, baked occlusion tinted navy/olive), mid-poly models. Texel density is re-measured under §ES (was 16 a metre at 480).
 - Clean silhouettes, and no normal maps or specular.
 - Dark but saturated, and blue owns the frame by default, not always: a relit village may go
@@ -72,6 +73,8 @@ two of them disagree, tell Mike. Don't quietly pick one.
   gets lighter and bluer.
 - Water is the brightest thing in view. Fire is the only warm light: one warm accent in the
   wild, many in a lit village (§EE.1). Only things that give off light glow.
+- **One firelight (§EX.6):** every fire, the torch in hand included, lights in the hearth's amber
+  (`look.json → fire.light.color`); fires differ in reach and strength, never in hue.
 
 The numbers are in LOOK_REFERENCE.md.
 

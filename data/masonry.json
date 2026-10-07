@@ -7,7 +7,9 @@
   "overgrowth": "\u00a7EU.4: only where it would really grow. climate: the moisture and temperature gate is vines.json climate (moisture[0] none, moisture[1] full, fades outside temp_c, shade_boost). moss_in_joints: moss gathers in the recessed joints first. moss_low_wall_m: moss climbs the shaded lower wall to this height at full climate. vines: vines from cracks and wall tops, the biome's own vine species, drawn per vines.json. dry: where the climate gives no moss, sand and dust drift into corners (drift_corner_m deep). Built (Claude Code): the place's climate is its world's biome (worlds.json worlds[*].theme -> biome -> data/biomes climate, the middle of its moisture and temp_c ranges); a theme with no world yet uses stand_in (the tomb, until \u00a7EW places it: open for Mike). Underground is all shade (shade 1 in the joints and low on the wall, half-shade higher up). density scales it all; joint_moss and low_moss how green the joints and the lower wall go at full climate; wet: how the moisture wanders inside a place (vary, over scale_m) and rises each flight down (per_flight), so areas differ on their own; vines_per_m and vine_len_m the vines (generic ivy until a world has a biome with vine species); dry: where the climate gives no moss, drifts_per_m drifts a metre of wall foot, drift_h_m high, reaching drift_corner_m out (deeper in the corners), color.",
   "presets": "\u00a7EU.5. stone_m: a stone's typical width [min, max]; course_bias: 0 = free polygons, 1 = loosely in courses (rows); tint: the stone's colour (sRGB hex) or \"theme\" for the stage's existing stone colour. megalithic: a few huge stones (Sacsayhuam\u00e1n). fitted_small: many tight stones. Built: aspect is a stone's width over its height (Inca courses run wide); a preset's relief block overrides relief for it (small stones want a smaller bevel and pillow).",
   "by_theme": "Which preset each crawler.json theme uses (first guess, open for Mike, \u00a7EU). Per world with \u00a7EW (worlds.json). A theme not listed takes default.",
-  "seed": "Claude Code: 0 takes the stones from the tomb's own seed (each tomb its own stones; every wall face then hashes its own seed from it, partition.seed_per_face); any other number pins the layout."
+  "seed": "Claude Code: 0 takes the stones from the tomb's own seed (each tomb its own stones; every wall face then hashes its own seed from it, partition.seed_per_face); any other number pins the layout.",
+  "styles": "[NOT WIRED YET \u2014 design \u00a7EX.1\u2013EX.3] A ruin type's whole kit (Mike, 6 Oct: \"each ruins type has a homogenized and thoughtful layout and aesthetic \u2026 crafted out of the same materials\"). Every built stone surface in a ruin draws from its style: rule.every_surface. One stone: stone.tint (\"theme\" as the presets) with stone.spread, the most any one stone strays from it (lighter or darker); rule.no_general_palette: nothing built of stone takes RuinBuilder's general palette or a hard-coded colour (the floor flags, the ceiling slabs, the stairs and the sconces did, 37fd8a7). rule.on_top: what may lie over the stone without being a second stone (the heart's ochre is paint, \u00a7BQ; soot \u00a7EV.1; moss and drift \u00a7EU.4). module_m: the builders' unit; room sides, corridor lengths and the spacing of doors and sconces are whole numbers of it (\u00a7EX.2). heights_m: the short list of ceiling heights (the kit's own as built). walls.preset: a presets entry. floor: method fitted_flags (the walls' Voronoi cutter laid flat, stones stone_scale times the wall's, pillow and proud times pillow_scale, joints packed with grit to joint_fill of their depth; wear: smoother and flatter along the middle of a passage, amount 0-1) or rough_slabs (big flags, the gaps packed with small stones, gap_share of the floor). ceiling: method lintel_slabs (single slabs wall to wall, slab_w_m wide each, settled like the walls) or corbel_vault (courses stepping in course_step_m each until a capstone closes it); rooms: how a room's ceiling starts (corbel_courses courses stepping corbel_step_m in, then the method); passages: a corridor's roof; gaps_share: passage capstones with a gap between them where snow and draft come in. max_span_m: no slab or vault spans wider; a wider room gets pillars of the style's stone on the module carrying stone beams, the ceiling spanning beam to beam. hearth_room four_pillars: four pillars round the hearth, the hearth's shaft (\u00a7EV.1) open between them (a megaron's plan). doors: shape trapezoid (top_share: the top's width over the foot's, the Inca batter) or trilithon (two uprights and a lintel); lintel monolith: one stone; threshold: one stone or a kerb stone. niches: the catacomb's bone shelves and any wall recess take this shape. stairs: block_steps (each step one block, settled like the walls) or big_blocks (few, broad). sconce: niche_cup (a niche of niches.shape cut in the wall, a stone cup in it, niche_w_m x niche_h_m) or recess_shelf (a recess between two orthostats, a flat stone shelf). dressing: coffins, benches, shelves and rubble of stone are cut from the style's stone. plan: how a ruin of this style lays out (\u00a7EX.2, crawler.json plan). models: the real places each is drawn from, for whoever builds it. First guesses by Claude (chat), 6 Oct; Mike tunes by playing (\u00a7EX.9 call 1).",
+  "style_by_theme": "[NOT WIRED YET \u2014 design \u00a7EX.1] Which style each crawler.json theme is built in. by_theme (the wall preset) stays as built and must agree with the style's walls.preset. A theme not listed takes default."
  },
  "seed": 0,
  "partition": {
@@ -106,5 +108,179 @@
   "tomb": "fitted_small",
   "snow_ruins": "megalithic",
   "default": "megalithic"
+ },
+ "styles": {
+  "andean_tomb": {
+   "name": "Andean fitted stone (the sarcophagus tombs)",
+   "models": [
+    "Sacsayhuam\u00e1n and Cusco: polygonal stones fitted without mortar (walls, floor)",
+    "Chav\u00edn de Hu\u00e1ntar: underground galleries roofed with long slabs, cut through with air ducts (plan, ceilings)",
+    "Inca doorways and niches: trapezoidal, under one lintel"
+   ],
+   "rule": {
+    "every_surface": [
+     "walls",
+     "floor",
+     "ceiling",
+     "doors",
+     "thresholds",
+     "stairs",
+     "niches",
+     "fire_holders",
+     "stone_dressing",
+     "rubble"
+    ],
+    "no_general_palette": true,
+    "on_top": [
+     "ochre_paint",
+     "soot",
+     "moss",
+     "drift"
+    ]
+   },
+   "stone": {
+    "tint": "theme",
+    "spread": 0.06
+   },
+   "module_m": 2.0,
+   "heights_m": {
+    "corridor": 2.6,
+    "room": 3.2,
+    "hearth_room": 3.6
+   },
+   "walls": {
+    "preset": "fitted_small"
+   },
+   "floor": {
+    "method": "fitted_flags",
+    "stone_scale": 2.0,
+    "pillow_scale": 0.25,
+    "joint_fill": 0.7,
+    "wear": {
+     "along": "passage_middle",
+     "amount": 0.6
+    }
+   },
+   "ceiling": {
+    "method": "lintel_slabs",
+    "slab_w_m": [
+     0.5,
+     0.9
+    ],
+    "rooms": {
+     "corbel_courses": 1,
+     "corbel_step_m": 0.3
+    },
+    "passages": "lintel_slabs",
+    "gaps_share": 0.0
+   },
+   "max_span_m": 6.0,
+   "hearth_room": "four_pillars",
+   "doors": {
+    "shape": "trapezoid",
+    "top_share": 0.85,
+    "lintel": "monolith",
+    "threshold": "one_stone"
+   },
+   "niches": {
+    "shape": "trapezoid",
+    "top_share": 0.8
+   },
+   "stairs": {
+    "method": "block_steps"
+   },
+   "sconce": {
+    "method": "niche_cup",
+    "niche_w_m": 0.4,
+    "niche_h_m": 0.55
+   },
+   "dressing": "style_stone",
+   "plan": "gallery_and_chambers"
+  },
+  "passage_grave_snow": {
+   "name": "Megalithic passage grave (the snow ruins)",
+   "models": [
+    "Maeshowe: orthostats, a corbelled chamber closed by one capstone",
+    "Newgrange: a long passage of uprights roofed with capstones"
+   ],
+   "rule": {
+    "every_surface": [
+     "walls",
+     "floor",
+     "ceiling",
+     "doors",
+     "thresholds",
+     "stairs",
+     "niches",
+     "fire_holders",
+     "stone_dressing",
+     "rubble"
+    ],
+    "no_general_palette": true,
+    "on_top": [
+     "ochre_paint",
+     "soot",
+     "moss",
+     "drift"
+    ]
+   },
+   "stone": {
+    "tint": "theme",
+    "spread": 0.08
+   },
+   "module_m": 2.5,
+   "heights_m": {
+    "corridor": 2.2,
+    "room": 3.6,
+    "hearth_room": 4.0
+   },
+   "walls": {
+    "preset": "megalithic"
+   },
+   "floor": {
+    "method": "rough_slabs",
+    "stone_scale": 1.0,
+    "pillow_scale": 0.4,
+    "joint_fill": 0.9,
+    "gap_share": 0.12,
+    "wear": {
+     "along": "passage_middle",
+     "amount": 0.3
+    }
+   },
+   "ceiling": {
+    "method": "corbel_vault",
+    "course_step_m": 0.35,
+    "rooms": {
+     "corbel_courses": 4,
+     "corbel_step_m": 0.35
+    },
+    "passages": "capstones",
+    "gaps_share": 0.15
+   },
+   "max_span_m": 6.0,
+   "hearth_room": "four_pillars",
+   "doors": {
+    "shape": "trilithon",
+    "lintel": "monolith",
+    "threshold": "kerb_stone"
+   },
+   "niches": {
+    "shape": "recess"
+   },
+   "stairs": {
+    "method": "big_blocks"
+   },
+   "sconce": {
+    "method": "recess_shelf"
+   },
+   "dressing": "style_stone",
+   "plan": "passage_and_chambers"
+  }
+ },
+ "style_by_theme": {
+  "tomb": "andean_tomb",
+  "snow_ruins": "passage_grave_snow",
+  "default": "andean_tomb"
  }
 }

@@ -4140,3 +4140,159 @@ Mike plays and reports between each.
    directions, so if the tundra's peak shows in the desert's north, the tundra lies north.
 7. **Generated or composed:** each world from a seed every new game (as §ET.10 call 3 reads the
    dungeons), or composed once by hand and dressed by the seed?
+
+## EX. After the first dungeon: one stone per ruin, one plan, one hearth, always a way out, one amber firelight, a reticle — LOCKED (6 Oct, 21:13, Mike's playtest notes)
+
+Mike played the first slice (§ET.11, with §EU and §EV built) and wrote it up. *"I do like the way
+the ruins we spawn in first have the pillow faces walls, but the ceiling and floor don't seem to
+match the architecture"*; *"each ruins type has a homogenized and thoughtful layout and aesthetic
+so it all pieces together and it looks like it was crafted out of the same materials"*; *"there
+was no HUD or cursor, strictly a torch, which is fine for now, but we at least need a reticle"*;
+*"I was unable to proceed … make sure all procedurally generated dungeons have at least one exit
+whether all the lights are activated or not"*; *"each dungeon should only have one main hearth
+room with the other rooms just having torch areas to light"*; *"the amber light from hearths
+doesn't match the bluer spectrum light from the torch … always amber."* Six direct notes from
+play, taken as locked (as §EB's were). The rules are Mike's; where this section says how (the
+styles, the counts, the exit's place), those are Claude's first guesses, marked.
+
+**What Claude found in the code (37fd8a7), so the fixes aim at causes:**
+- Only the walls are §EU's fitted stone. The floor is RuinBuilder's rectangular flagstones, the
+  ceiling plain slabs in 1.5 m strips with a random colour each off the general stone palette,
+  the stairs RuinBuilder's dry-stone blocks, and every sconce a box in a hard-coded grey-blue
+  (`CrawlerFires._sconce`). Four ways of building and several stones in one room.
+- The tomb kit (`TombKit`) grows three or four branches from the hearth room and each ends at
+  its last room. Nothing leads out: every way is a dead end. And every room past the hearth room
+  holds a hearth ring (`delves.json → fire_holders.by_ruin.tomb`), so each room is a second
+  hearth.
+- The torch's light is `torch.json → light.color` #FFB347, a pale yellow-orange; the hearth and
+  every sconce are #FF6E24 (`look.json → fire.light.color`). The crawler runs the full night
+  grade (`post.set_night(1.0)`), which pulls bright surfaces toward a cyan-white and spares only
+  strongly orange ones (`grade.protect_chroma`). Claude's reading: stone right at the torch goes
+  bright and pale, falls outside that protection and is pulled blue-white. Claude Code to
+  confirm on screen; the rule in EX.6 holds either way.
+- The crawler's HUD is wordless (§ET.3) and draws nothing at all, the crosshair included.
+
+### EX.1 One ruin, one stone: a style is the whole kit
+- Each ruin type has **one style**, and **every built surface in it** draws from that style:
+  walls, floor, ceiling, door frames and thresholds, stairs, niches and shelves, fire-holders
+  (the hearth's surround, every sconce), stone dressing (coffins, benches) and rubble. One stone
+  (one tint with its own small spread), one joint and occlusion colour (§ES.2's scene shade), one
+  way of cutting and fitting, so a room reads as cut from one quarry by one people's hands.
+- Nothing built of stone in a ruin takes the general palette or a hard-coded colour.
+- **Floors and ceilings are cut the way the walls are, adapted to their job,** as real builders
+  did: a floor is flatter and worn (low pillow, joints packed with grit, smoother down the middle
+  of a passage where feet went); a ceiling spans the way that stone can span (EX.3).
+- **Still on top of the stone:** the heart's ochre (§BQ) is paint on the style's own stone, not a
+  second stone; soot (§EV.1), moss and drift (§EU.4) lie over it; wood, bone, reed and cloth are
+  other materials and stay as they are.
+- **Amends §EU.5:** a masonry preset was walls only; a style now names a preset for the walls and
+  says how the floor, ceiling, doors, stairs and holders are made of the same stone
+  (`masonry.json → styles`).
+
+### EX.2 A thoughtful layout: every ruin type has a plan
+- **A builders' module.** Each style has one unit, and room sides, corridor lengths and the
+  spacing of doors and sconces are whole numbers of it (first guess: the tomb's unit is its
+  corridor's width, 2 m), so rooms line up and repeat the way built places do. Heights come from
+  a short list per style (`masonry.json → styles`).
+- **A spine.** One way from the hearth room is the main axis: it runs through the heart (§CJ.3)
+  to the exit (EX.5). It is the longest branch and it is never a dead end. The other ways are
+  side branches, shorter, each ending in a room (never in a bare corridor).
+- **Sight lines.** Doors sit in the middle of the wall they cut, and where a room has two, they
+  face each other, so you look down a passage through a door to the next light: Mike's shot
+  (a path running straight to a landmark, walls either side) underground.
+- Each style says how it lays out (EX.3). Free-form turning stays, within the module.
+
+### EX.3 The two styles so far (Claude's first guesses, from real builders)
+**The sarcophagus tombs: Andean fitted stone.** §EU's Inca masonry, and Chavín de Huántar's
+underground galleries for the plan: narrow dry-stone galleries roofed with long stone slabs, cut
+through with air ducts (§ET.6's airways), side chambers off a main gallery.
+- **Walls:** `fitted_small`, as built.
+- **Floor:** the same stone from the same cutter, fitted polygonal flags about twice the wall's
+  stone size, barely pillowed, joints shallow and grit-filled, worn smooth down the middle of a
+  passage.
+- **Ceiling:** long single lintel slabs of the same stone, wall to wall, each its own length and a
+  little settled, with the walls' bevel. In rooms, one corbel course steps in above the wall top
+  before the slabs span (a room is wider than one slab reaches).
+- **Doors:** trapezoidal, narrower at the top, under one monolithic lintel, the threshold one
+  stone: the Inca signature. The catacomb's bone niches and the sconce niches take the same
+  trapezoid.
+- **Stairs:** each step one block of the same stone, bevelled and settled like the walls.
+- **Sconces:** a trapezoidal niche cut into the wall with a stone cup in it, not a box stuck on.
+- **Plan:** a main gallery (the spine), side chambers off it, the heart at the spine's far end.
+
+**The snow ruins: megalithic, the passage-grave way.** Maeshowe and Newgrange for the build:
+upright orthostats, corbelled chambers closed by a capstone, passages roofed with single slabs.
+- **Walls:** `megalithic` orthostats.
+- **Floor:** a few big rough slabs, the gaps packed with small stones and frozen grit.
+- **Ceiling:** rooms corbelled, each course stepping in until one capstone closes it; passages
+  roofed with single capstones, and here and there a gap between them where snow and draft come
+  in (the drafty stage, §ET.5).
+- **Doors:** two uprights and a lintel; the threshold a kerb stone.
+- **Stairs:** few and broad, big single blocks.
+- **Sconces:** a recess between two orthostats with a flat stone shelf.
+- **Plan:** fewer, larger chambers off a long low passage.
+
+### EX.4 One hearth per dungeon; every other room gets torches
+- **Each dungeon has exactly one hearth room** (in the first dungeon, the room you wake in).
+  Every other room gets **wall torches**: sconces in the style's own niche (EX.3). First guess:
+  two in a room up to 8 m long, four in a longer one, in facing pairs on the long walls; the heart
+  four, two flanking the dead. Corridors keep their sconces as built (`crawler.json → holders`).
+- Relit sconces stay lit and you can light a torch at them, as built (§ET.4).
+- **With §EV:** only the hearth has a shaft and a column of daylight; every sconce has a flue. One
+  column of sky in a dungeon, over its one hearth.
+- **Amends** §ET.11 step 3 as built (a hearth ring in every room) for Torchfire 1;
+  `delves.json → fire_holders` is unchanged for the open world (Torchfire 2).
+- **Touches, does not decide:** §ET.10 call 2 (the hub) and §EW.4's guess (travel hearth to
+  hearth): one hearth per dungeon makes it the natural place to arrive and leave.
+
+### EX.5 Always a way out
+- **Every generated dungeon has at least one exit you can reach from where you wake, whatever is
+  lit or unlit.** No gate, puzzle or count of relit lights stands between them. Relight gates and
+  scroll gates (§ET.4) may close side ways and shortcuts, never the only way on. **Narrows
+  §ET.4** ("a passage that opens only once it is relit") to side ways.
+- **Where (first guess):** the old way in, a long stair climbing out at the far end of the spine,
+  past the heart, so walking out takes you through the whole place. Daylight shows faint at the
+  top (§EV.2's cool blue), so from below you can see where out is: light as wayfinding.
+- **Where it leads:** §EW.3's seam to the next world, or the surface above (§EW.7 step 2). Until
+  either is built, Claude Code's stand-in: walking out fades to the next dungeon from a new seed,
+  arriving in its hearth room with the hearth lit (so no one is stranded in the dark while it is
+  a stand-in; the real answer is call 3 below).
+- **Checked, not hoped:** the build fails any seed where the player's own body can't walk from the
+  wake spot to the exit with every holder cold and every gate shut: stairs climbable, doors wide
+  and tall enough, no rubble or coffin across a doorway.
+
+### EX.6 One firelight: amber
+- **Every fire's light is the hearth's amber** (`look.json → fire.light.color`, #FF6E24): the torch
+  in hand, a planted torch, sconces, braziers and hearths. **`torch.json → light.color` changes
+  from #FFB347 to #FF6E24** (§AW's first guess; §EB.3 kept it). A torch differs from a hearth in
+  reach and strength only, never in hue.
+- **Firelit stone is amber wherever the fire is:** the grade treats torchlight exactly as it
+  treats hearth light (§EU.6's amber underground), the bright stone right at the torch included.
+- **Guttering dims and reddens the coal** (§ET.7's warning); it never cools toward white or blue.
+- **Unchanged:** past the fire's reach the dark stays its faint navy (`crawler.json → look`), and a
+  vent's column of daylight (§EV.2) is sky, not fire, so it stays blue. Blue, and the one warm
+  accent.
+
+### EX.7 A reticle
+- **The crosshair is on in the crawler in first person:** the open world's (`hud.json → reticle`),
+  drawn inside the 480-line frame (§Y). Still no words and no prompts (§ET.3). The Settings switch
+  (Crosshair dot) still turns it off.
+- **An idea, not locked:** the reticle warms when something you can swing the flame to (a cold
+  holder, a lit one for an unlit torch) is in reach: the wordless way of saying "you can light
+  this".
+
+### EX.8 Order of work
+Before §EW.7 step 2, each its own Claude Code pass (`docs/PROMPT_QUEUE.md` 44–48):
+1. One amber firelight (EX.6). 2. The reticle (EX.7). 3. The plan and the way out (EX.2, EX.5).
+4. One hearth, torches in the rooms (EX.4). 5. The style kit: floor, ceiling, doors, stairs and
+sconces of the walls' own stone (EX.1, EX.3).
+
+### EX.9 Open for Mike
+1. **The two styles** (EX.3): the Andean tomb and the passage-grave snow ruins.
+2. **Torches in a room:** two and four (EX.4), or another count.
+3. **Arriving in a new dungeon:** its one hearth lit (someone keeps it) or cold (you bring the
+   flame in)? The stand-in uses lit.
+4. **The warming reticle** (EX.7).
+5. **A style per world:** each of §EW.2's worlds (and `areas.json`) its own style from a real
+   building tradition, researched one per agent once Mike says which worlds come next. This also
+   answers §EU's open call on masonry by tradition.
