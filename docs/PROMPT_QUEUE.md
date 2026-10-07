@@ -85,7 +85,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | built c40b2da |
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
-| 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
+| 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | built b998d05 |
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | built a4f1b00 |
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
 | 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
@@ -1046,7 +1046,7 @@ CHECK (headless): with only the torch, the wheel goes torch → bare hands → t
 
 ## 56 — Harm: a red edge on the first hit; a chase follows you into the light; you heal only once it gives you up — §FD
 
-**Status:** todo
+**Status:** built b998d05
 **Mike sees:** Take a hit and a red ring closes round the edge of your view and you hear your heartbeat; a second and the ring goes darker red and your heart pounds harder and faster; a third is "Good night". Running into a lit room doesn't save you: the thing that hit you follows you in. You only start to recover once you've lost it, by getting far enough away, out of its sight long enough, into a hiding place, or by dousing your torch. Then it slinks back to the dark.
 
 ```text

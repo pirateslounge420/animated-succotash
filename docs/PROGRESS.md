@@ -4,6 +4,27 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 56, §FD with §FJ.3, part 2: the snake's chase follows you into the light; queue 56 built (d14f7d8, b998d05)
+- **The light is no refuge once it has hit you.** This is §FD's amendment of §EY.1 on the snake (queue 49's `Boss`, whose chase already holds a `Pursuit`): a relit room stays closed to its prowling, not to a chase in progress. Once its strike has landed (`Pursuit.has_hit`, `residents.json → rules.chase_enters_light`), until it gives you up:
+  - it hunts you into any relit room or stretch, and its strikes land there (`rule.relit_room` safe holds only until it has had you);
+  - its wind-up no longer breaks off when you step into the light;
+  - a relight round it doesn't send it off.
+- **Back to the dark:** when it gives you up in the light, it leaves at once for the nearest dark, fast enough to be there within `rules.back_to_dark_s` (4 s; `Pursuit.back_to_dark_mps`), or it goes down below by then.
+- **The hearth room stays shut,** even to a chase that has had you. This is my call: the snake's ways never go through it (queue 49), and §BA's fire is safety. There it watches from the edge of its dark (`watch_s`, 10 s), gives you up, and finds you again if you're still in its sight. So by the fire in its view nothing heals: it hasn't lost you. Out of its sight with the torch smothered is how you hide (§FC.2). **Mike:** say if the hearth should be open to a chase too.
+- **Its prowling** still never enters a lit node. `lit_entries` still counts only that (0 in `boss_check`'s relight runs); `chase_lit_entries` counts the lit nodes it went into after you.
+- **Checks:** `crawler_harm_check` (seeds 1, 7, 42 with `SNAKE_SEEDS`) has 87 lines, 0 fails. With the real snake on each seed:
+  - A strike lands in its dark. Held in place and keeping you in sight 3 m off for 15 s, nothing heals.
+  - Out of its sight, torch lit, it gives you up at 6.2 s (`out_of_sight_s` 6), and the hit heals 5.0 s later.
+  - With a room beside its dark relit, it strikes you in the dark, follows you in 1.3 s after you step into the light, and lands a second hit there 1.7–1.8 s on.
+  - Given you up there (you 26 m off), it is back in the dark in 0.7–1.6 s (limit 4).
+  - By the hearth, in its sight for 30 s, it never comes in and nothing heals. Out of its sight with the torch smothered, it lets you go and the hit heals 5.0 s later.
+  - Five minutes in the lit doorways nearest it, torch lit: it was after you 271–274 s, watching from its dark, and never stood in a lit node (0 steps, 0 hits).
+  - Also passing, on the code with queues 51, 57, 58, 60 and 61 in: `boss_check` 106, `crawler_check` 173, `stagger_check` 61, `fire_pot_check` 82, `residents_check` 123. With queue 47 in too: `crawler_harm_check` 87, `boss_check` 106, `crawler_check` 187.
+- **Frames** (`crawler_frames`, seed 7, 35 lines, 0 fails, before 51, 57 part 2 and 58 landed): with the crawler's own Harm now (queue 49), the ring is 48 px deep at hit 1 and 77 px at hit 2 at both edges, its rim darker on two (luma 0.144 against 0.204), and the heartbeat plays from hit 1.
+- **Queue:** row 56 is now `built`. Its two parts are d14f7d8 (the ring, the heartbeat, `Pursuit`, healing once nothing pursues you) and b998d05 (the snake's chase into the light).
+
+---
+
 ## 2026-10-07 — Queue 57, §FA.1–§FA.2, part 2: the stagger on the snake, and its strike's hiss its own (a4f1b00; part 1 7f65da2)
 - **The snake strikes with part 1's `CreatureStrike`** (queue 49 built it that way). Its rear-back, lunge and draw back follow the strike's parts. A lit swing in the rear-back staggers it, and it hears a swing that lands on it. Checking prompt 57's list on the snake itself turned up three things, fixed here.
 - **Its strike's hiss is its own (§FA.2).** While it held off at the edge of your light it hissed with the strike's own voice every second or two, so a hiss didn't tell you it was about to strike.
