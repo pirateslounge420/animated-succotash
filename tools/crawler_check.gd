@@ -116,13 +116,24 @@ extends SceneTree
 ##     toward an ordinary airway's draft, flat out at max_deg in a strong
 ##     mouth's gust, never putting it out; the light flickering with the
 ##     flame on top of the coal's breath, held_scale kept; the smoke
-##     darker toward soot and never grey;
+##     darker toward soot and never grey; 120 s flat out costs the torch
+##     its 120 s of burn and no more;
+## 11b. torches burn down (§FJ.4, torch.json crawler_burn, prompt 62): a
+##     torch's whole burn is crawler_burn.burn_min (15, Mike), it starts to
+##     gutter at its last gutter_share and is burnt out at the end; in your
+##     hand the charred stick drops to the floor at your feet, out of your
+##     pack, your next torch in your hand unlit; a burnt one never catches;
+##     smothered at half its burn it keeps it and relights at a relit
+##     sconce; three held, the bundle gives no fourth (no words, a rustle),
+##     two held it gives the third; the empty bundle is laid again
+##     bundle.remake_h_game game hours on, not before;
 ## 12. the way out (§EX.5, WayOut): faint daylight in the opening, cool
 ##     blue by day and fainter at night, seen from the bottom of the
 ##     flight (nothing between), fainter from far off (exit.glow far_fade:
-##     all of it on the landing, less from the wake spot, Mike 7 Oct); stepping into it fades to the next tomb
-##     (exit.stand_in): a new seed, you on the mat by its lit hearth, the
-##     torch you carried lit or not as it was, the log's line;
+##     all of it on the landing, less from the wake spot, Mike 7 Oct);
+##     stepping into it fades to the next tomb (exit.stand_in): a new seed,
+##     you on the mat by its lit hearth, the torch you carried lit or not
+##     as it was, the log's line;
 ## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
 ##     on seeds 1, 7 and 42 every stone vertex within the style's tint +-
 ##     spread before occlusion, ochre, soot, moss and drift, none from
@@ -198,6 +209,7 @@ func _run() -> void:
 	await _snuff(main)
 	await _lean(main)
 	await _douse(main)
+	await _burn_down(main)
 	await _half_dark(main)
 	await _rescuer(main)
 	_sprite_kept(main)
@@ -1180,7 +1192,7 @@ func _pitch(main: CrawlerMain) -> void:
 	t.put_out("burnt")
 	ok(not vh.is_visible_in_tree() and (t._view.get_node("Stick") as Node3D).is_visible_in_tree(), "burnt out: a bare stick, as built")
 	it.erase("burnt")
-	it["burn_left_min"] = float(Torch.D.get("burn_min", 50.0))
+	it["burn_left_min"] = Torch.full_burn_min()
 	t.light()
 	# Planted in the tomb: lit, out with burn left, burnt out.
 	var at := p.global_position + Vector3(0.0, 0.0, 0.0)
@@ -2198,7 +2210,10 @@ func _snuff(main: CrawlerMain) -> void:
 	var last := p.global_position
 	gmax = 0.0
 	lit_all = true
+	var burn0 := float(t.item().get("burn_left_min", -1.0))
+	var ran := 0
 	for i in 7200:
+		ran += 1
 		var target: Vector3 = pts[wi]
 		var to := Vector3(target.x - p.global_position.x, 0.0, target.z - p.global_position.z)
 		if to.length() < 0.6:
@@ -2286,6 +2301,8 @@ func _snuff(main: CrawlerMain) -> void:
 	Input.action_release("move_forward")
 	print("  the run: %d points on the tour, %d reached; %d times round something in the way, %d points skipped to %s; %.1f s in an airway's draft (flicker up to %.2f), %.1f s in a strong gust" % [pts.size(), got, detours, skips, str(stuck_in), in_draft / 60.0, flick_max, gust_frames / 60.0])
 	ok(lit_all and gmax == 0.0 and not burn_gutter, "120 s flat out round the tomb (%.0f m, %d whip turns): lit, gutter 0 throughout (§EZ.1 moving_fast never)" % [dist, whips])
+	var cost := burn0 - float(t.item().get("burn_left_min", -1.0))
+	ok(absf(cost - ran / 3600.0) < 1e-3, "and it cost the torch its %.0f s of burn and no more (%.3f min of %.3f)" % [ran / 60.0, cost, ran / 3600.0])
 	# A real sprint, not a runner stuck against a wall (the turns, the
 	# whips and the odd prop cost 10-20 s of the 120).
 	ok(at_sprint / 60.0 >= 90.0 and old_out > 0.0, "a real sprint: %.0f s of the 120 at a sprint by the removed rule's own measure, which would have put the torch out %.1f s in" % [at_sprint / 60.0, old_out])
@@ -2581,6 +2598,139 @@ func _douse(main: CrawlerMain) -> void:
 	await _frames(2)
 	ok(t.douse() and not t.lit() and t.pass_flame() == "torch" and t.lit(), "smothered by a planted torch, it relights at the planted torch")
 	_unplant(pt)
+	await _frames(2)
+
+
+## Every torch out of your pack (_burn_down).
+func _clear_torches(p: CrawlerPlayer) -> void:
+	for i in p.inventory.carried.size():
+		var c: Variant = p.inventory.carried[i]
+		if c is Dictionary and str((c as Dictionary).get("kind", "")) == "torch":
+			p.inventory.carried[i] = null
+
+
+## Torches burn down (design 6 Oct §FJ.4, torch.json crawler_burn; prompt
+## 62).
+func _burn_down(main: CrawlerMain) -> void:
+	var p := main.player
+	var t := p.torch
+	var fires := main.fires
+	var w := main.world
+	var CB: Dictionary = Torch.D.get("crawler_burn", {})
+	var full := float(CB.get("burn_min", 15.0))
+	var share := float(Torch.D.get("gutter_share", 0.12))
+	var help := str((Torch.D.get("_help", {}) as Dictionary).get("crawler_burn", ""))
+	ok(is_equal_approx(Torch.full_burn_min(), full) and not help.begins_with("[NOT WIRED YET"), "a crawler torch burns crawler_burn.burn_min, %.0f minutes (Mike, 7 Oct; the open world keeps its %.0f), and crawler_burn is wired" % [full, float(Torch.D.get("burn_min", 50.0))])
+	# The timer: a fresh torch, lit, stepped a second at a time.
+	var fresh := Inventory.make("torch", {"lit": true, "burn_left_min": Torch.full_burn_min()})
+	var gutter_s := -1
+	var out_s := -1
+	for sec in int(full * 60.0) + 10:
+		var what := Torch.burn_step(fresh, 1.0, {}, true)
+		if what == "gutter":
+			gutter_s = sec + 1
+		elif what == "out":
+			out_s = sec + 1
+			break
+	ok(absf(gutter_s - full * (1.0 - share) * 60.0) <= 1.0 and absf(out_s - full * 60.0) <= 1.0 and bool(fresh.get("burnt", false)) and not bool(fresh.get("lit", true)), "lit, a torch starts to gutter %.1f min in (its last %.0f%%) and is burnt out at %.1f min" % [gutter_s / 60.0, share * 100.0, out_s / 60.0])
+	# In your hand by the hearth, a spare in the pack.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch"))
+	p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	var hp := fires.hearth.global_position
+	_place_facing(p, hp + Vector3(0.0, 0.0, 1.0), hp)
+	await _frames(5)
+	var first := t.item()
+	ok(t.pass_flame() == "torch" and t.lit() and absf(float(first.get("burn_left_min", -1.0)) - full) < 0.01, "a fresh torch lit at the hearth has its whole burn (%.2f min)" % float(first.get("burn_left_min", -1.0)))
+	# Two seconds short of its gutter.
+	first["burn_left_min"] = full * share + 2.0 / 60.0
+	await _frames(180)
+	ok(t.lit() and Torch.guttering(first) and Torch.share_now(first) < 1.0, "in its last %.0f%% it gutters, still lit, at %.2f of its light" % [share * 100.0, Torch.share_now(first)])
+	# A second left.
+	first["burn_left_min"] = 1.0 / 60.0
+	var burnt0 := t.burnt_count
+	var sticks0 := fires.sticks.size()
+	var feet := p.global_position
+	await _frames(90)
+	var in_pack := false
+	for c in p.inventory.carried:
+		if is_same(c, first):
+			in_pack = true
+	var stick: Node3D = fires.sticks[-1] if fires.sticks.size() > sticks0 else null
+	var off := Vector2(stick.global_position.x - feet.x, stick.global_position.z - feet.z).length() if stick != null else -1.0
+	ok(t.burnt_count == burnt0 + 1 and bool(first.get("burnt", false)) and not in_pack and stick != null and off < 0.5 and absf(stick.global_position.y - feet.y) < 0.1, "burnt out, its charred stick falls to the floor by your feet (%.2f m off, %.2f m from their height) and leaves your pack" % [off, absf(stick.global_position.y - feet.y) if stick != null else -1.0])
+	var second := t.item()
+	ok(t.in_hand() and not t.lit() and not second.is_empty() and not is_same(second, first) and not bool(second.get("burnt", false)), "your next torch is in your hand, unlit")
+	# A burnt one never catches.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch", {"burnt": true, "burn_left_min": 0.0}))
+	p.weapon = "torch"
+	await _frames(2)
+	t.light()
+	var lit_by_hand := t.lit()
+	var how := t.pass_flame()
+	ok(not lit_by_hand and not t.lit() and how != "torch", "a burnt stick never catches, lit or swung through the hearth ('%s')" % how)
+	# Smothered at half its burn, it keeps it, and relights at a sconce.
+	_clear_torches(p)
+	p.inventory.add(Inventory.make("torch", {"burn_left_min": full * 0.5}))
+	p.weapon = "torch"
+	await _frames(2)
+	var relit := t.pass_flame() == "torch" and t.lit()
+	await _frames(30)
+	t.douse()
+	var kept := float(t.item().get("burn_left_min", -1.0))
+	await _frames(600)
+	var still := float(t.item().get("burn_left_min", -1.0))
+	var sconce: Node3D = null
+	for h in fires.holders:
+		if str(h.get_meta("fire_holder")) == "sconce" and FireStore.is_lit(h):
+			sconce = h
+			break
+	var again := false
+	if sconce != null:
+		_place_facing(p, _stand_by(main, sconce), sconce.global_position)
+		await _frames(5)
+		again = t.pass_flame() == "torch" and t.lit() and absf(float(t.item().get("burn_left_min", -1.0)) - kept) < 0.01
+	ok(relit and absf(kept - full * 0.5) < 0.02 and still == kept and again, "smothered at half its burn (%.2f min) it keeps it, 10 s out, and relights at a relit sconce with it" % kept)
+	# Three at most, the one in hand counted.
+	_clear_torches(p)
+	for i in 3:
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	_place_facing(p, fires.bundle.global_position + Vector3(1.0, 0.0, 0.0), fires.bundle.global_position)
+	await _frames(3)
+	var left0 := fires.bundle_left
+	var logs0 := GameLog.entries.size()
+	var ref0 := fires.refusals
+	var took := main.take_torch()
+	ok(left0 > 0 and not took and fires.bundle_left == left0 and Torch.carried_count(p.inventory, true) == 3 and GameLog.entries.size() == logs0 and fires.refusals == ref0 + 1, "three held, the one in hand counted, the bundle gives no fourth: nothing taken, no words, a soft rustle (crawler_burn.carry_max %d)" % Torch.carry_max())
+	for i in p.inventory.carried.size():
+		var c: Variant = p.inventory.carried[i]
+		if c is Dictionary and str((c as Dictionary).get("kind", "")) == "torch" and not is_same(c, t.item()):
+			p.inventory.carried[i] = null
+			break
+	ok(main.take_torch() and fires.bundle_left == left0 - 1 and Torch.carried_count(p.inventory, true) == 3, "with two held it gives the third")
+	# The empty bundle is laid again remake_h_game game hours on.
+	_clear_torches(p)
+	while fires.bundle_left > 0:
+		fires.take_torch()
+	var keep_days: float = w.days
+	var wait := float((Torch.D.get("bundle", {}) as Dictionary).get("remake_h_game", 24.0)) / 24.0
+	var made0 := fires.bundles_remade
+	await _frames(2)
+	var empty_ok := fires.bundle_left == 0 and fires.bundle_out_at >= 0.0
+	w.days = fires.bundle_out_at + wait * 0.5
+	await _frames(2)
+	var half_ok := fires.bundle_left == 0 and fires.bundles_remade == made0
+	w.days = fires.bundle_out_at + wait + 0.001
+	await _frames(2)
+	var count := int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
+	ok(empty_ok and half_ok and fires.bundle_left == count and fires.bundles_remade == made0 + 1 and fires.bundle_out_at < 0.0, "the empty bundle is laid again %.0f game hours on (bundle.remake_h_game), not halfway: %d torches" % [wait * 24.0, fires.bundle_left])
+	w.days = keep_days
+	# As the rest expects: one fresh torch in hand.
+	p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
 	await _frames(2)
 
 
@@ -3584,9 +3734,10 @@ func _pack(p: CrawlerPlayer) -> String:
 const STYLE_SEEDS := [1, 7, 42]
 ## The crawler's scripts may hold these colours of their own, none of them
 ## built stone: the heart's ochre (paint), the checks' poison, the charred
-## logs, the torch bundle's wood, tips and cord, an airway's void and dust,
-## the waking fade, a sprite's clear background, RuinStyle's grey for a
-## theme with no stone at all (missing data).
+## logs (and a burnt torch's stick, §FJ.4), the torch bundle's wood, tips
+## and cord, an airway's void and dust, the waking fade, a sprite's clear
+## background, RuinStyle's grey for a theme with no stone at all (missing
+## data).
 ## The scripts that lay the tomb's stone (TombBuild, the masonry it cuts,
 ## the style, the fires' holders, the layout): the colour search looks in
 ## these. Every crawler script is searched for the general palette by name.

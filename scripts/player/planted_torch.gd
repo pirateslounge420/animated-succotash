@@ -148,7 +148,7 @@ static func unlit_near(pos: Vector3, radius: float) -> PlantedTorch:
 func relight() -> void:
 	item["lit"] = true
 	if not item.has("burn_left_min"):
-		item["burn_left_min"] = float(Torch.D.get("burn_min", 50.0))
+		item["burn_left_min"] = Torch.full_burn_min()
 	_apply()
 
 

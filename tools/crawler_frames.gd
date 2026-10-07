@@ -1079,6 +1079,8 @@ func _run() -> void:
 	# The skeletons sleep through the tour (design §FE); one is woken at
 	# the end for its frames.
 	Residents.stay_asleep = true
+	# Pictures, not a burn test: the torch never burns out mid-run (§FJ.4).
+	Torch.burn_down = false
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	out_dir = OS.get_environment("OUT") if OS.get_environment("OUT") != "" else "user://crawler_frames/%d" % seed_v

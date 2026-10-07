@@ -6,7 +6,11 @@ extends Node3D
 ## you; the cold fire-holders down the tomb, all wall sconces (two or four
 ## on the walls of every other room, room_torches; one every
 ## sconce_every_m down the corridors); and the bundle of unlit torches by
-## the hearth (§AW).
+## the hearth (§AW): it gives none past the three you may hold (design 6
+## Oct §FJ.4, torch.json crawler_burn.carry_max: a soft rustle, no words),
+## and once empty it is laid again bundle.remake_h_game game hours on (the
+## hearth's keeper binds more, §FJ.4's first guess). A torch burnt out in
+## your hand leaves its charred stick on the floor (lay_stick).
 ##
 ## Every fire is a Campfire (the same stones, coals, flame card, light,
 ## sound and smoke as the open world's, so the torch's swing finds them,
@@ -43,6 +47,15 @@ var holders: Array[Node3D] = []
 ## The bundle by the hearth: [node, torches left].
 var bundle: Node3D
 var bundle_left := 0
+## When the bundle ran out (world days; -1 while it holds torches).
+var bundle_out_at := -1.0
+## Bundles laid again, and torches refused at it, three held (checks).
+var bundles_remade := 0
+var refusals := 0
+## The charred sticks dropped where torches burnt out (lay_stick).
+var sticks: Array[Node3D] = []
+var _bundle_at := Vector3.ZERO
+var _bundle_voice: AudioStreamPlayer3D
 ## What never blocks a flame's light in lit_on (the player's own body).
 var ray_exclude: Array[RID] = []
 var _t := 0.0
@@ -205,11 +218,16 @@ func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 ## flame).
 func _bundle(pos: Vector3) -> void:
 	bundle_left = int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
+	_bundle_at = pos
 	bundle = Node3D.new()
 	bundle.name = "TorchBundle"
 	add_child(bundle)
 	bundle.position = pos
 	bundle.rotation.y = randf() * TAU
+	_bundle_voice = AudioStreamPlayer3D.new()
+	_bundle_voice.name = "Voice"
+	_bundle_voice.unit_size = 2.0
+	bundle.add_child(_bundle_voice)
 	var wood := Color(0.36, 0.25, 0.14)
 	const STICK_M := 0.62
 	const TOP_R := 0.018
@@ -241,7 +259,59 @@ func take_torch() -> Dictionary:
 		var c := bundle.get_node_or_null(n % bundle_left)
 		if c:
 			c.queue_free()
+	if bundle_left == 0 and world != null:
+		bundle_out_at = float(world.get("days"))
 	return Inventory.make("torch")
+
+
+## Three held already (§FJ.4, CrawlerMain.take_torch): nothing taken and no
+## words, only your hand on the sticks, a soft rustle at the bundle.
+func refuse_torch() -> void:
+	refusals += 1
+	if _bundle_voice == null or not _bundle_voice.is_inside_tree():
+		return
+	_bundle_voice.stream = SoundSynth.stream("rustle", refusals)
+	_bundle_voice.pitch_scale = 0.8
+	_bundle_voice.volume_db = -8.0
+	Audio3D.play(_bundle_voice)
+
+
+## An empty bundle is laid again bundle.remake_h_game game hours after it
+## ran out, on the crawler's clock (world.days; §FJ.4's first guess: the
+## hearth's keeper binds more).
+func _remake_bundle() -> void:
+	if bundle_left > 0 or bundle_out_at < 0.0 or world == null:
+		return
+	var wait := float((Torch.D.get("bundle", {}) as Dictionary).get("remake_h_game", 24.0)) / 24.0
+	if float(world.get("days")) - bundle_out_at < wait:
+		return
+	if bundle != null:
+		bundle.queue_free()
+	_bundle(_bundle_at)
+	bundle_out_at = -1.0
+	bundles_remade += 1
+	GameLog.add("More torches lie bound by the hearth.", "torch")
+
+
+## The charred stick of a torch burnt out in your hand (Torch.burnt_out,
+## §FJ.4), lying at `at` (scene: by your feet, on the floor you stand on,
+## so never on a pit's guard or a step you can't see): a bundle stick
+## burnt black as the hearth's logs, its head gone. It stays where it fell.
+func lay_stick(at: Vector3) -> Node3D:
+	var root := Node3D.new()
+	root.name = "CharredStick"
+	add_child(root)
+	root.global_position = at
+	root.rotation.y = randf() * TAU
+	var stick := CreatureBodies.cone(root, 0.022, 0.016, STICK_BURNT_M, Vector3(0.0, 0.022, 0.0), CHAR, 0.0, 6)
+	stick.rotation = Vector3(PI * 0.5, 0.0, 0.0)
+	sticks.append(root)
+	return root
+
+
+## A burnt stick's length (m) and its char (the hearth's charred logs').
+const STICK_BURNT_M := 0.48
+const CHAR := Color(0.09, 0.07, 0.06)
 
 
 ## Every flame burning now, where its light sits (design §FG: what dims
@@ -311,6 +381,7 @@ func lit_count() -> int:
 
 func _process(delta: float) -> void:
 	_t += delta
+	_remake_bundle()
 	FireStore.tick(get_tree(), delta, get_viewport().get_camera_3d().global_position if get_viewport().get_camera_3d() else Vector3.ZERO)
 	# The flame, the light and the sound: the near fires each frame (the
 	# far ones are dark beyond their light anyway).

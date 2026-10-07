@@ -18,9 +18,15 @@ extends Node3D
 ## its strike's wind-up (design 6 Oct §FA.1, CreatureStrike, the crawler's
 ## creatures; the open world has none, so there it still does nothing,
 ## §BA). Burns
-## burn_min real minutes, rain and storms shorten that, then gutters (the
-## last gutter_share: dimmer, a harder flicker) and goes out: a stick
-## (`burnt`). Water past douse_depth_m puts it out (relight it at a
+## burn_min real minutes (in the crawler crawler_burn.burn_min, design 6 Oct
+## §FJ.4: 15, Mike 7 Oct; full_burn_min), rain and storms shorten that,
+## then gutters (the last gutter_share: dimmer, a harder flicker) and goes
+## out: a stick (`burnt`). Only lit time counts: out or smothered, it keeps
+## what it has, and relights from any flame. In the crawler the burnt
+## stick drops from your hand to the floor (burnt_out, CrawlerMain lays
+## it) and your next torch with burn left is in your hand, unlit; you hold
+## crawler_burn.carry_max torches at most, the one in hand included
+## (at_carry_max: the bundle refuses a fourth). Water past douse_depth_m puts it out (relight it at a
 ## flame); so does stowing it (Q or the wheel away from it) and starting a climb with
 ## no ground to plant it in; with ground there, a climb plants it. In the
 ## crawler you can smother it on purpose (design 6 Oct §FC.3, douse(): F)
@@ -51,6 +57,11 @@ static var instance: Torch = null
 ## Torch bundles laid by fires (lay_bundle): [WorldItem or null, dir,
 ## ground, world day it ran out (or -1)], remade after bundle.remake_h_game.
 static var bundles: Array = []
+## Torches burn down (design §AW; in the crawler §FJ.4). The frame tools
+## turn it off: their pictures are not a burn test, and a long render
+## would burn the torch out mid-run (as Residents.stay_asleep keeps the
+## skeletons asleep for the checks).
+static var burn_down := true
 ## Smothering your own torch (design 6 Oct §FC.3, stealth.json douse):
 ## its log line and its sound.
 static var DOUSE: Dictionary = Tuning.table("stealth").get("douse", {})
@@ -94,6 +105,11 @@ var last_out := ""
 var _held: Dictionary = {}
 ## A line for the player (main shows it and clears it).
 var note := ""
+## The torch in hand burnt out in the crawler (§FJ.4): where its charred
+## stick fell (scene), for CrawlerMain to lay it on the floor.
+signal burnt_out(at: Vector3)
+## Torches burnt out in hand (checks).
+var burnt_count := 0
 
 
 func setup(p: PlanetPlayer) -> void:
@@ -461,12 +477,13 @@ func pass_flame() -> String:
 
 func light() -> void:
 	var it := item()
-	if it.is_empty():
+	# A burnt-out stick never catches again (§FJ.4).
+	if it.is_empty() or bool(it.get("burnt", false)):
 		return
 	it["lit"] = true
 	snuff.reset()
 	if not it.has("burn_left_min"):
-		it["burn_left_min"] = float(D.get("burn_min", 50.0))
+		it["burn_left_min"] = full_burn_min()
 	_play("torch_light")
 	GameLog.add("Lit a torch from a flame.", "torch")
 	_apply(true)
@@ -543,7 +560,7 @@ func put_out(why: String) -> void:
 	match why:
 		"burnt":
 			it["burnt"] = true
-			GameLog.add("The torch has burnt out: a stick now.", "torch")
+			GameLog.add("The torch has burnt out: a charred stick now." if pitch else "The torch has burnt out: a stick now.", "torch")
 		"doused":
 			GameLog.add("The water put the torch out.", "torch")
 		"smothered":
@@ -556,6 +573,22 @@ func put_out(why: String) -> void:
 	_apply(false)
 
 
+## Burnt out in your hand in the crawler (§FJ.4): the charred stick falls
+## to the floor by your feet (burnt_out: CrawlerMain lays it there) and
+## leaves your pack; your next torch with burn left is in your hand,
+## unlit, or your hand is empty.
+func _drop_burnt(it: Dictionary) -> void:
+	_remove_from_pack(it)
+	burnt_count += 1
+	var fwd := -player.global_basis.z
+	fwd.y = 0.0
+	fwd = fwd.normalized() if fwd.length() > 1e-4 else Vector3.FORWARD
+	burnt_out.emit(player.global_position + fwd * 0.2)
+	if carried_count(player.inventory) == 0:
+		player.weapon = "hands"
+	_apply(false)
+
+
 func _remove_from_pack(it: Dictionary) -> void:
 	for i in player.inventory.carried.size():
 		if player.inventory.carried[i] == it:
@@ -565,11 +598,45 @@ func _remove_from_pack(it: Dictionary) -> void:
 
 # --- Burning -----------------------------------------------------------------------
 
+## A torch's whole burn (real minutes): in the crawler (Torchfire 1, design
+## 6 Oct §FJ.4) torch.json crawler_burn.burn_min (15, Mike 7 Oct), in the
+## open world the top-level burn_min (50).
+static func full_burn_min() -> float:
+	if GameMode.crawler_running:
+		return float((D.get("crawler_burn", {}) as Dictionary).get("burn_min", 15.0))
+	return float(D.get("burn_min", 50.0))
+
+
+## The crawler's carry limit (§FJ.4, crawler_burn.carry_max: three, Mike).
+static func carry_max() -> int:
+	return int((D.get("crawler_burn", {}) as Dictionary).get("carry_max", 3))
+
+
+## The torches `inv` holds that count toward carry_max: every torch with
+## burn left (a burnt stick doesn't; in the crawler it is dropped as it
+## burns out), the one in hand among them unless crawler_burn
+## carry_counts_hand is false (then `in_hand`, if one is held, is not
+## counted).
+static func carried_count(inv: Inventory, in_hand := false) -> int:
+	var n := 0
+	for it in inv.carried:
+		if it is Dictionary and str(it.get("kind", "")) == "torch" and not bool(it.get("burnt", false)):
+			n += 1
+	if in_hand and n > 0 and not bool((D.get("crawler_burn", {}) as Dictionary).get("carry_counts_hand", true)):
+		n -= 1
+	return n
+
+
+## At the limit: no more torches taken (the crawler's bundle, §FJ.4).
+func at_carry_max() -> bool:
+	return carried_count(player.inventory, in_hand()) >= carry_max()
+
+
 ## Burn `it` down over `delta` seconds by the weather (rain and storms
 ## shorten it). Returns "gutter" the frame it starts to gutter, "out" the
 ## frame it dies, else "".
 static func burn_step(it: Dictionary, delta: float, wx: Dictionary, _held: bool) -> String:
-	if not bool(it.get("lit", false)):
+	if not bool(it.get("lit", false)) or not burn_down:
 		return ""
 	var scale := 1.0
 	var resin: Dictionary = D.get("resin", {})
@@ -581,10 +648,10 @@ static func burn_step(it: Dictionary, delta: float, wx: Dictionary, _held: bool)
 	# A resin torch (design §BP) burns burn_scale times as long.
 	if is_resin:
 		scale /= maxf(float(resin.get("burn_scale", 1.8)), 0.1)
-	var before := float(it.get("burn_left_min", float(D.get("burn_min", 50.0))))
+	var before := float(it.get("burn_left_min", full_burn_min()))
 	var after := before - delta / 60.0 * scale
 	it["burn_left_min"] = after
-	var gutter_at := float(D.get("burn_min", 50.0)) * float(D.get("gutter_share", 0.12))
+	var gutter_at := full_burn_min() * float(D.get("gutter_share", 0.12))
 	if after <= 0.0:
 		it["lit"] = false
 		it["burnt"] = true
@@ -596,7 +663,7 @@ static func burn_step(it: Dictionary, delta: float, wx: Dictionary, _held: bool)
 
 ## Guttering?
 static func guttering(it: Dictionary) -> bool:
-	return float(it.get("burn_left_min", 99.0)) <= float(D.get("burn_min", 50.0)) * float(D.get("gutter_share", 0.12))
+	return float(it.get("burn_left_min", 99.0)) <= full_burn_min() * float(D.get("gutter_share", 0.12))
 
 
 ## How bright it is now against full (0-1): 1, or the gutter's share.
@@ -631,6 +698,8 @@ func update_torch(delta: float) -> void:
 			_play("torch")
 		elif what == "out":
 			put_out("burnt")
+			if pitch:
+				_drop_burnt(it)
 			return
 		# Water: swimming, or wading past the douse depth (in a delve, §CJ,
 		# you are under the ground, not under the sea: PlanetPlayer.water_depth).
