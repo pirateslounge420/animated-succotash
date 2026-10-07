@@ -84,7 +84,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | todo |
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
-| 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | todo |
+| 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | todo |
@@ -1030,7 +1030,7 @@ CHECK: douse with a lit torch → lit false, burn_left_min unchanged, still in h
 
 ## 55 — Two hands: the wheel, Tab and the wheel, and a Controls page — §FB
 
-**Status:** todo
+**Status:** built 5402764
 **Mike sees:** Q no longer swaps anything. The mouse wheel cycles what's in your right hand (torch, bare hands). Holding Tab and scrolling cycles your left hand through the left-hand things you carry, and back to empty, with a small wordless strip showing while Tab is held. In Settings there's a Controls page where every key can be rebound, including which hand the wheel drives.
 
 ```text

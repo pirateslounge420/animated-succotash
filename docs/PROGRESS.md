@@ -4,6 +4,45 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 55, §FB: two hands (the wheel, and Tab with the wheel) and a Controls page (5402764)
+- **The right hand** (`Hands`, `hands.json → right`): in the crawler the mouse wheel steps through what your right hand can hold: the torch (while you carry one), bare hands, and later a spear once found. Scrolling a lit torch away puts it out, as built. **Q does nothing in the crawler** (`q_swaps` false, now read). The open world keeps Q and its tool swap.
+- **The left hand** (`hands.json → left`): left-hand things sit in their own strip of the pack (`Inventory.strip`, 3 places, `left.strip_slots`), not in the carry slots. Hold Tab and scroll to step the left hand through them and back to empty.
+  - **The strip** (`HandStrip`): shows while Tab is held, low left inside the 480-line frame, icons only, with the one in hand marked. Each pot shows its oil on its plug: tar black, light oil pale. A quick tap of Tab shows nothing (`tab_hold.show_after_s`, 0.15 s, my number).
+  - **The wheel's step** (`wheel_step`, mine): a mouse notch is one step. A trackpad's small steps add up to one step per stroke, so a two-finger swipe doesn't flip through the hand.
+- **Joined to the fire pots.** Queue 60 part 1 was built alongside this, with its own stand-in left hand on Tab and the wheel. Now:
+  - `FirePots` asks `Hands` which pot is in the left hand (`FirePots.left` reads and sets it);
+  - its pots live on the strip, not in the carry slots;
+  - its own Tab+wheel handler is gone;
+  - the left hand holds still while a pot is being lit or aimed.
+  - Its F9 (pots of both oils), its pot in view and its `fire_pot` kind stay; my own stand-in pot and F9 went in the merge. Queue 60's part 2 no longer needs to wire the left hand.
+- **wheel_drives:** right by default. Switched to left on the Controls page, the plain wheel steps the left hand and Tab with the wheel steps the right. Holding Tab then shows the right hand's choices, low right. That last part is my reading: Tab shows whatever Tab and the wheel step through.
+- **The Controls page** (`ControlsPage`, Settings' second tab): all 32 actions with their keys and buttons, the wheel among them, queue 54's douse included. Two columns: moving, the hands and the screens on the left; the open world's own keys and the dev keys on the right. It is 616×454 at 480 lines, so it fits a 4:3 frame too.
+  - Click an action, then press its new key, mouse button or wheel. Esc cancels and doesn't shut the panel. The page takes that press before the game hears it.
+  - The one input replaces the action's keys and buttons; a gamepad's stay. So rebinding Forward drops the Up arrow (reset brings it back).
+  - "Wheel drives" switches the wheel's hand. "Reset to defaults" asks once (click it again).
+  - An input that two actions share in one game shows amber on both, with a line at the foot. Actions that only one game reads never clash: Tab is the crawler's other hand and the open world's inventory.
+- **Saved per player** in `user://controls.cfg`. Only the actions you changed are saved, so new defaults still reach the rest; delete the file to go back to the defaults. `Controls.ensure()` applies it at every start, over `DEFAULTS` and Project Settings. The open world's prompts ("Right click: …") now name the bound button.
+- **On the way:**
+  - the Settings panel was 496 px tall in the 480-line frame, so its title and foot were clipped. Its rows are 19 px now (474 px);
+  - both games give an open panel its clicks first, so no key rebound to a mouse button can shut it under the pointer;
+  - in the crawler the wheel no longer grabs the mouse (a click still does).
+- **Data:** `[NOT WIRED YET]` is off `hands.json → _help.about`, which now says which keys are read. New, with help lines: `left.strip_slots`, `tab_hold.show_after_s`, `wheel_step`. `douse_key`'s help now says the page rebinds it.
+- **Checks** (seed 7, all 0 fails):
+  - `tools/hands_check.gd` (new): 61 lines, driven by real key and wheel events. It covers the prompt's six:
+    - the wheel goes torch → bare hands → torch;
+    - Q changes nothing;
+    - Tab+wheel goes item → empty → item;
+    - `wheel_drives` left swaps the hands;
+    - a binding saved is in force after a restart (the crawler built anew, the file read again);
+    - reset restores `DEFAULTS`.
+  - It also checks the strip inside the frame, a tap of Tab, the trackpad, F9's three pots, the left hand held while lighting, every action on the page, Esc, and clashes.
+  - After the merge with queues 45, 50, 52, 54, 56, 57 and 60: `crawler_check` 113 lines, `fire_pot_check` 63, `stagger_check` 41, `crawler_harm_check` 45 and `audio_mix_check` (the panel's sliders after the row change) all pass. In the open world, `swing_check` passed 18 lines before the merge.
+  - `crawler_frames` (seed 7, lavapipe): 0 fails on the first merge (26 lines, with queues 45, 50, 56, 57 and 60 in). New frames, now 17a–18b: the torch in the right hand and a tar pot in the left with Tab held (it checks the strip is drawn low left, inside the frame); the right hand's strip with the wheel on the left hand; the Controls and Settings pages. I looked at them once: everything inside the frame, the oils told apart on the strip. The final render on 5402764 (with 52 and 54 in too) was still running at this commit; its result follows here.
+- **Not mine, flagged:** `tool_check` (the ninja game, `MOVEMENT_PROFILE=shinobi`) fails 7 lines: the folk's bow and spear no longer lie by you, so Q has nothing to cycle. It fails the same 7 on the untouched base commit fd9a919, so it was failing before this pass.
+- **For chat:** CLAUDE.md's brief still calls §FA–§FH "not built yet". §FB is built now.
+
+---
+
 ## 2026-10-07 — The open world's master volume holds under the hurt muffle (§EA; Mike asked for it, found during queue 56) (f48f587)
 - **The bug:** Harm's muffle (§EA) wrote the Master bus's volume every frame, at 0 dB when unhurt, so in the open world the Settings master-volume slider did nothing while Harm ran (only 0 % still muted). Leaving, Harm also put the bus back to 0 dB rather than the slider's level.
 - **The fix:** `AudioMix` owns the Master level. `AudioMix.set_master_trim(db)` lays a trim on top of the slider's level, Harm sets its muffle through it, and takes it off when it goes. The muffle's low-pass is unchanged. The crawler's Harm (queue 56) never touches the Master bus.
