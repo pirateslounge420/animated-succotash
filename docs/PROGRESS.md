@@ -77,8 +77,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
     | Torch in hand | 480 lines (854×480) | 270 lines (480×270) |
     |---|---|---|
-    | Standing | 119 px tall × 74 wide (25% of the frame), ~4.7 px a texel | 57 × 43 px (21%), ~2.2 px a texel |
-    | Sprinting (34° lean, stretched 1.3) | 138 × 109 px | 71 × 68 px |
+    | Standing | 122 px tall × 78 wide (25% of the frame), ~4.8 px a texel | 58 × 44 px (21%), ~2.3 px a texel |
+    | Sprinting (31° there: a slot's draft adds to your speed's 34°; stretched 1.3) | 141 × 112 px | 72 × 60 px |
 
   - It sits at the bottom right, its foot about two thirds of the way down the frame.
 - **The lean** (`PitchTorch.Lean`): 6° per m/s against your motion, at most 50°, stretching to 1.3 at a sprint, toward an airway's draft, settling over 0.4 s.
@@ -98,7 +98,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - every wrap is six-sided and flat-topped with its bands as steps (a vertex test); the coal is six-sided; the drips are 2–7 cm; no specular, roughness under 1 or normal map on any head or stick;
     - the lean is 0 standing, 33.6° sprinting (within 50°) and stretched 1.3, settled again after stopping, 5° toward an ordinary airway, and 50° away from a strong mouth in its gust, while the torch holds;
     - the flame's flicker on the light (×0.94–1.08 over 2 s); the smoke darker and still blue.
-  - `crawler_frames` (seed 7) had 0 fails over 46 frames, rendered before queues 49, 58 and 61 landed; its render on this commit follows below. New: the bundle's heads by the hearth (`01h`), and the torch in hand in a dark corridor standing and at a sprint, at 480 and 270 (`22a`–`22d`), measured as above. That is the walkabout for Torchfire 1.
+  - `crawler_frames` (seed 7, on 2060cc2) has 0 fails over 57 frames (43 checked lines). New: the bundle's heads by the hearth (`01h`), and the torch in hand in a dark corridor standing and at a sprint, at 480 and 270 (`22a`–`22d`), measured as above and all four checked. That is the walkabout for Torchfire 1.
+    - The first render on afac6a9 caught the snake (queue 49) reaching you in that corridor during the last torch frame: the harm darkened it and the flame measured small, unchecked. In 2060cc2 the torch frames hold the snake still, as the glow-moss frames do, and check the sprint (the flame streams wider than it stands, still solid).
   - Also 0 fails: `fire_pot_check`, `hands_check`, `stagger_check`, `crawler_harm_check`, `residents_check` and `boss_check` (seed 7), and the open world's `swing_check` (seed 7731).
 - **Noted:**
   - The night grade lifts every near-black to navy (R3), so the pitch shows as the frame's darkest navy, not brown-black. Browner darks by a fire would be the grade's warmth (§EE.1), not the torch.
