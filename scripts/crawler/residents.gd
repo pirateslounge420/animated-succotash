@@ -21,6 +21,12 @@ extends Node3D
 ##   hidden_from()  you are out of its sight only because of low cover
 ##                  (§FC.2: crouched behind it; standing, it would see you):
 ##                  what its Pursuit's hide rule reads;
+##   watched()      can you see it (Mike's 7 Oct note, the Boos; its
+##                  creature's creep block): any of its view points in your
+##                  frame or within creep.view_margin of its edge, within
+##                  creep.seen_m of your eye, nothing of the stone between;
+##                  the dark doesn't hide it. While you can, a creeper holds
+##                  still (Resident.holds_still);
 ##   nav            the floor they walk (TombNav, built once the tomb's
 ##                  stone is in the physics world);
 ##   bake()         their sheets (SkeletonRig, ResidentSprite: §ET.8).
@@ -168,14 +174,70 @@ func clear_line(a: Vector3, b: Vector3) -> bool:
 	return get_world_3d().direct_space_state.intersect_ray(q).is_empty()
 
 
-## Does `r`, at rest, wake (you within its wakes_m, a clear line from its
-## head to yours)?
+## Have you come near enough to `r` at rest to bring it out: your head
+## within its waking distance (Resident.waking_m: a creeper's creep.arms_m
+## arms it, a waker's wakes_m wakes it), a clear line from its head to
+## yours?
 func can_wake(r: Resident) -> bool:
 	if stay_asleep or paused():
 		return false
 	var head := player.eye_position()
 	var e: Vector3 = r.place.eye
-	return e.distance_to(head) <= float(r.def.get("wakes_m", 3.0)) and clear_line(e, head)
+	return e.distance_to(head) <= r.waking_m() and clear_line(e, head)
+
+
+## Can you see `r` now (Mike's 7 Oct note; its creep block): what holds a
+## creeper still.
+func watched(r: Resident) -> bool:
+	return points_watched(r.view_points(), r.creep())
+
+
+## Would you see any of `pts` (points on a body: feet, middle, head; the
+## middle also taken `cr`.side_m to either side as you see it, so an arm at
+## the frame's edge counts) from your eye now: in the frame or within
+## `cr`.view_margin of its edge (a share of the frame on each side), within
+## `cr`.seen_m, with nothing of the stone between? The dark doesn't hide
+## them. With no creep block, in the frame within Resident.SEEN_M.
+func points_watched(pts: Array, cr: Dictionary = {}) -> bool:
+	if pts.is_empty() or not is_inside_tree():
+		return false
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return false
+	var c := cam.global_position
+	var far := float(cr.get("seen_m", Resident.SEEN_M))
+	var margin := float(cr.get("view_margin", 0.0))
+	var side := float(cr.get("side_m", 0.0))
+	var all_pts := pts.duplicate()
+	if side > 0.0 and pts.size() >= 2:
+		var across := ((pts[1] as Vector3) - c).cross(Vector3.UP)
+		across.y = 0.0
+		if across.length() > 0.001:
+			across = across.normalized() * side
+			all_pts.append((pts[1] as Vector3) + across)
+			all_pts.append((pts[1] as Vector3) - across)
+	for q: Vector3 in all_pts:
+		if c.distance_to(q) <= far and off_frame(cam, q) <= margin and clear_line(c, q):
+			return true
+	return false
+
+
+## How far `p` lies outside camera `cam`'s frame, as a share of the frame
+## (its width across, its height up and down): 0 on its edge, below 0
+## inside it, INF behind the camera.
+static func off_frame(cam: Camera3D, p: Vector3) -> float:
+	var lp := cam.global_transform.affine_inverse() * p
+	var ahead := -lp.z
+	if ahead < 0.01:
+		return INF
+	var size := cam.get_viewport().get_visible_rect().size
+	var aspect := size.x / maxf(size.y, 1.0)
+	var tv := tan(deg_to_rad(cam.fov) * 0.5)
+	var th := tv * aspect
+	if cam.keep_aspect == Camera3D.KEEP_WIDTH:
+		th = tv
+		tv = th / aspect
+	return (maxf(absf(lp.x / ahead) / th, absf(lp.y / ahead) / tv) - 1.0) * 0.5
 
 
 ## What `r` senses of you now: "touch", "sight", "flame", "glow",
@@ -472,24 +534,19 @@ func come_up_spot(r: Resident) -> Dictionary:
 		if d >= best_d:
 			continue
 		var spot := pocket_spot(int(n.id), r)
-		if spot.distance_to(player.global_position) < keep_off or seen_at(spot):
+		if spot.distance_to(player.global_position) < keep_off or seen_at(spot, r.creep()):
 			continue
 		best_d = d
 		best = {"node": int(n.id), "pos": spot}
 	return best
 
 
-## Would you see something standing at `p` (its middle and its head): in the
-## frame, near enough, nothing of the stone between?
-func seen_at(p: Vector3) -> bool:
-	var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
-	if cam == null:
-		return false
-	var c := cam.global_position
-	for q: Vector3 in [p + Vector3(0.0, 0.5, 0.0), p + Vector3(0.0, 1.5, 0.0)]:
-		if c.distance_to(q) <= Resident.SEEN_M and cam.is_position_in_frustum(q) and clear_line(c, q):
-			return true
-	return false
+## Would you see something standing at `p` (its feet, middle and head):
+## points_watched by `cr` (a creeper's creep block: what it counts as being
+## seen, Mike's 7 Oct note), else in the frame within Resident.SEEN_M,
+## nothing of the stone between?
+func seen_at(p: Vector3, cr: Dictionary = {}) -> bool:
+	return points_watched(Resident.standing_points(p), cr)
 
 
 ## Where the light comes into dark node `id` nearest `at` (a doorway to a lit
