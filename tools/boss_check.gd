@@ -424,8 +424,16 @@ func _swing_into(main: CrawlerMain, dists: Array, how: String) -> void:
 		guard += 1
 	var d0 := _flat_d(h0, p.global_position)
 	var d1 := _flat_d(b.head, p.global_position)
-	ok(absf(moved - b.strike.reel_m) < 0.1 and d1 > d0 + 0.5,
-		"%s: it reels %.2f m %s (reel_m %.2f), %.2f -> %.2f m from you" % [how, moved, "back along its body" if b._reel_back else "straight back, its body following", b.strike.reel_m, d0, d1])
+	# The whole reel_m, or straight back until the wall stops it, still on
+	# its floor its girth off the stone (queue 57: Boss._on_floor; before
+	# that it slipped into the wall).
+	var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[b.node].piece)]
+	var aa := Delves.along_across(pc, Vector2(b.base.x, b.base.z))
+	var edge := minf(minf(aa.x, float(pc.len) - aa.x), float(pc.half) - absf(aa.y))
+	var margin := float(b.sub("body").get("girth_m", 0.38)) * 0.5 + 0.1
+	var at_wall := not b._reel_back and moved > 0.5 and edge >= margin - 0.01 and edge <= margin + 0.08
+	ok((absf(moved - b.strike.reel_m) < 0.1 or at_wall) and edge >= margin - 0.01 and d1 > d0 + 0.5,
+		"%s: it reels %.2f m %s (reel_m %.2f)%s, %.2f -> %.2f m from you, %.2f m off the nearest wall" % [how, moved, "back along its body" if b._reel_back else "straight back, its body following", b.strike.reel_m, ", until the wall stops it" if at_wall else "", d0, d1, edge])
 	ok(main.harm.landed == landed0, "%s: no hit counts from the broken strike (%d)" % [how, main.harm.landed - landed0])
 
 

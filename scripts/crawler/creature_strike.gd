@@ -21,8 +21,9 @@ extends Node3D
 ##            nothing to it now (stagger.committed_strike_goes_through).
 ##            At its end the hit lands, one hit through the player's
 ##            take_hit (Harm counts it, i-frames and all, §EA, §EC), if you
-##            are still within strike.reach_m with nothing solid between;
-##            stepped out of reach in time, it misses.
+##            are still within strike.reach_m of where it struck from
+##            (`origin`, its body, not its lunging head) with nothing solid
+##            between; stepped out of reach in time, it misses.
 ##   recover  strike.recover_s: it draws back before it can strike again.
 ##
 ## Any swing that lands on a creature, staggering it or not, is as loud as
@@ -60,6 +61,10 @@ var sound := ""
 ## strike whenever that is in reach: the creature sets both.
 var target: Node3D
 var armed := false
+## Where its reach is measured from (scene; flat): its body where it
+## strikes from, for a creature whose head (this node) lunges out of it, as
+## the snake's does. Unset (INF), this node's own place.
+var origin := Vector3.INF
 ## What a landed strike does, Callable(target) (unset: one hit through the
 ## player's take_hit).
 var on_hit := Callable()
@@ -155,9 +160,14 @@ func pose_k() -> float:
 	return 0.0
 
 
+## Where its reach is measured from: `origin`, else this node.
+func reach_from() -> Vector3:
+	return origin if origin.is_finite() else global_position
+
+
 ## `pos` within its reach (flat; the crawler's up is +y).
 func reaches(pos: Vector3) -> bool:
-	var d := pos - global_position
+	var d := pos - reach_from()
 	return Vector2(d.x, d.z).length() <= reach_m
 
 
@@ -342,7 +352,11 @@ static func swing_lands(player: PlanetPlayer, at: Vector3, reach: float, lit: bo
 		to.y = 0.0
 		if to.length() > CLOSE_M and rad_to_deg(fwd.angle_to(to.normalized())) > SWING_CONE_DEG:
 			continue
-		if not cs._clear(player.reach_from(), cs.global_position, [player.get_rid()]):
+		# Nothing solid between you and the near side of its head (a head
+		# drawn back against stone is still there to hit).
+		var from := player.reach_from()
+		var near := cs.global_position + (from - cs.global_position).normalized() * minf(cs.body_r, from.distance_to(cs.global_position) * 0.5)
+		if not cs._clear(from, near, [player.get_rid()]):
 			continue
 		best = cs
 		best_d = d

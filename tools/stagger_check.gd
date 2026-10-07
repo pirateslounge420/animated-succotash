@@ -24,7 +24,17 @@ extends SceneTree
 ##     heard; a swing that meets nothing isn't;
 ##  8. stepped out of reach in the wind-up, the strike misses; a creature
 ##     behind you, or out of the swing's reach, isn't met by it;
-##  9. the swing still passes the flame (§CN): its arc ends as built.
+##  9. the swing still passes the flame (§CN): its arc ends as built;
+## 10. the snake itself (queue 49's Boss strikes with this), scripted in its
+##     own dark two metres from its head: its wind-up's sound from the
+##     first frame, its pose (reared, the head drawn back, the jaws
+##     opening), then the lunge and one hit; a swing in the committed
+##     strike, or with the torch unlit, staggers nothing and the hit
+##     counts; a second stagger inside cooldown_s fails; stepped back out
+##     of reach_m in its wind-up, the lunge misses (its reach is measured
+##     from its body, not its lunging head); the hiss it holds off with at
+##     your flame is its own low warning, darker and slower than the
+##     strike's (bosses.json torch_delay.sound).
 
 var main: CrawlerMain
 var player: CrawlerPlayer
@@ -33,6 +43,8 @@ var harm: Harm
 var creature: Node3D
 var strike: CreatureStrike
 var lane := {}
+## Stepping the snake (main.boss) by hand each frame, not the stand-in.
+var on_snake := false
 var fails := 0
 
 
@@ -65,6 +77,12 @@ func _run() -> void:
 		await physics_frame
 	while not main.baked:
 		await process_frame
+	# The snake (queue 49) holds still while the stand-in is tried, and is
+	# stepped by hand when it is its turn.
+	if main.boss != null:
+		while not main.boss.started:
+			await process_frame
+		main.boss.auto = false
 	player = main.player
 	torch = player.torch
 	# Hits go through the player's take_hit to Harm (§EA, §EC); the crawler
@@ -103,6 +121,7 @@ func _run() -> void:
 	await _unlit()
 	await _noise()
 	await _misses()
+	await _snake()
 	_done()
 
 
@@ -195,7 +214,10 @@ func _place() -> void:
 func _frames(n: int) -> void:
 	for i in n:
 		await physics_frame
-		creature.global_position += strike.take_reel()
+		if on_snake:
+			main.boss.tick(1.0 / 60.0)
+		else:
+			creature.global_position += strike.take_reel()
 
 
 ## Step until the strike is `share` of the way into its wind-up less the
@@ -391,3 +413,321 @@ func _misses() -> void:
 	for i in 30:
 		await _frames(1)
 	ok(torch.swings == passes + 1 and torch._swing == 0.0, "the swing still runs its arc to the end, where the flame passes (§CN)")
+
+
+# --- 10. The snake itself ------------------------------------------------------
+
+func _snake() -> void:
+	var b := main.boss
+	ok(b != null and b.strike != null, "the tomb has its snake, striking with CreatureStrike (queue 49)")
+	if b == null or b.strike == null:
+		return
+	# The stand-in out of the way: a swing must meet the snake alone.
+	creature.queue_free()
+	await process_frame
+	strike = b.strike
+	on_snake = true
+	var sd: Dictionary = ((_json("res://data/bosses.json").get("bosses", {}) as Dictionary).get("desert", {}) as Dictionary).get("strike", {})
+	ok(strike.sound == str(sd.get("sound", "")) and absf(strike.wind_up_s - float(sd.get("wind_up_s", 0.0))) < 1e-4 and absf(strike.reach_m - float(sd.get("reach_m", 0.0))) < 1e-4,
+		"the snake strikes with its strike block (%s, wind-up %.2f s, reach %.1f m)" % [strike.sound, strike.wind_up_s, strike.reach_m])
+	await _snake_tell(b)
+	await _snake_committed(b)
+	await _snake_unlit(b)
+	await _snake_cooldown(b)
+	await _snake_steps_back(b)
+	_snake_warn(b)
+	on_snake = false
+
+
+func _near_unlit(b: Boss, q: Vector3, r: float) -> bool:
+	for h in b.fires.holders:
+		if not FireStore.is_lit(h) and (h as Node3D).global_position.distance_to(q) < r:
+			return true
+	return false
+
+
+## In its dark, standing room: q in a dark node next to (or in) the one it
+## lies in, inside that piece's walls, with nothing between it and its
+## head, and no unlit holder within the swing's reach (a swing passes the
+## flame, §CN, and a holder relit beside it would send it off, §EY.1).
+func _dark_spot(b: Boss, q: Vector3) -> bool:
+	var id := b.ground.node_at(q)
+	if id < 0 or not b.ground.is_ground(id) or _near_unlit(b, q, Torch.reach_m() + 0.6):
+		return false
+	if b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
+		return false
+	# Your chest to where its head rears (a metre and more up, over its
+	# body): no overhang between.
+	if b._blocked(q + Vector3(0, 0.9, 0), b.base + Vector3(0, 1.2, 0), false):
+		return false
+	var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]
+	var aa := Delves.along_across(pc, Vector2(q.x, q.z))
+	return aa.x > 0.4 and aa.x < float(pc.len) - 0.4 and absf(aa.y) < float(pc.half) - 0.45
+
+
+## A spot `near_m` from where it strikes from (its base) in its dark, and
+## with `far_m` > 0 a spot that far on along the same line, also in its
+## dark: {"near", "far"}, or {} if none.
+func _snake_spot(b: Boss, near_m: float, far_m := 0.0) -> Dictionary:
+	for k in 32:
+		var a := TAU * k / 32.0
+		var dv := Vector3(cos(a), 0.0, sin(a))
+		var near := b.base + dv * near_m
+		near.y = b._floor_y(near)
+		if not _dark_spot(b, near):
+			continue
+		if far_m > 0.0:
+			var far := b.base + dv * far_m
+			far.y = b._floor_y(far)
+			if not _dark_spot(b, far):
+				continue
+			return {"near": near, "far": far}
+		return {"near": near}
+	return {}
+
+
+## You at `at` facing its head, your torch lit or not, and its strike begun
+## as its own algorithm begins it (it has you; in its strike).
+func _snake_begin(b: Boss, at: Vector3, lit: bool) -> void:
+	harm.reset()
+	player._invulnerable = 0.0
+	var to := b.strike.global_position - at
+	player.spawn_flat(at, atan2(-to.x, -to.z), 0.0)
+	if lit:
+		if not torch.lit():
+			torch.light()
+	else:
+		torch.item()["lit"] = false
+	await physics_frame
+	b.strike.cancel()
+	# A fresh chase, begun with your torch as it is now (a torch put out
+	# while it chases you loses it, bosses.json gives_up.torch_doused).
+	b._let_go("check")
+	b.noticed = true
+	b.pursuit.notice(lit)
+	b.state = "strike"
+	b.strike.begin()
+
+
+## The strike over, it holds still until the next one is begun (it would
+## otherwise strike again while you stand in reach).
+func _snake_rest(b: Boss) -> void:
+	b._calm()
+
+
+## What a swing at the snake's head from where you stand sees (the torch's
+## own tests, CreatureStrike.swing_lands): its reach, the angle off where
+## you look, and whether stone is between.
+func _sees(b: Boss) -> String:
+	var at := torch.swing_point()
+	var d := at.distance_to(b.strike.global_position) - b.strike.body_r
+	var fwd := -player.global_basis.z
+	fwd.y = 0.0
+	var to := b.strike.global_position - player.global_position
+	to.y = 0.0
+	var ang := rad_to_deg(fwd.normalized().angle_to(to.normalized())) if to.length() > 0.01 else 0.0
+	var clear := b.strike._clear(player.reach_from(), b.strike.global_position, [player.get_rid()])
+	return "%.2f m past its head's size (reach %.1f), %.0f deg off your view, %s" % [d, Torch.reach_m(), ang, "clear" if clear else "stone between"]
+
+
+func _snake_to(b: Boss, state: String, n := 240) -> void:
+	for i in n:
+		if b.strike.state == state:
+			return
+		await _frames(1)
+
+
+func _snake_tell(b: Boss) -> void:
+	var spot := _snake_spot(b, 2.0)
+	ok(not spot.is_empty(), "the snake: a spot in its dark 2 m from it, out of the swing's reach of any unlit holder")
+	if spot.is_empty():
+		return
+	var h0 := harm.landed
+	b.strike.cooldown_left = 0.0
+	await _snake_begin(b, spot.near, true)
+	var tell: AudioStreamPlayer3D = b.strike.get_node_or_null("Tell")
+	ok(b.strike.wind_up_frame == Engine.get_physics_frames() and b.strike.tell_frame == b.strike.wind_up_frame and tell != null and tell.playing and _kind_of(tell.stream) == "snake_hiss",
+		"the snake: its strike's hiss starts on the wind-up's first frame, from its head (%s)" % _kind_of(tell.stream if tell != null else null))
+	var lift0 := b.lift
+	var lift_max := lift0
+	var back := 0.0
+	var mouth_early := false
+	var mouth_late := false
+	while b.strike.state == "wind_up":
+		var k := b.strike.pose_k()
+		await _frames(1)
+		lift_max = maxf(lift_max, b.lift)
+		back = minf(back, b.lunge)
+		if k < 0.4 and b.mouth_open:
+			mouth_early = true
+		if k > 0.7 and b.mouth_open:
+			mouth_late = true
+	ok(lift_max > lift0 + 0.2 and back < -0.15 and not mouth_early and mouth_late,
+		"the snake: its wind-up shows: reared (%.2f -> %.2f m), the head drawn back (%.2f m), the jaws opening after half" % [lift0, lift_max, back])
+	var out := 0.0
+	while b.strike.state == "strike":
+		await _frames(1)
+		out = maxf(out, b.lunge)
+	ok(out > 0.8, "the snake: then the lunge (%.2f m)" % out)
+	ok(harm.landed == h0 + 1, "the snake: left alone, its strike lands one hit (Harm %d -> %d)" % [h0, harm.landed])
+	_snake_rest(b)
+
+
+## A swing whose top falls in the committed strike.
+func _snake_committed(b: Boss) -> void:
+	var spot := _snake_spot(b, 2.0)
+	if spot.is_empty():
+		ok(false, "the snake: a spot for the committed swing")
+		return
+	b.strike.cooldown_left = 0.0
+	var h0 := harm.landed
+	var s0 := b.strike.staggers
+	await _snake_begin(b, spot.near, true)
+	await _swing_for(1.0 + 0.5 * b.strike.strike_s / b.strike.wind_up_s)
+	var state_at := ""
+	for i in 30:
+		if torch._swing <= Torch.SWING_TOP:
+			break
+		await _frames(1)
+		state_at = b.strike.state
+	await _frames(1)
+	ok(torch.last_contact == "landed" and b.strike.staggers == s0,
+		"the snake: a swing landing after its wind-up ends (in the %s) doesn't stagger it (%s)" % [state_at, torch.last_contact])
+	await _snake_to(b, "recover")
+	ok(harm.landed == h0 + 1, "the snake: and the hit counts (Harm %d -> %d)" % [h0, harm.landed])
+	_snake_rest(b)
+
+
+func _snake_unlit(b: Boss) -> void:
+	var spot := _snake_spot(b, 2.0)
+	if spot.is_empty():
+		ok(false, "the snake: a spot for the unlit swing")
+		return
+	b.strike.cooldown_left = 0.0
+	var h0 := harm.landed
+	var s0 := b.strike.staggers
+	await _snake_begin(b, spot.near, false)
+	ok(not torch.lit() and torch.in_hand(), "the snake: your torch in hand, unlit")
+	await _swing_for(0.5)
+	await _to_top()
+	await _frames(1)
+	ok(torch.last_contact == "landed" and b.strike.staggers == s0 and absf(b.strike.met_at_share - 0.5) < 0.06,
+		"the snake: the same swing unlit staggers nothing (%s at %.0f%%)" % [torch.last_contact, b.strike.met_at_share * 100.0])
+	await _snake_to(b, "recover")
+	ok(harm.landed == h0 + 1, "the snake: and the hit counts (Harm %d -> %d)" % [h0, harm.landed])
+	_snake_rest(b)
+	torch.light()
+
+
+func _snake_cooldown(b: Boss) -> void:
+	var spot := _snake_spot(b, 2.0)
+	if spot.is_empty():
+		ok(false, "the snake: a spot for the stagger")
+		return
+	b.strike.cooldown_left = 0.0
+	var h0 := harm.landed
+	var s0 := b.strike.staggers
+	await _snake_begin(b, spot.near, true)
+	await _swing_for(0.5)
+	await _to_top()
+	await _frames(1)
+	ok(torch.last_contact == "staggered" and b.strike.staggers == s0 + 1,
+		"the snake: a lit swing at %.0f%% of its wind-up staggers it (%s)" % [b.strike.met_at_share * 100.0, _sees(b)])
+	await _snake_to(b, "ready")
+	var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[b.node].piece)]
+	var aa := Delves.along_across(pc, Vector2(b.base.x, b.base.z))
+	var edge := minf(minf(aa.x, float(pc.len) - aa.x), float(pc.half) - absf(aa.y))
+	ok(b.node >= 0 and b.ground.is_ground(b.node) and edge >= 0.0,
+		"the snake: its reel leaves it on its own floor in its dark, off the walls (%.2f m from the nearest wall, %s)" % [edge, "back along its body" if b._reel_back else "straight back"])
+	# Straight in again, inside the cooldown, from wherever its reel left it.
+	var left := b.strike.cooldown_left
+	var again := _snake_spot(b, 2.0)
+	if again.is_empty():
+		ok(false, "the snake: a spot for the second strike")
+		return
+	await _snake_begin(b, again.near, true)
+	await _swing_for(0.5)
+	var seen := _sees(b)
+	await _to_top()
+	await _frames(1)
+	ok(left > 0.0 and torch.last_contact == "landed" and b.strike.staggers == s0 + 1,
+		"the snake: a second stagger inside cooldown_s fails (%s, %.2f s of %.1f left; the swing: %s)" % [torch.last_contact, left, float(CreatureStrike.D.get("cooldown_s", 3.0)), seen])
+	await _snake_to(b, "recover")
+	ok(harm.landed == h0 + 1, "the snake: and that strike's hit counts (Harm %d -> %d)" % [h0, harm.landed])
+	_snake_rest(b)
+
+
+func _snake_steps_back(b: Boss) -> void:
+	var spot := _snake_spot(b, 2.0, b.strike.reach_m + 0.9)
+	ok(not spot.is_empty(), "the snake: a line in its dark to step back along")
+	if spot.is_empty():
+		return
+	b.strike.cooldown_left = 0.0
+	var h0 := harm.landed
+	var landed0 := b.strike.landed
+	await _snake_begin(b, spot.near, true)
+	while b.strike.state == "wind_up" and b.strike.t < 0.5 * b.strike.wind_up_s:
+		await _frames(1)
+	player.global_position = spot.far
+	await _snake_to(b, "recover")
+	var d := Vector2(player.global_position.x - b.base.x, player.global_position.z - b.base.z).length()
+	ok(harm.landed == h0 and b.strike.landed == landed0 and b.strike.strikes > 0,
+		"the snake: stepped back to %.1f m in its wind-up, its lunge misses (reach_m %.1f from its body; Harm %d -> %d)" % [d, b.strike.reach_m, h0, harm.landed])
+	_snake_rest(b)
+
+
+## The hiss it holds off with at your flame (torch_delay.sound): its own,
+## a darker, slower warning than its strike's.
+func _snake_warn(b: Boss) -> void:
+	b.strike.cancel()
+	b.state = "hang"
+	b._hiss_t = 0.0
+	b.tick(1.0 / 60.0)
+	var hang := _kind_of(b._hiss.stream if b._hiss != null else null)
+	var warn := _stats(SoundSynth.stream("snake_warn", 0))
+	var hiss := _stats(SoundSynth.stream("snake_hiss", 0))
+	ok(hang == "snake_warn", "the snake: holding off at your flame it hisses its own warning (%s), not its strike's hiss" % hang)
+	ok(warn.zcr < 0.7 * hiss.zcr and warn.attack_s > 4.0 * hiss.attack_s,
+		"the snake: the warning is darker and slower than the strike's hiss (%.0f vs %.0f crossings a second; up in %.2f vs %.2f s)" % [warn.zcr, hiss.zcr, warn.attack_s, hiss.attack_s])
+	b.state = "coil"
+
+
+## Which SoundSynth voice `st` is ("" if none of these).
+static func _kind_of(st: Variant) -> String:
+	if st == null:
+		return ""
+	for kind in ["snake_hiss", "snake_warn"]:
+		for v in SoundSynth.VARIANTS:
+			if SoundSynth.stream(kind, v) == st:
+				return kind
+	return "other"
+
+
+## A synth clip's brightness (zero crossings a second) and how fast it
+## comes up (s until its 10 ms loudness first reaches half its peak).
+static func _stats(st: AudioStreamWAV) -> Dictionary:
+	var data := st.data
+	var n := data.size() / 2
+	var crossings := 0
+	var prev := 0
+	var win := int(SoundSynth.RATE * 0.01)
+	var rms: Array = []
+	var acc := 0.0
+	for i in n:
+		var v := data.decode_s16(i * 2)
+		if (v >= 0) != (prev >= 0):
+			crossings += 1
+		prev = v
+		acc += float(v) * float(v)
+		if (i + 1) % win == 0:
+			rms.append(sqrt(acc / win))
+			acc = 0.0
+	var peak := 0.0
+	for r in rms:
+		peak = maxf(peak, float(r))
+	var attack := 0.0
+	for j in rms.size():
+		if float(rms[j]) >= peak * 0.5:
+			attack = j * 0.01
+			break
+	return {"zcr": crossings / (float(n) / SoundSynth.RATE), "attack_s": attack}

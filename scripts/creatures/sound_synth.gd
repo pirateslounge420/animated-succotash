@@ -55,6 +55,9 @@ class_name SoundSynth
 ##   snake_hiss   the giant snake's strike tell (design §FA.2): a sharp,
 ##                dry breath of a hiss, up fast and held through the
 ##                wind-up (CreatureStrike stops it as the strike goes)
+##   snake_warn   the giant snake holding off at your flame (§EY.2's torch
+##                delay): a low, slow, rasping warning hiss, swelling and
+##                easing, nothing like its strike's sharp one (§FA.2)
 ##
 ## Every one of them plays on a 3D player tuned by the falloff table,
 ## data/audio.json (Audio3D), except the hitmarker, a UI sound.
@@ -175,6 +178,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _jaw_creak(rng)
 		"bone_step":
 			samples = _bone_step(rng)
+		"snake_warn":
+			samples = _snake_warn(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -1362,4 +1367,34 @@ static func _bone_step(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var t := float(i) / RATE
 		var rattle := rng.randf_range(-1, 1) * (exp(-t * 60.0) * 0.4 + (0.3 if rng.randf() < 0.02 else 0.0) * exp(-t * 20.0))
 		s[i] = sin(TAU * f * t) * exp(-t * 70.0) * 0.7 + rattle
+	return s
+
+
+## The giant snake holding off at the edge of your light (design 6 Oct
+## §EY.2's torch delay): a warning, not a strike, so nothing like its
+## strike's hiss (§FA.2: that one must always mean the strike). Dark (noise
+## high-passed near 450 Hz and low-passed twice near 2 kHz, so its top
+## falls away steeply), slow to swell and slow to ease, rasping (a fast
+## flutter on the breath) and wavering slowly as the breath is let out.
+static func _snake_warn(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(1.3, 1.7))
+	var hp_k := 1.0 - TAU * rng.randf_range(380.0, 520.0) / RATE
+	var lp_k := 1.0 - exp(-TAU * rng.randf_range(1800.0, 2300.0) / RATE)
+	var rasp_hz := rng.randf_range(26.0, 34.0)
+	var wob_hz := rng.randf_range(2.0, 3.0)
+	var ph := rng.randf() * TAU
+	var hp := 0.0
+	var prev := 0.0
+	var lp := 0.0
+	var lp2 := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		hp = x - prev + hp_k * hp
+		prev = x
+		lp = lerpf(lp, hp, lp_k)
+		lp2 = lerpf(lp2, lp, lp_k)
+		var rasp := 1.0 + 0.35 * sin(TAU * rasp_hz * t)
+		var breath := 1.0 + 0.25 * sin(TAU * wob_hz * t + ph)
+		s[i] = lp2 * rasp * breath * _env(i, s.size(), 0.3, 0.6)
 	return s

@@ -1116,12 +1116,22 @@ func _reel(v: Vector3) -> void:
 	var to := head + v
 	to.y = _floor_y(to)
 	var tn := ground.node_at(to)
-	if tn < 0 or not ground.is_ground(tn) or _blocked(head + Vector3(0, 0.3, 0), to + Vector3(0, 0.3, 0)):
+	if tn < 0 or not ground.is_ground(tn) or not _on_floor(to, tn) or _blocked(head + Vector3(0, 0.3, 0), to + Vector3(0, 0.3, 0)):
 		return
 	head = to
 	base = to
 	_push_trail(head)
 	_track_node()
+
+
+## `p` on node `id`'s floor, off its walls by the body's girth (queue 57:
+## a reel's small steps can't slip through a wall's face the way a ray
+## that starts on it can).
+func _on_floor(p: Vector3, id: int) -> bool:
+	var pc: Dictionary = lay.pieces[int(ground.nodes[id].piece)]
+	var aa := Delves.along_across(pc, Vector2(p.x, p.z))
+	var m := float(sub("body").get("girth_m", 0.38)) * 0.5 + 0.1
+	return aa.x >= m and aa.x <= float(pc.len) - m and absf(aa.y) <= float(pc.half) - m
 
 
 ## Where its head would be `m` metres back along its own body.
@@ -1529,20 +1539,25 @@ func _pose() -> void:
 	var hp := head + Vector3.UP * lift + dir * lunge
 	body.pose(hp, dir, mouth_open, seg_pos, seg_dir)
 	# Where a swing has to reach to stagger it, and where its strike comes
-	# from: its head.
+	# from: its head. Its reach is measured from its body where it struck
+	# from (base), not from the head as it lunges out (queue 57), so a step
+	# back out of reach_m in its wind-up still makes it miss.
 	strike.global_position = hp + Vector3(0.0, 0.2, 0.0)
+	strike.origin = base
 	# The tell sits in the body's thick, behind the head.
 	if not seg_pos.is_empty():
 		_tell.global_position = seg_pos[mini(4, seg_pos.size() - 1)]
 		_hiss.global_position = hp
 
 
-## Its hiss at your flame while it holds off (the strike's own voice,
-## bosses.json strike.sound).
+## Its hiss at your flame while it holds off: a low, slow warning of its
+## own (bosses.json torch_delay.sound, SoundSynth snake_warn), never its
+## strike's sharp hiss (strike.sound), so that one always means the strike
+## is coming (§FA.2, queue 57).
 func _play_hiss() -> void:
 	if _hiss == null:
 		return
-	_hiss.stream = SoundSynth.stream(str(sub("strike").get("sound", "snake_hiss")), _rng.randi())
+	_hiss.stream = SoundSynth.stream(str(sub("torch_delay").get("sound", "snake_warn")), _rng.randi())
 	Audio3D.play(_hiss)
 
 
