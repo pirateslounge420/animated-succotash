@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Mike: metal is fine, the world moves past the tribal stage (design answer, for chat; no code)
+Mike: *"metal is fine- we moving past tribal stage."* It settles the clash flagged in this morning's answers: the warden's chain is metal (§FI.2 call 6, `bosses.json → unplaced.warden.chain`, still null), and "no metal" (§EH) no longer holds for Torchfire 1.
+- **Nothing in Torchfire 1 enforced it:** the crawler has no metal rule and no check for one.
+- **The shelved open world still does:** `tools/no_metal_check.gd` holds its peoples, camps, techniques and villages to §EH. That stays as it is until Mike says the open world moves on too.
+- **For chat:**
+  - Amend §EH for Torchfire 1, and §FJ.5's "fits §EH" for the clay pot (the pot stays clay).
+  - Set the warden's chain to metal.
+  - Mike's Project brief still says "tribal tech" (§FK.5's suggested wording).
+
 ## 2026-10-07 — Mike's second note of 7 Oct, part 2: how the creatures move (§EY, §FD, §FE, §FF.2, §FA.3): nothing goes through the stone, the light has edges, the snake's own tunnels, the 2 m lunge (helper session 5e998ec, cf15aee, 285049b, a077343; merged c7fe09c, ce46ff2; follow-up ffd5dc2)
 Mike: *"the snake can follow you but not get close to the fire- in other words, creatures that are actively chasing will chase near the fire but stay somewhat in the darkness if they can- they may show just enough of their face/body near the fire if chasing"*; *"creatures shouldnt "sink" into the stone- only ghosts/phantoms should have the ability to ohase thru walls and floors and ceilings. the snake and other physical bosses have to move thru lit room while doing their best to stay at the edges of the light. depending on the ruins boss type as well, they may have their own tunnels- this can be the case for the snake. it wont actually despawn and respawn places"*; *"the snake should be faster or just as fast as a walk and if you sprint you can outrun it"*; *"a pot cant kill a boss but will stun it/cause it to retreat to its cave temporarily"*; *"skeletons should lu ge at the player within 2 meters"*. Built by a helper session in its own worktree (its commits above, its merges of the shared branch 11f37d7 and 9f84e24), merged here. Numbers he didn't give are Claude Code's first guesses.
 
