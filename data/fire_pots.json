@@ -5,7 +5,7 @@
   "sources": "§FA.3 / §FF.3. gift: the folk of a fully relit ruin give some, with the way of using them (Mike). found: a few lie in ruins (Claude's first guess, open).",
   "carry_max": "How many fit the left-hand strip (§FB). Rarity is the point: there won't be many (Mike).",
   "lit_from": "§FA.3 (Mike): the wick is lit off the lit torch in the right hand only. No lit torch, no pot (§AW: fire is borrowed, never made). light_anim_s: the hands-come-together animation, in view.",
-  "fuse_s": "Seconds from the wick catching to the burst (Claude's first guess). cook_off_in_hand: null until Mike answers §FI.2 call 2; true would make a pot held past fuse_s burst in your hand as one hit (harm.json).",
+  "fuse_s": "Seconds from the wick catching to the burst (Claude's first guess). cook_off_in_hand: null until Mike answers §FI.2 call 2; true would make a pot held past fuse_s burst in your hand as one hit (harm.json). Mike answered 7 Oct (\"a fuse held too long after lighting will explode in hand and cause 1 point of damage\"): true, wired (Claude Code, FirePots._cook_off): held past fuse_s from the catch, the pot bursts where your hand is (its whole burst: the flash, the fire on what stands within splash_m, tar's patch, the sound), it is gone from your pack, and you take one hit of harm.json's three (death cause fire:pot_in_hand). false or null: a spent fuse waits for the impact, as first built.",
   "throw": "§FB first guess: hold left click to light and aim (the §N hold-to-charge), release to lob. Range grows with the hold from min_m to max_m over charge_s.",
   "gives_away": "§FA.3 first guess (§DF): the wick's flare is seen by creatures within flare_seen_m with a line of sight; the burst is heard within burst_heard_m. Wired 7 Oct on the snake (queue 60 part 2): the wick's flare counts as your flame in its sight out to flare_seen_m, even with your torch smothered; a burst within burst_heard_m of it counts as a sprint heard.",
   "spreads_to": "§FA.3 first guess: what catches from a burst or a burning patch (webs, the temple cats' wooden runs, dry rushes, cloth).",
@@ -18,7 +18,7 @@
   "found": "Added by Claude Code (prompt 60, §FA.3 sources: found, Claude's first guess): one pot lies on the floor of a side room per dungeon, never on the spine (crawler.json plan.spine; until it's built, never on the way from the hearth room to the heart), never the hearth room or the heart, a dead end where there is one. oils: the odds of each oil. Right click takes it.",
   "dev_items": "Added by Claude Code (prompt 60): F9 in the crawler (dev_mode) puts pots in the pack up to carry_max, of these oils in turn, so both can be tried.",
   "spread": "Added by Claude Code (prompt 60, §FA.3 spreads_to): what catches burns burn_s seconds by its kind, burning what stands in it at burn_dps (residents.json fire_hp units), then lies charred and never burns again. In the tomb so far: the hearth room's reed mat (rushes) and the bedroll (cloth); the tomb has no dry wood. Webs and the cats' runs come with their worlds. First guesses.",
-  "hurts_you": "Added by Claude Code (prompt 60), open for Mike: your own pot's fire doesn't hurt you (Harm isn't in the crawler yet, prompt 56). true would make standing in a burst or a burning patch a hit."
+  "hurts_you": "Added by Claude Code (prompt 60), open for Mike: your own pot's fire doesn't hurt you (Harm isn't in the crawler yet, prompt 56). true would make standing in a burst or a burning patch a hit. Mike, 7 Oct (\"your own fire pot should be able to hurt you if you throw it way too close to yourself, like a wall or floor you're right next to\"): true, wired (Claude Code; FirePots.burst_hurts_you). hurts_you_m (new, Claude Code's first guess): your own burst within this many metres of your body (your capsule, from your feet to your eye, 0.35 m round), with no stone between, is one hit (death cause fire:pot), whichever oil; looking level the shortest throw lands 4 m out (throw.min_m), so it takes a wall or floor right next to you, or looking straight down. Its burning patch and stuck tar never hurt you (first guess, open for Mike). A pot that goes off in your hand is cook_off_in_hand's one hit, never two."
  },
  "vessel": "clay_pot",
  "crafted": false,
@@ -30,7 +30,7 @@
  "lit_from": "torch_in_right_hand",
  "light_anim_s": 0.6,
  "fuse_s": 3.0,
- "cook_off_in_hand": null,
+ "cook_off_in_hand": true,
  "throw": {
   "hold_to_charge": true,
   "min_m": 4.0,
@@ -141,5 +141,6 @@
   "burn_dps": 0.5,
   "leaves": "char"
  },
- "hurts_you": false
+ "hurts_you": true,
+ "hurts_you_m": 1.0
 }

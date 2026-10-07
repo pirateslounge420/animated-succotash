@@ -730,12 +730,13 @@ func _update_swing(delta: float) -> void:
 
 ## The top of the swing, as far out as it goes (§FA.1): it meets whatever
 ## creature it reaches (CreatureStrike.swing_lands). A lit torch staggers
-## one in its wind-up; landing on one at all is as loud as a sprint, and
-## you hear it land. Keeps what it did (last_contact: "staggered",
-## "landed" or "").
+## one in its wind-up; landing on one at all is as loud as a sprint, you
+## hear it land, and the crosshair shows its X (Reticle.hit; Mike, 7 Oct).
+## Keeps what it did (last_contact: "staggered", "landed" or "").
 func swing_top() -> String:
 	last_contact = CreatureStrike.swing_lands(player, swing_point(), reach_m(), lit())
 	if last_contact != "":
+		Reticle.hit()
 		_voice.stream = SoundSynth.stream("arrow_hit", randi())
 		_voice.pitch_scale = randf_range(0.8, 0.95)
 		_voice.play()

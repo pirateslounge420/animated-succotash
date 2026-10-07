@@ -21,7 +21,8 @@ extends SceneTree
 ##  6. the same swing as 3 with the torch unlit staggers nothing, and the
 ##     hit counts;
 ##  7. a swing that lands is as loud as a sprint, held long enough to be
-##     heard; a swing that meets nothing isn't;
+##     heard, and shows the crosshair's X (Mike, 7 Oct); a swing that
+##     meets nothing isn't and doesn't;
 ##  8. stepped out of reach in the wind-up, the strike misses; a creature
 ##     behind you, or out of the swing's reach, isn't met by it;
 ##  9. the swing still passes the flame (§CN): its arc ends as built;
@@ -267,12 +268,14 @@ func _stagger_at_half() -> void:
 	var hits0 := harm.landed
 	var landed0 := strike.landed
 	var d0 := Vector2(creature.global_position.x - player.global_position.x, creature.global_position.z - player.global_position.z).length()
+	var x0 := Reticle.hits
 	strike.begin()
 	await _swing_for(0.5)
 	await _to_top()
 	await _frames(1)
 	ok(torch.last_contact == "staggered" and strike.staggers == 1 and strike.state == "reel",
 		"a lit swing landing at %.0f%% of the wind-up staggers it (%s, %s)" % [strike.met_at_share * 100.0, torch.last_contact, strike.state])
+	ok(Reticle.hits == x0 + 1, "and the crosshair shows its X, once (Reticle.hit; Mike, 7 Oct: %d)" % (Reticle.hits - x0))
 	ok(absf(strike.met_at_share - 0.5) < 0.06, "it landed at half the wind-up (%.2f)" % strike.met_at_share)
 	var tell: AudioStreamPlayer3D = strike.get_node_or_null("Tell")
 	ok(tell != null and not tell.playing, "its tell is broken off with its strike")
@@ -368,10 +371,12 @@ func _noise() -> void:
 	ok(player.noise_level < 0.5, "then quiet again (%.2f)" % player.noise_level)
 	# Nothing in reach: a swing at the air is no louder than standing.
 	creature.global_position = lane.at + lane.fwd * 6.0 + Vector3.UP * 0.6
+	var xn := Reticle.hits
 	torch.swing()
 	await _to_top()
 	await _frames(2)
 	ok(torch.last_contact == "" and player.noise_level < 0.5, "a swing that meets nothing isn't (%.2f)" % player.noise_level)
+	ok(Reticle.hits == xn, "and shows no X")
 	await _frames(20)
 
 

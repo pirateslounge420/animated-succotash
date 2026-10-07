@@ -25,7 +25,10 @@ extends Node3D
 ##  * Aiming (§N's hold to charge): keep holding and the lob's range grows
 ##    from throw.min_m to throw.max_m over charge_s, shown by a faint dotted
 ##    arc (AimArc's look; throw.arc_shown). The fuse runs from the catch
-##    (fuse_s); cook_off_in_hand is null, so it never goes off in your hand.
+##    (fuse_s). Held past it, the pot bursts in your hand (cook_off_in_hand;
+##    Mike, 7 Oct: "a fuse held too long after lighting will explode in
+##    hand and cause 1 point of damage"): the burst where your hand is, the
+##    pot gone, and one hit (Harm).
 ##  * The throw: let go and it lobs (ThrownPot) along your view, throw.lob_deg
 ##    above it, so looking level it lands at the charged range on level
 ##    ground; it bursts where it lands, or in the air when the fuse runs out.
@@ -37,6 +40,13 @@ extends Node3D
 ##    vs_boss.drives_off_s, never killed (§FA.4). Fire catches what burns
 ##    (spreads_to). Every flame of it is PotFire's: amber, glowing, smoking,
 ##    never a flame a torch or a holder takes from (relights_holders null).
+##    A burst that catches a creature shows the crosshair's X (Reticle.hit;
+##    Mike, 7 Oct).
+##  * It can hurt you (hurts_you; Mike, 7 Oct: "your own fire pot should
+##    be able to hurt you if you throw it way too close to yourself, like a
+##    wall or floor you're right next to"): your own burst within
+##    hurts_you_m of your body, with no stone between, is one hit. Its
+##    burning patch and stuck tar never hurt you.
 ##  * It gives you away (§DF): the lit wick, in your hand and in the air, is
 ##    a flare seen within gives_away.flare_seen_m by anything with a clear
 ##    line to it (flares, flare_seen_from); the burst is heard within
@@ -92,6 +102,10 @@ var charge := 0.0
 var fuse_left := 0.0
 ## Throws made; the last one's [from, velocity, charge] (checks).
 var throws := 0
+## Pots that went off in your hand, and your own bursts that hit you
+## (checks).
+var cook_offs := 0
+var self_hits := 0
 var last_launch: Array = []
 ## Pots in the air, and the fires burning.
 var flying: Array = []
@@ -340,11 +354,11 @@ func _physics_process(delta: float) -> void:
 					_catch(pot)
 		"aiming":
 			state_t += delta
-			# cook_off_in_hand null: a fuse spent in your hand waits for the
-			# impact, never a burst in your hand.
 			fuse_left = maxf(fuse_left - delta, 0.0)
 			if pot.is_empty():
 				_set_state("idle")
+			elif fuse_left <= 0.0 and cooks_off():
+				_cook_off(pot)
 			elif not down:
 				if not player.ui_open:
 					_throw(pot)
@@ -360,6 +374,26 @@ func _catch(pot: Dictionary) -> void:
 	fuse_left = float(D.get("fuse_s", 3.0))
 	_caught_at = clock
 	_say("fire_snap", randf_range(1.2, 1.4))
+
+
+## A fuse spent in your hand bursts there (cook_off_in_hand true; null or
+## false: it waits for the impact, as first built).
+static func cooks_off() -> bool:
+	var v: Variant = D.get("cook_off_in_hand", null)
+	return typeof(v) == TYPE_BOOL and bool(v)
+
+
+## The fuse ran out in your hand: the pot bursts where your hand is, gone
+## from the pack, and that is one hit.
+func _cook_off(pot: Dictionary) -> void:
+	var at := hand_point()
+	var p_oil := str(pot.get("oil", "tar"))
+	_remove(pot)
+	left = {}
+	_set_state("idle")
+	charge = 0.0
+	cook_offs += 1
+	burst(at, p_oil, null, Vector3.UP, true)
 
 
 ## Where the pot leaves your hand (scene): the pot in view's middle, or
@@ -443,18 +477,28 @@ func _say(kind: String, pitch: float) -> void:
 
 ## A pot of `p_oil` bursts at `at` (scene), on `hit` if it met a fire
 ## target: the flash, the burst's fire on everything within splash_m, tar's
-## stuck fire and its patch on the floor under it, what catches, and the
-## sound of it, heard within burst_heard_m (§DF).
-func burst(at: Vector3, p_oil: String, hit: Node3D, _normal: Vector3) -> void:
+## stuck fire and its patch on the floor under it, what catches, the
+## crosshair's X if it caught a creature, and the sound of it, heard
+## within burst_heard_m (§DF). Within hurts_you_m of you it is one hit, as
+## it is `in_hand` (a cook-off).
+func burst(at: Vector3, p_oil: String, hit: Node3D, _normal: Vector3, in_hand := false) -> void:
 	var o := oil(p_oil)
 	fires.append(PotFire.flash(self, at, p_oil))
 	var splash := float(o.get("splash_m", 1.5))
+	var caught := false
 	for t in targets(get_tree()):
 		if t != hit and distance_to(t, at) > splash:
 			continue
-		burn(t, float(o.get("burst", 1.0)), p_oil, at)
+		if burn(t, float(o.get("burst", 1.0)), p_oil, at):
+			caught = true
 		if bool(o.get("sticks", false)) and float(o.get("burn_s", 0.0)) > 0.0 and not is_boss(t) and not burnt_out(t):
 			stick(t, p_oil)
+	if caught:
+		Reticle.hit()
+	if in_hand:
+		_hurt_you(at, "fire:pot_in_hand")
+	elif burst_hurts_you(at):
+		_hurt_you(at, "fire:pot")
 	if float(o.get("floor_patch_s", 0.0)) > 0.0 and float(o.get("patch_radius_m", 0.0)) > 0.0:
 		var fl := floor_under(at)
 		if fl.is_finite():
@@ -467,6 +511,48 @@ func burst(at: Vector3, p_oil: String, hit: Node3D, _normal: Vector3) -> void:
 		_bursts.pop_front()
 	NoiseEvents.emit(at, heard)
 	GameLog.add("The pot burst and the tar burns on." if p_oil == "tar" else "The pot burst in a sheet of flame.", "pots")
+
+
+## Your own burst at `at` reaches you (hurts_you): within hurts_you_m of
+## your body (your capsule, feet to eye, 0.35 m round), with no stone
+## between it and the nearest of you.
+func burst_hurts_you(at: Vector3) -> bool:
+	var v: Variant = D.get("hurts_you", false)
+	if typeof(v) != TYPE_BOOL or not bool(v) or player == null or player.dead:
+		return false
+	var near := nearest_of_you(at)
+	if at.distance_to(near) - YOU_R > float(D.get("hurts_you_m", 1.0)):
+		return false
+	var dir := (near - at).normalized()
+	var q := PhysicsRayQueryParameters3D.create(at + dir * 0.05, near)
+	q.exclude = [player.get_rid()]
+	q.collision_mask = PropCollision.WORLD_LAYER
+	return get_world_3d().direct_space_state.intersect_ray(q).is_empty()
+
+
+## Your body's radius (PlanetPlayer's capsule).
+const YOU_R := 0.35
+
+
+## The point of your body's middle line (feet + YOU_R up to your eye)
+## nearest `at` (scene).
+func nearest_of_you(at: Vector3) -> Vector3:
+	var a := player.global_position + Vector3.UP * YOU_R
+	var b := player.camera().global_position
+	if b.y < a.y:
+		b = a
+	var ab := b - a
+	var k := clampf((at - a).dot(ab) / maxf(ab.length_squared(), 1e-6), 0.0, 1.0)
+	return a + ab * k
+
+
+## One hit from your own pot (Harm counts it; `cause` its death cause).
+func _hurt_you(at: Vector3, cause: String) -> void:
+	if player == null or player.dead:
+		return
+	self_hits += 1
+	player.death_cause = cause
+	player.take_hit(1.0, at)
 
 
 ## The floor under `at` (scene; INF if none within 4 m).
@@ -554,15 +640,15 @@ static func oil_scale(t: Node3D, p_oil: String) -> float:
 
 ## Fire on `t`: `amount` (fire_hp units) times its oil_scale off its
 ## fire_hp, and at 0 it burns out and is gone; a boss is driven off
-## instead, never killed (§FA.4).
-func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> void:
+## instead, never killed (§FA.4). True when the fire reached a creature.
+func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> bool:
 	if t == null or not is_instance_valid(t) or burnt_out(t):
-		return
+		return false
 	if is_boss(t):
 		drive_off(t, from)
-		return
+		return true
 	if not "fire_hp" in t:
-		return
+		return false
 	var a := amount * oil_scale(t, p_oil)
 	t.set("fire_hp", maxf(float(t.get("fire_hp")) - a, 0.0))
 	t.set_meta("fire_taken", float(t.get_meta("fire_taken", 0.0)) + a)
@@ -570,6 +656,7 @@ func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> void:
 		_burn_out(t)
 	elif t.has_method("fire_hit"):
 		t.call("fire_hit", a, from)
+	return true
 
 
 ## Fire on what stands in a burning patch round `at` (`radius` m on the

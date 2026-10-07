@@ -67,7 +67,10 @@ extends SceneTree
 ##     middle pixel and sized per hud.json reticle at the 480 and 270
 ##     presets, its dark edge one pixel round it, drawn over the grade
 ##     (no bloom); off with the Settings switch hud.reticle and under an
-##     open panel (crawler_frames.gd checks its pixels on screen);
+##     open panel (crawler_frames.gd checks its pixels on screen); a hit
+##     (Mike, 7 Oct; hud.json reticle.hit_marker) shows its X for show_s,
+##     four diagonals in the corners between the arms at 480 and 270
+##     lines, clear of the arms, its dark edge never drawn twice;
 ##  7. dousing your own torch (§FC.3, Torch.douse): F is the douse key;
 ##     pressed with a lit torch in hand it goes out and stays in your hand
 ##     (the same torch, a spare in the pack ahead of it), its burn
@@ -83,8 +86,11 @@ extends SceneTree
 ##     so does a fire pot's tar burning on the floor;
 ##  9. sneaking (§FC.1, stealth.json sneak): the eye eases down and back up
 ##     over camera_ease_s, never a snap, and stays down under a low
-##     ceiling; the crosshair closes into the dim ring and back, the ring
-##     one clean pixel line round the frame's middle at 480 and 270 lines;
+##     ceiling; the crosshair takes its dim sneak look and back: its two
+##     level dashes alone (shape dashes, Mike 7 Oct), the crosshair's own
+##     left and right arms on their dark edge, at 480 and 270 lines (and
+##     the first look, the ring, still one clean pixel line round the
+##     frame's middle);
 ##     a crouched step at footstep_volume of a walking one's; the ledge
 ##     guard: a crouched walk at a 2 m drop stops at the lip, a diagonal
 ##     one slides along it, neither falls, a standing one falls, and
@@ -113,7 +119,8 @@ extends SceneTree
 ##     darker toward soot and never grey;
 ## 12. the way out (§EX.5, WayOut): faint daylight in the opening, cool
 ##     blue by day and fainter at night, seen from the bottom of the
-##     flight (nothing between); stepping into it fades to the next tomb
+##     flight (nothing between), fainter from far off (exit.glow far_fade:
+##     all of it on the landing, less from the wake spot, Mike 7 Oct); stepping into it fades to the next tomb
 ##     (exit.stand_in): a new seed, you on the mat by its lit hearth, the
 ##     torch you carried lit or not as it was, the log's line;
 ## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
@@ -2997,6 +3004,25 @@ func _reticle(main: CrawlerMain) -> void:
 	main.settings_panel.close()
 	await _ticks(2)
 	ok(not under_log and not under_settings and ret.showing(), "hidden while the log or the settings are open, back when they close")
+	# A hit (Mike, 7 Oct; hud.json reticle.hit_marker): its X for show_s.
+	var HM: Dictionary = R.get("hit_marker", {})
+	var show_s := float(HM.get("show_s", 0.3))
+	var x_before := ret.hit_showing()
+	Reticle.hit()
+	await _ticks(2)
+	var x_on := ret.hit_showing() and ret._key.size() > 4 and bool(ret._key[4])
+	await _ticks(int(show_s * 60.0) + 4)
+	ok(not x_before and x_on and not ret.hit_showing(), "a hit (Reticle.hit) shows the X, and it goes again after show_s (%.2f s)" % show_s)
+	for lines_n in [480, 270]:
+		var k := float(lines_n) / ref
+		var fw := int(round(lines_n * 16.0 / 9.0))
+		var f := Vector2i(fw + (fw & 1), lines_n)
+		var faults: Array = []
+		for under in ["cross", "dashes"]:
+			for e in _x_faults(f, k, under):
+				faults.append("over the %s: %s" % [under, e])
+		var xc := Reticle.x_cells(f, k)
+		ok(faults.is_empty(), "%d lines: the hit's X is four diagonals in the corners between the arms, %d to %d px out along each from the middle (from_px %s, length_px %s at the 480 reference), the same in every corner, clear of the arms and their edge, its own edge one pixel round it and never over the crosshair's (standing or sneaking)%s" % [lines_n, int(xc.from), int(xc.from) + int(xc.length) - 1, str(HM.get("from_px")), str(HM.get("length_px")), "" if faults.is_empty() else ": %s" % [faults]])
 	if had_preset == null:
 		Settings.erase("display.preset")
 	else:
@@ -3059,6 +3085,127 @@ func _eased(track: Array, from: float, to: float, down: bool) -> Dictionary:
 			at = (i + 1) / 60.0
 		prev = y
 	return {"mono": mono, "at": at, "big": big}
+
+
+## The sneak's dashes on a frame `f` at scale `k` (Reticle.dash_cells):
+## what is wrong with them, or nothing. The crosshair's own two level arms
+## and no up or down arm; their dark edge one pixel round them, each pixel
+## once.
+func _dash_faults(f: Vector2i, k: float) -> Array:
+	var dc := Reticle.dash_cells(f, k)
+	var cl := Reticle.cells(f, k)
+	var bad: Array = []
+	var arms: Array = dc.arms
+	if arms.size() != 2 or arms[0] != cl.arms[0] or arms[1] != cl.arms[1]:
+		bad.append("not the crosshair's two level arms: %s" % [arms])
+	var px := {}
+	for a: Rect2i in arms:
+		if a.size.x <= a.size.y:
+			bad.append("an arm not level: %s" % a)
+		for y in range(a.position.y, a.end.y):
+			for x in range(a.position.x, a.end.x):
+				px[Vector2i(x, y)] = true
+	var edge := {}
+	var twice := 0
+	for e: Rect2i in dc.edge:
+		for y in range(e.position.y, e.end.y):
+			for x in range(e.position.x, e.end.x):
+				var q := Vector2i(x, y)
+				if px.has(q) or edge.has(q):
+					twice += 1
+				edge[q] = true
+	var want_edge := {}
+	for p: Vector2i in px:
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var q := p + Vector2i(dx, dy)
+				if not px.has(q):
+					want_edge[q] = true
+	if twice > 0 or edge.size() != want_edge.size():
+		bad.append("edge %d px (want %d), %d over a dash or twice" % [edge.size(), want_edge.size(), twice])
+	return bad
+
+
+## The hit's X on a frame `f` at scale `k` over the crosshair's `under`
+## shape (Reticle.x_cells): what is wrong with it, or nothing. Four
+## diagonals, one in each corner between the arms, from_px to from_px +
+## length_px - 1 pixels out from the arms' band along each, as wide as the
+## arms, the same in every corner; none of it on the arms' band, an arm or
+## the arms' dark edge; its own dark edge one pixel round it, each pixel
+## once, never over what the shape under it draws.
+func _x_faults(f: Vector2i, k: float, under: String) -> Array:
+	var HM: Dictionary = Tuning.section("hud", "reticle").get("hit_marker", {})
+	var xc := Reticle.x_cells(f, k, under)
+	var cl := Reticle.cells(f, k)
+	var bad: Array = []
+	var from := maxi(roundi(float(HM.get("from_px", 3)) * k), 1)
+	var length := maxi(roundi(float(HM.get("length_px", 4)) * k), 1)
+	if int(xc.from) != from or int(xc.length) != length:
+		bad.append("from %d, length %d (want %d, %d)" % [xc.from, xc.length, from, length])
+	var w := int(cl.width)
+	var px := {}
+	for r: Rect2i in xc.x:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				px[Vector2i(x, y)] = true
+	if px.size() != 4 * length * w:
+		bad.append("%d px (want %d)" % [px.size(), 4 * length * w])
+	var box := Rect2i()
+	var drawn := {}
+	for i in (cl.arms as Array).size():
+		var a: Rect2i = cl.arms[i]
+		box = a if i == 0 else box.merge(a)
+	var shape_rects: Array = cl.arms + cl.edge
+	if under == "dashes":
+		var dc := Reticle.dash_cells(f, k)
+		shape_rects = dc.arms + dc.edge
+	for r: Rect2i in shape_rects:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				drawn[Vector2i(x, y)] = true
+	var all_cross := {}
+	for r: Rect2i in cl.arms + cl.edge:
+		for y in range(r.position.y, r.end.y):
+			for x in range(r.position.x, r.end.x):
+				all_cross[Vector2i(x, y)] = true
+	var lo: Vector2i = (cl.middle as Vector2i) - Vector2i(w / 2, w / 2)
+	var hi := lo + Vector2i(w - 1, w - 1)
+	for p: Vector2i in px:
+		if not px.has(Vector2i(box.position.x + box.end.x - 1 - p.x, p.y)) or not px.has(Vector2i(p.x, box.position.y + box.end.y - 1 - p.y)):
+			bad.append("not the same in every corner")
+			break
+	for p: Vector2i in px:
+		if (p.x >= lo.x and p.x <= hi.x) or (p.y >= lo.y and p.y <= hi.y):
+			bad.append("on the arms' band at %s" % p)
+			break
+		if all_cross.has(p):
+			bad.append("on an arm or its edge at %s" % p)
+			break
+		if p.x > hi.x and p.y > hi.y:
+			var dx := p.x - hi.x
+			var dy := p.y - hi.y
+			if dx < from or dx > from + length - 1 or dy - dx < 0 or dy - dx > w - 1:
+				bad.append("off its diagonal at %s" % p)
+				break
+	var edge := {}
+	var twice := 0
+	for e: Rect2i in xc.edge:
+		for y in range(e.position.y, e.end.y):
+			for x in range(e.position.x, e.end.x):
+				var q := Vector2i(x, y)
+				if px.has(q) or edge.has(q) or drawn.has(q):
+					twice += 1
+				edge[q] = true
+	var want_edge := {}
+	for p: Vector2i in px:
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var q := p + Vector2i(dx, dy)
+				if not px.has(q) and not drawn.has(q):
+					want_edge[q] = true
+	if twice > 0 or edge.size() != want_edge.size():
+		bad.append("edge %d px (want %d), %d over the X, the crosshair or twice" % [edge.size(), want_edge.size(), twice])
+	return bad
 
 
 ## The sneak's ring on a frame `f` at scale `k` (Reticle.ring_cells): what
@@ -3145,7 +3292,8 @@ func _sneak(main: CrawlerMain) -> void:
 	ok(dn.mono and float(dn.at) > 0.0 and float(dn.at) <= ease + 1.0 / 60.0 + 1e-6, "Shift: over the first 0.3 s the eye eases down, never back up, and is at %.2f m by %.3f s, the first tick past camera_ease_s %.2f" % [crouch_eye, dn.at, ease])
 	ok(float(dn.big) < (stand_eye - crouch_eye) * 0.25, "never a snap: the biggest one-frame step %.3f m of the %.2f m" % [dn.big, stand_eye - crouch_eye])
 	ok(p.crouching and is_equal_approx(p._shape.height, PlanetPlayer.CROUCH_HEIGHT), "the collision crouches at once (%.2f m tall)" % p._shape.height)
-	ok(shape.call() == "ring" and is_equal_approx(alpha.call(), dim) and r._key.size() > 1 and bool(r._key[1]), "crouched, the crosshair closes into the ring, dimmed to %.2f (%s)" % [alpha.call(), shape.call()])
+	var want_shape := str(look.get("shape", "dashes"))
+	ok(shape.call() == want_shape and is_equal_approx(alpha.call(), dim) and r._key.size() > 1 and bool(r._key[1]), "crouched, the crosshair takes its sneak look, %s (%s), dimmed to %.2f" % [want_shape, "the up and down arms gone, the two level dashes left" if want_shape == "dashes" else "stealth.json sneak.reticle.shape", alpha.call()])
 	# Up again.
 	Input.action_release("crouch")
 	track = await _eye_track(p, 18)
@@ -3161,7 +3309,9 @@ func _sneak(main: CrawlerMain) -> void:
 		var f := Vector2i(fw + (fw & 1), lines_n)
 		var want_r := maxi(roundi(float(look.get("ring_px", 4)) * k), maxi(roundi(float(Tuning.section("hud", "reticle").get("thickness_px", 1)) * k), 1) + 1)
 		var faults := _ring_faults(f, k, want_r)
-		ok(faults.is_empty(), "%d lines: the ring is one clean pixel line %d px out from the crosshair's middle, the same on every side, the middle clear, its dark edge one pixel round it%s" % [lines_n, want_r, "" if faults.is_empty() else ": %s" % [faults]])
+		ok(faults.is_empty(), "%d lines: the ring (shape ring, the first look) is one clean pixel line %d px out from the crosshair's middle, the same on every side, the middle clear, its dark edge one pixel round it%s" % [lines_n, want_r, "" if faults.is_empty() else ": %s" % [faults]])
+		var dfaults := _dash_faults(f, k)
+		ok(dfaults.is_empty(), "%d lines: the dashes (shape dashes) are the crosshair's own two level arms and nothing else, on their dark edge one pixel round them, each pixel once%s" % [lines_n, "" if dfaults.is_empty() else ": %s" % [dfaults]])
 	# Under a low ceiling the view stays down.
 	Input.action_press("crouch")
 	await _frames(20)
@@ -3338,6 +3488,38 @@ func _way_out(main: CrawlerMain) -> void:
 	var aim := (ex.p as Vector3) + Vector3.UP * (float(ex.h) - 0.3) + n * 0.4
 	var hit := _ray(eye, aim, [main.player.get_rid()])
 	ok(hit.is_empty(), "from the foot of the flight, looking up %.1f m over %.1f m, nothing stands between your eye and the opening's daylight%s" % [aim.y - eye.y, Vector2(aim.x - eye.x, aim.z - eye.z).length(), "" if hit.is_empty() else (" (hit at %s)" % str(hit.position))])
+	# Faint from far off (Mike, 7 Oct; exit.glow near_m, far_m, far_share):
+	# the opening's sheet shows all its glow within near_m of your eye,
+	# easing down to far_share of it by far_m; by day as by night.
+	var gl: Dictionary = WayOut.G
+	var near_m := float(gl.get("near_m", 8.0))
+	var far_m := float(gl.get("far_m", 30.0))
+	var far_share := float(gl.get("far_share", 0.55))
+	var mid_k := WayOut.far_fade((near_m + far_m) * 0.5)
+	ok(is_equal_approx(WayOut.far_fade(near_m * 0.5), 1.0) and is_equal_approx(WayOut.far_fade(far_m + 5.0), far_share) and mid_k < 1.0 and mid_k > far_share, "faint from far off: all its glow within %.0f m, %.2f of it halfway out, %.2f of it past %.0f m (exit.glow near_m, far_share, far_m)" % [near_m, mid_k, far_share, far_m])
+	var p := main.player
+	var shares: Array = []
+	for when in [Vents.days_at_solar_hour(13.0, 12.0), Vents.days_at_solar_hour(13.0, 0.0)]:
+		w.days = when
+		p.spawn_flat((ex.p as Vector3) - n * 2.0, atan2(-n.x, -n.z), 0.0)
+		await process_frame
+		await process_frame
+		var near_share := wo.seen_share
+		var near_l := mat.albedo_color.get_luminance()
+		var wk: Array = lay.wake
+		p.spawn_flat(wk[0], float(wk[1]), 0.0)
+		await process_frame
+		await process_frame
+		var far_d := (ex.p as Vector3).distance_to(p.camera().global_position)
+		shares.append([near_share, wo.seen_share, far_d, WayOut.far_fade(far_d), mat.albedo_color.get_luminance() / maxf(near_l, 1e-6)])
+	w.days = keep
+	await process_frame
+	var fade_ok := true
+	for sh in shares:
+		if not is_equal_approx(float(sh[0]), 1.0) or absf(float(sh[1]) - float(sh[3])) > 0.01 or absf(float(sh[4]) - float(sh[1])) > 0.02 or (float(sh[2]) > near_m + 1.0 and float(sh[1]) >= 1.0):
+			fade_ok = false
+	print("  the way out's sheet from the landing and from the wake spot, by day and by night: %s" % [shares])
+	ok(fade_ok and shares.size() == 2, "on the landing the opening shows all its glow; from the wake spot %.0f m off it shows %.2f of it, by day and by night" % [float(shares[0][2]), float(shares[0][1])])
 
 
 ## Stepping into the opening (design §EX.5's stand-in, exit.stand_in): the

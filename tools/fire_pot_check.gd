@@ -14,11 +14,20 @@ extends SceneTree
 ##  5. the throw: scripted throws, looking level on flat ground, land at the
 ##     charged range (min_m, half, max_m) within half a metre, where the aim's
 ##     arc said; a throw is as loud as a swing; a pot in the air is a flare;
-##  6. the fuse: held past fuse_s it never goes off in your hand
-##     (cook_off_in_hand null), and bursts on landing; in the air with fuse
+##  6. the fuse: held past fuse_s it goes off in your hand
+##     (cook_off_in_hand; Mike, 7 Oct), not before: one burst where your
+##     hand is, the pot gone from your hand and your pack, nothing thrown,
+##     and one hit (fire:pot_in_hand), never two; in the air with fuse
 ##     left it bursts when the fuse runs out;
+##  6b. your own pot hurts you (hurts_you; Mike, 7 Oct): a burst within
+##     hurts_you_m of your body is one hit (fire:pot), one further off
+##     isn't, nor one behind stone; thrown at the floor at your feet
+##     (looking straight down) it is one hit, thrown level (4 m out) it
+##     isn't; its burning patch never hurts you;
 ##  7. tar: a hit on a skeleton (a stand-in until prompt 58: residents.json
-##     skeleton fire_hp and oil_scale) takes the burst and burns at burn_dps:
+##     skeleton fire_hp and oil_scale) takes the burst, shows the
+##     crosshair's X (Reticle.hit; Mike, 7 Oct; a burst on nothing
+##     doesn't), and burns at burn_dps:
 ##     at 0 fire_hp it burns out and is gone; a sturdier one burns for burn_s
 ##     and then stops; a thrown pot meets a target in its path; the patch on
 ##     the floor burns what stands in it for floor_patch_s, then its light
@@ -135,15 +144,20 @@ func _run() -> void:
 	p = main.player
 	ok(fp != null and FirePots.instance == fp, "the crawler has its fire pots (FirePots)")
 	_skeletons_ready()
+	# The far floor first: from here on you stand on it, far from every
+	# burst that isn't meant to reach you (hurts_you).
+	_floor()
 	await _found_in_scene()
+	_stand(Vector3(0.0, -300.0, 0.0))
+	await _frames(5)
 	await _spread()
 	await _no_holder()
-	_floor()
 	await _carry()
 	await _no_torch_no_pot()
 	await _lighting()
 	await _throws()
 	await _fuse()
+	await _self_harm()
 	await _tar()
 	await _light_oil()
 	await _boss()
@@ -363,17 +377,36 @@ func _throws() -> void:
 func _fuse() -> void:
 	_stand(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
 	await _frames(5)
+	var harm := Harm.instance
+	ok(harm != null and FirePots.cooks_off(), "cook_off_in_hand is on (Mike, 7 Oct), and the crawler counts hits (Harm)")
+	if harm == null:
+		return
+	harm.reset()
+	await _frames(45)
 	_torch(true)
 	_pot_in_hand("light_oil")
+	var carried := fp.pots_carried().size()
 	var bursts := FirePots.bursts_since(0).size()
+	var cooks := fp.cook_offs
+	var selfs := fp.self_hits
+	var throws0 := fp.throws
+	var landed0 := harm.landed
+	var fuse_s := float(FirePots.D.get("fuse_s", 3.0))
 	Input.action_press("shoot")
-	await _frames(int((FirePots.light_anim_s() + float(FirePots.D.get("fuse_s", 3.0)) + 1.0) * 60.0))
-	var held_ok := fp.state == "aiming" and FirePots.bursts_since(0).size() == bursts and fp.fuse_left == 0.0
+	# Just short of the fuse: still in your hand, whole.
+	await _frames(int((FirePots.light_anim_s() + fuse_s) * 60.0) - 8)
+	var before_ok := fp.state == "aiming" and FirePots.bursts_since(0).size() == bursts and harm.landed == landed0
+	var eye := p.camera().global_position
+	await _frames(16)
+	var b := FirePots.bursts_since(0)
 	Input.action_release("shoot")
-	await _frames(2)
-	await _wait_landed(600)
-	ok(held_ok, "held past fuse_s (%.1f s) it never goes off in your hand (cook_off_in_hand null)" % float(FirePots.D.get("fuse_s", 3.0)))
-	ok(str(fp.last_landing.get("why", "")) == "world", "a spent fuse waits for the landing: it burst on the floor (%s)" % str(fp.last_landing.get("why", "")))
+	await _frames(3)
+	var at: Vector3 = b[-1].pos if b.size() > bursts else Vector3.INF
+	ok(before_ok and fp.cook_offs == cooks + 1 and b.size() == bursts + 1 and at.is_finite() and at.distance_to(eye) < 1.0, "held past fuse_s (%.1f s from the catch) it bursts in your hand (%.2f m from your eye), not before" % [fuse_s, at.distance_to(eye) if at.is_finite() else -1.0])
+	ok(fp.state == "idle" and fp.in_left().is_empty() and fp.pots_carried().size() == carried - 1 and fp.throws == throws0 and fp.flying.is_empty(), "the pot is gone: the left hand empty, one fewer in the pack (%d), nothing thrown" % fp.pots_carried().size())
+	ok(harm.landed == landed0 + 1 and fp.self_hits == selfs + 1 and harm.cause == "fire:pot_in_hand", "and it is one hit, never two (Harm %d -> %d, %s)" % [landed0, harm.landed, harm.cause])
+	harm.reset()
+	await _frames(45)
 	# With fuse left, in the air: it bursts when the fuse runs out.
 	var tp := ThrownPot.new()
 	fp.add_child(tp)
@@ -382,6 +415,77 @@ func _fuse() -> void:
 	fp.flying.append(tp)
 	await _wait_landed(200)
 	ok(str(fp.last_landing.get("why", "")) == "fuse" and absf(float(fp.last_landing.get("life", 0.0)) - 0.5) < 0.05, "in the air with fuse left, it bursts as the fuse runs out (after %.2f s, %s)" % [float(fp.last_landing.get("life", 0.0)), str(fp.last_landing.get("why", ""))])
+
+
+## A box of stone (the world's layer) `size` big, centred `at`.
+func _stone(size: Vector3, at: Vector3) -> StaticBody3D:
+	var body := StaticBody3D.new()
+	body.collision_layer = PropCollision.WORLD_LAYER
+	var cs := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = size
+	cs.shape = box
+	body.add_child(cs)
+	main.add_child(body)
+	body.global_position = at
+	return body
+
+
+## Your own pot hurts you (hurts_you, hurts_you_m; Mike, 7 Oct).
+func _self_harm() -> void:
+	var harm := Harm.instance
+	var within := float(FirePots.D.get("hurts_you_m", 1.0))
+	ok(harm != null and bool(FirePots.D.get("hurts_you", false)), "hurts_you is on (Mike, 7 Oct): your own pot can hurt you")
+	if harm == null:
+		return
+	var at := Vector3(0.0, -300.0, 0.0)
+	_stand(at, 0.0, 0.0)
+	await _frames(20)
+	harm.reset()
+	await _frames(45)
+	var l0 := harm.landed
+	var s0 := fp.self_hits
+	# Beside you at knee height, within reach: one hit, and the tar's patch
+	# burning round your feet after it, none.
+	fp.burst(p.global_position + Vector3(FirePots.YOU_R + within * 0.5, 0.5, 0.0), "tar", null, Vector3.UP)
+	await _frames(2)
+	var near_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1 and harm.cause == "fire:pot"
+	await _frames(180)
+	var patch_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1
+	harm.reset()
+	await _frames(int(float(FirePots.oil("tar").get("floor_patch_s", 12.0)) * 60.0))
+	_stand(at, 0.0, 0.0)
+	await _frames(10)
+	# Further off: nothing.
+	fp.burst(p.global_position + Vector3(FirePots.YOU_R + within + 0.5, 0.5, 0.0), "light_oil", null, Vector3.UP)
+	await _frames(2)
+	var far_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1
+	ok(near_ok and far_ok, "your own burst %.2f m from you is one hit (fire:pot); one %.2f m off isn't (hurts_you_m %.1f)" % [within * 0.5, within + 0.5, within])
+	ok(patch_ok, "standing in its burning tar after, nothing more: its patch never hurts you")
+	# Behind stone: a wall between you and a burst within reach.
+	var wall := _stone(Vector3(0.1, 3.0, 3.0), p.global_position + Vector3(FirePots.YOU_R + 0.25, 1.5, 0.0))
+	await _frames(2)
+	fp.burst(p.global_position + Vector3(FirePots.YOU_R + 0.55, 0.8, 0.0), "light_oil", null, Vector3.UP)
+	await _frames(2)
+	ok(harm.landed == l0 + 1 and fp.self_hits == s0 + 1, "nor one %.2f m off behind a wall" % 0.55)
+	wall.queue_free()
+	await _frames(45)
+	# Thrown at the floor at your feet, looking straight down: one hit.
+	_stand(at, 0.0, -1.5)
+	await _frames(10)
+	var r := await _throw_k(0.0)
+	var land: Vector3 = (r.landing as Dictionary).get("pos", Vector3.INF)
+	var d_feet := Vector2(land.x - p.global_position.x, land.z - p.global_position.z).length() if land.is_finite() else -1.0
+	ok(harm.landed == l0 + 2 and fp.self_hits == s0 + 2 and str((r.landing as Dictionary).get("why", "")) == "world", "thrown at the floor at your feet (looking straight down) it bursts %.2f m from them, and that is one hit (Harm %d)" % [d_feet, harm.landed - l0])
+	harm.reset()
+	await _frames(45)
+	# Thrown level: it lands 4 m out, and nothing.
+	_stand(at, 0.0, 0.0)
+	await _frames(10)
+	var r2 := await _throw_k(0.0)
+	ok(harm.landed == l0 + 2 and fp.self_hits == s0 + 2 and str((r2.landing as Dictionary).get("why", "")) == "world", "thrown level it lands out of reach (%s), and nothing" % str(((r2.landing as Dictionary).get("pos", Vector3.ZERO) as Vector3).snapped(Vector3.ONE * 0.1)))
+	harm.reset()
+	await _frames(45)
 
 
 ## A stand-in resident hung `at` (far from any floor unless asked), its
@@ -406,8 +510,10 @@ func _tar() -> void:
 	# A skeleton, high above any floor (no patch under it): the burst, then
 	# the tar burning until its fire_hp is gone.
 	var sk := _resident(Vector3(40.0, -200.0, 0.0), hp)
+	var x0 := Reticle.hits
 	fp.burst(FirePots.center_of(sk), "tar", sk, Vector3.UP)
 	await _frames(1)
+	ok(Reticle.hits == x0 + 1, "a burst that catches a creature shows the crosshair's X, once (Reticle.hit; Mike, 7 Oct: %d)" % (Reticle.hits - x0))
 	var after_burst := sk.fire_hp
 	var stuck: Variant = sk.get_meta("pot_stuck") if sk.has_meta("pot_stuck") else null
 	ok(absf(after_burst - (hp - burst)) < 0.02 and stuck is PotFire, "tar on a skeleton: the burst takes %.1f of its %.1f fire_hp and the tar sticks" % [burst, hp])
@@ -445,8 +551,10 @@ func _tar() -> void:
 	# The patch on the floor.
 	var foot := Vector3(60.0, -300.0, 0.0)
 	var n_patch := _count("patch")
+	var x1 := Reticle.hits
 	fp.burst(foot + Vector3.UP * 0.3, "tar", null, Vector3.UP)
 	await _frames(2)
+	ok(Reticle.hits == x1, "a burst on nothing shows no X")
 	var patch: PotFire = null
 	for f in fp.fires:
 		if is_instance_valid(f) and (f as PotFire).kind == "patch" and (f as PotFire).foot.distance_to(foot) < 0.5:
