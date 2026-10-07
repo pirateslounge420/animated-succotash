@@ -22,11 +22,15 @@ extends Node3D
 ## §FJ.4: 15, Mike 7 Oct; full_burn_min), rain and storms shorten that,
 ## then gutters (the last gutter_share: dimmer, a harder flicker) and goes
 ## out: a stick (`burnt`). Only lit time counts: out or smothered, it keeps
-## what it has, and relights from any flame. In the crawler the burnt
-## stick drops from your hand to the floor (burnt_out, CrawlerMain lays
-## it) and your next torch with burn left is in your hand, unlit; you hold
-## crawler_burn.carry_max torches at most, the one in hand included
-## (at_carry_max: the bundle refuses a fourth). Water past douse_depth_m puts it out (relight it at a
+## what it has, and relights from any flame. In the crawler a torch burnt
+## out in your hand stays there, its embers glowing crawler_burn.embers_s
+## (20 s, Mike 7 Oct) before they sputter out: the wheel drops it and
+## brings up your next torch, which catches from the embers while they
+## glow (swap_burnt); F drops it and leaves your hand empty
+## (discard_burnt); either way its charred stick lies on the floor
+## (burnt_out, CrawlerMain lays it). You hold crawler_burn.carry_max
+## torches at most, the one in hand included (at_carry_max: the bundle
+## refuses a fourth). Water past douse_depth_m puts it out (relight it at a
 ## flame); so does stowing it (Q or the wheel away from it) and starting a climb with
 ## no ground to plant it in; with ground there, a climb plants it. In the
 ## crawler you can smother it on purpose (design 6 Oct §FC.3, douse(): F)
@@ -105,11 +109,14 @@ var last_out := ""
 var _held: Dictionary = {}
 ## A line for the player (main shows it and clears it).
 var note := ""
-## The torch in hand burnt out in the crawler (§FJ.4): where its charred
-## stick fell (scene), for CrawlerMain to lay it on the floor.
-signal burnt_out(at: Vector3)
-## Torches burnt out in hand (checks).
+## A burnt-out torch left your hand in the crawler (§FJ.4): where its
+## charred stick fell (scene) and how long its embers glow on there, for
+## CrawlerMain to lay it on the floor.
+signal burnt_out(at: Vector3, embers_left_s: float)
+## Burnt sticks dropped, and new torches lit from a dead one's embers
+## (checks).
 var burnt_count := 0
+var embers_lit := 0
 
 
 func setup(p: PlanetPlayer) -> void:
@@ -357,21 +364,31 @@ static func light_node() -> OmniLight3D:
 # --- The torch in hand ------------------------------------------------------------
 
 ## The carried torch in hand (the lit one first; else the one last in
-## hand, while you carry it and it isn't a burnt stick; else the first),
-## or {} with none.
+## hand, while you carry it and it isn't a burnt stick (in the crawler even
+## burnt, until you drop it, §FJ.4); else the first (in the crawler the
+## first with burn left)), or {} with none.
 func item() -> Dictionary:
 	var best := {}
+	var spent := {}
 	var held := {}
 	for it in player.inventory.carried:
 		if it is Dictionary and str(it.get("kind", "")) == "torch":
 			if bool(it.get("lit", false)):
 				_held = it
 				return it
-			if best.is_empty():
+			var burnt := bool(it.get("burnt", false))
+			# In the crawler the torch that burnt out in your hand stays in
+			# it until you drop it (§FJ.4), and the next one up is one with
+			# burn left; the open world takes the first, as built.
+			if best.is_empty() and not (pitch and burnt):
 				best = it
-			if is_same(it, _held) and not bool(it.get("burnt", false)):
+			if spent.is_empty() and burnt:
+				spent = it
+			if is_same(it, _held) and (pitch or not burnt):
 				held = it
-	return held if not held.is_empty() else best
+	if not held.is_empty():
+		return held
+	return best if not best.is_empty() else spent
 
 
 func in_hand() -> bool:
@@ -475,7 +492,7 @@ func pass_flame() -> String:
 	return last_pass
 
 
-func light() -> void:
+func light(line := "Lit a torch from a flame.") -> void:
 	var it := item()
 	# A burnt-out stick never catches again (§FJ.4).
 	if it.is_empty() or bool(it.get("burnt", false)):
@@ -485,7 +502,7 @@ func light() -> void:
 	if not it.has("burn_left_min"):
 		it["burn_left_min"] = full_burn_min()
 	_play("torch_light")
-	GameLog.add("Lit a torch from a flame.", "torch")
+	GameLog.add(line, "torch")
 	_apply(true)
 
 
@@ -533,10 +550,13 @@ func hands_needed() -> void:
 
 
 ## Q away from it (the wheel in the crawler, §FB), or into the pack: a
-## lit torch goes out.
+## lit torch goes out; in the crawler a burnt-out one leaves your hand for
+## the floor (§FJ.4).
 func stow() -> void:
 	if lit():
 		put_out("stowed")
+	elif pitch:
+		discard_burnt()
 
 
 ## Smother it on purpose (design 6 Oct §FC.3, the douse key, F): a lit
@@ -573,20 +593,90 @@ func put_out(why: String) -> void:
 	_apply(false)
 
 
-## Burnt out in your hand in the crawler (§FJ.4): the charred stick falls
-## to the floor by your feet (burnt_out: CrawlerMain lays it there) and
-## leaves your pack; your next torch with burn left is in your hand,
-## unlit, or your hand is empty.
+## A torch's embers once it has burnt out in your hand in the crawler
+## (§FJ.4, crawler_burn.embers_s; Mike, 7 Oct: "a torch's embers remain
+## for ~20 seconds before sputtering out completely").
+static func embers_s() -> float:
+	return float((D.get("crawler_burn", {}) as Dictionary).get("embers_s", 20.0))
+
+
+## The burnt torch in your hand's embers, as a share of their glow when
+## the flame died (0: none, or not burnt).
+func embers_share() -> float:
+	var it := item()
+	if it.is_empty() or not bool(it.get("burnt", false)):
+		return 0.0
+	return clampf(float(it.get("embers_s", 0.0)) / maxf(embers_s(), 0.01), 0.0, 1.0)
+
+
+## The wheel from a burnt-out torch in your hand (§FJ.4; Mike, 7 Oct: "you
+## have to discard it out your hand or scroll to the next- it should be
+## possible for players to light their new torch with the old torch's
+## embers"): it drops to the floor and your next torch with burn left
+## comes to hand, catching from the old one's embers while they still
+## glow, unlit once they've died; with no other torch your hand is empty.
+## False when the torch in hand isn't a burnt one.
+func swap_burnt() -> bool:
+	var old := item()
+	if not pitch or old.is_empty() or not bool(old.get("burnt", false)) or not in_hand():
+		return false
+	var glowing := float(old.get("embers_s", 0.0)) > 0.0
+	_drop_burnt(old)
+	var next := item()
+	if next.is_empty() or bool(next.get("burnt", false)):
+		player.weapon = "hands"
+		_apply(false)
+		return true
+	_held = next
+	player.weapon = "torch"
+	if glowing:
+		embers_lit += 1
+		light("Lit the new torch from the old one's embers.")
+	_apply(lit())
+	return true
+
+
+## F with a burnt-out torch in your hand (Mike, 7 Oct: "discard it out
+## your hand"): its charred stick drops to the floor and your hand is
+## empty. False when the torch in hand isn't a burnt one.
+func discard_burnt() -> bool:
+	var old := item()
+	if not pitch or old.is_empty() or not bool(old.get("burnt", false)) or not in_hand():
+		return false
+	_drop_burnt(old)
+	player.weapon = "hands"
+	_apply(false)
+	return true
+
+
+## A burnt-out torch leaves your hand (swap_burnt, discard_burnt): out of
+## your pack, its charred stick laid by your feet, its embers glowing on
+## there for what's left of them (burnt_out: CrawlerMain lays it).
 func _drop_burnt(it: Dictionary) -> void:
 	_remove_from_pack(it)
 	burnt_count += 1
 	var fwd := -player.global_basis.z
 	fwd.y = 0.0
 	fwd = fwd.normalized() if fwd.length() > 1e-4 else Vector3.FORWARD
-	burnt_out.emit(player.global_position + fwd * 0.2)
-	if carried_count(player.inventory) == 0:
-		player.weapon = "hands"
-	_apply(false)
+	burnt_out.emit(player.global_position + fwd * 0.2, maxf(float(it.get("embers_s", 0.0)), 0.0))
+
+
+## The embers of the burnt-out torch in your hand: a dim red glow that
+## sputters and fades over embers_s, then nothing but a dead stick.
+func _embers_step(it: Dictionary, delta: float) -> void:
+	var left := float(it.get("embers_s", 0.0))
+	if left <= 0.0:
+		return
+	left = maxf(left - delta, 0.0)
+	it["embers_s"] = left
+	if left <= 0.0:
+		GameLog.add("The embers have died.", "torch")
+		_play("smother_hiss")
+		return
+	var share := left / maxf(embers_s(), 0.01)
+	var sputter := 0.55 + 0.45 * absf(sin(_t * 13.7) * sin(_t * 4.9 + _seed))
+	_light.light_color = gutter_color(1.0)
+	_light.light_energy = float(L.get("gutter_energy", 0.9)) * float((D.get("crawler_burn", {}) as Dictionary).get("embers_light_share", 0.25)) * share * sputter * held_scale()
 
 
 func _remove_from_pack(it: Dictionary) -> void:
@@ -699,7 +789,9 @@ func update_torch(delta: float) -> void:
 		elif what == "out":
 			put_out("burnt")
 			if pitch:
-				_drop_burnt(it)
+				# Its embers glow on in your hand (§FJ.4, Mike 7 Oct).
+				it["embers_s"] = embers_s()
+				_apply(false)
 			return
 		# Water: swimming, or wading past the douse depth (in a delve, §CJ,
 		# you are under the ground, not under the sea: PlanetPlayer.water_depth).
@@ -745,6 +837,8 @@ func update_torch(delta: float) -> void:
 			PitchTorch.set_low(_view_flame, maxf(snuff.gutter, PitchTorch.GUTTER_LOW if guttering(it) else 0.0))
 		else:
 			set_glow(_view_flame, g, it)
+	elif pitch and in_hand() and bool(it.get("burnt", false)):
+		_embers_step(it, delta)
 	if pitch:
 		# The flame leans the way the air goes past it: against your motion,
 		# with an airway's draft (§EZ.2, §EV.3), whipped flat out at
@@ -767,14 +861,18 @@ func update_torch(delta: float) -> void:
 
 func _apply(on: bool) -> void:
 	_view.visible = in_hand() and player.first_person and not player.climbing
+	var embers := embers_share() if pitch else 0.0
 	if pitch:
 		# The pitch head shows lit or not (unlit: the wrap alone, §EZ.2);
-		# burnt out, a bare stick, as built.
-		_view_flame.visible = _view.visible and not bool(item().get("burnt", false))
+		# burnt out, its embers glowing in the coal while they last (§FJ.4),
+		# then a bare stick, as built.
+		_view_flame.visible = _view.visible and (not bool(item().get("burnt", false)) or embers > 0.0)
 		PitchTorch.set_lit(_view_flame, on)
+		if not on:
+			PitchTorch.set_embers(_view_flame, embers)
 	else:
 		_view_flame.visible = _view.visible and on
-	_light.visible = on and not player.climbing
+	_light.visible = (on or embers > 0.0) and not player.climbing
 	# The swing's arc, the fist's (Fists._carry): out along the aim and back.
 	var s := sin(_swing * PI) if _swing > 0.0 else 0.0
 	_view.position = Vector3(0.34, -0.3, -0.56).lerp(Vector3(0.1, -0.16, -0.86), s)

@@ -161,11 +161,11 @@ func _ready() -> void:
 	add_child(harm)
 	harm.setup(player, post, null)
 	player.died.connect(_on_taken)
-	# A torch burnt out in your hand drops its charred stick on this tomb's
-	# floor (§FJ.4).
-	player.torch.burnt_out.connect(func(at: Vector3) -> void:
+	# A burnt-out torch you drop lies on this tomb's floor, its embers
+	# glowing on there while they last (§FJ.4).
+	player.torch.burnt_out.connect(func(at: Vector3, embers_left_s: float) -> void:
 		if fires != null and is_instance_valid(fires):
-			fires.lay_stick(at))
+			fires.lay_stick(at, embers_left_s))
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
 	_load_tomb(_seed())
@@ -614,6 +614,8 @@ func _on_taken() -> void:
 	_fade.color.a = 1.0
 	if player.torch.lit():
 		player.torch.put_out("taken")
+	# A burnt-out one in your hand is dropped where you fell (§FJ.4).
+	player.torch.discard_burnt()
 	player.weapon = "hands"
 	if player.hands != null and not Hands.left_busy():
 		player.hands.hold_left({})

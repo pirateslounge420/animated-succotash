@@ -19,11 +19,14 @@ extends SceneTree
 ##     hand is, the pot gone from your hand and your pack, nothing thrown,
 ##     and one hit (fire:pot_in_hand), never two; in the air with fuse
 ##     left it bursts when the fuse runs out;
-##  6b. your own pot hurts you (hurts_you; Mike, 7 Oct): a burst within
-##     hurts_you_m of your body is one hit (fire:pot), one further off
-##     isn't, nor one behind stone; thrown at the floor at your feet
-##     (looking straight down) it is one hit, thrown level (4 m out) it
-##     isn't; its burning patch never hurts you;
+##  6b. your own pot hurts you (hurts_you; Mike, 7 Oct): a tar burst
+##     within its hurts_you_m of your body is one hit (fire:pot), one
+##     further off isn't; light oil's flash reaches further (one hit where
+##     tar's doesn't, none past its own); never behind stone; walking into
+##     your own burning tar is one hit, once (fire:pot_patch), and never
+##     after its burst has hit you: one pot, one hit; thrown at the floor at
+##     your feet (looking straight down) it is one hit, thrown level (4 m
+##     out) it isn't;
 ##  7. tar: a hit on a skeleton (a stand-in until prompt 58: residents.json
 ##     skeleton fire_hp and oil_scale) takes the burst, shows the
 ##     crosshair's X (Reticle.hit; Mike, 7 Oct; a burst on nothing
@@ -439,43 +442,71 @@ func _stone(size: Vector3, at: Vector3) -> StaticBody3D:
 	return body
 
 
-## Your own pot hurts you (hurts_you, hurts_you_m; Mike, 7 Oct).
+## Your own pot hurts you (hurts_you, oils.<kind>.hurts_you_m; Mike, 7
+## Oct), one hit a pot at most.
 func _self_harm() -> void:
 	var harm := Harm.instance
-	var within := float(FirePots.D.get("hurts_you_m", 1.0))
-	ok(harm != null and bool(FirePots.D.get("hurts_you", false)), "hurts_you is on (Mike, 7 Oct): your own pot can hurt you")
+	var tar_m := FirePots.hurts_m("tar")
+	var oil_m := FirePots.hurts_m("light_oil")
+	ok(harm != null and bool(FirePots.D.get("hurts_you", false)) and oil_m > tar_m, "hurts_you is on (Mike, 7 Oct): your own pot can hurt you, light oil's flash from further (%.1f m) than tar's burst (%.1f m)" % [oil_m, tar_m])
 	if harm == null:
 		return
 	var at := Vector3(0.0, -300.0, 0.0)
+	var patch_s := float(FirePots.oil("tar").get("floor_patch_s", 12.0))
+	# One burst `d` m from you at knee height: the hits it lands at once and
+	# 3 s on (standing in whatever burns after), its patch let burn out.
+	var hits_from := func(oil_kind: String, d: float) -> Array:
+		_stand(at, 0.0, 0.0)
+		await _frames(10)
+		harm.reset()
+		await _frames(45)
+		var l0 := harm.landed
+		fp.burst(p.global_position + Vector3(FirePots.YOU_R + d, 0.5, 0.0), oil_kind, null, Vector3.UP)
+		await _frames(2)
+		var now := harm.landed - l0
+		var why := harm.cause
+		await _frames(180)
+		var after := harm.landed - l0
+		harm.reset()
+		await _frames(int(patch_s * 60.0) if oil_kind == "tar" else 45)
+		return [now, after, why]
+	var near: Array = await hits_from.call("tar", tar_m * 0.5)
+	var tar_far: Array = await hits_from.call("tar", tar_m + 0.2)
+	var oil_mid: Array = await hits_from.call("light_oil", tar_m + 0.2)
+	var oil_far: Array = await hits_from.call("light_oil", oil_m + 0.3)
+	ok(int(near[0]) == 1 and str(near[2]) == "fire:pot" and int(tar_far[1]) == 0, "your own tar burst %.2f m from you is one hit (fire:pot); %.2f m off, none" % [tar_m * 0.5, tar_m + 0.2])
+	ok(int(oil_mid[0]) == 1 and int(oil_far[1]) == 0, "light oil's flash reaches further: %.2f m off one hit, %.2f m off none" % [tar_m + 0.2, oil_m + 0.3])
+	ok(int(near[1]) == 1, "standing in its burning tar after the burst hit you, nothing more: one pot, one hit (%d)" % int(near[1]))
+	# Walking into your own burning tar, its burst having missed you: one
+	# hit, once.
 	_stand(at, 0.0, 0.0)
-	await _frames(20)
+	await _frames(10)
+	harm.reset()
+	await _frames(45)
+	var lp := harm.landed
+	var spot := at + Vector3(3.0, 0.0, 0.0)
+	fp.burst(spot + Vector3.UP * 0.3, "tar", null, Vector3.UP)
+	await _frames(2)
+	var missed := harm.landed == lp
+	_stand(spot, 0.0, 0.0)
+	await _frames(3)
+	var walked := harm.landed - lp
+	var why_p := harm.cause
+	await _frames(240)
+	ok(missed and walked == 1 and why_p == "fire:pot_patch" and harm.landed - lp == 1, "a tar pot bursting 3 m off misses you; walking into its burning patch is one hit (%s), and 4 s in it, no more (%d)" % [why_p, harm.landed - lp])
+	harm.reset()
+	_stand(at, 0.0, 0.0)
+	await _frames(int(patch_s * 60.0))
 	harm.reset()
 	await _frames(45)
 	var l0 := harm.landed
 	var s0 := fp.self_hits
-	# Beside you at knee height, within reach: one hit, and the tar's patch
-	# burning round your feet after it, none.
-	fp.burst(p.global_position + Vector3(FirePots.YOU_R + within * 0.5, 0.5, 0.0), "tar", null, Vector3.UP)
-	await _frames(2)
-	var near_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1 and harm.cause == "fire:pot"
-	await _frames(180)
-	var patch_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1
-	harm.reset()
-	await _frames(int(float(FirePots.oil("tar").get("floor_patch_s", 12.0)) * 60.0))
-	_stand(at, 0.0, 0.0)
-	await _frames(10)
-	# Further off: nothing.
-	fp.burst(p.global_position + Vector3(FirePots.YOU_R + within + 0.5, 0.5, 0.0), "light_oil", null, Vector3.UP)
-	await _frames(2)
-	var far_ok := harm.landed == l0 + 1 and fp.self_hits == s0 + 1
-	ok(near_ok and far_ok, "your own burst %.2f m from you is one hit (fire:pot); one %.2f m off isn't (hurts_you_m %.1f)" % [within * 0.5, within + 0.5, within])
-	ok(patch_ok, "standing in its burning tar after, nothing more: its patch never hurts you")
 	# Behind stone: a wall between you and a burst within reach.
 	var wall := _stone(Vector3(0.1, 3.0, 3.0), p.global_position + Vector3(FirePots.YOU_R + 0.25, 1.5, 0.0))
 	await _frames(2)
 	fp.burst(p.global_position + Vector3(FirePots.YOU_R + 0.55, 0.8, 0.0), "light_oil", null, Vector3.UP)
 	await _frames(2)
-	ok(harm.landed == l0 + 1 and fp.self_hits == s0 + 1, "nor one %.2f m off behind a wall" % 0.55)
+	ok(harm.landed == l0 and fp.self_hits == s0, "nor one %.2f m off behind a wall" % 0.55)
 	wall.queue_free()
 	await _frames(45)
 	# Thrown at the floor at your feet, looking straight down: one hit.
@@ -484,16 +515,18 @@ func _self_harm() -> void:
 	var r := await _throw_k(0.0)
 	var land: Vector3 = (r.landing as Dictionary).get("pos", Vector3.INF)
 	var d_feet := Vector2(land.x - p.global_position.x, land.z - p.global_position.z).length() if land.is_finite() else -1.0
-	ok(harm.landed == l0 + 2 and fp.self_hits == s0 + 2 and str((r.landing as Dictionary).get("why", "")) == "world", "thrown at the floor at your feet (looking straight down) it bursts %.2f m from them, and that is one hit (Harm %d)" % [d_feet, harm.landed - l0])
+	await _frames(120)
+	ok(harm.landed == l0 + 1 and fp.self_hits == s0 + 1 and str((r.landing as Dictionary).get("why", "")) == "world", "thrown at the floor at your feet (looking straight down) it bursts %.2f m from them, and that is one hit, its patch round your feet none (Harm %d)" % [d_feet, harm.landed - l0])
 	harm.reset()
-	await _frames(45)
+	await _frames(int(patch_s * 60.0))
 	# Thrown level: it lands 4 m out, and nothing.
 	_stand(at, 0.0, 0.0)
 	await _frames(10)
+	var l1 := harm.landed
 	var r2 := await _throw_k(0.0)
-	ok(harm.landed == l0 + 2 and fp.self_hits == s0 + 2 and str((r2.landing as Dictionary).get("why", "")) == "world", "thrown level it lands out of reach (%s), and nothing" % str(((r2.landing as Dictionary).get("pos", Vector3.ZERO) as Vector3).snapped(Vector3.ONE * 0.1)))
+	ok(harm.landed == l1 and str((r2.landing as Dictionary).get("why", "")) == "world", "thrown level it lands out of reach (%s), and nothing" % str(((r2.landing as Dictionary).get("pos", Vector3.ZERO) as Vector3).snapped(Vector3.ONE * 0.1)))
 	harm.reset()
-	await _frames(45)
+	await _frames(int(patch_s * 60.0))
 
 
 ## A stand-in resident hung `at` (far from any floor unless asked), its

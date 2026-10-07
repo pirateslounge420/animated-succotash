@@ -43,9 +43,12 @@ extends Node3D
 ##    Mike, 7 Oct).
 ##  * It can hurt you (hurts_you; Mike, 7 Oct: "your own fire pot should
 ##    be able to hurt you if you throw it way too close to yourself, like a
-##    wall or floor you're right next to"): your own burst within
-##    hurts_you_m of your body, with no stone between, is one hit. Its
-##    burning patch and stuck tar never hurt you.
+##    wall or floor you're right next to"): your own burst within its
+##    oil's hurts_you_m of your body (light oil's flash a little wider than
+##    tar's burst), with no stone between, is one hit; walking into your own
+##    burning tar is one hit too (Mike, 7 Oct: tar "lasts longer after
+##    bursting, the aoe isn't as large"), but a pot never hurts you more
+##    than once. Stuck tar never hurts you.
 ##  * Fire to fire (Mike, 7 Oct, answering §FI.2 call 4): a pot's fire
 ##    relights a cold holder it reaches (relights_holders: a burst within
 ##    splash_m of a sconce, a patch round one on the floor), as the torch's
@@ -485,8 +488,9 @@ func _say(kind: String, pitch: float) -> void:
 ## fire on everything within splash_m, tar's stuck fire and its patch on
 ## the floor under it, what catches, the cold holders it relights (Mike,
 ## 7 Oct), the crosshair's X if it caught a creature, and the sound of it,
-## heard within burst_heard_m (§DF). Within hurts_you_m of you it is one
-## hit, as it is `in_hand` (a cook-off).
+## heard within burst_heard_m (§DF). Within its oil's hurts_you_m of you it
+## is one hit, as it is `in_hand` (a cook-off); a pot never hurts you
+## more than once, so its patch then doesn't (Mike, 7 Oct).
 func burst(at: Vector3, p_oil: String, hit: Node3D, normal: Vector3, in_hand := false) -> void:
 	var o := oil(p_oil)
 	fires.append(PotFire.flash(self, at, p_oil))
@@ -501,14 +505,15 @@ func burst(at: Vector3, p_oil: String, hit: Node3D, normal: Vector3, in_hand := 
 			stick(t, p_oil)
 	if caught:
 		Reticle.hit()
-	if in_hand:
-		_hurt_you(at, "fire:pot_in_hand")
-	elif burst_hurts_you(at):
-		_hurt_you(at, "fire:pot")
+	var hurt := in_hand or burst_hurts_you(at, p_oil)
+	if hurt:
+		hurt_you(at, "fire:pot_in_hand" if in_hand else "fire:pot")
 	if float(o.get("floor_patch_s", 0.0)) > 0.0 and float(o.get("patch_radius_m", 0.0)) > 0.0:
 		var fl := floor_under(at)
 		if fl.is_finite():
-			fires.append(PotFire.patch(self, fl, p_oil))
+			var pf := PotFire.patch(self, fl, p_oil)
+			pf.spent_on_you = hurt
+			fires.append(pf)
 	ignite_near(at, splash)
 	# Cold holders in its reach catch (relights_holders), seen from just off
 	# what it burst on.
@@ -522,15 +527,21 @@ func burst(at: Vector3, p_oil: String, hit: Node3D, normal: Vector3, in_hand := 
 	GameLog.add("The pot burst and the tar burns on." if p_oil == "tar" else "The pot burst in a sheet of flame.", "pots")
 
 
-## Your own burst at `at` reaches you (hurts_you): within hurts_you_m of
-## your body (your capsule, feet to eye, 0.35 m round), with no stone
-## between it and the nearest of you.
-func burst_hurts_you(at: Vector3) -> bool:
-	var v: Variant = D.get("hurts_you", false)
-	if typeof(v) != TYPE_BOOL or not bool(v) or player == null or player.dead:
+## How near your own burst of `p_oil` hurts you (m from your body): the
+## oil's own hurts_you_m, else hurts_you_m (Mike, 7 Oct: light oil's flash
+## a little wider than tar's burst).
+static func hurts_m(p_oil: String) -> float:
+	return float(oil(p_oil).get("hurts_you_m", D.get("hurts_you_m", 1.0)))
+
+
+## Your own burst of `p_oil` at `at` reaches you (hurts_you): within its
+## hurts_m of your body (your capsule, feet to eye, 0.35 m round), with no
+## stone between it and the nearest of you.
+func burst_hurts_you(at: Vector3, p_oil := "tar") -> bool:
+	if not _hurts_on():
 		return false
 	var near := nearest_of_you(at)
-	if at.distance_to(near) - YOU_R > float(D.get("hurts_you_m", 1.0)):
+	if at.distance_to(near) - YOU_R > hurts_m(p_oil):
 		return false
 	var dir := (near - at).normalized()
 	var q := PhysicsRayQueryParameters3D.create(at + dir * 0.05, near)
@@ -555,8 +566,26 @@ func nearest_of_you(at: Vector3) -> Vector3:
 	return a + ab * k
 
 
+## Your own pot can hurt you at all (hurts_you), you alive.
+func _hurts_on() -> bool:
+	var v: Variant = D.get("hurts_you", false)
+	return typeof(v) == TYPE_BOOL and bool(v) and player != null and not player.dead
+
+
+## You walk into your own burning tar (Mike, 7 Oct: tar "lasts longer after
+## bursting, the aoe isn't as large"; one damage): your feet within its
+## flames (PotFire.PATCH_FLAMES_SHARE of its radius) plus your body's
+## width, about its height. Once a patch (PotFire.spent_on_you), never
+## when its burst hit you.
+func patch_hurts_you(p: PotFire) -> bool:
+	if p.spent_on_you or not _hurts_on():
+		return false
+	var feet := player.global_position
+	return Vector2(feet.x - p.foot.x, feet.z - p.foot.z).length() <= p.radius * PotFire.PATCH_FLAMES_SHARE + YOU_R and absf(feet.y - p.foot.y) < 1.0
+
+
 ## One hit from your own pot (Harm counts it; `cause` its death cause).
-func _hurt_you(at: Vector3, cause: String) -> void:
+func hurt_you(at: Vector3, cause: String) -> void:
 	if player == null or player.dead:
 		return
 	self_hits += 1

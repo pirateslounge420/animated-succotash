@@ -141,6 +141,13 @@ func cycle(hand: String, dir: int) -> void:
 
 
 func _cycle_right(dir: int) -> void:
+	# A burnt-out torch in your hand (design 6 Oct §FJ.4; Mike, 7 Oct): the
+	# wheel drops it and brings up your next torch, lit from its embers
+	# while they glow (Torch.swap_burnt).
+	if player.weapon == "torch" and player.torch.swap_burnt():
+		last_step = ["right", "torch", player.weapon]
+		player.torch.block_until_release()
+		return
 	var choices := right_choices()
 	var from: String = player.weapon
 	var to: String = choices[posmod(choices.find(right_now()) + dir, choices.size())]

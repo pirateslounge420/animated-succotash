@@ -8,9 +8,10 @@ extends Node3D
 ## sconce_every_m down the corridors); and the bundle of unlit torches by
 ## the hearth (§AW): it gives none past the three you may hold (design 6
 ## Oct §FJ.4, torch.json crawler_burn.carry_max: a soft rustle, no words),
-## and once empty it is laid again bundle.remake_h_game game hours on (the
-## hearth's keeper binds more, §FJ.4's first guess). A torch burnt out in
-## your hand leaves its charred stick on the floor (lay_stick).
+## and once empty it stays empty (Mike, 7 Oct: torches don't come back by
+## themselves; they are found or made, neither built yet). A burnt-out
+## torch you drop leaves its charred stick on the floor, its embers
+## glowing on there while they last (lay_stick).
 ##
 ## Every fire is a Campfire (the same stones, coals, flame card, light,
 ## sound and smoke as the open world's, so the torch's swing finds them,
@@ -47,14 +48,12 @@ var holders: Array[Node3D] = []
 ## The bundle by the hearth: [node, torches left].
 var bundle: Node3D
 var bundle_left := 0
-## When the bundle ran out (world days; -1 while it holds torches).
-var bundle_out_at := -1.0
-## Bundles laid again, and torches refused at it, three held (checks).
-var bundles_remade := 0
+## Torches refused at the bundle, three held (checks).
 var refusals := 0
-## The charred sticks dropped where torches burnt out (lay_stick).
+## The charred sticks dropped where torches burnt out (lay_stick), and
+## those whose embers still glow: [root, light, tip, seconds left, all].
 var sticks: Array[Node3D] = []
-var _bundle_at := Vector3.ZERO
+var _glowing: Array = []
 var _bundle_voice: AudioStreamPlayer3D
 ## What never blocks a flame's light in lit_on (the player's own body).
 var ray_exclude: Array[RID] = []
@@ -218,7 +217,6 @@ func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 ## flame).
 func _bundle(pos: Vector3) -> void:
 	bundle_left = int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
-	_bundle_at = pos
 	bundle = Node3D.new()
 	bundle.name = "TorchBundle"
 	add_child(bundle)
@@ -259,8 +257,6 @@ func take_torch() -> Dictionary:
 		var c := bundle.get_node_or_null(n % bundle_left)
 		if c:
 			c.queue_free()
-	if bundle_left == 0 and world != null:
-		bundle_out_at = float(world.get("days"))
 	return Inventory.make("torch")
 
 
@@ -276,28 +272,13 @@ func refuse_torch() -> void:
 	Audio3D.play(_bundle_voice)
 
 
-## An empty bundle is laid again bundle.remake_h_game game hours after it
-## ran out, on the crawler's clock (world.days; §FJ.4's first guess: the
-## hearth's keeper binds more).
-func _remake_bundle() -> void:
-	if bundle_left > 0 or bundle_out_at < 0.0 or world == null:
-		return
-	var wait := float((Torch.D.get("bundle", {}) as Dictionary).get("remake_h_game", 24.0)) / 24.0
-	if float(world.get("days")) - bundle_out_at < wait:
-		return
-	if bundle != null:
-		bundle.queue_free()
-	_bundle(_bundle_at)
-	bundle_out_at = -1.0
-	bundles_remade += 1
-	GameLog.add("More torches lie bound by the hearth.", "torch")
-
-
-## The charred stick of a torch burnt out in your hand (Torch.burnt_out,
+## The charred stick of a burnt-out torch you dropped (Torch.burnt_out,
 ## §FJ.4), lying at `at` (scene: by your feet, on the floor you stand on,
 ## so never on a pit's guard or a step you can't see): a bundle stick
 ## burnt black as the hearth's logs, its head gone. It stays where it fell.
-func lay_stick(at: Vector3) -> Node3D:
+## Dropped with `embers_left_s` of its embers to go, its end glows dim red
+## (the embers' light, Torch's colours) and fades to nothing over them.
+func lay_stick(at: Vector3, embers_left_s := 0.0) -> Node3D:
 	var root := Node3D.new()
 	root.name = "CharredStick"
 	add_child(root)
@@ -306,12 +287,54 @@ func lay_stick(at: Vector3) -> Node3D:
 	var stick := CreatureBodies.cone(root, 0.022, 0.016, STICK_BURNT_M, Vector3(0.0, 0.022, 0.0), CHAR, 0.0, 6)
 	stick.rotation = Vector3(PI * 0.5, 0.0, 0.0)
 	sticks.append(root)
+	if embers_left_s > 0.0:
+		# The embers at its burnt end: a small glowing knot and their light.
+		var end := Vector3(0.0, 0.022, -STICK_BURNT_M * 0.5)
+		var tip := CreatureBodies.cone(root, 0.02, 0.02, 0.05, end, Torch.gutter_color(1.0), EMBER_TIP_GLOW, 6)
+		tip.rotation = Vector3(PI * 0.5, 0.0, 0.0)
+		var l := OmniLight3D.new()
+		l.name = "Embers"
+		l.light_color = Torch.gutter_color(1.0)
+		l.omni_range = EMBER_RANGE_M
+		l.shadow_enabled = false
+		l.light_specular = 0.0
+		l.position = end + Vector3(0.0, 0.08, 0.0)
+		root.add_child(l)
+		var all := maxf(Torch.embers_s(), 0.01)
+		_glowing.append([root, l, tip, embers_left_s, all])
+		_embers(0.0)
 	return root
+
+
+## The dropped sticks' embers fading (lay_stick): the light dimmer and
+## sputtering as they die, the glowing knot gone with the last of them.
+func _embers(delta: float) -> void:
+	for i in range(_glowing.size() - 1, -1, -1):
+		var g: Array = _glowing[i]
+		var root := g[0] as Node3D
+		if not is_instance_valid(root):
+			_glowing.remove_at(i)
+			continue
+		var left := maxf(float(g[3]) - delta, 0.0)
+		g[3] = left
+		var l := g[1] as OmniLight3D
+		if left <= 0.0:
+			l.queue_free()
+			(g[2] as Node3D).queue_free()
+			_glowing.remove_at(i)
+			continue
+		var sputter := 0.55 + 0.45 * absf(sin(_t * 13.7 + float(i)) * sin(_t * 4.9))
+		l.light_energy = EMBER_ENERGY * left / float(g[4]) * sputter
 
 
 ## A burnt stick's length (m) and its char (the hearth's charred logs').
 const STICK_BURNT_M := 0.48
 const CHAR := Color(0.09, 0.07, 0.06)
+## A dropped stick's embers: their glowing knot, their light's reach (m)
+## and its strength at the moment the flame died.
+const EMBER_TIP_GLOW := 1.4
+const EMBER_RANGE_M := 2.5
+const EMBER_ENERGY := 0.35
 
 
 ## Every flame burning now, where its light sits (design §FG: what dims
@@ -381,7 +404,7 @@ func lit_count() -> int:
 
 func _process(delta: float) -> void:
 	_t += delta
-	_remake_bundle()
+	_embers(delta)
 	FireStore.tick(get_tree(), delta, get_viewport().get_camera_3d().global_position if get_viewport().get_camera_3d() else Vector3.ZERO)
 	# The flame, the light and the sound: the near fires each frame (the
 	# far ones are dark beyond their light anyway).
