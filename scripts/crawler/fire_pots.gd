@@ -114,6 +114,9 @@ const WIND := Vector3(-0.25, -0.24, -0.42)
 ## The torch in view at rest (Torch._apply's), and leant over to the wick.
 const TORCH_REST := Vector3(0.34, -0.3, -0.56)
 const TORCH_LEAN := 0.5
+## The lit wick's light on you (player space): over the left hand, a third
+## of a metre from the pot in view.
+const WICK_LIGHT_AT := Vector3(-0.25, 1.62, -0.3)
 
 
 static func _json(path: String) -> Dictionary:
@@ -162,6 +165,19 @@ func build(p_world: Node, p_lay: Dictionary, p_player: CrawlerPlayer) -> void:
 	_view.visible = false
 	_voice = Audio3D.make("torch", player, "PotVoice")
 	_voice.position = Vector3(-0.3, 1.3, -0.3)
+	# The lit wick's light: on you, over the left hand (WICK_LIGHT_AT), not
+	# at the wick itself, whose clay would blow out white a few centimetres
+	# from a point light.
+	var W: Dictionary = D.get("wick", {})
+	_wick_light = OmniLight3D.new()
+	_wick_light.name = "WickLight"
+	_wick_light.light_color = Torch.fire_color()
+	_wick_light.omni_range = float(W.get("light_range_m", 4.0))
+	_wick_light.omni_attenuation = Campfire.ATTENUATION
+	_wick_light.shadow_enabled = false
+	_wick_light.position = WICK_LIGHT_AT
+	_wick_light.visible = false
+	player.add_child(_wick_light)
 	_arc = MeshInstance3D.new()
 	_arc.name = "PotArc"
 	_arc.top_level = true
@@ -893,7 +909,7 @@ func _process(_delta: float) -> void:
 	var lit := state == "aiming"
 	if _wick != null:
 		_wick.visible = show and lit
-		_wick_light.visible = show and lit
+	_wick_light.visible = show and lit
 	if show:
 		_pose()
 		if lit:
@@ -914,14 +930,6 @@ func _dress_view(p_oil: String) -> void:
 	_wick.name = "Wick"
 	_wick.position = PotMesh.wick_tip()
 	_view.add_child(_wick)
-	_wick_light = OmniLight3D.new()
-	_wick_light.name = "WickLight"
-	_wick_light.light_color = Torch.fire_color()
-	_wick_light.omni_range = float(W.get("light_range_m", 4.0))
-	_wick_light.omni_attenuation = Campfire.ATTENUATION
-	_wick_light.shadow_enabled = false
-	_wick_light.position = PotMesh.wick_tip() + Vector3(0.0, 0.05, 0.0)
-	_view.add_child(_wick_light)
 	_wick.visible = false
 	_wick_light.visible = false
 	Bow._no_shadow(_view)

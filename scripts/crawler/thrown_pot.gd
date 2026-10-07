@@ -35,6 +35,8 @@ var _axis := Vector3.RIGHT
 var _spin := 0.0
 ## The pot's middle above its foot (it tumbles about it).
 const MID_Y := 0.06
+## The wick's light rides this far above the pot.
+const LIGHT_UP_M := 0.3
 
 
 ## Into the air from `from` (scene) at `vel`, `p_oil` in it, `p_fuse`
@@ -81,7 +83,8 @@ func wick_point() -> Vector3:
 func _place_wick() -> void:
 	var tip := _pivot.basis * (PotMesh.wick_tip() - Vector3(0.0, MID_Y, 0.0))
 	_wick.position = tip
-	_light.position = tip
+	# Its light rides a little above it, so the clay isn't blown white.
+	_light.position = Vector3(0.0, LIGHT_UP_M, 0.0)
 
 
 func _physics_process(delta: float) -> void:

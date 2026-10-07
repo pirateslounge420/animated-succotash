@@ -51,6 +51,8 @@ var _pops: AudioStreamPlayer3D
 var _pop_at := 0.0
 
 static var _sounds := {}
+## A flash's fireball is this much wider than a flame card's tongue.
+const FLASH_WIDE := 1.6
 
 
 static func _look() -> Dictionary:
@@ -275,7 +277,8 @@ func _process(_delta: float) -> void:
 		var hs := 1.0
 		if kind == "flash":
 			hs = smoothstep(0.0, 0.18, g) * (1.0 - smoothstep(0.45, 1.0, g)) * 1.2 + 0.05
-			fl.scale = Vector3(hs, hs, hs)
+			# Broader than a flame's tongue: a ball of burning oil.
+			fl.scale = Vector3(hs * FLASH_WIDE, hs, hs)
 		else:
 			hs = lerpf(1.0, float(low.get("height_scale", 0.45)), g)
 			fl.scale = Vector3(1.0, hs, 1.0)
