@@ -313,11 +313,11 @@ func _pots(main: CrawlerMain) -> void:
 		var s2: Vector2 = (cor.c as Vector2) + d * 0.8
 		p.spawn_flat(Vector3(s2.x, Delves.floor_of(cor, 0.8), s2.y), atan2(-d.x, -d.y), -0.2)
 		await _frames(8)
-		var before := _stats(await _shot("11a_corridor_before_the_pot"))
+		var before := _stats(await _shot("14a_corridor_before_the_pot"))
 		var f2: Vector2 = (cor.c as Vector2) + d * 4.0
 		fp.burst(Vector3(f2.x, Delves.floor_of(cor, 4.0) + 0.25, f2.y), "tar", null, Vector3.UP)
 		await _wait_s(1.5)
-		var img := await _shot("11_tar_patch")
+		var img := await _shot("14_tar_patch")
 		var st := _stats(img)
 		var pt := _patch(img, 0.3, 0.45, 0.7, 0.85)
 		print("  tar patch: warm %.3f of the frame (%.3f before), mean %.3f (%.3f before); its stretch of floor hue %.1f, chroma %.3f" % [st.warm, before.warm, st.mean_l, before.mean_l, pt.hue, pt.chroma])
@@ -327,11 +327,11 @@ func _pots(main: CrawlerMain) -> void:
 		var s3: Vector2 = (room.c as Vector2) + d3 * 1.0
 		p.spawn_flat(Vector3(s3.x, float(room.y0), s3.y), atan2(-d3.x, -d3.y), 0.0)
 		await _frames(8)
-		var before3 := _stats(await _shot("12a_room_before_the_burst"))
+		var before3 := _stats(await _shot("15a_room_before_the_burst"))
 		var b3: Vector2 = (room.c as Vector2) + d3 * minf(5.0, float(room.len) - 1.0)
 		fp.burst(Vector3(b3.x, float(room.y0) + 1.3, b3.y), "light_oil", null, Vector3.UP)
 		await _wait_s(0.2)
-		var img3 := await _shot("12_pot_burst")
+		var img3 := await _shot("15_pot_burst")
 		var st3 := _stats(img3)
 		var mid := _patch(img3, 0.35, 0.25, 0.65, 0.75)
 		print("  light-oil burst: warm %.3f of the frame (%.3f before), mean %.3f (%.3f before); its middle hue %.1f, luma %.3f" % [st3.warm, before3.warm, st3.mean_l, before3.mean_l, mid.hue, mid.luma])
@@ -354,7 +354,7 @@ func _pots(main: CrawlerMain) -> void:
 	fp._catch(pot)
 	await _wait_s(0.4)
 	fp.charge = 0.5
-	await _shot("13_pot_lit_in_hand")
+	await _shot("16_pot_lit_in_hand")
 	fp._set_state("idle")
 	fp.left = {}
 	Input.action_release("shoot")

@@ -4,6 +4,37 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 60, §FA.3, part 1: fire pots, lit off the torch and thrown (the general pot; the creatures and the left hand wire in when 49, 55 and 58 land) (e607b24, 1f5897e)
+- **Built ahead of its prerequisites, at Mike's word** ("do what you can as if those other prompts were completed"): queue 55 (two hands), 57 (the stagger, part 1 in) and 58 (the skeletons) are being built in parallel. So, like queue 57's part 1, this is the pot itself plus a socket the creatures plug into. Part 2 wires the snake, the skeletons and queue 55's left hand when they land, and row 60 stays `todo` until then.
+- **The pot** (`PotMesh`, §FJ.5): a sealed fired-clay pot, about 15 cm to the tip of its fibre wick, 8-sided, painted (navy occlusion under the belly and in the neck) and drawn in the tomb's own matte material. The oil shows by eye: tar's plug is black pitch with drips down the shoulder; light oil's is a pale seal.
+- **Carrying and the left hand** (`FirePots`): each pot is an item of the pack (`items.json → fire_pot`, with its `oil`), at most `carry_max` (3). Hold Tab and scroll to bring one into the left hand (low left in view) and back to empty. This is a stand-in for queue 55's left hand, which brings the strip. While a pot is in the left hand the torch doesn't swing (`hands.json → clicks.left_with_pot`).
+- **Lighting, aiming, the throw:**
+  - Hold left click with the torch lit: the pot and the torch come together in view over `light_anim_s` (0.6 s), and the wick catches with a little flare of amber light. With no torch, or an unlit one, nothing happens; let go early and the hands part.
+  - Keep holding: the lob charges from `min_m` to `max_m` over `charge_s`, with a faint dotted arc (AimArc's look) and the pot drawing back.
+  - Let go: it lobs (`ThrownPot`) `lob_deg` above your view, at the speed that lands it at the charged range on level ground when you look level, tumbling with its wick alight. It bursts on the first stone or creature it meets, or in the air when the fuse runs out. A fuse spent in your hand never goes off there (`cook_off_in_hand` null); it waits for the landing.
+- **The burst** (`FirePots.burst`, `PotFire`):
+  - Fire damage within `splash_m` to every fire target, times its `oil_scale`.
+  - Tar sticks and burns what it hits (`burn_dps` for `burn_s`, a fresh coat restarting it) and leaves a patch burning on the floor (`patch_radius_m`, `floor_patch_s`) that burns what stands in it, then gutters dimmer and redder, goes out and leaves char. Light oil is one big flash and nothing after.
+  - Every flame is the campfire's card in the hearth's amber with its sparks and smoke; none is a flame a torch catches from or a holder is lit by (`relights_holders` null).
+  - A resident at 0 fire hit points burns out and is gone (its `burn_out()`); a boss is driven off into the dark for `drives_off_s` and never killed (§FA.4).
+- **It gives you away** (§DF): the lit wick, in hand and in the air, is a flare seen within `flare_seen_m` by anything with a clear line to it (`FirePots.flare_seen_from`); the burst is heard within `burst_heard_m` (`FirePots.bursts_since`, and `NoiseEvents`). A throw is as loud as a swing.
+- **Fire spreads** (`spreads_to`): the tomb's only dry things are the hearth room's reed mat (rushes) and the bedroll (cloth); a burst or a patch by them sets them burning, then they lie charred for good. `register_burnable` is there for webs and the cats' runs.
+- **The found pot:** one per dungeon on the floor of a side room, a dead end where there is one, never the hearth room, the heart or the spine. Until queue 46's spine is in, "the spine" is the way through the doors from the hearth room to the heart. Right click takes it.
+- **The socket** (for queues 49 and 58; see `FirePots`' notes): a creature joins the group `fire_targets` with a `fire_hp` and `fire_creature` (its `residents.json` key), and `burn_out()`; a boss has `drive_off(seconds, from)`. What sees and hears reads `flare_seen_from()` and `bursts_since()`.
+- **Data:** `[NOT WIRED YET]` is off `fire_pots.json → _help.about`. Added with help lines: `throw.lob_deg / gravity_mps2 / arc_shown / flight_max_s`, `wick`, `look`, `found`, `dev_items`, `spread`, `hurts_you` (false, open for Mike). `items.json → kinds.fire_pot`. `fire_pots.json` is read by `FirePots` itself, not `Tuning`, to keep clear of the parallel passes' edits to `Tuning.FILES`.
+- **Small edits outside my files:** `crawler_main.gd` makes the `FirePots` node (5 lines); `crawler_frames.gd` gains `_pots()`.
+- **Checks:**
+  - `tools/fire_pot_check.gd` (new): 63 lines, 0 fails on seeds 7, 1 and 42. It runs against stand-ins for the skeleton and the snake that use the socket and `residents.json`'s numbers.
+  - Measured throws looking level: 4.14 / 9.07 / 13.82 m against charged 4.21 / 9.21 / 14.00 m; the arc ends where they land.
+  - Tar on a skeleton: 1.0 off its 3.0, then gone at 4.00 s (4.00 expected). A sturdier one ends burn_s at 14.99 (15.00 expected).
+  - The patch burns 5.98 over 12 s; its light ends at about a quarter of its mid-life energy, redder.
+  - `crawler_check` and `stagger_check`: 0 fails.
+  - `crawler_frames` (seed 7, 480 lines, 0 fails): `14_tar_patch` (the corridor's mean light 0.054 dark → 0.173, warm pixels 0 → 44% of the frame, the floor's hue 17.8°, in the amber), `15_pot_burst` (warm 56%, hue 13.9°), and `16_pot_lit_in_hand` (the clay pot low left, its pitch plug and drip, a small wick flame, the arc).
+  - **Fixed from the first pass:** the pot in hand read as a glowing white ball, because the wick's light sat 5 cm from the clay. That light now rides over your left hand, and 0.3 m above a pot in flight. The wick's flame shrank to wick size (`wick.flame_scale` 0.07), and the light-oil fireball is wider, so it reads as a burst rather than a flame's tongue.
+- **For Mike, two calls:** `hurts_you` is new and open: should your own pot's fire hurt you if you stand in its burst or its burning patch? And a burning patch is no flame to relight a torch from, just as a pot doesn't light a cold sconce (`relights_holders`, §FI.2 call 4). Say if you want either.
+
+---
+
 ## 2026-10-07 — Queue 56, §FD with §FJ.3, part 1: a red ring and a heartbeat; you heal once nothing pursues you (the snake's chase waits for 49) (d14f7d8)
 - **Harm in the crawler** (`Harm.fd`, on while the crawler runs; the open world keeps §EA/§EC, and `harm_check` gives the same 31 lines as before):
   - **Hit 1:** a red ring closes round the edge of the view, in four stepped bands like §EC's navy flash (`harm.json → fd.hit_1_edge`: #B01818, 0.6 at the rim, a tenth of the frame's short side). It is drawn on its own layer over the grade (`HarmRing`, `shaders/harm_ring.gdshader`), inside the 480-line frame. The heartbeat starts: 105 bpm, −6 dB.
