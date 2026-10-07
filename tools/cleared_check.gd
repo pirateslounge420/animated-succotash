@@ -27,11 +27,12 @@ extends SceneTree
 ##     dark;
 ##  3. a dark pocket's bite (it moves in plain view: you got right up on
 ##     it): one hanging back in a dark pocket lets you be, still, at
-##     pocket_counterattack_m + 1 m; a scripted walk in to 2 m, looking at
-##     it, draws a strike with its wind-up (its tell from the wind-up's
-##     first frame), lunging in as it winds up, and the hit lands at the end
-##     of its committed strike; the same walk again, your lit torch's swing
-##     at half its wind-up staggers it and no hit lands;
+##     pocket_counterattack_m + 1 m; a scripted walk in to just inside
+##     that (2 m at most), looking at it, draws a strike with its wind-up
+##     (its tell from the wind-up's first frame), lunging in as it winds
+##     up, and the hit lands at the end of its committed strike; the same
+##     walk again, your lit torch's swing at half its wind-up staggers it
+##     and no hit lands;
 ##  3b. cut off (Mike's note of 7 Oct: nothing goes into the stone): a way
 ##     from the hearth room relit end to end round a skeleton resting in it,
 ##     the only dark left to it beyond the lit hearth room: it climbs out
@@ -460,11 +461,13 @@ func _pocket() -> void:
 	await _frames(int(2.0 / DT))
 	var w0 := r.strike.wind_ups
 	ok(r.state == Resident.LURK and r.strike.wind_ups == w0 and r.global_position.distance_to(spot) < 0.35 and not r.pursuit.on, "hanging back in a dark pocket (piece %d), it lets you be at %.1f m, pocket_counterattack_m + 1 m (%s, no one's pursuer)" % [int(line.piece), Vector2(from.x - spot.x, from.z - spot.z).length(), r.state_name()])
-	# Walk in to 2 m (what the walk sees, in a dictionary: a lambda keeps
-	# its own copies of plain locals).
+	# Walk in to just inside its bite, outside its strike's reach (2 m at
+	# most; what the walk sees, in a dictionary: a lambda keeps its own
+	# copies of plain locals).
+	var walk_to := minf(2.0, cm - 0.1)
 	var seen := {"began_at": -1.0, "lunging": false}
 	var hits0 := main.harm.landed
-	await _walk_in(spot, 2.0, func() -> bool:
+	await _walk_in(spot, walk_to, func() -> bool:
 		if float(seen.began_at) < 0.0 and r.strike.wind_ups > w0:
 			seen.began_at = Vector2(player.global_position.x - r.global_position.x, player.global_position.z - r.global_position.z).length()
 			seen.lunging = r.lunging
@@ -481,7 +484,7 @@ func _pocket() -> void:
 		if main.harm.landed != hits0:
 			landed_frame = Engine.get_physics_frames()
 	ok(began_at > 0.0 and began_at <= cm + 0.05 and bool(seen.lunging) and cs.tell_frame == cs.wind_up_frame, "a scripted walk in draws its strike with its wind-up: it began with you %.2f m off (pocket_counterattack_m %.1f), its tell (%s) from the wind-up's first frame (frame %d, the wind-up's %d)" % [began_at, cm, cs.sound, cs.tell_frame, cs.wind_up_frame])
-	ok(closest < 2.0 - 0.3 and closest <= cs.reach_m, "it lunges in as it winds up: you stopped 2 m off and it came to %.2f m (reach_m %.1f)" % [closest, cs.reach_m])
+	ok(closest < walk_to - 0.3 and closest <= cs.reach_m, "it lunges in as it winds up: you stopped %.1f m off and it came to %.2f m (reach_m %.1f)" % [walk_to, closest, cs.reach_m])
 	var landed_s := float(landed_frame - cs.wind_up_frame) * DT
 	var want := cs.wind_up_s + cs.strike_s
 	ok(landed_frame > 0 and main.harm.landed == hits0 + 1 and absf(landed_s - want) <= 2.5 * DT, "the hit lands at the end of its committed strike: %.2f s after the wind-up began (wind_up_s %.2f, strike_s %.2f)" % [landed_s, cs.wind_up_s, cs.strike_s])
@@ -494,7 +497,7 @@ func _pocket() -> void:
 	await _frames(int(1.0 / DT))
 	hits0 = main.harm.landed
 	var swing := {"did": ""}
-	await _walk_in(spot, 2.0, func() -> bool:
+	await _walk_in(spot, walk_to, func() -> bool:
 		if r.strike != null and r.strike.winding_up() and r.strike.t >= r.strike.wind_up_s * 0.5 and str(swing.did) == "":
 			swing.did = player.torch.swing_top()
 			return true
