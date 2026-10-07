@@ -25,12 +25,33 @@ extends SceneTree
 ##    (Harm.reset) clears the list and a hunter still after you is back on
 ##    its next step;
 ##  - hit 3: "Good night" as built, the ring going under the closing black.
+## Then the snake itself (queue 49's Boss), on SEED (SNAKE_SEEDS="1,7,42" for
+## more), each scene booted fresh, the snake and Harm stepped together:
+##  - a real strike lands in its dark; held where it is (its noticing and
+##    its chase's rules running), it keeps you in sight 3 m off for 15 s
+##    and nothing heals; you step out of its sight, torch still lit: it
+##    gives you up after its out_of_sight_s, and the hit heals one step_s
+##    later;
+##  - a room next to its dark relit: it strikes you in the dark, you step
+##    into the lit room, and it follows you in (§FD) and strikes you there;
+##    then it gives you up
+##    there (you far off) and is back in an unlit node within
+##    residents.json rules.back_to_dark_s;
+##  - it follows you into a lit room, never into the hearth room: by the
+##    fire in its sight nothing heals (it hasn't lost you); out of its
+##    sight there with your torch smothered (§FC.2), it gives you up and
+##    you heal;
+##  - half the tomb relit, you in the lit doorways nearest it for five
+##    minutes, torch lit: it comes after you again and again, and a snake
+##    that hasn't hit you never stands in a lit node.
 
 var fails := 0
 var main: CrawlerMain
 var harm: Harm
 var p: CrawlerPlayer
 var gives_up: Dictionary
+## The snake's step (s), as boss_check steps it.
+const DT := 1.0 / 30.0
 
 
 func ok(cond: bool, what: String) -> void:
@@ -108,6 +129,20 @@ func _run() -> void:
 	_reset_timer()
 	_rules()
 	_good_night()
+	main.queue_free()
+	await process_frame
+	var seeds: Array = [seed_v]
+	if OS.get_environment("SNAKE_SEEDS") != "":
+		seeds = []
+		for sv in OS.get_environment("SNAKE_SEEDS").split(","):
+			if sv.strip_edges().is_valid_int():
+				seeds.append(int(sv))
+	for sv in seeds:
+		print("== the snake, seed %d" % sv)
+		await _snake_holds(sv)
+		await _snake_follows(sv)
+		await _snake_hearth(sv)
+		await _snake_keeps_out(sv)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -316,3 +351,425 @@ func _good_night() -> void:
 	var want := float(Harm.ring_look(harm.ring).alpha) * (1.0 - harm.black)
 	ok(harm.black > 0.3 and absf(harm._ring.alpha - want) < 0.02, "the ring goes under the closing black (black %.2f, ring alpha %.2f)" % [harm.black, harm._ring.alpha])
 	harm.reset()
+
+
+# --- The snake (queue 49's Boss) -------------------------------------------------
+
+func _boot(sv: int) -> CrawlerMain:
+	OS.set_environment("SEED", str(sv))
+	var m: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
+	get_root().add_child(m)
+	for i in 10:
+		await physics_frame
+	while not m.baked or not m.boss.started:
+		await process_frame
+	m.boss.auto = false
+	m.harm.set_process(false)
+	m.harm.reset()
+	return m
+
+
+func _done(m: CrawlerMain) -> void:
+	m.queue_free()
+	await process_frame
+	Engine.time_scale = 1.0
+
+
+## The snake and Harm stepped together `secs` s (you stand as placed).
+func _sim(m: CrawlerMain, secs: float, stop: Callable = Callable()) -> float:
+	var t := 0.0
+	while t < secs:
+		m.boss.tick(DT)
+		m.harm.tick(DT)
+		Engine.time_scale = 1.0
+		t += DT
+		if stop.is_valid() and bool(stop.call()):
+			break
+	return t
+
+
+## The snake held where it lies, its noticing and its chase's rules running.
+func _sim_held(m: CrawlerMain, secs: float, stop: Callable = Callable()) -> float:
+	var t := 0.0
+	while t < secs:
+		m.boss._notice(DT)
+		m.boss._chase(DT)
+		m.harm.tick(DT)
+		t += DT
+		if stop.is_valid() and bool(stop.call()):
+			break
+	return t
+
+
+func _place(pl: CrawlerPlayer, at: Vector3, look: Vector3) -> void:
+	var flat := Vector3(look.x - at.x, 0.0, look.z - at.z)
+	pl.spawn_flat(at, atan2(-flat.x, -flat.z), 0.0)
+
+
+func _torch(pl: CrawlerPlayer, lit: bool) -> void:
+	if not pl.inventory.has_kind("torch"):
+		pl.inventory.add(Inventory.make("torch"))
+	pl.weapon = "torch"
+	if lit and not pl.torch.lit():
+		pl.torch.light()
+	elif not lit and pl.torch.lit():
+		pl.torch.put_out("stowed")
+
+
+func _light(m: CrawlerMain, h: Node3D) -> void:
+	FireStore.swing_light(h, float(m.world.get("days")))
+	for i in 600:
+		FireStore.tick(self, 1.0 / 60.0, h.global_position)
+		if FireStore.is_lit(h):
+			return
+
+
+## A spot `d` m from its head in its own dark, in its sight (as boss_check).
+func _beside(b: Boss, d: float) -> Vector3:
+	for k in 16:
+		var a := TAU * k / 16.0
+		var q := b.head + Vector3(cos(a), 0.0, sin(a)) * d
+		q.y = b._floor_y(q)
+		var id := b.ground.node_at(q)
+		if id >= 0 and b.ground.is_ground(id) and (id == b.node or not b.ground.link(id, b.node).is_empty()) and not b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
+			var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]
+			var aa := Delves.along_across(pc, Vector2(q.x, q.z))
+			if aa.x > 0.4 and aa.x < float(pc.len) - 0.4 and absf(aa.y) < float(pc.half) - 0.45:
+				return q
+	return Vector3.INF
+
+
+## Every node's floor middle, and points along each corridor stretch.
+func _spots(b: Boss) -> Array:
+	var out: Array = []
+	for n in b.ground.nodes:
+		out.append(n.center)
+		if str(n.kind) == "stretch":
+			var pc: Dictionary = b.lay.pieces[int(n.piece)]
+			var a := float(n.a0) + 0.6
+			while a < float(n.a1) - 0.6:
+				out.append(BossGround.point(pc, a, 0.0))
+				a += 1.5
+	return out
+
+
+## You with your lit torch somewhere between `lo` and `hi` m from its head
+## where it can't see the flame (false if there is nowhere).
+func _hide(m: CrawlerMain, lo: float, hi: float) -> bool:
+	var b := m.boss
+	for q: Vector3 in _spots(b):
+		var d := (q - b.head).length()
+		if d < lo or d > hi:
+			continue
+		_place(m.player, q, b.head)
+		if b._blocked(b._eye(), m.player.torch.flame_position(), false):
+			return true
+	return false
+
+
+## One hit lands, then it keeps you in its sight 3 m off for 15 s, held
+## where it is: nothing heals; out of its sight, it gives you up after
+## out_of_sight_s, and the hit heals one step_s later.
+func _snake_holds(sv: int) -> void:
+	var m := await _boot(sv)
+	var b := m.boss
+	var h := m.harm
+	var pl := m.player
+	var spot := _beside(b, 1.2)
+	if spot == Vector3.INF:
+		ok(false, "a spot beside the snake in its dark (seed %d)" % sv)
+		await _done(m)
+		return
+	# Torch out: it comes straight in.
+	_torch(pl, false)
+	_place(pl, spot, b.head)
+	await physics_frame
+	var landed0 := h.landed
+	var t_hit := _sim(m, 10.0, func(): return h.landed > landed0)
+	ok(h.landed == landed0 + 1 and b.noticed and b.pursuit.on and b.pursuit.has_hit and h.chased(), "a strike in its dark: one hit (%.1f s), and it is pursuing you (Harm.chased)" % t_hit)
+	# Held: you 3 m off in its sight, your torch lit, for 15 s.
+	var near := _beside(b, 3.0)
+	if near == Vector3.INF:
+		near = spot
+	_torch(pl, true)
+	_place(pl, near, b.head)
+	# (A lambda keeps its own copy of a local: the tally lives in a
+	# dictionary.)
+	var seen := {"lost": 0}
+	_sim_held(m, 15.0, func():
+		if not b.perceives:
+			seen.lost += 1
+		return false)
+	ok(h.hits.size() == 1 and b.pursuit.on and h.chased() and int(seen.lost) == 0, "kept in its sight 3 m off for 15 s, nothing heals (%d hit, its chase on, it saw you every step)" % h.hits.size())
+	# Out of its sight, the torch still lit.
+	var oos := float(gives_up.get("out_of_sight_s", 6.0))
+	if not _hide(m, 4.0, float(gives_up.get("distance_m", 24.0)) - 2.0):
+		ok(false, "a spot out of its sight within its distance_m (seed %d)" % sv)
+		await _done(m)
+		return
+	var t_gone := _sim_held(m, oos + 3.0, func(): return not b.pursuit.on)
+	ok(not b.pursuit.on and b.pursuit.why == "out_of_sight" and absf(t_gone - oos) < 0.35 and not h.chased(), "out of its sight (torch lit, %.1f m off), it gives you up after %.1f s (out_of_sight_s %.1f)" % [(pl.global_position - b.head).length(), t_gone, oos])
+	var step_s := float((Harm.D.recover as Dictionary).step_s)
+	var t_heal := 0.0
+	while not h.hits.is_empty() and t_heal < step_s + 2.0:
+		h.tick(DT)
+		t_heal += DT
+	ok(h.hits.is_empty() and absf(t_heal - step_s) < 0.2, "and the hit heals %.1f s later (one step_s, %.1f)" % [t_heal, step_s])
+	await _done(m)
+
+
+## A room next to its dark relit: it strikes you in the dark, follows you
+## into the light, and, given you up there, is back in the dark within
+## back_to_dark_s.
+func _snake_follows(sv: int) -> void:
+	var m := await _boot(sv)
+	var b := m.boss
+	var h := m.harm
+	var pl := m.player
+	var g := b.ground
+	var pair := _room_by_dark(m)
+	if pair.is_empty():
+		ok(false, "a room to relight beside a stretch of its dark (seed %d)" % sv)
+		await _done(m)
+		return
+	var room := int(pair.room)
+	var dark := int(pair.dark)
+	ok(not g.is_ground(room) and g.is_ground(dark), "relit: room %d (a %s) is lit, the %s beside it (node %d) still its dark" % [room, m.lay.pieces[int(g.nodes[room].piece)].get("room_kind", "room"), g.nodes[dark].kind, dark])
+	# The snake in that dark, you beside it, your torch out.
+	if str(g.nodes[dark].kind) == "room":
+		b._lie_coiled(dark)
+	else:
+		b._lie_along(dark)
+	b.noticed = false
+	var spot := _beside(b, 1.2)
+	if spot == Vector3.INF:
+		ok(false, "a spot beside the snake in node %d (seed %d)" % [dark, sv])
+		await _done(m)
+		return
+	_torch(pl, false)
+	_place(pl, spot, b.head)
+	await physics_frame
+	var landed0 := h.landed
+	_sim(m, 10.0, func(): return h.landed > landed0)
+	ok(h.landed == landed0 + 1 and b.pursuit.has_hit, "it strikes you in its dark: one hit, its teeth in you")
+	# Into the lit room, the torch lit (it sees you go).
+	var inside: Vector3 = g.nodes[room].center
+	_torch(pl, true)
+	_place(pl, inside, b.head)
+	var e0 := b.chase_lit_entries
+	var t_in := _sim(m, 15.0, func(): return g.node_at(b.base) == room)
+	ok(g.node_at(b.base) == room and b.chase_lit_entries > e0 and b.lit_entries == 0, "you step into the lit room and it follows you in (%.1f s; %d lit node(s) entered after you, none of its own accord)" % [t_in, b.chase_lit_entries - e0])
+	# And strikes you there (the light is no sanctuary now).
+	var landed1 := h.landed
+	var t_2 := _sim(m, 8.0, func(): return h.landed > landed1)
+	ok(h.landed == landed1 + 1 and not g.is_ground(g.node_at(pl.global_position)), "and its strike lands in the light: a second hit %.1f s on, you in the lit room" % t_2)
+	# Given up there (you far off): back to the dark within back_to_dark_s.
+	var back_s := float(Pursuit.RULES.get("back_to_dark_s", 4.0))
+	var far := _far_spot(m, float(gives_up.get("distance_m", 24.0)) + 2.0)
+	if far == Vector3.INF:
+		# A tomb too small to get that far: put the torch out instead.
+		_torch(pl, false)
+	else:
+		_place(pl, far, b.head)
+	var gave := false
+	var t_dark := 0.0
+	while t_dark < back_s + 3.0:
+		b.tick(DT)
+		h.tick(DT)
+		Engine.time_scale = 1.0
+		t_dark += DT
+		if not b.pursuit.on and not gave:
+			gave = true
+			t_dark = 0.0
+		if gave and (g.is_ground(g.node_at(b.base)) or b.state == "below"):
+			break
+	var where := "below the tomb" if b.state == "below" else "node %d" % g.node_at(b.base)
+	ok(gave and b.pursuit.why in ["distance", "torch_doused"] and t_dark <= back_s and (g.is_ground(g.node_at(b.base)) or b.state == "below"), "given you up in the light (%s), it is back in the dark in %.1f s (%s; back_to_dark_s %.1f)" % [b.pursuit.why, t_dark, where, back_s])
+	await _done(m)
+
+
+## The hearth room stays shut to it even in a chase that has had you (its
+## ways never go through it, BossGround): it lies in the dark just outside
+## the hearth room's door, hits you there, you step in by the fire, and it
+## never comes in; it watches from its dark and gives you up, and you heal.
+func _snake_hearth(sv: int) -> void:
+	var m := await _boot(sv)
+	var b := m.boss
+	var g := b.ground
+	var h := m.harm
+	var pl := m.player
+	var w: Array = m.lay.wake
+	var hearth := g.node_at(w[0])
+	var outside := -1
+	var via := Vector3.ZERO
+	for l in g.nodes[hearth].links:
+		if g.is_ground(int(l.to)):
+			outside = int(l.to)
+			via = l.via
+			break
+	if outside < 0:
+		ok(false, "a stretch of its dark at the hearth room's door (seed %d)" % sv)
+		await _done(m)
+		return
+	if str(g.nodes[outside].kind) == "room":
+		b._lie_coiled(outside)
+	else:
+		b._lie_along(outside)
+	b.noticed = false
+	var spot := _beside(b, 1.2)
+	if spot == Vector3.INF:
+		ok(false, "a spot beside the snake by the hearth room (seed %d)" % sv)
+		await _done(m)
+		return
+	_torch(pl, false)
+	_place(pl, spot, b.head)
+	await physics_frame
+	var landed0 := h.landed
+	_sim(m, 10.0, func(): return h.landed > landed0)
+	# In by the fire, 2.5 m inside the door, the torch lit: in its sight.
+	var c: Vector3 = g.nodes[hearth].center
+	var into := Vector3(c.x - via.x, 0.0, c.z - via.z).normalized()
+	var by_fire := via + into * 2.5
+	by_fire.y = b._floor_y(by_fire)
+	_torch(pl, true)
+	_place(pl, by_fire, b.head)
+	var inside := {"steps": 0, "watch": 0.0}
+	_sim(m, 30.0, func():
+		if g.node_at(b.base) == hearth:
+			inside.steps += 1
+		if b.state == "watch":
+			inside.watch += DT
+		return false)
+	ok(h.landed == landed0 + 1 and int(inside.steps) == 0 and h.hits.size() == 1, "after a hit at its door you step in by the hearth, in its sight (%.1f m): for 30 s it never comes into the hearth room (%.0f s watching from its dark), and nothing heals: it hasn't lost you" % [(pl.global_position - b.head).length(), float(inside.watch)])
+	# Hidden (§FC.2): out of its sight deeper in the hearth room, and your
+	# torch smothered, since a lit one gives you away round cover (it
+	# finds you again from along its corridor otherwise).
+	var hid := false
+	var pc: Dictionary = m.lay.pieces[int(g.nodes[hearth].piece)]
+	var al := 0.6
+	while al < float(pc.len) - 0.6 and not hid:
+		var ac := -float(pc.half) + 0.6
+		while ac < float(pc.half) - 0.6 and not hid:
+			var q := BossGround.point(pc, al, ac)
+			q.y = b._floor_y(q)
+			var off_fire := Vector2(q.x - (m.lay.hearth as Vector3).x, q.z - (m.lay.hearth as Vector3).z).length()
+			if g.node_at(q) == hearth and off_fire > 1.4:
+				_place(pl, q, b.head)
+				hid = b._blocked(b._eye(), pl.torch.flame_position(), false)
+			ac += 0.5
+		al += 0.5
+	_torch(pl, false)
+	var t := _sim(m, 15.0, func(): return not b.pursuit.on)
+	ok(not b.pursuit.on and g.node_at(b.base) != hearth, "%s and your torch smothered, it gives you up %.1f s on (%s)" % ["out of its sight behind the hearth room's wall" if hid else "in the hearth room", t, b.pursuit.why])
+	var step_s := float((Harm.D.recover as Dictionary).step_s)
+	var t_heal := _sim(m, step_s + 2.0, func(): return h.hits.is_empty())
+	ok(h.hits.is_empty() and absf(t_heal - step_s) < 0.2, "and by the hearth the hit heals %.1f s after it lets you go (one step_s)" % t_heal)
+	await _done(m)
+
+
+## A lit-able room (its own torches, not the hearth room) with a stretch
+## or room of the dark beside it once relit: {"room", "dark"}, its torches
+## lit; {} if none.
+func _room_by_dark(m: CrawlerMain) -> Dictionary:
+	var g := m.boss.ground
+	for n in g.nodes:
+		if str(n.kind) != "room" or bool(n.hearth) or (n.holders as Array).is_empty():
+			continue
+		for l in n.links:
+			var other: Dictionary = g.nodes[int(l.to)]
+			if bool(other.hearth):
+				continue
+			# Light the room's own torches, and see.
+			for i in n.holders:
+				_light(m, m.fires.holders[int(i)])
+			m.boss._refresh(false)
+			if not g.is_ground(int(n.id)) and g.is_ground(int(l.to)):
+				return {"room": int(n.id), "dark": int(l.to)}
+	return {}
+
+
+## A floor spot at least `d` m from the snake's head (INF if none).
+func _far_spot(m: CrawlerMain, d: float) -> Vector3:
+	var best := Vector3.INF
+	var best_d := 0.0
+	for q: Vector3 in _spots(m.boss):
+		var dd := (q - m.boss.head).length()
+		if dd > best_d:
+			best_d = dd
+			best = q
+	return best if best_d >= d else Vector3.INF
+
+
+## Half the tomb relit (outward from the hearth), you in the lit doorways
+## nearest it with your torch lit, five minutes, moved every 10 s to the
+## one nearest it now: it sees you, comes to the edge of its dark, watches
+## and gives you up, again and again; a snake that hasn't hit you never
+## stands in a lit node.
+func _snake_keeps_out(sv: int) -> void:
+	var m := await _boot(sv)
+	var b := m.boss
+	var g := b.ground
+	var pl := m.player
+	var order: Array = _outward(m)
+	for k in order.size() / 2:
+		_light(m, m.fires.holders[int(order[k])])
+	b._refresh(false)
+	# The lit doorways onto its dark: 1.5 m into the lit side of each.
+	var doors: Array = []
+	for n in g.nodes:
+		if g.is_ground(int(n.id)):
+			continue
+		for l in n.links:
+			if not g.is_ground(int(l.to)):
+				continue
+			var via: Vector3 = l.via
+			var into := Vector3((n.center as Vector3).x - via.x, 0.0, (n.center as Vector3).z - via.z)
+			var q := via + into.normalized() * 1.5 if into.length() > 0.1 else (n.center as Vector3)
+			q.y = b._floor_y(q)
+			if g.node_at(q) != int(n.id):
+				q = n.center
+			doors.append(q)
+	if doors.is_empty():
+		ok(false, "lit doorways onto its dark (seed %d)" % sv)
+		await _done(m)
+		return
+	_torch(pl, true)
+	var in_light := 0
+	var steps := 0
+	var after_t := 0.0
+	var watched := 0.0
+	while steps * DT < 300.0:
+		if steps % int(round(10.0 / DT)) == 0:
+			var best: Vector3 = doors[0]
+			for q: Vector3 in doors:
+				if (q - b.head).length() < (best - b.head).length():
+					best = q
+			_place(pl, best, b.head)
+		steps += 1
+		b.tick(DT)
+		m.harm.tick(DT)
+		Engine.time_scale = 1.0
+		if b.noticed:
+			after_t += DT
+		if b.state == "watch":
+			watched += DT
+		if not b.state in ["below", "lair", "gone", "release", "held"] and not g.is_ground(g.node_at(b.base)):
+			in_light += 1
+	ok(after_t >= 30.0, "five minutes in the lit doorways (%d onto its dark): it was after you %.0f s of it, %.0f s watching from the edge of its dark" % [doors.size(), after_t, watched])
+	ok(b.hits_landed == 0 and in_light == 0 and b.lit_entries == 0 and b.chase_lit_entries == 0, "a snake that hasn't hit you never stood in a lit node in five minutes (%d steps in the light, %d hits)" % [in_light, b.hits_landed])
+	await _done(m)
+
+
+## The holders by their distance from the hearth room (as boss_check).
+func _outward(m: CrawlerMain) -> Array:
+	var g := m.boss.ground
+	var dist: Dictionary = g._dijkstra(0, false, 0.0).dist
+	var hs: Array = []
+	for i in (m.lay.holders as Array).size():
+		var hd: Dictionary = m.lay.holders[i]
+		hs.append([float(dist.get(g.node_at(hd.pos), 999.0)), i])
+	hs.sort_custom(func(a, b2): return float(a[0]) < float(b2[0]))
+	var out: Array = []
+	for x in hs:
+		out.append(int(x[1]))
+	return out

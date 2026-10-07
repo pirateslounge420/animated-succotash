@@ -6,8 +6,7 @@ extends Control
 ## frame closing to black and "Good night" in red. Drawn inside the
 ## 480-line frame like the rest of the HUD (§Y), wordless otherwise
 ## (§ET.3). It only reads Harm (its flash, black and text_alpha); the
-## stage's darkened edges and drained colour are the grade's (PostGrade,
-## Harm sets them).
+## stage's red ring is Harm's own in the crawler (HarmRing, §FJ.3).
 
 var _label: Label
 

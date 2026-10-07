@@ -19,12 +19,17 @@ extends Node3D
 ##               sees_flame_m, a sprint (or anything as loud: a swing
 ##               that lands on it) within hears_sprint_m, or you within
 ##               feels_m whatever your light; then it hunts you through its
-##               ground at hunt_mps, never into the light: if you stand in
+##               ground at hunt_mps, not into the light: if you stand in
 ##               a lit room it waits at the edge of its dark (watch_s) and
 ##               gives you up. The chase is a Pursuit (§FD, bosses.json
 ##               gives_up: too far, out of its sight and hearing too long,
 ##               your torch going out), so while it has you, you don't
-##               heal (Harm).
+##               heal (Harm). Once its strike has landed the chase crosses
+##               into the light (§FD, residents.json
+##               rules.chase_enters_light): it follows you into any lit
+##               room or stretch but the hearth room, and strikes there,
+##               until it gives you up; given up in the light, it is back
+##               in the dark within rules.back_to_dark_s (Pursuit).
 ##   your torch  (rule.torch_in_hand delay) with your torch lit it hangs at
 ##               the edge of its circle (torch_delay.hang_m), reared and
 ##               hissing, for torch_delay.hang_s before it closes; with the
@@ -34,13 +39,14 @@ extends Node3D
 ##               back, jaws opening, the hiss), the lunge, the draw back. A
 ##               lunge that reaches you is one hit (contact.strike_is_hit;
 ##               Harm, harm.json: its breath between hits holds), never in
-##               a lit room (rule.relit_room safe). A lit torch swung into
+##               a lit room (rule.relit_room safe) until it has had you. A lit torch swung into
 ##               its wind-up staggers it (torch.json stagger): it recoils
 ##               back along its body. Three hits is "Good night", and you
 ##               wake at the hearth (CrawlerMain) with every light you lit
 ##               still burning (contact.relit_kept); it goes back to its
 ##               rounds.
 ##   the light   relight the room or stretch it is in and it leaves at once
+##               (unless it is on you with its teeth in you, §FD)
 ##               for the nearest dark by the way with least light in it
 ##               (rule.leaves_lit_room), at leave_mps, out across the lit
 ##               stretch beyond if it must, never through the hearth room.
@@ -166,6 +172,8 @@ var _vanish_t := -1.0
 var _bed_t := -1.0
 ## Below: how long before it comes up again.
 var below_t := 0.0
+## How fast it is leaving the light now (m/s; _leave).
+var _leave_mps := 4.0
 
 var _tell: AudioStreamPlayer3D
 var _hiss: AudioStreamPlayer3D
@@ -179,6 +187,8 @@ var bed_db := -20.0
 ## The checks: times it walked into a lit node of its own accord (never),
 ## and the hits it landed.
 var lit_entries := 0
+## The lit nodes it went into after you, its strike landed (§FD).
+var chase_lit_entries := 0
 var hits_landed := 0
 ## Fire pots (FirePots): times a pot drove it off, and the last burst it
 ## listened for.
@@ -558,7 +568,11 @@ func _track_node() -> void:
 	var was := node
 	node = ground.node_at(base)
 	if node != was and node >= 0 and not ground.is_ground(node) and not state in ["leave", "release", "held", "below"]:
-		lit_entries += 1
+		if _into_light():
+			# After you, with its teeth in you (§FD): not of its own accord.
+			chase_lit_entries += 1
+		else:
+			lit_entries += 1
 
 
 ## The way through nodes `path` (from the one it is in) to `end`: through
@@ -744,7 +758,8 @@ func _refresh(force: bool) -> void:
 	if state in ["release", "lair", "gone", "below"]:
 		return
 	node = ground.node_at(base)
-	if not ground.is_ground(node):
+	if not ground.is_ground(node) and not _into_light():
+		# (A chase that has had you stays on you in the light, §FD.)
 		_leave()
 		return
 	# The way it was going may have gone into the light: think again.
@@ -858,14 +873,20 @@ func drive_off(seconds: float, _from: Vector3) -> void:
 
 ## The chase's own rules (Pursuit, bosses.json gives_up): too far, out of
 ## its sight and hearing too long, your torch put out. Given up, it goes
-## back to its rounds.
+## back to its rounds; given up in the light it had followed you into
+## (§FD), back to the dark first, there within residents.json
+## rules.back_to_dark_s.
 func _chase(delta: float) -> void:
 	if not noticed:
 		return
 	var d := _flat(player.global_position - head).length()
 	if pursuit.step(delta, perceives, d, _torch_lit()):
 		noticed = false
-		if state in ["hunt", "hang", "strike", "watch"]:
+		if state in ["leave", "below"]:
+			return
+		if not ground.is_ground(node):
+			_leave(true)
+		elif state in ["hunt", "hang", "strike", "watch"]:
 			_next_round()
 
 
@@ -873,6 +894,22 @@ func _chase(delta: float) -> void:
 func _let_go(why: String) -> void:
 	noticed = false
 	pursuit.give_up(why)
+
+
+## May it go into the light after you now? Its prowling never does; a
+## chase whose strike has landed does, until it gives you up (§FD,
+## Pursuit.may_enter, rules.chase_enters_light). Never into the hearth
+## room: its ways never go through it (BossGround).
+func _into_light() -> bool:
+	return noticed and pursuit != null and pursuit.may_enter(true)
+
+
+## Close enough to rear at you: one stretch of its dark, or next to each
+## other in it (_same_dark); in a chase that has had you, in the light too.
+func _within(pn: int) -> bool:
+	if _same_dark(pn):
+		return true
+	return _into_light() and pn >= 0 and not bool(ground.nodes[pn].hearth) and not ground.link(node, pn).is_empty()
 
 
 ## Whatever strike was under way, off.
@@ -957,7 +994,9 @@ func _hunt_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 0.7, delta)
 	var pp := player.global_position
 	var pn := ground.node_at(pp)
-	if not ground.is_ground(pn):
+	# Into the light only after you, and only once it has had you (§FD).
+	var into := _into_light()
+	if not ground.is_ground(pn) and not into:
 		_go_watch(pn)
 		return
 	var torch_lit := _torch_lit()
@@ -967,7 +1006,7 @@ func _hunt_tick(delta: float) -> void:
 	var holding := torch_lit and not struck and hang_t < hang_s
 	var stop := hang_m if holding else strike.reach_m * 0.7
 	var d := _flat(pp - base).length()
-	if d <= stop + 0.1 and _same_dark(pn):
+	if d <= stop + 0.1 and _within(pn):
 		if holding:
 			state = "hang"
 		else:
@@ -978,7 +1017,7 @@ func _hunt_tick(delta: float) -> void:
 	if _replan_t <= 0.0 or pn != _player_node:
 		_replan_t = 0.4
 		_player_node = pn
-		var path := ground.path(node, pn, true)
+		var path := ground.path(node, pn, not into)
 		if path.is_empty():
 			_go_watch(pn)
 			return
@@ -1024,7 +1063,7 @@ func _hang_tick(delta: float) -> void:
 		_play_hiss()
 	var delay := sub("torch_delay")
 	var d := _flat(pp - base).length()
-	if not ground.is_ground(pn):
+	if not ground.is_ground(pn) and not _into_light():
 		_go_watch(pn)
 	elif not _torch_lit() or hang_t >= float(delay.get("hang_s", 4.0)) or d > float(delay.get("hang_m", 3.5)) + 1.2:
 		# The flame has held it long enough (or there is none): it comes.
@@ -1040,8 +1079,9 @@ func _strike_tick(delta: float) -> void:
 	speed = 0.0
 	_face(pp, delta)
 	var k := strike.pose_k()
-	if strike.winding_up() and not ground.is_ground(pn):
-		# You stepped into the light in its wind-up: it breaks off.
+	if strike.winding_up() and not ground.is_ground(pn) and not _into_light():
+		# You stepped into the light in its wind-up: it breaks off (not
+		# once it has had you, §FD).
 		_calm()
 		_go_watch(pn)
 		return
@@ -1068,9 +1108,9 @@ func _strike_tick(delta: float) -> void:
 		_:
 			mouth_open = false
 			lunge = move_toward(lunge, 0.0, delta * 3.0)
-			if not ground.is_ground(pn):
+			if not ground.is_ground(pn) and not _into_light():
 				_go_watch(pn)
-			elif d <= strike.reach_m * 1.05 and _same_dark(pn):
+			elif d <= strike.reach_m * 1.05 and _within(pn):
 				strike.begin()
 			else:
 				state = "hunt"
@@ -1079,11 +1119,13 @@ func _strike_tick(delta: float) -> void:
 
 ## A strike reached you (CreatureStrike.on_hit): one hit
 ## (contact.strike_is_hit; Harm's breath between hits holds), unless you
-## stand in the light (rule.relit_room safe).
+## stand in the light (rule.relit_room safe) and it hasn't had you yet: a
+## chase whose strike has landed follows you into the light (§FD), and
+## its strikes land there too.
 func _on_strike_hit(_target: Node3D) -> void:
 	if not bool(CONTACT.get("strike_is_hit", true)):
 		return
-	if not ground.is_ground(ground.node_at(player.global_position)):
+	if not ground.is_ground(ground.node_at(player.global_position)) and not _into_light():
 		return
 	var before := Harm.instance.landed if Harm.instance != null else 0
 	player.death_cause = "creature:%s" % name_text
@@ -1212,7 +1254,15 @@ func _watch_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 0.4, delta)
 	var pp := player.global_position
 	var pn := ground.node_at(pp)
-	if ground.is_ground(pn) and noticed:
+	var back_in := ground.is_ground(pn)
+	if not back_in and _into_light() and pn >= 0 and not bool(ground.nodes[pn].hearth):
+		# Out of the hearth room into light it may follow you through
+		# (§FD): looked for now and then, not every step.
+		_replan_t -= delta
+		if _replan_t <= 0.0:
+			_replan_t = 0.4
+			back_in = not ground.path(node, pn, false).is_empty()
+	if back_in and noticed:
 		state = "hunt"
 		_replan_t = 0.0
 		return
@@ -1232,20 +1282,38 @@ func _watch_tick(delta: float) -> void:
 
 ## Its node was lit round it: off to the nearest dark at once, across no
 ## more than LEAVE_LIT_MAX more lit nodes; cut off deeper in the light, down
-## into the dark below.
-func _leave() -> void:
+## into the dark below. `hurry` (§FD: it gave you up in the light it had
+## followed you into): fast enough to be back in the dark within
+## residents.json rules.back_to_dark_s (Pursuit.back_to_dark_mps), or gone
+## below by then.
+func _leave(hurry := false) -> void:
 	var path := ground.nearest_dark(node)
 	_calm()
+	_leave_mps = num("leave_mps", 4.0)
 	if path.is_empty() or ground.lit_on(path) > LEAVE_LIT_MAX + 1:
 		_go_below()
+		if hurry and _vanish_t > 0.0:
+			_vanish_t = minf(_vanish_t, float(Pursuit.RULES.get("back_to_dark_s", 4.0)) * 0.9)
 		return
 	var to := int(path[-1])
 	var end: Vector3 = ground.nodes[to].center
 	if str(ground.nodes[to].kind) == "room":
 		end = _room_entry(to)
 	_set_route(_route_nodes(path, end))
+	if hurry:
+		_leave_mps = Pursuit.back_to_dark_mps(_route_left(), _leave_mps)
 	state = "leave"
 	target = to
+
+
+## How far its route runs on from where it is (m, flat).
+func _route_left() -> float:
+	var m := 0.0
+	var at := base
+	for i in range(route_i, route.size()):
+		m += _flat(route[i] - at).length()
+		at = route[i]
+	return m
 
 
 ## Cut off in the light: it goes down into the dark under the tomb. While
@@ -1349,7 +1417,7 @@ func _lie_along(id: int) -> void:
 func _leave_tick(delta: float) -> void:
 	_sway = move_toward(_sway, 1.0, delta * 2.0)
 	lift = move_toward(lift, 0.1, delta)
-	if _advance(num("leave_mps", 4.0), delta) or (ground.is_ground(node) and route_i >= route.size() - 1):
+	if _advance(_leave_mps, delta) or (ground.is_ground(node) and route_i >= route.size() - 1):
 		if not ground.is_ground(node):
 			_leave()
 			return
