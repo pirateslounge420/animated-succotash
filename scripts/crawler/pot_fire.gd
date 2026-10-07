@@ -292,6 +292,9 @@ func _process(_delta: float) -> void:
 		var card := fl.get_node_or_null("Card") as MeshInstance3D
 		if card != null and card.material_override is ShaderMaterial:
 			(card.material_override as ShaderMaterial).set_shader_parameter("low", g * (0.4 if kind == "flash" else 1.0))
+	if kind == "stuck" and target != null and is_instance_valid(target):
+		# On it wherever it goes: lying, climbing out, walking.
+		global_position = FirePots.center_of(target) - Vector3.UP * 0.35
 	var sp := get_node_or_null("Specks") as MultiMeshInstance3D
 	if sp != null:
 		(sp.material_override as ShaderMaterial).set_shader_parameter("now", now)

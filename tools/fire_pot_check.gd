@@ -33,6 +33,13 @@ extends SceneTree
 ##     dies; a burning tar patch it lies in drives it off; the lit wick
 ##     alone (the torch smothered) gives you away to it; a burst is heard
 ##     within burst_heard_m of it, not past it;
+##  9b. the real skeletons (prompt 58's Resident): fire targets with
+##     residents.json's fire_hp; tar on a sleeping one wakes it, burns it
+##     down and it is gone, its chase off (Harm no longer counts it); light
+##     oil burns an awake one out at once; awake, one 12 m off (past its own
+##     sight and its torch sight) sees nothing with your torch out, sees the
+##     lit wick as your flame, not at 28 m, and hears a burst 30 m off it,
+##     not 46 m off;
 ## 10. it gives you away: the lit wick is seen within flare_seen_m, not past
 ##     it, not through stone; the burst is heard within burst_heard_m
 ##     (bursts_since, NoiseEvents);
@@ -127,6 +134,7 @@ func _run() -> void:
 	fp = main.fire_pots
 	p = main.player
 	ok(fp != null and FirePots.instance == fp, "the crawler has its fire pots (FirePots)")
+	_skeletons_ready()
 	await _found_in_scene()
 	await _spread()
 	await _no_holder()
@@ -141,6 +149,7 @@ func _run() -> void:
 	await _boss()
 	await _gives_away()
 	await _real_snake()
+	await _real_skeletons()
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -825,3 +834,111 @@ func _real_snake() -> void:
 	ok(b.driven == driven + 1, "a burning tar patch under it drives it off")
 	b.remove_meta("pot_driven_until")
 	b.auto = true
+
+
+## Before any pot is thrown: every skeleton a fire target, with
+## residents.json's fire_hp.
+func _skeletons_ready() -> void:
+	var rs: Residents = main.get("residents")
+	if rs == null:
+		ok(false, "the tomb has its skeletons (prompt 58)")
+		return
+	var hp0 := float(rs.creature("skeleton").get("fire_hp", 3.0))
+	var all_in := not rs.all.is_empty()
+	for r in rs.all:
+		if not r.is_in_group(FirePots.TARGET_GROUP) or absf(r.fire_hp - hp0) > 0.001 or r.fire_creature != "skeleton":
+			all_in = false
+	ok(all_in, "every skeleton (%d) is a fire target with residents.json's fire_hp (%.1f)" % [rs.all.size(), hp0])
+
+
+## The real skeletons (prompt 58's Resident) through the fire-target socket.
+func _real_skeletons() -> void:
+	var rs: Residents = main.get("residents")
+	ok(rs != null and rs.all.size() >= 3, "the tomb has its skeletons (prompt 58; %d)" % (rs.all.size() if rs != null else 0))
+	if rs == null or rs.all.size() < 3:
+		return
+	var hp0 := float(rs.creature("skeleton").get("fire_hp", 3.0))
+	_torch(false)
+	_stand(Vector3(0.0, -300.0, 0.0))
+	await _frames(3)
+	# Tar on one lying asleep: it wakes, burns down, and is gone.
+	var r: Resident = null
+	for c in rs.all:
+		if c.state == Resident.REST:
+			r = c
+			break
+	ok(r != null, "a skeleton asleep to try")
+	if r != null:
+		var burst := float(FirePots.oil("tar").get("burst", 1.0))
+		fp.burst(r.fire_center(), "tar", r, Vector3.UP)
+		var woke := r.awake()
+		var hp1 := r.fire_hp
+		var chased := r.pursuit.on
+		var gone_s := -1.0
+		for i in int(10.0 * 60.0):
+			await physics_frame
+			if not is_instance_valid(r):
+				gone_s = (i + 1) / 60.0
+				break
+		ok(woke and chased and absf(hp1 - (hp0 - burst)) < 0.02, "tar on a sleeping skeleton: it wakes and climbs out, burning (fire_hp %.1f after the burst), the chase on" % hp1)
+		var counted := false
+		if Harm.instance != null:
+			for w in Harm.instance.pursuers:
+				if not is_instance_valid(w):
+					counted = true
+		ok(gone_s > 0.0 and gone_s <= float(FirePots.oil("tar").get("burn_s", 8.0)) and not rs.all.has(r) and not counted, "it burns down to nothing and is gone (after %.2f s), off the tomb's list, its chase off" % gone_s)
+	# Light oil on one awake: out at once.
+	var r2: Resident = null
+	for c in rs.all:
+		if c.state == Resident.REST:
+			r2 = c
+			break
+	if r2 != null:
+		r2.wake()
+		await _frames(2)
+		fp.burst(r2.fire_center(), "light_oil", r2, Vector3.UP)
+		await _frames(2)
+		ok(not is_instance_valid(r2), "light oil burns an awake skeleton out at once")
+	# Its senses, on the open floor: a skeleton up and hunting, 12 m off
+	# (past its own sight, sees_you_m, and its torch sight, sees_flame_m).
+	var r3: Resident = null
+	for c in rs.all:
+		if is_instance_valid(c):
+			r3 = c
+			break
+	ok(r3 != null, "a skeleton to sense with")
+	if r3 == null:
+		return
+	r3.set_physics_process(false)
+	r3._enter(Resident.HUNT)
+	r3.hears_burst()
+	var seen_m := float((FirePots.D.get("gives_away", {}) as Dictionary).get("flare_seen_m", 25.0))
+	var heard_m := float((FirePots.D.get("gives_away", {}) as Dictionary).get("burst_heard_m", 40.0))
+	r3.global_position = Vector3(0.0, -300.0, -12.0)
+	_stand(Vector3(0.0, -300.0, 0.0), 0.0, 0.0)
+	_torch(false)
+	await _frames(4)
+	var nothing := rs.sense(r3)
+	Bow.need_capture = false
+	_torch(true)
+	var pot := _pot_in_hand("tar")
+	Input.action_press("shoot")
+	fp._catch(pot)
+	p.torch.put_out("smothered")
+	await _frames(3)
+	var by_wick := rs.sense(r3)
+	r3.global_position = Vector3(0.0, -300.0, -(seen_m + 3.0))
+	var far_wick := rs.sense(r3)
+	fp._set_state("idle")
+	fp.left = {}
+	Input.action_release("shoot")
+	fp._remove(pot)
+	ok(nothing == "" and by_wick == "flame" and far_wick == "", "awake 12 m off, your torch out: it senses nothing (%s); the pot's lit wick it sees as your flame (%s); %.0f m off it doesn't (%s)" % [nothing if nothing != "" else "-", by_wick, seen_m + 3.0, far_wick if far_wick != "" else "-"])
+	r3.global_position = Vector3(0.0, -300.0, -12.0)
+	fp.burst(r3.eye() + Vector3(heard_m + 6.0, 0.0, 0.0), "light_oil", null, Vector3.UP)
+	var far_burst := rs.sense(r3)
+	fp.burst(r3.eye() + Vector3(heard_m - 10.0, 0.0, 0.0), "light_oil", null, Vector3.UP)
+	var near_burst := rs.sense(r3)
+	ok(far_burst == "" and near_burst == "hearing", "a burst %.0f m off it hears (%s); %.0f m off it doesn't (%s)" % [heard_m - 10.0, near_burst, heard_m + 6.0, far_burst if far_burst != "" else "-"])
+	r3.give_up("check")
+	r3.set_physics_process(true)

@@ -137,10 +137,12 @@ func can_wake(r: Resident) -> bool:
 
 
 ## What `r` senses of you now: "touch", "sight", "flame", "glow",
-## "hearing" or "".
+## "hearing" or "". A fire pot's lit wick is your flame too, and its burst
+## is heard (§FA.3, FirePots).
 func sense(r: Resident) -> String:
 	if paused():
 		return ""
+	var burst := r.hears_burst()
 	var head := player.eye_position()
 	var e := r.eye()
 	var dist := e.distance_to(head)
@@ -160,11 +162,18 @@ func sense(r: Resident) -> String:
 		for g in glow:
 			if e.distance_to(g) <= sf and clear_line(e, g):
 				return "glow"
+	# A fire pot's lit wick, in your hand or in the air: your flame too, out
+	# to fire_pots.json gives_away.flare_seen_m, even with the torch out.
+	if not FirePots.flare_seen_from(e, get_world_3d().direct_space_state).is_empty():
+		return "flame"
 	# What you sound like: your steps by how loud they are, and a loud
 	# moment (a swing that lands) even standing still.
 	var hs := float(n.get("hears_step_m", 0.0))
 	var heard := player.anim_state in ["walk", "sprint", "crouch_walk"] or player.noise_level > STILL_HEARD
 	if heard and dist <= hs * player.noise_level / WALK_NOISE:
+		return "hearing"
+	# A fire pot's burst within its burst_heard_m gives you away.
+	if burst:
 		return "hearing"
 	return ""
 

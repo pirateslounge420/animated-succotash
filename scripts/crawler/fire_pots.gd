@@ -51,6 +51,8 @@ extends Node3D
 ##     key, for oil_scale;
 ##   * drive_off(seconds: float, from: Vector3): a boss's; then nothing
 ##     burns it down, it leaves for the dark for that long;
+##   * optionally fire_hit(amount, from): fire reached it and it still
+##     stands (a sleeping skeleton wakes);
 ##   * optionally fire_center() (where fire meets it; else its origin plus
 ##     meta fire_center_y, 0.9 m) and meta fire_radius_m (its body, 0.45 m),
 ##     or for a long body fire_distance(p) (how far p is from it, under 0
@@ -545,6 +547,8 @@ func burn(t: Node3D, amount: float, p_oil: String, from: Vector3) -> void:
 	t.set_meta("fire_taken", float(t.get_meta("fire_taken", 0.0)) + a)
 	if float(t.get("fire_hp")) <= 0.0:
 		_burn_out(t)
+	elif t.has_method("fire_hit"):
+		t.call("fire_hit", a, from)
 
 
 ## Fire on what stands in a burning patch round `at` (`radius` m on the

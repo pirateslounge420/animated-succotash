@@ -33,8 +33,15 @@ extends Node3D
 ##   lying     climbing back in over rise_s, then rest.
 ##
 ## It is a sprite (ResidentSprite) with no body: nothing walks into it, it
-## walks through nothing (its path keeps it to the floor). fire_hp is
-## carried for the fire pots (§FA.3; queue 60 wires the burning).
+## walks through nothing (its path keeps it to the floor).
+##
+## Fire pots (§FA.3; FirePots' fire-target socket, queue 60): a pot's
+## burst within its splash, the tar stuck on it and a burning patch it
+## stands in burn its fire_hp down (times its oil_scale); burnt while it
+## lies at rest, it wakes and climbs out burning; at 0 it burns out and
+## is gone for good, the chase with it. Awake, it sees a pot's lit wick as
+## your flame out to gives_away.flare_seen_m, and hears a burst within
+## burst_heard_m (Residents.sense).
 
 enum { REST, RISING, HUNT, STRIKING, RETURN, LYING }
 const STATE_NAMES := ["rest", "rising", "hunt", "striking", "return", "lying"]
@@ -63,8 +70,14 @@ var feet: AudioStreamPlayer3D
 var strike: CreatureStrike
 ## Its chase (Pursuit): on from when it wakes until it gives you up.
 var pursuit: Pursuit
-## Carried, not used yet (fire pots, §FA.3).
+## What fire it has left (residents.json fire_hp; FirePots burns it down).
 var fire_hp := 0.0
+## Its residents.json key, for the fire pots' oil_scale (FirePots).
+var fire_creature: String:
+	get:
+		return kind
+## The last fire pot burst it listened for (FirePots.bursts_since).
+var burst_id := 0
 ## Where it last sensed you, and by what ("sight", "flame", "glow",
 ## "hearing", "touch" or ""); whether you are out of its sight only
 ## because of low cover (Residents.hidden_from).
@@ -95,6 +108,8 @@ func setup(p_residents: Residents, p_place: Dictionary) -> void:
 	def = residents.creature(kind)
 	fire_hp = float(def.get("fire_hp", 0.0))
 	pursuit = Pursuit.new(self, gives_up())
+	# A fire pot's burst can reach it (FirePots' fire-target socket).
+	add_to_group(FirePots.TARGET_GROUP)
 	name = "%s_%d_%d" % [kind.capitalize(), int(place.piece), int(place.spot) + 1]
 	global_position = place.pos
 	yaw = float(place.yaw)
@@ -143,6 +158,47 @@ func eye() -> Vector3:
 	if state == RISING or state == LYING:
 		return global_position + Vector3(0.0, lerpf(0.7, float(def.get("eye_m", 1.5)), clampf(t / maxf(float(def.get("rise_s", 1.6)), 0.01), 0.0, 1.0)), 0.0)
 	return global_position + Vector3(0.0, float(def.get("eye_m", 1.5)), 0.0)
+
+
+## Where a fire pot meets it (FirePots): its middle, lying in its rest
+## (from its niche's or grave's floor to its head) or standing.
+func fire_center() -> Vector3:
+	if state == REST:
+		return ((place.pos as Vector3) + (place.eye as Vector3)) * 0.5
+	return global_position + Vector3(0.0, float(def.get("eye_m", 1.5)) * 0.6, 0.0)
+
+
+## A pot's fire reached it and it still stands (FirePots): lying at rest,
+## it wakes and climbs out, burning.
+func fire_hit(_amount: float, _from: Vector3) -> void:
+	if state == REST:
+		wake()
+
+
+## Burnt down to nothing by a fire pot (§FA.3: a resident at 0 fire_hp
+## burns out and is gone): the chase off (Harm no longer counts it), out
+## of the tomb for good.
+func burn_out() -> void:
+	gave_up_why = "burnt"
+	pursuit.give_up("burnt")
+	if strike != null:
+		strike.cancel()
+	_disarm()
+	if residents != null:
+		residents.all.erase(self)
+	queue_free()
+
+
+## A fire pot's burst within its burst_heard_m since it last listened
+## (FirePots.bursts_since; §FA.3: the burst gives you away).
+func hears_burst() -> bool:
+	var out := false
+	var e := eye()
+	for b in FirePots.bursts_since(burst_id):
+		burst_id = int(b.id)
+		if e.distance_to(b.pos) <= float(b.heard_m):
+			out = true
+	return out
 
 
 ## Is it out of its rest (awake, up or on its way)?
