@@ -6,7 +6,9 @@ relighting them, stage by themed stage; fire is carried, never made; the dark is
 no combat. **The stages are pocket worlds (§EW, 6 Oct, not built yet):** one bounded slice per
 biome (~1–2 km, first guess) with its ruins above and its dungeon below, a day-night cycle and
 ambient life; worlds join underground, show on each other's horizons, and a map fast-travels to
-visited ones. **The open world described below (planet, roads, ecology, weather, camp sim) is
+visited ones. **Each world's dungeon has one boss (§EY, 6 Oct, not built yet):** a creepy
+mythical creature that prowls only the rooms not yet relit and is never fought; the last light
+drives it back into its lair (`data/bosses.json`). **The open world described below (planet, roads, ecology, weather, camp sim) is
 Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
 and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
 plain English: what it reads, what it writes, what changes on screen.

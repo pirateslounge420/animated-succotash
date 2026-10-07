@@ -4296,3 +4296,124 @@ sconces of the walls' own stone (EX.1, EX.3).
 5. **A style per world:** each of §EW.2's worlds (and `areas.json`) its own style from a real
    building tradition, researched one per agent once Mike says which worlds come next. This also
    answers §EU's open call on masonry by tradition.
+
+## EY. A boss in every dungeon: it prowls only the dark, and the last light drives it into its hole — LOCKED (6 Oct, 21:20, Mike)
+
+Talked through in chat, 6 Oct evening. Mike: *"each dungeon will have a unique boss slash mythical
+creature … they kind of like patrol the dungeon in a different algorithm. And they're creepy"*;
+*"they want to stop you from relighting all the lights"*; *"it only patrols in the area where you
+haven't relit the torches yet … once you light up all the areas, it basically has nowhere to
+prowl in the dark and is forced back into its dark hole"*; *"all of these bosses should feel
+unique"*; *"go ahead and lockem in"*.
+
+Builds on §BA (a creature per biome, each with its own approach), §ET.4 (progress is light;
+relit stays lit), §EW (a pocket world per biome, its dungeon below) and §EX (one hearth per
+dungeon, torches in every other room, always a way out). Data: `data/bosses.json`
+(new, not wired). Not built.
+
+### EY.1 The rule (Mike)
+- Every pocket world's dungeon has **one boss**: a unique, creepy mythical creature. It is the
+  dark given a body (§BA, §CU), not a fight: no health bar, nothing to kill (§ET.1).
+- **Its ground is the dark.** It prowls only the rooms and corridors not yet relit. A relit room
+  is closed to it for good (§ET.4: relit stays lit). It never puts a relit light out.
+- **It tries to stop you relighting** by hunting you while you carry your torch through its dark.
+  Every relight shrinks its ground.
+- **The last light drives it home.** When the dungeon's last light is relit it has nowhere left
+  to prowl, and it is forced back into its lair: usually a hole in a cave somewhere in the
+  dungeon.
+- **Each moves its own way** ("a different algorithm"; EY.3), and each is heard before it is
+  seen, as §BA's ladder.
+
+### EY.2 Around the rule (Claude's first guesses, open for Mike)
+- **Your torch is a delay; a relit room is safety.** §BA's rule, made the boss's.
+- **When a room counts as relit:** once every torch in it is lit (§EX.4's two or four); a
+  corridor stretch between two lit sconces counts as lit. The hearth room is lit from the start,
+  so it is never its ground.
+- **A danger, never a gate (§EX.5 holds):** the way out stays open whatever is lit. The boss
+  hunts you on the spine as anywhere else in the dark; it never blocks the exit or seals a door.
+- **Relight the room it is in** and it leaves for the nearest dark. It never stays in the light.
+- **Caught:** each strike is one of §EA/§EC's hits; three and it's "Good night". You wake at the
+  hearth (§ET.3), and every light you relit is still lit, so its ground is no bigger than you
+  left it.
+- **Running:** outrunning one at a sprint is §ET.7's risk; a sprint held too long gutters the
+  torch.
+- **The release:** when the last light catches, you hear it go, a long sound travelling away and
+  down to its hole. Then the dungeon's small sounds come back (drips, insects, birds above). It
+  stays in its hole, because relit stays lit.
+- **The lair** is a real place, off the main path, that you can find: a hole in a cave floor or
+  wall. Once it has been driven in you can stand at the edge and hear it breathing below. You
+  don't go down (EY.7 call 3).
+- **No name on screen** (§BA: no bestiary). One log line: "Drove the {boss} into its hole" (§AZ).
+
+### EY.3 The eight, one per named world (§EW.2)
+The creatures are Mike's. The moves and tells are Claude's, offered in chat and locked with
+them; the numbers in `bosses.json` are first guesses. *World* marks who placed it there.
+
+| World | Boss | How it moves | The tell |
+|---|---|---|---|
+| the abandoned mine | **giant centipede / millipede** (world: Claude) | Runs its own route over walls and ceilings, so it can come from above. Dead still, then a fast, precise dart. | Its legs clicking on stone. |
+| the mountains | **wolfman**, in a cave-style ruin (world: Claude) | A tracker: follows your trail through the dark and circles back to where you last were. | A howl when it picks you up. |
+| the swamp | **giant hornet** (world: Claude) | Flies the dark at night, lands on a wall and goes silent to wait. By day it is in its lair (Claude). | Its drone, then the drone stopping. |
+| the desert sandstone | **giant snake** (world: Claude) | Slithers the halls, slow and steady, along the corridors; coils in dead ends between rounds. | Scales dragging on stone. |
+| the volcano | **dragon** (Mike) | Walks the unlit lava halls and breathes a gout down a corridor when it sees your light (EY.4). | The hall ahead brightening orange round a corner: light that isn't yours. |
+| the tundra snow and ice | **yeti**, in the ice cave / igloo place (Mike) | Territorial: holds the ice halls near its lair and roars to drive you off; it doesn't chase far. | The roar. |
+| the underwater caves | **giant prehistoric whale** (Mike) | Its patrol is the water: it travels the flooded tunnels and surfaces in whichever unlit pool room it chooses. Relighting a room closes that pool to it, so its network shrinks pool by pool. | The water going still, then bulging, then a long breath in the dark. |
+| the beach | **horseshoe crab / trilobite creeper** (Mike) | Moves with the tide: buried under the sand at low tide, out along the tide line and into the sea caves as the water rises. | Shell plates clicking; the sand shifting before it surfaces. |
+
+- **The hornet and the snake:** Claude offered the hornet for the desert or the swamp, and the
+  snake for the swamp or a sunken temple. This section puts the snake in the desert sandstone
+  (Mike read the tomb as desert, §EW.2) and the hornet in the swamp. Open (EY.7 call 1).
+- **The tide** is the real semidiurnal tide on the game clock: 12.42 game hours is 74.5 real
+  minutes (one game hour is 6 real minutes).
+- **Every biome gets a world** (§EW.2), so every later world needs a boss of its own. Eight are
+  named.
+
+### EY.4 The dragon is the exception to fire never made (Mike)
+Claude flagged that a fire-breather goes against §AW (every flame is borrowed, never made) and
+that its fire would light the dark it lives in. Mike: *"the dragon would be an exception because
+it lives in the volcanic caves"*. Where fire comes out of the earth (§EW.2's magma), a beast of
+fire belongs.
+- **The exception is the dragon's alone.** You still never make fire.
+- **Its fire is brief** (Claude's first guess): a gout lights the hall for a moment and leaves
+  nothing lit. It doesn't relight anything or take ground.
+- **The look:** its breath and the magma are fire, so they glow and are warm (fire is the one
+  warm accent; only things that give off light glow).
+- **Open:** can you catch a flame from its breath, or from the magma? It would still be borrowed
+  (EY.7 call 4).
+
+### EY.5 How they are drawn
+- §ET.8 holds: baked sprites, eight directions around by three heights. The from-below row
+  covers the centipede on the ceiling.
+- They are beasts, not folk: creature bodies, not the cloaked rig (the yeti was already an
+  uncloaked beast).
+- **Long bodies** (centipede, snake, whale), Claude's first guess: a chain of segment sprites,
+  each following the head's path, so the body bends through the corridors. Claude Code's call.
+- The whale's model: Basilosaurus, the long, eel-like ancient whale (Claude's suggestion). The
+  creeper: horseshoe crab and trilobite in one shell.
+
+### EY.6 Against what is already locked
+- **§BA's hunters** (werewolf, night rider, pond crawler, skinwalker, mountain yeti) hunt the open
+  world's nights, which is Torchfire 2 (§ET.2). In Torchfire 1 the bosses are the hunters. The
+  yeti is in both: a pacer in §BA, territorial here.
+- **The wolfman and §DG's full-moon werewolf:** the wolfman lives in its dungeon and is not tied
+  to the moon. Whether they are one creature is open (EY.7 call 5).
+- **§AW, fire is borrowed:** amended for the dragon only (EY.4).
+
+### EY.7 Open for Mike
+1. The snake in the desert sandstone and the hornet in the swamp (Claude's split), or the other
+   way round?
+2. Caught: three hits (EY.2), or taken at once?
+3. The lair: can you ever go down it?
+4. The dragon's breath, or the magma, as a flame to borrow?
+5. The wolfman and the full-moon werewolf: one creature or two?
+
+### EY.8 Order of work (Claude's proposal; slots into §EW.7)
+After §EX.8's five passes (`docs/PROMPT_QUEUE.md` 44–48), as prompt 49:
+1. **The rule in the tomb with one boss, the snake** (`bosses.json → bosses.desert`, `first`;
+   the snake stands in the tomb as the test while the tomb's world is open, §EW.8 call 4):
+   its ground is the unlit rooms; a relit room closes; it leaves a room you relight; its lair is
+   a hole in an off-path room; the last light sends it home with the release; its tell; a strike
+   is a hit.
+2. Each world's boss as that world is built (the tundra's yeti with §EW.7 step 3).
+
+Mike plays and reports between each.
