@@ -29,6 +29,17 @@ class_name FittedStone
 ## Everything goes into a RuinBuilder's arrays (TombBuild), drawn with the
 ## ruin material's fitted stone (kind 6: the stone's grain without the
 ## tile's painted cracks; the joints are real now).
+##
+## One ruin, one stone (design §EX.1, §EX.3; RuinStyle): every stone's
+## colour is the ruin's style's stone (stone.tint, each stone lighter or
+## darker by at most stone.spread), never RuinBuilder's palette, and the
+## same cutter makes the rest of the kit: a wall face keeps its door frames
+## and niches out (holes: each cell crossing one is cut along the hole's
+## edges, so the stones round an opening are fitted to it), the floor is
+## the cutter laid flat (flags: bigger stones, barely pillowed, the joints
+## packed with grit, worn down the middle of a passage), and a ceiling's
+## lintel slabs are drawn as its stones (slabs). TombBuild.bare (the
+## checks) leaves the joints and feet the stone's own colour.
 
 static var M: Dictionary = Tuning.table("masonry")
 ## The ruin material's kinds (shaders/ruin.gdshader, UV.x).
@@ -42,10 +53,14 @@ static var preset_override := ""
 static var _climates: Dictionary = {}
 
 
-## The preset's name for the theme now (masonry.json by_theme).
+## The preset's name for the theme now: its style's walls.preset (§EX.1),
+## else masonry.json by_theme (which must agree with it).
 static func preset_name() -> String:
 	if preset_override != "":
 		return preset_override.replace("-", "_")
+	var sp := str(RuinStyle.val("walls.preset", "", theme))
+	if sp != "":
+		return sp.replace("-", "_")
 	var by: Dictionary = M.get("by_theme", {})
 	return str(by.get(theme, by.get("default", "megalithic"))).replace("-", "_")
 
@@ -162,9 +177,11 @@ static func dry_of(cl: Vector2) -> float:
 ## 0): [[site, polygon (PackedVector2Array, counter-clockwise)]...]. Seed
 ## points in loose courses (each course its own height, each stone its own
 ## width, both from stone_m; course_bias how true the courses run), then
-## relax_steps of Lloyd's relaxation.
-static func cells(length: float, height: float, rng: RandomNumberGenerator) -> Array:
-	var p := preset()
+## relax_steps of Lloyd's relaxation. `sizes` overrides the preset's
+## stone_m, aspect and course_bias (the floor's flags).
+static func cells(length: float, height: float, rng: RandomNumberGenerator, sizes: Dictionary = {}) -> Array:
+	var p := preset().duplicate()
+	p.merge(sizes, true)
 	var sm: Array = p.get("stone_m", [0.9, 2.2])
 	var s0 := maxf(float(sm[0]), 0.05)
 	var s1 := maxf(float(sm[1]), s0)
@@ -309,14 +326,17 @@ static func _inradius(poly: PackedVector2Array, c: Vector2) -> float:
 ## Dress one wall face with fitted stones. The face's plane: `o` (scene, at
 ## y 0) + `u` * along + up * y + `n` * out (n: out of the wall, into the
 ## room); `length` along, stones from y `y0` to `y1`, the floor at
-## `floor_y`; `cl` the climate there (moisture, temp_c: climate_at). Returns
-## the stones laid; `out` gets the face's "cells" (its stones' polygons,
-## cells(): where its joints run) and "heights" (each one's face off the
-## wall's face: Vector2(rim, pillowed middle)), for the beetles (WallLife).
-static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, floor_y: float, cl: Vector2, rng: RandomNumberGenerator, out: Dictionary = {}) -> int:
+## `floor_y`; `cl` the climate there (moisture, temp_c: climate_at).
+## `holes`: openings kept out of it (convex polygons, counter-clockwise, in
+## the face's own (along, y - y0)): a door's frame, a niche; `clear`: [from,
+## to] stretches along it no vine hangs over and no drift lies in (the
+## doorways, the niches). Returns the stones laid; `out` gets the face's
+## "cells" (its stones' polygons as laid, cut round the holes: where its
+## joints run) and "heights" (each one's face off the wall's face:
+## Vector2(rim, pillowed middle)), for the beetles (WallLife).
+static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, floor_y: float, cl: Vector2, rng: RandomNumberGenerator, holes: Array = [], clear: Array = [], out: Dictionary = {}) -> int:
 	if length < 0.3 or y1 - y0 < 0.3:
 		return 0
-	var p := preset()
 	var rl := relief()
 	var st: Dictionary = M.get("settle", {})
 	var og := overgrowth()
@@ -325,8 +345,7 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 	var bevel := float(rl.get("bevel_m", 0.05))
 	var pillow := float(rl.get("pillow_m", 0.04))
 	var shade_joints := str(rl.get("joint_occlusion", "scene_shade")) == "scene_shade"
-	var tint_s := str(p.get("tint", "theme"))
-	var tint := Color(tint_s) if tint_s.begins_with("#") else Color.WHITE
+	var bare := TombBuild.bare
 	# Underground is all shade: the joints and the low wall full shade.
 	var moss_k := moss_of(cl, 1.0)
 	var jmoss := moss_k * float(og.get("joint_moss", 0.9)) if bool(og.get("moss_in_joints", true)) else 0.0
@@ -334,32 +353,33 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 	var low_moss := float(og.get("low_moss", 0.65)) * moss_k
 	var was_mat := b.mat
 	b.mat = FITTED_M
-	var at := func(uv: Vector2, w: float) -> Vector3:
-		return o + u * uv.x + Vector3.UP * (y0 + uv.y) + n * w
-	# The joints' back: one sheet behind the stones, in the joints' shade.
-	var back: Color = (b.palette[1] as Color).darkened(0.25)
-	back = Prelit.ao_tint(back, 0.3) if shade_joints else back.darkened(0.5)
+	var fo := o + Vector3.UP * y0
+	# The joints' back: behind the stones, in the joints' shade (one sheet,
+	# the openings cut out of it where the face has them).
+	var back: Color = RuinStyle.joint(0.3, bare) if shade_joints else RuinStyle.tint().darkened(0.5)
 	back.a = jmoss
 	var inside := o + Vector3.UP * (y0 + y1) * 0.5 - n * 2.0
-	var q0: Vector3 = at.call(Vector2(0, 0), -jd)
-	var q1: Vector3 = at.call(Vector2(length, 0), -jd)
-	var q2: Vector3 = at.call(Vector2(length, y1 - y0), -jd)
-	var q3: Vector3 = at.call(Vector2(0, y1 - y0), -jd)
-	b._tri_n(q0, q1, q2, n, n, n, back, back, back, inside + u * length * 0.5)
-	b._tri_n(q0, q2, q3, n, n, n, back, back, back, inside + u * length * 0.5)
+	var parts: Array = []
+	for cell in cells(length, y1 - y0, rng):
+		if holes.is_empty():
+			parts.append(cell)
+		else:
+			for piece in cut(cell[1], holes):
+				parts.append([cell[0], piece])
+	var whole := PackedVector2Array([Vector2(0, 0), Vector2(length, 0), Vector2(length, y1 - y0), Vector2(0, y1 - y0)])
+	for poly in ([whole] if holes.is_empty() else cut(whole, holes)):
+		_sheet(b, fo, u, Vector3.UP, n, poly, -jd, back, inside + u * length * 0.5)
 	var laid := 0
 	var share := float(st.get("share", 0.15))
 	var offs: Array = st.get("offset_m", [-0.04, 0.06])
 	var tilts: Array = st.get("tilt_deg", [0.0, 4.0])
-	var all := cells(length, y1 - y0, rng)
 	# Each stone's face off the wall's face: (its rim, its pillowed middle);
 	# a sliver left as joint stays down at the joints' back.
 	var heights := PackedVector2Array()
-	heights.resize(all.size())
+	heights.resize(parts.size())
 	heights.fill(Vector2(-jd, -jd))
-	for ci in all.size():
-		var cell: Array = all[ci]
-		var poly: PackedVector2Array = cell[1]
+	for ci in parts.size():
+		var poly: PackedVector2Array = parts[ci][1]
 		if _area(poly) < 0.004:
 			continue
 		var c := _centroid(poly)
@@ -378,58 +398,261 @@ static func face(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: flo
 			sink = float(st.get("dropped_m", 0.05))
 			rot = deg_to_rad(float(tilts[1])) * 2.0 * (1.0 if rng.randf() < 0.5 else -1.0)
 		heights[ci] = Vector2(proud + off, proud + off + pillow)
-		var cs := c - Vector2(0, sink)
-		var s0 := maxf(0.2, 1.0 - joint * 0.5 / r_in)
-		var s1 := maxf(0.12, 1.0 - (joint * 0.5 + bevel) / r_in)
-		var col: Color = (b.palette[rng.randi() % b.palette.size()] as Color).darkened(rng.randf_range(0.0, 0.14))
-		col = Color(col.r * tint.r, col.g * tint.g, col.b * tint.b)
+		# The style's one stone (§EX.1), each stone its own shade of it.
+		var col := RuinStyle.stone(rng)
 		var patch := rng.randf_range(0.5, 1.3)
-		var foot_col: Color = Prelit.ao_tint(col, 0.55) if shade_joints else col.darkened(0.3)
+		var foot_col: Color = col if bare else (Prelit.ao_tint(col, 0.55) if shade_joints else col.darkened(0.3))
 		foot_col.a = jmoss * 0.85
-		# A small stone's face needs no middle ring.
-		var ring := r_in > 0.12
-		var nv := poly.size()
-		var r0: Array[Vector3] = []
-		var r1: Array[Vector3] = []
-		var rm: Array[Vector3] = []
-		var n0: Array[Vector3] = []
-		var n1: Array[Vector3] = []
-		var nm: Array[Vector3] = []
-		var c1: Array[Color] = []
-		var cm: Array[Color] = []
-		for k in nv:
-			var d := (poly[k] - c).rotated(rot)
-			var radial := (u * d.x + Vector3.UP * d.y).normalized()
-			r0.append(at.call(cs + d * s0, -jd * 0.45 + off))
-			r1.append(at.call(cs + d * s1, proud + off))
-			rm.append(at.call(cs + d * s1 * 0.55, proud + pillow * 0.72 + off))
-			n0.append((n * 0.35 + radial).normalized())
-			n1.append((n + radial * 0.6).normalized())
-			nm.append((n + radial * 0.28).normalized())
-			c1.append(_mossy(col, (r1[k] as Vector3).y - floor_y, low_m, low_moss * patch))
-			cm.append(_mossy(col, (rm[k] as Vector3).y - floor_y, low_m, low_moss * patch))
-		var top: Vector3 = at.call(cs, proud + pillow + off)
-		var ct := _mossy(col, top.y - floor_y, low_m, low_moss * patch)
-		var behind := top - n * 1.0
-		for k in nv:
-			var k2 := (k + 1) % nv
-			# The bevel, from the joint up to the face.
-			b._tri_n(r0[k], r0[k2], r1[k2], n0[k], n0[k2], n1[k2], foot_col, foot_col, c1[k2], behind)
-			b._tri_n(r0[k], r1[k2], r1[k], n0[k], n1[k2], n1[k], foot_col, c1[k2], c1[k], behind)
-			if ring:
-				# The face's outer ring and its pillowed middle.
-				b._tri_n(r1[k], r1[k2], rm[k2], n1[k], n1[k2], nm[k2], c1[k], c1[k2], cm[k2], behind)
-				b._tri_n(r1[k], rm[k2], rm[k], n1[k], nm[k2], nm[k], c1[k], cm[k2], cm[k], behind)
-				b._tri_n(rm[k], rm[k2], top, nm[k], nm[k2], n, cm[k], cm[k2], ct, behind)
-			else:
-				b._tri_n(r1[k], r1[k2], top, n1[k], n1[k2], n, c1[k], c1[k2], ct, behind)
+		stone(b, fo, u, Vector3.UP, n, poly, col, foot_col, proud, pillow, bevel, joint, jd, off, rot, Vector2(0, sink), Vector3(floor_y, low_m, low_moss * patch))
 		laid += 1
 	b.mat = was_mat
-	out["cells"] = all
+	out["cells"] = parts
 	out["heights"] = heights
 	# Vines grow up the wall into half shade.
-	_vines(b, o, u, n, length, y0, y1, moss_of(cl, 0.5), float((rl.get("proud_m", [0.02, 0.06]) as Array)[1]) + pillow, rng)
-	_dust(b, o, u, n, length, floor_y, dry_of(cl), rng)
+	_vines(b, o, u, n, length, y0, y1, moss_of(cl, 0.5), float((rl.get("proud_m", [0.02, 0.06]) as Array)[1]) + pillow, rng, clear)
+	_dust(b, o, u, n, length, floor_y, dry_of(cl), rng, clear)
+	return laid
+
+
+## One stone of a fitted face: `poly` (counter-clockwise) in the face's
+## plane fo + u * x + v * y, `n` out of the face. Its foot down in the
+## joint (`foot_col`), its bevel rising to the face, its face `proud` out
+## and pillowed by `pillow` (a middle ring higher, the middle highest, the
+## normals bending out from the middle so the torch rounds it); moved `off`
+## out (or in), turned `rot` in the plane, shifted `shift` (a dropped
+## stone). Moss in its alpha: the lower wall's (`low`: the floor's y, how
+## high it climbs, how much; walls only, v up) or `low.z` < 0 for none
+## (the foot keeps its own alpha). `rings` false: the face one fan to its
+## middle (a flag's, all but flat).
+static func stone(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, n: Vector3, poly: PackedVector2Array, col: Color, foot_col: Color, proud: float, pillow: float, bevel: float, joint: float, jd: float, off: float, rot: float, shift: Vector2, low: Vector3, rings := true) -> void:
+	var c := _centroid(poly)
+	var r_in := _inradius(poly, c)
+	var cs := c - shift
+	var s0 := maxf(0.2, 1.0 - joint * 0.5 / r_in)
+	var s1 := maxf(0.12, 1.0 - (joint * 0.5 + bevel) / r_in)
+	# A small stone's face needs no middle ring (nor a flag's, barely pillowed).
+	var ring := rings and r_in > 0.12
+	var nv := poly.size()
+	var r0: Array[Vector3] = []
+	var r1: Array[Vector3] = []
+	var rm: Array[Vector3] = []
+	var n0: Array[Vector3] = []
+	var n1: Array[Vector3] = []
+	var nm: Array[Vector3] = []
+	var c1: Array[Color] = []
+	var cm: Array[Color] = []
+	var mossy := low.z >= 0.0
+	var flat := col
+	flat.a = 0.0
+	for k in nv:
+		var d := (poly[k] - c).rotated(rot)
+		var radial := (u * d.x + v * d.y).normalized()
+		var p0 := cs + d * s0
+		var p1 := cs + d * s1
+		var pm := cs + d * s1 * 0.55
+		r0.append(fo + u * p0.x + v * p0.y + n * (-jd * 0.45 + off))
+		r1.append(fo + u * p1.x + v * p1.y + n * (proud + off))
+		rm.append(fo + u * pm.x + v * pm.y + n * (proud + pillow * 0.72 + off))
+		n0.append((n * 0.35 + radial).normalized())
+		n1.append((n + radial * 0.6).normalized())
+		nm.append((n + radial * 0.28).normalized())
+		c1.append(_mossy(col, (r1[k] as Vector3).y - low.x, low.y, low.z) if mossy else flat)
+		cm.append(_mossy(col, (rm[k] as Vector3).y - low.x, low.y, low.z) if mossy else flat)
+	var top: Vector3 = fo + u * cs.x + v * cs.y + n * (proud + pillow + off)
+	var ct := _mossy(col, top.y - low.x, low.y, low.z) if mossy else flat
+	var behind := top - n * 1.0
+	for k in nv:
+		var k2 := (k + 1) % nv
+		# The bevel, from the joint up to the face.
+		b._tri_n(r0[k], r0[k2], r1[k2], n0[k], n0[k2], n1[k2], foot_col, foot_col, c1[k2], behind)
+		b._tri_n(r0[k], r1[k2], r1[k], n0[k], n1[k2], n1[k], foot_col, c1[k2], c1[k], behind)
+		if ring:
+			# The face's outer ring and its pillowed middle.
+			b._tri_n(r1[k], r1[k2], rm[k2], n1[k], n1[k2], nm[k2], c1[k], c1[k2], cm[k2], behind)
+			b._tri_n(r1[k], rm[k2], rm[k], n1[k], nm[k2], nm[k], c1[k], cm[k2], cm[k], behind)
+			b._tri_n(rm[k], rm[k2], top, nm[k], nm[k2], n, cm[k], cm[k2], ct, behind)
+		else:
+			b._tri_n(r1[k], r1[k2], top, n1[k], n1[k2], n, c1[k], c1[k2], ct, behind)
+
+
+## A flat sheet over `poly` (the face's plane fo + u * x + v * y), `w` out
+## along `n` (negative: behind the face): a stone's own joint back.
+static func _sheet(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, n: Vector3, poly: PackedVector2Array, w: float, col: Color, inside: Vector3) -> void:
+	var p0 := fo + u * poly[0].x + v * poly[0].y + n * w
+	for i in range(1, poly.size() - 1):
+		var p1 := fo + u * poly[i].x + v * poly[i].y + n * w
+		var p2 := fo + u * poly[i + 1].x + v * poly[i + 1].y + n * w
+		b._tri_n(p0, p1, p2, n, n, n, col, col, col, inside)
+
+
+## Convex polygon `poly` less the convex `holes` (each counter-clockwise):
+## convex pieces that tile what is left. Each hole's edges cut the
+## polygon in turn: what lies outside an edge is a piece, the rest goes on
+## to the next edge, and what is left after the last lies in the hole.
+static func cut(poly: PackedVector2Array, holes: Array) -> Array:
+	var parts: Array = [poly]
+	for h in holes:
+		var hole: PackedVector2Array = h
+		var hb := _bounds(hole)
+		var next: Array = []
+		for part: PackedVector2Array in parts:
+			var pb := _bounds(part)
+			if pb.position.x >= hb.end.x or hb.position.x >= pb.end.x or pb.position.y >= hb.end.y or hb.position.y >= pb.end.y:
+				next.append(part)
+				continue
+			var rest := part
+			var nh := hole.size()
+			for i in nh:
+				var a := hole[i]
+				var e := hole[(i + 1) % nh] - a
+				var out := Vector2(e.y, -e.x)
+				var piece := _clip(rest, a, -out)
+				if piece.size() >= 3 and _area(piece) > 1e-6:
+					next.append(piece)
+				rest = _clip(rest, a, out)
+				if rest.size() < 3:
+					break
+		parts = next
+	return parts
+
+
+## `poly` turned counter-clockwise if it isn't.
+static func ccw(poly: PackedVector2Array) -> PackedVector2Array:
+	var s := 0.0
+	for i in poly.size():
+		var a := poly[i]
+		var b := poly[(i + 1) % poly.size()]
+		s += a.x * b.y - b.x * a.y
+	if s >= 0.0:
+		return poly
+	var out := PackedVector2Array()
+	for i in range(poly.size() - 1, -1, -1):
+		out.append(poly[i])
+	return out
+
+
+static func _bounds(poly: PackedVector2Array) -> Rect2:
+	var r := Rect2(poly[0], Vector2.ZERO)
+	for q in poly:
+		r = r.expand(q)
+	return r
+
+
+## A floor of fitted flags (design §EX.3 floor fitted_flags): the walls'
+## cutter laid flat over `length` x `width` (the plane fo + u * x + v * y,
+## up out of it), stones floor.stone_scale times the wall preset's, their
+## pillow and proud times pillow_scale, the joints packed with grit to
+## joint_fill of their depth (one sheet of grit, in the scene's shade), and
+## worn: `wear` (a Callable of the flag's middle, x and y: 0-1, the middle
+## of a passage where feet went) flattens a flag and takes its stone a
+## little toward the light end of the spread (floor.wear amount, lighten).
+## Settled like the walls, a little: a share sit a little high or low, or
+## turned. Returns the flags laid.
+static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: float, width: float, cl: Vector2, rng: RandomNumberGenerator, wear: Callable) -> int:
+	if length < 0.3 or width < 0.3:
+		return 0
+	var fl: Dictionary = RuinStyle.val("floor", {}, theme)
+	var p := preset()
+	var rl := relief()
+	var st: Dictionary = M.get("settle", {})
+	var og := overgrowth()
+	var bare := TombBuild.bare
+	var k := maxf(float(fl.get("stone_scale", 2.0)), 0.2)
+	var sm: Array = p.get("stone_m", [0.25, 0.6])
+	var sizes := {"stone_m": [float(sm[0]) * k, float(sm[1]) * k]}
+	var ps := clampf(float(fl.get("pillow_scale", 0.25)), 0.0, 1.0)
+	var fill := clampf(float(fl.get("joint_fill", 0.7)), 0.0, 0.95)
+	var wr: Dictionary = fl.get("wear", {})
+	var amount := clampf(float(wr.get("amount", 0.6)), 0.0, 1.0)
+	var lighten := clampf(float(wr.get("lighten", 0.6)), 0.0, 1.0)
+	var joint := float(rl.get("joint_m", 0.012))
+	var jd := float(rl.get("joint_depth_m", 0.06))
+	var bevel := float(rl.get("bevel_m", 0.05))
+	var pillow := float(rl.get("pillow_m", 0.04)) * ps
+	var jmoss := moss_of(cl, 1.0) * float(og.get("joint_moss", 0.9)) if bool(og.get("moss_in_joints", true)) else 0.0
+	var was_mat := b.mat
+	b.mat = FITTED_M
+	var n := Vector3.UP
+	# The grit, packed into the joints up to joint_fill of their depth.
+	var grit: Color = RuinStyle.joint(0.45, bare)
+	grit.a = jmoss * 0.5
+	var inside := fo - n * 1.0 + (u * length + v * width) * 0.5
+	_sheet(b, fo, u, v, n, PackedVector2Array([Vector2(0, 0), Vector2(length, 0), Vector2(length, width), Vector2(0, width)]), -jd * (1.0 - fill), grit, inside)
+	var share := float(st.get("share", 0.15))
+	var offs: Array = st.get("offset_m", [-0.04, 0.06])
+	var tilts: Array = st.get("tilt_deg", [0.0, 4.0])
+	var laid := 0
+	for cell in cells(length, width, rng, sizes):
+		var poly: PackedVector2Array = cell[1]
+		if _area(poly) < 0.004:
+			continue
+		var c := _centroid(poly)
+		var r_in := _inradius(poly, c)
+		if r_in < joint * 0.5 + 0.01:
+			continue
+		var w := clampf(float(wear.call(c.x, c.y)), 0.0, 1.0) * amount
+		var proud := _roll(rl.get("proud_m", [0.02, 0.06]), rng) * ps * (1.0 - w)
+		var off := 0.0
+		var rot := 0.0
+		if rng.randf() < share:
+			off = rng.randf_range(float(offs[0]), float(offs[1])) * ps
+			rot = deg_to_rad(rng.randf_range(float(tilts[0]), float(tilts[1]))) * (1.0 if rng.randf() < 0.5 else -1.0)
+		if rng.randf() < float(st.get("dropped_share", 0.02)):
+			off -= float(st.get("dropped_m", 0.05)) * ps
+		var col := RuinStyle.worn(RuinStyle.stone(rng), w * lighten)
+		var foot_col: Color = col if bare else Prelit.ao_tint(col, 0.55)
+		foot_col.a = jmoss * 0.85 * (1.0 - w)
+		stone(b, fo, u, v, n, poly, col, foot_col, proud, pillow * (1.0 - w), bevel, joint, jd, off, rot, Vector2.ZERO, Vector3(0, 0, -1), false)
+		laid += 1
+	b.mat = was_mat
+	return laid
+
+
+## A ceiling of lintel slabs (design §EX.3 ceiling lintel_slabs): each of
+## `slab_cells` (convex, counter-clockwise, in the plane fo + u * x + v * y,
+## `n` down out of it) one stone of the style, cut round `holes` (the vents'
+## mouths), with the walls' bevel and a little pillow, settled like the
+## walls (a share hang a little low, or sit turned a degree or two). Behind
+## them, over `backs` (Rect2s in the same plane), the joints' back.
+## Returns the slabs laid.
+static func slabs(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, n: Vector3, slab_cells: Array, rng: RandomNumberGenerator, holes: Array, backs: Array) -> int:
+	var rl := relief()
+	var st: Dictionary = M.get("settle", {})
+	var bare := TombBuild.bare
+	var joint := float(rl.get("joint_m", 0.012))
+	var jd := float(rl.get("joint_depth_m", 0.06))
+	var bevel := float(rl.get("bevel_m", 0.05)) * 1.2
+	var pillow := float(rl.get("pillow_m", 0.04)) * 0.5
+	var was_mat := b.mat
+	b.mat = FITTED_M
+	var back: Color = RuinStyle.joint(0.3, bare)
+	back.a = 0.0
+	var inside := fo - n * 2.0
+	for r: Rect2 in backs:
+		_sheet(b, fo, u, v, n, PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]), -jd, back, inside)
+	var share := float(st.get("share", 0.15))
+	var offs: Array = st.get("offset_m", [-0.04, 0.06])
+	var tilts: Array = st.get("tilt_deg", [0.0, 4.0])
+	var laid := 0
+	for cell: PackedVector2Array in slab_cells:
+		var col := RuinStyle.stone(rng)
+		var proud := _roll(rl.get("proud_m", [0.02, 0.06]), rng) * 0.6
+		var off := 0.0
+		var rot := 0.0
+		if rng.randf() < share:
+			off = rng.randf_range(0.0, maxf(float(offs[1]), 0.0))
+			rot = deg_to_rad(rng.randf_range(float(tilts[0]), float(tilts[1]))) * 0.4 * (1.0 if rng.randf() < 0.5 else -1.0)
+		var foot_col: Color = col if bare else Prelit.ao_tint(col, 0.55)
+		foot_col.a = 0.0
+		for poly: PackedVector2Array in (cut(cell, holes) if not holes.is_empty() else [cell]):
+			if _area(poly) < 0.004:
+				continue
+			var r_in := _inradius(poly, _centroid(poly))
+			if r_in < joint * 0.5 + 0.01:
+				continue
+			stone(b, fo, u, v, n, poly, col, foot_col, proud, pillow, minf(bevel, r_in * 0.4), joint, jd, off, rot, Vector2.ZERO, Vector3(0, 0, -1))
+		laid += 1
+	b.mat = was_mat
 	return laid
 
 
@@ -442,9 +665,10 @@ static func _mossy(col: Color, above_floor: float, low_m: float, amount: float) 
 
 
 ## Vines (where the climate allows, `moss_k`): from the wall's top under the
-## ceiling, and from cracks in its upper half, hanging down. Generic ivy
-## until a world gives its biome's own vine species (vines.json, §CS).
-static func _vines(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, moss_k: float, out_m: float, rng: RandomNumberGenerator) -> void:
+## ceiling, and from cracks in its upper half, hanging down; none over the
+## `clear` stretches (the doorways, the niches). Generic ivy until a world
+## gives its biome's own vine species (vines.json, §CS).
+static func _vines(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, y0: float, y1: float, moss_k: float, out_m: float, rng: RandomNumberGenerator, clear: Array = []) -> void:
 	if moss_k < 0.05:
 		return
 	var og := overgrowth()
@@ -458,7 +682,7 @@ static func _vines(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: f
 		var y := y1 - 0.05 if from_top else lerpf(y0 + (y1 - y0) * 0.45, y1 - 0.3, rng.randf())
 		var l := rng.randf_range(float(lens[0]), float(lens[1])) * (0.5 + 0.5 * moss_k)
 		l = minf(l, y - y0 - 0.1)
-		if l < 0.3:
+		if l < 0.3 or _in_clear(along, clear):
 			continue
 		var top := o + u * along + Vector3.UP * y + n * out_m
 		vine(b, top, u, n, l, rng)
@@ -494,8 +718,8 @@ static func vine(b: RuinBuilder, top: Vector3, u: Vector3, n: Vector3, length: f
 
 ## Dust (dry only, `dry` 0-1: dry_of): sand and dust drifted against the
 ## foot of the wall, the biggest in its corners, reaching
-## overgrowth.dry.drift_corner_m out from it.
-static func _dust(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, floor_y: float, dry: float, rng: RandomNumberGenerator) -> void:
+## overgrowth.dry.drift_corner_m out from it; none in a doorway (`clear`).
+static func _dust(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: float, floor_y: float, dry: float, rng: RandomNumberGenerator, clear: Array = []) -> void:
 	if dry <= 0.0:
 		return
 	var dr: Dictionary = overgrowth().get("dry", {})
@@ -521,7 +745,19 @@ static func _dust(b: RuinBuilder, o: Vector3, u: Vector3, n: Vector3, length: fl
 		var depth := reach * (1.6 if corner else 1.0) * rng.randf_range(0.8, 1.2)
 		var along := float(spots[i])
 		var c := o + u * along + Vector3.UP * floor_y + n * depth * 0.5
-		b.boulder(c, Vector3(rng.randf_range(0.35, 0.8), h, depth), Basis(u, Vector3.UP, u.cross(Vector3.UP)).orthonormalized(), col.darkened(rng.randf_range(0.0, 0.12)), 0.0)
+		var size := Vector3(rng.randf_range(0.35, 0.8), h, depth)
+		var dark := rng.randf_range(0.0, 0.12)
+		if _in_clear(along, clear, size.x * 0.5):
+			continue
+		b.boulder(c, size, Basis(u, Vector3.UP, u.cross(Vector3.UP)).orthonormalized(), col.darkened(dark), 0.0)
 	b.solid = was_solid
 	b.mat = was_mat
 	b.rng = was_rng
+
+
+## Is `along` within `pad` of one of the `clear` stretches ([from, to])?
+static func _in_clear(along: float, clear: Array, pad := 0.0) -> bool:
+	for c in clear:
+		if along > float(c[0]) - pad and along < float(c[1]) + pad:
+			return true
+	return false

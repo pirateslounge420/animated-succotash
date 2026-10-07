@@ -73,7 +73,7 @@ two of them disagree, tell Mike. Don't quietly pick one.
 "Almost like Minecraft, except not in boxes, and everything flows better." The era is
 1999–2004 consoles.
 - **Ruin walls (§EU, built 6 Oct in the tomb):** fitted polygonal stone in real relief (stones proud, joints sunk; no normal maps), a seed per wall face, settled with age, moss and vines only where the climate allows. Firelit stone underground may go amber (§EU.6).
-- **One ruin, one stone (§EX.1, not built yet):** every ruin type has one style (`masonry.json → styles`), and its floor, ceiling, doors, stairs, niches, sconces and stone dressing are cut from the walls' own stone in the same way. Nothing built of stone takes the general palette.
+- **One ruin, one stone (§EX.1, built 7 Oct in the tomb):** every ruin type has one style (`masonry.json → styles`), and its floor, ceiling, doors, stairs, niches, sconces and stone dressing are cut from the walls' own stone in the same way. Nothing built of stone takes the general palette.
 - **3D pixel art (§ES, frame amended by §EU):** a 480-line internal frame by default (§EU.1, 6 Oct; 270 "painted" stays a preset) with nearest-neighbour scaling; lighting painted into textures (diffuse-only, baked occlusion tinted navy/olive), mid-poly models. Texel density is re-measured under §ES (was 16 a metre at 480).
 - Clean silhouettes, and no normal maps or specular.
 - Dark but saturated, and blue owns the frame by default, not always: a relit village may go

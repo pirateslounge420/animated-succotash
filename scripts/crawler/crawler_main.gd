@@ -326,7 +326,9 @@ func _environment() -> void:
 ## The tomb's stone: one mesh lit per pixel (the delves' material: only
 ## fire lights it) and its collision.
 func _build_tomb() -> void:
+	var t0 := Time.get_ticks_msec()
 	var data := TombBuild.build(lay)
+	var build_ms := Time.get_ticks_msec() - t0
 	tomb = Node3D.new()
 	tomb.name = "Tomb"
 	add_child(tomb)
@@ -352,6 +354,11 @@ func _build_tomb() -> void:
 	tomb.set_meta("stones", int(data.get("stones", 0)))
 	tomb.set_meta("faces", int(data.get("faces", 0)))
 	walls = data.get("walls", [])
+	# One ruin, one stone (§EX.1, §EX.3): what the style built (the checks).
+	tomb.set_meta("plans", data.get("plans", {}))
+	tomb.set_meta("doors_built", data.get("doors", []))
+	tomb.set_meta("build_ms", build_ms)
+	print("[crawler] %s style, one stone %s +- %.2f: %d floor flags, %d ceiling slabs, %d doors; built in %d ms" % [RuinStyle.style_name(str(lay.get("theme", "tomb"))), RuinStyle.tint(str(lay.get("theme", "tomb"))).to_html(false), RuinStyle.spread(str(lay.get("theme", "tomb"))), int(data.get("flags", 0)), int(data.get("slabs", 0)), (data.get("doors", []) as Array).size(), build_ms])
 
 
 ## The tomb's collision (TombBuild.build's "cv" faces and "ch" hulls) as

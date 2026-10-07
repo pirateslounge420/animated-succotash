@@ -405,8 +405,9 @@ static func main_path(p_lay: Dictionary) -> Array:
 ## bosses.json lair: kind hole, off_main_path): a side room off the main
 ## way (main_path), a dead end if there is one, and in it a spot of floor
 ## clear of its doors, its fires, its airways, the way between its doors
-## and what stands on its floor, where the floor has broken through into
-## the dark below; in a crypt, where one of its coffins stood (_lair_spot).
+## what stands on its floor and the pillars it will stand on (§EX.3),
+## where the floor has broken through into the dark below; in a crypt,
+## where one of its coffins stood (_lair_spot).
 ## {"piece", "pos" (Vector3, the hole's middle on the floor), "r" (its
 ## radius, bosses.json lair.hole_r_m)[, "coffin" (the crypt's coffin spot
 ## it took, TombKit.coffin_spots' "i")]}, or {} if no side room has room
@@ -438,6 +439,11 @@ static func place_lair(p_lay: Dictionary, r_m := -1.0) -> Dictionary:
 	return best
 
 
+## How far a hole's edge keeps from a pillar's middle (m): the broken
+## flags round its rim, the pillar's base, and a passage between them.
+const PILLAR_KEEP_M := 1.35
+
+
 ## The clearest spot for a hole `r` across in room `pc`: {"pos", "clear"
 ## (m to the nearest thing it must keep off)[, "coffin" (the coffin spot it
 ## took)]} or {}. In a crypt it is where one of its coffins stood
@@ -460,6 +466,11 @@ static func _lair_spot(p_lay: Dictionary, pc: Dictionary, r: float) -> Dictionar
 	for a in p_lay.get("airways", []):
 		if int(a.piece) == int(pc.id):
 			keep.append([Vector2((a.pos as Vector3).x, (a.pos as Vector3).z), 1.2, 0.6])
+	# Off the pillars the room will stand on (design §EX.3; TombBuild
+	# .pillars_for): its broken edge never under one, and room to pass
+	# between them, where a coffin stood too.
+	for q: Vector2 in TombBuild.pillars_for(p_lay, pc):
+		keep.append([q, PILLAR_KEEP_M, PILLAR_KEEP_M])
 	var lines: Array = []
 	for i in (pc.doors as Array).size():
 		for j in range(i + 1, (pc.doors as Array).size()):
@@ -558,10 +569,10 @@ static func _coffin_spot(p_lay: Dictionary, pc: Dictionary, coffins: Array, keep
 
 ## What a room's dressing may stand on its floor, as TombBuild lays it, as
 ## [point, metres the hole's rim keeps off it]: an ossuary's piles of bones
-## in its corners; a fallen room's slab and rubble in one of its four
-## corners (the one farthest from its doors and its sconces' bays: any of
-## them, here). (A catacomb's niches and shelves line its long walls:
-## _lair_spot keeps further off those.)
+## in its corners; a fallen room's slab and rubble where TombBuild lays
+## them (clear of its doors' ways, its pillars and its sconces' bays). (A
+## catacomb's niches line its long walls: _lair_spot keeps further off
+## those.)
 static func _dressing(_p_lay: Dictionary, pc: Dictionary) -> Array:
 	var out: Array = []
 	var length := float(pc.len)
@@ -574,7 +585,9 @@ static func _dressing(_p_lay: Dictionary, pc: Dictionary) -> Array:
 				var q := point(pc, ca, cs)
 				out.append([Vector2(q.x, q.z), 0.8])
 		"collapsed":
-			for k in 4:
-				var q := point(pc, length * (0.22 if k < 2 else 0.78), half * (0.6 if k % 2 == 0 else -0.6))
-				out.append([Vector2(q.x, q.z), 1.7])
+			# Where TombBuild lays its fallen slab and rubble (TombBuild
+			# .collapse_for), as far as they reach.
+			var col := TombBuild.collapse_for(_p_lay, pc)
+			var q := point(pc, (col[0] as Vector2).x, (col[0] as Vector2).y)
+			out.append([Vector2(q.x, q.z), maxf(float(col[1]), float(col[2]) * 0.5) + 0.5])
 	return out

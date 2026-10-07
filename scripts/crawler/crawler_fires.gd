@@ -16,9 +16,13 @@ extends Node3D
 ## kindling to find) so the swing of a lit torch catches them; once lit
 ## they never burn down (holders.kept: FireStore's kept stores) and stay
 ## lit for the game (§ET.4: light is the score), and an unlit torch swung
-## through one catches. A sconce is a flame on a stone bracket at chest
-## height on the wall, its light reaching light_radius_m; a room's is
-## brighter than a corridor's by room_torches.light_scale.
+## through one catches. A sconce is a flame in a stone cup in a trapezoid
+## niche cut into the wall at chest height (design §EX.3 sconce niche_cup:
+## TombBuild cuts the niche and the cup from the ruin's one stone), its
+## light reaching light_radius_m from just in front of the niche; a room's is
+## brighter than a corridor's by room_torches.light_scale. The hearth's
+## kerb is TombBuild's too (§EX.1): the campfire's own ring stones are
+## hidden here, their collision kept.
 
 static var HOLD: Dictionary = Tuning.table("crawler").get("holders", {})
 static var RT: Dictionary = Tuning.table("crawler").get("room_torches", {})
@@ -26,6 +30,10 @@ static var FH: Dictionary = Tuning.table("delves").get("fire_holders", {})
 ## The ash laid in a cold holder (fuel.json kindling kinds): dry, catches
 ## after its catch time.
 const LAID_KINDLING := "dry_twigs"
+## How far out from its wall a sconce's light hangs (m), in front of the
+## niche its flame stands in (design §EX.3): where the stone bracket held
+## the flame before the niches.
+const LIGHT_OUT_M := 0.32
 
 var world: Node
 var hearth: Node3D
@@ -54,6 +62,7 @@ func build(p_world: Node, lay: Dictionary) -> void:
 	var hp: Vector3 = lay.hearth
 	hearth = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, hp), key_dir(hp), false)
 	hearth.name = "Hearth"
+	_hide_ring(hearth)
 	var hst := FireStore.store_of(hearth)
 	hst["kept"] = true
 	hearth.set_meta("crawler_hearth", true)
@@ -75,6 +84,7 @@ func _holder(h: Dictionary) -> Node3D:
 	else:
 		fire = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, pos), key_dir(pos), false)
 		fire.name = "FireHolder"
+		_hide_ring(fire)
 	# A cold holder: out, the ash laid, kept once lit (§ET.4).
 	var st := FireStore.store_of(fire)
 	var units: Array = []
@@ -108,10 +118,23 @@ func _holder(h: Dictionary) -> Node3D:
 	return fire
 
 
-## A wall sconce at `pos` (the flame's foot) on the wall facing `nrm`: a
-## stone bracket and cup, the flame card, the coals, the light (`light_k`
-## times a corridor sconce's), the sound; a Campfire to everything that
-## looks for fires.
+## The campfire's own ring of stones (Campfire.RING_STONE) hidden: the
+## tomb's kerb of the ruin's stone stands there (TombBuild._kerbs). Their
+## collision stays.
+static func _hide_ring(fire: Node3D) -> void:
+	var ring := CreatureBodies.mat(Campfire.RING_STONE)
+	for c in fire.get_children():
+		if c is Node3D and not c is MeshInstance3D:
+			for m in c.get_children():
+				if m is MeshInstance3D and (m as MeshInstance3D).material_override == ring:
+					(c as Node3D).visible = false
+
+
+## A wall sconce at `pos` (the flame's foot, on the wall's face) on the wall
+## facing `nrm`: the flame card and the coals in the stone cup in its niche
+## (TombBuild: sconce_inset into the wall), the light just in front of the
+## niche (LIGHT_OUT_M; `light_k` times a corridor sconce's), the sound; a
+## Campfire to everything that looks for fires.
 func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Sconce"
@@ -120,10 +143,8 @@ func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 	root.set_meta("smoke", 0.25)
 	add_child(root)
 	var right := Vector3.UP.cross(nrm).normalized()
-	root.global_transform = Transform3D(Basis(right, Vector3.UP, nrm), pos + nrm * 0.32)
-	var stone := Color(0.4, 0.42, 0.46)
-	CreatureBodies.box(root, Vector3(0.16, 0.34, 0.3), Vector3(0.0, -0.22, -0.16), stone.darkened(0.1))
-	CreatureBodies.box(root, Vector3(0.3, 0.1, 0.3), Vector3(0.0, -0.04, 0.0), stone)
+	var inset := TombBuild.sconce_inset()
+	root.global_transform = Transform3D(Basis(right, Vector3.UP, nrm), pos - nrm * inset)
 	var phase := float(posmod(hash(pos), 1000)) * 0.37
 	var coals := Campfire.coal_bed(phase)
 	coals.position = Vector3(0, 0.02, 0)
@@ -143,12 +164,15 @@ func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 	light.name = "Light"
 	light.light_color = Torch.fire_color()  # one firelight (§EX.6)
 	light.omni_attenuation = Campfire.ATTENUATION
-	light.position = Vector3(0, 0.3, 0)
+	# Out in front of its niche, where the old bracket held the flame
+	# (LIGHT_OUT_M from the wall): inside the niche its own sides would
+	# shade the room from it, and a room's two or four lights it as the lit
+	# level counts them (design §EX.4).
+	light.position = Vector3(0, 0.3, inset + LIGHT_OUT_M)
 	root.add_child(light)
 	FireShadows.enlist(light)
-	# Nothing of the sconce casts a shadow: the bracket, the cup and the
-	# coals sit at the light's own seat, where they'd blot out the whole
-	# corridor below it.
+	# Nothing of the sconce casts a shadow: the coals sit at the light's own
+	# seat, where they'd blot out the whole corridor below it.
 	for g in root.find_children("*", "GeometryInstance3D", true, false):
 		(g as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	root.set_meta("flick_seed", phase)
@@ -156,6 +180,7 @@ func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 	# scales it after).
 	root.set_meta("energy_k", s * 1.4 * light_k)
 	root.set_meta("light_y", 0.3)
+	root.set_meta("light_z", inset + LIGHT_OUT_M)
 	FireStore.register(root, world, key_dir(pos), true)
 	return root
 

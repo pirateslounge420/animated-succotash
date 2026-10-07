@@ -20,6 +20,8 @@ extends SceneTree
 ## the torch beside it; a crypt from its doorway with its old hearth ring
 ## (built for the frame, then taken away) and with its own wall sconces
 ## relit (§EX.4); the heart by torchlight and with its four sconces relit;
+## a crypt by torchlight and its doorway from inside, the one stone of
+## §EX.1 and §EX.3 (10c, 10d);
 ## the red ring after one hit and after two (§FD, §FJ.3: its depth in
 ## pixels at 480 lines, darker and deeper on two, the heart beating from
 ## hit 1); the two hands (§FB): the torch in the right, a fire pot in the
@@ -1336,6 +1338,25 @@ func _run() -> void:
 		await _frames(20)
 		await _shot("10b_heart_relit")
 		print("  the heart: %d sconces relit" % n_h)
+	# One ruin, one stone (§EX.1, §EX.3): a crypt by torchlight, looking down
+	# it (the fitted flags, the corbel course and the slabs, its pillars
+	# where it has them, the coffins), and its doorway from inside (the
+	# trapezoid, the jamb stones, the lintel, the threshold).
+	for pc in main.lay.pieces:
+		if str(pc.get("room_kind", "")) != "crypt":
+			continue
+		var cd: Vector2 = pc.dir
+		var cc: Vector2 = (pc.c as Vector2) + cd * 0.9
+		p.spawn_flat(Vector3(cc.x, float(pc.y0), cc.y), atan2(-cd.x, -cd.y), -0.1)
+		await _frames(20)
+		await _shot("10c_crypt_by_torch")
+		var door: Dictionary = main.lay.doors[int(pc.doors[0])]
+		var into: Vector2 = (door.n as Vector2) if int(door.b) == int(pc.id) else -(door.n as Vector2)
+		var at: Vector2 = (door.p as Vector2) + into * 3.2
+		p.spawn_flat(Vector3(at.x, float(pc.y0), at.y), atan2(into.x, into.y), 0.05)
+		await _frames(20)
+		await _shot("10d_doorway_from_the_crypt")
+		break
 	# The plan and the way out (§EX.2, §EX.5), the torch away: down the
 	# spine from the hearth room's door; into the heart from its way in,
 	# toward the dead and the flight past them; from the foot of the flight,
@@ -1480,6 +1501,12 @@ func _harm_ring(main: CrawlerMain, p: CrawlerPlayer) -> void:
 		made = true
 	harm.set_process(false)
 	harm.reset()
+	# What the pots left burning goes out first (a tar patch lasts 12 s):
+	# the corridor is dark, and its flicker past the ring's edge would
+	# differ from shot to shot.
+	for f in main.fire_pots.fires.duplicate():
+		if f is PotFire and is_instance_valid(f):
+			(f as PotFire)._end()
 	# A cold corridor: 3.5 m along from a sconce nobody has lit.
 	var cold: Node3D = null
 	for h in main.fires.holders:

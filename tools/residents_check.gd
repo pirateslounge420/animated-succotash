@@ -384,9 +384,12 @@ func _wake() -> void:
 
 
 ## A lidded coffin to hide behind, and where a skeleton stands seeing it:
-## {"hide", "watch", "piece"} or {}.
+## {"hide", "watch", "piece"} or {}. One the coffin alone hides you behind
+## (standing there it would see you) is taken first: a crypt's pillars
+## (queue 48) can stand across the line too.
 func _cover() -> Dictionary:
 	var lay := main.lay
+	var first := {}
 	for pc in lay.pieces:
 		if str(pc.get("room_kind", "")) != "crypt":
 			continue
@@ -412,8 +415,12 @@ func _cover() -> Dictionary:
 				var stand_head := hide + Vector3(0.0, PlanetPlayer.EYE_Y, 0.0)
 				if res.clear_line(eye, head) or eye.distance_to(head) > float(_skel().get("notice", {}).get("sees_you_m", 6.0)):
 					continue
-				return {"hide": hide, "watch": watch, "piece": int(pc.id), "stand_seen": res.clear_line(eye, stand_head)}
-	return {}
+				var cov := {"hide": hide, "watch": watch, "piece": int(pc.id), "stand_seen": res.clear_line(eye, stand_head)}
+				if bool(cov.stand_seen):
+					return cov
+				if first.is_empty():
+					first = cov
+	return first
 
 
 ## Does your body fit crouched at `at` (on the floor), touching nothing?

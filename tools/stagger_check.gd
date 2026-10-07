@@ -178,24 +178,27 @@ func _blocks() -> void:
 ## round the hearth well off to the side).
 func _lane() -> Dictionary:
 	var space := player.get_world_3d().direct_space_state
-	for k in 4:
-		var yaw := k * PI * 0.5
-		var b := Basis(Vector3.UP, yaw)
-		var at := b * Vector3(3.2, 0.0, 1.6)
-		var fwd := b * Vector3(0.0, 0.0, -1.0)
-		var head := at + fwd * 2.0 + Vector3.UP * 0.6
-		var chest := at + Vector3.UP * 0.9
-		var clear := true
-		for to in [head, at - fwd * 1.2 + Vector3.UP * 0.6, at - fwd * 0.8 + Vector3.UP * 0.9, head - fwd * 1.0]:
-			var q := PhysicsRayQueryParameters3D.create(chest, to, PropCollision.WORLD_LAYER)
-			q.exclude = [player.get_rid()]
-			if not space.intersect_ray(q).is_empty():
-				clear = false
-		var down := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 0.5, at - Vector3.UP * 0.5, PropCollision.WORLD_LAYER)
-		down.exclude = [player.get_rid()]
-		var floor_hit := space.intersect_ray(down)
-		if clear and not floor_hit.is_empty() and absf((floor_hit.position as Vector3).y) < 0.2:
-			return {"at": at, "yaw": yaw, "fwd": fwd, "head": head}
+	# The first lane that is clear: 3.2 m out, then nearer or out between
+	# the hearth room's pillars and its walls (design §EX.3, queue 48).
+	for off: Vector3 in [Vector3(3.2, 0.0, 1.6), Vector3(2.0, 0.0, 1.6), Vector3(2.0, 0.0, 2.2), Vector3(3.9, 0.0, 1.6)]:
+		for k in 4:
+			var yaw := k * PI * 0.5
+			var b := Basis(Vector3.UP, yaw)
+			var at := b * off
+			var fwd := b * Vector3(0.0, 0.0, -1.0)
+			var head := at + fwd * 2.0 + Vector3.UP * 0.6
+			var chest := at + Vector3.UP * 0.9
+			var clear := true
+			for to in [head, at - fwd * 1.2 + Vector3.UP * 0.6, at - fwd * 0.8 + Vector3.UP * 0.9, head - fwd * 1.0]:
+				var q := PhysicsRayQueryParameters3D.create(chest, to, PropCollision.WORLD_LAYER)
+				q.exclude = [player.get_rid()]
+				if not space.intersect_ray(q).is_empty():
+					clear = false
+			var down := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 0.5, at - Vector3.UP * 0.5, PropCollision.WORLD_LAYER)
+			down.exclude = [player.get_rid()]
+			var floor_hit := space.intersect_ray(down)
+			if clear and not floor_hit.is_empty() and absf((floor_hit.position as Vector3).y) < 0.2:
+				return {"at": at, "yaw": yaw, "fwd": fwd, "head": head}
 	return {}
 
 

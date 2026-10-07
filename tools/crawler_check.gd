@@ -115,7 +115,16 @@ extends SceneTree
 ##     blue by day and fainter at night, seen from the bottom of the
 ##     flight (nothing between); stepping into it fades to the next tomb
 ##     (exit.stand_in): a new seed, you on the mat by its lit hearth, the
-##     torch you carried lit or not as it was, the log's line.
+##     torch you carried lit or not as it was, the log's line;
+## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
+##     on seeds 1, 7 and 42 every stone vertex within the style's tint +-
+##     spread before occlusion, ochre, soot, moss and drift, none from
+##     RuinBuilder's palette (poisoned, and a grep), every door a trapezoid
+##     narrower at the top by top_share (and in the built tomb, measured by
+##     rays), four pillars round the hearth with its shaft open, no ceiling
+##     past max_span_m unsupported, the boss's hole off the pillars (and 30
+##     more layouts), triangles per room inside 45,000, and the player's own
+##     body through every door, corridor, stair and room.
 
 ## The seeds §EX.4's room torches are checked on (queue 47).
 const TORCH_SEEDS := [1, 7, 42]
@@ -169,6 +178,8 @@ func _run() -> void:
 		await process_frame
 	await _scene(main)
 	_masonry(main)
+	_style_kit()
+	await _style_scene(main)
 	await _vents(main)
 	_firelight(main)
 	_torch_room(main)
@@ -187,6 +198,7 @@ func _run() -> void:
 	await _torch_lights(main)
 	await _way_out(main)
 	await _stand_in(main)
+	await _room_walks(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -679,11 +691,12 @@ static func _fire_energy() -> float:
 
 
 ## The light a sconce holder `h` gives, as the lit level counts it:
-## [position, energy, range, decay] (CrawlerFires._sconce: its cup 0.32 m
-## out from the wall, the light 0.3 m over it, energy_k, light_radius_m).
+## [position, energy, range, decay] (CrawlerFires._sconce: its cup in its
+## niche, design §EX.3, the light 0.3 m over it and LIGHT_OUT_M out from
+## the wall, in front of the niche; energy_k, light_radius_m).
 static func _sconce_light(h: Dictionary) -> Array:
 	var k := float(CrawlerFires.HOLD.get("sconce_scale", 0.38)) * 1.4 * (float(TombKit.RT.get("light_scale", 1.0)) if bool(h.get("room", false)) else 1.0)
-	return [(h.pos as Vector3) + (h.normal as Vector3) * 0.32 + Vector3(0.0, 0.3, 0.0), _fire_energy() * k, float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
+	return [(h.pos as Vector3) + (h.normal as Vector3) * CrawlerFires.LIGHT_OUT_M + Vector3(0.0, 0.3, 0.0), _fire_energy() * k, float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
 
 
 ## Room `pc`'s old hearth ring's light (until §EX.4, TombKit put one in
@@ -1505,7 +1518,8 @@ func _swing_spot(main: CrawlerMain, h: Node3D) -> float:
 				continue
 			q.transform = Transform3D(Basis.IDENTITY, at + Vector3(0.0, cap.height * 0.5 + 0.12, 0.0))
 			if space.intersect_shape(q, 1).is_empty():
-				return o + 0.32
+				# From the wall's face: the cup stands in its niche (§EX.3).
+				return o - TombBuild.sconce_inset()
 	return -1.0
 
 
@@ -1529,7 +1543,7 @@ func _torch_lights(main: CrawlerMain) -> void:
 		var h: Node3D = main.fires.holders[i]
 		var l := h.get_node_or_null("Light") as OmniLight3D
 		var m := _sconce_light(hd)
-		var base: Vector3 = h.global_transform * Vector3(0.0, float(h.get_meta("light_y", 1.0)), 0.0)
+		var base: Vector3 = h.global_transform * Vector3(0.0, float(h.get_meta("light_y", 1.0)), float(h.get_meta("light_z", 0.0)))
 		var k := float(CrawlerFires.HOLD.get("sconce_scale", 0.38)) * 1.4 * float(TombKit.RT.get("light_scale", 1.0))
 		if l == null or not FireStore.is_lit(h) or not l.visible or absf(l.omni_range - float(m[2])) > 0.01 or absf(l.omni_attenuation - float(m[3])) > 0.001 or absf(float(h.get_meta("energy_k", 0.0)) - k) > 0.001 or base.distance_to(m[0]) > 0.01:
 			odd += 1
@@ -3228,3 +3242,534 @@ func _pack(p: CrawlerPlayer) -> String:
 	for it in p.inventory.carried:
 		kinds.append(str((it as Dictionary).get("kind", "")) if it is Dictionary else "-")
 	return ",".join(kinds)
+
+
+# --- One ruin, one stone (design §EX.1, §EX.3) ------------------------------------
+
+const STYLE_SEEDS := [1, 7, 42]
+## The crawler's scripts may hold these colours of their own, none of them
+## built stone: the heart's ochre (paint), the checks' poison, the charred
+## logs, the torch bundle's wood, tips and cord, an airway's void and dust,
+## the waking fade, a sprite's clear background, RuinStyle's grey for a
+## theme with no stone at all (missing data).
+## The scripts that lay the tomb's stone (TombBuild, the masonry it cuts,
+## the style, the fires' holders, the layout): the colour search looks in
+## these. Every crawler script is searched for the general palette by name.
+const STONE_SCRIPTS := ["tomb_build.gd", "fitted_stone.gd", "ruin_style.gd", "crawler_fires.gd", "tomb_kit.gd"]
+const OWN_COLOURS := ["Color(0.62, 0.3, 0.14)", "Color(1.0, 0.0, 1.0)", "Color(0.09, 0.07, 0.06)", "Color(0.36, 0.25, 0.14)",
+	"Color(0.1, 0.08, 0.06)", "Color(0.5, 0.42, 0.28)", "Color(0.01, 0.012, 0.03)", "Color(0.58, 0.6, 0.66)",
+	"Color(0.0, 0.0, 0.01)", "Color(0, 0, 0, 0)", "Color(0.5, 0.5, 0.5)"]
+
+
+## Is `c` the poison (magenta) or anything shaded from it?
+static func _poisoned(c: Color) -> bool:
+	return c.r > c.g * 2.5 + 0.05 and c.b > c.g * 2.5 + 0.05 and absf(c.r - c.b) < 0.3
+
+
+## One ruin, one stone (design §EX.1, §EX.3; masonry.json styles, RuinStyle),
+## on pure builds of seeds 1, 7 and 42, built as cut (TombBuild.bare: no
+## joint or contact shade, ochre, soot, moss or drift) with RuinBuilder's
+## palette poisoned: every vertex is the style's stone within tint +-
+## spread, another material (bone, clay, gold, reed, hide) or overgrowth,
+## and none shows the poison; the crawler's scripts name no general palette,
+## and the ones that lay stone no stone colour of their own (grep); every
+## door is narrower at the top by doors.top_share; the hearth room stands on
+## four pillars round the hearth, its shaft open between them; no ceiling
+## spans past max_span_m unsupported; the boss's hole keeps off the pillars;
+## triangles in every room inside the 45,000 budget.
+func _style_kit() -> void:
+	var th := "tomb"
+	ok(RuinStyle.style_name(th) == "andean_tomb" and str(RuinStyle.val("walls.preset", "", th)) == str((FittedStone.M.get("by_theme", {}) as Dictionary).get(th, "")), "the tomb is built in its style, %s; the style's wall preset is by_theme's (%s)" % [RuinStyle.style_name(th), FittedStone.preset_name()])
+	var tint := RuinStyle.tint(th)
+	var spread := RuinStyle.spread(th)
+	var own := str(((Tuning.table("crawler").get("themes", {}) as Dictionary).get(th, {}) as Dictionary).get("stone", ""))
+	ok(own.begins_with("#") and tint.is_equal_approx(Color(own)), "one stone: the style's tint is the theme's own stone (crawler.json themes.tomb.stone #%s), each stone within %.2f of it" % [tint.to_html(false), spread])
+	var top_share := RuinStyle.num("doors.top_share", 0.85, th)
+	var max_span := RuinStyle.num("max_span_m", 6.0, th)
+	var untagged := 0
+	var poisoned := 0
+	var outside := 0
+	var stone_v := 0
+	var other_v := 0
+	var grown_v := 0
+	var lo := Color(1, 1, 1)
+	var hi := Color(0, 0, 0)
+	var doors_n := 0
+	var doors_bad := 0
+	var spans_bad := 0
+	var worst_slab := 0.0
+	var worst_beam := 0.0
+	var pillared := 0
+	var rooms_n := 0
+	var hearth_ok := true
+	var per_room: Array = []
+	var side_m := RuinStyle.num("pillars.side_m", 0.6, th)
+	var lair_gap := INF
+	var lair_rooms := 0
+	TombBuild.bare = true
+	TombBuild.poison = true
+	for s in STYLE_SEEDS:
+		var lay := TombKit.layout(int(s))
+		var data := TombBuild.build(lay)
+		var v: PackedVector3Array = data.v
+		var c: PackedColorArray = data.c
+		var m: PackedVector2Array = data.m
+		var runs: Array = data.tags
+		var ri := 0
+		var tag := TombBuild.T_NONE
+		for i in v.size():
+			while ri < runs.size() and int(runs[ri][0]) <= i:
+				tag = int(runs[ri][1])
+				ri += 1
+			var col := c[i]
+			if _poisoned(col):
+				poisoned += 1
+			var kind := int(round(m[i].x))
+			if kind == RuinBuilder.LEAF_M or kind == FittedStone.DUST_M:
+				grown_v += 1
+				continue
+			if tag == TombBuild.T_NONE:
+				untagged += 1
+			elif tag == TombBuild.T_OTHER:
+				other_v += 1
+			else:
+				stone_v += 1
+				lo = Color(minf(lo.r, col.r), minf(lo.g, col.g), minf(lo.b, col.b))
+				hi = Color(maxf(hi.r, col.r), maxf(hi.g, col.g), maxf(hi.b, col.b))
+				if absf(col.r - tint.r) > spread + 1e-3 or absf(col.g - tint.g) > spread + 1e-3 or absf(col.b - tint.b) > spread + 1e-3:
+					outside += 1
+					if outside <= 3:
+						print("  seed %d vertex %d at %s: #%s outside the stone" % [s, i, str(v[i]), col.to_html(false)])
+		# Doors: the trapezoid, narrower at the top by top_share.
+		for d in data.doors:
+			doors_n += 1
+			if absf(float(d.top) / maxf(float(d.foot), 0.01) - top_share) > 0.005:
+				doors_bad += 1
+		# The ceilings' spans and the hearth room's pillars.
+		for pc in lay.pieces:
+			if str(pc.kind) != "room":
+				continue
+			rooms_n += 1
+			var pl: Dictionary = data.plans[int(pc.id)]
+			var sp: Dictionary = pl.get("spans", {})
+			worst_slab = maxf(worst_slab, float(sp.get("slab", 99.0)))
+			worst_beam = maxf(worst_beam, float(sp.get("beam", 0.0)))
+			if float(sp.get("slab", 99.0)) > max_span + 1e-3 or float(sp.get("beam", 0.0)) > max_span + 1e-3:
+				spans_bad += 1
+				print("  seed %d room %d (%s, %.1f x %.1f): slabs span %.2f m, beams %.2f m" % [s, pc.id, pc.room_kind, float(pc.len), 2.0 * float(pc.half), float(sp.get("slab", 99.0)), float(sp.get("beam", 0.0))])
+			if not (pl.pillars as Array).is_empty():
+				pillared += 1
+			if str(pc.room_kind) == "hearth":
+				var why := _hearth_pillars(lay, pc, pl)
+				if why != "":
+					hearth_ok = false
+					print("  seed %d hearth room: %s" % [s, why])
+		# The boss's hole (queue 49) keeps off its room's pillars, as built.
+		var gap := _lair_gap(lay, (data.plans.get(int((lay.get("lair", {}) as Dictionary).get("piece", -1)), {}) as Dictionary).get("pillars", []), side_m)
+		if gap < INF:
+			lair_rooms += 1
+			lair_gap = minf(lair_gap, gap)
+		# Triangles in each room (the tomb mesh inside its walls).
+		for pc in lay.pieces:
+			if str(pc.kind) != "room":
+				continue
+			var n := 0
+			for i in range(0, v.size(), 3):
+				var c3 := (v[i] + v[i + 1] + v[i + 2]) / 3.0
+				var aa := Delves.along_across(pc, Vector2(c3.x, c3.z))
+				if aa.x > -0.7 and aa.x < float(pc.len) + 0.7 and absf(aa.y) < float(pc.half) + 0.7 and c3.y > float(pc.y0) - 0.5 and c3.y < float(pc.y0) + float(pc.h) + 0.5:
+					n += 1
+			per_room.append(n)
+	TombBuild.bare = false
+	TombBuild.poison = false
+	# And in 30 more layouts, the pillars as planned (TombBuild.pillars_for).
+	for s in range(101, 131):
+		var lay := TombKit.layout(s)
+		var l: Dictionary = lay.get("lair", {})
+		if l.is_empty():
+			continue
+		var pc: Dictionary = lay.pieces[int(l.piece)]
+		var pts: Array = []
+		for q: Vector2 in TombBuild.pillars_for(lay, pc):
+			pts.append(Delves.along_across(pc, q))
+		var gap := _lair_gap(lay, pts, side_m)
+		if gap < INF:
+			lair_rooms += 1
+			lair_gap = minf(lair_gap, gap)
+	print("  the stone as cut over seeds %s: %d stone vertices from #%s to #%s (tint #%s +- %.2f), %d of other materials, %d of moss, vines and drift" % [str(STYLE_SEEDS), stone_v, lo.to_html(false), hi.to_html(false), tint.to_html(false), spread, other_v, grown_v])
+	ok(untagged == 0, "every vertex of the tomb is the style's stone or another material (%d untold)" % untagged)
+	ok(stone_v > 100000 and outside == 0, "no vertex of the tomb's stone strays outside its tint +- spread before occlusion, ochre, soot, moss and drift (%d of %d)" % [outside, stone_v])
+	ok(poisoned == 0, "no stone takes RuinBuilder's palette: with it poisoned, none of the tomb shows it (%d vertices)" % poisoned)
+	var hits := _palette_grep()
+	ok(hits.is_empty(), "the crawler's scripts name no general palette, and the ones that lay stone no stone colour of their own (grep: %s)" % ("none" if hits.is_empty() else ", ".join(hits)))
+	ok(doors_n > 30 and doors_bad == 0, "every door is a trapezoid, its top %.2f of its foot (doors.top_share; %d doors, %d off)" % [top_share, doors_n, doors_bad])
+	ok(hearth_ok, "the hearth room stands on four pillars round the hearth, the hearth, the mat, the bundle and the rescuer clear of them, its shaft open between them")
+	ok(spans_bad == 0, "no room's ceiling spans past max_span_m (%.1f m) unsupported: slabs at most %.2f m, beams %.2f m; %d of %d rooms on pillars" % [max_span, worst_slab, worst_beam, pillared, rooms_n])
+	ok(lair_rooms > 0 and lair_gap >= 0.75, "the boss's hole keeps off the pillars: its rim at least %.2f m from a pillar's base, room to pass (%d holes in rooms on pillars, seeds %s as built and 30 more layouts)" % [lair_gap, lair_rooms, str(STYLE_SEEDS)])
+	per_room.sort()
+	ok(not per_room.is_empty() and int(per_room[-1]) <= 45000, "triangles in a room inside the 45,000 budget: median %d, fewest %d, most %d (%d rooms)" % [per_room[per_room.size() / 2], per_room[0], per_room[-1], per_room.size()])
+
+
+## How far the boss's hole's rim (its collision ring) stands from the
+## nearest pillar's base (`pillars`: along/across in its room; a base as the
+## circle round its corners), m; INF with no hole or no pillars.
+func _lair_gap(lay: Dictionary, pillars: Array, side_m: float) -> float:
+	var l: Dictionary = lay.get("lair", {})
+	if l.is_empty() or pillars.is_empty():
+		return INF
+	var pc: Dictionary = lay.pieces[int(l.piece)]
+	var c := Vector2((l.pos as Vector3).x, (l.pos as Vector3).z)
+	var least := INF
+	for q: Vector2 in pillars:
+		least = minf(least, RuinBuilder._pp(pc, q.x, q.y).distance_to(c) - float(l.r) - 0.05 - side_m * 0.71)
+	return least
+
+
+## Why the hearth room's pillars are wrong ("" when they're right): four of
+## them round the hearth, clear of the hearth, the mat, the bundle and the
+## rescuer, the hearth's shaft between them and no pillar or beam across it.
+func _hearth_pillars(lay: Dictionary, pc: Dictionary, pl: Dictionary) -> String:
+	var pillars: Array = pl.get("pillars", [])
+	if pillars.size() != 4:
+		return "%d pillars" % pillars.size()
+	var side := RuinStyle.num("pillars.side_m", 0.6)
+	var bw := RuinStyle.num("pillars.beam_w_m", 0.5)
+	var box := Rect2(pillars[0], Vector2.ZERO)
+	for q: Vector2 in pillars:
+		box = box.expand(q)
+	var aa_of := func(p: Vector3) -> Vector2: return Delves.along_across(pc, Vector2(p.x, p.z))
+	var hearth: Vector2 = aa_of.call(lay.hearth)
+	if not box.grow(-0.5).has_point(hearth):
+		return "the hearth is not between its pillars"
+	# The mat by three points down its length (its half width and a hand
+	# clear of a pillar's base), the rest by their middles.
+	var w: Array = lay.wake
+	var axis := Vector3(sin(float(w[1])), 0.0, cos(float(w[1])))
+	var things: Array = [["the hearth", lay.hearth, 0.85], ["the bundle", lay.bundle, 0.45], ["the rescuer", (lay.rescuer as Array)[0], 0.5]]
+	for k: float in [-0.7, 0.0, 0.7]:
+		things.append(["the mat", (w[0] as Vector3) + axis * k, 0.6])
+	var base := side * 0.5 + 0.08
+	for th in things:
+		var at: Vector2 = aa_of.call(th[1])
+		for q: Vector2 in pillars:
+			var near := Vector2(clampf(at.x, q.x - base, q.x + base), clampf(at.y, q.y - base, q.y + base))
+			if near.distance_to(at) < float(th[2]):
+				return "a pillar at %s crowds %s" % [str(q), th[0]]
+	for vt in lay.vents:
+		if int(vt.fire_index) != -1:
+			continue
+		var m: Vector2 = aa_of.call(vt.mouth)
+		var r := float(vt.d) * 0.5
+		var hole := Rect2(m - Vector2(r, r), Vector2(2.0 * r, 2.0 * r))
+		if not box.has_point(m):
+			return "the shaft is not between the pillars"
+		for q: Vector2 in pillars:
+			if Rect2(q - Vector2(side, side) * 0.5, Vector2(side, side)).intersects(hole):
+				return "a pillar stands under the shaft"
+		var ax := int(pl.s_axis)
+		for bm in pl.beams:
+			var br := Rect2(float(bm[0]) - bw * 0.5, float(bm[1]), bw, float(bm[2]) - float(bm[1])) if ax == 0 else Rect2(float(bm[1]), float(bm[0]) - bw * 0.5, float(bm[2]) - float(bm[1]), bw)
+			if br.intersects(hole):
+				return "a beam crosses the shaft"
+	return ""
+
+
+## The crawler's scripts: any read of RuinBuilder's palette, any of its
+## general palettes by name, any numeric colour that isn't one of the
+## known non-stone ones (OWN_COLOURS). ["file:line"...].
+func _palette_grep() -> Array:
+	var hits: Array = []
+	var re := RegEx.new()
+	re.compile("Color\\([0-9][^)]*\\)")
+	var dir := DirAccess.open("res://scripts/crawler")
+	for f in dir.get_files():
+		if not f.ends_with(".gd"):
+			continue
+		var ln := 0
+		for line in FileAccess.get_file_as_string("res://scripts/crawler/" + f).split("\n"):
+			ln += 1
+			var code := line.strip_edges()
+			if code.begins_with("#"):
+				continue
+			if code.contains("palette[") or code.contains("palette.size") or code.contains("STONES") or code.contains("SANDSTONE") or code.contains("LIMESTONE"):
+				hits.append("%s:%d" % [f, ln])
+				continue
+			if not f in STONE_SCRIPTS:
+				continue
+			for mt in re.search_all(code):
+				if not mt.get_string() in OWN_COLOURS:
+					hits.append("%s:%d %s" % [f, ln, mt.get_string()])
+	return hits
+
+
+## The door frames in the built tomb (design §EX.3 doors): rays across each
+## opening at its foot and near its top meet the jamb stones, the opening
+## narrower at the top as top_share says.
+func _style_scene(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var top_share := RuinStyle.num("doors.top_share", 0.85)
+	var worst := 0.0
+	var probed := 0
+	var shut := 0
+	for d in lay.doors:
+		var p2: Vector2 = d.p
+		var n2: Vector2 = d.n
+		var t := Vector3(-n2.y, 0.0, n2.x)
+		var c := Vector3(p2.x, float(d.y), p2.y)
+		var w: Array = []
+		for hgt: float in [0.35, float(d.h) - 0.2]:
+			var o := c + Vector3.UP * hgt
+			var r1 := _ray(o, o + t * 2.0, [main.player.get_rid()])
+			var r2 := _ray(o, o - t * 2.0, [main.player.get_rid()])
+			if r1.is_empty() or r2.is_empty():
+				w.append(-1.0)
+			else:
+				w.append(o.distance_to(r1.position) + o.distance_to(r2.position))
+		if float(w[0]) <= 0.0 or float(w[1]) <= 0.0:
+			shut += 1
+			continue
+		probed += 1
+		var fw := 2.0 * float(d.half)
+		var h := float(d.h)
+		var want := (fw - fw * (1.0 - top_share) * (h - 0.2) / h) / (fw - fw * (1.0 - top_share) * 0.35 / h)
+		worst = maxf(worst, absf(float(w[1]) / float(w[0]) - want))
+		if probed <= 2:
+			print("  door %d: %.2f m across at its foot, %.2f m near its top (%.3f; the trapezoid %.3f)" % [d.id, w[0], w[1], float(w[1]) / float(w[0]), want])
+	ok(probed == (lay.doors as Array).size() and worst < 0.02, "the doorways in stone: across every one of %d, near its top narrower than at its foot as top_share says (worst %.3f off; %d unprobed)" % [probed, worst, shut])
+
+
+## The player's own body walks the built tomb (design §EX.5's check; the
+## stone kit of §EX.3 mustn't stand in the way: thresholds, battered jambs,
+## pillars, coffins, block stairs): through every door both ways, along
+## every corridor and stair from door to door, from every door into the
+## middle of its room (round its pillars and what lies there), the
+## CharacterBody3D with the crawler's own capsule, step and slope, steered
+## like a player (a step aside when something stands in the way). Seeds 1,
+## 7 and 42 (the scene's own, then the others built in turn).
+func _room_walks(main: CrawlerMain) -> void:
+	var seeds_done: Array = []
+	var all_ok := true
+	var walked := 0.0
+	var legs := 0
+	var blocked: Array = []
+	var builds: Array = []
+	# The scene's own tomb when it is one of them (the way out's stand-in
+	# may have moved it on to the next).
+	if int(main.lay.seed) in STYLE_SEEDS:
+		var res := await _walk_tomb(main)
+		seeds_done.append(int(main.lay.seed))
+		all_ok = bool(res.ok)
+		walked = float(res.m)
+		legs = int(res.legs)
+		blocked = res.blocked
+		builds.append("%d: %d ms" % [int(main.lay.seed), int(main.tomb.get_meta("build_ms", 0))])
+	var cur := main
+	for s in STYLE_SEEDS:
+		if int(s) in seeds_done:
+			continue
+		cur.queue_free()
+		await process_frame
+		await process_frame
+		OS.set_environment("SEED", str(s))
+		cur = load("res://scenes/crawler.tscn").instantiate()
+		get_root().add_child(cur)
+		for i in 10:
+			await physics_frame
+		while not cur.baked:
+			await process_frame
+		builds.append("%d: %d ms" % [int(s), int(cur.tomb.get_meta("build_ms", 0))])
+		var r2 := await _walk_tomb(cur)
+		seeds_done.append(int(s))
+		all_ok = all_ok and bool(r2.ok)
+		walked += float(r2.m)
+		legs += int(r2.legs)
+		blocked.append_array(r2.blocked)
+	print("  the tomb's build: %s" % ", ".join(builds))
+	ok(all_ok, "the player's body walks every tomb of seeds %s: every door both ways, every corridor and stair, into every room (%d legs, %.0f m%s)" % [str(seeds_done), legs, walked, "" if blocked.is_empty() else "; blocked: " + ", ".join(blocked)])
+
+
+## Walk one built tomb: {"ok", "m" (metres walked), "legs", "blocked"
+## [what stopped the body]}.
+func _walk_tomb(main: CrawlerMain) -> Dictionary:
+	var lay := main.lay
+	var p := main.player
+	p.typing = false
+	p.ui_open = false
+	var legs: Array = []
+	# A door: from its one side to its other, both ways. Not the way out's
+	# opening (b -1, §EX.5): stepping into it walks you out to the next
+	# tomb, and 46's own walk (_walks) goes through it.
+	for d in lay.doors:
+		if int(d.a) < 0 or int(d.b) < 0:
+			continue
+		var a_pc: Dictionary = lay.pieces[int(d.a)]
+		var b_pc: Dictionary = lay.pieces[int(d.b)]
+		var p2: Vector2 = d.p
+		var n2: Vector2 = d.n
+		var from := _on_floor(a_pc, p2 - n2 * 1.1)
+		var to := _on_floor(b_pc, p2 + n2 * 1.1)
+		legs.append([from, to, "door %d" % d.id])
+		legs.append([to, from, "door %d back" % d.id])
+	# A corridor or a stair: from the one door to the other.
+	for pc in lay.pieces:
+		if str(pc.kind) == "room":
+			continue
+		var ends: Array = []
+		for di in pc.doors:
+			ends.append(_inside_door(lay, pc, lay.doors[di]))
+		for i in range(1, ends.size()):
+			legs.append([ends[0], ends[i], "%s %d" % [pc.kind, pc.id]])
+	# A room: from each door to its middle (the wake spot in the hearth
+	# room), or as near it as the floor goes, the way a person would find
+	# round its pillars and what lies there (TombNav, the skeletons' grid).
+	var blocked: Array = []
+	var nav := TombNav.build(lay, get_root().get_world_3d().direct_space_state, 0.36, [p.get_rid()])
+	for pc in lay.pieces:
+		if str(pc.kind) != "room":
+			continue
+		var ways := _room_ways(main, pc, nav)
+		if ways.is_empty():
+			blocked.append("seed %d %s %d: no way in to within 2 m of its middle from every door, or not across it" % [int(lay.seed), pc.room_kind, pc.id])
+			continue
+		for di in pc.doors:
+			var pts: Array = ways[di]
+			for i in range(1, pts.size()):
+				legs.append([pts[i - 1], pts[i], "into %s %d by door %d" % [pc.room_kind, pc.id, di]])
+	var walked := 0.0
+	var out0 := main.walked_out
+	for leg in legs:
+		var res := await _walk_leg(p, leg[0], leg[1])
+		walked += float(res.m)
+		if not bool(res.ok):
+			blocked.append("seed %d %s (stopped at %s)" % [int(lay.seed), leg[2], str(res.at)])
+		if main.walked_out != out0 or main.leaving:
+			# The legs after it would walk the next tomb's stone.
+			blocked.append("seed %d %s: walked out of the tomb" % [int(lay.seed), leg[2]])
+			break
+	for a in ["move_forward", "move_left", "move_right", "move_back", "sprint"]:
+		Input.action_release(a)
+	return {"ok": blocked.is_empty(), "m": walked, "legs": legs.size(), "blocked": blocked}
+
+
+## A point on piece `pc`'s floor (x/z `q`).
+static func _on_floor(pc: Dictionary, q: Vector2) -> Vector3:
+	return Vector3(q.x, Delves.floor_of(pc, Delves.along_across(pc, q).x), q.y)
+
+
+## Just inside piece `pc` through door `d`.
+static func _inside_door(lay: Dictionary, pc: Dictionary, d: Dictionary) -> Vector3:
+	var p2: Vector2 = d.p
+	var n2: Vector2 = d.n
+	var into := n2 if int(d.b) == int(pc.id) else -n2
+	return _on_floor(pc, p2 + into * 1.1)
+
+
+## Just inside room `pc` through door `d`, where the body stands clear:
+## 1.1 m in, or nearer the door where something stands closer than that
+## (a coffin across the way in). A sweep starting inside a stone would pass
+## through it (cast_motion leaves out what it starts in).
+func _clear_inside(q: PhysicsShapeQueryParameters3D, lay: Dictionary, pc: Dictionary, d: Dictionary) -> Vector3:
+	var p2: Vector2 = d.p
+	var n2: Vector2 = d.n
+	var into := n2 if int(d.b) == int(pc.id) else -n2
+	for k: float in [1.1, 0.9, 0.7, 0.5]:
+		var at := _on_floor(pc, p2 + into * k)
+		if _stands(q, at):
+			return at
+	return _inside_door(lay, pc, d)
+
+
+## The body's capsule (a hair wider than the player's), for finding ways.
+func _body_query(main: CrawlerMain) -> PhysicsShapeQueryParameters3D:
+	var shape := CapsuleShape3D.new()
+	shape.radius = 0.37
+	shape.height = PlanetPlayer.STAND_HEIGHT - 0.1
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = shape
+	q.exclude = [main.player.get_rid()]
+	return q
+
+
+## Does the body stand clear at `at` (on a floor)? Its capsule's foot 4 cm
+## up: over the flags and the thresholds' lips, not over any stone it
+## couldn't step onto.
+func _stands(q: PhysicsShapeQueryParameters3D, at: Vector3) -> bool:
+	q.transform = Transform3D(Basis.IDENTITY, at + Vector3(0.0, 0.04 + (q.shape as CapsuleShape3D).height * 0.5, 0.0))
+	q.motion = Vector3.ZERO
+	return get_root().get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty()
+
+
+## The ways into room `pc`: {door id: [points to walk through]}, each from
+## just inside its door (where the body stands clear: _clear_inside) to the
+## room's middle (the wake spot in the hearth room), or as near it as the
+## floor goes, round its pillars and whatever lies there: the way found on
+## `nav` (TombNav at your size, the skeletons' own floor grid). {} when a
+## door's way stops more than 2 m short of the middle, or the room can't be
+## crossed from one of its doors to another.
+func _room_ways(main: CrawlerMain, pc: Dictionary, nav: TombNav) -> Dictionary:
+	var q := _body_query(main)
+	var hub := _on_floor(pc, (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * 0.5)
+	if str(pc.room_kind) == "hearth":
+		hub = (main.lay.wake as Array)[0]
+	var ways := {}
+	var starts := {}
+	for di in pc.doors:
+		var s0 := _clear_inside(q, main.lay, pc, main.lay.doors[di])
+		starts[di] = s0
+		var path := nav.path(s0, hub, true)
+		if path.is_empty() or Vector2(path[-1].x - hub.x, path[-1].z - hub.z).length() > 2.0:
+			return {}
+		var pts: Array = [s0]
+		for k in path.size():
+			if k > 0 or path[k].distance_to(s0) > 0.3:
+				pts.append(path[k])
+		ways[di] = pts
+	var ds: Array = starts.keys()
+	for k in range(1, ds.size()):
+		if nav.path(starts[ds[0]], starts[ds[k]], false).is_empty():
+			return {}
+	return ways
+
+
+## Walk the body from `from` to `to` like a player would: face it, walk;
+## when something stands in the way, a step to the side and on. {"ok", "m",
+## "at"}.
+func _walk_leg(p: CrawlerPlayer, from: Vector3, to: Vector3, max_s := 12.0) -> Dictionary:
+	var flat := Vector2(to.x - from.x, to.z - from.z)
+	p.spawn_flat(from, atan2(-flat.x, -flat.y), 0.0)
+	await _frames(3)
+	Input.action_press("move_forward")
+	var best := INF
+	var since := 0
+	var dodge := 0
+	var side := 1.0
+	var ok_ := false
+	var start := p.global_position
+	for i in int(max_s * 60.0):
+		var here := p.global_position
+		var go := Vector2(to.x - here.x, to.z - here.z)
+		if go.length() < 0.45 and absf(here.y - to.y) < 0.7:
+			ok_ = true
+			break
+		p._yaw = atan2(-go.x, -go.y)
+		if dodge > 0:
+			dodge -= 1
+			if dodge == 0:
+				Input.action_release("move_left")
+				Input.action_release("move_right")
+		elif since > 30:
+			side = -side
+			dodge = 26
+			since = 0
+			Input.action_press("move_left" if side < 0.0 else "move_right")
+		await physics_frame
+		var dd := Vector2(to.x - p.global_position.x, to.z - p.global_position.z).length()
+		if dd < best - 0.05:
+			best = dd
+			since = 0
+		else:
+			since += 1
+	Input.action_release("move_forward")
+	Input.action_release("move_left")
+	Input.action_release("move_right")
+	return {"ok": ok_, "m": start.distance_to(p.global_position), "at": p.global_position.snapped(Vector3.ONE * 0.01)}

@@ -528,8 +528,9 @@ static func flicker(camp: Node3D, time: float) -> void:
 		light.light_energy = LIGHT_ENERGY * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
 		light.omni_range = (float(camp.get_meta("range_m")) if camp.has_meta("range_m") else RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night))
 		var jm := float(fk.get("position_jitter_m", 0.06))
-		# (meta light_y: a fire whose light sits lower, a wall sconce's.)
-		light.position = Vector3(0, float(camp.get_meta("light_y", 1.0)), 0) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
+		# (meta light_y: a fire whose light sits lower, a wall sconce's;
+		# light_z: out of its niche, a sconce cut into the wall, §EX.3.)
+		light.position = Vector3(0, float(camp.get_meta("light_y", 1.0)), float(camp.get_meta("light_z", 0.0))) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
 	# The pool on the ground swells with the light.
 	var gs := GLOW_M * lerpf(1.0, float(L.get("ground_glow_night_scale", 1.4)), night)
 	for n in ["GroundWarm", "GroundGlow"]:

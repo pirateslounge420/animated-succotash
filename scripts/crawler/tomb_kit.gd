@@ -442,6 +442,10 @@ static func door_side(pc: Dictionary, d: Dictionary) -> Array:
 static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: Dictionary) -> void:
 	var res: Dictionary = Tuning.table("crawler").get("rescuer", {})
 	var stand := float(res.get("stand_m", 2.1))
+	# A hearth room on four pillars (design §EX.3 hearth_room four_pillars,
+	# TombBuild): you wake between two of them, never on a diagonal, where a
+	# pillar stands.
+	var pillared := str(RuinStyle.val("hearth_room", "", str(lay.theme))) == "four_pillars"
 	# The way from the hearth with the most room: away from the doors.
 	var best_a := 0.0
 	var best_score := -INF
@@ -453,6 +457,8 @@ static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: 
 			var d: Dictionary = lay.doors[di]
 			score += (d.p as Vector2).normalized().dot(v) * -1.0
 		score += rng.randf() * 0.1
+		if pillared and k % 4 == 2:
+			continue
 		if score > best_score:
 			best_score = score
 			best_a = a
@@ -930,6 +936,24 @@ const COFFIN_SIZE := Vector3(0.95, 0.9, 2.2)
 
 static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
 	var out: Array = []
+	var pillars := _pillars_aa(lay, pc)
+	for c in coffin_rows(lay, pc):
+		# None where a pillar stands (design §EX.3; the pillars keep off the
+		# rows where they can).
+		var a := float(c.along)
+		var sd := float(c.sd)
+		var m := Vector2(a, sd * (float(pc.half) - COFFIN_IN))
+		var foot := Rect2(m - Vector2(COFFIN_SIZE.x, COFFIN_SIZE.z) * 0.5, Vector2(COFFIN_SIZE.x, COFFIN_SIZE.z)).grow(0.1)
+		if _pillar_in(pillars, foot, Vector2.INF):
+			continue
+		out.append({"along": a, "sd": sd, "i": out.size()})
+	return out
+
+
+## The coffins' rows before the pillars (TombBuild's plan keeps its pillars
+## off them where it can): [{"along", "sd"}...].
+static func coffin_rows(lay: Dictionary, pc: Dictionary) -> Array:
+	var out: Array = []
 	if float(pc.half) < 2.4:
 		return out
 	for sd: float in [-1.0, 1.0]:
@@ -937,7 +961,7 @@ static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
 		# where that costs none (design §EX.4); a sconce over a coffin's
 		# head is in reach from the gap beside it.
 		for a in row(lay, pc, sd, 1.6, 2.4, float(pc.len) - 1.4, 1.2, 1.9, 1.4, 0.0):
-			out.append({"along": a, "sd": sd, "i": out.size()})
+			out.append({"along": a, "sd": sd})
 	return out
 
 
@@ -949,9 +973,10 @@ static func lair_took(lay: Dictionary, piece: int, spot: int) -> bool:
 	return l.has("coffin") and int(l.get("piece", -1)) == piece and int(l.coffin) == spot
 
 
-## A catacomb's niche stacks (three shelves each, down both long walls
-## every 1.4 m, clear of the doors and airways, and of the room's fire,
-## where one climbing out would step into it): [{"along", "sd", "i"}...].
+## A catacomb's niches (TombBuild cuts them into the walls, §EX.3: two
+## bone niches to a column, or one tall burial niche where a skeleton
+## sits), down both long walls every 1.4 m, clear of the doors and
+## airways: [{"along", "sd", "i"}...].
 static func niche_spots(lay: Dictionary, pc: Dictionary) -> Array:
 	var out: Array = []
 	for sd: float in [-1.0, 1.0]:
@@ -960,6 +985,30 @@ static func niche_spots(lay: Dictionary, pc: Dictionary) -> Array:
 		for a in row(lay, pc, sd, 1.0, 1.4, float(pc.len) - 0.8, 0.0, 1.5, 1.2, NICHE_CLEAR):
 			out.append({"along": a, "sd": sd, "i": out.size()})
 	return out
+
+
+## Room `pc`'s pillars' bases (TombBuild.pillars_for; a base a little
+## wider than its pillar, masonry.json styles pillars.side_m): Rect2s in
+## its (along, across).
+static func _pillars_aa(lay: Dictionary, pc: Dictionary) -> Array:
+	var out: Array = []
+	var hs := RuinStyle.num("pillars.side_m", 0.6, str(lay.get("theme", ""))) * 0.5 + TombBuild.PILLAR_BASE_OVER
+	for q: Vector2 in TombBuild.pillars_for(lay, pc):
+		var aa := Delves.along_across(pc, q)
+		out.append(Rect2(aa - Vector2(hs, hs), Vector2(2.0 * hs, 2.0 * hs)))
+	return out
+
+
+## Does a pillar's base (`pillars`, _pillars_aa) reach into `foot` (an
+## empty Rect2: none), or stand within a body's width of `step` (all in a
+## room's along, across)?
+static func _pillar_in(pillars: Array, foot: Rect2, step: Vector2) -> bool:
+	for base: Rect2 in pillars:
+		if foot.has_area() and base.intersects(foot):
+			return true
+		if step != Vector2.INF and (step - step.clamp(base.position, base.end)).length() < 0.45:
+			return true
+	return false
 
 
 ## A niche stack keeps this far (m, middle to middle) from a sconce on its
@@ -1154,9 +1203,12 @@ static func _place_residents(lay: Dictionary) -> void:
 			"heart":
 				if "grave" in rests and bool(cr.get("heart_holds_one", true)):
 					heart = rest_place(lay, pc, kind, "grave", {"i": -1})
+		# Never where it would climb out into a pillar (design §EX.3).
+		var pillars := _pillars_aa(lay, pc)
 		for p in places:
 			var at: Vector3 = p.pos
-			if line_distance(lines, Vector2(at.x, at.z)) >= off and not _by_lair(lay, at):
+			var out_at: Vector3 = p.out
+			if line_distance(lines, Vector2(at.x, at.z)) >= off and not _by_lair(lay, at) and not _pillar_in(pillars, Rect2(), Delves.along_across(pc, Vector2(out_at.x, out_at.z))):
 				cands.append(p)
 	var span: Array = cr.get("per_dungeon", [3, 6])
 	var want := rng.randi_range(int(span[0]), int(span[1]))

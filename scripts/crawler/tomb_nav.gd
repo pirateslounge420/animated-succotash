@@ -7,7 +7,8 @@ extends RefCounted
 ## height. A square is open where a body `radius` m round fits: on the
 ## floor of a piece's lane or in a door's gap through a wall, clear of
 ## anything standing on the floor (coffins, holders, rubble, the lowest
-## shelves: found by casting down onto it once, when the tomb is built).
+## shelves, the pillars: found by casting down onto it once, when the tomb
+## is built).
 ## Paths by A* (AStarGrid2D), pulled straight wherever the straight line
 ## stays on open squares.
 
@@ -33,6 +34,8 @@ var piece_of := PackedInt32Array()
 var open := PackedByteArray()
 ## Squares open (tools).
 var open_count := 0
+## Open squares closed because no door reaches them (_close_islands; tools).
+var closed_islands := 0
 
 
 ## The grid for `p_lay`, cast against `space` (the tomb's stone), for a
@@ -117,6 +120,9 @@ func _build(space: PhysicsDirectSpaceState3D, exclude: Array[RID]) -> void:
 	var q := PhysicsRayQueryParameters3D.new()
 	q.collision_mask = PropCollision.WORLD_LAYER
 	q.exclude = exclude
+	# A cast that starts inside something standing there (a pillar, §EX.3,
+	# taller than PROBE_M) finds it where it starts.
+	q.hit_from_inside = true
 	for cy in size.y:
 		for cx in size.x:
 			var i := cy * size.x + cx
@@ -154,6 +160,7 @@ func _build(space: PhysicsDirectSpaceState3D, exclude: Array[RID]) -> void:
 			if ok:
 				open[i] = 1
 				open_count += 1
+	_close_islands()
 	astar.region = Rect2i(Vector2i.ZERO, size)
 	astar.cell_size = Vector2.ONE
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -165,6 +172,42 @@ func _build(space: PhysicsDirectSpaceState3D, exclude: Array[RID]) -> void:
 		for cx in size.x:
 			if open[cy * size.x + cx] == 1:
 				astar.set_point_solid(Vector2i(cx, cy), false)
+
+
+## Close every open square no door's gap reaches over open squares: a patch
+## of floor walled in by what stands there (coffins and a pillar, §EX.3),
+## which nothing could walk into or out of, so nothing comes up or hangs
+## back there (Residents.pocket_spot). Squares joined only corner to corner
+## don't join (A* goes diagonally only past two open sides).
+func _close_islands() -> void:
+	var seen := PackedByteArray()
+	seen.resize(open.size())
+	var stack: Array[int] = []
+	for i in open.size():
+		if open[i] == 1 and piece_of[i] == -1:
+			seen[i] = 1
+			stack.append(i)
+	if stack.is_empty():
+		# No door's gap open at this size (a test floor): nothing to tell by.
+		return
+	while not stack.is_empty():
+		var i: int = stack.pop_back()
+		var cx := i % size.x
+		var cy := i / size.x
+		for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var x2 := cx + o.x
+			var y2 := cy + o.y
+			if x2 < 0 or y2 < 0 or x2 >= size.x or y2 >= size.y:
+				continue
+			var j := y2 * size.x + x2
+			if open[j] == 1 and seen[j] == 0:
+				seen[j] = 1
+				stack.append(j)
+	for i in open.size():
+		if open[i] == 1 and seen[i] == 0:
+			open[i] = 0
+			open_count -= 1
+			closed_islands += 1
 
 
 ## Every square whose middle is in `r` (x/z) takes `what(middle)`: [floor
