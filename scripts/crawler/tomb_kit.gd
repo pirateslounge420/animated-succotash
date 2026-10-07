@@ -551,8 +551,9 @@ static func door_gap(d: Dictionary, q: Vector2) -> float:
 
 ## A room's wall sconces (design §EX.4; crawler.json room_torches, the
 ## style's module_m). `small` of them in a room whose long walls are up to
-## small_room_max_m long, `large` in a longer one: in facing pairs on the
-## long walls (in a square room, the pair with fewer doors), a whole number
+## small_room_max_m long, `large` in a longer one, and `pillared` in a
+## room that stands on pillars (TombBuild.on_pillars; Mike, 7 Oct): in
+## facing pairs on the long walls (in a square room, the pair with fewer doors), a whole number
 ## of modules apart, the spacing nearest an even spread down the wall
 ## first. The heart gets heart_flank_dead on each side wall, a module
 ## apart, flanking the dead at its end (`heart` in all). Each keeps clear_m
@@ -592,6 +593,10 @@ static func _room_sconces(lay: Dictionary, pc: Dictionary) -> Array:
 		plans.append([["left", "right"], [offs, mid]])
 	else:
 		var n := int(RT.get("small", 2)) if maxf(length, width) <= float(RT.get("small_room_max_m", 8.0)) + 0.001 else int(RT.get("large", 4))
+		# A room on pillars gets two facing pairs (room_torches.pillared;
+		# Mike, 7 Oct): its pillars shadow one pair's light off the floor.
+		if TombBuild.on_pillars(lay, pc):
+			n = maxi(n, int(RT.get("pillared", 4)))
 		var per := maxi(ceili(n * 0.5), 1)
 		var pairs: Array = [["left", "right"], ["start", "end"]]
 		if width > length + 0.001 or (absf(width - length) <= 0.001 and _doors_on(pc, doors, pairs[0]) > _doors_on(pc, doors, pairs[1])):
@@ -723,15 +728,20 @@ static func _place_vents(lay: Dictionary) -> void:
 		var fp: Vector3 = f.pos
 		var vtype := vent_type(str(f.kind))
 		var wr: Array = (V.get(vtype, {}) as Dictionary).get("width_m", [0.6, 1.2] if vtype == "shaft" else [0.15, 0.3])
-		# The mouth: beside a fire on the floor for a shaft, straight over it
-		# for a flue; over a sconce, just off its wall. Kept inside the
-		# piece's ceiling.
+		# The mouth: straight over its fire (a hearth's shaft too, Mike 7 Oct:
+		# "situated more directly above the fire"; vents.shaft.over_fire, the
+		# smoke straight up it and its daylight falling on the fire); over a
+		# sconce, against its wall, where the flue slot cut up the wall above
+		# it rises into it (TombBuild._flue_slot_op). Kept inside the piece's
+		# ceiling. over_fire false: a shaft's mouth mouth_offset_m to one side
+		# of its fire (§EV.2's first guess, its column beside the fire).
 		var m := Vector2(fp.x, fp.z)
 		var d0 := float(wr[1])
 		if str(f.kind) == "sconce":
+			# Against its wall, so the slot up the wall runs into it.
 			var nv: Vector3 = f.normal
-			m += Vector2(nv.x, nv.z) * (d0 * 0.5 + 0.08)
-		elif vtype == "shaft":
+			m += Vector2(nv.x, nv.z) * (d0 * 0.5)
+		elif vtype == "shaft" and not bool((V.get("shaft", {}) as Dictionary).get("over_fire", true)):
 			var off: Array = V.get("mouth_offset_m", [0.7, 1.1])
 			var orng := RandomNumberGenerator.new()
 			orng.seed = hash([int(lay.seed), fp, "vent"])

@@ -22,7 +22,8 @@ extends Node3D
 ## light reaching light_radius_m from just in front of the niche; a room's is
 ## brighter than a corridor's by room_torches.light_scale. The hearth's
 ## kerb is TombBuild's too (§EX.1): the campfire's own ring stones are
-## hidden here, their collision kept.
+## hidden here, their collision kept; where the style sinks the hearth in
+## a pit (Mike, 7 Oct; TombBuild.pit) the fire sits down in it.
 
 static var HOLD: Dictionary = Tuning.table("crawler").get("holders", {})
 static var RT: Dictionary = Tuning.table("crawler").get("room_torches", {})
@@ -60,9 +61,22 @@ func build(p_world: Node, lay: Dictionary) -> void:
 	FireStore.stores.clear()
 	# The hearth: lit, tended, kept (the rescuer keeps it, §ET.3).
 	var hp: Vector3 = lay.hearth
-	hearth = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, hp), key_dir(hp), false)
+	# Down in its pit where the style sinks one (TombBuild.pit, Mike 7 Oct):
+	# its logs and coals on the ash at the pit's foot, its light kept where
+	# it was over the room's floor (the room lit as before, the pit's lip
+	# throwing no shadow over it), and the pool of firelight on the floor
+	# round it.
+	var sink := float(TombBuild.pit().get("depth", 0.0))
+	hearth = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, hp - Vector3(0.0, sink, 0.0)), key_dir(hp), false)
 	hearth.name = "Hearth"
 	_hide_ring(hearth)
+	if sink > 0.0:
+		hearth.set_meta("pit_depth", sink)
+		hearth.set_meta("light_y", 1.0 + sink)
+		for n in ["GroundWarm", "GroundGlow"]:
+			var g := hearth.get_node_or_null(n) as Node3D
+			if g:
+				g.position.y += sink
 	var hst := FireStore.store_of(hearth)
 	hst["kept"] = true
 	hearth.set_meta("crawler_hearth", true)

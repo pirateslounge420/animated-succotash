@@ -8,7 +8,8 @@ extends SceneTree
 ## just the last light's (26-26d). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
-## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
+## hearth (noon and midnight), up the hearth's shaft, down into the
+## hearth's pit at night (01i; Mike, 7 Oct), a fitted-stone wall
 ## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); a sheet
 ## baked with FigureSprite (kept for creatures and bosses); circling the
 ## one who found you, live in 3D (§FH): from in front, its left, behind,
@@ -17,7 +18,8 @@ extends SceneTree
 ## smothered, in the old full dark (the half-dark off) and in the
 ## half-dark (§FC.4), and by torchlight with the half-dark off and on; the
 ## corridor with its sconce relit, 1 m from that sconce's wall and with
-## the torch beside it; a crypt from its doorway with its old hearth ring
+## the torch beside it, and its flue slot from a few steps off (08d; Mike,
+## 7 Oct: the slot reads darker than the stone beside it, SLOT_DARKER); a crypt from its doorway with its old hearth ring
 ## (built for the frame, then taken away) and with its own wall sconces
 ## relit (§EX.4); the heart by torchlight and with its four sconces relit;
 ## a crypt by torchlight and its doorway from inside, the one stone of
@@ -53,7 +55,8 @@ extends SceneTree
 ## pixels about 3 m off a readable step over the frame's black, about
 ## 15 m off at it, and blue), the torchlit frame the same with the
 ## half-dark on as off, the crypt with its sconces relit at least as lit
-## on screen as with its old ring, and one firelight (§EX.6): the torchlit
+## on screen as with its old ring (in a room on pillars, at least
+## PILLARED_LIT_SHARE of it: Mike, 7 Oct), and one firelight (§EX.6): the torchlit
 ## and sconce-lit stone the same amber, and the stone right at the torch
 ## kept amber by the grade; the torch's flame reads as a flame at the
 ## bottom right (its size on screen measured, in pixels, at both presets); and
@@ -85,6 +88,13 @@ extends SceneTree
 
 var fails := 0
 var out_dir := ""
+## How lit on screen a room on pillars must be, with its wall torches
+## relit, against its old hearth ring (Mike, 7 Oct: a bit darker is fine,
+## the pillars' shadows are places for things to hide).
+const PILLARED_LIT_SHARE := 0.85
+## How much darker than the stone beside it a relit wall torch's flue slot
+## reads on screen (its luma under this share).
+const SLOT_DARKER := 0.85
 ## The firelit wall patches measured ({"torch", "sconce"}: _patch).
 var firelit := {}
 ## The crosshair's readings ({"wake", "wake_270", "amber", "amber_close",
@@ -593,6 +603,48 @@ func _door_view(main: CrawlerMain, pc: Dictionary) -> Array:
 
 ## Relight every sconce in room `pc` with the swing (a step out from each,
 ## the torch lit), then put the torch away: how many caught.
+## A relit wall torch's flue slot (design §EV.1; Mike, 7 Oct; TombBuild
+## ._flue_slot_op), from 2.4 m off its wall and a little along it, at
+## night, the torch away: the slot's middle (a little into it) against the
+## stone beside it at the same height, both on screen.
+func _flue_slot_frame(main: CrawlerMain, p: CrawlerPlayer, sconce: Node3D, nrm: Vector3, along: Vector3) -> void:
+	var pos: Vector3 = sconce.global_position + nrm * TombBuild.sconce_inset()
+	var slot: Dictionary = {}
+	for sl in main.tomb.get_meta("flue_slots", []):
+		var b: Vector3 = sl.bottom
+		if Vector2(b.x - pos.x, b.z - pos.z).length() < 0.1:
+			slot = sl
+	ok(not slot.is_empty(), "the relit corridor sconce has its flue slot up the wall over its niche")
+	if slot.is_empty():
+		return
+	var mid: Vector3 = ((slot.bottom as Vector3) + (slot.top as Vector3)) * 0.5
+	var floor_y := sconce.global_position.y - float(CrawlerFires.HOLD.get("sconce_h_m", 1.7))
+	var stand := Vector3(pos.x, floor_y, pos.z) + nrm * 2.4 + along * 0.6
+	var to := mid - (stand + Vector3(0.0, 1.26, 0.0))
+	p.spawn_flat(stand, atan2(-to.x, -to.z), atan2(to.y, Vector2(to.x, to.z).length()))
+	await _frames(10)
+	var img := await _shot("08d_flue_slot_over_sconce")
+	var cam := get_root().get_camera_3d()
+	var in_slot := _luma_at(img, cam.unproject_position(mid - nrm * 0.1), 2)
+	var beside := _luma_at(img, cam.unproject_position(mid + along * 0.45 + nrm * 0.02), 2)
+	print("  the flue slot over the relit sconce: luma %.3f inside, %.3f on the stone beside it" % [in_slot, beside])
+	# Its own flame's light falls up into it, so it reads darker and cooler
+	# than the stone beside it, not black.
+	ok(in_slot < beside * SLOT_DARKER, "the sooted flue slot reads darker up the wall over its lit niche (luma %.3f against %.3f beside it, under %.2f of it)" % [in_slot, beside, SLOT_DARKER])
+
+
+## Mean luma of the (2r+1)^2 pixels round screen point `at`.
+func _luma_at(img: Image, at: Vector2, r: int) -> float:
+	var s := 0.0
+	var n := 0
+	for y in range(int(at.y) - r, int(at.y) + r + 1):
+		for x in range(int(at.x) - r, int(at.x) + r + 1):
+			if x >= 0 and y >= 0 and x < img.get_width() and y < img.get_height():
+				s += img.get_pixel(x, y).get_luminance()
+				n += 1
+	return s / maxf(n, 1)
+
+
 func _relight_room(p: CrawlerPlayer, main: CrawlerMain, pc: Dictionary) -> int:
 	var t := p.torch
 	_torch_in_hand(p)
@@ -1091,6 +1143,20 @@ func _run() -> void:
 	p.spawn_flat(Vector3(hm.x + 1.6, 0.0, hm.z), PI * 0.5, 0.9)
 	await _frames(6)
 	await _shot("01c_up_the_flue")
+	# Down into the hearth's pit from its kerb, at night (Mike, 7 Oct: "a
+	# fire pit made into the ground"; TombBuild._hearth_pit): the fire down
+	# in it, the shaft straight over it.
+	world.days = 13.0
+	var hp1: Vector3 = main.lay.hearth
+	var w0: Vector3 = w[0]
+	var away := Vector3(w0.x - hp1.x, 0.0, w0.z - hp1.z).normalized()
+	var at_pit := hp1 + away * 1.45
+	var to_pit := hp1 - Vector3(0.0, 0.2, 0.0) - (at_pit + Vector3(0.0, 1.26, 0.0))
+	p.spawn_flat(at_pit, atan2(-to_pit.x, -to_pit.z), atan2(to_pit.y, Vector2(to_pit.x, to_pit.z).length()))
+	await _frames(8)
+	var pit_st := _stats(await _shot("01i_hearth_pit"))
+	ok(float(pit_st.warm) > 0.05, "down into the hearth's pit at night: its fire down in it, warm (%.3f of the frame)" % float(pit_st.warm))
+	world.days = 13.5
 	# The bundle by the hearth, close: unlit pitch heads (§EZ.2).
 	var bp: Vector3 = main.fires.bundle.global_position
 	var hp0: Vector3 = main.fires.hearth.global_position
@@ -1288,6 +1354,11 @@ func _run() -> void:
 		await _frames(10)
 		await _shot("08c_torch_beside_sconce")
 		t.put_out("stowed")
+		# Its flue slot (design §EV.1; Mike, 7 Oct: "torches in the indents
+		# on the wall still have exit vents above them"; TombBuild
+		# ._flue_slot_op): from a few steps off, the sooted slot up the wall
+		# over the relit niche reads darker than the stone beside it.
+		await _flue_slot_frame(main, p, sconce, nrm, along)
 		world.days = keep_days2
 		p.spawn_flat(keep_pos, keep_yaw, -0.05)
 		await _frames(4)
@@ -1321,7 +1392,14 @@ func _run() -> void:
 		var so := _stats(old_img)
 		var sn := _stats(new_img)
 		print("  the %s from its door, at night: old hearth ring mean %.3f (warm %.3f); its %d sconces relit mean %.3f (warm %.3f)" % [crypt.room_kind, so.mean_l, so.warm, n_lit, sn.mean_l, sn.warm])
-		ok(float(sn.mean_l) >= float(so.mean_l), "the %s with its %d wall sconces relit is at least as lit on screen as with its old hearth ring (mean %.3f against %.3f)" % [crypt.room_kind, n_lit, sn.mean_l, so.mean_l])
+		# A room on pillars may read a little darker than its ring did: its
+		# four torches' light falls in pools by the walls, the pillars'
+		# shadows across the floor (Mike, 7 Oct: "it's also ok if there's
+		# some shadows or a bit darker than it was because it gives monsters a
+		# place to hide"); the ring, in the middle, lit the far pillars.
+		var pillared := TombBuild.on_pillars(main.lay, crypt)
+		var share := PILLARED_LIT_SHARE if pillared else 1.0
+		ok(float(sn.mean_l) >= float(so.mean_l) * share, "the %s with its %d wall sconces relit is %s on screen as with its old hearth ring (mean %.3f against %.3f)" % [crypt.room_kind, n_lit, ("at least %.2f as lit (on pillars)" % share) if pillared else "at least as lit", sn.mean_l, so.mean_l])
 		world.days = keep_days3
 	# The heart: by torchlight, then its four sconces relit, flanking the
 	# dead.

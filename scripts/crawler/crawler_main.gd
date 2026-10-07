@@ -357,6 +357,7 @@ func _build_tomb() -> void:
 	# One ruin, one stone (§EX.1, §EX.3): what the style built (the checks).
 	tomb.set_meta("plans", data.get("plans", {}))
 	tomb.set_meta("doors_built", data.get("doors", []))
+	tomb.set_meta("flue_slots", data.get("flue_slots", []))
 	tomb.set_meta("build_ms", build_ms)
 	print("[crawler] %s style, one stone %s +- %.2f: %d floor flags, %d ceiling slabs, %d doors; built in %d ms" % [RuinStyle.style_name(str(lay.get("theme", "tomb"))), RuinStyle.tint(str(lay.get("theme", "tomb"))).to_html(false), RuinStyle.spread(str(lay.get("theme", "tomb"))), int(data.get("flags", 0)), int(data.get("slabs", 0)), (data.get("doors", []) as Array).size(), build_ms])
 

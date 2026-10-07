@@ -181,6 +181,8 @@ func _run() -> void:
 	_style_kit()
 	await _style_scene(main)
 	await _vents(main)
+	_hearth_pit(main)
+	_flue_slots(main)
 	_firelight(main)
 	_torch_room(main)
 	await _ambience(main)
@@ -378,7 +380,7 @@ func _layouts(seeds: Array) -> void:
 				kinds[str(pc.room_kind)] = int(kinds.get(str(pc.room_kind), 0)) + 1
 				if str(pc.room_kind) != "hearth":
 					rooms_n += 1
-					if int(in_room.get(int(pc.id), 0)) != _sconces_wanted(pc):
+					if int(in_room.get(int(pc.id), 0)) != _sconces_wanted(lay, pc):
 						holders_ok = false
 				elif in_room.has(int(pc.id)):
 					holders_ok = false
@@ -676,12 +678,14 @@ func _walk_body(lay: Dictionary, ex: Dictionary, root: Node3D, path: Array) -> D
 ## How many wall sconces room `pc` should have (design §EX.4, crawler.json
 ## room_torches): the heart `heart`; else `small` when its long walls are
 ## up to small_room_max_m, `large` when longer.
-func _sconces_wanted(pc: Dictionary) -> int:
+func _sconces_wanted(lay: Dictionary, pc: Dictionary) -> int:
 	var rt: Dictionary = TombKit.RT
 	if str(pc.room_kind) == "heart":
 		return int(rt.get("heart", 4))
 	var long := maxf(float(pc.len), 2.0 * float(pc.half))
-	return int(rt.get("small", 2)) if long <= float(rt.get("small_room_max_m", 8.0)) + 0.001 else int(rt.get("large", 4))
+	var n := int(rt.get("small", 2)) if long <= float(rt.get("small_room_max_m", 8.0)) + 0.001 else int(rt.get("large", 4))
+	# A room on pillars: two facing pairs (room_torches.pillared; Mike, 7 Oct).
+	return maxi(n, int(rt.get("pillared", 4))) if TombBuild.on_pillars(lay, pc) else n
 
 
 ## A full fire's light energy at night (look.json fire.light; Campfire.
@@ -790,6 +794,8 @@ func _room_torches() -> void:
 	var least_gap := INF
 	var n_sconces := 0
 	var n_rooms := 0
+	var pillared_ok := true
+	var n_pillared := 0
 	# By kind of room: [old ring's share of white, sconces', old ring's
 	# light, sconces', rooms].
 	var sums := {"small": [0.0, 0.0, 0.0, 0.0, 0], "large": [0.0, 0.0, 0.0, 0.0, 0], "heart": [0.0, 0.0, 0.0, 0.0, 0]}
@@ -828,9 +834,9 @@ func _room_torches() -> void:
 				continue
 			n_rooms += 1
 			var mine: Array = by_room.get(int(pc.id), [])
-			if mine.size() != _sconces_wanted(pc):
+			if mine.size() != _sconces_wanted(lay, pc):
 				counts_ok = false
-				print("  seed %d room %d (%s, %.1f x %.1f m): %d sconces, the rule says %d" % [seed_v, pc.id, pc.room_kind, pc.len, 2.0 * float(pc.half), mine.size(), _sconces_wanted(pc)])
+				print("  seed %d room %d (%s, %.1f x %.1f m): %d sconces, the rule says %d" % [seed_v, pc.id, pc.room_kind, pc.len, 2.0 * float(pc.half), mine.size(), _sconces_wanted(lay, pc)])
 			# On the long walls (the heart's side walls), in facing pairs where
 			# the doors allow, whole modules apart down each wall.
 			var long_walls: Array = ["left", "right"] if str(pc.room_kind) == "heart" or float(pc.len) >= 2.0 * float(pc.half) - 0.001 else ["start", "end"]
@@ -902,6 +908,18 @@ func _room_torches() -> void:
 		for k in flues:
 			if int(flues[k]) != 1:
 				vents_ok = false
+		# A room standing on pillars as built has two facing pairs of wall
+		# torches (room_torches.pillared; Mike, 7 Oct): its pillars shadow a
+		# single pair's light off the floor (queue 48).
+		var plans: Dictionary = TombBuild.build(lay, true).plans
+		for id in plans:
+			var pp: Dictionary = lay.pieces[int(id)]
+			if str(pp.kind) != "room" or str(pp.room_kind) in ["hearth", "heart"] or (plans[id].pillars as Array).is_empty():
+				continue
+			n_pillared += 1
+			if (by_room.get(int(id), []) as Array).size() < int(rt.get("pillared", 4)) or not TombBuild.on_pillars(lay, pp):
+				pillared_ok = false
+				print("  seed %d room %d (%s, %.1f x %.1f m) stands on pillars with %d wall torches" % [seed_v, int(id), pp.room_kind, pp.len, 2.0 * float(pp.half), (by_room.get(int(id), []) as Array).size()])
 		# The airways clear of the sconces on their wall.
 		for aw in lay.airways:
 			var pc: Dictionary = lay.pieces[int(aw.piece)]
@@ -916,8 +934,9 @@ func _room_torches() -> void:
 					air_ok = false
 					print("  seed %d: an airway %.2f m from a sconce on its wall" % [seed_v, absf(sa.x - aa.x)])
 	ok(hearths_ok, "seeds %s: one hearth per tomb, in the hearth room; every other fire a wall sconce (§EX.4)" % str(TORCH_SEEDS))
-	ok(counts_ok, "every other room has its sconces: %d up to %.0f m long, %d longer, the heart %d (%d rooms, %d sconces in all)" % [int(rt.get("small", 2)), float(rt.get("small_room_max_m", 8.0)), int(rt.get("large", 4)), int(rt.get("heart", 4)), n_rooms, n_sconces])
+	ok(counts_ok, "every other room has its sconces: %d up to %.0f m long, %d longer or on pillars, the heart %d (%d rooms, %d sconces in all)" % [int(rt.get("small", 2)), float(rt.get("small_room_max_m", 8.0)), int(rt.get("large", 4)), int(rt.get("heart", 4)), n_rooms, n_sconces])
 	ok(heart_ok, "the heart's: %d on each side wall, flanking the dead" % flank)
+	ok(pillared_ok and n_pillared > 0, "every room standing on pillars as built has %d wall torches, two facing pairs (room_torches.pillared, Mike 7 Oct; %d rooms on pillars)" % [int(rt.get("pillared", 4)), n_pillared])
 	ok(long_ok and spaced_ok, "the rooms' sconces stand on their long walls, whole modules apart (%.0f m, masonry.json styles module_m)" % TombKit.module_of("tomb"))
 	ok(faced >= n_pairs * 0.9, "and in facing pairs where the doors allow: %d of %d pairs face each other exactly (the rest step apart to clear a door)" % [faced, n_pairs])
 	ok(least_gap >= clear - 0.001, "no sconce within %.1f m of a door's edge (the nearest %.2f m)" % [clear, least_gap])
@@ -1671,6 +1690,140 @@ func _vents(main: CrawlerMain) -> void:
 		else:
 			print("  vent %s d %.2f at %s: darkest %.3f" % [v.kind, float(v.d), str(m), darkest])
 	ok(stained == vents.size(), "soot round every flue's mouth (%d of %d)" % [stained, vents.size()])
+
+
+## The hearth's pit and its shaft (Mike, 7 Oct: "where the main hearths
+## sit there should be a fire pit made into the ground"; "the exit draft
+## vent should be situated more directly above the fire"; masonry.json
+## styles hearth sunk_pit, smoke.json vents.shaft.over_fire): the fire
+## down in its pit, its light where it was over the room's floor; the
+## pit's floor under it and the room's floor round it where they should be;
+## the guard round its lip; the flags cut round it; the shaft straight over
+## the fire, the flame standing straight in its draft.
+func _hearth_pit(main: CrawlerMain) -> void:
+	var pt := TombBuild.pit()
+	ok(not pt.is_empty(), "the tomb's style sinks its hearth in a pit (masonry.json styles hearth sunk_pit)")
+	if pt.is_empty():
+		return
+	var lay := main.lay
+	var hp: Vector3 = lay.hearth
+	var depth := float(pt.depth)
+	var a := float(pt.r)
+	var outer := a + float(pt.kerb_w)
+	var fire := main.fires.hearth
+	ok(absf(fire.global_position.y - (hp.y - depth)) < 0.01 and Vector2(fire.global_position.x - hp.x, fire.global_position.z - hp.z).length() < 0.01, "the hearth's fire sits down in its pit, %.2f m under the room's floor (at y %.2f)" % [depth, fire.global_position.y])
+	var lt := fire.get_node_or_null("Light") as Node3D
+	ok(lt != null and absf(lt.global_position.y - (hp.y + 1.0)) < 0.15, "its light hangs where it did, about 1 m over the room's floor (y %.2f), so the room is lit as before" % (lt.global_position.y if lt else -99.0))
+	var ex: Array[RID] = [main.player.get_rid()]
+	# (Not the fire's own logs and its hidden ring, which lie in the pit.)
+	for b in fire.find_children("*", "CollisionObject3D", true, false):
+		ex.append((b as CollisionObject3D).get_rid())
+	# The pit's floor at its foot, the room's floor round it.
+	var hit_in := _ray(hp + Vector3(0.12, 1.5, 0.08), hp + Vector3(0.12, -2.0, 0.08), ex)
+	var y_in: float = (hit_in.position as Vector3).y if not hit_in.is_empty() else 99.0
+	var out_p := hp + Vector3(outer + 0.35, 0.0, 0.0)
+	var hit_out := _ray(out_p + Vector3(0.0, 1.5, 0.0), out_p + Vector3(0.0, -2.0, 0.0), ex)
+	var y_out: float = (hit_out.position as Vector3).y if not hit_out.is_empty() else 99.0
+	ok(absf(y_in - (hp.y - depth)) < 0.03 and absf(y_out - hp.y) < 0.03, "in the pit you'd stand on its floor %.2f m down (%.2f), past its kerb on the room's floor (%.2f)" % [depth, y_in, y_out])
+	# The guard: you stand at its lip, never in it; it stays under every
+	# eye (yours crouched at 0.78 m).
+	var guard_ok := true
+	var guard_far := 0.0
+	for k in 16:
+		var dir := Vector3(cos(TAU * k / 16.0), 0.0, sin(TAU * k / 16.0))
+		var g := _ray(hp + dir * 1.35 + Vector3(0.0, 0.25, 0.0), hp + Vector3(0.0, 0.25, 0.0), ex)
+		if g.is_empty() or Vector2((g.position as Vector3).x - hp.x, (g.position as Vector3).z - hp.z).length() > outer / cos(PI / int(pt.sides)) + 0.02:
+			guard_ok = false
+			print("  toward the pit at 0.25 m: %s" % ("nothing" if g.is_empty() else "met %s at %s" % [str(g.get("collider")), str(g.position)]))
+		else:
+			guard_far = maxf(guard_far, Vector2((g.position as Vector3).x - hp.x, (g.position as Vector3).z - hp.z).length())
+		var over := _ray(hp + dir * 2.0 + Vector3(0.0, 0.7, 0.0), hp - dir * 2.0 + Vector3(0.0, 0.7, 0.0), ex)
+		if not over.is_empty() and Vector2((over.position as Vector3).x - hp.x, (over.position as Vector3).z - hp.z).length() < outer + 0.3:
+			guard_ok = false
+			print("  across the pit at 0.7 m: met %s at %s" % [str(over.get("collider")), str(over.position)])
+	ok(guard_ok and float(pt.guard) < 0.78, "a guard round its lip keeps you out of the fire (met %.2f m from its middle all round) and passes under every eye (%.2f m up; a line across it at 0.7 m meets nothing)" % [guard_far, float(pt.guard)])
+	# The flags cut round it: no stone at the floor's height inside its lip.
+	var inside := 0
+	var lip := a - TombBuild.PIT_LIP_M - 0.03
+	for mi in main.tomb.get_children():
+		if not mi is MeshInstance3D:
+			continue
+		var vv: PackedVector3Array = (mi as MeshInstance3D).mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+		for q in vv:
+			if q.y > hp.y - 0.1 and q.y < hp.y + 0.2 and Vector2(q.x - hp.x, q.z - hp.z).length() < lip:
+				inside += 1
+	ok(inside == 0, "the floor's flags are cut round the pit: no stone at the floor's height inside its lip (%d vertices)" % inside)
+	# The shaft straight over the fire, its daylight falling on it, the
+	# flame standing straight in its draft.
+	var shaft: Dictionary = {}
+	for v in lay.vents:
+		if int(v.fire_index) == -1:
+			shaft = v
+	var m: Vector3 = shaft.get("mouth", Vector3.INF)
+	var off := Vector2(m.x - hp.x, m.z - hp.z).length()
+	ok(str(shaft.get("type", "")) == "shaft" and off < 0.05, "the hearth's shaft stands straight over its fire (its mouth %.2f m off the fire's middle, smoke.json vents.shaft.over_fire)" % off)
+	var lean: Vector3 = fire.get_meta("draft", Vector3.ONE)
+	ok(lean.length() < 1e-4 and fire.has_meta("draft_flicker"), "its draft draws the hearth's flame straight up: no lean, only the flicker")
+	var lit_fire := false
+	for sh in main.vents.shafts:
+		var sp := sh.light as SpotLight3D
+		if Vector2(sp.global_position.x - hp.x, sp.global_position.z - hp.z).length() < 0.05:
+			lit_fire = true
+	ok(lit_fire, "the shaft's column of daylight falls on the fire")
+
+
+## The wall torches' flue slots (design §EV.1: "a narrow flue slot in the
+## wall above it"; Mike, 7 Oct: "please ensure torches in the indents on the
+## wall still have exit vents above them"; TombBuild._flue_slot_op): every
+## sconce in its niche has a slot cut up the wall from just over its niche
+## to the wall face's top, as wide as its flue, straight under its vent's
+## mouth in the ceiling against the wall, that vent open to the sky
+## (_vents).
+func _flue_slots(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var slots: Array = main.tomb.get_meta("flue_slots", [])
+	var sc := TombBuild.sconce_niche()
+	var with_slot := 0
+	var under_mouth := 0
+	var worst := ""
+	for i in (lay.holders as Array).size():
+		var hd: Dictionary = lay.holders[i]
+		if str(hd.kind) != "sconce":
+			continue
+		var pos: Vector3 = hd.pos
+		var nrm: Vector3 = hd.normal
+		var niche_top := pos.y - float((sc.cup as Vector3).y) + float(sc.h)
+		var pc: Dictionary = lay.pieces[int(hd.piece)]
+		var ceil_y := Delves.floor_of(pc, Delves.along_across(pc, Vector2(pos.x, pos.z)).x) + float(pc.h)
+		var found: Dictionary = {}
+		for sl in slots:
+			var b: Vector3 = sl.bottom
+			if Vector2(b.x - pos.x, b.z - pos.z).length() < 0.05 and b.y > niche_top - 0.01 and b.y < niche_top + 0.12:
+				found = sl
+				break
+		if found.is_empty() or (found.top as Vector3).y < ceil_y - 0.45:
+			worst = "sconce %d at %s: %s" % [i, str(pos), "no slot" if found.is_empty() else "its slot stops at %.2f, the ceiling at %.2f" % [(found.top as Vector3).y, ceil_y]]
+			continue
+		with_slot += 1
+		# Its vent's mouth in the ceiling, against the wall over it.
+		for v in lay.vents:
+			if int(v.fire_index) != i:
+				continue
+			var mo: Vector3 = v.mouth
+			var rel := Vector3(mo.x - pos.x, 0.0, mo.z - pos.z)
+			var along := rel - nrm * rel.dot(nrm)
+			if along.length() < 0.05 and rel.dot(nrm) - float(v.d) * 0.5 < 0.15 and absf(float(found.w) - clampf(float(v.d), 0.12, float(sc.w) * float(sc.top) - 0.06)) < 0.01:
+				under_mouth += 1
+			elif worst == "":
+				worst = "sconce %d: its mouth %.2f m along and %.2f m out from its slot" % [i, along.length(), rel.dot(nrm)]
+	var n := 0
+	for hd in lay.holders:
+		if str(hd.kind) == "sconce":
+			n += 1
+	if worst != "":
+		print("  " + worst)
+	ok(with_slot == n and n > 0, "every wall torch has its flue slot cut up the wall from just over its niche to the ceiling (%d of %d)" % [with_slot, n])
+	ok(under_mouth == n, "each slot is its flue's width, straight under its vent's mouth in the ceiling against the wall (%d of %d)" % [under_mouth, n])
 
 
 ## Where the torch in hand's flame would be if you stood at `stand` facing

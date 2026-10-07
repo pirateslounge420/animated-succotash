@@ -101,6 +101,10 @@ var wall_faces: Array = []
 ## Coffins laid in the crypts and bone-niche bays in the catacombs (checks).
 var coffins := 0
 var niches := 0
+## The wall torches' flue slots as cut (_flue_slot_op; checks): [{"bottom",
+## "top" (its middle on the wall's face, scene), "w", "depth", "n" (out of
+## the wall)}...].
+var flue_slots: Array = []
 ## The collision alone (build's collision_only).
 var _collision_only := false
 var flags_laid := 0
@@ -196,7 +200,7 @@ static func build(lay: Dictionary, collision_only := false) -> Dictionary:
 	b._took("soot", t)
 	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces,
 		"walls": b.wall_faces, "coffins": b.coffins, "niches": b.niches,
-		"flags": b.flags_laid, "slabs": b.slabs_laid, "plans": b.plans, "doors": b.doors_built, "tags": b._runs, "ms": b.ms}
+		"flags": b.flags_laid, "slabs": b.slabs_laid, "plans": b.plans, "doors": b.doors_built, "flue_slots": b.flue_slots, "tags": b._runs, "ms": b.ms}
 
 
 ## Adds the time since `t0` (usec) to part `part` (ms); returns now.
@@ -298,16 +302,7 @@ func _plan_room(pc: Dictionary) -> Dictionary:
 	var half := float(pc.half)
 	var length := float(pc.len)
 	var rc: Dictionary = RuinStyle.val("ceiling.rooms", {})
-	var courses := maxi(int(rc.get("corbel_courses", 1)), 0)
-	# No corbel course where it would hang over a doorway's head with less
-	# than CORBEL_OVER_DOOR_M of lintel under it (the way out's landing, at
-	# the corridors' height: it would cross the tops of its doorways).
-	var door_top := 0.0
-	for di in pc.doors:
-		var dd: Dictionary = _lay.doors[di]
-		door_top = maxf(door_top, float(dd.y) + float(dd.h) - float(pc.y0))
-	if float(pc.h) - float(rc.get("corbel_h_m", 0.36)) * courses < door_top + CORBEL_OVER_DOOR_M:
-		courses = 0
+	var courses := corbel_courses(_lay, pc)
 	var step := float(rc.get("corbel_step_m", 0.3)) * courses
 	var ch := float(rc.get("corbel_h_m", 0.36)) * courses
 	var kind := str(pc.get("room_kind", ""))
@@ -318,9 +313,7 @@ func _plan_room(pc: Dictionary) -> Dictionary:
 	var sy := 2.0 * half - 2.0 * step
 	var s_axis := 1 if sy <= sx else 0
 	plan["s_axis"] = s_axis
-	var max_span := RuinStyle.num("max_span_m", 6.0)
-	var four := kind == "hearth" and str(RuinStyle.val("hearth_room", "")) == "four_pillars"
-	if not four and minf(sx, sy) <= max_span:
+	if not on_pillars(_lay, pc):
 		plan["spans"] = {"slab": minf(sx, sy), "beam": 0.0}
 		return plan
 	var mid := Vector2(length * 0.5, 0.0)
@@ -386,6 +379,41 @@ func _plan_room(pc: Dictionary) -> Dictionary:
 	if kind == "collapsed":
 		plan["corner"] = _collapse_corner(pc, chosen.pillars)
 	return plan
+
+
+## How many corbel courses room `pc` of layout `lay` has (ceiling.rooms
+## corbel_courses): none where one would hang over a doorway's head with
+## less than CORBEL_OVER_DOOR_M of lintel under it (the way out's landing,
+## at the corridors' height: it would cross the tops of its doorways).
+static func corbel_courses(lay: Dictionary, pc: Dictionary) -> int:
+	var th := str(lay.get("theme", ""))
+	var rc: Dictionary = RuinStyle.val("ceiling.rooms", {}, th)
+	var courses := maxi(int(rc.get("corbel_courses", 1)), 0)
+	var door_top := 0.0
+	for di in pc.doors:
+		var dd: Dictionary = lay.doors[di]
+		door_top = maxf(door_top, float(dd.y) + float(dd.h) - float(pc.y0))
+	if float(pc.h) - float(rc.get("corbel_h_m", 0.36)) * courses < door_top + CORBEL_OVER_DOOR_M:
+		courses = 0
+	return courses
+
+
+## Does room `pc` of layout `lay` want pillars (design §EX.3): its slabs'
+## shorter span past its corbel course over the style's max_span_m, or the
+## hearth room's four (hearth_room four_pillars)? The layout's alone, so
+## the kit gives a room on pillars its four wall torches before it is
+## built (TombKit._room_sconces; Mike, 7 Oct). (_plan_room stands them;
+## where no spacing fits, a room that wants them has none.)
+static func on_pillars(lay: Dictionary, pc: Dictionary) -> bool:
+	if str(pc.get("kind", "")) not in ["room", "landing"]:
+		return false
+	var th := str(lay.get("theme", ""))
+	if str(pc.get("room_kind", "")) == "hearth" and str(RuinStyle.val("hearth_room", "", th)) == "four_pillars":
+		return true
+	var step := float((RuinStyle.val("ceiling.rooms", {}, th) as Dictionary).get("corbel_step_m", 0.3)) * corbel_courses(lay, pc)
+	var sx := float(pc.len) - 2.0 * step
+	var sy := 2.0 * float(pc.half) - 2.0 * step
+	return minf(sx, sy) > RuinStyle.num("max_span_m", 6.0, th)
 
 
 ## How far a pillar's base stands out round the pillar (m; its drums are
@@ -772,7 +800,12 @@ func _niche_ops(pc: Dictionary, side: String) -> Array:
 		elif aa.x >= float(pc.len) - 0.06:
 			on = "end"
 		if on == side:
-			ops.append(_sconce_op(hd, aa.x + Delves.WALL if side in ["left", "right"] else aa.y + half))
+			var op := _sconce_op(hd, aa.x + Delves.WALL if side in ["left", "right"] else aa.y + half)
+			ops.append(op)
+			# Its flue slot up the wall to under the corbel course (whose
+			# stone over it is left out, _corbels).
+			var plan: Dictionary = plans.get(int(pc.id), {})
+			ops.append(_flue_slot_op(hd, op, float(pc.y0) + float(pc.h) - float(plan.get("corbel_h", 0.0)) + 0.05))
 	return ops
 
 
@@ -788,6 +821,31 @@ func _sconce_op(hd: Dictionary, c: float) -> Dictionary:
 		"depth": float(sc.d), "n": Vector2(nrm.x, nrm.z), "sconce": true}
 
 
+## The flue slot over a sconce's niche `niche` (design §EV.1: "a narrow
+## flue slot in the wall above it"; Mike, 7 Oct: the torches in the wall's
+## niches have their vents above them): a narrow upright slot cut into the
+## wall from just over the niche's top up to the wall face's top `top_y`,
+## where its vent's mouth opens in the ceiling against the wall
+## (TombKit._place_vents), the vent's own width (narrower the deeper,
+## within the niche's top), as deep into the wall as the niche, dark
+## inside and sooted (_soot), so each wall torch shows the way its smoke
+## goes.
+func _flue_slot_op(hd: Dictionary, niche: Dictionary, top_y: float) -> Dictionary:
+	var w := float((TombKit.vents_table().get("flue", {}) as Dictionary).get("width_m", [0.15, 0.3])[0])
+	for v in _lay.get("vents", []):
+		if str(v.kind) == "sconce" and (v.fire as Vector3).is_equal_approx(hd.pos):
+			w = float(v.d)
+			break
+	w = clampf(w, 0.12, float(niche.tw) - 0.06)
+	var y0 := float(niche.y1) + FLUE_SLOT_LIP_M
+	return {"kind": "niche", "c": float(niche.c), "fw": w, "tw": w, "y0": y0, "y1": maxf(top_y, y0 + 0.3),
+		"depth": float(niche.depth), "n": niche.n, "flue": true}
+
+
+## The stone left between a sconce's niche and its flue slot over it (m).
+const FLUE_SLOT_LIP_M := 0.05
+
+
 ## The style's sconce (design §EX.3 sconce niche_cup): {"w", "h", "d" (the
 ## niche's width, height and depth), "top" (its top's share of its foot),
 ## "cup" (the cup's size)}.
@@ -801,6 +859,34 @@ static func sconce_niche() -> Dictionary:
 ## How far into its niche a sconce's flame stands, from the wall's face.
 static func sconce_inset() -> float:
 	return float(sconce_niche().d) * 0.45
+
+
+## The style's hearth pit (design §EX.1's fire-holders; Mike, 7 Oct: "a
+## fire pit made into the ground instead of just having a campfire sitting
+## right on the floor"; masonry.json styles hearth, method sunk_pit):
+## {"sides", "r" (its middle to its lining's face), "depth", "kerb_w",
+## "proud" (the kerb over the floor), "guard" (the unseen guard's top over
+## the floor), "ash"}; {} where the style's hearth is the old ring on the
+## floor.
+static func pit() -> Dictionary:
+	var hp: Dictionary = RuinStyle.val("hearth", {})
+	if str(hp.get("method", "")) != "sunk_pit":
+		return {}
+	return {"sides": maxi(int(hp.get("sides", 12)), 3), "r": maxf(float(hp.get("r_m", 0.62)), 0.3), "depth": maxf(float(hp.get("depth_m", 0.32)), 0.05),
+		"kerb_w": maxf(float(hp.get("kerb_w_m", 0.24)), 0.05), "proud": float(hp.get("kerb_proud_m", 0.03)), "guard": float(hp.get("guard_m", 0.45)),
+		"ash": Color(str(hp.get("ash", "#2a2422")))}
+
+
+## The pit's outline at `apothem` m from `c` (x/z), its `sides` corners
+## counter-clockwise in x/z, a side square to the room's walls first (so a
+## four-sided pit lies square in the room).
+static func pit_poly(c: Vector3, apothem: float, sides: int) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	var rv := apothem / cos(PI / sides)
+	for k in sides:
+		var a := (k + 0.5) * TAU / sides
+		out.append(Vector2(c.x + cos(a) * rv, c.z + sin(a) * rv))
+	return FittedStone.ccw(out)
 
 
 ## The catacomb's bone niches (niches.bone): {"w", "h", "d", "top", "sills"
@@ -1003,6 +1089,17 @@ func _hollow(o: Vector3, u: Vector3, n: Vector3, op: Dictionary) -> void:
 	var col := RuinStyle.stone(rng)
 	var mouth: Color = col if bare else Prelit.ao_tint(col, 0.8)
 	var deep: Color = col if bare else Prelit.ao_tint(col, 0.42)
+	if bool(op.get("flue", false)) and not bare:
+		# A flue slot is caked with the smoke's soot inside (§EV.1, outlets
+		# soot), so it shows dark over its lit niche: the way the smoke goes.
+		# The soot lies on the stone (rule.on_top), drawn as the drifts are
+		# (DUST_M), so the night's pull of the stone toward slate doesn't
+		# lift it (ruin.gdshader).
+		var soot := Color(str(((Tuning.table("smoke").get("outlets", {}) as Dictionary).get("soot", {}) as Dictionary).get("colour", "#0A0C20")))
+		mouth = col.lerp(soot, 0.85)
+		deep = soot
+		_tag(T_OTHER)
+		mat = FittedStone.DUST_M
 	mouth.a = 0.0
 	deep.a = 0.0
 	var w0 := 0.01
@@ -1015,6 +1112,8 @@ func _hollow(o: Vector3, u: Vector3, n: Vector3, op: Dictionary) -> void:
 	var trd := tr0 - n * (d + w0)
 	var tld := tl0 - n * (d + w0)
 	var hollow := o + u * c + Vector3.UP * (y0 + y1) * 0.5 - n * d * 0.5
+	if bool(op.get("flue", false)):
+		flue_slots.append({"bottom": o + u * c + Vector3.UP * y0, "top": o + u * c + Vector3.UP * y1, "w": 2.0 * fw, "depth": d, "n": n})
 	_inside_quad([bl0, br0, brd, bld], [mouth, mouth, deep, deep], Vector3.UP, hollow)
 	_inside_quad([tl0, tr0, trd, tld], [mouth, mouth, deep, deep], Vector3.DOWN, hollow)
 	var nl := (tl0 - bl0).cross(n).normalized()
@@ -1022,6 +1121,7 @@ func _hollow(o: Vector3, u: Vector3, n: Vector3, op: Dictionary) -> void:
 	var nr := (tr0 - br0).cross(n).normalized()
 	_inside_quad([br0, tr0, trd, brd], [mouth, mouth, deep, deep], nr if nr.dot(hollow - br0) > 0.0 else -nr, hollow)
 	_inside_quad([bld, brd, trd, tld], [deep, deep, deep, deep], n, hollow)
+	_stone_mode()
 
 
 ## A quad of a hollow's inside, facing the hollow (normal `nrm`).
@@ -1100,12 +1200,45 @@ func _pave_flags(pc: Dictionary) -> void:
 	fr.seed = hash([_mseed, int(pc.id), "floor"])
 	_stone_mode()
 	var tf := Time.get_ticks_usec()
+	# The hearth's pit (pit(); _hearth_pit lines it): its outline, kerb and
+	# all, kept out of the hearth room's flags and their collision.
+	var hole := PackedVector2Array()
+	var pt := pit()
+	if str(pc.get("room_kind", "")) == "hearth" and not pt.is_empty():
+		hole = pit_poly(_lay.get("hearth", Vector3.ZERO), float(pt.r) + float(pt.kerb_w), int(pt.sides))
+	var fo := Vector3(o2.x, y, o2.y)
 	if not _collision_only:
-		flags_laid += FittedStone.flags(self, Vector3(o2.x, y, o2.y), ax[0], ax[1], length + 0.1, 2.0 * half + 0.1, cl, fr,
-			func(x: float, yy: float) -> float: return float(wear.call(x - 0.05, yy - half - 0.05)))
+		var holes: Array = []
+		if not hole.is_empty():
+			var local := PackedVector2Array()
+			var au: Vector3 = ax[0]
+			var av: Vector3 = ax[1]
+			for q in hole:
+				var d3 := Vector3(q.x, y, q.y) - fo
+				local.append(Vector2(d3.dot(au), d3.dot(av)))
+			holes.append(FittedStone.ccw(local))
+		flags_laid += FittedStone.flags(self, fo, ax[0], ax[1], length + 0.1, 2.0 * half + 0.1, cl, fr,
+			func(x: float, yy: float) -> float: return float(wear.call(x - 0.05, yy - half - 0.05)), holes)
 	_took("floors", tf)
 	var r := Delves.rect_of(pc, 0.05)
-	_collision_box(Transform3D(Basis.IDENTITY, Vector3(r.get_center().x, y - 0.15, r.get_center().y)), Vector3(r.size.x * 0.5, 0.15, r.size.y * 0.5))
+	if hole.is_empty():
+		_collision_box(Transform3D(Basis.IDENTITY, Vector3(r.get_center().x, y - 0.15, r.get_center().y)), Vector3(r.size.x * 0.5, 0.15, r.size.y * 0.5))
+		return
+	# The floor round the pit: the room's slab less the pit, in convex
+	# pieces (the pit's own floor and guard are _hearth_pit's).
+	var rect := FittedStone.ccw(PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]))
+	for poly: PackedVector2Array in FittedStone.cut(rect, [hole]):
+		_prism(poly, y - 0.3, y)
+
+
+## A convex prism of collision (RuinBuilder's hull points): x/z outline
+## `poly`, from `y0` up to `y1`.
+func _prism(poly: PackedVector2Array, y0: float, y1: float) -> void:
+	var pts := PackedVector3Array()
+	for q in poly:
+		pts.append(Vector3(q.x, y0, q.y))
+		pts.append(Vector3(q.x, y1, q.y))
+	_ch.append(pts)
 
 
 ## Flags over a rectangle (RuinBuilder's callers): the tomb's fitted flags,
@@ -1442,7 +1575,10 @@ func _corridor(pc: Dictionary) -> void:
 				continue
 			var aa := _aa(pc, hd.pos)
 			if signf(aa.y) == sd:
-				ops.append(_sconce_op(hd, aa.x))
+				var op := _sconce_op(hd, aa.x)
+				ops.append(op)
+				# Its flue slot up the wall into the ceiling (the face's top).
+				ops.append(_flue_slot_op(hd, op, y + h + 0.05))
 		_stone_wall(_pp(pc, 0.0, sd * hw), _pp(pc, length, sd * hw), y - 0.6, top, ops)
 	_pave_flags(pc)
 	_ceiling(pc, false)
@@ -1944,11 +2080,16 @@ func _heart_box(p: Vector3, yaw: float, open := false) -> void:
 
 
 ## The hearth's kerb (design §EX.1: the hearth's surround is the style's
-## stone): nine stones in a ring round each fire on the floor (the hearth,
-## and any hearth ring), where the campfire's own ring stones were
+## stone): the hearth's pit where the style sinks it (_hearth_pit, Mike 7
+## Oct); else, and round any other fire on the floor (a hearth ring), nine
+## stones in a ring where the campfire's own ring stones were
 ## (CrawlerFires hides those; their collision stays).
 func _kerbs(lay: Dictionary) -> void:
-	var fires: Array = [lay.get("hearth", Vector3.ZERO)]
+	var fires: Array = []
+	if pit().is_empty():
+		fires.append(lay.get("hearth", Vector3.ZERO))
+	else:
+		_hearth_pit(lay.get("hearth", Vector3.ZERO))
 	for hd in lay.holders:
 		if str(hd.kind) != "sconce":
 			fires.append(hd.pos)
@@ -1966,6 +2107,113 @@ func _kerbs(lay: Dictionary) -> void:
 			var size := Vector3(rng.randf_range(0.26, 0.34), rng.randf_range(0.15, 0.2), rng.randf_range(0.18, 0.24))
 			var tilt := Basis.from_euler(Vector3(rng.randf_range(-0.06, 0.06), 0.0, rng.randf_range(-0.06, 0.06)))
 			box(Transform3D(Basis(Vector3.UP, -a - PI * 0.5) * tilt, f + Vector3(cos(a) * rr, size.y * 0.5 - 0.01, sin(a) * rr)), size, RuinStyle.stone(rng), _growth(0.05), 0.03, 0.01)
+	foot_y = was_foot
+	solid = was_solid
+
+
+## How far the kerb overhangs the pit's lining (m), and how deep the kerb
+## stones go under the floor (m).
+const PIT_LIP_M := 0.05
+const PIT_KERB_DEEP_M := 0.14
+
+
+## The hearth's pit (pit(); Mike, 7 Oct: "a fire pit made into the ground
+## instead of just having a campfire sitting right on the floor"; the
+## Andean tomb's after the Mito tradition's sunken hearths): a polygon of
+## `sides` sunk `depth` m into the floor at `c`, the floor's flags cut round
+## it (_pave_flags). Round its lip the kerb, one stone a side set into the
+## floor, its top pillowed and kerb_proud_m proud of the flags, overhanging
+## the lining a hand; under it the lining, a block a side, going toward the
+## scene's shade (navy) as it goes down; the joints' back under the kerb;
+## and at its foot a bed of ash, where CrawlerFires sets the fire. All the
+## style's stone but the ash, on the pit's own dice. Collision: the pit's
+## floor, and the guard round its lip up to guard_m over the floor (under
+## every eye: you stand at its edge, a thrown pot falls in).
+func _hearth_pit(c: Vector3) -> void:
+	var pt := pit()
+	var n := int(pt.sides)
+	var a := float(pt.r)
+	var kw := float(pt.kerb_w)
+	var proud := float(pt.proud)
+	var fy := c.y
+	var foot := fy - float(pt.depth)
+	var lip := pit_poly(c, a - PIT_LIP_M, n)
+	var lining := pit_poly(c, a, n)
+	var outer := pit_poly(c, a + kw, n)
+	var pr := RandomNumberGenerator.new()
+	pr.seed = hash([int(_lay.seed), "hearth_pit"])
+	var was_solid := solid
+	var was_foot := foot_y
+	var was_rng := rng
+	rng = pr
+	solid = false
+	foot_y = foot
+	_stone_mode()
+	var rl := FittedStone.relief()
+	var joint := float(rl.get("joint_m", 0.012))
+	var jd := float(rl.get("joint_depth_m", 0.06))
+	var back := RuinStyle.joint(0.3, bare)
+	back.a = 0.0
+	var mid := Vector3(c.x, foot, c.z)
+	for k in n:
+		var k2 := (k + 1) % n
+		var l0 := Vector3(lip[k].x, fy, lip[k].y)
+		var l1 := Vector3(lip[k2].x, fy, lip[k2].y)
+		var o0 := Vector3(outer[k].x, fy, outer[k].y)
+		var o1 := Vector3(outer[k2].x, fy, outer[k2].y)
+		var inward := (Vector3(c.x, fy, c.z) - (l0 + l1) * 0.5).normalized()
+		# The joints' back under the kerb (between its stones, and between
+		# it and the flags cut round it).
+		var below := Vector3(0.0, -jd, 0.0)
+		_tri_n(l0 + below, o0 + below, o1 + below, Vector3.UP, Vector3.UP, Vector3.UP, back, back, back, mid - Vector3.UP)
+		_tri_n(l0 + below, o1 + below, l1 + below, Vector3.UP, Vector3.UP, Vector3.UP, back, back, back, mid - Vector3.UP)
+		# The kerb stone: its top pillowed as a flag's, settled a little.
+		var col := RuinStyle.stone(pr)
+		var off := pr.randf_range(-0.006, 0.006)
+		var poly := FittedStone.ccw(PackedVector2Array([lip[k], lip[k2], outer[k2], outer[k]]))
+		var foot_col: Color = col if bare else Prelit.ao_tint(col, 0.55)
+		foot_col.a = 0.0
+		FittedStone.stone(self, Vector3(0.0, fy, 0.0), Vector3.RIGHT, Vector3.BACK, Vector3.UP, poly, col, foot_col, proud, 0.02, 0.04, joint, jd, off, 0.0, Vector2.ZERO, Vector3(0, 0, -1), false)
+		# Its face over the pit, down to the lining.
+		var top_y := fy - jd * 0.45 + off
+		var face_col: Color = col if bare else Prelit.ao_tint(col, 0.8)
+		var deep_col: Color = col if bare else Prelit.ao_tint(col, 0.6)
+		var dl0 := l0.lerp(l1, joint / maxf(l0.distance_to(l1), 0.01))
+		var dl1 := l1.lerp(l0, joint / maxf(l0.distance_to(l1), 0.01))
+		_quad_i(Vector3(dl0.x, top_y, dl0.z), Vector3(dl1.x, top_y, dl1.z), Vector3(dl1.x, fy - PIT_KERB_DEEP_M, dl1.z), Vector3(dl0.x, fy - PIT_KERB_DEEP_M, dl0.z),
+			inward, inward, inward, inward, face_col, face_col, deep_col, deep_col, mid - inward * 4.0)
+		# The lining under it: one block of the side, its face on the pit's
+		# outline, into the shade as it goes down.
+		var s0 := Vector3(lining[k].x, 0.0, lining[k].y)
+		var s1 := Vector3(lining[k2].x, 0.0, lining[k2].y)
+		var along := s1 - s0
+		var side_len := along.length()
+		var h := fy - PIT_KERB_DEEP_M - foot + 0.02
+		var thick := 0.2
+		var lc := RuinStyle.stone(pr)
+		if not bare:
+			lc = Prelit.ao_tint(lc, 0.5)
+		var lm := (s0 + s1) * 0.5 - inward * (thick * 0.5) + Vector3(0.0, foot + h * 0.5 - 0.02, 0.0)
+		var yaw := atan2(along.x, along.z)
+		box(Transform3D(Basis(Vector3.UP, yaw + PI * 0.5) * Basis.from_euler(Vector3(0.0, 0.0, pr.randf_range(-0.03, 0.03))), lm), Vector3(side_len - joint * 2.0, h, thick), lc, 0.0, 0.025, 0.008)
+		# The guard round the lip (collision only): the kerb's own footprint,
+		# from the pit's floor to guard_m over the floor, each side reaching a
+		# little past its corners into the next, so no seam opens between them.
+		var sl := (lip[k2] - lip[k]).normalized() * 0.03
+		var so := (outer[k2] - outer[k]).normalized() * 0.03
+		_prism(FittedStone.ccw(PackedVector2Array([lip[k] - sl, lip[k2] + sl, outer[k2] + so, outer[k] - so])), foot, fy + float(pt.guard))
+	# The bed of ash at its foot (not stone), and its collision.
+	_other_mode()
+	var ash: Color = pt.ash
+	for k in n:
+		var k2 := (k + 1) % n
+		var p0 := Vector3(lining[k].x, foot + 0.005, lining[k].y)
+		var p1 := Vector3(lining[k2].x, foot + 0.005, lining[k2].y)
+		var cm := Vector3(c.x, foot + 0.02, c.z)
+		_tri_n(p0, p1, cm, Vector3.UP, Vector3.UP, Vector3.UP, ash, ash, ash.lightened(0.08), cm - Vector3.UP)
+	_stone_mode()
+	_prism(outer, foot - 0.3, foot)
+	rng = was_rng
 	foot_y = was_foot
 	solid = was_solid
 

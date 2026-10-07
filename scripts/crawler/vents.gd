@@ -8,11 +8,12 @@ extends Node3D
 ##   the daylight  down a shaft only (a hearth's, a hearth ring's, an
 ##                 altar's; a sconce's or brazier's narrow flue lets in no
 ##                 light worth drawing, §EV.2): a column of sky-light
-##                 falling to the floor beside the fire (a spot light, a
-##                 seen beam of lit air, the sky's disc up the shaft), cool
-##                 blue by day and a faint moonlit blue by night on the
-##                 world's clock (the 144-minute day, which CrawlerMain
-##                 runs), so blue owns the frame and the fire is the one
+##                 falling onto the fire under it (Mike, 7 Oct: the shaft
+##                 straight over the hearth; beside it before): a spot
+##                 light, a seen beam of lit air, the sky's disc up the
+##                 shaft; cool blue by day and a faint moonlit blue by
+##                 night on the world's clock (the 144-minute day, which
+##                 CrawlerMain runs), so blue owns the frame and the fire is the one
 ##                 warm accent; brightening and dimming with the sun's
 ##                 height over the tomb (design §FG: flavour, never a key;
 ##                 daylight.sky_band_deg, low_sun_share); fainter and
@@ -78,12 +79,14 @@ func build(p_world: Node, lay: Dictionary, fires: CrawlerFires) -> void:
 	_update(true)
 
 
-## The flame leans toward its vent (CrawlerFires applies it).
+## The flame leans toward its vent (CrawlerFires applies it); under a vent
+## straight over it (the hearth's shaft, Mike 7 Oct) the draft draws it
+## straight up: no lean, only the quicker flicker.
 func _draft(v: Dictionary, fire: Node3D) -> void:
 	var m: Vector3 = v.mouth
 	var f: Vector3 = v.fire
 	var to := Vector3(m.x - f.x, 0.0, m.z - f.z)
-	var dir := to.normalized() if to.length() > 0.05 else Vector3(1, 0, 0).rotated(Vector3.UP, float(posmod(hash(f), 628)) / 100.0)
+	var dir := to.normalized() if to.length() > 0.05 else Vector3.ZERO
 	var dr: Dictionary = V.get("draft", {})
 	fire.set_meta("draft", dir * deg_to_rad(float(dr.get("lean_deg", 7.0))))
 	fire.set_meta("draft_flicker", float(dr.get("flicker", 0.22)))

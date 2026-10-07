@@ -547,8 +547,11 @@ static func _bounds(poly: PackedVector2Array) -> Rect2:
 ## of a passage where feet went) flattens a flag and takes its stone a
 ## little toward the light end of the spread (floor.wear amount, lighten).
 ## Settled like the walls, a little: a share sit a little high or low, or
-## turned. Returns the flags laid.
-static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: float, width: float, cl: Vector2, rng: RandomNumberGenerator, wear: Callable) -> int:
+## turned. `holes`: openings kept out of it (convex polygons, counter-
+## clockwise, in its own (x, y)): the hearth's pit (TombBuild._hearth_pit);
+## a flag crossing one is cut along its edge, on the same rolls, so the
+## rest of the floor is laid as it would be. Returns the flags laid.
+static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: float, width: float, cl: Vector2, rng: RandomNumberGenerator, wear: Callable, holes: Array = []) -> int:
 	if length < 0.3 or width < 0.3:
 		return 0
 	var fl: Dictionary = RuinStyle.val("floor", {}, theme)
@@ -577,7 +580,9 @@ static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: f
 	var grit: Color = RuinStyle.joint(0.45, bare)
 	grit.a = jmoss * 0.5
 	var inside := fo - n * 1.0 + (u * length + v * width) * 0.5
-	_sheet(b, fo, u, v, n, PackedVector2Array([Vector2(0, 0), Vector2(length, 0), Vector2(length, width), Vector2(0, width)]), -jd * (1.0 - fill), grit, inside)
+	var whole := PackedVector2Array([Vector2(0, 0), Vector2(length, 0), Vector2(length, width), Vector2(0, width)])
+	for poly in ([whole] if holes.is_empty() else cut(whole, holes)):
+		_sheet(b, fo, u, v, n, poly, -jd * (1.0 - fill), grit, inside)
 	var share := float(st.get("share", 0.15))
 	var offs: Array = st.get("offset_m", [-0.04, 0.06])
 	var tilts: Array = st.get("tilt_deg", [0.0, 4.0])
@@ -602,7 +607,13 @@ static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: f
 		var col := RuinStyle.worn(RuinStyle.stone(rng), w * lighten)
 		var foot_col: Color = col if bare else Prelit.ao_tint(col, 0.55)
 		foot_col.a = jmoss * 0.85 * (1.0 - w)
-		stone(b, fo, u, v, n, poly, col, foot_col, proud, pillow * (1.0 - w), bevel, joint, jd, off, rot, Vector2.ZERO, Vector3(0, 0, -1), false)
+		for piece: PackedVector2Array in ([poly] if holes.is_empty() else cut(poly, holes)):
+			if piece == poly:
+				stone(b, fo, u, v, n, poly, col, foot_col, proud, pillow * (1.0 - w), bevel, joint, jd, off, rot, Vector2.ZERO, Vector3(0, 0, -1), false)
+			elif _area(piece) >= 0.004 and _inradius(piece, _centroid(piece)) >= joint * 0.5 + 0.01:
+				# Cut along a hole's edge: laid square to it, so its edge
+				# keeps the line.
+				stone(b, fo, u, v, n, piece, col, foot_col, proud, pillow * (1.0 - w), bevel, joint, jd, off, 0.0, Vector2.ZERO, Vector3(0, 0, -1), false)
 		laid += 1
 	b.mat = was_mat
 	return laid
