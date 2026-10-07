@@ -4,6 +4,18 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 60, §FA.3–§FA.4, part 2: the snake through the fire pots' socket: driven off, never killed; the wick and the burst give you away (4370e02)
+- **Queue 55's two hands** were wired to the pots by that pass itself (the pots live on the left hand's strip, my Tab-and-wheel stand-in is gone); the fire pot check passed there, and here.
+- **The snake** (queue 49's `Boss`) is a fire target now:
+  - **Driven off** (`drive_off`): a pot that bursts within `splash_m` of any part of it, or a burning tar patch it crawls into, sends it down below the tomb as the light does (gone the moment you can't see it). The chase is off for `vs_boss.drives_off_s` (30 s), then it comes up out of its hole or the dark nearest it. Never burnt, never killed (§FA.4).
+  - **Its whole length counts:** the socket gained an optional `fire_distance(p)`, and the snake answers it along its 9 m body (INF while it's below, home or gone). A pot by its tail, 13.9 m from its head in the check, drives it off.
+  - **The pot gives you away:** it sees the lit wick within `gives_away.flare_seen_m` (25 m, past its own 20 m for a torch) even with your torch smothered, and hears a burst within `burst_heard_m` (40 m) of it as it hears a sprint. Either sets it hunting you. Bursts while it's below go unheard.
+- **A fix on the way:** tar burning on a creature that is then freed left a freed fire on `FirePots.fires`, which queue 54's half-dark reads ("Trying to cast a freed object"). A pot's fire now leaves the list whenever it leaves the scene.
+- **Checks:** `fire_pot_check` adds the real snake (the wick alone notices you; a burst at 30 m heard, at 46 m not; driven off by a pot at its head and by one at its tail, chase off; out of reach below; up after 30.0 s, never dead; a patch under it drives it off). 0 fails on seeds 7, 1 and 42, no script errors. `boss_check`, `crawler_harm_check`, `stagger_check`, `crawler_check`, `hands_check`: 0 fails.
+- **Still to come:** the skeletons (queue 58) with their fire hit points; row 60 stays `todo` until they burn.
+
+---
+
 ## 2026-10-07 — Queue 53, §FC.1: sneak — the view eases down, the crosshair closes into a ring, quiet feet, the ledge guard (c40b2da)
 - **The view eases.** Shift still crouches (Controls `crouch`, which `stealth.json → sneak.key` names). The collision drops at once and the eye glides from 1.26 m to 0.78 m over `camera_ease_s` (0.18 s, a smoothstep), then back up the same way when you let go. Standing up still waits for headroom, so the view never rises into a low ceiling. Measured: there by 0.183 s (the first tick past 0.18 s); the biggest one-frame step is 0.066 m of the 0.48 m. The torch in hand and the half-dark's light hang off the camera, so they ride down with the view. `eye_position()` follows the eased eye too.
 - **The crosshair's ring.** Prompt 45's crosshair landed from another session while this pass was under way (475c143), and so did 50, 52, 54, 55, 56, 57 and 60; this pass is rebased onto them. The sneak look is built on prompt 45's `Reticle`, cell by cell on the frame's pixel grid like its cross.
