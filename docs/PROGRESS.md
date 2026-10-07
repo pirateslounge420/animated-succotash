@@ -4,6 +4,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 57, §FA.1–§FA.2, part 2: the stagger on the snake, and its strike's hiss its own (a4f1b00; part 1 7f65da2)
+- **The snake strikes with part 1's `CreatureStrike`** (queue 49 built it that way). Its rear-back, lunge and draw back follow the strike's parts. A lit swing in the rear-back staggers it, and it hears a swing that lands on it. Checking prompt 57's list on the snake itself turned up three things, fixed here.
+- **Its strike's hiss is its own (§FA.2).** While it held off at the edge of your light it hissed with the strike's own voice every second or two, so a hiss didn't tell you it was about to strike.
+  - Holding off, it now gives a low, slow, rasping warning (`bosses.json → bosses.desert.torch_delay.sound`, the synth's `snake_warn`). The sharp hiss (`snake_hiss`) comes only with the rear-back.
+  - Measured: the warning is much darker (about 4,600 zero crossings a second against 12,300) and swells in 0.19 s against 0.02 s.
+- **A step back makes it miss.** The bite's 2.5 m was counted from its head as the head lunged out, so it reached about 5 m: stepping back to 3.8 m during its rear-back still got you bitten (measured).
+  - `CreatureStrike.origin` (new): the reach counts from where its body lies; the snake sets it to its base. Stepped back to 3.4 m, it now misses.
+- **Its reel stays out of the walls.** Thrown straight back from its coil, it slipped 0.34 m into the end wall (a short step's ray that starts on a wall's face goes through it).
+  - Each step now stays on its floor, its girth off the stone (`Boss._on_floor`). Struck in its coil it reels 0.84–1.06 m and stops 0.29 m from the wall; coming at you down a corridor it still reels the full 1.5 m back along its body.
+  - `boss_check`'s reel line now allows the wall stopping it.
+- **A swing needs a clear line only to the near side of a head** (`CreatureStrike.swing_lands`), so a head drawn back against stone can still be hit. This holds for the skeletons too.
+- **Checks**, on the tree with queues 51, 58 and 60:
+  - `stagger_check`: 61 lines, 0 fails on seeds 1, 7 and 42. The snake part covers:
+    - its sharp hiss on the rear-back's first frame, from its head;
+    - reared 0.12 → 0.95 m, the head drawn back 0.30 m, the jaws opening after half;
+    - the lunge (1.43 m) and one hit;
+    - a swing in the lunge, or with the torch unlit, staggers nothing, and the hit counts;
+    - a lit swing at 48% staggers it; a second inside the cooldown (2.2 s left) fails, and the hit counts;
+    - stepped back to 3.4 m it misses; its reel leaves it on its floor;
+    - holding off at your flame it hisses `snake_warn`.
+  - Without the reel fix the check fails (the snake ends 0.34 m into the wall).
+  - Also 0 fails: `boss_check` (106 lines), `residents_check` (123), `crawler_check` (173), `fire_pot_check` (82), `crawler_harm_check` (45).
+- **Row 57 is built.** Queue 56's second part (a chase that follows you into the light) is still to come; the stagger doesn't depend on it.
+
+---
+
 ## 2026-10-07 — Queue 51, §EZ.2: the pitch torch, a wrapped, tarred head and a pixel flame (afac6a9)
 - **Every torch in Torchfire 1 is the pitch torch** (`PitchTorch`, new; `torch.json → pitch_head`, wired): in your hand, planted, and in the bundle by the hearth. The open world (Torchfire 2) keeps §CP's burnt end: my call, since it is shelved and its checks still test the burnt end.
   - **The wrap:** six flat sides lined up with the stick's, 1.35 times its radius, 12 cm long, a flat top. Four bands, each strip's lower edge standing 7% proud, so they show as steps. Two to four drips of pitch run 2–7 cm down the stick.

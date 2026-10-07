@@ -86,7 +86,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 54 | §FC.3, §FC.4 | Douse your own torch, and a dark you can half see in | built 972a2d5 |
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
-| 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
+| 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | built a4f1b00 |
 | 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
 | 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
 | 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | built b21b5cd |
@@ -1061,7 +1061,7 @@ CHECK (headless): one scripted hit, the snake kept in sight and close: no recove
 
 ## 57 — The torch staggers, and every creature has its own strike tell — §FA.1, §FA.2
 
-**Status:** todo
+**Status:** built a4f1b00
 **Mike sees:** When the snake draws its head back to strike, you hear its hiss; swing your lit torch into it right then and it reels away, its strike broken, giving you a second to run. Swing too late, once it's already lunging, and the bite lands anyway. The torch never hurts it.
 
 ```text
