@@ -4,6 +4,46 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Mike's note on the torch's end: 20 s of embers to light the next one, the bundle never refills, light oil's flash reaches further, your own tar burns you once (063c726)
+Mike, on queue 62 as built and the open calls: *"when a torch burns out, you have to discard it out your hand or scroll to the next- it ahould be possible for players to light their new torch with the old torches embers. a torch embers remain for ~20 seconds before sputtering out completely- this should give the player enough time to relight another unused torch. the used torch will then be dropped. also, after a game day (144 minutes) the torches dont just reup themselves- they have to be found or created. we can get into crafting a bit later. it should be bare bones crafting system (beically you can combone up to 3 items in your inventory to create a new item- for example, if holding a bottle of oil- olive oil perhaps, you can combine the empty lamp and the oil to make it fill. one bottle of oil should be good for 3 refills. and yes, a light oil flash should be slightly larger aoe while the tar style while it lasts longer after busting, the aoe isnt as large. still only hurts for 1 damage."* Also the way-out frame the other session flagged (97dd330).
+
+- **What changes on screen:**
+  - **A torch burnt out** stays in your hand, its coal glowing dim red and sputtering for 20 s, then a dead stick. Scroll the wheel and it drops by your feet and your next torch comes up: while the embers glow it catches from them, after that it comes up unlit. F drops it and leaves your hand empty. A dropped stick's embers glow on, on the floor, until their 20 s are up.
+  - **The bundle** never fills up again. Torches are to be found or made; neither is built yet.
+  - **Your own pot:** a light-oil flash hurts you from 1.4 m, a tar burst from 1 m. Walking into your own burning tar is one hit. A pot never costs you more than one hit.
+  - **The way out** shows all its glow from the foot of its stairs again, and fades only from further off.
+- **The embers** (`torch.json → crawler_burn.embers_s` 20, Mike; `embers_light_share` 0.25, first guess; `Torch.swap_burnt`, `discard_burnt`, `_embers_step`, `PitchTorch.set_embers`):
+  - Burnt out, the item keeps an `embers_s` countdown. The head shows its coal alone, glowing at the share left. The light is a quarter of the gutter's, in the gutter's red, sputtering and fading to nothing; then "The embers have died." and a soft hiss.
+  - `Torch.item()` keeps the burnt torch in your hand in the crawler (it used to fall through to the next torch), and the next one up is a torch with burn left. The open world is unchanged.
+  - The wheel (`Hands._cycle_right`) from a burnt torch drops it (`burnt_out` with the embers left; `CrawlerFires.lay_stick` lays the stick and, with embers left, a glowing knot and a small light that fade over what's left). Your next torch comes up, lit from the embers while they glow ("Lit the new torch from the old one's embers."). F (`CrawlerPlayer`) drops a burnt one when there is no flame to smother. Taken by the dark, a burnt one in your hand is dropped where you fell.
+- **The bundle** (`CrawlerFires`): `_remake_bundle` is gone. The data's `later_sources` still lists `bundle_remade` (chat's list, unread by the code); Mike has ruled it out.
+- **Your own pot** (`fire_pots.json → oils.light_oil.hurts_you_m` 1.4 and `oils.tar.hurts_you_m` 1.0, new, first guesses on "slightly larger"; `FirePots.hurts_m`, `patch_hurts_you`; `PotFire.spent_on_you`):
+  - The burst's reach on you is per oil.
+  - A tar patch hurts you once: your feet within its flames (0.6 of `patch_radius_m`, 0.72 m) plus your body's 0.35 m, about its height (fire:pot_patch).
+  - A patch whose burst hit you never does. Stuck tar never hurts you.
+- **The way out** (`crawler.json → exit.glow` `near_m` 8 to 16, `far_m` 30 to 40): from the foot of its flight, about 15 m below, it shows all of its glow, as §EX.5 wants. At night from there `crawler_frames` 25b read 0.085 against the stone's 0.071 at 8 m, under its readable step.
+- **Checks** (on 063c726), all 0 fails:
+  - `crawler_check` (seed 7): 264 lines. New:
+    - Burnt out, the torch stays in your hand, its embers at 0.98 of their glow and their light 0.20 against the guttering flame's 0.89; ten seconds on they're half gone (0.48).
+    - The wheel drops it 0.20 m from your feet, out of your pack, its embers glowing there, and your next torch comes up lit from them; the dropped stick's light goes when its embers would have.
+    - Left in your hand, its embers die at 20 s; the wheel then brings up the last torch unlit. F drops a burnt one and your hand is empty.
+    - The emptied bundle stays empty two game days on.
+  - `fire_pot_check` (seed 7): 101.
+    - Tar 0.5 m off: one hit (fire:pot); 1.2 m off: none. Light oil 1.2 m off: one hit; 1.7 m off: none.
+    - After a burst hit you, standing in its patch: nothing more. A tar pot 3 m off misses; walking into its patch is one hit (fire:pot_patch), and four seconds in it, no more.
+    - The fire-to-fire swing 2.0 m from a patch is unharmed.
+  - `hands_check` 61, `stagger_check` 63, `crawler_harm_check` 59, `boss_check` 115, `cleared_check` 84, `residents_check` 161.
+- **For Mike:**
+  - The embers light your next torch the moment you scroll to it. Would you rather it take a moment, the two heads held together, as lighting a pot does?
+  - F drops a burnt torch. Is that the "discard" you meant, or would you like a key of its own?
+  - Light oil hurts you from 1.4 m and tar from 1 m: "slightly larger" as a first guess.
+  - Torches are found or made, and neither is built. Until then each tomb's bundle of three is all there is, and the next tomb has its own. Want a first guess at found torches (one or two lying in side rooms, like the found pot)?
+- **For chat:**
+  - The torch's end: 20 s of embers, the wheel to the next torch lit from them, the used one dropped. This amends §FJ.4 as built by queue 62.
+  - Torches don't come back by themselves; they are found or made. This rules out `bundle.remake_h_game` in the crawler and `later_sources`' `bundle_remade`.
+  - **Crafting, for later** (Mike): bare bones. Combine up to 3 items in your inventory to make a new one. For example, a bottle of oil (olive oil, perhaps) and an empty clay lamp make a filled lamp; one bottle is good for 3 refills. This goes with the clay lamps found in tombs (30 minutes of light, his earlier note today).
+  - Light oil's flash reaches you further than tar's burst; tar's lasting fire hurts you too; a pot still costs one hit at most.
+
 ## 2026-10-07 — Queue 62, §FJ.4: torches burn down — 15 minutes each, three at most, the bundle by the hearth (56dc352)
 Built in order after Mike's notes, with his number from today: *"a regular torch burn time should be 15 minutes and an oil lamp gives 30 minutes"* (the lamp comes later).
 

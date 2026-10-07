@@ -167,6 +167,21 @@ static func set_lit(head: Node3D, on: bool) -> void:
 		(wrap.material_override as ShaderMaterial).set_shader_parameter("heat", 1.0 if on else 0.0)
 
 
+## A burnt-out torch's embers (Torch, design 6 Oct §FJ.4; Mike, 7 Oct):
+## the coal alone, glowing at `share` of a lit coal's glow, fading as they
+## die; no flame; 0 hides it (a dead head).
+static func set_embers(head: Node3D, share: float) -> void:
+	var coal := head.get_node_or_null("Coal") as MeshInstance3D
+	if coal == null:
+		return
+	coal.visible = share > 0.0
+	var fl := head.get_node_or_null("Flame") as Node3D
+	if fl:
+		fl.visible = false
+	if share > 0.0 and coal.material_override is ShaderMaterial:
+		(coal.material_override as ShaderMaterial).set_shader_parameter("glow", share * float(Torch.EMBER.get("gutter_glow", 0.72)))
+
+
 ## The coal's glow now (Torch.ember_glow; guttering draws it lower, so
 ## fewer of its hot bands show: ember.gutter_glow), as Torch.set_glow does
 ## for the burnt end.

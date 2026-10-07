@@ -18,7 +18,7 @@
   "found": "Added by Claude Code (prompt 60, §FA.3 sources: found, Claude's first guess): one pot lies on the floor of a side room per dungeon, never on the spine (queue 46's spine, lay.spine), never the hearth room or the heart, a dead end where there is one. oils: the odds of each oil. Right click takes it.",
   "dev_items": "Added by Claude Code (prompt 60): F9 in the crawler (dev_mode) puts pots in the pack up to carry_max, of these oils in turn, so both can be tried.",
   "spread": "Added by Claude Code (prompt 60, §FA.3 spreads_to): what catches burns burn_s seconds by its kind, burning what stands in it at burn_dps (residents.json fire_hp units), then lies charred and never burns again. In the tomb so far: the hearth room's reed mat (rushes) and the bedroll (cloth); the tomb has no dry wood. Webs and the cats' runs come with their worlds. First guesses.",
-  "hurts_you": "Added by Claude Code (prompt 60), open for Mike: your own pot's fire doesn't hurt you (Harm isn't in the crawler yet, prompt 56). true would make standing in a burst or a burning patch a hit. Mike, 7 Oct (\"your own fire pot should be able to hurt you if you throw it way too close to yourself, like a wall or floor you're right next to\"): true, wired (Claude Code; FirePots.burst_hurts_you). hurts_you_m (new, Claude Code's first guess): your own burst within this many metres of your body (your capsule, from your feet to your eye, 0.35 m round), with no stone between, is one hit (death cause fire:pot), whichever oil; looking level the shortest throw lands 4 m out (throw.min_m), so it takes a wall or floor right next to you, or looking straight down. Its burning patch and stuck tar never hurt you (first guess, open for Mike). A pot that goes off in your hand is cook_off_in_hand's one hit, never two."
+  "hurts_you": "Added by Claude Code (prompt 60), open for Mike: your own pot's fire doesn't hurt you (Harm isn't in the crawler yet, prompt 56). true would make standing in a burst or a burning patch a hit. Mike, 7 Oct (\"your own fire pot should be able to hurt you if you throw it way too close to yourself, like a wall or floor you're right next to\"): true, wired (Claude Code; FirePots.burst_hurts_you). hurts_you_m (new, Claude Code's first guess): your own burst within this many metres of your body (your capsule, from your feet to your eye, 0.35 m round), with no stone between, is one hit (death cause fire:pot), whichever oil; looking level the shortest throw lands 4 m out (throw.min_m), so it takes a wall or floor right next to you, or looking straight down. Its burning patch and stuck tar never hurt you (first guess, open for Mike). A pot that goes off in your hand is cook_off_in_hand's one hit, never two. Mike, 7 Oct (\"a light oil flash should be slightly larger aoe while the tar style while it lasts longer after busting, the aoe isnt as large. still only hurts for 1 damage\"): oils.<kind>.hurts_you_m (new, Claude Code's first guesses) overrides hurts_you_m per oil: light oil 1.4, tar 1.0. Walking into your own burning tar patch is one hit too (fire:pot_patch): your feet within its flames (0.6 of patch_radius_m, 0.72 m) plus your body's 0.35 m. A pot never hurts you more than once: a patch whose burst hit you never does, and each patch hurts you once at most. Stuck tar never hurts you."
  },
  "vessel": "clay_pot",
  "crafted": false,
@@ -65,6 +65,7 @@
    "burn_dps": 0.5,
    "floor_patch_s": 12.0,
    "patch_radius_m": 1.2,
+   "hurts_you_m": 1.0,
    "mike": "do more damage over time and keeps them on fire"
   },
   "light_oil": {
@@ -76,6 +77,7 @@
    "floor_patch_s": 0.0,
    "patch_radius_m": 0.0,
    "flash_point": "low",
+   "hurts_you_m": 1.4,
    "mike": "more damage in one burst, but no lingering damage over time"
   }
  },

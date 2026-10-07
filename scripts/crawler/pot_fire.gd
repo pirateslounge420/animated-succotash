@@ -8,7 +8,10 @@ extends Node3D
 ##   patch   tar on the floor (oils.tar floor_patch_s, patch_radius_m): a few
 ##           flames across the patch that burn on, then gutter and go out (a
 ##           light that goes out), leaving a char mark on the stone; it burns
-##           what stands in it (burn_dps) and catches what spreads
+##           what stands in it (burn_dps) and catches what spreads; you
+##           walking into its flames is one hit, once, and never when its
+##           burst has hit you already (Mike, 7 Oct: one pot, one damage;
+##           FirePots.patch_hurts_you)
 ##   stuck   tar stuck to a creature, burning on it for burn_s at burn_dps
 ##   spread  a thing that burns (spreads_to: a web, dry wood, rushes, cloth)
 ##           alight for spread.burn_s, then charred
@@ -42,6 +45,8 @@ var size := 1.0
 var foot := Vector3.ZERO
 ## Burnt out (its light gone, freed this frame).
 var done := false
+## A patch has had its one hit on you, or its burst had it (FirePots).
+var spent_on_you := false
 var _relight_t := 0.0
 
 var _flames: Array[Node3D] = []
@@ -54,6 +59,9 @@ var _pops: AudioStreamPlayer3D
 var _pop_at := 0.0
 
 static var _sounds := {}
+## A patch's flames stand within this share of its radius of its middle
+## (the burning, and your one hit if you walk into them).
+const PATCH_FLAMES_SHARE := 0.6
 ## A flash's fireball is this much wider than a flame card's tongue.
 const FLASH_WIDE := 1.6
 
@@ -110,7 +118,7 @@ static func patch(p_pots: FirePots, at: Vector3, p_oil: String) -> PotFire:
 	f._range = float(_look().get("patch_range_m", 6.0))
 	p_pots.add_child(f)
 	f.global_position = at
-	f._build(int(_look().get("patch_flames", 4)), f.radius * 0.6, 2)
+	f._build(int(_look().get("patch_flames", 4)), f.radius * PATCH_FLAMES_SHARE, 2)
 	f._light_on(true)
 	f._voice()
 	return f
@@ -270,6 +278,9 @@ func _physics_process(delta: float) -> void:
 		pots.burn(target, dps * delta, oil, FirePots.center_of(target))
 	elif kind == "patch" or kind == "spread":
 		pots.burn_what_stands_in(foot, radius, dps * delta, oil, self)
+		if kind == "patch" and pots.patch_hurts_you(self):
+			spent_on_you = true
+			pots.hurt_you(foot, "fire:pot_patch")
 		pots.ignite_near(foot, radius)
 		_relight_t -= delta
 		if _relight_t <= 0.0:

@@ -192,8 +192,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("weapon_swap") and Hands.q_swaps():
 		swap_weapon()
 	elif event.is_action_pressed("douse") and not ui_open and not dead:
-		# F (design 6 Oct §FC.3): smother the lit torch in hand.
-		torch.douse()
+		# F (design 6 Oct §FC.3): smother the lit torch in hand; with a
+		# burnt-out one in hand, drop it (§FJ.4, Mike 7 Oct).
+		if not torch.douse():
+			torch.discard_burnt()
 	elif event.is_action_pressed("release_mouse"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

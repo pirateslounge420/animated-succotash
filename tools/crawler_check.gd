@@ -123,13 +123,16 @@ extends SceneTree
 ##     its 120 s of burn and no more;
 ## 11b. torches burn down (§FJ.4, torch.json crawler_burn, prompt 62): a
 ##     torch's whole burn is crawler_burn.burn_min (15, Mike), it starts to
-##     gutter at its last gutter_share and is burnt out at the end; in your
-##     hand the charred stick drops to the floor at your feet, out of your
-##     pack, your next torch in your hand unlit; a burnt one never catches;
-##     smothered at half its burn it keeps it and relights at a relit
-##     sconce; three held, the bundle gives no fourth (no words, a rustle),
-##     two held it gives the third; the empty bundle is laid again
-##     bundle.remake_h_game game hours on, not before;
+##     gutter at its last gutter_share and is burnt out at the end; burnt
+##     out it stays in your hand, its embers glowing dim (Mike, 7 Oct), half
+##     gone 10 s on; the wheel drops it by your feet, out of your pack, its
+##     embers glowing on there and dying on time, and your next torch comes
+##     up lit from them; left to die (embers_s), the wheel brings up the
+##     next one unlit; F drops a burnt one, your hand empty; a burnt one
+##     never catches; smothered at half its burn it keeps it and relights
+##     at a relit sconce; three held, the bundle gives no fourth (no words,
+##     a rustle), two held it gives the third; the emptied bundle stays
+##     empty;
 ## 12. the way out (§EX.5, WayOut): faint daylight in the opening, cool
 ##     blue by day and fainter at night, seen from the bottom of the
 ##     flight (nothing between), fainter from far off (exit.glow far_fade:
@@ -2652,10 +2655,10 @@ func _burn_down(main: CrawlerMain) -> void:
 			out_s = sec + 1
 			break
 	ok(absf(gutter_s - full * (1.0 - share) * 60.0) <= 1.0 and absf(out_s - full * 60.0) <= 1.0 and bool(fresh.get("burnt", false)) and not bool(fresh.get("lit", true)), "lit, a torch starts to gutter %.1f min in (its last %.0f%%) and is burnt out at %.1f min" % [gutter_s / 60.0, share * 100.0, out_s / 60.0])
-	# In your hand by the hearth, a spare in the pack.
+	# In your hand by the hearth, two spares in the pack.
 	_clear_torches(p)
-	p.inventory.add(Inventory.make("torch"))
-	p.inventory.add(Inventory.make("torch"))
+	for i in 3:
+		p.inventory.add(Inventory.make("torch"))
 	p.weapon = "torch"
 	var hp := fires.hearth.global_position
 	_place_facing(p, hp + Vector3(0.0, 0.0, 1.0), hp)
@@ -2666,21 +2669,58 @@ func _burn_down(main: CrawlerMain) -> void:
 	first["burn_left_min"] = full * share + 2.0 / 60.0
 	await _frames(180)
 	ok(t.lit() and Torch.guttering(first) and Torch.share_now(first) < 1.0, "in its last %.0f%% it gutters, still lit, at %.2f of its light" % [share * 100.0, Torch.share_now(first)])
-	# A second left.
+	# A second left: burnt out, it stays in your hand, its embers glowing
+	# (Mike, 7 Oct).
+	var gutter_e := t._light.light_energy
 	first["burn_left_min"] = 1.0 / 60.0
 	var burnt0 := t.burnt_count
 	var sticks0 := fires.sticks.size()
-	var feet := p.global_position
 	await _frames(90)
+	var held_ok := is_same(t.item(), first) and t.in_hand() and not t.lit() and bool(first.get("burnt", false)) and t.burnt_count == burnt0 and fires.sticks.size() == sticks0
+	var g0 := t.embers_share()
+	var ember_e := t._light.light_energy
+	ok(held_ok and g0 > 0.9 and t._light.visible and ember_e > 0.0 and ember_e < gutter_e * 0.5, "burnt out, it stays in your hand, its embers glowing (%.2f of their glow, their light %.2f against the guttering flame's %.2f)" % [g0, ember_e, gutter_e])
+	# Ten seconds on they are half gone; the wheel drops it and brings up
+	# the next torch, which catches from them.
+	await _frames(600)
+	var g10 := t.embers_share()
+	var feet := p.global_position
+	var lit0 := t.embers_lit
+	p.hands.cycle("right", 1)
+	await _frames(3)
+	var second := t.item()
 	var in_pack := false
 	for c in p.inventory.carried:
 		if is_same(c, first):
 			in_pack = true
 	var stick: Node3D = fires.sticks[-1] if fires.sticks.size() > sticks0 else null
 	var off := Vector2(stick.global_position.x - feet.x, stick.global_position.z - feet.z).length() if stick != null else -1.0
-	ok(t.burnt_count == burnt0 + 1 and bool(first.get("burnt", false)) and not in_pack and stick != null and off < 0.5 and absf(stick.global_position.y - feet.y) < 0.1, "burnt out, its charred stick falls to the floor by your feet (%.2f m off, %.2f m from their height) and leaves your pack" % [off, absf(stick.global_position.y - feet.y) if stick != null else -1.0])
-	var second := t.item()
-	ok(t.in_hand() and not t.lit() and not second.is_empty() and not is_same(second, first) and not bool(second.get("burnt", false)), "your next torch is in your hand, unlit")
+	var stick_light: OmniLight3D = stick.get_node_or_null("Embers") as OmniLight3D if stick != null else null
+	ok(absf(g10 - 0.5) < 0.06, "ten seconds on its embers are half gone (%.2f of their glow; embers_s %.0f)" % [g10, Torch.embers_s()])
+	ok(not in_pack and stick != null and off < 0.5 and absf(stick.global_position.y - feet.y) < 0.1 and t.burnt_count == burnt0 + 1 and stick_light != null, "the wheel drops it: its charred stick lies by your feet (%.2f m off), out of your pack, its embers glowing on there" % off)
+	ok(t.in_hand() and t.lit() and not second.is_empty() and not is_same(second, first) and t.embers_lit == lit0 + 1 and str(GameLog.entries[-1].get("text", "")).contains("embers"), "and your next torch comes up and catches from them (\"%s\")" % str(GameLog.entries[-1].get("text", "")))
+	await _frames(int((Torch.embers_s() * 0.5 + 1.0) * 60.0))
+	ok(not is_instance_valid(stick_light), "the dropped stick's embers die when theirs would have (its light gone)")
+	# Left to die in your hand: 21 s on, a dead stick; the wheel then brings
+	# up the next one unlit.
+	second["burn_left_min"] = 1.0 / 60.0
+	await _frames(90)
+	var b1 := t.burnt_count
+	var n_log := GameLog.entries.size()
+	await _frames(int((Torch.embers_s() + 1.0) * 60.0))
+	var died_ok := is_same(t.item(), second) and t.embers_share() == 0.0 and not t._light.visible and str(GameLog.entries[-1].get("text", "")) == "The embers have died." and GameLog.entries.size() > n_log
+	p.hands.cycle("right", 1)
+	await _frames(3)
+	var third := t.item()
+	ok(died_ok and t.burnt_count == b1 + 1 and t.in_hand() and not t.lit() and not third.is_empty() and not is_same(third, second) and not bool(third.get("burnt", false)), "left in your hand, its embers die %.0f s on and it is a dead stick; the wheel then drops it and brings up your last torch, unlit" % Torch.embers_s())
+	# F drops a burnt one and leaves your hand empty.
+	var lit3 := t.pass_flame() == "torch" and t.lit()
+	third["burn_left_min"] = 1.0 / 60.0
+	await _frames(90)
+	var b2 := t.burnt_count
+	await _press_f()
+	await _frames(2)
+	ok(lit3 and t.burnt_count == b2 + 1 and p.weapon == "hands" and not t.in_hand() and Torch.carried_count(p.inventory) == 0 and not p.inventory.has_kind("torch"), "F with a burnt one in your hand drops it: your hand empty, no torch left")
 	# A burnt one never catches.
 	_clear_torches(p)
 	p.inventory.add(Inventory.make("torch", {"burnt": true, "burn_left_min": 0.0}))
@@ -2730,22 +2770,19 @@ func _burn_down(main: CrawlerMain) -> void:
 			p.inventory.carried[i] = null
 			break
 	ok(main.take_torch() and fires.bundle_left == left0 - 1 and Torch.carried_count(p.inventory, true) == 3, "with two held it gives the third")
-	# The empty bundle is laid again remake_h_game game hours on.
+	# The emptied bundle stays empty (Mike, 7 Oct: torches don't come back
+	# by themselves; they are found or made).
 	_clear_torches(p)
 	while fires.bundle_left > 0:
 		fires.take_torch()
 	var keep_days: float = w.days
-	var wait := float((Torch.D.get("bundle", {}) as Dictionary).get("remake_h_game", 24.0)) / 24.0
-	var made0 := fires.bundles_remade
-	await _frames(2)
-	var empty_ok := fires.bundle_left == 0 and fires.bundle_out_at >= 0.0
-	w.days = fires.bundle_out_at + wait * 0.5
-	await _frames(2)
-	var half_ok := fires.bundle_left == 0 and fires.bundles_remade == made0
-	w.days = fires.bundle_out_at + wait + 0.001
-	await _frames(2)
-	var count := int((Torch.D.get("bundle", {}) as Dictionary).get("count_at_camp", 3))
-	ok(empty_ok and half_ok and fires.bundle_left == count and fires.bundles_remade == made0 + 1 and fires.bundle_out_at < 0.0, "the empty bundle is laid again %.0f game hours on (bundle.remake_h_game), not halfway: %d torches" % [wait * 24.0, fires.bundle_left])
+	w.days = keep_days + 2.0
+	await _frames(3)
+	var heads := 0
+	for c in fires.bundle.get_children():
+		if c.has_meta("pitch_head") and not c.is_queued_for_deletion():
+			heads += 1
+	ok(fires.bundle_left == 0 and heads == 0, "the emptied bundle stays empty two game days on (no torch laid again)")
 	w.days = keep_days
 	# As the rest expects: one fresh torch in hand.
 	p.inventory.add(Inventory.make("torch"))
