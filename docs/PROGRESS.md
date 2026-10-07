@@ -4,6 +4,33 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 50, §EZ.1 and §EZ.5: the torch stays lit; only deep water puts it out (dacd5d3)
+- **The sprint rule is gone** (`TorchSnuff`). Walking, sprinting for any length of time, turning, whipping the view round and swinging never gutter the torch or put it out.
+  - Deleted, since the design no longer mandates them: `torch.json → snuff.sprint`, and `crawler.json → snuff_log` (its sprint and draft lines).
+- **Speed still shows.** Running feeds the coal air, as built (`ember.air_brighten`, `light.sprint_flicker_scale`): mean light energy 3.04 flat out against 2.80 standing (×1.09).
+- **The strong airway gust holds** (`Airways`). The marked mouths keep their cycle, moan and dust exactly as built.
+  - A gust in line whips the torch hard: its smoke streams flat away from the mouth (4.9 m/s at a flame 2.5 m out) and its light flickers hard.
+  - The warning before it no longer gutters the coal. The flame's own lean (`pitch_head.lean.max_deg`) comes with prompt 51.
+- **My call, flagged for Mike: an ordinary draft now flickers the torch instead of guttering it.** As built, a slot in a corridor wall guttered the torch a little (up to 0.25: dimmer and redder).
+  - With nothing but water able to put it out, that read as a false warning, and the prompt's run round the tomb wants gutter 0 throughout.
+  - Now an ordinary draft leans the torch and quickens its light's flicker, as §EV.3's draft does a vented fire. `crawler.json → airways.gutter` is renamed `flicker` (same 0.25; my own block).
+  - The gutter (dimmer, redder, the sputter) now warns only of deep water, or a torch burning low.
+- **Unchanged:** deep water gutters it and then puts it out (`douse_depth_m`); out means out. The burn still counts down (50 real minutes; the prompt's step 4 is withdrawn, and §FJ.4's crawler timer is prompt 62). The open world keeps its own rules. No boss is built yet, so step 6 had nothing to change.
+- **Data:** the two `[NOT WIRED YET]` notes are off `torch.json → _help.snuff`, with a "Built" note added; `crawler.json → _help.airways` is updated.
+- **For chat:** `bosses.json → _help.bosses` still says "a sprint held too long gutters the torch (§ET.7)", which §EZ.1 amended.
+- **Checks:** `crawler_check` passes with 0 fails on seeds 7, 1, 42 and 31337. Its torch section is rewritten:
+  - a minute of walking; brighter at a run; a minute of swinging (225 swings);
+  - 120 s flat out round the tomb, through every door depth-first and back, with a full whip-round every 4 s: 592–628 m, lit, gutter 0 throughout. That was 103–111 s at a sprint by the removed rule's own measure, which would have put the torch out 12–24 s in;
+  - an ordinary slot leans and flickers it, never a gutter;
+  - three strong gusts in line: lit, never guttering, whipped hard, with the moan and dust before each. Out of the line, or behind cover, the gust passes it by;
+  - wading gutters it (redder, never bluer), and past `douse_depth_m` puts it out.
+  - The scripted runner steers round coffins, rubble and the hearth with a capsule test-move. In all four runs it had to skip ahead twice (seed 1).
+  - After rebasing onto queue 45, 57 (part 1) and 60 (part 1): `crawler_check` (seed 7), `stagger_check` and `fire_pot_check` pass with 0 fails.
+  - `swing_check` (the open world, which shares `torch.gd`) passes all 18 lines, then crashes in Godot's shutdown (signal 11 after its result line). It does exactly the same on the code before this pass, so the crash predates it.
+  - No walkabout, per the prompt.
+
+---
+
 ## 2026-10-07 — Queue 57, §FA.1–§FA.2, part 1: the torch staggers a strike's wind-up (the general strike; the snake waits for 49)
 - **A strike in two parts** (`CreatureStrike`, `scripts/crawler/creature_strike.gd`), for any creature with a `strike` block (`bosses.json`, `residents.json`; the skeletons of queue 58 use the same piece):
   - first the **wind-up** (`wind_up_s`), with the creature's own tell (§FA.2): a pose for its sprite, and its own sound, played from a 3D player at its head from the wind-up's first frame;

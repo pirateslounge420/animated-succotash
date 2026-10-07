@@ -79,7 +79,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | todo |
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | todo |
-| 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | todo |
+| 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | todo |
 | 52 | §FH | The folk at the hearth in 3D, made pixel by the frame | todo |
 | 53 | §FC.1 | Sneak: the view eases down, the reticle changes, quiet feet, the ledge guard | todo |
@@ -955,7 +955,7 @@ CHECK (headless, seeds 1, 7, 42): the ground's node count falls with each relit 
 
 ## 50 — The torch stays lit: only deep water puts it out — §EZ.1, §EZ.5
 
-**Status:** todo
+**Status:** built dacd5d3
 **Mike sees:** Run flat out for as long as you like, spin round, swing the torch: it stays lit, and it glows a little brighter while you run. A strong gust at a marked airway whips the flame hard but it holds. Only wading into deep water puts it out. (Amended by §FJ.4, 6 Oct 22:52: torches burn down again; that part is prompt 62.)
 
 ```text
