@@ -74,7 +74,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 42 | §EM | Third places: the soak, the great tree, the water rock, the porch | built 6dec101 |
 | 43 | §EN | The library: the camp book moves, the record-keeper, the winter count | built c6a2bd8 |
 | 44 | §EX.6 | One firelight: the torch takes the hearth's amber | built cb946c1 |
-| 45 | §EX.7 | A reticle in the crawler | todo |
+| 45 | §EX.7 | A reticle in the crawler | built 475c143 |
 | 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | todo |
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | todo |
 | 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
@@ -880,7 +880,7 @@ CHECK (headless, in tools/crawler_check.gd or crawler_frames.gd): every fire lig
 
 ## 45 — A reticle in the crawler — §EX.7
 
-**Status:** todo
+**Status:** built 475c143
 **Mike sees:** A small crosshair in the middle of the screen in the crawler, chunky in the low-res frame like the rest of the HUD. Still no words anywhere. The Settings crosshair switch still turns it off.
 
 ```text

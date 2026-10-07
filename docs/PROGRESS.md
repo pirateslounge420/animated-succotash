@@ -4,6 +4,40 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 45, §EX.7: a reticle in the crawler (475c143)
+- **The crosshair is on in the crawler.** It is the open world's (`hud.json → reticle`), now drawn by one piece of code, `Reticle` (`scripts/ui/reticle.gd`). The crawler and the open world's `StatusHud` both draw it with that code, so the two can't drift apart.
+  - It is the only thing in the crawler's HUD: no words, meter, names or prompts (§ET.3). `crawler.json → hud.reticle` puts it there. `[NOT WIRED YET]` is off `_help.hud`; `warms_near_flame` stays false and is not built.
+- **Drawn on the frame's own pixels:** four arms round the frame's middle pixel, built from whole-pixel squares (as the pocket watch is), inside the internal frame and nearest-scaled with it.
+  - The old drawing used lines centred on a pixel corner, so it came out a pixel lopsided (2 clear pixels on one side of the middle, 3 on the other). Now it is the same on every side.
+  - Its sizes follow the frame's lines like the HUD text, since `hud.json` gives every size at the 480 reference. At 480 lines: arms 5 px, 3 px clear of the middle, 1 px wide, 17 px across. At 270: arms 3, 2 clear, 1 wide, 11 across. So it stays about the same size on screen.
+  - In the open world (Torchfire 2) nothing changes at 480 but the one-pixel centring. At 270 its crosshair is now its 480 size on screen, not 1.8 times bigger.
+- **Off:** Settings → Crosshair dot (`hud.reticle`). It also hides while the log or the settings panel is open: both cover the middle of the frame, and it would show through them (my call).
+- **No light of its own:** the HUD's layer is drawn over the finished frame, so the grade, the dither and the bloom never touch it.
+- **The outline:** it already had the open world's one-pixel dark edge (navy at 70%), so I added none. The edge is what makes it readable over fire.
+- **Readable, measured (seed 7, WCAG contrast; 3:1 is the bar for a mark):**
+
+  | Where it sat | Arms against their edge | Arms alone against what's behind |
+  |---|---|---|
+  | The corridor's dark wall (navy) | 8.4:1 | 8.2:1 |
+  | Over the hearth's fire | 4.3:1 | 1.2:1 |
+  | Amber stone, the torch 1 m away | 5.4:1 | 1.4:1 |
+  | Amber stone, 0.45 m | 4.4:1 | 1.1:1 |
+  | Down the dark corridor, on the far hearth's doorway | 7.1:1 | 2.7:1 |
+
+- **Checks:**
+  - `crawler_check` passes with 0 fails on seeds 7, 1 and 42 (77–78 lines). New lines: the HUD holds the crosshair alone, no words, nothing of the open world's HUD; it is drawn over the grade; it is centred and sized per `hud.json` at 480 and 270, with its edge one pixel round it; the switch hides it; so does an open panel.
+  - `crawler_frames` (seed 7) has 0 fails. New frames: `01g` (the hearth room at 270 lines), `07b` (the dark corridor's wall), `07c` (the same, switch off).
+    - Every pixel of the graded picture sits on the dither's 5-bit grid, so any pixel off it was drawn by the HUD. At 480 the only such pixels are the crosshair's 20 arm and 64 edge pixels; at 270, 12 and 48. So no words and no glow anywhere.
+    - With the switch off, nothing at all is drawn over the frame, and the wall round the crosshair is the same either way (luma 0.0678 against 0.0686).
+    - The scene's own numbers now leave the crosshair's box out. Unchanged within the flame's flicker: torchlit wall hue 23.1°, sconce-lit 23.1° and 28.2° over two runs (the limit is 8° apart), the corridor's dark at 0.056.
+  - The open world's `hud_pin_check` passes as before (49 lines, 0 fails). It crashes on exit after printing its result; the unchanged code does the same.
+- **This machine** started without Godot or a Vulkan driver. I installed Godot 4.3 (checksum checked) and lavapipe, and `HOW_TO_RUN.md` now says how.
+- **For Mike and chat:**
+  - §FC.1 (prompt 53, sneaking) has "the dot" of the reticle opening into a small ring. The crawler's reticle is the open world's four-arm crosshair (§EX.7), not a dot, so 53 needs a call: the arms spread and dim, or a dot for the crawler.
+  - In the open world, the Crosshair dot switch hides only the dot, not the first-person crosshair (`StatusHud`, as built). I left it, since Torchfire 2 is shelved.
+
+---
+
 ## 2026-10-06 night — Design §FJ: Mike's answers (Claude, chat; design and data only)
 - **Locked 22:52:** the first ruin is drawn at random from the roster (amends §ET.3); the desert tomb's mummy wakes in its sarcophagus; hit 1 is a red ring with a heartbeat, hit 2 darker red and a harder heart; torches burn down again (reverses §EZ.5's no burn-down: a timer, three at most, from the hearth's bundle, relight from any flame); fire pots are clay; the centipede is the jungle's boss.
 - **Data:** `torch.json → snuff.burns_down` true, new `crawler_burn`; `harm.json → fd` rings; `fire_pots.json → vessel` clay_pot; `bosses.json → bosses.jungle`; `residents.json → creatures.mummy`; `crawler.json → opening_pick`.
