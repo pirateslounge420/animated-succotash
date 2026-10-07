@@ -4,8 +4,9 @@ extends SceneTree
 ## end of a pass (no screenshots between steps):
 ##   SEED=7 xvfb-run -a -s "-screen 0 1280x720x24" ~/bin/godot --path . \
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
-## ONLY=skeleton renders just the skeletons' sheet and frames. The snake
-## (queue 49) is held still for the whole tour; boss_frames pictures it.
+## ONLY=skeleton renders just the skeletons' sheet and frames; ONLY=cleared
+## just the last light's (26-26d). The snake (queue 49) is held still for
+## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, a fitted-stone wall
 ## by torchlight, the torch 1 m and 0.45 m from a wall (§EX.6); a sheet
@@ -33,6 +34,13 @@ extends SceneTree
 ## heart toward the dead and the flight past them, and from the foot of
 ## the way out's flight looking up it, at noon and at midnight with the
 ## torch out, and by torchlight.
+## Last, the floor cleared by light (design §FF.2, queue 59; 26-26d): every
+## other light relit, you before a skeleton at rest in its niche (else its
+## grave) with its room's light still cold, then that last light caught
+## and the skeleton sinking back into the stone (its first moment, then a
+## third of the way), and the niche empty (checks: it is in view on screen
+## as the light catches, its bone lit amber; then gone for good, and the
+## log's line).
 ## Checks: every cell of the sheets holds the figure (its pixels drawn),
 ## the skeleton caught halfway out of its place with its bone lit amber
 ## on screen,
@@ -1031,6 +1039,13 @@ func _run() -> void:
 		await _skeleton(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "cleared":
+		# Just the last light's frames (design §FF.2).
+		await _frames(30)
+		main.player.set_physics_process(false)
+		await _cleared(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -1427,6 +1442,8 @@ func _run() -> void:
 	await _harm_ring(main, p)
 	await _hands(main, p)
 	await _skeleton(main)
+	# Last: clearing the floor sends every skeleton away for good.
+	await _cleared(main)
 	_finish(keep)
 
 
@@ -1697,3 +1714,131 @@ func _skeleton(main: CrawlerMain) -> void:
 	r.set_physics_process(true)
 	p.torch.put_out("stowed")
 
+
+
+## The floor cleared by light (design §FF.2; queue 59): every light but the
+## last relit (the skeletons asleep through it, as the tour keeps them),
+## you before a skeleton at rest in its wall niche (else its grave), its
+## room's light still cold (26a); then that last light caught and the
+## floor cleared: the skeleton, in view, sinks back into the stone (26b,
+## the moment it catches; 26c a third of the way, held for the frame: on a slow
+## renderer the game runs on between frames, so it is posed there, a
+## harness frame); then the niche empty and the room lit (26d).
+func _cleared(main: CrawlerMain) -> void:
+	var res := main.residents
+	var fires := main.fires
+	var p := main.player
+	var boss: Variant = main.get("boss")
+	var keep_auto := true
+	if boss is Boss:
+		keep_auto = (boss as Boss).auto
+		(boss as Boss).auto = false
+	# Everyone at rest in its place (the skeleton frames woke one).
+	for q in res.all:
+		q._disarm()
+		q.pursuit.give_up()
+		q.state = Resident.REST
+		q.t = 0.0
+		q.global_position = q.place.pos
+		q.yaw = float(q.place.yaw)
+		q.set_physics_process(true)
+		q._show_pose()
+	# A skeleton at rest in a wall niche (else a grave) whose room has a
+	# light of its own, and floor before it to stand on, close (it sleeps on
+	# through the setup: the tour keeps them asleep, and it is held once the
+	# last light is lit).
+	var r: Resident = null
+	var stand := Vector3.INF
+	for kind in ["wall_niche", "grave"]:
+		for q in res.all:
+			if str(q.place.rests_in) != kind or not fires.holders.any(func(h) -> bool: return int(h.get_meta("piece")) == int(q.place.piece)):
+				continue
+			var out: Vector3 = q.place.out
+			var inward := Vector3(out.x - (q.place.pos as Vector3).x, 0.0, out.z - (q.place.pos as Vector3).z).normalized()
+			for m: float in [1.6, 2.1, 1.2, 2.7]:
+				var at := _floor_at(main, out + inward * m)
+				if at != Vector3.INF and main.residents.nav.is_open(main.residents.nav.cell_of(at)):
+					r = q
+					stand = at
+					break
+			if r != null:
+				break
+		if r != null:
+			break
+	if r == null:
+		ok(false, "the last light: a skeleton at rest in a room with its own light, with room to stand before it")
+		return
+	# Every light but its room's (one of them left for last).
+	var last: Node3D = null
+	for h in fires.holders:
+		if int(h.get_meta("piece")) == int(r.place.piece) and last == null:
+			last = h
+			continue
+		if not FireStore.is_lit(h):
+			FireStore.swing_light(h, float(main.world.get("days")))
+			for i in 600:
+				FireStore.tick(self, 1.0 / 60.0, h.global_position)
+				if FireStore.is_lit(h):
+					break
+	await _frames(4)
+	ok(fires.lit_count() == fires.holders.size() - 1 and not res.cleared, "the last light: every other light relit (%d of %d), the floor not yet cleared" % [fires.lit_count(), fires.holders.size()])
+	# You before it by torchlight, the last light in view too.
+	var world: Node = main.world
+	world.days = 13.0
+	_torch_in_hand(p)
+	p.torch.light()
+	p.hands.hold_left({})
+	var look := (r.place.eye as Vector3).lerp(last.global_position + Vector3(0.0, 0.4, 0.0), 0.3)
+	_look_at_from(p, stand, look)
+	await _frames(10)
+	await _shot("26a_last_light_cold_%s" % str(r.place.rests_in))
+	# The last light: it catches, the floor is cleared, and the skeleton in
+	# view goes (held at each moment for its frame).
+	Residents.stay_asleep = false
+	r.set_physics_process(false)
+	FireStore.swing_light(last, float(world.get("days")))
+	for i in 600:
+		FireStore.tick(self, 1.0 / 60.0, last.global_position)
+		if FireStore.is_lit(last):
+			break
+	var n := 0
+	while not res.cleared and n < 60:
+		await physics_frame
+		n += 1
+	var seen := r.state == Resident.RETREAT and r.seen_going
+	var wd := maxf(Residents.rule("withdraw_s", 1.2), 0.05)
+	var into := Resident._into_stone(r.hole if not r.hole.is_empty() else r.place)
+	var from: Vector3 = (r.hole.get("pos", r.place.pos) as Vector3)
+	r.global_position = from + into * smoothstep(0.0, 1.0, 0.08)
+	r._show_pose()
+	await _frames(4)
+	var img := await _shot("26b_last_light_catches")
+	var cam := p.camera()
+	var mid := r.global_position + Vector3(0.0, 0.5, 0.0)
+	var on := cam.is_position_in_frustum(mid)
+	var at := cam.unproject_position(mid) / cam.get_viewport().get_visible_rect().size
+	var bone := _brightest(img, at, Vector2(0.06, 0.12), 0.15)
+	print("  the last light caught: the floor cleared %s, the skeleton (%s, %s) at %s of the frame, its brightest pixels luma %.3f, hue %.1f" % [str(res.cleared), r.state_name(), r._rphase, str(at), bone.luma, bone.hue])
+	ok(res.cleared and seen and on and at.x > 0.0 and at.x < 1.0 and at.y > 0.0 and at.y < 1.0, "the last light caught, the floor cleared, and the skeleton in view goes: it sinks back into the stone where you see it (%s)" % r._rphase)
+	ok(float(bone.luma) > 0.2 and float(bone.hue) >= -20.0 and float(bone.hue) <= 62.0, "its bone lit amber as it goes (luma %.3f, hue %.1f)" % [bone.luma, bone.hue])
+	# A third of the way: deep in its niche (or down in its grave), the
+	# stone about to take it.
+	r.global_position = from + into * smoothstep(0.0, 1.0, 0.33)
+	r._show_pose()
+	await _frames(4)
+	await _shot("26c_into_the_stone_harness")
+	# On it goes; then the place is empty.
+	r.set_physics_process(true)
+	var w := 0
+	while is_instance_valid(r) and r.state != Resident.GONE and w < 600:
+		await physics_frame
+		w += 1
+	await _frames(10)
+	await _shot("26d_gone")
+	var line := str(Residents.CLEARED.get("log_line", ""))
+	var logged := GameLog.entries.any(func(e) -> bool: return str(e.get("text", "")) == line)
+	ok((not is_instance_valid(r) or r.state == Resident.GONE) and res.all.is_empty() and logged, "then it is gone for good, every one of them, and the log says \"%s\"" % line)
+	Residents.stay_asleep = true
+	if boss is Boss:
+		(boss as Boss).auto = keep_auto
+	p.torch.put_out("stowed")

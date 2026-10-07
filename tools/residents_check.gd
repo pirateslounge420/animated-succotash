@@ -19,8 +19,10 @@ extends SceneTree
 ##  4. hiding (§FC.2): crouched behind a lidded coffin with your torch
 ##     doused, it never senses you (you are hidden from it by the coffin
 ##     alone), gives you up after out_of_sight_s and walks back to lie in
-##     its own place; the same with the torch lit, it sees the light round
-##     the coffin and comes for you;
+##     its own place (queue 59, §FF.2: if a way through the dark leads
+##     there; with the lit hearth room between, it hangs back in the dark
+##     instead); the same with the torch lit, it sees the light round the
+##     coffin and comes for you;
 ##  5. the strike (queue 57's CreatureStrike, §FA.1-2): in reach it winds
 ##     up, the jaw open on its sprite and its tell (the jaw's creak) sounding
 ##     from the wind-up's first frame; one hit lands at the end of its
@@ -457,7 +459,9 @@ func _hide(lit: bool) -> void:
 	while t < oos + 2.0:
 		await physics_frame
 		t += DT
-		if r.state == Resident.RETURN and gave < 0.0:
+		# Given up (home, or with queue 59 hanging back in the dark when no
+		# way through the dark leads home).
+		if r.gave_up_why != "" and gave < 0.0:
 			gave = t
 			why = r.gave_up_why
 		if gave < 0.0 and r.sensed_by != "" and sensed == "":
@@ -474,14 +478,19 @@ func _hide(lit: bool) -> void:
 			ok(hid, "and it is the coffin alone that hides you: standing there it would see you (Residents.hidden_from, Pursuit's hide)")
 		ok(gave > 0.0 and absf(gave - oos) < 0.5 and why == "out_of_sight", "it gives you up after out_of_sight_s %.0f s (%.2f s, %s)" % [oos, gave, why])
 		ok(not r.pursuit.on and not main.harm.chased(), "given up, it is no longer your pursuer")
-		# You slip away (off the tomb, out of its senses: its way home may
-		# pass through the hearth room); it goes home.
+		# You slip away (off the tomb, out of its senses); it goes home by a
+		# way through the dark, or (queue 59, §FF.2) with the lit hearth
+		# room between, it hangs back in the dark where it is.
 		player.spawn_flat(_at(0.0), 0.0, 0.0)
+		var home_dark := res.can_go_home(r)
 		var back := 0.0
-		while r.state != Resident.REST and back < 90.0:
+		while r.state != (Resident.REST if home_dark else Resident.LURK) and back < 90.0:
 			await physics_frame
 			back += DT
-		ok(r.state == Resident.REST and r.global_position.distance_to(r.place.pos) < 0.05, "and walks back to lie in its own %s (at rest %.1f s later)" % [r.place.rests_in, back])
+		if home_dark:
+			ok(r.state == Resident.REST and r.global_position.distance_to(r.place.pos) < 0.05, "and walks back to lie in its own %s (at rest %.1f s later)" % [r.place.rests_in, back])
+		else:
+			ok(r.state == Resident.LURK and res.dark_at(r.global_position), "its own %s lies past the lit hearth room, so it hangs back in the dark where it is (%s, %.1f s later; §FF.2: home only through the dark)" % [r.place.rests_in, r.state_name(), back])
 	else:
 		ok(sensed in ["flame", "glow"], "the same with the torch lit: it sees your light round the coffin (%s)" % sensed)
 		ok(gave < 0.0 and came, "and it doesn't give you up: it comes for you and winds up to strike (%s)" % r.state_name())

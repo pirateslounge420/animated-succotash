@@ -206,11 +206,12 @@ func _load_tomb(s: int) -> void:
 	wall_life.name = "WallLife"
 	add_child(wall_life)
 	wall_life.build(lay, walls, fires)
-	# What lives in the dark (§FE): asleep in their places.
+	# What lives in the dark (§FE): asleep in their places; kept to the dark
+	# by the holders' light, and gone when the last one catches (§FF.2).
 	residents = Residents.new()
 	residents.name = "Residents"
 	add_child(residents)
-	residents.build(lay, player)
+	residents.build(lay, player, fires)
 	var w: Array = lay.wake
 	player.spawn_flat(w[0], float(w[1]), -0.32)
 	if fire_pots == null:
@@ -526,12 +527,20 @@ func _process(delta: float) -> void:
 		player.torch.note = ""
 	if leaving:
 		return
+	if baked and way_out.stepped_in(player.global_position) >= 0:
+		walk_out()
+
+
+## The count of lights relit, in the log as each catches: in the physics
+## step, ahead of what a light sets off there (the residents' clearing,
+## §FF.2, and the boss's release, §EY.2), so the log reads in that order.
+func _physics_process(_delta: float) -> void:
+	if leaving:
+		return
 	var lit := fires.lit_count()
 	if lit > _lit_logged:
 		_lit_logged = lit
 		GameLog.add("%d of %d lights burn again." % [lit, fires.holders.size()], "relit")
-	if baked and way_out.stepped_in(player.global_position) >= 0:
-		walk_out()
 
 
 ## Into the opening at the top of the way out (§EX.5): the stand-in until
