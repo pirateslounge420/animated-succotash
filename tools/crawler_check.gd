@@ -7,11 +7,23 @@ extends SceneTree
 ##     overrides it, the open world's scene is still there;
 ##  2. the tomb kit (§ET.3, §CJ.8), over SEEDS seeds: three or four exits
 ##     from the hearth room, every piece reachable from it through doors,
-##     no two pieces overlapping unless a door joins them, a heart, a cold
-##     holder in every room past the hearth room, the airways placed, the
-##     mat, the bundle and the rescuer in the hearth room clear of the
-##     hearth; in the scene: a floor under every piece and a ceiling over
-##     it, and you standing on the floor;
+##     no two pieces overlapping unless a door joins them, a heart, every
+##     room past the hearth room with its wall sconces (§EX.4) and no
+##     hearth but the hearth room's, the airways placed, the mat, the
+##     bundle and the rescuer in the hearth room clear of the hearth; in
+##     the scene: a floor under every piece and a ceiling over it, and you
+##     standing on the floor;
+##  2b. one hearth, wall torches in the other rooms (design §EX.4;
+##     crawler.json room_torches), on seeds 1, 7 and 42: one hearth, in the
+##     hearth room; two or four sconces in every other room by the rule
+##     (the heart four, two each side flanking the dead), on the long
+##     walls, whole modules apart, in facing pairs where the doors allow;
+##     none within clear_m of a door's edge; one shaft (the hearth's), one
+##     flue per sconce; the airways clear of the sconces; and each room,
+##     with its sconces relit, at least as lit as with its old hearth ring
+##     (both reported). In the scene: one hearth among the fires, every
+##     room sconce in your reach from somewhere your body fits, and the
+##     sconces' lights as the measure assumes;
 ##  3. relighting (§ET.4): you wake with nothing in hand, the hearth lit,
 ##     every holder dark (full dark: no light but the hearth's); a torch
 ##     from the bundle, lit at the hearth by the swing; every holder lit by
@@ -89,6 +101,17 @@ extends SceneTree
 ##     darker toward soot and never grey.
 
 const SEEDS := 30
+## The seeds §EX.4's room torches are checked on (queue 47).
+const TORCH_SEEDS := [1, 7, 42]
+## The lit level's sample spacing over a room's floor and walls (m).
+const LIT_STEP := 0.25
+## The light (Godot's light energy units, after the falloff) at which lit
+## tomb stone shows white: its red clips where the grade's exposure (0.9)
+## times the stone's red (about 0.28 after the night pull and the painted
+## light, ruin.gdshader) times this reaches 1. More light there can't be
+## seen, so a sample counts at most this much (the hot patch on the wall
+## right at a sconce counts as white, no more).
+const LIT_WHITE := 4.0
 
 var fails := 0
 
@@ -111,6 +134,7 @@ func _run() -> void:
 	Residents.stay_asleep = true
 	_switch()
 	_layouts()
+	_room_torches()
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
@@ -123,6 +147,7 @@ func _run() -> void:
 	_masonry(main)
 	await _vents(main)
 	_firelight(main)
+	_torch_room(main)
 	await _ambience(main)
 	await _relight(main)
 	await _pitch(main)
@@ -134,6 +159,8 @@ func _run() -> void:
 	_sprite_kept(main)
 	await _reticle(main)
 	await _sneak(main)
+	# The room sconces' lights, every holder still lit from _relight.
+	await _torch_lights(main)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -195,17 +222,23 @@ func _layouts() -> void:
 					print("  seed %d: pieces %d and %d overlap" % [lay.seed, i, j])
 		if not lay.has("heart"):
 			heart_ok = false
+		# §EX.4: every holder a wall sconce (no hearth ring anywhere), each
+		# room past the hearth room with its count.
 		var in_room := {}
 		for h in lay.holders:
 			if str(h.kind) != "sconce":
-				in_room[int(h.piece)] = true
+				holders_ok = false
+			elif bool(h.get("room", false)):
+				in_room[int(h.piece)] = int(in_room.get(int(h.piece), 0)) + 1
 		for pc in pieces:
 			if str(pc.kind) == "room":
 				kinds[str(pc.room_kind)] = int(kinds.get(str(pc.room_kind), 0)) + 1
 				if str(pc.room_kind) != "hearth":
 					rooms_n += 1
-					if not in_room.has(int(pc.id)):
+					if int(in_room.get(int(pc.id), 0)) != _sconces_wanted(pc):
 						holders_ok = false
+				elif in_room.has(int(pc.id)):
+					holders_ok = false
 			elif str(pc.kind) == "stair":
 				stairs += 1
 		for a in lay.airways:
@@ -220,10 +253,268 @@ func _layouts() -> void:
 	ok(reach_ok, "every piece reachable from the hearth room through doors")
 	ok(overlap_ok, "no two pieces overlap except through a door")
 	ok(heart_ok, "every tomb has a heart (its deepest room)")
-	ok(holders_ok, "a cold fire-holder in every room past the hearth room (%d rooms)" % rooms_n)
+	ok(holders_ok, "every room past the hearth room has its wall sconces by the rule, and no hearth ring anywhere (§EX.4; %d rooms)" % rooms_n)
 	ok(spots_ok, "the mat, the bundle and the rescuer stand in the hearth room, clear of the hearth")
 	ok(strong >= SEEDS * 0.8, "strong airway mouths placed (%d in %d tombs)" % [strong, SEEDS])
 	print("  %d pieces in %d tombs (%.1f each), %d flights of stairs; rooms by kind %s" % [pieces_n, SEEDS, float(pieces_n) / SEEDS, stairs, str(kinds)])
+
+
+## How many wall sconces room `pc` should have (design §EX.4, crawler.json
+## room_torches): the heart `heart`; else `small` when its long walls are
+## up to small_room_max_m, `large` when longer.
+func _sconces_wanted(pc: Dictionary) -> int:
+	var rt: Dictionary = TombKit.RT
+	if str(pc.room_kind) == "heart":
+		return int(rt.get("heart", 4))
+	var long := maxf(float(pc.len), 2.0 * float(pc.half))
+	return int(rt.get("small", 2)) if long <= float(rt.get("small_room_max_m", 8.0)) + 0.001 else int(rt.get("large", 4))
+
+
+## A full fire's light energy at night (look.json fire.light; Campfire.
+## flicker with its flicker at the middle; underground it is always night).
+static func _fire_energy() -> float:
+	return Campfire.LIGHT_ENERGY * float(Campfire.L.get("night_energy_scale", 1.3))
+
+
+## The light a sconce holder `h` gives, as the lit level counts it:
+## [position, energy, range, decay] (CrawlerFires._sconce: its cup 0.32 m
+## out from the wall, the light 0.3 m over it, energy_k, light_radius_m).
+static func _sconce_light(h: Dictionary) -> Array:
+	var k := float(CrawlerFires.HOLD.get("sconce_scale", 0.38)) * 1.4 * (float(TombKit.RT.get("light_scale", 1.0)) if bool(h.get("room", false)) else 1.0)
+	return [(h.pos as Vector3) + (h.normal as Vector3) * 0.32 + Vector3(0.0, 0.3, 0.0), _fire_energy() * k, float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
+
+
+## Room `pc`'s old hearth ring's light (until §EX.4, TombKit put one in
+## every room past the hearth room: in its middle, 0.62 of the way down
+## the heart; a Campfire's light 1 m over the ring).
+static func _ring_light(pc: Dictionary) -> Array:
+	var at: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * (0.62 if str(pc.room_kind) == "heart" else 0.5)
+	return [Vector3(at.x, float(pc.y0) + 1.0, at.y), _fire_energy(), float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
+
+
+## How lit room `pc` of `lay` is by `lights` ([[position, energy, range,
+## decay]...]): the light on its floor and its walls, sampled every
+## LIT_STEP m (the walls up to its ceiling, not across its doorways), as
+## Godot lights a Lambert surface (energy x the cosine x the omni's falloff,
+## (1 - (d / range)^4)^2 / d^decay). Returns [the mean share of white
+## (each sample capped at LIT_WHITE), the mean light uncapped].
+func _lit_level(lay: Dictionary, pc: Dictionary, lights: Array) -> Array:
+	var dv: Vector2 = pc.dir
+	var pv := Delves.perp(dv)
+	var length := float(pc.len)
+	var half := float(pc.half)
+	var y0 := float(pc.y0)
+	var samples: Array = []
+	var a := LIT_STEP * 0.5
+	while a < length:
+		var c := -half + LIT_STEP * 0.5
+		while c < half:
+			var q: Vector2 = (pc.c as Vector2) + dv * a + pv * c
+			samples.append([Vector3(q.x, y0, q.y), Vector3.UP])
+			c += LIT_STEP
+		a += LIT_STEP
+	var doors: Array = []
+	for di in pc.doors:
+		doors.append(lay.doors[di])
+	for side in ["start", "end", "left", "right"]:
+		var span := TombKit.wall_len(pc, side)
+		var off := -span * 0.5 + LIT_STEP * 0.5
+		while off < span * 0.5:
+			var fp := TombKit.face_point(pc, side, off)
+			var q: Vector2 = fp[0]
+			var n2: Vector2 = fp[1]
+			var y := y0 + LIT_STEP * 0.5
+			while y < y0 + float(pc.h):
+				var open := false
+				for d in doors:
+					if TombKit.door_gap(d, q) < 0.01 and y < float(d.y) + float(d.h):
+						open = true
+				if not open:
+					samples.append([Vector3(q.x, y, q.y), Vector3(n2.x, 0.0, n2.y)])
+				y += LIT_STEP
+			off += LIT_STEP
+	var seen := 0.0
+	var plain := 0.0
+	for s in samples:
+		var p: Vector3 = s[0]
+		var nrm: Vector3 = s[1]
+		var e := 0.0
+		for l in lights:
+			var v: Vector3 = (l[0] as Vector3) - p
+			var d := maxf(v.length(), 1e-4)
+			var cs := nrm.dot(v) / d
+			if cs <= 0.0:
+				continue
+			var fall := maxf(1.0 - pow(d / float(l[2]), 4.0), 0.0)
+			e += float(l[1]) * cs * fall * fall * pow(d, -float(l[3]))
+		seen += minf(e, LIT_WHITE)
+		plain += e
+	var n_s := maxf(samples.size(), 1.0)
+	return [seen / n_s / LIT_WHITE, plain / n_s]
+
+
+## One hearth per dungeon; wall torches in every other room (design §EX.4;
+## crawler.json room_torches), on TORCH_SEEDS: the layouts, their vents and
+## airways, and each room's light with its sconces relit against its old
+## hearth ring.
+func _room_torches() -> void:
+	var rt: Dictionary = TombKit.RT
+	var clear := float(rt.get("clear_m", 0.6))
+	var flank := int(rt.get("heart_flank_dead", 2))
+	var opp := {"left": "right", "right": "left", "start": "end", "end": "start"}
+	var hearths_ok := true
+	var counts_ok := true
+	var heart_ok := true
+	var long_ok := true
+	var spaced_ok := true
+	var faced := 0
+	var n_pairs := 0
+	var vents_ok := true
+	var air_ok := true
+	var lit_ok := true
+	var least_gap := INF
+	var n_sconces := 0
+	var n_rooms := 0
+	# By kind of room: [old ring's share of white, sconces', old ring's
+	# light, sconces', rooms].
+	var sums := {"small": [0.0, 0.0, 0.0, 0.0, 0], "large": [0.0, 0.0, 0.0, 0.0, 0], "heart": [0.0, 0.0, 0.0, 0.0, 0]}
+	var worst := INF
+	var worst_what := ""
+	var t0 := Time.get_ticks_msec()
+	for seed_v in TORCH_SEEDS:
+		var lay := TombKit.layout(int(seed_v))
+		var module := TombKit.module_m(str(lay.theme))
+		# One hearth, the hearth room's; every holder a sconce.
+		var hearth_rooms := 0
+		for pc in lay.pieces:
+			if str(pc.kind) == "room" and str(pc.room_kind) == "hearth":
+				hearth_rooms += 1
+		var not_sconce := 0
+		for h in lay.holders:
+			if str(h.kind) != "sconce" or TombKit.vent_type(str(h.kind)) == "shaft":
+				not_sconce += 1
+		if hearth_rooms != int(rt.get("hearth_rooms", 1)) or TombKit.piece_at(lay, lay.hearth) != 0 or str((lay.pieces[0] as Dictionary).room_kind) != "hearth" or not_sconce > 0:
+			hearths_ok = false
+			print("  seed %d: %d hearth rooms, the hearth in piece %d, %d other fires not sconces" % [seed_v, hearth_rooms, TombKit.piece_at(lay, lay.hearth), not_sconce])
+		var by_room := {}
+		for h in lay.holders:
+			n_sconces += 1
+			var q := Vector2((h.pos as Vector3).x, (h.pos as Vector3).z)
+			for d in lay.doors:
+				var g := TombKit.door_gap(d, q)
+				if g < least_gap:
+					least_gap = g
+			if bool(h.get("room", false)):
+				if not by_room.has(int(h.piece)):
+					by_room[int(h.piece)] = []
+				(by_room[int(h.piece)] as Array).append(h)
+		for pc in lay.pieces:
+			if str(pc.kind) != "room" or str(pc.room_kind) == "hearth":
+				continue
+			n_rooms += 1
+			var mine: Array = by_room.get(int(pc.id), [])
+			if mine.size() != _sconces_wanted(pc):
+				counts_ok = false
+				print("  seed %d room %d (%s, %.1f x %.1f m): %d sconces, the rule says %d" % [seed_v, pc.id, pc.room_kind, pc.len, 2.0 * float(pc.half), mine.size(), _sconces_wanted(pc)])
+			# On the long walls (the heart's side walls), in facing pairs where
+			# the doors allow, whole modules apart down each wall.
+			var long_walls: Array = ["left", "right"] if str(pc.room_kind) == "heart" or float(pc.len) >= 2.0 * float(pc.half) - 0.001 else ["start", "end"]
+			var walls := {}
+			for h in mine:
+				if not walls.has(str(h.side)):
+					walls[str(h.side)] = []
+				(walls[str(h.side)] as Array).append(float(h.off))
+				if not str(h.side) in long_walls and absf(float(pc.len) - 2.0 * float(pc.half)) > 0.001:
+					long_ok = false
+					print("  seed %d room %d (%.1f x %.1f m): a sconce on its short %s wall" % [seed_v, pc.id, pc.len, 2.0 * float(pc.half), h.side])
+			for side in walls:
+				var offs: Array = walls[side]
+				offs.sort()
+				if side in ["left", "start"]:
+					for o in offs:
+						n_pairs += 1
+						for o2 in walls.get(opp[side], []):
+							if absf(float(o2) - float(o)) < 0.01:
+								faced += 1
+								break
+				for i in range(1, offs.size()):
+					var m := (float(offs[i]) - float(offs[i - 1])) / module
+					if absf(m - roundf(m)) > 0.001 or roundf(m) < 1.0:
+						spaced_ok = false
+						print("  seed %d room %d: sconces %.2f m apart on its %s wall" % [seed_v, pc.id, float(offs[i]) - float(offs[i - 1]), side])
+			var is_heart := str(pc.room_kind) == "heart"
+			if is_heart:
+				# Two each side, one before the dead and one past them.
+				var dead := float(pc.len) * 0.5 - TombKit.HEART_DEAD_M
+				for side in ["left", "right"]:
+					var offs: Array = walls.get(side, [])
+					if offs.size() != flank or float(offs.min()) >= dead or float(offs.max()) <= dead:
+						heart_ok = false
+						print("  seed %d heart %d: its %s wall's sconces %s, the dead at %.2f" % [seed_v, pc.id, side, str(offs), dead])
+			# Its light: the sconces relit against the old hearth ring.
+			var lights: Array = []
+			for h in mine:
+				lights.append(_sconce_light(h))
+			var now_l := _lit_level(lay, pc, lights)
+			var old_l := _lit_level(lay, pc, [_ring_light(pc)])
+			var cls := "heart" if is_heart else ("small" if mine.size() <= int(rt.get("small", 2)) else "large")
+			var sm: Array = sums[cls]
+			sm[0] = float(sm[0]) + float(old_l[0])
+			sm[1] = float(sm[1]) + float(now_l[0])
+			sm[2] = float(sm[2]) + float(old_l[1])
+			sm[3] = float(sm[3]) + float(now_l[1])
+			sm[4] = int(sm[4]) + 1
+			var ratio := float(now_l[0]) / maxf(float(old_l[0]), 1e-6)
+			if ratio < worst:
+				worst = ratio
+				worst_what = "seed %d room %d (%s, %.1f x %.1f m, %d sconces): %.2f against the ring's %.2f" % [seed_v, pc.id, pc.room_kind, pc.len, 2.0 * float(pc.half), mine.size(), now_l[0], old_l[0]]
+			if float(now_l[0]) < float(old_l[0]) or float(now_l[1]) < float(old_l[1]):
+				lit_ok = false
+				print("  seed %d room %d (%s, %d sconces): lit %.3f (%.2f) against the old ring's %.3f (%.2f)" % [seed_v, pc.id, pc.room_kind, mine.size(), now_l[0], now_l[1], old_l[0], old_l[1]])
+		# The vents: one shaft (the hearth's), one flue per sconce.
+		var shafts := 0
+		var flues := {}
+		for v in lay.vents:
+			if str(v.type) == "shaft":
+				shafts += 1
+				if int(v.fire_index) != -1:
+					vents_ok = false
+			elif str(v.kind) == "sconce":
+				flues[int(v.fire_index)] = int(flues.get(int(v.fire_index), 0)) + 1
+		if shafts != 1 or flues.size() != (lay.holders as Array).size():
+			vents_ok = false
+			print("  seed %d: %d shafts, %d sconces with a flue of %d" % [seed_v, shafts, flues.size(), (lay.holders as Array).size()])
+		for k in flues:
+			if int(flues[k]) != 1:
+				vents_ok = false
+		# The airways clear of the sconces on their wall.
+		for aw in lay.airways:
+			var pc: Dictionary = lay.pieces[int(aw.piece)]
+			var ap: Vector3 = aw.pos
+			var aa := Delves.along_across(pc, Vector2(ap.x, ap.z))
+			var need := float(TombKit.AIRWAY_HALF[0 if bool(aw.strong) else 1]) + clear + TombKit.SCONCE_HALF - 0.001
+			for h in lay.holders:
+				if int(h.piece) != int(pc.id):
+					continue
+				var sa := Delves.along_across(pc, Vector2((h.pos as Vector3).x, (h.pos as Vector3).z))
+				if absf(absf(sa.y) - float(pc.half)) < 0.05 and signf(sa.y) == signf(aa.y) and absf(sa.x - aa.x) < need:
+					air_ok = false
+					print("  seed %d: an airway %.2f m from a sconce on its wall" % [seed_v, absf(sa.x - aa.x)])
+	ok(hearths_ok, "seeds %s: one hearth per tomb, in the hearth room; every other fire a wall sconce (§EX.4)" % str(TORCH_SEEDS))
+	ok(counts_ok, "every other room has its sconces: %d up to %.0f m long, %d longer, the heart %d (%d rooms, %d sconces in all)" % [int(rt.get("small", 2)), float(rt.get("small_room_max_m", 8.0)), int(rt.get("large", 4)), int(rt.get("heart", 4)), n_rooms, n_sconces])
+	ok(heart_ok, "the heart's: %d on each side wall, flanking the dead" % flank)
+	ok(long_ok and spaced_ok, "the rooms' sconces stand on their long walls, whole modules apart (%.0f m, masonry.json styles module_m)" % TombKit.module_m("tomb"))
+	ok(faced >= n_pairs * 0.9, "and in facing pairs where the doors allow: %d of %d pairs face each other exactly (the rest step apart to clear a door)" % [faced, n_pairs])
+	ok(least_gap >= clear - 0.001, "no sconce within %.1f m of a door's edge (the nearest %.2f m)" % [clear, least_gap])
+	ok(vents_ok, "vents: one shaft per tomb (the hearth's, its daylight the only column), one flue per sconce")
+	ok(air_ok, "the airways keep clear of the sconces")
+	for cls in ["small", "large", "heart"]:
+		var sm: Array = sums[cls]
+		if int(sm[4]) > 0:
+			var n := float(sm[4])
+			print("  lit, %s rooms (%d): old hearth ring %.2f of white (light %.2f), sconces relit %.2f (light %.2f)" % [cls, int(sm[4]), float(sm[0]) / n, float(sm[2]) / n, float(sm[1]) / n, float(sm[3]) / n])
+	print("  the least lit against its old ring: %s (light_scale %.2f; %d ms)" % [worst_what, float(rt.get("light_scale", 1.0)), Time.get_ticks_msec() - t0])
+	ok(lit_ok, "with its sconces relit, every room is at least as lit as with its old hearth ring (the worst %.2f times)" % worst)
 
 
 func _ray(from: Vector3, to: Vector3, exclude: Array[RID] = []) -> Dictionary:
@@ -740,6 +1031,115 @@ func _firelight(main: CrawlerMain) -> void:
 	ok(Color(str(Torch.L.get("color", ""))).is_equal_approx(want), "torch.json light.color is look.json fire.light.color (#%s)" % want.to_html(false))
 
 
+## The room torches in the built tomb (design §EX.4): one hearth among its
+## fires, in the hearth room, every other fire a sconce; and every room
+## sconce in your reach from somewhere your body fits (_swing_spot).
+func _torch_room(main: CrawlerMain) -> void:
+	var lay := main.lay
+	var hearths: Array = []
+	for f in main.get_tree().get_nodes_in_group(Campfire.GROUP):
+		if not (f as Node3D).has_meta("fire_holder") or str(f.get_meta("fire_holder")) != "sconce":
+			hearths.append(f)
+	var hearth_ok: bool = hearths.size() == 1 and hearths[0] == main.fires.hearth and TombKit.piece_at(lay, main.fires.hearth.global_position) == 0
+	ok(hearth_ok, "in the scene: one hearth among the %d fires (the hearth room's), every other fire a wall sconce" % main.get_tree().get_nodes_in_group(Campfire.GROUP).size())
+	var n := 0
+	var blocked := 0
+	var far := 0.0
+	for i in main.fires.holders.size():
+		if not bool((lay.holders[i] as Dictionary).get("room", false)):
+			continue
+		n += 1
+		var h: Node3D = main.fires.holders[i]
+		var d := _swing_spot(main, h)
+		if d < 0.0:
+			blocked += 1
+			var pc: Dictionary = lay.pieces[int(h.get_meta("piece"))]
+			print("  room sconce %d in room %d (%s): nowhere to stand and swing at it" % [i, pc.id, pc.room_kind])
+		far = maxf(far, d)
+	ok(n > 0 and blocked == 0, "every room sconce in your reach from somewhere you can stand (%d of %d; the farthest you need stand %.2f m out from its wall)" % [n - blocked, n, far])
+
+
+## Where you could stand to swing at wall sconce `h`: a grid before it
+## (0.5 to 2.5 m out from its wall, up to 1.8 m either side) inside its
+## room, nearest first, where your body (the crawler's capsule) fits and
+## the swing's point (Torch.swing_point: 0.9 m up, 0.4 m on toward it) is
+## within torch.json swing.reach_m of it and nearer it than any other
+## fire. The nearest such spot's distance from the wall (m), or -1.
+func _swing_spot(main: CrawlerMain, h: Node3D) -> float:
+	var pc: Dictionary = main.lay.pieces[int(h.get_meta("piece"))]
+	var cup := h.global_position
+	var nrm := h.global_basis.z
+	nrm.y = 0.0
+	nrm = nrm.normalized()
+	var tan := nrm.cross(Vector3.UP)
+	var floor_y := Delves.floor_of(pc, Delves.along_across(pc, Vector2(cup.x, cup.z)).x)
+	var cap := CapsuleShape3D.new()
+	cap.radius = 0.35
+	cap.height = PlanetPlayer.STAND_HEIGHT
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = cap
+	q.exclude = [main.player.get_rid()]
+	var space := get_root().get_world_3d().direct_space_state
+	var fires := main.get_tree().get_nodes_in_group(Campfire.GROUP)
+	var reach := Torch.reach_m()
+	for oi in 9:
+		var o := 0.2 + 0.25 * oi
+		for si in 13:
+			var sv := 0.3 * ceili(si * 0.5) * (1.0 if si % 2 == 1 else -1.0)
+			var at := Vector3(cup.x, floor_y, cup.z) + nrm * o + tan * sv
+			var aa := Delves.along_across(pc, Vector2(at.x, at.z))
+			if aa.x < 0.35 or aa.x > float(pc.len) - 0.35 or absf(aa.y) > float(pc.half) - 0.35:
+				continue
+			var to := Vector3(cup.x - at.x, 0.0, cup.z - at.z).normalized()
+			var swing := at + Vector3(0.0, 0.9, 0.0) + to * 0.4
+			var dd := swing.distance_to(cup)
+			if dd > reach:
+				continue
+			var nearest := true
+			for f in fires:
+				if f != h and (f as Node3D).global_position.distance_to(swing) < dd:
+					nearest = false
+			if not nearest:
+				continue
+			q.transform = Transform3D(Basis.IDENTITY, at + Vector3(0.0, cap.height * 0.5 + 0.12, 0.0))
+			if space.intersect_shape(q, 1).is_empty():
+				return o + 0.32
+	return -1.0
+
+
+## The room sconces' lights as built, after relighting (CrawlerFires; the
+## lit level in _room_torches counts them this way): each lit and shining,
+## its range, falloff and strength (room_torches.light_scale) and where it
+## hangs as assumed there.
+func _torch_lights(main: CrawlerMain) -> void:
+	for i in 30:
+		await process_frame
+	var lay := main.lay
+	var n := 0
+	var odd := 0
+	var e_sum := 0.0
+	var want_e := 0.0
+	for i in main.fires.holders.size():
+		var hd: Dictionary = lay.holders[i]
+		if not bool(hd.get("room", false)):
+			continue
+		n += 1
+		var h: Node3D = main.fires.holders[i]
+		var l := h.get_node_or_null("Light") as OmniLight3D
+		var m := _sconce_light(hd)
+		var base: Vector3 = h.global_transform * Vector3(0.0, float(h.get_meta("light_y", 1.0)), 0.0)
+		var k := float(CrawlerFires.HOLD.get("sconce_scale", 0.38)) * 1.4 * float(TombKit.RT.get("light_scale", 1.0))
+		if l == null or not FireStore.is_lit(h) or not l.visible or absf(l.omni_range - float(m[2])) > 0.01 or absf(l.omni_attenuation - float(m[3])) > 0.001 or absf(float(h.get_meta("energy_k", 0.0)) - k) > 0.001 or base.distance_to(m[0]) > 0.01:
+			odd += 1
+			print("  room sconce %d: lit %s, light %s, range %.2f, decay %.2f, energy_k %.3f, at %s against %s" % [i, FireStore.is_lit(h), l != null and l.visible, l.omni_range if l else 0.0, l.omni_attenuation if l else 0.0, float(h.get_meta("energy_k", 0.0)), str(base), str(m[0])])
+		elif l:
+			e_sum += l.light_energy
+			want_e += float(m[1])
+	ok(n > 0 and odd == 0, "every relit room sconce shines as the lit level counts it (%d: range, falloff, place; light_scale %.2f)" % [n, float(TombKit.RT.get("light_scale", 1.0))])
+	# Its strength flickers about the steady one the lit level takes.
+	ok(want_e > 0.0 and absf(e_sum / want_e - 1.0) < 0.35, "the room sconces' light flickers about the strength the lit level takes (now %.2f of it)" % (e_sum / maxf(want_e, 1e-6)))
+
+
 ## Every built-in fire's own vent (design §EV; TombKit, Vents, smoke.json
 ## vents).
 func _vents(main: CrawlerMain) -> void:
@@ -768,18 +1168,21 @@ func _vents(main: CrawlerMain) -> void:
 	ok(reach, "every flue reaches the surface (%.1f m)" % surface)
 	ok(open, "every straight flue is open from its mouth to the sky")
 	ok(drafts, "every vented fire feels the draft")
-	# Deeper: narrower and fainter.
+	# Deeper: narrower, and a shaft as deep fainter (the hearth's is the
+	# tomb's one shaft since §EX.4, so the sconces' flues show the depth).
 	var shallow: Dictionary = {}
 	var deep: Dictionary = {}
 	for v in vents:
-		if str(v.kind) != "hearth_ring":
+		if str(v.type) != "flue":
 			continue
 		if shallow.is_empty() or float(v.depth) < float(shallow.depth):
 			shallow = v
 		if deep.is_empty() or float(v.depth) > float(deep.depth):
 			deep = v
 	if not deep.is_empty() and float(deep.depth) > float(shallow.depth) + 0.5:
-		ok(float(deep.d) < float(shallow.d) and float(deep.share) < float(shallow.share), "a deeper fire's flue is narrower and its daylight fainter (%.1f m: %.2f m wide, %.2f; %.1f m: %.2f m, %.2f)" % [shallow.depth, shallow.d, shallow.share, deep.depth, deep.d, deep.share])
+		var s_sh := TombKit.daylight_share(float(shallow.depth))
+		var s_dp := TombKit.daylight_share(float(deep.depth))
+		ok(float(deep.d) < float(shallow.d) and s_dp < s_sh, "a deeper fire's vent is narrower, and a shaft as deep would let less daylight down (%.1f m: %.2f m wide, %.2f; %.1f m: %.2f m, %.2f)" % [shallow.depth, shallow.d, s_sh, deep.depth, deep.d, s_dp])
 	# A shaft for a big fire, a narrow flue for a small one; only shafts
 	# let daylight down (design §EV.1-2).
 	var sized := true

@@ -430,12 +430,17 @@ func _snake() -> void:
 	var sd: Dictionary = ((_json("res://data/bosses.json").get("bosses", {}) as Dictionary).get("desert", {}) as Dictionary).get("strike", {})
 	ok(strike.sound == str(sd.get("sound", "")) and absf(strike.wind_up_s - float(sd.get("wind_up_s", 0.0))) < 1e-4 and absf(strike.reach_m - float(sd.get("reach_m", 0.0))) < 1e-4,
 		"the snake strikes with its strike block (%s, wind-up %.2f s, reach %.1f m)" % [strike.sound, strike.wind_up_s, strike.reach_m])
+	# The tomb's cold holders held cold while it is tested: a swing passes
+	# the flame (§CN), and a holder relit beside it would send it off
+	# (§EY.1).
+	var laid := _hold_cold(b)
 	await _snake_tell(b)
 	await _snake_committed(b)
 	await _snake_unlit(b)
 	await _snake_cooldown(b)
 	await _snake_steps_back(b)
 	_snake_warn(b)
+	_unhold_cold(laid)
 	on_snake = false
 
 
@@ -448,11 +453,12 @@ func _near_unlit(b: Boss, q: Vector3, r: float) -> bool:
 
 ## In its dark, standing room: q in a dark node next to (or in) the one it
 ## lies in, inside that piece's walls, with nothing between it and its
-## head, and no unlit holder within the swing's reach (a swing passes the
-## flame, §CN, and a holder relit beside it would send it off, §EY.1).
-func _dark_spot(b: Boss, q: Vector3) -> bool:
+## head, and (`mind_holders`) no unlit holder within the swing's reach (a
+## swing passes the flame, §CN, and a holder relit beside it would send it
+## off, §EY.1; _hold_cold keeps them from catching anyway).
+func _dark_spot(b: Boss, q: Vector3, mind_holders := true) -> bool:
 	var id := b.ground.node_at(q)
-	if id < 0 or not b.ground.is_ground(id) or _near_unlit(b, q, Torch.reach_m() + 0.6):
+	if id < 0 or not b.ground.is_ground(id) or (mind_holders and _near_unlit(b, q, Torch.reach_m() + 0.6)):
 		return false
 	if b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
 		return false
@@ -469,21 +475,46 @@ func _dark_spot(b: Boss, q: Vector3) -> bool:
 ## with `far_m` > 0 a spot that far on along the same line, also in its
 ## dark: {"near", "far"}, or {} if none.
 func _snake_spot(b: Boss, near_m: float, far_m := 0.0) -> Dictionary:
-	for k in 32:
-		var a := TAU * k / 32.0
-		var dv := Vector3(cos(a), 0.0, sin(a))
-		var near := b.base + dv * near_m
-		near.y = b._floor_y(near)
-		if not _dark_spot(b, near):
-			continue
-		if far_m > 0.0:
-			var far := b.base + dv * far_m
-			far.y = b._floor_y(far)
-			if not _dark_spot(b, far):
+	# Out of every cold holder's reach first; else (its reel can leave it
+	# by a wall with cold sconces all round, design §EX.4) anywhere by it,
+	# the holders held cold (_hold_cold).
+	for mind: bool in [true, false]:
+		for k in 32:
+			var a := TAU * k / 32.0
+			var dv := Vector3(cos(a), 0.0, sin(a))
+			var near := b.base + dv * near_m
+			near.y = b._floor_y(near)
+			if not _dark_spot(b, near, mind):
 				continue
-			return {"near": near, "far": far}
-		return {"near": near}
+			if far_m > 0.0:
+				var far := b.base + dv * far_m
+				far.y = b._floor_y(far)
+				if not _dark_spot(b, far, mind):
+					continue
+				return {"near": near, "far": far}
+			return {"near": near}
 	return {}
+
+
+## Take the laid kindling out of every cold holder, so no swing of the
+## snake's tests lights one (FireStore.swing_light: "not_laid"):
+## [[its store, the kindling]...] for _unhold_cold.
+func _hold_cold(b: Boss) -> Array:
+	var out: Array = []
+	for h in b.fires.holders:
+		if FireStore.is_lit(h):
+			continue
+		var st := FireStore.store_of(h)
+		if st.has("kindling"):
+			out.append([st, st.kindling])
+			st.erase("kindling")
+	return out
+
+
+## Lay again what _hold_cold took out.
+func _unhold_cold(laid: Array) -> void:
+	for e in laid:
+		(e[0] as Dictionary)["kindling"] = e[1]
 
 
 ## You at `at` facing its head, your torch lit or not, and its strike begun

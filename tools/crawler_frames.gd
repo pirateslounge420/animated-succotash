@@ -15,17 +15,19 @@ extends SceneTree
 ## smothered, in the old full dark (the half-dark off) and in the
 ## half-dark (§FC.4), and by torchlight with the half-dark off and on; the
 ## corridor with its sconce relit, 1 m from that sconce's wall and with
-## the torch beside it; a room with its hearth ring relit; the red ring
-## after one hit and after two (§FD, §FJ.3: its depth in pixels at 480
-## lines, darker and deeper on two, the heart beating from hit 1); the two
-## hands (§FB): the torch in the right, a fire pot in the left, Tab held
-## (the strip low left, then the right hand's low right), and Settings'
-## Controls and Settings pages; and the tomb's skeletons (design §FE,
-## queue 58; 21-21c): their sheet, one at rest in its wall niche (else
-## its grave), climbing out of it in your torchlight, and out; the pitch
-## torch (§EZ.2): the bundle's unlit heads by the hearth (01h), and the
-## torch in hand in the dark corridor standing and at a sprint's lean, at
-## 480 lines and at 270 (22a-22d).
+## the torch beside it; a crypt from its doorway with its old hearth ring
+## (built for the frame, then taken away) and with its own wall sconces
+## relit (§EX.4); the heart by torchlight and with its four sconces relit;
+## the red ring after one hit and after two (§FD, §FJ.3: its depth in
+## pixels at 480 lines, darker and deeper on two, the heart beating from
+## hit 1); the two hands (§FB): the torch in the right, a fire pot in the
+## left, Tab held (the strip low left, then the right hand's low right),
+## and Settings' Controls and Settings pages; and the tomb's skeletons
+## (design §FE, queue 58; 21-21c): their sheet, one at rest in its wall
+## niche (else its grave), climbing out of it in your torchlight, and out;
+## the pitch torch (§EZ.2): the bundle's unlit heads by the hearth (01h),
+## and the torch in hand in the dark corridor standing and at a sprint's
+## lean, at 480 lines and at 270 (22a-22d).
 ## Checks: every cell of the sheets holds the figure (its pixels drawn),
 ## the skeleton caught halfway out of its place with its bone lit amber
 ## on screen,
@@ -35,10 +37,11 @@ extends SceneTree
 ## grey), the smothered corridor still dark, the half-dark (the wall
 ## pixels about 3 m off a readable step over the frame's black, about
 ## 15 m off at it, and blue), the torchlit frame the same with the
-## half-dark on as off, and one firelight (§EX.6): the torchlit and
-## sconce-lit stone the same amber, and the stone right at the torch kept
-## amber by the grade; the torch's flame reads as a flame at the bottom
-## right (its size on screen measured, in pixels, at both presets).
+## half-dark on as off, the crypt with its sconces relit at least as lit
+## on screen as with its old ring, and one firelight (§EX.6): the torchlit
+## and sconce-lit stone the same amber, and the stone right at the torch
+## kept amber by the grade; the torch's flame reads as a flame at the
+## bottom right (its size on screen measured, in pixels, at both presets).
 ## The crosshair (§EX.7, Reticle), in the frames as you see it: its arms'
 ## pixels round the frame's middle pixel, sized per hud.json, at the 480
 ## preset (waking in the hearth room) and the 270 one (01g); nothing else
@@ -380,8 +383,10 @@ func _mean_luma(img: Image) -> float:
 
 
 ## A long view down a cold corridor (§FC.4's frames): a corridor's end,
-## looking along it, with 16-30 m clear ahead (a far wall about 15 m off
-## and more) and the hearth over 14 m away: [feet, yaw], or [] if none.
+## looking along it, with 13.5-30 m clear ahead, walls about 15 m off in
+## view (_walls_at: the band the half-dark's check reads; until §EX.4 an
+## old hearth ring's stones in the room beyond could be all there was of
+## it) and the hearth over 14 m away: [feet, yaw], or [] if none.
 func _long_view(main: CrawlerMain) -> Array:
 	var p := main.player
 	var space := p.get_world_3d().direct_space_state
@@ -400,9 +405,29 @@ func _long_view(main: CrawlerMain) -> Array:
 			q.exclude = [p.get_rid()]
 			var h := space.intersect_ray(q)
 			var clear := 40.0 if h.is_empty() else eye.distance_to(h.position)
-			if clear >= 16.0 and clear <= 30.0 and eye.distance_to(hp) > 14.0:
+			if clear >= 13.5 and clear <= 30.0 and eye.distance_to(hp) > 14.0 and _walls_at(space, eye, face, 13.5, 16.5, q.exclude) >= 4:
 				return [Vector3(at2.x, fy, at2.y), atan2(-face.x, -face.y)]
 	return []
+
+
+## How many of a fan of rays from `eye` round `face` (60 degrees across,
+## 40 up and down) meet a wall (a level normal) `lo` to `hi` m off.
+func _walls_at(space: PhysicsDirectSpaceState3D, eye: Vector3, face: Vector2, lo: float, hi: float, ex: Array) -> int:
+	var n := 0
+	var f3 := Vector3(face.x, 0.0, face.y).normalized()
+	for yi in range(-10, 11):
+		for ti in range(-5, 6):
+			var d := f3.rotated(Vector3.UP, deg_to_rad(yi * 3.0))
+			d = d.rotated(d.cross(Vector3.UP).normalized(), deg_to_rad(ti * 4.0))
+			var q := PhysicsRayQueryParameters3D.create(eye, eye + d * (hi + 2.0), PropCollision.WORLD_LAYER)
+			q.exclude = ex
+			var h := space.intersect_ray(q)
+			if h.is_empty() or absf((h.normal as Vector3).y) > 0.3:
+				continue
+			var dist := eye.distance_to(h.position)
+			if dist >= lo and dist <= hi:
+				n += 1
+	return n
 
 
 ## Wait until the half-dark has settled where it's going (off with the
@@ -437,7 +462,7 @@ func _half_dark(main: CrawlerMain) -> void:
 	var t := p.torch
 	var hd := main.half_dark
 	var v := _long_view(main)
-	ok(not v.is_empty(), "a long view down a cold corridor (16-30 m clear ahead, the hearth over 14 m off)")
+	ok(not v.is_empty(), "a long view down a cold corridor (13.5-30 m clear ahead, walls about 15 m off in view, the hearth over 14 m off)")
 	if v.is_empty():
 		return
 	var keep_pos := p.global_position
@@ -487,6 +512,91 @@ func _half_dark(main: CrawlerMain) -> void:
 	main.world.days = keep_days
 	p.spawn_flat(keep_pos, keep_yaw, -0.05)
 	await _settle(main)
+## A stretch of room `room`'s side wall with no sconce, door or airway
+## within 1.6 m: [along, side (1 its left, -1 its right)], the nearest its
+## middle (the middle of its left wall if none).
+func _bare_wall(main: CrawlerMain, room: Dictionary) -> Array:
+	var length := float(room.len)
+	for k in 40:
+		var along := length * 0.5 + 0.25 * ceili(k * 0.5) * (1.0 if k % 2 == 1 else -1.0)
+		if along < 1.2 or along > length - 1.2:
+			continue
+		for sd: float in [1.0, -1.0]:
+			var bare := true
+			for thing in main.lay.holders + main.lay.airways:
+				if int(thing.piece) != int(room.id):
+					continue
+				var aa := Delves.along_across(room, Vector2((thing.pos as Vector3).x, (thing.pos as Vector3).z))
+				if absf(absf(aa.y) - float(room.half)) < 0.05 and signf(aa.y) == sd and absf(aa.x - along) < 1.6:
+					bare = false
+			for di in room.doors:
+				var ds: Array = TombKit.door_side(room, main.lay.doors[di])
+				if str(ds[0]) == ("left" if sd > 0.0 else "right") and absf(float(ds[1]) + length * 0.5 - along) < 1.6:
+					bare = false
+			if bare:
+				return [along, sd]
+	return [length * 0.5, 1.0]
+
+
+## The room to show with its sconces relit (design §EX.4): a crypt with two
+## on its long side walls if there is one, else a crypt with two, a crypt,
+## or any room past the hearth room.
+func _pick_room(main: CrawlerMain) -> Dictionary:
+	var best: Dictionary = {}
+	var best_score := -1
+	for pc in main.lay.pieces:
+		if str(pc.kind) != "room" or str(pc.get("room_kind", "")) in ["hearth", "heart", ""]:
+			continue
+		var n := 0
+		var on_sides := true
+		for h in main.lay.holders:
+			if int(h.piece) == int(pc.id):
+				n += 1
+				on_sides = on_sides and str(h.get("side", "")) in ["left", "right"]
+		var score := (4 if str(pc.room_kind) == "crypt" else 0) + (2 if n == 2 else 0) + (1 if on_sides else 0)
+		if score > best_score:
+			best_score = score
+			best = pc
+	return best
+
+
+## Where to look into room `pc` from: just inside the door in its start
+## wall (its way in), facing down the room. [position, yaw].
+func _door_view(main: CrawlerMain, pc: Dictionary) -> Array:
+	var d: Vector2 = pc.dir
+	var across := 0.0
+	for di in pc.doors:
+		var ds: Array = TombKit.door_side(pc, main.lay.doors[di])
+		if str(ds[0]) == "start":
+			across = clampf(float(ds[1]), -float(pc.half) + 0.6, float(pc.half) - 0.6)
+	var at: Vector2 = (pc.c as Vector2) + d * 0.6 + Delves.perp(d) * across
+	return [Vector3(at.x, float(pc.y0), at.y), atan2(-d.x, -d.y)]
+
+
+## Relight every sconce in room `pc` with the swing (a step out from each,
+## the torch lit), then put the torch away: how many caught.
+func _relight_room(p: CrawlerPlayer, main: CrawlerMain, pc: Dictionary) -> int:
+	var t := p.torch
+	_torch_in_hand(p)
+	t.light()
+	var mine: Array = []
+	for h in main.fires.holders:
+		if int(h.get_meta("piece")) == int(pc.id):
+			mine.append(h)
+			var nrm := h.global_basis.z
+			var at := h.global_position - Vector3(0.0, float(CrawlerFires.HOLD.get("sconce_h_m", 1.7)), 0.0) + nrm * 0.8
+			var to := h.global_position - at
+			p.spawn_flat(at, atan2(-to.x, -to.z), 0.0)
+			t.pass_flame()
+	for i in 240:
+		FireStore.tick(self, 1.0 / 60.0, p.global_position)
+	await _frames(2)
+	t.put_out("stowed")
+	var n := 0
+	for h in mine:
+		if FireStore.is_lit(h):
+			n += 1
+	return n
 
 
 ## Blue-green pixels (the glow-moss's colour: green well over red, as green
@@ -952,15 +1062,18 @@ func _run() -> void:
 			break
 	if not room.is_empty():
 		var rd: Vector2 = room.dir
-		var pv := Delves.perp(rd)
-		var spot: Vector2 = (room.c as Vector2) + rd * float(room.len) * 0.5 + pv * (float(room.half) - 1.4)
+		# A bare stretch of a side wall (no sconce, door or airway near).
+		var bw := _bare_wall(main, room)
+		var along_w := float(bw[0])
+		var pv := Delves.perp(rd) * float(bw[1])
+		var spot: Vector2 = (room.c as Vector2) + rd * along_w + pv * (float(room.half) - 1.4)
 		p.spawn_flat(Vector3(spot.x, float(room.y0), spot.y), atan2(-pv.x, -pv.y), -0.1)
 		await _frames(8)
 		await _shot("01d_fitted_stone_%s" % FittedStone.preset_name())
 		# The torch's light on the stone (§EX.6): 1 m from the wall, at
-		# night (no daylight down the room's shaft), nothing else lit near.
+		# night, nothing else lit near.
 		world.days = 13.0
-		var spot1: Vector2 = (room.c as Vector2) + rd * float(room.len) * 0.5 + pv * (float(room.half) - 1.0)
+		var spot1: Vector2 = (room.c as Vector2) + rd * along_w + pv * (float(room.half) - 1.0)
 		p.spawn_flat(Vector3(spot1.x, float(room.y0), spot1.y), atan2(-pv.x, -pv.y), -0.05)
 		await _frames(8)
 		var img_e := await _shot("01e_torch_at_wall")
@@ -970,7 +1083,7 @@ func _run() -> void:
 		_say_cross("on the torchlit wall, 1 m", cross.amber)
 		print("  torchlit wall: hue %.1f, chroma %.3f, luma %.3f (#%s)" % [tw.hue, tw.chroma, tw.luma, (tw.color as Color).to_html(false)])
 		# Closer, where the stone at the torch blows brightest.
-		var spot2: Vector2 = (room.c as Vector2) + rd * float(room.len) * 0.5 + pv * (float(room.half) - 0.45)
+		var spot2: Vector2 = (room.c as Vector2) + rd * along_w + pv * (float(room.half) - 0.45)
 		p.spawn_flat(Vector3(spot2.x, float(room.y0), spot2.y), atan2(-pv.x, -pv.y), -0.05)
 		await _frames(8)
 		var img_f := await _shot("01f_torch_close")
@@ -1049,7 +1162,7 @@ func _run() -> void:
 	t.light()
 	var sconce: Node3D = null
 	for h in main.fires.holders:
-		if str(h.get_meta("fire_holder")) == "sconce":
+		if str(h.get_meta("fire_holder")) == "sconce" and str((main.lay.pieces[int(h.get_meta("piece"))] as Dictionary).kind) == "corridor":
 			sconce = h
 			break
 	if sconce != null:
@@ -1135,34 +1248,50 @@ func _run() -> void:
 		var ls := _stats(lit_img)
 		ok(FireStore.is_lit(sconce) and float(ls.mean_l) > float(ds.mean_l) + 0.02, "relit, its sconce lights the corridor (mean %.3f against %.3f dark)" % [ls.mean_l, ds.mean_l])
 		t.light()
-	# A room with its hearth ring relit.
-	var ring: Node3D = null
-	for h in main.fires.holders:
-		if str(h.get_meta("fire_holder")) != "sconce":
-			ring = h
-			break
-	if ring != null:
-		var piece: Dictionary = main.lay.pieces[int(ring.get_meta("piece"))]
-		var dv: Vector2 = piece.dir
-		var stand2 := ring.global_position - Vector3(dv.x, 0.0, dv.y) * 1.0
-		var to2 := ring.global_position - stand2
-		p.spawn_flat(stand2, atan2(-to2.x, -to2.z), 0.0)
-		t.pass_flame()
+	# A crypt with its wall sconces relit (design §EX.4), against the
+	# hearth ring it had before (built for the frame where TombKit put it,
+	# then taken away): the same view from its doorway, at night, the
+	# torch away.
+	var crypt := _pick_room(main)
+	if not crypt.is_empty():
+		var keep_days3: float = world.days
+		world.days = 13.0
+		var view := _door_view(main, crypt)
+		t.put_out("stowed")
+		var ring_at: Vector2 = (crypt.c as Vector2) + (crypt.dir as Vector2) * float(crypt.len) * 0.5
+		var ring: Node3D = main.fires._holder({"kind": "hearth_ring", "pos": Vector3(ring_at.x, float(crypt.y0), ring_at.y), "normal": Vector3.UP, "piece": int(crypt.id)})
+		FireStore.swing_light(ring, world.days)
 		for i in 240:
 			FireStore.tick(self, 1.0 / 60.0, p.global_position)
-		var back := ring.global_position - Vector3(dv.x, 0.0, dv.y) * (float(piece.len) * 0.45)
-		var to3 := ring.global_position - back
-		p.spawn_flat(Vector3(back.x, float(piece.y0), back.z), atan2(-to3.x, -to3.z), -0.15)
+		p.spawn_flat(view[0], float(view[1]), -0.12)
 		await _frames(20)
-		await _shot("09_room_relit_%s" % str(piece.room_kind))
-	# The heart.
+		var old_img := await _shot("09a_%s_old_hearth_ring" % str(crypt.room_kind))
+		ring.queue_free()
+		await _frames(2)
+		var n_lit := await _relight_room(p, main, crypt)
+		p.spawn_flat(view[0], float(view[1]), -0.12)
+		await _frames(20)
+		var new_img := await _shot("09_%s_sconces_relit" % str(crypt.room_kind))
+		var so := _stats(old_img)
+		var sn := _stats(new_img)
+		print("  the %s from its door, at night: old hearth ring mean %.3f (warm %.3f); its %d sconces relit mean %.3f (warm %.3f)" % [crypt.room_kind, so.mean_l, so.warm, n_lit, sn.mean_l, sn.warm])
+		ok(float(sn.mean_l) >= float(so.mean_l), "the %s with its %d wall sconces relit is at least as lit on screen as with its old hearth ring (mean %.3f against %.3f)" % [crypt.room_kind, n_lit, sn.mean_l, so.mean_l])
+		world.days = keep_days3
+	# The heart: by torchlight, then its four sconces relit, flanking the
+	# dead.
 	if main.lay.has("heart"):
 		var hpc: Dictionary = main.lay.pieces[int(main.lay.heart)]
 		var hd: Vector2 = hpc.dir
 		var hc: Vector2 = (hpc.c as Vector2) + hd * float(hpc.len) * 0.3
+		t.light()
 		p.spawn_flat(Vector3(hc.x, float(hpc.y0), hc.y), atan2(-hd.x, -hd.y), -0.2)
 		await _frames(20)
 		await _shot("10_heart_by_torch")
+		var n_h := await _relight_room(p, main, hpc)
+		p.spawn_flat(Vector3(hc.x, float(hpc.y0), hc.y), atan2(-hd.x, -hd.y), -0.12)
+		await _frames(20)
+		await _shot("10b_heart_relit")
+		print("  the heart: %d sconces relit" % n_h)
 	await _pots(main)
 	await _atmosphere(main)
 	# One firelight (§EX.6): the torchlit and the sconce-lit stone the same
@@ -1237,7 +1366,7 @@ func _harm_ring(main: CrawlerMain, p: CrawlerPlayer) -> void:
 	# A cold corridor: 3.5 m along from a sconce nobody has lit.
 	var cold: Node3D = null
 	for h in main.fires.holders:
-		if str(h.get_meta("fire_holder")) == "sconce" and not FireStore.is_lit(h):
+		if str(h.get_meta("fire_holder")) == "sconce" and not FireStore.is_lit(h) and str((main.lay.pieces[int(h.get_meta("piece"))] as Dictionary).kind) == "corridor":
 			cold = h
 			break
 	if cold == null:

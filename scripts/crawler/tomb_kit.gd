@@ -18,12 +18,13 @@ class_name TombKit
 ## branch that can't go on ends at its last room.
 ##
 ## Rooms are of the kit's kinds (crypt, catacomb, ossuary, collapsed); the
-## deepest room of all is the heart (§CJ.3). Every room past the hearth
-## room holds a cold fire-holder (delves.json fire_holders), every
-## corridor longer than holders.sconce_first_m a wall sconce every
-## sconce_every_m; stairs none (fire_holders.skip). The airways
-## (airways.per_air by the theme's air): ordinary slots in corridor walls,
-## strong marked mouths in room walls. The residents (design §FE,
+## deepest room of all is the heart (§CJ.3). The hearth room's hearth is
+## the tomb's one hearth (design §EX.4); every other room has cold wall
+## sconces in facing pairs (crawler.json room_torches), and every corridor
+## longer than holders.sconce_first_m a wall sconce every sconce_every_m;
+## stairs none (fire_holders.skip). The airways (airways.per_air by the
+## theme's air): ordinary slots in corridor walls, strong marked mouths in
+## room walls, both clear of the sconces. The residents (design §FE,
 ## residents.json): the tomb's skeletons rest in the catacombs' wall
 ## niches and the crypts' coffins, more toward the heart, and the heart's
 ## own coffin holds one (Mike's frame 9); none in the hearth room, none by
@@ -32,9 +33,11 @@ class_name TombKit
 static var K: Dictionary = Tuning.table("crawler").get("kit", {})
 static var RESIDENTS: Dictionary = Tuning.table("residents")
 static var HOLD: Dictionary = Tuning.table("crawler").get("holders", {})
+static var RT: Dictionary = Tuning.table("crawler").get("room_torches", {})
 static var AIR: Dictionary = Tuning.table("crawler").get("airways", {})
 static var OPEN: Dictionary = Tuning.table("crawler").get("opening", {})
 static var THEMES: Dictionary = Tuning.table("crawler").get("themes", {})
+static var MAS: Dictionary = Tuning.table("masonry")
 
 const WALL := Delves.WALL
 ## A door's half width (the corridors' lanes are a little wider).
@@ -42,6 +45,20 @@ const DOOR_HALF := 0.75
 ## Clearance kept between pieces' walls.
 const GAP := 0.25
 const SIDES := ["end", "left", "right", "start"]
+## Where the heart's dead lie: the stone box across the room's end, its
+## middle this far from the end wall (TombBuild draws it there; the heart's
+## sconces flank it, design §EX.4).
+const HEART_DEAD_M := 1.6
+## A wall sconce's half width along its wall (CrawlerFires' bracket and
+## cup): kept room_torches.clear_m from a door's edge, a corner and an
+## airway's surround.
+const SCONCE_HALF := 0.15
+## An airway's surround's half width along its wall (TombBuild draws it):
+## strong, ordinary.
+const AIRWAY_HALF := [0.63, 0.43]
+## How far a room's sconces step along their wall at a time to clear a
+## door (m).
+const SHIFT_M := 0.25
 
 
 static func _range(rng: RandomNumberGenerator, v, lo: float, hi: float) -> float:
@@ -59,7 +76,8 @@ static func _irange(rng: RandomNumberGenerator, v, lo: int, hi: int) -> int:
 ## The tomb for `seed_value`: {"seed", "theme", "pieces" [piece...],
 ## "doors" [door...], "hearth" (Vector3), "wake" ([Vector3, yaw]),
 ## "bundle" (Vector3), "rescuer" ([Vector3, yaw]), "holders"
-## [{"kind": "hearth_ring"/"sconce", "pos", "normal", "piece"}...],
+## [{"kind": "sconce", "pos", "normal", "piece", "room" (a room's wall
+## torch, not a corridor's)}...],
 ## "airways" [{"strong", "pos", "normal", "piece"}...], "heart" (piece
 ## id), "exits" (the hearth room's corridors), "residents" (_place_residents)}.
 ## A door is {"p" (Vector2,
@@ -302,24 +320,20 @@ static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: 
 	lay["rescuer"] = [Vector3(r.x, 0.0, r.y), atan2(r.x, r.y)]
 
 
-## Cold fire-holders: one per room past the hearth room (delves.json
-## fire_holders), sconces down the corridors.
+## Cold fire-holders (design §EX.4; crawler.json room_torches, holders):
+## the hearth room's hearth is the tomb's one hearth (room_torches
+## hearth_rooms), so no other room gets one; every other room gets wall
+## sconces (_room_sconces), and the corridors a sconce every
+## sconce_every_m as built (stairs none, delves.json fire_holders.skip;
+## delves.json's hearth rings by ruin still serve the open world).
 static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
-	var fh: Dictionary = Tuning.table("delves").get("fire_holders", {})
-	var kind := str((fh.get("by_ruin", {}) as Dictionary).get(str((THEMES.get(lay.theme, {}) as Dictionary).get("ruin_kind", "tomb")), fh.get("by_ruin", {}).get("default", "hearth_ring")))
-	var skip: Array = fh.get("skip", ["stair"])
+	var skip: Array = (Tuning.table("delves").get("fire_holders", {}) as Dictionary).get("skip", ["stair"])
 	for pc in lay.pieces:
 		match str(pc.kind):
 			"room":
 				if str(pc.room_kind) == "hearth":
 					continue
-				# Near the room's far end in the heart (the dead lie before
-				# it), else its middle a little off the line between doors.
-				var along := float(pc.len) * (0.62 if str(pc.room_kind) == "heart" else 0.5)
-				var across := rng.randf_range(-0.6, 0.6) if float(pc.half) > 3.2 else 0.0
-				var p := Delves.perp(pc.dir)
-				var at: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * along + p * across
-				(lay.holders as Array).append({"kind": kind, "pos": Vector3(at.x, float(pc.y0), at.y), "normal": Vector3.UP, "piece": int(pc.id)})
+				(lay.holders as Array).append_array(_room_sconces(lay, pc))
 			"corridor", "stair":
 				if str(pc.kind) in skip:
 					continue
@@ -331,17 +345,206 @@ static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 					var p := Delves.perp(pc.dir)
 					var wall: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * a + p * sd * float(pc.half)
 					var nrm := -Vector3(p.x, 0.0, p.y) * sd
-					(lay.holders as Array).append({"kind": "sconce", "pos": Vector3(wall.x, Delves.floor_of(pc, a) + float(HOLD.get("sconce_h_m", 1.7)), wall.y), "normal": nrm, "piece": int(pc.id)})
+					(lay.holders as Array).append({"kind": "sconce", "pos": Vector3(wall.x, Delves.floor_of(pc, a) + float(HOLD.get("sconce_h_m", 1.7)), wall.y), "normal": nrm, "piece": int(pc.id), "room": false})
 					sd = -sd
 					a += every
 
 
+## The theme's masonry style (design §EX.1; masonry.json style_by_theme ->
+## styles; {} when it has none).
+static func style(theme: String) -> Dictionary:
+	var by: Dictionary = MAS.get("style_by_theme", {})
+	return (MAS.get("styles", {}) as Dictionary).get(str(by.get(theme, by.get("default", ""))), {})
+
+
+## The builders' module for `theme` (m; design §EX.2, its style's
+## module_m): a room's sconces stand whole modules apart.
+static func module_m(theme: String) -> float:
+	return maxf(float(style(theme).get("module_m", 2.0)), 0.5)
+
+
+## The point on the inside face of wall `side` of piece `pc`, `off` along
+## that wall from its middle (along the piece on its side walls, across it
+## on its end walls), and the way into the piece from there.
+static func face_point(pc: Dictionary, side: String, off: float) -> Array:
+	var c: Vector2 = pc.c
+	var d: Vector2 = pc.dir
+	var p := Delves.perp(d)
+	var length := float(pc.len)
+	var half := float(pc.half)
+	match side:
+		"end":
+			return [c + d * length + p * off, -d]
+		"start":
+			return [c + p * off, d]
+		"left":
+			return [c + d * (length * 0.5 + off) + p * half, -p]
+	return [c + d * (length * 0.5 + off) - p * half, p]
+
+
+## The inside length of wall `side` of piece `pc` (m).
+static func wall_len(pc: Dictionary, side: String) -> float:
+	return 2.0 * float(pc.half) if side in ["start", "end"] else float(pc.len)
+
+
+## How far (x/z) `q` is from door `d`'s opening: the gap through its wall,
+## `half` either side of its middle and the wall's thickness deep (0 in it).
+static func door_gap(d: Dictionary, q: Vector2) -> float:
+	var n: Vector2 = d.n
+	var r := q - (d.p as Vector2)
+	return Vector2(maxf(absf(r.dot(Delves.perp(n))) - float(d.half), 0.0), maxf(absf(r.dot(n)) - WALL * 0.5, 0.0)).length()
+
+
+## A room's wall sconces (design §EX.4; crawler.json room_torches, the
+## style's module_m). `small` of them in a room whose long walls are up to
+## small_room_max_m long, `large` in a longer one: in facing pairs on the
+## long walls (in a square room, the pair with fewer doors), a whole number
+## of modules apart, the spacing nearest an even spread down the wall
+## first. The heart gets heart_flank_dead on each side wall, a module
+## apart, flanking the dead at its end (`heart` in all). Each keeps clear_m
+## from its bracket's edge to every door's edge and to the corners; where a
+## door is in the way the pairs step along the wall together (SHIFT_M at a
+## time, nearest first, so a door in the middle of a wall ends up
+## flanked), still facing and whole modules apart; failing that, at
+## another whole-module spacing; failing that, each long wall finds its
+## own places (the pairs then not quite facing); and only failing that,
+## the other two walls.
+static func _room_sconces(lay: Dictionary, pc: Dictionary) -> Array:
+	var module := module_m(str(lay.theme))
+	var length := float(pc.len)
+	var width := 2.0 * float(pc.half)
+	var clear := float(RT.get("clear_m", 0.6)) + SCONCE_HALF
+	var doors: Array = []
+	for di in pc.doors:
+		doors.append(lay.doors[di])
+	# Each plan: [walls, [offsets from the wall's middle...] in order].
+	var plans: Array = []
+	if str(pc.room_kind) == "heart":
+		var per := maxi(int(RT.get("heart_flank_dead", 2)), 1)
+		var lim := length * 0.5 - clear
+		# A module apart (closer only in a heart too short for it).
+		var s := module if (per - 1) * module <= 2.0 * lim else 2.0 * maxf(lim, 0.0) / maxf(per - 1, 1)
+		# Centred on the dead, then kept off the corners as one group.
+		var dead := length * 0.5 - HEART_DEAD_M
+		var offs: Array = []
+		var mid: Array = []
+		for i in per:
+			offs.append(dead + (i - (per - 1) * 0.5) * s)
+			mid.append((i - (per - 1) * 0.5) * s)
+		var shift := minf(lim - float(offs[-1]), 0.0) + maxf(-lim - float(offs[0]), 0.0)
+		for i in per:
+			offs[i] = float(offs[i]) + shift
+		# If doors crowd the dead, the same pairs anywhere down the side walls.
+		plans.append([["left", "right"], [offs, mid]])
+	else:
+		var n := int(RT.get("small", 2)) if maxf(length, width) <= float(RT.get("small_room_max_m", 8.0)) + 0.001 else int(RT.get("large", 4))
+		var per := maxi(ceili(n * 0.5), 1)
+		var pairs: Array = [["left", "right"], ["start", "end"]]
+		if width > length + 0.001 or (absf(width - length) <= 0.001 and _doors_on(pc, doors, pairs[0]) > _doors_on(pc, doors, pairs[1])):
+			pairs.reverse()
+		for walls in pairs:
+			var span := wall_len(pc, str(walls[0]))
+			var lim := span * 0.5 - clear
+			if lim < 0.0:
+				continue
+			# Whole modules apart: the spacing nearest an even spread down
+			# the wall first, then the others, nearest it first.
+			var ks: Array = [1]
+			if per > 1:
+				var k_max := floori(2.0 * lim / ((per - 1) * module) + 1e-4)
+				var k0 := clampi(roundi(span / per / module), 1, maxi(k_max, 1))
+				ks = range(1, maxi(k_max, 1) + 1)
+				ks.sort_custom(func(x, y): return absi(int(x) - k0) < absi(int(y) - k0) or (absi(int(x) - k0) == absi(int(y) - k0) and int(x) > int(y)))
+			var sets: Array = []
+			for k in ks:
+				var offs: Array = []
+				for i in per:
+					offs.append((i - (per - 1) * 0.5) * int(k) * module)
+				sets.append(offs)
+			plans.append([walls, sets])
+	for plan in plans:
+		var walls: Array = plan[0]
+		# Facing: both walls clear at the same places.
+		for offs in plan[1]:
+			var at := _clear_offsets(pc, walls, offs, doors, clear)
+			if not at.is_empty():
+				return _sconces_on(pc, walls, at)
+		# Else each wall finds its own.
+		var out: Array = []
+		for side in walls:
+			for offs in plan[1]:
+				var at := _clear_offsets(pc, [side], offs, doors, clear)
+				if not at.is_empty():
+					out.append_array(_sconces_on(pc, [side], at))
+					break
+		if out.size() == walls.size() * (plan[1][0] as Array).size():
+			return out
+	push_warning("TombKit: room %d (%s) has no wall clear of its doors for its sconces" % [int(pc.id), str(pc.room_kind)])
+	return []
+
+
+## How many of `doors` cut piece `pc`'s walls `walls`.
+static func _doors_on(pc: Dictionary, doors: Array, walls: Array) -> int:
+	var n := 0
+	for d in doors:
+		if str(door_side(pc, d)[0]) in walls:
+			n += 1
+	return n
+
+
+## `offs` moved along walls `walls` of `pc` as one group (0 first, then
+## SHIFT_M, -SHIFT_M, 2 SHIFT_M...) until every one is within its wall,
+## clear of the corners and of every door by `clear` (m): the offsets, or
+## [] if nowhere along the wall clears.
+static func _clear_offsets(pc: Dictionary, walls: Array, offs: Array, doors: Array, clear: float) -> Array:
+	var step := SHIFT_M
+	var lim := wall_len(pc, str(walls[0])) * 0.5 - clear
+	var lo := float(offs[0])
+	var hi := float(offs[-1])
+	var n := ceili((2.0 * lim + absf(hi - lo)) / step) + 1
+	for j in 2 * n + 1:
+		var t := step * ceili(j * 0.5) * (1.0 if j % 2 == 1 else -1.0)
+		if hi + t > lim + 1e-4 or lo + t < -lim - 1e-4:
+			continue
+		var ok := true
+		for side in walls:
+			for off in offs:
+				var q: Vector2 = face_point(pc, str(side), float(off) + t)[0]
+				for d in doors:
+					if door_gap(d, q) < clear:
+						ok = false
+		if ok:
+			var out: Array = []
+			for off in offs:
+				out.append(float(off) + t)
+			return out
+	return []
+
+
+## Holders for sconces at offsets `offs` along each of walls `walls` of
+## room `pc` (room_torches.room_holder: wall sconces are what is built).
+static func _sconces_on(pc: Dictionary, walls: Array, offs: Array) -> Array:
+	var kind := str(RT.get("room_holder", "sconce"))
+	if kind != "sconce":
+		push_warning("crawler.json room_torches.room_holder %s: only wall sconces are built (design §EX.4)" % kind)
+	var h := float(HOLD.get("sconce_h_m", 1.7))
+	var out: Array = []
+	for side in walls:
+		for off in offs:
+			var fp := face_point(pc, str(side), float(off))
+			var at: Vector2 = fp[0]
+			var nv: Vector2 = fp[1]
+			out.append({"kind": "sconce", "pos": Vector3(at.x, Delves.floor_of(pc, Delves.along_across(pc, at).x) + h, at.y), "normal": Vector3(nv.x, 0.0, nv.y), "piece": int(pc.id), "room": true, "side": str(side), "off": float(off)})
+	return out
+
+
 ## The vents (design §EV; smoke.json vents): every permanent fire the
-## generator built (the hearth, each hearth ring and sconce; carried
-## torches are exempt) gets its own vent from its piece's ceiling up to the
-## surface, kinked where another piece of the tomb stands over it: a shaft
-## for a hearth, ring or altar, a narrow flue for a sconce or brazier
-## (§EV.1). Each is {"kind", "type" ("shaft" / "flue"), "fire" (the fire's
+## generator built (the hearth and each sconce; carried torches are
+## exempt) gets its own vent from its piece's ceiling up to the surface,
+## kinked where another piece of the tomb stands over it: a shaft for a
+## hearth, ring or altar, a narrow flue for a sconce or brazier (§EV.1). So
+## the one hearth's shaft is the tomb's one column of daylight (§EX.4).
+## Each is {"kind", "type" ("shaft" / "flue"), "fire" (the fire's
 ## place), "fire_index" (-1 the hearth, else its holder's index), "piece",
 ## "mouth" (the vent's mouth in the ceiling's underside), "d" (its width,
 ## narrowing with depth), "depth" (the vent's length up to the surface),
@@ -460,7 +663,8 @@ static func _column_clear(lay: Dictionary, own: int, p: Vector2, d: float, from_
 
 
 ## The airways (§ET.6): ordinary slots in corridor walls, strong marked
-## mouths in room side walls, away from doors and sconces.
+## mouths in room side walls, away from doors and sconces (room_torches
+## clear_m between a mouth's surround and a sconce's bracket).
 static func _place_airways(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 	var air := str((THEMES.get(lay.theme, {}) as Dictionary).get("air", "still"))
 	var counts: Dictionary = (AIR.get("per_air", {}) as Dictionary).get(air, {"ordinary": 2, "strong": 1})
@@ -473,18 +677,31 @@ static func _place_airways(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 			rooms.append(pc)
 	_shuffle(rng, corridors)
 	_shuffle(rng, rooms)
-	for i in mini(int(counts.get("ordinary", 2)), corridors.size()):
-		var pc: Dictionary = corridors[i]
+	var n_ord := int(counts.get("ordinary", 2))
+	var made_o := 0
+	for pc in corridors:
+		if made_o >= n_ord:
+			break
 		var a := float(pc.len) * rng.randf_range(0.3, 0.7)
 		var sd := 1.0 if rng.randf() < 0.5 else -1.0
-		_airway(lay, pc, a, sd, false)
+		# The rolled wall, else the other one if a sconce is there.
+		for s2: float in [sd, -sd]:
+			if _airway_clear(lay, pc, a, s2, false):
+				_airway(lay, pc, a, s2, false)
+				made_o += 1
+				break
 	var n_strong := int(counts.get("strong", 1))
 	var made := 0
 	for pc in rooms:
 		if made >= n_strong:
 			break
-		# A side wall with no door on it.
+		var a0 := float(pc.len) * rng.randf_range(0.35, 0.65)
+		# A side wall with no door on it, the rolled spot or another along
+		# it clear of the room's sconces.
+		var placed := false
 		for sd: float in [1.0, -1.0]:
+			if placed:
+				break
 			var side := "left" if sd > 0.0 else "right"
 			var used := false
 			for di in pc.doors:
@@ -492,9 +709,26 @@ static func _place_airways(lay: Dictionary, rng: RandomNumberGenerator) -> void:
 					used = true
 			if used:
 				continue
-			_airway(lay, pc, float(pc.len) * rng.randf_range(0.35, 0.65), sd, true)
-			made += 1
-			break
+			for a: float in [a0, float(pc.len) * 0.25, float(pc.len) * 0.75, float(pc.len) * 0.5, float(pc.len) * 0.35, float(pc.len) * 0.65]:
+				if _airway_clear(lay, pc, a, sd, true):
+					_airway(lay, pc, a, sd, true)
+					made += 1
+					placed = true
+					break
+
+
+## Is a strong (or ordinary) airway mouth `along` piece `pc`'s side wall
+## `sd` (1 left, -1 right) clear of every sconce on that wall?
+static func _airway_clear(lay: Dictionary, pc: Dictionary, along: float, sd: float, strong: bool) -> bool:
+	var need := float(AIRWAY_HALF[0 if strong else 1]) + float(RT.get("clear_m", 0.6)) + SCONCE_HALF
+	for h in lay.holders:
+		if int(h.piece) != int(pc.id):
+			continue
+		var pos: Vector3 = h.pos
+		var aa := Delves.along_across(pc, Vector2(pos.x, pos.z))
+		if absf(absf(aa.y) - float(pc.half)) < 0.05 and signf(aa.y) == sd and absf(aa.x - along) < need:
+			return false
+	return true
 
 
 static func _airway(lay: Dictionary, pc: Dictionary, along: float, sd: float, strong: bool) -> void:
@@ -551,12 +785,11 @@ static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
 	if float(pc.half) < 2.4:
 		return out
 	for sd: float in [-1.0, 1.0]:
-		var side := "left" if sd > 0.0 else "right"
-		var a := 1.6
-		while a < float(pc.len) - 1.4:
-			if not near_door(lay, pc, side, a, 1.9) and not near_airway(lay, pc, sd, a, 1.4):
-				out.append({"along": a, "sd": sd, "i": out.size()})
-			a += 2.4
+		# Set so the first sconce on this wall falls between two coffins
+		# where that costs none (design §EX.4); a sconce over a coffin's
+		# head is in reach from the gap beside it.
+		for a in row(lay, pc, sd, 1.6, 2.4, float(pc.len) - 1.4, 1.2, 1.9, 1.4, 0.0):
+			out.append({"along": a, "sd": sd, "i": out.size()})
 	return out
 
 
@@ -565,13 +798,66 @@ static func coffin_spots(lay: Dictionary, pc: Dictionary) -> Array:
 static func niche_spots(lay: Dictionary, pc: Dictionary) -> Array:
 	var out: Array = []
 	for sd: float in [-1.0, 1.0]:
-		var side := "left" if sd > 0.0 else "right"
-		var a := 1.0
-		while a < float(pc.len) - 0.8:
-			if not near_door(lay, pc, side, a, 1.5) and not near_airway(lay, pc, sd, a, 1.2):
-				out.append({"along": a, "sd": sd, "i": out.size()})
-			a += 1.4
+		# Set so the first sconce on this wall hangs where one stack would
+		# be: no stack within NICHE_CLEAR of a sconce's bracket (§EX.4).
+		for a in row(lay, pc, sd, 1.0, 1.4, float(pc.len) - 0.8, 0.0, 1.5, 1.2, NICHE_CLEAR):
+			out.append({"along": a, "sd": sd, "i": out.size()})
 	return out
+
+
+## A niche stack keeps this far (m, middle to middle) from a sconce on its
+## wall: a burial niche's frame's half width (TombBuild._burial_niche, its
+## lintel 1.46 m), the sconce bracket's, a hand's gap.
+const NICHE_CLEAR := 0.95
+
+
+## A row of things down `pc`'s side wall `sd` (1 left, -1 right): every
+## `pitch` m from `start` while short of `end`, clear of that wall's doors
+## (`door_m`), airways (`air_m`) and room sconces (`sconce_m`, 0 for
+## none). Or the same row set `phase` m off the wall's first sconce (so a
+## sconce sits in a gap, or at a skipped place), where that holds as many
+## (design §EX.4): the alongs.
+static func row(lay: Dictionary, pc: Dictionary, sd: float, start: float, pitch: float, end: float, phase: float, door_m: float, air_m: float, sconce_m: float) -> Array:
+	var side := "left" if sd > 0.0 else "right"
+	var best: Array = []
+	var starts: Array = [start]
+	var s0 := first_sconce_along(lay, pc, sd)
+	if not is_nan(s0):
+		starts.push_front(s0 + phase - pitch * floorf((s0 + phase - start) / pitch))
+	for a0 in starts:
+		var out: Array = []
+		var a := float(a0)
+		while a < end:
+			if not near_door(lay, pc, side, a, door_m) and not near_airway(lay, pc, sd, a, air_m) and not (sconce_m > 0.0 and near_sconce(lay, pc, sd, a, sconce_m)):
+				out.append(a)
+			a += pitch
+		if out.size() > best.size():
+			best = out
+	return best
+
+
+## The along of the first sconce on `pc`'s side wall `sd` (1 left, -1
+## right), or NAN when that wall has none.
+static func first_sconce_along(lay: Dictionary, pc: Dictionary, sd: float) -> float:
+	var best := NAN
+	for h in lay.get("holders", []):
+		if int(h.piece) != int(pc.id) or str(h.kind) != "sconce":
+			continue
+		var aa := Delves.along_across(pc, Vector2((h.pos as Vector3).x, (h.pos as Vector3).z))
+		if absf(absf(aa.y) - float(pc.half)) < 0.05 and signf(aa.y) == sd and (is_nan(best) or aa.x < best):
+			best = aa.x
+	return best
+
+
+## Is there a sconce on `pc`'s side wall `sd` within `within` m of `along`?
+static func near_sconce(lay: Dictionary, pc: Dictionary, sd: float, along: float, within: float) -> bool:
+	for h in lay.get("holders", []):
+		if int(h.piece) != int(pc.id) or str(h.kind) != "sconce":
+			continue
+		var aa := Delves.along_across(pc, Vector2((h.pos as Vector3).x, (h.pos as Vector3).z))
+		if absf(absf(aa.y) - float(pc.half)) < 0.05 and signf(aa.y) == sd and absf(aa.x - along) < within:
+			return true
+	return false
 
 
 ## The heart's coffin (Mike's frame 9): its middle on the floor, its yaw
@@ -591,8 +877,8 @@ static func grave_floor(box_h: float) -> float:
 
 static func heart_box(pc: Dictionary) -> Dictionary:
 	var length := float(pc.len)
-	var q: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * (length - 1.6)
-	return {"pos": Vector3(q.x, Delves.floor_of(pc, length - 1.6), q.y), "yaw": atan2((pc.dir as Vector2).x, (pc.dir as Vector2).y) + PI * 0.5}
+	var q: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * (length - HEART_DEAD_M)
+	return {"pos": Vector3(q.x, Delves.floor_of(pc, length - HEART_DEAD_M), q.y), "yaw": atan2((pc.dir as Vector2).x, (pc.dir as Vector2).y) + PI * 0.5}
 
 
 ## The yaw that faces a figure (its front -z at yaw 0) along x/z `f`.

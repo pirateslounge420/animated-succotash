@@ -46,6 +46,9 @@ var faces := 0
 ## from y0): where its joints run), "heights" (each stone's face off the
 ## wall's face: Vector2(rim, pillowed middle))}.
 var wall_faces: Array = []
+## Coffins laid in the crypts and bone-niche bays in the catacombs (checks).
+var coffins := 0
+var niches := 0
 
 
 func ground(_x: float, _z: float) -> float:
@@ -93,7 +96,7 @@ static func build(lay: Dictionary) -> Dictionary:
 	for a in lay.airways:
 		b._airway_surround(a)
 	b._soot(lay)
-	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces, "walls": b.wall_faces}
+	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces, "walls": b.wall_faces, "coffins": b.coffins, "niches": b.niches}
 
 
 ## Door gaps on each wall of `pc`: side -> [[offset, half]] (offsets as
@@ -332,10 +335,52 @@ func _near_door(pc: Dictionary, side: String, along: float, within: float) -> bo
 	return TombKit.near_door(_lay, pc, side, along, within)
 
 
+## The bay before each of a room's wall sconces (design §EX.4), kept clear
+## of the clutter laid at random (a collapse's slab and rubble, bone heaps,
+## grave goods) so you can always step up to it and swing the flame:
+## BAY_HALF either side of it along its wall, BAY_DEEP out into the room
+## (where you stand to swing at it, your body's width round that). Coffins
+## and niches are laid in rows instead, set round the sconces
+## (TombKit.coffin_spots, niche_spots).
+const BAY_HALF := 0.65
+const BAY_DEEP := 1.6
+
+
+## How far grave goods reach past the spread they're laid in (RuinBuilder.
+## _grave_goods: a second urn 0.45 m off the first, 0.2 m round).
+const GOODS_REACH := 0.7
+
+
+## Room `pc`'s sconce bays: Rect2s in its (along, across).
+func _bays(pc: Dictionary) -> Array:
+	var out: Array = []
+	var dv: Vector2 = pc.dir
+	var pv := Delves.perp(dv)
+	for h in _lay.holders:
+		if int(h.piece) != int(pc.id) or str(h.kind) != "sconce":
+			continue
+		var pos: Vector3 = h.pos
+		var nrm: Vector3 = h.normal
+		var aa := Delves.along_across(pc, Vector2(pos.x, pos.z))
+		var n2 := Vector2(Vector2(nrm.x, nrm.z).dot(dv), Vector2(nrm.x, nrm.z).dot(pv))
+		var t2 := Vector2(-n2.y, n2.x) * BAY_HALF
+		out.append(Rect2(aa - t2, Vector2.ZERO).expand(aa + t2).expand(aa + n2 * BAY_DEEP - t2).expand(aa + n2 * BAY_DEEP + t2))
+	return out
+
+
+## Does `r` (room `pc`'s along, across) reach into one of `bays`?
+static func _in_bay(bays: Array, r: Rect2) -> bool:
+	for b in bays:
+		if (b as Rect2).intersects(r):
+			return true
+	return false
+
+
 func _dress(pc: Dictionary) -> void:
 	var half := float(pc.half)
 	var length := float(pc.len)
 	var pv := Delves.perp(pc.dir)
+	var bays := _bays(pc)
 	match str(pc.get("room_kind", "")):
 		"hearth":
 			# The mat you wake on (§ET.3): woven reeds, flat on the floor.
@@ -364,15 +409,18 @@ func _dress(pc: Dictionary) -> void:
 			for s in TombKit.coffin_spots(_lay, pc):
 				var a := float(s.along)
 				var sd := float(s.sd)
+				coffins += 1
 				var col: Color = palette[rng.randi() % palette.size()]
 				if TombKit.resting_at(_lay, int(pc.id), int(s.i)).is_empty():
 					_sarcophagus(_at(pc, a, sd * (half - TombKit.COFFIN_IN)), yaw, col)
 				else:
 					# Its lid falls toward the room's middle, clear of the end
 					# walls' doors (the coffin's +x looks back toward the
-					# room's start).
-					_open_coffin(_at(pc, a, sd * (half - TombKit.COFFIN_IN)), yaw, col, TombKit.COFFIN_SIZE, -1.0 if a < length * 0.5 else 1.0)
-				if rng.randf() < 0.35:
+					# room's start), unless that lays it before a sconce
+					# (_lid_side).
+					var at := _at(pc, a, sd * (half - TombKit.COFFIN_IN))
+					_open_coffin(at, yaw, col, TombKit.COFFIN_SIZE, _lid_side(pc, at, yaw, TombKit.COFFIN_SIZE, -1.0 if a < length * 0.5 else 1.0, bays))
+				if rng.randf() < 0.35 and not _in_bay(bays, Rect2(a + 0.9 - GOODS_REACH, sd * (half - 2.3) - GOODS_REACH, 2.0 * GOODS_REACH, 2.0 * GOODS_REACH)):
 					_grave_goods(_at(pc, a + 0.9, sd * (half - 2.3), 0.03), 0.3, 1)
 		"catacomb":
 			# The niche stacks (TombKit.niche_spots); the one a skeleton sits
@@ -380,6 +428,7 @@ func _dress(pc: Dictionary) -> void:
 			for s in TombKit.niche_spots(_lay, pc):
 				var a := float(s.along)
 				var sd := float(s.sd)
+				niches += 1
 				if not TombKit.resting_at(_lay, int(pc.id), int(s.i)).is_empty():
 					_burial_niche(pc, a, sd)
 					continue
@@ -393,11 +442,11 @@ func _dress(pc: Dictionary) -> void:
 				var ca := 0.9 if k < 2 else length - 0.9
 				var cs := (half - 0.9) * (1.0 if k % 2 == 0 else -1.0)
 				var side := "left" if cs > 0.0 else "right"
-				if _near_door(pc, side, ca, 1.8):
+				if _near_door(pc, side, ca, 1.8) or _in_bay(bays, Rect2(ca - 0.6 - GOODS_REACH, cs - 0.6 - GOODS_REACH, 1.2 + 2.0 * GOODS_REACH, 1.2 + 2.0 * GOODS_REACH)):
 					continue
 				_grave_goods(_at(pc, ca, cs, 0.03), 0.6, 6)
 		"collapsed":
-			# The corner farthest from the doors.
+			# The corner farthest from the doors and the sconces' bays.
 			var best := Vector2(length * 0.8, half * 0.6)
 			var best_d := -INF
 			for k in 4:
@@ -406,16 +455,84 @@ func _dress(pc: Dictionary) -> void:
 				for di in pc.doors:
 					var d: Dictionary = _lay.doors[di]
 					dmin = minf(dmin, (Delves.along_across(pc, d.p) - q).length())
+				for b in bays:
+					var r: Rect2 = b
+					dmin = minf(dmin, (q - q.clamp(r.position, r.end)).length())
 				if dmin > best_d:
 					best_d = dmin
 					best = q
 			var p := _at(pc, best.x, best.y)
-			box(Transform3D(Basis.from_euler(Vector3(0.45, rng.randf() * TAU, 0.2)), p + Vector3(0.0, 0.8, 0.0)), Vector3(2.6, 0.45, 1.5), palette[2], _growth(0.4), 0.12, 0.08)
-			rubble(p, 1.4, 6)
+			# The slab, turned (or broken smaller) until it keeps out of the
+			# sconces' bays, and its rubble the same.
+			var yaw0 := rng.randf() * TAU
+			for k in 8:
+				var size := Vector3(2.6, 0.45, 1.5) * (1.0 if k < 4 else 0.65)
+				var yaw := yaw0 + PI * 0.5 * (k % 4)
+				if not _in_bay(bays, _slab_foot(pc, p, size, yaw)):
+					box(Transform3D(Basis.from_euler(Vector3(0.45, yaw, 0.2)), p + Vector3(0.0, 0.8, 0.0)), size, palette[2], _growth(0.4), 0.12, 0.08)
+					break
+			_rubble_clear(pc, p, 1.4, 6, bays)
 		"heart":
 			var hb := TombKit.heart_box(pc)
 			_heart_box(hb.pos, float(hb.yaw), not TombKit.resting_at(_lay, int(pc.id), -1).is_empty())
-			_grave_goods(_at(pc, length * 0.35, 0.0, 0.03), 1.4, 6)
+			# The dead's goods, spread no nearer the sconces' bays than they
+			# reach.
+			var g := Vector2(length * 0.35, 0.0)
+			var room_for := 1.4 + GOODS_REACH
+			for b in bays:
+				var r: Rect2 = b
+				room_for = minf(room_for, (g - g.clamp(r.position, r.end)).length())
+			_grave_goods(_at(pc, g.x, g.y, 0.03), clampf(room_for - GOODS_REACH, 0.3, 1.4), 6)
+
+
+## The side (+1 / -1 along the coffin's x) an open coffin's lid falls to
+## (_open_coffin): `prefer` (toward the room's middle) unless the lid would
+## lie in a sconce's bay (design §EX.4), then the other side if that's
+## clear.
+func _lid_side(pc: Dictionary, p: Vector3, yaw: float, size: Vector3, prefer: float, bays: Array) -> float:
+	for sd: float in [prefer, -prefer]:
+		var c := p + Basis(Vector3.UP, yaw) * Vector3(sd * (size.x * 0.5 + 0.5), 0.0, 0.0)
+		if not _in_bay(bays, _slab_foot(pc, c, Vector3(size.x + 0.1, 0.0, size.z + 0.5), yaw)):
+			return sd
+	return prefer
+
+
+## A fallen slab's footprint at `p`, `size`, turned `yaw` (its tilt
+## aside): a Rect2 in room `pc`'s (along, across), a little over.
+func _slab_foot(pc: Dictionary, p: Vector3, size: Vector3, yaw: float) -> Rect2:
+	var bs := Basis(Vector3.UP, yaw)
+	var r := Rect2(Delves.along_across(pc, Vector2(p.x, p.z)), Vector2.ZERO)
+	for c in [Vector3(1, 0, 1), Vector3(1, 0, -1), Vector3(-1, 0, 1), Vector3(-1, 0, -1)]:
+		var w: Vector3 = p + bs * (Vector3(size.x, 0.0, size.z) * 0.5 * (c as Vector3))
+		r = r.expand(Delves.along_across(pc, Vector2(w.x, w.z)))
+	return r.grow(0.1)
+
+
+## RuinBuilder.rubble, kept out of `bays` (room `pc`'s sconce bays): a
+## block or boulder that would land in one isn't laid.
+func _rubble_clear(pc: Dictionary, center: Vector3, spread: float, count: int, bays: Array) -> void:
+	for i in count:
+		var a := rng.randf() * TAU
+		var r := sqrt(rng.randf()) * spread
+		var x := center.x + cos(a) * r
+		var z := center.z + sin(a) * r
+		var size := Vector3(rng.randf_range(0.6, 1.4), rng.randf_range(0.4, 0.8), rng.randf_range(0.6, 1.2))
+		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.5, 0.5), rng.randf() * TAU, rng.randf_range(-0.5, 0.5)))
+		var col: Color = palette[rng.randi() % palette.size()]
+		var block := rng.randf() < 0.55
+		var moss := _growth(rng.randf_range(0.3, 0.9))
+		var rr := maxf(size.x, size.z) * 0.5
+		if _in_bay(bays, Rect2(Delves.along_across(pc, Vector2(x, z)) - Vector2(rr, rr), Vector2(rr, rr) * 2.0)):
+			continue
+		var p := Vector3(x, ground(x, z) + size.y * 0.3, z)
+		var was := foot_y
+		foot_y = p.y - size.y * 0.3
+		if block:
+			# A tumbled block, edges knocked round.
+			box(Transform3D(basis, p), size, col, moss, 0.16, 0.1)
+		else:
+			boulder(p, size * 0.55, basis, col.darkened(0.05), moss)
+		foot_y = was
 
 
 ## The heart's coffin (Mike's frame 9): a mossy stone box, its lid shoved

@@ -11,11 +11,13 @@ extends Node
 ##      hearth, the one who found you sitting across it, a bundle of
 ##      unlit torches beside it, three or four ways out; the tomb beyond
 ##      generated from the seed out of the tomb kit (TombKit, TombBuild).
-##   3. relighting (§ET.4): cold fire-holders down the tomb, lit with the
-##      torch's swing (§CN), staying lit, and a torch relights at any of
-##      them; between them the dark (§BA, §CJ.5: no sun, no sky, only a
-##      faint navy so nothing is grey), half readable near you when no
-##      flame is (§FC.4, HalfDark).
+##   3. relighting (§ET.4, §EX.4): cold wall sconces down the tomb (on the
+##      walls of every room past the hearth room, whose hearth is the
+##      tomb's only one, and along the corridors), lit with the torch's
+##      swing (§CN), staying lit, and a torch relights at any of them;
+##      between them the dark (§BA, §CJ.5: no sun, no sky, only a faint
+##      navy so nothing is grey), half readable near you when no flame is
+##      (§FC.4, HalfDark).
 ##   4. the torch's snuff rules (§ET.7 as amended by §EZ.1 and §EZ.5:
 ##      only deep water puts it out; the airways lean it; TorchSnuff,
 ##      Airways), and F to smother it yourself (§FC.3, Torch.douse).

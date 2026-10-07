@@ -277,6 +277,30 @@ func _pick(kinds: Array) -> Resident:
 	return res.all[0] if not res.all.is_empty() else null
 
 
+## As _pick, but one whose waking test spot (_wake: just beyond its
+## wakes_m, in front of it) is out of every other skeleton's wakes_m, so
+## only it is tested there (two in one catacomb can rest close, design
+## §EX.4 setting the niches round the sconces); else _pick's.
+func _pick_alone(kinds: Array) -> Resident:
+	for k in kinds:
+		for r in res.all:
+			if str(r.place.rests_in) != k or int(r.place.spot) < 0:
+				continue
+			var e: Vector3 = r.place.eye
+			var out: Vector3 = r.place.out
+			var inward := Vector3(out.x - (r.place.pos as Vector3).x, 0.0, out.z - (r.place.pos as Vector3).z).normalized()
+			var d := float(r.def.get("wakes_m", 3.0)) + 0.4
+			var dy := out.y + PlanetPlayer.EYE_Y - e.y
+			var eye := Vector3(e.x, out.y, e.z) + inward * sqrt(maxf(d * d - dy * dy, 0.0)) + Vector3(0.0, PlanetPlayer.EYE_Y, 0.0)
+			var alone := true
+			for q in res.all:
+				if q != r and (q.place.eye as Vector3).distance_to(eye) <= float(q.def.get("wakes_m", 3.0)) + 0.3:
+					alone = false
+			if alone:
+				return r
+	return _pick(kinds)
+
+
 ## A torch in your hand (from the pack), lit or not.
 func _torch(lit: bool) -> void:
 	if not player.inventory.has_kind("torch"):
@@ -308,7 +332,7 @@ func _hunt_at(r: Resident, at: Vector3, face: Vector3) -> void:
 
 ## 3. Waking at wakes_m.
 func _wake() -> void:
-	var r := _pick(["wall_niche", "grave"])
+	var r := _pick_alone(["wall_niche", "grave"])
 	if r == null:
 		ok(false, "a skeleton to wake")
 		return

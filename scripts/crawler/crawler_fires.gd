@@ -1,11 +1,12 @@
 class_name CrawlerFires
 extends Node3D
-## The tomb's fire (design 6 Oct §ET.3, §ET.4; crawler.json holders,
-## delves.json fire_holders): the hearth in the hearth room, lit when you
-## wake and kept by the one who found you; the cold fire-holders down the
-## tomb (a hearth ring in each room, delves.json by_ruin tomb, and wall
-## sconces down the corridors); and the bundle of unlit torches by the
-## hearth (§AW).
+## The tomb's fire (design 6 Oct §ET.3, §ET.4, §EX.4; crawler.json holders,
+## room_torches; delves.json fire_holders): the hearth in the hearth room,
+## the tomb's one hearth, lit when you wake and kept by the one who found
+## you; the cold fire-holders down the tomb, all wall sconces (two or four
+## on the walls of every other room, room_torches; one every
+## sconce_every_m down the corridors); and the bundle of unlit torches by
+## the hearth (§AW).
 ##
 ## Every fire is a Campfire (the same stones, coals, flame card, light,
 ## sound and smoke as the open world's, so the torch's swing finds them,
@@ -16,9 +17,11 @@ extends Node3D
 ## they never burn down (holders.kept: FireStore's kept stores) and stay
 ## lit for the game (§ET.4: light is the score), and an unlit torch swung
 ## through one catches. A sconce is a flame on a stone bracket at chest
-## height on the wall, its light reaching light_radius_m.
+## height on the wall, its light reaching light_radius_m; a room's is
+## brighter than a corridor's by room_torches.light_scale.
 
 static var HOLD: Dictionary = Tuning.table("crawler").get("holders", {})
+static var RT: Dictionary = Tuning.table("crawler").get("room_torches", {})
 static var FH: Dictionary = Tuning.table("delves").get("fire_holders", {})
 ## The ash laid in a cold holder (fuel.json kindling kinds): dry, catches
 ## after its catch time.
@@ -60,11 +63,15 @@ func build(p_world: Node, lay: Dictionary) -> void:
 	_bundle(lay.bundle)
 
 
+## A cold holder from the layout's `h` (TombKit): a wall sconce, or any
+## other kind as a Campfire on the floor (none in the tomb since §EX.4; the
+## frames tool builds the old hearth ring to measure against).
 func _holder(h: Dictionary) -> Node3D:
 	var pos: Vector3 = h.pos
 	var fire: Node3D
 	if str(h.kind) == "sconce":
-		fire = _sconce(pos, h.normal)
+		# A room's wall torch lights a room (room_torches.light_scale).
+		fire = _sconce(pos, h.normal, float(RT.get("light_scale", 1.0)) if bool(h.get("room", false)) else 1.0)
 	else:
 		fire = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, pos), key_dir(pos), false)
 		fire.name = "FireHolder"
@@ -96,9 +103,10 @@ func _holder(h: Dictionary) -> Node3D:
 
 
 ## A wall sconce at `pos` (the flame's foot) on the wall facing `nrm`: a
-## stone bracket and cup, the flame card, the coals, the light, the
-## sound; a Campfire to everything that looks for fires.
-func _sconce(pos: Vector3, nrm: Vector3) -> Node3D:
+## stone bracket and cup, the flame card, the coals, the light (`light_k`
+## times a corridor sconce's), the sound; a Campfire to everything that
+## looks for fires.
+func _sconce(pos: Vector3, nrm: Vector3, light_k := 1.0) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Sconce"
 	root.add_to_group(Campfire.GROUP)
@@ -140,7 +148,7 @@ func _sconce(pos: Vector3, nrm: Vector3) -> Node3D:
 	root.set_meta("flick_seed", phase)
 	# A small flame's light (Campfire.flicker sets the campfire's; this
 	# scales it after).
-	root.set_meta("energy_k", s * 1.4)
+	root.set_meta("energy_k", s * 1.4 * light_k)
 	root.set_meta("light_y", 0.3)
 	FireStore.register(root, world, key_dir(pos), true)
 	return root
