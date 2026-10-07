@@ -60,9 +60,13 @@ Built in order after Mike's notes, with his number from today: *"a regular torch
   - **Seed 42's lights relit went from 0 to 2** after one throw. The second sconce had been catching since the snake's tests, 15 m away (a pot thrown at the snake lit it). Each pot lit only what was in its reach.
   - **Other checks** (seed 7):
     - Before the merge with fc4a333, all 0 fails: `residents_check`, `boss_check`, `crawler_harm_check`, `stagger_check`, `hands_check`, `crawler_check` (240 lines) and `cleared_check` (84 lines). In the open world, `swing_check` (its own seed, 7731: 18 lines) and `scene_load_check` have 0 fails. Both still crash at shutdown after their results, as before.
-    - On the code as pushed: `stagger_check`, `hands_check` and `crawler_harm_check` have 0 fails. `crawler_check`, `boss_check`, `residents_check` and `cleared_check` were still running at the push, with 0 fails so far; their result follows here.
+    - On the code as pushed, all 0 fails: `crawler_check` (247 lines), `cleared_check` (84), `boss_check`, `residents_check`, `crawler_harm_check`, `stagger_check` and `hands_check`. No script errors in any log.
   - **Found on the way:** `swing_check` with `SEED=7` fails 3 lines (a swing at the ground lights a fire, no wildfire, a swing at a creature). The code from before this change fails the same way. Its own seed passes. Not looked into: the open world is shelved.
-  - **The frames:** not rendered yet for this change. `crawler_frames` runs next, on the code as pushed, and its result follows here.
+  - **The frames** (`crawler_frames`, seed 7, on 59f37d4): 70 frames, 52 lines, 1 fail, no script errors.
+    - The fire pots pass: the tar patch lights its dark corridor in amber (hue 18.9) and the light-oil burst fills its dark room (hue 17.5). The tar patch's corridor sconce, 1.7 m over it, stays cold.
+    - The skeletons (`21a`–`21c`) and the floor cleared by light (`26a`–`26d`, the last light 48th of 48) pass.
+    - **The fail isn't this change:** from the foot of the way out's flight at night (`25b`), the opening reads 0.085 against the stone's 0.071, 0.014 over where the check wants 0.02. Before fc4a333 it read 0.100 against 0.075. That is fc4a333's fade from far off (`exit.glow`: all of the glow within 8 m, 0.55 of it by 30 m), seen from about 15 m below. The frame comes before any fire pot in the run.
+    - **For Mike:** you asked for the way out to be faint from far off, and this frame wants it readable from the foot of the stairs. Either `exit.glow.far_share` goes up, or the frame's bar comes down. Left for the session building part 2, which renders the frames next.
 - **Merged with fc4a333** (Mike's second note, part 1, pushed while this ran): `burst` takes their `in_hand` and keeps the face it burst on (`normal`) for the relight. A pot that cooks off in your hand by a cold sconce lights it too. The fire-to-fire check's thrown pot now flies with you on the far floor, out of your own burst's reach (`hurts_you`).
 - **Left open, a call for Mike if he wants it:** a tar patch burning on the floor under a sconce doesn't light it; only a burst that reaches it does.
 
