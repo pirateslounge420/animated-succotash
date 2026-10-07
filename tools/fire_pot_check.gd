@@ -57,9 +57,17 @@ extends SceneTree
 ## 12. the found pot: over 30 tombs it lies in a side room, never the hearth
 ##     room, the heart or the spine (prompt 46's, or the way to the heart);
 ##     in the scene on the floor of its room; right click takes it;
-## 13. one firelight (§EX.6): every light of the pot's fire is the hearth's
-##     amber, reddening only as it dies; it never lights a cold holder and
-##     no torch catches from it (relights_holders null).
+## 13. fire to fire (Mike, 7 Oct, answering §FI.2 call 4: relights_holders,
+##     relights_torch), last: a tar pot thrown at the wall by a cold sconce
+##     bursts on the stone and the sconce catches and burns for good, the
+##     lights relit one more; a light-oil burst behind a cold sconce's wall,
+##     in splash_m by the tape, leaves it cold (never through stone), and
+##     the same burst in front of it lights it; an unlit torch swung by a
+##     burning tar patch catches (nothing before the patch, nothing where it
+##     burnt out); the patch under a cold sconce doesn't light it, 1.7 m up;
+##     a patch beside a holder on the floor lights it; and one firelight
+##     (§EX.6): every light of the pot's fire is the hearth's amber,
+##     reddening only as it dies.
 
 const SEEDS := 30
 
@@ -151,7 +159,6 @@ func _run() -> void:
 	_stand(Vector3(0.0, -300.0, 0.0))
 	await _frames(5)
 	await _spread()
-	await _no_holder()
 	await _carry()
 	await _no_torch_no_pot()
 	await _lighting()
@@ -164,6 +171,7 @@ func _run() -> void:
 	await _gives_away()
 	await _real_snake()
 	await _real_skeletons()
+	await _fire_to_fire()
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -711,40 +719,186 @@ func _spread() -> void:
 	ok(_count("spread") == n and str(mat.state) == "burnt", "and never burns again")
 
 
-## The pot's fire never lights a cold holder, and no torch catches from it.
-func _no_holder() -> void:
-	var cold: Node3D = null
+## Cold sconces to try fire to fire on: cold, `m` m clear of every
+## creature (a burst by one would burn it or drive it off), and `apart` m
+## from each other, from any fire alight and from any of the pots' fire;
+## the first `corridors` of them in corridors (bare floor in front of
+## them, for the tests on the floor), then any.
+func _cold_sconces(want: int, corridors: int, m := 6.0, apart := 8.0) -> Array[Node3D]:
+	var cands: Array[Node3D] = []
 	for h in main.fires.holders:
-		if not FireStore.is_lit(h) and str(h.get_meta("fire_holder")) != "sconce":
-			cold = h
-			break
-	if cold == null:
-		for h in main.fires.holders:
-			if not FireStore.is_lit(h):
-				cold = h
+		if FireStore.is_lit(h) or FireStore.state_of(h) == "catching" or str(h.get_meta("fire_holder")) != "sconce":
+			continue
+		var at := h.global_position
+		var clear := not FirePots.flame_near(at, apart)
+		for t in FirePots.targets(self):
+			if FirePots.distance_to(t, at) < m:
+				clear = false
+		for f in get_nodes_in_group(Campfire.GROUP):
+			if FireStore.is_lit(f) and (f as Node3D).global_position.distance_to(at) < apart:
+				clear = false
+		if clear:
+			cands.append(h)
+	var out: Array[Node3D] = []
+	for pass_i in 2:
+		for h in cands:
+			if out.size() >= (corridors if pass_i == 0 else want):
 				break
-	ok(cold != null, "a cold holder to try")
-	if cold == null:
+			if pass_i == 0 and str(main.lay.pieces[int(h.get_meta("piece"))].kind) != "corridor":
+				continue
+			var near := false
+			for o in out:
+				if o == h or o.global_position.distance_to(h.global_position) < apart:
+					near = true
+			if not near:
+				out.append(h)
+	return out
+
+
+## How far the open air runs from `from` along `dir`, up to `most` m.
+func _open_m(from: Vector3, dir: Vector3, most: float) -> float:
+	var q := PhysicsRayQueryParameters3D.create(from, from + dir * most)
+	q.collision_mask = PropCollision.WORLD_LAYER
+	q.exclude = [p.get_rid()]
+	var hit := p.get_world_3d().direct_space_state.intersect_ray(q)
+	return most if hit.is_empty() else from.distance_to(hit.position)
+
+
+func _catching(h: Node3D) -> bool:
+	return FireStore.is_lit(h) or FireStore.state_of(h) == "catching"
+
+
+## Fire to fire (Mike, 7 Oct, answering §FI.2 call 4: "a pot should relight
+## an old sconce and a burning patch can relight torch"; relights_holders,
+## relights_torch). Last, so the lights it relights change nothing above.
+func _fire_to_fire() -> void:
+	ok(bool(FirePots.D.get("relights_holders", false)) and bool(FirePots.D.get("relights_torch", false)), "fire_pots.json: a pot's fire relights cold holders and an unlit torch (relights_holders, relights_torch; Mike, 7 Oct)")
+	var b: Boss = main.get("boss")
+	if b != null:
+		# Held where it is (down below, if the last pot sent it there).
+		b.auto = false
+	_torch(false)
+	fp.left = {}
+	# Two in corridors (for the tests on the floor), then two more.
+	var sc := _cold_sconces(4, 2)
+	var in_cor := 0
+	for h in sc:
+		if str(main.lay.pieces[int(h.get_meta("piece"))].kind) == "corridor":
+			in_cor += 1
+	ok(sc.size() >= 4 and in_cor >= 2, "four cold sconces clear of the creatures and of each other to try (%d, %d in corridors)" % [sc.size(), in_cor])
+	if sc.size() < 4 or in_cor < 2:
+		if b != null:
+			b.auto = true
 		return
-	var at := cold.global_position
-	var foot := fp.floor_under(at + Vector3.UP * 0.5)
-	fp.burst(at + Vector3.UP * 0.4, "tar", null, Vector3.UP)
+	var floor_of := func(h: Node3D) -> float:
+		return h.global_position.y - float(CrawlerFires.HOLD.get("sconce_h_m", 1.7))
+	# A tar pot thrown at the wall by a cold sconce: it bursts on the stone
+	# beside the niche, and the sconce catches.
+	var a: Node3D = sc[2]
+	var nrm := a.global_basis.z.normalized()
+	var face := a.global_position + nrm * TombBuild.sconce_inset()
+	var aim := face + Vector3.UP.cross(nrm).normalized() * 0.45 + Vector3.UP * 0.1
+	var out_m := clampf(_open_m(face + nrm * 0.05 - Vector3.UP * 0.3, nrm, 3.5) - 0.4, 1.0, 3.0)
+	var from := face + nrm * out_m - Vector3.UP * 0.3
+	# You on the far floor, out of its reach (hurts_you): the pot flies on
+	# its own from where your hand would be.
+	_stand(Vector3(0.0, -300.0, 0.0))
 	await _frames(3)
+	var lit0: int = main.fires.lit_count()
+	fp.last_landing = {}
+	var g := float(FirePots.throw_d().get("gravity_mps2", 9.8))
+	var tf := 0.45
+	var tp := ThrownPot.new()
+	fp.add_child(tp)
+	var ex: Array[RID] = [p.get_rid()]
+	tp.launch(fp, from, (aim - from) / tf + Vector3.UP * 0.5 * g * tf, "tar", -1.0, ex)
+	fp.flying.append(tp)
+	await _wait_landed(240)
+	var land := fp.last_landing.duplicate()
+	var at: Vector3 = land.get("pos", Vector3.INF)
+	var caught := _catching(a)
+	ok(str(land.get("why", "")) == "world" and at.distance_to(aim) < 0.4 and caught, "a tar pot thrown %.1f m at the wall by a cold sconce bursts on the stone, %.2f m from its flame, and the sconce catches (%s)" % [out_m, at.distance_to(a.global_position) if at.is_finite() else -1.0, FireStore.state_of(a)])
+	for i in 360:
+		if FireStore.is_lit(a):
+			break
+		await physics_frame
+	ok(FireStore.is_lit(a) and main.fires.lit_count() >= lit0 + 1, "it burns again, for good, like one the torch relit: lights relit %d, then %d" % [lit0, main.fires.lit_count()])
+	# One firelight (§EX.6): the pot's own fire in the hearth's amber.
 	var lights_ok := true
+	var n_lights := 0
 	var want := Torch.fire_color()
 	for f in fp.fires:
 		if is_instance_valid(f) and (f as PotFire).light() != null and (f as PotFire).gutter() == 0.0 and (f as PotFire).kind != "flash":
+			n_lights += 1
 			if not (f as PotFire).light().light_color.is_equal_approx(want):
 				lights_ok = false
-	ok(lights_ok, "one firelight: the pot's fire lights in the hearth's amber (#%s)" % want.to_html(false))
-	for i in 240:
-		FireStore.tick(self, 1.0 / 60.0, at)
-		await physics_frame
-	ok(not FireStore.is_lit(cold), "tar burning on a cold %s never lights it (relights_holders null)" % str(cold.get_meta("fire_holder")))
-	var near_p := foot if foot.is_finite() else at
-	ok(not Torch.flame_near(self, near_p + Vector3.UP * 0.4, 0.8), "and no torch catches from the pot's fire (not a flame the swing takes from)")
-	# Let it burn out before the rest.
-	await _frames(int(float(FirePots.oil("tar").get("floor_patch_s", 12.0)) * 60.0) + 30)
+	ok(lights_ok and n_lights > 0, "one firelight: the pot's fire lights in the hearth's amber (#%s, %d lights)" % [want.to_html(false), n_lights])
+	# Never through stone: a light-oil burst behind a cold sconce's wall,
+	# well within splash_m of it by the tape, leaves it cold; the same
+	# burst in front of it lights it.
+	var bh: Node3D = sc[3]
+	var n2 := bh.global_basis.z.normalized()
+	var splash := float(FirePots.oil("light_oil").get("splash_m", 3.0))
+	var behind := bh.global_position - n2 * (Delves.WALL + 0.35)
+	fp.burst(behind, "light_oil", null, -n2)
+	await _frames(3)
+	var through := _catching(bh)
+	var front := bh.global_position + n2 * (TombBuild.sconce_inset() + 0.9) - Vector3.UP * 0.4
+	fp.burst(front, "light_oil", null, Vector3.UP)
+	await _frames(3)
+	ok(not through and behind.distance_to(bh.global_position) < splash and _catching(bh), "a light-oil burst behind a cold sconce's wall, %.1f m from its flame (splash_m %.0f), leaves it cold: never through stone; the same burst %.1f m in front of it lights it" % [behind.distance_to(bh.global_position), splash, front.distance_to(bh.global_position)])
+	# An unlit torch swung by a burning tar patch catches from it; the patch
+	# under a cold sconce doesn't reach it, 1.7 m up (only a burst does).
+	var c: Node3D = sc[0]
+	var n3 := c.global_basis.z.normalized()
+	var spot := fp.floor_under(c.global_position + n3 * (TombBuild.sconce_inset() + 0.6) - Vector3.UP * 1.0)
+	ok(spot.is_finite() and absf(spot.y - float(floor_of.call(c))) < 0.1, "bare corridor floor under a cold sconce for a tar patch")
+	var along := Vector3.UP.cross(n3).normalized()
+	if _open_m(spot + Vector3.UP * 1.0, -along, 3.0) > _open_m(spot + Vector3.UP * 1.0, along, 3.0):
+		along = -along
+	var stand := spot + along * clampf(_open_m(spot + Vector3.UP * 1.0, along, 3.0) - 0.5, 1.2, 2.0)
+	var to := spot - stand
+	_torch(false)
+	_stand(stand, atan2(-to.x, -to.z), -0.3)
+	await _frames(3)
+	p.torch.swing()
+	await _frames(int(Fists.STRIKE_S * 60.0) + 6)
+	var before := p.torch.last_pass
+	var patch := PotFire.patch(fp, spot, "tar")
+	fp.fires.append(patch)
+	await _frames(2)
+	p.torch.swing()
+	await _frames(int(Fists.STRIKE_S * 60.0) + 6)
+	ok(before == "" and p.torch.last_pass == "torch" and p.torch.lit(), "an unlit torch swung %.1f m from a burning tar patch catches from it (%s); before the patch, nothing (%s)" % [stand.distance_to(spot), p.torch.last_pass, before if before != "" else "-"])
+	await _frames(60)
+	ok(not _catching(c), "the patch on the floor under a cold sconce doesn't light it, 1.7 m up (its flames don't reach; a burst there would)")
+	p.torch.put_out("stowed")
+	var patch_s := float(FirePots.oil("tar").get("floor_patch_s", 12.0))
+	await _frames(int(patch_s * 60.0) + 30)
+	p.torch.swing()
+	await _frames(int(Fists.STRIKE_S * 60.0) + 6)
+	ok(not is_instance_valid(patch) and p.torch.last_pass == "" and not p.torch.lit(), "where it has burnt out, the swing passes nothing")
+	# A holder on the floor (none in the tomb since §EX.4; built here as
+	# the frames tool builds the old hearth ring): a patch beside it lights it.
+	var d: Node3D = sc[1]
+	var n4 := d.global_basis.z.normalized()
+	var out4 := clampf(_open_m(d.global_position + n4 * (TombBuild.sconce_inset() + 0.05) - Vector3.UP * 1.0, n4, 3.0) - 0.7, 0.6, 1.3)
+	var ring_at := fp.floor_under(d.global_position + n4 * (TombBuild.sconce_inset() + out4) - Vector3.UP * 1.0)
+	var ring: Node3D = main.fires._holder({"kind": "hearth_ring", "pos": ring_at, "normal": Vector3.UP, "piece": TombKit.piece_at(main.lay, ring_at + Vector3.UP * 0.2)})
+	await _frames(2)
+	var cold_ring := not _catching(ring)
+	var a4 := Vector3.UP.cross(n4).normalized()
+	var by := fp.floor_under(ring_at + a4 * 1.0 + Vector3.UP * 0.3)
+	var patch2 := PotFire.patch(fp, by if by.is_finite() else ring_at + a4 * 1.0, "tar")
+	fp.fires.append(patch2)
+	await _frames(30)
+	var fy := float(floor_of.call(d))
+	ok(cold_ring and _catching(ring) and absf(ring_at.y - fy) < 0.1 and absf(patch2.foot.y - fy) < 0.1, "a tar patch burning 1 m from a cold holder on the corridor's floor lights it (%s)" % FireStore.state_of(ring))
+	patch2._end()
+	ring.queue_free()
+	await _frames(2)
+	if b != null:
+		b.auto = true
 
 
 func _found_layouts() -> void:
@@ -978,6 +1132,7 @@ func _real_skeletons() -> void:
 	ok(r != null, "a skeleton asleep to try")
 	if r != null:
 		var burst := float(FirePots.oil("tar").get("burst", 1.0))
+		var r_id := r.get_instance_id()
 		fp.burst(r.fire_center(), "tar", r, Vector3.UP)
 		var woke := r.awake()
 		var hp1 := r.fire_hp
@@ -994,7 +1149,11 @@ func _real_skeletons() -> void:
 			for w in Harm.instance.pursuers:
 				if not is_instance_valid(w):
 					counted = true
-		ok(gone_s > 0.0 and gone_s <= float(FirePots.oil("tar").get("burn_s", 8.0)) and not rs.all.has(r) and not counted, "it burns down to nothing and is gone (after %.2f s), off the tomb's list, its chase off" % gone_s)
+		var listed := false
+		for c in rs.all:
+			if not is_instance_valid(c) or c.get_instance_id() == r_id:
+				listed = true
+		ok(gone_s > 0.0 and gone_s <= float(FirePots.oil("tar").get("burn_s", 8.0)) and not listed and not counted, "it burns down to nothing and is gone (after %.2f s), off the tomb's list, its chase off" % gone_s)
 	# Light oil on one awake: out at once.
 	var r2: Resident = null
 	for c in rs.all:

@@ -368,10 +368,12 @@ func lit() -> bool:
 
 
 ## Any flame within `radius` of `pos` a torch can be lit at (a lit fire,
-## a planted torch).
+## a planted torch, a lit sconce; in the crawler a fire pot's burning patch
+## or tar alight, FirePots.flame_near, Mike 7 Oct).
 static func flame_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 	return Campfire.lit_near(tree, pos, radius) or PlantedTorch.lit_near(pos, radius) \
-		or (Shrines.instance != null and Shrines.instance.sconce_near(pos, radius + 0.4, true) != null)
+		or (Shrines.instance != null and Shrines.instance.sconce_near(pos, radius + 0.4, true) != null) \
+		or FirePots.flame_near(pos, radius)
 
 
 ## How far the flame passes on the swing (torch.json swing, §CN).
