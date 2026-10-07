@@ -2,7 +2,8 @@ class_name Torch
 extends Node3D
 ## The torch (design 30 Sept §AW, data/torch.json): the first tool. A
 ## carried thing (`kind` torch, Inventory: burden applies) held in one
-## hand (PlanetPlayer.weapon "torch"; Q cycles to it while you carry one),
+## hand (PlanetPlayer.weapon "torch"; Q cycles to it while you carry one,
+## in the crawler the mouse wheel, §FB Hands),
 ## drawn in first person like the bow. The swing passes the flame (design
 ## 2 Oct §CN, superseding §AW's right click): left click (`shoot`) swings
 ## it on the bare hand's arc and timing (Fists.STRIKE_S), and at the end
@@ -20,7 +21,7 @@ extends Node3D
 ## burn_min real minutes, rain and storms shorten that, then gutters (the
 ## last gutter_share: dimmer, a harder flicker) and goes out: a stick
 ## (`burnt`). Water past douse_depth_m puts it out (relight it at a
-## flame); so does stowing it (Q away from it) and starting a climb with
+## flame); so does stowing it (Q or the wheel away from it) and starting a climb with
 ## no ground to plant it in; with ground there, a climb plants it. In the
 ## crawler you can smother it on purpose (design 6 Oct §FC.3, douse(): F)
 ## and keep holding it, its burn kept; that is not water. Right
@@ -490,7 +491,8 @@ func hands_needed() -> void:
 	put_out("stowed")
 
 
-## Q away from it, or into the pack: a lit torch goes out.
+## Q away from it (the wheel in the crawler, §FB), or into the pack: a
+## lit torch goes out.
 func stow() -> void:
 	if lit():
 		put_out("stowed")

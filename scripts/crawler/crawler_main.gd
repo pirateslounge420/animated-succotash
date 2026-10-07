@@ -27,10 +27,13 @@ extends Node
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), off with the Settings switch Crosshair dot and while the log or
 ## the settings cover the middle of the frame. The log keeps its lines
-## (Enter), O the settings, F11 the pixel size, F2 the frame time. Right
-## click takes a torch from the bundle; left click swings the torch; Q
-## puts it away or takes it out; F smothers it. No combat, no harm, no
-## dread meter yet (the dark is the absence of light in this slice).
+## (Enter), O the settings (with their Controls page, §FB), F11 the pixel
+## size, F2 the frame time. Right click takes a torch from the bundle;
+## left click swings the torch; the mouse wheel puts it away or takes it
+## out, and with Tab held the wheel steps the left hand through its strip
+## of fire pots, shown while Tab is held (§FB: Hands, HandStrip;
+## FirePots); F smothers the torch. No combat, no harm, no dread meter yet
+## (the dark is the absence of light in this slice).
 
 static var LOOKD: Dictionary = Tuning.table("crawler").get("look", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
@@ -57,6 +60,8 @@ var reticle: Reticle
 var perf: PerfReadout
 var log_panel: LogPanel
 var settings_panel: SettingsPanel
+## The strip Tab shows (§FB).
+var hand_strip: HandStrip
 var _fade: ColorRect
 var _lit_logged := 0
 ## The one who found you is at the hearth and the dark lifting (tests
@@ -319,6 +324,11 @@ func _ui() -> void:
 	log_panel = LogPanel.new()
 	log_panel.name = "Log"
 	ui.add_child(log_panel)
+	# The hands' strip (§FB), under the panels.
+	hand_strip = HandStrip.new()
+	hand_strip.name = "HandStrip"
+	hand_strip.hands = player.hands
+	ui.add_child(hand_strip)
 	settings_panel = SettingsPanel.new()
 	settings_panel.name = "Settings"
 	ui.add_child(settings_panel)
@@ -372,10 +382,12 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("settings") or (event.is_action_pressed("release_mouse") and settings_panel.visible):
-		_toggle_settings(not settings_panel.visible)
-	elif settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	# The open panel's clicks first, so no key rebound to a mouse button
+	# shuts it under the pointer (the Controls page, §FB).
+	if settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		settings_panel.click(event.position)
+	elif event.is_action_pressed("settings") or (event.is_action_pressed("release_mouse") and settings_panel.visible):
+		_toggle_settings(not settings_panel.visible)
 	elif settings_panel.visible and event is InputEventMouseMotion:
 		settings_panel.drag(event.position)
 	elif event.is_action_pressed("log") and not log_panel.visible and not settings_panel.visible:

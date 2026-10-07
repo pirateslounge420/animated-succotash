@@ -1,12 +1,13 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FB] Two hands (Mike, 6 Oct, 22:32): the mouse wheel cycles the right hand, holding Tab and scrolling cycles the left; Q no longer swaps (replaces the crawler's weapon_swap). Every action rebindable on a Controls page in Settings. First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "about": "Two hands (Mike, 6 Oct, 22:32): the mouse wheel cycles the right hand, holding Tab and scrolling cycles the left; Q no longer swaps (replaces the crawler's weapon_swap). Every action rebindable on a Controls page in Settings. First guesses by Claude (chat), 6 Oct night; the designer owns them. Wired by Claude Code (prompt 55, 7 Oct): right, left, wheel_drives, q_swaps, tab_hold, wheel_step and rebind are read (Hands, HandStrip, Controls, the Controls page); clicks.left_with_pot is the fire pots' (FirePots, prompt 60), which ask Hands what's in the left hand; douse_key is dousing's (prompt 54), on the Controls page as Douse the torch.",
   "right": "§FB (Mike): what the right hand holds; the wheel alone cycles it. 'spear' only once found (§ED.7). Scrolling a lit torch away puts it out, as built (Torch.stow).",
-  "left": "§FB (Mike): left-hand things live in their own small strip of the pack; hold Tab and scroll to cycle them, and to 'empty'.",
+  "left": "§FB (Mike): left-hand things live in their own small strip of the pack; hold Tab and scroll to cycle them, and to 'empty'. strip_slots (Claude Code, prompt 55): how many left-hand things the strip holds, 3, as fire_pots.json carry_max says for the pots. The fire pots are its first things (FirePots, prompt 60): they sit on the strip, not in the carry slots, and dev F9 fills it.",
   "wheel_drives": "§FB (Mike): the wheel drives the right hand by default; the player can switch it to the left in Controls (wheel_drives_options).",
-  "tab_hold": "§FB first guess: holding Tab shows the left-hand strip, wordless, inside the 480-line frame (§Y); tapping Tab alone does nothing in the crawler for now (no inventory screen there).",
+  "tab_hold": "§FB first guess: holding Tab shows the left-hand strip, wordless, inside the 480-line frame (§Y); tapping Tab alone does nothing in the crawler for now (no inventory screen there). show_after_s (Claude Code, prompt 55): the strip shows once Tab has been held this long, or at once when the wheel turns with Tab held, so a tap shows nothing. With wheel_drives on the left, Tab and the wheel drive the right hand, and holding Tab shows the right hand's choices instead.",
+  "wheel_step": "Claude Code, prompt 55: one hand step per notch of a mouse wheel (an event whose factor is at least notch). A trackpad's or a smooth wheel's small steps add up to one step a stroke: they must add to notch, and then the stroke is spent until the wheel has rested reset_s seconds.",
   "clicks": "§FB (Mike): left click swings the right hand's thing (§CN), right click interacts. left_with_pot is Claude's first guess (§FI.2 call 12): hold to bring the hands together and light the wick (fire_pots.json), keep holding to aim, release to throw; the torch doesn't swing while a pot is in the left hand.",
-  "douse_key": "§FC.3 first guess (§FI.2 call 12): smother your own torch and keep holding it. Rebindable. Wired 7 Oct in the crawler (Claude Code): the Controls action douse, F (the d-pad's down on a pad), from Controls.DEFAULTS; rebinding it in a Controls page is §FB's, not built yet.",
+  "douse_key": "§FC.3 first guess (§FI.2 call 12): smother your own torch and keep holding it. Rebindable. Wired 7 Oct in the crawler (Claude Code): the Controls action douse, F (the d-pad's down on a pad), from Controls.DEFAULTS; rebound on Settings' Controls page with every other action (§FB, prompt 55).",
   "rebind": "§FB (Mike): a Controls page in Settings; every action rebindable, saved per player (Claude Code picks where)."
  },
  "right": {
@@ -23,7 +24,8 @@
    "empty"
   ],
   "cycle": "tab_hold_and_wheel",
-  "own_strip": true
+  "own_strip": true,
+  "strip_slots": 3
  },
  "wheel_drives": "right",
  "wheel_drives_options": [
@@ -33,7 +35,12 @@
  "q_swaps": false,
  "tab_hold": {
   "shows_strip": true,
-  "tap_alone": "nothing"
+  "tap_alone": "nothing",
+  "show_after_s": 0.15
+ },
+ "wheel_step": {
+  "notch": 1.0,
+  "reset_s": 0.25
  },
  "clicks": {
   "left": "swing_right_hand",

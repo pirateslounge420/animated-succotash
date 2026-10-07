@@ -80,6 +80,27 @@ static func draw_icon(ci: CanvasItem, c: Vector2, r: float, it: Dictionary) -> v
 			# A round-bellied pot with a neck (a camp's gift, §EJ.4).
 			ci.draw_colored_polygon(_ellipse(c + Vector2(0, r * 0.2), r * 0.7, r * 0.6), main)
 			ci.draw_rect(Rect2(c + Vector2(-r * 0.3, -r * 0.65), Vector2(r * 0.6, r * 0.35)), main.darkened(0.15))
+			if str(it.get("kind", "")) == "fire_pot":
+				# A fire pot (§FA.3, §FJ.5; the left hand's strip, §FB): its
+				# mouth stopped with its oil's plug, tar's black pitch or light
+				# oil's pale seal (PotMesh), the wick standing out of it, lit
+				# in the fire's amber once it has caught.
+				var plug := PotMesh.PITCH if str(it.get("oil", "tar")) == "tar" else PotMesh.SEAL
+				ci.draw_rect(Rect2(c + Vector2(-r * 0.34, -r * 0.82), Vector2(r * 0.68, r * 0.26)), plug)
+				var tip := c + Vector2(r * 0.3, -r * 1.12)
+				ci.draw_line(c + Vector2(0, -r * 0.82), tip, PotMesh.WICK.lightened(0.35), maxf(1.0, w * 1.2))
+				if bool(it.get("lit", false)):
+					ci.draw_circle(tip, r * 0.2, Torch.fire_color())
+		"torch":
+			# A stick and its burnt end; lit, the end glows in the fire's
+			# amber (§EX.6). A spent one is a stick.
+			var tip := c + Vector2(r * 0.42, -r * 0.62)
+			ci.draw_line(c + Vector2(-r * 0.5, r * 0.88), tip, Color(0.45, 0.31, 0.17), w * 1.8)
+			if bool(it.get("lit", false)):
+				ci.draw_circle(tip + Vector2(r * 0.06, -r * 0.1), r * 0.36, Torch.fire_color())
+				ci.draw_circle(tip + Vector2(r * 0.04, -r * 0.06), r * 0.18, Color("#FEFC54"))
+			elif not bool(it.get("burnt", false)):
+				ci.draw_circle(tip, r * 0.2, Color(0.12, 0.08, 0.06))
 		"bowl":
 			# A bowl with the stew showing.
 			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-r * 0.85, -r * 0.1), c + Vector2(r * 0.85, -r * 0.1), c + Vector2(r * 0.45, r * 0.6), c + Vector2(-r * 0.45, r * 0.6)]), main)
@@ -126,6 +147,37 @@ static func _fruit(ci: CanvasItem, c: Vector2, r: float, it: Dictionary, col: Co
 	ci.draw_circle(c + Vector2(-r * 0.22, -r * 0.08), r * 0.1, col.lightened(0.45))
 	ci.draw_line(c + Vector2(0, -r * 0.4), c + Vector2(r * 0.12, -r * 0.85), stalk, maxf(1.0, w))
 	_leaf(ci, c + Vector2(r * 0.35, -r * 0.72), r * 0.5, -0.4, Color(0.34, 0.55, 0.24))
+
+
+## An open hand, its fingers up (an empty hand on the hands' strip,
+## HandStrip, §FB), as pixel art: HAND at a whole-number scale for the
+## size `r` (2 at the strip's 480-line cell, 1 at 270), so its fingers
+## stay apart. A left hand seen from the back, its thumb out to the right;
+## mirrored for the right hand.
+const HAND := [
+	"....#....",
+	"..#.#.#..",
+	"#.#.#.#..",
+	"#.#.#.#..",
+	"#######.#",
+	"#######.#",
+	"#########",
+	"########.",
+	".######..",
+	"..#####..",
+]
+
+
+static func draw_hand(ci: CanvasItem, c: Vector2, r: float, col: Color, right_hand := false) -> void:
+	var w: int = (HAND[0] as String).length()
+	var s := maxf(1.0, floorf(r * 2.0 / w))
+	var top := (c - Vector2(w, HAND.size()) * s * 0.5).round()
+	for y in HAND.size():
+		var line: String = HAND[y]
+		for x in w:
+			if line[x] == "#":
+				var px := (w - 1 - x) if right_hand else x
+				ci.draw_rect(Rect2(top + Vector2(px, y) * s, Vector2(s, s)), col)
 
 
 static func _leaf(ci: CanvasItem, at: Vector2, length: float, tilt: float, col: Color) -> void:

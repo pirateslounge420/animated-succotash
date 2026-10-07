@@ -16,7 +16,10 @@ extends SceneTree
 ## corridor with its sconce relit, 1 m from that sconce's wall and with
 ## the torch beside it; a room with its hearth ring relit; the red ring
 ## after one hit and after two (§FD, §FJ.3: its depth in pixels at 480
-## lines, darker and deeper on two, the heart beating from hit 1).
+## lines, darker and deeper on two, the heart beating from hit 1); the two
+## hands (§FB): the torch in the right, a fire pot in the left, Tab held
+## (the strip low left, then the right hand's low right), and Settings'
+## Controls and Settings pages.
 ## Checks: every cell of the sheet holds the figure (its pixels drawn),
 ## the rescuer's chest brighter and warmer from in front (past the fire)
 ## than from behind, its back navy, the waking frame shows the fire warm
@@ -40,7 +43,9 @@ extends SceneTree
 ## against the navy by themselves. The scene's own
 ## numbers (the stats and patches) leave the crosshair's pixels out. The
 ## run sets the 480 preset and the switch on, and puts the player's
-## settings back at the end.
+## settings back at the end. The hands' strip is drawn where its layout
+## says, inside the frame. The player's controls file is
+## user://controls_frames.cfg here, removed after.
 
 var fails := 0
 var out_dir := ""
@@ -543,6 +548,7 @@ func _in_room(pc: Dictionary, p: Vector3, margin: float) -> bool:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	Controls.path = "user://controls_frames.cfg"
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	OS.set_environment("SEED", str(seed_v))
 	out_dir = OS.get_environment("OUT") if OS.get_environment("OUT") != "" else "user://crawler_frames/%d" % seed_v
@@ -839,6 +845,9 @@ func _run() -> void:
 		var rc: Dictionary = cross[key]
 		ok(float(rc.edge_cr) >= 3.0, "readable %s: its arms %.1f:1 against their dark edge, the edge %.1f:1 against what's behind it (the arms alone against that: %.1f:1)" % [where[key], rc.edge_cr, rc.edge_out_cr, rc.out_cr])
 	await _harm_ring(main, p)
+	await _hands(main, p)
+	if FileAccess.file_exists(Controls.path):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(Controls.path))
 	for key in keep:
 		if keep[key] == null:
 			Settings.erase(key)
@@ -950,3 +959,73 @@ func _ring_depth(img: Image, none: Image, left: bool) -> float:
 		else:
 			same = 0
 	return float(reach)
+
+
+## The mean difference of two frames over `r` (image pixels), 0..1.
+func _diff(a: Image, b: Image, r: Rect2) -> float:
+	var s := 0.0
+	var n := 0
+	for y in range(int(r.position.y), int(r.end.y)):
+		for x in range(int(r.position.x), int(r.end.x)):
+			var ca := a.get_pixel(x, y)
+			var cb := b.get_pixel(x, y)
+			s += (absf(ca.r - cb.r) + absf(ca.g - cb.g) + absf(ca.b - cb.b)) / 3.0
+			n += 1
+	return s / maxf(n, 1.0)
+
+
+## The two hands (design §FB, prompt 55): on the mat at night, the torch
+## lit in the right hand and a fire pot in the left, the strip holding
+## pots of both oils; Tab held, the
+## strip low on the left of the frame; with the wheel on the left hand, the
+## right hand's choices low right; then Settings' Controls page and the
+## Settings page with its tabs. (The player's physics is off here, so Tab
+## is pressed and its time set by hand.)
+func _hands(main: CrawlerMain, p: CrawlerPlayer) -> void:
+	var hands := p.hands
+	var world: Node = main.world
+	var keep_days: float = world.days
+	world.days = 13.0
+	var w: Array = main.lay.wake
+	p.spawn_flat(w[0], float(w[1]), -0.3)
+	_torch_in_hand(p)
+	p.torch.light()
+	# Fire pots of both oils on the strip (FirePots' F9), the first in hand
+	# (the strip cleared first, so it holds just these).
+	for it in main.fire_pots.pots_carried():
+		main.fire_pots._remove(it)
+	main.fire_pots.give_dev()
+	hands.hold_left(main.fire_pots.pots_carried()[0])
+	hands.update(0.0)
+	await _frames(8)
+	var plain := await _shot("17a_hands_both")
+	Input.action_press("other_hand")
+	hands.tab_s = 1.0
+	await _frames(4)
+	var held := await _shot("17b_hands_strip")
+	var lay: Dictionary = main.hand_strip.layout()
+	var pr: Rect2 = lay.panel
+	var k := float(held.get_width()) / main.hand_strip.size.x
+	var d_in := _diff(plain, held, Rect2(pr.position * k, pr.size * k))
+	var opposite := Rect2(Vector2(main.hand_strip.size.x - pr.end.x, pr.position.y) * k, pr.size * k)
+	var d_out := _diff(plain, held, opposite)
+	ok(main.hand_strip.visible and Rect2(Vector2.ZERO, main.hand_strip.size).encloses(pr) and d_in > d_out * 4.0 + 0.02, "Tab held: the strip is drawn low left, inside the frame (%s; the frame changed %.3f there, %.3f at the opposite corner)" % [str(pr), d_in, d_out])
+	Controls.set_wheel_drives("left")
+	await _frames(4)
+	await _shot("17c_hands_strip_right")
+	Controls.set_wheel_drives("right")
+	Input.action_release("other_hand")
+	hands.tab_s = 0.0
+	await _frames(4)
+	main._toggle_settings(true)
+	main.settings_panel.page = "controls"
+	main.settings_panel.queue_redraw()
+	await _frames(4)
+	await _shot("18_controls_page")
+	main.settings_panel.page = "settings"
+	main.settings_panel.queue_redraw()
+	await _frames(4)
+	await _shot("18b_settings_page")
+	main._toggle_settings(false)
+	p.torch.put_out("stowed")
+	world.days = keep_days

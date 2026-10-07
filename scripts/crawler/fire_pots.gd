@@ -6,15 +6,18 @@ extends Node3D
 ## lit torch, no pot. The crawler's one node for them (CrawlerMain makes
 ## it):
 ##
-##  * Carrying: each pot is an item of the pack (items.json fire_pot, its
-##    "oil" tar or light_oil), carry_max of them at most. They come from the
-##    one found pot lying in a side room off the spine (found), and from
-##    dev_items (F9: up to carry_max); restored ruins' gifts (§FF.3) come
-##    later.
-##  * The left hand (§FB; until prompt 55's left hand is in, this is it):
-##    hold Tab and scroll to bring a pot into your left hand, and again to
-##    empty it. A pot in the left hand shows low left in view, and the torch
-##    doesn't swing while it is there (hands.json clicks.left_with_pot).
+##  * Carrying: each pot is an item of the left hand's own strip of the
+##    pack (§FB: Inventory.strip, not the carry slots; items.json fire_pot,
+##    its "oil" tar or light_oil), carry_max of them at most. They come from
+##    the one found pot lying in a side room off the spine (found), and
+##    from dev_items (F9: up to carry_max); restored ruins' gifts (§FF.3)
+##    come later.
+##  * The left hand (§FB, prompt 55: Hands): hold Tab and scroll to bring a
+##    pot into your left hand, and again to empty it; `left` reads and sets
+##    Hands' left hand. A pot in the left hand shows low left in view, and
+##    the torch doesn't swing while it is there (hands.json
+##    clicks.left_with_pot). The left hand doesn't change while a pot is
+##    being lit or aimed (Hands.left_busy).
 ##  * Lighting (hands.json clicks.left_with_pot): hold left click with a lit
 ##    torch in your right hand and the hands come together in view over
 ##    light_anim_s, and the wick catches off the torch's flame. No lit torch
@@ -68,8 +71,14 @@ var lay: Dictionary
 var player: CrawlerPlayer
 ## Seconds since the tomb was built (the fires' and the flares' clock).
 var clock := 0.0
-## The pot in your left hand (an item of the pack), or {} for empty.
-var left: Dictionary = {}
+## The pot in your left hand (an item of the strip), or {} for empty: the
+## left hand is Hands' (§FB); this reads and sets it.
+var left: Dictionary:
+	get:
+		return player.hands.left_item() if player != null and player.hands != null else {}
+	set(v):
+		if player != null and player.hands != null:
+			player.hands.hold_left(v)
 ## "idle", "lighting" (the hands coming together), "aiming" (the wick lit).
 var state := "idle"
 var state_t := 0.0
@@ -205,17 +214,17 @@ func make_pot(p_oil: String) -> Dictionary:
 	return Inventory.make("fire_pot", {"oil": p_oil, "id": _next_id})
 
 
-## The pots you carry, in the pack's order.
+## The pots you carry, in the strip's order.
 func pots_carried() -> Array:
 	var out: Array = []
-	for it in player.inventory.carried:
+	for it in player.inventory.strip:
 		if it is Dictionary and str(it.get("kind", "")) == "fire_pot":
 			out.append(it)
 	return out
 
 
-## One pot of `p_oil` into the pack, if there's room for it in the strip
-## (carry_max) and the pack.
+## One pot of `p_oil` onto the strip (Inventory.add puts a left-hand thing
+## there), if there's room: carry_max pots, and a free place.
 func give(p_oil: String) -> bool:
 	if pots_carried().size() >= carry_max():
 		return false
@@ -237,41 +246,26 @@ func give_dev() -> int:
 	return n
 
 
-func _carried(it: Dictionary) -> bool:
-	for c in player.inventory.carried:
-		if is_same(c, it):
-			return true
-	return false
-
-
 func _remove(it: Dictionary) -> void:
-	for i in player.inventory.carried.size():
-		if is_same(player.inventory.carried[i], it):
-			player.inventory.carried[i] = null
+	for i in player.inventory.strip.size():
+		if is_same(player.inventory.strip[i], it):
+			player.inventory.strip[i] = null
 			return
 
 
-# --- The left hand (until prompt 55's is in) -------------------------------------
+# --- The left hand (Hands', §FB) ---------------------------------------------------
 
-## The pot in your left hand, or {} (thrown, or gone from the pack).
+## The pot in your left hand, or {} (thrown, or gone from the strip).
 func in_left() -> Dictionary:
-	if not left.is_empty() and not _carried(left):
-		left = {}
 	return left
 
 
-## Tab and the wheel (§FB): the left hand cycles through the pots you carry
-## and empty. Not while a pot is being lit or aimed.
+## One step of the left hand through the pots you carry and empty (what
+## Tab and the wheel do, Hands). Not while a pot is being lit or aimed.
 func cycle_left(step: int) -> void:
 	if state != "idle":
 		return
-	var opts: Array = [{}]
-	opts.append_array(pots_carried())
-	var at := 0
-	for k in opts.size():
-		if is_same(opts[k], in_left()):
-			at = k
-	left = opts[posmod(at + step, opts.size())]
+	player.hands.cycle("left", step)
 	if not left.is_empty():
 		# The torch doesn't swing from this press on (hands.json clicks).
 		player.torch.block_until_release()
@@ -285,11 +279,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("interact") and take_found():
 		get_viewport().set_input_as_handled()
-	elif event is InputEventMouseButton and event.pressed and Input.is_physical_key_pressed(KEY_TAB):
-		var mb := event as InputEventMouseButton
-		if mb.button_index == MOUSE_BUTTON_WHEEL_UP or mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			cycle_left(1 if mb.button_index == MOUSE_BUTTON_WHEEL_DOWN else -1)
-			get_viewport().set_input_as_handled()
 
 
 # --- Lighting, aiming, throwing ------------------------------------------------------
@@ -876,7 +865,7 @@ func _found_spot(pc: Dictionary) -> Vector3:
 	return Vector3.INF
 
 
-## Right click by the found pot: into the pack, if the strip has room.
+## Right click by the found pot: onto the strip, if it has room.
 func take_found() -> bool:
 	if found == null or not is_instance_valid(found):
 		return false

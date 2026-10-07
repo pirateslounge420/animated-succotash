@@ -4,15 +4,20 @@ extends PlanetPlayer
 ## (PlanetPlayer) on flat stone instead of a round planet. Free movement
 ## stays (§AU, §ET.8; grid-step is an open call, §ET.10): WASD walk, W W
 ## or the sprint button to sprint (movement.json's speeds), Shift crouch,
-## Space jump, the mouse looks, first person only. The torch is the one
-## tool (Q: torch in hand or bare hands; left click swings it, §CN; F
-## smothers it and you keep holding it, §FC.3); no
-## bow, no spear, no fists, no climbing, no combat (§ET.1). Gravity is
-## straight down (-y): the tomb is its own flat world, no planet under it.
+## Space jump, the mouse looks, first person only. Two hands (§FB,
+## Hands): the mouse wheel takes the torch out or puts it away (a lit one
+## put away goes out), and held, Tab turns the wheel to the left hand and
+## its strip of left-hand things; Q does nothing here. Left click swings
+## the torch (§CN); F smothers it and you keep holding it (§FC.3); no bow,
+## no spear, no fists, no climbing, no combat (§ET.1). Gravity is straight
+## down (-y): the tomb is its own flat world, no planet under it.
 ## Footsteps sound on stone. Nothing hurts you in this slice.
 
 ## How far the bundle and the holders answer the interact button (m).
 const REACH_M := 1.8
+
+## The two hands (§FB): the wheel, Tab and the wheel, the left hand's strip.
+var hands: Hands
 
 
 func _ready() -> void:
@@ -54,6 +59,10 @@ func _ready() -> void:
 	torch.name = "Torch"
 	add_child(torch)
 	torch.setup(self)
+	hands = Hands.new()
+	hands.name = "Hands"
+	add_child(hands)
+	hands.setup(self)
 	_apply_view()
 
 
@@ -84,25 +93,24 @@ func water_depth() -> float:
 	return water_depth_m
 
 
-## Q: the torch in hand, or bare hands (putting a lit torch away puts it
-## out, §AW).
+## The next thing in the right hand, as one turn of the wheel (§FB,
+## Hands; putting a lit torch away puts it out, §AW). Q no longer calls it
+## here (hands.json q_swaps).
 func swap_weapon() -> void:
-	if weapon == "torch":
-		torch.stow()
-		weapon = "hands"
-	elif inventory.has_kind("torch"):
-		weapon = "torch"
-	torch.block_until_release()
+	hands.cycle("right", 1)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if ui_open and event is InputEventMouseButton:
 		return
-	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not Controls.is_wheel(event):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		# The click that takes the mouse doesn't also swing the torch.
 		torch.block_until_release()
-	elif event.is_action_pressed("weapon_swap"):
+	elif hands.wheel_input(event):
+		# The wheel steps a hand; with Tab held, the other one (§FB).
+		pass
+	elif event.is_action_pressed("weapon_swap") and Hands.q_swaps():
 		swap_weapon()
 	elif event.is_action_pressed("douse") and not ui_open and not dead:
 		# F (design 6 Oct §FC.3): smother the lit torch in hand.
@@ -155,6 +163,7 @@ func _physics_process(delta: float) -> void:
 	_loud_t = maxf(_loud_t - delta, 0.0)
 	moving_state(move_speed)
 	torch.update_torch(delta)
+	hands.update(delta)
 
 
 ## A loud moment (a swing landing on a creature, §FA.1): it holds over

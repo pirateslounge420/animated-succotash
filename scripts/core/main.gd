@@ -885,7 +885,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	# HUD stops it as GUI input (Hud.PinCatcher).
 	if event is InputEventMouseButton and event.pressed and not player.ui_open:
 		_mouse_freed = false
-	if event.is_action_pressed("toggle_map"):
+	# The open settings panel's clicks first, so no key rebound to a mouse
+	# button acts under the pointer (the Controls page, §FB).
+	if settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		settings_panel.click(event.position)
+	elif event.is_action_pressed("toggle_map"):
 		map_overlay.toggle(player.surface_dir)
 	elif event.is_action_pressed("toggle_hud"):
 		hud.toggle()
@@ -906,8 +910,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		creatures.dev_howl()
 	elif event.is_action_pressed("settings") or (event.is_action_pressed("release_mouse") and settings_panel.visible):
 		_toggle_settings(not settings_panel.visible)
-	elif settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		settings_panel.click(event.position)
 	elif settings_panel.visible and event is InputEventMouseMotion:
 		# Dragging a volume slider.
 		settings_panel.drag(event.position)

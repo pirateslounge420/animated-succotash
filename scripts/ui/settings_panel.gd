@@ -12,6 +12,10 @@ extends Control
 ## click left or right of the bar for 10 % less or more); O, F10 or Esc
 ## closes. The world doesn't pause. Sizes at the 480-line reference, like
 ## all the HUD (HudText.px()).
+##
+## Two tabs at the top: these settings, and Controls (design 6 Oct §FB,
+## ControlsPage): every action's keys and buttons, rebound by clicking one
+## and pressing the new input, with the wheel's hand and a reset.
 
 ## [key, label, kind]: "bool" switches; "lines" and "aspect" step through
 ## Display's choices; "render" is the render distance in metres
@@ -47,7 +51,8 @@ const EDGE := Color("#C8D8F0")
 const TEXT := Color(0.93, 0.95, 1.0)
 const DIM := Color(0.62, 0.68, 0.82)
 const W := 300.0
-const ROW := 20.0
+## A line's height: 19 so the whole panel (474 px) fits the 480-line frame.
+const ROW := 19.0
 ## A slider's bar: where it starts in its row and how wide it is (px).
 const BAR_X := 118.0
 const BAR_W := 120.0
@@ -57,6 +62,11 @@ var _rows: Array = [] # [Rect2, item]
 var _dragging: Array = []
 ## An "action" line clicked once, waiting for its second click.
 var _armed := ""
+## The page shown: "settings" (ITEMS) or "controls" (ControlsPage, §FB).
+var page := "settings"
+var controls := ControlsPage.new()
+## The tabs: [page, its name].
+const TABS := [["settings", "Settings"], ["controls", "Controls"]]
 
 
 func _ready() -> void:
@@ -73,12 +83,51 @@ func open() -> void:
 func close() -> void:
 	visible = false
 	_armed = ""
+	controls.cancel()
+
+
+## While an action on the Controls page waits for its new input, the next
+## key or button pressed is its, before anything else hears it (Esc lets
+## it go and leaves the panel open).
+func _input(event: InputEvent) -> void:
+	if not visible or page != "controls" or controls.waiting == "":
+		return
+	if controls.capture(event):
+		get_viewport().set_input_as_handled()
+		queue_redraw()
+
+
+## The panel's box for the page shown, in the middle of the frame.
+func panel_rect() -> Rect2:
+	var sz := ControlsPage.size() if page == "controls" else Vector2(W, 30.0 + ROW * ITEMS.size() + 26.0)
+	return Rect2((size * 0.5 - sz * 0.5).round(), sz)
+
+
+## The tabs' boxes in panel `r`: [[Rect2, page], ...].
+func tab_rects(r: Rect2) -> Array:
+	var out: Array = []
+	for i in TABS.size():
+		out.append([Rect2(r.position + Vector2(6.0 + 84.0 * i, 4.0), Vector2(80.0, 24.0)), TABS[i][0]])
+	return out
 
 
 ## A click: switch the line under it (or set the slider). True if it hit
 ## one.
 func click(at: Vector2) -> bool:
 	_dragging = []
+	var pr := panel_rect()
+	for t in tab_rects(pr):
+		if (t[0] as Rect2).has_point(at):
+			if page != str(t[1]):
+				page = str(t[1])
+				_armed = ""
+				controls.cancel()
+			queue_redraw()
+			return true
+	if page == "controls":
+		var hit := controls.click(at, pr)
+		queue_redraw()
+		return hit
 	for r in _rows:
 		var row: Rect2 = r[0]
 		if row.has_point(at):
@@ -94,7 +143,7 @@ func click(at: Vector2) -> bool:
 ## The mouse moved with the button held: a slider picked up by the click
 ## follows it.
 func drag(at: Vector2) -> void:
-	if _dragging.is_empty() or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if page != "settings" or _dragging.is_empty() or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		_dragging = []
 		return
 	for r in _rows:
@@ -177,11 +226,20 @@ func _draw() -> void:
 	_rows.clear()
 	var font := ThemeDB.fallback_font
 	var px := HudText.px(20)
-	var h := 30.0 + ROW * ITEMS.size() + 26.0
-	var r := Rect2(Vector2(size.x * 0.5 - W * 0.5, size.y * 0.5 - h * 0.5), Vector2(W, h))
+	var r := panel_rect()
 	draw_rect(r, PANEL)
 	draw_rect(r, Color(EDGE, 0.55), false, 1.0)
-	draw_string(font, r.position + Vector2(10, 22), "Settings", HORIZONTAL_ALIGNMENT_LEFT, -1, px, TEXT)
+	# The tabs: the page shown bright and underlined, the other dim.
+	for t in tab_rects(r):
+		var tr: Rect2 = t[0]
+		var on := str(t[1]) == page
+		var name := "Settings" if str(t[1]) == "settings" else "Controls"
+		draw_string(font, tr.position + Vector2(4, 18), name, HORIZONTAL_ALIGNMENT_LEFT, -1, px, TEXT if on else DIM)
+		if on:
+			draw_line(tr.position + Vector2(4, 22), tr.position + Vector2(4 + font.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x, 22), Color(EDGE, 0.8), 1.0)
+	if page == "controls":
+		controls.draw(self, font, px, r)
+		return
 	for i in ITEMS.size():
 		var item: Array = ITEMS[i]
 		var row := Rect2(r.position + Vector2(8, 30 + ROW * i), Vector2(W - 16, ROW - 2))
@@ -195,7 +253,7 @@ func _draw() -> void:
 			continue
 		var lit: bool = item[2] != "bool" or _on(item)
 		draw_string(font, row.position + Vector2(14, 15), _shown(item), HORIZONTAL_ALIGNMENT_LEFT, -1, px, TEXT if lit else DIM)
-	draw_string(font, Vector2(r.position.x + 10, r.end.y - 8), "click to set - O or Esc closes", HORIZONTAL_ALIGNMENT_LEFT, -1, px, DIM)
+	draw_string(font, Vector2(r.position.x + 10, r.end.y - 8), "click to set - %s or %s closes" % [Controls.first_name("settings", "O"), Controls.first_name("release_mouse", "Esc")], HORIZONTAL_ALIGNMENT_LEFT, -1, px, DIM)
 
 
 ## A volume slider: its name, a bar filled to its level, the level.

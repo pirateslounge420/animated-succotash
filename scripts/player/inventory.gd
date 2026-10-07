@@ -24,6 +24,12 @@ var carried: Array = []
 ## Equipment slot -> Array: the worn items first, then the spares (null
 ## where empty).
 var worn := {}
+## The left hand's own small strip of the pack (design 6 Oct §FB,
+## data/hands.json left): the left-hand things (hands.json left.holds: a
+## fire pot, §FA.3) go here, not in the carry slots, strip_slots() of
+## them, an item or null each. Holding Tab and scrolling cycles the left
+## hand through them (Hands).
+var strip: Array = []
 
 
 static func data() -> Dictionary:
@@ -40,6 +46,16 @@ static func carry_slots() -> int:
 	return int(data().get("carry_slots", 10))
 
 
+## How many left-hand things the strip holds (hands.json left.strip_slots).
+static func strip_slots() -> int:
+	return int(Tuning.section("hands", "left").get("strip_slots", 3))
+
+
+## Is `kind` a left-hand thing (hands.json left.holds)?
+static func left_kind(kind: String) -> bool:
+	return kind != "empty" and kind in (Tuning.section("hands", "left").get("holds", []) as Array)
+
+
 ## An equipment slot's {label, worn, spares}.
 static func slot_info(slot: String) -> Dictionary:
 	return data().get("equipment", {}).get(slot, {"label": slot.capitalize(), "worn": 1, "spares": 2})
@@ -52,6 +68,8 @@ static func kind_info(kind: String) -> Dictionary:
 func _init() -> void:
 	carried.resize(carry_slots())
 	carried.fill(null)
+	strip.resize(strip_slots())
+	strip.fill(null)
 	for slot in data().get("equipment", {}):
 		var info := slot_info(slot)
 		var a: Array = []
@@ -130,8 +148,15 @@ static func colors(it: Dictionary) -> Array:
 	return [main, second]
 
 
-## Put `it` in the first empty carry slot. False if your hands are full.
+## Put `it` in the first empty carry slot (a left-hand thing in the first
+## empty place on the strip). False if there's no room.
 func add(it: Dictionary) -> bool:
+	if left_kind(str(it.get("kind", ""))):
+		for i in strip.size():
+			if strip[i] == null:
+				strip[i] = it
+				return true
+		return false
 	for i in carried.size():
 		if carried[i] == null:
 			carried[i] = it
