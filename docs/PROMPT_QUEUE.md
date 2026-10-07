@@ -87,7 +87,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 55 | §FB | Two hands: the wheel, Tab and the wheel, and a Controls page | built 5402764 |
 | 56 | §FD, §FJ.3 | Harm: a red ring and a heartbeat; a chase follows you into the light; heal once it gives you up | todo |
 | 57 | §FA.1, §FA.2 | The torch staggers, and every creature has its own strike tell | todo |
-| 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | todo |
+| 58 | §FE, §FC.2 | The tomb's residents: skeletons out of the walls, and somewhere to hide | built 43688cb |
 | 59 | §FF.2 | Cleared by light: the retreat, and the half-lit floor that bites | todo |
 | 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | todo |
 | 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | todo |
@@ -896,7 +896,7 @@ CHECK (headless): the crawler's frame at seed 7 has the reticle's pixels at the 
 
 ## 46 — The plan and the way out: a spine, the module, an exit every time — §EX.2, §EX.5
 
-**Status:** todo
+**Status:** todo. Found while building 58 (7 Oct): seed 126's crypt (piece 16) can't be walked through by your body, with or without the skeletons. Its coffins and hearth ring close off the aisle, so this pass's walk check should catch it. `tools/residents_check.gd` walks your body from the wake spot into the heart as a stand-in, and `TombNav` (a floor grid at your body's size) may help here.
 **Mike sees:** Every tomb now has a way on: one main passage (the spine) runs from the hearth room through the heart to a long stair climbing out, with faint daylight at its top you can see from below. Walking up it fades to a fresh tomb. Side passages are shorter and end in a room. Rooms line up and doors face each other, so you often look straight down a passage to the next light.
 
 ```text
@@ -1076,7 +1076,7 @@ CHECK (headless): a scripted swing landing at 50% of the snake's wind-up stagger
 
 ## 58 — The tomb's residents: skeletons that climb out of the walls, and somewhere to hide — §FE, §FC.2
 
-**Status:** todo
+**Status:** built 43688cb
 **Mike sees:** Skeletons lie still in the tomb's wall niches and graves. Walk too close and you hear bone grinding as one climbs out and comes after you, slow; its jaw drops open just before it swings. Duck out of its sight behind a sarcophagus or pillar, or get far enough away, and it gives up and goes back to lie in its niche.
 
 ```text

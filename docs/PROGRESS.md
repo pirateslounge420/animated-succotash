@@ -4,6 +4,56 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-07 — Queue 58, §FE and §FC.2: the tomb's skeletons, and somewhere to hide (43688cb)
+- **On top of the other sessions' work.** The skeletons' strike is 57's `CreatureStrike`, their chase is 56's `Pursuit`, and their hits go through 49's Harm in the crawler. So the stagger, the tells, giving up and being taken work the same for the skeletons as for the snake. While I built this, the other sessions built 45, 49, 50, 52, 53, 54, 55, 56 part 1, 57 part 1, 60 parts 1 and 2, and 61. My own stand-ins for the strike, the stagger, the chase and Harm in the crawler went in the merge.
+- **Where they rest** (`TombKit._place_residents`, its own seed, so the rest of the tomb is unchanged): 3–6 skeletons a tomb (`per_dungeon`).
+  - The heart's coffin always holds one (Mike's frame 9, now a resident instead of baked stone bones).
+  - The rest are drawn from the crypts' coffins and the catacombs' niche stacks. In a coffin (`grave`) the lid is shoved off onto the floor beside it and the skeleton kneels inside, slumped over the end. In a niche (`wall_niche`) it sits hunched on a deeper bottom shelf, the middle shelf gone, with jambs and a lintel framing the stack.
+  - Rooms are weighted by depth to the power `toward_heart`, so more lie toward the heart. None in the hearth room, none within `apart_m` (2 m) of another, none within `off_line_m` (1 m) of the door-to-door way through the rooms.
+- **The framework** (`Residents`, `Resident`; `residents.json`):
+  - **Asleep** it is set dressing: no strike of its own in play, so a swing meets nothing.
+  - **Waking:** when your head comes within `wakes_m` (3 m) of its head with a clear line, it climbs out over `rise_s` (1.6 s) with its near tell (bone grinding, SoundSynth `bone_grind`). From then it hunts you at `walk_mps` (2.2) along a floor grid (`TombNav`: A* over 0.25 m squares, cast once against the stone, round the coffins and the hearth's ring).
+  - **What it senses:** you yourself within `notice.sees_you_m` (6 m) along a clear line from its eyes to your head; your torch's flame, or the stone it lights, within `sees_flame_m` (10 m); what you sound like within `hears_step_m` (6 m) scaled by your noise (`CrawlerPlayer.noise_level`, so a swing that lands, 57's loud moment, is heard standing still); anything within 1 m.
+  - **Its chase** is a `Pursuit` with its own `gives_up`, so Harm counts it as pursuing you from waking until it gives you up (16 m away, or 8 s without sensing you; `hide` true; `torch_doused` false). Then it walks home and lies down again. On the way home it hunts again if it senses you.
+  - **Its strike** is a `CreatureStrike` at its head, made when it wakes and gone when it lies down. In reach, sensing you there, it winds up for `wind_up_s` (0.7 s). The jaw drops open on its sprite, and its `sound` (`jaw_creak`, the jaw's creak and knock) plays from the first frame. Then comes the committed strike, `strike_s` (0.15 s): the hit lands at its end if you're still in reach with nothing between. Then `recover_s` (1.2 s).
+  - **The stagger:** your lit torch's swing in the wind-up staggers it back `reel_m` (0.6 m) along the floor, with a crack of bone.
+- **Hiding** (§FC.2): no button and no prompt. Crouched behind a lidded coffin your eyes are at 0.78 m and its lid at 1.1 m, so it can't see you. `Residents.hidden_from` tells its `Pursuit` when only that low cover hides you: standing there you'd be seen. A lit torch gives you away round cover: it sees the flame, or the stone it lights (14 rays out to `stealth.json → hide.glow_reach_m`, 4 m, every 0.2 s, only while a skeleton is up).
+- **Harm** in the crawler is queue 49's (56's red ring and heartbeat; `CrawlerHarmView` draws the navy flash and "Good night"). The skeletons' hits go through it. At the wake every skeleton after you gives you up and goes home (`Residents.player_woke`), and the keys now let go while "Good night" plays.
+- **Drawn:** `SkeletonRig`, a bone model on joints, painted with light from above and navy beneath (`bone_paint.gdshader`). It is baked in 12 poses (two rests, three steps of climbing out, a four-step walk, wind-up, strike, reel) × 3 heights × 8 around into one sheet. `ResidentSprite.bake_poses` renders the eight views at once on SubViewports sharing one world, after the snake's sprites and before the dark lifts.
+- **Data:**
+  - `residents.json` skeleton: new `per_dungeon`, `heart_holds_one`, `toward_heart`, `off_line_m`, `apart_m`, `eye_m`, `notice.sees_you_m`, `sprite`; its strike block gains 57's `strike_s`, `recover_s`, `reel_m`, `body_r` and `sound`.
+  - `stealth.json → hide.glow_*`; `audio.json → resident`.
+  - `[NOT WIRED YET]` is off `residents.json → _help.about` for the skeleton (the other creatures say not wired). It is off `stealth.json` altogether: with 53's sneak and 54's douse, all three parts are wired.
+- **Other sessions' checks touched** (one line each):
+  - `crawler_check`, `stagger_check`, `crawler_harm_check`, `fire_pot_check`, `hands_check`, `boss_check`, `crawler_frames`, `boss_frames` and `perf_bench` keep the skeletons asleep (`Residents.stay_asleep`).
+  - `crawler_check` doesn't count the skeletons' sprites as folk, as it doesn't the snake's (§FH's "no FigureSprite in the tomb" is about the folk).
+  - `fire_pot_check`'s stand-in class is `ResidentStandIn` now, like 49's `BossStandIn`; the name `Resident` is the real one's.
+- **Checks:**
+  - `tools/residents_check.gd` (new): 123 lines, 0 fails, on seeds 1, 7 and 42, with the snake held still (`Boss.auto` false, as 49's harm check does). It covers the prompt's list:
+    - every skeleton rests 1 m or more off the way through the rooms, and off the line your own body walks from the wake spot into the heart. Your body walks that line by the keys, every holder cold and every skeleton asleep (queue 46's walk-to-exit check, until 46 builds the exit);
+    - a scripted approach wakes one just inside `wakes_m` and not just outside it;
+    - crouched behind a lidded coffin with the torch out, it never senses you, gives you up at `out_of_sight_s` (8.02 s) and walks back to lie in its own place; with the torch lit it sees your light round the coffin and comes for you;
+    - one hit lands at the end of its committed strike (0.85 s after the wind-up began), none before and none in its recovery;
+    - your torch's own swing (`Torch.swing_top`), lit, at half the wind-up staggers it 0.60 m back and no hit lands. Unlit, it staggers nothing; a second stagger inside `cooldown_s` fails; once the strike is committed a swing does nothing.
+    - It also checks the tell from the wind-up's first frame, the chase holding your healing off for 15 s and letting it go 5.02 s after it gives you up, and "Good night" with the wake at the hearth.
+  - The other sessions' checks on the final code, with 49's snake, 60's pots against it and 61's moss and beetles in (seed 7 unless said, all 0 fails): `crawler_check` 152 lines (seed 1: 154), `boss_check` 106 (seeds 1, 7, 42), `stagger_check` 41, `crawler_harm_check` 45, `hands_check` 61, `fire_pot_check` 73. All 393 scripts in `scripts/` and `tools/` load without a parse error.
+- **Frames** (`crawler_frames`, seed 1, lavapipe): the whole tour, before the merges with 49, 53, 60 part 2 and 61, passed 36 lines with 0 fails. The skeleton frames alone (`ONLY=skeleton`) on the final code: 3 lines, 0 fails.
+  - `21`: the sheet. All 288 cells (12 poses × 3 heights × 8 around) hold the skeleton; the fewest drawn is 103 px at half size.
+  - `21a`: one sitting hunched in its framed catacomb niche.
+  - `21b`: caught halfway out of it in your torchlight (pose `rise_b`), its bone amber on screen (brightest pixels luma 0.306, hue 19.0).
+  - `21c`: out on the floor. It is held still for this shot: on lavapipe the game runs on between slow frames, and in the first run it had already reached the camera and struck (the hit's navy edge flash was in the frame).
+  - I looked at them once. The niche reads as a stone-framed shelf with the bones sitting on it. Climbing out, the skeleton stands up inside the frame. Out, it is a pale amber figure against the navy, its pixels as chunky as the walls'.
+- **Not mine, flagged:** on seed 1 the harm-ring frames (queue 56) are shot in the corridor where the fire pots' tar patch (queue 60) is still burning. So hit 2's ring reads 386 px deep at the left edge: that is the patch's flicker on the wall, not the ring. The check passes; seed 7 measured 77 px.
+- **For chat and Mike:**
+  - The tomb has no pillars yet, so the cover is the lidded coffins, the heart's coffin, the collapsed room's slab, and corners and doorways. Pillars and alcoves come with the style kit (queue 48).
+  - The hit lands at the end of 57's committed strike (0.7 s of wind-up, then 0.15 s), not at the wind-up's last frame as 58's check line words it. It's the same rule for every creature.
+  - Nothing keeps a skeleton out of the light until queue 59: it follows you into lit rooms whether or not it has hit you, can strike you there, and walks home through them. The snake never strikes in a lit room (§EY.1, `relit_room` safe), so for now the light saves you from the snake but not from a skeleton.
+  - A fire pot doesn't touch them yet, and they don't look for a lit wick or hear a burst. Queue 60's part 2 did both for the snake; its last part joins the skeletons (`fire_hp` is carried).
+  - Seed 126's crypt can't be walked through with or without skeletons (noted under queue 46).
+  - CLAUDE.md's brief still calls §FA–§FH "not built yet".
+
+---
+
 ## 2026-10-07 — Queue 49, §EY.1, §EY.2, §EY.8 step 1: a boss in the dungeon, the snake (827805b, 4a963ed)
 - **Built in parallel with its prerequisites.** The prompt says "after 44–48", and Mike started 45–53 at the same time. So I built against the branch as each pass landed (45, 50, 52–57 and 60's part 1) and rebased onto them.
   - 46, 47 and 48 haven't landed yet, so three things wait for them. Until 46's spine is in, the lair's "main way" is the doors from the hearth room to the tomb's heart; `BossGround.main_path` reads the spine as soon as the layout has one.
