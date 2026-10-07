@@ -13,7 +13,8 @@ extends Node
 ## contact").
 ##   hit 1  the frame's edges darken and the colour drains a little toward
 ##          the dark's navy (never grey: PostGrade.set_harm), sound goes a
-##          little muffled (the Master bus: muffle_db and a low-pass);
+##          little muffled (the Master bus: muffle_db under the volume
+##          slider's level, AudioMix.set_master_trim, and a low-pass);
 ##   hit 2  the same, deeper, and a fast heartbeat comes up under
 ##          everything (heart_bpm);
 ##   hit 3  taken: the dark closes the frame to black over close_s, "Good
@@ -145,7 +146,8 @@ func _exit_tree() -> void:
 		instance = null
 	if _bus_fx >= 0 and _bus_fx < AudioServer.get_bus_effect_count(0) and AudioServer.get_bus_effect(0, _bus_fx) == _lpf:
 		AudioServer.remove_bus_effect(0, _bus_fx)
-		AudioServer.set_bus_volume_db(0, 0.0)
+		# The master slider's level back, the muffle off it.
+		AudioMix.set_master_trim(0.0)
 
 
 func stage_of(n: int) -> Dictionary:
@@ -433,7 +435,9 @@ func _apply() -> void:
 			var look := ring_look(ring)
 			_ring.show_ring(look.color, float(look.alpha) * (1.0 - black), float(look.width_frac))
 		return
-	AudioServer.set_bus_volume_db(0, muffle_db)
+	# The muffle lies on top of the master slider's level (AudioMix), never
+	# in place of it.
+	AudioMix.set_master_trim(muffle_db)
 	if _lpf != null:
 		# 0 dB wide open; each -4 dB takes the top off a little more.
 		_lpf.cutoff_hz = clampf(20000.0 * pow(2.0, muffle_db / 2.5), 900.0, 20000.0)

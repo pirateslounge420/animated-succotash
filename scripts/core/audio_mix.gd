@@ -13,6 +13,18 @@ class_name AudioMix
 const BUSES := {"footsteps": "Footsteps", "climbing": "Climbing"}
 ## Each slider's setting and its level in a new game (%).
 const DEFAULTS := {"audio.master": 100, "audio.footsteps": 50, "audio.climbing": 50}
+## A trim (dB) laid on top of the master slider's level, never in place of
+## it: the open world's hurt muffle (Harm, design 4 Oct §EA). 0 for none.
+static var master_trim_db := 0.0
+
+
+## Lay `db` on top of the master slider's level (0 takes it off). Calling
+## it again with the same trim does nothing.
+static func set_master_trim(db: float) -> void:
+	if is_equal_approx(db, master_trim_db):
+		return
+	master_trim_db = db
+	_level("Master", percent("audio.master"))
 
 
 ## The bus a group's players play on, made (sending to Master, at its
@@ -56,4 +68,5 @@ static func _level(bus_name: String, pct: int) -> void:
 	if i < 0:
 		return
 	AudioServer.set_bus_mute(i, pct <= 0)
-	AudioServer.set_bus_volume_db(i, linear_to_db(maxf(pct / 100.0, 0.0001)))
+	var trim := master_trim_db if bus_name == "Master" else 0.0
+	AudioServer.set_bus_volume_db(i, linear_to_db(maxf(pct / 100.0, 0.0001)) + trim)

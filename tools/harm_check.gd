@@ -5,7 +5,8 @@ extends SceneTree
 ## asserts:
 ##  - a creature's hit takes no health and shows no meter (the status bar
 ##    stays the ninja game's);
-##  - stage 1 darkens the edges, drains the colour and muffles, with no
+##  - stage 1 darkens the edges, drains the colour and muffles (on top of
+##    the master volume slider's level, which holds), with no
 ##    heartbeat; stage 2 deepens it and the heart beats at heart_bpm;
 ##  - every hit is unmistakable (§EC): a dark-navy edge flash and a camera
 ##    kick; a bite inside invuln_s of a hit doesn't land;
@@ -67,6 +68,15 @@ func _run() -> void:
 	var D := Harm.D
 	var hp0 := player.hp
 	ok(not (D.get("_help", "") as String).begins_with("[NOT WIRED"), "harm.json is no longer marked not wired")
+	# The master volume slider (AudioMix) holds: at 50 % the Master bus sits
+	# at the slider's level unhurt, and hit 1's muffle lies on top of it
+	# (put back after hit 1).
+	var had_master := Settings.has("audio.master")
+	var keep_master: Variant = Settings.get_value("audio.master")
+	AudioMix.set_percent("audio.master", 50)
+	var slider_db := linear_to_db(0.5)
+	harm.tick(0.05)
+	ok(absf(AudioServer.get_bus_volume_db(0) - slider_db) < 0.05, "unhurt, the Master bus is the volume slider's (50 %%: %.1f dB)" % AudioServer.get_bus_volume_db(0))
 	# Hit 1.
 	_hit()
 	ok(harm.flash > 0.9 and absf(player._hit_kick.x) > 0.01, "a hit is unmistakable: the edge flash and the camera kick (§EC)")
@@ -83,6 +93,13 @@ func _run() -> void:
 	ok(harm.stage == 1 and absf(harm.vignette - float(s1.vignette)) < 0.05 and absf(harm.desaturate - float(s1.desaturate)) < 0.05,
 		"hit 1: the edges darken and the colour drains (vignette %.2f, desaturate %.2f)" % [harm.vignette, harm.desaturate])
 	ok(harm.muffle_db < float(s1.muffle_db) * 0.8, "hit 1: the sound muffles (%.1f dB)" % harm.muffle_db)
+	var bus_db := AudioServer.get_bus_volume_db(0)
+	ok(absf(bus_db - (slider_db + harm.muffle_db)) < 0.05, "hit 1: the muffle lies under the slider's level, not in place of it (%.1f dB = %.1f + %.1f)" % [bus_db, slider_db, harm.muffle_db])
+	if had_master:
+		Settings.set_value("audio.master", keep_master)
+	else:
+		Settings.erase("audio.master")
+	AudioMix.apply("audio.master")
 	ok(not harm.heart and harm.beats == 0, "hit 1: no heartbeat")
 	# Hit 2.
 	_hit()
