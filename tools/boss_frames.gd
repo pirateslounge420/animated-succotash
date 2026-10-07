@@ -16,8 +16,10 @@ extends SceneTree
 ## Checks: every cell of every sheet holds the body; the snake shows at
 ## the torch's edge (pixels that change when it is hidden, warm-lit); the
 ## hole's mouth is the darkest thing round it; the snake shows at the edge
-## of the hearth's light, never past the chase's cap; its tunnel's hole is
-## dark inside against the torchlit stone beside it.
+## of the hearth's light, never past the chase's cap, and its whole body
+## behind it in the dark, along the floor it came by; through its tunnel's
+## hole every sight in to its back is the black, against the torchlit
+## stone beside it.
 
 var fails := 0
 var out_dir := ""
@@ -247,8 +249,9 @@ func _peek(main: CrawlerMain) -> void:
 	b._calm()
 	if str(g.nodes[outside].kind) == "room":
 		b._lie_coiled(outside)
-	else:
-		b._lie_along(outside)
+	elif not _lie_facing(b, outside, via):
+		ok(false, "its whole body laid out in the dark beyond the hearth room's door")
+		return
 	var c: Vector3 = g.nodes[hearth].center
 	var into := Vector3(c.x - via.x, 0.0, c.z - via.z).normalized()
 	var by_fire := via + into * 2.5
@@ -275,6 +278,17 @@ func _peek(main: CrawlerMain) -> void:
 	await _frames(6)
 	var shot := await _shot("15_snake_peeks_at_the_hearth_light")
 	var head_px := _px(shot, head + Vector3(0.0, b.lift + 0.2, 0.0))
+	# Its body as drawn behind it: along the trail its head left (none of it
+	# run on straight past the trail's end, BossBody's fallback), and all of
+	# it in the dark.
+	var length := float(b.sub("body").get("length_m", 9.0))
+	var along: Array = b._body_pts(0.25)
+	var body_most := 0.0
+	for q: Vector3 in along:
+		body_most = maxf(body_most, lf.at(q))
+	var laid := float(along.size() - 1) * 0.25
+	print("  its body: %.1f m of it along the way it came (length_m %.1f), the light on it %.3f at most" % [laid, length, body_most])
+	ok(laid >= length - 0.25 - 1e-3 and body_most <= lf.cap + 1e-4, "its whole body behind it in the dark, along the floor it came by (%.1f of %.1f m; the light on it %.3f at most, the cap %.3f)" % [laid, length, body_most, lf.cap])
 	b.body.visible = false
 	await _frames(3)
 	var bare := await _shot("15b_same_without_it")
@@ -295,9 +309,56 @@ func _peek(main: CrawlerMain) -> void:
 	b._calm()
 
 
+## Laid out in the dark beyond the hearth room's door `door` (a frames'
+## placing; in play it gets anywhere only by going there, and its body
+## lies along the way it went): its head 0.3 m in from the far end of
+## corridor stretch `id`, facing the door, and its whole body behind it
+## along the chase's own way out from there (TombNav's capped grid, so
+## none of it in the light), the longest such way to any of its dark.
+## False if no way out is as long as its body.
+func _lie_facing(b: Boss, id: int, door: Vector3) -> bool:
+	var g := b.ground
+	var n: Dictionary = g.nodes[id]
+	var pc: Dictionary = b.lay.pieces[int(n.piece)]
+	var p0 := BossGround.point(pc, float(n.a0), 0.0)
+	var p1 := BossGround.point(pc, float(n.a1), 0.0)
+	var a0_near := Vector2(p0.x - door.x, p0.z - door.z).length() < Vector2(p1.x - door.x, p1.z - door.z).length()
+	var at := BossGround.point(pc, float(n.a1) - 0.3 if a0_near else float(n.a0) + 0.3, 0.0)
+	var length := float(b.sub("body").get("length_m", 9.0))
+	var best := PackedVector3Array()
+	for k in g.nodes.size():
+		if k == id or not g.is_ground(k):
+			continue
+		var way := b.nav.path(at, g.nodes[k].center, true, TombNav.CAP)
+		if TombNav.length_of(way) > TombNav.length_of(best):
+			best = way
+	if TombNav.length_of(best) < length + 0.5:
+		return false
+	# Oldest first: from the far end of that way back to where its head is.
+	var tail_first: Array = []
+	for i in range(best.size() - 1, -1, -1):
+		tail_first.append(best[i])
+	b._trail_from(tail_first)
+	b.base = best[0]
+	b.head = b.base
+	var to_door := Vector3(door.x - b.base.x, 0.0, door.z - b.base.z)
+	b.dir = to_door.normalized() if to_door.length() > 0.01 else Vector3.FORWARD
+	b.node = g.node_at(b.base)
+	b.target = id
+	b.state = "coil"
+	b.coiling = false
+	b.coil_left = 5.0
+	b._set_route(PackedVector3Array())
+	return true
+
+
 ## One of its tunnels' holes (Mike's note of 7 Oct: "they may have their
 ## own tunnels"), by torchlight from 1.8 m before it, looking a little
-## down: the hole dark against the lit stone beside it.
+## down. Through its mouth you see its sill (the floor going in, torchlit
+## like any floor) and, over that, its back: the black. Every pixel whose
+## sight passes in through the mouth to the back (worked out from the
+## camera, a few cm clear of every edge) must be the dark's navy, dark
+## against the torchlit stone beside it.
 func _hole_frame(main: CrawlerMain) -> void:
 	var b := main.boss
 	var p := main.player
@@ -323,12 +384,67 @@ func _hole_frame(main: CrawlerMain) -> void:
 		p.torch.light()
 	await _frames(8)
 	var img := await _shot("16_tunnel_hole")
-	var mid := (h.pos as Vector3) + Vector3.UP * float(h.h) * 0.4 - n * 0.05
-	var side := (h.pos as Vector3) + u * (float(h.w) * 0.5 + 0.3) + Vector3.UP * 0.25
-	var in_hole := _around(img, _px(img, mid), 3)
+	var hp: Vector3 = h.pos
+	var w := float(h.w)
+	var hh := float(h.h)
+	var side := hp + u * (w * 0.5 + 0.3) + Vector3.UP * 0.25
 	var by_it := _around(img, _px(img, side), 3)
-	print("  the hole (%s, %.2f x %.2f m): inside #%s, the stone beside it #%s" % [str(h.get("piece", "?")), float(h.w), float(h.h), in_hole.to_html(false), by_it.to_html(false)])
-	ok(_luma(in_hole) < _luma(by_it) * 0.5, "its hole reads as a way into the black: dark inside against the torchlit stone beside it")
+	# Its mouth on the frame (the arch on the wall's face), its back where
+	# the boss hangs the black (Boss._hole_mouths), and each a few cm in
+	# from its edges (MARGIN): a sight in through the one and on to the
+	# other sees the black.
+	const MARGIN := 0.03
+	var mouth := TombBuild._arch(0.0, w, 0.0, hh)
+	var clear := TombBuild._arch(0.0, w - MARGIN * 2.0, MARGIN, hh - MARGIN)
+	var back := float(h.depth) - 0.04
+	var outline := PackedVector2Array()
+	for v: Vector2 in mouth:
+		var q := _px(img, hp + u * v.x + Vector3.UP * v.y)
+		if q.x < 0.0:
+			ok(false, "its hole in view")
+			return
+		outline.append(q)
+	var box := Rect2(outline[0], Vector2.ZERO)
+	for q in outline:
+		box = box.expand(q)
+	var cam := get_root().get_camera_3d()
+	var vs := get_root().get_visible_rect().size
+	var in_mouth := 0
+	var black_in_mouth := 0
+	var sees_back := 0
+	var black := 0
+	var black_sum := Color(0, 0, 0)
+	var not_black := Color(0, 0, 0)
+	for y in range(maxi(int(box.position.y), 0), mini(int(ceil(box.end.y)) + 1, img.get_height())):
+		for x in range(maxi(int(box.position.x), 0), mini(int(ceil(box.end.x)) + 1, img.get_width())):
+			var c := img.get_pixel(x, y)
+			var is_black := _luma(c) < _luma(by_it) * 0.5 and c.b > c.r
+			if Geometry2D.is_point_in_polygon(Vector2(x + 0.5, y + 0.5), outline):
+				in_mouth += 1
+				if is_black:
+					black_in_mouth += 1
+			# The sight through this pixel: where it crosses the face, and
+			# where it reaches the back's depth.
+			var sp := Vector2((x + 0.5) / img.get_width() * vs.x, (y + 0.5) / img.get_height() * vs.y)
+			var o := cam.project_ray_origin(sp)
+			var dv := cam.project_ray_normal(sp)
+			if dv.dot(n) > -1e-4:
+				continue
+			var at_face := o + dv * ((hp - o).dot(n) / dv.dot(n))
+			var at_back := o + dv * ((hp - n * back - o).dot(n) / dv.dot(n))
+			if not Geometry2D.is_point_in_polygon(Vector2((at_face - hp).dot(u), at_face.y - hp.y), clear):
+				continue
+			if not Geometry2D.is_point_in_polygon(Vector2((at_back - hp).dot(u), at_back.y - hp.y), clear):
+				continue
+			sees_back += 1
+			if is_black:
+				black += 1
+				black_sum += c
+			else:
+				not_black += c
+	var share := float(black) / float(maxi(sees_back, 1))
+	print("  the hole (%s, %.2f x %.2f m) from %.1f m: %d pixels of its mouth, %.0f%% of them the black (the rest its sill, torchlit going in); %d see in to its back, %d of them the black (#%s)%s; the stone beside it #%s" % [str(h.get("piece", "?")), w, hh, Vector3(at.x - hp.x, 0.0, at.z - hp.z).length(), in_mouth, 100.0 * black_in_mouth / float(maxi(in_mouth, 1)), sees_back, black, (black_sum / float(maxi(black, 1))).to_html(false), "" if black == sees_back else ", the others #%s" % (not_black / float(sees_back - black)).to_html(false), by_it.to_html(false)])
+	ok(sees_back >= 150 and share >= 0.95, "its hole reads as a way into the black: every sight in through its mouth to its back is the dark's navy (%d of %d), dark against the torchlit stone beside it" % [black, sees_back])
 
 
 ## Its sheets, saved, and every cell holding the body.
