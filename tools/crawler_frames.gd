@@ -1341,7 +1341,10 @@ func _run() -> void:
 	# One ruin, one stone (§EX.1, §EX.3): a crypt by torchlight, looking down
 	# it (the fitted flags, the corbel course and the slabs, its pillars
 	# where it has them, the coffins), and its doorway from inside (the
-	# trapezoid, the jamb stones, the lintel, the threshold).
+	# trapezoid, the jamb stones, the lintel, the threshold). The torch in
+	# hand and lit (the heart's relight put it away).
+	_torch_in_hand(p)
+	t.light()
 	for pc in main.lay.pieces:
 		if str(pc.get("room_kind", "")) != "crypt":
 			continue

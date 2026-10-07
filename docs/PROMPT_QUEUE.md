@@ -77,7 +77,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 45 | §EX.7 | A reticle in the crawler | built 475c143 |
 | 46 | §EX.2, §EX.5 | The plan and the way out: a spine, the module, an exit every time | built 28dafd4 |
 | 47 | §EX.4 | One hearth per dungeon; wall torches in the other rooms | built 6578210 |
-| 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | todo |
+| 48 | §EX.1, §EX.3 | One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style | built 8799b26 |
 | 49 | §EY.1, §EY.2 | A boss in the dungeon: the snake prowls only the unlit rooms; the last light drives it into its hole | built 827805b |
 | 50 | §EZ.1, §EZ.5 | The torch stays lit: only deep water puts it out | built dacd5d3 |
 | 51 | §EZ.2 | The pitch torch: a wrapped, tarred head and a pixel flame | built afac6a9 |
@@ -926,7 +926,7 @@ CHECK (tools/crawler_check.gd, headless, seeds 1, 7, 42): exactly one hearth per
 
 ## 48 — One ruin, one stone: floor, ceiling, doors, stairs and sconces in the walls' style — §EX.1, §EX.3
 
-**Status:** todo
+**Status:** built 8799b26
 **Mike sees:** The tomb looks built by one people from one quarry: the floor is fitted polygonal flags of the same stone as the pillowed walls, worn smooth down the middle; the ceiling is long single slabs of that stone, with a step of corbel above the walls in the rooms; doorways and niches are Inca trapezoids under one big lintel; stairs are single blocks; the wall torches sit in trapezoid niches cut into the wall. The snow ruins, when built, use the passage-grave kit: orthostats, rough slab floors, corbelled chambers closed by a capstone.
 
 ```text
