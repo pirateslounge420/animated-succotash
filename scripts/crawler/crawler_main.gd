@@ -35,6 +35,8 @@ var world: Node
 var lay: Dictionary
 var tomb: Node3D
 var fires: CrawlerFires
+## Fire pots (design §FA.3): lit off the torch, thrown (FirePots).
+var fire_pots: FirePots
 var airways: Airways
 var vents: Vents
 var player: CrawlerPlayer
@@ -91,6 +93,10 @@ func _ready() -> void:
 	var w: Array = lay.wake
 	player.spawn_flat(w[0], float(w[1]), -0.32)
 	airways.exclude = [player.get_rid()]
+	fire_pots = FirePots.new()
+	fire_pots.name = "FirePots"
+	add_child(fire_pots)
+	fire_pots.build(world, lay, player)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"

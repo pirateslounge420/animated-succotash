@@ -274,6 +274,94 @@ func _torch_in_hand(p: CrawlerPlayer) -> void:
 	p.weapon = "torch"
 
 
+## Real seconds (the fires burn on the physics clock, which keeps to it).
+func _wait_s(s: float) -> void:
+	var until := Time.get_ticks_msec() + int(s * 1000.0)
+	while Time.get_ticks_msec() < until:
+		await process_frame
+
+
+## Fire pots (design §FA.3, prompt 60), at night with the torch away: a tar
+## patch burning on a dark corridor's floor, a light-oil burst in a dark
+## room at its height, and a pot lit in the left hand with the aim's arc.
+## Checks: the patch and the burst light the dark, in the hearth's amber
+## (the grade's orange band).
+func _pots(main: CrawlerMain) -> void:
+	var p := main.player
+	var fp := main.fire_pots
+	var world: Node = main.world
+	var keep_days: float = world.days
+	world.days = 13.0
+	p.torch.put_out("stowed")
+	var lit_in := {}
+	for h in main.fires.holders:
+		if FireStore.is_lit(h):
+			lit_in[int(h.get_meta("piece"))] = true
+	var cor: Dictionary = {}
+	var room: Dictionary = {}
+	for pc in main.lay.pieces:
+		if lit_in.has(int(pc.id)):
+			continue
+		if cor.is_empty() and str(pc.kind) == "corridor" and float(pc.len) >= 7.0:
+			cor = pc
+		elif room.is_empty() and str(pc.kind) == "room" and not str(pc.get("room_kind", "")) in ["hearth", "heart"] and float(pc.len) >= 7.0:
+			room = pc
+	if not cor.is_empty():
+		var d: Vector2 = cor.dir
+		var s2: Vector2 = (cor.c as Vector2) + d * 0.8
+		p.spawn_flat(Vector3(s2.x, Delves.floor_of(cor, 0.8), s2.y), atan2(-d.x, -d.y), -0.2)
+		await _frames(8)
+		var before := _stats(await _shot("11a_corridor_before_the_pot"))
+		var f2: Vector2 = (cor.c as Vector2) + d * 4.0
+		fp.burst(Vector3(f2.x, Delves.floor_of(cor, 4.0) + 0.25, f2.y), "tar", null, Vector3.UP)
+		await _wait_s(1.5)
+		var img := await _shot("11_tar_patch")
+		var st := _stats(img)
+		var pt := _patch(img, 0.3, 0.45, 0.7, 0.85)
+		print("  tar patch: warm %.3f of the frame (%.3f before), mean %.3f (%.3f before); its stretch of floor hue %.1f, chroma %.3f" % [st.warm, before.warm, st.mean_l, before.mean_l, pt.hue, pt.chroma])
+		ok(float(st.warm) > float(before.warm) + 0.01 and float(st.mean_l) > float(before.mean_l) + 0.01 and float(pt.hue) >= -20.0 and float(pt.hue) <= 62.0, "a tar patch burns on the dark corridor's floor and lights it in the hearth's amber (hue %.1f)" % pt.hue)
+	if not room.is_empty():
+		var d3: Vector2 = room.dir
+		var s3: Vector2 = (room.c as Vector2) + d3 * 1.0
+		p.spawn_flat(Vector3(s3.x, float(room.y0), s3.y), atan2(-d3.x, -d3.y), 0.0)
+		await _frames(8)
+		var before3 := _stats(await _shot("12a_room_before_the_burst"))
+		var b3: Vector2 = (room.c as Vector2) + d3 * minf(5.0, float(room.len) - 1.0)
+		fp.burst(Vector3(b3.x, float(room.y0) + 1.3, b3.y), "light_oil", null, Vector3.UP)
+		await _wait_s(0.2)
+		var img3 := await _shot("12_pot_burst")
+		var st3 := _stats(img3)
+		var mid := _patch(img3, 0.35, 0.25, 0.65, 0.75)
+		print("  light-oil burst: warm %.3f of the frame (%.3f before), mean %.3f (%.3f before); its middle hue %.1f, luma %.3f" % [st3.warm, before3.warm, st3.mean_l, before3.mean_l, mid.hue, mid.luma])
+		ok(float(st3.warm) > float(before3.warm) + 0.05 and float(mid.hue) >= -20.0 and float(mid.hue) <= 62.0, "a light-oil burst fills the dark room with amber fire (hue %.1f, warm %.3f)" % [mid.hue, st3.warm])
+		await _wait_s(1.0)
+	# A pot lit in the left hand, charged halfway: the hands, the wick, the
+	# arc of the lob.
+	_torch_in_hand(p)
+	p.torch.light()
+	if not cor.is_empty():
+		var d4: Vector2 = cor.dir
+		var s4: Vector2 = (cor.c as Vector2) + d4 * 0.8
+		p.spawn_flat(Vector3(s4.x, Delves.floor_of(cor, 0.8), s4.y), atan2(-d4.x, -d4.y), -0.1)
+	fp.give("tar")
+	var pot: Dictionary = fp.pots_carried()[-1]
+	fp.left = pot
+	# Held (no mouse to capture here): let go and it would be thrown.
+	Bow.need_capture = false
+	Input.action_press("shoot")
+	fp._catch(pot)
+	await _wait_s(0.4)
+	fp.charge = 0.5
+	await _shot("13_pot_lit_in_hand")
+	fp._set_state("idle")
+	fp.left = {}
+	Input.action_release("shoot")
+	Bow.need_capture = true
+	fp._remove(pot)
+	p.torch.put_out("stowed")
+	world.days = keep_days
+
+
 func _run() -> void:
 	WorldSave.read_only = true
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
@@ -507,6 +595,7 @@ func _run() -> void:
 		p.spawn_flat(Vector3(hc.x, float(hpc.y0), hc.y), atan2(-hd.x, -hd.y), -0.2)
 		await _frames(20)
 		await _shot("10_heart_by_torch")
+	await _pots(main)
 	# One firelight (§EX.6): the torchlit and the sconce-lit stone the same
 	# amber, both inside the grade's orange band.
 	if firelit.has("torch") and firelit.has("sconce"):

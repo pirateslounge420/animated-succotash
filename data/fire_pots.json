@@ -1,6 +1,6 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FA.3] Fire pots (Mike, 6 Oct, 22:32): a small sealed vessel of oil with a wick, lit off the torch in your right hand and thrown. Rare; you never craft them (§BN): restored ruins' folk give them (§FF.3). The only ranged way to fight back in Torchfire 1, and it is fire (§ED.7: only fire answers what lurks in the dark). First guesses by Claude (chat), 6 Oct night; the designer owns them.",
+  "about": "Fire pots (Mike, 6 Oct, 22:32): a small sealed vessel of oil with a wick, lit off the torch in your right hand and thrown. Rare; you never craft them (§BN): restored ruins' folk give them (§FF.3). The only ranged way to fight back in Torchfire 1, and it is fire (§ED.7: only fire answers what lurks in the dark). First guesses by Claude (chat), 6 Oct night; the designer owns them. Wired 7 Oct (Claude Code, prompt 60; FirePots, ThrownPot, PotFire, PotMesh in scripts/crawler/): everything here is read, with the engine's own blocks added below (wick, look, found, dev_items, spread, hurts_you). sources: found (one pot in a side room per dungeon) and F9 are in; gift waits for §FF.3. What burns and what is driven off join through FirePots' fire-target socket: prompt 58's skeletons and prompt 49's snake as they land.",
   "vessel": "§FJ.5 (Mike, 6 Oct 22:52: 'the clay pot bomb sounds good'): a sealed fired-clay pot with a wick (answers §FA.5; fits §EH). No glass.",
   "sources": "§FA.3 / §FF.3. gift: the folk of a fully relit ruin give some, with the way of using them (Mike). found: a few lie in ruins (Claude's first guess, open).",
   "carry_max": "How many fit the left-hand strip (§FB). Rarity is the point: there won't be many (Mike).",
@@ -12,7 +12,13 @@
   "light": "Its fire lights in the hearth's amber (§EX.6, look.json fire.light.color). relights_holders: null until Mike answers §FI.2 call 4 (can a thrown pot light a cold sconce?).",
   "oils": "§FA.3 (Mike): tar sticks and keeps burning (damage over time, a patch on the floor); light oil has a low flash point and bursts once with no lingering fire. burst is fire damage at once, burn_dps fire damage per second while stuck, in the units of residents.json fire_hp.",
   "vs_creature": "§FA.3 (Mike): some oils do more to certain creatures: residents.json → creatures.<name>.oil_scale.",
-  "vs_boss": "§FA.4, open (§FI.2 call 3). Claude's first guess: a pot never kills a boss; a hit drives it off into the dark for drives_off_s."
+  "vs_boss": "§FA.4, open (§FI.2 call 3). Claude's first guess: a pot never kills a boss; a hit drives it off into the dark for drives_off_s.",
+  "wick": "Added by Claude Code (prompt 60, §FA.3): the lit wick, in your hand and in the air. flame_scale: its flame card against a campfire's; light_range_m and energy: its small amber light (§EX.6); as it catches the light flares to flare_energy and settles over flare_s (Mike: 'lighting it lights you up too'). First guesses; Mike tunes them by playing.",
+  "look": "Added by Claude Code (prompt 60, §FA.3): how its fire looks, all in the hearth's amber (§EX.6). flash_*: the burst per oil, its seconds, its fireball against a campfire's flame, its light's spike. patch_*: tar burning on the floor, its flames, light and reach. stuck_*: tar burning on a creature. gutter_share: the last share of a fire's life in which it dims, reddens and sinks before it goes out. char_color: the black left on the stone where it burnt. First guesses.",
+  "found": "Added by Claude Code (prompt 60, §FA.3 sources: found, Claude's first guess): one pot lies on the floor of a side room per dungeon, never on the spine (crawler.json plan.spine; until it's built, never on the way from the hearth room to the heart), never the hearth room or the heart, a dead end where there is one. oils: the odds of each oil. Right click takes it.",
+  "dev_items": "Added by Claude Code (prompt 60): F9 in the crawler (dev_mode) puts pots in the pack up to carry_max, of these oils in turn, so both can be tried.",
+  "spread": "Added by Claude Code (prompt 60, §FA.3 spreads_to): what catches burns burn_s seconds by its kind, burning what stands in it at burn_dps (residents.json fire_hp units), then lies charred and never burns again. In the tomb so far: the hearth room's reed mat (rushes) and the bedroll (cloth); the tomb has no dry wood. Webs and the cats' runs come with their worlds. First guesses.",
+  "hurts_you": "Added by Claude Code (prompt 60), open for Mike: your own pot's fire doesn't hurt you (Harm isn't in the crawler yet, prompt 56). true would make standing in a burst or a burning patch a hit."
  },
  "vessel": "clay_pot",
  "crafted": false,
@@ -30,7 +36,12 @@
   "min_m": 4.0,
   "max_m": 14.0,
   "charge_s": 0.8,
-  "arc": "lob"
+  "arc": "lob",
+  "lob_deg": 18.0,
+  "gravity_mps2": 9.8,
+  "arc_shown": true,
+  "flight_max_s": 6.0,
+  "_help_lob": "Added by Claude Code (prompt 60): the pot leaves your hand lob_deg above where you look, at the speed that lands it at the charged range on level ground when you look level (looking down throws shorter, up higher and longer); it falls at gravity_mps2. arc_shown: a faint dotted arc of the lob while you aim (AimArc's look, §FB's 'keep holding to aim'). flight_max_s: longer in the air, it bursts where it is. 18 degrees keeps a full 14 m lob under a 2.6 m corridor ceiling."
  },
  "gives_away": {
   "flare_seen_m": 25.0,
@@ -71,5 +82,64 @@
  "vs_boss": {
   "kills": false,
   "drives_off_s": 30.0
- }
+ },
+ "wick": {
+  "flame_scale": 0.12,
+  "light_range_m": 4.0,
+  "energy": 1.0,
+  "flare_energy": 3.0,
+  "flare_s": 0.35
+ },
+ "look": {
+  "flash_s": {
+   "tar": 0.35,
+   "light_oil": 0.8
+  },
+  "flash_flame_scale": {
+   "tar": 1.0,
+   "light_oil": 2.6
+  },
+  "flash_energy": {
+   "tar": 6.0,
+   "light_oil": 14.0
+  },
+  "patch_flames": 4,
+  "patch_flame_scale": 0.5,
+  "patch_energy": 2.4,
+  "patch_range_m": 6.0,
+  "stuck_flame_scale": 0.45,
+  "stuck_energy": 1.6,
+  "stuck_range_m": 5.0,
+  "gutter_share": 0.3,
+  "char_color": "#0b0c14"
+ },
+ "found": {
+  "per_dungeon": 1,
+  "in": "side_room",
+  "never_on_spine": true,
+  "prefer_dead_end": true,
+  "oils": {
+   "tar": 1,
+   "light_oil": 1
+  }
+ },
+ "dev_items": {
+  "gives": "carry_max",
+  "oils": [
+   "tar",
+   "light_oil",
+   "tar"
+  ]
+ },
+ "spread": {
+  "burn_s": {
+   "web": 2.0,
+   "dry_wood": 30.0,
+   "rushes": 15.0,
+   "cloth": 12.0
+  },
+  "burn_dps": 0.5,
+  "leaves": "char"
+ },
+ "hurts_you": false
 }

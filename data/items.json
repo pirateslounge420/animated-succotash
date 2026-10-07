@@ -129,6 +129,12 @@
    "color": "#9c5a36",
    "_note": "Added by Claude Code with the \u00a7EJ.4 wiring: a camp's gift (camps.json sim.sharing.gift_back), from a camp with pottery. Carried; it does nothing yet."
   },
+  "fire_pot": {
+   "name": "Fire pot",
+   "icon": "pot",
+   "color": "#9c5a36",
+   "_note": "Added by Claude Code with prompt 60 (design \u00a7FA.3, \u00a7FJ.5; FirePots): a sealed clay pot of oil (its \"oil\": tar or light_oil) with a wick, lit off the torch in your right hand and thrown. Carried in the left hand's strip, fire_pots.json carry_max at most."
+  },
   "bowl_of_stew": {
    "name": "Bowl of stew",
    "icon": "bowl",
