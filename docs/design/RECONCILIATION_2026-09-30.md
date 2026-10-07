@@ -5085,3 +5085,29 @@ the cut as a fresh reversal of the 27 Sept "keep" calls; §ET.2 had already made
 ### FK.6 Order of work
 `docs/PROMPT_QUEUE.md` **63** (new): one seed per new game, a save, Continue and New game, and the
 fixed clock in the crawler. After 46 (the exit and its stand-in).
+
+## FL. Past the medieval stage (metal is back), and 480 lines the most — LOCKED (7 Oct, 16:09, Mike)
+
+### FL.1 Tech level: past the medieval stage
+- Mike, 7 Oct: "past medieval stage"; asked whether that brings metal back over §EH, "intended."
+- **Supersedes §EH** (no metal; pottery, bone, stone, wood and fibre as the ceiling) and §EE.1's
+  medieval ceiling. Metal, glass and ore are allowed again in the world, its ruins and its makers.
+- What this reopens (calls for Mike, not decided here):
+  1. **The warden's chain** (§FI flag): no longer a conflict; a forged chain fits.
+  2. **Fire pots** (§FJ, clay): stay clay unless Mike asks; a glass fire-bottle is no longer barred.
+  3. **Lanterns** (the §EH note on lamps): a metal-and-glass lantern is possible as a light source.
+  4. **§EE.5's retired specialties** (`mining`, `glass`): may come back as village specialties.
+  5. **How far past medieval:** early modern (Renaissance) or later. Firearms stay out until Mike
+     says otherwise (fire is the only combat, §FA).
+- Unchanged: every flame is borrowed from a hearth (the volcano's dragon the one exception, §EY).
+
+### FL.2 Render: 480 lines the most
+- Mike, 7 Oct: "max resolution 480p." `look.json → max_internal_lines` 720 → **480**.
+  480 stays the default (§EU.1). The presets above 480 (`half_hd` 540, `fine` 720) leave
+  Settings > Display > Pixel size; `painted` 270 and `chunky` 360 stay. `auto` now picks the
+  tallest preset at or under 480 that divides the window exactly, else 480 with letterbox.
+- Supersedes the 28 Sept "720 the hard maximum".
+
+### FL.3 Order of work
+`docs/PROMPT_QUEUE.md` **64**: the 480 cap in look.json, Settings and auto. The tech change needs
+no code yet; it waits on FL.1's calls.

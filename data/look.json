@@ -113,7 +113,7 @@
  },
  "render": {
   "internal_lines": 480,
-  "max_internal_lines": 720,
+  "max_internal_lines": 480,
   "aspect": "16:9",
   "upscale": "nearest",
   "integer_scale": true,
