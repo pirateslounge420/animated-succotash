@@ -1165,4 +1165,6 @@ CHECK (headless, tools/crawler_check.gd): the same game seed builds the same fir
 ```
 
 ## 64 — §FL.2: 480 lines the most
+**Status:** built 596646a
+
 look.json max_internal_lines is now 480 (was 720). Drop presets above 480 (half_hd 540, fine 720) from Settings > Display > Pixel size and from auto's order; auto picks the tallest preset ≤480 that divides the window exactly, else 480 letterboxed. 480 stays default. Update the _help lines that mention 720/540.

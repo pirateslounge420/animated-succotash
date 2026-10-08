@@ -4,6 +4,46 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-08 — Queue 64, §FL.2: 480 lines the most, half_hd and fine gone from the pixel sizes; §FL.1's "metal is back" marked in the data (596646a, bdd8798)
+Mike, 7 Oct: *"max resolution 480p."* Built as §FL.2 and queue 64 say. §FL.1 (past the medieval stage, metal is back) needs no code yet, so only its markers went into the data.
+
+- **What changes on screen:**
+  - Settings > Display > Pixel size and F11 now step through default (854×480), auto, painted (480×270) and chunky (640×360). half_hd (960×540) and fine (1280×720) are gone.
+  - 480 stays the default. If you never changed the pixel size, nothing looks different.
+  - auto picks the tallest of the three that divides your window's height by a whole number, else default (480) with black bars:
+    - 960 and 1440p get default (×2, ×3), as 1440p did before.
+    - 720p, 1080p and 4K get chunky (×2, ×3, ×6). 1080p and 4K used to get half_hd (540).
+    - Any other height gets default.
+  - A saved pixel size of half_hd or fine now opens at default (480). An old saved line count over 480 is held to 480.
+- **How:**
+  - `look.json → render.presets` loses `half_hd` and `fine`; `auto.prefer` is now default, chunky, painted (tallest first). `max_internal_lines` was already 480 (chat, b2ccee8).
+  - `Display`: its own fallback for the most lines is 480 (was 720; `max_lines()`). `auto_for(h)` is auto's pick for a window `h` pixels tall; `auto_preset()` calls it with the window's height, so the check can try any height without a window. The unused `LINE_CHOICES` (480, 720) is gone.
+  - The settings panel and F11 read the presets from the file, so they follow with no code change (their comments updated).
+  - `_help`: `_help.render`, `render._help_presets` and `auto.rule` say 480 is the most. `_help_preset_480`'s list of presets now points on to `_help_preset_fl2` (new), which says what §FL.2 changed. `HOW_TO_RUN.md`: the settings row, F11 and the picture paragraph.
+- **§FL.1 markers (no code):** each §EH "no metal" note in `data/` now says §EH is superseded by §FL.1 (7 Oct: metal is back), and what stays until Mike's call:
+  - `bosses.json → _help.unplaced`: the warden's chain; a forged chain fits (§FL.1 call 1).
+  - `fire_pots.json → _help.vessel`: the pot stays clay; a glass fire-bottle is no longer barred (call 2).
+  - `npc_maker.json → _help.parts`: the jewellery and the glasses slot.
+  - `techniques.json → bog_iron.retired`, `villages.json → glass` and `mining.retired` (call 4), `peoples/marsh.json` (its bog-fir need and the bog-iron smiths' note), `peoples/README.md` rule 4.
+  - The rows stay retired: the code only looks for a `retired` key, never its words.
+- **Checks** (on bdd8798), all 0 fails:
+  - `crawler_check` (seed 7, 203 seeds walked): 271 lines, the 265 before and 6 new (part 14):
+    - 480 is the default and the most, and the pixel sizes are painted 270, chunky 360 and default 480.
+    - auto's order is tallest first. Its pick at every window height from 240 to 2400 matches the rule worked out in the check: 720 chunky, 768 default, 900 default, 960 default, 1080 chunky, 1200 default, 1440 default, 1600 default, 2160 chunky.
+    - Pixel size steps from default to auto, painted, chunky and back to default.
+    - half_hd, fine and an old 720 all show 480. The player's settings are put back.
+  - `hud_pin_check` 47 (49 before: two pixel sizes fewer). Every HUD line fits at painted, chunky and default.
+  - `no_metal_check` seeds 42 and 7731: 16 each. The open world still holds to §EH; the markers change nothing it reads.
+  - As before: `hands_check` 61, `crawler_harm_check` 59, `boss_check` 227, `residents_check` 176, `cleared_check` 90, `fire_pot_check` 104, `stagger_check` 65.
+  - `hud_pin_check` and `no_metal_check` (the open world) crash in Godot's shutdown after their result line: the known one.
+- **Frames** (once, at the end, on bdd8798, seed 7, lavapipe): `crawler_frames` 72 frames, 54 lines, 0 fails, the same counts as before. Its 480- and 270-line frames use default and painted, which haven't changed.
+- **For Mike:**
+  - On a 1080p screen, auto now gives chunky (640×360, ×3), blockier than the old 540. If you'd rather 1080p got 480 with black bars, say so.
+  - The warden's chain: yesterday's entry read your "metal is fine" as settling it as metal, but §FL.1 lists it as a call. `bosses.json → unplaced.warden.chain` is still null. Say "a forged chain" and chat sets it.
+- **For chat:**
+  - `LOOK_REFERENCE.md` (around line 249) still suggests comparing default and half_hd (540) with F11; half_hd is gone.
+  - Still citing §EH, left as they are because they describe what's built: seven code comments ("no metal (§EH)") and `tools/no_metal_check.gd`, which holds the open world to it; `camps.json → sim.trades.never` lists "metal". `stand.json` and `camps.json` still call the planet "tribal".
+
 ## 2026-10-07 — Mike: metal is fine, the world moves past the tribal stage (design answer, for chat; no code)
 Mike: *"metal is fine- we moving past tribal stage."* It settles the clash flagged in this morning's answers: the warden's chain is metal (§FI.2 call 6, `bosses.json → unplaced.warden.chain`, still null), and "no metal" (§EH) no longer holds for Torchfire 1.
 - **Nothing in Torchfire 1 enforced it:** the crawler has no metal rule and no check for one.
