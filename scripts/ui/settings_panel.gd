@@ -4,8 +4,9 @@ extends Control
 ## The HUD: every element can be switched on or off, so you choose what's
 ## on your screen (2026-09-29, from play; design §L's speedometer and
 ## clock among them, all on by default). The display (design §Y, Display:
-## the pixel size, painted 270, chunky 360 or default 480 lines, the most
-## since §FL.2, or auto; 16:9 or 4:3 letterboxed; integer scaling) and
+## the pixel size, painted 270, chunky 360, default 480, half_hd 540 or
+## fine 720 lines, the most, or auto; 16:9 or 4:3 letterboxed; integer
+## scaling) and
 ## the sun's shadows by day (design §AG 6 A/B, SkySystem.day_shadows()).
 ## Audio: volume sliders (AudioMix) for everything, the footsteps and the
 ## climbing (from play: those two were too loud; they start at half).

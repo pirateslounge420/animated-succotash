@@ -2,8 +2,9 @@ class_name Display
 ## The fixed internal resolution (design §Y; data/look.json "render"):
 ## the whole frame (the 3D, the post-grade and dither, the HUD) is drawn
 ## at the preset's lines (480, "default", the committed default again
-## since Mike's 6 Oct dungeon lock; 270 "painted" was §ES's; 480 is the
-## most too, §FL.2), 16:9 (854x480) or 4:3, and upscaled
+## since Mike's 6 Oct dungeon lock; 270 "painted" was §ES's; 720 at most;
+## 1080 is never rendered, Mike, 7 Oct evening, undoing §FL.2's 480), 16:9
+## (854x480) or 4:3, and upscaled
 ## to the window with nearest-neighbour: square, honest pixels, so a
 ## bigger window only means bigger pixels. It's the root window's
 ## "viewport" content scale (project.godot [display]); every HUD px is at
@@ -17,10 +18,10 @@ class_name Display
 ##
 ## The player's settings (SettingsPanel) override the file:
 ## "display.preset" (a name from render.presets: painted 270 / chunky
-## 360 / default 480, the default and the most, design §BU, §FL.2; or
-## "auto"; a name no longer in the file, half_hd or fine, is the file's
-## own preset; an older "display.lines" still counts while no preset is
-## chosen, held to 480), "display.aspect" ("16:9" / "4:3"),
+## 360 / default 480, the default / half_hd 540 / fine 720, the most,
+## design §BU; or "auto"; a name not in the file is the file's own
+## preset; an older "display.lines" still counts while no preset is
+## chosen, held to 720), "display.aspect" ("16:9" / "4:3"),
 ## "display.integer" (on / off). apply() re-reads them. A dev key (F11,
 ## dev_pixel) cycles the presets live.
 
@@ -57,11 +58,10 @@ static func preset() -> String:
 
 
 ## "auto" (look.json render.auto): the first preset in render.auto.prefer
-## (tallest first) whose lines divide the window's height exactly (a
-## whole-number upscale, so nothing crawls), at or under
-## max_internal_lines (480, §FL.2); none does: the file's own preset
-## (default, 480), letterboxed. 960 and 1440 windows get default (x2,
-## x3); 720, 1080 and 2160, chunky (x2, x3, x6).
+## whose lines divide the window's height exactly (a whole-number upscale,
+## so nothing crawls), at or under max_internal_lines; none does: the
+## file's own preset (default, 480), letterboxed. 1440 windows get
+## default (x3); 1080 and 2160, half_hd (x2, x4).
 const AUTO := "auto"
 
 static func auto_preset() -> String:
@@ -80,10 +80,10 @@ static func auto_for(h: int) -> String:
 	return str(r.get("preset", "default"))
 
 
-## The most lines any setting may give (render.max_internal_lines; 480
-## since §FL.2).
+## The most lines any setting may give (render.max_internal_lines, 720;
+## never 1080).
 static func max_lines() -> int:
-	return int(render().get("max_internal_lines", 480))
+	return int(render().get("max_internal_lines", 720))
 
 
 ## Internal lines now: the preset's (an older "display.lines" setting

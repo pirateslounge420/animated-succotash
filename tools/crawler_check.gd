@@ -149,13 +149,16 @@ extends SceneTree
 ##     past max_span_m unsupported, the boss's hole off the pillars (and 30
 ##     more layouts), triangles per room inside 45,000, and the player's own
 ##     body through every door, corridor, stair and room;
-## 14. 480 lines the most (§FL.2, Display; queue 64): look.json's pixel
-##     sizes are painted 270, chunky 360 and default 480, the default and
-##     the most, auto's order tallest first; auto's pick for every window
-##     height from 240 to 2400 the tallest of them that divides it exactly,
-##     else default; Settings > Display > Pixel size and F11 step through
-##     the three and auto only; a setting saved as half_hd or fine, or an
-##     old display.lines of 720, shows 480. The player's settings put back.
+## 14. 720 the most, 480 the default, never 1080 (Mike, 7 Oct evening,
+##     undoing §FL.2's 480; Display, queue 64): look.json's pixel sizes
+##     are painted 270, chunky 360, default 480, half_hd 540 and fine 720,
+##     auto's order every one once, default first; auto's pick for every
+##     window height from 240 to 2400 the first in that order that divides
+##     it exactly, else default, never above 720 (1440 default, 1080 and
+##     2160 half_hd); Settings > Display > Pixel size and F11 step through
+##     the five and auto; a saved half_hd or fine shows 540 or 720, a name
+##     not in the file default, an old display.lines of 1080 is held to
+##     720. The player's settings put back.
 
 ## The seeds §EX.4's room torches are checked on (queue 47).
 const TORCH_SEEDS := [1, 7, 42]
@@ -248,36 +251,37 @@ func _switch() -> void:
 	OS.set_environment("GAME", want)
 
 
-## 480 lines the most (§FL.2): the pixel sizes, auto, and settings saved
-## before the cap.
+## 720 the most, 480 the default, never 1080 (Mike, 7 Oct evening): the
+## pixel sizes, auto, and settings saved before.
 func _pixel_size() -> void:
 	var r := Display.render()
 	var pre := Display.presets()
 	var sizes := {}
 	for nm in pre:
 		sizes[str(nm)] = int(pre[nm])
-	ok(Display.max_lines() == 480 and int(r.get("internal_lines", 0)) == 480 and str(r.get("preset", "")) == "default", "look.json render: 480 lines the default and the most (max_internal_lines %d, internal_lines %d, preset %s)" % [Display.max_lines(), int(r.get("internal_lines", 0)), str(r.get("preset", ""))])
-	ok(sizes == {"painted": 270, "chunky": 360, "default": 480}, "the pixel sizes are painted 270, chunky 360 and default 480, none above 480 (%s)" % [sizes])
+	ok(Display.max_lines() == 720 and int(r.get("internal_lines", 0)) == 480 and str(r.get("preset", "")) == "default", "look.json render: 480 lines the default, 720 the most (max_internal_lines %d, internal_lines %d, preset %s)" % [Display.max_lines(), int(r.get("internal_lines", 0)), str(r.get("preset", ""))])
+	ok(sizes == {"painted": 270, "chunky": 360, "default": 480, "half_hd": 540, "fine": 720}, "the pixel sizes are painted 270, chunky 360, default 480, half_hd 540 and fine 720, none above 720, no 1080 (%s)" % [sizes])
 	var prefer: Array = (r.get("auto", {}) as Dictionary).get("prefer", [])
-	var tallest_first := prefer.size() == sizes.size()
-	for i in prefer.size():
-		if not sizes.has(str(prefer[i])) or (i > 0 and sizes.get(str(prefer[i]), 0) >= sizes.get(str(prefer[i - 1]), 0)):
-			tallest_first = false
-	ok(tallest_first, "auto's order is every pixel size, tallest first (%s)" % [prefer])
+	var once := prefer.size() == sizes.size()
+	for nm in sizes:
+		if prefer.count(nm) != 1:
+			once = false
+	ok(once and not prefer.is_empty() and str(prefer[0]) == "default", "auto's order is every pixel size once, default (480) first (%s)" % [prefer])
 	# auto's pick for every window height against the rule worked out here:
-	# the tallest size at or under 480 that divides it, else default.
+	# the first in auto's order at or under 720 that divides it, else default.
 	var off: Array = []
 	for h in range(240, 2401):
-		var best := ""
-		for nm in sizes:
-			if sizes[nm] <= 480 and h % sizes[nm] == 0 and (best == "" or sizes[nm] > sizes[best]):
-				best = nm
-		if Display.auto_for(h) != (best if best != "" else "default"):
+		var want := "default"
+		for nm in prefer:
+			if sizes.has(str(nm)) and sizes[str(nm)] <= 720 and h % sizes[str(nm)] == 0:
+				want = str(nm)
+				break
+		if Display.auto_for(h) != want or sizes.get(Display.auto_for(h), 0) > 720:
 			off.append("%d: %s" % [h, Display.auto_for(h)])
 	var picks: Array = []
-	for h in [720, 768, 900, 960, 1080, 1200, 1440, 1600, 2160]:
+	for h in [720, 768, 960, 1080, 1200, 1440, 2160]:
 		picks.append("%d %s" % [h, Display.auto_for(h)])
-	ok(off.is_empty(), "auto picks the tallest size that divides the window's height exactly, else default (480), at every height 240-2400 (%s)%s" % [", ".join(picks), "" if off.is_empty() else ": off at %s" % [off.slice(0, 6)]])
+	ok(off.is_empty() and picks == ["720 chunky", "768 default", "960 default", "1080 half_hd", "1200 default", "1440 default", "2160 half_hd"], "auto takes the first size in its order that divides the window's height exactly, else default (480), never above 720, at every height 240-2400 (%s)%s" % [", ".join(picks), "" if off.is_empty() else ": off at %s" % [off.slice(0, 6)]])
 	# The player's settings, put back at the end.
 	var had_preset: Variant = Settings.get_value("display.preset") if Settings.has("display.preset") else null
 	var had_lines: Variant = Settings.get_value("display.lines") if Settings.has("display.lines") else null
@@ -285,15 +289,15 @@ func _pixel_size() -> void:
 	var steps: Array = []
 	for i in sizes.size() + 1:
 		steps.append(Display.cycle_preset())
-	ok(steps == ["auto", "painted", "chunky", "default"], "Pixel size (Settings, F11) steps from default through auto, painted, chunky and back: no half_hd, no fine (%s)" % [steps])
+	ok(steps == ["half_hd", "fine", "auto", "painted", "chunky", "default"], "Pixel size (Settings, F11) steps from default through half_hd, fine, auto, painted, chunky and back (%s)" % [steps])
 	var held: Array = []
-	for old in ["half_hd", "fine"]:
+	for old in ["half_hd", "fine", "full_hd"]:
 		Settings.set_value("display.preset", old)
 		held.append("%s: %s %d" % [old, Display.preset(), Display.lines()])
 	Settings.erase("display.preset")
-	Settings.set_value("display.lines", 720)
-	held.append("lines 720: %d" % Display.lines())
-	ok(held == ["half_hd: default 480", "fine: default 480", "lines 720: 480"], "a setting saved before the cap shows 480: half_hd and fine are the file's default, an old display.lines of 720 is held to 480 (%s)" % [held])
+	Settings.set_value("display.lines", 1080)
+	held.append("lines 1080: %d" % Display.lines())
+	ok(held == ["half_hd: half_hd 540", "fine: fine 720", "full_hd: default 480", "lines 1080: 720"], "settings saved before: half_hd and fine show 540 and 720, a name not in the file (full_hd) the default 480, an old display.lines of 1080 is held to 720 (%s)" % [held])
 	for kv in [["display.preset", had_preset], ["display.lines", had_lines]]:
 		if kv[1] == null:
 			Settings.erase(kv[0])
