@@ -148,7 +148,14 @@ extends SceneTree
 ##     rays), four pillars round the hearth with its shaft open, no ceiling
 ##     past max_span_m unsupported, the boss's hole off the pillars (and 30
 ##     more layouts), triangles per room inside 45,000, and the player's own
-##     body through every door, corridor, stair and room.
+##     body through every door, corridor, stair and room;
+## 14. 480 lines the most (§FL.2, Display; queue 64): look.json's pixel
+##     sizes are painted 270, chunky 360 and default 480, the default and
+##     the most, auto's order tallest first; auto's pick for every window
+##     height from 240 to 2400 the tallest of them that divides it exactly,
+##     else default; Settings > Display > Pixel size and F11 step through
+##     the three and auto only; a setting saved as half_hd or fine, or an
+##     old display.lines of 720, shows 480. The player's settings put back.
 
 ## The seeds §EX.4's room torches are checked on (queue 47).
 const TORCH_SEEDS := [1, 7, 42]
@@ -188,6 +195,7 @@ func _run() -> void:
 	# you all over the tomb; tools/residents_check.gd wakes them.
 	Residents.stay_asleep = true
 	_switch()
+	_pixel_size()
 	var seeds := _walk_seeds()
 	_layouts(seeds)
 	_room_torches()
@@ -238,6 +246,59 @@ func _switch() -> void:
 	OS.set_environment("GAME", "torchfire2")
 	ok(GameMode.scene() == "res://scenes/main.tscn" and ResourceLoader.exists("res://scenes/main.tscn"), "GAME=torchfire2 opens the open world, still there (scenes/main.tscn)")
 	OS.set_environment("GAME", want)
+
+
+## 480 lines the most (§FL.2): the pixel sizes, auto, and settings saved
+## before the cap.
+func _pixel_size() -> void:
+	var r := Display.render()
+	var pre := Display.presets()
+	var sizes := {}
+	for nm in pre:
+		sizes[str(nm)] = int(pre[nm])
+	ok(Display.max_lines() == 480 and int(r.get("internal_lines", 0)) == 480 and str(r.get("preset", "")) == "default", "look.json render: 480 lines the default and the most (max_internal_lines %d, internal_lines %d, preset %s)" % [Display.max_lines(), int(r.get("internal_lines", 0)), str(r.get("preset", ""))])
+	ok(sizes == {"painted": 270, "chunky": 360, "default": 480}, "the pixel sizes are painted 270, chunky 360 and default 480, none above 480 (%s)" % [sizes])
+	var prefer: Array = (r.get("auto", {}) as Dictionary).get("prefer", [])
+	var tallest_first := prefer.size() == sizes.size()
+	for i in prefer.size():
+		if not sizes.has(str(prefer[i])) or (i > 0 and sizes.get(str(prefer[i]), 0) >= sizes.get(str(prefer[i - 1]), 0)):
+			tallest_first = false
+	ok(tallest_first, "auto's order is every pixel size, tallest first (%s)" % [prefer])
+	# auto's pick for every window height against the rule worked out here:
+	# the tallest size at or under 480 that divides it, else default.
+	var off: Array = []
+	for h in range(240, 2401):
+		var best := ""
+		for nm in sizes:
+			if sizes[nm] <= 480 and h % sizes[nm] == 0 and (best == "" or sizes[nm] > sizes[best]):
+				best = nm
+		if Display.auto_for(h) != (best if best != "" else "default"):
+			off.append("%d: %s" % [h, Display.auto_for(h)])
+	var picks: Array = []
+	for h in [720, 768, 900, 960, 1080, 1200, 1440, 1600, 2160]:
+		picks.append("%d %s" % [h, Display.auto_for(h)])
+	ok(off.is_empty(), "auto picks the tallest size that divides the window's height exactly, else default (480), at every height 240-2400 (%s)%s" % [", ".join(picks), "" if off.is_empty() else ": off at %s" % [off.slice(0, 6)]])
+	# The player's settings, put back at the end.
+	var had_preset: Variant = Settings.get_value("display.preset") if Settings.has("display.preset") else null
+	var had_lines: Variant = Settings.get_value("display.lines") if Settings.has("display.lines") else null
+	Settings.set_value("display.preset", "default")
+	var steps: Array = []
+	for i in sizes.size() + 1:
+		steps.append(Display.cycle_preset())
+	ok(steps == ["auto", "painted", "chunky", "default"], "Pixel size (Settings, F11) steps from default through auto, painted, chunky and back: no half_hd, no fine (%s)" % [steps])
+	var held: Array = []
+	for old in ["half_hd", "fine"]:
+		Settings.set_value("display.preset", old)
+		held.append("%s: %s %d" % [old, Display.preset(), Display.lines()])
+	Settings.erase("display.preset")
+	Settings.set_value("display.lines", 720)
+	held.append("lines 720: %d" % Display.lines())
+	ok(held == ["half_hd: default 480", "fine: default 480", "lines 720: 480"], "a setting saved before the cap shows 480: half_hd and fine are the file's default, an old display.lines of 720 is held to 480 (%s)" % [held])
+	for kv in [["display.preset", had_preset], ["display.lines", had_lines]]:
+		if kv[1] == null:
+			Settings.erase(kv[0])
+		else:
+			Settings.set_value(kv[0], kv[1])
 
 
 ## The seeds the plan and the walk run over: 1, 7, 42 and WALK_SEEDS more

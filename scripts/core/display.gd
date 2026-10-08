@@ -2,8 +2,8 @@ class_name Display
 ## The fixed internal resolution (design §Y; data/look.json "render"):
 ## the whole frame (the 3D, the post-grade and dither, the HUD) is drawn
 ## at the preset's lines (480, "default", the committed default again
-## since Mike's 6 Oct dungeon lock; 270 "painted" was §ES's; 720 at most;
-## 1080 is never rendered), 16:9 (854x480) or 4:3, and upscaled
+## since Mike's 6 Oct dungeon lock; 270 "painted" was §ES's; 480 is the
+## most too, §FL.2), 16:9 (854x480) or 4:3, and upscaled
 ## to the window with nearest-neighbour: square, honest pixels, so a
 ## bigger window only means bigger pixels. It's the root window's
 ## "viewport" content scale (project.godot [display]); every HUD px is at
@@ -17,13 +17,13 @@ class_name Display
 ##
 ## The player's settings (SettingsPanel) override the file:
 ## "display.preset" (a name from render.presets: painted 270 / chunky
-## 360 / default 480, the default / half_hd 540 / fine 720,
-## design §BU; or "auto"; an older "display.lines" still
-## counts while no preset is chosen), "display.aspect" ("16:9" / "4:3"),
+## 360 / default 480, the default and the most, design §BU, §FL.2; or
+## "auto"; a name no longer in the file, half_hd or fine, is the file's
+## own preset; an older "display.lines" still counts while no preset is
+## chosen, held to 480), "display.aspect" ("16:9" / "4:3"),
 ## "display.integer" (on / off). apply() re-reads them. A dev key (F11,
 ## dev_pixel) cycles the presets live.
 
-const LINE_CHOICES := [480, 720]
 const ASPECTS := ["16:9", "4:3"]
 
 static var _window: Window
@@ -57,24 +57,33 @@ static func preset() -> String:
 
 
 ## "auto" (look.json render.auto): the first preset in render.auto.prefer
-## whose lines divide the window's height exactly (a whole-number upscale,
-## so nothing crawls), at or under max_internal_lines; none does: the
-## file's own preset (default, 480), letterboxed. 1440 windows get
-## default (x3); 1080 and 2160, half_hd (x2, x4).
+## (tallest first) whose lines divide the window's height exactly (a
+## whole-number upscale, so nothing crawls), at or under
+## max_internal_lines (480, §FL.2); none does: the file's own preset
+## (default, 480), letterboxed. 960 and 1440 windows get default (x2,
+## x3); 720, 1080 and 2160, chunky (x2, x3, x6).
 const AUTO := "auto"
 
 static func auto_preset() -> String:
-	var r := render()
-	var fallback := str(r.get("preset", "default"))
 	if _window == null:
-		return fallback
-	var h := _window.size.y
-	var cap := int(r.get("max_internal_lines", 720))
+		return str(render().get("preset", "default"))
+	return auto_for(_window.size.y)
+
+
+## auto's pick for a window `h` pixels tall.
+static func auto_for(h: int) -> String:
+	var r := render()
 	for name in (r.get("auto", {}) as Dictionary).get("prefer", presets().keys()):
 		var lines_n := int(presets().get(str(name), 0))
-		if lines_n > 0 and lines_n <= cap and h % lines_n == 0:
+		if lines_n > 0 and lines_n <= max_lines() and h % lines_n == 0:
 			return str(name)
-	return fallback
+	return str(r.get("preset", "default"))
+
+
+## The most lines any setting may give (render.max_internal_lines; 480
+## since §FL.2).
+static func max_lines() -> int:
+	return int(render().get("max_internal_lines", 480))
 
 
 ## Internal lines now: the preset's (an older "display.lines" setting
@@ -85,7 +94,7 @@ static func lines() -> int:
 	var v := int(presets().get(name, int(r.get("internal_lines", 480))))
 	if str(Settings.get_value("display.preset", "")) == "" and int(Settings.get_value("display.lines", 0)) != 0:
 		v = int(Settings.get_value("display.lines", v))
-	return clampi(v, 240, int(r.get("max_internal_lines", 720)))
+	return clampi(v, 240, max_lines())
 
 
 ## The next preset in the file's order (the settings panel, the dev key).
