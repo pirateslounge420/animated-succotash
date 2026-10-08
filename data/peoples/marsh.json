@@ -14,7 +14,7 @@
   "needs": [
    "standing water or a wetland within 200 m, a hummock or dry rise to build on, and reeds within reach",
    "peat within reach for the full life; without it the fire runs on reed and willow brush",
-   "a stand of bog fir within reach for the candle, and willow for the trap frames (§EH: no iron seep, no smith)"
+   "a stand of bog fir within reach for the candle, and willow for the trap frames (§EH: no iron seep, no smith; §EH is superseded by §FL.1, 7 Oct, metal is back; unchanged until Mike's call)"
   ]
  },
  "fundamental": "fish_run",
@@ -287,7 +287,7 @@
    "source": "https://en.wikipedia.org/wiki/Marsh_Arabs"
   },
   {
-   "retired": "§EH (5 Oct): no metal in Torchfire 1; kept as a note for the sequel",
+   "retired": "§EH (5 Oct): no metal in Torchfire 1; kept as a note for the sequel. §EH is superseded by §FL.1 (7 Oct: metal is back); retired until Mike's call",
    "analogue": "Bog-iron smiths of the Iron Age and Viking age",
    "region": "Denmark, Norway, Iceland; c. 500 BCE–1300 CE",
    "note": "an oily sheen on the bog water (járnbrák, the iron slick) marked the seep; pea-sized nodules were cut out with a turf knife and roasted in a clay bloomery about 80 cm tall with charcoal, ore to charcoal 1:1; a smelt gave a bloom of a few kilos, hammered clean; at Snorup in Jutland the Iron Age left slag-pit furnaces on phosphorus-rich bog ore, each used once and abandoned as a pit of slag, and at Eiðar in east Iceland the slag heaps stood building-high (something like 1,000 tonnes of iron); the same bog could be re-harvested about once a generation",

@@ -28,7 +28,9 @@ level of detail. `tools/peoples_check.py` is the gate (0 errors before commit).
 4. **Materials are for makers.** A material is useless in the player's pack; a people's
    `maker` works what its land supports, and what the player brings. **No metal at all** (§EH, 5 Oct, supersedes §BO's bog-iron exception): the craft ceiling
    is fired clay, bone/antler/horn, knapped and ground stone, worked wood and fibre. No tool
-   tiers, no ladder from copper to steel. No periodic table.
+   tiers, no ladder from copper to steel. No periodic table. *§EH is superseded by §FL.1
+   (7 Oct: past the medieval stage, metal is back). The people files keep this rule until
+   Mike makes §FL.1's calls, and `tools/no_metal_check.gd` still holds the open world to it.*
 5. **The four fundamentals** (§BM): `crop` (river, valley), `fish_run` (coast, lake, river),
    `herd` (steppe, savanna, taiga, highland — built last), `managed_burn` (grassland,
    savanna, scrub). `forage` is the floor everyone starts on. A life names one.
