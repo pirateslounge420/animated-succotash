@@ -4,6 +4,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-08 — Mike's correction to §FL.2: 720 the most, 480 the default, never 1080; half_hd and fine are back (a1e64b3)
+Mike, 7 Oct evening, after queue 64: *"so the very maximum resolution should be 720 but default at 480. no 1080."* §FL.2 had read his "max resolution 480p" as a cap at 480. This puts the cap back at 720 and undoes the rest of 596646a's pixel-size change. The §FL.1 markers (bdd8798) stay.
+
+- **What changes on screen:**
+  - Settings > Display > Pixel size and F11 have all five sizes again: painted (480×270), chunky (640×360), default (854×480), half_hd (960×540) and fine (1280×720), and auto.
+  - 480 stays the default and 720 is the most. Nothing draws 1080 lines: an old saved line count of 1080 shows 720.
+  - auto is back to the 6 Oct order (§EU.1): 480 if it fits your window a whole number of times, then 540, 360, 270, 720.
+    - 1440p gets 480 (×3).
+    - 1080p and 4K get 540 (×2, ×4). This answers the entry below's question about 1080p.
+    - 720p gets 360 (×2). Any other height gets 480 with black bars.
+- **How:**
+  - `look.json → render`: `max_internal_lines` 480 → 720; `half_hd` and `fine` are back in `presets`; `auto.prefer` is back to default, half_hd, chunky, painted, fine.
+  - `_help`: `_help.render`, `_help_presets` and `auto.rule` say 720 is the most and never 1080. `_help_preset_480` is back as it was. `_help_preset_fl2` records §FL.2 and its undoing.
+  - `Display`'s own fallback for the most is 720 again. `auto_for` and `max_lines` stay: the check uses them. `HOW_TO_RUN.md` matches.
+- **Checks** (on a1e64b3), all 0 fails:
+  - `crawler_check` (seed 7, 203 seeds walked): 271 lines. Part 14 now checks:
+    - 480 the default and 720 the most; the five sizes.
+    - auto's order: every size once, default first. Its pick at every window height from 240 to 2400 follows that order and is never above 720: 720 chunky, 768 default, 960 default, 1080 half_hd, 1200 default, 1440 default, 2160 half_hd.
+    - Pixel size steps from default to half_hd, fine, auto, painted, chunky and back.
+    - A saved half_hd or fine shows 540 or 720, a name not in the file shows 480, and an old 1080 is held to 720.
+  - `hud_pin_check` 49 (every HUD line fits at all five sizes again), `hands_check` 61, `crawler_harm_check` 59. `hud_pin_check` crashes in Godot's shutdown after its result: the known one.
+  - Not re-run: the boss, residents, cleared, fire pot and stagger checks, `no_metal_check` and `crawler_frames`. None uses the sizes above 480, and they passed on bdd8798 (the entry below).
+- **For chat:**
+  - §FL.2 needs amending to Mike's correction: 720 the most, 480 the default, never 1080; the sizes up to 720 stay; auto's order is §EU.1's. `PROMPT_QUEUE.md` 64's text too.
+  - The entry below's flag on `LOOK_REFERENCE.md`'s half_hd comparison is moot: half_hd is back.
+
 ## 2026-10-08 — Queue 64, §FL.2: 480 lines the most, half_hd and fine gone from the pixel sizes; §FL.1's "metal is back" marked in the data (596646a, bdd8798)
 Mike, 7 Oct: *"max resolution 480p."* Built as §FL.2 and queue 64 say. §FL.1 (past the medieval stage, metal is back) needs no code yet, so only its markers went into the data.
 
