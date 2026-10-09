@@ -4,6 +4,57 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 75, §FM.13: a mushroom shape: a cap on a stalk (431c230)
+§FM.13 item 1 (Mike, 9 Oct, "do it"): teonanácatl, the fly agaric and Caesar's mushroom were drawn as a leaf rosette; now the engine draws a real mushroom. Built as queue 75 says. An earlier agent's draft, cut off by a container restart before it committed, was picked up, checked against every item and finished.
+
+- **What changes on screen:**
+  - **Nothing in the crawler yet.** `data/sacred` is still not loaded.
+  - **In the open world** (Torchfire 2, switched off), the fly agaric (taiga) and Caesar's mushroom (Mediterranean scrub) now grow as mushrooms. Each plant is a small group of three: an old one in the middle with its cap opened out, and two younger ones round it, leaning out a little, with rounder caps.
+    - The fly agaric: wide, flattish scarlet caps dotted with white warts, on stout white stalks with a skirt and a swollen foot.
+    - Caesar's mushroom: flame-orange domes opening flat, golden gills and stalks, each standing in a white sack (its "egg").
+  - **Teonanácatl**, built from its data/sacred entry for the check and the look only: tiny ochre bells with a low nipple on thread-thin straw stalks, a blue-green tinge at the rims, the group widest at its top.
+  - **Painted (§ES):** under every cap the gills are dark, shaded toward navy, and the stalks go navy just under the caps and at the foot, never grey. Diffuse only, no leaf tiles, no shine. Mushrooms don't sway in the wind.
+  - **From far off** a mushroom is the same three caps on stalks with fewer sides. It never becomes the flat card the far trees use, so it never turns into a blob.
+- **How:**
+  - `PlantSpecies.Shape.MUSHROOM`, read from an entry's `"shape": "mushroom"`.
+  - `MushroomMesh` (`scripts/ecology/mushroom_mesh.gd`, new), called from `PlantMeshes._build`, reads each entry's own `appearance` block:
+    - `cap.form` (or `cap.notes` when the form names no shape) for the cap's shape: conic, bell, hemispherical, domed, flat or funnel, and a nipple;
+    - `cap.size_cm` against `height_m` for how broad the cap is; the stalk is about a tenth of the cap across, and as tall as `height_m` leaves under the cap;
+    - `cap.colour`, with `cap.secondary` toward the rim (and on the flecks of a flecked cap), `underside.colour` for the gills, `stipe.colour` for the stalk;
+    - words in the cap's notes, habit and silhouette for a skirt, a bulb or a volva.
+  - The plant shader has a new material, "a fungus's flesh" (`foliage.gdshader`, UV2.x −1). It is drawn like bark (closed, lit from outside, shadows cast from its far side), but in its own painted colour: no bark texture, no pull toward bark brown, no moss.
+  - `SpeciesDB.species_in_file()` and `species_from_entry()` build one entry exactly as the loader builds a catalogue entry, without adding it to the world's plants. So the check and the look can draw teonanácatl while the open world and the §CC trim stay as they were.
+  - Data, as data-driven one-liners: `"shape": "mushroom"` in teonanácatl's entry and in the two Amanitas'.
+  - `HOW_TO_RUN.md`: a mushrooms bullet. `data/biomes/README.md` lists the shape.
+- **What you can tune:**
+  - The look comes from each entry's `appearance` block and `height_m`: `cap.form`, `cap.size_cm`, `cap.colour`, `cap.secondary`, `cap.texture`, `underside.colour`, `stipe.colour`, `habit`. Change the entry and the mushroom follows on the next start.
+  - Any other fungus can be a mushroom with the same one-liner in its biome file. The field mushroom, the parasol, the boletes and the waxcaps are still rosettes.
+  - In code, `scripts/ecology/mushroom_mesh.gd`: `BODIES` (the group: heights and cap sizes), `STALK_OF_CAP` (stalk thickness), `RIM_SHARE` (how much of the secondary colour reaches the rim), `FORMS` (each cap shape's height and roundness).
+- **Checks** (on 431c230), all 0 fails:
+  - `tools/mushroom_check.gd` (new, queue 75's check): 82 lines.
+    - The shape and its string. Teonanácatl built from its data/sacred entry as a catalogue entry is built, and data/sacred still not loaded: 1,003 species before and after, none from data/sacred.
+    - The fly agaric and Caesar's mushroom load as MUSHROOM. Every loaded mushroom builds through `mesh_for` (the path the open world and the litter fungi take) at the near and far levels.
+    - For all three at the hero, near and far levels: every face flesh (no leaf card, hull, far picture or leaf tile), sway 0, still in the wind. Top at y 1 in the unit frame, so drawn at any height in `height_m` it stands inside `height_m`. The cap `cap.colour` at its top, easing to `cap.secondary` at the rim. The gills dark (0.57 of their colour's lightness) and bluer: navy. Three stalks through a third of the height; leaning 2–11°. Lit from outside.
+    - Teonanácatl's widest point is in its top third at every level: 0.74 of its height near, 0.76 far.
+    - The far level keeps the near level's silhouette: widths within 1–3 % of the widest, a cut either side.
+    - Drawn at the middle of `height_m`: teonanácatl's cap 1.7 cm on a 2.0 mm stalk (its entry: 0.5–3 cm, 1–3 mm); the Amanitas' caps 13.7 cm (8–20 cm) on 15 mm stalks.
+    - The cap shapes read from the text: teonanácatl conic to bell with a nipple, its oldest cap 1.03 of its half-width tall; the fly agaric hemispherical to flat (0.38); Caesar's, from its notes, domed to flat (0.32).
+  - `tools/species_mesh_check.gd`: 1,003 species at the near and far levels, 0 fails, no missing tiles (977 at its last record; the data has grown since).
+  - `tools/giant_herb_check.gd` 108; `tools/wood_normals_check.gd` 2 (every bark part and culm still faces out); `python3 tools/shader_varying_check.py` (the plant shader still 9 slots); `python3 tools/plant_schema_check.py --strict` on the three data files (50 entries, 0 errors).
+  - The look, `tools/species_row.gd` (`SPECIES="Fly agaric,sacred:teonanacatl" HEIGHT_M=mid SPACING=0.3 DIST=0.75 EYE_M=0.3 LOOK_H=0.5 GRASS=Buffalograss`, 14:00, eye 30 cm up, 75 cm off): three red toadstools with white flecks and white stalks, navy shade under their caps (and navy shadows: the row casts them; in play the ground cover casts none), beside two of teonanácatl's three thin straw stalks with tiny ochre bells, standing in pale buffalograss, the fly agarics about 60 px tall. All read as mushrooms; teonanácatl's bells stand clear of the grass heads. Rendered twice: in the first frame the sown grass drew nothing, so the row's `GRASS` now draws it in the class texture (below).
+  - New in `species_row.gd`: a `sacred:<id>` name stands a data/sacred entry in the row, `HEIGHT_M=mid` draws each plant at the middle of its own height, `EYE_M` sets the camera's height, and `GRASS=<name>` sows a grass round the row.
+- **For Mike:**
+  - A far mushroom is its own small model (about 180 triangles for a group of three) rather than the far trees' two-triangle card. Mushrooms are drawn only within the ground cover's reach (`look.json → ranges.ground_m`, 45 m), so it costs little.
+  - The younger fly agarics' and Caesar's caps sit lower than the old one's: those groups are widest at about half their height, like a cluster of toadstools. Teonanácatl's group is widest at its top, as the check asks.
+- **For chat:**
+  - Data touched beyond the three one-liners: one line added to `flags.teonanacatl` in `sacred_plants.json` (the rosette stand-in is gone). `notes` there still says "no mushroom shape": that is your text, so I left it. `status` keeps its `[NOT WIRED YET]`: the file is still not loaded, and the prompt named no `_help` line to unwire.
+  - The fly agaric's old `traits` block still describes a rosette (`leaf_shape` "leaves in a ground rosette", `trunk` "none — stemless"); no code reads those two.
+  - `sports.json → by_shape` has no `mushroom`. The two Amanitas therefore no longer roll sports: as rosettes they could come up "variegated"; now nothing comes up, not even their documented white form (`anthocyanin_free`). If you add an entry, note that the plant shader would paint the "green form" and "dark form" sports onto a cap.
+  - Caesar's mushroom's appearance never mentions its ring (only its `source` does), so it draws without a skirt. A "ring" in its `cap.notes` or `habit` would add one.
+  - For prompts 76 and 77: `SpeciesDB.species_in_file(SpeciesDB.SACRED_PATH, id)` builds a data/sacred entry without loading it, and `species_row.gd` takes `sacred:<id>`.
+  - Seen in the look: up close, the open world's tiled grasses barely draw. With its own leaf tile, the buffalograss sown round the row showed nothing at a metre: its leaf cells are 12 cm or more, wider than a blade, so they cut the blades away. Reported, not this pass's.
+  - CLAUDE.md's §FM line doesn't mention §FM.13's three shapes (queue 75–77); the mushroom is now built.
+
 ## 2026-10-09 — Queue 68, §FM.6: floors and the fork: a second floor below the first, sealed until floor one is lit (f2bd277)
 §FM.6: "Light every torch on floor one and two openings appear together: the way up to the surface and the way down to the next floor. An instantaneous first decision for the player." Built as queue 68 says, with three calls of mine (the stair's place, floor two's size and its skeletons) under **For Mike** below.
 

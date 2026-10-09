@@ -104,7 +104,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
-| 75 | §FM.13 | A mushroom shape: a cap on a stalk | todo |
+| 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | todo |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | todo |
 
@@ -1337,7 +1337,7 @@ CHECK (headless): every exit in ruin_compass.json that points at a built world a
 
 ## 75 — A mushroom shape: a cap on a stalk — §FM.13
 
-**Status:** todo
+**Status:** built 431c230
 **Mike sees:** Nothing in the crawler yet. The engine can now draw a real mushroom, a little cap on a thin stalk, so teonanácatl (and the fly agaric) stop being drawn as a leaf rosette.
 
 ```text
