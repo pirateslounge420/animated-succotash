@@ -5289,7 +5289,29 @@ Queue 64's text is superseded the same way. CLAUDE.md and the project brief alre
 - **68** floors and the fork, then **69** floor two's fog, **70** the room pool, **73** tomes as
   pages (all after 68).
 - **71** the tomb's surface (after 63 and 68).
-- **72** harvest and brew, and **74** the compass and the reference map: both *wait* (72 for the
-  plant data fill of FM.9, 74 for a second world and FM.10 call 1).
+- **72** harvest and brew, and **74** the compass and the reference map: both *wait* (72 for
+  prompts 67 and 71, its plant entries being written; 74 for a second world and FM.10 call 1).
+- **75–77** the three new plant shapes (FM.13), any time.
 
 Mike plays and reports between each.
+
+### FM.13 Three new plant shapes: the mushroom, the globe cactus, the bulb
+Mike, 9 Oct, on Claude's offer to write the prompt for the missing shapes: "do it."
+- The engine (`PlantSpecies.Shape`, `PlantMeshes.mesh_for`) has no shape for three of the
+  §FM.9 plants, which stand in as the nearest shape until these exist:
+  1. **MUSHROOM** for teonanácatl: a tiny conic-to-bell cap, often with a low nipple, on a tall
+     thread-thin stalk, in small groups in grass. Fly agaric (*Amanita muscaria*, the taiga ruin)
+     and *A. caesarea* also draw as rosettes today and take the same shape, with their own broad
+     caps and stout stalks.
+  2. **GLOBE_CACTUS** for peyote: a flat, spineless blue-green button sunk to its rim in gravel,
+     broad low ribs cut into bumps, a white wool tuft on each bump and a woolly centre, often in
+     tight clumps. Not the column that CACTUS draws.
+  3. **BULB** for leshoma: a bare brown bulb half out of the ground, and above it a flat upright
+     fan of grey-green rippled straps in one plane (two ranks); in its season a round head of pink
+     trumpets on a short thick stalk, before the leaves.
+- Each reads at 64 px (PLANT_SCHEMA's archetype rule), is painted per §ES (diffuse only, no
+  normal maps, occlusion baked toward navy or olive), and takes its look from the entry's own
+  `appearance` block in `data/sacred/sacred_plants.json`.
+- Not here: the ayahuasca vine's corkscrew stem (it draws as a plain liana until Mike asks).
+- `docs/PROMPT_QUEUE.md` **75–77**, one shape each, any order, any time: none needs another
+  §FM prompt. Building a shape does not load `data/sacred` into the open world.

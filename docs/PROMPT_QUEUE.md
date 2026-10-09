@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for 67 and 71 (its plant entries are written, §FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows.
+Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for 67 and 71 (its plant entries are written, §FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** 75–77 are §FM.13, three new plant shapes (mushroom, globe cactus, bulb): any time, any order. The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -104,6 +104,9 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
+| 75 | §FM.13 | A mushroom shape: a cap on a stalk | todo |
+| 76 | §FM.13 | A globe cactus shape: a low button in the ground | todo |
+| 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1330,4 +1333,49 @@ READ: §FM.8 and §FM.10; docs/design/RUIN_ROSTER_REFERENCE.md; data/ruin_compas
 BUILD: (1) On a surface, the open edge in a direction leads to the neighbouring ruin's surface named by ruin_compass.json exits, the same in every playthrough; other edges stay closed by the land (§DM). (2) The map is reference only: it shows the ruins you have reached and their bearings, and takes you nowhere. Set worlds.json map.fast_travel off (§FM.8 supersedes §EW and §FK.3 for now). (3) The first ruin is still drawn at random (§FJ.1) and each ruin's inside still comes from the game's seed (§FK.2).
 
 CHECK (headless): every exit in ruin_compass.json that points at a built world arrives there from the opposite side; an exit that points at a ruin not built yet stays closed by the land; the map lists only reached ruins; no map action moves the player.
+```
+
+## 75 — A mushroom shape: a cap on a stalk — §FM.13
+
+**Status:** todo
+**Mike sees:** Nothing in the crawler yet. The engine can now draw a real mushroom, a little cap on a thin stalk, so teonanácatl (and the fly agaric) stop being drawn as a leaf rosette.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FM.13 item 1, a MUSHROOM plant shape, and nothing else. No screenshots after every step: check with headless numbers, and look once at the end with species_row. Prepend a PROGRESS entry, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.9 and §FM.13 of docs/design/RECONCILIATION_2026-09-30.md; docs/design/PLANT_SCHEMA.md (the archetype rule: readable at 64 px, LOD never smooths the silhouette); §ES (painted: diffuse only, roughness 1, no normal maps, occlusion baked toward navy or olive); data/sacred/sacred_plants.json (the entry's appearance, height_m, color, accent, tint, and the file's flags); scripts/ecology/plant_species.gd (enum Shape, how a shape string is read), scripts/ecology/plant_meshes.gd (mesh_for, material_for, the CACTUS, ROSETTE and SPIKE_ROSETTE builders it sits beside), tools/species_mesh_check.gd and tools/species_row.gd. Also scripts/ecology/litter_field.gd (litter fungi fruit with mesh_for, so they will pick the new shape up) and the Amanita muscaria and A. caesarea entries in data/biomes/04_taiga.json and 12_mediterranean_scrub.json.
+
+BUILD: (1) Add MUSHROOM to PlantSpecies.Shape and its string "mushroom". (2) PlantMeshes builds it: a cap (conic, bell or flat by the entry's cap.form, with an optional low nipple) on a stalk whose height and thickness come from height_m and the cap's size_cm; a few fruit bodies grouped per instance, slightly leaning. Cap colour from appearance.cap.colour with its secondary toward the rim; gills dark under the cap. Near and far levels: the far one keeps the cap-on-stalk silhouette. No leaf tiles (leaf type none). (3) Data, as a data-driven one-liner (say so in the commit): set teonanacatl's shape to "mushroom" in data/sacred/sacred_plants.json, and Amanita muscaria's and A. caesarea's in their biome files (their broad caps and stout stalks from their own entries). Do not add data/sacred to SpeciesDB's load: build the test species straight from its entry the way SpeciesDB builds a catalogue entry, so the open world and the §CC trim are untouched.
+
+CHECK (headless): species_mesh_check passes with the two Amanitas now built as mushrooms; a new check builds teonanacatl from its data/sacred entry at both levels and gets a mesh whose height is inside height_m and whose widest point is in its top third (a cap, not a rosette). species_row once: the fly agaric and teonanácatl side by side in grass, readable as mushrooms.
+```
+
+## 76 — A globe cactus shape: a low button in the ground — §FM.13
+
+**Status:** todo
+**Mike sees:** Nothing in the crawler yet. The engine can now draw peyote as what it is, a flat blue-green button with white woolly tufts sitting in the gravel, instead of a tall cactus column.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FM.13 item 2, a GLOBE_CACTUS plant shape, and nothing else. No screenshots after every step: check with headless numbers, and look once at the end with species_row. Prepend a PROGRESS entry, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.9 and §FM.13 of docs/design/RECONCILIATION_2026-09-30.md; docs/design/PLANT_SCHEMA.md (the archetype rule: readable at 64 px, LOD never smooths the silhouette); §ES (painted: diffuse only, roughness 1, no normal maps, occlusion baked toward navy or olive); data/sacred/sacred_plants.json (the entry's appearance, height_m, color, accent, tint, and the file's flags); scripts/ecology/plant_species.gd (enum Shape, how a shape string is read), scripts/ecology/plant_meshes.gd (mesh_for, material_for, the CACTUS, ROSETTE and SPIKE_ROSETTE builders it sits beside), tools/species_mesh_check.gd and tools/species_row.gd. Also the Trichocereus entries in data/plants/trichocereus.json (the CACTUS column it must not become).
+
+BUILD: (1) Add GLOBE_CACTUS to PlantSpecies.Shape and its string "globe_cactus". (2) PlantMeshes builds it: a flattened dome as wide as appearance.stem.diameter_cm and as tall as height_m, sunk to its rim (most of its height below the ground line), its rib count from stem.ribs, the ribs cut by cross-furrows into rounded bumps, a pale wool tuft (areole_colour) on each bump and a woolly boss at the centre; no spines when spine_cm is [0, 0]. Several heads in a tight clump per instance. Stem colour and secondary from the entry; flower (a small pink bell at the crown) only where the entry blooms. The far level keeps the flat button. (3) Data, as a data-driven one-liner (say so in the commit): set peyote's shape to "globe_cactus" in data/sacred/sacred_plants.json. CACTUS is unchanged. Do not add data/sacred to SpeciesDB's load: build the test species straight from its entry the way SpeciesDB builds a catalogue entry, so the open world and the §CC trim are untouched.
+
+CHECK (headless): species_mesh_check still passes (every CACTUS unchanged); a new check builds peyote from its data/sacred entry at both levels and gets a mesh no taller than height_m above the ground line and at least three times as wide as it is tall above ground. species_row once: peyote in gravel beside a San Pedro, readable as a button, not a stub column.
+```
+
+## 77 — A bulb shape: a fan of leaves on a bulb, and its flower head — §FM.13
+
+**Status:** todo
+**Mike sees:** Nothing in the crawler yet. The engine can now draw leshoma as it looks: a bare brown bulb half out of the ground with a flat fan of grey-green rippled leaves, and in its season a round head of pink flowers.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FM.13 item 3, a BULB plant shape, and nothing else. No screenshots after every step: check with headless numbers, and look once at the end with species_row. Prepend a PROGRESS entry, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.9 and §FM.13 of docs/design/RECONCILIATION_2026-09-30.md; docs/design/PLANT_SCHEMA.md (the archetype rule: readable at 64 px, LOD never smooths the silhouette); §ES (painted: diffuse only, roughness 1, no normal maps, occlusion baked toward navy or olive); data/sacred/sacred_plants.json (the entry's appearance, height_m, color, accent, tint, and the file's flags); scripts/ecology/plant_species.gd (enum Shape, how a shape string is read), scripts/ecology/plant_meshes.gd (mesh_for, material_for, the CACTUS, ROSETTE and SPIKE_ROSETTE builders it sits beside), tools/species_mesh_check.gd and tools/species_row.gd. Also leshoma's repro.bloom and growth blocks (when it flowers, and that the flowers come before the leaves) and the season code the other plants use for bloom (leaf_season.gd, fruit_crop.gd).
+
+BUILD: (1) Add BULB to PlantSpecies.Shape and its string "bulb". (2) PlantMeshes builds it: a bare brown bulb, about half above the ground, and from its neck a flat upright fan of strap leaves in ONE plane (two ranks), 8 to 16 of them, stiff, blunt and rippled at the edges (appearance.leaf), sometimes twisted a little; the fan's plane turns at random per instance. In its bloom season, a single round head of narrow pink trumpets (appearance.flower) on a short thick stalk sits on the bulb, with no leaves yet, as the entry says; if the bloom season can't be shown on this pass, build the leafy form only and say so in PROGRESS. The far level keeps the fan in one plane. (3) Data, as a data-driven one-liner (say so in the commit): set leshoma's shape to "bulb" in data/sacred/sacred_plants.json. SPIKE_ROSETTE is unchanged. Do not add data/sacred to SpeciesDB's load: build the test species straight from its entry the way SpeciesDB builds a catalogue entry, so the open world and the §CC trim are untouched.
+
+CHECK (headless): species_mesh_check still passes (every SPIKE_ROSETTE unchanged); a new check builds leshoma from its data/sacred entry at both levels and gets a mesh whose leaf fan is thin across (its depth under a quarter of its width, before the random turn) with a bulb at the base. species_row once: leshoma in grass, readable as a fan on a bulb from the side and as a line from edge-on.
 ```
