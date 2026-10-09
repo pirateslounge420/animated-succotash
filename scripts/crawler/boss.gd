@@ -113,6 +113,24 @@ extends Node3D
 ##               lengths, each where the head was, so it bends through the
 ##               corridors, lies in a coil, and slides into a hole after its
 ##               head.
+##   its pool    (design 9 Oct §FM.1, Mike: "a group of different behaviors
+##               that each boss can cycle through on RNG level"; queue 65;
+##               data/boss_pool.json; BossPool, BossState) what it does next
+##               is drawn at random from its own states, by weight, never
+##               the same one twice running, on dice of the pool's own (not
+##               the game seed), each for its dwell_s. 'rounds' is all of
+##               the above, wrapped and not rewritten (rounds_tick), so a
+##               pool of 'rounds' alone plays exactly as before. The rule's
+##               own moments are never a state's (RULE_MOMENTS: the chase,
+##               the torch's hold, the strike, leaving the light, a fire
+##               pot, you taken, the last light): the state in charge is
+##               over when one begins, and the pool is asked again only once
+##               it is free (its strike ready, out of its tunnels). A state
+##               strikes only by begin_strike (the strike as built, its tell
+##               and wind-up first, after your torch's hold), never stays in
+##               the light (lit round it or walked into it, it leaves as
+##               built) and never waits on the way out (on_way_out,
+##               EXIT_WAIT_S).
 
 static var B: Dictionary = Tuning.table("bosses")
 static var RULE: Dictionary = B.get("rule", {})
@@ -146,6 +164,28 @@ const VOID := Color(0.004, 0.005, 0.012)
 ## A route point inside the rock: in a tunnel, or down its den.
 const HID_TUNNEL := 1
 const HID_DEN := 2
+## The rule's own moments (boss_pool.json rule.never_breaks; §FM.1): the
+## chase (hunting you, the torch's hold, the strike, watching at the
+## light's edge), leaving the light, a fire pot (stunned, fleeing to its
+## hole, down it, rising), you taken, the last light. No state of its pool
+## is in charge during one, and the pool is never asked.
+const RULE_MOMENTS := ["hunt", "hang", "strike", "watch", "leave", "stunned", "flee", "den", "rise", "held", "release", "lair", "gone"]
+## A state of its pool may keep it still on the way out (on_way_out) at
+## most this long (s), then it is over (never_blocks_exit); the way out
+## reaches this far (m) round the middle of a doorway onto it; still is
+## slower than this (m/s).
+const EXIT_WAIT_S := 0.5
+const EXIT_CLEAR_M := 2.0
+const STILL_MPS := 0.3
+## No state may come now (none can enter): its built behaviour meanwhile,
+## and the pool asked again this much later (s).
+const POOL_RETRY_S := 1.0
+## The draws kept in draw_log (tools).
+const DRAW_LOG := 512
+
+## Tools: no pool at all, its tick the built behaviour exactly as before
+## queue 65 (the pool's check runs the two and compares the routes).
+static var pool_off := false
 
 var key := ""
 var def: Dictionary = {}
@@ -278,6 +318,31 @@ var _in_at := Vector3.ZERO
 var driven := 0
 var _burst_id := 0
 
+## Its behaviour pool (§FM.1; BossPool; null with pool_off); the state in
+## charge now ("" between: one of the rule's own moments, or before the
+## first draw) and its unit; how long it has left (its dwell); whether the
+## pool is to be asked at the next free tick; the state before.
+var pool: BossPool
+var behaviour := ""
+var _unit: BossState
+var _dwell_left := 0.0
+var _pool_due := true
+var _prev_behaviour := ""
+## Tools: the draws, oldest first, the last DRAW_LOG of them ({"id", "state"
+## (its own state then), "strike" (its strike's), "tunnel", "clock"}); how
+## the states in charge ended (their dwell, themselves, the rule's moments,
+## and the guards: the light, the way out).
+var draw_log: Array = []
+var states_ended := {"dwell": 0, "done": 0, "rule": 0, "light": 0, "exit": 0, "swap": 0}
+## The way out's guard: how long a state has kept it still there, and where
+## it was last tick; the doorways onto the way out (on_way_out).
+var _exit_wait := 0.0
+var _guard_at := Vector3.INF
+var _way_out_doors: Array = []
+## The way out's guard tripped: on its built rounds until it is off the way
+## out, and only then the pool asked again.
+var _clear_way_out := false
+
 
 ## The boss of this dungeon (§EY.8: the tomb's world is open, so the one
 ## marked first stands in): its key in bosses.json bosses.
@@ -336,6 +401,10 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 		_breath.position = (lair.pos as Vector3) - Vector3(0.0, 1.2, 0.0)
 		_mouth(lair)
 	_hole_mouths()
+	# Its behaviour pool (§FM.1): its own states (boss_pool.json pools), on
+	# dice of the pool's own; the first is drawn at its first free tick.
+	pool = null if pool_off else BossPool.for_boss(key, int(lay.seed))
+	_way_out_doors = _find_way_out_doors()
 	_refresh(true)
 	_begin.call_deferred()
 
@@ -1098,6 +1167,8 @@ func tick(delta: float) -> void:
 		if state != "held":
 			state = "held"
 			_calm()
+			# One of the rule's own moments: the state of its pool is over.
+			_end_unit("rule")
 	if state == "held":
 		lift = move_toward(lift, 0.1, delta)
 		lunge = move_toward(lunge, 0.0, delta * 3.0)
@@ -1105,6 +1176,25 @@ func tick(delta: float) -> void:
 		_sound_tick(delta)
 		return
 	strike.tick(delta)
+	# Its pool (§FM.1): the next state drawn when it is due and the boss is
+	# free; then the one in charge, its built rounds in the rule's moments.
+	_pool_step(delta)
+	if _unit == null or rule_moment():
+		rounds_tick(delta)
+	else:
+		_unit.tick(self, delta)
+		_pool_guard(delta)
+	if _after_tunnel and not _in_tunnel():
+		_after_tunnel = false
+		_after_light()
+	_pose()
+	_bed_tick(delta)
+	_sound_tick(delta)
+
+
+## The built behaviour (queues 49, 56, 57), the pool's 'rounds' (§FM.1),
+## unchanged: noticing you, the chase, and whatever it is doing now.
+func rounds_tick(delta: float) -> void:
 	_notice(delta)
 	_chase(delta)
 	match state:
@@ -1130,12 +1220,6 @@ func tick(delta: float) -> void:
 			_den_tick(delta)
 		"rise":
 			_rise_tick(delta)
-	if _after_tunnel and not _in_tunnel():
-		_after_tunnel = false
-		_after_light()
-	_pose()
-	_bed_tick(delta)
-	_sound_tick(delta)
 
 
 ## The lights: worked out again whenever a holder catches. The last one
@@ -1204,6 +1288,16 @@ func _turn_back_if_lit() -> bool:
 ## the light, it thinks again.
 func _after_light() -> void:
 	node = ground.node_at(base)
+	if _unit != null and not _unit.built() and not rule_moment():
+		# A state of its pool in charge (§FM.1): lit round it, the state is
+		# over and it leaves for the dark as built (never_breaks
+		# relit_room_stays_safe); else the state thinks again.
+		if node >= 0 and not ground.is_ground(node):
+			_end_unit("light")
+			_leave()
+		else:
+			_unit.lights_changed(self)
+		return
 	if noticed and state in ["hunt", "hang", "strike", "watch"]:
 		if light != null and light.at(base) > light.cap:
 			# The light caught round it: back to its edge (_hunt_tick).
@@ -2090,6 +2184,8 @@ func release() -> void:
 	released = true
 	var was := state
 	_calm()
+	# The last light is the rule's: no state of its pool after it (§FM.1).
+	_end_unit("rule")
 	_let_go("home")
 	var line := str(RELEASE.get("log_line", "Drove the {boss} into its hole")).format({"boss": name_text})
 	GameLog.add(line + ".", "boss")
@@ -2169,6 +2265,210 @@ func after_wake() -> void:
 	node = ground.node_at(base)
 	state = "coil"
 	_next_round()
+
+
+# --- Its pool (design 9 Oct §FM.1; BossPool, BossState) ----------------------
+
+## In one of the rule's own moments (RULE_MOMENTS, its strike under way, the
+## last light): no state of its pool is in charge and the pool is not asked.
+func rule_moment() -> bool:
+	return released or state in RULE_MOMENTS or (strike != null and strike.busy())
+
+
+## The pool, every tick before the one in charge: the state in charge is
+## over the moment one of the rule's own moments begins; once it ends
+## itself or its dwell runs out, and the boss is free (none of the rule's
+## moments, its strike ready, not in its tunnels), the pool is asked for
+## the next (rule.never_breaks: never mid-strike, in its wind-up, going
+## home at the last light or fleeing a pot).
+func _pool_step(delta: float) -> void:
+	if pool == null:
+		return
+	if rule_moment():
+		_end_unit("rule")
+		return
+	if _unit != null:
+		_dwell_left -= delta
+		if _unit.done or _dwell_left <= 0.0:
+			_pool_due = true
+	elif not _pool_due:
+		# None could come last time: asked again in a while.
+		_dwell_left -= delta
+		if _dwell_left <= 0.0:
+			_pool_due = true
+	if _pool_due and not _in_tunnel():
+		if _clear_way_out and on_way_out(base):
+			# Kept still on the way out: off it on its rounds first.
+			return
+		_clear_way_out = false
+		_draw_next()
+
+
+## The next state from the pool. The same one again (only when it is the
+## only one that may come) goes on as it is, its time renewed; another
+## takes over from the one in charge (exit, then enter).
+func _draw_next() -> void:
+	var ended_self := _unit != null and _unit.done
+	var id := pool.draw(func(i: String) -> bool: return pool.unit(i).can_enter(self))
+	if draw_log.size() >= DRAW_LOG:
+		draw_log.pop_front()
+	draw_log.append({"id": id, "state": state, "strike": strike.state, "tunnel": _in_tunnel(), "clock": clock})
+	if id != "" and _unit != null and id == behaviour and not ended_self:
+		_dwell_left = pool.dwell(id)
+		_pool_due = false
+		return
+	if _unit != null:
+		_end_unit("done" if ended_self else "dwell")
+	_pool_due = false
+	if id == "":
+		# None may come now: its built behaviour meanwhile.
+		_dwell_left = POOL_RETRY_S
+		return
+	behaviour = id
+	_unit = pool.unit(id)
+	_unit.done = false
+	_dwell_left = pool.dwell(id)
+	_exit_wait = 0.0
+	_guard_at = base
+	_unit.enter(self, _prev_behaviour)
+
+
+## The state in charge is over (`why`: its dwell, itself, one of the rule's
+## moments, the guards' light or way out): its exit, and the pool is asked
+## at the next free tick.
+func _end_unit(why: String) -> void:
+	if _unit == null:
+		return
+	var u := _unit
+	_unit = null
+	_prev_behaviour = behaviour
+	behaviour = ""
+	_pool_due = true
+	_exit_wait = 0.0
+	states_ended[why] = int(states_ended.get(why, 0)) + 1
+	u.exit(self)
+
+
+## A state of its pool in charge (not its built rounds, which the boss
+## check holds to the rule), after its tick (rule.never_breaks): it never
+## stays in the light (in a lit room or stretch outside the chase, the
+## state is over and it leaves for the dark as built), and never waits on
+## the way out (kept still there EXIT_WAIT_S, the state is over and it
+## sets off on its rounds).
+func _pool_guard(delta: float) -> void:
+	if _unit == null or _unit.built() or rule_moment() or _in_tunnel():
+		_exit_wait = 0.0
+		_guard_at = base
+		return
+	var at := ground.node_at(base)
+	if at >= 0 and not ground.is_ground(at):
+		node = at
+		_end_unit("light")
+		_leave()
+		return
+	var moved := _flat(base - _guard_at).length() if _guard_at.is_finite() else INF
+	_guard_at = base
+	if moved <= STILL_MPS * delta and on_way_out(base):
+		_exit_wait += delta
+		if _exit_wait >= EXIT_WAIT_S:
+			_end_unit("exit")
+			_clear_way_out = true
+			node = ground.node_at(base)
+			_next_round()
+	else:
+		_exit_wait = 0.0
+
+
+## Its pool swapped (tools: a test pool): the state in charge is over, and
+## the new pool is asked at the next free tick.
+func set_pool(p: BossPool) -> void:
+	_end_unit("swap")
+	pool = p
+	_prev_behaviour = ""
+	_pool_due = true
+
+
+## The state in charge ends itself (BossState.done): the pool draws the
+## next at the boss's next free tick.
+func end_state() -> void:
+	if _unit != null:
+		_unit.done = true
+
+
+## Back on its built rounds from wherever a state of its pool left it (the
+## pool's 'rounds' taking over from another): coiling or prowling it
+## carries on; else it sets off on its next round from where it is.
+func resume_rounds() -> void:
+	if rule_moment() or state in ["coil", "prowl"]:
+		return
+	node = ground.node_at(base)
+	_next_round()
+
+
+## Your lit torch still holds it off (rule.torch_in_hand delay): it hasn't
+## struck since it found you, and hasn't yet held at your flame for
+## torch_delay.hang_s.
+func holding_off() -> bool:
+	return _torch_lit() and not struck and hang_t < float(sub("torch_delay").get("hang_s", 4.0))
+
+
+## The strike as built (§FA, queue 57; CreatureStrike): the only way a
+## state of its pool strikes. Its tell and its wind-up come first, always
+## (never_breaks wind_up_and_tell_always_play), and while your lit torch
+## still holds it off it goes into the hold as built, the strike following
+## from there (torch_hold_holds). Either way the chase is on (Pursuit) and
+## the state is over (the strike and the chase are the rule's). True if
+## the wind-up began now.
+func begin_strike() -> bool:
+	if player == null or strike.busy() or rule_moment():
+		return false
+	if not noticed:
+		hang_t = 0.0
+		struck = false
+	noticed = true
+	last_seen = player.global_position
+	pursuit.notice(_torch_lit())
+	coiling = false
+	_replan_t = 0.0
+	_hunt_to = Vector3.INF
+	if holding_off() or not strike.begin():
+		state = "hunt"
+		return false
+	state = "strike"
+	return true
+
+
+## On the way out (§EX.5): in a piece marked exit (the flight up and the
+## landing to the daylight), or within EXIT_CLEAR_M of the middle of a
+## doorway onto it or out of the tomb. No state of its pool waits there
+## (never_blocks_exit).
+func on_way_out(p: Vector3) -> bool:
+	var pid := TombKit.piece_at(lay, p)
+	if pid >= 0 and bool((lay.pieces[pid] as Dictionary).get("exit", false)):
+		return true
+	for q: Vector3 in _way_out_doors:
+		if _flat(p - q).length() <= EXIT_CLEAR_M and absf(p.y - q.y) < 2.0:
+			return true
+	return false
+
+
+## The doorways onto the way out: out of the tomb (no piece beyond), or
+## into a piece marked exit; the middle of each on its floor.
+func _find_way_out_doors() -> Array:
+	var out: Array = []
+	for d in lay.get("doors", []):
+		var onto := int(d.b) < 0
+		for side: int in [int(d.a), int(d.b)]:
+			if side >= 0 and side < (lay.pieces as Array).size() and bool((lay.pieces[side] as Dictionary).get("exit", false)):
+				onto = true
+		if not onto:
+			continue
+		var dp: Variant = d.p
+		if dp is Vector2:
+			out.append(Vector3((dp as Vector2).x, float(d.y), (dp as Vector2).y))
+		elif dp is Vector3:
+			out.append(dp)
+	return out
 
 
 # --- The body and the sound -------------------------------------------------
