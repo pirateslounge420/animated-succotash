@@ -4,6 +4,76 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 63, §FK.2 and §FK.3: one world per new game — one seed, a save, Continue and New game; one clock (c90ea52)
+Built as queue 63 says, in the crawler only. The open world (Torchfire 2) and its own saves are untouched.
+
+- **What changes on screen:**
+  - **The first time you press Play** nothing is new: you wake in a new tomb.
+  - **From then on, Play first shows a small plain box on black** (the settings panel's look, no art) with two lines:
+    - **Continue**, with the tomb it opens written under it ("Tomb 7731, 4 of 34 lights burning").
+    - **New game**.
+    - Click one, or use Up and Down (W, S) and Enter (Space or E). Esc is Continue. New game asks once more ("Start a new game? This world is put away.") and starts on the second pick.
+  - **Continue** wakes you on the mat by the hearth of the tomb you were in, with every light you relit there burning again.
+    - The log says "Back by the hearth, as you left it.", and its first line counts only the cold lights.
+    - A tomb you had lit end to end is still cleared: the skeletons lie as bones in their niches and graves, and the snake is down its hole. Neither log line ("Banished the dark…", "Drove the giant snake…") plays again.
+  - **Walking out** still fades to another tomb, but now it is this game's next tomb, the same one every time you play this game.
+  - **New game** (that box, or Settings → World → New game, two clicks) rolls a new world: a new first tomb, new tombs beyond it, every light cold. In the crawler the Settings line now reads New game; in the open world it still reads New world.
+  - **Not kept yet:** what you carry, the bundle's torches and the time of day. On Continue you wake empty-handed, the bundle has its three torches again, and the day starts at the usual hour (about 15:00).
+- **What is saved, and where:**
+  - One file per game, `crawler/<game seed>.json`, in Godot's user folder. On a Mac that is `~/Library/Application Support/Godot/app_userdata/Low-Poly Exploration/`.
+  - `crawler/last.json` names the last game played. That is the one Continue opens.
+  - The file holds the game's seed, the tomb you are in, and for each tomb you have been in: its seed, its theme, a fingerprint of where its lights stand, and which lights you relit.
+  - It is written whenever something changes (a light catching, walking out into the next tomb, a new game) and once more when the game closes. A crash loses nothing.
+  - After New game, the old game's file stays on disk, but nothing in the game opens it again. One world or save slots is still your call (§FK.5 call 3).
+  - **WorldSave or a new save:** a crawler save beside it, not WorldSave. WorldSave keeps the open world's saves in `worlds/` with its own last-world pointer. Sharing them would have let one game's Continue open the other game's seed. So the crawler has its own folder and its own pointer, and `WorldSave` is unchanged.
+  - The checks never write a save. Under `WorldSave.read_only`, or in any `--script` run whatever that says, the save lives in memory only.
+- **One seed, every tomb** (`persistence.dungeon_seeds`):
+  - A game's first tomb is built from the game's own seed: game 7731's first tomb is tomb 7731. So `SEED=7` still gives the checks the same tomb 7 they always had, and the seeds in older notes (126's crypt, 42's floor holder) still mean the same tombs.
+  - Each later place (the tombs the way out leads to: 1, 2, …) gets a seed drawn from the game's seed and that place. For game 7 the next tomb is 425838.
+  - `SEED=` in the environment pins a game: always a fresh start of it, never a Continue.
+  - The first tomb is still the tomb theme: §FJ.1's random pick from the roster isn't wired yet, and only the tomb is built.
+- **How:**
+  - **`CrawlerSave`** (new, `scripts/crawler/crawler_save.gd`):
+    - `begin` picks the game: a new one if New game was asked for; else `SEED=`'s, fresh; else the last game kept (Continue); else a new one.
+    - `dungeon_seed` draws each tomb's seed. `enter` records the tomb you are in and hands back its kept lights; a tomb whose lights no longer stand where they did (the rules changed since) starts cold, with a warning. `relight` lights them straight to flames, with no catching, no sound and no log line. `keep_relit` records new ones as they catch.
+    - `keep` and `kept_value` hold any other named state per tomb: for gates, and for §FM.6's fork (below).
+  - **`CrawlerMain`:**
+    - Calls `begin`, builds the tomb at its place and relights its kept lights before anything that reads the light is built.
+    - Records each light as it catches, saves on closing, walks out to the game's next place, and New game sets the request and reloads.
+    - A kept tomb that is all relit starts cleared, its residents laid down as bones once their sprites exist. `next_seed` and `_seed` are gone.
+  - **`Boss._start_far`:** a boss that starts with no dark anywhere (only a kept tomb all relit) is home in its lair, breathing below, unseen. It was "gone" before, and that case never came up.
+  - **The boot scene** (`scripts/core/boot.gd`) shows `BootMenu` (new, `scripts/ui/boot_menu.gd`) when a crawler game is kept. With none, and for the open world, it boots as before.
+  - **`SettingsPanel`:** the New world line reads New game in the crawler.
+  - **Data:**
+    - `[NOT WIRED YET]` is off `crawler.json → _help.persistence` and `worlds.json → _help.generation`, each now saying what is built and what isn't (gates, the map, `shot_check`, other worlds).
+    - `persistence.log_continue` is added.
+    - `persistence.save` changed from `world_save` to `crawler_save`, a one-line value naming what is built.
+    - `_help.exit`'s stand-in sentence now says the game's next dungeon.
+  - **One clock (§FK.3):** already built by queue 61. `Vents.sun_deg` reads DayCycle's reference day at no latitude and no tilt, and `CrawlerMain` turns `World.days` at 144 minutes. This pass checks it and changes nothing.
+- **The fork (queue 68):** 68 wasn't on the branch when this pushed, so the fork's opened state isn't in the save yet. Whichever lands second wires it. `CrawlerSave.keep(place, "fork_open", true)` and `kept_value` are ready for it. On Continue, a fork whose floor is relit should open quietly, like the cleared floor here: no log line, no opening sound.
+- **Checks** (on c90ea52), all 0 fails:
+  - **`crawler_save_check`** (new, `tools/crawler_save_check.gd`, seed 7 and game 15): 39 lines.
+    - **The seeds:** a game's first tomb is its own seed's. Over 300 game seeds, the first five places' seeds are all different, in range, never the game's own past the first, and the same when drawn again.
+    - **The same game, twice over:** game 7 builds the same first tomb (27 pieces, 48 holders, 1 exit) and the same next tomb (seed 425838) twice, in layouts and in the scene. Two games build different first and next tombs.
+    - **The first launch, booted for real:** the boot scene shows no choice and opens a new game.
+    - **The round trip:** three lights relit ([0, 24, 47] of 48), the scene closed, Continue. The same game and tomb, the same three lit and no others, you on the mat, the log's two lines. Walked out, two lit in the next tomb, Continue: place 1 with its two lit, and place 0's three still kept.
+    - **New game:** Settings' line reads "> New game". A new seed, every light cold, the pointer at the new game, the old save kept. With a game kept the boot shows the choice and its Continue line; Continue opens that game; New game asks again and then starts a new one. `persistence.continue` set to anything else: no Continue.
+    - **A kept tomb all relit (game 15, 35 lights):** Continue brings it back cleared, its 5 skeletons bones in place and drawn, the snake in its lair and unseen. No log lines again, and still nothing 5 s on.
+    - **A kept tomb whose fingerprint no longer matches** starts cold, and the save takes the layout as built now.
+    - **No save written:** 55 writes, all in memory, none to disk, `user://crawler` unchanged. A `--script` run keeps it off the disk even with `WorldSave.read_only` off.
+    - **The clock:** dawn 0.1667, day 0.2917, dusk 0.7083 and night 0.8333 of the day in every game and tomb the run opened, and half a year on. That is 18, 60, 18 and 48 minutes of a 144-minute day, and the shafts and the way out follow it. `worlds.json` clock is shared, no latitude.
+  - **`crawler_check`** (seed 7, 203 seeds walked): 271 lines. The stand-in's line now expects the game's next tomb: place 1 is seed 425838, place 2 is 837268.
+  - `boss_check` 227, `residents_check` 176, `cleared_check` 90, `fire_pot_check` 104, `stagger_check` 65, `crawler_harm_check` 59, `hands_check` 61, `hud_pin_check` 49 (it crashes in Godot's shutdown after its result line, the known one).
+  - No frames: the prompt asked for headless numbers only. The boot box is plain text in the settings panel's colours, and nothing in the tomb looks different.
+- **For Mike:**
+  - **One world, or save slots** (§FK.5 call 3)? Today New game puts the old world away for good, though its file stays on disk.
+  - **Should Continue also keep what you carry, the bundle's count and the time of day?** Today Continue gives you a full bundle again and an empty hand, so quitting and continuing is a way to get torches back. Your §FJ.4 note says the bundle never refills. Say the word and those go in the save.
+  - **The box at every Play:** is two lines on black fine, or would you rather Play just continue, with New game only in Settings?
+- **For chat:**
+  - `CLAUDE.md`'s §FK line ("not built yet") can say built for the tomb: one seed, the save, Continue and New game, one clock.
+  - `crawler.json → persistence.save` is now `crawler_save`, not `world_save`.
+  - §FK.2 says the save holds "worlds found". There is one world (the tomb's) and no map, so there is nothing to record yet.
+
 ## 2026-10-08 — Mike's correction to §FL.2: 720 the most, 480 the default, never 1080; half_hd and fine are back (a1e64b3)
 Mike, 7 Oct evening, after queue 64: *"so the very maximum resolution should be 720 but default at 480. no 1080."* §FL.2 had read his "max resolution 480p" as a cap at 480. This puts the cap back at 720 and undoes the rest of 596646a's pixel-size change. The §FL.1 markers (bdd8798) stay.
 

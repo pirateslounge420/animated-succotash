@@ -92,7 +92,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 60 | §FA.3 | Fire pots: lit off your torch, thrown, tar that clings, oil that bursts | built b21b5cd |
 | 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | built e11418b |
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | built 56dc352 |
-| 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | todo |
+| 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | built c90ea52 |
 | 64 | §FL.2 | 480 lines the most | built 596646a, undone by a1e64b3 (720 the most, §FM.11) |
 | 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | todo |
 | 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
@@ -1165,7 +1165,7 @@ CHECK (headless, tools/crawler_check.gd): a lit torch fast-forwarded through bur
 
 ## 63 — One world per new game: one seed, a save, Continue and New game; one clock — §FK.2, §FK.3
 
-**Status:** todo
+**Status:** built c90ea52
 **Mike sees:** A new game makes a world that is yours. Quit and come back, press Continue, and you wake in the same tomb with every light you relit still burning. Walking out always leads to the same next tomb in this world, not a random one. New game rolls a brand new world. If the crawler shows the sky or the daylight shaft, the day runs the same length everywhere.
 
 ```text
