@@ -49,9 +49,19 @@ extends Node
 ## flight past the heart the old way in glows with faint daylight
 ## (WayOut). Stepping into it is the stand-in (exit.stand_in) until
 ## §EW.3's seam or §EW.7's surface is built: the screen fades out over
-## fade_s, the next tomb is built from a new seed (next_seed: the same
-## after a pinned SEED), and you arrive in its hearth room by its lit
-## hearth, carrying what you carried, the torch lit or not as it was.
+## fade_s, the game's next dungeon is built (its seed drawn from the game's
+## and its place, CrawlerSave.dungeon_seed: the same every time for this
+## game), and you arrive in its hearth room by its lit hearth, carrying
+## what you carried, the torch lit or not as it was.
+##
+## One world per new game, kept for good (design §FK.2, CrawlerSave;
+## crawler.json persistence): a new game rolls one seed and every dungeon
+## comes from it; the save keeps the game's seed, the dungeon you are in
+## and the holders you relit in each, written as they change and when the
+## game closes. Continue (the boot's choice, scripts/core/boot.gd) opens
+## the last game in the dungeon you were in, by its hearth, its relit
+## holders burning; Settings' New game rolls a new seed. SEED= in the
+## environment pins a game, fresh (the checks).
 ##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
@@ -122,6 +132,9 @@ var baked := false
 var leaving := false
 ## Tombs walked out of this session.
 var walked_out := 0
+## A kept dungeon came back with every light relit (§FK.2): its residents
+## lie down as bones once their sheets are baked (_rescuer).
+var _bones_after_bake := false
 
 
 func _ready() -> void:
@@ -171,7 +184,14 @@ func _ready() -> void:
 			fires.lay_stick(at, embers_left_s))
 	EngineReport.check_shaders()
 	print("[engine] %s · %s" % [EngineReport.summary(), EngineReport.shaders_text()])
-	_load_tomb(_seed())
+	# Which game (§FK.2, CrawlerSave.begin): a new one when New game was
+	# asked for, SEED='s fresh, else the last one kept (Continue), else new;
+	# then the dungeon you are in, its relit holders burning.
+	CrawlerSave.begin(CrawlerSave.pinned_seed())
+	print("[crawler] %s: game %d, place %d" % ["Continue" if CrawlerSave.continued else "a new game", CrawlerSave.game_seed, CrawlerSave.place])
+	_load_tomb(CrawlerSave.seed_at(CrawlerSave.place), CrawlerSave.place)
+	if CrawlerSave.continued:
+		GameLog.add(str(CrawlerSave.P.get("log_continue", "Back by the hearth, as you left it.")), "world")
 	_rescuer()
 
 
@@ -179,15 +199,19 @@ func _ready() -> void:
 ## vents, airways and way out, the life on its walls, its residents, its
 ## fire pots' found pot and its boss), you standing on the mat by its
 ## hearth. The session's own (you and what you carry and
-## hold, the grade, the HUD, the log) stays.
-func _load_tomb(s: int) -> void:
+## hold, the grade, the HUD, the log) stays. `at` is its place in this
+## game's world (CrawlerSave: 0 the first, then each way out's next).
+func _load_tomb(s: int, at := 0) -> void:
 	seed_value = s
-	lay = TombKit.layout(s)
+	lay = TombKit.layout(s, CrawlerSave.theme_at(at))
 	_build_tomb()
 	fires = CrawlerFires.new()
 	fires.name = "Fires"
 	add_child(fires)
 	fires.build(world, lay)
+	# Kept in this game (§FK.2): the holders you relit here burn again as
+	# you left them, before anything that reads the light is built.
+	var kept_lit := CrawlerSave.relight(fires, CrawlerSave.enter(at, lay))
 	# Every permanent fire's vent (the vents rule): its daylight, soot and
 	# draft.
 	vents = Vents.new()
@@ -220,6 +244,14 @@ func _load_tomb(s: int) -> void:
 	residents.name = "Residents"
 	add_child(residents)
 	residents.build(lay, player, fires)
+	# Kept with every light relit: cleared already, as you left it (§FF.2),
+	# with no log line again; its residents lie down as bones in their
+	# places once their sheets are baked (_rescuer), and the snake is down
+	# its hole (Boss._start_far: no dark left).
+	_bones_after_bake = kept_lit > 0 and residents.floor_lit()
+	if _bones_after_bake:
+		residents.cleared = true
+		residents.cleared_at = residents.clock
 	var w: Array = lay.wake
 	player.spawn_flat(w[0], float(w[1]), -0.32)
 	if fire_pots == null:
@@ -233,8 +265,9 @@ func _load_tomb(s: int) -> void:
 	boss = Boss.new()
 	add_child(boss)
 	boss.build(lay, fires, player, drips)
-	_lit_logged = 0
-	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [s, int(lay.hearth_ways), fires.holders.size()], "world")
+	_lit_logged = fires.lit_count()
+	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [s, int(lay.hearth_ways), fires.holders.size() - _lit_logged], "world")
+	print("[crawler] game %d, place %d: %d holders kept relit" % [CrawlerSave.game_seed, at, kept_lit])
 	print("[crawler] seed %d: %d pieces, %d ways from the hearth room, %d way out, %d holders, %d airways, %d vents (%d with daylight), %d residents; %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [s, (lay.pieces as Array).size(), int(lay.hearth_ways), (lay.exits as Array).size(), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), residents.all.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
 
 
@@ -257,14 +290,10 @@ func _clear_tomb() -> void:
 	TorchSnuff.drafts = null
 
 
-## The tomb after `s` (the stand-in's new seed, exit.stand_in): a seeded
-## step, so a pinned SEED walks the same tombs every time.
-static func next_seed(s: int) -> int:
-	var n := posmod(hash([s, "the next tomb"]), 999999) + 1
-	return n if n != s else posmod(n, 999999) + 1
-
-
 func _exit_tree() -> void:
+	# The game closing (or this scene giving way to the next): kept as it
+	# stands (§FK.2).
+	CrawlerSave.save()
 	GameMode.crawler_running = false
 	PlayerBody.watch_point = Vector3(INF, INF, INF)
 	FireShadows.mode = ""
@@ -272,17 +301,6 @@ func _exit_tree() -> void:
 	NodeRelease.detach_all(self)
 	Look.finish()
 	SculptedBodies.finish()
-
-
-## A new tomb each game (§ET.10 call 3, Claude's reading): SEED in the
-## environment pins one.
-func _seed() -> int:
-	var env := OS.get_environment("SEED")
-	if env.is_valid_int():
-		return int(env)
-	var rng := RandomNumberGenerator.new()
-	rng.randomize()
-	return rng.randi_range(1, 999999)
 
 
 ## Underground (crawler.json look): no sun, no sky; a faint navy ambient
@@ -518,6 +536,12 @@ func _rescuer(fade_in_s := 2.5) -> void:
 		boss.nav = residents.nav
 		boss.light = residents.light
 	await residents.bake(self)
+	if _bones_after_bake:
+		# A kept floor, every light relit (§FK.2, §FF.2): each resident as it
+		# was left, bones in its niche or grave (Resident.retreat at rest).
+		_bones_after_bake = false
+		for one in residents.all.duplicate():
+			(one as Resident).retreat()
 	baked = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, fade_in_s)
@@ -563,11 +587,14 @@ func _physics_process(_delta: float) -> void:
 	if lit > _lit_logged:
 		_lit_logged = lit
 		GameLog.add("%d of %d lights burn again." % [lit, fires.holders.size()], "relit")
+		# Kept for good in this game's save, written now (§FK.2).
+		CrawlerSave.keep_relit(CrawlerSave.place, CrawlerSave.relit_now(fires))
 
 
 ## Into the opening at the top of the way out (§EX.5): the stand-in until
 ## §EW.3's seam or §EW.7's surface is built (exit.stand_in). The dark
-## comes over fade_s, the next tomb is built from a new seed, and you
+## comes over fade_s, the game's next dungeon is built (§FK.2: the next
+## place, its seed drawn from the game's, CrawlerSave), and you
 ## arrive in its hearth room by its lit hearth (§EX.9 call 3's stand-in
 ## answer), carrying what you carried, the torch lit or not as it was.
 func walk_out() -> void:
@@ -583,7 +610,8 @@ func walk_out() -> void:
 	tw.tween_property(_fade, "color:a", 1.0, fade_s)
 	await tw.finished
 	_clear_tomb()
-	_load_tomb(next_seed(seed_value))
+	var at := CrawlerSave.place + 1
+	_load_tomb(CrawlerSave.seed_at(at), at)
 	walked_out += 1
 	# (Still in the black while the new boss's sprites bake.)
 	await _rescuer(fade_s)
@@ -664,9 +692,18 @@ func take_torch() -> bool:
 	return true
 
 
-## A new tomb (the settings panel's "New world").
+## A new game (the settings panel's "New game", design §FK.2): this game is
+## kept as it stands, and the next start rolls a new seed and a new world,
+## the one Continue opens from then on.
 func start_new_world() -> void:
-	get_tree().reload_current_scene()
+	CrawlerSave.save()
+	CrawlerSave.new_game_requested = true
+	if get_tree().current_scene == self:
+		get_tree().reload_current_scene()
+	else:
+		# A tool holds the scene itself (tools/crawler_save_check.gd): it
+		# builds the next one.
+		queue_free()
 
 
 func _toggle_settings(on: bool) -> void:

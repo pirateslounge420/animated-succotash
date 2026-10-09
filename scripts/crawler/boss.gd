@@ -470,7 +470,11 @@ func _start_far() -> void:
 				best_d = float(dist[id])
 				best = int(id)
 	if best < 0:
-		state = "gone"
+		# No dark left anywhere from the start: a kept dungeon whose every
+		# light you relit (design §FK.2, CrawlerSave). It is home as the last
+		# light left it (§EY.2), down its hole, with no cry and no log line.
+		released = true
+		_home()
 		body.visible = false
 		return
 	_lie_coiled(best)

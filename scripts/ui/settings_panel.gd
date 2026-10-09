@@ -212,9 +212,13 @@ func _on(item: Array) -> bool:
 func _shown(item: Array) -> String:
 	match str(item[2]):
 		"action":
+			# In the crawler a world is a game (design 7 Oct §FK.2,
+			# CrawlerSave): New game rolls a new seed and a new world, and
+			# Continue opens the new one from then on.
+			var game: bool = item[0] == "world.new" and GameMode.crawler_running
 			if _armed == item[0]:
-				return "Start a new world? This one stays saved. (click again)"
-			return "> %s" % item[1]
+				return "Start a new game? This world is put away. (click again)" if game else "Start a new world? This one stays saved. (click again)"
+			return "> %s" % ("New game" if game else item[1])
 		"preset":
 			return "< %s: %s >" % [item[1], Display.preset_label()]
 		"aspect":

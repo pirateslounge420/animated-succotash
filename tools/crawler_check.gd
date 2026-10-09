@@ -137,7 +137,8 @@ extends SceneTree
 ##     blue by day and fainter at night, seen from the bottom of the
 ##     flight (nothing between), fainter from far off (exit.glow far_fade:
 ##     all of it on the landing, less from the wake spot, Mike 7 Oct);
-##     stepping into it fades to the next tomb (exit.stand_in): a new seed,
+##     stepping into it fades to the game's next tomb (exit.stand_in; its
+##     seed drawn from the game's and its place, §FK.2, queue 63),
 ##     you on the mat by its lit hearth, the torch you carried lit or not
 ##     as it was, the log's line;
 ## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
@@ -3794,7 +3795,7 @@ func _way_out(main: CrawlerMain) -> void:
 
 
 ## Stepping into the opening (design §EX.5's stand-in, exit.stand_in): the
-## fade, the next tomb from a new seed, you on the mat by its lit hearth
+## fade, the game's next tomb (§FK.2), you on the mat by its lit hearth
 ## carrying the torch you carried, lit or not as it was, and the log's line.
 func _stand_in(main: CrawlerMain) -> void:
 	var p := main.player
@@ -3803,6 +3804,7 @@ func _stand_in(main: CrawlerMain) -> void:
 	for lit_case in [true, false]:
 		var ex: Dictionary = main.lay.exits[0]
 		var old_seed := main.seed_value
+		var old_place := CrawlerSave.place
 		if not p.inventory.has_kind("torch"):
 			p.inventory.add(Inventory.make("torch"))
 		p.weapon = "torch"
@@ -3833,7 +3835,9 @@ func _stand_in(main: CrawlerMain) -> void:
 				break
 		var took := Time.get_ticks_msec() - t0
 		var piece := TombKit.piece_at(main.lay, p.global_position)
-		ok(not main.leaving and main.seed_value != old_seed and main.seed_value == CrawlerMain.next_seed(old_seed) and int(main.lay.seed) == main.seed_value, "it fades to the next tomb from a new seed (%d after %d; %d ms)" % [main.seed_value, old_seed, took])
+		# The game's next dungeon (design §FK.2, queue 63): the next place,
+		# its seed drawn from the game's seed and that place.
+		ok(not main.leaving and main.seed_value != old_seed and CrawlerSave.place == old_place + 1 and main.seed_value == CrawlerSave.dungeon_seed(CrawlerSave.game_seed, old_place + 1) and int(main.lay.seed) == main.seed_value, "it fades to the game's next tomb (game %d, place %d: seed %d after %d; %d ms)" % [CrawlerSave.game_seed, CrawlerSave.place, main.seed_value, old_seed, took])
 		ok(piece == 0 and absf(p.global_position.y) < 0.3 and (p.global_position - (main.lay.wake[0] as Vector3)).length() < 0.6, "you arrive in its hearth room, on the mat (%s)" % str(p.global_position.snapped(Vector3.ONE * 0.01)))
 		ok(FireStore.is_lit(main.fires.hearth) and main.fires.lit_count() == 0, "its hearth lit, its lights below cold")
 		ok(t.in_hand() and t.lit() == lit_case and _pack(p) == pack, "the torch you carried, %s as it was, and nothing else changed" % ("lit" if lit_case else "unlit"))
