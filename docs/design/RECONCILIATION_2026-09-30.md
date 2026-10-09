@@ -5239,13 +5239,25 @@ translations only, no systems yet). Flavour and omens for now.
   the reference doc, not the queue.
 
 ### FM.9 Plants: what has to exist before any of it can be harvested
-Not in `data/` yet: *Ipomoea corymbosa* (ololiuhqui), *Psilocybe mexicana* (teonanácatl),
+Entries written 9 Oct, in `data/sacred/sacred_plants.json` (not loaded, so the open world and the §CC trim are untouched): *Ipomoea corymbosa* (ololiuhqui), *Psilocybe mexicana* (teonanácatl),
 *Lophophora williamsii* (peyote), *Erythroxylum coca*, *Banisteriopsis caapi* (the ayahuasca vine),
 *Boophone disticha* (leshoma), and a sacred *Datura wrightii* (trimmed 1 Oct). In the data already:
-*Trichocereus* (San Pedro) and *Amanita muscaria*. Writing these is a data fill (chat, parallel
-agents, one per plant, in PLANT_SCHEMA vocabulary), and the engine has no shape yet for low globe
-cacti like peyote or for mushrooms (sacred-plants reference, 3 Oct). Use lines describe rites only:
+*Trichocereus* (San Pedro) and *Amanita muscaria*. The fill was done by parallel agents, one per
+plant, in PLANT_SCHEMA vocabulary; every entry passes `plant_schema_check.py --strict` and carries
+a `sacred` block (effect class, rite, peoples, ruin, conservation). Use lines describe rites only:
 no doses, no preparation.
+
+**What still blocks drawing them** (the file's `flags`): no engine shape for a mushroom
+(teonanácatl stands in as a rosette, like *Amanita*), a low globe cactus (peyote as a column), a
+half-buried bulb with a flat leaf fan (leshoma as a spike rosette), or a corkscrew liana stem (the
+ayahuasca vine). Ololiuhqui, the Aztec world's plant and the one prompt 72 needs, is a plain
+liana, which the engine already draws.
+
+**Doubts the agents found:** no source ties sacred datura's rites to Mesa Verde's builders (seeds
+only, at Ancestral Pueblo and Mogollon sites; the rites are Zuni and southern Californian); coca
+var. *coca* is known only in cultivation, so its biomes are where it is grown; the Maya link to
+the mushroom is the weakest of all (reported, from the Guatemalan mushroom stones); the
+mushroom's 1000–1800 m band is not confirmed by a source opened.
 
 ### FM.10 Open for Mike
 1. **Cultures against biome worlds.** §EW built eight biome worlds (volcano, mine, sea caves,

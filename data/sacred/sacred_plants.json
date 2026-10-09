@@ -1,0 +1,2058 @@
+{
+ "key": "sacred",
+ "name": "Sacred plants of the ruins",
+ "kind": "catalogue",
+ "status": "[NOT WIRED YET — design §FM.9] Not loaded: species_db reads data/plants only, so these do not grow in the open world (Torchfire 2) and the 1 Oct trim (§CC) is untouched. Queue 72 (harvest and brew) reads the Aztec world's plant from here once the engine can draw it.",
+ "_help": {
+  "about": "§FM.7, §FM.9 (9 Oct). One entry per ruin plant on the compass (data/ruin_compass.json; docs/design/RUIN_ROSTER_REFERENCE.md). Researched by seven parallel agents, one per plant, in PLANT_SCHEMA vocabulary, each passing tools/plant_schema_check.py --strict. San Pedro (data/plants/trichocereus.json) and fly agaric (data/biomes/04_taiga.json) are already in the data and are not repeated here.",
+  "sacred": "The additive block on each entry. effect_class: visionary, deliriant, stimulant or sedative. rite: one sentence on who used it and for what; rites only, never doses, amounts or preparation (§FM.9). peoples, ruin (an id in ruin_compass.json), conservation (IUCN status), confidence, refs.",
+  "flags": "Per plant: what the engine can't draw yet (a mushroom, a low globe cactus, a bulb, a twisted vine stem), biome-key gaps, and doubts in the sources. Read before wiring.",
+  "id": "Each entry's id matches its ruin_compass.json plant."
+ },
+ "notes": "Engine gaps: no mushroom shape (teonanacatl as rosette, like Amanita), no low globe cactus (peyote as cactus), no bulb (leshoma as spike_rosette), no twisted liana stem (ayahuasca vine). Seeds of ololiuhqui, all of datura and leshoma's bulb are poisonous.",
+ "plants": {
+  "epiphyte": [
+   {
+    "name": "Ipomoea corymbosa",
+    "display": "Ololiuhqui (Christmas vine)",
+    "genus": "Ipomoea",
+    "species": "corymbosa",
+    "origin": "Mexico, Central America, Caribbean",
+    "family": "Convolvulaceae",
+    "synonym": "Turbina corymbosa; Rivea corymbosa",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.35,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1100
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "THORN_SCRUB",
+     "SAVANNA",
+     "JUNGLE"
+    ],
+    "height_m": [
+     3.0,
+     10.0
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "granite",
+      "karst",
+      "alluvium",
+      "basalt",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.2,
+     "salinity": "none"
+    },
+    "color": "#4E9A3C",
+    "accent": "#F4F0E2",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with the two notched, butterfly-shaped cotyledons of the morning-glory family, then bright green heart-shaped leaves on a thin green twining stem that winds up the nearest shrub. Within a season or two it is a several-metre tangle; the lower stem turns woody and grey-brown while the tips stay green and herbaceous.",
+     "confidence": "estimated",
+     "source": "Habit from Wood et al., Convolvulaceae Unlimited (Turbina corymbosa: liana, twining stems several metres long, woody for most of their length, herbaceous at the tips) and Queensland Biosecurity (scrambling vine to more than 10 m). Germination, growth rate, first flowering and lifespan estimated from related woody Ipomoea."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bee",
+     "disperser": [
+      "gravity",
+      "wind",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_wet",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "Mass-flowers at the end of the rains into the early dry season (Nov-Feb in Mexico and the Antilles, hence 'Christmas vine'); sweet-scented flowers are a major bee nectar source. Usually one hairy seed per fruit; dried flower clusters with papery sepals persist on the dead stems. Long cultivated, so people carried it far beyond its core range."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.15
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Ipomoea corymbosa (L.) Roth, syn. Turbina corymbosa (L.) Raf., Rivea corymbosa (L.) Hallier f. Kew POWO: liana, native Mexico (all regions) through Central America, the West Indies and Bahamas to Venezuela, Colombia, Peru, Bolivia, Paraguay and Brazil; introduced Florida, Queensland, Canaries, Old World tropics. Wood et al., Convolvulaceae Unlimited: thorn scrub, thickets, savannas, open woodland, riverbanks, swamps, dry hillsides, mountain and river-valley forest, sea level to 1100 m (exceptionally 1450 m), on granitic, limestone, coral rock, swampy and fertile soils; flowering peaks Nov-Jan in Middle America and the West Indies. Seeds are poisonous (ergoline alkaloids).",
+    "ceremonial": "documented",
+    "appearance": {
+     "stem": {
+      "colour": "#7A6E5E",
+      "secondary": "#5E8A3E",
+      "notes": "twining stems, grey-brown and woody for most of their length, green and herbaceous at the tips; drapes over shrubs and small trees"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.7
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4E9A3C",
+      "underside": "#7FB466",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#3A7A2E",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       10
+      ],
+      "notes": "heart-shaped, about as wide as long, deep cordate notch with rounded ears, short drawn-out point; on long 4-6 cm stalks; hairless, paler beneath with short white hairs on the main veins"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5E8A3E",
+      "markings": "#5E8A3E",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long slender leaf stalks, 4-6 cm"
+     },
+     "flower": {
+      "colour": "#F6F2E6",
+      "secondary": "#5A3A4A",
+      "form": "white bell-funnel 2.5-3 cm with a dark brown-purple throat, in loose many-flowered branched clusters on long stalks from the leaf axils; whole vine goes white in bloom",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#B8A070",
+      "form": "small pointed ovoid fruit 1-1.5 cm, beaked, cupped in papery straw-coloured sepals; one hairy brown seed; persists on dead stems"
+     },
+     "seasonal": "green through the rains; at the turn to the dry season the vine is blanketed in white flowers, then in papery straw-coloured fruit clusters",
+     "silhouette": "heart-leaved twining vine blanketing shrubs, white-flowered at dry season",
+     "confidence": "documented",
+     "refs": "Wood et al., Convolvulaceae Unlimited (Turbina corymbosa); Flowers of India (Christmas vine: leaves 4-10 x 3-9 cm, ovate-cordate with rounded ears; flowers 2.5-3 cm, funnel-shaped, cream with dark centre; capsules 11-14 x 3-4 mm); Queensland Biosecurity (Turbina): white bell-shaped flowers with a dark brown-purple centre, open morning to evening; Wikipedia Ipomoea corymbosa"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.15,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 5,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "flower"
+    },
+    "realm": "neotropic",
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 1,
+     "color": "#7A6E5E",
+     "color_2": "#5C4E40",
+     "lenticels": "dots",
+     "confidence": "estimated",
+     "note": "old stems woody; tips green and herbaceous"
+    },
+    "architecture": {
+     "model": "mangenot",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.1,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 60,
+     "live_crown_ratio": [
+      0.6,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      11,
+      2
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 3,
+     "flower_colour": "#F6F2E6",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#8AA858",
+     "ripe_colour": "#B8A070",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      180
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Wood et al., Convolvulaceae Unlimited (corolla campanulate, white with a dark brown to purplish lower tube, 2.5-3 cm; compound cymes on 15-25 cm peduncles; fruit ovoid-oblong 10-15 x 5-6 mm, apiculate, usually one seed 8-11 mm; flowering peaks Nov-Jan in Middle America; flowers an important bee nectar source). Queensland Biosecurity (flowers open in the morning and close in the evening; beaked fruit stays attached to the dead stems). Seeds poisonous. Flowers per cluster, fruit set, ripening, hang, rot and crop estimated."
+    },
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "Aztec priests and curers took the seeds, called ololiuhqui, to divine the causes of illness, theft and misfortune and to speak with the gods, and Mazatec, Zapotec, Chinantec and Mixe healers in Oaxaca still used them for divination in the twentieth century.",
+     "peoples": [
+      "Aztec (Nahua)",
+      "Mazatec",
+      "Zapotec",
+      "Chinantec",
+      "Mixe"
+     ],
+     "ruin": "aztec",
+     "conservation": "not assessed",
+     "confidence": "documented",
+     "refs": "Hernandez (16th c.) and Sahagun, Florentine Codex, via Schultes 1941, 'A contribution to our knowledge of Rivea corymbosa, the narcotic ololiuqui of the Aztecs' (Harvard Botanical Museum); Wasson 1963, 'Notes on the present status of ololiuhqui and the other hallucinogens of Mexico', Bot. Mus. Leafl. Harvard 20: 161-193; Wikipedia Ipomoea corymbosa and Aztec use of entheogens. Active class: ergolines."
+    },
+    "id": "ololiuhqui"
+   },
+   {
+    "name": "Banisteriopsis caapi",
+    "display": "Ayahuasca vine",
+    "genus": "Banisteriopsis",
+    "species": "caapi",
+    "origin": "Western and central Amazonia",
+    "family": "Malpighiaceae",
+    "synonym": "Banisteria caapi; Banisteriopsis inebrians; B. quitensis",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
+    "height_m": [
+     10,
+     30
+    ],
+    "density": 0.15,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "sand",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "color": "#3E8A3A",
+    "accent": "#E890B8",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A thin green-brown searching shoot with paired opposite ovate leaves that twines anticlockwise up the nearest stem; within a few years the stem browns and thickens, and older stems coil around each other into a knotted, rope-like twist that climbs into the canopy.",
+     "confidence": "estimated",
+     "source": "Habit from Wikipedia and NTBG Tropical Plant Database (giant twining liana to ~30 m; flowers rarely, seldom sets seed, mainly spreads vegetatively). Germination, growth timing and lifespan estimated; no species growth data recorded."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "early_wet",
+      "days": 14,
+      "interval_years": [
+       1,
+       4
+      ]
+     },
+     "dormant": "none",
+     "note": "Flowers infrequently and seldom sets seed (NTBG); in the wild it persists and spreads mostly by stems that root where they touch the ground. 'runner' is the nearest clonal value for that. Wind-borne winged samaras when it does fruit."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.6,
+      0.85
+     ],
+     "allocation": [
+      0.2,
+      0.5
+     ]
+    },
+    "source": "Banisteriopsis caapi (Spruce ex Griseb.) C.V.Morton, Malpighiaceae. Kew POWO: climber of the wet tropical biome, native to NW Argentina, Bolivia, N and W-C Brazil, Colombia, Ecuador, Peru, Venezuela. Wikipedia: giant liana to 30 m twining on other plants; flowers white or pale pink, 12-14 mm, mostly January, infrequently. NTBG Tropical Plant Database: bark chocolate-brown and smooth; leaves opposite, oval, entire, 8-18 x 3.5-8 cm, glabrous above; axillary or terminal cymose panicles; pink petals 5-7 mm; 10 stamens; fruit a samara; flowers rarely. PFAF: moist tropics from about sea level to 1,000 m, rainforest. Range poorly known in the wild (Ermakova 2022, Chacruna).",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "Shamans and healers of many western Amazonian peoples (Shipibo-Conibo, Tukano, Cofán, Asháninka) lead night-long sung ceremonies around the vine for healing, divination and meeting the forest spirits.",
+     "peoples": [
+      "Shipibo-Conibo",
+      "Tukano",
+      "Cofán",
+      "Asháninka",
+      "Siona",
+      "Kaxinawá (Huni Kuin)",
+      "Achuar"
+     ],
+     "ruin": "amazon",
+     "conservation": "not assessed (IUCN)",
+     "confidence": "documented",
+     "refs": "Schultes & Hofmann, Plants of the Gods (1979); Reichel-Dolmatoff, The Shaman and the Jaguar (1975, Tukano); Gebhart-Sayer (1986) and Brabec de Mori (2014) on Shipibo-Conibo icaro healing songs; Luna, Vegetalismo (1986); Spruce's 1852 Vaupés account; Ermakova 2022 (Chacruna) on conservation: not listed or assessed by IUCN."
+    },
+    "appearance": {
+     "stem": {
+      "colour": "#5E4030",
+      "secondary": "#7E5A40",
+      "diameter_cm": [
+       3,
+       15
+      ],
+      "notes": "Woody stem, chocolate-brown and smooth when young, rougher with age; stems twist on themselves and around each other into a knotted, rope- or corkscrew-like cable with knobby swollen nodes, looping from the forest floor up into the crown."
+     },
+     "trunk": {
+      "form": "leaning",
+      "taper": 0.05,
+      "lean": 0.6
+     },
+     "leaf_notes": "Opposite pairs of plain, entire, egg-shaped leaves with a short drawn-out tip, deep matte green above, paler below; pairs held flat along the hanging stems.",
+     "flower": {
+      "colour": "#F0A8C8",
+      "secondary": "#F8E8F0",
+      "form": "loose branched sprays of small 5-petalled pale-pink flowers, petals clawed and frilly, at shoot tips and leaf axils",
+      "scent": "faint"
+     },
+     "fruit": {
+      "colour": "#B89A60",
+      "form": "small nut with one broad papery wing (samara), green ripening tan-brown, spinning down on the wind"
+     },
+     "seasonal": "evergreen; rare flushes of pink flowers early in the wet season",
+     "silhouette": "corkscrew-twisted brown cable looping into the canopy, leafy above",
+     "confidence": "documented",
+     "refs": "NTBG Tropical Plant Database (Banisteriopsis caapi); Wikipedia; Kew POWO; Top Tropicals catalogue (reddish-brown stem, smooth deep-green oval leaves, pink and white flower clusters); Ark (yaogara.org) species page (stem rugose with age; Indigenous growers tell morphotypes apart by stem relief and bark colour)."
+    },
+    "silhouette": "corkscrew-twisted brown cable looping into the canopy, leafy above",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      8,
+      18
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "neotropic",
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 3,
+     "color": "#5E4030",
+     "color_2": "#3E2A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "Chocolate-brown and smooth (NTBG), rugose on old stems; the twist itself is a stem form, not a bark pattern."
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      50,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.9,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 60,
+     "live_crown_ratio": [
+      0.3,
+      0.2
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 3.0,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      2
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 1.3,
+     "flower_colour": "#f0a8c8",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      60
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      2,
+      3.5
+     ],
+     "unripe_colour": "#8aa860",
+     "ripe_colour": "#b89a60",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      90
+     ],
+     "crop_per_tree": [
+      1,
+      300
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers white or pale pink, 12-14 mm, most often January, infrequent); NTBG (axillary or terminal cymose panicles, pink petals 5-7 mm, fruit a samara, flowers rarely and seldom sets seed). Malpighiaceae flowers are typically worked by oil-collecting bees; samara size, cluster counts, ripening and crop estimated."
+    },
+    "id": "ayahuasca_vine"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Psilocybe mexicana",
+    "display": "teonanácatl",
+    "genus": "Psilocybe",
+    "species": "mexicana",
+    "origin": "Highlands of Mexico and Guatemala",
+    "kingdom": "Fungi",
+    "family": "Hymenogastraceae",
+    "shape": "rosette",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     1000,
+     1800
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "WET_MEADOW"
+    ],
+    "height_m": [
+     0.04,
+     0.12
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "basalt",
+      "alluvium",
+      "karst",
+      "granite",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#B4783A",
+    "accent": "#D8BE84",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.8
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       2
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       3
+      ],
+      [
+       "spent",
+       2
+      ]
+     ],
+     "final_size": 1.0,
+     "confidence": "estimated",
+     "source": "Fruiting-body stage lengths estimated for a small fragile Psilocybe; fruits May to October (Wikipedia Psilocybe mexicana)."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "The mycelium is the organism and lives in the grassy soil for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the soil; 'wind' = spores. It can form sclerotia (hard underground resting bodies) that carry it through the dry season and fire; 'dormant: dry' stands for them."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.4
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Psilocybe mexicana R. Heim (Index Fungorum), section Mexicanae; Hymenogastraceae (older works: Strophariaceae). Grows alone or in small groups on soil among moss and short grazed grass in subtropical pastures and humid meadows, on roadsides, trails and cornfield margins, and in grassy places bordering pine-oak and cloud forest, roughly 1000-1800 m, May to October; Guerrero, Michoacan, Morelos, Jalisco, Oaxaca, Veracruz and Puebla to Guatemala (Guzman 1983 monograph via Wikipedia; Guzman in Scientia Fungorum; Redalyc 57404303 'praderas subtropicales con pastos rasantes'). Active compound class: psilocybin. The sacred mushroom of the Mazatec veladas recorded by Heim and Wasson in Huautla de Jimenez.",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "Aztec (Mexica) nobles and merchants ate teonanácatl, the 'god mushroom', at feasts and for divination, and Mazatec curanderas such as María Sabina still keep all-night healing vigils (veladas) with it, while Maya use is only reported, from the debated mushroom stones of highland Guatemala.",
+     "peoples": [
+      "Aztec (Mexica)",
+      "Nahua",
+      "Mazatec",
+      "Zapotec",
+      "Mixe",
+      "Chatino",
+      "Maya (reported)"
+     ],
+     "ruin": "maya",
+     "conservation": "not assessed (IUCN Red List)",
+     "confidence": "documented",
+     "refs": "Sahagún, Florentine Codex (Aztec teonanácatl at feasts); Wasson & Wasson 1957, Mushrooms, Russia and History, and Heim & Wasson 1958 (Mazatec veladas, María Sabina); Borhegyi on Guatemalan mushroom stones (Maya link reported, debated); Chacruna 2021 'Psychoactive Mushrooms in Mexico' (peoples); Wikipedia Psilocybin mushroom."
+    },
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#b0723a",
+      "secondary": "#3f7a8c",
+      "form": "small conic to bell-shaped cap, often with a low nipple, ochre-brown drying to straw-beige; bruises blue-green",
+      "size_cm": [
+       0.5,
+       3
+      ],
+      "texture": "smooth",
+      "gloss": 0.2,
+      "notes": "hygrophanous: wet caps are darker brown, drying from the centre to pale straw; faint blue or green tones and blue bruising where handled; no ring on the stem"
+     },
+     "underside": {
+      "colour": "#5a4256",
+      "type": "gills grey to purple-brown with whitish edges, adnate to adnexed"
+     },
+     "stipe": {
+      "colour": "#c8a672",
+      "height_cm": [
+       4,
+       12.5
+      ]
+     },
+     "habit": "alone or in small groups among moss and short grazed grass on pastures, trail edges and cornfield margins",
+     "seasonal": "fruits only in the rainy season (May to October), then rots within days; sclerotia wait out the dry season underground",
+     "silhouette": "tiny ochre bell on a tall thread-thin stalk in grass",
+     "confidence": "documented",
+     "refs": "Wikipedia Psilocybe mexicana (cap 0.5-2(3) cm, conic to campanulate or subumbonate, ochre to brown, straw in age, blue-bruising; gills grey to purple-brown with whitish edges; stipe 4-10(12.5) cm x 1-2(3) mm, straw to reddish-brown, no annulus; spore print dark purple-brown); Guzman 1983 The Genus Psilocybe"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.7,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.95,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "neotropic",
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "id": "teonanacatl"
+   },
+   {
+    "id": "leshoma",
+    "name": "Boophone disticha",
+    "display": "Leshoma (poison bulb)",
+    "genus": "Boophone",
+    "species": "disticha",
+    "origin": "Southern and eastern Africa",
+    "family": "Amaryllidaceae",
+    "synonym": "Buphane disticha; Boophone toxicaria; Brunsvigia disticha; Haemanthus toxicarius",
+    "shape": "spike_rosette",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     200,
+     2500
+    ],
+    "biomes": [
+     "SAVANNA",
+     "TALLGRASS_PRAIRIE"
+    ],
+    "height_m": [
+     0.3,
+     0.5
+    ],
+    "density": 0.08,
+    "soil": {
+     "classes": [
+      "granite",
+      "sand",
+      "sandstone",
+      "basalt"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#6E9A8E",
+    "accent": "#E0507E",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The big round seed sends down a root and swells a pea-sized bulb that puts up one or two narrow grey-green straps. Each year the bulb fattens, its brown papery tunics thicken, and the leaves multiply into the two-ranked fan; it does not flower until the bulb is large, about 4-5 years from seed, and grown bulbs sit with their neck and upper half bare above the soil.",
+     "confidence": "estimated",
+     "source": "LLIFLE Boophone disticha (4-5 years seed to flower); PlantZAfrica / SANBI (bulbs do not flower until quite large; slow to flower after moving). Germination and lifespan estimated; common name 'century plant' reflects long-lived bulbs."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "dry",
+     "note": "Flowers at the end of the dry season, often right after a grass fire, before the leaves. Pedicels lengthen into a big spherical seed head that snaps off when dry and rolls across the burnt veld as a tumbleweed, dropping seed. Rarely offsets. Leaves die back in the dry winter."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_width": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Kew POWO / Flora Zambesiaca (bulbous geophyte, SE South Sudan to South Africa; grassland or wooded grassland on well-drained soils, 200-2,500 m; seasonally dry tropical biome; bulb to 25 cm, partly exposed; leaves grey-green to bluish-green, stiff, to 50-60 cm x 1.5-4.2 cm, after the flowers; scape 5-30 cm; dense head of pink to dark purple flowers; 3-angled capsule, wind-tumbled head). PlantZAfrica / SANBI (dry grassland and rocky slopes, summer-rainfall; fan of erect grey-green leaves; flowers July-October; bees and flies; very poisonous; Declining). LLIFLE (8-16 glaucous leaves, often strongly undulate; hundreds of tunics; flowers after grassland fires). Random Harvest (fire induces flowering; grows on grassland, rocky outcrops, mountainsides). Pacific Bulb Society (wavy-edged grey-green leaves to 45 x 5 cm). Very poisonous to people and stock.",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "Zulu, Xhosa, Sotho, Shona and San healers and diviners used the poisonous bulb in divination, to see in vision who or what lay behind a person's misfortune, and in initiation, the Sotho in the boys' initiation lodge (lebollo).",
+     "peoples": [
+      "Zulu",
+      "Xhosa",
+      "Sotho",
+      "Shona",
+      "San"
+     ],
+     "ruin": "great_zimbabwe",
+     "conservation": "not assessed (IUCN); Declining on the Red List of South African Plants (wild harvest for medicine markets)",
+     "confidence": "documented",
+     "refs": "Sobiecki J.F. 2008, A review of plants used in divination in southern Africa and their psychoactive effects, Southern African Humanities 20(2): 333-351; Nyazema, Chanyandura & Egan 2024, The use and potential abuse of psychoactive plants in southern Africa: an overview, Frontiers in Pharmacology 15:1269247 (Zulu, Xhosa, Shona and San divination; Sesotho name leshoma); Pasquali 2021, Leshoma, the visionary plant of southern Africa, Antrocom 17(1) (Sotho lebollo initiation); SANBI Red List status."
+    },
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0,
+      "lean": 0,
+      "notes": "the 'stem' is a huge onion-like bulb 15-25 cm across, the top half sitting bare on the ground, wrapped in hundreds of brown papery tunics that fray into a shaggy neck"
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#7aa298",
+      "underside": "#8fb2a8",
+      "gloss": 0.1,
+      "veins": "parallel",
+      "vein_colour": "#62877c",
+      "margin": "wavy",
+      "size_cm": [
+       20,
+       50
+      ],
+      "notes": "8-16 stiff, blunt, glaucous grey-green straps in two ranks, a flat upright fan (often twisted) in ONE plane from the bulb neck; edges strongly rippled"
+     },
+     "flower": {
+      "colour": "#e0507e",
+      "secondary": "#f2b8c8",
+      "form": "a single dense round head 15-30 cm of 50-200 narrow pink-to-red trumpets with long protruding stamens and yellow anthers, on a short thick stalk that seems to sit on the bulb; no leaves yet",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c9b07a",
+      "form": "pedicels stretch to ~30 cm into a big straw-coloured spoked sphere tipped with 3-angled capsules; it snaps off and rolls as a tumbleweed"
+     },
+     "seasonal": "deciduous geophyte: bare bulb in the dry season, pink ball after the first fire or rains, then the grey fan of leaves through the wet summer; fan yellows and dies back in autumn",
+     "silhouette": "grey-green strap fan in one plane on a bare brown bulb",
+     "confidence": "documented",
+     "refs": "Kew POWO / Flora Zambesiaca; PlantZAfrica (SANBI); LLIFLE; Pacific Bulb Society wiki; Wikipedia Boophone disticha; Random Harvest"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "undulate",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -18,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#c2a35a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "afrotropic",
+    "bark": {
+     "pattern": "papery",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1,
+     "color": "#7A5A3C",
+     "color_2": "#D9C69C",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "the exposed bulb: many layers of thin brown tunics, paler cream where they tear"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 3,
+     "flower_colour": "#e0507e",
+     "flower_form": "ball",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      50,
+      200
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#c9b07a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      150
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "PlantZAfrica (flowers July-October; bees and flies); Kew POWO / FZ (10-200+ flowers in a ball; 3-angled capsule to 3-4 cm; pedicels lengthen in fruit); Wikipedia (about fifty flowers; pedicels to ~30 cm; head becomes a tumbleweed). 'falls' here means the whole dry head breaks off and rolls. Flower days, fruit set, ripening and crop estimated."
+    }
+   },
+   {
+    "name": "Lophophora williamsii",
+    "display": "Peyote",
+    "genus": "Lophophora",
+    "species": "williamsii",
+    "origin": "Chihuahuan Desert and south Texas",
+    "family": "Cactaceae",
+    "synonym": "Anhalonium williamsii",
+    "shape": "cactus",
+    "temp_c": [
+     16,
+     23
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "altitude_m": [
+     100,
+     1900
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "THORN_SCRUB"
+    ],
+    "height_m": [
+     0.02,
+     0.07
+    ],
+    "density": 0.25,
+    "soil": {
+     "classes": [
+      "karst",
+      "alluvium"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5A8C86",
+    "accent": "#E890B4",
+    "silhouette": "flat blue-green button with woolly tufts, flush with the ground",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Two tiny cotyledons, then a pea-sized grey-green globe with five ribs and tufts of white wool, usually in leaf litter under a nurse shrub. It widens far more than it rises, adding ribs in Fibonacci steps (5, then 8, then 13) as it ages, the crown staying flat or slightly domed with a woolly centre and the body pulled down into a long carrot-like taproot. Growth facts: in the wild it is very slow, taking roughly 10 to 30 years from seed to flowering size (3 to 10 in cultivation). A crown cut off above the root leaves the buried stem alive, and that stem sends up new heads (pups) from its buried areoles; a cut into the root kills the plant, because roots cannot make new crowns. Regrown heads come back smaller and more numerous (2.6 crowns per plant two years after one harvest, against 1.7 uncut) and need well over six years, probably eight or more, to reach flowering size again.",
+     "confidence": "estimated",
+     "source": "Llifle encyclopedia (very slow; wild plants up to 30 years to flower, cultivated 6-10; taproot 25 cm+); United Plant Savers (3-15 years to reproductive maturity; Terry 2017 IUCN); Chacruna harvesting guidelines (seedlings 5-ribbed, >10 years to mature from seed; six years not enough to regenerate, eight likely the minimum); Trout & Norton 2011, Erowid Extracts 20 (new crowns from the subterranean stem; 2.6 vs 1.7 crowns after two years); Cactus Conservation Institute (cut too low and no new stems form). Germination and lifespan estimated."
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity",
+      "water",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "Solitary or clustering; damaged or cut crowns put up new heads from the buried stem, so old plants and harvested ground show tight clumps of small buttons. Flowers open by day from the woolly crown centre."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "rib_count": [
+      0.2,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Small spineless button cactus of the Chihuahuan Desert scrub and the Tamaulipan thorn scrub of south Texas and north-central to north-east Mexico (Chihuahua, Coahuila, Nuevo León, Tamaulipas, San Luis Potosí, Zacatecas), 100-1,900 m, on calcareous (limestone) gravelly clay and loam soils, rocky slopes and dry riverbeds, usually under nurse shrubs (cenizo Leucophyllum, Acacia, creosote bush Larrea, tasajillo Opuntia leptocaulis, lechuguilla). Stem 2-7 cm tall, 4-12 cm wide, flattened, blue-green to grey-green, 5-13 rounded ribs, areoles with tufts of white to yellowish wool, no spines; most of the plant is a buried stem and a 25 cm+ taproot. Pink to whitish bell flowers 1.5-2.5 cm from the crown centre, March-May and sporadically to September; club-shaped pink fruit to 2 cm, drying brownish-white. Wikipedia Peyote; Llifle; Kew POWO; Cactus Conservation Institute; Ermakova et al. 2020; sacredcacti.com associated flora (citing Anderson 1980).",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "The Wixárika (Huichol) walk a yearly pilgrimage to the desert of Wirikuta in San Luis Potosí to gather peyote as the sacrament of their deities, and the Native American Church holds it as the sacrament of its all-night prayer and healing meetings.",
+     "peoples": [
+      "Wixárika (Huichol)",
+      "Native American Church"
+     ],
+     "ruin": "peyote_country",
+     "conservation": "IUCN Vulnerable (Terry 2013, amended 2017), declining: wild crowns overharvested (often cut too deep to regrow) and habitat lost to clearing for grazing, farms and border-town growth; under special protection (Pr) in Mexico.",
+     "confidence": "documented",
+     "refs": "Wikipedia Peyote (Wixárika sacrament; Native American Church all-night ceremonies; IUCN Vulnerable); United Plant Savers (Terry 2017 IUCN assessment, threats, Mexican protection); Cactus Conservation Institute; Ermakova et al. 2020, bioRxiv 10.1101/2020.04.03.023515 (harvest and habitat conversion). Active compound class: mescaline."
+    },
+    "traits": {
+     "genus": "Lophophora",
+     "species": "williamsii",
+     "native_range": "Chihuahuan Desert and Tamaulipan thorn scrub, Mexico and south Texas",
+     "leaf_shape": "none — woolly areoles on ribs, no spines",
+     "trunk": "succulent flattened globe, mostly below ground",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.07
+     ],
+     "growth_rate": "very slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity",
+      "water",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5A8C86",
+      "secondary": "#7FA8A0",
+      "ribs": [
+       5,
+       13
+      ],
+      "rib_depth": 0.25,
+      "areole_colour": "#EEE6CE",
+      "spine_colour": "#EEE6CE",
+      "spine_cm": [
+       0,
+       0
+      ],
+      "spines_per_areole": [
+       0,
+       0
+      ],
+      "height_m": [
+       0.02,
+       0.07
+      ],
+      "diameter_cm": [
+       4,
+       12
+      ],
+      "gloss": 0.1,
+      "notes": "Peyote: a flat, blue-green, matte button sunk to its rim in gravel; broad low ribs cut into rounded bumps by cross-furrows, each bump topped with a white wool tuft and NO spines; the centre is a dense white woolly boss. Often in tight clumps of several heads under a grey shrub."
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.0
+     },
+     "flower": {
+      "colour": "#F0A2C2",
+      "secondary": "#FBEFF2",
+      "form": "small pink-and-white bell 1.5-2.5 cm sitting in the woolly crown centre, open by day",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#E0628E",
+      "form": "small pink club-shaped berry to 2 cm poking out of the wool, drying brownish-white"
+     },
+     "seasonal": "evergreen succulent; shrinks and greys, sinking lower into the soil in drought; flowers in spring after rain",
+     "silhouette": "flat blue-green button with woolly tufts, flush with the ground",
+     "confidence": "documented",
+     "refs": "Wikipedia Peyote; Llifle Lophophora williamsii; Cactus Conservation Institute; Kew POWO"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.05,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -16,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "nearctic",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1.5,
+     "color": "#5A8C86",
+     "color_2": "#EEE6CE",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "spineless: the 'spiny' pattern stands for the areoles, each a white wool tuft on a rounded tubercle"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 1,
+     "branch_angle_deg": [
+      0,
+      30
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.0,
+     "fork_height_frac": [
+      0.0,
+      0.0
+     ],
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.05,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 2.2,
+     "flower_colour": "#F0A2C2",
+     "flower_form": "bell",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.0
+     ],
+     "unripe_colour": "#D9A0B4",
+     "ripe_colour": "#E0628E",
+     "ripen_days": [
+      30,
+      90
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      1,
+      6
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Peyote (flowers pink or white to yellowish, 1-2.4 cm, open by day, March-May and sometimes to September; fruit club-shaped, fleshy, pink, 1.5-2 cm, drying brownish-white, not bursting, described as edible); Llifle (solitary bell flowers 1.5-2.5 cm from the woolly centre; fruit red to pinkish to 2 cm). Pollinators, fruit set, ripening, hang and crop estimated."
+    },
+    "id": "peyote"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Erythroxylum coca",
+    "display": "Coca",
+    "genus": "Erythroxylum",
+    "species": "coca",
+    "origin": "Eastern Andes of Peru and Bolivia",
+    "family": "Erythroxylaceae",
+    "synonym": "Erythroxylum coca var. coca (Huánuco or Bolivian coca)",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     500,
+     2000
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TROPICAL_RAINFOREST"
+    ],
+    "height_m": [
+     1.0,
+     3.0
+    ],
+    "density": 0.15,
+    "soil": {
+     "classes": [
+      "granite",
+      "till",
+      "sandstone",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.3,
+     "salinity": "none"
+    },
+    "color": "#3E9A3A",
+    "accent": "#D8361E",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A thin single-stemmed seedling with a few small bright-green elliptic leaves, traditionally raised in shaded seedbeds; it branches from low down within a year or two into a twiggy, upright shrub of slender reddish-brown stems with leaves set flat along the side shoots.",
+     "confidence": "estimated",
+     "source": "Wikipedia Coca (seed sown in shaded seedbeds; var. coca cuttings do not root easily); Encyclopedia.com Coca (leaves picked from 6-12 months after planting; plants productive 30-40 years); FAO Ecocrop E. coca (1-3 years to first harvest, ~20 years economic life). Germination days and height years estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "early_wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "Flowers heterostylous (two style forms on different plants; Ganders 1979, Bohm, Ganders and Plowman 1982). Var. coca is propagated by seed; its cuttings root poorly, unlike the Amazonian var. ipadu. Red drupes taken by birds (estimated)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Erythroxylum coca var. coca, Huánuco or Bolivian coca: evergreen shrub 1-3 m (to ~5 m unpruned), reddish-brown bark, light-green elliptic leaves 4-8 cm with two arching lines either side of the midrib beneath, small yellowish-white five-petalled flowers in axillary clusters, red-orange ovoid drupes. Grown on the humid eastern slopes of the Andes of Peru and Bolivia (yungas montane forest, about 1000-2000 m; down to ~500 m in the premontane belt), frost-tender, on very acid soils. Known almost only in cultivation; genomic work (White et al. 2020) derives it from the wild E. gracilipes, domesticated in southeastern Peru. Wikipedia Coca and Erythroxylum coca; Sauvain et al. 1997 J. Ethnopharmacol. 56; Sayre (USP VIII) leaf description; Plowman 1984.",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "stimulant",
+     "rite": "Quechua and Aymara peoples offer coca leaves to the apus (mountain spirits), Inti and Pachamama, read them in divination and chew them together in acullico; under the Inca coca was a sacred, state-controlled plant of priests and nobles, used in offerings and divination and placed with the dead.",
+     "peoples": [
+      "Inca",
+      "Quechua",
+      "Aymara"
+     ],
+     "ruin": "inca",
+     "conservation": "not assessed",
+     "confidence": "documented",
+     "refs": "Wikipedia Coca (religious use: offerings to the apus, Inti and Pachamama; divination; Inca state monopoly; leaves placed with mummies); Encyclopedia.com Coca (sacred under the Inca, reserved to chieftains, priests and privileged classes; leaves buried with the dead). The leaf is not the refined drug."
+    },
+    "traits": {
+     "genus": "Erythroxylum",
+     "species": "coca",
+     "native_range": "Eastern Andean slopes of Peru and Bolivia (yungas), 500-2000 m; known mainly in cultivation",
+     "leaf_shape": "small glossy elliptic leaves with two arching lines beneath",
+     "trunk": "multi-stemmed from the base, slender reddish-brown stems",
+     "petiole": "very short stout petiole",
+     "height_m": [
+      1.0,
+      3.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7A4632",
+      "secondary": "#A8684A",
+      "feature_cm": 0.5,
+      "roughness": 0.15,
+      "notes": "thin smooth red-brown stems with pale lenticel dots; twigs set with small brown persistent stipule scales"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "elliptic",
+      "colour": "#3E9A3A",
+      "underside": "#8ABA7A",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#2E6E2C",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       8
+      ],
+      "notes": "bright light-green, slightly glossy, thin-leathery ellipses on very short stalks; beneath, two pale curved lines run from base to tip either side of the midrib, enclosing a narrow leaf-shaped panel: the species' tell at close range"
+     },
+     "flower": {
+      "colour": "#F2EDCF",
+      "secondary": "#E4D07A",
+      "form": "tiny yellowish-white five-petalled stars, under 1 cm, in little clusters on short stalks in the leaf axils and along older twigs",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#D8361E",
+      "form": "small ovoid scarlet to red-orange drupes, about 1 cm, scattered along the twigs like beads"
+     },
+     "seasonal": "evergreen; flushes of bright new leaves after the rains; red drupes after flowering",
+     "silhouette": "upright twiggy shrub of flat bright-green leaf sprays",
+     "confidence": "documented",
+     "refs": "Wikipedia Coca; Sauvain et al. 1997 (shrub 1-2 m, leaves to ~8 x 5 cm, white or yellowish flowers, red-orange drupe); Sayre, USP VIII Coca (Huánuco leaf 2.5-7.5 cm, nearly elliptical, short point, entire, smooth and slightly glossy, two lines beneath); Naturalis Useful Plants (reddish-brown bark, light green leaves to 7 cm)"
+    },
+    "silhouette": "upright twiggy shrub of flat bright-green leaf sprays",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "andes",
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7A4632",
+     "color_2": "#A8684A",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "Erythroxylum: 'red wood'; reddish-brown bark (Naturalis Useful Plants); lenticels on the branches (PROSEA, for the sister species)"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      55
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#F2EDCF",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      6
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.8,
+      1.2
+     ],
+     "unripe_colour": "#6E9A4A",
+     "ripe_colour": "#D8361E",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      20
+     ],
+     "crop_per_tree": [
+      100,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia Coca (small yellowish-white five-petalled flowers in clusters on short stalks; red berries); Sauvain et al. 1997 (red-orange oblong to ovate drupe); PROSEA E. novogranatense (petals ~4 mm, 1-4(-8) per cluster, heterodistylous). Season, pollinators, fruit size, timings and counts estimated."
+    },
+    "id": "coca"
+   },
+   {
+    "name": "Datura wrightii",
+    "display": "Sacred datura",
+    "genus": "Datura",
+    "species": "wrightii",
+    "origin": "Southwest US, California, N Mexico",
+    "family": "Solanaceae",
+    "synonym": "Datura meteloides auct. (misapplied)",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     24
+    ],
+    "moisture": [
+     0.08,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     2200
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "SAGEBRUSH",
+     "MEDITERRANEAN_SCRUB",
+     "CANYON",
+     "THORN_SCRUB"
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.15,
+    "soil": {
+     "classes": [
+      "sand",
+      "alluvium",
+      "granite",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#6E8C6A",
+    "accent": "#F2EEE6",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      45
+     ],
+     "height_years": [
+      0.2,
+      1.5
+     ],
+     "first_seed_years": 0.25,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed lies dormant in sandy wash soil for years and comes up after warm-season rain or disturbance. Two narrow cotyledons, then soft, dull grey-green, hairy ovate leaves on a stout stem that forks early; growth is very fast and a first-year plant can already be a low sprawling mound with a few white trumpets. It builds a fleshy tuberous root, dies back to the ground after frost and resprouts each warm season into a wider mound.",
+     "confidence": "estimated",
+     "source": "Arizona Cooperative Extension 'Sacred Datura' (fleshy tuberous root, dies back after freezes and resprouts; 2-3 ft tall, sprawling 6-8 ft); UW ESRM 412 propagation protocol DAWR2 (seed dormant in soil for decades, germinates in warm moist months, very rapid early growth, can flower at 2-5 weeks; short-lived perennial in warm climates, annual in the cold north of its range). Germination window and lifespan estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Each trumpet opens at dusk and closes by the next late morning or noon; hawkmoths (Manduca) pollinate it at night, bees visit in the early morning. The nodding capsule bursts irregularly and drops its light-brown seed under the plant, where wash floods carry it on. The tuberous root resprouts the same plant each year; it does not spread clonally."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.25
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.95,
+     "effect": "deliriant (tropane alkaloids); every part is deadly poisonous: never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "deliriant",
+     "rite": "Zuni rain priests used it in rites to bring rain and in divination, and the Chumash, Tongva, Luiseño and Kumeyaay of southern California gave it in toloache initiation rites marking a youth's passage to adulthood and in shamans' vision rites; it is deadly poisonous and not every initiate survived.",
+     "peoples": [
+      "Zuni",
+      "Chumash",
+      "Tongva",
+      "Luiseño",
+      "Kumeyaay (Diegueño)"
+     ],
+     "ruin": "pueblo",
+     "conservation": "not assessed (IUCN); NatureServe G5 Secure",
+     "confidence": "documented",
+     "refs": "Stevenson 1915, Ethnobotany of the Zuni Indians (BAE 30th Annual Report), pp. 46, 48, 88 (use restricted to the rain priests and the directors of the Little Fire and Cimex fraternities; rain and divination); Applegate 1975, The Datura cult among the Chumash (J. California Anthropology 2); Robinson et al. 2020, PNAS 117(49), Datura quids at Pinwheel Cave, Chumash-area rock art site, AD 1530-1890; Du Bois 1908, The Religion of the Luiseño Indians of Southern California; Garcia & Adams 2005, Healing with Medicinal Plants of the West (Chumash momoy, Tongva manit); Wikipedia Datura wrightii; Southwest Desert Flora (Diegueño toloache initiation)"
+    },
+    "source": "Datura wrightii, sacred datura - sprawling, grey-green, densely appressed-hairy herbaceous perennial from a tuberous root, 0.3-1.5 m tall and up to 2.4 m wide, of open sandy or gravelly ground: desert washes and arroyos, canyon floors, roadsides and other periodically disturbed places, in creosote and Joshua-tree desert scrub, desert grassland, sagebrush and pinyon-juniper, and California coastal and foothill scrub, from sea level to about 2,200 m (7,200 ft). Native from California, Nevada, Utah and Colorado through Arizona, New Mexico and Texas into northern Mexico and Baja California; most abundant in southern California (Wikipedia; Arizona Cooperative Extension; Native Plant Society of New Mexico; Southwest Desert Flora; UW ESRM 412 protocol DAWR2; birdandhike.com). Kew POWO (Datura wrightii Regel, accepted) gives a narrower native range, S Central USA to N Mexico. Deliriant (tropane alkaloids); every part is deadly poisonous. Ceremonial use documented: Zuni rain and divination rites, southern California toloache initiation.",
+    "appearance": {
+     "flower": {
+      "colour": "#F6F3EC",
+      "secondary": "#CDBFE0",
+      "form": "huge upright white trumpet 15-20 cm long, flaring to a 10 cm five-pointed rim, the points drawn out into thin threads, rim sometimes faintly violet; one in each fork of the stems, open from dusk to mid-morning, a limp twisted white rag by afternoon",
+      "scent": "sweet",
+      "emission": "none",
+      "notes": "Plain white petals lit only by moon or torch; they do NOT glow. Brightest white in the scrub at night because they are white, not because they give off light."
+     },
+     "fruit": {
+      "colour": "#7E9A5E",
+      "form": "round spiny capsule 3-4 cm, nodding on a curved stalk below the stem, densely covered in slender short spines; turns tan and bursts irregularly, spilling light-brown seeds"
+     },
+     "seasonal": "dies back to the ground after frost and resprouts from the root each warm season; flowers April to October, new trumpets each evening",
+     "silhouette": "low sprawling grey-green mound with big upturned white trumpets",
+     "confidence": "documented",
+     "refs": "Wikipedia Datura wrightii; Native Plant Society of New Mexico Wildflowers of New Mexico (blades 2.5-10 in, entire to wavy or coarsely toothed; flowers 6-10 in, petal tips with slender threads; round 1 in capsule densely short-spiny, hanging down); Southwest Desert Flora (white to pale lavender, nodding globose capsule bursting irregularly, spines under 1/3 in, seeds light brown); Arizona Cooperative Extension (leaves grey-green below, flowers open early evening, close by noon); americansouthwest.net"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.7,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      25
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -12,
+     "sat": 0.62,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "nearctic",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1.0,
+     "color": "#7A8C6E",
+     "color_2": "#5E6B52",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout herbaceous stems dulled grey-green by dense flat-lying hairs; darker at the forks"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.0,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.95,
+      0.95
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated",
+     "note": "sympodial forking in twos at every node with a single flower in the fork (the Datura pattern); low stems sprawl outward and lie half on the ground, so the plant is wider than tall"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 18,
+     "flower_colour": "#f6f3ec",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3,
+      4
+     ],
+     "unripe_colour": "#6f9549",
+     "ripe_colour": "#9a7e58",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      20,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      150
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia Datura wrightii (white trumpets to 20 cm, blooms April-October, open morning and evening, spiny globular capsule 3-4 cm opening when ripe); Arizona Cooperative Extension (dozens of flowers per plant, opening early evening, closing by noon; hawkmoth pollinated). Fruit set, ripening, hang and rot times and crop estimated."
+    },
+    "id": "sacred_datura"
+   }
+  ]
+ },
+ "flags": {
+  "ololiuhqui": [
+   "Category 'epiphyte' follows most existing liana entries (Ivy, Passion vine, Monstera); the vine is rooted in the ground, not epiphytic.",
+   "repro.bloom.season 'late_wet' is the nearest existing value: real flowering is Nov-Feb, end of the rains into the early dry season; there is no 'early_dry' value.",
+   "photoperiod short_day (threshold 12.0 h) is inferred from the fixed Christmas-season bloom and the genus; not directly documented for this species.",
+   "conservation 'not assessed': no IUCN Red List assessment found; the species is widespread and weedy.",
+   "Biomes: JUNGLE stands in for 'rainforest margins / mountain forests'; riverbanks and swamps are also recorded but FLOODPLAIN_FOREST/SWAMP are temperate-framed here, so left out.",
+   "Range: POWO lists it native south to Bolivia, Paraguay and S Brazil; Wood et al. suggest part of that range is old human introduction. Altitude 0-1100 m (exceptionally 1450 m).",
+   "Bark, architecture, growth timings and crop numbers estimated (no published measurements).",
+   "Seeds are poisonous; no preparation detail anywhere in the entry."
+  ],
+  "teonanacatl": [
+   "Engine has no mushroom shape: entered as shape 'rosette' in the 'ground' category with a 'fungus' block, stage-form 'growth' and no 'fruiting' or 'architecture', exactly as Amanita muscaria in data/biomes/04_taiga.json. A rosette mesh will not read as a thin-stalked bell mushroom.",
+   "No biome key for subtropical pine-oak forest or grazed highland pasture: chose CLOUD_FOREST (its edges and clearings) and WET_MEADOW (humid meadows); nothing else on the list fits without overreach.",
+   "Altitude: Wikipedia says 'common at 300-550 m (980-1,800 ft)', which looks like a units muddle; the brief's ~1000-1800 m (subtropical montane belt in Guzman's work) is used. No primary source fetched gives the number outright.",
+   "Ruin 'maya' rests on the weakest evidence: documented use is Aztec (central Mexico) and Mazatec (Oaxaca); Maya use is only reported (Guatemalan mushroom stones, debated). The rite sentence says so.",
+   "Conservation: no IUCN assessment found (only proposals on the fungal red-list portal). Chacruna's table lists it under Mexico's NOM-059 as 'A' (threatened); not verified, so left out of the block.",
+   "fungus.edible set to 'no' (psychoactive, not food); the vocabulary has no psychoactive value.",
+   "Claude (chat), 9 Oct: the 1000-1800 m band is the brief's; no source opened gives it directly (Guzman 1983 is the place to check). Treat as estimated."
+  ],
+  "coca": [
+   "Wild status: Var. coca is known almost only in cultivation. Plowman reported feral or wild-looking stands in Peruvian and Bolivian montane forest, but White et al. 2020 (museum genomics) derive all cultivated cocas from the wild E. gracilipes and found no confirmed wild var. coca. The biomes and altitude gate the plant to the habitat it is grown in and escapes into (humid yungas montane forest, about 500-2000 m), not to a proven wild range.",
+   "biomes: CLOUD_FOREST covers the 1000-2000 m yungas. TROPICAL_RAINFOREST stands in for the humid premontane belt down to about 500 m, but that biome is described as lowland; if it reads wrong, keep CLOUD_FOREST only. The Chapare lowland (<500 m) is recent cultivation and was left out on purpose.",
+   "The game-defining tell, two pale arching lines beneath the leaf, has no schema field; it is recorded in appearance.leaf.notes only.",
+   "conservation: E. coca is not on the IUCN Red List ('not assessed').",
+   "Flowering months, pollinators, fruit size, growth timings and architecture are estimated (marked)."
+  ],
+  "ayahuasca_vine": [
+   "Engine has no twisted/spiralled stem: the liana shape cannot yet draw the corkscrew cable that is this vine's signature. It is carried only by appearance.stem.notes, the silhouette and architecture.sinuosity 0.9. appearance.trunk.form uses 'leaning', the nearest existing value; there is no 'twining' value.",
+   "No 'needs' entry: the existing vocabulary has no host-tree or support value for climbers.",
+   "Category 'epiphyte' follows the existing Bauhinia and Passion vine liana entries, though the plant roots in the ground.",
+   "Altitude 0-1,000 m from PFAF only; floras give no elevation, and herbarium elevation data (GBIF) could not be reached from here.",
+   "Wild range is poorly mapped; much of the vine people see is cultivated near settlements. Samara size, flower counts, growth timing and lifespan are estimated.",
+   "FLOODPLAIN_FOREST left out on purpose: the vine also grows on riverbanks, but that biome in the data is drawn on temperate bottomlands.",
+   "Asháninka was named in the brief; the sources I checked name Shipibo-Conibo, Tukano, Cofán, Siona, Kaxinawá and Achuar more directly. Asháninka use is widely reported but I did not open a primary source for it.",
+   "Admixture plants and preparation are left out on purpose, per the brief."
+  ],
+  "leshoma": [
+   "No bulb/geophyte shape in the engine: used spike_rosette (as Bromelia) and canopy 'rosette'; the leaves are a flat two-ranked FAN in one plane (arrangement 'distichous'), which a radial rosette builder will not show unless it honours distichous.",
+   "The half-exposed bulb is the key silhouette and has no mesh: bark 'papery' describes its tunics, but nothing draws a 20 cm brown globe at the base.",
+   "The flower is a spherical umbel on a short scape, not a spike; flowers come before the leaves (bare bulb + pink ball, then fan). The engine can't yet stage leafless bloom or the detached tumbleweed seed head rolling in wind.",
+   "Biome gap: its main home, the Highveld montane grassland of southern Africa, has no afrotropic association; TALLGRASS_PRAIRIE (fire-maintained C4 grassland) used as the nearest key alongside SAVANNA (miombo/Zimbabwe). SAVANNA's climate band (18-33 C) runs warmer than the plant's cooler upland range.",
+   "Initiation is sourced only to Pasquali 2021 (Sotho boys' lebollo); I could not confirm initiation of diviners themselves. The Frontiers overview names divination only (Zulu, Xhosa, Shona, San). Sobiecki 2008 is paywalled, so it is cited from its abstract (85 divination plants) and not checked line by line for Boophone.",
+   "Highly poisonous to people and stock (cannot_be_browsed true; edible 'toxic').",
+   "IUCN has not assessed it; SANBI lists it Declining in South Africa."
+  ],
+  "peyote": [
+   "Engine gap: 'cactus' draws a column, but peyote is a low flattened globe 2-7 cm tall, wider than tall and mostly below ground (buried stem plus a 25 cm+ taproot). There is no low-globe shape yet (FM.9); canopy 'mound' with gap 0.05 is the nearest hint.",
+   "Spineless: bark pattern 'spiny' is the nearest value; it stands for the woolly areoles. appearance.stem spine_cm and spines_per_areole are [0, 0].",
+   "No `needs` value for 'grows under a nurse shrub' (cenizo, Acacia, creosote, tasajillo). Used dry_ground; the nurse association is in `source` only.",
+   "Altitude 100-1,900 m (Llifle, Wikipedia). Wirikuta, the pilgrimage desert in San Luis Potosí, lies near the top of that band.",
+   "Years to flowering vary by source: 3-15 (United Plant Savers), up to 30 in the wild (Llifle), more than 10 (Chacruna). first_seed_years 10 and height_years are estimates.",
+   "Category 'ground', following the thorn-scrub Prickly pear. Puna cactus files under 'shrub'.",
+   "Conflict: Wikipedia says Texas lists peyote as endangered, but United Plant Savers says it has no US state or federal protection. Left out; only IUCN and the Mexican listing are stated.",
+   "cannot_be_browsed omitted: hogs, rabbits and snails damage it (Cactus Conservation Institute).",
+   "Regrowth after the crown is cut is recorded as growth fact only, in growth.juvenile_note and repro.note, for the shaman's respectful-harvest idea (FM.7)."
+  ],
+  "sacred_datura": [
+   "Ruin fit: the 'pueblo' ruin is Mesa Verde (Ancestral Puebloan). No source documents a Datura rite there. Archaeology shows presence only: Datura seeds in Ancestral Pueblo contexts in Colorado, AD 1250-1300 (Litzinger 1981, cited by King et al. 2018), and ~900 seeds on a room floor with ceremonial objects at Higgins Flat Pueblo, NM (Mogollon; Cutler 1956). The documented rite link is the Zuni, a living Pueblo people. So 'peoples' leaves out the Ancestral Puebloans.",
+   "Altitude: the upper limit is about 2,200 m (7,200 ft). Mesa Verde's mesa top is about 2,000-2,600 m, so the plant belongs in the canyon bottoms and lower slopes, not on the high mesa.",
+   "Range conflict: Kew POWO (D. wrightii Regel, accepted) lists only New Mexico, Texas and NE/NW Mexico. The regional floras (and Wikipedia, NPSNM, Arizona Extension, Southwest Desert Flora) include California, Arizona, Nevada, Utah and Colorado. I followed the floras, because the Chumash rite depends on the California plants.",
+   "Corrected the 1 Oct trimmed entry: the flowers are plain white (sometimes with a faint violet rim) and do NOT glow. I set appearance.flower.emission to 'none'.",
+   "The engine has no low sprawling herb-mound shape. 'shrub' with canopy 'mound' is the closest, but it is a herbaceous perennial that dies back to its root each winter. Its 'drop'/die-back is not modelled.",
+   "Added a 'toxic' block, carried over from the archived Datura entries though it is not in the Trichocereus template, so that 'deadly poisonous' is machine-readable. I dropped the archive's 'alkaloid' gene to stay inside the brief's hard limit.",
+   "repro.pollinator is 'insect' because 'moth' is not used in repro anywhere in the data. fruiting.pollinators carries 'moth'.",
+   "The checker only applies the catalogue biome gate to files in a 'plants' folder. A copy placed under a 'plants' folder also passes --strict with 0 errors."
+  ]
+ },
+ "sources": {
+  "ololiuhqui": [
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:60458008-2",
+   "https://convolvulaceae.myspecies.info/content/turbina-corymbosa-0",
+   "https://www.flowersofindia.net/catalog/slides/Christmas%20Vine.html",
+   "https://www.business.qld.gov.au/industries/farms-fishing-forestry/agriculture/biosecurity/plants/invasive/other/turbina",
+   "https://en.wikipedia.org/wiki/Ipomoea_corymbosa",
+   "https://en.wikipedia.org/wiki/Aztec_use_of_entheogens"
+  ],
+  "teonanacatl": [
+   "https://en.wikipedia.org/wiki/Psilocybe_mexicana",
+   "https://en.wikipedia.org/wiki/Psilocybin_mushroom",
+   "https://chacruna.net/psychoactive-mushrooms-in-mexico-overview-of-ecology-and-ethnomycology/",
+   "https://scientiafungorum.org.mx/index.php/micologia/article/download/502/686/1874",
+   "https://www.redalyc.org/pdf/574/57404303.pdf",
+   "https://colfungi.org/taxon/urn:lsid:indexfungorum.org:names:304487"
+  ],
+  "coca": [
+   "https://en.wikipedia.org/wiki/Coca",
+   "https://en.wikipedia.org/wiki/Erythroxylum_coca",
+   "https://horizon.documentation.ird.fr/exl-doc/pleins_textes/pleins_textes_7/b_fdi_55-56/010023032.pdf",
+   "https://datadryad.org/dataset/doi:10.5061/dryad.cvdncjt1n",
+   "https://henriettes-herb.com/eclectic/sayre/erythroxylon.html",
+   "https://useful-plants.linnaeus.naturalis.nl/linnaeus_ng/app/views/species/taxon.php?id=127573",
+   "https://uses.plantnet-project.org/en/Erythroxylum_novogranatense_(PROSEA)",
+   "https://www.encyclopedia.com/plants-and-animals/plants/plants/coca",
+   "https://ecocrop.apps.fao.org/ecocrop/srv/en/cropView?id=14047"
+  ],
+  "ayahuasca_vine": [
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:29180-2",
+   "https://en.wikipedia.org/wiki/Banisteriopsis_caapi",
+   "https://ntbg.org/database/plants/detail/banisteriopsis-caapi",
+   "https://pfaf.org/User/Plant.aspx?LatinName=Banisteriopsis+caapi",
+   "https://toptropicals.com/catalog/uid/banisteriopsis_caapi.htm",
+   "https://ark.yaogara.org/plants/banisteriopsis-caapi",
+   "https://chacruna.net/ayahuasca-vine-globalization-conservation/",
+   "https://en.wikipedia.org/wiki/Ayahuasca"
+  ],
+  "leshoma": [
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:60455694-2/general-information",
+   "https://pza.sanbi.org/node/9834",
+   "https://plantzafrica.com/plantab/boophdist.html",
+   "https://llifle.com/Encyclopedia/BULBS/Family/Amaryllidaceae/1351/Boophone_disticha",
+   "https://pacificbulbsociety.org/pbswiki/index.php/Boophone",
+   "https://en.wikipedia.org/wiki/Boophone_disticha",
+   "https://www.randomharvest.co.za/South-African-Indigenous-Plants/Show-Plant/PlantId/456/Plant/Boophone-disticha",
+   "https://www.sahumanities.org/index.php/sah/article/view/369",
+   "https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2024.1269247/full",
+   "https://antrocom.net/archives/2021/volume-17-number-1/leshoma-the-visionary-plant-of-southern-africa/"
+  ],
+  "peyote": [
+   "https://en.wikipedia.org/wiki/Peyote",
+   "https://llifle.com/Encyclopedia/CACTI/Family/Cactaceae/1117/Lophophora_williamsii",
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:143606-2/general-information",
+   "https://cactusconservation.org/?p=621",
+   "https://unitedplantsavers.org/peyote-lophophora-williamsii-2/",
+   "https://chacruna.net/peyote-harvesting-guidelines/",
+   "https://erowid.org/plants/peyote/peyote_article5.shtml",
+   "https://www.biorxiv.org/content/10.1101/2020.04.03.023515v1",
+   "https://sacredcacti.com/blog/associated/"
+  ],
+  "sacred_datura": [
+   "https://en.wikipedia.org/wiki/Datura_wrightii",
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:815620-1",
+   "https://www.npsnm.org/wildflowersnm/Datura_wrightii.html",
+   "https://southwestdesertflora.com/WebsiteFolders/All_Species/Solanaceae/Datura wrightii, Western Jimson Weed.html",
+   "https://www.extension.arizona.edu/sites/extension.arizona.edu/files/barnesm/SacredDatura.pdf",
+   "https://courses.washington.edu/esrm412/protocols/2026/DAWR2.pdf",
+   "https://w.birdandhike.com/Veg/Species/Forbs-P/Datura_wri/_Dat_wri.htm",
+   "https://www.americansouthwest.net/plants/wildflowers/datura-wrightii.html",
+   "https://www.texasbeyondhistory.net/ethnobot/images/jimsonweed.html",
+   "https://www.nationalgeographic.com/science/2020/11/400-years-ago-visitors-painted-cave-took-hallucinogens/",
+   "https://www.cambridge.org/core/product/BC403850B55D372801DE729BB23EAD7D/core-reader",
+   "https://repository.si.edu/handle/10088/91736"
+  ]
+ }
+}
