@@ -4,6 +4,56 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 65, §FM.1: the boss behaviour pool; the snake plays exactly as before (492ae98)
+Mike, 9 Oct: every boss has *"a group of different behaviors that each boss can cycle through on RNG level"*, so you can never learn it like a script. This pass builds the machinery for that. Nothing of §FM.2 is in it: the snake's four new moves are queue 66.
+
+- **What changes on screen:** nothing yet, on purpose.
+  - The snake now rolls dice to choose what to do next. So far its only move is `rounds`, which is everything it already did: its rounds and coils, noticing you, the hold at your flame, the strike, the light's edge, the tunnels, the pots, the last light.
+  - It walks the very same route as before, frame for frame.
+  - The other bosses' lists are `rounds` alone too, ready for when each is built.
+- **How:**
+  - `BossPool` (`scripts/crawler/boss_pool.gd`, new) reads a boss's list from `data/boss_pool.json → pools.<boss>`.
+    - It draws the next state by weight, and never the same one twice running unless it is the only one that may come (`rule.repeat_gap`).
+    - It rolls dice of its own, not the game seed (`rule.live_rng`; false would seed them from it).
+    - Each state lasts a random time between its two `dwell_s` numbers.
+  - A state is a small script with enter, tick and exit (`BossState`, `scripts/crawler/boss_state.gd`, new), found by its name in `scripts/crawler/boss_states/<name>.gd`.
+    - `rounds.gd` is the first. It runs `Boss.rounds_tick`, which is the boss's built behaviour moved into its own function, not rewritten.
+    - Queue 66 adds the snake's four moves by dropping four files in that folder.
+    - A name in the data with no script (the snake's four, until then) is skipped with one warning in Godot's output, never a crash.
+  - `Boss` asks the pool for the next state when the one in charge ends itself or its time runs out, and only when it is free. The rule always wins (`rule.never_breaks`):
+    - Its own moments are the chase (hunting you, the hold at your flame, the strike, watching from the light's edge), leaving the light, a fire pot, you taken and the last light (`Boss.RULE_MOMENTS`).
+    - When one of them begins, the state in charge is over. The dice wait until it has passed, the strike is done and the snake is out of its tunnels.
+  - A state strikes only with `Boss.begin_strike`, the strike as built: your lit torch holds it off first, then its rear-back and hiss.
+  - A state ends, and the snake leaves as it always has, if you light the room round it or it walks into the light.
+  - A state ends if it keeps the snake still on the way out for half a second (`Boss.EXIT_WAIT_S`). The way out is the flight and landing to the daylight, and 2 m round their doorways. The snake then goes off on its rounds before the next roll.
+  - No number in `bosses.json` changed, and nothing about the strike.
+  - `boss_pool.json`: `_help.about` no longer says NOT WIRED for §FM.1. The mark now sits on `_help.desert` and `_help.camouflage` (§FM.2, queue 66). `_help.rule`, `_help.pools` and `_help.check` say what is built.
+  - `HOW_TO_RUN.md` has three new bullets under the snake.
+- **Checks**, all 0 fails:
+  - `tools/boss_pool_check.gd` (new): 51 lines (on 492ae98).
+    - The draw: a test pool of three states (weights 1, 2, 3) over 200 draws has no fixed order and never the same state twice running. All three are drawn, and their shares are within 0.1 of the weights (0.02 over 20,000).
+    - An unknown name warns once and is skipped.
+    - Same route: the snake from seeds 1, 7 and 42, loose 150 s with two relights round it and a fire pot. Its route is identical frame for frame with no pool at all, with its pool from the file, and with a `rounds`-only pool rolled every 0.1–0.4 s (240–270 rolls).
+    - No roll while it hunts you, holds at your flame, strikes, holds you taken, is driven off by a pot, or goes home at the last light.
+    - A state's strike plays its rear-back and hiss first (0.70 s), and your lit torch's 4 s hold before that.
+    - A state is over on the very tick you light the room round it or it walks into the hearth room.
+    - A state kept still on the way out is over after 0.5 s, and the snake is off the way out before the next roll.
+    - A state that ends itself is followed at once by the next.
+  - `boss_check` 227 (on 492ae98). Its whole output is word for word the same as before this pass, every number in it. It was diffed against two pre-pass runs, which also matched each other.
+  - `crawler_save_check` 39 (queue 63's; it checks the snake down its hole on Continue) and `cleared_check` 90, both on 492ae98.
+  - `crawler_check` (seed 7) 271, `stagger_check` 65, `crawler_harm_check` 59 and `fire_pot_check` 104, all on this pass before it was rebased onto queue 63. Queue 63 touched none of the boss's code but `_start_far`.
+- **For Mike:** to tune later, open `data/boss_pool.json`.
+  - Under `pools → desert`, each move has a `weight`: how often it comes up against the others.
+  - Each move has a `dwell_s` pair: the shortest and longest it lasts, in seconds.
+  - `rule → repeat_gap` 1 means never the same move twice running.
+  - Until queue 66, only `rounds` does anything.
+- **For chat:**
+  - §FM.2's `coil_ambush` (`wind_up_begun_on_turn`) clashes with `rule.never_breaks → torch_hold_holds`. As built, a state's strike waits out your lit torch's hold first, like every strike. Queue 66 or Mike must choose whether the ambush is an exception.
+  - "Never blocks the exit" is built as: a state can't keep the snake still on the way out (the exit flight and landing, and 2 m round their doorways) for over 0.5 s. The spine to the heart isn't counted, so 66's doorway watcher may still sit in a spine doorway. Is that right?
+  - The dice wait out more than the prompt's list (the strike, the last light, a pot): also the whole chase, leaving the light and its tunnels. That way a roll never cuts a chase or a tunnel short.
+  - After a chase the next move is drawn afresh, because the strike and the chase end the state in charge. `_help.rule` already says a strike ends a state.
+  - `CLAUDE.md`'s §FM line still says "not built yet". §FM.1's pool is now built, with only `rounds` in it.
+
 ## 2026-10-09 — Queue 63, §FK.2 and §FK.3: one world per new game — one seed, a save, Continue and New game; one clock (c90ea52)
 Built as queue 63 says, in the crawler only. The open world (Torchfire 2) and its own saves are untouched.
 

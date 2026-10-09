@@ -94,7 +94,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | built 56dc352 |
 | 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | built c90ea52 |
 | 64 | §FL.2 | 480 lines the most | built 596646a, undone by a1e64b3 (720 the most, §FM.11) |
-| 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | todo |
+| 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | built 492ae98 |
 | 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
 | 67 | §FM.6 | The shaman and the cauldron at the hearth | todo |
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | todo |
@@ -1187,7 +1187,7 @@ look.json max_internal_lines is now 480 (was 720). Drop presets above 480 (half_
 
 ## 65 — The boss behaviour pool: every boss draws its moves at random — §FM.1
 
-**Status:** todo
+**Status:** built 492ae98
 **Mike sees:** Nothing yet. A boss now picks what to do next from a list at random, so no boss can be learned like a script. Until the snake gets its new moves (66), every boss plays exactly as it does today.
 
 ```text
