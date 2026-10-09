@@ -4,6 +4,54 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 67, §FM.6: the shaman and the cauldron at the hearth (3485919)
+Mike, 9 Oct (§FM.6, the opening room): one shaman sits at the hearth, *"and now a cauldron hangs over the hearth, from the first moment."* Built as queue 67 says; nothing else from §FM.6 (the floors, the fork, the fog and the room pool are 68–70; the brew is 72).
+
+- **What changes on screen:**
+  - In every tomb an iron cauldron hangs over the hearth's fire, there as soon as the screen fades up and in every tomb the way out takes you to.
+    - A round-bellied pot about half a metre across with a rolled lip, its bottom 44 cm over the floor so the flame licks it. It is empty.
+    - It hangs by a short chain from a tripod of three dark poles lashed together over the fire, their feet on the pit's kerb. One pole stands straight across the fire from your mat, the other two at your sides of the fire, so none stands between you and the flame or the shaman. The bail arches toward your mat.
+    - The fire lights it from below: the sooty belly glows amber, and the rim, the inside and the tops of the poles fall away into the dark, so from the mat it reads as a dark pot against the flame, the flame showing under it.
+    - The poles throw long shadows across the floor; the pot throws none.
+  - The one who found you now reads as the shaman: the same figure, the same slow breath and glances, still silent, and in his right hand a long wooden ladle, leaning out to his side with its bowl up.
+  - Nothing else moved: you wake on the same spot, walk up to the kerb and light your torch at the hearth as before, and the room's light, the creatures' sense of it and the way out are as they were. A fire pot thrown into the pit may now strike the cauldron.
+- **How:**
+  - `HearthCauldron` (`scripts/crawler/hearth_cauldron.gd`, new), built with the tomb right after its fires (`CrawlerMain._load_tomb`, after queue 63's kept holders) and freed with it.
+    - The pot is one lathe, 14 sides, outside and in, with its soot and its occlusion painted into its vertex colours (Prelit, toward navy: the inside and under the lip are darker); lugs, the bail and the chain are thin iron rods; 1,318 triangles in all.
+    - It is drawn in the tomb's own lit material (diffuse only, roughness 1, no normal maps), the iron and the poles alike in its smooth matte. (The timber tile striped the slanting poles in the first look, so they lost it.)
+    - A collision hull round the pot's belly, under its rim, inside the pit's guard: nothing you walk changes, and no line from the hearth's light to the floor past the kerb meets it. The poles and the chain have none (they stand inside the guard too).
+  - The light. The hearth's one light hangs a metre over the floor, a hand above the pot's mouth. In the first walkabout, lit from there, the empty pot glowed from inside like a brazier and blew out to orange. So:
+    - the hearth's light passes the cauldron by: its cull mask leaves out the cauldron's render layer (layer 14) and nothing else, so the room is lit exactly as before;
+    - and a small light in the flame under the pot, `Firelight`, lights the cauldron alone, in the hearth's amber, at `firelight.share` (0.14) of the hearth light's strength every frame, so it flickers and breathes with the fire. It has no shadow and isn't a fire to the game: the light field, the half-dark, the fire shadows and the creatures never see it.
+  - `HearthFolk.hold()`: the ladle, a slim wooden handle with a small bowl on its top, a child of his right forearm through his fist, so it rides his hand and breath. It is painted like him (his shader, his big texels, 16 a metre). Nothing new in the rig, no blocker, no words.
+  - For queue 72 (the brew): `CrawlerMain.cauldron` and `CrawlerMain.shaman()`, the nodes `Cauldron` and `Rescuer`, the group `hearth_cauldron`, `HearthCauldron.mouth()` and `mouth_r()`, `HearthFolk.ladle`.
+  - `crawler.json`: a new `cauldron` block and `_help.cauldron`; `rescuer → holds, ladle` and a sentence on `_help.rescuer`. All first guesses.
+  - `HOW_TO_RUN.md`: two new bullets, the shaman and the cauldron, and the cauldron's check.
+- **Checks**, all 0 fails:
+  - `tools/hearth_cauldron_check.gd` (new; the prompt said `crawler_check`, put in its own file to keep runs short and merges clean): 56 lines, on 3485919.
+    - Over 20 seeds' hearth rooms, built as the game builds them: exactly one shaman and one cauldron within the hearth's reach (its light's 9.1 m); the cauldron over the hearth's middle, its pot under the hearth's light, its collision inside the pit's guard, the tripod's feet on the kerb; the ladle in his right hand.
+    - The wake spot meets neither collision (at least 1.79 m clear of the cauldron, 3.76 m of the shaman).
+    - The usual spot: your body walked from the mat at the fire stops at the guard, 1.21–1.23 m from its middle, never at the cauldron, and the swing from there reaches the flame.
+    - The hearth's light field at 3 m (up to 151 squares), cast with the cauldron and without, the light at rest and at its flicker's eight furthest jitters: unchanged, 0.000% at worst; no square past the kerb changed at all.
+    - In the game (seed 7, then two tombs the way out took me to): the cauldron there before the dark lifts; one shaman and one cauldron in each tomb, the last tomb's gone; you wake on the mat; walking from it at the fire you stop at the guard, take a torch from the bundle and the game's own swing lights it; the residents' light field at 3 m unchanged; the look (above) and the shaman (above) as described; no log line from him; the cauldron empty.
+  - `crawler_check` (seed 7) 271, on this pass rebased onto queue 63. Two lines changed in place: "full dark" counts the cauldron's Firelight with the hearth's light, and the pit's floor ray and the line across the pit at 0.7 m pass the cauldron (the pit and its guard are what they measure).
+  - `crawler_save_check` 39 (queue 63's), also on 63.
+  - On 3485919 (rebased onto queue 65): `stagger_check` 65, `fire_pot_check` 104, `crawler_harm_check` 59, `cleared_check` 90, `residents_check` 176 and `boss_check` 227.
+  - `hands_check` 61, before the rebases.
+  - The walkabout once, `crawler_frames.gd ONLY=cauldron` (seed 7, 27a–27e), 8 lines. From the mat at midnight the cauldron hangs dark in front of the fire, its belly 2.5 times darker than the flame showing under it, the poles framing the fire, the shaman across it with the ladle out to his side, nothing between your eye and him. At noon the shaft's daylight falls on the pot. From the side, the bail, the chain and the lashing read. Down into the pit past it, the fire is still the warm thing in view. From in front of the shaman, the ladle's bowl at its top. The first look's pot was copper-bright and the ladle's bowl, facing the fire, looked like a disc held up beside his head; the colours went darker, the light from below weaker, and the bowl now opens to the sky.
+  - Not re-run: the full `crawler_frames` tour. Its rescuer frames (03a–03e) now have the ladle in them; 27e checks the same view as 03a.
+- **For Mike:** to tune, open `data/crawler.json`.
+  - `cauldron → pot`: `belly_r_m` (its width), `h_m`, `bottom_m` (how high over the floor it hangs), `mouth_r_m`, `lip_m`.
+  - `cauldron → tripod`: `apex_m` (how high the poles cross), `pole_r_m` (how thick), `past_apex_m`. `cauldron → chain → link_m`.
+  - `cauldron → colors`: `iron`, `soot`, `pole`, `pole_soot`, `cord`.
+  - `cauldron → firelight → share`: how strongly the fire lights it from below (0.14; higher is brighter).
+  - `rescuer → ladle`: its length, its bowl, `out_deg` and `fwd_deg` (how it leans), `bowl_tilt_deg`, `color`; `rescuer → holds` set to `""` takes the ladle away.
+- **For chat:**
+  - The live amber is the hearth's colour and flicker on a light of the cauldron's own, in the flame under it; the hearth's own light leaves the cauldron out. That was the only way I found to light an empty pot hung a hand under the light without it glowing from inside. Mike may want the hearth's light moved down, which queue 67 forbade (the light field).
+  - Iron was my call (§FL.1). The tomb is still Andean, and FM.10 call 1 (Aztec world against the tomb) is open; clay over three hearthstones would be the Mesoamerican way, if Mike wants it.
+  - The ladle is a new prop, cut like the fire circle's stick and bowl. §FM.6 has no ladle, only "a shaman".
+  - CLAUDE.md's §FM line still says "not built yet". The shaman and the cauldron are now built.
+
 ## 2026-10-09 — Queue 65, §FM.1: the boss behaviour pool; the snake plays exactly as before (492ae98)
 Mike, 9 Oct: every boss has *"a group of different behaviors that each boss can cycle through on RNG level"*, so you can never learn it like a script. This pass builds the machinery for that. Nothing of §FM.2 is in it: the snake's four new moves are queue 66.
 

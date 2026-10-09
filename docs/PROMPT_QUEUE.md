@@ -96,7 +96,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 64 | §FL.2 | 480 lines the most | built 596646a, undone by a1e64b3 (720 the most, §FM.11) |
 | 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | built 492ae98 |
 | 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
-| 67 | §FM.6 | The shaman and the cauldron at the hearth | todo |
+| 67 | §FM.6 | The shaman and the cauldron at the hearth | built 3485919 |
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | todo |
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | todo |
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
@@ -1217,7 +1217,7 @@ CHECK (headless): over 300 draws all four new states and 'rounds' are entered; t
 
 ## 67 — The shaman and the cauldron at the hearth — §FM.6
 
-**Status:** todo
+**Status:** built 3485919
 **Mike sees:** You wake at the hearth with the shaman sitting across the fire, and a cauldron hangs over the flame. It is there from the first moment in every dungeon.
 
 ```text
