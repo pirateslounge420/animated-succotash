@@ -5,7 +5,8 @@ extends SceneTree
 ##   SEED=7 xvfb-run -a -s "-screen 0 1280x720x24" ~/bin/godot --path . \
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
 ## ONLY=skeleton renders just the skeletons' sheet and frames; ONLY=cleared
-## just the last light's (26-26d). The snake (queue 49) is held still for
+## just the last light's (26-26d); ONLY=cauldron just the cauldron over the
+## hearth and the shaman with his ladle (27a-27e; §FM.6, queue 67). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1121,6 +1122,14 @@ func _run() -> void:
 		await _cleared(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "cauldron":
+		# Just the cauldron over the hearth and the shaman across it (design
+		# §FM.6, queue 67; 27a-27e).
+		await _frames(30)
+		main.player.set_physics_process(false)
+		await _cauldron(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -1568,6 +1577,99 @@ func _run() -> void:
 	# Last: clearing the floor sends every skeleton away for good.
 	await _cleared(main)
 	_finish(keep)
+
+
+## The cauldron over the hearth and the shaman across it (design §FM.6,
+## queue 67; ONLY=cauldron): waking on the mat at midnight and at noon
+## (27a, 27b), the cauldron from the side (27c), down into the pit past it
+## (27d), the shaman with his ladle from in front of him past the fire
+## (27e). Checks: waking, the fire still the warm accent and the dark navy,
+## the crosshair readable where it sits; the cauldron reads against the
+## flame (its upper belly darker than the flame showing under it, the
+## flame warm); the shaman across the fire in plain view (nothing between
+## your eye and his chest); the pit's fire still warm past the cauldron;
+## his ladle on screen and his chest lit amber from the fire.
+func _cauldron(main: CrawlerMain) -> void:
+	var p := main.player
+	var world: Node = main.world
+	var c := main.cauldron
+	var r := main.shaman()
+	var cam := get_root().get_camera_3d()
+	var vs := get_root().get_visible_rect().size
+	var w: Array = main.lay.wake
+	var hp: Vector3 = main.lay.hearth
+	ok(c != null and r != null, "the cauldron over the hearth and the shaman across it are there")
+	if c == null or r == null:
+		return
+	var keep_days := float(world.get("days"))
+	world.days = 13.0
+	p.spawn_flat(w[0], float(w[1]), -0.32)
+	await _frames(12)
+	var img := await _shot("27a_cauldron_wake_night")
+	var st := _stats(img)
+	var d: Color = st.dark
+	ok(float(st.warm) > 0.002 and d.b >= d.r and d.b >= d.g * 0.9, "waking at midnight: the hearth still the warm accent (%.3f of the frame), the dark navy (#%s)" % [st.warm, d.to_html(false)])
+	var rc := _reticle_read(img)
+	_say_cross("waking by the cauldron", rc)
+	ok(float(rc.edge_cr) >= 3.0, "the crosshair readable where it sits by the cauldron: its arms %.1f:1 against their dark edge" % float(rc.edge_cr))
+	# The cauldron against the flame: its upper belly against the flame
+	# showing under it.
+	var belly := cam.unproject_position(c.to_global(Vector3(0.0, c.bottom_y + (c.mouth_y - c.bottom_y) * 0.62, 0.0))) / vs
+	var flame := cam.unproject_position(hp + Vector3(0.0, c.bottom_y - 0.16, 0.0)) / vs
+	var pb := _patch(img, belly.x - 0.01, belly.y - 0.012, belly.x + 0.01, belly.y + 0.012)
+	var pf := _patch(img, flame.x - 0.008, flame.y - 0.01, flame.x + 0.008, flame.y + 0.01)
+	var fc: Color = pf.color
+	print("  the cauldron's belly #%s (luma %.3f) over the flame under it #%s (luma %.3f)" % [(pb.color as Color).to_html(false), pb.luma, fc.to_html(false), pf.luma])
+	ok(float(pf.luma) > float(pb.luma) * 1.6 and fc.r > fc.b * 1.5, "the cauldron reads against the flame: its belly dark (luma %.3f) over the flame showing under it, warm and %.1fx as bright" % [pb.luma, float(pf.luma) / maxf(float(pb.luma), 0.001)])
+	# The shaman across the fire, in plain view.
+	var chest := r.global_position + Vector3(0.0, 0.78, 0.0)
+	var cp := cam.unproject_position(chest) / vs
+	var q := PhysicsRayQueryParameters3D.create(cam.global_position, chest, PropCollision.WORLD_LAYER)
+	q.exclude = [p.get_rid()]
+	var hit := cam.get_world_3d().direct_space_state.intersect_ray(q)
+	var seen := not hit.is_empty() and Hitboxes.creature_of(hit.collider) == r
+	ok(seen and cp.x > 0.05 and cp.x < 0.95 and cp.y > 0.05 and cp.y < 0.95 and not cam.is_position_behind(chest), "the shaman sits across the fire in view from the mat, nothing between your eye and him (on screen at %.2f, %.2f)" % [cp.x, cp.y])
+	world.days = 13.5
+	await _frames(8)
+	await _shot("27b_cauldron_wake_noon")
+	# From the side, a step back from the kerb, at night.
+	world.days = 13.0
+	var wv := Vector3((w[0] as Vector3).x - hp.x, 0.0, (w[0] as Vector3).z - hp.z).normalized()
+	var side := wv.cross(Vector3.UP).normalized()
+	var at_side := hp + (side * 0.8 + wv * 0.6).normalized() * 1.7
+	var look_at := hp + Vector3(0.0, 0.7, 0.0)
+	var to_c := look_at - (at_side + Vector3(0.0, PlanetPlayer.EYE_Y, 0.0))
+	p.spawn_flat(at_side, atan2(-to_c.x, -to_c.z), atan2(to_c.y, Vector2(to_c.x, to_c.z).length()))
+	await _frames(10)
+	var side_img := await _shot("27c_cauldron_side")
+	ok(float(_stats(side_img).warm) > 0.01, "from the side, the fire under the cauldron warm in view (%.3f of the frame)" % float(_stats(side_img).warm))
+	# Down into the pit from its kerb, past the cauldron (01i's view).
+	var at_pit := hp + wv * 1.45
+	var to_pit := hp - Vector3(0.0, 0.2, 0.0) - (at_pit + Vector3(0.0, 1.26, 0.0))
+	p.spawn_flat(at_pit, atan2(-to_pit.x, -to_pit.z), atan2(to_pit.y, Vector2(to_pit.x, to_pit.z).length()))
+	await _frames(8)
+	var pit_st := _stats(await _shot("27d_cauldron_pit"))
+	ok(float(pit_st.warm) > 0.05, "down into the hearth's pit past the cauldron at night: its fire still warm in view (%.3f of the frame)" % float(pit_st.warm))
+	# The shaman from in front of him, past the fire (03a's view): his ladle.
+	var foot := r.global_position
+	var front := r.front()
+	var right := front.cross(Vector3.UP)
+	var hr: Dictionary = main.lay.pieces[0]
+	var dir := front * cos(0.45) + right * sin(0.45)
+	var dist := 2.6
+	while dist > 1.0 and not _in_room(hr, foot + dir * dist, 0.6):
+		dist -= 0.1
+	var at3: Vector3 = foot + dir * dist
+	p.spawn_flat(Vector3(at3.x, 0.0, at3.z), atan2(dir.x, dir.z), -0.28)
+	await _frames(12)
+	var img3 := await _shot("27e_shaman_ladle")
+	var top := cam.unproject_position(r.ladle.global_transform * Vector3(0.0, 0.7, 0.0)) / vs
+	var c3 := cam.unproject_position(foot + Vector3(0.0, 0.78, 0.0)) / vs
+	var chest3 := _patch(img3, c3.x - 0.012, c3.y - 0.03, c3.x + 0.012, c3.y + 0.03)
+	var cc: Color = chest3.color
+	print("  the shaman from in front (%.1f m): his chest #%s (luma %.3f); his ladle's top on screen at %.2f, %.2f" % [dist, cc.to_html(false), chest3.luma, top.x, top.y])
+	ok(top.x > 0.02 and top.x < 0.98 and top.y > 0.02 and top.y < 0.98 and cc.r > cc.b, "from in front of him past the fire: his ladle on screen, his chest lit amber by the fire (#%s)" % cc.to_html(false))
+	world.days = keep_days
 
 
 ## The player's own settings back and the run's controls file gone; the

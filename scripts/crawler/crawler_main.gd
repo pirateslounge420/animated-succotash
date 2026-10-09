@@ -23,7 +23,9 @@ extends Node
 ##      Airways), and F to smother it yourself (§FC.3, Torch.douse).
 ##   5. the one who found you, sitting at the hearth: the shared rig live
 ##      in 3D (§FH, HearthFolk; amends §ET.8 for folk, whose baked sprites,
-##      FigureSprite, stay for creatures and bosses).
+##      FigureSprite, stay for creatures and bosses); since §FM.6 (queue 67)
+##      the shaman, a long ladle in his hand, and a cauldron hanging over the
+##      hearth from a tripod (HearthCauldron), from the first moment.
 ##   6. atmosphere, never a puzzle (§FG): glow-moss on damp stone that
 ##      dims when a flame comes near (GlowMoss), beetles and scarabs on
 ##      the walls that scatter from the light into the joints (WallLife),
@@ -103,6 +105,9 @@ var player: CrawlerPlayer
 ## The dark you can half see in (§FC.4).
 var half_dark: HalfDark
 var rescuer: HearthFolk
+## The cauldron over the hearth (design §FM.6, HearthCauldron; the node
+## "Cauldron").
+var cauldron: HearthCauldron
 ## What lives in the dark below the boss (§FE): the tomb's skeletons.
 var residents: Residents
 var post: PostGrade
@@ -212,6 +217,8 @@ func _load_tomb(s: int, at := 0) -> void:
 	# Kept in this game (§FK.2): the holders you relit here burn again as
 	# you left them, before anything that reads the light is built.
 	var kept_lit := CrawlerSave.relight(fires, CrawlerSave.enter(at, lay))
+	# The cauldron over the hearth, from the first moment (§FM.6).
+	cauldron = HearthCauldron.make(self, lay, fires.hearth)
 	# Every permanent fire's vent (the vents rule): its daylight, soot and
 	# draft.
 	vents = Vents.new()
@@ -278,13 +285,14 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, boss]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
 		remove_child(node)
 		NodeRelease.free_later(node)
 	rescuer = null
+	cauldron = null
 	boss = null
 	baked = false
 	TorchSnuff.drafts = null
@@ -503,6 +511,13 @@ func _ui() -> void:
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(_fade)
+
+
+## The shaman at the hearth (design §FM.6): the one who found you, the
+## ladle in his hand (HearthFolk.ladle); null between tombs. His cauldron
+## is `cauldron`.
+func shaman() -> HearthFolk:
+	return rescuer
 
 
 ## The one who found you (§ET.3), sitting across the hearth on a low

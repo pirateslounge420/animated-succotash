@@ -1109,7 +1109,9 @@ func _lights_on(main: CrawlerMain) -> int:
 	var n := 0
 	for l in main.find_children("*", "OmniLight3D", true, false):
 		var o := l as OmniLight3D
-		if o.is_visible_in_tree() and o.light_energy > 0.01:
+		# (The cauldron's Firelight is the hearth's own light on its belly,
+		# lighting nothing but the cauldron: counted with the hearth, §FM.6.)
+		if o.is_visible_in_tree() and o.light_energy > 0.01 and not HearthCauldron.is_firelight(o):
 			n += 1
 	return n
 
@@ -1822,9 +1824,13 @@ func _hearth_pit(main: CrawlerMain) -> void:
 	var lt := fire.get_node_or_null("Light") as Node3D
 	ok(lt != null and absf(lt.global_position.y - (hp.y + 1.0)) < 0.15, "its light hangs where it did, about 1 m over the room's floor (y %.2f), so the room is lit as before" % (lt.global_position.y if lt else -99.0))
 	var ex: Array[RID] = [main.player.get_rid()]
-	# (Not the fire's own logs and its hidden ring, which lie in the pit.)
+	# (Not the fire's own logs and its hidden ring, which lie in the pit,
+	# nor the cauldron hanging over it, §FM.6: the pit and its guard are
+	# what's measured.)
 	for b in fire.find_children("*", "CollisionObject3D", true, false):
 		ex.append((b as CollisionObject3D).get_rid())
+	if main.cauldron != null:
+		ex.append(main.cauldron.collision.get_rid())
 	# The pit's floor at its foot, the room's floor round it.
 	var hit_in := _ray(hp + Vector3(0.12, 1.5, 0.08), hp + Vector3(0.12, -2.0, 0.08), ex)
 	var y_in: float = (hit_in.position as Vector3).y if not hit_in.is_empty() else 99.0
@@ -1848,7 +1854,7 @@ func _hearth_pit(main: CrawlerMain) -> void:
 		if not over.is_empty() and Vector2((over.position as Vector3).x - hp.x, (over.position as Vector3).z - hp.z).length() < outer + 0.3:
 			guard_ok = false
 			print("  across the pit at 0.7 m: met %s at %s" % [str(over.get("collider")), str(over.position)])
-	ok(guard_ok and float(pt.guard) < 0.78, "a guard round its lip keeps you out of the fire (met %.2f m from its middle all round) and passes under every eye (%.2f m up; a line across it at 0.7 m meets nothing)" % [guard_far, float(pt.guard)])
+	ok(guard_ok and float(pt.guard) < 0.78, "a guard round its lip keeps you out of the fire (met %.2f m from its middle all round) and passes under every eye (%.2f m up; a line across it at 0.7 m meets nothing but the cauldron hanging over it)" % [guard_far, float(pt.guard)])
 	# The flags cut round it: no stone at the floor's height inside its lip.
 	var inside := 0
 	var lip := a - TombBuild.PIT_LIP_M - 0.03
