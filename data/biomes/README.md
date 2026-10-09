@@ -56,6 +56,8 @@ Shapes: `conifer`, `broadleaf`, `gnarled`, `emergent`, `umbrella`, `palm`,
 `grass`, `reed`, `fern`, `tree_fern`, `cactus`, `cushion`, `moss`,
 `hanging_moss`, `epiphyte_clump`, `liana`, `knees`, `thermophile_mat`,
 `bamboo` (a clump of culms; works from dwarf 1 m bamboo to 30 m giants).
+`mushroom` (design §FM.13): three caps on stalks, drawn from the entry's
+own `appearance.cap`, `underside` and `stipe` (scripts/ecology/mushroom_mesh.gd).
 These are low-poly placeholders; real models replace them later.
 
 ## Biome file fields

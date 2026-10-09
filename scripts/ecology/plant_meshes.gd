@@ -304,7 +304,7 @@ static func climbable(shape: int) -> bool:
 ## its layouts (hero and near levels only; -1, and every far mesh, is the
 ## old single-crown tree).
 static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> ArrayMesh:
-	var idx := SpeciesDB.index_of(sp)
+	var idx := _key_of(sp)
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
 	# Young layouts (TreeLayouts slots) have the near level only: slim
@@ -361,7 +361,7 @@ static func warm(species_indices: Array) -> void:
 
 ## A species' mesh arrays (thread-safe; built once and shared).
 static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array:
-	var idx := SpeciesDB.index_of(sp)
+	var idx := _key_of(sp)
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
 	if layout >= TreeLayouts.COUNT or (lod == LOD_LIGHT and layout < 0):
@@ -375,7 +375,7 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	var built: Array
 	if layout >= 0:
 		built = _build_layout(sp, idx, lod, layout)
-	elif lod == LOD_FAR and IMPOSTORS:
+	elif lod == LOD_FAR and IMPOSTORS and not own_far(sp):
 		built = _build_impostor(sp, idx)
 	else:
 		built = _build(sp, idx, lod)
@@ -385,6 +385,23 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	var out: Array = _arrays[key]
 	_mutex.unlock()
 	return out
+
+
+## A species' number in the mesh caches: its SpeciesDB index, or for a
+## species built from an entry outside the loaded set
+## (SpeciesDB.species_from_entry, design §FM.13) a negative number of its
+## own, so two of those never share a mesh.
+static func _key_of(sp: PlantSpecies) -> int:
+	var idx := SpeciesDB.index_of(sp)
+	return idx if idx >= 0 else -2 - (hash(sp.name) & 0x3FFFFFFF)
+
+
+## Shapes whose far level is their own far model, never the one-quad
+## picture (_build_impostor): the picture is cut from a crown's outline,
+## four widths up a crown that closes to a point, which would lose a
+## mushroom's cap on its stalk (design §FM.13: the far level keeps it).
+static func own_far(sp: PlantSpecies) -> bool:
+	return sp.shape == S.MUSHROOM
 
 
 ## The young layouts (TreeLayouts slots) a chunk's trees grow, ahead of
@@ -1095,6 +1112,9 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 			b.disc(Vector3(0, 0.7, 0), 22.0, 0.6, 9, wood, 0.0)
 		S.BAMBOO:
 			b.bamboo(wood, leaf)
+		S.MUSHROOM:
+			# Caps on stalks from the entry's appearance (design §FM.13).
+			MushroomMesh.build(b, sp, far)
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
 	return b.commit_arrays()
@@ -1105,7 +1125,7 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor; -1 a fungus's flesh, MushroomMesh: bark's rules, its own colour)
 	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
 	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
@@ -1990,10 +2010,11 @@ class _Builder:
 	func commit_arrays() -> Array:
 		# Baked ambient occlusion: the base of each plant (trunk foot, grass
 		# roots) is darker, the way it would be in its own shadow. Hanging
-		# plants grow down from their origin (y < 0) and are left alone.
+		# plants grow down from their origin (y < 0) and are left alone; a
+		# fungus's flesh (UV2.x -1) has its own, toward navy (MushroomMesh).
 		for i in v.size():
 			var y := v[i].y
-			if y >= 0.0 and y < 0.14:
+			if y >= 0.0 and y < 0.14 and uv2[i].x > -0.5:
 				var k := lerpf(0.58, 1.0, smoothstep(0.0, 0.14, y))
 				c[i] = Color(c[i].r * k, c[i].g * k, c[i].b * k, c[i].a)
 		_smooth()

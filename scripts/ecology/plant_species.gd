@@ -9,11 +9,16 @@ extends RefCounted
 enum Tier { EMERGENT, CANOPY, SHRUB, GROUND, EPIPHYTE }
 
 ## Placeholder silhouettes, built by PlantMeshes. Real models replace these.
+## An entry's `shape` string is the name in lower case ("mushroom").
+## MUSHROOM (design §FM.13, queue 75): caps on stalks, a few fruit bodies
+## to a plant, drawn from the entry's appearance.cap / underside / stipe
+## (MushroomMesh).
 enum Shape {
 	CONIFER, BROADLEAF, GNARLED, EMERGENT, UMBRELLA, PALM, CYPRESS, MANGROVE,
 	ROSETTE, SPIKE_ROSETTE, SHRUB, TUSSOCK, GRASS, REED, FERN, TREE_FERN,
 	CACTUS, CUSHION, MOSS, HANGING_MOSS, EPIPHYTE_CLUMP, LIANA, KNEES, THERMOPHILE_MAT,
 	BAMBOO,
+	MUSHROOM,
 }
 
 ## Special conditions (optional).
@@ -136,6 +141,11 @@ var cycle := {}
 ## `appearance.flower` block (spadix colour...), for the bloom's parts.
 var aroid := {}
 var flower := {}
+## The entry's whole `appearance` block (the modeller's targets: a
+## fungus's cap, underside and stipe, its habit and notes...), for the
+## builders that draw from it (MushroomMesh, design §FM.13); empty when
+## the entry has none.
+var appearance := {}
 ## A fungus's `fungus` block (substrate, fruit_season...): LitterField
 ## fruits the "litter" ones. Read from whichever file lists it (design
 ## §CC folded the fungi catalogue into the biome files).

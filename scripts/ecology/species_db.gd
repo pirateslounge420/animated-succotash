@@ -31,6 +31,9 @@ const DATA_DIR := "res://data/biomes"
 const CATALOGUE_DIR := "res://data/plants"
 ## The per-species tiles' index (design §AH).
 const ATLAS_PATH := "res://assets/textures/plants/species/atlas_species.json"
+## The sacred plants of the ruins (design §FM.9): never loaded here, only
+## read an entry at a time (species_in_file()).
+const SACRED_PATH := "res://data/sacred/sacred_plants.json"
 ## The realm of a catalogue entry that has none yet: no place has it.
 const UNASSIGNED := "unassigned"
 ## A catalogue entry with no `biomes` list (design §CA): listed nowhere.
@@ -378,7 +381,9 @@ static func biome_hosts(id: int, realm: String) -> bool:
 	return rs.has(realm) or rs.has("any")
 
 
-static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: String, by_name: Dictionary) -> void:
+## `register` false builds the record without adding it to the loaded
+## species (species_from_entry()).
+static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: String, by_name: Dictionary, register := true) -> void:
 	var p_name: String = e.name
 	var t := _range(e.get("temp_c", climate.get("temp_c")), Vector2(-50, 50))
 	var m := _range(e.get("moisture", climate.get("moisture")), Vector2(0, 1))
@@ -497,6 +502,7 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	if pet is Dictionary and str(pet.get("base", "")).begins_with("#"):
 		sp.petiole_color = Color.from_string(str(pet.get("base")), Color(0, 0, 0, 0))
 	sp.flower = fl if fl is Dictionary else {}
+	sp.appearance = app if app is Dictionary else {}
 	var gn = e.get("genes", {})
 	sp.gene_ranges = gn if gn is Dictionary else {}
 	var rp = e.get("repro", {})
@@ -510,10 +516,65 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	var fu = e.get("fungus", {})
 	sp.fungus = fu if fu is Dictionary else {}
 	by_name[p_name] = sp
-	_all.append(sp)
+	if register:
+		_all.append(sp)
 
 
 static func _range(v, fallback: Vector2) -> Vector2:
 	if typeof(v) == TYPE_ARRAY and v.size() == 2:
 		return Vector2(float(v[0]), float(v[1]))
 	return fallback
+
+
+## One entry built as the loader builds a catalogue entry (_add_entry: its
+## shape, size, colours, leaf, canopy, appearance...; its realm and biomes;
+## PlantGenetics' and PlantGrowth's numbers), WITHOUT adding it to the
+## loaded species (design §FM.13): an entry of a file SpeciesDB doesn't
+## load (data/sacred) can be drawn and checked while the open world and
+## the §CC trim stay as they are. It has no index (index_of() is -1).
+## `tier`: a PlantSpecies.Tier. Main thread.
+static func species_from_entry(e: Dictionary, tier: int, path := "") -> PlantSpecies:
+	if not e.has("name"):
+		return null
+	var by_name := {}
+	_add_entry(e, tier, {}, path, by_name, false)
+	var sp: PlantSpecies = by_name[e.name]
+	sp.from_catalogue = true
+	# Its realm and biomes as _load_catalogue gives them (none: unassigned,
+	# unlisted).
+	var realms := _realm_list(e.get("realm", ""))
+	for r in realms:
+		if r != "any" and not sp.realms.has(r):
+			sp.realms.append(r)
+	if realms.is_empty():
+		sp.realms.append(UNASSIGNED)
+	var listed: Array = e.get("biomes", []) if e.get("biomes") is Array else []
+	for b in listed:
+		_list_in(sp, BiomeTemplates.id_of_key(str(b)))
+	if listed.is_empty() and bool(HAB.get("catalogue_needs_biomes", true)):
+		sp.biomes.append(UNLISTED)
+	var one: Array[PlantSpecies] = [sp]
+	PlantGenetics.setup(one)
+	PlantGrowth.setup(one)
+	return sp
+
+
+## The entry with this `id` (or this name) in a catalogue-format file
+## (plants by tier) that SpeciesDB doesn't load, built by
+## species_from_entry(); null if the file has none. The sacred plants
+## (design §FM.9): species_in_file(SACRED_PATH, "teonanacatl").
+static func species_in_file(path: String, id: String) -> PlantSpecies:
+	var doc = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+	if not doc is Dictionary:
+		push_warning("SpeciesDB: %s is missing or not valid JSON" % path)
+		return null
+	var plants = doc.get("plants", {})
+	if not plants is Dictionary:
+		return null
+	for tier_name in plants:
+		if not TIER_NAMES.has(tier_name) or not plants[tier_name] is Array:
+			continue
+		for e in plants[tier_name]:
+			if e is Dictionary and (str(e.get("id", "")) == id or str(e.get("name", "")) == id):
+				return species_from_entry(e, TIER_NAMES[tier_name], path)
+	return null

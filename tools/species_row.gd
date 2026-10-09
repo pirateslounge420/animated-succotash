@@ -35,6 +35,14 @@ extends SceneTree
 ## below through the gaps). ANCHORS=1 marks every leaf-cluster anchor
 ## with a magenta dot (with BARE=1: the §AL debug view, every dot on a
 ## twig).
+## Small plants (design §FM.13, queue 75): a name "sacred:<id>" stands an
+## entry of data/sacred in the row, built from its entry and never loaded
+## (SpeciesDB.species_in_file); HEIGHT_M=mid draws each at the middle of
+## its own height_m; EYE_M (default 1.7) is the camera's height; GRASS=
+## <name> sows GRASS_N (default 160) of that species round the row, within
+## GRASS_M (default 1.2) m. The mushrooms in grass, at about 64 px:
+##   SPECIES="Fly agaric,sacred:teonanacatl" HEIGHT_M=mid SPACING=0.3 \
+##     DIST=0.75 EYE_M=0.3 LOOK_H=0.5 GRASS=Buffalograss TAG=mushrooms
 
 var out_dir := "/tmp/shots"
 
@@ -92,8 +100,9 @@ func _run() -> void:
 		_hide_vegetation(get_root())
 		main.leaf_season.only_extra = true
 	var trees: Array[Node3D] = []
+	var tallest := 0.0
 	for i in names.size():
-		var sp := SpeciesDB.find(names[i].strip_edges())
+		var sp := _species(names[i].strip_edges())
 		if sp == null:
 			print("[species] no species named '%s'" % names[i])
 			continue
@@ -101,8 +110,11 @@ func _run() -> void:
 		var h := height
 		if height_env == "auto":
 			h = clampf((sp.height_m.x + sp.height_m.y) * 0.5 * 0.6, 8.0, 22.0)
+		elif height_env == "mid":
+			h = (sp.height_m.x + sp.height_m.y) * 0.5
+		tallest = maxf(tallest, h)
 		var d := (row_d + e * off / PlanetConst.RADIUS_M).normalized()
-		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - 0.1)
+		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - minf(0.1, h * 0.1))
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.use_custom_data = true
@@ -120,7 +132,10 @@ func _run() -> void:
 		get_root().add_child(mmi)
 		mmi.global_position = at
 		trees.append(mmi)
-		main.leaf_season.extra.append([at, h, SpeciesDB.index_of(sp)])
+		# Only a loaded species with a leaf tile sheds (as LeafSeason's own
+		# scan; a data/sacred entry has no index).
+		if SpeciesDB.index_of(sp) >= 0 and sp.tiles.has("leaf"):
+			main.leaf_season.extra.append([at, h, SpeciesDB.index_of(sp)])
 		if OS.get_environment("BARE") == "1":
 			var bare_m := (mmi.material_override as ShaderMaterial).duplicate() as ShaderMaterial
 			bare_m.set_shader_parameter("leaf_season", 0.0)
@@ -129,9 +144,13 @@ func _run() -> void:
 			_mark_anchors(sp, at, b, maxi(layout, 0))
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
 	main.leaf_season._scan_t = 0.0 # take the row now
-	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + 1.7)
+	if OS.get_environment("GRASS") != "":
+		_sow_grass(world, main, row_d, n, e, names.size(), spacing)
+	var eye_m := float(OS.get_environment("EYE_M")) if OS.get_environment("EYE_M") != "" else 1.7
+	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + eye_m)
 	var look_h := float(OS.get_environment("LOOK_H")) if OS.get_environment("LOOK_H") != "" else 0.45
-	var mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + height * look_h)
+	var aim_h := tallest if height_env == "mid" else height
+	var mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + aim_h * look_h)
 	var cam := Camera3D.new()
 	cam.fov = 70.0
 	cam.near = 0.1
@@ -146,7 +165,7 @@ func _run() -> void:
 	var first_at: Vector3 = trees[0].global_position if not trees.is_empty() else mid
 	var first_d := (row_d + e * (-(names.size() - 1) * 0.5 * spacing) / PlanetConst.RADIUS_M).normalized()
 	var first_h := height
-	var first_sp := SpeciesDB.find(names[0].strip_edges())
+	var first_sp := _species(names[0].strip_edges())
 	if height_env == "auto" and first_sp:
 		first_h = clampf((first_sp.height_m.x + first_sp.height_m.y) * 0.5 * 0.6, 8.0, 22.0)
 	var perch_at := Vector3.INF
@@ -317,3 +336,64 @@ func _mark_anchors(sp: PlantSpecies, at: Vector3, basis: Basis, layout: int) -> 
 	get_root().add_child(mi)
 	mi.global_position = at
 	print("[species] %s: %d anchors marked" % [sp.name, sk.anchors.size()])
+
+
+## A row plant by name; "sacred:<id>" builds that entry of data/sacred
+## (design §FM.13: from its entry, never loaded; SpeciesDB.species_in_file).
+func _species(p_name: String) -> PlantSpecies:
+	if p_name.begins_with("sacred:"):
+		return SpeciesDB.species_in_file(SpeciesDB.SACRED_PATH, p_name.trim_prefix("sacred:"))
+	return SpeciesDB.find(p_name)
+
+
+## GRASS=<name>: GRASS_N plants of that species at its own heights, turned
+## at random (seeded), sown within GRASS_M m round the row (`count` plants
+## `spacing` m apart along `e`, the camera off to the south, -`n`), clear
+## of the row's plants by 6 cm and no more than 25 cm toward the camera, so
+## the row stands in it and still shows; its hero mesh in one MultiMesh, in
+## the class textures (PlantMeshes.material(): a grass's own leaf tile cuts
+## its blades, a few millimetres wide, to nothing this close).
+func _sow_grass(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3, count: int, spacing: float) -> void:
+	var gsp := SpeciesDB.find(OS.get_environment("GRASS"))
+	if gsp == null:
+		print("[species] no grass named '%s'" % OS.get_environment("GRASS"))
+		return
+	var total := int(OS.get_environment("GRASS_N")) if OS.get_environment("GRASS_N") != "" else 160
+	var reach := float(OS.get_environment("GRASS_M")) if OS.get_environment("GRASS_M") != "" else 1.2
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 75
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_custom_data = true
+	mm.use_colors = true
+	mm.mesh = PlantMeshes.mesh_for(gsp, PlantMeshes.LOD_HERO)
+	mm.instance_count = total
+	var root: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d))
+	var placed := 0
+	var tries := 0
+	while placed < total and tries < total * 20:
+		tries += 1
+		var dx := rng.randf_range(-reach, reach)
+		var dz := rng.randf_range(-0.25, reach)
+		var clear := true
+		for k in count:
+			if Vector2(dx - (float(k) - (count - 1) * 0.5) * spacing, dz).length() < 0.06:
+				clear = false
+		if not clear:
+			continue
+		var d := (row_d + (e * dx + n * dz) / PlanetConst.RADIUS_M).normalized()
+		var h := rng.randf_range(gsp.height_m.x, gsp.height_m.y)
+		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - minf(0.1, h * 0.1))
+		var b := Basis(e, d, e.cross(d)).orthonormalized().rotated(d, rng.randf() * TAU).scaled(Vector3.ONE * h)
+		mm.set_instance_transform(placed, Transform3D(b, at - root))
+		mm.set_instance_color(placed, Color.WHITE)
+		mm.set_instance_custom_data(placed, Color(0, 0, 0, 0))
+		placed += 1
+	mm.visible_instance_count = placed
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = mm
+	mmi.material_override = PlantMeshes.material()
+	mmi.name = "Row_grass"
+	get_root().add_child(mmi)
+	mmi.global_position = root
+	print("[species] %d %s sown round the row" % [placed, gsp.name])

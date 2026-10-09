@@ -581,7 +581,7 @@
     "origin": "Highlands of Mexico and Guatemala",
     "kingdom": "Fungi",
     "family": "Hymenogastraceae",
-    "shape": "rosette",
+    "shape": "mushroom",
     "temp_c": [
      12,
      26
@@ -1929,7 +1929,8 @@
    "Ruin 'maya' rests on the weakest evidence: documented use is Aztec (central Mexico) and Mazatec (Oaxaca); Maya use is only reported (Guatemalan mushroom stones, debated). The rite sentence says so.",
    "Conservation: no IUCN assessment found (only proposals on the fungal red-list portal). Chacruna's table lists it under Mexico's NOM-059 as 'A' (threatened); not verified, so left out of the block.",
    "fungus.edible set to 'no' (psychoactive, not food); the vocabulary has no psychoactive value.",
-   "Claude (chat), 9 Oct: the 1000-1800 m band is the brief's; no source opened gives it directly (Guzman 1983 is the place to check). Treat as estimated."
+   "Claude (chat), 9 Oct: the 1000-1800 m band is the brief's; no source opened gives it directly (Guzman 1983 is the place to check). Treat as estimated.",
+   "Claude Code, 9 Oct (queue 75, §FM.13): the engine has the MUSHROOM shape now (scripts/ecology/mushroom_mesh.gd) and this entry's shape is 'mushroom', so the first flag's rosette stand-in is gone. data/sacred is still not loaded; tools/mushroom_check.gd builds this entry straight from the file (SpeciesDB.species_in_file)."
   ],
   "coca": [
    "Wild status: Var. coca is known almost only in cultivation. Plowman reported feral or wild-looking stands in Peruvian and Bolivian montane forest, but White et al. 2020 (museum genomics) derive all cultivated cocas from the wild E. gracilipes and found no confirmed wild var. coca. The biomes and altitude gate the plant to the habitat it is grown in and escapes into (humid yungas montane forest, about 500-2000 m), not to a proven wild range.",

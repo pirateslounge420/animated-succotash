@@ -24,7 +24,10 @@
 // far cards, inside the ragged cluster outline. sp_autumn blends the leaf
 // toward its autumn leaf and the mass by the same share (§AI). The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm,
-// 5 a branchy tree's leaf-cluster card, 6 a far tree's picture); card UVs
+// 5 a branchy tree's leaf-cluster card, 6 a far tree's picture, -1 a
+// fungus's flesh: MushroomMesh, design §FM.13, bark's rules (closed, lit
+// outward, cast from its far faces) in its own painted colour, with no
+// bark tile, no pull toward the bark brown by day and no moss); card UVs
 // are in UV.
 //
 // Far trees as 2D (from play; PlantMeshes._build_impostor, UV2.x 6): one
@@ -626,6 +629,8 @@ void fragment() {
 	// A whole leaf (2.25, PlantMeshes.leaf_blade) goes whole, by its key,
 	// in vertex().
 	bool blade = abs(mat_id - 2.25) < 0.1;
+	// A fungus's flesh (UV2.x -1): bark everywhere but its colour (above).
+	bool flesh = mat_id < -0.5;
 	if (v_leaf < 0.999 && mat_id > 0.5 && mat_id < 2.5 && !blade) {
 		vec3 cell = floor(obj_pos / max(sp_leaf_m * v_leafs * 2.0, 0.25));
 		if (sp_hash(cell.xy + cell.z * 17.13) >= v_leaf) {
@@ -662,6 +667,9 @@ void fragment() {
 	} else if (mat_id > 0.5) {
 		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
 		tex = retro_tile(look_tex_leaves, uv / (look_tile_m2.y * v_leafs));
+	} else if (flesh) {
+		// Its painted colour as it is (a cap is a few texels across).
+		tex = vec4(vec3(0.5), 1.0);
 	} else {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
 		tex = retro_tile(look_tex_bark, uv / look_tile_m2.x);
@@ -676,7 +684,11 @@ void fragment() {
 	// A lit village (§EE.1): its hearths ease the night's blue pull here.
 	float nk = look_night * (1.0 - look_warm(world_pos));
 	if (mat_id < 0.5) {
-		base = pal_pull(base, pal_bark, 0.7 * (1.0 - gw));
+		// (A fungus's flesh keeps its own colour by day; it cools at night
+		// as bark does.)
+		if (!flesh) {
+			base = pal_pull(base, pal_bark, 0.7 * (1.0 - gw));
+		}
 		base = pal_pull(base, pal_bark_night, 0.6 * nk * (1.0 - gw));
 	}
 	base = pal_pull(base, pal_canopy, 0.55 * gw);
@@ -686,7 +698,7 @@ void fragment() {
 		base = mat_id > 3.5 && mat_id < 4.5 ? mix(base, vec3(0.72, 0.62, 0.40), 0.85) : mix(base, vec3(0.46, 0.44, 0.41), 0.75);
 	}
 	ALBEDO = base * tex.rgb * 2.0;
-	if (sp_tiled && ((mat_id < 0.5 && sp_has_bark) || (mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+	if (sp_tiled && ((mat_id < 0.5 && !flesh && sp_has_bark) || (mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
 		// The species' own tiles (§AH), times white and the genes jitter.
 		// The foliage mass takes the autumn colour by the same share as the
 		// leaf cutout (autumn / leaf colour).
@@ -776,7 +788,7 @@ void fragment() {
 		// blades tip their lit side away, paler toward the tips.
 		ALBEDO *= 1.0 + f_d.z * smoothstep(0.2, 1.0, sway_w);
 	}
-	if (mat_id < 0.5 && moss > 0.01) {
+	if (mat_id < 0.5 && !flesh && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).
 		float n = retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
