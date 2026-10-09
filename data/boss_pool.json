@@ -1,0 +1,77 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FM.1, §FM.2] Boss behaviour pools (Mike, 9 Oct: every boss has 'a group of different behaviors that each boss can cycle through on RNG level', so the player can never pin down its algorithm). Claude (chat) wrote the structure and every number below as first guesses; Mike tunes by playing. Claude Code reads this in queue 65 (the pool) and 66 (the snake's states) and removes this prefix as each is wired.",
+  "rule": "draw: a weighted random pick from the boss's own states, never a fixed sequence. repeat_gap: the same state is not picked twice running unless it is the only one. live_rng: the draw is not seeded from the game seed, so loading a save does not replay it (the dungeon itself is seeded, §FK.2). dwell_s [min, max]: how long a picked state lasts before the next draw, unless something ends it (you light its room, it strikes, you leave). never_breaks: a state may never break a §EY rule: a relit room stays safe, the boss never blocks the exit, the torch hold, the wind-up and the strike tell always hold, and a hit is one of three (§FD).",
+  "pools": "One entry per boss id from bosses.json → bosses. 'rounds' is the boss's built behaviour (queue 49), so a boss with only that entry plays exactly as it does now. Which states other bosses share is NOT locked (§FM.1): the names lurk_threshold, observe, withdraw and strike are Claude's proposal, kept out of the data until Mike agrees.",
+  "desert": "The snake (§FM.2). freeze_watched: you look at it from far off and it goes still, a little more camouflaged than now and never invisible (invisibility is saved for another boss); this one is the snake's own, not shared. doorway_watch: it sits in a doorway of an unlit room and watches you. observe_then_behind: it studies you out of your light for a while, then goes round and takes you from behind. coil_ambush: you hear it and turn, and it is already coiled with its wind-up begun (the jump scare); a hit is still only hit 1 of three.",
+  "camouflage": "blend: how far its look moves toward the stone it lies on (0 is as built, 1 would be gone). max_blend: never above this, so it is never invisible. Texture and value only, no transparency.",
+  "check": "headless: over 200 draws the sequence is not a fixed order, never repeats a state twice running, and every state is drawn at least once."
+ },
+ "rule": {
+  "draw": "weighted",
+  "no_fixed_sequence": true,
+  "repeat_gap": 1,
+  "live_rng": true,
+  "never_breaks": [
+   "relit_room_stays_safe",
+   "never_blocks_exit",
+   "torch_hold_holds",
+   "wind_up_and_tell_always_play",
+   "a_hit_is_one_of_three"
+  ]
+ },
+ "camouflage": {
+  "blend": 0.3,
+  "max_blend": 0.5
+ },
+ "pools": {
+  "desert": {
+   "rounds": {
+    "weight": 4,
+    "dwell_s": [20, 50]
+   },
+   "freeze_watched": {
+    "weight": 2,
+    "dwell_s": [6, 14],
+    "needs": "watched",
+    "from_m": [12.0, 60.0],
+    "look_deg": 25.0,
+    "breaks_when": "you_close_inside_m_or_look_away_s",
+    "close_m": 7.0,
+    "look_away_s": 3.0,
+    "blend": 0.3
+   },
+   "doorway_watch": {
+    "weight": 2,
+    "dwell_s": [8, 20],
+    "place": "doorway_of_unlit_room",
+    "head_m": 0.8,
+    "leaves_when": "room_lit"
+   },
+   "observe_then_behind": {
+    "weight": 2,
+    "dwell_s": [12, 35],
+    "observe_m": [10.0, 18.0],
+    "observe_s": [10.0, 30.0],
+    "then": "circle_to_behind",
+    "uses_tunnels": true,
+    "tell": "scales dragging on stone"
+   },
+   "coil_ambush": {
+    "weight": 1,
+    "dwell_s": [6, 12],
+    "lies_coiled_behind_m": [5.0, 9.0],
+    "wind_up_begun_on_turn": true,
+    "is_hit": "hit_1_of_three"
+   }
+  },
+  "mine": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "mountains": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "swamp": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "volcano": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "tundra": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "sea_caves": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "beach": {"rounds": {"weight": 1, "dwell_s": [20, 50]}},
+  "jungle": {"rounds": {"weight": 1, "dwell_s": [20, 50]}}
+ }
+}

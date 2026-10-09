@@ -1,0 +1,31 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FM.6] The room pool, Phantasy Star Online style (Mike, 9 Oct): hand-built archetypal big rooms plus generic rooms and paths, their order shuffled per run, certain big rooms drawn at random into the map. It adds to §EX.2's spine and module and replaces nothing. Claude (chat) wrote the rule and the three first-guess archetypes; Claude Code authors each room's geometry in queue 70, and Mike renames or replaces the archetypes by playing.",
+  "big_rooms": "per_dungeon [min, max]: how many archetypal big rooms a dungeon draws, by its seed. placed_on: the spine or a side branch (never the exit's last stretch, never the hearth's heart room, which stays the one hearth room of §EX.4). no_repeat_in_a_dungeon: an archetype appears once per dungeon.",
+  "generic": "The rooms and paths already built (crawler.json → plan.module, masonry.json styles), shuffled by the dungeon's seed. Same seed, same dungeon.",
+  "archetypes": "id: a short brief for the room's shape, and ruin_kinds: which kinds may draw it. Each is built in the ruin's one stone (§EX.1). Geometry, props and sconce places are Claude Code's, painted per §ES, with the room's torches counting toward the floor's lit test (§FF.2).",
+  "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan."
+ },
+ "big_rooms": {
+  "per_dungeon": [1, 2],
+  "placed_on": "spine_or_branch",
+  "no_repeat_in_a_dungeon": true
+ },
+ "generic": {
+  "shuffle": "per_seed"
+ },
+ "archetypes": {
+  "pillar_hall": {
+   "brief": "A long hall of paired pillars in rows, sconces on the pillars, the far end lost in dark.",
+   "ruin_kinds": ["tomb"]
+  },
+  "stepped_hall": {
+   "brief": "A broad hall whose floor rises in wide steps to a dais, so the far torches sit high above the near ones.",
+   "ruin_kinds": ["tomb"]
+  },
+  "sunken_court": {
+   "brief": "A room one stair below the corridors, open above to a shaft, so daylight or moonlight falls into its middle.",
+   "ruin_kinds": ["tomb"]
+  }
+ }
+}

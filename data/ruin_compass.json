@@ -1,0 +1,92 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FM.8] The ruin roster and its fixed compass (Mike, 9 Oct). REFERENCE ONLY: only the tomb is built, and Mike said the other ruins go in the reference doc, not the queue. Nothing reads this file yet. The prose and the sources are in docs/design/RUIN_ROSTER_REFERENCE.md; where they differ, the doc wins.",
+  "map": "reference_only: the map shows where you have been and which way things lie, and takes you nowhere. fast_travel false: for now this supersedes worlds.json → map.fast_travel (§EW) and the map return of §FK.3 (§FM.8).",
+  "walk": "fixed: the same neighbours every playthrough. Each ruin's inside still comes from the game's seed (§FK.2) and the first ruin is still drawn at random (§FJ.1). Open (§FM.10 call 3): whether walking a direction replaces or sits beside worlds.json → links (the underground passage).",
+  "ruins": "id: culture, stone (what the ruin is built of), plant (its species and rite, one line, no doses or preparation), plant_status (in_game or not_in_game as of 9 Oct), exits (cardinal direction to the neighbouring ruin id). status: built (the tomb only), reference, or invented (no real ruin; ours). null exits are unplaced."
+ },
+ "map": {
+  "reference_only": true,
+  "fast_travel": false
+ },
+ "walk": {
+  "fixed": true,
+  "same_every_game": true,
+  "first_ruin": "random"
+ },
+ "ruins": {
+  "aztec": {
+   "status": "built_as_the_tomb_open_call_1",
+   "culture": "Aztec (Mexica)",
+   "stone": "volcanic: basalt, andesite, tezontle (red, porous)",
+   "plant": "Ipomoea corymbosa (ololiuhqui): priests' and healers' divination",
+   "plant_status": "not_in_game",
+   "exits": {"north": "peyote_country", "east": "gulf_swamp", "south": "maya"}
+  },
+  "peyote_country": {
+   "status": "invented",
+   "culture": "Wixarika (Huichol) country",
+   "stone": "adobe and sandstone (Claude's suggestion; real adobe analogue: Paquime)",
+   "plant": "Lophophora williamsii (peyote): the Wirikuta pilgrimage; IUCN Vulnerable, so the shaman teaches the respectful harvest (Mike)",
+   "plant_status": "not_in_game",
+   "exits": {"north": "pueblo", "south": "aztec"}
+  },
+  "pueblo": {
+   "status": "reference",
+   "culture": "Ancestral Pueblo (Mesa Verde)",
+   "stone": "sandstone blocks in mud mortar, cliff alcoves",
+   "plant": "Datura wrightii (sacred datura): Southwest divination and rain rites; a different experience, not a harder one (Mike)",
+   "plant_status": "not_in_game",
+   "exits": {"south": "peyote_country"}
+  },
+  "gulf_swamp": {
+   "status": "reference",
+   "culture": "Gulf South mound builders (analogues: Poverty Point, Moundville)",
+   "stone": "earth and timber",
+   "plant": null,
+   "plant_candidate": "Ilex vomitoria (yaupon): the ceremonial black drink; a mild stimulant (Claude's candidate, Mike has not chosen)",
+   "plant_status": "not_chosen",
+   "exits": {"west": "aztec"}
+  },
+  "maya": {
+   "status": "reference",
+   "culture": "Maya",
+   "stone": "pale limestone",
+   "plant": "Psilocybe mexicana (teonanacatl): shared with the Aztec rites; Maya use indirect and debated",
+   "plant_status": "not_in_game",
+   "exits": {"north": "aztec", "south": "inca"}
+  },
+  "inca": {
+   "status": "reference",
+   "culture": "Inca (San Pedro rites are older, Chavin)",
+   "stone": "precision-cut andesite and granite, no mortar",
+   "plant": "Echinopsis pachanoi (San Pedro): northern Peruvian healers' mesa rites; and Erythroxylum coca, a mild chewable offered to the mountain spirits (no effect chosen)",
+   "plant_status": "san_pedro_in_game_coca_not",
+   "exits": {"north": "maya", "south": "amazon", "east": "great_zimbabwe"}
+  },
+  "amazon": {
+   "status": "reference",
+   "culture": "Amazonian peoples (Acre geoglyphs, Llanos de Mojos mounds)",
+   "stone": "none: earthworks, ditched enclosures, causeways",
+   "plant": "Banisteriopsis caapi (the ayahuasca vine): visionary and healing rites",
+   "plant_status": "not_in_game",
+   "exits": {"north": "inca"}
+  },
+  "great_zimbabwe": {
+   "status": "reference",
+   "culture": "Shona (Great Zimbabwe, about the 11th to 15th century)",
+   "stone": "dry-stone granite, no mortar",
+   "plant": "Boophone disticha (leshoma): healers' divination and initiation; a poisonous bulb",
+   "plant_status": "not_in_game",
+   "exits": {"west": "inca"}
+  },
+  "taiga": {
+   "status": "reference",
+   "culture": "Siberian taiga peoples (Koryak, Chukchi, Khanty)",
+   "stone": "none: dark timber, log-and-earth, bone and antler",
+   "plant": "Amanita muscaria (fly agaric): trance rites",
+   "plant_status": "in_game",
+   "exits": null
+  }
+ }
+}

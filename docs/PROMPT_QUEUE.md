@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's).
+Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for the plant data fill (§FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -93,6 +93,17 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 61 | §FG | Atmosphere, not puzzles: glow-moss, beetles, daylight with the clock | built e11418b |
 | 62 | §FJ.4 | Torches burn down: a timer, the hearth's bundle, three at most | todo |
 | 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | todo |
+| 64 | §FL.2 | 480 lines the most | built 596646a, undone by a1e64b3 (720 the most, §FM.11) |
+| 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | todo |
+| 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
+| 67 | §FM.6 | The shaman and the cauldron at the hearth | todo |
+| 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | todo |
+| 69 | §FM.6 | Floor two's fog: the same stone, darker | todo |
+| 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
+| 71 | §FM.7 | The tomb's surface: day and night above the stair | todo |
+| 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (plant data fill; 67, 71) |
+| 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
+| 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1168,3 +1179,155 @@ CHECK (headless, tools/crawler_check.gd): the same game seed builds the same fir
 **Status:** built 596646a; undone by Mike's correction, a1e64b3 (7 Oct evening: 720 the most, 480 the default, never 1080; half_hd and fine back)
 
 look.json max_internal_lines is now 480 (was 720). Drop presets above 480 (half_hd 540, fine 720) from Settings > Display > Pixel size and from auto's order; auto picks the tallest preset ≤480 that divides the window exactly, else 480 letterboxed. 480 stays default. Update the _help lines that mention 720/540.
+
+(Superseded by §FM.11, 9 Oct: Mike's 7 Oct evening correction, "the very maximum resolution should be 720 but default at 480. no 1080." Nothing to build; a1e64b3 already did it.)
+
+## 65 — The boss behaviour pool: every boss draws its moves at random — §FM.1
+
+**Status:** todo
+**Mike sees:** Nothing yet. A boss now picks what to do next from a list at random, so no boss can be learned like a script. Until the snake gets its new moves (66), every boss plays exactly as it does today.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 57 (built). This pass builds ONE thing: design §FM.1 of docs/design/RECONCILIATION_2026-09-30.md, the scaffolding for a boss's behaviour pool, and nothing from §FM.2 (the snake's new states are prompt 66). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off boss_pool.json _help.about for the parts you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.1 and §FM.2 (so the scaffold fits what the snake will need); §EY (the boss rule: one per dungeon, prowls only the unlit, the last light drives it to its lair); data/boss_pool.json (rule, pools, _help) and data/bosses.json (rule; every boss's pattern); scripts/crawler/boss.gd (build, tick, _begin, _refresh, _after_light, _turn_back_if_lit, _notice), boss_ground.gd, pursuit.gd, creature_strike.gd.
+
+BUILD: (1) A BossPool class (scripts/crawler/boss_pool.gd) that loads a boss's states from boss_pool.json pools[<boss id>], draws the next state by weight, never the same state twice running unless it is the only one (rule.repeat_gap), from live RNG (not seeded from the game seed: rule.live_rng), and returns how long it lasts (dwell_s as [min, max]). (2) Boss asks the pool for its next state when the current one ends or its dwell runs out. The state 'rounds' is the boss's existing behaviour, wrapped and not rewritten: a pool with only 'rounds' plays exactly as the boss does now. (3) A state is a small unit with enter, tick and exit, registered by its id, so prompt 66 can add the snake's. An id in the data that no code registers is skipped with one warning, never a crash. (4) rule.never_breaks holds: the pool is never asked while the boss is mid-strike, in its wind-up, retreating (the last light, §EY) or fleeing a pot; a state can't skip the strike's tell and wind-up, can't block the exit, can't stay in a relit room. (5) Change no number in bosses.json and nothing about the strike.
+
+CHECK (headless, tools/crawler_check.gd or a new tools/boss_pool_check.gd): a test pool of three states over 200 draws: the order is not a fixed sequence, no state repeats twice running, every state is drawn, and the draws follow the weights within a loose tolerance; every boss with only 'rounds' walks the same route from the same seed as before this pass (compare with the boss check as built); an unknown state id warns once and is skipped; no draw happens mid-strike.
+```
+
+## 66 — The snake's pool: freeze, doorway, observe, coil — §FM.2
+
+**Status:** todo
+**Mike sees:** The snake stops being predictable. Look at it from far off and it goes still and half-vanishes into the stone. It sits in doorways and watches you. It follows you a while before it circles round behind. And sometimes you turn at the sound of it and it is already coiled and striking.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 65. This pass builds ONE thing: design §FM.2 of docs/design/RECONCILIATION_2026-09-30.md, the four new states in the desert snake's pool, on prompt 65's BossPool. The snake only; no other boss changes. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look at the freeze once with the walkabout at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off boss_pool.json _help.desert and _help.camouflage, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.2 (Mike's four behaviours: a plain big snake, no feathers); §EY; data/boss_pool.json (pools.desert, camouflage and their _help); data/bosses.json bosses.desert (hunt_mps, watch_s, coils_in, torch_delay, peek_m, tunnels, strike, body); scripts/crawler/boss.gd, boss_body.gd (the snake's sprites: how they are tinted), boss_ground.gd (tunnels, doors, dead ends), boss_sounds.gd, creature_strike.gd, pursuit.gd, half_dark.gd (§FC.4).
+
+BUILD, each a state registered on the desert pool: (1) freeze_watched: you look at it (its head or body inside look_deg of your view axis, seen in your torch's light or your half-dark sight) from at least from_m[0] away: it stops dead and lies still. Its sprites' value and hue move toward the stone under it by camouflage.blend, never above camouflage.max_blend, never transparent: a texture and value shift only, so a frozen snake is hard to spot but never gone (Mike keeps invisibility for another boss). It holds until you close inside close_m, look away for look_away_s, or its dwell ends, then the pool draws the next state with no tell. It never freezes in a room you have lit. (2) doorway_watch: it picks the nearest doorway of an unlit room on its rounds that you are not in and lies with its head in the gap (head_m), still, for its dwell; it leaves when that room is lit, as the boss rule says. (3) observe_then_behind: it follows you at observe_m, outside your torch's circle, along corridors and its tunnels, for observe_s; then goes round behind you and strikes with the strike as built (tell, wind-up, recovery unchanged). (4) coil_ambush: it goes round into a coil lies_coiled_behind_m behind you and waits; its tell sounds as you move on; if you turn toward it, its wind-up has already begun (wind_up_begun_on_turn), so the jump scare is real; the hit is hit 1 of three (§FD), never more; if you keep walking it lets you go when its dwell ends. Keep everything 49 and 57 built (the slither, the torch hold, the peek, the tunnels, the strike tell); a sprinter still outruns it (hunt_mps unchanged).
+
+CHECK (headless): over 300 draws all four new states and 'rounds' are entered; the freeze starts only with the head inside look_deg and beyond from_m[0], and ends on close_m, look_away_s or dwell; the sprites' blend never exceeds max_blend (sample the tint); doorway_watch's head sits in a doorway of an unlit room and the snake leaves when it is lit; observe_then_behind's distance stays inside observe_m and outside the torch circle; in coil_ambush a view turn toward it starts the wind-up on that tick and the resulting hit counts as one hit; hunt_mps is still 4.6. Walkabout once: the snake frozen at 20 m in a lit corridor, readable on a second look.
+```
+
+## 67 — The shaman and the cauldron at the hearth — §FM.6
+
+**Status:** todo
+**Mike sees:** You wake at the hearth with the shaman sitting across the fire, and a cauldron hangs over the flame. It is there from the first moment in every dungeon.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time after prompt 52 (built). This pass builds ONE thing: design §FM.6's opening room, the shaman and the cauldron at the hearth, and nothing else from §FM.6. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look at the hearth room once with the walkabout at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.6 (the opening room); §FM.3 (what was not taken from the pasted Aztec doc: no speaking shamans, no obsidian mirrors); §EX.4 (one hearth per dungeon), §ET.9 (one rig, one animation set), §FH (the folk at the hearth in 3D), §FL.1 (metal is allowed again); crawler.json rescuer and folk_3d; scripts/crawler/hearth_folk.gd, tomb_build.gd (where the hearth is built), tomb_kit.gd, light_field.gd.
+
+BUILD: (1) The one figure at the hearth (the rescuer) reads as the shaman. Same rig, same animations, wordless: give him what the shared wardrobe already allows, such as a ladle or stirring stick in the hand, and nothing new in the rig. Nobody speaks (§ED). (2) A cauldron hangs over the hearth's flame from a tripod or chain, in the ruin's own material or clay or iron, your call. It is painted per §ES and the hearth's amber falls on it live. It is empty: the brew is prompt 72. (3) It must not hide the flame: lighting a torch at the hearth works from the usual spot, and the hearth's entry in the light field (light_field.gd) is unchanged. (4) It is in the hearth room of every dungeon from the first moment, and it does not move the place you wake.
+
+CHECK (headless, tools/crawler_check.gd): over 20 seeds every dungeon's hearth room has exactly one shaman figure and one cauldron within the hearth's radius; a torch lights at the hearth from the usual spot; the light field at 3 m from the hearth is unchanged within 1 percent; the wake spot is not inside the cauldron's or the figure's collision. Walkabout once at the hearth: the cauldron reads against the flame and the shaman sits across the fire.
+```
+
+## 68 — Floors and the fork: light the first floor and two ways open — §FM.6
+
+**Status:** todo
+**Mike sees:** Light every torch on the first floor and two openings appear together: a stair up toward the day and a stair down to a second floor. Take either one first. Nothing is lost by choosing.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 59 (built). This pass builds ONE thing: design §FM.6's floors and the fork, in the crawler. Floor two is a plain second floor here: its fog is prompt 69, the room pool is prompt 70, and the boss does not move (see below). No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off descent.json _help.floors and _help.fork and crawler.json _help.floors for what you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.6, §FM.10 calls 2 and 4; §FF.1 (floors) and §FF.2 (cleared by light); §EX.4 (one hearth per dungeon) and §EX.5 (the exit, never gated, its stand-in); §EY.3 (the lair); §FG (nothing marks a way); data/descent.json (floors, fork, _help); crawler.json exit, floors, cleared, gates, plan; scripts/crawler/way_out.gd, tomb_build.gd (the plan, the spine), crawler_fires.gd, crawler_main.gd.
+
+BUILD: (1) A dungeon has descent.json floors.count floors (two). Floor one is the tomb as built. Floor two lies below it, reached by a stair down, built by the same generator in the same stone (same_stone) with no second hearth (§EX.4); its rooms get wall torches to light like the others. Its stair up lands at floor one's stair down. Cleared-by-light (§FF.2) counts per floor. (2) The fork: when every torch on floor one is lit (the cleared.when test), fork.opens happens in the same tick: the stair down and the surface stair both open, with a visible and audible opening (reuse the gates machinery, gates.relight_to_open) and fork.log_line once. Until then the way down is a plain stone seal in the stair's mouth. Nothing points to it (§FG). (3) fork.gate_surface is false: the surface stair stays open as built (§EX.5, exit.never_gated) and only the way down waits on the lights. Set true, the surface stair is sealed until floor one is lit. Mike has not answered §FM.10 call 2, so keep it false and say so in PROGRESS. The surface stair still leads where exit.stand_in sends it until prompt 71 builds the surface. (4) The boss stays on floor one as built and its lair hole (§EY.3) does not move: moving its home to the base layer waits for Mike's answer to §FM.10 call 4. (5) If prompt 63's save exists, the fork's opened state is saved per dungeon with the relit holders.
+
+CHECK (headless, tools/crawler_check.gd): floor one's torches cold: the way down is sealed; all lit but one: still sealed; the last one lit: both openings open on the same tick and the log line shows once; with gate_surface false the surface stair is open throughout, and true it is sealed until lit; take the stair down to floor two and back up to the matching stair on floor one; floor two has no second hearth and its own torches count toward its own cleared test only; over 50 seeds the way down is always reachable once lit and the exit is still reachable with every holder cold.
+```
+
+## 69 — Floor two's fog: the same stone, darker — §FM.6
+
+**Status:** todo
+**Mike sees:** Floor two is the same stone as floor one, but a low fog fills it all the way through, so it feels darker and you see less far.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 68. This pass builds ONE thing: design §FM.6's floor-two fog, uniform, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look at floor two once with the walkabout at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off descent.json _help.floor_two, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.6 (floor two: the energy of the whole place a little darker, a layer of fog, uniform for now, no separate system); docs/design/LOOK_REFERENCE.md and §ES (the frame: shade is navy and never grey, distance gets lighter and bluer); data/descent.json (floor_two.fog and _help); look.json; scripts/crawler/crawler_main.gd (the environment), light_field.gd.
+
+BUILD: (1) Floor two gets one fog across the whole floor at descent.json floor_two.fog.density, its colour from the look's shade navy (color_from) and never grey, lighter and bluer with distance. Floor one has none. (2) Fog is only fog: it changes how far you see and how far your torch reaches by rendering, and nothing else. No change to the light field's numbers, to what the boss sees or hears, or to any rule. (3) Ease it in over the last metres of the stair down and out over the stair up, so there is no pop. (4) It must hold in the 480-line nearest-neighbour frame (§ES) without banding badly or breaking the dither.
+
+CHECK (headless, tools/crawler_check.gd and tools/crawler_frames.gd): floor two's environment fog is on at the data's density and floor one's is off; the fog colour has blue above red and is not grey (red, green and blue within 0.02 of each other fails); at the stair the density eases between the two floors in the ease distance; the frame renders at the default 480 lines. Walkabout once on floor two: a lit torch's pool reads in the fog and the far end of a corridor is lost. Mike tunes density in descent.json.
+```
+
+## 70 — The room pool: hand-built big rooms shuffled into each run — §FM.6
+
+**Status:** todo
+**Mike sees:** Two tombs now differ in the rooms you come to, not only in the winding. Each run draws a few hand-built big rooms into the layout, a pillar hall, a stepped hall, a sunken court, among the usual rooms and passages.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 68. This pass builds ONE thing: design §FM.6's room pool, Phantasy Star Online style, three archetypal big rooms for the tomb. It adds to §EX.2's plan and replaces nothing. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look at each new room once with the walkabout at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off room_pool.json _help.about for what you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.6; §EX.1 (one ruin, one stone), §EX.2 (the plan: spine, module, side branches) and §EX.4 (one hearth per dungeon, wall torches in the other rooms); §EU (the walls) and §ES (painted detail); data/room_pool.json (big_rooms, generic, archetypes and _help); crawler.json plan; masonry.json styles; rooms.json; scripts/crawler/tomb_build.gd, tomb_kit.gd, ruin_style.gd, fitted_stone.gd.
+
+BUILD: (1) Author the three archetypes in room_pool.json (pillar_hall, stepped_hall, sunken_court) as hand-built rooms in the tomb's one stone: footprint, door places, what stands in them, sconce places. They are first guesses on Claude's three briefs; say in PROGRESS that Mike may rename or replace them. Their torches count toward the floor's lit test (§FF.2). (2) The plan draws big_rooms.per_dungeon of them by the dungeon's seed and places them on the spine or a side branch, never on the exit's last stretch and never in the heart room (the one hearth room, §EX.4); an archetype appears once per dungeon. (3) The generic rooms and paths are the ones already built, shuffled by the seed. The spine through the heart, the exit that is always reachable (§EX.5) and one hearth all still hold. (4) Same seed, same dungeon.
+
+CHECK (headless, tools/crawler_check.gd): over 100 seeds every dungeon has its spine, its heart and an exit reachable with every holder cold; the number of big rooms is inside per_dungeon; all three archetypes appear somewhere and none twice in one dungeon; the same seed twice gives the same plan; no room overlaps another; one hearth per dungeon. Walkabout once in each archetype: it reads in the tomb's stone and its torches can be lit.
+```
+
+## 71 — The tomb's surface: day and night above the stair — §FM.7
+
+**Status:** todo
+**Mike sees:** Take the stair up and you come out into daylight on a small stretch of land above the tomb. It is day, dusk or night as the clock says, with things to find and look at. You no longer wake in another tomb.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompts 63 (the one clock, the seed) and 68 (the fork). This pass builds ONE thing: design §FM.7 and §EW.7 step 2, the surface pocket above the tomb. It does not build any other world, the passages between worlds, the far horizon's other worlds, or the map (§EW.7 steps 3 and 4), and no harvesting (prompt 72). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look at the surface once with the walkabout at the end (dawn, noon, dusk, night). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off worlds.json _help for the parts you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.7 and §FM.8 (the map is reference only for now); §EW (§EW.1 size and edge, the layered horizon, §EW.7 step 2) and §EV (the hearth shaft and the vents' stacks); §FK.1 and §FK.3 (no planet; one 144-minute clock, the same everywhere, no latitude); §FM.10 calls 1 and 3 (open: how a culture ruin sits with the biome worlds; compass walks against underground passages); worlds.json (size, edge, clock, horizon, generation, worlds.desert); crawler.json exit (stand_in, leads_to, daylight_at_top) and way_out.gd; sky/day_cycle.json and DayCycle; the biome data for the tomb's world.
+
+BUILD: (1) A bounded surface pocket in the tomb's biome (worlds.json size; the land itself closes it, never an invisible wall, §DM), with ground, ground cover and sky in the look (§ES; the sun is the one light, shade navy, distance lighter and bluer). (2) The stair up from the dungeon (the surface stair of prompt 68, and exit.leads_to) comes out at the ruin on the surface above it, with daylight at the top as built; the same stair takes you back down to the same dungeon with its relit holders still lit. exit.stand_in stays for any dungeon with no surface yet. (3) The day-night cycle runs there for ambience only: the one clock of §FK.3 (the fixed 144-minute split, day 60, dusk 18, night 48, dawn 18), the same clock as underground, not a copy of it. Nothing is gated by the time of day. (4) The vents' stacks (§EV) stand on it. A little ambient life from the ecosystem archetypes, and a few things to find that are never required (§FG): ruin remains, litter, old camp marks. (5) No map, no fast travel, no edges to other worlds here.
+
+CHECK (headless, tools/crawler_check.gd): the stair up arrives on the surface at the ruin above the stair; the stair down returns to the same dungeon with the same holders lit; the sun's height at the start of dawn, noon, dusk and night matches the 60/18/48/18 split and is the same value as the underground clock at the same moment; walking 2000 m from the stair in any direction never leaves the pocket's edge into void; over 20 seeds the surface builds. Walkabout: noon, dusk, night.
+```
+
+## 72 — Harvest and brew: a plant from above, a brew from the shaman — §FM.7
+
+**Status:** waits (the plant data fill, §FM.9, and prompts 67 and 71)
+**Mike sees:** On the surface you find the local sacred plant and take part of it, carry it down to the shaman, and he brews it in the cauldron. What you drink is a different experience for each plant.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompts 67 and 71, and only once the world's plant exists in data/plants and the engine can draw it (design §FM.9). If it doesn't, say so to Mike and stop; do not stand in another plant. This pass builds ONE thing: design §FM.7's harvest-and-brew loop for the tomb's world, and nothing for the other ruins. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.7 (harvest, carry, brew; respect; a different experience per plant, never a harder one; what a brew does is NOT locked); §FM.4 (nothing here reaches the secret layer: not decided); §FM.3 (no timers, torch drain or hallucinations: Mike did not choose them); data/ruin_compass.json (the world's plant); docs/design/RUIN_ROSTER_REFERENCE.md (the rite, in one line; no doses, no preparation); data/plants; hands.json; scripts/crawler/hearth_folk.gd and the prompt 67 cauldron.
+
+BUILD: (1) One harvestable plant of the world's species grows on the surface. Harvesting takes part of it and leaves the plant standing, never uproots it, and it regrows on the game clock; the shaman, seen once doing the same, wordless, is how the way is taught (Mike: the shaman teaches the respectful harvest). (2) You carry it, as one carried thing, to the hearth: the shaman takes it to the cauldron and works it, wordless, using the rig's own animations. (3) You drink. The effect is a placeholder vision tint and pulse, set per plant in data, for a first guess of 120 seconds, then it fades. It gates nothing and changes no rule: no timer on anything else, no torch drain, no hallucinations. (4) Nothing about it reaches the secret layer (§FM.4).
+
+CHECK (headless): the plant stands after a harvest and regrows in the data's time; carrying and handing over works from the usual spot; the tint starts on drinking and ends on its time; no gameplay number anywhere changes while it runs.
+```
+
+## 73 — Tomes as collected pages: found on the base layer — §FM.5
+
+**Status:** todo
+**Mike sees:** On the lowest floor you find old scrolls and tomes, each holding only some pages of a longer book. You keep what you find, and reopen any of it to read.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 68. This pass builds ONE thing: design §FM.5, tomes as collected pages, found on the base layer. It adds no new texts: the text fill is chat's. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FM.5 and §DL; data/tomes.json (find, tomes: only the I Ching and the Tao Te Ching so far, both filled false) and data/tomes/README.md (the page format: pages split on a line of ---); data/descent.json floors.base_layer; hud.json log_more (tome); scripts/player/tomes.gd and scripts/ui/tome_panel.gd (R to read a tome you carry).
+
+BUILD: (1) A tome can be split into fragments: tomes.json gets an additive fragments list per tome (an id and a page range each), and each fragment is its own pickup. Nothing changes for a tome with no fragments list. (2) Fragments lie on the dungeon's base layer (descent.json floors.base_layer, the last floor), by the existing find rule (find.at, share_of_hearts), never in a chest, and different fragments of a book can lie in different dungeons. (3) What you pick up you keep. You can reopen any collected fragment to read it, and the book's title page says how much you hold ('pages 1 to 5 of 12'). That is all: no systems, no scoring (§DL: flavour for now). (4) A tome whose text file is unfilled opens its title page only, as built. Two tiers of depth for now (§FM.5); do not build a third.
+
+CHECK (headless): a split tome's fragments are each found at most once per dungeon and only on the last floor; a collected fragment can be reopened after leaving the dungeon; the title page's count is right with zero, some and all fragments; a tome with no fragments list behaves as before.
+```
+
+## 74 — The compass walk and the reference map — §FM.8
+
+**Status:** waits (a second world, and §FM.10 calls 1 and 3)
+**Mike sees:** Each surface has four directions, and walking one leads to the neighbouring ruin. A map shows where you have been and which way things lie, and takes you nowhere.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompt 71 and once a second world exists, and only after Mike has answered §FM.10 calls 1 and 3. If he hasn't, say so to Mike and stop. This pass builds ONE thing: design §FM.8, the fixed compass walk between surfaces and the reference-only map. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off ruin_compass.json _help.about, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes.
+
+READ: §FM.8 and §FM.10; docs/design/RUIN_ROSTER_REFERENCE.md; data/ruin_compass.json (map, walk, ruins and their exits); worlds.json (map, links); the built surface from prompt 71.
+
+BUILD: (1) On a surface, the open edge in a direction leads to the neighbouring ruin's surface named by ruin_compass.json exits, the same in every playthrough; other edges stay closed by the land (§DM). (2) The map is reference only: it shows the ruins you have reached and their bearings, and takes you nowhere. Set worlds.json map.fast_travel off (§FM.8 supersedes §EW and §FK.3 for now). (3) The first ruin is still drawn at random (§FJ.1) and each ruin's inside still comes from the game's seed (§FK.2).
+
+CHECK (headless): every exit in ruin_compass.json that points at a built world arrives there from the opposite side; an exit that points at a ruin not built yet stays closed by the land; the map lists only reached ruins; no map action moves the player.
+```

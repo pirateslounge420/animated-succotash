@@ -1,0 +1,29 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FM.6] How a dungeon goes down and up (Mike, 9 Oct, bones only). Claude (chat) wrote the structure and every number as first guesses; Mike tunes by playing. Claude Code reads this in queue 68 (floors and the fork), 69 (floor two's fog) and 73 (tomes on the base layer), and removes this prefix as each is wired.",
+  "floors": "count: floors per dungeon for now (two; a third later, §FM.6). same_stone: every floor is cut from the ruin's own stone and architecture (§EX.1), so it reads as one place. base_layer: the last floor, where the boss lives (§FM.1) and where tomes lie (§FM.5). crawler.json → floors (§FF.1) is the older, unwired note this carries on.",
+  "fork": "Light every torch on floor one (the same test as crawler.json → cleared.when) and two openings appear together: the way up to the surface and the way down. both_at_once: never one before the other. penalty none: surface first or down first, no cost, both in time. gate_surface: false keeps §EX.5's exit (crawler.json → exit.never_gated: an exit always exists whether or not the lights are lit) as built, so only the way down waits on the lights. Mike has not answered (§FM.10 call 2): set true to shut the surface stair until the floor is lit.",
+  "floor_two": "Fog across the whole floor, uniform for now (Mike: 'we'll just keep it uniform'). It darkens the place; what it does to sight and to your torch's reach is what fog does, with no separate system. color_from: the look's shade, navy and never grey, lighter and bluer with distance (LOOK_REFERENCE.md). density: Claude's first guess in Godot's exponential fog, to be tuned by eye.",
+  "check": "headless: with floor one's torches cold the way down is shut; with all lit it is open, and the surface stair is open or shut per gate_surface; floor two's fog density is above floor one's, which is zero."
+ },
+ "floors": {
+  "count": 2,
+  "same_stone": true,
+  "base_layer": "last_floor"
+ },
+ "fork": {
+  "when": "every_torch_on_floor_relit",
+  "opens": ["surface_stair", "stair_down"],
+  "both_at_once": true,
+  "penalty": "none",
+  "gate_surface": false,
+  "log_line": "Every light is lit. Two ways open: up to the day, or down."
+ },
+ "floor_two": {
+  "fog": {
+   "uniform": true,
+   "color_from": "look_shade_navy",
+   "density": 0.04
+  }
+ }
+}

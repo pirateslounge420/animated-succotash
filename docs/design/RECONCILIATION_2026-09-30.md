@@ -5111,3 +5111,173 @@ fixed clock in the crawler. After 46 (the exit and its stand-in).
 ### FL.3 Order of work
 `docs/PROMPT_QUEUE.md` **64**: the 480 cap in look.json, Settings and auto. The tech change needs
 no code yet; it waits on FL.1's calls.
+
+### FL.4 Amended (§FM.11): 720 the most, 480 the default, never 1080
+Mike's correction of 7 Oct evening is in `docs/PROGRESS.md` (8 Oct, a1e64b3); §FL.2 above is
+superseded by it. Read FM.11.
+
+## FM. The tomb's depth, the surface above it, and the compass — LOCKED (9 Oct, by voice, Mike; bones only)
+
+Mike, 9 Oct, after bringing in a design doc another AI had written ("Torchfire 1: Aztec World &
+Quetzalcoatl"): "we're not going to get too much into detail. We're just kind of mapping out
+the bones and then later we'll go back and get into the details." This section is the bones. Nothing in it
+settles a number; Claude Code's first guesses go in the data files, and Mike tunes by playing.
+Where the pasted doc and Mike's own words differ, Mike's words are here and the doc's are not
+(FM.3 lists what was not taken).
+
+### FM.1 Bosses are never beaten, and never play the same way twice
+- Mike: "the boss is never going to be defeatable, at least not right now." That confirms
+  §EY.2: a lit floor pushes the boss back; nothing is killed and nothing is won from it.
+- **Where it lives:** "the base layer of every ruin that you go to, that'll be where the boss
+  usually hangs out and lurks around." The dungeon's lowest floor is the boss's home. Reading, not
+  asked: §EY.3's lair hole opens onto that floor (FM.10 call 4).
+- **A behaviour pool, a rule for every boss:** each boss has "a group of different behaviors that
+  each boss can cycle through on RNG level," so the player can never pin down its algorithm. A
+  weighted draw from the boss's own list, never a fixed sequence.
+- **Not locked:** which entries every boss shares. Claude's proposal, not confirmed: the *structure*
+  is shared (lurk at a threshold, watch before committing, withdraw into the dark, strike) and each
+  boss adds a signature of its own. Mike on the snake's freeze: "it depends on the boss."
+
+### FM.2 The snake: Mike's four behaviours
+The snake is the desert boss already built (`bosses.json → desert`, queues 49 and 57). Mike's list
+for its pool:
+1. **Camouflage-freeze.** It goes still when you look at it from far away. Make it "a little bit
+   more camouflaged than it is now," never invisible: invisibility is saved for a different boss
+   ("a chameleon boss or something"). The freeze is the snake's own signature, not shared.
+2. **The doorway watcher.** It sits in doorways and watches you.
+3. **Observe, then strike from behind.** It studies you for a while before it attacks from behind.
+4. **The coil you turn into.** If you hear it and turn around, it may already be coiled and
+   striking: the jump scare.
+- A plain big snake. No feathers and no Quetzalcoatl (the pasted doc's idea, dropped by Mike).
+- Keep what 49 and 57 built (the slither, the torch hold, the peek, the tunnels, the strike tell).
+  The pool adds states; it replaces none.
+
+### FM.3 The Aztec world, and what was not taken from the pasted doc
+- Mike: the dungeon he last played (the tomb, with the snake) "should be the Aztec one"; the
+  surface above it is its overworld (FM.7).
+- **Not taken, because Mike did not say it and some of it collides with a lock:** speaking
+  shamans (§ED: folk are mute), wall sconces that seal the snake's paths, beating the snake for an
+  artifact (FM.1), a brew on a hard timer, torches burning faster under it, hallucinations, torch
+  stakes dipped in resin braziers (§FJ.4: torches come from the hearth's bundle, three at most),
+  flooded channels crossed by throwing a torch, the stair up that opens only after the boss falls
+  (§EX.5), and the per-biome shaman table.
+- **Open:** how an Aztec world sits with the tomb as built, which has sarcophagi and a mummy
+  (§FJ.2). FM.10 call 1.
+
+### FM.4 The secret true layer
+- Mike: "I like the secret layer rule. I just don't know how to implement it just yet." A player who
+  has lit every dungeon and driven every boss to its base layer may think they have finished the
+  game; something deeper is waiting. "Not too obvious, kind of like an Easter egg," found through
+  hints and omens that foreshadow it (FM.5).
+- **How the deeper layer is reached: not decided.** The pasted doc's idea (a brew that lets you see
+  and reach it) is one option; Mike has not chosen it, and has not tied any brew to this layer.
+
+### FM.5 Tomes become collected pages
+Extends §DL (`data/tomes.json`: real texts you find and read, never in a chest, public-domain
+translations only, no systems yet). Flavour and omens for now.
+- Tomes and scrolls lie on the bottom layer of underground ruins. You pick them up and keep a
+  collection, rather than reading one where it lies.
+- **Pages:** different pages of a book come from different ruins, or from different parts of one
+  ruin. A tome may also carry a ruin's sacred history, forgotten: "monsters or aliens or angels
+  and demons that used to roam the planet before the ruins happened." How literal that is: open.
+- **Sources Mike named:** the I Ching; Wu Xing (five-phase theory; the voice note says "Wu Jing");
+  the Book of Five Rings, which is Japanese, not Chinese (Miyamoto Musashi, about 1645; Mike
+  wasn't sure); and passages from the New Testament. Public-domain translations only (§DL).
+- **Tiers:** two levels for now, perhaps three later.
+
+### FM.6 The dungeon's bones
+- **Layout, Phantasy Star Online style.** A pool of hand-built archetypal big rooms plus generic
+  rooms and paths. Their order is shuffled per run, and certain archetypal big rooms are drawn at
+  random into the map. This builds on §EX.2's spine and module, which Mike did not ask to drop
+  (Claude's chat wording had said "replacing"; corrected here).
+- **The opening room.** You wake at the hearth in the middle room of the first dungeon. One
+  shaman sits there (the rescuer, §EX.4 and §FH, wordless) and now a **cauldron hangs over the
+  hearth**, from the first moment.
+- **The fork.** Light every torch on floor one and two openings appear together: the way up to the
+  surface and the way down to the next floor. "An instantaneous first decision for the player."
+  Order of choice only, no penalty either way; you can do both in time.
+- **Floor two.** The same stone and architecture as floor one, so it reads as one place, with the
+  energy of the whole place "a little bit darker": a layer of fog across floor two, **uniform for
+  now**. What fog does to
+  sight and to your torch's reach is just what fog does; no separate system. A third floor, if it
+  comes, goes further; two for now.
+- **Mike's last playtest (a couple of days before 9 Oct):** after going up the stair he arrived in a tomb that looked the same,
+  with a different shaman across the fire. That is the exit's stand-in (`crawler.json →
+  exit.stand_in`, §EX.5), working as built until the surface exists. It is not a bug.
+
+### FM.7 The surface
+- Going up leads to the **overworld of that dungeon's own biome**, the pocket above it (§EW.7
+  step 2), not a neutral hub.
+- **The day-night cycle runs there, for ambience only.** It is the one 144-minute clock of §FK.3,
+  the same clock everywhere (not a separate instance per ruin). No gating by time of day. No
+  planet or globe (§FK.1).
+- **You look around and search.** It is ambient and world-building. The local psychoactive plants
+  grow there: you harvest one, carry it down to the shaman at the hearth, and he makes you a brew
+  of what you found. Each place has its archetypal plants.
+- **Respect is part of it.** Peyote is IUCN Vulnerable in life. Mike keeps it: a shaman who "brings
+  you around to the different psychoactive plants" teaches the proper, respectful way to harvest.
+- **A brew is "a different, unique experience" for each plant,** not a harder mode: sacred
+  datura, a deliriant, is "not going to be more dangerous." What any brew does: not locked.
+- **Coca** (Inca world): a mild chewable that Mike likes. No effect chosen; the crawler has no
+  stamina, so Claude's chat suggestion of a stamina boost was not locked.
+
+### FM.8 The map and the compass
+- **The map is reference only: "not going to be any fast traveling for now."** For now this
+  supersedes §EW's and §FK.3's fast travel and the map taking you back to a discovered dungeon.
+- **Compass connections.** Each surface has cardinal directions, and "depending on which way you
+  go" you reach a different ruin. The connections are fixed, the same every playthrough. Each
+  ruin's inside still comes from the game's seed (§FK.2), and the first ruin is still drawn at
+  random (§FJ.1). Where no real ruins are known, "we'll come up with our own."
+- **The roster so far**, from Mike's reading of the globe (thematic, not an atlas):
+  - **Aztec** at the centre. **North:** peyote country (an invented ruin), and beyond it the
+    **Pueblo** cliff dwellings. **East:** a **Gulf South swamp** ruin. **South:** the **Maya**.
+  - Past the Maya, further south: the **Inca**. South of the Inca: the **Amazon**. East of the
+    Inca: **Great Zimbabwe**.
+  - **Unplaced:** the taiga "barbarian" ruin (fly agaric).
+- Culture, stone, plant and position for each ruin: `docs/design/RUIN_ROSTER_REFERENCE.md`, and
+  `data/ruin_compass.json`. **Reference only: only the tomb is built.** Mike: the other ruins go in
+  the reference doc, not the queue.
+
+### FM.9 Plants: what has to exist before any of it can be harvested
+Not in `data/` yet: *Ipomoea corymbosa* (ololiuhqui), *Psilocybe mexicana* (teonanácatl),
+*Lophophora williamsii* (peyote), *Erythroxylum coca*, *Banisteriopsis caapi* (the ayahuasca vine),
+*Boophone disticha* (leshoma), and a sacred *Datura wrightii* (trimmed 1 Oct). In the data already:
+*Trichocereus* (San Pedro) and *Amanita muscaria*. Writing these is a data fill (chat, parallel
+agents, one per plant, in PLANT_SCHEMA vocabulary), and the engine has no shape yet for low globe
+cacti like peyote or for mushrooms (sacred-plants reference, 3 Oct). Use lines describe rites only:
+no doses, no preparation.
+
+### FM.10 Open for Mike
+1. **Cultures against biome worlds.** §EW built eight biome worlds (volcano, mine, sea caves,
+   beach, desert, tundra, swamp, mountains, and the jungle of §FJ.5). The roster is cultures. Does
+   the Aztec world *replace* the tomb (whose sarcophagi and mummy are Egyptian), sit beside it,
+   or is each culture a ruin kind inside a biome world?
+2. **Is the surface exit gated by light?** FM.6 opens it with the way down on a fully lit floor;
+   §EX.5 says an exit always exists whether or not the lights are lit. `descent.json` carries a flag
+   for it, ungated for now.
+3. **Compass walks against §EW.3's underground passages.** Does walking a direction on the surface
+   replace the underground passage between worlds, or sit beside it?
+4. **The base layer against §EY.3's lair hole.** Assumed the same place.
+5. **How the secret layer is reached** (FM.4), and whether any brew has to do with it.
+6. **What a brew does** (FM.7), and whether coca does anything.
+7. **Two ruins have no plant or place:** the Gulf South swamp's plant (a candidate is in the roster
+   doc) and the taiga ruin's position.
+
+### FM.11 Amendment: 720 the most, 480 the default, never 1080
+`docs/PROGRESS.md` (8 Oct, a1e64b3) records Mike's correction of 7 Oct evening: "the very maximum
+resolution should be 720 but default at 480. no 1080." §FL.2 had read "max resolution 480p" as a
+cap. **Superseded:** 480 is the default, 720 the most, nothing draws 1080; the five sizes (painted
+270, chunky 360, default 480, half_hd 540, fine 720) and auto are back, with auto in §EU.1's order.
+Queue 64's text is superseded the same way. CLAUDE.md and the project brief already say it.
+
+### FM.12 Order of work
+`docs/PROMPT_QUEUE.md` **65–74**, one idea each:
+- **65** the boss behaviour pool, then **66** the snake's pool on it.
+- **67** the shaman and the cauldron at the hearth (any time).
+- **68** floors and the fork, then **69** floor two's fog, **70** the room pool, **73** tomes as
+  pages (all after 68).
+- **71** the tomb's surface (after 63 and 68).
+- **72** harvest and brew, and **74** the compass and the reference map: both *wait* (72 for the
+  plant data fill of FM.9, 74 for a second world and FM.10 call 1).
+
+Mike plays and reports between each.
