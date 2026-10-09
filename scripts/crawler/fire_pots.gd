@@ -984,7 +984,9 @@ static func found_room_of(p_lay: Dictionary) -> int:
 	var rooms: Array = []
 	var ends: Array = []
 	for pc in p_lay.get("pieces", []):
-		if str(pc.kind) != "room":
+		# On floor one, as built (design §FM.6: floor two, TombFloors, waits
+		# behind the fork).
+		if str(pc.kind) != "room" or int(pc.get("floor", 0)) != 0:
 			continue
 		var rk := str(pc.get("room_kind", ""))
 		if rk == "hearth" or rk == "heart" or int(pc.id) in spine:

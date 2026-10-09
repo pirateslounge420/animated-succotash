@@ -539,7 +539,7 @@ func _walks(seeds: Array) -> void:
 			print("  seed %d: your body did not get out: %s" % [s, r.why])
 	walked.sort()
 	var med := float(walked[walked.size() / 2]) if not walked.is_empty() else 0.0
-	ok(failed.is_empty(), "%d seeds: your body (its capsule, floor rules and step) walks from the wake spot to the way out every time, every holder cold, no gate (none built)%s" % [seeds.size(), "" if failed.is_empty() else (": failed %s" % str(failed))])
+	ok(failed.is_empty(), "%d seeds: your body (its capsule, floor rules and step) walks from the wake spot to the way out every time, every holder cold, no gate on the way (the fork's seal shuts only the way down: tools/fork_check.gd walks this with it standing)%s" % [seeds.size(), "" if failed.is_empty() else (": failed %s" % str(failed))])
 	ok(holes > 0 and holes_open == holes, "the snake's holes never in your way (Mike's note of 7 Oct): the floor before every one open to your capsule (%d of %d over %d tombs)" % [holes_open, holes, seeds.size()])
 	if not walked.is_empty():
 		print("  the walk out: median %.0f m (shortest %.0f, longest %.0f; %d s for %d tombs)" % [med, walked[0], walked[-1], (Time.get_ticks_msec() - t0) / 1000, seeds.size()])
@@ -4212,6 +4212,11 @@ func _walk_tomb(main: CrawlerMain) -> Dictionary:
 	var p := main.player
 	p.typing = false
 	p.ui_open = false
+	# The stair down's seal gone, as when floor one is lit (design §FM.6, the
+	# fork: tools/fork_check.gd checks the seal shuts it until then).
+	if main.fork != null:
+		main.fork.open_now(true)
+		await _frames(2)
 	var legs: Array = []
 	# A door: from its one side to its other, both ways. Not the way out's
 	# opening (b -1, §EX.5): stepping into it walks you out to the next

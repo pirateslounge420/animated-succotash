@@ -39,7 +39,8 @@ extends Node3D
 ## home (player_woke).
 ##
 ## Cleared by light (design §FF.2; residents.json rules, crawler.json
-## cleared). Until floors exist (§FF.1) a floor is the whole dungeon. The
+## cleared), counted per floor (design §FM.6, TombFloors: floor one, and
+## floor two below it; a resident is its resting place's floor's). The
 ## light is 49's graph of the tomb's rooms and corridor stretches
 ## (BossGround, `ground`), worked out again whenever a holder catches, and
 ## the light on the floor itself (LightField, `light`, on the floor grid:
@@ -59,12 +60,13 @@ extends Node3D
 ##   dark pockets  on a half-lit floor they hang back in what dark is left
 ##                 (pocket_spot), and strike at you when you come within
 ##                 rules.pocket_counterattack_m (Resident's lunge);
-##   cleared       when the floor's last light catches (clear_floor), every
-##                 one leaves by its retreat_to: home to its own niche or
-##                 grave, or a nearer one left open (claim_hole), by the
-##                 dimmest way, seen or not, to lie down there as bones for
-##                 good (Mike's note of 7 Oct: nothing sinks into the stone);
-##                 and the log's one line.
+##   cleared       when a floor's last light catches (clear_floor), every
+##                 one of that floor leaves by its retreat_to: home to its
+##                 own niche or grave, or a nearer one left open
+##                 (claim_hole), by the dimmest way, seen or not, to lie
+##                 down there as bones for good (Mike's note of 7 Oct:
+##                 nothing sinks into the stone); and the log's one line,
+##                 once for each floor.
 
 static var D: Dictionary = Tuning.table("residents")
 static var RULES: Dictionary = D.get("rules", {})
@@ -101,14 +103,21 @@ var _glow_t := 0.0
 var fires: CrawlerFires
 var ground: BossGround
 var _lit_n := -1
-## The floor is cleared: every light on it relit (crawler.json cleared).
+## Every floor is cleared: every light on each relit (crawler.json
+## cleared); each floor's own, when it was (the clock), in cleared_floors
+## (floor -> seconds).
 var cleared := false
+var cleared_floors := {}
+## What the floor grid casts through (design §FM.6: a gate's seal,
+## RelightGate): the gate shuts its doorway's squares itself (Fork,
+## TombNav.close_door), so they open with it.
+var see_through: Array[RID] = []
 ## Every resting place the tomb laid (its open niches and graves): the
 ## holes a resident can go back into when the floor is cleared.
 var holes: Array = []
-## Seconds of play (not counting "Good night"), when the floor was cleared
-## (-1 not yet), and who has gone off the roll for good, lying in its niche
-## or grave as bones: [{"name", "at", "seen"}] (tools).
+## Seconds of play (not counting "Good night"), when a floor was last
+## cleared (-1 not yet), and who has gone off the roll for good, lying in
+## its niche or grave as bones: [{"name", "at", "seen"}] (tools).
 var clock := 0.0
 var cleared_at := -1.0
 var gone: Array = []
@@ -133,7 +142,9 @@ func build(p_lay: Dictionary, p_player: CrawlerPlayer, p_fires: CrawlerFires = n
 ## (an urn, a lid) moves to the nearest open floor.
 func build_nav() -> void:
 	var ex: Array[RID] = [player.get_rid()]
-	nav = TombNav.build(lay, get_world_3d().direct_space_state, NAV_RADIUS, ex)
+	var nav_ex: Array[RID] = ex.duplicate()
+	nav_ex.append_array(see_through)
+	nav = TombNav.build(lay, get_world_3d().direct_space_state, NAV_RADIUS, nav_ex)
 	if fires != null:
 		light = LightField.build(nav, fires, self, ex)
 	for r in all:
@@ -369,8 +380,8 @@ func player_woke() -> void:
 
 ## The light again whenever a holder catches (relit stays lit, so the count
 ## only rises): the light on the floor and the graph worked out afresh,
-## then the floor cleared if that was its last light, else every resident
-## told (light_changed).
+## then each floor cleared whose last light that was, and every resident
+## on a floor still dark told (light_changed).
 func refresh_light() -> void:
 	if fires == null or ground == null:
 		return
@@ -384,40 +395,55 @@ func refresh_light() -> void:
 	for h in fires.holders:
 		lit.append(FireStore.is_lit(h))
 	ground.update(lit)
-	if floor_lit():
-		clear_floor()
-		return
+	for f in TombFloors.floors_of(lay):
+		if not cleared_floors.has(f) and floor_lit(f):
+			clear_floor(f)
 	# The checks that aren't about them keep them asleep through it.
 	if stay_asleep:
 		return
 	for r in all.duplicate():
-		r.light_changed()
+		if not cleared_floors.has(floor_of(r)):
+			r.light_changed()
 
 
-## Every light on the floor relit (crawler.json cleared.when
-## every_light_on_floor_relit; until floors exist, §FF.1, the floor is the
-## whole dungeon).
-func floor_lit() -> bool:
-	return fires != null and not fires.holders.is_empty() and fires.lit_count() >= fires.holders.size()
+## Every light on floor `f` relit (crawler.json cleared.when
+## every_light_on_floor_relit, design §FM.6: per floor, TombFloors); `f`
+## -1, every light on every floor.
+func floor_lit(f := -1) -> bool:
+	if fires == null or fires.holders.is_empty():
+		return false
+	if f < 0 or TombFloors.floors_of(lay).size() < 2:
+		return fires.lit_count() >= fires.holders.size()
+	return TombFloors.floor_lit(fires, lay, f)
 
 
-## The floor's last light has caught (§FF.2): it is cleared. The log's one
-## line (crawler.json cleared.log_line: no creature named, §BA), and every
-## resident leaves by its retreat_to (residents.json
+## The floor resident `r` belongs to: its resting place's.
+func floor_of(r: Resident) -> int:
+	return TombFloors.floor_of(lay, int(r.place.get("piece", -1)))
+
+
+## Floor `f`'s last light has caught (§FF.2; `f` -1: every floor not yet
+## cleared): it is cleared. The log's one line for it (crawler.json
+## cleared.log_line: no creature named, §BA; once a floor), and every
+## resident of it leaves by its retreat_to (residents.json
 ## rules.retreat_on_floor_lit): home to lie down as bones for good, seen
 ## going if you can see it, walking on there unseen however far (Resident
 ## .retreat; Mike's note of 7 Oct). The boss's release is its own
-## (Boss.release, §EY.2).
-func clear_floor() -> void:
-	if cleared:
-		return
-	cleared = true
-	cleared_at = clock
-	GameLog.add(str(CLEARED.get("log_line", "Banished the dark. What lived in it fled.")), "cleared")
-	if stay_asleep or not bool(CLEARED.get("residents_leave", true)) or not bool(RULES.get("retreat_on_floor_lit", true)):
-		return
-	for r in all.duplicate():
-		r.retreat()
+## (Boss.release, §EY.2), as is the fork's (Fork, design §FM.6).
+func clear_floor(f := -1) -> void:
+	var floors: Array = TombFloors.floors_of(lay) if f < 0 else [f]
+	for fl in floors:
+		if cleared_floors.has(fl):
+			continue
+		cleared_floors[fl] = clock
+		cleared_at = clock
+		GameLog.add(str(CLEARED.get("log_line", "Banished the dark. What lived in it fled.")), "cleared")
+		if stay_asleep or not bool(CLEARED.get("residents_leave", true)) or not bool(RULES.get("retreat_on_floor_lit", true)):
+			continue
+		for r in all.duplicate():
+			if floor_of(r) == int(fl):
+				r.retreat()
+	cleared = cleared_floors.size() >= TombFloors.floors_of(lay).size()
 
 
 ## `r` lies in its niche or grave as bones for good (Resident._lay_down, the

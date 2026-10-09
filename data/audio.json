@@ -5,6 +5,7 @@
   "crown_kinds": "Design §DA (Wind II, added by Claude Code, 4 Oct): crown_hush, crown_rustle, crown_clatter, crown_rattle are the crowns round you sounding in the gusts (WindCrowns; wind.json sound.crowns): a source at each crown, voiced by its leaf (needles hush, broad leaves rustle, palm fronds clatter, dry autumn leaves rattle; SoundSynth crown_*_loop), muffled like any source so you can walk to it.",
   "strike_tell": "Design 6 Oct §FA.2 (prompt 57, added by Claude Code): a creature's strike tell, its own sound as it winds up to strike (CreatureStrike; the creature's strike.sound names the SoundSynth voice, the snake's snake_hiss). A source at the creature's head from the wind-up's first frame: loud close by, so an ambush is heard before it is seen; dull and without direction far off, like any source.",
   "kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
+  "stone_seal": "Design §FM.6 (the fork, added by Claude Code, 9 Oct, queue 68; RelightGate): a stone seal grinding down into the floor of its doorway and settling with a thud when every torch on floor one burns, the way down opening (and the way out's flight, with descent.json fork.gate_surface). Heard a long way down the passages (max_distance 70), dulled with distance, so wherever the last light caught you hear that something opened, and roughly where.",
   "boss_kinds": "Design §EY (the dungeon's boss, added by Claude Code, 7 Oct, queue 49; Boss, BossSounds): boss_tell is its tell and its hiss (the snake: scales dragging on stone, heard through the tomb well before it is seen, max_distance 34 against the torch's few metres of sight); boss_breath its breathing in its hole once it has been driven home (max_distance is overridden by bosses.json lair.breathing_heard_m); boss_cry the release, the long sound going away along the tomb and down into the hole.",
   "resident": "Design §FE, §FA.2 (the crawler's residents, added by Claude Code, 7 Oct, queue 58): a resident's own sounds, at the creature: the skeleton's near tell (bone grinding on stone as it climbs out, SoundSynth bone_grind), its wind-up tell (the jaw dropping open, jaw_creak: heard before it is seen when it comes at you from the side) and its steps (bone_step). Muffled with distance like any source, so you can tell where it is.",
   "unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
@@ -489,6 +490,14 @@
    "model": "inverse",
    "max_db": 3,
    "muffle": [20, 90],
+   "class": "source"
+  },
+  "stone_seal": {
+   "unit_size": 14,
+   "max_distance": 70,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [14, 70],
    "class": "source"
   }
  },

@@ -208,21 +208,33 @@ func _layout(s: int) -> void:
 		for q in lay.residents:
 			if q != r and (q.pos as Vector3).distance_to(r.pos) < apart - 1e-3:
 				apart_ok = false
-	# Places it could have used, kept apart: how many it could lay.
-	var places := 0
-	for pc in lay.pieces:
-		if str(pc.kind) != "room":
-			continue
-		match str(pc.get("room_kind", "")):
-			"crypt":
-				places += TombKit.coffin_spots(lay, pc).size()
-			"catacomb":
-				places += ceili(TombKit.niche_spots(lay, pc).size() * 0.5)
-	var floor_n := mini(int(span[0]), places + 1)
-	var kinds := {}
-	for r in lay.residents:
-		kinds[r.rests_in] = int(kinds.get(r.rests_in, 0)) + 1
-	ok(n >= floor_n and n <= int(span[1]), "seed %d: %d skeletons laid (%s; per_dungeon %s, %d places to lay them)" % [s, n, str(kinds), str(span), places + 1])
+	# Places it could have used, kept apart: how many it could lay. Floor by
+	# floor (design §FM.6, TombFloors: each floor lays its own, per_dungeon
+	# read per floor).
+	var counts_ok := true
+	var said: Array = []
+	for f in TombFloors.floors_of(lay):
+		var places := 0
+		for pc in lay.pieces:
+			if str(pc.kind) != "room" or int(pc.get("floor", 0)) != int(f):
+				continue
+			match str(pc.get("room_kind", "")):
+				"crypt":
+					places += TombKit.coffin_spots(lay, pc).size()
+				"catacomb":
+					places += ceili(TombKit.niche_spots(lay, pc).size() * 0.5)
+		var nf := 0
+		var kinds := {}
+		for r in lay.residents:
+			if TombFloors.floor_of(lay, int(r.piece)) == int(f):
+				nf += 1
+				kinds[r.rests_in] = int(kinds.get(r.rests_in, 0)) + 1
+		# Floor one's heart always holds one, so it has a place more.
+		var floor_n := mini(int(span[0]), places + (1 if int(f) == 0 else 0))
+		if nf < floor_n or nf > int(span[1]):
+			counts_ok = false
+		said.append("floor %d: %d (%s, %d places)" % [int(f) + 1, nf, str(kinds), places + (1 if int(f) == 0 else 0)])
+	ok(counts_ok, "seed %d: %d skeletons laid, per_dungeon %s on each floor (%s)" % [s, n, str(span), "; ".join(said)])
 	ok(heart_one, "the heart's coffin holds one (Mike's frame 9)")
 	ok(not in_hearth, "none rests in the hearth room")
 	ok(apart_ok, "none rests within %.1f m of another" % apart)

@@ -63,6 +63,10 @@ var by_piece: Dictionary = {}
 var holders_lit: Array = []
 ## Built with the boss's own tunnels as links.
 var with_tunnels := false
+## Doors a gate shuts (design §FM.6: the fork's seals, Fork; door id ->
+## true): no way through them while they stand (_dijkstra), whatever the
+## light.
+var shut := {}
 
 
 static func build(p_lay: Dictionary, p_with_tunnels := false) -> BossGround:
@@ -98,8 +102,13 @@ static func point(pc: Dictionary, along: float, across: float) -> Vector3:
 func _make() -> void:
 	var holders: Array = lay.get("holders", [])
 	# Every piece's nodes: a room whole, a corridor or stair cut at its
-	# sconces.
+	# sconces. The boss's graph (with_tunnels) holds only its own floor
+	# (TombFloors.BOSS_FLOOR, design §FM.6: it stays on floor one as built),
+	# so its ground is floor one's dark and the last light there sends it
+	# home; the skeletons' holds every floor.
 	for pc in lay.pieces:
+		if with_tunnels and int(pc.get("floor", 0)) != TombFloors.BOSS_FLOOR:
+			continue
 		if str(pc.kind) == "room":
 			var n := _node("room", pc, 0.0, float(pc.len))
 			for i in holders.size():
@@ -386,6 +395,8 @@ func _dijkstra(from: int, ground_only: bool, lit_cost: float, hearth_cost := -1.
 		done[u] = true
 		for l in nodes[u].links:
 			var v := int(l.to)
+			if not shut.is_empty() and shut.has(int(l.get("door", -1))):
+				continue
 			var lit_v := bool(nodes[v].lit)
 			if ground_only and lit_v:
 				continue
@@ -493,6 +504,10 @@ static func place_lair(p_lay: Dictionary, r_m := -1.0) -> Dictionary:
 	var best_score := -INF
 	for pc in p_lay.pieces:
 		if str(pc.kind) != "room" or str(pc.get("room_kind", "")) in ["hearth", "heart"] or int(pc.id) in main:
+			continue
+		# On the boss's own floor (TombFloors.BOSS_FLOOR: floor one, §FM.10
+		# call 4 not answered).
+		if int(pc.get("floor", 0)) != TombFloors.BOSS_FLOOR:
 			continue
 		var spot := _lair_spot(p_lay, pc, r_m)
 		if spot.is_empty():
@@ -709,7 +724,7 @@ static func place_tunnels(p_lay: Dictionary) -> Dictionary:
 	var lair: Dictionary = p_lay.get("lair", {})
 	var spots := {}
 	for pc in p_lay.pieces:
-		if not str(pc.kind) in ["room", "corridor"]:
+		if not str(pc.kind) in ["room", "corridor"] or int(pc.get("floor", 0)) != TombFloors.BOSS_FLOOR:
 			continue
 		if str(pc.get("room_kind", "")) in ["hearth", "heart"] or int(pc.id) in main or bool(pc.get("spine", false)):
 			continue
@@ -835,7 +850,7 @@ static func tunnel_pts(p_lay: Dictionary, ha: Dictionary, hb: Dictionary, td: Di
 	for k in steps + 1:
 		var q := a2.lerp(b2, float(k) / steps)
 		for pc in p_lay.pieces:
-			if Delves.rect_of(pc, Delves.WALL + 0.3).has_point(q):
+			if int(pc.get("floor", 0)) == TombFloors.BOSS_FLOOR and Delves.rect_of(pc, Delves.WALL + 0.3).has_point(q):
 				y = minf(y, minf(float(pc.y0), float(pc.y1)))
 	y -= under
 	return PackedVector3Array([ha.out, ha.pos, back_a, Vector3(back_a.x, y, back_a.z), Vector3(back_b.x, y, back_b.z), back_b, hb.pos, hb.out])

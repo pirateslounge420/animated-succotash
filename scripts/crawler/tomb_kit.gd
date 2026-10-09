@@ -162,6 +162,9 @@ static func module_span(r, lo: float, hi: float, m: float) -> Vector2i:
 ## (its opening), "heart", "stair", "landing" (piece ids), "p" (Vector3,
 ## the opening's middle on its floor and the wall's middle line), "n"
 ## (Vector3, out through it), "half", "h", "y", "rise", "leads_to"}.
+## And its floors (design §FM.6, TombFloors): "floors" and "descent", a
+## piece's "floor" (floor two's pieces 1); "spine", "branches", "heart",
+## "exits", the lair and the tunnels are floor one's.
 static func layout(seed_value: int, theme := "") -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
@@ -204,6 +207,11 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 		var n := mini(_irange(rng, K.get("branch_rooms", [2, 3]), 2, 3), cap)
 		if not _branch(lay, rng, hearth_room, str(sides[i]), n, (lay.branches as Array).size()).is_empty():
 			lay.hearth_ways = int(lay.hearth_ways) + 1
+	# The floors (design §FM.6, TombFloors): the stair down from a room near
+	# the spine's far end and floor two below it, on their own dice, laid
+	# before floor one's things so the room the stair leaves places its
+	# sconces, niches and coffins round its new door like any other.
+	TombFloors.grow(lay)
 	_wake_and_bundle(lay, rng, hearth_room)
 	_place_holders(lay, rng)
 	_place_vents(lay)
@@ -219,6 +227,9 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	# dice): holes at the foot of the side ways' walls, one in its lair room,
 	# joined under the floors ({} for a boss with none).
 	lay["tunnels"] = BossGround.place_tunnels(lay)
+	# Floor two's own sconces, airways and residents (its own dice), and
+	# every fire's vent again with theirs (TombFloors.fill).
+	TombFloors.fill(lay)
 	return lay
 
 
@@ -497,10 +508,13 @@ static func _wake_and_bundle(lay: Dictionary, rng: RandomNumberGenerator, room: 
 ## hearth_rooms), so no other room gets one; every other room gets wall
 ## sconces (_room_sconces), and the corridors a sconce every
 ## sconce_every_m as built (stairs none, delves.json fire_holders.skip;
-## delves.json's hearth rings by ruin still serve the open world).
-static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator) -> void:
+## delves.json's hearth rings by ruin still serve the open world). On floor
+## `on_floor`'s pieces only (TombFloors: each floor on its own dice).
+static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator, on_floor := 0) -> void:
 	var skip: Array = (Tuning.table("delves").get("fire_holders", {}) as Dictionary).get("skip", ["stair"])
 	for pc in lay.pieces:
+		if int(pc.get("floor", 0)) != on_floor:
+			continue
 		match str(pc.kind):
 			"room":
 				if str(pc.room_kind) == "hearth":
@@ -833,13 +847,16 @@ static func _column_clear(lay: Dictionary, own: int, p: Vector2, d: float, from_
 
 ## The airways (§ET.6): ordinary slots in corridor walls, strong marked
 ## mouths in room side walls, away from doors and sconces (room_torches
-## clear_m between a mouth's surround and a sconce's bracket).
-static func _place_airways(lay: Dictionary, rng: RandomNumberGenerator) -> void:
+## clear_m between a mouth's surround and a sconce's bracket). On floor
+## `on_floor`'s pieces only (TombFloors: each floor its own, on its dice).
+static func _place_airways(lay: Dictionary, rng: RandomNumberGenerator, on_floor := 0) -> void:
 	var air := str((THEMES.get(lay.theme, {}) as Dictionary).get("air", "still"))
 	var counts: Dictionary = (AIR.get("per_air", {}) as Dictionary).get(air, {"ordinary": 2, "strong": 1})
 	var corridors: Array = []
 	var rooms: Array = []
 	for pc in lay.pieces:
+		if int(pc.get("floor", 0)) != on_floor:
+			continue
 		if str(pc.kind) == "corridor" and float(pc.len) >= 4.0:
 			corridors.append(pc)
 		elif str(pc.kind) == "room" and str(pc.room_kind) != "hearth":
@@ -1187,14 +1204,19 @@ static func rest_place(lay: Dictionary, pc: Dictionary, kind: String, rests_in: 
 ## the way through (walk_lines; the heart's coffin aside), none by the
 ## boss's hole (_by_lair), none within apart_m of another. Its own
 ## seed, so the rest of the tomb is as it was. lay.residents [rest_place...].
-static func _place_residents(lay: Dictionary) -> void:
-	lay["residents"] = []
+## Floor by floor (design §FM.6, TombFloors): `on_floor` 0 lays floor
+## one's (lay.residents afresh), a floor below adds its own on its own
+## seed, from its own rooms (per_dungeon read per floor; floor two has no
+## heart, so no coffin there always holds one).
+static func _place_residents(lay: Dictionary, on_floor := 0) -> void:
+	if on_floor == 0 or not lay.has("residents"):
+		lay["residents"] = []
 	var kind := "skeleton"
 	var cr: Dictionary = (RESIDENTS.get("creatures", {}) as Dictionary).get(kind, {})
 	if cr.is_empty():
 		return
 	var rng := RandomNumberGenerator.new()
-	rng.seed = hash([int(lay.seed), "residents"])
+	rng.seed = hash([int(lay.seed), "residents"]) if on_floor == 0 else hash([int(lay.seed), "residents", on_floor])
 	var lines := walk_lines(lay)
 	var off := float(cr.get("off_line_m", 1.0))
 	var apart := float(cr.get("apart_m", 2.0))
@@ -1203,7 +1225,7 @@ static func _place_residents(lay: Dictionary) -> void:
 	var heart: Dictionary = {}
 	var cands: Array = []
 	for pc in lay.pieces:
-		if str(pc.kind) != "room":
+		if str(pc.kind) != "room" or int(pc.get("floor", 0)) != on_floor:
 			continue
 		var places: Array = []
 		match str(pc.get("room_kind", "")):
@@ -1253,7 +1275,10 @@ static func _place_residents(lay: Dictionary) -> void:
 				break
 		if ok:
 			picked.append(chosen)
-	lay["residents"] = picked
+	if on_floor == 0:
+		lay["residents"] = picked
+	else:
+		(lay.residents as Array).append_array(picked)
 
 
 ## Is `at` by the boss's hole (lay.lair, BossGround.place_lair): within its

@@ -58,6 +58,8 @@ var closed_islands := 0
 ## chase's grid: open squares no brighter than its cap.
 var light: LightField
 var astar_cap: AStarGrid2D
+## Doors a gate has shut (close_door): door id -> [square indices closed].
+var _shut := {}
 
 
 ## The grid for `p_lay`, cast against `space` (the tomb's stone), for a
@@ -229,6 +231,66 @@ func light_changed(cells: Array, lf: LightField) -> void:
 		if astar_cap != null:
 			astar_cap.set_point_weight_scale(c, ws)
 			astar_cap.set_point_solid(c, lv > lf.cap)
+
+
+## Door `d`'s gap shut by a gate (design §FM.6: the fork's seals, Fork,
+## RelightGate): every open square in it closed, so nothing walks or paths
+## through while the seal stands. The grid is cast with the seal passed
+## through (Residents.see_through), so open_door gives those squares back.
+func close_door(d: Dictionary) -> void:
+	if _shut.has(int(d.id)):
+		return
+	var cells: Array = []
+	for i in _door_cells(d):
+		if open[i] == 1:
+			open[i] = 0
+			open_count -= 1
+			cells.append(i)
+			var c := Vector2i(i % size.x, i / size.x)
+			astar.set_point_solid(c, true)
+			if astar_cap != null:
+				astar_cap.set_point_solid(c, true)
+	_shut[int(d.id)] = cells
+
+
+## Door `d`'s gap open again (its gate has opened): the squares close_door
+## closed, walkable as before (on the chase's grid, those no brighter than
+## the light's cap).
+func open_door(d: Dictionary) -> void:
+	if not _shut.has(int(d.id)):
+		return
+	for i in _shut[int(d.id)]:
+		open[i] = 1
+		open_count += 1
+		var c := Vector2i(int(i) % size.x, int(i) / size.x)
+		astar.set_point_solid(c, false)
+		if astar_cap != null:
+			astar_cap.set_point_solid(c, light != null and light.level[int(i)] > light.cap)
+	_shut.erase(int(d.id))
+
+
+## Is door `d`'s gap shut (close_door)?
+func door_shut(d: Dictionary) -> bool:
+	return _shut.has(int(d.id))
+
+
+## The squares of door `d`'s gap through its wall (as _build lays them):
+## indices.
+func _door_cells(d: Dictionary) -> Array:
+	var out: Array = []
+	var p0: Vector2 = d.p
+	var nv: Vector2 = d.n
+	var across := Vector2(absf(nv.y), absf(nv.x))
+	var ext := Vector2(absf(nv.x), absf(nv.y)) * (Delves.WALL * 0.5 + 0.1) + across * float(d.half)
+	var r := Rect2(p0 - ext, ext * 2.0)
+	var c0 := Vector2i(floori((r.position.x - origin.x) / CELL), floori((r.position.y - origin.y) / CELL))
+	var c1 := Vector2i(floori((r.end.x - origin.x) / CELL), floori((r.end.y - origin.y) / CELL))
+	for cy in range(maxi(c0.y, 0), mini(c1.y, size.y - 1) + 1):
+		for cx in range(maxi(c0.x, 0), mini(c1.x, size.x - 1) + 1):
+			var mid := Vector2(origin.x + (cx + 0.5) * CELL, origin.y + (cy + 0.5) * CELL)
+			if r.has_point(mid):
+				out.append(cy * size.x + cx)
+	return out
 
 
 ## The light on square `c` (0 without a light field).

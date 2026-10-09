@@ -41,9 +41,11 @@ extends SceneTree
 ##     the moment you look away, every step a walk, through the hearth room
 ##     by the dimmest way (the light along its way no more than along the
 ##     shortest), until it stands in the dark of another way;
-##  4. a scripted run relighting every holder (the layout's order, the
-##     heart's own lights last, so it is the last dark), you by each with
-##     your torch lit and then a while,
+##  4. a scripted run relighting every holder on floor one, the floor you
+##     wake on (the layout's order, the heart's own lights last, so it is
+##     the last dark; design §FM.6: each floor is cleared by its own lights,
+##     floor two's skeletons asleep below the fork's seal, tools/
+##     fork_check.gd), you by each with your torch lit and then a while,
 ##     the skeletons free (nothing takes you on this run): hunting you, none
 ##     stands where the light passes the cap; outside a chase none stands
 ##     in a lit room or stretch but on its way out of one (climbing out of
@@ -57,7 +59,7 @@ extends SceneTree
 ##     could see it in; and every step is a walk (none longer than
 ##     Resident.LEAVE_MAX_MPS allows);
 ##  5. the last light: the floor is cleared and the log has its line once,
-##     after the count of lights; every resident walks home to its niche or
+##     after the count of the floor's lights; every resident of it walks home to its niche or
 ##     grave (or a nearer one left open), climbs in and lies down, bones
 ##     for good: off the roll, every one still in the scene drawn lying in
 ##     its place (none vanished, none sank), the ones in view seen going;
@@ -836,13 +838,15 @@ func _relight_run() -> void:
 	var heart := int(main.lay.get("heart", -1))
 	var order: Array = []
 	var last: Array = []
-	for h in fires.holders:
+	# Floor one's lights (design §FM.6: the floor you wake on).
+	for i in TombFloors.holders_on(main.lay, 0):
+		var h: Node3D = fires.holders[int(i)]
 		if int(h.get_meta("piece")) == heart:
 			last.append(h)
 		else:
 			order.append(h)
 	order.append_array(last)
-	var n0 := res.all.size()
+	var n0 := _floor_one().size()
 	_torch(true)
 	# Nothing takes you on this run: their strikes still reach you (so their
 	# chases may follow you into the light), Harm counts none.
@@ -862,7 +866,7 @@ func _relight_run() -> void:
 	# The walk to the last light: long enough for any the light cut off to
 	# walk out to the last of the dark, as walking there would be.
 	var walk := 0.0
-	while walk < 60.0 and res.all.any(func(q) -> bool: return is_instance_valid(q) and (q as Resident).state == Resident.LEAVE):
+	while walk < 60.0 and _floor_one().any(func(q) -> bool: return is_instance_valid(q) and (q as Resident).state == Resident.LEAVE):
 		await physics_frame
 		walk += DT
 		_track()
@@ -870,7 +874,7 @@ func _relight_run() -> void:
 	ok(_past_cap == 0, "hunting you, none ever stood where the light passes the chase's cap (%d frames)" % _past_cap)
 	ok(_bad == 0 and _worst <= rise + b2d + 0.5, "over the run no resident stood in the light outside a chase but on its way out, and none for longer than %.1f s of the time it could move (rise_s + back_to_dark_s; %.2f s at worst; %d frames held still in your view or just short of it, not counted), save the ones cut off walking out" % [rise + b2d + 0.5, _worst, _held_light])
 	ok(not _fell_back.is_empty(), "skeletons resting or standing in relit rooms fell back into the dark (%d)" % _fell_back.size())
-	ok(not res.cleared and res.gone.is_empty() and res.all.size() == n0, "the floor is not cleared while a light is still cold, and none has lain down for good (%d of %d still on the roll)" % [res.all.size(), n0])
+	ok(not res.cleared_floors.has(0) and res.gone.is_empty() and _floor_one().size() == n0, "the floor is not cleared while a light is still cold, and none has lain down for good (%d of %d still on the roll)" % [_floor_one().size(), n0])
 	# The last light: the heart's own, with what is left there in view.
 	main.boss.auto = true
 	var h_last: Node3D = order[-1]
@@ -886,10 +890,10 @@ func _relight_run() -> void:
 				nearest = d
 				look = q.global_position
 	_place_facing(stand, look)
-	var left := res.all.size()
+	var left := _floor_one().size()
 	_say_states()
 	_light_holder(h_last)
-	var everyone: Array = res.all.duplicate()
+	var everyone: Array = _floor_one()
 	var t := 0.0
 	var home_by := -1.0
 	var vanished := 0
@@ -900,10 +904,11 @@ func _relight_run() -> void:
 		for q in everyone:
 			if not is_instance_valid(q) or not q.is_inside_tree() or q.sprite == null or not q.sprite.visible:
 				vanished += 1
-		if home_by < 0.0 and res.cleared and res.all.is_empty():
+		if home_by < 0.0 and res.cleared_floors.has(0) and _floor_one().is_empty():
 			home_by = t
 			break
-	ok(res.cleared and fires.lit_count() == fires.holders.size(), "the last light caught (%d of %d): the floor is cleared" % [fires.lit_count(), fires.holders.size()])
+	var c1 := TombFloors.lit_on(fires, main.lay, 0)
+	ok(res.cleared_floors.has(0) and c1.x == c1.y, "the last light caught (%d of %d): the floor is cleared" % [c1.x, c1.y])
 	var seen := 0
 	for g in res.gone:
 		if bool(g.seen):
@@ -911,7 +916,7 @@ func _relight_run() -> void:
 		print("  %s lay down %.2f s after the last light (%s)" % [g.name, float(g.at) - res.cleared_at, "seen going" if bool(g.seen) else "out of sight"])
 	var bones := _bones_in_scene()
 	ok(home_by >= 0.0 and bones == everyone.size() and vanished == 0, "every resident walks home and lies down in a niche or grave as bones within %.1f s: %d left at the last light, %d of all %d seen going, every one still in the scene lying in its place (%d), none vanished or sank (%d frames)" % [home_by, left, seen, res.gone.size(), bones, vanished])
-	ok(res.all.is_empty() and _awake_in_scene() == 0, "none is left on the roll (%d) or up in the scene (%d)" % [res.all.size(), _awake_in_scene()])
+	ok(_floor_one().is_empty() and _awake_in_scene(true) == 0, "none is left on the roll (%d) or up in the scene (%d)" % [_floor_one().size(), _awake_in_scene(true)])
 	ok(_boo.bad == 0 and int(_boo.logged) > 0, "and over the run, the last light included, none beyond its lunge_m, outside its strike and the last light's going, moved, turned or changed its pose on a frame you could see it in (%d did; %d skeleton-frames logged: %d moved, %d held still in your view, %d let off)" % [_boo.bad, _boo.logged, _boo.moved, _boo.held, _boo.let_off])
 	ok(_jumps == 0, "every step of every one over the run a walk (Mike's note of 7 Oct): none longer than %.3f m in a frame (the longest %.3f m)" % [Resident.LEAVE_MAX_MPS * DT + 0.01, _longest])
 	var line := str(Residents.CLEARED.get("log_line", ""))
@@ -923,7 +928,7 @@ func _relight_run() -> void:
 		if str(e.get("kind", "")) == "cleared":
 			lines += 1
 			at_line = i
-		if str(e.get("text", "")) == "%d of %d lights burn again." % [fires.holders.size(), fires.holders.size()]:
+		if str(e.get("text", "")) == "%d of %d lights burn again." % [c1.y, c1.y]:
 			at_count = i
 	ok(lines == 1 and line != "" and str(GameLog.entries[at_line].text) == line and at_count >= 0 and at_count < at_line, "the log's one line, after the count of lights: \"%s\"" % line)
 	# The snake's release (queue 49) still plays: it travels home and goes
@@ -957,7 +962,7 @@ func _relight_run() -> void:
 			var q0: Resident = everyone[s]
 			player.spawn_flat(q0.hole.get("out", q0.place.out), 0.0, -0.1)
 		await _frames(60)
-		back = maxi(back, res.all.size() + _awake_in_scene())
+		back = maxi(back, _floor_one().size() + _awake_in_scene(true))
 		for cs in CreatureStrike.all:
 			if is_instance_valid(cs) and (cs as Node).get_parent() is Resident:
 				strikes += 1
@@ -980,14 +985,25 @@ func _bones_in_scene() -> int:
 	return n
 
 
-## Residents in the scene that are not bones (up, or resting to be woken).
-func _awake_in_scene() -> int:
+## Residents in the scene that are not bones (up, or resting to be woken;
+## `one`: floor one's only, design §FM.6).
+func _awake_in_scene(one := false) -> int:
 	var n := 0
 	for c in res.get_children():
 		var q := c as Resident
-		if q != null and is_instance_valid(q) and not q.is_queued_for_deletion() and q.state != Resident.BONES:
+		if q != null and is_instance_valid(q) and not q.is_queued_for_deletion() and q.state != Resident.BONES and not (one and res.floor_of(q) != 0):
 			n += 1
 	return n
+
+
+## Floor one's residents still on the roll (design §FM.6: floor two's sleep
+## on below the fork's seal).
+func _floor_one() -> Array:
+	var out: Array = []
+	for q in res.all:
+		if is_instance_valid(q) and res.floor_of(q) == 0:
+			out.append(q)
+	return out
 
 
 ## Where each resident is as the last light is about to catch, and whether

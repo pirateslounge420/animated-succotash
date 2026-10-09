@@ -1,15 +1,16 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FM.6] How a dungeon goes down and up (Mike, 9 Oct, bones only). Claude (chat) wrote the structure and every number as first guesses; Mike tunes by playing. Claude Code reads this in queue 68 (floors and the fork), 69 (floor two's fog) and 73 (tomes on the base layer), and removes this prefix as each is wired.",
-  "floors": "count: floors per dungeon for now (two; a third later, §FM.6). same_stone: every floor is cut from the ruin's own stone and architecture (§EX.1), so it reads as one place. base_layer: the last floor, where the boss lives (§FM.1) and where tomes lie (§FM.5). crawler.json → floors (§FF.1) is the older, unwired note this carries on.",
-  "fork": "Light every torch on floor one (the same test as crawler.json → cleared.when) and two openings appear together: the way up to the surface and the way down. both_at_once: never one before the other. penalty none: surface first or down first, no cost, both in time. gate_surface: false keeps §EX.5's exit (crawler.json → exit.never_gated: an exit always exists whether or not the lights are lit) as built, so only the way down waits on the lights. Mike has not answered (§FM.10 call 2): set true to shut the surface stair until the floor is lit.",
-  "floor_two": "Fog across the whole floor, uniform for now (Mike: 'we'll just keep it uniform'). It darkens the place; what it does to sight and to your torch's reach is what fog does, with no separate system. color_from: the look's shade, navy and never grey, lighter and bluer with distance (LOOK_REFERENCE.md). density: Claude's first guess in Godot's exponential fog, to be tuned by eye.",
-  "check": "headless: with floor one's torches cold the way down is shut; with all lit it is open, and the surface stair is open or shut per gate_surface; floor two's fog density is above floor one's, which is zero."
+  "about": "(design §FM.6) How a dungeon goes down and up (Mike, 9 Oct, bones only). Claude (chat) wrote the structure and every number as first guesses; Mike tunes by playing. Claude Code reads this in queue 68 (floors and the fork: wired 9 Oct), 69 (floor two's fog) and 73 (tomes on the base layer); a block not read yet carries [NOT WIRED YET — design §FM.6] in its own _help line (moved there from this one by queue 68), which goes as each is wired.",
+  "floors": "count: floors per dungeon for now (two; a third later, §FM.6). same_stone: every floor is cut from the ruin's own stone and architecture (§EX.1), so it reads as one place. base_layer: the last floor, where the boss lives (§FM.1) and where tomes lie (§FM.5). crawler.json → floors (§FF.1) is the older note this carries on. Built 9 Oct (Claude Code, queue 68; TombFloors, with TombKit's own generator): count 2 gives every tomb a second floor (1: the tomb alone, as before; more than 2 is not built, held to 2). Floor one is the tomb as built; the stair down leaves the spine's room before the heart (else one further back along the spine, then the heart, then the side ways' rooms) through a door centred in its side wall, a flight straight on down drop_m (added by Claude Code, first guess 4.8 m: two of the kit's stair drops, crawler.json kit.stair_drop_m; 8 m of flight at the kit's stair slope) into floor two's first room. same_stone: floor two is grown by the same generator in the ruin's one style (§EX.1): ways out of its first room as out of the hearth room (the first plan.spine.rooms long, the others side ways), rooms of the kit's kinds with their wall sconces (§EX.4), corridors with theirs, airways, its own residents (residents.json per_dungeon read per floor), no hearth and no heart; nothing of it over or under floor one in plan, all of it below the room the stair leaves. Its stair up is that same flight. base_layer is not read yet: the boss stays on floor one with its lair (§FM.10 call 4 unanswered) and the tomes come with queue 73.",
+  "fork": "Light every torch on floor one (the same test as crawler.json → cleared.when) and two openings appear together: the way up to the surface and the way down. both_at_once: never one before the other. penalty none: surface first or down first, no cost, both in time. gate_surface: false keeps §EX.5's exit (crawler.json → exit.never_gated: an exit always exists whether or not the lights are lit) as built, so only the way down waits on the lights. Mike has not answered (§FM.10 call 2): set true to shut the surface stair until the floor is lit. Built 9 Oct (Claude Code, queue 68; Fork, RelightGate): when is the floor's cleared test (TombFloors.floor_lit on floor one, the same as Residents'), checked every physics tick; opens: the stair down is shut until then by a plain stone seal in its mouth (the first relight_to_open gate, crawler.json gates), nothing on it, no light (§FG); with gate_surface true a second seal stands at the foot of the way out's flight, in the heart's far wall; both_at_once: every seal starts down on the same tick, the very tick floor one is cleared; penalty none: nothing else changes either way; log_line: once, after the floor's own line and the snake's. seal (added by Claude Code, first guesses): open_s, how long a seal takes to sink into its doorway's floor (3 s), grinding all the way (audio.json stone_seal, heard 70 m down the passages) and settling with a thud; thick_m, the slab's thickness in the doorway (0.36 of the wall's 0.6). While a seal stands nothing walks or paths through it (the skeletons' and the snake's floor grid and graph of the light). The surface stair still leads where crawler.json exit.stand_in sends it (the next tomb) until prompt 71 builds the surface.",
+  "floor_two": "[NOT WIRED YET — design §FM.6] Fog across the whole floor, uniform for now (Mike: 'we'll just keep it uniform'). It darkens the place; what it does to sight and to your torch's reach is what fog does, with no separate system. color_from: the look's shade, navy and never grey, lighter and bluer with distance (LOOK_REFERENCE.md). density: Claude's first guess in Godot's exponential fog, to be tuned by eye.",
+  "check": "headless: with floor one's torches cold the way down is shut; with all lit it is open, and the surface stair is open or shut per gate_surface; floor two's fog density is above floor one's, which is zero. Floors and the fork: tools/fork_check.gd (queue 68)."
  },
  "floors": {
   "count": 2,
   "same_stone": true,
-  "base_layer": "last_floor"
+  "base_layer": "last_floor",
+  "drop_m": 4.8
  },
  "fork": {
   "when": "every_torch_on_floor_relit",
@@ -17,7 +18,11 @@
   "both_at_once": true,
   "penalty": "none",
   "gate_surface": false,
-  "log_line": "Every light is lit. Two ways open: up to the day, or down."
+  "log_line": "Every light is lit. Two ways open: up to the day, or down.",
+  "seal": {
+   "open_s": 3.0,
+   "thick_m": 0.36
+  }
  },
  "floor_two": {
   "fog": {

@@ -20,7 +20,7 @@ extends SceneTree
 ##     the scene gone (the game closing) and a fresh one opened by Continue
 ##     (no SEED): the same game and place, you on the mat by its hearth, the
 ##     same three lit and no others, the log's Continue line, its first line
-##     counting only the cold ones; walked out of and two lit in the next,
+##     counting only the cold ones (floor one's since queue 68, §FM.6); walked out of and two lit in the next,
 ##     then Continue again: place 1 with its two lit, place 0's three kept;
 ##  4. New game after that: a different seed, place 0, every holder cold,
 ##     the last-game pointer at the new game and the old game's save still
@@ -352,7 +352,16 @@ func _round_trip() -> void:
 	ok(at_mat < 0.6 and TombKit.piece_at(main.lay, p.global_position) == 0, "you wake on the mat by its hearth (%.2f m from it)" % at_mat)
 	var first := str(GameLog.entries[0].get("text", "")) if not GameLog.entries.is_empty() else ""
 	var cont := str(CrawlerSave.P.get("log_continue", ""))
-	ok(cont != "" and _logged(cont) and first.contains("%d cold lights below" % (n - 3)) and not _log_begins("%d of %d lights burn again" % [3, n]), "the log: \"%s\" and \"%s\" (the cold ones only; no count of lights for the kept ones)" % [first, cont])
+	# Floor one's cold ones (queue 68, design §FM.6: the tomb's first line
+	# counts floor one's lights, nothing telling of a floor below), and no
+	# floor's count of lights for the kept ones.
+	var c0 := TombFloors.lit_on(main.fires, main.lay, 0)
+	var counted := false
+	for f in TombFloors.floors_of(main.lay):
+		var cf := TombFloors.lit_on(main.fires, main.lay, f)
+		if cf.x > 0 and _log_begins("%d of %d lights burn again" % [cf.x, cf.y]):
+			counted = true
+	ok(cont != "" and _logged(cont) and first.contains("%d cold lights below" % (c0.y - c0.x)) and not counted and not _log_begins("%d of %d lights burn again" % [3, n]), "the log: \"%s\" and \"%s\" (floor one's cold ones only; no count of lights for the kept ones)" % [first, cont])
 	# On into the next tomb, two lit there, and Continue again.
 	await _walk_out(main)
 	var n1 := main.fires.holders.size()

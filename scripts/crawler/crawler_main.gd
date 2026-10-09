@@ -47,6 +47,13 @@ extends Node
 ## are hits too, and you heal only once nothing is after you (§FD); taken,
 ## every one after you gives you up and goes home.
 ##
+## And its floors (design §FM.6, TombFloors, Fork; data/descent.json): floor
+## two below floor one, down a stair from the room before the heart, shut
+## by a plain stone seal until every torch on floor one burns; then the
+## seal sinks into the floor with a grinding of stone and both ways stand
+## open, the way out up to the day and the way down (the fork). Each floor
+## is cleared by its own lights (§FF.2).
+##
 ## And always a way out (§EX.5, crawler.json exit): at the top of the long
 ## flight past the heart the old way in glows with faint daylight
 ## (WayOut). Stepping into it is the stand-in (exit.stand_in) until
@@ -126,9 +133,13 @@ var hand_strip: HandStrip
 var harm: Harm
 var harm_view: CrawlerHarmView
 var boss: Boss
+## The fork (design §FM.6): the seal on the way down, opened with the way
+## out when floor one is lit.
+var fork: Fork
 var drips: AudioStreamPlayer
 var _fade: ColorRect
-var _lit_logged := 0
+## Lights logged as relit, per floor (floor -> count).
+var _lit_logged := {}
 ## The one who found you is at the hearth and the dark lifting (tests
 ## wait on it; the name is from when the rescuer was baked to a sprite).
 var baked := false
@@ -137,9 +148,10 @@ var baked := false
 var leaving := false
 ## Tombs walked out of this session.
 var walked_out := 0
-## A kept dungeon came back with every light relit (§FK.2): its residents
-## lie down as bones once their sheets are baked (_rescuer).
-var _bones_after_bake := false
+## The floors a kept dungeon came back with every light relit (§FK.2,
+## floor by floor since §FM.6): their residents lie down as bones once
+## their sheets are baked (_rescuer).
+var _bones_after_bake: Array = []
 
 
 func _ready() -> void:
@@ -251,14 +263,20 @@ func _load_tomb(s: int, at := 0) -> void:
 	residents.name = "Residents"
 	add_child(residents)
 	residents.build(lay, player, fires)
-	# Kept with every light relit: cleared already, as you left it (§FF.2),
-	# with no log line again; its residents lie down as bones in their
-	# places once their sheets are baked (_rescuer), and the snake is down
-	# its hole (Boss._start_far: no dark left).
-	_bones_after_bake = kept_lit > 0 and residents.floor_lit()
-	if _bones_after_bake:
-		residents.cleared = true
-		residents.cleared_at = residents.clock
+	# Kept with a floor's every light relit: that floor cleared already, as
+	# you left it (§FF.2, floor by floor since §FM.6), with no log line
+	# again; its residents lie down as bones in their places once their
+	# sheets are baked (_rescuer), and with floor one's the snake is down its
+	# hole (Boss._start_far: no dark left on its floor).
+	_bones_after_bake = []
+	if kept_lit > 0:
+		for f in TombFloors.floors_of(lay):
+			if residents.floor_lit(f):
+				residents.cleared_floors[f] = residents.clock
+				_bones_after_bake.append(f)
+		residents.cleared = residents.cleared_floors.size() >= TombFloors.floors_of(lay).size()
+		if not _bones_after_bake.is_empty():
+			residents.cleared_at = residents.clock
 	var w: Array = lay.wake
 	player.spawn_flat(w[0], float(w[1]), -0.32)
 	if fire_pots == null:
@@ -272,8 +290,25 @@ func _load_tomb(s: int, at := 0) -> void:
 	boss = Boss.new()
 	add_child(boss)
 	boss.build(lay, fires, player, drips)
-	_lit_logged = fires.lit_count()
-	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [s, int(lay.hearth_ways), fires.holders.size() - _lit_logged], "world")
+	# The fork (design §FM.6): the way down sealed until floor one is lit,
+	# after the boss, so its line follows the boss's going. Kept open in this
+	# game's save once it has opened (§FK.2, CrawlerSave.keep "fork_open"),
+	# and open again on Continue at once, with no sound and no line (as with
+	# every light on floor one kept relit).
+	fork = Fork.new()
+	add_child(fork)
+	fork.build(lay, fires, residents, boss)
+	if bool(CrawlerSave.kept_value(at, "fork_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
+		fork.open_now(true)
+	fork.opened_now.connect(func() -> void: CrawlerSave.keep(at, "fork_open", true))
+	# The lights already burning (kept), counted floor by floor, so the log
+	# counts on from them.
+	_lit_logged = {}
+	for f in TombFloors.floors_of(lay):
+		_lit_logged[f] = TombFloors.lit_on(fires, lay, f).x
+	# (Floor one's cold lights: nothing tells of a floor below, §FG.)
+	var c0 := TombFloors.lit_on(fires, lay, 0)
+	GameLog.add("Tomb %d — %d ways out of the hearth room, %d cold lights below." % [s, int(lay.hearth_ways), c0.y - c0.x], "world")
 	print("[crawler] game %d, place %d: %d holders kept relit" % [CrawlerSave.game_seed, at, kept_lit])
 	print("[crawler] seed %d: %d pieces, %d ways from the hearth room, %d way out, %d holders, %d airways, %d vents (%d with daylight), %d residents; %s masonry: %d stones on %d wall faces, %d triangles; %d glow-moss patches, %d beetles and scarabs" % [s, (lay.pieces as Array).size(), int(lay.hearth_ways), (lay.exits as Array).size(), fires.holders.size(), (lay.airways as Array).size(), (lay.vents as Array).size(), vents.shafts.size(), residents.all.size(), FittedStone.preset_name(), int(tomb.get_meta("stones")), int(tomb.get_meta("faces")), int(tomb.get_meta("triangles")), glow_moss.patches.size(), wall_life.bugs.size()])
 
@@ -285,7 +320,7 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
@@ -294,6 +329,7 @@ func _clear_tomb() -> void:
 	rescuer = null
 	cauldron = null
 	boss = null
+	fork = null
 	baked = false
 	TorchSnuff.drafts = null
 
@@ -546,17 +582,26 @@ func _rescuer(fade_in_s := 2.5) -> void:
 	# (Mike's note of 7 Oct: it moves only physically, at the edges of the
 	# light).
 	await get_tree().physics_frame
+	# The fork's seals: the grid is cast through them and their doorways
+	# shut on it, to open with them (Fork).
+	if fork != null:
+		residents.see_through = fork.seal_rids()
 	residents.build_nav()
+	if fork != null:
+		fork.attach_nav(residents.nav)
 	if boss != null:
 		boss.nav = residents.nav
 		boss.light = residents.light
 	await residents.bake(self)
-	if _bones_after_bake:
-		# A kept floor, every light relit (§FK.2, §FF.2): each resident as it
-		# was left, bones in its niche or grave (Resident.retreat at rest).
-		_bones_after_bake = false
+	if not _bones_after_bake.is_empty():
+		# A kept floor, every light relit (§FK.2, §FF.2): each of its residents
+		# as it was left, bones in its niche or grave (Resident.retreat at
+		# rest).
+		var floors := _bones_after_bake.duplicate()
+		_bones_after_bake = []
 		for one in residents.all.duplicate():
-			(one as Resident).retreat()
+			if residents.floor_of(one as Resident) in floors:
+				(one as Resident).retreat()
 	baked = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, fade_in_s)
@@ -594,14 +639,20 @@ func _process(delta: float) -> void:
 
 ## The count of lights relit, in the log as each catches: in the physics
 ## step, ahead of what a light sets off there (the residents' clearing,
-## §FF.2, and the boss's release, §EY.2), so the log reads in that order.
+## §FF.2, the boss's release, §EY.2, and the fork, §FM.6), so the log reads
+## in that order. Counted per floor (design §FM.6): the lights of the floor
+## the light caught on.
 func _physics_process(_delta: float) -> void:
 	if leaving:
 		return
-	var lit := fires.lit_count()
-	if lit > _lit_logged:
-		_lit_logged = lit
-		GameLog.add("%d of %d lights burn again." % [lit, fires.holders.size()], "relit")
+	var caught := false
+	for f in TombFloors.floors_of(lay):
+		var c := TombFloors.lit_on(fires, lay, f)
+		if c.x > int(_lit_logged.get(f, 0)):
+			_lit_logged[f] = c.x
+			caught = true
+			GameLog.add("%d of %d lights burn again." % [c.x, c.y], "relit")
+	if caught:
 		# Kept for good in this game's save, written now (§FK.2).
 		CrawlerSave.keep_relit(CrawlerSave.place, CrawlerSave.relit_now(fires))
 
