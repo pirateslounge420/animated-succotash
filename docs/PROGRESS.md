@@ -4,6 +4,73 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 68, §FM.6: floors and the fork: a second floor below the first, sealed until floor one is lit (f2bd277)
+§FM.6: "Light every torch on floor one and two openings appear together: the way up to the surface and the way down to the next floor. An instantaneous first decision for the player." Built as queue 68 says, with three calls of mine (the stair's place, floor two's size and its skeletons) under **For Mike** below.
+
+- **What changes on screen:**
+  - **The way down.** The room just before the heart (the spine's last room before it) has a doorway in the middle of one side wall with a plain stone slab standing in it. It is the tomb's own grey-blue stone, with nothing carved on it and no light (§FG: nothing points to it), and you can't get past it.
+  - **The fork.** Light every torch on floor one. On the very tick the last one catches, the slab starts to sink into the floor. It takes 3 s, with a heavy grinding of stone you can hear about 70 m down the passages and a thud as it settles. Then the log says, once: "Every light is lit. Two ways open: up to the day, or down." The line comes after "Banished the dark. What lived in it fled." and the snake's line.
+  - **The way out stays open the whole time.** `fork.gate_surface` is false: you haven't answered §FM.10 call 2, so I left it false. With it true, a second slab stands at the foot of the way-out stair and both slabs sink on the same tick. Going up still fades to the game's next tomb, as before, until prompt 71 builds the surface.
+  - **Behind the slab:** a straight flight of stairs drops 4.8 m (8 m of steps) into floor two. Going back up, you arrive at the same doorway.
+  - **Floor two** is built by the same generator in the same stone:
+    - a first room at the foot of the stairs, then a long main way and shorter side ways;
+    - crypts, catacombs, ossuaries and collapsed rooms (about 9 rooms), with cold wall torches in every room and along the corridors, and airways;
+    - its own three to six skeletons asleep in its niches and coffins;
+    - no hearth (floor one's is the only one) and no heart. No fog yet (prompt 69).
+  - **Each floor is cleared by its own lights.** Light all of floor two and its skeletons go home, and the log says its line, whatever floor one is doing. The log counts each floor's lights separately ("12 of 32 lights burn again." on floor two). The tomb's first log line counts floor one's lights only, so nothing gives floor two away.
+  - **The snake stays on floor one**, with its lair where it was. You haven't answered §FM.10 call 4. Its dark is floor one's, so floor one's last light drives it home. It never goes down the stairs. The fire pot you can find stays on floor one too.
+  - **Floor one is the tomb as it was**, except the room the stairs leave: it gains the doorway, and its torches, niches and coffins are placed around it. The rest of floor one keeps its layout, torches, airways, skeletons, lair and tunnels.
+  - **Kept** (queue 63's save, §FK.2; 63 landed first, so this pass wired it): once the way down opens, it stays open in your game's save (`fork_open`, kept with the lights you relit). Continue finds it open, with no grinding and no log line again. A floor kept fully relit comes back cleared on its own.
+- **How:**
+  - `TombFloors` (new) lays the stairs and floor two. `TombKit` calls it after floor one's side ways. Floor two gets its own dice, and floor one's torches, airways, skeletons, lair and tunnels are placed on floor one only. Floor two never sits over or under floor one, so one floor grid holds both.
+  - `Fork` and `RelightGate` are new. They are the first relight_to_open gate (`crawler.json → gates`; nothing called "the gates machinery" existed, so this is it). While a slab stands, nothing walks or plans a path through it: `TombNav.close_door` and `BossGround.shut`.
+  - `Residents` clears floor by floor (`cleared_floors`). `CrawlerMain` counts lights per floor and saves the fork with the relit lights.
+  - Data:
+    - `descent.json`: `floors.drop_m` (4.8) and `fork.seal` (`open_s` 3, `thick_m` 0.36) added; `_help.floors` and `_help.fork` say what is built.
+    - `audio.json → kinds.stone_seal`: the grinding's reach.
+    - `crawler.json`: `[NOT WIRED YET]` off `_help.floors`; `_help.cleared`, `_help.gates` and `_help.persistence` updated.
+- **What you can tune** (restart after editing):
+  - `descent.json → floors.count`: 1 gives the tomb alone, as before; 2 is the most for now.
+  - `floors.drop_m`: how far down the stairs go.
+  - `fork.gate_surface`: true seals the way out too until floor one is lit.
+  - `fork.seal.open_s`: how long the slab takes to sink.
+  - `fork.log_line`.
+  - `audio.json → kinds.stone_seal`: how far the grinding carries.
+- **Checks** (on f2bd277 and the merges before it), all 0 fails:
+  - `tools/fork_check.gd` (new, this pass's checks; queue 68 named `crawler_check.gd`): 48 lines.
+    - **Fifty layouts:** two floors every time. The stairs always leave the spine's room before the heart, through a centred door in its side wall. The flight drops 4.8 m. Floor two is below and apart, reached only through that door. Floor one matches a one-floor tomb of the same seed except that door. Floor two has its torches, no hearth or heart, its own skeletons. The snake's lair and tunnels are on floor one.
+    - **The walks (50 tombs):** with every torch cold and the slab standing, your body walks out every time and finds no way down. With the slab gone, it walks down into floor two every time (median 81 m).
+    - **In the game:**
+      - The slab blocks you, the skeletons and the snake, and carries no light.
+      - Floor two lit first is cleared on its own; the way down stays shut.
+      - Floor one lit but one: still shut.
+      - The last torch opens the way down on the tick floor one is cleared, with the grinding and the one log line.
+      - The slab sinks out of sight in 2.9 s. The snake goes home. The way out is open throughout.
+      - Your body walks down the stairs and back up to the same doorway.
+      - Continue after closing finds the way down open, quiet.
+      - With `gate_surface` true, both slabs go on one tick.
+  - Also run: on f2bd277, `crawler_check` 271 (seed 7, 203 seeds walked), `boss_check` 227, `boss_pool_check` 51 and `hearth_cauldron_check` 56. On the merge with queue 63: `crawler_save_check` 39, `cleared_check` 90, `crawler_harm_check` 59, `hands_check` 61 and `hud_pin_check` 49. On this pass before the merges (queues 65 and 67 touch neither): `residents_check` 177, `fire_pot_check` 104 and `stagger_check` 65. `hud_pin_check` crashes in Godot's shutdown after its result: the known one.
+  - Changed in place where floors change what they assert:
+    - `cleared_check`'s relight run uses floor one's torches and skeletons.
+    - `residents_check` counts 3–6 skeletons per floor.
+    - `crawler_check`'s walk of every door opens the fork first, and its walk-out line now names the slab.
+    - `crawler_save_check`'s first log line counts floor one's cold lights.
+- **For Mike:**
+  - §FM.10 call 2, the way out gated by the lights: still open; `gate_surface` is false.
+  - §FM.10 call 4, the snake's home on the bottom floor: still open; it stays on floor one.
+  - My calls, change any:
+    - **Where the stairs leave:** the room before the heart, so the way down opens near the way up.
+    - **Floor two's size:** about three quarters of floor one (about 9 rooms against 11).
+    - **Its own skeletons:** `residents.json → per_dungeon` 3–6 now counts per floor, so a whole tomb has 6–12.
+  - The beetles (`ambience` 10–16 a tomb) are now spread over both floors, so floor one has about half as many as before. Glow-moss grows by wall length, so each floor keeps its own.
+  - Floor two adds about half again to the tomb's stone (seed 7: 937,000 triangles against 606,000) and to its build time (13.5 s against 8.5 s on this machine; much less on your Mac).
+- **For chat:**
+  - Prompt 68 asked to take `[NOT WIRED YET]` off `descent.json → _help.floors` and `_help.fork`, but neither carried it; only `_help.about` did. The about now says floors and fork are wired, and the prefix moved to `_help.floor_two` (prompt 69's).
+  - `floors.same_stone` and `floors.base_layer` aren't read: floor two is always the same stone; the base layer waits on call 4 and prompt 73.
+  - `fork.when`, `opens`, `both_at_once` and `penalty` are built as they say; nothing switches them.
+  - §FF.1's open question (one hearth per dungeon or per floor) is read as one per dungeon (§EX.4).
+  - Slower checks: floor two roughly doubles the work of every crawler check that builds tombs. `crawler_check`'s 203-seed walk alone took 613 s here (the whole run about 45 min, with other checks running alongside).
+
 ## 2026-10-09 — Queue 67, §FM.6: the shaman and the cauldron at the hearth (3485919)
 Mike, 9 Oct (§FM.6, the opening room): one shaman sits at the hearth, *"and now a cauldron hangs over the hearth, from the first moment."* Built as queue 67 says; nothing else from §FM.6 (the floors, the fork, the fog and the room pool are 68–70; the brew is 72).
 

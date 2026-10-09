@@ -97,7 +97,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | built 492ae98 |
 | 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
 | 67 | §FM.6 | The shaman and the cauldron at the hearth | built 3485919 |
-| 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | todo |
+| 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | built f2bd277 |
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | todo |
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | todo |
@@ -1232,7 +1232,7 @@ CHECK (headless, tools/crawler_check.gd): over 20 seeds every dungeon's hearth r
 
 ## 68 — Floors and the fork: light the first floor and two ways open — §FM.6
 
-**Status:** todo
+**Status:** built f2bd277
 **Mike sees:** Light every torch on the first floor and two openings appear together: a stair up toward the day and a stair down to a second floor. Take either one first. Nothing is lost by choosing.
 
 ```text
