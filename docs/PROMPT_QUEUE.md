@@ -99,7 +99,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 67 | §FM.6 | The shaman and the cauldron at the hearth | built 3485919 |
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | built f2bd277 |
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | built a490eda |
-| 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
+| 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | built fae9712 |
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | built 0181fcf |
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
@@ -1262,7 +1262,7 @@ CHECK (headless, tools/crawler_check.gd and tools/crawler_frames.gd): floor two'
 
 ## 70 — The room pool: hand-built big rooms shuffled into each run — §FM.6
 
-**Status:** todo
+**Status:** built fae9712
 **Mike sees:** Two tombs now differ in the rooms you come to, not only in the winding. Each run draws a few hand-built big rooms into the layout, a pillar hall, a stepped hall, a sunken court, among the usual rooms and passages.
 
 ```text
