@@ -4,6 +4,86 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 71, §FM.7: the tomb's surface: day and night above the stair (0181fcf)
+§FM.7: "Going up leads to the overworld of that dungeon's own biome, the pocket above it (§EW.7 step 2) ... The day-night cycle runs there, for ambience only." Built as queue 71 says: one surface, the tomb's, and nothing of the other worlds, the passages, the map or harvesting.
+
+- **What changes on screen:**
+  - **Going up.** Walk into the way out's opening and the screen goes black over 2 s. The log says "Up the old stair and out, under the open sky." The first time, the surface is built in the dark (6–16 s on this cloud machine, depending on how busy it is); after that it is kept, so going up again is just the fade.
+  - **Where you come out:** the yard of a ruin straight above the opening you walked into, in the tomb's own grey-blue fitted stone (§EX.1).
+    - A stair of block steps climbs out of the ground between fitted walls, under a trapezoid portal (jambs under one lintel, the tomb's door, §EX.3), with broken stubs of its front wall either side.
+    - Round it is a yard of fitted flags inside low broken walls, open ahead.
+    - You stand 2.4 m past the portal facing out, carrying what you carried, your torch lit or not as it was.
+  - **The land** (the desert world, `worlds.json → worlds.desert`, biome hot_desert):
+    - A basin about 1.4 km across, gently rolling, flat round the ruin.
+    - A dry wash runs from just past the ruin straight out ahead of you toward a butte standing over the rim against the sky (the shot: a line running to a landmark).
+    - All the way round, a slope of talus rises to an escarpment 38–80 m high that closes the basin. It is far too steep to climb anywhere: the land itself, no invisible wall.
+    - Far ranges show pale blue over the rim in the haze: near, mid and far (§EW.5), no other world's landmark yet.
+  - **The plants:** the hot desert's own, drawn exactly as in the open world, about 10,500 of them: creosote and bursage on the flats, saguaro and paloverde on the slopes under the cliffs, velvet mesquite on the wash's banks (its sandy bed is left open, so it runs out pale toward the butte), grasses round the ruin. Each stand is mostly its dominant species (§CS). Trees have trunks you can't walk through.
+  - **Life:** tortoises by day and hares at any hour, five to nine of them near you. A hare bolts if you come within 14 m; a tortoise just stops. These are the only two ground animals in `data/creatures` whose climate fits the desert.
+  - **Things to find, never needed** (§FG), out on the basin: ruin remains (a broken run of fitted wall, fallen blocks, a lintel lying), old camp marks (a ring of field stones round old ash, charred sticks, fallen poles) and litter (sherds, a broken pot, bleached bones). Between 9 and 16 of them in a world (11 on seed 7).
+  - **The vents** (§EV.4), each on the ground straight above its vent below:
+    - over the hearth's shaft, its stack: a ring of the tomb's stone round a dark mouth, sooted at the lip (`smoke.json → outlets.by_ruin`: the tomb's mound vent). The hearth's smoke rises out of it by day (a 42 m column) and a faint amber glow shows in its mouth at night;
+    - over every wall torch's flue, a small sooted slot in the ground (80 of them over seed 7).
+  - **The time of day:** the one clock (§FK.3), the same World clock as below, so the sun up here and the shafts' daylight below always agree. Dawn, day, dusk and night are 18, 60, 18 and 48 minutes of the 144-minute day; the sun rises in the east, stands overhead at noon and sets in the west. The moon and stars come out at night (the open world's sky, §DD). Wind blows all the time; cicadas sing by day and crickets by night. Ambience only: nothing up here needs a time of day.
+  - **Going back down:** walk back down the ruin's steps. Once you are 3 m down them, the screen goes black, the log says "Down the old stair, back into the dark.", and you stand on the landing at the top of the tomb's flight, just inside the opening, facing in. It is the same tomb exactly as you left it: every light you lit still burning, the skeletons and the snake where they were, nothing rebuilt.
+  - **The stand-in** stays for a dungeon with no surface yet (`exit.stand_in`); the tomb has one, so you no longer wake in another tomb.
+- **How:**
+  - `Surface` (`scripts/crawler/surface.gd`, new) is the world up there. `CrawlerMain.go_up` and `go_down` carry you between: the dungeon's nodes are taken out of the tree while you are up (kept, not rebuilt, so the same tomb comes back; floor two's fog, queue 69's FloorFog, goes with them), the surface out while you are down. `walk_out` goes up when `Surface.covers` the dungeon (the tomb), else the stand-in as before.
+  - `SurfaceGround` (new): one heightfield, drawn in the open world's terrain material and walked on as one HeightMapShape3D, so what you see is what you walk on. The stairwell is cut into it under the yard.
+  - `SurfaceBuild` (new, extends TombBuild): the ruin, the stacks and slots, the finds, all cut from the tomb's style (the stone weathered dry, the desert's climate, not the tomb's damp: sand drifts, no moss).
+  - `SurfacePlants` (new): the biome file's three nearctic associations (wash, flats, upland), the open world's PlantMeshes, near meshes within 110 m and impostors past it.
+  - `SurfaceLife` (new): creatures from `data/creatures` whose climate overlaps the biome's, in CreatureBodies' bodies.
+  - The sky is the open world's `SkySystem` with a new switch, `one_clock` (default off, so the open world is untouched): the sun from DayCycle's reference day over flat ground, the same height `Vents.sun_deg` gives the shafts. Everything the surface changes (the environment, the grade's night and firelit whites, the look's haze, the half-dark, the camera's reach, the drone and drips) is put back as it was when you go down.
+  - Small hooks: `Footsteps.flat_ground` (sand and dirt underfoot up there), `GlowMoss._enter_tree` (its patches glow again when the tomb comes back).
+  - Data: `worlds.json → surface` (new block, every key in `_help.surface`); `[NOT WIRED YET]` off `_help.about`, with what is built and what isn't; `_help.size`, `clock`, `life`, `horizon` and `worlds` say what queue 71 built; `crawler.json → _help.exit` and `smoke.json → _help.vents` likewise.
+- **What you can tune** (`data/worlds.json → surface`, restart after editing):
+  - `on`: false gives the stand-in back.
+  - `across_m` (the basin's width), `edge.cliff_m` (the escarpment's height), `edge.landmark` (the butte).
+  - `sky.fog_day` and `fog_night` (how quickly distance goes pale blue).
+  - `plants.per_hectare` (how many plants), `plants.dominant_share`, `plants.ground_per_hectare`.
+  - `life.count`, `finds` (how many of each), `stairhead` (`drop_m`, `yard_m`, `down_at_m`), `arrive` (`fade_s`, the log's two lines), `sound` (the wind, cicadas and crickets).
+- **Checks**, all 0 fails (0181fcf is the pass rebased onto queue 77; each line says which base it ran on):
+  - `tools/surface_check.gd` (new, queue 71's check): 60 lines, on every base (last on 0181fcf).
+    - **Going up:** walking into the opening begins it. You come out in the yard straight over the opening (9.9 m from the point above it), on the yard's floor at the surface level, facing out. The portal's jambs stand either side of the stair's mouth. The torch and pack are as they were, and the log has its line. The dungeon is kept out of the tree (its stone, fires, residents, boss, fork, shaman and floor two's fog).
+    - **The look:** the sky runs on the one clock. At noon the sun is the one light (no other light up there), the shade is navy (ambient #1838c8), and distance is lighter and bluer (haze #79a4d8). At midnight there is no sun, the shade is still navy, and the moon's light is on. The ground is in the hot desert's colours. 10,475 plants grow from the biome's three associations, each stand mostly its dominant species (wash: velvet mesquite 96 against 79; flats: creosote 2,015 against 1,403; upland: saguaro and paloverde 2,696 against 1,723).
+    - **The one clock:** dawn 18, day 60, dusk 18 and night 48 minutes. At the start of dawn the sun is at −10.000° up here and −10.000° below; at noon 90.000° and 89.998°; at the start of dusk 9.999° and 9.999°; at the start of night −10.001° and −10.001°. The sun moves with World.days, and the surface keeps no clock of its own. Ambience only: at midnight you go down and come up again just as at noon.
+    - **The vents:** one stack (the tomb's mound vent) and 80 slots, each straight over its vent. The stack smokes by day (a 42 m column) and glows faintly amber at night.
+    - **Life and finds:** 9 hares and tortoises, on the ground inside the pocket and keeping their hours (the tortoise by day only). The finds: 4 remains, 2 camps and 5 litter, clear of the stairhead, with no trigger or pickup up there.
+    - **Going down:** walking back down the steps begins it. It is the same dungeon (the same stone, layout and fires; tomb 7, place 0), with the same 27 holders lit on its two floors and no others. You stand on the landing facing in, and the log has its line. Everything the surface changed is put back: the environment, the grade, the haze, the half-dark, the camera's reach, the drone and drips, stone underfoot. Going up again finds the same surface, with no new build. Your steps are on stone in the yard and on sand out on the basin.
+    - **The edge:** the only collision is the land, the stone and the trunks (no invisible wall). The pocket is 1,400 m across, within `size.across_m` [1000, 2000]. The escarpment is steeper than you can walk all the way round. Your own body walked 2,000 m from the stair in 16 directions and never left the pocket: at most 1.7 m past the cliff's foot, 718 m out at the furthest, never off the ground, never falling. Sprinting and jumping gave the same result (2.8 m, 741 m). No map, no fast travel.
+    - **Twenty tombs** (seeds 1, 7, 42 and 17 more): the surface builds on every one, in 5–24 s each depending on the machine's load. On each, the stair climbs from straight over the opening, you arrive on level ground, your body walks down the steps to where the way down begins, every vent has its stack or slot, all three stands grow, and there are finds and creatures. The same seed gives the same land.
+  - `tools/crawler_check.gd` (seed 7): 273 on both rebases (271 before). Its stand-in round now goes up to the surface and back down first (two new lines), then walks the stand-in as before with `surface.on` off.
+  - Run again after rebasing onto queues 66, 69 and 76: surface_check 60, crawler_check 273, boss_check 227, crawler_save_check 39, hearth_cauldron_check 56, and the walkabout's 7; then, onto queue 77, surface_check again: 60.
+  - Run on the first rebase (onto queue 75): crawler_save_check 39, hearth_cauldron_check 56, boss_check 227, fork_check 48, cleared_check 90, residents_check 177, fire_pot_check 104, crawler_harm_check 59, hands_check 61, stagger_check 65, boss_pool_check 51, `day_check` (SEED=7731, the open world's sky, which `one_clock` leaves alone) 21, hud_pin_check 49. The last two end with the open world's known crash after their result.
+  - The "2 resources still in use at exit" warning every crawler check prints comes from TombNav's and LightField's scripts, from before this pass (named with `--verbose` on fork_check).
+  - **The walkabout** (`ONLY=surface` with `tools/crawler_frames.gd`, seed 7, frames 29a–29g; renumbered from 28 because queue 69's fog frames are 28a–28f): 7 frame checks pass. What I saw:
+    - **29a, dawn:** the sun on the horizon. The sky is pink to violet with gold-lit flecks of cloud. The escarpment and the far ranges are pale blue-grey. The wash's mesquites stand dark against the sky, and the yard and the basin are navy.
+    - **29b, noon:** the sun overhead. The sky is a deep saturated blue with pale painted clouds, over a pale blue band of escarpment all the way round. The sand ahead is a pale warm cream (#f7e4e2) under navy tree shadows. Mesquites stand either side of the open wash. In the foreground are the yard's blue-grey fitted flags, with a broken wall stub in navy shade on the left.
+    - **29c, dusk:** dawn in reverse: the horizon warm (5 % of the frame), the land navy.
+    - **29d, midnight:** a full moon nearly overhead (80.7°, 0.98 of its light). Stars in a deep blue sky; the sand a moonlit pale blue (luma 0.45, against 0.92 at noon); the flags and walls blue.
+    - **29g, a moonless midnight:** stars over a navy land. The ridge line and the trees' silhouettes still read; the darkest tenth of the frame is navy (#000025), never black; the frame's luma is 0.07.
+    - **29e, the ruin from out on the basin at noon:** the portal (its lintel on its jambs), the broken wall stubs, the yard's low walls and sand drifts round them, the stack's smoke rising beyond, and the escarpment pale blue far off. Pale spikes on the horizon at either side are, I take it, far saguaros.
+    - **29f, the hearth's stack at dusk:** a sooted ring of the tomb's stone, with a grey column of smoke standing over it.
+- **For Mike:**
+  - **Which world the tomb is in** (§FM.10 call 1, §EW.8 call 4): I built the desert, because queue 71 points at `worlds.desert` (your "read today's tomb as a desert dungeon", and the snake is the desert's boss). §FM.3 says the tomb should be the Aztec world. If the Aztec world is a different biome, change `worlds.json → surface.world` (or `worlds.desert.biome`) and the land, plants and animals follow.
+  - **Prompt 72 will need a call:** ololiuhqui (the Aztec world's plant) grows in tropical dry forest, thorn scrub, savanna and jungle, not hot desert. Thorn scrub would host it and still look like dry country.
+  - **The next tombs:** the tomb's way out now goes up, so in play you stay in your first tomb and the land above it. The game's next tombs wait for the passages between worlds (§EW.3).
+  - **Continue** still wakes you by the hearth below, even if you quit while up on the surface. Say if Continue should put you back up there.
+  - My first guesses, change any: the basin's 1.4 km, the escarpment all round (a desert basin; cliffs could be broken by dunes in places), the yard and portal, the finds' counts, the fair-weather breeze.
+  - **The light up there is the open world's, unchanged.** Two things you may notice:
+    - At noon the sand is nearly white (luma 0.92). With no latitude (§FK.3) the sun stands straight overhead at noon every day, the strongest light the look's sun gives.
+    - Nights swing with the moon. Under a full moon overhead the pale sand reads bright: the frame measures 0.28, against the open world's full-moon target of 0.20 (`look.json → moon_nights`, set on greener ground). With no moon it measures 0.07, against the target of 0.10: navy and dark, the ridge line and the trees still readable. The one dial is `moon_nights.lift_scale`, and it is shared with the open world, so I left it alone.
+- **For chat:**
+  - **Which world the tomb is in.** Queue 71 points at `worlds.desert` (hot_desert), but §FM.3 makes the tomb the Aztec world (§FM.10 call 1, §EW.8 call 4). I built the desert; the switch is `surface.world`.
+  - **For prompt 72:** ololiuhqui's biomes (tropical dry forest, thorn scrub, savanna, jungle) leave out hot desert.
+  - `worlds.desert.theme` stays "open". FittedStone matches that key to find a ruin's climate, so setting it to "tomb" would dry out the tomb's own stone below (no moss). The surface swaps in the desert's climate only while it cuts its own stone.
+  - `[NOT WIRED YET]` was only on `_help.about`. I took it off and said what is built: the tomb's surface. The rest of §EW is still not built: the passages, the map, every other world, and the horizon's other-world landmarks.
+  - CLAUDE.md's §EW and §FM lines say "not built yet". The tomb's surface now is.
+  - `data/creatures` has no desert bird, so up there the only life is the hare and the tortoise.
+  - Places 1 and beyond (the next tombs) can't be reached in play while the tomb's way out goes up. `surface.on` false brings back the stand-in.
+  - Continue doesn't remember that you were up on the surface (`CrawlerSave` keeps no flag for it).
+  - Queue 71's CHECK names crawler_check; its new assertions are in `tools/surface_check.gd`, as new checks go in a new file. Existing checks were changed in place only where going up changes what they test: crawler_check's stand-in round; crawler_save_check, hearth_cauldron_check and boss_check, which walk out (they turn `surface.on` off, or count a trip up as a walk out).
+
 ## 2026-10-09 — Queue 77, §FM.13: a bulb shape: a fan of leaves on a bulb (ea48c3c)
 §FM.13 item 3 (Mike, 9 Oct, "do it"): leshoma was drawn as a spike rosette; now the engine draws it as it looks, a bare brown bulb half out of the ground with a flat fan of grey-green rippled leaves. Built as queue 77 says, the leafy form only: its flower head is not built (below). The spike rosette itself is untouched.
 

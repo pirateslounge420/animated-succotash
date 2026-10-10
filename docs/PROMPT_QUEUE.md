@@ -100,7 +100,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | built f2bd277 |
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | built a490eda |
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
-| 71 | §FM.7 | The tomb's surface: day and night above the stair | todo |
+| 71 | §FM.7 | The tomb's surface: day and night above the stair | built 0181fcf |
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
@@ -1277,7 +1277,7 @@ CHECK (headless, tools/crawler_check.gd): over 100 seeds every dungeon has its s
 
 ## 71 — The tomb's surface: day and night above the stair — §FM.7
 
-**Status:** todo
+**Status:** built 0181fcf
 **Mike sees:** Take the stair up and you come out into daylight on a small stretch of land above the tomb. It is day, dusk or night as the clock says, with things to find and look at. You no longer wake in another tomb.
 
 ```text
