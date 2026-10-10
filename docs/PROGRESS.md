@@ -4,6 +4,63 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 77, §FM.13: a bulb shape: a fan of leaves on a bulb (ea48c3c)
+§FM.13 item 3 (Mike, 9 Oct, "do it"): leshoma was drawn as a spike rosette; now the engine draws it as it looks, a bare brown bulb half out of the ground with a flat fan of grey-green rippled leaves. Built as queue 77 says, the leafy form only: its flower head is not built (below). The spike rosette itself is untouched.
+
+- **What changes on screen:**
+  - **Nothing in the crawler yet.** `data/sacred` is still not loaded, and nothing in the open world (Torchfire 2, switched off) has the new shape either. The engine can draw leshoma; nothing places it yet.
+  - **The bulb:** a bare brown onion about 19 cm across (drawn at 40 cm tall), widest right at the ground line, so its top half sits bare above the ground and the rest is under it. It narrows into a neck, with a few frayed shreds of paler tunic round the neck's top. Its papery skin is painted in faint bands, paler on its shoulder and neck where the tunics tear.
+  - **The leaves:** 12 stiff grey-green straps, 25–34 cm long and about 3 cm wide, blunt at the tip, their edges rippled (they rise and fall out of the blade). They stand in a flat upright fan in one plane, in two ranks: one leaf leans left, the next right, each pair farther out than the one inside it, the outer ones arching out to about 60° from upright. Four of the twelve are twisted a little (up to 28° by the tip). The front of each leaf is the entry's grey-green, the back a paler grey-green, with a darker midrib.
+  - **From the side** (the fan facing you) it reads as a fan on a bulb; **edge-on** the fan is a thin line on top of the bulb. Every leshoma shares one model, and the placer turns each plant at random, so in a patch one fan faces you and the next shows its edge.
+  - **Painted (§ES):** diffuse only, no leaf tiles, no shine. The shade at the bulb's foot and at the leaves' feet in the neck goes navy, never grey. The bulb holds still in the wind; the leaves sway a little at their tips.
+  - **From far off** it keeps every leaf on the same line in its one plane (fewer segments, no ripples, no shreds), never the flat card the far trees use, which turns to face you and would show the fan even edge-on.
+  - **Not built: the flower.** In life leshoma flowers before its leaves come, a round pink head on a short thick stalk. Torchfire 1 has one clock and no year (§FK.3), so there is no bloom season to show it in, and the open world, which has seasons, doesn't load `data/sacred`. As queue 77 allows, this pass builds the leafy form only: a question for you below.
+- **How:**
+  - `PlantSpecies.Shape.BULB`, read from an entry's `"shape": "bulb"`.
+  - `BulbMesh` (`scripts/ecology/bulb_mesh.gd`, new), called from `PlantMeshes._build`, reads the entry:
+    - `appearance.trunk.notes` for the bulb's size ("15-25 cm across": the middle);
+    - `appearance.leaf.notes` for the count ("8-16": one count for the species, 12 here), the word "twisted" and the word "blunt";
+    - `appearance.leaf.size_cm` for the length, the leaf block's `aspect` for the width, its `apex` (obtuse: a blunt end), `appearance.leaf.margin` (wavy: rippled edges);
+    - `appearance.leaf.colour`, `underside` and `vein_colour`; `canopy.droop` for how much the outer leaves arch;
+    - the entry's `bark` block (`color`, `color_2`) for the bulb. `PlantSpecies` now keeps an entry's `bark` block (`SpeciesDB`, two lines).
+  - Every face is the plant shader's painted flesh (queue 75's material, UV2.x −1), so each leaf is a closed thin strap. The plant shader pulls every bark toward its warm brown by day but leaves painted flesh alone, so the bulb's colours take that pull in the builder (`BulbMesh.painted_bark`, the palette's numbers copied). Without it the first frame showed the bulbs pale pink.
+  - `PlantMeshes.own_far` now includes BULB (its far level is its own model).
+  - Data, as a data-driven one-liner: `"shape": "bulb"` in leshoma's entry. Also one line added to `flags.leshoma` (the stand-ins gone, the flower not drawn), and `data/biomes/README.md` lists the shape.
+  - `tools/species_row.gd`: `TURN_DEG` (new) turns each row plant round its up, so one plant can face you and its twin show its edge; a bulb stands on the ground as in play; the sown grass keeps clear of each row plant's footprint (it grew through the bulbs before).
+  - `HOW_TO_RUN.md`: a bulbs bullet.
+- **What you can tune:**
+  - In leshoma's entry (`data/sacred/sacred_plants.json`): `appearance.trunk.notes` (the bulb's "cm across"), `appearance.leaf.notes` (the count, "twisted", "blunt"), `appearance.leaf.size_cm`, `colour`, `underside`, `vein_colour`, `margin`; the leaf block's `aspect` (length over width) and `apex`; `bark.color` and `color_2` (the bulb); `canopy.droop` (more arch); `height_m`. Change the entry and the plant follows on the next start.
+  - In code, `scripts/ecology/bulb_mesh.gd`: `LEAN_INNER` and `LEAN_OUTER` (how wide the fan opens), `YOUNG_LENGTH` (the inner leaves' length), `RIPPLE` (how strongly the edges ripple), `TWIST_SHARE` and `TWIST_DEG`, `LEAF_SWAY`, `PROFILE` (the bulb's shape), `BAND`, `NECK_CREAM` and `SHREDS` (the tunics).
+- **Checks** (on ea48c3c as pushed), all 0 fails:
+  - `tools/bulb_check.gd` (new, queue 77's check): 56 lines.
+    - The shape and its string. Leshoma's entry says bulb, and it is built straight from it as a catalogue entry is built, with `data/sacred` still not loaded: 1,003 species before and after, none from `data/sacred`.
+    - At the hero, near and far levels (1,056, 792 and 396 triangles): every face painted, the top at y 1 in the unit frame, the bulb's foot under the ground line.
+    - **The fan is thin across:** its depth 0.13 against its width 1.15 (0.11; 0.10 far off), under a quarter, before the random turn; it spreads to both sides.
+    - **A bulb at the base:** round at the ground line, widest 0.03–0.08 of its radius from it, still three quarters of its width half way up its top half, closing into a neck, its foot 0.62 radii under the ground: about half out of the ground. 19 cm across drawn at 0.4 m (the entry: 15–25 cm). Brown, its foot toward navy, lit outward, still.
+    - **The leaves:** 12 (the notes: 8–16), leaning left and right in turn, each in its own plane; every tip in the mesh in the same place at every level (every leaf kept far off); 25.5–33.9 cm long (the entry: 20–50 cm), about their length over the aspect wide; arching at most 30°, blunt; 4 of 12 twisted, 28° at most.
+    - **One leaf alone:** 3.0 cm wide, its end still 1.5 cm across, 2.8 mm thick; its edges rippled 4.7 mm out of the blade (0.17 of its width), up and down in turn, near, and flat far off; front the entry's colour, back its underside; sway 0 at its foot, 0.35 at its tip; lit outward.
+    - The far level's face-on outline within 0.7 % of the near level's. No corner anywhere in the flower's pink: the leafy form only.
+    - **The random turn:** one model for every plant, and the placer's yaw spread over the whole turn (64 plants: 16, 14, 17 and 17 a quarter turn); its `prepare()` turns a plant by it (1.00 rad).
+    - **Every SPIKE_ROSETTE unchanged:** all 3 spike rosette species build exactly the spike rosette's leafy ball and spike at every level (rebuilt in the check as `PlantMeshes._build` draws it), and their far level is still the far card.
+  - `tools/species_mesh_check.gd`: 1,003 species at the near and far levels, 0 fails, no missing tiles.
+  - The plant checks round it: `globe_cactus_check` 44, `mushroom_check` 82, `giant_herb_check` 108, `wood_normals_check` 2 (every bark part and culm still faces out); `python3 tools/shader_varying_check.py` (all within the house limit); `python3 tools/plant_schema_check.py --strict data/sacred/sacred_plants.json` (7 entries, 0 errors).
+  - `crawler_check` not run: this is not a crawler pass, and no crawler script uses the plant code.
+  - **The look,** `tools/species_row.gd` (`SPECIES="sacred:leshoma,sacred:leshoma" TURN_DEG="0,90" HEIGHT_M=mid SPACING=0.9 DIST=2.1 EYE_M=0.5 LOOK_H=0.45 GRASS=Buffalograss`, 14:00, the camera 2.1 m off and 50 cm up), rendered twice:
+    - First frame: both read as meant, but the bulbs were a pale pinkish tan (#B59484 on screen), because painted flesh skips the shader's pull toward bark brown. So the bulb's colours now take that pull in the builder.
+    - Second frame, the one that stands: two leshomas about 69 px tall at 480 lines, in short pale buffalograss. **On the left, facing you:** a fan of a dozen grey-green straps (#5A737B to #4A6B63 on screen) opening from the bulb's neck like a hand fan, the outer ones arching out, over a warm tan-brown bulb (#BD947B; lighter than tree bark, because its dome faces the sun and the sky). **On the right, edge-on:** the same fan is a thin upright line on its bulb. Both cast navy shadows on the grass. Both read at a glance: a fan on a bulb, and a line on a bulb.
+    - Also in the frame: a pale blue streak across the sky, the open world's own, not this pass's.
+- **For Mike:**
+  - **The flower:** when should leshoma flower in Torchfire 1, where there is no year? In life it flowers at the end of the dry season, often right after a grass fire, before the leaves come: a pink ball on a bare bulb, then the fan. It could stay leafy (as now), flower after a fire, or keep a few plants always in flower. Your call; nothing waits on it.
+  - A leshoma model is about 800 triangles near (1,056 at the closest level, 396 far off), more than a mushroom: the rippled, twisted leaves are closed straps. Ground plants are drawn only within the ground cover's reach, so it costs little.
+- **For chat:**
+  - Data touched beyond the one-liner: one line added to `flags.leshoma`. `notes` at the top of `sacred_plants.json` still says "no bulb (leshoma as spike_rosette)": your text, so I left it. `status` keeps its `[NOT WIRED YET]`: the file is still not loaded, and the prompt named no `_help` line to unwire.
+  - Leshoma's `repro.bloom`, `fruiting` and `seasonal` are not read: no bloom season in Torchfire 1 (§FK.3). The open world's bloom code (`FruitCrop`'s flower_months window, `LeafSeason`'s clock) runs on its year and latitude only.
+  - "Often twisted" in `appearance.leaf.notes` is drawn as a few leaves twisted a little (queue 77's "sometimes twisted a little"), not the whole fan spiralling.
+  - `bulb_mesh.gd` copies three palette numbers (`pal_bark`, its 70 % day pull, `pal_ref_luma`) from `shaders/palette.gdshaderinc` so the painted bulb reads as bark: if the palette changes, change them with it.
+  - `sports.json → by_shape` has no `bulb`, so leshoma rolls no sports (as with the mushrooms). `Wind.kind_of` gives BULB the sheltered kind (0: the shrubs' push), not the grasses' bow, unchanged code.
+  - CLAUDE.md's §FM line doesn't mention §FM.13's three shapes; all three are now built (75, 76, and this, the leafy form).
+  - The prompt's check is in `tools/bulb_check.gd`, a new file, as the prompt allows ("a new check").
+
 ## 2026-10-09 — Queue 76, §FM.13: a globe cactus shape: a low button in the ground (d2c2859)
 §FM.13 item 2 (Mike, 9 Oct, "do it"): peyote was drawn as the tall cactus column; now the engine draws it as what it is, a clump of flat blue-green buttons sunk in the ground. Built as queue 76 says; the cactus column itself is untouched.
 

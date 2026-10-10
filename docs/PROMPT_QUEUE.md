@@ -106,7 +106,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
-| 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | todo |
+| 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1367,7 +1367,7 @@ CHECK (headless): species_mesh_check still passes (every CACTUS unchanged); a ne
 
 ## 77 — A bulb shape: a fan of leaves on a bulb, and its flower head — §FM.13
 
-**Status:** todo
+**Status:** built ea48c3c
 **Mike sees:** Nothing in the crawler yet. The engine can now draw leshoma as it looks: a bare brown bulb half out of the ground with a flat fan of grey-green rippled leaves, and in its season a round head of pink flowers.
 
 ```text
