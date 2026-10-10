@@ -110,13 +110,20 @@ func effect(player: PlanetPlayer, kind: String) -> void:
 	_effect_player.play()
 
 
+## A flat world's own ground where there is no planet (the crawler's
+## surface above the tomb, design §FM.7: Surface sets it while you are up
+## there): what is underfoot for `player`, or none (stone).
+static var flat_ground: Callable = Callable()
+
+
 ## What the player is standing on.
 static func material_under(player: PlanetPlayer) -> String:
 	var d := player.surface_dir
 	var chunks := player.chunks
-	# Underground in the crawler's tombs (design 6 Oct §ET): paved stone.
+	# Underground in the crawler's tombs (design 6 Oct §ET): paved stone; up
+	# on the crawler's surface, its own ground.
 	if chunks == null:
-		return "stone"
+		return str(flat_ground.call(player)) if flat_ground.is_valid() else "stone"
 	var ground_h := chunks.ground_height(d)
 	var water := chunks.water_level_at(d)
 	if water > ground_h + 0.05:

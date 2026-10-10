@@ -137,10 +137,14 @@ extends SceneTree
 ##     blue by day and fainter at night, seen from the bottom of the
 ##     flight (nothing between), fainter from far off (exit.glow far_fade:
 ##     all of it on the landing, less from the wake spot, Mike 7 Oct);
-##     stepping into it fades to the game's next tomb (exit.stand_in; its
-##     seed drawn from the game's and its place, §FK.2, queue 63),
-##     you on the mat by its lit hearth, the torch you carried lit or not
-##     as it was, the log's line;
+##     stepping into it leads up to the tomb's surface, at the ruin over
+##     the stair, and the same stair back down to the same tomb, its lights
+##     as they were (§FM.7, queue 71; surface_check.gd checks the surface);
+##     with worlds.json surface.on off (a dungeon with no surface yet) it
+##     fades to the game's next tomb (exit.stand_in; its seed drawn from
+##     the game's and its place, §FK.2, queue 63), you on the mat by its
+##     lit hearth, the torch you carried lit or not as it was, the log's
+##     line;
 ## 13. one ruin, one stone (§EX.1, §EX.3; _style_kit, _style_scene, _room_walks):
 ##     on seeds 1, 7 and 42 every stone vertex within the style's tint +-
 ##     spread before occlusion, ochre, soot, moss and drift, none from
@@ -3804,13 +3808,20 @@ func _way_out(main: CrawlerMain) -> void:
 	ok(fade_ok and shares.size() == 2, "on the landing the opening shows all its glow; from the wake spot %.0f m off it shows %.2f of it, by day and by night" % [float(shares[0][2]), float(shares[0][1])])
 
 
-## Stepping into the opening (design §EX.5's stand-in, exit.stand_in): the
-## fade, the game's next tomb (§FK.2), you on the mat by its lit hearth
-## carrying the torch you carried, lit or not as it was, and the log's line.
+## Stepping into the opening (design §EX.5; §FM.7, queue 71): the tomb has
+## its surface above it (Surface.covers), so the way out leads up into the
+## day at the ruin over the stair, and the same stair back down to the same
+## tomb, its holders lit as they were (tools/surface_check.gd checks the
+## surface whole). A dungeon with no surface yet keeps the stand-in
+## (exit.stand_in), checked here with worlds.json surface.on off: the fade,
+## the game's next tomb (§FK.2), you on the mat by its lit hearth carrying
+## the torch you carried, lit or not as it was, and the log's line.
 func _stand_in(main: CrawlerMain) -> void:
 	var p := main.player
 	var t := p.torch
 	var si: Dictionary = TombKit.EXIT.get("stand_in", {})
+	await _surface_round(main)
+	Surface.S["on"] = false
 	for lit_case in [true, false]:
 		var ex: Dictionary = main.lay.exits[0]
 		var old_seed := main.seed_value
@@ -3854,6 +3865,56 @@ func _stand_in(main: CrawlerMain) -> void:
 		ok(line == str(si.get("log", "")) and line != "", "the log says so: \"%s\"" % line)
 		await _frames(int(float(si.get("fade_s", 2.0)) * 60.0) + 10)
 		ok(main.baked and main.rescuer != null and is_instance_valid(main.rescuer) and not main._fade.visible, "its rescuer at its hearth, the dark lifted")
+	Surface.S["on"] = true
+
+
+## The way out with the surface on (design §FM.7, queue 71): walked into,
+## it comes out at the ruin over the stair, on the surface above the
+## opening; walked back down the stairhead's steps, the same tomb, on its
+## landing, its lights lit as they were.
+func _surface_round(main: CrawlerMain) -> void:
+	var p := main.player
+	var ex: Dictionary = main.lay.exits[0]
+	var n: Vector3 = ex.n
+	var lit := CrawlerSave.relit_now(main.fires)
+	var stone := main.tomb
+	p.spawn_flat((ex.p as Vector3) - n * 1.3, atan2(-n.x, -n.z), 0.0)
+	await _frames(5)
+	Input.action_press("move_forward")
+	for i in 240:
+		await physics_frame
+		if main.leaving:
+			break
+	Input.action_release("move_forward")
+	for i in 6000:
+		await process_frame
+		if main.on_surface and not main.leaving:
+			break
+	await _frames(10)
+	var up_ok := main.on_surface and main.surface != null
+	var pos := p.global_position
+	if up_ok:
+		var st: Dictionary = main.surface.stair
+		up_ok = (st.bottom as Vector2).distance_to(Vector2((ex.p as Vector3).x, (ex.p as Vector3).z)) < 0.01 and (st.yard as Rect2).has_point(Vector2(pos.x, pos.z)) and pos.y > float(ex.y) + 2.0 and p.is_on_floor()
+	ok(up_ok, "the way out leads up to the surface (§FM.7): you come out at the ruin over the stair, above the opening (%s)" % str(pos.snapped(Vector3.ONE * 0.01)))
+	if not main.on_surface:
+		return
+	var sn: Vector2 = main.surface.stair.n
+	var at := main.surface.arrival()
+	p.spawn_flat(at.pos, atan2(sn.x, sn.y), 0.0)
+	await _frames(5)
+	Input.action_press("move_forward")
+	for i in 600:
+		await physics_frame
+		if main.leaving:
+			break
+	Input.action_release("move_forward")
+	for i in 6000:
+		await process_frame
+		if not main.on_surface and not main.leaving:
+			break
+	await _frames(10)
+	ok(not main.on_surface and main.tomb == stone and CrawlerSave.relit_now(main.fires) == lit and TombKit.piece_at(main.lay, p.global_position) == int(ex.landing), "and the same stair back down to the same tomb, on its landing, its %d lights lit as they were" % lit.size())
 
 
 ## What you carry, kind by kind (the stand-in changes none of it).

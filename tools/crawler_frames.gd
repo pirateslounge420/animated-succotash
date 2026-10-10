@@ -7,7 +7,9 @@ extends SceneTree
 ## ONLY=skeleton renders just the skeletons' sheet and frames; ONLY=cleared
 ## just the last light's (26-26d); ONLY=cauldron just the cauldron over the
 ## hearth and the shaman with his ladle (27a-27e; §FM.6, queue 67); ONLY=fog
-## just floor two's fog (28a-28d; §FM.6, queue 69). The snake (queue 49) is held still for
+## just floor two's fog (28a-28d; §FM.6, queue 69); ONLY=surface just the
+## tomb's surface up the stair: dawn, noon, dusk and midnight from where you come out,
+## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1142,6 +1144,12 @@ func _run() -> void:
 		await _fog(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "surface":
+		# Just the tomb's surface (design §FM.7, queue 71; 29a-29g).
+		await _frames(30)
+		await _surface(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -1886,6 +1894,112 @@ func _dither_alive(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Arr
 			if lv.size() >= 2:
 				mixed += 1
 	return {"n": n, "mixed": mixed}
+
+
+## The tomb's surface (design §FM.7, queue 71; ONLY=surface): up the stair
+## (CrawlerMain.go_up), then from where you come out on the ruin's yard,
+## looking out along the way out (the wash running to the butte against the
+## sky), at dawn, noon, dusk and midnight (29a-29d); back at the ruin over
+## the stair from out on the basin at noon (29e); the hearth's stack
+## smoking at dusk (29f); from where you come out again at the midnight
+## nearest a new moon (29g). Checks: at noon the sky blue over the warm sand
+## ahead; at dusk the horizon warm; at midnight the frame dark and blue (its
+## darkest share navy, never grey), the sand ahead under 0.6 of its noon
+## luma and the frame darker than at noon; the stairhead's portal on screen
+## from out on the basin; the stack's smoke in view at dusk; with no moon the
+## frame darker than the moonlit midnight's and its darkest share navy,
+## never black.
+func _surface(main: CrawlerMain) -> void:
+	var p := main.player
+	var world: Node = main.world
+	var keep_days := float(world.get("days"))
+	main.go_up()
+	while not main.on_surface or main.leaving:
+		await process_frame
+	p.set_physics_process(false)
+	var s := main.surface
+	var cam := get_root().get_camera_3d()
+	var vs := get_root().get_visible_rect().size
+	var at := s.arrival()
+	var base := floorf(keep_days) + 1.0
+	var lumas := {}
+	var sands := {}
+	var moons := {}
+	for sh in [["29a_surface_dawn", 6.0], ["29b_surface_noon", 12.0], ["29c_surface_dusk", 18.0], ["29d_surface_night", 0.0]]:
+		world.days = Vents.days_at_solar_hour(base, float(sh[1]))
+		p.spawn_flat(at.pos, float(at.yaw), 0.04)
+		await _frames(24)
+		var img := await _shot(str(sh[0]))
+		var sky := _patch(img, 0.05, 0.02, 0.95, 0.16)
+		# The open sand ahead, past the yard's flags (the bottom rows) and
+		# clear of its broken walls either side.
+		var sand := _patch(img, 0.30, 0.64, 0.80, 0.80)
+		var horizon := _patch(img, 0.05, 0.38, 0.95, 0.46)
+		var whole := _patch(img, 0.0, 0.0, 1.0, 1.0)
+		lumas[sh[1]] = float(whole.luma)
+		sands[sh[1]] = float(sand.luma)
+		moons[sh[1]] = s.sky.moonlight
+		var sc: Color = sky.color
+		var gc: Color = sand.color
+		var hc: Color = horizon.color
+		print("  %s (sun %.1f degrees; the moon %.1f degrees, %.2f of its light): sky #%s, horizon #%s, the sand ahead #%s (luma %.3f), the frame's luma %.3f" % [sh[0], s.sky.sun_elevation_deg, s.sky.moon_elevation_deg, s.sky.moonlight, sc.to_html(false), hc.to_html(false), gc.to_html(false), float(sand.luma), float(whole.luma)])
+		match float(sh[1]):
+			12.0:
+				ok(sc.b > sc.r and sc.b > sc.g and gc.r > gc.b, "at noon the sky blue (#%s) over the warm sand (#%s)" % [sc.to_html(false), gc.to_html(false)])
+			18.0:
+				ok(hc.r > hc.b * 0.9 or _stats(img).warm > 0.02, "at dusk the horizon warm (#%s, %.3f of the frame warm)" % [hc.to_html(false), _stats(img).warm])
+			0.0:
+				var d: Color = _stats(img).dark
+				ok(d.b >= d.r and d.b >= d.g * 0.9, "at midnight the dark navy, never grey (#%s)" % d.to_html(false))
+	# The land darker at night than at noon (the sky's luma barely moves: a
+	# deep noon blue against the night's blue).
+	ok(float(sands.get(0.0, 1.0)) < float(sands.get(12.0, 0.0)) * 0.6 and float(lumas.get(0.0, 1.0)) < float(lumas.get(12.0, 0.0)), "the night darker than the noon (the sand ahead at luma %.3f against %.3f, the frame %.3f against %.3f; the moon %.2f of its light)" % [float(sands.get(0.0, 0.0)), float(sands.get(12.0, 0.0)), float(lumas.get(0.0, 0.0)), float(lumas.get(12.0, 0.0)), float(moons.get(0.0, 0.0))])
+	# A night with no moon up (the nearest midnight to a new moon, the
+	# darkest the one clock gives): darker than a moonlit one, and its
+	# darkest share navy, never black (§DD: you can always see).
+	var no_moon := Vents.days_at_solar_hour(base, 0.0)
+	for k in int(ceil(DayCycle.moon_cycle_days())) + 1:
+		var dk := Vents.days_at_solar_hour(base + float(k), 0.0)
+		if Astro.moon_illumination(dk) < Astro.moon_illumination(no_moon):
+			no_moon = dk
+	world.days = no_moon
+	p.spawn_flat(at.pos, float(at.yaw), 0.04)
+	await _frames(24)
+	var img_n := await _shot("29g_surface_night_no_moon")
+	var whole_n := _patch(img_n, 0.0, 0.0, 1.0, 1.0)
+	var sand_n := _patch(img_n, 0.30, 0.64, 0.80, 0.80)
+	var dark_n: Color = _stats(img_n).dark
+	var moon_n := s.sky.moonlight
+	print("  29g_surface_night_no_moon (day %.2f, the moon %.2f lit, %.1f degrees, %.2f of its light): the sand ahead #%s (luma %.3f), the frame's luma %.3f (look.json moon_nights: %.2f full, %.2f new, at 02:00 in the open world)" % [no_moon, Astro.moon_illumination(no_moon), s.sky.moon_elevation_deg, moon_n,
+		(sand_n.color as Color).to_html(false), float(sand_n.luma), float(whole_n.luma), float(Tuning.section("look", "moon_nights").get("full_mean_luma", 0.2)), float(Tuning.section("look", "moon_nights").get("new_mean_luma", 0.1))])
+	var moonlit := float(moons.get(0.0, 0.0)) - moon_n > 0.1
+	ok((not moonlit or float(whole_n.luma) < float(lumas.get(0.0, 0.0)) * 0.9) and dark_n.b >= dark_n.r and dark_n.b >= dark_n.g * 0.9 and dark_n.b > 0.03, "a night with no moon (%.2f of its light) %sits darkest share navy, never black (#%s)" % [moon_n, ("darker than the moonlit (luma %.3f against %.3f), " % [float(whole_n.luma), float(lumas.get(0.0, 0.0))]) if moonlit else "", dark_n.to_html(false)])
+	# Back at the ruin over the stair, from out on the basin.
+	world.days = Vents.days_at_solar_hour(base, 12.0)
+	var n: Vector2 = s.stair.n
+	var out: Vector2 = (s.stair.mouth as Vector2) + n * 16.0 + (s.stair.side as Vector2) * 5.0
+	var eye := Vector3(out.x, s.land.height_at(out.x, out.y), out.y)
+	var mouth := Vector3((s.stair.mouth as Vector2).x, float(s.stair.y) + 1.4, (s.stair.mouth as Vector2).y)
+	var to := mouth - (eye + Vector3(0.0, PlanetPlayer.EYE_Y, 0.0))
+	p.spawn_flat(eye, atan2(-to.x, -to.z), atan2(to.y, Vector2(to.x, to.z).length()))
+	await _frames(16)
+	await _shot("29e_surface_ruin_noon")
+	var mp := cam.unproject_position(mouth) / vs
+	ok(not cam.is_position_behind(mouth) and mp.x > 0.1 and mp.x < 0.9 and mp.y > 0.1 and mp.y < 0.9, "the stairhead's portal in view from out on the basin (on screen at %.2f, %.2f)" % [mp.x, mp.y])
+	# The hearth's stack, smoking, at dusk.
+	if not s.stacks.is_empty():
+		world.days = Vents.days_at_solar_hour(base, 17.2)
+		var foot: Vector3 = s.stacks[0].foot
+		var from := Vector2(foot.x, foot.z) + n * 7.0 + (s.stair.side as Vector2) * 3.0
+		var e2 := Vector3(from.x, s.land.height_at(from.x, from.y), from.y)
+		var top := foot + Vector3(0.0, 4.0, 0.0)
+		var t2 := top - (e2 + Vector3(0.0, PlanetPlayer.EYE_Y, 0.0))
+		p.spawn_flat(e2, atan2(-t2.x, -t2.z), atan2(t2.y, Vector2(t2.x, t2.z).length()))
+		await _frames(24)
+		await _shot("29f_surface_stack_dusk")
+		var col: Node3D = s._smokes[0].col
+		ok(col.visible and float(col.get_meta("top_m", 0.0)) > 1.0, "the hearth's smoke stands over its stack at dusk (%.0f m of column)" % float(col.get_meta("top_m", 0.0)))
+	world.days = keep_days
 
 
 ## The player's own settings back and the run's controls file gone; the

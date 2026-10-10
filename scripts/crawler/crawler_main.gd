@@ -160,6 +160,17 @@ var walked_out := 0
 ## floor by floor since §FM.6): their residents lie down as bones once
 ## their sheets are baked (_rescuer).
 var _bones_after_bake: Array = []
+## The surface above this dungeon (design §FM.7, queue 71; Surface), built
+## the first time you go up and kept while you are below; null until then,
+## and for a dungeon with none (exit.stand_in).
+var surface: Surface
+## You are up on it (the dungeon's nodes kept out of the tree, as you left
+## them: _below).
+var on_surface := false
+## Times you went up and came back down this session (tests wait on them).
+var went_up := 0
+var came_down := 0
+var _below: Array = []
 
 
 func _ready() -> void:
@@ -336,8 +347,11 @@ func _clear_tomb() -> void:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
-		remove_child(node)
+		if node.get_parent() == self:
+			remove_child(node)
 		NodeRelease.free_later(node)
+	# The surface is this dungeon's (design §FM.7): gone with it.
+	_free_surface()
 	rescuer = null
 	cauldron = null
 	boss = null
@@ -350,6 +364,19 @@ func _exit_tree() -> void:
 	# The game closing (or this scene giving way to the next): kept as it
 	# stands (§FK.2).
 	CrawlerSave.save()
+	# Whichever world is out of the tree, the dungeon below or the surface
+	# above (design §FM.7), goes too.
+	if on_surface:
+		for n in _below:
+			if is_instance_valid(n) and not (n as Node).is_inside_tree():
+				NodeRelease.detach_all(n)
+				(n as Node).free()
+		_below = []
+		if surface != null and is_instance_valid(surface):
+			surface.drop_kept()
+	elif surface != null and is_instance_valid(surface) and not surface.is_inside_tree():
+		NodeRelease.detach_all(surface)
+		surface.free()
 	GameMode.crawler_running = false
 	PlayerBody.watch_point = Vector3(INF, INF, INF)
 	FireShadows.mode = ""
@@ -645,6 +672,11 @@ func _process(delta: float) -> void:
 		player.torch.note = ""
 	if leaving:
 		return
+	if on_surface:
+		# Back down the old stair (design §FM.7).
+		if surface.stepped_in(player.global_position):
+			go_down()
+		return
 	if baked and way_out.stepped_in(player.global_position) >= 0:
 		walk_out()
 
@@ -677,6 +709,11 @@ func _physics_process(_delta: float) -> void:
 ## answer), carrying what you carried, the torch lit or not as it was.
 func walk_out() -> void:
 	if leaving:
+		return
+	# The surface above it (design §FM.7, queue 71): up the stair into the
+	# day; the stand-in stays for any dungeon with none yet.
+	if Surface.covers(lay):
+		await go_up()
 		return
 	leaving = true
 	var si: Dictionary = EXIT.get("stand_in", {})
@@ -728,6 +765,10 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_taken() -> void:
 	_fade.visible = true
 	_fade.color.a = 1.0
+	# Taken up on the surface (only your own fire pot can, §FA.3): you wake
+	# below all the same, the frame already black.
+	if on_surface:
+		_down_now()
 	if player.torch.lit():
 		player.torch.put_out("taken")
 	# A burnt-out one in your hand is dropped where you fell (§FJ.4).
@@ -792,3 +833,115 @@ func _toggle_settings(on: bool) -> void:
 		settings_panel.close()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.torch.block_until_release()
+
+
+# --- The surface above (design 9 Oct §FM.7, queue 71) ------------------------------
+
+## The dungeon's own nodes, the ones a trip up keeps out of the tree (the
+## stone, its fires, vents and airways, the way out, the moss and the
+## beetles, the residents, the shaman and his cauldron, the boss, the
+## fork): what _clear_tomb frees. The fire pots stay with you.
+func _dungeon_nodes() -> Array:
+	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork]
+
+
+## Up the stair into the day (design §FM.7; worlds.json surface.arrive): the
+## dark comes over fade_s; the dungeon, as you leave it, is kept out of the
+## tree (its relit holders burning, its residents and its boss where they
+## are, all still, nothing of it drawn or walking); the surface over it is
+## built the first time (Surface, from the dungeon's own seed: the same
+## land every time for this game), else it is as you left it; and you stand
+## on the yard of the ruin over the stair, facing out, carrying what you
+## carried, the torch lit or not as it was. The log's line (log_up).
+func go_up() -> void:
+	if leaving or on_surface:
+		return
+	leaving = true
+	var A: Dictionary = Surface.S.get("arrive", {})
+	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
+	GameLog.add(str(A.get("log_up", "Up the old stair and out, under the open sky.")), "world")
+	await _fade_to(1.0, fade_s)
+	if surface == null or not is_instance_valid(surface):
+		surface = Surface.new()
+		surface.build(world, lay, fires.hearth)
+	_below = []
+	# Floor two's fog goes too (it is the dungeon's look, and the sky's haze
+	# is the surface's): kept for the next tomb, never freed with this one.
+	for n in _dungeon_nodes() + [floor_fog]:
+		var node := n as Node
+		if node != null and is_instance_valid(node) and node.get_parent() == self:
+			remove_child(node)
+			_below.append(node)
+	add_child(surface)
+	surface.enter(self)
+	var at := surface.arrival()
+	player.spawn_flat(at.pos, float(at.yaw), 0.0)
+	on_surface = true
+	went_up += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## Back down the stair (design §FM.7): the dark; the surface kept out of
+## the tree as you leave it; the dungeon back just as you left it, its
+## relit holders still burning; and you stand on the landing at the top of
+## its flight, back_in_m inside the opening, facing in. The log's line
+## (log_down).
+func go_down() -> void:
+	if leaving or not on_surface:
+		return
+	leaving = true
+	var A: Dictionary = Surface.S.get("arrive", {})
+	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
+	GameLog.add(str(A.get("log_down", "Down the old stair, back into the dark.")), "world")
+	await _fade_to(1.0, fade_s)
+	_down_now()
+	came_down += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## The swap down at once (the frame black): the surface out, the dungeon
+## back in, you on its landing.
+func _down_now() -> void:
+	if not on_surface:
+		return
+	surface.leave(self)
+	remove_child(surface)
+	for n in _below:
+		if is_instance_valid(n) and (n as Node).get_parent() == null:
+			add_child(n)
+	_below = []
+	TorchSnuff.drafts = airways
+	on_surface = false
+	var ex: Dictionary = lay.exits[0]
+	var n3: Vector3 = ex.n
+	var back := float((Surface.S.get("arrive", {}) as Dictionary).get("back_in_m", 1.4))
+	player.spawn_flat((ex.p as Vector3) - n3 * back, atan2(n3.x, n3.z), 0.0)
+
+
+## The waking dark over the frame, to `a` over `s` seconds.
+func _fade_to(a: float, s: float) -> void:
+	_fade.visible = true
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", a, s)
+	await tw.finished
+	if a <= 0.0:
+		_fade.visible = false
+
+
+## The surface gone (a new dungeon, design §FM.7: it is the old one's).
+func _free_surface() -> void:
+	if surface == null or not is_instance_valid(surface):
+		surface = null
+		return
+	if surface.is_inside_tree():
+		surface.leave(self)
+		remove_child(surface)
+	# Floor two's fog, kept out of the tree while you were up, back in it.
+	if floor_fog != null and is_instance_valid(floor_fog) and floor_fog.get_parent() == null:
+		add_child(floor_fog)
+	_below = []
+	NodeRelease.free_later(surface)
+	surface = null
+	on_surface = false

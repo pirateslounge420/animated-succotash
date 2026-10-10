@@ -56,6 +56,13 @@ static var MOON_CURVE := float(Tuning.section("look", "moon_nights").get("curve_
 static var MOON_LIFT := float(Tuning.section("look", "moon_nights").get("lift_scale", 1.0))
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
 var magic := 0.0
+## The pocket worlds' one clock (design §FK.3; Torchfire 1's surface,
+## Surface; false for the open world, as built): true takes the sun and
+## the moon off the planet's sky (Astro: its tilt, its year, the viewer's
+## latitude) onto one sky over flat ground, every day DayCycle's reference
+## day (one_clock_sun, one_clock_moon): the sky Vents.sun_deg turns the
+## shafts below by, at the same moment.
+var one_clock := false
 
 var sun: DirectionalLight3D
 var moon: DirectionalLight3D
@@ -344,8 +351,12 @@ func _ready() -> void:
 ## fog_amount: 0-1 local fog likelihood from the planet (cloud forests,
 ## coasts). delta: frame time for cloud drift.
 func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather: Dictionary, fog_amount: float, delta: float) -> void:
-	sun_dir = Astro.sun_dir(days)
-	moon_dir = Astro.moon_dir(days, moon_mode)
+	if one_clock:
+		sun_dir = one_clock_sun(days, up, east)
+		moon_dir = one_clock_moon(days, up, east)
+	else:
+		sun_dir = Astro.sun_dir(days)
+		moon_dir = Astro.moon_dir(days, moon_mode)
 	sun_elevation_deg = rad_to_deg(Astro.elevation(sun_dir, up))
 	moon_elevation_deg = rad_to_deg(Astro.elevation(moon_dir, up))
 	var illumination := Astro.moon_illumination(days)
@@ -580,6 +591,24 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("fog_color", fog_color)
 	# Below the horizon (where no ground is drawn): distance, not a dark band.
 	sky_material.set_shader_parameter("ground_color", fog_color)
+
+
+## The one clock's sun (one_clock; design §FK.3: no latitude, no axial
+## tilt, no day of the year): at world time `days` the sky has turned to
+## DayCycle's reference-day hour (the equator on an equinox: day 60, dusk
+## 18, night 48, dawn 18 of the 144 minutes), and the sun stands on the
+## great circle through due east of `up`, overhead and due west, its hour
+## angle off the overhead: 90 degrees up at noon, as Vents.sun_deg says.
+static func one_clock_sun(days: float, up: Vector3, east: Vector3) -> Vector3:
+	var h := TAU * (DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5)
+	return (up * cos(h) - east * sin(h)).normalized()
+
+
+## The one clock's moon: on the sun's path, its elongation behind it (it
+## rises later each day; its phases count days as ever, §DD).
+static func one_clock_moon(days: float, up: Vector3, east: Vector3) -> Vector3:
+	var h := TAU * (DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5) - Astro.moon_elongation(days)
+	return (up * cos(h) - east * sin(h)).normalized()
 
 
 ## The environment's tonemapper (look.json grade.tonemap: linear, the

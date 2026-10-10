@@ -94,7 +94,9 @@ func _run() -> void:
 	await _look(main)
 	_shaman(main)
 	# Two more tombs by the stand-in (exit.stand_in): one of each again, the
-	# last tomb's gone.
+	# last tomb's gone. (The tomb's way out leads up to its surface since
+	# queue 71, §FM.7; the stand-in is walked with worlds.json surface.on off.)
+	Surface.S["on"] = false
 	for k in 2:
 		var old_c := main.cauldron
 		var old_r := main.rescuer
@@ -106,6 +108,7 @@ func _run() -> void:
 		ok(not is_instance_valid(old_c) or not old_c.is_inside_tree(), "tomb %d: the last tomb's cauldron is gone" % (k + 2))
 		ok(not is_instance_valid(old_r) or not old_r.is_inside_tree(), "tomb %d: the last tomb's shaman is gone" % (k + 2))
 		_in_game(main, k + 1)
+	Surface.S["on"] = true
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 

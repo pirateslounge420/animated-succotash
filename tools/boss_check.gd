@@ -1858,7 +1858,9 @@ func _walk_out_run(main: CrawlerMain, in_heart := false) -> void:
 	var i := 1
 	var sprinted := 0.0
 	_mo_reset(b)
-	while i < pts.size() and clock < 120.0 and main.walked_out == 0:
+	# Out: up to the tomb's surface since queue 71 (§FM.7), the stand-in's
+	# next tomb for a dungeon with none.
+	while i < pts.size() and clock < 120.0 and main.walked_out + main.went_up == 0:
 		var to: Vector3 = pts[i]
 		var v := CrawlerPlayer.SPRINT_SPEED if b.noticed else CrawlerPlayer.WALK_SPEED
 		var left := v / 60.0
@@ -1894,7 +1896,7 @@ func _walk_out_run(main: CrawlerMain, in_heart := false) -> void:
 	# Held in the opening until CrawlerMain walks you out, then its next
 	# tomb's build.
 	var guard := 0
-	while not taken and main.walked_out == 0 and not main.leaving and guard < 120:
+	while not taken and main.walked_out + main.went_up == 0 and not main.leaving and guard < 120:
 		p.global_position = at
 		p.velocity = Vector3.ZERO
 		await physics_frame
@@ -1905,7 +1907,7 @@ func _walk_out_run(main: CrawlerMain, in_heart := false) -> void:
 		guard += 1
 	var hits := main.harm.landed - landed0
 	var seen := "it never noticed you" if noticed_at < 0.0 else "it noticed you at %.1f s and you sprinted %.1f s" % [noticed_at, sprinted]
-	ok(not taken and main.walked_out == 1, "the walk out with it loose (%s): your torch lit, from the wake spot along the spine (%.0f m, %.1f s), walking until it is after you, then sprinting: you get out (%s, %d hit%s landed)" % [how, walked, clock, seen, hits, "" if hits == 1 else "s"])
+	ok(not taken and main.walked_out + main.went_up == 1, "the walk out with it loose (%s): your torch lit, from the wake spot along the spine (%.0f m, %.1f s), walking until it is after you, then sprinting: you get out (%s, %d hit%s landed)" % [how, walked, clock, seen, hits, "" if hits == 1 else "s"])
 	main.harm.reset()
 	for k in 4:
 		await process_frame

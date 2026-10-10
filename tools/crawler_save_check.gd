@@ -164,13 +164,17 @@ func _boot(picks: Array, boot: Node = null) -> Array:
 
 
 ## Out through the way out (the stand-in), until the next tomb's hearth room
-## is ready.
+## is ready. The tomb's way out leads up to its surface since queue 71
+## (§FM.7); the stand-in is still the way on for a dungeon with none, so it
+## is walked here with worlds.json surface.on off.
 func _walk_out(m: CrawlerMain) -> void:
+	Surface.S["on"] = false
 	m.walk_out()
 	var guard := 0
 	while (m.leaving or not m.baked) and guard < 6000:
 		await process_frame
 		guard += 1
+	Surface.S["on"] = true
 	_phases_here(m)
 
 

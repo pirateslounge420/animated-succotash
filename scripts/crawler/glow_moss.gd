@@ -154,6 +154,13 @@ func _exit_tree() -> void:
 		_mat.set_shader_parameter("glow_moss_count", 0)
 
 
+## Back in the tree (the dungeon kept while you were on the surface above,
+## design §FM.7, CrawlerMain.go_down): its patches glow again.
+func _enter_tree() -> void:
+	if _mat != null:
+		_mat.set_shader_parameter("glow_moss_count", patches.size())
+
+
 ## A patch's glow now (rest_energy at rest, dim_to of it by a flame).
 func energy_of(p: Dictionary) -> float:
 	return rest_energy() * float(p.level)
