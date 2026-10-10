@@ -4,6 +4,71 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 76, §FM.13: a globe cactus shape: a low button in the ground (d2c2859)
+§FM.13 item 2 (Mike, 9 Oct, "do it"): peyote was drawn as the tall cactus column; now the engine draws it as what it is, a clump of flat blue-green buttons sunk in the ground. Built as queue 76 says; the cactus column itself is untouched.
+
+- **What changes on screen:**
+  - **Nothing in the crawler or the open world yet.** `data/sacred` is still not loaded, and no loaded plant uses the new shape.
+  - **Peyote**, built from its data/sacred entry for the check and the look only, is a tight clump of four buttons: an old one in the middle and three smaller ones pressed round it, leaning out a little. Only the top third of each button shows above the ground; the rest is a buried body you never see. Seen from above:
+    - each button is ribbed like a slice of pumpkin (8 ribs on the two bigger ones, 5 on the small ones), its edge scalloped by the ribs;
+    - furrows across the ribs cut them into rounded bumps, and every bump carries a white tuft of wool, so each button wears rings of white dots;
+    - a white woolly cushion sits in the middle of each button;
+    - a small pink-and-white bell stands in the old button's wool;
+    - no spines.
+  - **Painted (§ES):** blue-green, a little paler on the bumps, the furrows and the edge where it meets the ground shaded toward navy, never grey. Diffuse only, no leaf tiles, no shine. It stands still in the wind.
+  - **From far off** it is the same four flat ribbed buttons with their white centres, without the bumps, tufts and flower. It never becomes the flat card the far trees use, which would have stood the button on its edge.
+- **How:**
+  - `PlantSpecies.Shape.GLOBE_CACTUS`, read from an entry's `"shape": "globe_cactus"`.
+  - `GlobeCactusMesh` (`scripts/ecology/globe_cactus_mesh.gd`, new), called from `PlantMeshes._build` beside the mushroom, reads the entry's own `appearance` block:
+    - `stem.diameter_cm` and `height_m` for the old button's width and height (8 cm across, 4.5 cm tall at the middle of its height, 1.4 cm of it above the ground); the smaller buttons 74, 60 and 46 % of it;
+    - `stem.ribs` for the rib counts (the old button the middle of the range, the smaller ones fewer, in the steps peyote adds them, 5, 8, 13: its growth note), `stem.rib_depth` for how deep the furrows run;
+    - `stem.colour` and `stem.secondary` for the body, `stem.areole_colour` for the wool, `stem.spine_cm`, `spines_per_areole` and `spine_colour` for spines (none while `spine_cm` is [0, 0]);
+    - `appearance.flower` (colour, with its secondary at the rim and in the throat) and `fruiting.flower_size_cm` for the bell, drawn only where the entry names a flower colour;
+    - `appearance.trunk.form`: "solitary" draws one button; peyote's says "clumping".
+  - It uses queue 75's painted flesh material (`foliage.gdshader`, UV2.x −1), so the shader is untouched. The far level is its own small model (`PlantMeshes.own_far`), like the mushroom's.
+  - About 980 triangles for the clump near, 1,490 at the hero level right round the player, 230 far.
+  - Data, as a data-driven one-liner: `"shape": "globe_cactus"` in peyote's entry. One line added to `flags.peyote`: the column stand-in is gone.
+  - `tools/species_row.gd`: `GRAVEL=1` sows small pebbles round the row; a globe cactus in the row stands on the ground as in play, not sunk further.
+  - `HOW_TO_RUN.md`: a globe cactus bullet. `data/biomes/README.md` lists the shape.
+- **What you can tune:**
+  - The look comes from peyote's `appearance` block and `height_m` in `data/sacred/sacred_plants.json`: `stem.diameter_cm`, `stem.ribs`, `stem.rib_depth`, `stem.colour`, `stem.secondary`, `stem.areole_colour`, the spines, `appearance.flower`, `fruiting.flower_size_cm`, `appearance.trunk.form`. Change the entry and the drawing follows on the next start.
+  - In code, `scripts/ecology/globe_cactus_mesh.gd`: `ABOVE` (how much of a button shows above the ground, 0.3), `CLUMP` (the buttons: sizes, where each sits in the rib range, bumps along a rib), `TIGHT` (how hard they press together), `CROSS` (how deep the cross-furrows are against the ribs'), `CREST_SHARE` (how pale the bumps go), `BOSS_R`/`BOSS_H` (the woolly centre), `TUFT_R` (the wool tufts), `FLOWER_H` (the bell's height).
+- **Checks** (on d2c2859), all 0 fails:
+  - `tools/globe_cactus_check.gd` (new, queue 76's check): 44 lines.
+    - The shape and its string. Peyote built from its data/sacred entry as a catalogue entry is built, and data/sacred still not loaded: 1,003 species before and after, none from data/sacred.
+    - **The queue's check**, at the hero, near and far levels: drawn at any height in `height_m` it stands no taller than `height_m` over the ground line (1.0–3.5 cm with the flower near, 0.7–2.4 cm far), and it is 7.0 times as wide as it is tall above the ground (9.3 far): at least three.
+    - Every face painted flesh, no leaf tiles, sway 0, still in the wind; most of it below the ground line.
+    - The old button alone: as tall as `height_m` (0.99 of the unit frame), widest at the ground line (sunk to its rim, 71 % of it underground), 8.0 cm across drawn at 4.5 cm (`diameter_cm` 4–12); 8 ribs counted round its outline; along a rib, its height dips into 3 cross-furrows (4 bumps, the outermost halved by the ground) near and hero, none far; 24 wool tufts (8 ribs × 3 bumps above the ground); its woolly centre the highest point, facing up; the bumps toward `stem.secondary`, the furrows at 0.66–0.69 of the body's lightness and bluer (navy); the edge's corners face out.
+    - The clump: 4 buttons, each pressed into a neighbour (overlapping 0.13–0.16), a woolly centre on every one; ribs 8, 8, 5, 5 from `stem.ribs` [5, 13].
+    - No spines: the same entry given `spine_cm` [1, 2] grows exactly 150 spines (3 on each of 50 tufts), each 1.5 cm long at the middle height.
+    - The flower: a bell 2.2 cm across (`flower_size_cm` 2.2) in the old button's wool near and hero, none far; none on the same entry without a flower; one button where the entry says "solitary".
+    - The far level keeps the flat button: its widths up the part above the ground within 11 % of the near level's widest, its top the same white centre, in 228 triangles against 976.
+    - **Every CACTUS unchanged:** all 27 CACTUS species, the 18 Trichocereus among them, build the same hero, near and far meshes as before this pass (geometry fingerprints taken from the code before any change); the San Pedro is still the column, 0.52 of its height at its widest.
+  - `tools/species_mesh_check.gd`: 1,003 species at the near and far levels, 0 fails, no missing tiles.
+  - `tools/mushroom_check.gd` 82 (queue 75's: the shared far-level rule and the builder), `tools/giant_herb_check.gd` 108, `tools/wood_normals_check.gd` 2; `python3 tools/plant_schema_check.py --strict data/sacred/sacred_plants.json`: 7 entries, 0 errors.
+  - No crawler code changed, so `crawler_check` was not run.
+  - **The look, `tools/species_row.gd`** (`SPECIES="sacred:peyote,Trichocereus pachanoi" HEIGHT_M=mid SPACING=0.55 DIST=0.4 EYE_M=0.3 LOOK_H=0 GRAVEL=1`, 14:00, eye 30 cm up, 40 cm off): peyote in pebbles beside the foot of the San Pedro.
+    - The clump, about 55 px across at 480 lines, reads as a cluster of flat blue-grey buttons flush with the ground, with rows of white tufts, scalloped rib edges and a pale pink-white bell in the middle one. A navy line runs where the edges meet the ground.
+    - The San Pedro beside it is a ribbed column filling half the frame. A button, not a stub column.
+    - The ground there is the open world's green grassland by the first camp (seed 42), with the pebbles sown on it, not a real desert floor.
+    - Rendered twice: the first framing (80 cm off, bigger pebbles) put the clump at about 35 px among pebbles nearly as big as the small buttons, so the camera came closer and the gravel got finer (0.3–1.5 cm).
+- **For Mike:**
+  - **The bell shows all year.** Every peyote clump shares one mesh, so the flower stands on every clump at every season. (Peyote flowers for two days a year, in spring.) The flowers that come and go with the season (`FruitCrop`) only cover trees and shrubs, and peyote is a ground plant. Say if you'd rather have no flower until it can follow the season.
+  - **No tufts on the outermost ring of bumps.** It is cut in half by the ground line, so a tuft there would sit in the gravel. Each rib shows three tufted bumps on the old button, and fewer on the smaller ones.
+  - **It is small.** At its middle height a clump is about 16 cm across and stands 1.4 cm out of the ground (2.2 cm to the bell's rim), as the entry says. From standing height a few metres off it is a pale dot with a white centre; you see the ribs and tufts only when you crouch close.
+  - **My calls, change any:**
+    - four buttons to a clump;
+    - a third of each button above the ground;
+    - the old button takes the middle of the rib range (8 of 5–13) and the smaller ones fewer;
+    - the bell's size from `fruiting.flower_size_cm`.
+- **For chat:**
+  - Data touched beyond the one-liner: one line added to `flags.peyote` in `sacred_plants.json` (the column stand-in is gone). `notes` there still says "no low globe cactus (peyote as cactus)": that is your text, so I left it. `status` keeps its `[NOT WIRED YET]`: the file is still not loaded, and the prompt named no `_help` line to unwire.
+  - PLANT_SCHEMA §2's list of engine shapes ("CONIFER … BAMBOO…") doesn't name MUSHROOM or GLOBE_CACTUS; it ends in "…", so nothing contradicts it, but you may want to add them.
+  - `sports.json → by_shape` has no `globe_cactus`, so a globe cactus rolls no sports (as with queue 75's mushroom).
+  - The rib count follows the entry's growth note (5, then 8, then 13) by size within the clump. The entry's `genes.rib_count` isn't read: every clump shares one mesh, so per-plant genes can't change it yet.
+  - For queue 72 or the surface: a globe cactus stands only about a third of its height out of the ground, so wherever it is placed, the drawn ground must be the height the plant is placed at. In the open world `ground_height` matches the drawn ground exactly, and the row frame shows it flush.
+  - CLAUDE.md's §FM line doesn't mention §FM.13's shapes (queues 75–77); the mushroom and now the globe cactus are built.
+
 ## 2026-10-09 — Queue 69, §FM.6: floor two's fog: the same stone, darker (a490eda)
 §FM.6 (Mike, 9 Oct): floor two is the same stone and architecture as floor one, so it reads as one place, with the energy of the whole place *"a little bit darker"*: a layer of fog across floor two, uniform for now, doing to sight and to the torch's reach just what fog does. Built as queue 69 says, and nothing else from §FM.6. One number changed after the walkabout (the density, below).
 

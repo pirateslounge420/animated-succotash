@@ -105,7 +105,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
-| 76 | §FM.13 | A globe cactus shape: a low button in the ground | todo |
+| 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -1352,7 +1352,7 @@ CHECK (headless): species_mesh_check passes with the two Amanitas now built as m
 
 ## 76 — A globe cactus shape: a low button in the ground — §FM.13
 
-**Status:** todo
+**Status:** built d2c2859
 **Mike sees:** Nothing in the crawler yet. The engine can now draw peyote as what it is, a flat blue-green button with white woolly tufts sitting in the gravel, instead of a tall cactus column.
 
 ```text
