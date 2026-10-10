@@ -109,7 +109,7 @@
    "wisps": null,
    "tell": "her voice, sweet, calling you in",
    "mike": "a creepy witch lady that roams the halls and tries to get you to make her stew",
-   "ritual_trap": "[NOT WIRED YET \u2014 design \u00a7FR] At the swamp's hearth the 'shaman' is the witch in a young woman's glamour: after you sip, she turns her back, turns round as the old witch with a creaky cackle (the sting, then her tell through the chase), and that ignites after_performance: snap_then_chase. Not a hit. Numbers and open calls: data/shaman_ritual.json."
+   "ritual_trap": "[NOT WIRED YET \u2014 design \u00a7FR, \u00a7FT] At the swamp's hearth the 'shaman' is a young woman who is the witch: you sip her brew (real, jimsonweed, \u00a7FT), her change builds as you drink and the game never says whether it is real or the drug's; after you sip she turns her back, turns round as the old witch with a creaky cackle (the sting, then her tell through the chase), and that ignites after_performance: snap_then_chase. Not a hit. Numbers and open calls: data/shaman_ritual.json."
   },
   "desert": {
    "creature": "giant snake",

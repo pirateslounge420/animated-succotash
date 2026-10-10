@@ -8,7 +8,8 @@
   "sacred": "The additive block on each entry. effect_class: visionary, deliriant, stimulant or sedative. rite: one sentence on who used it and for what; rites only, never doses, amounts or preparation (§FM.9). peoples, ruin (an id in ruin_compass.json), conservation (IUCN status), confidence, refs.",
   "flags": "Per plant: what the engine can't draw yet (a mushroom, a low globe cactus, a bulb, a twisted vine stem), biome-key gaps, and doubts in the sources. Read before wiring.",
   "id": "Each entry's id matches its ruin_compass.json plant.",
-  "egypt": "§FP (10 Oct): blue lotus (Nymphaea caerulea) and mandrake (Mandragora officinarum), the Egyptian ruin's two brew plants (Mike, 10 Oct). Written by two parallel agents, one per plant, each passing tools/plant_schema_check.py --strict. Both are 'ground' rosettes as the nearest shape the engine has: neither draws right (a water-lily shape and a trunkless ground rosette are missing; see flags). Evidence is thin for both: blue lotus's sedative effect is only inferred, and mandrake is documented in Egyptian objects and art, not in any ritual text. Mandrake is not native to Egypt (imported in the New Kingdom), and no hot-desert biome key honestly grows either plant: which world holds the Egyptian ruin is open (§FO.9 call 2, §FP.9)."
+  "egypt": "§FP (10 Oct): blue lotus (Nymphaea caerulea) and mandrake (Mandragora officinarum), the Egyptian ruin's two brew plants (Mike, 10 Oct). Written by two parallel agents, one per plant, each passing tools/plant_schema_check.py --strict. Both are 'ground' rosettes as the nearest shape the engine has: neither draws right (a water-lily shape and a trunkless ground rosette are missing; see flags). Evidence is thin for both: blue lotus's sedative effect is only inferred, and mandrake is documented in Egyptian objects and art, not in any ritual text. Mandrake is not native to Egypt (imported in the New Kingdom), and no hot-desert biome key honestly grows either plant: which world holds the Egyptian ruin is open (§FO.9 call 2, §FP.9).",
+  "gulf_swamp": "Jimsonweed (Datura stramonium), the Gulf South swamp ruin's local psychoactive (10 Oct), added to plants.shrub by one data-fill agent and passing tools/plant_schema_check.py --strict. It sits beside sacred_datura (D. wrightii, a Southwest desert species, unchanged). Evidence is thin: Datura residue (genus only) in Arkansas Mississippian and Caddoan vessels, no named ceremony, and the native range of the species is disputed (see flags). Not yet chosen as the swamp's plant in data/ruin_compass.json."
  },
  "notes": "Engine gaps: no mushroom shape (teonanacatl as rosette, like Amanita), no low globe cactus (peyote as cactus), no bulb (leshoma as spike_rosette), no twisted liana stem (ayahuasca vine). Seeds of ololiuhqui, all of datura and leshoma's bulb are poisonous.",
  "plants": {
@@ -2406,6 +2407,271 @@
      "source": "Wikipedia Datura wrightii (white trumpets to 20 cm, blooms April-October, open morning and evening, spiny globular capsule 3-4 cm opening when ripe); Arizona Cooperative Extension (dozens of flowers per plant, opening early evening, closing by noon; hawkmoth pollinated). Fruit set, ripening, hang and rot times and crop estimated."
     },
     "id": "sacred_datura"
+   },
+   {
+    "name": "Datura stramonium",
+    "display": "Jimsonweed",
+    "genus": "Datura",
+    "species": "stramonium",
+    "origin": "Mexico (disputed); weed of E US",
+    "family": "Solanaceae",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "SWAMP"
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#58824A",
+    "accent": "#F2EEE6",
+    "silhouette": "forking green annual, white trumpets, upright spiny pods",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      0.15,
+      0.45
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      0.5,
+      1.0
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "An annual that comes up from seed in early summer on ground that has been turned, cleared or flooded; the seed can lie in the soil for years. It grows into an erect, freely branching, forking herb and is killed by the first frost. The seedling's own look is not described in any source opened; it is drawn as a small forking sprig like the other Datura.",
+     "confidence": "estimated",
+     "source": "PlantPono Datura stramonium sheet quoting Holm et al. 1997 ('germinates in the field in early summer and flowers from summer through autumn', 'requires disturbed sites for establishment', about 90% germination after 17 years' burial per Burnside et al. 1996, viable in soil up to 40 years per Weber 2017) and PROTA (germination starts after about 2 weeks and is complete after one month); Wikipedia Datura stramonium (annual, frost-sensitive, seed dormant for years until the soil is disturbed); NC State Extension (sensitive to frost). Growth times to half and full height, first seed, lifespan and shade tolerance estimated."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "A seed-only annual (Holm: 'dispersal is almost wholly by seed'). Each trumpet opens in the evening and has wilted by the next day. PROTA reports hawkmoth pollination and says the plant is largely self-fertile; Wikipedia says nocturnal moths feed on it. repro.pollinator is 'insect' because 'moth' is not used in repro anywhere in the data (fruiting.pollinators carries 'moth' and 'self'). Weber 2017 (via PlantPono): seeds and capsules float on water, so floods carry them along a river bank. 'dormant: cold' stands for the dead plant at the first frost and the seed that waits in the soil; the plant itself does not overwinter."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.4
+     ],
+     "scent": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.95,
+     "effect": "deliriant (tropane alkaloids); every part is poisonous: never eaten, never browsed"
+    },
+    "ceremonial": "reported",
+    "sacred": {
+     "effect_class": "deliriant",
+     "rite": "Datura residue (not identified to species) is found in Mississippian and Caddoan bottles, bowls and effigy vessels from Arkansas dated about AD 1400-1700, among them a female effigy bottle that its authors tie to the earth-mother figure Old-Woman-Who-Never-Dies, and the authors read the vessels as holding a ritual drink; it is poisonous in every part, the vessels' find places are poorly recorded, and no named people or ceremony is attached.",
+     "peoples": [
+      "Mississippian and Caddoan peoples of Arkansas (archaeological residue only, no named nation)"
+     ],
+     "ruin": "gulf_swamp",
+     "conservation": "IUCN status not checked; NatureServe global rank GU (unrankable) per the Tennessee-Kentucky Plant Atlas; introduced weed across much of the world (Kew POWO)",
+     "confidence": "reported",
+     "refs": "King, Powis, Cheong, Deere, Pickering, Singleton & Gaikwad 2018, Absorbed Residue Evidence for Prehistoric Datura Use in the American Southeast and Western Mexico, Advances in Archaeological Practice 6(4):312-327, doi 10.1017/aap.2018.30 (https://www.cambridge.org/core/product/BC403850B55D372801DE729BB23EAD7D/core-reader; read all but the last 210 characters): atropine found in 13 pottery and 14 shell vessels from the Gilcrease Museum, 7 of 31 Mississippian pottery vessels positive, among them bottles, bowls, a female effigy bottle and a human-head effigy bottle; the authors read the use as ritual; Lambert, Perttula & Gaikwad 2022 (online 2021), Production Matters: Organic Residue Evidence for Late Precolumbian Datura-Making in the Central Arkansas River Valley, Advances in Archaeological Practice 10(2):149-159, doi 10.1017/aap.2021.15 (https://www.cambridge.org/core/journals/advances-in-archaeological-practice/article/abs/production-matters/8767998261B84066BA893CAF80133288; abstract page only, the full text could not be opened): Datura residues in two Late Precolumbian composite bottles from the Central Arkansas River valley, unlike most Mississippian bottles"
+    },
+    "source": "Datura stramonium, jimsonweed (thorn apple, Jamestown weed) - erect, freely branching, forking annual herb 0.6-1.5 m tall (Wikipedia 60-150 cm; NC State Extension 1-4 ft; PROTA up to 2 m), with large ovate coarsely toothed leaves, a white (sometimes violet-tinged) evening-opening trumpet and an erect, spiny, four-valved capsule. A weed of disturbed ground, rich moist soil and the places floods and people open up: fields, pastures, roadsides and waste ground, and, in the USGS PlantID and Kansas Wildflowers accounts, floodplains, bottomlands and the banks of streams; annual and killed by frost. Naturalized across the eastern United States; the native range is not settled: Kew POWO lists only Mexico as native and every US state as introduced, bplant.org says 'the exact native range of this species is not known', Weakley's Flora gives 'non-native? presumably introduced from Mexico or Central America' before 1492, the Tennessee-Kentucky Plant Atlas says not native, the Kansas Wildflowers account says native, and King et al. 2018 say its natural range 'is difficult to determine because it has become so widespread'. Deliriant (tropane alkaloids); every part is poisonous. Ritual use is reported only from archaeological residue in Arkansas.",
+    "appearance": {
+     "flower": {
+      "colour": "#F6F3EC",
+      "secondary": "#CDBFE0",
+      "form": "upright white trumpet 6-9 cm (Wikipedia; Radford, Ahles & Bell give 7-10 cm), sometimes violet-tinged or with a purple throat, flaring into five lobes each drawn out to a long sharp tooth, held on a long angled green calyx; one at a time in the forks of the stems, open in the evening and wilted the next day",
+      "scent": "sweet",
+      "emission": "none",
+      "notes": "Plain white petals lit only by moon or torch; they do NOT glow. Wikipedia calls the flowers fragrant; 'sweet' is the nearest scent value."
+     },
+     "fruit": {
+      "colour": "#6F9549",
+      "form": "erect egg-shaped capsule 2.5-5 cm, covered in many slender spines, standing up from the fork (not nodding like Datura wrightii's); ripens to light yellow-brown and splits into four valves, spilling black seeds"
+     },
+     "seasonal": "comes up in early summer, flowers through summer into autumn, ripe fruit until frost; the first frost kills the whole plant and the seed waits in the soil",
+     "silhouette": "forking green annual, white trumpets, upright spiny pods",
+     "confidence": "documented",
+     "refs": "Wikipedia Datura stramonium (leaves 8-20 cm toothed and undulate, darker above and paler below; trumpets 6-9 cm white, cream or violet; capsule spiny or smooth, splits into four chambers of black seeds); NC State Extension (leaves ovate to oblong-elliptical, hairless, wavy margin with coarse teeth; flowers trumpet-shaped, white to purple-tinged, open only in the evening and wilt the next day; spiked capsule ripens light yellow-brown and splits into 4 valves); namethatplant.net quoting Radford, Ahles & Bell 1968 (funnelform corolla 7-10 cm, 'capsule erect, subglobose or ovoid, 2.5-4cm long, spinose, valvate') and Smith 1998 (ovate leaves with large, coarse, angular teeth); Kansas Wildflowers (capsule 1.4-2 in, many slender spines, four valves); King's American Dispensatory via henriettes-herb.com (stem much branched and forked, yellowish-green; leaves unequal at the base, deeply toothed and sinuate; flowers erect)"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.72,
+     "val": 0.82,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "nearctic",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1.0,
+     "color": "#7A9A5A",
+     "color_2": "#5E7A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth, branched, yellowish-green herbaceous stem (King's American Dispensatory); darker at the forks. Colours are estimated from that description."
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.15,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.95,
+      0.95
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.4,
+     "confidence": "estimated",
+     "note": "an annual herb, so no woody skeleton; forking in twos at the nodes ('much branched and forked', King's American Dispensatory), the Datura pattern, upright rather than sprawling. Order count, angles and spacing estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 8,
+     "flower_colour": "#f6f3ec",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth",
+      "self"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      5
+     ],
+     "unripe_colour": "#6f9549",
+     "ripe_colour": "#a08a58",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      10,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      5,
+      100
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Holm et al. 1997 via PlantPono (flowers May to September in the north temperate zone, ripe fruit from August until frost in November; up to 25,000 seeds per well-nourished plant); NC State Extension (flowers July to September); USGS PlantID (July to October); Wikipedia Datura stramonium (flowers throughout the summer; trumpets 6-9 cm; capsule 3-8 cm); Radford, Ahles & Bell 1968 (capsule 2.5-4 cm). Month range is the span of the sources. Fruit set, ripening, hang and rot times and crop per plant estimated; fruit_size_cm spans Radford and Kansas Wildflowers."
+    },
+    "id": "jimsonweed"
    }
   ]
  },
@@ -2513,6 +2779,21 @@
    "CONSERVATION IS REGIONAL. 'Endangered (IUCN 3.1) (Europe assessment)' is quoted from Wikipedia's Mandragora officinarum page (Bilz & Soljan 2011), not read from the Red List; it is a European regional assessment, not a global one, and it may refer to the narrow European M. officinarum. Not verified.",
    "TOXICITY. Wikipedia and Kew say the root and leaves (Kew: all parts) are poisonous. Whether the ripe fruit is poisonous is unclear (PFAF: possibly poisonous, so caution; the Egyptians and the Bible treat it as a fragrant fruit), so fruiting.edible is 'toxic' and cannot_be_browsed is true, as for datura. toxic.potency 0.9 is a judgment next to datura's 0.95, not a measured value.",
    "ESTIMATED BLOCKS: growth timings, repro pollinator and disperser, flowers per plant, fruit set, ripening, hang, rot and crop, bark colours, tint numbers, canopy gap and droop, genes ranges, and density 0.1. No architecture block (herb)."
+  ],
+  "jimsonweed": [
+   "NATIVE RANGE IS UNSETTLED, AND THE SOURCES DISAGREE. Kew POWO accepts the species as native to Mexico only and lists every US state (Alabama, Arkansas, Louisiana, Mississippi, Texas...) as introduced; bplant.org: 'The exact native range of this species is not known' and 'generally agreed to be native to Mexico', some saying Texas; Weakley's Flora (via namethatplant.net): 'non-native? presumably introduced from Mexico or Central America' before 1492; Tennessee-Kentucky Plant Atlas: 'Not Native'; Kansas Wildflowers: 'Native'; Virginia Museum of Natural History: 'likely in Eastern North America before the arrival of Europeans', origin Mesoamerican and spread by people; King et al. 2018: 'its natural range is difficult to determine because it has become so widespread'. realm 'nearctic' and origin 'Mexico (disputed); weed of E US' follow the sources' middle; if the realm gate treats Mexico as another realm, set it by hand. Whether it grew in the Mississippian Southeast before 1492 is open.",
+   "THE ARCHAEOLOGY NAMES THE GENUS, NOT THE SPECIES. King et al. 2018 identified atropine, which the authors take as a Datura biomarker ('no other plants in North and Central America are known to contain these alkaloids together'); only atropine was found, no scopolamine. Neither text I read (King et al. in full but its last 210 characters; Lambert et al. abstract page only) names Datura stramonium, D. wrightii, D. inoxia or D. quercifolia. So the link from these vessels to jimsonweed is by region and by the genus, not proven. King et al. report archaeological Datura seeds in Mississippian contexts (AD 1100-1200) in Illinois, none from the Southeast.",
+   "THE VESSELS ARE NOT FROM THE GULF SOUTH. The residue finds are from Arkansas (Central Arkansas River valley; Mississippian and Caddoan Mississippian pottery, AD 1400-1700 in King et al.; 'Late Precolumbian' in Lambert et al.). King et al.'s vessels were bought by dealers for the Gilcrease Museum in the early twentieth century, so their find places are poorly documented. Nothing I opened ties Datura to Moundville or Poverty Point (ruin_compass analogues for gulf_swamp); Poverty Point is far older. The ruin link is regional and by analogy, as with the pueblo entry.",
+   "THE 'HUNCHBACK CRONE EFFIGY POTS' CLAIM IS UNVERIFIED (it came from a voice chat). What the papers do say: King et al. found atropine in a female effigy bottle from Arkansas (Gilcrease GM 5425-1514) and write that it is 'a cognate of historic-period earth mother figures such as Old-Woman-Who-Never-Dies'; the human-head effigy bottle was also positive. The text I read contains no hunchback or humpback figure and does not call the female figure a crone. Lambert et al.'s abstract page does not mention effigies; its reference list has two Old Woman titles (Baker 1994; Duncan & Diaz-Granados 2004) that I could not read. So only 'a Datura-positive female effigy bottle linked by the authors to an earth-mother figure' is in the entry; the hunchback and the crone are not claimed.",
+   "WHAT I COULD NOT READ. The last 210 characters of King et al. 2018. The full text of Lambert et al. 2022 (abstract page only, so its bottle dates, methods and Mississippian comparison are not in the entry, and I did not use its other reported details). The user brief named Tushingham as the author of the absorbed-residue paper; the Cambridge page lists King, Powis, Cheong, Deere, Pickering, Singleton and Gaikwad (Powis is a co-author, Tushingham is not). Per design §FM.9 the entry gives no preparation: the abstract's account of how the disks in the bottles were used to make the drink is left out, only the title is cited.",
+   "OTHER RITE EVIDENCE IS WEAK AND NOT CLAIMED. Wikipedia lists Algonquian and Cherokee among peoples who used 'Datura plants' in ceremonies, naming no species, rite or source. The Powhatan huskanaw (Beverley 1705) is Virginia, not the Gulf, and Beverley's own text never names Datura: the Virginia Museum of Natural History page says Schultes and Hofmann 'suspected' Datura in the 'wysoccan' and calls the evidence 'very limited and anecdotal'; Henricus says 'possibly jimsonweed'. The USDA Forest Service ethnobotany page for Datura does not describe Indigenous eastern ritual use of D. stramonium, only the 1676 Jamestown soldiers' poisoning and Shaker adverts. Nothing there is in the entry. sacred.confidence is 'reported' and ceremonial 'reported', not 'documented': the Arkansas ritual reading is the authors' interpretation of vessel forms and imagery.",
+   "BIOME KEYS. FLOODPLAIN_FOREST is the one the sources support: USGS PlantID lists 'farm lots, wastegrounds, floodplains, and bottomlands', Kansas Wildflowers 'flood plains' and 'along streams', NC State 'moist, well-drained soils... prefers humus-rich', Tennessee-Kentucky atlas moisture 'Mesic', Holm 'prefers rich soil and plentiful rainfall'. SWAMP is a STRETCH, included because the ruin is a swamp ruin: no source puts jimsonweed in a swamp, and it is a mesic plant, not a waterlogged one, so the entry belongs only to the swamp's drier bank and cleared ground (needs 'river_bank' keeps it near water). Left out: WET_MEADOW (a cool band, 3-18 C, with no source; stretch), FRESHWATER_MARSH (standing water, treeless, cool band; the plant is no marsh species), MARITIME_FOREST (no source ties it to dunes or salt; stretch). The real homes of the plant, fields, pastures, roadsides, ditches and farmyards, have no biome key; TEMPERATE_DECIDUOUS is its Eastern US land but is not Gulf South and not tagged.",
+   "NEEDS: 'river_bank' and not 'dry_ground'. The engine's DRY_GROUND need keeps a plant out of wetland biomes and within 8 m of water (vegetation_placer.gd), which would shut it out of FLOODPLAIN_FOREST and SWAMP altogether, so sacred_datura's choice does not carry over. river_bank is a soft weight within about 25-70 m of water. The same plant's weedy side (fields, roadsides, trampled ground by a village) is not modelled.",
+   "ENGINE CANNOT DRAW IT RIGHT. 'shrub' with canopy 'rounded' is the nearest shape for an annual herb; nothing draws a plant that dies at first frost and is gone by winter (tint.drop is the winter leaf fall, not a whole-plant death, and repro.dormant 'cold' only stands for it). The erect spiny capsule (nodding in D. wrightii) and the evening-opening trumpet cycle are text in appearance only, not drawn. The leaf 'dentate' margin is the closest value to a coarse, angular tooth on a wavy blade; King's description calls the leaf deeply toothed and sinuate.",
+   "STRUCTURAL CONFLICT TO CHECK. USGS PlantID lists the leaves as opposite; NC State, namethatplant (Radford, Ahles & Bell; Smith) and King's give them alternate (leaves arise one at a fork). The entry uses alternate.",
+   "ESTIMATED, not read in any source: temp_c [12, 28] (summer-growing, frost-killed; no source gives a band), moisture [0.4, 0.85] (from 'mesic', 'plentiful rainfall' and drought tolerance once established), altitude_m [0, 1600] (Holm: sea level to 2,750 m in the Himalayas; Flora of China 600-1,600 m; the Gulf South is low), density, soil classes alluvium, sand and till (PROTA 'various soil types, prefers clayey or loamy'; Holm 'sandy pastures'; fertility_min 0.4 from 'rich soil'), salinity 'none', ph 'any' (Wikipedia 'calcareous', Tennessee-Kentucky atlas 'alkaline', NC State 'almost any'), shade 'intermediate' (NC State full sun or partial shade), the whole genes block, leaf aspect 1.5 (NC State 'ovate to oblong-elliptical'), canopy and tint numbers, the architecture numbers, the colours, and everything in growth and fruiting that the sources do not quote.",
+   "TOXICITY. toxic.potency 0.95 is carried from sacred_datura and is a judgment, not a measurement; sources agree every part is poisonous (Booy et al. 2015 via PlantPono: 'All parts of the plant are very poisonous'; NC State: 'All parts of this plant are toxic if ingested'; Radford, Ahles & Bell: seeds especially) and name the tropane alkaloids atropine, hyoscyamine and scopolamine. No lethal amounts are recorded, per §FM.9.",
+   "DESIGN LINK TO CHECK. §FR/§FS.3 (10 Oct) lock the swamp shaman and a brew that is only a trick; §FQ/§FR leave the culture of the Gulf South ruin open ('the invented folk-horror ruin'). ruin_compass.json still has gulf_swamp.plant null with plant_candidate yaupon and plant_status 'not_chosen'; I have not changed it and this entry does not choose it. data/sacred is still not loaded by the engine."
   ]
  },
  "sources": {
@@ -2613,6 +2894,23 @@
    "https://egypt.swan.ac.uk/?p=842",
    "https://egypt-museum.com/the-secret-language-of-flowers-in-egyptian-tombs/",
    "https://en.wikipedia.org/wiki/Ebers_Papyrus"
+  ],
+  "jimsonweed": [
+   "https://en.wikipedia.org/wiki/Datura_stramonium",
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:314738-2",
+   "https://plants.ces.ncsu.edu/plants/datura-stramonium/common-name/jamestown-weed/",
+   "https://plantpono.org/wp-content/uploads/Datura-stramonium.pdf",
+   "https://warcapps.usgs.gov/PlantID/Species/Details/1801",
+   "https://tennessee-kentucky.plantatlas.usf.edu/plant/species/1868",
+   "https://kswildflower.org/plants/datura-stramonium",
+   "https://namethatplant.net/plantdetail.shtml?plant=437",
+   "https://bplant.org/plant/667",
+   "https://henriettes-herb.com/eclectic/kings/datura.html",
+   "https://www.vmnh.net/research-collections/vmnh-greenhouses/jamestown-weed",
+   "https://henricus.org/?p=7508",
+   "https://www.fs.usda.gov/wildflowers/ethnobotany/Mind_and_Spirit/datura.shtml",
+   "https://www.cambridge.org/core/product/BC403850B55D372801DE729BB23EAD7D/core-reader",
+   "https://www.cambridge.org/core/journals/advances-in-archaeological-practice/article/abs/production-matters/8767998261B84066BA893CAF80133288"
   ]
  }
 }

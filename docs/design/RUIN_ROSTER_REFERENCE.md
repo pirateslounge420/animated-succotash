@@ -110,7 +110,8 @@ map as thematic.
 ### Gulf South swamp (east of the Aztec)
 - **Stone:** none to speak of. Claude's suggestion: earth and timber. Real analogues: the mounds of
   Poverty Point (Louisiana, over 3,000 years old) and Moundville (Alabama).
-- **Plant:** not chosen. Claude's candidate: yaupon (*Ilex vomitoria*), the holly whose leaves
+- **Plant (locked 10 Oct, §FT):** jimsonweed (*Datura stramonium*), a deliriant; Datura residue is found in Mississippian and Caddoan vessels from Arkansas (genus only, poorly recorded). The yaupon candidate below was dropped. Entry in `data/sacred`, not drawn yet.
+- **Plant (earlier, dropped):** not chosen. Claude's candidate: yaupon (*Ilex vomitoria*), the holly whose leaves
   made the Southeast's ceremonial "black drink" of purification and council. A mild stimulant, so
   not a visionary brew. `Ilex` appears in the floodplain and maritime forest biome files; check
   for *vomitoria* before relying on it.

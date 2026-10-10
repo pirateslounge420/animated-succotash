@@ -54,12 +54,14 @@
    "status": "reference",
    "culture": "Gulf South mound builders (analogues: Poverty Point, Moundville)",
    "stone": "earth and timber",
-   "plant": null,
-   "plant_candidate": "Ilex vomitoria (yaupon): the ceremonial black drink; a mild stimulant (Claude's candidate, Mike has not chosen)",
-   "plant_status": "not_chosen",
+   "plant": "Datura stramonium (jimsonweed): Mike, 10 Oct, §FT.1",
+   "plant_candidate": "(was yaupon, a mild stimulant: dropped, §FT.4)",
+   "plant_status": "entry_in_data_sacred_not_drawn",
    "exits": {
     "west": "aztec"
-   }
+   },
+   "boss": "the witch (§FE.3); her false-shaman sequence is §FR",
+   "setting": "Southeast bayou country (Louisiana, Mississippi, Alabama, Florida)"
   },
   "maya": {
    "status": "reference",

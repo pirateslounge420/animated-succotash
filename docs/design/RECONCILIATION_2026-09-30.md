@@ -5914,7 +5914,7 @@ the frame); the witch anywhere but the swamp's hearth; a swamp culture (still th
 ruin of the roster: Mike's own "what would the swamp like" is unanswered).
 
 ### FR.5 Open for Mike
-1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick? (Answered by §FS.3: a trick.)
+1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick? (§FS.3 said a trick; §FT.0 reverses it: real, datura.)
 2. **Is the trap every time you drink there, or only the first?** And after it, is there a shaman
    at the swamp's hearth at all?
 3. **How does the hearth hold against her?** Does the chase start in the lit room and follow you
@@ -5922,7 +5922,7 @@ ruin of the roster: Mike's own "what would the swamp like" is unanswered).
 4. **What happens in the other cultures' cutscenes,** if anything?
 5. **Is the cutscene skippable,** and does a repeat play shorter?
 6. **Does she need the brew at all,** or can the swamp's boss be met in the halls first?
-7. **The swamp itself:** which culture the Gulf South ruin is, if any.
+7. **The swamp itself:** the Southeast bayou (§FT.1); no named nation.
 
 ## FS. Answers to §FQ and §FR: the Maya sit in the jungle, the swoops all hit, the swamp's brew is a trick — LOCKED (10 Oct, by voice, Mike; "Yep, we'll do that", "We'll go with that", then "Yep, lock it in" to Claude's read-back of all three)
 
@@ -5946,7 +5946,7 @@ answers back before he locked them, so they are in his own words. No number chan
 Camazotz's swoops all count: each one that connects is one of the three hits (§FD). Confirmed as
 written in §FQ.2; the later swoops are not a harassing chase.
 
-### FS.3 The swamp's brew is not real (answers §FR.5 call 1)
+### FS.3 The swamp's brew is not real (answers §FR.5 call 1) — SUPERSEDED by §FT.0: it is real
 - **The witch's brew is purely her trick** to leave you vulnerable before the reveal. It is not a
   psychoactive brew like the other ruins': no vision filter, no tint, no palette swap, no hidden
   carvings. §FM.7 and §FN.5 govern the real brews and do not touch it.
@@ -5963,3 +5963,69 @@ written in §FQ.2; the later swoops are not a harassing chase.
 - **98 builds no brew:** its placeholder tint is removed. It still waits for 97, the swamp world and
   the witch built as a boss.
 - Everything else stands.
+
+## FT. The swamp's plant is datura (jimsonweed), and its brew is real — LOCKED (10 Oct, by voice, Mike; "Yep, it'll be the [da]tura. It sounds good.")
+
+Mike, 10 Oct, asked to answer the open calls, said the swamp's brew would be "whatever the local
+psychedelic is down here" and asked what Claude thought for the Louisiana, Mississippi, Alabama,
+Florida bayou. Claude (voice) offered yaupon (the black drink, a mild stimulant) or datura; Mike:
+"Yep, it'll be the [da]tura." (Claude heard "churro"; he corrected it: "I said the tura.") No number
+changes; first guesses are in `data/shaman_ritual.json`.
+
+### FT.0 What this changes in what Mike locked minutes earlier (said out loud, not picked quietly)
+**§FS.3 said the swamp's brew is "purely her trick," not real, and Mike locked that.** His next words
+make the brew the local psychedelic, which makes it real. Claude's reading: his later words stand, so
+**§FS.3 is superseded**: the swamp's brew is real. If he meant it to stay only her trick, one line
+puts it back (FT.5 call 1).
+
+### FT.1 The swamp's plant is jimsonweed, *Datura stramonium*
+- **Region:** Mike named the bayou country (Louisiana, Mississippi, Alabama, Florida). That settles
+  the setting of the Gulf South ruin as the Southeast, not any one named nation (the roster's
+  "Gulf South mound builders," analogues Poverty Point and Moundville, stay as reference).
+- **Species:** the roster's existing `sacred_datura` is *Datura wrightii*, a Southwest desert plant
+  (the Pueblo's). The Southeast's is jimsonweed, *D. stramonium*, a weed of disturbed, moist, rich
+  ground, naturalized across the east. A new entry, `jimsonweed`, is written
+  (`data/sacred/sacred_plants.json`, 10 Oct, one agent, `plant_schema_check.py --strict` 0 errors).
+- **Habitat, honest:** `FLOODPLAIN_FOREST` is supported by sources; `SWAMP` is a stretch (no source
+  puts it there). It is keyed to the river bank, not the dry ground the desert datura takes.
+- **Evidence, honest (§FP.5's rule):** Datura residues in Mississippian and Caddoan vessels from
+  Arkansas, about AD 1400–1700 (King and others 2018; Lambert, Perttula and Gaikwad 2022). They
+  identify the genus only, the finds are poorly recorded, and no named ceremony is attached. The voice
+  session's "heavy residue testing" and "hunchback crone effigy pots" are **not borne out**: no source
+  opened ties the hunchback pots to it. What the papers do give is a Datura-positive female effigy
+  bottle tied by its authors to Old-Woman-Who-Never-Dies, an old-woman earth-mother figure, which
+  suits the witch loosely. Confidence: `reported` for the rite, `estimated` for the rest.
+- **Yaupon is moot** (a stimulant, not a vision). No doses and no preparation in the data (§FM.9).
+
+### FT.2 The swamp's brew is real, and it is her trap
+- **A real brew,** like the other ruins': you harvest jimsonweed on the swamp's surface (respectfully,
+  as the others), carry it down, and she serves it. It has a vision of its own (a deliriant; the
+  same "cannot tell what is real" feel Mike wants for Egypt's, FP.4).
+- **Her change and the trip happen together,** so the player cannot tell the drug from the truth.
+  **The ambiguity is kept:** the design does not say whether her change is real or the brew's. The
+  sequence of §FR.2 plays exactly the same either way, and the game never answers it. (This replaces
+  §FR.0 point 3's reading that she was the witch all along.)
+- **The vision's look is open (FT.5 call 2).** Provisional default, not a decision: the shared filter
+  of §FN.5 (a palette swap with hidden carvings, in a marsh green), no phantom figures. Whether the
+  swamp takes Egypt's display-only hallucinations (FP.4) is Mike's call. The chase still starts
+  from the reveal, so the trap is the witch's behaviour (§FM.7 reads as before: a different
+  experience, not a harder mode).
+
+### FT.3 What this changes in the queue
+- **98** now builds a real brew: it waits for 83 (the vision filter) as well as 97, the swamp world
+  and the witch built as a boss. The tint is a placeholder from the filter, in a marsh palette.
+- A swamp surface needs jimsonweed grown and drawn (the shrub shape exists; its flags are in the file).
+
+### FT.4 Not taken
+Yaupon as the swamp's plant; *D. wrightii* in the swamp; the hunchback-pot claim; a named nation; a
+phantom figure in the swamp's vision; deciding whether her change is real.
+
+### FT.5 Open for Mike
+1. **Is the swamp's brew real?** Written real from his later words; one line reverses it.
+2. **The swamp's vision look:** the shared filter, or phantom figures too (FP.4)?
+3. **Does the trap fire every time you drink there, or only the first?** (§FR.5 call 2)
+4. **How does the hearth hold against her?** (§FR.5 call 3)
+5. **Is the cutscene skippable;** can you meet her in the halls before drinking? (§FR.5 calls 5, 6)
+6. **What happens in the other cultures' cutscenes?** (§FR.5 call 4)
+7. **What the swamp ruin is built of:** earth and timber (the roster's), or something stonier?
+   Mike asked what it might look like; the earthwork-and-timber answer was not confirmed.
