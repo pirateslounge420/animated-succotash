@@ -61,6 +61,10 @@ own `appearance.cap`, `underside` and `stipe` (scripts/ecology/mushroom_mesh.gd)
 `globe_cactus` (design §FM.13): a tight clump of low ribbed buttons sunk to
 their rims, wool on the bumps, drawn from the entry's own `appearance.stem`
 and `flower` (scripts/ecology/globe_cactus_mesh.gd); `cactus` stays the column.
+`bulb` (design §FM.13): a bare bulb half out of the ground and a flat upright
+fan of strap leaves in one plane (two ranks), drawn from the entry's own
+`appearance.trunk.notes` and `appearance.leaf`, its leaf block and its `bark`
+block (scripts/ecology/bulb_mesh.gd); no flower yet; `spike_rosette` unchanged.
 These are low-poly placeholders; real models replace them later.
 
 ## Biome file fields

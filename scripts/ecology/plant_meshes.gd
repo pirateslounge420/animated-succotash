@@ -400,9 +400,12 @@ static func _key_of(sp: PlantSpecies) -> int:
 ## picture (_build_impostor): the picture is cut from a crown's outline,
 ## four widths up a crown that closes to a point, which would lose a
 ## mushroom's cap on its stalk (design §FM.13: the far level keeps it), and
-## stand a globe cactus's flat button on its edge (it keeps the button).
+## stand a globe cactus's flat button on its edge (it keeps the button);
+## and it turns to face the camera, which would draw a bulb's flat fan
+## seen edge-on as a fan (§FM.13: the far level keeps the fan in one
+## plane).
 static func own_far(sp: PlantSpecies) -> bool:
-	return sp.shape == S.MUSHROOM or sp.shape == S.GLOBE_CACTUS
+	return sp.shape == S.MUSHROOM or sp.shape == S.GLOBE_CACTUS or sp.shape == S.BULB
 
 
 ## The young layouts (TreeLayouts slots) a chunk's trees grow, ahead of
@@ -1120,6 +1123,11 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 			# Low ribbed buttons sunk to their rims, from the entry's
 			# appearance (design §FM.13, queue 76; never the CACTUS column).
 			GlobeCactusMesh.build(b, sp, far)
+		S.BULB:
+			# A bulb half out of the ground and a flat fan of strap leaves
+			# from its neck, from the entry's appearance (design §FM.13,
+			# queue 77; SPIKE_ROSETTE unchanged).
+			BulbMesh.build(b, sp, far)
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
 	return b.commit_arrays()
@@ -1130,7 +1138,7 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor; -1 a fungus's flesh, MushroomMesh, or a globe cactus's, GlobeCactusMesh: bark's rules, its own colour)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor; -1 a fungus's flesh, MushroomMesh, or a globe cactus's, GlobeCactusMesh, or a bulb's and its leaves, BulbMesh: bark's rules, its own colour)
 	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
 	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
@@ -2017,7 +2025,7 @@ class _Builder:
 		# roots) is darker, the way it would be in its own shadow. Hanging
 		# plants grow down from their origin (y < 0) and are left alone;
 		# painted flesh (UV2.x -1) has its own, toward navy (MushroomMesh,
-		# GlobeCactusMesh).
+		# GlobeCactusMesh, BulbMesh).
 		for i in v.size():
 			var y := v[i].y
 			if y >= 0.0 and y < 0.14 and uv2[i].x > -0.5:

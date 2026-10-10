@@ -503,6 +503,8 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 		sp.petiole_color = Color.from_string(str(pet.get("base")), Color(0, 0, 0, 0))
 	sp.flower = fl if fl is Dictionary else {}
 	sp.appearance = app if app is Dictionary else {}
+	var bk = e.get("bark", {})
+	sp.bark = bk if bk is Dictionary else {}
 	var gn = e.get("genes", {})
 	sp.gene_ranges = gn if gn is Dictionary else {}
 	var rp = e.get("repro", {})

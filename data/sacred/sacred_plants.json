@@ -783,7 +783,7 @@
     "origin": "Southern and eastern Africa",
     "family": "Amaryllidaceae",
     "synonym": "Buphane disticha; Boophone toxicaria; Brunsvigia disticha; Haemanthus toxicarius",
-    "shape": "spike_rosette",
+    "shape": "bulb",
     "temp_c": [
      12,
      26
@@ -1956,7 +1956,8 @@
    "Biome gap: its main home, the Highveld montane grassland of southern Africa, has no afrotropic association; TALLGRASS_PRAIRIE (fire-maintained C4 grassland) used as the nearest key alongside SAVANNA (miombo/Zimbabwe). SAVANNA's climate band (18-33 C) runs warmer than the plant's cooler upland range.",
    "Initiation is sourced only to Pasquali 2021 (Sotho boys' lebollo); I could not confirm initiation of diviners themselves. The Frontiers overview names divination only (Zulu, Xhosa, Shona, San). Sobiecki 2008 is paywalled, so it is cited from its abstract (85 divination plants) and not checked line by line for Boophone.",
    "Highly poisonous to people and stock (cannot_be_browsed true; edible 'toxic').",
-   "IUCN has not assessed it; SANBI lists it Declining in South Africa."
+   "IUCN has not assessed it; SANBI lists it Declining in South Africa.",
+   "Claude Code, 9 Oct (queue 77, §FM.13): the engine has the BULB shape now (scripts/ecology/bulb_mesh.gd) and this entry's shape is 'bulb', so the first two flags' stand-ins are gone: a bare brown bulb half out of the ground (appearance.trunk.notes' 15-25 cm, bark.color and color_2) and a flat upright fan of 12 stiff, blunt, rippled grey-green straps in one plane, two ranks (appearance.leaf: notes, size_cm, colour, underside, vein_colour, margin; the leaf block's aspect and apex). The third stands: the flower head is not drawn, because Torchfire 1 has one clock and no year (FK.3), so there is no season for it to come before the leaves in; the leafy form only. data/sacred is still not loaded; tools/bulb_check.gd builds this entry straight from the file (SpeciesDB.species_in_file)."
   ],
   "peyote": [
    "Engine gap: 'cactus' draws a column, but peyote is a low flattened globe 2-7 cm tall, wider than tall and mostly below ground (buried stem plus a 25 cm+ taproot). There is no low-globe shape yet (FM.9); canopy 'mound' with gap 0.05 is the nearest hint.",

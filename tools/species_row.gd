@@ -50,6 +50,14 @@ extends SceneTree
 ## beside a San Pedro, the clump about 64 px across:
 ##   SPECIES="sacred:peyote,Trichocereus pachanoi" HEIGHT_M=mid SPACING=0.55 \
 ##     DIST=0.4 EYE_M=0.3 LOOK_H=0 GRAVEL=1 TAG=globe_cactus
+## TURN_DEG (queue 77): each row plant's turn round its up, degrees, in the
+## row's order (default 0 each: its mesh's x along the row), as the placer
+## turns every plant at random. A bulb stands on the ground as in play (its
+## mesh is half in the ground already), and the sown grass keeps clear of
+## each row plant's footprint. Leshoma in grass, its fan facing you and
+## edge-on, about 64 px tall at 480 lines:
+##   SPECIES="sacred:leshoma,sacred:leshoma" TURN_DEG="0,90" HEIGHT_M=mid \
+##     SPACING=0.9 DIST=2.1 EYE_M=0.5 LOOK_H=0.45 GRASS=Buffalograss TAG=bulb
 
 var out_dir := "/tmp/shots"
 
@@ -107,7 +115,8 @@ func _run() -> void:
 		_hide_vegetation(get_root())
 		main.leaf_season.only_extra = true
 	var trees: Array[Node3D] = []
-	var feet: Array = [] # [offset along the row (m), footprint radius (m)] (GRAVEL)
+	var feet: Array = [] # [offset along the row (m), footprint radius (m)] (GRAVEL, GRASS)
+	var turns := OS.get_environment("TURN_DEG").split(",", false)
 	var tallest := 0.0
 	for i in names.size():
 		var sp := _species(names[i].strip_edges())
@@ -122,9 +131,9 @@ func _run() -> void:
 			h = (sp.height_m.x + sp.height_m.y) * 0.5
 		tallest = maxf(tallest, h)
 		var d := (row_d + e * off / PlanetConst.RADIUS_M).normalized()
-		# A globe cactus's mesh is sunk to its rim already (design §FM.13):
-		# it stands on the ground as in play.
-		var sink := 0.0 if sp.shape == PlantSpecies.Shape.GLOBE_CACTUS else minf(0.1, h * 0.1)
+		# A globe cactus's mesh is sunk to its rim already, a bulb's half in
+		# the ground (design §FM.13): they stand on the ground as in play.
+		var sink := 0.0 if sp.shape in [PlantSpecies.Shape.GLOBE_CACTUS, PlantSpecies.Shape.BULB] else minf(0.1, h * 0.1)
 		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - sink)
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -133,7 +142,8 @@ func _run() -> void:
 		mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, layout)
 		feet.append([off, _footprint(mm.mesh) * h])
 		mm.instance_count = 1
-		var b := Basis(e, d, e.cross(d)).orthonormalized().scaled(Vector3.ONE * h)
+		var turn := deg_to_rad(float(turns[i])) if i < turns.size() else 0.0
+		var b := Basis(e, d, e.cross(d)).orthonormalized().rotated(d, turn).scaled(Vector3.ONE * h)
 		mm.set_instance_transform(0, Transform3D(b, Vector3.ZERO))
 		mm.set_instance_color(0, Color.WHITE)
 		mm.set_instance_custom_data(0, Color(0, 0, 0, 0))
@@ -157,7 +167,7 @@ func _run() -> void:
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
 	main.leaf_season._scan_t = 0.0 # take the row now
 	if OS.get_environment("GRASS") != "":
-		_sow_grass(world, main, row_d, n, e, names.size(), spacing)
+		_sow_grass(world, main, row_d, n, e, feet)
 	if OS.get_environment("GRAVEL") != "":
 		_sow_gravel(world, main, row_d, n, e, feet)
 	var eye_m := float(OS.get_environment("EYE_M")) if OS.get_environment("EYE_M") != "" else 1.7
@@ -361,13 +371,15 @@ func _species(p_name: String) -> PlantSpecies:
 
 
 ## GRASS=<name>: GRASS_N plants of that species at its own heights, turned
-## at random (seeded), sown within GRASS_M m round the row (`count` plants
-## `spacing` m apart along `e`, the camera off to the south, -`n`), clear
-## of the row's plants by 6 cm and no more than 25 cm toward the camera, so
-## the row stands in it and still shows; its hero mesh in one MultiMesh, in
-## the class textures (PlantMeshes.material(): a grass's own leaf tile cuts
-## its blades, a few millimetres wide, to nothing this close).
-func _sow_grass(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3, count: int, spacing: float) -> void:
+## at random (seeded), sown within GRASS_M m round the row (the row's
+## plants along `e`, `feet`: [offset, footprint radius] each; the camera
+## off to the south, -`n`), clear of each row plant by 6 cm or its
+## footprint and 1 cm more (a bulb's), and no more than 25 cm toward the
+## camera, so the row stands in it and still shows; its hero mesh in one
+## MultiMesh, in the class textures (PlantMeshes.material(): a grass's own
+## leaf tile cuts its blades, a few millimetres wide, to nothing this
+## close).
+func _sow_grass(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3, feet: Array) -> void:
 	var gsp := SpeciesDB.find(OS.get_environment("GRASS"))
 	if gsp == null:
 		print("[species] no grass named '%s'" % OS.get_environment("GRASS"))
@@ -390,8 +402,8 @@ func _sow_grass(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3,
 		var dx := rng.randf_range(-reach, reach)
 		var dz := rng.randf_range(-0.25, reach)
 		var clear := true
-		for k in count:
-			if Vector2(dx - (float(k) - (count - 1) * 0.5) * spacing, dz).length() < 0.06:
+		for f in feet:
+			if Vector2(dx - float(f[0]), dz).length() < maxf(0.06, float(f[1]) + 0.01):
 				clear = false
 		if not clear:
 			continue

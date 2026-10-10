@@ -16,6 +16,10 @@ enum Tier { EMERGENT, CANOPY, SHRUB, GROUND, EPIPHYTE }
 ## GLOBE_CACTUS (design §FM.13, queue 76): low ribbed buttons sunk to their
 ## rims in the ground, a tight clump to a plant, drawn from the entry's
 ## appearance.stem / flower (GlobeCactusMesh); never the CACTUS column.
+## BULB (design §FM.13, queue 77; "bulb"): a bare bulb half out of the
+## ground and a flat upright fan of strap leaves in one plane (two ranks),
+## drawn from the entry's appearance.trunk / leaf and bark blocks
+## (BulbMesh).
 enum Shape {
 	CONIFER, BROADLEAF, GNARLED, EMERGENT, UMBRELLA, PALM, CYPRESS, MANGROVE,
 	ROSETTE, SPIKE_ROSETTE, SHRUB, TUSSOCK, GRASS, REED, FERN, TREE_FERN,
@@ -23,6 +27,7 @@ enum Shape {
 	BAMBOO,
 	MUSHROOM,
 	GLOBE_CACTUS,
+	BULB,
 }
 
 ## Special conditions (optional).
@@ -148,9 +153,12 @@ var flower := {}
 ## The entry's whole `appearance` block (the modeller's targets: a
 ## fungus's cap, underside and stipe, its habit and notes...), for the
 ## builders that draw from it (MushroomMesh, design §FM.13; a globe
-## cactus's stem and flower, GlobeCactusMesh); empty when the entry has
-## none.
+## cactus's stem and flower, GlobeCactusMesh; a bulb's trunk notes and
+## leaf, BulbMesh); empty when the entry has none.
 var appearance := {}
+## The entry's `bark` block (pattern, color, color_2...): a bulb's tunics
+## for BulbMesh (design §FM.13); empty when the entry has none.
+var bark := {}
 ## A fungus's `fungus` block (substrate, fruit_season...): LitterField
 ## fruits the "litter" ones. Read from whichever file lists it (design
 ## §CC folded the fungi catalogue into the biome files).
