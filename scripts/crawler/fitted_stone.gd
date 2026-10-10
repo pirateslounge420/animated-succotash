@@ -550,8 +550,11 @@ static func _bounds(poly: PackedVector2Array) -> Rect2:
 ## turned. `holes`: openings kept out of it (convex polygons, counter-
 ## clockwise, in its own (x, y)): the hearth's pit (TombBuild._hearth_pit);
 ## a flag crossing one is cut along its edge, on the same rolls, so the
-## rest of the floor is laid as it would be. Returns the flags laid.
-static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: float, width: float, cl: Vector2, rng: RandomNumberGenerator, wear: Callable, holes: Array = []) -> int:
+## rest of the floor is laid as it would be. `scale`: the flags that much
+## bigger again (a big room's merged cells, design §FM.6's room pool:
+## room_pool.json build.flags_scale; 1 everywhere else). Returns the flags
+## laid.
+static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: float, width: float, cl: Vector2, rng: RandomNumberGenerator, wear: Callable, holes: Array = [], scale := 1.0) -> int:
 	if length < 0.3 or width < 0.3:
 		return 0
 	var fl: Dictionary = RuinStyle.val("floor", {}, theme)
@@ -560,7 +563,7 @@ static func flags(b: RuinBuilder, fo: Vector3, u: Vector3, v: Vector3, length: f
 	var st: Dictionary = M.get("settle", {})
 	var og := overgrowth()
 	var bare := TombBuild.bare
-	var k := maxf(float(fl.get("stone_scale", 2.0)), 0.2)
+	var k := maxf(float(fl.get("stone_scale", 2.0)), 0.2) * maxf(scale, 0.2)
 	var sm: Array = p.get("stone_m", [0.25, 0.6])
 	var sizes := {"stone_m": [float(sm[0]) * k, float(sm[1]) * k]}
 	var ps := clampf(float(fl.get("pillow_scale", 0.25)), 0.0, 1.0)

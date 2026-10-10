@@ -526,10 +526,12 @@ func _rest(delta: float) -> void:
 ## burnt where it lies (a fire pot). It climbs out, its near tell heard as
 ## it starts to move (a creeper you are watching lies there until you look
 ## away), its strike ready, and hunts you from now (Pursuit, §FD); unless
-## its place lies where the light passes the chase's cap (a relit torch of
-## its half-lit room beside it: Mike's note of 7 Oct, a chase keeps to the
-## dark), when it climbs out and goes for the dark instead, no one's
-## pursuer.
+## its place, or the floor it climbs out onto, lies where the light passes
+## the chase's cap (a relit torch of its half-lit room beside it: Mike's
+## note of 7 Oct, a chase keeps to the dark), when it climbs out and goes
+## for the dark instead, no one's pursuer. (Both: a grave can shade the
+## floor beside it from the torch that lights the grave itself, and it
+## would climb out in that light.)
 func wake() -> void:
 	if state != REST:
 		return
@@ -537,7 +539,7 @@ func wake() -> void:
 	_enter(RISING)
 	_told = false
 	_arm()
-	if not residents.light_ok(self, place.out):
+	if not residents.light_ok(self, place.out) or not residents.light_ok(self, place.pos):
 		_falling_back = true
 		return
 	last_known = residents.player.global_position

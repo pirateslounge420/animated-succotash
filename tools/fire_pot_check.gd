@@ -772,11 +772,16 @@ func _spread() -> void:
 ## creature (a burst by one would burn it or drive it off), and `apart` m
 ## from each other, from any fire alight and from any of the pots' fire;
 ## the first `corridors` of them in corridors (bare floor in front of
-## them, for the tests on the floor), then any.
+## them, for the tests on the floor), then any on a wall (the tests throw
+## at the wall beside one and burst behind its wall: not a big room's
+## sconce cut into a pillar, design §FM.6's room pool).
 func _cold_sconces(want: int, corridors: int, m := 6.0, apart := 8.0) -> Array[Node3D]:
 	var cands: Array[Node3D] = []
-	for h in main.fires.holders:
+	for hi in main.fires.holders.size():
+		var h: Node3D = main.fires.holders[hi]
 		if FireStore.is_lit(h) or FireStore.state_of(h) == "catching" or str(h.get_meta("fire_holder")) != "sconce":
+			continue
+		if str((main.lay.holders[hi] as Dictionary).get("side", "")) == "pillar":
 			continue
 		var at := h.global_position
 		var clear := not FirePots.flame_near(at, apart)

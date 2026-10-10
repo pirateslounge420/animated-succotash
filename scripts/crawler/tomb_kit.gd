@@ -40,6 +40,13 @@ class_name TombKit
 ##   doors        centred on the wall they cut (plan.doors), so where a
 ##                room's two doors face each other you look straight
 ##                through it down the next passage to the next light
+##   big rooms    the room pool (design §FM.6, Phantasy Star Online style;
+##                RoomPool, room_pool.json): one or two hand-built big rooms
+##                drawn by the seed, each in the place of one of the kit's
+##                rooms on floor one's spine (short of the room before the
+##                heart) or a side way, its floor, doors, pillars, sconces and
+##                what stands in it its archetype's; the kit's own rooms and
+##                paths round them rolled as before
 ##
 ## Rooms are of the kit's kinds (crypt, catacomb, ossuary, collapsed; a
 ## crypt wants CRYPT_MIN_HALF); the spine's last is the heart (§CJ.3). The
@@ -165,7 +172,21 @@ static func module_span(r, lo: float, hi: float, m: float) -> Vector2i:
 ## And its floors (design §FM.6, TombFloors): "floors" and "descent", a
 ## piece's "floor" (floor two's pieces 1); "spine", "branches", "heart",
 ## "exits", the lair and the tunnels are floor one's.
+## And its big rooms (design §FM.6's room pool, RoomPool; room_pool.json):
+## "big_rooms" [piece ids], each such room carrying "big_room" (its
+## archetype). A tomb left with fewer than big_rooms.per_dungeon's least,
+## or whose big rooms left the boss no lair with its tunnel's hole
+## (RoomPool.keeps_lair), is laid again with them due from the first slot
+## that takes one (the spine's first rooms, so the side ways keep the
+## kit's).
 static func layout(seed_value: int, theme := "") -> Dictionary:
+	var lay := _layout(seed_value, theme, false)
+	if RoomPool.short(lay) or not RoomPool.keeps_lair(lay):
+		lay = _layout(seed_value, theme, true)
+	return lay
+
+
+static func _layout(seed_value: int, theme: String, eager: bool) -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var th := theme if theme != "" else str(OPEN.get("first_theme", "tomb"))
@@ -188,6 +209,10 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 	_shuffle(rng, sides)
 	var sp: Dictionary = PLAN.get("spine", {})
 	var spine_rooms := maxi(_irange(rng, sp.get("rooms", [4, 5]), 4, 5), 1)
+	# The room pool (design §FM.6, RoomPool): which big rooms this dungeon
+	# draws and the slots they are due at, on its own dice (the kit's run on
+	# untouched); _branch lays them as their slots come up.
+	lay["_pool"] = RoomPool.plan(seed_value, th, spine_rooms, want, eager)
 	var spine := _branch(lay, rng, hearth_room, str(sides[0]), spine_rooms, 0)
 	if not spine.is_empty():
 		lay.hearth_ways = 1
@@ -207,6 +232,10 @@ static func layout(seed_value: int, theme := "") -> Dictionary:
 		var n := mini(_irange(rng, K.get("branch_rooms", [2, 3]), 2, 3), cap)
 		if not _branch(lay, rng, hearth_room, str(sides[i]), n, (lay.branches as Array).size()).is_empty():
 			lay.hearth_ways = int(lay.hearth_ways) + 1
+	# The big rooms laid (floor one only: floor two draws none).
+	var pool: Dictionary = lay.get("_pool", {})
+	lay["big_rooms"] = (pool.get("placed", []) as Array).duplicate()
+	lay.erase("_pool")
 	# The floors (design §FM.6, TombFloors): the stair down from a room near
 	# the spine's far end and floor two below it, on their own dice, laid
 	# before floor one's things so the room the stair leaves places its
@@ -311,53 +340,75 @@ static func _branch(lay: Dictionary, rng: RandomNumberGenerator, from: Dictionar
 	var rooms: Array = []
 	var cur := from
 	var ways: Array = [side]
+	var pool: Dictionary = lay.get("_pool", {})
 	for k in n_rooms:
 		var heart := spine and k == n_rooms - 1
 		var placed := false
-		for way in ways:
-			for attempt in 9:
-				# A module less every third try (corridor, then room).
-				var less := attempt / 3
-				var wp := wall_point(cur, str(way), 0.0)
-				var n: Vector2 = wp[1]
-				var start: Vector2 = (wp[0] as Vector2) + n * (WALL * 0.5)
-				var y := float(cur.y1)
-				var stair := k > 0 and rng.randf() < float(K.get("stair_chance", 0.3))
-				var clen := maxi(rng.randi_range(cspan.x, cspan.y) - less, 1) * mod
-				var dy := 0.0
-				if stair:
-					dy = drop
-					clen = maxf(clen, flight)
-				var cor := Delves.piece("stair" if stair else "corridor", start, n, clen, chalf, y, y - dy, ch)
-				var nl := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
-				var nw := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
-				if heart:
-					nl = maxi(nl, heart_n)
-				var rc: Vector2 = start + n * (clen + WALL)
-				var room := Delves.piece("room", rc, n, nl * mod, nw * mod * 0.5, y - dy, y - dy, rh)
-				if not _free(lay, outer(cor), [cur.id]):
-					continue
-				# The room touches only its corridor (not added yet): not even
-				# the room the corridor leaves.
-				if not _free(lay, outer(room), []):
-					continue
-				for pc in [cor, room]:
-					_add(lay, pc)
-					pc["branch"] = branch
-					pc["spine"] = spine
-					ids.append(int(pc.id))
-				cor["depth"] = int(cur.get("depth", 0))
-				room["depth"] = int(cur.get("depth", 0)) + 1
-				room["room_kind"] = _room_kind(rng, float(room.half))
-				room["branch_of"] = int(from.id)
-				_door(lay, wp[0], n, float(cor.half) - 0.1, y, minf(ch, float(cur.h)) - 0.2, cur, cor)
-				_door(lay, start + n * (clen + WALL * 0.5), n, float(cor.half) - 0.1, y - dy, ch - 0.2, cor, room)
-				rooms.append(room)
-				cur = room
-				placed = true
-				break
+		# The room pool (design §FM.6, RoomPool): a slot that may take a big
+		# room (floor one's spine short of the exit's last stretch, or a side
+		# way) lays the one due, its archetype's own floor in place of the
+		# kit's dice; one that won't fit here lays the kit's room and waits
+		# for the next slot. The kit's dice are rolled as ever either way.
+		var slot := RoomPool.slot_ok(branch, k, n_rooms) and not pool.is_empty()
+		var due := RoomPool.due(pool) if slot else ""
+		for big in ([due, ""] if due != "" else [""]):
+			for way in ways:
+				for attempt in 9:
+					# A module less every third try (corridor, then room).
+					var less := attempt / 3
+					var wp := wall_point(cur, str(way), 0.0)
+					var n: Vector2 = wp[1]
+					var start: Vector2 = (wp[0] as Vector2) + n * (WALL * 0.5)
+					# The floor at the wall the way leaves by (a big room's far
+					# door may be up on its dais).
+					var y := float(cur.y1)
+					if cur.has("profile"):
+						y = Delves.floor_of(cur, float(cur.len) if str(way) == "end" else (0.0 if str(way) == "start" else float(cur.len) * 0.5))
+					var stair := k > 0 and rng.randf() < float(K.get("stair_chance", 0.3))
+					var clen := maxi(rng.randi_range(cspan.x, cspan.y) - less, 1) * mod
+					var dy := 0.0
+					if stair:
+						dy = drop
+						clen = maxf(clen, flight)
+					var cor := Delves.piece("stair" if stair else "corridor", start, n, clen, chalf, y, y - dy, ch)
+					var nl := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
+					var nw := maxi(rng.randi_range(rspan.x, rspan.y) - less, rspan.x)
+					if heart:
+						nl = maxi(nl, heart_n)
+					var rc: Vector2 = start + n * (clen + WALL)
+					var room := Delves.piece("room", rc, n, nl * mod, nw * mod * 0.5, y - dy, y - dy, rh)
+					if str(big) != "":
+						var fp := RoomPool.footprint(str(big), mod)
+						room = Delves.piece("room", rc, n, fp.x, fp.y * 0.5, y - dy, y - dy, RoomPool.height(str(big), th, rh, fp.x))
+					if not _free(lay, outer(cor), [cur.id]):
+						continue
+					# The room touches only its corridor (not added yet): not even
+					# the room the corridor leaves.
+					if not _free(lay, outer(room), []):
+						continue
+					for pc in [cor, room]:
+						_add(lay, pc)
+						pc["branch"] = branch
+						pc["spine"] = spine
+						ids.append(int(pc.id))
+					cor["depth"] = int(cur.get("depth", 0))
+					room["depth"] = int(cur.get("depth", 0)) + 1
+					room["room_kind"] = _room_kind(rng, float(room.half))
+					if str(big) != "":
+						RoomPool.make(room, str(big))
+					room["branch_of"] = int(from.id)
+					_door(lay, wp[0], n, float(cor.half) - 0.1, y, minf(ch, float(cur.h)) - 0.2, cur, cor)
+					_door(lay, start + n * (clen + WALL * 0.5), n, float(cor.half) - 0.1, y - dy, ch - 0.2, cor, room)
+					rooms.append(room)
+					cur = room
+					placed = true
+					break
+				if placed:
+					break
 			if placed:
 				break
+		if slot and placed:
+			RoomPool.passed(pool, cur)
 		if not placed:
 			break
 		# On (§EX.2): straight through the wall facing the way in, the
@@ -367,6 +418,10 @@ static func _branch(lay: Dictionary, rng: RandomNumberGenerator, from: Dictionar
 		var rl := "right" if lr == "left" else "left"
 		var turn := (not spine or not facing) and rng.randf() < float(K.get("turn_chance", 0.45))
 		ways = [lr, "end", rl] if turn else ["end", lr, rl]
+		# A big room goes on only through the walls its archetype opens.
+		if cur.has("big_room"):
+			var on := RoomPool.ways_on(str(cur.big_room))
+			ways = ways.filter(func(w) -> bool: return w in on)
 	if ids.is_empty():
 		(lay.branches as Array).pop_back()
 	elif spine:
@@ -518,6 +573,10 @@ static func _place_holders(lay: Dictionary, rng: RandomNumberGenerator, on_floor
 		match str(pc.kind):
 			"room":
 				if str(pc.room_kind) == "hearth":
+					continue
+				# A big room's are its archetype's, hand-placed (RoomPool).
+				if pc.has("big_room"):
+					(lay.holders as Array).append_array(RoomPool.sconces(lay, pc))
 					continue
 				(lay.holders as Array).append_array(_room_sconces(lay, pc))
 			"corridor", "stair":
@@ -766,7 +825,8 @@ static func _place_vents(lay: Dictionary) -> void:
 			orng.seed = hash([int(lay.seed), fp, "vent"])
 			m += Vector2.RIGHT.rotated(orng.randf() * TAU) * orng.randf_range(float(off[0]), float(off[1]))
 		var aa := Delves.along_across(pc, m)
-		var ceil_y := Delves.floor_of(pc, clampf(aa.x, 0.0, float(pc.len))) + float(pc.h)
+		# (A big room's ceiling is level over its stepped floor, RoomPool.)
+		var ceil_y := RoomPool.ceiling_at(pc, clampf(aa.x, 0.0, float(pc.len)))
 		var depth := maxf(surface - ceil_y, 0.0)
 		# Narrower the deeper (§EV.2): the full width at the surface, the
 		# least at the depth where the daylight is gone.
@@ -775,7 +835,7 @@ static func _place_vents(lay: Dictionary) -> void:
 		aa.x = clampf(aa.x, d * 0.5 + 0.05, float(pc.len) - d * 0.5 - 0.05)
 		aa.y = clampf(aa.y, -float(pc.half) + d * 0.5 + 0.05, float(pc.half) - d * 0.5 - 0.05)
 		m = (pc.c as Vector2) + (pc.dir as Vector2) * aa.x + Delves.perp(pc.dir) * aa.y
-		ceil_y = Delves.floor_of(pc, aa.x) + float(pc.h)
+		ceil_y = RoomPool.ceiling_at(pc, aa.x)
 		var mouth := Vector3(m.x, ceil_y, m.y)
 		var kink: Dictionary = V.get("kink", {})
 		var legs := _flue_legs(lay, int(pc.id), mouth, d, surface, kink, int((V.get("shaft", {}) as Dictionary).get("kinks", 2)))

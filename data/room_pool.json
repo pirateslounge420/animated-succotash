@@ -1,10 +1,12 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §FM.6] The room pool, Phantasy Star Online style (Mike, 9 Oct): hand-built archetypal big rooms plus generic rooms and paths, their order shuffled per run, certain big rooms drawn at random into the map. It adds to §EX.2's spine and module and replaces nothing. Claude (chat) wrote the rule and the three first-guess archetypes; Claude Code authors each room's geometry in queue 70, and Mike renames or replaces the archetypes by playing.",
-  "big_rooms": "per_dungeon [min, max]: how many archetypal big rooms a dungeon draws, by its seed. placed_on: the spine or a side branch (never the exit's last stretch, never the hearth's heart room, which stays the one hearth room of §EX.4). no_repeat_in_a_dungeon: an archetype appears once per dungeon.",
-  "generic": "The rooms and paths already built (crawler.json → plan.module, masonry.json styles), shuffled by the dungeon's seed. Same seed, same dungeon.",
-  "archetypes": "id: a short brief for the room's shape, and ruin_kinds: which kinds may draw it. Each is built in the ruin's one stone (§EX.1). Geometry, props and sconce places are Claude Code's, painted per §ES, with the room's torches counting toward the floor's lit test (§FF.2).",
-  "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan."
+  "about": "The room pool, Phantasy Star Online style (Mike, 9 Oct, design §FM.6): hand-built archetypal big rooms plus generic rooms and paths, their order shuffled per run, certain big rooms drawn at random into the map. It adds to §EX.2's spine and module and replaces nothing. Claude (chat) wrote the rule and the three first-guess archetypes; Claude Code authors each room's geometry in queue 70, and Mike renames or replaces the archetypes by playing. Built 9 Oct (Claude Code, queue 70; RoomPool, RoomPoolBuild, TombKit._branch): big_rooms, generic and the three archetypes below are read; restart after editing. A big room takes the place of one of the generic rooms on floor one's spine or a side way (its corridor in is the kit's as ever), so the dungeon's size and the spine's room count are as before; floor two (§FM.6) draws none.",
+  "big_rooms": "per_dungeon [min, max]: how many archetypal big rooms a dungeon draws, by its seed. placed_on: the spine or a side branch (never the exit's last stretch, never the hearth's heart room, which stays the one hearth room of §EX.4). no_repeat_in_a_dungeon: an archetype appears once per dungeon. As built (queue 70): the count and which archetypes are drawn on the room pool's own dice (the dungeon's seed and 'room pool'), so the rest of the tomb's dice run as before up to the first slot a big room is due at; where: among the floor's room slots that may take one, in the order the generator lays them (the spine's first, then each side way's), the slots drawn on the same dice; a big room that doesn't fit where it was drawn tries the next slot on. placed_on also takes 'spine' or 'branch' alone. 'The exit's last stretch' is read as the spine from the room before the heart on: that room (the stair down to floor two leaves it, §FM.6), the heart and the way out's flight and landing; the hearth room is never one. Should a tomb end up with fewer than per_dungeon's least (it hasn't in 1,000 seeds), or its big rooms leave the boss no lair in a room its tunnels can start from (the lair and its tunnels' holes never go in a big room, and a big room can take the side way's dead end the lair would have had: 8 tombs in 1,000), the generator lays it again with the big rooms on the first slots that take them (the spine's first rooms, so the side ways keep the kit's). Same seed, same dungeon.",
+  "generic": "The rooms and paths already built (crawler.json → plan.module, masonry.json styles), shuffled by the dungeon's seed. Same seed, same dungeon. As built: the kit's rooms (crypt, catacomb, ossuary, collapsed) and corridors and flights, rolled by the dungeon's seed exactly as before (TombKit); nothing new is read from shuffle (per_seed is how the kit already lays them).",
+  "archetypes": "id: a short brief for the room's shape, and ruin_kinds: which kinds may draw it. Each is built in the ruin's one stone (§EX.1). Geometry, props and sconce places are Claude Code's, painted per §ES, with the room's torches counting toward the floor's lit test (§FF.2). As built (queue 70, first guesses, Mike may rename or replace them): width_modules, length_modules: its floor in the style's modules (masonry.json styles module_m, 2 m in the tomb), length along the way in. doors_on: the walls a way may go on through, a door centred in each (§EX.2); a way always comes in through its start wall, in the middle. floor: flat; steps_up (lower_m of floor at the way in, then steps rises, each rise_m up a run_m slope, tread_m of tread between them, and the dais the rest of the way, where its far door is, if it has one); sunken (terrace_m of floor at each end at the doors' height, a flight run_m long down drop_m, and the court between, one stair below the corridors); every flight walked on a slope under its steps, as the tomb's stairs are. headroom: the style's heights_m entry over its highest floor; the ceiling is level, so a stepped hall is taller at its way in and a sunken court over its court. pillars: rows_m (across its middle line) and along_m, a pillar at each (side_m, else the style's pillars.side_m), carrying a beam down each row from end wall to end wall, the ceiling's slabs spanning across onto them (max_span_m holds). sconces: its wall torches, {wall, along_m (side walls) or across_m (end walls)} or {pillar: [along index, row index], face: aisle}: a sconce cut into the pillar's face toward the hall's middle line, its flue slot up the pillar (§EV.1). stands: what stands in it: a seat on the dais (along_m, size_m [across, high, deep]); a stela in the court (along_m, size_m [wide, high, thick]); tenon heads, carved stone heads set into the walls (walls, along_m, up_m over the court's floor, size_m [wide, high, how far each juts]).",
+  "build": "(Claude Code, queue 70) flags_scale: a big room's floor flags that much bigger again than a room's (masonry.json styles floor.stone_scale): queue 48's remedy for a room past its 45,000 triangles, merging the floor's small cells. With it, and the walls' stone that would stand hidden behind a big room's steps left out, every big room stays inside that budget (tools/room_pool_check.gd and crawler_check count them).",
+  "sunken_court_sky": "The brief's shaft of daylight or moonlight into the court is not built: §EX.4 (locked) keeps one column of sky in a dungeon, over its one hearth (crawler_check asserts one shaft per tomb). The court is one stair below the corridors, taller over its court than any room, its middle the stela's. If Mike wants the sky over it, §EX.4 needs his word first.",
+  "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan. As built: tools/room_pool_check.gd (queue 70)."
  },
  "big_rooms": {
   "per_dungeon": [1, 2],
@@ -14,18 +16,65 @@
  "generic": {
   "shuffle": "per_seed"
  },
+ "build": {
+  "flags_scale": 1.5
+ },
  "archetypes": {
   "pillar_hall": {
    "brief": "A long hall of paired pillars in rows, sconces on the pillars, the far end lost in dark.",
-   "ruin_kinds": ["tomb"]
+   "ruin_kinds": ["tomb"],
+   "width_modules": 4,
+   "length_modules": 7,
+   "doors_on": ["end", "left", "right"],
+   "floor": {"kind": "flat"},
+   "headroom": "room",
+   "pillars": {"side_m": 0.8, "rows_m": [2.0, -2.0], "along_m": [3.0, 7.0, 11.0]},
+   "sconces": [
+    {"pillar": [0, 0], "face": "aisle"},
+    {"pillar": [0, 1], "face": "aisle"},
+    {"pillar": [2, 0], "face": "aisle"},
+    {"pillar": [2, 1], "face": "aisle"}
+   ],
+   "stands": []
   },
   "stepped_hall": {
    "brief": "A broad hall whose floor rises in wide steps to a dais, so the far torches sit high above the near ones.",
-   "ruin_kinds": ["tomb"]
+   "ruin_kinds": ["tomb"],
+   "width_modules": 5,
+   "length_modules": 5,
+   "doors_on": ["end"],
+   "floor": {"kind": "steps_up", "lower_m": 1.5, "steps": 4, "rise_m": 0.3, "run_m": 0.5, "tread_m": 1.0},
+   "headroom": "room",
+   "pillars": {"rows_m": [2.5, -2.5], "along_m": [2.5, 8.0]},
+   "sconces": [
+    {"wall": "left", "along_m": 0.9},
+    {"wall": "right", "along_m": 0.9},
+    {"wall": "end", "across_m": 3.5},
+    {"wall": "end", "across_m": -3.5}
+   ],
+   "stands": [
+    {"kind": "seat", "along_m": 7.6, "size_m": [1.6, 1.1, 0.75]}
+   ]
   },
   "sunken_court": {
    "brief": "A room one stair below the corridors, open above to a shaft, so daylight or moonlight falls into its middle.",
-   "ruin_kinds": ["tomb"]
+   "ruin_kinds": ["tomb"],
+   "width_modules": 5,
+   "length_modules": 6,
+   "doors_on": ["end"],
+   "floor": {"kind": "sunken", "terrace_m": 1.0, "drop_m": 1.2, "run_m": 2.0},
+   "headroom": "room",
+   "pillars": {"rows_m": [2.5, -2.5], "along_m": [4.5, 7.5]},
+   "sconces": [
+    {"wall": "left", "along_m": 3.75},
+    {"wall": "right", "along_m": 3.75},
+    {"wall": "left", "along_m": 8.25},
+    {"wall": "right", "along_m": 8.25}
+   ],
+   "stands": [
+    {"kind": "stela", "along_m": 6.0, "size_m": [0.7, 2.4, 0.4]},
+    {"kind": "tenon_heads", "walls": ["left", "right"], "along_m": [5.0, 6.0, 7.0], "up_m": 2.65, "size_m": [0.44, 0.52, 0.42]}
+   ]
   }
  }
 }

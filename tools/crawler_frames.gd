@@ -9,7 +9,9 @@ extends SceneTree
 ## hearth and the shaman with his ladle (27a-27e; §FM.6, queue 67); ONLY=fog
 ## just floor two's fog (28a-28d; §FM.6, queue 69); ONLY=surface just the
 ## tomb's surface up the stair: dawn, noon, dusk and midnight from where you come out,
-## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71). The snake (queue 49) is held still for
+## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71);
+## ONLY=rooms just the room pool's big rooms (30a-30i; §FM.6, queue 70;
+## ROOMS= some of them). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1150,6 +1152,13 @@ func _run() -> void:
 		await _surface(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "rooms":
+		# Just the room pool's big rooms (design §FM.6, queue 70; 30a-30i),
+		# each in the first tomb from seed 1 on that draws it.
+		await _frames(30)
+		await _rooms(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -2000,6 +2009,141 @@ func _surface(main: CrawlerMain) -> void:
 		var col: Node3D = s._smokes[0].col
 		ok(col.visible and float(col.get_meta("top_m", 0.0)) > 1.0, "the hearth's smoke stands over its stack at dusk (%.0f m of column)" % float(col.get_meta("top_m", 0.0)))
 	world.days = keep_days
+
+
+## The room pool's big rooms (design §FM.6, queue 70; ONLY=rooms; RoomPool,
+## RoomPoolBuild): each archetype in the first tomb from seed 1 on that
+## draws it, at midnight: from just inside its way in, looking down it by
+## the torch in hand (30a the pillar hall down its aisle of pillars, 30b the
+## stepped hall up its steps to the dais, 30c the sunken court down into
+## its court); then with its own torches relit (30d-30f); then a second look
+## with them lit (30g the pillar hall from beside a pillar's sconce, 30h the
+## stepped hall from its dais's edge before the seat, back down the hall, 30i
+## the sunken court from beside its stela up at a wall of stone heads).
+## Checks: every torch of each big room catches with the game's own swing;
+## by the torch in hand the frame's warm firelight shows and its dark is
+## navy, never grey (the tomb's one stone and its painted shade, §EX.1,
+## §ES); relit, more of the frame warm than by the torch alone.
+## ROOMS=stepped_hall,sunken_court (say) takes just those (their frames
+## keep their letters).
+func _rooms(first: CrawlerMain) -> void:
+	var order := ["pillar_hall", "stepped_hall", "sunken_court"]
+	var only := OS.get_environment("ROOMS")
+	var seeds := {}
+	for s in range(1, 400):
+		var lay := TombKit.layout(s)
+		for id in lay.big_rooms:
+			var k := str(lay.pieces[int(id)].big_room)
+			if not seeds.has(k):
+				seeds[k] = s
+		if seeds.size() == order.size():
+			break
+	var cur := first
+	for i in order.size():
+		var k: String = order[i]
+		if only != "" and not (k in only.split(",")):
+			continue
+		if not seeds.has(k):
+			ok(false, "a tomb that draws the %s" % k)
+			continue
+		var s := int(seeds[k])
+		if int(cur.lay.seed) != s:
+			cur.queue_free()
+			await _frames(2)
+			OS.set_environment("SEED", str(s))
+			cur = load("res://scenes/crawler.tscn").instantiate()
+			get_root().add_child(cur)
+			while not cur.baked:
+				await process_frame
+			await _frames(30)
+		var boss: Variant = cur.get("boss")
+		if boss is Boss:
+			(boss as Boss).auto = false
+		var lay := cur.lay
+		var pc: Dictionary = {}
+		for id in lay.big_rooms:
+			if str(lay.pieces[int(id)].big_room) == k:
+				pc = lay.pieces[int(id)]
+		var p := cur.player
+		p.set_physics_process(false)
+		cur.world.days = 13.0
+		# Just inside its way in, looking down it.
+		var din: Dictionary = {}
+		for di in pc.doors:
+			if str(TombKit.door_side(pc, lay.doors[di])[0]) == "start":
+				din = lay.doors[di]
+		var into: Vector2 = (din.n as Vector2) * (1.0 if int(din.b) == int(pc.id) else -1.0)
+		var q: Vector2 = (din.p as Vector2) + into * (Delves.WALL * 0.5 + 0.5)
+		var at := Vector3(q.x, Delves.floor_of(pc, Delves.along_across(pc, q).x), q.y)
+		var far2 := RuinBuilder._pp(pc, float(pc.len) - 1.0, 0.0)
+		var look_y := Delves.floor_of(pc, float(pc.len) - 1.0) + (0.6 if k == "sunken_court" else 1.4)
+		var target := Vector3(far2.x, look_y, far2.y)
+		_torch_in_hand(p)
+		p.torch.light()
+		_look_at_from(p, at, target)
+		await _frames(14)
+		var img := await _shot("30%s_%s_torch" % ["abc"[i], k])
+		var st := _stats(img)
+		var d: Color = st.dark
+		print("  %s (seed %d, room %d): by the torch warm %.3f of the frame, the dark #%s" % [k, s, int(pc.id), st.warm, d.to_html(false)])
+		ok(float(st.warm) > 0.002 and d.b >= d.r and d.b >= d.g * 0.9, "the %s by the torch in hand: its stone warm in the firelight (%.3f of the frame), its dark navy (#%s)" % [k, st.warm, d.to_html(false)])
+		# Its own torches relit with the game's swing.
+		var want := 0
+		for h in lay.holders:
+			if int(h.piece) == int(pc.id):
+				want += 1
+		var n := await _relight_room(p, cur, pc)
+		ok(want > 0 and n == want, "the %s's torches all catch with the game's own swing (%d of %d)" % [k, n, want])
+		_torch_in_hand(p)
+		p.torch.light()
+		_look_at_from(p, at, target)
+		await _frames(14)
+		var img2 := await _shot("30%s_%s_relit" % ["def"[i], k])
+		var st2 := _stats(img2)
+		print("  %s relit: warm %.3f of the frame (by the torch alone %.3f)" % [k, st2.warm, st.warm])
+		ok(float(st2.warm) > float(st.warm), "the %s with its torches relit: more of the frame warm than by the torch alone (%.3f against %.3f)" % [k, st2.warm, st.warm])
+		# A second look, its torches lit.
+		var at3 := at
+		var target3 := target
+		match k:
+			"pillar_hall":
+				# Down the aisle from a little before the first pillar a sconce
+				# is cut into, at its flame.
+				for h in cur.fires.holders:
+					if int(h.get_meta("piece")) == int(pc.id):
+						var hp: Vector3 = h.global_position
+						var nrm := h.global_basis.z
+						var dirv := Vector3((pc.dir as Vector2).x, 0.0, (pc.dir as Vector2).y)
+						var fy := Delves.floor_of(pc, Delves.along_across(pc, Vector2(hp.x, hp.z)).x)
+						at3 = Vector3(hp.x, fy, hp.z) + nrm * 1.3 - dirv * 2.2
+						target3 = hp + Vector3(0.0, 0.3, 0.0) + dirv * 0.2
+						break
+			"stepped_hall":
+				# From the dais's front edge, before the seat, back down the
+				# hall.
+				var top_y := RoomPool.highest(pc)
+				var dais := float(pc.len) - 1.2
+				for q2 in pc.get("profile", PackedVector2Array()):
+					if absf((q2 as Vector2).y - top_y) < 1e-3:
+						dais = (q2 as Vector2).x
+						break
+				var top2 := RuinBuilder._pp(pc, dais + 0.35, 0.0)
+				at3 = Vector3(top2.x, top_y, top2.y)
+				var low2 := RuinBuilder._pp(pc, 1.0, 0.0)
+				target3 = Vector3(low2.x, Delves.floor_of(pc, 1.0) + 0.8, low2.y)
+			"sunken_court":
+				# From the court beside the stela (a metre short of it and off
+				# its side), between the pillars, up at the far wall's stone
+				# heads.
+				var low_y := RoomPool.lowest(pc)
+				var c2 := RuinBuilder._pp(pc, float(pc.len) * 0.5 - 1.0, -1.0)
+				at3 = Vector3(c2.x, low_y, c2.y)
+				var w2 := RuinBuilder._pp(pc, float(pc.len) * 0.5, float(pc.half))
+				target3 = Vector3(w2.x, low_y + 2.6, w2.y)
+		_look_at_from(p, at3, target3)
+		await _frames(14)
+		await _shot("30%s_%s_inside" % ["ghi"[i], k])
+		p.torch.put_out("stowed")
 
 
 ## The player's own settings back and the run's controls file gone; the

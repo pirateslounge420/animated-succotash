@@ -470,9 +470,11 @@ func _layouts(seeds: Array) -> void:
 			elif k in ["corridor", "stair"] and not _whole(float(pc.len), m):
 				module_ok = false
 				print("  seed %d: %s %d is %.2f m long, not whole %.1f m modules" % [lay.seed, k, pc.id, pc.len, m])
-			# The style's heights.
+			# The style's heights (a big room's over its highest floor: its
+			# ceiling is level over its steps, design §FM.6's room pool).
 			var hk := "hearth_room" if str(pc.get("room_kind", "")) == "hearth" else ("room" if k == "room" else "corridor")
-			if hs.has(hk) and absf(float(pc.h) - float(hs[hk])) > 1e-4:
+			var over := (RoomPool.highest(pc) - float(pc.y0)) if pc.has("big_room") else 0.0
+			if hs.has(hk) and absf(float(pc.h) - over - float(hs[hk])) > 1e-4:
 				heights_ok = false
 				print("  seed %d: %s %d is %.2f m high, the style says %.2f" % [lay.seed, k, pc.id, pc.h, float(hs[hk])])
 			if k == "room":
@@ -795,6 +797,10 @@ func _walk_body(lay: Dictionary, ex: Dictionary, root: Node3D, path: Array) -> D
 ## up to small_room_max_m, `large` when longer.
 func _sconces_wanted(lay: Dictionary, pc: Dictionary) -> int:
 	var rt: Dictionary = TombKit.RT
+	# A big room's are its archetype's, hand-placed (design §FM.6's room
+	# pool; tools/room_pool_check.gd checks them).
+	if pc.has("big_room"):
+		return RoomPool.sconces_wanted(pc)
 	if str(pc.room_kind) == "heart":
 		return int(rt.get("heart", 4))
 	var long := maxf(float(pc.len), 2.0 * float(pc.half))
@@ -822,8 +828,10 @@ static func _sconce_light(h: Dictionary) -> Array:
 ## every room past the hearth room: in its middle, 0.62 of the way down
 ## the heart; a Campfire's light 1 m over the ring).
 static func _ring_light(pc: Dictionary) -> Array:
-	var at: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * (0.62 if str(pc.room_kind) == "heart" else 0.5)
-	return [Vector3(at.x, float(pc.y0) + 1.0, at.y), _fire_energy(), float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
+	var k := 0.62 if str(pc.room_kind) == "heart" else 0.5
+	var at: Vector2 = (pc.c as Vector2) + (pc.dir as Vector2) * float(pc.len) * k
+	# (On the floor where it stood: a big room's steps, design §FM.6.)
+	return [Vector3(at.x, Delves.floor_of(pc, float(pc.len) * k) + 1.0, at.y), _fire_energy(), float(CrawlerFires.FH.get("light_radius_m", 8.0)), Campfire.ATTENUATION]
 
 
 ## How lit room `pc` of `lay` is by `lights` ([[position, energy, range,
@@ -837,14 +845,16 @@ func _lit_level(lay: Dictionary, pc: Dictionary, lights: Array) -> Array:
 	var pv := Delves.perp(dv)
 	var length := float(pc.len)
 	var half := float(pc.half)
-	var y0 := float(pc.y0)
 	var samples: Array = []
 	var a := LIT_STEP * 0.5
 	while a < length:
 		var c := -half + LIT_STEP * 0.5
+		# The floor where it is (a big room's steps, design §FM.6; any other
+		# room's is level).
+		var fa := Delves.floor_of(pc, a)
 		while c < half:
 			var q: Vector2 = (pc.c as Vector2) + dv * a + pv * c
-			samples.append([Vector3(q.x, y0, q.y), Vector3.UP])
+			samples.append([Vector3(q.x, fa, q.y), Vector3.UP])
 			c += LIT_STEP
 		a += LIT_STEP
 	var doors: Array = []
@@ -857,8 +867,11 @@ func _lit_level(lay: Dictionary, pc: Dictionary, lights: Array) -> Array:
 			var fp := TombKit.face_point(pc, side, off)
 			var q: Vector2 = fp[0]
 			var n2: Vector2 = fp[1]
-			var y := y0 + LIT_STEP * 0.5
-			while y < y0 + float(pc.h):
+			# From the floor at the wall up to the ceiling (a big room's level
+			# ceiling over its steps; any other room's floor is y0).
+			var wy := Delves.floor_of(pc, Delves.along_across(pc, q).x)
+			var y := wy + LIT_STEP * 0.5
+			while y < RoomPool.ceiling_at(pc, Delves.along_across(pc, q).x):
 				var open := false
 				for d in doors:
 					if TombKit.door_gap(d, q) < 0.01 and y < float(d.y) + float(d.h):
@@ -953,10 +966,12 @@ func _room_torches() -> void:
 				counts_ok = false
 				print("  seed %d room %d (%s, %.1f x %.1f m): %d sconces, the rule says %d" % [seed_v, pc.id, pc.room_kind, pc.len, 2.0 * float(pc.half), mine.size(), _sconces_wanted(lay, pc)])
 			# On the long walls (the heart's side walls), in facing pairs where
-			# the doors allow, whole modules apart down each wall.
+			# the doors allow, whole modules apart down each wall. (Not a big
+			# room's: its places are its archetype's, on its walls or its
+			# pillars, design §FM.6; tools/room_pool_check.gd checks them.)
 			var long_walls: Array = ["left", "right"] if str(pc.room_kind) == "heart" or float(pc.len) >= 2.0 * float(pc.half) - 0.001 else ["start", "end"]
 			var walls := {}
-			for h in mine:
+			for h in ([] if pc.has("big_room") else mine):
 				if not walls.has(str(h.side)):
 					walls[str(h.side)] = []
 				(walls[str(h.side)] as Array).append(float(h.off))
@@ -1915,7 +1930,8 @@ func _flue_slots(main: CrawlerMain) -> void:
 		var nrm: Vector3 = hd.normal
 		var niche_top := pos.y - float((sc.cup as Vector3).y) + float(sc.h)
 		var pc: Dictionary = lay.pieces[int(hd.piece)]
-		var ceil_y := Delves.floor_of(pc, Delves.along_across(pc, Vector2(pos.x, pos.z)).x) + float(pc.h)
+		# (A big room's ceiling is level over its steps, design §FM.6.)
+		var ceil_y := RoomPool.ceiling_at(pc, Delves.along_across(pc, Vector2(pos.x, pos.z)).x)
 		var found: Dictionary = {}
 		for sl in slots:
 			var b: Vector3 = sl.bottom

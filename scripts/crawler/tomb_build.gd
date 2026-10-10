@@ -310,6 +310,10 @@ func _plan_room(pc: Dictionary) -> Dictionary:
 	var courses := corbel_courses(_lay, pc)
 	var step := float(rc.get("corbel_step_m", 0.3)) * courses
 	var ch := float(rc.get("corbel_h_m", 0.36)) * courses
+	# A big room's plan is its archetype's, hand-built (design §FM.6's room
+	# pool, RoomPool): its pillars, a beam down each row, the slabs across.
+	if pc.has("big_room"):
+		return RoomPool.room_plan(_lay, pc, step, ch)
 	var kind := str(pc.get("room_kind", ""))
 	var plan := {"step": step, "corbel_h": ch, "pillars": [], "beams": [], "s_axis": 1, "spans": {}}
 	if kind == "collapsed":
@@ -412,6 +416,9 @@ static func corbel_courses(lay: Dictionary, pc: Dictionary) -> int:
 static func on_pillars(lay: Dictionary, pc: Dictionary) -> bool:
 	if str(pc.get("kind", "")) not in ["room", "landing"]:
 		return false
+	# A big room stands on its archetype's pillars (RoomPool).
+	if pc.has("big_room"):
+		return not RoomPool.pillars(str(pc.big_room)).is_empty()
 	var th := str(lay.get("theme", ""))
 	if str(pc.get("room_kind", "")) == "hearth" and str(RuinStyle.val("hearth_room", "", th)) == "four_pillars":
 		return true
@@ -725,6 +732,9 @@ func _room(pc: Dictionary) -> void:
 	var top := y + h + Delves.SLAB
 	var face_top := y + h - float(plan.corbel_h) + 0.05
 	var mid := _pp(pc, length * 0.5, 0.0)
+	# The walls stand on the room's lowest floor (a sunken court's court,
+	# design §FM.6's room pool; any other room's own).
+	var y_lo := RoomPool.lowest(pc)
 	for side in SIDES:
 		var line := _side_line(pc, side)
 		var a: Vector2 = line[0]
@@ -741,8 +751,22 @@ func _room(pc: Dictionary) -> void:
 		# corridor's lane where the door frame's own stones are all that
 		# shows), and it stops under the room's corbel course.
 		var sd_in := _inner_sd(a, b2, mid)
-		_stone_wall(a, b2, y - 0.6, top, ops, Delves.WALL, {sd_in: face_top}, sd_in)
-	_pave_flags(pc)
+		var nf := wall_faces.size()
+		# (A big room's stone that would only stand hidden behind its steps
+		# or under its terraces is left out, RoomPoolBuild.hidden_holes.)
+		var hid: Array = RoomPoolBuild.hidden_holes(pc, side, y_lo - 0.1) if pc.has("profile") else []
+		_stone_wall(a, b2, y_lo - 0.6, top, ops, Delves.WALL, {sd_in: face_top}, sd_in, hid)
+		# On a big room's stepped floor, what lives on its walls (GlowMoss,
+		# WallLife) keeps over its highest floor, never inside a step.
+		if pc.has("profile"):
+			for fi in range(nf, wall_faces.size()):
+				(wall_faces[fi] as Dictionary)["floor_y"] = RoomPool.highest(pc)
+	# A big room's floor (RoomPoolBuild: its flags, merged bigger, and a
+	# stepped floor's blocks; its collision); else the room's fitted flags.
+	if pc.has("big_room"):
+		RoomPoolBuild.lay_floor(self, pc)
+	else:
+		_pave_flags(pc)
 	_room_ceiling(pc, plan)
 
 
@@ -964,8 +988,10 @@ func _door_frame(d: Dictionary) -> Dictionary:
 ## door frames, whose stones are their own, and the niches), its collision
 ## plain boxes; every face that looks into a piece of the tomb is dressed
 ## with fitted stones, the openings cut out, overgrown as its climate
-## allows.
-func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array = [], thick: float = Delves.WALL, tops: Dictionary = {}, only := 0.0) -> void:
+## allows. `hidden`: more holes for the dressed face `only` (its own
+## (along, y - y0)), stone that would only stand hidden (behind a big
+## room's steps, RoomPoolBuild.hidden_holes): left out.
+func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array = [], thick: float = Delves.WALL, tops: Dictionary = {}, only := 0.0, hidden: Array = []) -> void:
 	var along := b2 - a
 	var length := along.length()
 	if length < 0.15 or y_top <= y_bot + 0.05:
@@ -1035,6 +1061,8 @@ func _stone_wall(a: Vector2, b2: Vector2, y_bot: float, y_top: float, ops: Array
 				else:
 					holes.append(_trapezoid(float(op.c), float(op.fw), float(op.tw), float(op.y0) - y0, float(op.y1) - y0))
 				clear.append([float(op.c) - float(op.fw) * 0.5 - 0.15, float(op.c) + float(op.fw) * 0.5 + 0.15])
+		if sd == only:
+			holes.append_array(hidden)
 		var cl := FittedStone.climate_at(str(_lay.get("theme", "tomb")), int(_lay.seed), Vector3(probe.x, floor_y, probe.y))
 		# Every wall face its own seed (partition.seed_per_face), so nothing
 		# mirrors across a corridor.
@@ -1598,41 +1626,53 @@ func _pillars_and_beams(pc: Dictionary, plan: Dictionary) -> void:
 		return
 	var y := float(pc.y0)
 	var h := float(pc.h)
-	var side := RuinStyle.num("pillars.side_m", 0.6)
+	# (A big room's pillars may be its archetype's own side, RoomPool.)
+	var side := float(plan.get("side", RuinStyle.num("pillars.side_m", 0.6)))
 	var bw := RuinStyle.num("pillars.beam_w_m", 0.5)
 	var bh := RuinStyle.num("pillars.beam_h_m", 0.45)
 	var ax := _axes(pc)
 	var room_bs := Basis(ax[0], Vector3.UP, (ax[0] as Vector3).cross(Vector3.UP))
 	var beam_bot := y + h - bh
 	var cap_h := 0.24
+	var niches: Dictionary = plan.get("niches", {})
 	_stone_mode()
 	var was_foot := foot_y
 	var was_solid0 := solid
-	for q: Vector2 in plan.pillars:
+	for pi in (plan.pillars as Array).size():
+		var q: Vector2 = plan.pillars[pi]
 		var p3 := _at(pc, q.x, q.y)
+		# Each pillar stands on its own floor (a big room's steps; any other
+		# room's is the room's).
+		var fy := p3.y
 		# Its collision solid blocks as drawn: the base, the shaft and the
 		# cap (convex hulls, so a ray or a point inside one finds it:
 		# TombNav's casts down, the boss's room to coil; and a line of
 		# sight past the shaft isn't stopped short of it).
-		for blk in [[side * 0.5 + PILLAR_BASE_OVER, -0.05, 0.22], [side * 0.5, 0.22, beam_bot - cap_h - y], [side * 0.5 + 0.07, beam_bot - cap_h - y, beam_bot - y]]:
+		for blk in [[side * 0.5 + PILLAR_BASE_OVER, -0.05, 0.22], [side * 0.5, 0.22, beam_bot - cap_h - fy], [side * 0.5 + 0.07, beam_bot - cap_h - fy, beam_bot - fy]]:
 			var hb := float(blk[0])
 			var hull := PackedVector3Array()
 			for k in 8:
 				hull.append(p3 + room_bs * Vector3(hb if k & 1 else -hb, 0.0, hb if k & 2 else -hb) + Vector3.UP * (float(blk[1]) if k & 4 == 0 else float(blk[2])))
 			_ch.append(hull)
 		solid = false
-		foot_y = y
+		foot_y = fy
 		box(Transform3D(room_bs.rotated(Vector3.UP, rng.randf_range(-0.02, 0.02)), p3 + Vector3.UP * 0.11), Vector3(side + 2.0 * PILLAR_BASE_OVER, 0.22, side + 2.0 * PILLAR_BASE_OVER), RuinStyle.stone(rng), _growth(0.2), 0.04, 0.01)
-		var z := y + 0.22
+		var z := fy + 0.22
 		var top := beam_bot - cap_h
+		# A pillar a sconce is cut into (a big room's pillar hall, RoomPool):
+		# its shaft and cap round the niche and its flue slot.
+		if niches.has(pi):
+			RoomPoolBuild.niche_pillar(self, pc, p3, side, z, top, cap_h, niches[pi])
+			foot_y = was_foot
+			continue
 		var drums := clampi(int(round((top - z) / 0.72)), 2, 6)
 		for k in drums:
 			var zb := top if k == drums - 1 else z + (top - z) / float(drums - k) * rng.randf_range(0.9, 1.1)
 			var tilt := Basis.from_euler(Vector3(rng.randf_range(-0.012, 0.012), rng.randf_range(-0.04, 0.04), rng.randf_range(-0.012, 0.012)))
-			box(Transform3D(room_bs * tilt, p3 + Vector3.UP * ((z + zb) * 0.5 - y)), Vector3(side, zb - z + 0.006, side), RuinStyle.stone(rng), _growth(0.08), 0.035, 0.012)
+			box(Transform3D(room_bs * tilt, p3 + Vector3.UP * ((z + zb) * 0.5 - fy)), Vector3(side, zb - z + 0.006, side), RuinStyle.stone(rng), _growth(0.08), 0.035, 0.012)
 			z = zb
 		foot_y = was_foot
-		box(Transform3D(room_bs, p3 + Vector3.UP * (top + cap_h * 0.5 - y)), Vector3(side + 0.14, cap_h, side + 0.14), RuinStyle.stone(rng), 0.0, 0.035, 0.01)
+		box(Transform3D(room_bs, p3 + Vector3.UP * (top + cap_h * 0.5 - fy)), Vector3(side + 0.14, cap_h, side + 0.14), RuinStyle.stone(rng), 0.0, 0.035, 0.01)
 	solid = was_solid0
 	var was_solid := solid
 	solid = false
@@ -1947,6 +1987,11 @@ static func _in_bay(bays: Array, r: Rect2) -> bool:
 
 
 func _dress(pc: Dictionary) -> void:
+	# What stands in a big room is its archetype's (design §FM.6's room
+	# pool, RoomPoolBuild).
+	if pc.has("big_room"):
+		RoomPoolBuild.dress(self, pc)
+		return
 	var half := float(pc.half)
 	var length := float(pc.len)
 	var pv := Delves.perp(pc.dir)

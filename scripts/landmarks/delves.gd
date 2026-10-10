@@ -187,7 +187,27 @@ static func along_across(pc: Dictionary, p: Vector2) -> Vector2:
 
 
 static func floor_of(pc: Dictionary, along: float) -> float:
+	# A floor that isn't one slope (the crawler's big rooms, design §FM.6,
+	# RoomPool): its "profile", [(along, y)...], straight between its points.
+	var pf: Variant = pc.get("profile")
+	if pf is PackedVector2Array:
+		return profile_y(pf, along)
 	return lerpf(float(pc.y0), float(pc.y1), clampf(along / maxf(float(pc.len), 0.01), 0.0, 1.0))
+
+
+## The height of floor profile `pf` ([(along, y)...], along ascending)
+## at `along`, straight between its points, level past its ends.
+static func profile_y(pf: PackedVector2Array, along: float) -> float:
+	if pf.is_empty():
+		return 0.0
+	if along <= pf[0].x:
+		return pf[0].y
+	for i in range(1, pf.size()):
+		if along <= pf[i].x:
+			var a := pf[i - 1]
+			var b := pf[i]
+			return a.y if b.x - a.x < 1e-6 else lerpf(a.y, b.y, (along - a.x) / (b.x - a.x))
+	return pf[pf.size() - 1].y
 
 
 ## The piece's rectangle (local x0, x1, z0, z1), grown by `grow`.

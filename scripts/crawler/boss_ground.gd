@@ -505,6 +505,10 @@ static func place_lair(p_lay: Dictionary, r_m := -1.0) -> Dictionary:
 	for pc in p_lay.pieces:
 		if str(pc.kind) != "room" or str(pc.get("room_kind", "")) in ["hearth", "heart"] or int(pc.id) in main:
 			continue
+		# Never in a big room (design §FM.6's room pool: hand-built, what
+		# stands in it its archetype's).
+		if pc.has("big_room"):
+			continue
 		# On the boss's own floor (TombFloors.BOSS_FLOOR: floor one, §FM.10
 		# call 4 not answered).
 		if int(pc.get("floor", 0)) != TombFloors.BOSS_FLOOR:
@@ -728,6 +732,9 @@ static func place_tunnels(p_lay: Dictionary) -> Dictionary:
 			continue
 		if str(pc.get("room_kind", "")) in ["hearth", "heart"] or int(pc.id) in main or bool(pc.get("spine", false)):
 			continue
+		# Not in a big room's walls (design §FM.6's room pool, hand-built).
+		if pc.has("big_room"):
+			continue
 		var s := _hole_spot(p_lay, pc, td, lair)
 		if not s.is_empty():
 			spots[int(pc.id)] = s
@@ -851,7 +858,8 @@ static func tunnel_pts(p_lay: Dictionary, ha: Dictionary, hb: Dictionary, td: Di
 		var q := a2.lerp(b2, float(k) / steps)
 		for pc in p_lay.pieces:
 			if int(pc.get("floor", 0)) == TombFloors.BOSS_FLOOR and Delves.rect_of(pc, Delves.WALL + 0.3).has_point(q):
-				y = minf(y, minf(float(pc.y0), float(pc.y1)))
+				# (Under a sunken court's court too: RoomPool.lowest.)
+				y = minf(y, RoomPool.lowest(pc))
 	y -= under
 	return PackedVector3Array([ha.out, ha.pos, back_a, Vector3(back_a.x, y, back_a.z), Vector3(back_b.x, y, back_b.z), back_b, hb.pos, hb.out])
 

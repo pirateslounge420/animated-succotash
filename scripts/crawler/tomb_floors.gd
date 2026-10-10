@@ -143,6 +143,9 @@ static func lit_on(fires: CrawlerFires, lay: Dictionary, f: int) -> Vector2i:
 ## small_room_max_m, `large` longer, and `pillared` on pillars.
 static func sconces_wanted(lay: Dictionary, pc: Dictionary) -> int:
 	var rt: Dictionary = TombKit.RT
+	# A big room's are its archetype's (design §FM.6's room pool, RoomPool).
+	if pc.has("big_room"):
+		return RoomPool.sconces_wanted(pc)
 	if str(pc.get("room_kind", "")) == "heart":
 		return int(rt.get("heart", 4))
 	var long := maxf(float(pc.len), 2.0 * float(pc.half))
@@ -196,13 +199,14 @@ static func fill(lay: Dictionary) -> void:
 ## The floor-one rooms the stair down may leave, the likeliest first: the
 ## spine's rooms from the far end back (the one before the heart first,
 ## so the way down opens near the way up), then the heart, then the side
-## ways' rooms, deepest first. Never the hearth room.
+## ways' rooms, deepest first. Never the hearth room, nor a big room (the
+## room pool's, RoomPool: its doors are its archetype's).
 static func _hosts(lay: Dictionary) -> Array:
 	var out: Array = []
 	var spine: Array = lay.get("spine", [])
 	for i in range(spine.size() - 1, -1, -1):
 		var pc: Dictionary = lay.pieces[int(spine[i])]
-		if str(pc.kind) == "room" and not str(pc.get("room_kind", "")) in ["hearth", "heart"]:
+		if str(pc.kind) == "room" and not str(pc.get("room_kind", "")) in ["hearth", "heart"] and not pc.has("big_room"):
 			out.append(pc)
 	if lay.has("heart"):
 		out.append(lay.pieces[int(lay.heart)])
@@ -211,7 +215,7 @@ static func _hosts(lay: Dictionary) -> Array:
 	for bi in range(1, branches.size()):
 		for id in branches[bi]:
 			var pc: Dictionary = lay.pieces[int(id)]
-			if str(pc.kind) == "room":
+			if str(pc.kind) == "room" and not pc.has("big_room"):
 				side.append(pc)
 	side.sort_custom(func(a, b): return int(a.get("depth", 0)) > int(b.get("depth", 0)) or (int(a.get("depth", 0)) == int(b.get("depth", 0)) and int(a.id) < int(b.id)))
 	out.append_array(side)

@@ -54,7 +54,8 @@ extends SceneTree
 ##     you, you don't heal while it watches, and it gives you up after
 ##     watch_s (or sooner, by its own gives_up, when the doorway hides your
 ##     flame); then you at the light's dim edge, within its reach of where
-##     it may stand: its strike lands;
+##     it may stand (in that room, else the next room by its dark relit: a
+##     big room's torches can light it to its walls): its strike lands;
 ##  7. its tunnels in use: sent through one, it goes in at one hole, is
 ##     hidden inside for at least the tunnel's length over its speed (its
 ##     tell muffled), and comes out of the other; its whole side way relit
@@ -72,7 +73,9 @@ extends SceneTree
 ## 10. a scripted run relighting every holder in the layout's order, the
 ##     snake free between relights (you in the hearth room): it never walks
 ##     into a lit node of its own accord, it leaves one lit round it at once
-##     and gets to the dark, through the hearth room only when there was no
+##     (lit round it in one tomb at least, over the seeds: one tomb's order
+##     may never catch it out of its dark) and gets to the dark, through the
+##     hearth room only when there was no
 ##     other way, and after the last light it travels to its lair and goes
 ##     down the hole for good, breathing (heard within
 ##     lair.breathing_heard_m), the log has release.log_line and the tomb's
@@ -178,6 +181,8 @@ func _run() -> void:
 				main = await _boot(sv)
 				await _walk_out_run(main, in_heart)
 				await _done(main)
+	if relight_runs > 0:
+		ok(relight_leaves > 0, "over the %d relight runs, lit round it, it walked out of the light %d times" % [relight_runs, relight_leaves])
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -954,12 +959,27 @@ func _beside(b: Boss, d: float, clear_m := 0.0) -> Vector3:
 		if b._blocked(b._eye(), q + Vector3(0, 1.3, 0), false):
 			continue
 		var id := b.ground.node_at(q)
+		# Clear of the room's pillars: one at your shoulder can stand between
+		# its eye and the flame in your hand (a big room's stand out in its
+		# floor, design §FM.6's room pool).
+		if id >= 0 and _by_a_pillar(b.lay, b.lay.pieces[int(b.ground.nodes[id].piece)], q):
+			continue
 		if id >= 0 and b.ground.is_ground(id) and (id == b.node or not b.ground.link(id, b.node).is_empty()) and not b._blocked(b.head + Vector3(0, 0.6, 0), q + Vector3(0, 0.6, 0), false):
 			var pc: Dictionary = b.lay.pieces[int(b.ground.nodes[id].piece)]
 			var aa := Delves.along_across(pc, Vector2(q.x, q.z))
 			if aa.x > 0.4 and aa.x < float(pc.len) - 0.4 and absf(aa.y) < float(pc.half) - 0.45:
 				return q
 	return Vector3.INF
+
+
+## Is `q` within a metre of a pillar's face in piece `pc` (TombBuild
+## .pillars_for: the room's own, or a big room's, RoomPool)?
+static func _by_a_pillar(lay: Dictionary, pc: Dictionary, q: Vector3) -> bool:
+	var half_side := (RoomPool.pillar_side(str(pc.big_room), str(lay.get("theme", ""))) if pc.has("big_room") else RuinStyle.num("pillars.side_m", 0.6)) * 0.5
+	for pq: Vector2 in TombBuild.pillars_for(lay, pc):
+		if Vector2(q.x, q.z).distance_to(pq) < half_side + 1.0:
+			return true
+	return false
 
 
 # --- 5. Its speed: walking it catches you, sprinting you get away ---------------------
@@ -1233,11 +1253,11 @@ func _far_dark_spot(main: CrawlerMain) -> Vector3:
 
 ## A room with torches of its own (not the hearth room) beside a stretch
 ## or room of the dark once they are relit: {"room", "dark", "via"}, its
-## torches lit; {} if none.
-func _room_by_dark(main: CrawlerMain) -> Dictionary:
+## torches lit; {} if none. `skip`: rooms (nodes) not to take.
+func _room_by_dark(main: CrawlerMain, skip: Array = []) -> Dictionary:
 	var g := main.boss.ground
 	for n in g.nodes:
-		if str(n.kind) != "room" or bool(n.hearth) or (n.holders as Array).is_empty():
+		if str(n.kind) != "room" or bool(n.hearth) or (n.holders as Array).is_empty() or int(n.id) in skip:
 			continue
 		for l in n.links:
 			var other: Dictionary = g.nodes[int(l.to)]
@@ -1428,6 +1448,16 @@ func _edge(main: CrawlerMain) -> void:
 	if de.is_empty():
 		print("  (no floor in that room past the cap within its reach of the edge: the dim-edge strike is tried by another lit room)")
 		de = _dim_edge(main, reach)
+	# None lit yet: the next room by its dark relit, and tried. (A big room's
+	# torches can light it to its walls, its light's edge out past its
+	# doorways: the pillar hall's, on its pillars; design §FM.6's room pool.)
+	var tried: Array = [room]
+	while de.is_empty() and tried.size() < 4:
+		var next := _room_by_dark(main, tried)
+		if next.is_empty():
+			break
+		tried.append(int(next.room))
+		de = _dim_edge(main, reach, int(next.room))
 	if de.is_empty():
 		ok(false, "floor at the light's dim edge to stand on")
 		return
@@ -1681,6 +1711,10 @@ func _pot(main: CrawlerMain) -> void:
 ## How long leaving the light may take in the relight run (s): across the
 ## lit rooms at leave_mps, 4 m/s, the longest way out of them.
 const LEAVE_MOST_S := 12.0
+## The relight runs so far (one a seed): how many, and how often it walked
+## out of the light lit round it, over them all.
+var relight_runs := 0
+var relight_leaves := 0
 
 
 func _relight_run(main: CrawlerMain) -> void:
@@ -1716,6 +1750,10 @@ func _relight_run(main: CrawlerMain) -> void:
 	var worst_leave := 0.0
 	var lit_entries0 := b.lit_entries
 	var leaves := 0
+	# (How long it was out of its dark at all, outside its tunnels: lit round
+	# it, it leaves; never lit round it, the order the holders catch in
+	# never caught it in theirs.)
+	var lit_round := 0.0
 	var stuck := 0
 	var hearth_prowl := 0
 	var hearth_cross := 0
@@ -1744,6 +1782,7 @@ func _relight_run(main: CrawlerMain) -> void:
 				continue
 			var dark := b.node >= 0 and b.ground.is_ground(b.node)
 			if not dark:
+				lit_round += DT
 				if b.state == "leave":
 					if left < 0.0:
 						left = 0.0
@@ -1762,7 +1801,13 @@ func _relight_run(main: CrawlerMain) -> void:
 		counts.append(b.ground.ground_count())
 	print("  dark nodes as each holder caught: %s" % _short(counts))
 	ok(b.lit_entries == lit_entries0 and in_light < 0.05, "over the whole run it never went into the light of its own accord (%d entries, %.2f s in light outside leaving it)" % [b.lit_entries - lit_entries0, in_light])
-	ok(leaves > 0 and stuck == 0 and worst_leave <= LEAVE_MOST_S, "lit round it, it left for the dark every time (%d times, the longest %.1f s through the light, %.0f s at most), under it through its tunnels %d times (turning back in one whose far hole was lit %d times); it never went into the stone (there is no such thing now)" % [leaves, worst_leave, LEAVE_MOST_S, b.transits - transits0, b.turned_back])
+	# Lit round it at least once over the seeds (_run asserts it): one tomb's
+	# order may never catch it out of its dark before the last light sends
+	# it home (since the room pool's big rooms, design §FM.6, seed 42's
+	# doesn't).
+	relight_runs += 1
+	relight_leaves += leaves
+	ok((leaves > 0 or lit_round == 0.0) and stuck == 0 and worst_leave <= LEAVE_MOST_S, "lit round it, it left for the dark every time (%d times, the longest %.1f s through the light, %.0f s at most%s), under it through its tunnels %d times (turning back in one whose far hole was lit %d times); it never went into the stone (there is no such thing now)" % [leaves, worst_leave, LEAVE_MOST_S, "" if lit_round > 0.0 else "; the holders' order never lit round it here", b.transits - transits0, b.turned_back])
 	ok(hearth_prowl == 0, "it never set foot in the hearth room of its own accord (prowling or chasing: %d steps); crossing it with no other way to the dark, %d steps" % [hearth_prowl, hearth_cross])
 	_mo_ok("the relight run")
 	# The release: home physically.
