@@ -54,6 +54,11 @@ extends Node
 ## open, the way out up to the day and the way down (the fork). Each floor
 ## is cleared by its own lights (§FF.2).
 ##
+## Floor two lies under a fog in the look's shade navy, the same all
+## through it and none on floor one, easing in down the stair's last metres
+## (design §FM.6, FloorFog; descent.json floor_two.fog): only fog, drawn,
+## and nothing else changed by it.
+##
 ## And always a way out (§EX.5, crawler.json exit): at the top of the long
 ## flight past the heart the old way in glows with faint daylight
 ## (WayOut). Stepping into it is the stand-in (exit.stand_in) until
@@ -120,6 +125,9 @@ var residents: Residents
 var post: PostGrade
 var fire_shadows: FireShadows
 var environment: Environment
+## Floor two's fog (design §FM.6, queue 69; FloorFog): the environment's and
+## the look's, none on floor one, eased on the stair between them.
+var floor_fog: FloorFog
 var ui: CanvasLayer
 ## The crosshair (§EX.7), or null when crawler.json hud.reticle is off.
 var reticle: Reticle
@@ -174,6 +182,10 @@ func _ready() -> void:
 	half_dark.name = "HalfDark"
 	add_child(half_dark)
 	half_dark.setup(player)
+	floor_fog = FloorFog.new()
+	floor_fog.name = "FloorFog"
+	add_child(floor_fog)
+	floor_fog.setup(self)
 	FireShadows.mode = str(LOOKD.get("fire_shadow_mode", "cube"))
 	fire_shadows = FireShadows.new()
 	fire_shadows.name = "FireShadows"

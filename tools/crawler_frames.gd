@@ -6,7 +6,8 @@ extends SceneTree
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/crawler_frames.gd
 ## ONLY=skeleton renders just the skeletons' sheet and frames; ONLY=cleared
 ## just the last light's (26-26d); ONLY=cauldron just the cauldron over the
-## hearth and the shaman with his ladle (27a-27e; §FM.6, queue 67). The snake (queue 49) is held still for
+## hearth and the shaman with his ladle (27a-27e; §FM.6, queue 67); ONLY=fog
+## just floor two's fog (28a-28d; §FM.6, queue 69). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -373,8 +374,8 @@ func _say_cross(what: String, r: Dictionary) -> void:
 ## (so the dither's 4x4 pattern averages out); a wall (its normal within
 ## 0.3 of level) that far adds the block's four pixels. The crosshair's
 ## box is left out. {"n" pixels, "luma", "hue" (0-360, blue about 240),
-## "color"}.
-func _wall_band(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Array) -> Dictionary:
+## "color"}. `walls_only` false counts the floor and the ceiling too.
+func _wall_band(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Array, walls_only := true) -> Dictionary:
 	var vs := cam.get_viewport().get_visible_rect().size
 	var sx := vs.x / img.get_width()
 	var sy := vs.y / img.get_height()
@@ -391,7 +392,7 @@ func _wall_band(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Array)
 			var q := PhysicsRayQueryParameters3D.create(from, from + cam.project_ray_normal(sp) * (hi + 2.0), PropCollision.WORLD_LAYER)
 			q.exclude = exclude
 			var h := space.intersect_ray(q)
-			if h.is_empty() or absf((h.normal as Vector3).y) > 0.3:
+			if h.is_empty() or (walls_only and absf((h.normal as Vector3).y) > 0.3):
 				continue
 			var d := from.distance_to(h.position)
 			if d < lo or d > hi:
@@ -1134,6 +1135,13 @@ func _run() -> void:
 		await _cauldron(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "fog":
+		# Just floor two's fog (design §FM.6, queue 69; 28a-28d).
+		await _frames(30)
+		main.player.set_physics_process(false)
+		await _fog(main)
+		_finish(keep)
+		return
 	await _frames(200)
 	var p := main.player
 	p.set_physics_process(false)
@@ -1674,6 +1682,210 @@ func _cauldron(main: CrawlerMain) -> void:
 	print("  the shaman from in front (%.1f m): his chest #%s (luma %.3f); his ladle's top on screen at %.2f, %.2f" % [dist, cc.to_html(false), chest3.luma, top.x, top.y])
 	ok(top.x > 0.02 and top.x < 0.98 and top.y > 0.02 and top.y < 0.98 and cc.r > cc.b, "from in front of him past the fire: his ladle on screen, his chest lit amber by the fire (#%s)" % cc.to_html(false))
 	world.days = keep_days
+
+
+## How bright the torch's pool must stay in the fog against without it (the
+## floor and walls 1.2-4 m off, their mean luma).
+const POOL_KEPT := 0.8
+
+
+## Floor two's fog (design §FM.6, queue 69; FloorFog; ONLY=fog), at
+## midnight, down floor two's longest straight sight (along one of its
+## pieces' own lines, your eye at its height), the torch in hand lit:
+## floor two's lights cold, in its fog (28a) and with the fog pinned off
+## (28b); then every light on floor two relit, in the fog (28c) and
+## without it (28d). FOG_TRY=0.08,0.12 (env) adds the same two views at
+## other densities to compare (28e, 28f: <density>), the data's put back
+## after. Checks: each frame 854 x 480 (the default 480 lines) with every
+## pixel but the crosshair's on the grade's 5-bit grid (the dither whole,
+## the fog drawn under it), the dither still at work in the fog (its far
+## walls' 4x4 blocks not flattened to one level); the torch's pool reads
+## in the fog (the floor and walls 1.2-4 m off warm, at least POOL_KEPT as
+## bright as without it); past it the fog takes the dark to navy, never
+## grey (the walls 16 m and more off blue above red, lighter and bluer
+## than without it: distance lighter and bluer, never darker); the relit
+## far end lost in it (those walls, amber without the fog, much less warm
+## in it and nearer its navy).
+func _fog(main: CrawlerMain) -> void:
+	var p := main.player
+	var world: Node = main.world
+	var ff := main.floor_fog
+	var lay := main.lay
+	ok(ff != null and lay.has("descent"), "floor two and its fog are there (FloorFog)")
+	if ff == null or not lay.has("descent"):
+		return
+	var keep_days := float(world.get("days"))
+	world.days = 13.0
+	main.fork.open_now(true)
+	await _frames(4)
+	var space := p.get_world_3d().direct_space_state
+	var ex: Array = [p.get_rid()]
+	# The longest straight sight on floor two, along a piece's own line.
+	var best_d := 0.0
+	var eye := Vector3.ZERO
+	var look := Vector3.FORWARD
+	for pc in lay.pieces:
+		if int(pc.get("floor", 0)) != 1 or int(pc.id) == int(lay.descent.stair):
+			continue
+		var d2: Vector2 = pc.dir
+		var k := 1.0
+		while k < float(pc.len) - 0.5:
+			var c2: Vector2 = (pc.c as Vector2) + d2 * k
+			var at := Vector3(c2.x, Delves.floor_of(pc, k) + PlanetPlayer.EYE_Y, c2.y)
+			for sg in [1.0, -1.0]:
+				var dir := Vector3(d2.x, 0.0, d2.y) * float(sg)
+				var q := PhysicsRayQueryParameters3D.create(at, at + dir * 60.0, PropCollision.WORLD_LAYER)
+				q.exclude = ex
+				var h := space.intersect_ray(q)
+				var d := 60.0 if h.is_empty() else at.distance_to(h.position)
+				# A wall at your back 1.5 m off at least, so the torch's pool is
+				# round you.
+				var qb := PhysicsRayQueryParameters3D.create(at, at - dir * 1.5, PropCollision.WORLD_LAYER)
+				qb.exclude = ex
+				if d > best_d and space.intersect_ray(qb).is_empty():
+					best_d = d
+					eye = at
+					look = dir
+			k += 1.0
+	var far_lo := 16.0
+	print("  floor two's longest straight sight: %.1f m from %s" % [best_d, str(eye.snapped(Vector3.ONE * 0.01))])
+	ok(best_d >= far_lo + 2.0, "floor two has a straight sight of %.0f m or more to look down (%.1f m)" % [far_lo + 2.0, best_d])
+	var far_hi := minf(best_d + 1.0, 45.0)
+	p.spawn_flat(eye - Vector3(0.0, PlanetPlayer.EYE_Y, 0.0), atan2(-look.x, -look.z), -0.06)
+	_torch_in_hand(p)
+	p.torch.light()
+	await _frames(12)
+	var cam := get_root().get_camera_3d()
+	ok(is_equal_approx(ff.share, 1.0) and main.environment.fog_enabled, "on floor two, its fog on (all of it: %.2f)" % ff.share)
+	var tries: Array = []
+	for t in OS.get_environment("FOG_TRY").split(",", false):
+		if t.strip_edges().is_valid_float():
+			tries.append(float(t.strip_edges()))
+	var dens := FloorFog.density()
+	# 28a: the lights cold, in the fog.
+	var a := await _shot("28a_floor_two_fog_torch")
+	var a_near := _wall_band(a, cam, 1.2, 4.0, ex, false)
+	var a_far := _wall_band(a, cam, far_lo, far_hi, ex)
+	var a_read := _reticle_read(a)
+	var a_dith := _dither_alive(a, cam, 8.0, far_hi, ex)
+	# 28b: the same, the fog pinned off.
+	ff.force_share = 0.0
+	await _frames(8)
+	var b := await _shot("28b_floor_two_no_fog_torch")
+	var b_near := _wall_band(b, cam, 1.2, 4.0, ex, false)
+	var b_far := _wall_band(b, cam, far_lo, far_hi, ex)
+	ff.force_share = -1.0
+	await _frames(4)
+	await _fog_tries(main, tries, "28e", "torch", cam, far_lo, far_hi, ex)
+	# Every light on floor two relit.
+	var lit := 0
+	var hs: Array = lay.holders
+	for i in mini(main.fires.holders.size(), hs.size()):
+		if TombFloors.holder_floor(lay, hs[i]) != 1:
+			continue
+		var h: Node3D = main.fires.holders[i]
+		if not FireStore.is_lit(h):
+			FireStore.swing_light(h, float(world.get("days")))
+			for j in 600:
+				FireStore.tick(self, 1.0 / 60.0, h.global_position)
+				if FireStore.is_lit(h):
+					break
+		if FireStore.is_lit(h):
+			lit += 1
+	await _frames(12)
+	var c := await _shot("28c_floor_two_fog_lit")
+	var c_far := _wall_band(c, cam, far_lo, far_hi, ex)
+	var c_read := _reticle_read(c)
+	ff.force_share = 0.0
+	await _frames(8)
+	var d_img := await _shot("28d_floor_two_no_fog_lit")
+	var d_far := _wall_band(d_img, cam, far_lo, far_hi, ex)
+	ff.force_share = -1.0
+	await _frames(4)
+	await _fog_tries(main, tries, "28f", "lit", cam, far_lo, far_hi, ex)
+	var an: Color = a_near.color
+	var bn: Color = b_near.color
+	var af: Color = a_far.color
+	var bf: Color = b_far.color
+	var cf: Color = c_far.color
+	var df: Color = d_far.color
+	print("  at the data's density (%.3f a metre):" % dens)
+	print("  the torch's pool (floor and walls 1.2-4 m): #%s luma %.3f in the fog, #%s luma %.3f without (%d px)" % [an.to_html(false), a_near.luma, bn.to_html(false), b_near.luma, int(a_near.n)])
+	print("  the far walls (%.0f-%.0f m), cold: #%s luma %.3f in the fog, #%s luma %.3f without (%d px)" % [far_lo, far_hi, af.to_html(false), a_far.luma, bf.to_html(false), b_far.luma, int(a_far.n)])
+	print("  the far walls, %d lights relit on floor two: #%s luma %.3f in the fog, #%s luma %.3f without (%d px)" % [lit, cf.to_html(false), c_far.luma, df.to_html(false), d_far.luma, int(c_far.n)])
+	print("  the dither in the fog's walls (8 m on): %d of %d 4x4 blocks mix two or more of the 5-bit levels" % [int(a_dith.mixed), int(a_dith.n)])
+	ok(a.get_size() == Vector2i(854, 480) and c.get_size() == Vector2i(854, 480) and int(a_read.stray) == 0 and int(c_read.stray) == 0 and bool(a_read.grid),
+		"the fog in the 480-line frame (%dx%d), nearest-neighbour: every pixel but the crosshair's on the grade's 5-bit grid (%d and %d off it outside the crosshair): the dither whole" % [a.get_width(), a.get_height(), int(a_read.stray), int(c_read.stray)])
+	ok(int(a_dith.n) > 20 and float(a_dith.mixed) >= 0.3 * float(a_dith.n), "and at work in the fog, not flattened into bands: %d of the far walls' %d 4x4 blocks dither between levels" % [int(a_dith.mixed), int(a_dith.n)])
+	ok(int(a_near.n) > 0 and an.r > an.b and float(a_near.luma) >= POOL_KEPT * float(b_near.luma), "a lit torch's pool reads in the fog: the floor and walls 1.2-4 m off warm (#%s) and %.0f%% as bright as without it" % [an.to_html(false), 100.0 * float(a_near.luma) / maxf(float(b_near.luma), 0.001)])
+	ok(int(a_far.n) > 0 and af.b > af.r and not (absf(af.r - af.g) <= 0.02 and absf(af.g - af.b) <= 0.02 and absf(af.r - af.b) <= 0.02) and float(a_far.luma) >= float(b_far.luma) and af.b - af.r > bf.b - bf.r,
+		"past it the dark goes to the fog's navy, never grey: the walls %.0f m and more off #%s (blue above red), lighter and bluer than without it (#%s): distance lighter and bluer, never darker" % [far_lo, af.to_html(false), bf.to_html(false)])
+	ok(lit > 0 and int(c_far.n) > 0 and df.r > df.b and (cf.r - cf.b) < 0.5 * (df.r - df.b) and cf.b - cf.r > df.b - df.r, "the far end of the corridor lost in it: with floor two's %d lights relit its walls %.0f m and more off read amber without the fog (#%s) and hardly warm in it (#%s)" % [lit, far_lo, df.to_html(false), cf.to_html(false)])
+	p.torch.put_out("stowed")
+	world.days = keep_days
+
+
+## FOG_TRY's densities (_fog): the view now in the fog at each, its frame
+## `prefix`_<density>_`what`, its torch's pool and far walls printed; the
+## data's density put back after.
+func _fog_tries(main: CrawlerMain, tries: Array, prefix: String, what: String, cam: Camera3D, far_lo: float, far_hi: float, ex: Array) -> void:
+	if tries.is_empty():
+		return
+	var ff := main.floor_fog
+	var keep: Variant = FloorFog.FOG.get("density", 0.04)
+	for t in tries:
+		FloorFog.FOG["density"] = float(t)
+		ff.apply(1.0)
+		await _frames(8)
+		var img := await _shot("%s_fog_%s_%s" % [prefix, str(t).replace(".", "_"), what])
+		var near := _wall_band(img, cam, 1.2, 4.0, ex, false)
+		var far := _wall_band(img, cam, far_lo, far_hi, ex)
+		print("  try %.3f a metre, %s: the pool #%s luma %.3f; the far walls #%s luma %.3f" % [float(t), what, (near.color as Color).to_html(false), near.luma, (far.color as Color).to_html(false), far.luma])
+	FloorFog.FOG["density"] = keep
+	ff.apply(1.0)
+	await _frames(4)
+
+
+## The dither at work in `img`'s walls `lo`-`hi` m off: of the 4x4 blocks
+## (the Bayer pattern's size) wholly on such walls, how many mix two or more
+## of the grade's 5-bit levels in a channel. {"n", "mixed"}.
+func _dither_alive(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Array) -> Dictionary:
+	var vs := cam.get_viewport().get_visible_rect().size
+	var sx := vs.x / img.get_width()
+	var sy := vs.y / img.get_height()
+	var space := cam.get_world_3d().direct_space_state
+	var hud := _hud_rect(img).grow(2)
+	var n := 0
+	var mixed := 0
+	for by in range(0, img.get_height() - 3, 4):
+		for bx in range(0, img.get_width() - 3, 4):
+			if hud.intersects(Rect2i(bx, by, 4, 4)):
+				continue
+			var inside := true
+			for corner in [Vector2(bx + 0.5, by + 0.5), Vector2(bx + 3.5, by + 3.5)]:
+				var sp := Vector2(corner.x * sx, corner.y * sy)
+				var from := cam.project_ray_origin(sp)
+				var q := PhysicsRayQueryParameters3D.create(from, from + cam.project_ray_normal(sp) * (hi + 2.0), PropCollision.WORLD_LAYER)
+				q.exclude = exclude
+				var h := space.intersect_ray(q)
+				if h.is_empty() or absf((h.normal as Vector3).y) > 0.3:
+					inside = false
+					break
+				var dd := from.distance_to(h.position)
+				if dd < lo or dd > hi:
+					inside = false
+					break
+			if not inside:
+				continue
+			n += 1
+			var lv := {}
+			for y in range(by, by + 4):
+				for x in range(bx, bx + 4):
+					var px := img.get_pixel(x, y)
+					lv[Vector3i(roundi(px.r * _levels), roundi(px.g * _levels), roundi(px.b * _levels))] = true
+			if lv.size() >= 2:
+				mixed += 1
+	return {"n": n, "mixed": mixed}
 
 
 ## The player's own settings back and the run's controls file gone; the
