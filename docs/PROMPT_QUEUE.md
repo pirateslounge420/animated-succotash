@@ -102,7 +102,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | built fae9712 |
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | built 0181fcf |
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | built 376cf23 |
-| 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
+| 73 | §FM.5 | Tomes as collected pages: found on the base layer | built 1bff283 |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
@@ -1307,7 +1307,7 @@ CHECK (headless): the plant stands after a harvest and regrows in the data's tim
 
 ## 73 — Tomes as collected pages: found on the base layer — §FM.5
 
-**Status:** todo
+**Status:** built 1bff283
 **Mike sees:** On the lowest floor you find old scrolls and tomes, each holding only some pages of a longer book. You keep what you find, and reopen any of it to read.
 
 ```text
