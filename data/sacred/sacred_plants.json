@@ -1039,7 +1039,7 @@
     "origin": "Chihuahuan Desert and south Texas",
     "family": "Cactaceae",
     "synonym": "Anhalonium williamsii",
-    "shape": "cactus",
+    "shape": "globe_cactus",
     "temp_c": [
      16,
      23
@@ -1967,7 +1967,8 @@
    "Category 'ground', following the thorn-scrub Prickly pear. Puna cactus files under 'shrub'.",
    "Conflict: Wikipedia says Texas lists peyote as endangered, but United Plant Savers says it has no US state or federal protection. Left out; only IUCN and the Mexican listing are stated.",
    "cannot_be_browsed omitted: hogs, rabbits and snails damage it (Cactus Conservation Institute).",
-   "Regrowth after the crown is cut is recorded as growth fact only, in growth.juvenile_note and repro.note, for the shaman's respectful-harvest idea (FM.7)."
+   "Regrowth after the crown is cut is recorded as growth fact only, in growth.juvenile_note and repro.note, for the shaman's respectful-harvest idea (FM.7).",
+   "Claude Code, 9 Oct (queue 76, §FM.13): the engine has the GLOBE_CACTUS shape now (scripts/ecology/globe_cactus_mesh.gd) and this entry's shape is 'globe_cactus', so the first flag's column stand-in is gone: a clump of flat ribbed buttons sunk to their rims, from appearance.stem (diameter_cm, ribs, rib_depth, colour, secondary, areole_colour; no spines while spine_cm is [0, 0]) and appearance.flower. data/sacred is still not loaded; tools/globe_cactus_check.gd builds this entry straight from the file (SpeciesDB.species_in_file)."
   ],
   "sacred_datura": [
    "Ruin fit: the 'pueblo' ruin is Mesa Verde (Ancestral Puebloan). No source documents a Datura rite there. Archaeology shows presence only: Datura seeds in Ancestral Pueblo contexts in Colorado, AD 1250-1300 (Litzinger 1981, cited by King et al. 2018), and ~900 seeds on a room floor with ceremonial objects at Higgins Flat Pueblo, NM (Mogollon; Cutler 1956). The documented rite link is the Zuni, a living Pueblo people. So 'peoples' leaves out the Ancestral Puebloans.",

@@ -58,6 +58,9 @@ Shapes: `conifer`, `broadleaf`, `gnarled`, `emergent`, `umbrella`, `palm`,
 `bamboo` (a clump of culms; works from dwarf 1 m bamboo to 30 m giants).
 `mushroom` (design §FM.13): three caps on stalks, drawn from the entry's
 own `appearance.cap`, `underside` and `stipe` (scripts/ecology/mushroom_mesh.gd).
+`globe_cactus` (design §FM.13): a tight clump of low ribbed buttons sunk to
+their rims, wool on the bumps, drawn from the entry's own `appearance.stem`
+and `flower` (scripts/ecology/globe_cactus_mesh.gd); `cactus` stays the column.
 These are low-poly placeholders; real models replace them later.
 
 ## Biome file fields

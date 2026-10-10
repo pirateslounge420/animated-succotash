@@ -399,9 +399,10 @@ static func _key_of(sp: PlantSpecies) -> int:
 ## Shapes whose far level is their own far model, never the one-quad
 ## picture (_build_impostor): the picture is cut from a crown's outline,
 ## four widths up a crown that closes to a point, which would lose a
-## mushroom's cap on its stalk (design §FM.13: the far level keeps it).
+## mushroom's cap on its stalk (design §FM.13: the far level keeps it), and
+## stand a globe cactus's flat button on its edge (it keeps the button).
 static func own_far(sp: PlantSpecies) -> bool:
-	return sp.shape == S.MUSHROOM
+	return sp.shape == S.MUSHROOM or sp.shape == S.GLOBE_CACTUS
 
 
 ## The young layouts (TreeLayouts slots) a chunk's trees grow, ahead of
@@ -1115,6 +1116,10 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 		S.MUSHROOM:
 			# Caps on stalks from the entry's appearance (design §FM.13).
 			MushroomMesh.build(b, sp, far)
+		S.GLOBE_CACTUS:
+			# Low ribbed buttons sunk to their rims, from the entry's
+			# appearance (design §FM.13, queue 76; never the CACTUS column).
+			GlobeCactusMesh.build(b, sp, far)
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
 	return b.commit_arrays()
@@ -1125,7 +1130,7 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor; -1 a fungus's flesh, MushroomMesh: bark's rules, its own colour)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 2.25 a whole leaf (leaf_blade), 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor; -1 a fungus's flesh, MushroomMesh, or a globe cactus's, GlobeCactusMesh: bark's rules, its own colour)
 	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
 	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
@@ -2010,8 +2015,9 @@ class _Builder:
 	func commit_arrays() -> Array:
 		# Baked ambient occlusion: the base of each plant (trunk foot, grass
 		# roots) is darker, the way it would be in its own shadow. Hanging
-		# plants grow down from their origin (y < 0) and are left alone; a
-		# fungus's flesh (UV2.x -1) has its own, toward navy (MushroomMesh).
+		# plants grow down from their origin (y < 0) and are left alone;
+		# painted flesh (UV2.x -1) has its own, toward navy (MushroomMesh,
+		# GlobeCactusMesh).
 		for i in v.size():
 			var y := v[i].y
 			if y >= 0.0 and y < 0.14 and uv2[i].x > -0.5:

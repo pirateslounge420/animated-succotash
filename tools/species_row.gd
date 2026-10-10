@@ -43,6 +43,13 @@ extends SceneTree
 ## GRASS_M (default 1.2) m. The mushrooms in grass, at about 64 px:
 ##   SPECIES="Fly agaric,sacred:teonanacatl" HEIGHT_M=mid SPACING=0.3 \
 ##     DIST=0.75 EYE_M=0.3 LOOK_H=0.5 GRASS=Buffalograss TAG=mushrooms
+## GRAVEL=1 (queue 76) sows GRAVEL_N (default 3000) pebbles of 0.3-1.5 cm
+## within GRAVEL_M (default 0.6) m round the row, clear of the row's plants,
+## for a desert floor; a globe cactus stands on the ground as in play (its
+## mesh is sunk to its rim already), not sunk further. Peyote in gravel
+## beside a San Pedro, the clump about 64 px across:
+##   SPECIES="sacred:peyote,Trichocereus pachanoi" HEIGHT_M=mid SPACING=0.55 \
+##     DIST=0.4 EYE_M=0.3 LOOK_H=0 GRAVEL=1 TAG=globe_cactus
 
 var out_dir := "/tmp/shots"
 
@@ -100,6 +107,7 @@ func _run() -> void:
 		_hide_vegetation(get_root())
 		main.leaf_season.only_extra = true
 	var trees: Array[Node3D] = []
+	var feet: Array = [] # [offset along the row (m), footprint radius (m)] (GRAVEL)
 	var tallest := 0.0
 	for i in names.size():
 		var sp := _species(names[i].strip_edges())
@@ -114,12 +122,16 @@ func _run() -> void:
 			h = (sp.height_m.x + sp.height_m.y) * 0.5
 		tallest = maxf(tallest, h)
 		var d := (row_d + e * off / PlanetConst.RADIUS_M).normalized()
-		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - minf(0.1, h * 0.1))
+		# A globe cactus's mesh is sunk to its rim already (design §FM.13):
+		# it stands on the ground as in play.
+		var sink := 0.0 if sp.shape == PlantSpecies.Shape.GLOBE_CACTUS else minf(0.1, h * 0.1)
+		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - sink)
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.use_custom_data = true
 		mm.use_colors = true
 		mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, layout)
+		feet.append([off, _footprint(mm.mesh) * h])
 		mm.instance_count = 1
 		var b := Basis(e, d, e.cross(d)).orthonormalized().scaled(Vector3.ONE * h)
 		mm.set_instance_transform(0, Transform3D(b, Vector3.ZERO))
@@ -146,6 +158,8 @@ func _run() -> void:
 	main.leaf_season._scan_t = 0.0 # take the row now
 	if OS.get_environment("GRASS") != "":
 		_sow_grass(world, main, row_d, n, e, names.size(), spacing)
+	if OS.get_environment("GRAVEL") != "":
+		_sow_gravel(world, main, row_d, n, e, feet)
 	var eye_m := float(OS.get_environment("EYE_M")) if OS.get_environment("EYE_M") != "" else 1.7
 	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + eye_m)
 	var look_h := float(OS.get_environment("LOOK_H")) if OS.get_environment("LOOK_H") != "" else 0.45
@@ -397,3 +411,67 @@ func _sow_grass(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3,
 	get_root().add_child(mmi)
 	mmi.global_position = root
 	print("[species] %d %s sown round the row" % [placed, gsp.name])
+
+
+## A plant mesh's footprint at the ground line: the farthest its corners
+## within 6 cm (unit frame) of y 0 stand from its axis.
+func _footprint(mesh: Mesh) -> float:
+	var v: PackedVector3Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var r := 0.0
+	for p in v:
+		if absf(p.y) < 0.06:
+			r = maxf(r, Vector2(p.x, p.z).length())
+	return r
+
+
+## GRAVEL=1 (queue 76): a desert floor round the row, GRAVEL_N pebbles of
+## 0.3-1.5 cm (most of them small) within GRAVEL_M m (out to 50 cm toward
+## the camera), clear of the row's plants (`feet`: [offset along `e`,
+## footprint radius] each), each a small stone (RuinBuilder.rock_mesh, four
+## shapes and greys, the ruin material) turned at random and set a third
+## into the ground, as the game's own stones are.
+func _sow_gravel(world: Node, main: Node, row_d: Vector3, n: Vector3, e: Vector3, feet: Array) -> void:
+	var total := int(OS.get_environment("GRAVEL_N")) if OS.get_environment("GRAVEL_N") != "" else 3000
+	var reach := float(OS.get_environment("GRAVEL_M")) if OS.get_environment("GRAVEL_M") != "" else 0.6
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 76
+	var greys := [Color(0.62, 0.57, 0.5), Color(0.53, 0.49, 0.44), Color(0.7, 0.66, 0.6), Color(0.47, 0.44, 0.41)]
+	var root: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d))
+	var mms: Array[MultiMesh] = []
+	for k in 4:
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = RuinBuilder.rock_mesh(Vector3(1.0, 0.6, 0.85), 7600 + k, greys[k])
+		mm.instance_count = total
+		mm.visible_instance_count = 0
+		mms.append(mm)
+	var counts := [0, 0, 0, 0]
+	var placed := 0
+	var tries := 0
+	while placed < total and tries < total * 20:
+		tries += 1
+		var dx := rng.randf_range(-reach, reach)
+		var dz := rng.randf_range(-0.5, reach)
+		var s := lerpf(0.003, 0.015, pow(rng.randf(), 2.0))
+		var clear := true
+		for f in feet:
+			if Vector2(dx - float(f[0]), dz).length() < float(f[1]) + s * 0.5 + 0.005:
+				clear = false
+		if not clear:
+			continue
+		var d := (row_d + (e * dx + n * dz) / PlanetConst.RADIUS_M).normalized()
+		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) + 0.15 * 0.6 * s)
+		var b := Basis(e, d, e.cross(d)).orthonormalized().rotated(d, rng.randf() * TAU).scaled(Vector3.ONE * s)
+		var k := rng.randi() % 4
+		mms[k].set_instance_transform(counts[k], Transform3D(b, at - root))
+		counts[k] += 1
+		placed += 1
+	for k in 4:
+		mms[k].visible_instance_count = counts[k]
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mms[k]
+		mmi.material_override = RuinBuilder.material()
+		mmi.name = "Row_gravel%d" % k
+		get_root().add_child(mmi)
+		mmi.global_position = root
+	print("[species] %d pebbles sown round the row" % placed)
