@@ -19,6 +19,8 @@ extends Node3D
 ##                camp marks), all in the tomb's one stone (§EX.1)
 ##   the plants   SurfacePlants: the biome's associations, by their real
 ##                silhouettes (§EW.1, §CS)
+##   the vine     SacredVine: the world's sacred plant, one, hung from one of
+##                those trees, to harvest (§FM.7, queue 72; Brew)
 ##   the life     SurfaceLife: the ecology's ground archetypes that fit the
 ##                biome, seen in passing (§EW.1)
 ##   the sky      the open world's SkySystem (the look's sky, sun, moon,
@@ -34,7 +36,7 @@ extends Node3D
 ##   the sound    the wind; cicadas by day, crickets by night (sound)
 ##
 ## No map, no fast travel, no passage to another world (§EW.7 steps 3 and 4,
-## §FM.8). CrawlerMain carries you up and down (go_up, go_down): the
+## §FM.8); the interact button answers only the vine up here (Brew). CrawlerMain carries you up and down (go_up, go_down): the
 ## dungeon kept as you left it below, this kept as you left it above.
 ## Built the first time you go up, from the dungeon's own seed (§FK.2: the
 ## same land every time for this game).
@@ -62,6 +64,9 @@ var finds: Array = []
 var stone: Node3D
 var ground_node: Node3D
 var plants: SurfacePlants
+## The world's sacred plant, one, to harvest (design §FM.7, queue 72;
+## SacredVine; null if it can't be drawn or has no tree).
+var vine: SacredVine
 var life: SurfaceLife
 var sky: SkySystem
 ## The hearth below (its state drives the smoke; read only).
@@ -181,6 +186,10 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	plants.name = "Plants"
 	add_child(plants)
 	plants.build(land, S, biome_doc(), seed_value, keep_out)
+	# The world's sacred plant, hung from one of those trees (queue 72).
+	vine = SacredVine.make(world, land, stair, plants.trees_placed, seed_value)
+	if vine != null:
+		add_child(vine)
 	var t4 := Time.get_ticks_msec()
 	ms["plants"] = t4 - t3
 	life = SurfaceLife.new()

@@ -34,8 +34,10 @@ extends Node3D
 ## (FireCircle._props) with a bowl at its end, through his fist, leaning
 ## out to his right and a little toward the fire, its bowl up
 ## (rescuer.ladle). It rides his hand,
-## breath and all; nothing new in the rig. For code (prompt 72 has him
-## brew): CrawlerMain.shaman(), the node "Rescuer", its `ladle`.
+## breath and all; nothing new in the rig. For code: CrawlerMain.shaman(),
+## the node "Rescuer", its `ladle`. Since queue 72 (§FM.7) he brews what you
+## bring him (Brew, moving him with the rig's own animations: FolkMotion),
+## and the same figure stands once by the sacred vine up top (SacredVine).
 
 static var F3D: Dictionary = Tuning.table("crawler").get("folk_3d", {})
 static var RES: Dictionary = Tuning.table("crawler").get("rescuer", {})
@@ -58,6 +60,10 @@ var beast := ""
 var k := 1.0
 ## What it holds in its right hand (hold(): the shaman's ladle), or null.
 var ladle: MeshInstance3D
+## Its height (m) and cloak ([main, trim]) as made, so the same figure can
+## stand elsewhere (queue 72: the shaman by the sacred vine, SacredVine).
+var height := 1.62
+var palette: Array = []
 
 ## Where a stick passes through the right fist, in the forearm's own space
 ## (ElbowR; PlayerBody's glove: the palm facing in, the fingers curled
@@ -72,6 +78,8 @@ static func make(parent: Node, fname: String, at: Vector3, yaw: float, height_m:
 	var f := HearthFolk.new()
 	f.name = fname
 	f.beast = animal
+	f.height = height_m
+	f.palette = pal
 	# Where its head comes from, as on every camp's root (BeastHeads).
 	f.set_meta("beast", animal)
 	var b := CloakedFigure.build(height_m, pal[0], pal[1], true)

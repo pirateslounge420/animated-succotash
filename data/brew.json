@@ -1,0 +1,95 @@
+{
+ "_help": {
+  "about": "Harvest and brew (design 9 Oct §FM.7; Claude Code, queue 72; every number a first guess, Mike tunes by playing). The tomb's world's sacred plant grows once on the surface above it: you take part of it and the plant stands, regrowing on the game clock; the shaman, seen doing the same once, is how the respectful way is taught; you carry the cutting down, as one carried thing, to the hearth; the shaman takes it to his cauldron and works it, wordless, with the rig's own animations, and brings you a ladle of it; you drink, and a placeholder vision tints the frame for a while, then fades. It gates nothing and changes no rule (§FM.3: no timer on anything else, no torch drain, no hallucinations), and nothing about it reaches the secret layer (§FM.4: not decided). Read by Brew, SacredVine and FolkMotion (scripts/crawler/) and BrewVision (scripts/ui/). Restart the game after editing.",
+  "world": "Which plant the tomb's world grows (§FM.9). ruin: the tomb's place on the compass (data/ruin_compass.json → ruins.aztec, status built_as_the_tomb_open_call_1; that file is reference only and not read: §FM.8, queue 74). plant: the entry's id in file (data/sacred/sacred_plants.json), the one entry read, for the surface only, never loaded into data/plants or the species catalogue (the open world and the §CC trim stay as they are). The engine draws it as it draws every liana (PlantSpecies.Shape.LIANA, PlantMeshes: strands hanging from a host's crown), its colours from the entry.",
+  "vine": "Where the one plant grows on the surface (SacredVine): hung from a tree's crown as the open world hangs a liana (VegetationPlacer: attach_share of the tree's height up it, out_share of its height out from the trunk, toward where you come up), no longer than length_share of that height, so it hangs down near the ground. host_h_m: the trees it may hang from (a tree with a trunk and branches, PlantMeshes.climbable; the desert's are mesquite and paloverde). from_arrival_m: how far from where you come up, ahead_deg either side of the way you face there, near_m the distance it prefers (the nearest fit to it, the seed choosing between ties); none there, any tree in reach of the stair. visible_m: how far off it is drawn (the near mesh only; a liana has no far picture).",
+  "teach": "The shaman teaches the respectful harvest by doing it once (Mike, §FM.7): the first time you come up, he stands by the vine (the same figure as the one at the hearth: his rig, his cloak, his head, his ladle), stand_m out from it toward you. Within watch_m of him, with him inside view_deg of where you look (or with your hand on the vine), he crouches (crouch) and takes a length from the vine's foot with his left hand over reach_s, the plant left standing (the same take_share you take), shows it over show_s, turned to you, and puts it away over tuck_s; then he stands and watches you, and is not up there the next time you come up. on false: no lesson, the vine yours from the first. kept: the lesson kept in this game's save once seen (CrawlerSave keep harvest_taught), so Continue does not show it again. Wordless (§ED).",
+  "carry": "What you take (Inventory: a plant sample, part cutting, its species the entry's): one carried thing in your pack, at most max at once. reach_m: how near your eyes must be to the vine's foot for the interact button (right click) to take a cutting. While you carry it and your left hand holds no fire pot, it shows low in your left hand in view (view, camera space; view_len_m its length there). log_take: the log's line (the log only; no words on screen, §ET.3).",
+  "rite": "The hand-over and the brew at the hearth (Brew, FolkMotion). With a cutting in your pack, the interact button (right click) within hand_reach_m of the hearth's middle (the usual spot, where you light a torch at the guard, is about 1.2 m out) hands it over: the shaman rises from his stone (rise_s; a step of rise_step_m off it), walks round the hearth to stand beside you on the kerb (walk_r_m round, at walk_mps, turning at turn_dps; stand_r_m from the middle, beside_deg round from you, the side away from the torch bundle), reaches for it and takes it (take_s), turns to the cauldron and drops it in (drop_s; the brew shows in the pot), stirs with his ladle (stir_s, a circle stir_r_m round at stir_hz), lifts a ladleful (fill_s), turns to you and holds it out. The interact button within drink_reach_m of him then drinks it; he lowers the ladle (lower_s), walks back and sits (sit_s). His ways are checked clear of the stone (the walls, the pillars, his own seat; clear_m round him) and of the bundle (bundle_m) and the tripod's feet (feet_m). log_drink: the log's line when you drink. Nothing he does speaks (§ED, §FM.3).",
+  "plants": "Per plant, by its entry's id (only the tomb's world's, ololiuhqui, is built). take_share: how much of the plant's length one harvest takes (from its foot); keep_share: never cut below this share of its length (the plant always stands: nothing uproots it); regrow_game_h: game hours on the one clock (§FK.3; a game hour is 6 real minutes) for one take's length to grow back. brew_color: the brew in the cauldron and the ladle. vision (§FM.7: a different experience for each plant, never a harder one; what a brew does is NOT locked, so this is a placeholder): tint (colour) at strength over the whole frame and edge in bands from the frame's edges, pulsing at pulse_hz down to (1 - pulse_depth) of itself; it eases in over fade_in_s from the moment you drink, holds until last_s (a first guess of 120 seconds), then fades over fade_s. Drawn in the 480-line frame like the rest of the HUD; it touches nothing else."
+ },
+ "world": {
+  "ruin": "aztec",
+  "plant": "ololiuhqui",
+  "file": "res://data/sacred/sacred_plants.json"
+ },
+ "vine": {
+  "host_h_m": [
+   3.0,
+   8.0
+  ],
+  "from_arrival_m": [
+   16.0,
+   70.0
+  ],
+  "near_m": 30.0,
+  "ahead_deg": 40.0,
+  "attach_share": 0.8,
+  "out_share": 0.22,
+  "length_share": 0.9,
+  "visible_m": 180.0
+ },
+ "teach": {
+  "on": true,
+  "kept": true,
+  "stand_m": 0.7,
+  "watch_m": 12.0,
+  "view_deg": 40.0,
+  "crouch": 0.6,
+  "reach_s": 1.2,
+  "show_s": 1.6,
+  "tuck_s": 0.8
+ },
+ "carry": {
+  "max": 1,
+  "reach_m": 2.4,
+  "view": [
+   -0.28,
+   -0.34,
+   -0.5
+  ],
+  "view_len_m": 0.3,
+  "log_take": "Took a cutting of the vine. It stands, and will grow back."
+ },
+ "rite": {
+  "hand_reach_m": 1.75,
+  "rise_s": 0.8,
+  "rise_step_m": 0.45,
+  "walk_r_m": 1.8,
+  "walk_mps": 0.85,
+  "turn_dps": 200.0,
+  "stand_r_m": 1.15,
+  "beside_deg": 50.0,
+  "take_s": 1.4,
+  "drop_s": 1.3,
+  "stir_s": 6.0,
+  "stir_r_m": 0.07,
+  "stir_hz": 0.5,
+  "fill_s": 1.0,
+  "drink_reach_m": 2.0,
+  "lower_s": 0.6,
+  "sit_s": 0.9,
+  "clear_m": 0.24,
+  "bundle_m": 0.45,
+  "feet_m": 0.3,
+  "log_drink": "Drank the shaman's brew."
+ },
+ "plants": {
+  "ololiuhqui": {
+   "take_share": 0.25,
+   "keep_share": 0.5,
+   "regrow_game_h": 2.0,
+   "brew_color": "#3b2f22",
+   "vision": {
+    "tint": "#9c80ff",
+    "strength": 0.16,
+    "edge": 0.32,
+    "pulse_hz": 0.18,
+    "pulse_depth": 0.55,
+    "fade_in_s": 4.0,
+    "last_s": 120.0,
+    "fade_s": 10.0
+   }
+  }
+ }
+}

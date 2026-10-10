@@ -11,7 +11,8 @@ extends Node3D
 ## iron was Claude Code's call, and iron reads as a cauldron at 480 lines):
 ## round-bellied, a rolled lip, a lug on each side and a bail between them,
 ## hung by a short chain from a tripod of three poles lashed at the top,
-## their feet on the hearth's kerb. Empty: the brew is §FM.7's, prompt 72.
+## their feet on the hearth's kerb. Empty at rest: since queue 72 (§FM.7,
+## Brew) the brew stands in it only while the shaman works a cutting.
 ##
 ## Where (cauldron.pot, tripod, chain): over the hearth's middle, its belly
 ## low over the flame (its bottom pot.bottom_m over the floor, the flame
@@ -52,7 +53,7 @@ extends Node3D
 ## line from the hearth's light to the floor past the kerb meets it); the
 ## poles and the chain have none (they stand inside the guard too).
 ##
-## For code (prompt 72 brews in it): CrawlerMain.cauldron, the node
+## For code (Brew brews in it, queue 72): CrawlerMain.cauldron, the node
 ## "Cauldron", the group GROUP, mouth() and mouth_r().
 
 static var D: Dictionary = Tuning.table("crawler").get("cauldron", {})

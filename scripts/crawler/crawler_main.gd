@@ -77,13 +77,23 @@ extends Node
 ## holders burning; Settings' New game rolls a new seed. SEED= in the
 ## environment pins a game, fresh (the checks).
 ##
+## And harvest and brew (design §FM.7, queue 72; Brew, SacredVine,
+## FolkMotion, BrewVision; data/brew.json): the world's sacred plant on the
+## surface (the shaman's lesson once, then a cutting into your pack, the
+## plant standing and regrowing on the clock), carried down to the hearth
+## where the shaman brews it in the cauldron and holds the ladle out; you
+## drink, and a placeholder vision tints the frame for a while. The
+## interact button asks Brew first.
+##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), closing into a dim ring while you sneak (§FC.1), off with the
 ## Settings switch Crosshair dot and while the log or the settings cover
 ## the middle of the frame. The log keeps its lines (Enter), O the
 ## settings (with their Controls page, §FB), F11 the pixel size, F2 the
-## frame time. Right click takes a torch from the bundle; left click
+## frame time. Right click takes a torch from the bundle (or, carrying a
+## cutting, hands it to the shaman, and drinks what he brews; up on the
+## surface, it takes the cutting: Brew); left click
 ## swings the torch (lit, into a creature's wind-up, it staggers it:
 ## §FA.1, CreatureStrike); the mouse wheel puts it away or takes it out, and
 ## with Tab held the wheel steps the left hand through its strip of fire
@@ -171,6 +181,10 @@ var on_surface := false
 var went_up := 0
 var came_down := 0
 var _below: Array = []
+## Harvest and brew (design §FM.7, queue 72; Brew): the vine up top, the
+## shaman's brew at the hearth, the vision; the interact button asks it
+## first.
+var brew: Brew
 
 
 func _ready() -> void:
@@ -232,6 +246,9 @@ func _ready() -> void:
 	_load_tomb(CrawlerSave.seed_at(CrawlerSave.place), CrawlerSave.place)
 	if CrawlerSave.continued:
 		GameLog.add(str(CrawlerSave.P.get("log_continue", "Back by the hearth, as you left it.")), "world")
+	brew = Brew.new()
+	add_child(brew)
+	brew.setup(self)
 	_rescuer()
 
 
@@ -340,6 +357,9 @@ func _load_tomb(s: int, at := 0) -> void:
 ## the fire or light groups meets them again), for the next; their meshes
 ## let go of first (NodeRelease).
 func _clear_tomb() -> void:
+	# A brew under way goes with its tomb (queue 72).
+	if brew != null:
+		brew.reset()
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
@@ -750,7 +770,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("dev_perf"):
 		perf.toggle()
 	elif event.is_action_pressed("interact"):
-		take_torch()
+		# The vine, the hand-over and the drink first (queue 72), else the
+		# bundle as built.
+		if brew == null or not brew.interact():
+			take_torch()
 
 
 ## Taken by the third hit (Harm, §EA): "Good night" has played and the

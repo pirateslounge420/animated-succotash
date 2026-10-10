@@ -46,6 +46,9 @@ var placed := 0
 var grown := {}
 ## The species picked, by zone: {zone: {"dominant": [names], "companion": [...], "ground": [...]}}.
 var picks := {}
+## The trees grown (TREE_M or taller): [[x/z, height, species]...] (queue
+## 72: the sacred vine hangs from one, SacredVine).
+var trees_placed: Array = []
 var _mats := {}
 
 
@@ -203,6 +206,7 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 				mmi.visibility_range_begin = near_m
 				mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(mmi)
+	trees_placed = trees
 	# The trees' trunks, in your way.
 	if not trees.is_empty():
 		var body := StaticBody3D.new()

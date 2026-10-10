@@ -581,9 +581,13 @@ func _no_way_off(main: CrawlerMain) -> void:
 	var names := bodies.map(func(b): return str(b.name))
 	var only := true
 	for b in bodies:
-		if not (b is StaticBody3D) or not str(b.name) in ["Collision", "Trunks"]:
+		# (Since queue 72 the shaman stands by the sacred vine the first time
+		# you come up, and you bump into him as at the hearth: a figure's
+		# blocker on his rig, not a wall.)
+		var shaman_s := str(b.name) == "Blocker" and b.get_parent() is PlayerBody and b.get_parent().get_parent() is HearthFolk
+		if not (b is StaticBody3D) or not (str(b.name) in ["Collision", "Trunks"] or shaman_s):
 			only = false
-	ok(only, "no collision up here but the land, the stone and the trees' trunks (no invisible wall): %s" % str(names))
+	ok(only, "no collision up here but the land, the stone, the trees' trunks and the shaman by the vine (no invisible wall): %s" % str(names))
 
 
 # --- 8. The edge -------------------------------------------------------------------
