@@ -291,6 +291,16 @@ var _turned_back := false
 
 var _tell: AudioStreamPlayer3D
 var _hiss: AudioStreamPlayer3D
+## The rattle (design 10 Oct §FN.2, queue 78; bosses.json rattle): its own
+## player at the tail, tuned as the hiss is; the pause to the next shiver;
+## how many shivers began, and each one's moment (rattle_moment), for the
+## checks.
+var _rattle: AudioStreamPlayer3D
+var _rattle_t := 0.0
+## Its own dice, so the rattle never moves the boss's draws.
+var _rattle_rng := RandomNumberGenerator.new()
+var rattles := 0
+var rattle_moments: Array[String] = []
 var _breath: AudioStreamPlayer3D
 var _cry: AudioStreamPlayer3D
 var _tell_cutoff := 5000.0
@@ -406,6 +416,8 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_player: CrawlerPlayer, p_
 	_tell.stream = BossSounds.stream("scales_loop", _rng.randi())
 	_tell_cutoff = _tell.attenuation_filter_cutoff_hz
 	_hiss = Audio3D.make("strike_tell", self, "Hiss")
+	if not sub("rattle").is_empty():
+		_rattle = Audio3D.make("strike_tell", self, "Rattle")
 	# Its strike (CreatureStrike, bosses.json bosses.<key>.strike): driven
 	# from here (tick), so the checks' stepped clock drives it too.
 	strike = CreatureStrike.new()
@@ -2655,6 +2667,8 @@ func _pose() -> void:
 	if not seg_pos.is_empty():
 		_tell.global_position = seg_pos[mini(4, seg_pos.size() - 1)]
 		_hiss.global_position = hp
+		if _rattle != null:
+			_rattle.global_position = seg_pos[-1]
 
 
 ## Its hiss at your flame while it holds off: a low, slow warning of its
@@ -2671,10 +2685,52 @@ func _play_hiss(which := "") -> void:
 		Audio3D.play(_hiss)
 
 
+## Which of rattle.when's moments it is in now (§FN.2): "hold" (holding off
+## at your flame), "wind_up" (rearing to strike), "move" (on its way: its
+## rounds, the hunt, leaving, fleeing), or "" none.
+func rattle_moment() -> String:
+	if state == "hang":
+		return "hold"
+	if strike != null and strike.state == "wind_up":
+		return "wind_up"
+	if state in ["prowl", "hunt", "leave", "flee"] and speed > 0.1:
+		return "move"
+	return ""
+
+
+## The rattle (§FN.2; bosses.json rattle): a shiver from the tail, again
+## after gap_s while it stays in one of rattle.when's moments, stopped the
+## moment it is in none.
+func _rattle_tick(delta: float) -> void:
+	if _rattle == null:
+		return
+	var rt := sub("rattle")
+	var when: Array = rt.get("when", [])
+	var m := rattle_moment()
+	if m == "" or not (m in when):
+		_rattle_t = 0.0
+		if _rattle.playing:
+			_rattle.stop()
+		return
+	if _rattle.playing:
+		return
+	_rattle_t -= delta
+	if _rattle_t > 0.0:
+		return
+	var gap: Variant = rt.get("gap_s", [0.3, 0.8])
+	_rattle_t = _rattle_rng.randf_range(float(gap[0]), float(gap[1])) if gap is Array and (gap as Array).size() == 2 else 0.5
+	_rattle.stream = SoundSynth.stream(str(rt.get("sound", "snake_rattle")), _rattle_rng.randi())
+	rattles += 1
+	rattle_moments.append(m)
+	if _rattle.is_inside_tree():
+		Audio3D.play(_rattle)
+
+
 ## The tell: loud on the move, softer reared and still, quiet coiled,
 ## muffled in its tunnels (tunnels.muffle_db, muffle_hz); none down its
 ## hole or once it has gone home.
 func _sound_tick(delta: float) -> void:
+	_rattle_tick(delta)
 	if _tell == null:
 		return
 	var want := -INF

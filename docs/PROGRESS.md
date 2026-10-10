@@ -4,6 +4,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-10 — Queue 78, §FN.2: the snake becomes the feathered serpent: plumes and a rattle (892698b)
+- **Built:** the snake's baked sprites now wear quetzal plumes (BossBody): a crest of green and turquoise feathers lying back along every length of body, and a ruff behind the head with red at the throat. The last length of body is a new fifth sheet, the tail: the body's front half and a rattle of four pale rings with dark lines between them. Sheet pixel sizes are unchanged (px_head 40, px_seg 28): the feathers are kept under the frame's top, so nothing was raised.
+- **The sound:** SoundSynth `snake_rattle`, a dry, fast shiver of clicks (50–70 a second, rung through two bright bands). It plays from the tail on its own player with the warning hiss's tuning (`audio.json strike_tell`: the same distance and muffling), on its own dice so it never moves the boss's draws.
+- **When it sounds is Mike's call (§FN.8 call 8), not made:** `bosses.json → bosses.desert.rattle.when` (new block, `_help`). First guess `["hold"]`: while it holds off at your flame, beside snake_warn, so the sharp snake_hiss still always means the strike. Other values: `"move"`, `"wind_up"`, any mix, or `[]`. Plumes: `bosses.desert.body.plumes` (colours, size, `on`).
+- **Unchanged:** every speed, reach, wind-up, the four states, never beaten. No fire.
+- **Checks** (seed 7): new `feathered_serpent_check` 23 PASS, 0 fails headless (the paint in the models' vertices, the sheets' sizes, the sound, when it rattles under every list, and two 40 s loose runs). `boss_check` 228, `boss_pool_check` 48, `boss_snake_check` 65: the same counts, 0 fails.
+- **For Mike:** the feathers and rattle are first guesses; tune by eye. When should it rattle (§FN.8 call 8)?
+
 ## 2026-10-10 — Queue 63–77 built side by side, then checked together on f9c54af (session wrap)
 Mike asked for the queue to be built in parallel wherever a prompt doesn't wait on another. Thirteen passes were built by agents working at the same time, each in its own copy of the repo. Each pushed its own pass and PROGRESS entry (below). This entry records the combined check and what is still open across them.
 

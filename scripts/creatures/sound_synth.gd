@@ -58,6 +58,10 @@ class_name SoundSynth
 ##   snake_warn   the giant snake holding off at your flame (§EY.2's torch
 ##                delay): a low, slow, rasping warning hiss, swelling and
 ##                easing, nothing like its strike's sharp one (§FA.2)
+##   snake_rattle the feathered serpent's rattle (design 10 Oct §FN.2): a
+##                dry, fast shiver, a train of hard little clicks at a
+##                rattlesnake's 50-70 a second, bright and hollow, in a
+##                swell; when it sounds is bosses.json rattle.when
 ##
 ## Every one of them plays on a 3D player tuned by the falloff table,
 ## data/audio.json (Audio3D), except the hitmarker, a UI sound.
@@ -180,6 +184,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _bone_step(rng)
 		"snake_warn":
 			samples = _snake_warn(rng)
+		"snake_rattle":
+			samples = _snake_rattle(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -1397,4 +1403,39 @@ static func _snake_warn(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var rasp := 1.0 + 0.35 * sin(TAU * rasp_hz * t)
 		var breath := 1.0 + 0.25 * sin(TAU * wob_hz * t + ph)
 		s[i] = lp2 * rasp * breath * _env(i, s.size(), 0.3, 0.6)
+	return s
+
+
+## The rattle (§FN.2): hard clicks of hollow keratin, 50-70 a second, each a
+## burst of noise rung through two bright bands, wavering a little in rate,
+## swelling up and dying away.
+static func _snake_rattle(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.9, 1.3))
+	var rate := rng.randf_range(50.0, 70.0)
+	var f1 := rng.randf_range(3800.0, 4800.0)
+	var f2 := rng.randf_range(6500.0, 7800.0)
+	var r := 0.93
+	var b1 := [0.0, 0.0]
+	var b2 := [0.0, 0.0]
+	var y := [0.0, 0.0, 0.0, 0.0]
+	var ph := 0.0
+	var click := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		ph += (rate * (1.0 + 0.06 * sin(TAU * 3.0 * t))) / RATE
+		if ph >= 1.0:
+			ph -= 1.0
+			click = rng.randf_range(0.7, 1.0)
+		var x := rng.randf_range(-1, 1) * click
+		click *= 0.86
+		# Two resonators (the rings' hollow bodies).
+		for k in 2:
+			var f := f1 if k == 0 else f2
+			var w := TAU * f / RATE
+			var c := 2.0 * r * cos(w)
+			var o := k * 2
+			var v: float = c * float(y[o]) - r * r * float(y[o + 1]) + x * (1.0 - r)
+			y[o + 1] = y[o]
+			y[o] = v
+		s[i] = (float(y[0]) * 2.0 + float(y[2]) * 1.4) * 1.6 * _env(i, s.size(), 0.08, 0.35)
 	return s
