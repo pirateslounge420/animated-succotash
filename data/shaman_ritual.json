@@ -2,7 +2,7 @@
  "_help": {
   "about": "[NOT WIRED YET — design §FR] The shaman's ritual as a little cutscene, and the swamp's false shaman (Mike, 10 Oct, by voice: 'Yes, sir.'). Nothing reads this file yet. Every number is Claude (chat)'s first guess; Mike tunes by playing. Queue 97, 98 build it.",
   "cutscene": "§FR.1. A frame for every culture's shaman ritual: the camera locks to a fixed angle on the shaman when you take the brew and you cannot move or look until it ends. What happens inside is each culture's own; only the swamp's is specified. lock_s and the others are first guesses. harm_during_lock false: nothing can hit you while the camera is locked.",
-  "swamp_witch": "§FR.2. The swamp's hearth shaman is a young woman who is the witch under a glamour (§FE.3's 'false camp'). Wordless (§ED). Steps, in order: you sip; the change builds across build_s while the camera is locked; she gets up and turns her back for back_turned_s; she turns round as the old witch, stands reveal_m from you, and the cackle plays as a sting; the camera is yours again and she begins snap_then_chase (bosses.json → swamp). Not a hit and not a grab. The cackle goes on as her tell through the chase. brew_is_real is true (§FT.0, superseding §FS.3): jimsonweed, a deliriant; her change and the trip happen together and the game never says which is real (transformation_real_or_drug: left_ambiguous). vision.look is open (§FT.5 call 2); the provisional default is the shared filter in a marsh green, no phantom figures. first_time_only and hearth_holds: null until Mike answers §FR.5 calls 2 and 3."
+  "swamp_witch": "§FR.2. The swamp's hearth shaman is a young woman who is the witch under a glamour (§FE.3's 'false camp'). Wordless (§ED). Steps, in order: you sip; the change builds across build_s while the camera is locked; she gets up and turns her back for back_turned_s; she turns round as the old witch, stands reveal_m from you, and the cackle plays as a sting; the camera is yours again and she begins snap_then_chase (bosses.json → swamp). Not a hit and not a grab. The cackle goes on as her tell through the chase. brew_is_real is true (§FT.0, superseding §FS.3): jimsonweed, a deliriant; her change and the trip happen together and the game never says which is real (transformation_real_or_drug: left_ambiguous). vision.look is open (§FT.5 call 2); the provisional default is the shared filter in a marsh green, no phantom figures. first_time_only: the whole sequence on the first brew only (§FU.1). repeat (§FU.2): a later brew starts with nobody at the hearth and she shows up partway through, already the witch, no slow build, with the cackle and the chase; return_chance 0.5 (Claude's reading of 'maybe', Mike's call), who_serves null, camera_lock_at_return false and vision_runs_until_she_appears true are first guesses. hearth_holds: null until Mike answers §FR.5 call 3."
  },
  "cutscene": {
   "camera": "fixed_on_shaman",
@@ -41,7 +41,7 @@
   "ignites": "snap_then_chase",
   "hit": false,
   "grab": false,
-  "first_time_only": null,
+  "first_time_only": "the whole sequence on the first brew only (§FU.1)",
   "brew_is_real": true,
   "hearth_holds": null,
   "brew_note": "§FT.0 (10 Oct, Mike): the swamp's brew is real, jimsonweed (Datura stramonium); this supersedes §FS.3 (her trick). Her change and the trip happen together and the game never says which is real.",
@@ -52,6 +52,19 @@
    "provisional_default": "the shared filter of §FN.5 (palette swap, hidden carvings) in a marsh green, no phantom figures",
    "phantom_figures": null
   },
-  "region": "southeast_us_bayou"
+  "region": "southeast_us_bayou",
+  "repeat": {
+   "shaman_at_start": false,
+   "she_returns": "partway_through_the_brew",
+   "return_chance": 0.5,
+   "form": "already_the_witch",
+   "slow_build": false,
+   "cackle": "at_return_then_chase_tell",
+   "ignites": "snap_then_chase",
+   "hit": false,
+   "who_serves": null,
+   "camera_lock_at_return": false,
+   "vision_runs_until_she_appears": true
+  }
  }
 }

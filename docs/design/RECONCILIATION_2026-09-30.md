@@ -5916,7 +5916,7 @@ ruin of the roster: Mike's own "what would the swamp like" is unanswered).
 ### FR.5 Open for Mike
 1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick? (§FS.3 said a trick; §FT.0 reverses it: real, datura.)
 2. **Is the trap every time you drink there, or only the first?** And after it, is there a shaman
-   at the swamp's hearth at all?
+   at the swamp's hearth at all? (Answered by §FU.)
 3. **How does the hearth hold against her?** Does the chase start in the lit room and follow you
    out, or does she step back at the edge of the light as the snake does?
 4. **What happens in the other cultures' cutscenes,** if anything?
@@ -6023,9 +6023,50 @@ phantom figure in the swamp's vision; deciding whether her change is real.
 ### FT.5 Open for Mike
 1. **Is the swamp's brew real?** Written real from his later words; one line reverses it.
 2. **The swamp's vision look:** the shared filter, or phantom figures too (FP.4)?
-3. **Does the trap fire every time you drink there, or only the first?** (§FR.5 call 2)
+3. **Does the trap fire every time you drink there, or only the first?** (§FR.5 call 2; answered by §FU: the first brew only, and she can return, already the witch.)
 4. **How does the hearth hold against her?** (§FR.5 call 3)
 5. **Is the cutscene skippable;** can you meet her in the halls before drinking? (§FR.5 calls 5, 6)
 6. **What happens in the other cultures' cutscenes?** (§FR.5 call 4)
 7. **What the swamp ruin is built of:** earth and timber (the roster's), or something stonier?
    Mike asked what it might look like; the earthwork-and-timber answer was not confirmed.
+
+## FU. The witch comes back: the trap is a first-time ambush — LOCKED (10 Oct, by voice, Mike; "Yep, so lock it in. Thank you.")
+
+Mike, 10 Oct, answering §FR.5 call 2 and half of its twin. Claude (voice) read the shape back
+("the second brew starts normal, no shaman in sight at all, and then partway through she just appears,
+already the witch, no slow build this time") and Mike said "Yep, so lock it in." No number is settled;
+first guesses are in `data/shaman_ritual.json → swamp_witch.repeat`.
+
+### FU.1 The first time: the whole sequence
+The young shaman, the gradual change, the turn, the cackle and the chase (§FR.2, §FT.2) happen **the first
+time you brew at the swamp's hearth.** Mike: "maybe the witch is there only on the first time."
+
+### FU.2 Later brews: she is not there, and then she is
+- **A later brew starts normal: no shaman, nobody at the hearth** (Mike: "maybe she won't be there at
+  first"). Claude's reading: this answers "is there a shaman at that hearth on later visits": not at the start.
+- **Partway through she shows back up** ("and then she shows back up later"), **already the witch,** with
+  no slow build (the surprise is spent). A "you thought you got away with it" beat.
+- **The cackle plays at her return and carries on as her tell through the chase,** and the chase begins as at
+  the first reveal (`snap_then_chase`; not a hit). Claude's reading, as the voice session agreed.
+
+### FU.3 Claude's readings, flagged
+1. **"First time" is read as the first brew you drink,** not the first time you stand at the hearth (the trap
+   starts on the sip).
+2. **"Maybe … she'll show back up" is read as not certain.** First guess in the data: a `return_chance` of
+   0.5 per later brew, so a later brew can pass without her. Mike's call (FU.5 call 1).
+3. **With no shaman at the start, who makes the brew?** Not said. Claude's first guess: the cauldron is
+   already hanging over the hearth (§FM.6) and you drink from it yourself.
+4. **Does the camera lock (§FR.1) play at her return?** Not said. First guess: it does not; she walks into
+   the frame while you are free.
+
+### FU.4 Not taken
+A brew that is certain to bring her back; a repeat of the slow build; a repeat of the young shaman; a new
+sound for her return.
+
+### FU.5 Open for Mike
+1. **Is her return certain or a chance,** and how big (FU.3 point 2)?
+2. **Who serves the later brew** (FU.3 point 3)?
+3. **Does the camera lock at her return** (FU.3 point 4)?
+4. **Does the real brew run its vision on a later visit** until she shows up? Claude's guess: yes.
+5. Still open from §FR.5: how the hearth holds against her, skippability, meeting her in the halls before
+   drinking, and the other cultures' cutscenes.
