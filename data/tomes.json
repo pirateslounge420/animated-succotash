@@ -1,10 +1,11 @@
 {
  "_help": {
   "about": "Tomes: real philosophical texts you can find and read (3 Oct, Mike by voice: \"I would like to add some philosophical texts that you might be able to find randomly. For example, the I Ching\"). Rare finds live in ruins (§AW): a tome lies where someone left it, most often at a delve's heart (§CJ.3), never in a chest. It is read while you carry it, opening like the log (in the internal frame, in the HUD's font) a page at a time; the log notes the find (hud.json log_more: tome). Public-domain translations only. No systems yet (Mike: \"we might implement some systems based on it later, but we're going to wait on that for now\"): the I Ching coin cast already in the game (scripts/core/iching.gd, the rare-event RNG) is a separate thing. Restart after editing.",
-  "find": "at: where tomes lie; share_of_hearts: of the delves' hearts, how many hold a tome instead of another find. First guesses.",
+  "find": "at: where tomes lie; share_of_hearts: of the delves' hearts, how many hold a tome instead of another find. First guesses. In Torchfire 1's crawler the same rule lays a split tome's fragments (queue 73, §FM.5; fragments below): delve_heart stands for the hearts of a dungeon's base layer (descent.json floors.base_layer: the rooms at the far ends of its last floor's ways), and share_of_hearts of those hearts hold one. Raise it to find pages more often (1: one at the end of every way down there while there are pages you don't hold).",
   "tomes": "id; title (its name in play); what it is; translation (the public-domain one used) and not (the one not to use); pages (how it divides); text_file (the text itself, one file per tome under data/tomes/: a later data job, filled from a public-domain edition and checked against it); filled: whether the text is in yet.",
   "found_at": "found_at on a tome overrides find.at for that tome (§DQ: the second tome lies at the pass gate).",
-  "wired": "Built 4 Oct (§DL, scripts/player/tomes.gd, scripts/ui/tome_panel.gd): find.share_of_hearts of the delves' hearts hold a tome in place of their spear or bow (seeded per delve), among the tomes whose text is in (filled true and text_file there) and which have no found_at of their own. R reads a tome you carry. The text format is data/tomes/README.md. A tome whose text isn't in never lies anywhere, and the dev overlay (F3) says 'tome text missing: <id>'."
+  "wired": "Built 4 Oct (§DL, scripts/player/tomes.gd, scripts/ui/tome_panel.gd): find.share_of_hearts of the delves' hearts hold a tome in place of their spear or bow (seeded per delve), among the tomes whose text is in (filled true and text_file there) and which have no found_at of their own. R reads a tome you carry. The text format is data/tomes/README.md. A tome whose text isn't in never lies anywhere, and the dev overlay (F3) says 'tome text missing: <id>'. Since queue 73 (§FM.5) that is a tome found whole; a split tome's fragments (fragments) lie in the crawler before its text is in, and open at the title page only.",
+  "fragments": "Design §FM.5 (Mike, 9 Oct: tomes become collected pages; different pages of a book come from different ruins, or from different parts of one ruin). Built 9 Oct (Claude Code, queue 73; Tomes.fragments_of and layer_fragments, TomePages, TomePanel.open_held), first guesses: a tome's fragments list splits it into pages found apart, each {id, pages: [first, last]} its own pickup, pages counted from 1 (the first page after the title page, data/tomes/README.md). The I Ching's four follow Legge's two sections of the Text (hexagrams 1-30 and 31-64), each in two: 1-15, 16-30, 31-47, 48-64. In Torchfire 1's crawler they lie on a dungeon's base layer (descent.json floors.base_layer: its last floor) by find's own rule (find above), seeded on the dungeon's seed and the heart, never two of the same in one dungeon: a rolled scroll on the floor by its room's far wall, never in a chest, lit only by fire (§FG). A fragment of a tome with a found_at of its own doesn't lie there. Right click beside it takes it, kept for good in the game's save (crawler/<game seed>.json, tome_pages), so it never lies anywhere again in that game; the log says 'You found pages of a tome: <title>, pages 1 to 15 of 64.' R reads what you hold, anywhere: the book's title page says how much ('pages 1 to 15 of 64'; 'pages 1 to 15 and 31 to 47 of 64'; 'pages 1 to 64 of 64' with all of it), then only the pages you hold, in the book's order; up and down go to another book you hold pages of. A split tome's fragments lie before its text is in and open at the title page only until it is (filled true and text_file there); the count's 'of 64' is then the furthest page its fragments name. No systems, no scoring (§DL: flavour for now). A tome with no fragments list (the Tao) is found whole as before, and only in the open world. Two floors deep for now (§FM.5's two tiers), no third. The open world (Torchfire 2, shelved) still deals a split tome whole at a delve's heart once its text is in, as built. Restart after editing. Check: tools/tome_pages_check.gd."
  },
  "find": {
   "at": "delve_heart",
@@ -19,7 +20,13 @@
    "not": "Not Richard Wilhelm's translation in Cary F. Baynes's English (1950), still in copyright.",
    "pages": "one hexagram a page",
    "text_file": "data/tomes/iching_legge.txt",
-   "filled": false
+   "filled": false,
+   "fragments": [
+    {"id": "iching_1", "pages": [1, 15]},
+    {"id": "iching_2", "pages": [16, 30]},
+    {"id": "iching_3", "pages": [31, 47]},
+    {"id": "iching_4", "pages": [48, 64]}
+   ]
   },
   {
    "id": "tao",

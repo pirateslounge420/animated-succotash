@@ -36,6 +36,8 @@ const COLUMNS := [
 		["bind", "douse"],
 		["head", "Screens"],
 		["bind", "log"],
+		# Both games' since queue 73 (§FM.5: the crawler's pages you hold).
+		["bind", "read_tome"],
 		["bind", "settings"],
 		["bind", "release_mouse"],
 	],
@@ -46,7 +48,6 @@ const COLUMNS := [
 		["bind", "toggle_map"],
 		["bind", "toggle_view"],
 		["bind", "weapon_swap"],
-		["bind", "read_tome"],
 		["bind", "toggle_hud"],
 		["bind", "toggle_debug"],
 		["head", "Dev keys"],

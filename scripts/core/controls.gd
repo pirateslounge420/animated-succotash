@@ -62,6 +62,8 @@ const DEFAULTS := {
 	"hand_prev": [],
 	"other_hand": [KEY_TAB],
 	# Read a tome you carry (design 3 Oct §DL, TomePanel); R or Esc closes.
+	# Both games since queue 73 (§FM.5): in the crawler, the pages you hold
+	# (CrawlerMain.read_pages).
 	"read_tome": [KEY_R],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
 	# trees' branch graphs, F7 spawns the next Phase 1 rig beside you (Night
@@ -157,7 +159,7 @@ const NAMES := {
 ## actions is a clash only where one game reads both (clashes()), so Tab
 ## can be the crawler's other hand and the open world's inventory at once.
 const CRAWLER_ONLY := ["hand_next", "hand_prev", "other_hand", "douse"]
-const OPEN_WORLD_ONLY := ["inventory", "inventory_drop", "toggle_map", "toggle_hud", "toggle_debug", "toggle_view", "weapon_swap", "read_tome", "toggle_collision_view", "toggle_branch_view", "dev_spawn", "dev_howl", "dev_new_world"]
+const OPEN_WORLD_ONLY := ["inventory", "inventory_drop", "toggle_map", "toggle_hud", "toggle_debug", "toggle_view", "weapon_swap", "toggle_collision_view", "toggle_branch_view", "dev_spawn", "dev_howl", "dev_new_world"]
 
 ## The mouse buttons in the file, and on screen.
 const MOUSE_TEXT := {

@@ -85,15 +85,23 @@ extends Node
 ## drink, and a placeholder vision tints the frame for a while. The
 ## interact button asks Brew first.
 ##
+## And tomes as collected pages (design §FM.5, queue 73; TomePages,
+## TomePanel.open_held; data/tomes.json fragments): a split tome's pages lie
+## at the hearts of the dungeon's base layer (its last floor) by the tomes'
+## find rule, a rolled scroll on the floor; right click beside one takes it,
+## kept in the game's save for good; R reads what you hold, anywhere (the
+## book's title page says how much: "pages 1 to 5 of 12").
+##
 ## Wordless (§ET.3: no tooltips): no prompts, no HUD lines. The one thing
 ## on screen is the open world's crosshair (§EX.7, Reticle, crawler.json
 ## hud), closing into a dim ring while you sneak (§FC.1), off with the
-## Settings switch Crosshair dot and while the log or the settings cover
-## the middle of the frame. The log keeps its lines (Enter), O the
-## settings (with their Controls page, §FB), F11 the pixel size, F2 the
-## frame time. Right click takes a torch from the bundle (or, carrying a
-## cutting, hands it to the shaman, and drinks what he brews; up on the
-## surface, it takes the cutting: Brew); left click
+## Settings switch Crosshair dot and while the log, the tome panel or the
+## settings cover the middle of the frame. The log keeps its lines (Enter),
+## R the tome pages you hold (§FM.5), O the settings (with their Controls
+## page, §FB), F11 the pixel size, F2 the frame time. Right click takes a
+## torch from the bundle (or, carrying a cutting, hands it to the shaman,
+## and drinks what he brews; up on the surface, it takes the cutting: Brew;
+## beside pages lying on the base layer, it takes them: TomePages); left click
 ## swings the torch (lit, into a creature's wind-up, it staggers it:
 ## §FA.1, CreatureStrike); the mouse wheel puts it away or takes it out, and
 ## with Tab held the wheel steps the left hand through its strip of fire
@@ -185,6 +193,11 @@ var _below: Array = []
 ## shaman's brew at the hearth, the vision; the interact button asks it
 ## first.
 var brew: Brew
+## Tomes as collected pages (design §FM.5, queue 73): the pages lying on
+## this dungeon's base layer (TomePages, the node "TomePages"), and the
+## panel R reads what you hold in (TomePanel, "Tome").
+var tome_pages: TomePages
+var tome_panel: TomePanel
 
 
 func _ready() -> void:
@@ -341,6 +354,12 @@ func _load_tomb(s: int, at := 0) -> void:
 	if bool(CrawlerSave.kept_value(at, "fork_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
 		fork.open_now(true)
 	fork.opened_now.connect(func() -> void: CrawlerSave.keep(at, "fork_open", true))
+	# Tomes as collected pages (design §FM.5, queue 73): the pages due at its
+	# base layer's hearts, but those you hold, laid once the stone is in the
+	# physics world.
+	tome_pages = TomePages.new()
+	add_child(tome_pages)
+	tome_pages.build(lay, player)
 	# The lights already burning (kept), counted floor by floor, so the log
 	# counts on from them.
 	_lit_logged = {}
@@ -363,7 +382,7 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
@@ -376,6 +395,7 @@ func _clear_tomb() -> void:
 	cauldron = null
 	boss = null
 	fork = null
+	tome_pages = null
 	baked = false
 	TorchSnuff.drafts = null
 
@@ -590,6 +610,10 @@ func _ui() -> void:
 	log_panel = LogPanel.new()
 	log_panel.name = "Log"
 	ui.add_child(log_panel)
+	# The pages you hold, read with R (design §FM.5, queue 73).
+	tome_panel = TomePanel.new()
+	tome_panel.name = "Tome"
+	ui.add_child(tome_panel)
 	# The hands' strip (§FB), under the panels.
 	hand_strip = HandStrip.new()
 	hand_strip.name = "HandStrip"
@@ -680,8 +704,8 @@ func _process(delta: float) -> void:
 		PlayerBody.watch_point = cam.global_position
 	# (Taken, the keys let go while "Good night" plays: Harm; walking out,
 	# you stand still in the opening while the dark comes.)
-	player.typing = log_panel.visible or (harm != null and harm.taking) or leaving
-	player.ui_open = settings_panel.visible or log_panel.visible
+	player.typing = log_panel.visible or tome_panel.visible or (harm != null and harm.taking) or leaving
+	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
 		reticle.shown = player.first_person and not player.ui_open
@@ -762,8 +786,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_settings(not settings_panel.visible)
 	elif settings_panel.visible and event is InputEventMouseMotion:
 		settings_panel.drag(event.position)
-	elif event.is_action_pressed("log") and not log_panel.visible and not settings_panel.visible:
+	elif event.is_action_pressed("log") and not log_panel.visible and not settings_panel.visible and not tome_panel.visible:
 		log_panel.open()
+	elif event.is_action_pressed("read_tome") and not tome_panel.visible and not log_panel.visible and not settings_panel.visible and not leaving:
+		# The pages you hold (design §FM.5, queue 73).
+		read_pages()
 	elif event.is_action_pressed("dev_pixel"):
 		var pname := Display.cycle_preset()
 		print("[display] preset %s" % pname)
@@ -834,6 +861,19 @@ func take_torch() -> bool:
 	return true
 
 
+## R (design §FM.5, queue 73; Controls read_tome): the pages you hold in the
+## tome panel (TomePanel.open_held), the book you read last first, else the
+## first in tomes.json; down here or up on the surface alike. Nothing when
+## you hold none. True if it opened.
+func read_pages() -> bool:
+	var held := TomePages.held()
+	var books := TomePanel.books_held(held)
+	if books.is_empty():
+		return false
+	var id := tome_panel.tome_id if books.has(tome_panel.tome_id) else str(books[0])
+	return tome_panel.open_held(id, held)
+
+
 ## A new game (the settings panel's "New game", design §FK.2): this game is
 ## kept as it stands, and the next start rolls a new seed and a new world,
 ## the one Continue opens from then on.
@@ -863,9 +903,10 @@ func _toggle_settings(on: bool) -> void:
 ## The dungeon's own nodes, the ones a trip up keeps out of the tree (the
 ## stone, its fires, vents and airways, the way out, the moss and the
 ## beetles, the residents, the shaman and his cauldron, the boss, the
-## fork): what _clear_tomb frees. The fire pots stay with you.
+## fork, the pages lying on its base layer): what _clear_tomb frees. The
+## fire pots stay with you.
 func _dungeon_nodes() -> Array:
-	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork]
+	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages]
 
 
 ## Up the stair into the day (design §FM.7; worlds.json surface.arrive): the

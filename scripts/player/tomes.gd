@@ -11,6 +11,15 @@ class_name Tomes
 ## tome with its own found_at (the Tao at the pass gate, §DQ) isn't dealt
 ## to the hearts. No systems on it (Mike): the I Ching coin cast
 ## (iching.gd) is a separate thing.
+##
+## Collected pages (design 9 Oct §FM.5, queue 73; tomes.json
+## tomes[].fragments): a tome may be split into fragments, each a run of
+## its pages and its own pickup. In Torchfire 1's crawler they lie at the
+## hearts of a dungeon's base layer by find's own rule (layer_fragments;
+## TomePages lays them), before the text is in too: a split tome whose text
+## isn't in opens at its title page only (TomePanel.open_held), which says
+## how much of it you hold (held_line: "pages 1 to 5 of 12"). A tome with
+## no fragments list is found whole, as above, and only in the open world.
 
 static var D: Dictionary = _load()
 ## Tests: id -> {"text_file", "filled"} in place of the data's.
@@ -120,3 +129,132 @@ static func _add_page(pages: Array, cur: Array) -> void:
 	if cur.is_empty():
 		return
 	pages.append({"heading": str(cur[0]).strip_edges(), "text": "\n".join(cur.slice(1)).strip_edges()})
+
+
+# --- Collected pages (design 9 Oct §FM.5, queue 73) ------------------------------
+
+## Tome `id`'s fragments (tomes.json tomes[].fragments): [{"id", "pages":
+## [first, last], "tome"}...], its pages counted from 1 (the first page
+## after the title page, data/tomes/README.md); [] for a tome found whole.
+## An entry without an id or a page range is skipped.
+static func fragments_of(id: String) -> Array:
+	var out: Array = []
+	var fr: Variant = entry(id).get("fragments", [])
+	if not fr is Array:
+		return out
+	for f in fr:
+		if not f is Dictionary or str((f as Dictionary).get("id", "")) == "":
+			continue
+		var pr: Variant = (f as Dictionary).get("pages", [])
+		if not pr is Array or (pr as Array).size() < 2:
+			continue
+		var a := maxi(int(pr[0]), 1)
+		out.append({"id": str(f.id), "pages": [a, maxi(int(pr[1]), a)], "tome": id})
+	return out
+
+
+## Is tome `id` split into fragments (found as pages, never whole)?
+static func split(id: String) -> bool:
+	return not fragments_of(id).is_empty()
+
+
+## Fragment `fid` of any tome ({"id", "pages", "tome"}), or {}.
+static func fragment(fid: String) -> Dictionary:
+	for t in entries():
+		for f in fragments_of(str(t.get("id", ""))):
+			if str(f.id) == fid:
+				return f
+	return {}
+
+
+## How many pages tome `id` has: its text's once the text is in, else the
+## furthest page its fragments name (0 for a whole tome without its text).
+static func total_pages(id: String) -> int:
+	var b := book(id)
+	if not b.is_empty():
+		return (b.get("pages", []) as Array).size()
+	var n := 0
+	for f in fragments_of(id):
+		n = maxi(n, int(f.pages[1]))
+	return n
+
+
+## The pages of tome `id` that the fragments `fragment_ids` hold (ids of
+## any tome; the others are passed over): its page numbers, sorted, each
+## once, none past total_pages.
+static func pages_held(id: String, fragment_ids: Array) -> Array:
+	var total := total_pages(id)
+	var seen := {}
+	for f in fragments_of(id):
+		if not fragment_ids.has(str(f.id)):
+			continue
+		for p in range(int(f.pages[0]), mini(int(f.pages[1]), total) + 1):
+			seen[p] = true
+	var out: Array = seen.keys()
+	out.sort()
+	return out
+
+
+## Runs of consecutive page numbers in `pages` (sorted): [[first, last]...].
+static func runs_of(pages: Array) -> Array:
+	var out: Array = []
+	for p in pages:
+		var k := int(p)
+		if not out.is_empty() and int(out[-1][1]) == k - 1:
+			out[-1][1] = k
+		else:
+			out.append([k, k])
+	return out
+
+
+## What tome `id`'s title page says you hold of it, the fragments
+## `fragment_ids` in hand (design §FM.5, queue 73): "pages 1 to 5 of 12";
+## "pages 1 to 5 and 9 to 12 of 12"; "page 7 of 12"; "pages 1 to 12 of 12"
+## with all of it; "none of its 12 pages" with none.
+static func held_line(id: String, fragment_ids: Array) -> String:
+	var total := total_pages(id)
+	var runs := runs_of(pages_held(id, fragment_ids))
+	if runs.is_empty():
+		return "none of its %d pages" % total
+	var parts: Array = []
+	for r in runs:
+		parts.append(str(r[0]) if int(r[0]) == int(r[1]) else "%d to %d" % [int(r[0]), int(r[1])])
+	var said := str(parts[0])
+	if parts.size() > 1:
+		said = ", ".join(parts.slice(0, parts.size() - 1)) + " and " + str(parts[-1])
+	var one := runs.size() == 1 and int(runs[0][0]) == int(runs[0][1])
+	return "%s %s of %d" % ["page" if one else "pages", said, total]
+
+
+## The pages lying at the hearts of a dungeon's base layer (design §FM.5,
+## queue 73; Torchfire 1's crawler, TomePages), by find's own rule as at
+## the delves' hearts (heart_tome): find.at delve_heart, the base layer's
+## hearts (the room at the far end of each of its ways) standing for the
+## delves'; of them find.share_of_hearts hold a fragment, each heart seeded
+## on its own (`seed_v` the dungeon's, k its heart's), never in a chest.
+## The pool: every split tome's fragments (its text in or not: one whose
+## text isn't in opens at its title page only), but a tome's with a
+## found_at of its own; none twice in one dungeon. [fragment id or "" per
+## heart], `hearts` long. A whole tome never lies here.
+static func layer_fragments(seed_v: int, hearts: int) -> Array:
+	var out: Array = []
+	var find: Dictionary = D.get("find", {})
+	var on := str(find.get("at", "delve_heart")) == "delve_heart"
+	var share := float(find.get("share_of_hearts", 0.15))
+	var pool: Array = []
+	for t in entries():
+		var id := str(t.get("id", ""))
+		if str(entry(id).get("found_at", "delve_heart")) != "delve_heart":
+			continue
+		for f in fragments_of(id):
+			pool.append(str(f.id))
+	for k in hearts:
+		var got := ""
+		if on and not pool.is_empty():
+			var rng := RandomNumberGenerator.new()
+			rng.seed = hash([seed_v, "tome", k])
+			if rng.randf() < share:
+				got = str(pool[rng.randi() % pool.size()])
+				pool.erase(got)
+		out.append(got)
+	return out

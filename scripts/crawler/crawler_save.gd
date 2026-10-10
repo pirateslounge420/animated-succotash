@@ -16,7 +16,8 @@ class_name CrawlerSave
 ## The save (persistence.save): the game's seed, the place you are in, and
 ## every dungeon you have been in (its seed and theme, its holders'
 ## fingerprint, and the holders you relit there, by their index in the
-## layout's order; gates when they exist, keep()), in
+## layout's order; gates when they exist, keep()), and the tome pages you
+## hold, game-wide (data "tome_pages", design §FM.5: TomePages, queue 73), in
 ## user://crawler/<game seed>.json. It sits beside the open world's
 ## user://worlds (WorldSave, Torchfire 2's, untouched): the two games keep
 ## their own seeds and their own "last", so neither can open the other's

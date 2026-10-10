@@ -32,3 +32,18 @@ The second page's text.
   books), and the dev overlay (F3) says `tome text missing: <id>`.
 - Filling `iching_legge.txt` is a data job for Claude (chat): one agent per group of
   hexagrams, each checked against the public-domain edition.
+
+## Fragments (design 9 Oct §FM.5, queue 73)
+
+- A tome with a `fragments` list in `data/tomes.json` is split: each fragment, `{"id",
+  "pages": [first, last]}`, is a run of its pages and its own pickup. Pages are counted
+  from 1, the first page after the title page, in this file's order (for the I Ching,
+  page n is hexagram n). The I Ching's four: 1–15, 16–30, 31–47, 48–64.
+- In Torchfire 1's crawler the fragments lie on a dungeon's bottom floor (`TomePages`),
+  **before the text is in too**: the "no blank books" rule above is for a tome found
+  whole. A split tome whose text isn't in opens at its title page only, which says how
+  much of it you hold ("pages 1 to 15 of 64"; the 64 is then the furthest page its
+  fragments name). Once the text is in, the pages you hold read as any tome's, and the
+  count comes from the text.
+- Keep the fragments' ranges within the text's pages: a range past its last page is cut
+  to it.
