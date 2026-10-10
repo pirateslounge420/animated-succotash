@@ -1,0 +1,117 @@
+{
+  "_help": {
+    "about": "[NOT WIRED YET — design §FN] The Aztec ruin kind (Mike, 9 and 10 Oct, design §FN, bones plus what he specified). Claude (chat) wrote it; nothing reads it yet, and Claude Code removes this prefix as each block is wired (queues 78-84, docs/PROMPT_QUEUE.md). A line marked 'mike' is his; a line marked 'claude_guess' is Claude's first guess for Claude Code to tune by eye and Mike to settle by playing; 'open' is not decided (§FN.8). It is additive: it changes no existing file, and it is the Aztec ruin's own, so nothing here is read for another ruin kind.",
+    "kind": "temple, not a tomb (§FN.1): no sarcophagi and no burial chambers; the mummy and sarcophagi move to a new Egyptian ruin (§FN.0). world: assumed desert, because the snake is the desert's boss and the surface was built as desert (worlds.json surface.world); open, §FN.8 call 1, since the plants of this ruin do not grow in hot desert.",
+    "stone": "One ruin, one stone (§EX.1): the temple needs its own masonry.json style (queue 79). andean_tomb is Inca fitted polygonal stone and belongs to the Inca ruin, not this one.",
+    "calendar": "The tonalpohualli (§FN.1): 20 day signs in the standard order, each with a number 1-13 written as dots. The order here is the one the 9 Oct research gave; Mexicolore lists the signs in a different order, so check against a museum source before carving them in a fixed sequence. The English names are Claude's own knowledge.",
+    "chambers": "The two fixed main chambers (Mike, 10 Oct): in every Aztec temple, where they sit and how they are joined coming from the dungeon's seed (§FK.2) over room_pool.json's rules. Which floor holds each: open (§FN.8 call 8).",
+    "floors": "Two or three per ruin, drawn by the dungeon's seed (§FN.3). descent.json floors.count stays 2 until queue 81 builds a third.",
+    "snake": "The desert boss (bosses.json bosses.desert, boss_pool.json pools.desert) becomes the feathered serpent (§FN.2). This block adds a look and a sound; it replaces none of the snake's behaviour (queues 49, 57, 65, 66).",
+    "surface": "The Aztec silhouette on the surface (§FN.4): a step pyramid with an altar at the top, ambient, never a fast-travel point."
+  },
+  "kind": "aztec_temple",
+  "culture": "Aztec (Mexica)",
+  "is_a": "temple",
+  "world": "desert",
+  "world_status": "open",
+  "stone": {
+    "models": ["basalt", "andesite", "tezontle (red, porous volcanic rock)"],
+    "masonry_style": null,
+    "claude_guess": "plastered and painted in life, mostly red; a ruin now keeps dark bare stone with the red left only in the recesses",
+    "note": "the real analogue is the Templo Mayor of Tenochtitlan"
+  },
+  "calendar": {
+    "system": "tonalpohualli",
+    "count_days": 260,
+    "numerals": {"min": 1, "max": 13, "written": "dots"},
+    "day_signs": [
+      {"n": 1, "nahuatl": "Cipactli", "english": "crocodile"},
+      {"n": 2, "nahuatl": "Ehecatl", "english": "wind"},
+      {"n": 3, "nahuatl": "Calli", "english": "house"},
+      {"n": 4, "nahuatl": "Cuetzpalin", "english": "lizard"},
+      {"n": 5, "nahuatl": "Coatl", "english": "snake"},
+      {"n": 6, "nahuatl": "Miquiztli", "english": "death"},
+      {"n": 7, "nahuatl": "Mazatl", "english": "deer"},
+      {"n": 8, "nahuatl": "Tochtli", "english": "rabbit"},
+      {"n": 9, "nahuatl": "Atl", "english": "water"},
+      {"n": 10, "nahuatl": "Itzcuintli", "english": "dog"},
+      {"n": 11, "nahuatl": "Ozomatli", "english": "monkey"},
+      {"n": 12, "nahuatl": "Malinalli", "english": "grass"},
+      {"n": 13, "nahuatl": "Acatl", "english": "reed"},
+      {"n": 14, "nahuatl": "Ocelotl", "english": "jaguar"},
+      {"n": 15, "nahuatl": "Cuauhtli", "english": "eagle"},
+      {"n": 16, "nahuatl": "Cozcacuauhtli", "english": "vulture"},
+      {"n": 17, "nahuatl": "Ollin", "english": "movement"},
+      {"n": 18, "nahuatl": "Tecpatl", "english": "flint"},
+      {"n": 19, "nahuatl": "Quiahuitl", "english": "rain"},
+      {"n": 20, "nahuatl": "Xochitl", "english": "flower"}
+    ],
+    "temple_style": "carved day-sign panels with dot numerals (mike: 'tonalpohualli for Aztec style temple thing')",
+    "claude_guess_structural_count": "13 as the count of tiers or stair steps; not confirmed",
+    "snake_sign": "Coatl (snake), the boss room's sign (Claude's suggestion, 9 Oct)",
+    "luck_of_numbers": "not used: a deeper source says luck belonged to particular days, not to numbers"
+  },
+  "chambers": {
+    "always_present": ["blood_altar", "calendar_room"],
+    "placement": "seeded (the dungeon's seed, §FK.2); the other rooms and ways are the pool's generic ones, shuffled per run (room_pool.json)",
+    "floor": "open",
+    "blood_altar": {
+      "mike": "a circular sacrificial blood altar, in its own chamber",
+      "model": "the round Aztec sacrificial stone (temalacatl): a low carved drum with a ring of relief round the rim",
+      "claude_guess": {
+        "stain": "dried, near-black brown, never bright red (fire is the one warm accent)",
+        "props": "a stone bowl beside it, offerings, copal braziers; no bodies",
+        "reason": "the Templo Mayor dig found thousands of offerings and few human remains (a strong, partly disputed argument); dread through atmosphere, never gore (§FG)"
+      },
+      "no_gore": true
+    },
+    "calendar_room": {
+      "mike": "the Aztec calendar has its own room; flavour for now, no puzzle",
+      "puzzle": false,
+      "holds": "the tonalpohualli carved in full: the 20 day signs and the 13 dot numerals",
+      "hidden_carvings": "some carvings are only seen under the brew (§FN.5, data/visions.json)"
+    }
+  },
+  "floors": {
+    "min": 2,
+    "max": 3,
+    "drawn_by": "the dungeon's seed",
+    "third_floor": "same stone, goes further (§FM.6); whether it is darker again: open",
+    "way_on": "light every torch on a floor and the way on opens (§FN.3); on floor one both ways at once (§FM.6, descent.json fork)",
+    "cue": "audio.json stone_seal, the grinding of the seal sinking, for every floor's seal; whether it carries to the surface: open (§FN.8 call 4)"
+  },
+  "snake": {
+    "boss": "desert",
+    "feathered": true,
+    "mike": "give the snake feathers like Quetzalcoatl, for the historical accuracy of their legends; it needs a rattle",
+    "plumes": {
+      "where": "along the neck and spine",
+      "claude_guess": "iridescent green and turquoise, with a little red toward the breast (quetzal feathers are green with a red breast)"
+    },
+    "rattle": {
+      "mike": "Quetzalcoatl is like a giant rattlesnake; currently the snake has no rattle",
+      "evidence": "the earliest feathered serpents (Olmec) are crested rattlesnakes, taken by scholars as the prototype (Wikipedia, Feathered Serpent: Nicholson, Taube); the sources opened do not show rattles on Aztec or Teotihuacan serpents specifically",
+      "tail": "a rattle at the tail tip on the body bake",
+      "sound": "a dry shiver, new, beside snake_warn and snake_hiss",
+      "when": "open",
+      "claude_guess_when": "sounds when it holds off at your flame (torch_delay), so the sharp hiss still always means the strike (§FA.2); its roaming tell stays scales on stone"
+    },
+    "fireless": "the xiuhcoatl is a different, fire serpent; this snake breathes no fire and the volcano's dragon stays the one fire-breather",
+    "lair": {
+      "mike": "the whole ruin is the snake's lair, based on the holes in the walls it creeps through",
+      "holes_run_through": "the whole temple, every floor it can reach",
+      "open": "how this sits with the single lair hole of §EY.3 and the base layer of §FM.1 (§FN.8 call 3); assumed: the wall-holes are its roads and the lair hole is where the last light drives it"
+    },
+    "unchanged": ["slither", "torch hold", "the four behaviours of §FM.2", "never beaten (§FM.1)"]
+  },
+  "surface": {
+    "mike": "all the ruins underground need a counterpart on the surface; ambient world building, not a fast-travel landmark",
+    "silhouette": "step pyramid with an altar at the top",
+    "ambient": true,
+    "fast_travel": false,
+    "overgrown_and_crumbling": true,
+    "come_up": "inside it or beside it: open",
+    "two_altars": "the summit altar above and the round blood altar below are read as two places; open (§FN.8 call 5)",
+    "other_cultures": "flagged only (mike: just flagging it for now); no other silhouette is assigned and none is to be drawn until he asks"
+  }
+}

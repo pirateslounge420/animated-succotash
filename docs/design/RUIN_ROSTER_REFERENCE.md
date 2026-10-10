@@ -39,6 +39,12 @@ map as thematic.
   money; shared with the Maya. Not in the game.
 - **Plant status:** Claude's suggestion that ololiuhqui is this ruin's brew plant; Mike took it in
   the lock-in and has not named another.
+- **Amended 10 Oct (§FN):** Mike names the mushroom, teonanácatl, as the Aztec ruin's brew plant
+  ("the Aztecs are more focused on the mushrooms"). Both are Aztec in the sacred-plants reference.
+  Whether ololiuhqui stays as a second Aztec plant is open. The ruin is a temple, not a tomb, with
+  a round blood-altar chamber, a calendar room (the tonalpohualli) and the feathered-serpent boss:
+  `data/aztec_temple.json`. Its marks are pictographic day-sign glyphs (`data/visions.json`). The
+  desert surface cannot grow either plant honestly (§FN.8 call 1).
 
 ### Maya (south of the Aztec)
 - **Stone:** pale limestone, soft when quarried and hardening in the air, which is why the carving
@@ -47,6 +53,8 @@ map as thematic.
   the gods" is disputed). Aztec feasts and Mazatec healing vigils are documented; the Maya
   evidence is indirect and debated (mushroom stones of the Guatemalan highlands). Visionary.
   Entry in `data/sacred` (9 Oct), not drawn yet.
+- **Amended 10 Oct (§FN.5):** Mike gives the mushroom to the Aztec ruin, so the Maya have no plant
+  of their own for now (open, §FN.8 call 2). Their marks are a full logosyllabic script.
 - **Overlap to know about:** the same mushroom serves the Aztec rites, so the two worlds share it.
   Claude's suggestion, not locked: the Maya water lily (*Nymphaea ampla*) as a motif. It is white,
   and its sedative effect is inferred from art only.

@@ -5315,3 +5315,194 @@ Mike, 9 Oct, on Claude's offer to write the prompt for the missing shapes: "do i
 - Not here: the ayahuasca vine's corkscrew stem (it draws as a plain liana until Mike asks).
 - `docs/PROMPT_QUEUE.md` **75–77**, one shape each, any order, any time: none needs another
   §FM prompt. Building a shape does not load `data/sacred` into the open world.
+
+## FN. The Aztec temple, a surface twin for every ruin, and what a brew shows — LOCKED (10 Oct, 12:36, by voice, Mike; bones plus what he specified)
+
+Mike, 10 Oct, after playing the build: "I did play it and I like it, but it needs to be better."
+Talked through in chat, locked with "lock it in". The Aztec ruin's identity (FN.1, FN.2) was first
+talked through the evening of 9 Oct in a chat that never reached a lock; Mike repeated and
+extended it on 10 Oct, and it is locked here. As in §FM, no number is settled: Claude Code's first
+guesses go in the data, and Mike tunes by playing. Data: `data/aztec_temple.json` and
+`data/visions.json` (new, not wired). Not built.
+
+### FN.0 What this changes in earlier locks (said out loud, not picked quietly)
+1. **§FM.2's "no feathers and no Quetzalcoatl" is superseded.** Mike on 9 Oct evening: "give the snake
+   feathers like quetzal coatl" and "i wanna keep it quetzalcoatl for the historical accuracy of
+   their legends." The rest of §FM.2 (the four behaviours, "keep what 49 and 57 built") stands.
+2. **§FM.3's open note and §FM.10 call 1 are answered, in part.** Culture ruins are ruin kinds
+   inside the biome worlds (Mike, 9 Oct: "these ruins would be considered to be inside the
+   biomes"); the tomb's mummy and sarcophagi (§FJ.2) move to a new Egyptian ruin; the Aztec ruin
+   is a temple, not a tomb. **Which biome world the Aztec ruin sits in is not settled** (FN.8 call 1).
+3. **§FM.6's "two floors for now" becomes two or three per ruin** (FN.3). `descent.json`
+   `floors.count` stays 2 until a third floor is built.
+4. **§FM.7's "what any brew does: not locked" is locked for what it shows** (FN.5): a visual filter,
+   per culture. "A different, unique experience, never a harder mode" stands, and so do "no timer,
+   no torch drain, no hallucinations" of §FM.3 (FN.5.3 says how this stays inside them).
+5. **The Aztec brew plant changes from ololiuhqui to teonanácatl** (FN.5.4). `ruin_compass.json`,
+   `RUIN_ROSTER_REFERENCE.md`, `brew.json` and queue 72 still say ololiuhqui: Claude's suggestion
+   that Mike "took" in the §FM lock-in. His words on 10 Oct replace it.
+
+### FN.1 The Aztec ruin is a temple
+- **A temple, not a tomb.** Mike (9 Oct): "no tomb", and "there should be a circular sacrificial
+  blood altar though." No sarcophagi, no burial chambers. The ruin is overgrown and crumbling like
+  every ruin (the look rules hold).
+- **Built on the tonalpohualli** (Mike, 9 Oct: "tonalpohualli for Aztec style temple thing"): the
+  260-day sacred count, 20 day signs each paired with a number 1–13 written as dots. The temple's
+  carved style is day-sign panels with dot numerals. Claude's suggestion, not confirmed: 13 as the
+  structural count (tiers, stair steps).
+- **Three named parts (Mike, 10 Oct):**
+  1. **The blood altar has its own chamber.** A round stone altar (the Aztec round sacrificial
+     stone, the temalacatl, is the model). Claude's first guesses, from research: the stain dried
+     near-black brown, never bright red (fire is the one warm accent); a bowl beside it; offerings,
+     no bodies. The Mexicolore research found thousands of offerings and few human remains at the
+     Templo Mayor (a strong, partly disputed argument): it suits an old stained altar with
+     offerings and dread through atmosphere (§FG), never gore.
+  2. **The calendar has its own room.** The tonalpohualli carved in full. **Flavour for now, no
+     puzzle** (Mike: "just flavor for now").
+  3. **The whole ruin is the snake's lair** (FN.2).
+- **PSO-style bones (Mike, 10 Oct):** "I want everything to be RNG, like proc gen", with "certain main
+  chambers that we can work with" and "how the other connecting rooms are set up" randomized every
+  run, like Phantasy Star Online. This is §FM.6 and `room_pool.json` as built, with one reading:
+  the altar chamber and the calendar room are in every Aztec temple (the pool's other big rooms are
+  drawn at random, 1–2 a dungeon); where they sit and how they are joined come from the dungeon's
+  seed (§FK.2). **Which floor holds each is not decided.**
+- **Stone:** basalt, andesite and tezontle (red, porous volcanic rock), per `RUIN_ROSTER_REFERENCE.md`.
+  One ruin, one stone (§EX.1): the temple needs its own `masonry.json` style. `andean_tomb` is
+  Inca-style fitted polygonal stone, which belongs to the Inca ruin, not here. Claude's first guess
+  from research: the temples were plastered and painted, mostly red; a ruin now keeps dark bare stone
+  with the red left only in the recesses.
+- **Not locked:** the New Fire ceremony (a rite that relit every fire from one new flame) fits
+  "fire is carried" as the runners' carrying, but the first flame was made, which brushes §CQ's
+  "carried, never made". Claude flagged it on 9 Oct; Mike has not said.
+
+### FN.2 The snake is Quetzalcoatl, and it has a rattle
+- **The feathered serpent (FN.0 call 1).** Plumes along the neck and spine. Claude's first guess,
+  from research: iridescent green and turquoise (quetzal feathers are green, with a red breast),
+  which sits in the saturated blue-green palette. The snake is a creature, not a cloaked figure:
+  the one-rig rule is untouched.
+- **A rattle (Mike, 10 Oct):** "it needs a rattle … apparently Quetzalcoatl actually is like a
+  giant rattlesnake thing. So currently we don't have a rattle." On the evidence: the earliest
+  feathered serpents, the Olmec ones, are crested rattlesnakes, and scholars (Nicholson, Taube, as
+  Wikipedia gives them) take that as the prototype. The sources opened do not show rattles on the
+  Aztec or Teotihuacan serpents specifically. Mike's call stands; the evidence is the Olmec origin.
+- **When the rattle sounds is not locked.** Claude's first guess for Claude Code: it is the warning
+  the snake gives when it holds off at your flame (beside `snake_warn`, §FA.2), so the sharp hiss
+  still always means the strike. Its roaming tell stays scales on stone. Mike tunes by ear.
+- **Fireless.** The xiuhcoatl is a different serpent, Huitzilopochtli's fire serpent. The feathered
+  snake breathes no fire; the volcano's dragon stays the one fire-breather (Claude's reading).
+- **The ruin is its lair (Mike, 10 Oct):** "the whole ruin is kind of like the snake's lair", based on
+  "all the different holes in the walls that it uses to creep around." Its tunnels and peek are
+  built (queues 49, 57); what is new is that the holes run through the whole temple. **How this
+  sits with §EY.3's one lair hole and §FM.1's base layer is not asked** (FN.8 call 3); assumed for
+  now: the wall-holes are its roads, and the lair hole is where the last light drives it.
+- Unchanged: the slither, the torch hold, the pool of four (§FM.2), never beaten (§FM.1).
+
+### FN.3 Two or three floors, and the stone that moves
+- **Each ruin has two or three floors** (Mike, 10 Oct: "either two or three chambers, like two or
+  three levels"), drawn by the dungeon's seed. A third floor "goes further" (§FM.6), in the same
+  stone. Whether it is darker again is not decided.
+- **Light a floor and the way on opens** (Mike: "whenever you get everything lit up, you can either go
+  to the surface or deeper into the ruins"). On floor one that is §FM.6's fork as built: both ways
+  at once, no penalty. For a ruin of three floors the same rule opens floor three from floor two.
+- **The cue is stone moving** (Mike: "a sound cue for the player to let them know that something
+  opened up or something changed, so to go back down and explore"; "you can see that open room that
+  wasn't open before"). The grinding seal is built (`audio.json → stone_seal`, queue 68, heard up
+  to 70 m down the passages); the new part is that every floor's seal uses it.
+- **Not decided:** whether the cue should also carry to the surface (FN.8 call 4).
+
+### FN.4 A surface twin for every ruin
+- **World logic, not a mechanic (Mike, 10 Oct):** "all the ruins on the underground need to have a
+  counterpart on the surface." It is "ambient world building", "not going to be a fast travel
+  landmark": the world reads as one buried civilisation, not separate dungeon rooms.
+- **Each culture has its own silhouette** (Mike: "Of course"). The Aztec one comes first: **a step
+  pyramid with an altar at the top.** "Whenever you get to the surface, there should be …" one; whether
+  you come up inside it or beside it is not decided. It is as overgrown and crumbling as the rest.
+- **Flagged, not sketched** (Mike: "just flagging it for now"): no other culture's silhouette is
+  assigned, and none is to be drawn until he asks. The surface exists (queue 71); the pyramid is new on it.
+- **Two altars?** The pyramid has an altar at its top, and the temple below has the round blood
+  altar (FN.1). Read as two places; Mike has not said (FN.8 call 5).
+
+### FN.5 Writing, and what a brew shows
+1. **Every culture's own marks, somewhere in its temple, and the game never says what they are.**
+   Mike: "each respective culture's unique writing systems somewhere in the temple"; "we don't need
+   to come out and say right out, oh, this is Aztec", people "infer it based off the ruins and the
+   glyphs", and the game is quietly educational. Real marks, not invented runes. **Several of these
+   cultures had no writing** (from Claude's own knowledge, not a source opened here; check before each
+   ruin is built): the Inca had knotted cords (khipu) and woven or painted geometric patterns
+   (tocapu); Great Zimbabwe, the Amazon, the Pueblos and the taiga peoples are known for rock art,
+   earthworks and carved or woven pattern, not script. Only the Aztec (pictographic) and Maya (a full
+   script) wrote. Each ruin uses what its people really left.
+2. **A brew is a visual filter, unique per culture** (Mike: "more like a visual filter"; "it's going
+   to be unique per culture"). What it does: **a palette swap, hidden carvings that surface, glowing
+   glyphs, and glyph animations "changing in trippy ways."** The hidden carvings tell a hidden story
+   of the ancient people's history. One shared idea runs through every ruin; each plant has "different
+   effects, different colour palette swaps." The brew is drunk at the shaman's hearth (§FM.7), so the
+   filter acts in the ruin, where the glyphs are.
+3. **Kept inside the earlier locks (Claude's reading of how):** (a) the carvings are really there and
+   sober eyes miss them; the filter adds no creatures, faces or other things that are not in the
+   ruin (§FM.3: no hallucinations); (b) the glow is what you see, not light: it casts none, does not
+   count toward a floor's lit test (§FF.2) and does not touch the boss or the dark (look rule: only
+   things that give off light glow); (c) it gates nothing and is no harder mode (§FM.7); (d) the
+   respectful harvest stands. **How long it lasts is open:** the build's 120 s placeholder may be
+   short for reading glyphs (FN.8 call 6).
+4. **The Aztec brew plant is teonanácatl, the sacred mushroom** (Mike, 10 Oct: "I don't think San
+   Pedro was actually used by the Aztecs … I think the Aztecs are more focused on the mushrooms").
+   He is right about San Pedro: it is Andean (Chavín, the Inca's land), already the Inca's plant in the
+   roster. Both teonanácatl and ololiuhqui are in the sacred-plants reference as Aztec; Mike names
+   the mushroom. Knock-ons: the built brew (queue 72) grows ololiuhqui as a liana; the mushroom shape
+   exists now (queue 75); the roster gave the mushroom to the Maya as "shared", so the Maya now
+   have no plant of their own; whether ololiuhqui stays as a second Aztec plant is open.
+5. **First looks, from research, not Mike's words** (`data/visions.json`; two quick searches per plant
+   plus general knowledge; Claude Code tunes by eye and Mike settles by playing):
+   - **Aztec, teonanácatl:** reports are geometric and kaleidoscopic visuals, patterns that move, strong
+     synaesthesia. Look: the glyphs multiply and animate, geometry breathes across the stone.
+   - **Inca, San Pedro:** reports are heightened colour and light sensitivity, geometric patterns,
+     synaesthesia, stretched time, open and closed-eye visuals. Look: the carved marks saturate and
+     glow; a gentler reveal than the mushroom's. (Claude's chat answer had said "halos round light
+     sources" here; that came from a bhang report, and is moved there.)
+   - **Taiga, fly agaric:** a deliriant, calm and drowsy first, then dreamlike; objects seem very
+     large or very small, with visual distortion. Look: scale and proportion warp, the stone
+     swells and shrinks; no phantom creatures.
+   - **Bhang (cannabis), no ruin:** India is not on the compass, so it is kept in the data unassigned.
+     Reports are time stretching and soft haze; the pixel or grid pattern is from one trip report.
+   - **Not yet researched:** peyote (peyote country), sacred datura (Pueblo), the ayahuasca vine
+     (Amazon), leshoma (Great Zimbabwe), the Gulf South's plant (not chosen), and coca (no effect
+     chosen, §FM.7). Fan out one agent each when Mike asks.
+
+### FN.6 Not taken
+Everything in the 9 Oct pasted doc that §FM.3 left out stays out. Not taken here either: a puzzle in
+the calendar room (Mike: flavour for now); a timer or any gameplay effect of a brew; phantom
+creatures in a vision; the pyramid as a fast-travel point or beacon; any silhouette but the Aztec
+pyramid.
+
+### FN.7 Order of work
+`docs/PROMPT_QUEUE.md` **78–84**, one idea each:
+- **78** the snake's plumes and rattle. Ready, and the one Mike asked for first.
+- **79** the Aztec temple's stone: a `masonry.json` style. Ready.
+- **80** the two fixed chambers, the blood altar and the calendar room (after 79).
+- **81** a third floor, drawn by seed (after 68, which is built). Ready.
+- **82** the Aztec brew becomes teonanácatl (after Mike answers FN.8 call 1, since the mushroom must grow
+  where it grows).
+- **83** the vision filter: palette, hidden carvings, glowing and moving glyphs (after 80 and 82).
+- **84** the Aztec pyramid on the surface (after 79).
+
+Mike plays and reports between each.
+
+### FN.8 Open for Mike
+1. **Which biome world is the Aztec ruin in?** The snake is the desert's boss and the surface was built as
+   desert (`worlds.json → surface.world`). But teonanácatl's habitat is cloud forest and wet meadow
+   (`sacred_plants.json`), and Claude Code already flagged on 10 Oct that ololiuhqui does not grow in
+   hot desert either. "Every species grows only where it really grows" means the desert surface cannot
+   grow either plant honestly. Either the Aztec ruin's world is a highland or cloud-forest-edge world
+   (and the snake goes with it, or it keeps the desert's boss), or the desert world gains a real
+   highland pocket. Not picked.
+2. **Does the Maya keep teonanácatl too, and does ololiuhqui stay a second Aztec plant?**
+3. **The whole-ruin lair against §EY.3's one lair hole and §FM.1's base layer** (`descent.json` keeps the
+   boss on floor one, call 4): it matters more with three floors.
+4. **The stone cue:** heard only in the ruin as built, or also on the surface?
+5. **Summit altar and round altar:** two places, or one?
+6. **How long a brew lasts**, with glyphs to read (the build's 120 s is a placeholder).
+7. **Is the surface exit gated by light** (§FM.10 call 2)? His words this time ("whenever you get
+   everything lit up, you can either go to the surface or deeper") sound like gating; the data is
+   still ungated, and §EX.5 says an exit always exists.
+8. **When the rattle sounds** (FN.2), and **which floor holds the altar chamber and the calendar room.**

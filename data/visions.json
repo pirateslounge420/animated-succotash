@@ -1,0 +1,130 @@
+{
+  "_help": {
+    "about": "[NOT WIRED YET — design §FN.5] What a brew shows, and the marks a culture left in its temple (Mike, 10 Oct, design §FN). Claude (chat) wrote it; nothing reads it yet, and Claude Code removes this prefix as each block is wired (queues 82 and 83). 'mike' lines are his words; 'from_research' lines are what two quick searches and general knowledge gave, not his; 'look' lines are Claude's first guesses for Claude Code to tune by eye and Mike to settle by playing. Use lines describe rites only: no doses and no preparation. It is additive and reads nothing in data/brew.json, whose placeholder tint stands until queue 83.",
+    "rule": "The filter is what you see, not light and not a game rule: see rule.kept_inside.",
+    "evidence": "Each plant's from_research names its sources and how strong the evidence is. Trip reports are anecdotes. Treat every look as a direction.",
+    "marks": "Real marks each people left, not invented runes (Mike). Several roster cultures had no writing, so 'kind' says what they did leave. All of it is Claude's general knowledge, unsourced here: check before the ruin is built (confidence 'general')."
+  },
+  "rule": {
+    "kind": "visual filter, unique per culture, one shared idea across ruins (Mike)",
+    "does": ["palette swap", "hidden carvings that surface", "glowing glyphs", "glyph animations that change in trippy ways"],
+    "tells": "the hidden carvings tell a hidden story of the ancient people's history",
+    "acts_where": "in the ruin, where the glyphs are; drunk at the shaman's hearth (§FM.7)",
+    "kept_inside": {
+      "no_hallucinations": "the carvings are really there and sober eyes miss them; the filter adds no creatures, faces or other things that are not in the ruin (§FM.3)",
+      "glow_is_not_light": "the glow casts no light, does not count toward a floor's lit test (§FF.2) and does not touch the boss or the dark (look rule: only things that give off light glow)",
+      "gates_nothing": "no gameplay number changes while it runs; no timer on anything else, no torch drain (§FM.3, §FM.7)",
+      "never_harder": "a different experience for each plant, never a harder mode (§FM.7); sacred datura 'not going to be more dangerous' (Mike)",
+      "respect": "the shaman teaches the respectful harvest (§FM.7); peyote is IUCN Vulnerable"
+    },
+    "duration": {
+      "built_placeholder_s": 120,
+      "open": "may be short for reading glyphs (§FN.8 call 6)"
+    }
+  },
+  "cultures": {
+    "aztec": {
+      "ruin": "aztec_temple",
+      "plant": "Psilocybe mexicana (teonanacatl)",
+      "plant_source": "data/sacred/sacred_plants.json, id teonanacatl (its ruin field there still says maya; the roster gave it to the Maya as 'shared')",
+      "mike": "I think the Aztecs are more focused on the mushrooms",
+      "replaces": "ololiuhqui, which brew.json and queue 72 grow as a liana; whether it stays as a second Aztec plant: open",
+      "grows_where": "cloud forest and wet meadow in the data; the desert surface cannot grow it honestly (§FN.8 call 1)",
+      "marks": {
+        "kind": "pictographic writing: day-sign glyphs, rebus signs, codex-style figures",
+        "confidence": "general"
+      },
+      "from_research": {
+        "reports": ["visual hallucinations with vivid colours", "kaleidoscopic and geometric patterns that move", "synaesthesia", "euphoria"],
+        "sources": ["Psilocybe mexicana (Wikipedia and identification pages)", "Teonanacatl (Ancient Origins and a species page)"],
+        "evidence": "snippets of several pages; general knowledge for 'breathing' surfaces"
+      },
+      "look": "the glyphs multiply and animate, geometry breathes across the stone; the largest palette swap of the set"
+    },
+    "inca": {
+      "ruin": "inca_ruin",
+      "plant": "Echinopsis pachanoi (San Pedro)",
+      "plant_source": "data/plants/trichocereus.json; in the game already",
+      "mike": "the Incan people would be San Pedro",
+      "marks": {
+        "kind": "no script: knotted cords (khipu) and woven or painted geometric patterns (tocapu)",
+        "confidence": "general"
+      },
+      "from_research": {
+        "reports": ["heightened sensitivity to light and colour", "geometric patterns, open and closed-eye visuals", "synaesthesia", "altered sense of time", "euphoria"],
+        "sources": ["San Pedro: Everything You Need To Know", "ICEERS San Pedro basic info", "Echinopsis pachanoi (Wikipedia)"],
+        "evidence": "snippets of several pages; 'warm, grounded' is general lore, not from a page opened"
+      },
+      "look": "the carved marks saturate and glow; a gentler reveal than the mushroom's, the world turned up rather than changed"
+    },
+    "taiga": {
+      "ruin": "taiga_ruin",
+      "plant": "Amanita muscaria (fly agaric)",
+      "plant_source": "data/biomes/04_taiga.json; in the game already",
+      "marks": {
+        "kind": "no script: rock art and the patterns of shamans' drums and carved bone",
+        "confidence": "general"
+      },
+      "from_research": {
+        "reports": ["calm and drowsy at first, then dreamlike", "visual distortion", "objects seeming very large or very small", "confusion", "loss of balance"],
+        "sources": ["ICEERS Amanita muscaria basic info (opened)", "PsychonautWiki Amanita muscaria"],
+        "evidence": "one page opened in full; a deliriant (muscimol), not a classic psychedelic"
+      },
+      "look": "scale and proportion warp, the stone swells and shrinks, soft and woozy; no phantom creatures"
+    },
+    "maya": {
+      "ruin": "maya_ruin",
+      "plant": null,
+      "plant_status": "open: the roster gave the Maya the mushroom as 'shared with the Aztec', and Mike has named it the Aztec's (§FN.8 call 2)",
+      "marks": {
+        "kind": "a full script: logosyllabic glyph blocks",
+        "confidence": "general"
+      }
+    },
+    "peyote_country": {
+      "ruin": "peyote_country",
+      "plant": "Lophophora williamsii (peyote)",
+      "marks": {"kind": "no script: yarn paintings and offering discs in the Wixarika tradition", "confidence": "general"},
+      "from_research": "not yet researched"
+    },
+    "pueblo": {
+      "ruin": "pueblo",
+      "plant": "Datura wrightii (sacred datura)",
+      "marks": {"kind": "no script: petroglyphs and painted rock art", "confidence": "general"},
+      "from_research": "not yet researched"
+    },
+    "amazon": {
+      "ruin": "amazon",
+      "plant": "Banisteriopsis caapi (the ayahuasca vine)",
+      "marks": {"kind": "no script: geoglyph earthworks and rock art", "confidence": "general"},
+      "from_research": "not yet researched"
+    },
+    "great_zimbabwe": {
+      "ruin": "great_zimbabwe",
+      "plant": "Boophone disticha (leshoma)",
+      "marks": {"kind": "no script: patterned dry-stone walls and carved soapstone birds", "confidence": "general"},
+      "from_research": "not yet researched"
+    },
+    "gulf_swamp": {
+      "ruin": "gulf_swamp",
+      "plant": null,
+      "plant_status": "not chosen (the roster's candidate is yaupon, a mild stimulant)",
+      "marks": {"kind": "no script: engraved shell and copper iconography of the Mississippian peoples", "confidence": "general"},
+      "from_research": "not yet researched"
+    }
+  },
+  "unassigned": {
+    "bhang": {
+      "plant": "Cannabis sativa (bhang)",
+      "ruin": null,
+      "why": "India is not on the compass (data/ruin_compass.json)",
+      "from_research": {
+        "reports": ["time stretching", "soft hazy overlay", "halos round lights", "sound felt in the body", "faint patterns and textures, once pixel- or grid-like (one trip report)"],
+        "sources": ["Erowid experience report on bhang", "a trip-report article on bhang in India"],
+        "evidence": "anecdotal and thin; the grid look rests on one report"
+      },
+      "look": "a soft grid-textured haze rather than a hard palette swap"
+    }
+  },
+  "not_researched": ["peyote", "sacred datura", "ayahuasca vine", "leshoma", "the Gulf South plant", "coca (no effect chosen, §FM.7)"]
+}

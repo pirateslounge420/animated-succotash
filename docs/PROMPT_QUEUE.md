@@ -26,7 +26,7 @@ chats and handed over there. Their design and data are `2978fb9`, `053c218` and 
 engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and §DN are not built yet
 (Claude Code, 4 Oct). §DH (the goblin band) waits for Mike's four calls.
 
-Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for 67 and 71 (its plant entries are written, §FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** 75–77 are §FM.13, three new plant shapes (mushroom, globe cactus, bulb): any time, any order. The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows.
+Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for 67 and 71 (its plant entries are written, §FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** 75–77 are §FM.13, three new plant shapes (mushroom, globe cactus, bulb): any time, any order. The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows. 78–84 are §FN (10 Oct, Mike by voice; bones plus what he specified): 78 the snake's plumes and rattle and 79 the Aztec stone any time; 80 the Aztec temple as a ruin kind with its two fixed chambers (after 79); 81 a third floor any time; 84 the surface pyramid (after 79 and 80). **82 waits for Mike's answer to §FN.8 call 1 (which biome world the Aztec ruin sits in, since the mushroom must grow where it grows) and 83 waits for 80 and 82. Do not start a `waits` row.**
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -107,6 +107,13 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
+| 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | todo |
+| 79 | §FN.1 | The Aztec temple's stone: a masonry style | todo |
+| 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | todo (after 79) |
+| 81 | §FN.3 | A third floor, drawn by seed | todo |
+| 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
+| 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | waits (80 and 82) |
+| 84 | §FN.4 | The Aztec pyramid on the surface | todo (after 79 and 80) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1378,4 +1385,109 @@ READ: §FM.9 and §FM.13 of docs/design/RECONCILIATION_2026-09-30.md; docs/desig
 BUILD: (1) Add BULB to PlantSpecies.Shape and its string "bulb". (2) PlantMeshes builds it: a bare brown bulb, about half above the ground, and from its neck a flat upright fan of strap leaves in ONE plane (two ranks), 8 to 16 of them, stiff, blunt and rippled at the edges (appearance.leaf), sometimes twisted a little; the fan's plane turns at random per instance. In its bloom season, a single round head of narrow pink trumpets (appearance.flower) on a short thick stalk sits on the bulb, with no leaves yet, as the entry says; if the bloom season can't be shown on this pass, build the leafy form only and say so in PROGRESS. The far level keeps the fan in one plane. (3) Data, as a data-driven one-liner (say so in the commit): set leshoma's shape to "bulb" in data/sacred/sacred_plants.json. SPIKE_ROSETTE is unchanged. Do not add data/sacred to SpeciesDB's load: build the test species straight from its entry the way SpeciesDB builds a catalogue entry, so the open world and the §CC trim are untouched.
 
 CHECK (headless): species_mesh_check still passes (every SPIKE_ROSETTE unchanged); a new check builds leshoma from its data/sacred entry at both levels and gets a mesh whose leaf fan is thin across (its depth under a quarter of its width, before the random turn) with a bulb at the base. species_row once: leshoma in grass, readable as a fan on a bulb from the side and as a line from edge-on.
+```
+
+## 78 — The snake becomes the feathered serpent: plumes and a rattle — §FN.2
+
+**Status:** todo
+**Mike sees:** The snake wears quetzal plumes along its neck and back, and has a rattle at the tip of its tail you can hear. It moves, hunts and strikes exactly as before.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FN.2, the snake's plumes and its rattle, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.0 call 1 (this supersedes §FM.2's "no feathers and no Quetzalcoatl": Mike's later words), §FN.2, §FM.2 and §FA.2; data/aztec_temple.json → snake (plumes, rattle, fireless); data/bosses.json bosses.desert (body, strike, torch_delay) and data/boss_pool.json (pools.desert, camouflage); data/audio.json (snake_warn, snake_hiss); scripts/crawler/boss_body.gd (BossBody and its bake), boss_sounds.gd, scripts/creatures/sound_synth.gd, shaders/figure_sprite.gdshader; LOOK_REFERENCE.md and §ES (painted: diffuse only, no normal maps, no shine).
+
+BUILD: (1) Plumes: a row of feather shapes along the snake's neck and spine on its baked head and body sprites, painted green and turquoise with a little red toward the breast (aztec_temple.json snake.plumes; Claude's first guess, Mike tunes by eye). They must read at the sprite's pixel height (px_head, px_seg); if the bake cannot hold them at that size, raise the sizes in data and say so, never blur. The camouflage (§FM.2 freeze) still works and still never goes past max_blend; the plumes take the blend too. (2) A rattle: a few rings at the tail tip on the last body sprite, and a new sound snake_rattle in SoundSynth, a dry fast shiver, played through the same boss sound path as snake_warn, with the same distance and muffling. (3) When it sounds is Mike's call and not made (§FN.8 call 8): add a data block with _help whose first guess is aztec_temple.json snake.rattle.claude_guess_when (it sounds while the snake holds off at your flame, beside snake_warn, so the sharp snake_hiss still always means the strike), and list in _help the other values Mike may switch to by editing (always while it moves; just before the strike). (4) Change no behaviour or number: speeds, reach, wind-up, the four states, never beaten. The snake breathes no fire (§FN.2).
+
+CHECK (headless): boss_snake_check, boss_check and boss_pool_check still pass with the same counts; a new check finds the plume colours in the baked sprites' pixels and the sprite heights unchanged, finds snake_rattle in SoundSynth non-silent, and shows it plays in exactly the states the data names and never when the list is empty. Walkabout once: the snake in a lit corridor, reading as a snake with plumes at its distance.
+```
+
+## 79 — The Aztec temple's stone: a masonry style — §FN.1
+
+**Status:** todo
+**Mike sees:** Nothing in the crawler yet. The game can now cut a temple in dark volcanic stone with red, pitted tezontle, so the Aztec ruin has its own look and the Inca stone stays the Inca's.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FN.1's stone, a masonry.json style for the Aztec temple, and nothing else. It does not change which stone the tomb as built uses. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.1 and §EX.1 (one ruin, one stone: floor, ceiling, doors, stairs, niches, sconces, stone dressing and rubble are cut from the walls' own stone); data/masonry.json (styles, style_by_theme, and andean_tomb as the model: rule, walls preset, floor, ceiling, doors, hearth, pillars); data/aztec_temple.json → stone; docs/design/RUIN_ROSTER_REFERENCE.md (Aztec); scripts/crawler/ruin_style.gd and fitted_stone.gd; §EU (relief in real geometry, settled with age) and §ES (painted).
+
+BUILD: (1) A new style aztec_temple in masonry.json, additive, with its own _help: squared, coursed blocks of dark volcanic stone (basalt and andesite) with reddish porous tezontle for the pitted red look; relief carving possible on its faces (the day-sign panels of prompt 80 use it); plaster and red paint surviving only in the recesses, weathered and settled with age; every stone surface cut from the same stone (no_general_palette true). Doors: a flat lintel over a square opening, not the Inca's trapezoid (Claude's first guess; adjust if it reads wrong). (2) Register it as a new style_by_theme key (aztec_temple), changing no existing entry: the tomb keeps andean_tomb, snow_ruins keeps passage_grave_snow, default is unchanged.
+
+CHECK (headless): the existing masonry and crawler checks pass with the same counts; the tomb's style is unchanged byte for byte; the new style builds a wall, a floor, a ceiling, a door, a stair and a niche all in the one stone, with no surface taking the general palette. Walkabout once: an Aztec-style test room beside a tomb room, reading as two different stones.
+```
+
+## 80 — The Aztec temple as a ruin kind: the blood altar and the calendar room — §FN.1
+
+**Status:** todo (after 79)
+**Mike sees:** A new ruin, the Aztec temple, when the game is told to draw it: a round blood-altar chamber and a calendar room are always in it, joined by shuffled ways. Until Mike says which world it sits in, the game still plays the tomb.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 79. This pass builds ONE thing: design §FN.1, the Aztec temple as a ruin kind with its two fixed chambers, and nothing else. It builds no pyramid (84), no brew change (82, 83) and no new floor count (81). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.1 (a temple, not a tomb; the tonalpohualli; the two named chambers; PSO-style bones) and §FN.8 calls 1 and 8 (open: which world; which floor holds each chamber); §FM.6 and §FJ.1 (how the first ruin is drawn from the roster); data/aztec_temple.json (chambers, calendar, floors); data/room_pool.json (big_rooms, generic, archetypes and their _help); data/masonry.json (aztec_temple, prompt 79); scripts/crawler/room_pool.gd, room_pool_build.gd, tomb_kit.gd, tomb_floors.gd, tomb_build.gd.
+
+BUILD: (1) The Aztec temple as a kind the generator can build: the tomb generator and the room pool run with the aztec_temple stone and the temple's own big rooms, drawn from the dungeon's seed (§FK.2). (2) Two archetypes in room_pool.json, each with ruin_kinds ["aztec_temple"] and its own _help, built in the temple's one stone: aztec_blood_altar, a round chamber with a low round stone altar in the middle, a stone bowl beside it, the stain dried near-black brown (never bright red; fire is the one warm accent), offerings, no bodies; and aztec_calendar_room, whose walls carry the tonalpohualli: the 20 day-sign panels of aztec_temple.json calendar.day_signs with dot numerals 1–13, in relief, flavour only, no puzzle and nothing to operate. Both are in every Aztec temple (count 2, no repeat); the pool's other big rooms stay drawn at random. Torches in them count toward the floor's lit test (§FF.2) as in any room. (3) Which floor holds each chamber is open: put both on floor one for now, in data, and say so. (4) Mike has not said which biome world the Aztec temple sits in (§FN.8 call 1): add aztec_temple.json → enabled, default false, and read it where the first ruin is drawn. With it false the game plays exactly as now; with it true the temple joins the roster. Do not choose a world.
+
+CHECK (headless): with enabled false, crawler_check, room_pool_check and the other crawler checks pass with the same counts; with it true, over 100 seeds every temple has its altar chamber and its calendar room exactly once, the plan is reachable with every holder cold, the same seed gives the same plan, and the tomb's own archetypes never appear in a temple nor the temple's in a tomb. Walkabout once in each chamber.
+```
+
+## 81 — A third floor, drawn by seed — §FN.3
+
+**Status:** todo
+**Mike sees:** Some ruins now go three floors down instead of two. Light a floor and the stone seal grinds open onto the next, as it does on floor one.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time after prompt 68 (built). This pass builds ONE thing: design §FN.3, a third floor, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.3, §FM.6 and §FM.1; data/descent.json (floors, fork, floor_two, and their _help: count is held to 2 as built); data/audio.json stone_seal; scripts/crawler/tomb_floors.gd, fork.gd, relight_gate.gd, floor_fog.gd, tome_pages.gd (last_floor), residents.gd, tomb_kit.gd.
+
+BUILD: (1) A dungeon has two or three floors, drawn by its seed (§FK.2): add floors.range [2, 3] to descent.json with a _help line, keeping count as the older key it is read beside. (2) A third floor is grown by the same generator in the ruin's one style, like floor two, with floor two's fog (density the same for now; Mike tunes, §FN.3 leaves open whether it is darker again), residents read per floor. (3) Light every torch on floor two and a stone seal sinks in its stair down to floor three, grinding as floor one's does (stone_seal, the same cue), the way up staying as built. A dungeon of two floors plays exactly as before. (4) The tomes lie on the dungeon's last floor, as last_floor already says. The boss stays where it is: §FM.10 call 4 is unanswered, so do not move it.
+
+CHECK (headless): over 200 seeds both counts occur and the same seed gives the same count; a two-floor dungeon matches the old plan; on a three-floor one floor three is reachable only after floor two is lit, every floor has an exit reachable with every holder cold, the split tome's pages lie only on floor three, and fork_check, fog_check and tome_pages_check still pass. Walkabout once on floor three.
+```
+
+## 82 — The Aztec brew plant becomes teonanácatl — §FN.5
+
+**Status:** waits (Mike's answer to §FN.8 call 1)
+**Mike sees:** On the surface above the Aztec temple you find the sacred mushroom, take some, carry it down, and the shaman brews it.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after Mike has answered §FN.8 call 1 (which biome world the Aztec temple sits in): teonanácatl grows in cloud forest and wet meadow in the data, and the game grows each species only where it really grows. If he hasn't answered, say so to Mike and stop. This pass builds ONE thing: design §FN.5.4, the Aztec brew plant, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.5.4 and §FN.8 calls 1 and 2; §FM.7 (the respectful harvest, one carried thing, a different experience per plant); data/brew.json (world, vine, teach, carry, plants); data/sacred/sacred_plants.json (teonanacatl: appearance, habitat, sacred); data/visions.json; scripts/crawler/brew.gd, sacred_vine.gd, surface_plants.gd; scripts/ecology/mushroom_mesh.gd and tools/mushroom_check.gd (queue 75).
+
+BUILD: (1) brew.json → world.plant becomes teonanacatl for the Aztec world; ololiuhqui stays in the data, not grown. (2) The mushroom grows on the surface where its habitat says, a small group in short grass, not hung from a tree: the engine draws it with the MUSHROOM shape. (3) The harvest, the shaman's teaching, the carry and the brew are as built for the vine: you take some and leave the rest standing, it regrows on the game clock, wordless. (4) The placeholder vision stays until prompt 83.
+
+CHECK (headless): brew_check passes with the new plant; the group stands after a harvest and regrows in the data's time; it stands only on ground its habitat allows; carrying and handing over work from the usual spot.
+```
+
+## 83 — The vision filter: palette, hidden carvings, glowing and moving glyphs — §FN.5
+
+**Status:** waits (80 and 82)
+**Mike sees:** Drink the brew and the temple changes: its colours shift, carvings you could not see come up in the stone, and the glyphs glow and move. It fades, and the carvings are gone from view again. Nothing about how you play changes.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompts 80 and 82. This pass builds ONE thing: design §FN.5, the vision filter for the Aztec brew, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.5 (every point, especially 5.3's bounds), §FM.7 and §FM.3 (no hallucinations, no timer, no torch drain); data/visions.json (rule, cultures.aztec); data/brew.json plants.*.vision (the placeholder tint and pulse); data/aztec_temple.json (calendar, calendar_room); scripts/ui/brew_vision.gd and post_grade.gd; scripts/crawler/brew.gd; LOOK_REFERENCE.md and §ES.
+
+BUILD: (1) A palette swap on the frame while the brew is active, replacing the placeholder tint for this plant; its direction is visions.json cultures.aztec.look (geometry breathing across the stone), colours Claude Code's first guess, Mike tunes by eye. (2) Hidden carvings: a layer of relief and marks that is in the ruin from the start and is drawn only while the brew is active, on the calendar room's panels and elsewhere in the temple, in the temple's stone; a few panels read as a short wordless picture-history of the temple's people (placeholder panels; the story's content is Claude (chat)'s to write later, and the game never names the culture). (3) Glow and motion: the glyphs glow, multiply and change while the brew lasts. (4) The bounds hold: the carvings are really there, so no creature, face or other thing is added; the glow casts no light, does not count toward a floor's lit test (§FF.2), and does not touch the boss or the dark; nothing about play changes, no timer, no torch drain. (5) It fades in and out as the placeholder does; the length stays brew.json's value (§FN.8 call 6 is open).
+
+CHECK (headless): with the brew active the hidden layer is drawn and with it off it is not; the floor's lit test, the boss's behaviour and every gameplay number are identical with and without the brew; no light node is added by the glyph glow; the fade ends clean. Walkabout once: the calendar room sober, then under the brew.
+```
+
+## 84 — The Aztec pyramid on the surface — §FN.4
+
+**Status:** todo (after 79 and 80)
+**Mike sees:** On the surface above the Aztec temple a step pyramid stands, overgrown and crumbling, with an altar at the top. It is scenery: it takes you nowhere.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompts 79 and 80. This pass builds ONE thing: design §FN.4's Aztec surface twin, a step pyramid with an altar at its top, and nothing else. No other culture's silhouette (Mike: flagged only). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FN.4 (ambient world building; not a fast-travel landmark; whether you come up inside it or beside it is open; two altars, §FN.8 call 5); §FM.7; data/worlds.json → surface (ground, edge, landmark, plants); data/aztec_temple.json → surface, stone; data/masonry.json (aztec_temple); scripts/crawler/surface.gd, surface_build.gd, surface_ground.gd, surface_plants.gd; LOOK_REFERENCE.md (the shot: a path to a landmark against the sky).
+
+BUILD: (1) A stepped pyramid in the Aztec stone: broad tiers, a stair up one face, a small altar on the flat top, weathered, crumbling, overgrown only as the surface's climate allows. (2) It stands on land (never water), in view from where you come up, as a landmark the eye is led to; the stair up from the dungeon comes out beside it for now (inside or beside is open). (3) It is scenery only: no fast travel, no beacon, no exit, no gameplay number; walking up its stair is just walking. (4) It stands only where the Aztec temple does: read aztec_temple.json → enabled (prompt 80), so with that false nothing changes.
+
+CHECK (headless): with enabled false, surface_check passes with the same counts; with it true there is exactly one pyramid, on land, visible from the arrival point, its stair walkable and its top reachable, and no gameplay number or exit differs. Walkabout once at dusk: the pyramid against the sky from the arrival point.
 ```
