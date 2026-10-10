@@ -95,7 +95,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 63 | §FK.2, §FK.3 | One world per new game: one seed, a save, Continue and New game; one clock | built c90ea52 |
 | 64 | §FL.2 | 480 lines the most | built 596646a, undone by a1e64b3 (720 the most, §FM.11) |
 | 65 | §FM.1 | The boss behaviour pool: every boss draws its moves at random | built 492ae98 |
-| 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | todo |
+| 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | built 1bc37be |
 | 67 | §FM.6 | The shaman and the cauldron at the hearth | built 3485919 |
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | built f2bd277 |
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | todo |
@@ -1202,7 +1202,7 @@ CHECK (headless, tools/crawler_check.gd or a new tools/boss_pool_check.gd): a te
 
 ## 66 — The snake's pool: freeze, doorway, observe, coil — §FM.2
 
-**Status:** todo
+**Status:** built 1bc37be
 **Mike sees:** The snake stops being predictable. Look at it from far off and it goes still and half-vanishes into the stone. It sits in doorways and watches you. It follows you a while before it circles round behind. And sometimes you turn at the sound of it and it is already coiled and striking.
 
 ```text
