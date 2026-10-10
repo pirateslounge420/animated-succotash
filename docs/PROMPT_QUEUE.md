@@ -119,6 +119,10 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | waits (86) |
 | 88 | §FO.1 | The Egyptian stone: big sandstone blocks | todo |
 | 89 | §FO.1 | The Egyptian ruin and the pharaoh in its sarcophagus | waits (87, 88, and Mike's answer to §FO.9 call 2) |
+| 90 | §FP.1 | Scarabs: ambient skitterers in the Egyptian ruin | waits (89) |
+| 91 | §FP.2 | The pharaoh's locust swarm: a ranged slow | waits (89) |
+| 92 | §FP.3 | Hieroglyphs on the walls | waits (88 and 89) |
+| 93 | §FP.4 | The Egyptian brew: blue lotus, mandrake, a vision that feels real, glyphs that read | waits (89, 92, 83, and Mike's answer to §FO.9 call 2) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1570,4 +1574,64 @@ READ: §FO.1, §FO.7 and §FO.9 calls 2 and 6; §FJ.2 and §FN.0 call 2 (the mum
 BUILD: (1) The Egyptian ruin as a kind the generator can build, in the egyptian_pyramid stone, one floor, drawn by the dungeon's seed (§FK.2). Add egyptian_pyramid.json → enabled, default false, read where the first ruin is drawn; with it false the game plays exactly as now. Do not choose a world: use the one Mike named. (2) Sarcophagi with ordinary mummies (residents.json mummy, the waker: its lid grinds aside) laid by the generator as the skeletons are. (3) The pharaoh: move its entry from bosses.json unplaced to bosses.<world> once Mike names the world, keep its lair block, and add its boss_pool.json entry with 'rounds' only (boss_pool_check counts one pool per boss in bosses). Its body is its own, as the snake's is (§FO.1). Its lair is its own sarcophagus: put it in the pharaoh's chamber at the base of the floor; the lid grinds aside while it prowls and grinds shut when the last light drives it in, through §EY.2's release as built for the snake; a ring of collision keeps you at its edge (enterable false). Its numbers are Claude Code's first guesses, slow and unhurried to start, in data with _help, and Mike tunes. No strike block yet beyond what boss.gd needs, with a tell distinct from the mummy resident's. Phase two (prompt 87) applies to it with no per-boss code.
 
 CHECK (headless): with enabled false everything passes with the same counts; with it true, over 100 seeds every Egyptian ruin has its pharaoh's chamber with one sarcophagus, mummies in sarcophagi, one floor, a plan reachable with every holder cold and the same plan for the same seed; the lid is open while the pharaoh prowls and shut once it is home; boss_check, boss_pool_check, residents_check and the prompt 85 to 87 checks pass. Walkabout once: the chamber, the lid.
+```
+
+## 90 — Scarabs: ambient skitterers in the Egyptian ruin — §FP.1
+
+**Status:** waits (89)
+**Mike sees:** Small scarabs skitter across the Egyptian ruin's floors and walls and scatter from your steps and your light. They never touch you and do nothing.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 89. This pass builds ONE thing: design §FP.1, the ambient scarabs, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FP.1 and §FP.7; data/egypt_ruin.json (scarabs and its _help); data/worlds.json → life (ambient, population_sim false); scripts/crawler/wall_life.gd, surface_life.gd, resident.gd, resident_sprite.gd, tomb_build.gd.
+
+BUILD: (1) Ambient scarabs in the Egyptian ruin (the kind prompt 89 builds), a handful to a room, placed from the dungeon's seed, skittering along the floor and up the walls in short runs. (2) They scatter from your footsteps (egypt_ruin.json scarabs.skitter.from_steps_m) and from your light, and never touch you: no collision with you, no strike, no slow, no hit of any kind. (3) They count in nothing: not the floor's lit test (§FF.2), not the boss, not the residents. (4) A small dark beetle that reads from above at a glance, painted per §ES (diffuse only, no shine); Claude Code's first guess, Mike settles by eye. Read the numbers from the data file with their defaults.
+
+CHECK (headless): in every Egyptian ruin over 50 seeds each room has scarabs within the data's count; walking the whole floor produces no hit, no slow and no change to harm.json's counters; the lit test is identical with and without them; they scatter inside from_steps_m. Walkabout once: walk a room and watch them scatter.
+```
+
+## 91 — The pharaoh's locust swarm: a ranged slow — §FP.2
+
+**Status:** waits (89)
+**Mike sees:** From a distance the pharaoh sends a small swarm of locusts that lunges at you. You hear it coming from far off. If it catches you it only slows you for a moment, which is how the pharaoh gets close. It never counts as a hit.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 89. This pass builds ONE thing: design §FP.2, the locust swarm as one state in the pharaoh's pool, and nothing else. No other plague. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FP.2, §FP.9 calls 1 and 2; §FM.1 (the pool's never_breaks) and §EY; data/egypt_ruin.json (pharaoh_plagues and its _help); data/bosses.json → unplaced.pharaoh (or bosses.<world> once prompt 89 moves it); data/boss_pool.json (rule, the desert's entries as the model); scripts/crawler/boss.gd, boss_pool.gd, boss_state.gd, boss_states/coil_ambush.gd (the model for a state), creature_strike.gd, crawler_player.gd (where your speed is set), boss_sounds.gd, scripts/creatures/sound_synth.gd.
+
+BUILD: (1) A pool state locust_swarm (scripts/crawler/boss_states/locust_swarm.gd, id matching) in the pharaoh's boss_pool.json entry beside 'rounds' (weight 2, dwell 8 to 18 s: first guesses, in data with _help). It needs you within trigger_m of the pharaoh and not within its melee reach, and never in a lit room or stretch. (2) The tell, always played before a launch: a drone heard from heard_m away that builds as the swarm nears (a SoundSynth voice, built from the data). (3) The swarm: a small cloud of locust sprites that lunges at you at lunge_mps through the dark, and stays out of lit rooms like the rest of the boss. If it reaches you it slows you to slow_mult of your speed for slow_s through the player's speed multiplier, then your speed is restored exactly; cooldown_s between swarms. It is a status, not a hit: harm.json is untouched, no red ring, no heartbeat, and three swarms never end in Good night. (4) in_phase_two is false: with prompt 87's blackout the state is left out of the draw (BossState.can_enter) until Mike answers §FP.9 call 1. torch_stops_it stays null until call 2: do not invent a torch rule, and say so. (5) The pharaoh's melee and its 'rounds' do not change.
+
+CHECK (headless): over 200 draws the state comes up, never twice running; the tell plays before every launch; a swarm that reaches you applies slow_mult for slow_s and then your speed is exactly as before; the harm counters never move from a swarm; it never launches into a lit room; in phase two it is not drawn; boss_pool_check, boss_check and crawler_harm_check pass (update boss_pool_check to name the new state). Walkabout once: hear it from far, get caught, be slowed, get away.
+```
+
+## 92 — Hieroglyphs on the walls — §FP.3
+
+**Status:** waits (88 and 89)
+**Mike sees:** Rows of real hieroglyphs carved in relief dress the Egyptian ruin's walls. You can see them but not read them yet.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompts 88 and 89. This pass builds ONE thing: design §FP.3, hieroglyphs as wall marks, and nothing else. No text to read yet (93). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FP.3, §FN.5.1 (real marks, never named on screen), §EU (relief in real geometry) and §EX.1 (one ruin, one stone); data/egypt_ruin.json (hieroglyphs and its _help); data/masonry.json (egyptian_pyramid from prompt 88; aztec_temple and prompt 80's day-sign panels as the model for relief panels); scripts/crawler/fitted_stone.gd, ruin_style.gd, tomb_build.gd, room_pool_build.gd.
+
+BUILD: (1) Hieroglyph panels in relief, cut from the ruin's one stone, on the Egyptian ruin's walls and pillar faces: bands and columns of signs in registers, placed from the dungeon's seed. (2) Real signs only, never invented (§FN.5.1): take a small set of genuine, common Egyptian signs (for example the ankh, was sceptre, djed pillar, wedjat eye, scarab, reed leaf, water ripple, owl, vulture) and list them in a new block in data/egypt_ruin.json → hieroglyphs.signs with their Unicode names, drawn as relief by the engine. No sign is arranged to spell a passage yet. (3) Give each panel a stable id from the seed so prompt 93 can attach a line of text to it; set reads false on every panel for now. (4) A panel never sits on the way out or in a doorway, and never blocks a route (§EX.5). The game never says what the marks are.
+
+CHECK (headless): every Egyptian ruin over 50 seeds has panels, every panel is in the ruin's one stone and its signs are all from the data's list; ids are unique and the same seed gives the same ids; no panel blocks a route or the way out; crawler_check and the masonry checks pass with the same counts. Walkabout once: a corridor of hieroglyphs lit by your torch.
+```
+
+## 93 — The Egyptian brew: blue lotus, mandrake, a vision that feels real, and glyphs that read — §FP.4
+
+**Status:** waits (89, 92, and Mike's answer to §FO.9 call 2)
+**Mike sees:** On the surface you find the blue lotus or the mandrake, carry it down, and the shaman brews it. Drink it and the ruin shows you things that feel completely real, perhaps the boss glimpsed in the dark, though nothing is there; and the hieroglyphs on the walls turn into lines you can read. It fades and the marks go quiet again.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompts 89 and 92, prompt 83 (the vision filter) and Mike's answer to §FO.9 call 2 (which biome world holds the Egyptian ruin). If he hasn't answered, say so to Mike and stop. The plants grow only where they really grow (§FP.5): if the world he names grows neither, say so and stop. This pass builds ONE thing: design §FP.4, the Egyptian brew, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FP.0 call 1, §FP.3 to §FP.6 and §FP.9 calls 3, 5 and 7; §FM.7, §FN.5 (every point); data/visions.json (rule, cultures.egypt, and its amends and kept_inside_for_egypt); data/brew.json; data/sacred/sacred_plants.json (blue_lotus, mandrake: appearance, habitat, flags); data/egypt_ruin.json (hieroglyphs); scripts/crawler/brew.gd, sacred_vine.gd, surface_plants.gd; scripts/ui/brew_vision.gd and post_grade.gd (prompt 83); the panels of prompt 92.
+
+BUILD: (1) brew.json gets the Egyptian world's two plants, blue_lotus and mandrake, grown on the surface where their habitat allows and drawn in the nearest shape the engine has (neither draws right yet: no water-lily shape, no trunkless rosette; say so). The harvest, the shaman's teaching, the carry and the brew are as built for the other cultures, wordless, respectful, leave the rest standing. (2) The vision runs through prompt 83's filter, for Egypt only: the palette and hidden-carving behaviour as that prompt built it, plus display-only figures that look completely real: mummies and the pharaoh glimpsed in doorways and dark corners, standing where the real boss never is. They have no collision, no strike, no sound that counts, change no gameplay number or the floor's lit test, and fade with the brew; every other culture's brew keeps its 'no creatures' rule. Blue lotus and mandrake give the same vision for now; Mike has not said whether the lotus is gentler (§FP.9 call 3), so keep that in data. (3) The glyphs read: under the brew each hieroglyph panel of prompt 92 shows one line of text, and sober it is marks again. Mike has not picked the passages (§FP.9 call 5): use a plain placeholder line from a data list and say so; real passages only, with a public-domain translation (§DL). (4) How long it lasts is the built placeholder (§FN.8 call 6); do not change it.
+
+CHECK (headless): with the brew active the figures and the readable lines are drawn and with it off they are not; collision, harm counters, the lit test, every boss behaviour and every gameplay number are identical with and without the brew; no figure ever stands where the real boss stands; no light node is added; another culture's brew still draws no figures; the fade ends clean. Walkabout once: sober, the marks; under the brew, the lines and a figure in a doorway.
 ```

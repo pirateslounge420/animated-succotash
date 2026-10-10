@@ -4,7 +4,7 @@
   "map": "reference_only: the map shows where you have been and which way things lie, and takes you nowhere. fast_travel false: for now this supersedes worlds.json → map.fast_travel (§EW) and the map return of §FK.3 (§FM.8).",
   "walk": "fixed: the same neighbours every playthrough. Each ruin's inside still comes from the game's seed (§FK.2) and the first ruin is still drawn at random (§FJ.1). Open (§FM.10 call 3): whether walking a direction replaces or sits beside worlds.json → links (the underground passage).",
   "ruins": "id: culture, stone (what the ruin is built of), plant (its species and rite, one line, no doses or preparation), plant_status (in_game or not_in_game as of 9 Oct), exits (cardinal direction to the neighbouring ruin id). status: built (the tomb only), reference, or invented (no real ruin; ours). null exits are unplaced. plant_status entry_in_data_sacred_not_drawn: the species entry is in data/sacred/sacred_plants.json (9 Oct, §FM.9) but nothing loads or draws it yet.",
-  "egypt": "§FO.1 (10 Oct): Egypt is a ruin kind, not a world, and is UNPLACED: Mike has not put it on the compass (null exits, like the taiga), and its biome world is open (§FO.9 call 2). Stone: big sandstone blocks (Mike); true_pyramid in ruins.json is the nearest style, not wired. plant_status none_chosen: the sacred-plants reference holds the blue lotus, frankincense and myrrh, and Mike has picked none (§FO.7). Reference only, like every ruin but the tomb."
+  "egypt": "§FO.1, §FP (10 Oct): Egypt is a ruin kind, not a world, and is UNPLACED: Mike has not put it on the compass (null exits, like the taiga), and its biome world is open (§FO.9 call 2). Stone: big sandstone blocks (Mike); true_pyramid in ruins.json is the nearest style, not wired. Plants: blue lotus and mandrake (Mike, 10 Oct, §FP.4), entries in data/sacred/sacred_plants.json, not loaded or drawn. Reference only, like every ruin but the tomb."
  },
  "map": {
   "reference_only": true,
@@ -115,8 +115,8 @@
    "status": "reference",
    "culture": "Egyptian (pharaonic: pyramids, temples and tombs)",
    "stone": "big sandstone blocks (Mike); nearest style data/ruins.json true_pyramid",
-   "plant": null,
-   "plant_status": "none_chosen",
+   "plant": "Nymphaea caerulea (blue lotus) and Mandragora officinarum (mandrake): the Egyptian brew (§FP.4); both thin on evidence, neither native to a hot-desert ruin (§FP.5)",
+   "plant_status": "entry_in_data_sacred_not_drawn",
    "exits": null
   }
  }

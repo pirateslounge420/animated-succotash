@@ -110,6 +110,18 @@ map as thematic.
   for *vomitoria* before relying on it.
 - **Boss:** the witch (§EY, §FE) is the swamp's, already specified.
 
+### Egypt (unplaced; §FO.1, §FP)
+- **Stone:** big sandstone blocks (`masonry.json → egyptian_pyramid`, queue 88). One floor, like every ruin (§FO).
+- **Plants:** blue lotus (*Nymphaea caerulea*) and mandrake (*Mandragora officinarum*), locked by Mike
+  10 Oct (§FP.4); both in `data/sacred/sacred_plants.json`. Neither draws yet (no water-lily shape,
+  no trunkless rosette). **Honest habitat (§FP.5):** mandrake is not native to Egypt (it came in with
+  the New Kingdom, likely from Canaan) and blue lotus needs standing fresh water, so the biome world
+  that holds the ruin (§FO.9 call 2) also decides where these two grow.
+- **Boss:** a mummy pharaoh whose own sarcophagus is its lair (`bosses.json → unplaced.pharaoh`);
+  plague states join its pool, the locust swarm first (§FP.2). Ordinary mummies are residents.
+- **Life and marks:** ambient scarabs (§FP.1); real hieroglyphs on the walls, readable only under the brew (§FP.3).
+- **Position:** Mike has not placed it on the compass (`ruin_compass.json → ruins.egypt`, unplaced).
+
 ### Taiga "barbarian" ruin (unplaced)
 - **Stone:** none. Dark weathered timber and log-and-earth pit dwellings, bone and antler detail;
   permafrost and forest make stone rare this far north.
@@ -119,10 +131,10 @@ map as thematic.
 - **Position:** Mike has not placed it on the compass.
 
 ## What each ruin needs before it can be built
-1. Its place on the compass (only the taiga lacks one).
+1. Its place on the compass (the taiga and Egypt lack one).
 2. A `masonry.json` style for its stone (§EX.1).
-3. Its plant drawn by the engine. All seven entries are written (9 Oct) in
+3. Its plant drawn by the engine. All nine entries are written (seven on 9 Oct, blue lotus and mandrake on 10 Oct) in
    `data/sacred/sacred_plants.json`, with their habitat, look, rite and sources; it is not loaded
    yet. Four need an engine shape first (the mushroom, peyote's globe, leshoma's bulb, the
-   ayahuasca vine's twist); see the file's `flags`.
+   ayahuasca vine's twist, and Egypt's water-lily and rosette); see the file's `flags`.
 4. Mike's answer to §FM.10 call 1: how a culture ruin sits with the eight biome worlds.

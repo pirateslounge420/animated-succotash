@@ -7,7 +7,8 @@
   "about": "§FM.7, §FM.9 (9 Oct). One entry per ruin plant on the compass (data/ruin_compass.json; docs/design/RUIN_ROSTER_REFERENCE.md). Researched by seven parallel agents, one per plant, in PLANT_SCHEMA vocabulary, each passing tools/plant_schema_check.py --strict. San Pedro (data/plants/trichocereus.json) and fly agaric (data/biomes/04_taiga.json) are already in the data and are not repeated here.",
   "sacred": "The additive block on each entry. effect_class: visionary, deliriant, stimulant or sedative. rite: one sentence on who used it and for what; rites only, never doses, amounts or preparation (§FM.9). peoples, ruin (an id in ruin_compass.json), conservation (IUCN status), confidence, refs.",
   "flags": "Per plant: what the engine can't draw yet (a mushroom, a low globe cactus, a bulb, a twisted vine stem), biome-key gaps, and doubts in the sources. Read before wiring.",
-  "id": "Each entry's id matches its ruin_compass.json plant."
+  "id": "Each entry's id matches its ruin_compass.json plant.",
+  "egypt": "§FP (10 Oct): blue lotus (Nymphaea caerulea) and mandrake (Mandragora officinarum), the Egyptian ruin's two brew plants (Mike, 10 Oct). Written by two parallel agents, one per plant, each passing tools/plant_schema_check.py --strict. Both are 'ground' rosettes as the nearest shape the engine has: neither draws right (a water-lily shape and a trunkless ground rosette are missing; see flags). Evidence is thin for both: blue lotus's sedative effect is only inferred, and mandrake is documented in Egyptian objects and art, not in any ritual text. Mandrake is not native to Egypt (imported in the New Kingdom), and no hot-desert biome key honestly grows either plant: which world holds the Egyptian ruin is open (§FO.9 call 2, §FP.9)."
  },
  "notes": "Engine gaps: no mushroom shape (teonanacatl as rosette, like Amanita), no low globe cactus (peyote as cactus), no bulb (leshoma as spike_rosette), no twisted liana stem (ayahuasca vine). Seeds of ololiuhqui, all of datura and leshoma's bulb are poisonous.",
  "plants": {
@@ -1333,6 +1334,503 @@
      "source": "Wikipedia Peyote (flowers pink or white to yellowish, 1-2.4 cm, open by day, March-May and sometimes to September; fruit club-shaped, fleshy, pink, 1.5-2 cm, drying brownish-white, not bursting, described as edible); Llifle (solitary bell flowers 1.5-2.5 cm from the woolly centre; fruit red to pinkish to 2 cm). Pollinators, fruit set, ripening, hang and crop estimated."
     },
     "id": "peyote"
+   },
+   {
+    "name": "Nymphaea caerulea",
+    "display": "Egyptian blue lotus",
+    "genus": "Nymphaea",
+    "species": "caerulea",
+    "origin": "Nile valley and tropical Africa",
+    "family": "Nymphaeaceae",
+    "synonym": "Nymphaea nouchali var. caerulea (Savigny) Verdc. (Kew POWO's accepted name); Nymphaea capensis in some treatments",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1650
+    ],
+    "biomes": [
+     "FRESHWATER",
+     "OASIS"
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.6,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#3F8A50",
+    "accent": "#7F8FE0",
+    "silhouette": "flat round pads on still water, blue star flowers above",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      3,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The seedling sends up small submerged leaves first, then floating blades on lengthening stalks; the rhizome thickens and the plant spreads to about a metre across, older leaves being pushed to the edge as the stalks lengthen.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nymphaea caerulea (leaves polymorphic, differing underwater and floating; one plant spreads about 1 m; petioles lengthen with age, pushing older leaves outward); Kew POWO (rhizomatous hydrogeophyte). Germination days, years to size and flower, and lifespan are estimates; no source opened gives them. https://en.wikipedia.org/wiki/Nymphaea_caerulea ; https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:955147-1"
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 4,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "A rhizomatous water plant (Kew POWO calls it a hydrogeophyte). Each flower rises over 2-3 days, opens in mid-morning, shuts near dusk and lasts about four days (Wikipedia); the closing is what made it a sun symbol in Egypt. Insect pollination, water dispersal and the bloom season are estimated from the genus, not read in the sources opened."
+    },
+    "genes": {
+     "size": [
+      0.4,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.3
+     ],
+     "scent": [
+      0.4,
+      0.8
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "ceremonial": "reported",
+    "sacred": {
+     "effect_class": "sedative",
+     "rite": "Ancient Egyptians made the blue water lily the flower of the sun's daily rebirth (the god Nefertem, 'Water-Lily of the Sun', rises from it) and laid its petals with the dead, as in Tutankhamun's burial, while its use as a mild sedative or intoxicant in festivals such as Hathor's Festival of Drunkenness is only inferred from tomb art, a few texts and modern pharmacology, and is not proven.",
+     "peoples": [
+      "Ancient Egyptians (pharaonic)"
+     ],
+     "ruin": "egypt",
+     "conservation": "not evaluated (IUCN); least concern in South Africa (SANBI, per Wikipedia); Wikipedia also calls it rare in Egypt since the Aswan Dam, unverified and in conflict with the SANBI rating",
+     "confidence": "reported",
+     "refs": "Wikipedia Nymphaea caerulea (https://en.wikipedia.org/wiki/Nymphaea_caerulea): synonymy and range, flower and leaf, sun symbolism, petals in Tutankhamun's burial chamber, and the cautions that the active constituents are unknown, that the alkaloids proposed in the 1970s-80s were not confirmed by later phytochemical work, and that ancient-use claims rest on 'it has been suggested'; Kew POWO (https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:955147-1): accepted as N. nouchali var. caerulea, native range Egypt to southern Africa, rhizomatous hydrogeophyte; UC Berkeley Arts & Humanities, 'Investigating the psychedelic blue lotus of Egypt' (https://artshumanities.berkeley.edu/node/865): petals on Tutankhamun's body, McEvoy's reading of the Hathoric Festival of Drunkenness as reported not verified, the 'scholars have long hypothesized' wine idea as a working hypothesis only, a small comparison of nuciferine in verified versus shop-bought flowers, and the criticism of the 1998 BBC trial and of 'pseudoscience' in the marketing; Wikipedia Nefertem (https://en.wikipedia.org/wiki/Nefertem): the lotus at creation, the blue water lily and the sun, 'Water-Lily of the Sun'. The Egyptian psychoactive claim is thin evidence and should be read as a probable, not a certain, rite."
+    },
+    "source": "Nymphaea caerulea (Nymphaea nouchali var. caerulea), Egyptian blue lotus: a rhizomatous floating-leaved water plant of rivers, lakes and pools, native along the Nile and through central, East and southern Africa and the south Arabian peninsula (Yemen, Oman) and the Comoros, recorded from about 10 to 1,650 m in South Africa; it tolerates anoxic mud and nutrient-poor water and can dominate deeper water. Kew POWO lists the native range as Egypt to southern Africa, the southern Arabian peninsula and the Comoros, including Palestine. Flowers 8-12 cm, 14-20 petals, pale bluish-white to sky-blue or mauve with a pale yellow centre, opening mid-morning and shutting near dusk; leaves 8-35 cm, round with an incised notch, margin entire near the tip or wavy. Ceremonial use: sun and creation symbol, linked to Nefertem, petals in Tutankhamun's burial; the psychoactive use is inferred, not shown. Sources: https://en.wikipedia.org/wiki/Nymphaea_caerulea ; https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:955147-1 ; https://artshumanities.berkeley.edu/node/865 ; https://en.wikipedia.org/wiki/Nefertem . Temperature band, height, density and soil are estimated.",
+    "appearance": {
+     "flower": {
+      "colour": "#7F8FE0",
+      "secondary": "#F2D64B",
+      "form": "star-shaped water lily 8-12 cm across, 14-20 narrow pointed violet-blue petals (sky-blue to mauve, fading paler toward the base) around a heap of yellow stamens, four green sepals under it, held on its own stalk just above the water; opens mid-morning, shuts near dusk, lasts about four days",
+      "scent": "sweet",
+      "emission": "none",
+      "notes": "Plain petals, no glow. The yellow centre is the one warm spot and the blue is a touch lighter than the water; a bud rises over two or three days, so some flowers stand shut and some open. Opening by morning light and closing at dusk is the whole sun symbolism."
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3F8A50",
+      "underside": "#5E9A5A",
+      "gloss": 0.2,
+      "veins": "palmate",
+      "vein_colour": "#2E6E3E",
+      "margin": "wavy",
+      "size_cm": [
+       8,
+       35
+      ],
+      "notes": "flat round to slightly oval pads floating on the surface, each with a narrow wedge-shaped notch to the stalk and a faintly pointed tip; smooth above, raised green veins beneath (rarely purplish); edge entire near the tip or wavy"
+     },
+     "stem": {
+      "colour": "#2F4A34",
+      "secondary": "#4E6A48",
+      "notes": "thick, spongy, blackish-green leaf and flower stalks run down into the mud; nothing stands above the water but the flowers"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.0
+     },
+     "fruit": {
+      "colour": "#7A7048",
+      "form": "rounded spongy fruit that ripens under water; not drawn (estimated from the genus)"
+     },
+     "seasonal": "flowers through the warm months; the sources opened give May to October for India only",
+     "silhouette": "flat round pads on still water, blue star flowers above",
+     "confidence": "documented",
+     "refs": "Wikipedia Nymphaea caerulea (https://en.wikipedia.org/wiki/Nymphaea_caerulea): flower size, petal count and colour, leaf size and shape, sepals, opening and closing; Kew POWO (https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:955147-1). Fruit form estimated."
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.0,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      8,
+      35
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "afrotropic",
+    "bark": {
+     "pattern": "none"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 10,
+     "flower_colour": "#7f8fe0",
+     "flower_form": "star",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "beetle",
+      "fly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      3
+     ],
+     "unripe_colour": "#5c8a4a",
+     "ripe_colour": "#7a7048",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      0,
+      5
+     ],
+     "drop": "splits",
+     "rot_days": [
+      5,
+      20
+     ],
+     "crop_per_tree": [
+      2,
+      20
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia Nymphaea caerulea (flowers 8-12 cm with 14-20 petals, open about four days, opening mid-morning; blooming May to October recorded for India only). Months for Egypt, pollinators, fruit kind, size and timings, and crop are estimated from the genus; no source opened covers them. edible 'no' is about the fruit only and says nothing about the rhizome or seeds. https://en.wikipedia.org/wiki/Nymphaea_caerulea"
+    },
+    "id": "blue_lotus"
+   },
+   {
+    "name": "Mandragora officinarum",
+    "display": "Mandrake (devil's apple)",
+    "genus": "Mandragora",
+    "species": "officinarum",
+    "origin": "Mediterranean region",
+    "family": "Solanaceae",
+    "synonym": "Mandragora vernalis Bertol. (the spring-flowering mandrake)",
+    "shape": "rosette",
+    "temp_c": [
+     11,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB"
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.1,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sandstone",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#3F6B3A",
+    "accent": "#E8A92E",
+    "silhouette": "flat dark-green wrinkled leaf rosette, purple bells at centre",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A few small oval leaves lie flat on the ground from a thread of root that thickens into a carrot-like taproot, often forking in two (up to about 1.2 m long in an old plant). Each year of the cool wet season the rosette is bigger, its leaves broader and more blistered, and in the hot dry summer it dies back to the root and sleeps until the autumn rains. Only a large rosette sets flowers, from the centre.",
+     "confidence": "estimated",
+     "source": "Root form, summer die-back and the cool-season growing season from PFAF (https://temperate.theferns.info/plant/Mandragora+officinarum: deep, often branched taproot up to 1.2 m, often divides in two; dies back to its roots in hot dry summers and grows in mild moist winters) and Cretan Flora (flowers Nov/Jan to early April). Germination time, years to size, age at first flowering and lifespan are estimated; no source opened gives them."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "gravity",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 60,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "Flowers in the cool wet season (November to April; the bloom.season 'spring' is the nearest value to that), then the round fruit ripens into early summer and the leaves die back to the taproot for the hot dry months. No clonal spread; the root forks but the plant stays a single crown. Pollinators and dispersers are estimated, not documented."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.6
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "deliriant (tropane alkaloids: hyoscyamine, atropine, scopolamine); every part is poisonous, the root most of all: never eaten, never browsed"
+    },
+    "ceremonial": "estimated",
+    "sacred": {
+     "effect_class": "deliriant",
+     "rite": "New Kingdom Egyptians, from the 18th Dynasty, held and exchanged the imported mandrake fruit at banquets and wore, carried and buried it as a charm of love, fertility and renewal, though no surviving text sets out a ritual for it.",
+     "peoples": [
+      "Egyptian (New Kingdom, from the 18th Dynasty)"
+     ],
+     "ruin": "egypt",
+     "conservation": "Endangered on the IUCN Europe regional assessment (Bilz & Soljan 2011, as quoted by Wikipedia); no global assessment found",
+     "confidence": "estimated",
+     "refs": "https://www.metmuseum.org/art/collection/search/557739 ; https://egypt.swan.ac.uk/?p=842 ; https://egypt-museum.com/mandrake-and-lotus-broad-collar/ ; https://egypt-museum.com/the-secret-language-of-flowers-in-egyptian-tombs/ ; https://www.ucm.es/data/cont/docs/621-2017-06-23-El%20fruto%20del%20deseo.pdf ; https://www.researchgate.net/publication/228634623_Herbal_medicine_in_ancient_Egypt ; https://en.wikipedia.org/wiki/Ebers_Papyrus ; https://en.wikipedia.org/wiki/Mandragora_officinarum ; https://en.wikipedia.org/wiki/Mandrake_(plant) ; https://en.wikipedia.org/wiki/Mandragora_(genus) ; https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816733-1 ; https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816721-1 ; https://www.cretanflora.com/mandragora_officinarum_text.html"
+    },
+    "source": "Mandragora officinarum L., Solanaceae, a stemless perennial from a thick, often forked taproot. RANGE: Kew POWO accepts the species narrowly, native N Italy to the NW Balkan Peninsula (the page's list also names Lebanon-Syria, and the page contradicts itself on this) (https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816733-1), and gives the wider Mediterranean range from Morocco, Algeria and Tunisia through Iberia, Italy, Greece and Turkey to Lebanon-Syria and Palestine to the autumn-flowering M. autumnalis (https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816721-1); Wikipedia keeps the broad sense, native around the Mediterranean in N Africa, S Iberia, Italy, the former Yugoslavia, Greece, Cyprus, S Turkey and the Levant (https://en.wikipedia.org/wiki/Mandragora_officinarum; https://en.wikipedia.org/wiki/Mandrake_(plant)). Egypt is in neither list. HABITAT: open, often disturbed ground: light woodland, olive groves, fallow land, waysides, railway embankments and ruins, sea level to 1,200 m (Wikipedia; PFAF https://temperate.theferns.info/plant/Mandragora+officinarum); rocky flats and slopes with dry open shrubby vegetation, open grassy places, fallow terraces, waste ground and archaeological sites, 0-700 m and occasionally to 1,200 m on Crete (Cretan Flora https://www.cretanflora.com/mandragora_officinarum_text.html). PFAF: prefers deep, humus-rich, light, circumneutral soil, roots rot in wet or poorly draining ground, dies back to the root in hot dry summers and grows in mild moist winters, hardy to about -15 C for short spells if well drained. FORM: leaves in a basal rosette, usually spreading flat on the ground, ovate-elliptic, 12-20 cm (Cretan Flora; RHS https://www.rhs.org.uk/plants/10849/mandragora-officinarum/details gives dark green leaves to 30 cm; Wikipedia up to 45 cm and variable), entire or irregularly sinuate-lobed, bullate (blistered), nearly hairless, indistinct stalk; bell flowers 2-4 cm from the centre of the rosette, greenish-white to blue-violet, on slender stalks shorter than the leaves, November/January to April (Cretan Flora; Wikipedia says September to April; RHS: greenish-white with purple staining); round to ellipsoid berry 5-40 mm, ripening glossy yellow to orange from November to June; a long thick root. TOXICITY: all parts poisonous, tropane alkaloids including hyoscyamine, atropine and scopolamine (Wikipedia; Kew Adopt-a-seed https://adoptaseed.kew.org/seed/mandrake.html). EGYPT: not native; the plant reached Egypt in the New Kingdom, probably from Canaan and the Levant, and had to be planted and irrigated (https://www.ucm.es/data/cont/docs/621-2017-06-23-El%20fruto%20del%20deseo.pdf; https://www.researchgate.net/publication/228634623_Herbal_medicine_in_ancient_Egypt; https://egypt-museum.com/mandrake-and-lotus-broad-collar/). Taxonomy caveat: whether the Egyptian plant and the western Mediterranean plant are M. officinarum or M. autumnalis is unsettled (https://en.wikipedia.org/wiki/Mandragora_(genus)).",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0,
+      "notes": "stemless: no trunk above ground. Below ground a thick, pale carrot-like taproot, often forked in two, up to about 1.2 m long, which is where the plant's lore comes from; the rosette sits flat on bare soil."
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3F6B3A",
+      "underside": "#6E9060",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#2E5430",
+      "margin": "wavy",
+      "size_cm": [
+       12,
+       30
+      ],
+      "notes": "large ovate-elliptic leaves, dark green and blistered (bullate: the surface puckers between the veins), edge entire to shallowly wavy-lobed, nearly hairless, the stalk short and hardly separate from the blade; upright when young, then spread flat on the ground in a wheel. Dark-green colour from RHS, blistering from Cretan Flora."
+     },
+     "flower": {
+      "colour": "#9A82B8",
+      "secondary": "#DDE8CC",
+      "form": "broad upright bells 2-4 cm with five short triangular lobes, greenish-white shading to violet or purple, on slender stalks shorter than the leaves so they nestle in the centre of the rosette; a tuft of long narrow green sepals under each",
+      "scent": "faint"
+     },
+     "fruit": {
+      "colour": "#E8A92E",
+      "form": "round to egg-shaped berry 2.5-4 cm in the middle of the leaf wheel, green then glossy yellow to orange like a small tomato or apple, with a strong apple-like scent; poisonous"
+     },
+     "seasonal": "leaves come with the autumn rains and lie flat through the mild wet winter; bells in the centre from about November to April; round yellow-orange fruit through spring and early summer; the whole rosette withers to the root in the hot dry summer",
+     "silhouette": "flat dark-green wrinkled leaf rosette, purple bells at centre",
+     "confidence": "documented",
+     "refs": "Cretan Flora https://www.cretanflora.com/mandragora_officinarum_text.html (leaves flat on the ground, ovate-elliptic, bullate, subglabrous, 12-20 cm; flowers violet or purple 30-40 mm; berry yellow or orange); RHS https://www.rhs.org.uk/plants/10849/mandragora-officinarum/details (dark green rosette leaves to 30 cm, greenish-white flowers with purple staining, yellow fruit, stemless); Wikipedia https://en.wikipedia.org/wiki/Mandragora_officinarum; PFAF https://temperate.theferns.info/plant/Mandragora+officinarum. Flower stalk length, calyx and fruit scent are from Cretan Flora and PFAF."
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      12,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.72,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "mediterranean",
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#6E8C54",
+     "color_2": "#8A6A46",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "stemless: there is no stem to draw. green_stem stands for the short leaf stalks at the crown (color) and the pale-brown taproot top where it meets the soil (color_2)."
+    },
+    "fruiting": {
+     "flower_months": [
+      11,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 14,
+     "flower_size_cm": 3,
+     "flower_colour": "#9a82b8",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      3,
+      12
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2.5,
+      4
+     ],
+     "unripe_colour": "#7fa050",
+     "ripe_colour": "#e8a92e",
+     "ripen_days": [
+      90,
+      180
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      3,
+      30
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Cretan Flora https://www.cretanflora.com/mandragora_officinarum_text.html (bells 30-40 mm from the rosette centre on 2-8 cm stalks, November/January to April; berry 25-30 mm yellow or orange); Wikipedia https://en.wikipedia.org/wiki/Mandragora_officinarum (flowers September to April, berry 5-40 mm ripening November to June, glossy yellow to orange); PFAF https://temperate.theferns.info/plant/Mandragora+officinarum (strong apple-like scent; fruit possibly poisonous). Pollinators, flowers per plant, fruit set, ripening, hang and rot times and crop are estimated. A bud-to-fruit span of months is why ripen_days is long."
+    },
+    "id": "mandrake"
    }
   ],
   "shrub": [
@@ -1980,6 +2478,41 @@
    "Added a 'toxic' block, carried over from the archived Datura entries though it is not in the Trichocereus template, so that 'deadly poisonous' is machine-readable. I dropped the archive's 'alkaloid' gene to stay inside the brief's hard limit.",
    "repro.pollinator is 'insect' because 'moth' is not used in repro anywhere in the data. fruiting.pollinators carries 'moth'.",
    "The checker only applies the catalogue biome gate to files in a 'plants' folder. A copy placed under a 'plants' folder also passes --strict with 0 errors."
+  ],
+  "blue_lotus": [
+   "Engine gap: there is no water-lily shape. Entered as shape 'rosette' in the 'ground' category with needs ['standing_water'], canopy 'mat', exactly how the archived Nymphaea alba, Victoria and Nelumbo entries were carried (docs/plant_archive/biomes/37_freshwater.json). A rosette builder will not draw flat pads lying on a water surface, nor flowers standing just above it; the whole plant needs to sit on a water tile.",
+   "The flower is the point and the schema cannot carry it as a thing of its own: it is described only in appearance.flower and fruiting (star form, stalk position, #7F8FE0 with a #F2D64B centre). Nothing draws a flower standing alone above water, or the open-by-morning, shut-at-dusk cycle, unless the engine reads fruiting.flower_days and a time of day. Torchfire 1 has one clock and no year (FK.3), so the cycle may be worth wiring even though the season is not.",
+   "Leaf outline: Wikipedia calls the blade peltate with an incised-cordate notch (basal lobes overlapping or slightly apart). The schema's 'peltate' card is a stalk in the middle (lily pad), but the notch is the silhouette that reads, so outline 'cordate' / base 'cordate' with aspect 1.0 is used. The archived Nymphaea alba did the same. Texture 'matte' is a choice: the source says smooth, glabrous or pubescent, chartaceous, and gives no gloss.",
+   "Bark: pattern 'none' (submerged spongy stalks, nothing above water but the flowers); the stalks are described in appearance.stem only. Architecture block omitted (woody species only).",
+   "Biomes: no key fits a warm tropical African lake or river pool. FRESHWATER (kind water, climate 0-33 C) is the nearest, but its notes say it is drawn on temperate Eurasia and North America and that the water lilies of the Nile are in none of the catalogue now, with each land's warm ponds due their own community under design §CS. OASIS is included for 'pools in the desert' (the brief's habitat list); no source I opened mentions oases, so that key is the brief's, not verified, and its moisture band (0-0.3) is the land's, which the standing_water need overrides.",
+   "Biome keys considered and left out: FRESHWATER_MARSH and SWAMP (their climate bands are temperate or warm-temperate and drawn on North America and Europe, which would put a tropical species in the wrong cold), SAVANNA (where most of its East and southern African lakes lie, but a land biome whose moisture band does not suit open water; add it if standing_water gates the plant to pools), LAGOON (salt water, not this plant). Egypt itself is open as to biome world (§FO.9), so the Nile may be a river through HOT_DESERT; if so, FRESHWATER inside the desert world is the right place and this entry needs no other key.",
+   "Taxonomy is contested. Kew POWO accepts Nymphaea nouchali var. caerulea (Savigny) Verdc. 1989; Wikipedia lists the species name N. caerulea Savigny 1798 and says a 2012 study placed it nearer N. gracilis (Mexico) and a 2021 study nearer N. colorata, and that if N. caerulea has priority African populations might need renaming. The entry uses the name players and sellers know (genus Nymphaea, species caerulea) and puts POWO's name in `synonym`. Also sold as 'blue lotus' it is a water lily, not a Nelumbo lotus.",
+   "The Egyptian psychoactive claim is thin. Evidence is mostly inference from tomb and temple art, the sun symbolism, and modern pharmacology. Wikipedia: 'the key active constituents and mechanisms of action of the plant are unknown'; the aporphine alkaloids proposed by Emboden in the 1970s-80s were not found by later phytochemical work; ancient-use claims are worded 'it has been suggested' and 'purported'. Berkeley: 'we hypothesize', 'perhaps', and the 1998 BBC trial (two volunteers, Sherratt et al.) 'an ethically shady study protocol'. The claim that it was 'steeped in wine' is speculation: Wikipedia gives no separate primary source for it and Berkeley calls it what 'scholars have long hypothesized'. Neither the wine idea nor any preparation is in the entry.",
+   "effect_class 'sedative' is the closest of the four allowed values (visionary, deliriant, stimulant, sedative) to what is reported (relaxation, mild sedation, mood lift) and is itself weak. ceremonial is 'reported' and sacred.confidence is 'reported', not 'documented', which is what the other seven entries use. Per the trichocereus note, the ceremony system gives 'documented' a full ceremony, 'reported' a weaker one, so a full ceremony here would overstate the evidence; the symbolic role (sun, creation, burial petals) is the strong part and the intoxicant part is the weak one.",
+   "A 2024 report of traces of the plant in a Bes vase (2nd century BCE, from Wikipedia) was not opened at its source and is not used. Bertol et al. 2004 (J R Soc Med 97:84-85, 'Nymphaea cult in ancient Egypt and the New World') could not be opened: PMC returned a bot-check and Europe PMC blocked the fetch, only the title was read from the Florence repository. It is not cited in sacred.refs for that reason. Emboden 1981 (J Ethnopharmacol, PubMed 7007741) also could not be opened. The Hathor-festival reading comes from a news feature about McEvoy's work (Berkeley), not a peer-reviewed paper I read.",
+   "Conservation: IUCN has not evaluated it. Wikipedia's Egyptian section says it is rare or threatened after the Aswan Dam but SANBI lists it least concern in South Africa; these conflict and the Egypt claim is unsourced there. Recorded as 'not evaluated' with both statements.",
+   "Range and altitude: Kew POWO lists Egypt, Palestine, Ethiopia, Sudan-South Sudan, Somalia, Yemen, Oman and most of eastern and southern Africa through to the Cape Provinces, Comoros. Wikipedia says it is not native to Lesotho or the Western Cape and may be extinct in Israel. Altitude 0-1,650 m is the Nile at sea level to the 1921 South African record of 1,650 m; the Nile range is nowhere near that high. Introduced in India, Australia, Fiji, South America (not modelled).",
+   "Estimated, not read in any source: temp_c [18, 32] (warm shallow water), height_m [0.05, 0.25] (Wikipedia gives no height), density, soil classes alluvium and clay_peat (Wikipedia says it tolerates anoxic mud and nutrient-poor conditions), the whole growth block, repro pollinator/disperser/bloom season, genes, the whole fruiting block (including flower_months [5, 10], which Wikipedia gives for India only), and appearance.fruit. The fruit is a spongy berry that ripens underwater in the genus and no engine path draws it.",
+   "fruiting.edible is 'no' because the fruit is not eaten here; it says nothing about the rhizomes and seeds, which are eaten in parts of its range (not covered by any source I opened).",
+   "data/sacred is still not loaded by the engine (the catalogue's own status line); this entry joins plants.ground and has not been added to data/ruin_compass.json, where egypt.plant is still null with plant_status 'none_chosen'. Setting that is Mike's call (§FO.9), not mine."
+  ],
+  "mandrake": [
+   "EGYPT CANNOT GROW IT. Mandrake is not native to Egypt, so a hot-desert Egyptian ruin cannot honestly grow it (HOT_DESERT: temp 18-35 C, moisture 0-0.2, against the plant's cool-wet-winter, summer-dormant Mediterranean band). Sources agree it was introduced to Egypt in the New Kingdom, probably from Canaan and the Levant, and had to be planted in elite gardens with good irrigation (UCM article; Aboelsoud 2010: 'introduced from Canaan and grown locally since the New Kingdom'; egypt-museum.com: 'not native to the Nile Valley itself', seldom thriving in the marshy Nile). So the game needs either a different home world for this plant (MEDITERRANEAN_SCRUB, where the entry lives) or a carried-in plant: found in an irrigated ruin garden, or given by a traveller, never wild in the desert. ruin_compass.json has Egypt unplaced with its biome world open (section FO.9 call 2), so the world pick is Mike's.",
+   "NATIVE RANGE IS CONTESTED. Kew POWO accepts M. officinarum narrowly: native N Italy to the NW Balkan Peninsula (the page's own country list names only Italy, Lebanon-Syria and NW Balkans, and contradicts its summary on Lebanon-Syria). POWO gives the wide Mediterranean range (Morocco to Iran, Iberia, Greece, Turkey, Levant) to the autumn-flowering M. autumnalis. Wikipedia and PFAF use the broad sense (the whole Mediterranean). The entry follows the broad sense, as a field guide and the game's 'mediterranean' realm do. Egypt is in neither POWO list in either sense.",
+   "WHICH SPECIES IS EGYPT'S? Whether the Egyptian plant (and the mandrake of the Bible and Greek authors) was M. officinarum or M. autumnalis is unsettled: Wikipedia's genus page notes the officinarum/autumnalis split by flowering season (spring vs autumn) and by distribution, and Levant plants are put in autumnalis by Tu et al. 2010. The ruin link is therefore to the genus as much as to this species.",
+   "EGYPTIAN EVIDENCE IS ART AND OBJECTS, NOT RITUAL TEXT. Opened sources show the fruit in New Kingdom (mainly 18th Dynasty) banquet and garden scenes (Met: tomb of Nebseny TT 108, c. 1396-1386 BCE, a guest offers another a yellow mandrake fruit; egypt-museum.com: tomb of Nakht TT52), as amulets (Amarna, Swansea Egypt Centre, Gyory 1998: every fifth vegetable amulet in Amarna's North Suburb), faience beads (Amenhotep III), the Mandrake and Lotus Broad Collar (Amarna), plaster at Amarna, and in tomb contexts (UCM article: pectorals of Nefertiti and Tutankhamun, baskets in Tutankhamun's tomb, a jar from the tomb of Maya). Its stated meaning is love, desire, fertility and renewal. No source opened gives a written ritual for it, so sacred.confidence and ceremonial are 'estimated'.",
+   "THE BRIEF'S EBERS CLAIM IS NOT CONFIRMED. I could not verify that the Ebers Papyrus lists mandrake. Wikipedia's Ebers Papyrus page does not mention mandrake in its list of plants; Aboelsoud 2010 mentions mandrake only as an imported plant (aphrodisiac; with alcohol, induced unconsciousness) and does not tie it to the Ebers; the UCM article cites the Leiden papyrus (not the Ebers) for a mandrake-and-wine sleep preparation and the Ebers for lotus. Only egypt-museum.com ('The Secret Language of Flowers', uncited popular site) says an Ebers remedy mixes lotus, honey and mandrake; treat that as unverified. I did not open the papyrus or a translation (Manniche, Bardinet, Nunn). Medical use is left out of the rite sentence on purpose.",
+   "THE BRIEF'S 'HELD TO THE NOSE BESIDE LOTUS AND POPPIES' IS ONLY PARTLY SUPPORTED. Sources confirm banquet guests hold and offer the mandrake fruit alongside lotus blossoms they sniff; none says the mandrake itself is held to the nose, and none mentions poppies with it (egypt-museum.com says outright that its article does not mention poppies). Not claimed in the entry.",
+   "EUROPEAN FOLKLORE (kept out of the rite; Egypt is the ruin): the root often looks like a human figure and was made into amulets for luck and to cure sterility; it was said to scream when pulled from the ground and kill whoever heard it, so people tied roots to animals and had the animal pull them up; pulling it was said to condemn the puller to hell; Dioscorides named 'male' and 'female' mandrakes; the root was used as an anaesthetic in surgery in ancient times (Wikipedia Mandrake (plant), citing Grieve 1931; Roman use cited to Eger et al. 2013, Stolberg 2016). Medieval and later, not Egyptian.",
+   "ENGINE CANNOT DRAW IT RIGHT. The ROSETTE shape (scripts/ecology/plant_meshes.gd) builds a short 0.75 m trunk with ten fronds raised on top, which reads as a small palm or cycad, not a flat wheel of broad wrinkled leaves lying on the ground. No shape fits: SPIKE_ROSETTE is a blob plus a spike, CUSHION is a mound. A flat basal rosette shape (leaves on the soil, no trunk) is needed; the entry says 'rosette' with canopy.form 'rosette' and a bark of green_stem (as the bee orchid does) in the meantime. Also not drawable: the blistered (bullate) leaf surface and the wavy lobed edge beyond what 'undulate' gives, the forked taproot under the soil (never seen above ground), and the root's human shape.",
+   "DORMANCY NOT MODELLED. The plant dies back to the root in the hot dry summer and wakes with the autumn rains. repro.dormant is 'dry', but tint.drop is left out because the schema's drop means leaves fall in the winter transition. photoperiod is 'neutral' because no source gives a day-length trigger.",
+   "BIOME KEYS. Only MEDITERRANEAN_SCRUB (realm 'mediterranean'). No key fits olive groves, fallow terraces, field edges, railway banks or ruins; MEDITERRANEAN_SCRUB is the nearest. Considered and rejected: TEMPERATE_DECIDUOUS (the light woodland and the N Italy/W Balkans end of the range are temperate, but it is a different realm and the plant is no forest-floor species there), STEPPE and SAGEBRUSH (no), HOT_DESERT and OASIS (not native; irrigated Egyptian gardens are a carried-in case, not a biome). Nothing in the file's associations names mandrake; to grow it, a MEDITERRANEAN_SCRUB association (realm 'mediterranean') would need it in a ground or catalogue list, and the Mediterranean biome has no 'open disturbed ground' community yet.",
+   "CLIMATE AND SOIL BANDS ARE ESTIMATED. temp_c [11, 19] and moisture [0.3, 0.55] are the MEDITERRANEAN_SCRUB band narrowed; no source gives mean temperature or rainfall (PFAF only: hardy to about -15 C for short spells, grows in mild moist winters). Soil: PFAF says deep, humus-rich, light, circumneutral, dislikes chalk or gravel and rots in wet ground; RHS says chalk, loam or sand, well drained; Crete is rocky flats and terraces. The chosen classes alluvium, sandstone and basalt, drainage 'moderate' and ph 'neutral' are my reading of that, not a source's list, and sit uneasily with RHS (chalk, loam or sand) and Cretan Flora (rocky flats and slopes, terraces, waste ground). 'karst' was left out because of PFAF's chalk dislike; the designer could add it.",
+   "ALTITUDE AND SEASON DISAGREE ACROSS SOURCES. Altitude: Wikipedia and PFAF sea level to 1,200 m; Cretan Flora 0-700 m, occasionally 1,200 m. Flowering: Wikipedia September to April; Cretan Flora (November-)January to early April; PFAF 'early spring'; RHS 'spring'; the genus page calls the spring-flowering plant officinarum. The entry uses [11, 4] and bloom.season 'spring' (no 'winter' or 'autumn' value exists in repro.bloom.season).",
+   "LEAF DATA PARTLY ESTIMATED. Cretan Flora gives 12-20 cm, ovate-elliptic, bullate, subglabrous; RHS up to 30 cm, dark green; Wikipedia up to 45 cm and 'mostly elliptical or broader toward the tip'. The entry takes outline 'ovate' (the brief), size [12, 30], aspect 2.2, apex 'obtuse', base 'attenuate' (indistinct stalk) as estimates (leaf.confidence 'estimated'). 'Wrinkled' has no schema value (the texture list has no rugose or bullate), so texture is 'matte' for a nearly hairless blade, and the blistering is only in appearance.leaf.notes. The underside colour #6E9060 is a guess.",
+   "CONSERVATION IS REGIONAL. 'Endangered (IUCN 3.1) (Europe assessment)' is quoted from Wikipedia's Mandragora officinarum page (Bilz & Soljan 2011), not read from the Red List; it is a European regional assessment, not a global one, and it may refer to the narrow European M. officinarum. Not verified.",
+   "TOXICITY. Wikipedia and Kew say the root and leaves (Kew: all parts) are poisonous. Whether the ripe fruit is poisonous is unclear (PFAF: possibly poisonous, so caution; the Egyptians and the Bible treat it as a fragrant fruit), so fruiting.edible is 'toxic' and cannot_be_browsed is true, as for datura. toxic.potency 0.9 is a judgment next to datura's 0.95, not a measured value.",
+   "ESTIMATED BLOCKS: growth timings, repro pollinator and disperser, flowers per plant, fruit set, ripening, hang, rot and crop, bark colours, tint numbers, canopy gap and droop, genes ranges, and density 0.1. No architecture block (herb)."
   ]
  },
  "sources": {
@@ -2056,6 +2589,30 @@
    "https://www.nationalgeographic.com/science/2020/11/400-years-ago-visitors-painted-cave-took-hallucinogens/",
    "https://www.cambridge.org/core/product/BC403850B55D372801DE729BB23EAD7D/core-reader",
    "https://repository.si.edu/handle/10088/91736"
+  ],
+  "blue_lotus": [
+   "https://en.wikipedia.org/wiki/Nymphaea_caerulea",
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:955147-1",
+   "https://artshumanities.berkeley.edu/node/865",
+   "https://en.wikipedia.org/wiki/Nefertem"
+  ],
+  "mandrake": [
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816733-1",
+   "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:816721-1",
+   "https://en.wikipedia.org/wiki/Mandragora_officinarum",
+   "https://en.wikipedia.org/wiki/Mandrake_(plant",
+   "https://temperate.theferns.info/plant/Mandragora+officinarum",
+   "https://www.cretanflora.com/mandragora_officinarum_text.html",
+   "https://www.rhs.org.uk/plants/10849/mandragora-officinarum/details",
+   "https://adoptaseed.kew.org/seed/mandrake.html",
+   "https://www.ucm.es/data/cont/docs/621-2017-06-23-El%20fruto%20del%20deseo.pdf",
+   "https://www.researchgate.net/publication/228634623_Herbal_medicine_in_ancient_Egypt",
+   "https://egypt-museum.com/mandrake-and-lotus-broad-collar/",
+   "https://en.wikipedia.org/wiki/Mandragora_(genus",
+   "https://www.metmuseum.org/art/collection/search/557739",
+   "https://egypt.swan.ac.uk/?p=842",
+   "https://egypt-museum.com/the-secret-language-of-flowers-in-egyptian-tombs/",
+   "https://en.wikipedia.org/wiki/Ebers_Papyrus"
   ]
  }
 }

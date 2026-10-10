@@ -1,0 +1,52 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FP] The Egyptian ruin's own life and the pharaoh's plagues (Mike, 10 Oct, by voice). Nothing reads this file yet. Every number is Claude (chat)'s first guess; Mike tunes by playing. Queue 90 to 93 build it. The ruin itself and the pharaoh are §FO.1 (queue 88, 89); the brew's look is data/visions.json → cultures.egypt; the plants are data/sacred/sacred_plants.json (blue_lotus, mandrake).",
+  "scarabs": "§FP.1. Ambient skitterers, no threat: no hit, no slow, no combat role (Mike: 'ambient. Skitter critters'). Live in the Egyptian ruin as ambient life (worlds.json → life: population_sim false). skitter: they scatter from your steps and your light. may_move_to: data/creatures when built.",
+  "hieroglyphs": "§FP.3. Real hieroglyphs dress the walls of the Egyptian ruin, never named on screen (§FN.5.1). sober: marks only, unreadable. under_brew: they read as lines of text, as the tomes do (§DL: real texts, public-domain translations only), and only where a real passage can be honestly given. Which passages: open (§FP.9 call 5).",
+  "pharaoh_plagues": "§FP.2. Plague states for the pharaoh's pool (bosses.json → unplaced.pharaoh; boss_pool.json gets its entry when it is keyed to a world, queue 89). Only locust_swarm is chosen. locust_swarm: a ranged attack. When the pharaoh is within trigger_m of you (and not within melee reach) it sends a small swarm that lunges at you; you hear it coming from heard_m away (the tell, always played, §FM.1 never_breaks). A swarm never counts as a hit, so never as the third (Mike: 'It's always just a slow'): caught, you are slowed to slow_mult of your speed for slow_s, which is how the pharaoh closes the gap. cooldown_s between swarms. stays_out_of_lit: the swarm keeps out of lit rooms and stretches like the rest of the boss (§EY; Claude's reading). in_phase_two: false until Mike answers §FP.9 call 1. torch_stops_it: null until §FP.9 call 2."
+ },
+ "scarabs": {
+  "role": "ambient",
+  "where": "egyptian_ruin",
+  "hostile": false,
+  "hit": false,
+  "slow": false,
+  "skitter": {
+   "from_steps_m": 4.0,
+   "from_light": true,
+   "surfaces": [
+    "floor",
+    "wall"
+   ]
+  },
+  "may_move_to": "data/creatures"
+ },
+ "hieroglyphs": {
+  "kind": "egyptian_hieroglyphs",
+  "on": "walls",
+  "named_on_screen": false,
+  "sober": "marks_only",
+  "under_brew": "read_as_text",
+  "reads_only_where": "a_real_passage_can_be_honestly_given",
+  "text_source": null
+ },
+ "pharaoh_plagues": {
+  "locust_swarm": {
+   "kind": "ranged_slow",
+   "trigger_m": [
+    6.0,
+    14.0
+   ],
+   "heard_m": 40.0,
+   "lunge_mps": 6.0,
+   "hit": false,
+   "slow_mult": 0.6,
+   "slow_s": 3.0,
+   "cooldown_s": 12.0,
+   "stays_out_of_lit": true,
+   "torch_stops_it": null,
+   "in_phase_two": false
+  },
+  "other_plagues": null
+ }
+}

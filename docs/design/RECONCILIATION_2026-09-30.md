@@ -5645,3 +5645,118 @@ Mike plays and reports between each.
 6. **Egypt's surface twin (§FN.4),** and the one-rig question in FO.1.
 7. **Does the blackout save?** If you quit mid-run and Continue, is it still dark?
 8. **Phase two's numbers** (speed ×1.2, the pause before the boss emerges): by playing.
+
+## FP. Egypt's scarabs, hieroglyphs, the pharaoh's plagues, and a brew that shows things that are not there — LOCKED (10 Oct, by voice, Mike; "we'll go ahead and lock in Blue Lotus and Mandrake for the Egyptians", "we'll lock that in as the vibe of the Egyptian situation")
+
+Mike, 10 Oct, adding to §FO.1's Egyptian ruin. Talked through, locked in his own words. As in §FM,
+§FN and §FO, no number is settled: Claude's first guesses go in `data/egypt_ruin.json` (new, not
+wired) and `data/visions.json → cultures.egypt`, and Mike tunes by playing. Not built.
+
+### FP.0 What this changes in earlier locks (said out loud, not picked quietly)
+1. **A brew may show things that are not there, for Egypt.** This cuts against three earlier lines:
+   §FM.3 (hallucinations "not taken"), §FN.5.3(a) ("adds no creatures, faces or other things that are
+   not in the ruin") and §FN.6 ("phantom creatures in a vision" not taken). Those were left out
+   because Mike had not said it, and were Claude's reading of how a brew stays inside §FM.3. His word
+   now is the Egyptian vibe: "vivid, undoubtable hallucinations that feel completely real and
+   present." **Amended for Egypt only** (FP.4); every other culture's brew keeps §FN.5.3(a).
+2. **§FO.7's "Egypt's brew plant and vision: not chosen" is answered:** blue lotus and mandrake.
+3. **§FO.1's "the pharaoh's behaviours are not talked through" is begun:** its pool takes plague
+   states (FP.2); the locust swarm is the first.
+4. **§FN.5.1's "only the Aztec and Maya wrote" did not cover Egypt,** which had a full script.
+   Egypt's marks are real hieroglyphs (FP.3).
+5. **Unchanged:** §FD's three hits (a swarm's slow is not a hit), §FM.1 (never beaten), §FM.7 (a
+   brew is never a harder mode), §FO's one floor and phase two.
+
+### FP.1 Scarabs: ambient skitterers
+- **Ambient decoration, not a threat** (Mike: "they'll just be like ambient. Skitter critters"). No
+  hit, no slow, no combat role. They live in the Egyptian ruin, going about their lives
+  (§EW.1: ambient life, `population_sim` false).
+- Claude's first guess: small, they skitter along the floor and up the walls and scatter from your
+  steps and your light. Never touch you.
+
+### FP.2 The pharaoh's plagues
+- **The pharaoh's pool takes plague states** (Mike: "instead of just following you he'll have
+  different plagues … inspiration from the Bible and how God sent the different plagues on Egypt").
+  Only the locust swarm is chosen. The rest are open (FP.9 call 6).
+- **The locust swarm is a ranged attack** (Mike). When the pharaoh gets within a certain distance of
+  you, instead of coming straight on it sends out a small swarm that lunges at you. You hear it
+  from far off (Mike: "hearing that coming from far away could be really creepy"), the sound
+  building as the snake's dragging scales do, bigger.
+- **It only ever slows you** (Mike: "It's always just a slow"). A swarm never counts as a hit and so
+  never as the third. The slow is how it closes the gap: caught, you are slowed for a short time and
+  it can reach you; out of its range it is only a tempo hit.
+- **Held from §FM.1:** the tell and the wind-up always play, and by a lit fire you are out of its
+  reach (§EY). Claude's reading: the swarm stays out of lit rooms like the rest of it.
+- First guesses in `egypt_ruin.json`: a slow to 0.6 of your speed for 3 s, a 12 s gap between
+  swarms. Mike tunes.
+
+### FP.3 Hieroglyphs on the walls
+- **Real hieroglyphs dress the walls** of the Egyptian ruin (Mike: "hieroglyphs on the walls"),
+  in the culture's own real marks (§FN.5.1), never named on screen.
+- **Sober, you see marks and cannot read them; under the brew they read** (Mike: "it should be
+  readable … unless you can actually interpret it. But that'll be for whatever the local psychedelic
+  was"). Reading: drink the brew and the glyphs turn into lines of text, in the way of the tomes
+  (§DL: real texts, public-domain translations only). Claude's reading of "unless you can actually
+  interpret it": a glyph reads only where a real passage can be honestly given; the rest stays marks.
+  Which passages: open (FP.9 call 5).
+
+### FP.4 The Egyptian brew
+- **Two plants: blue lotus and mandrake** (Mike). Both have entries in
+  `data/sacred/sacred_plants.json` (ids `blue_lotus`, `mandrake`; two parallel agents, 10 Oct, each
+  passing `plant_schema_check.py --strict`). Neither draws right yet: no water-lily shape and no
+  trunkless ground rosette, so both stand in as the nearest shape.
+- **The vision** (`visions.json → cultures.egypt`): vivid hallucinations that feel completely real and
+  present, not obviously illusory; a glimpse of something lurking, possibly the boss, that you cannot
+  be sure is there (Mike agreed Claude's phrasing). This is the tropane-deliriant look of folklore and
+  witch-trial confessions: Claude's own summary, thin, no source opened here.
+- **Kept inside §FM.7, Claude's reading** (so this stays "a different experience, never a harder
+  mode"): the figures are display only: no collision, no strike, no sound that counts, never the real
+  boss's place, nothing that changes a gameplay number or the floor's lit test; they fade with the
+  brew; they gate nothing. **Open:** whether blue lotus gives the same vision, gentler, or its own
+  (FP.9 call 3).
+- No doses, no preparation, anywhere in the data (§FM.9).
+
+### FP.5 The plants do not grow where the ruin is, as it stands
+Both agents flagged it, so it is said here. **Mandrake is not native to Egypt:** the sources agree
+it came in with the New Kingdom, probably from Canaan, and had to be planted and watered; the game
+grows each species only where it really grows. **Blue lotus** needs standing fresh water, which a
+hot-desert surface does not have. The nearest biome keys are `FRESHWATER` and `OASIS` for the lotus
+and `MEDITERRANEAN_SCRUB` for mandrake. So the biome world that holds the Egyptian ruin (§FO.9
+call 2) now also decides where these two come from: a Nile-and-oasis world, or a carried-in plant
+from an irrigated garden at the ruin. Not picked.
+
+### FP.6 Corrections to what was said aloud
+Said in the voice session and not borne out by what the agents opened: mandrake is **not confirmed
+in the Ebers Papyrus** (no opened source ties them), and "held to the nose beside blue lotus and
+poppies" is only half supported (guests hold or offer the fruit beside lotus they sniff; no source
+mentions poppies). The evidence for both plants is art and objects, not any ritual text:
+`confidence` is `estimated` for mandrake and `reported` for blue lotus, and blue lotus's sedative
+effect is only inferred. Mushrooms for Egypt were left out as a fringe claim (not locked either way).
+
+### FP.7 Not taken
+Scarabs as a threat; any plague but the locusts; a swarm that counts as a hit; a torch rule for the
+swarm; a phantom that does anything; a place for the Egyptian ruin on the compass; the engine's two
+missing shapes (no prompt written until Mike asks).
+
+### FP.8 Order of work
+`docs/PROMPT_QUEUE.md` **90–93**, one idea each:
+- **90** scarabs, the ambient skitterers (after 89).
+- **91** the pharaoh's locust swarm (after 89).
+- **92** hieroglyphs on the walls, as marks (after 88 and 89).
+- **93** the Egyptian brew: blue lotus and mandrake, the real-seeming vision, and the glyphs that
+  read (waits for 89, 92 and Mike's answer to §FO.9 call 2).
+
+Mike plays and reports between each.
+
+### FP.9 Open for Mike
+1. **Does the plague pool, the slow included, run in phase two (§FO.5)?** A slow on top of a faster
+   boss with no torch could make the run to the exit unwinnable. Left off in the data until he says.
+2. **Does a torch swing, or a lit patch of floor, stop or scatter the swarm?**
+3. **Do blue lotus and mandrake give the same Egyptian vision,** or is the lotus's gentler?
+4. **Which biome world holds the Egyptian ruin** (§FO.9 call 2): FP.5 makes it also the question of
+   where the two plants grow.
+5. **Which passages do the glyphs read:** real texts with a public-domain translation, such as the
+   Pyramid Texts or the Book of the Dead? His pick.
+6. **Which other plagues join the pharaoh's pool?** (Frogs, darkness, boils and the rest are
+   suggestions only.)
+7. **Which figures does the vision show?** The boss and its mummies are the obvious ones.

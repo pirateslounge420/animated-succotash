@@ -111,6 +111,37 @@
       "plant_status": "not chosen (the roster's candidate is yaupon, a mild stimulant)",
       "marks": {"kind": "no script: engraved shell and copper iconography of the Mississippian peoples", "confidence": "general"},
       "from_research": "not yet researched"
+    },
+    "egypt": {
+      "ruin": "egyptian_pyramid",
+      "plants": [
+        "Nymphaea caerulea (blue lotus)",
+        "Mandragora officinarum (mandrake)"
+      ],
+      "plant_source": "data/sacred/sacred_plants.json, ids blue_lotus and mandrake (§FP.4, 10 Oct)",
+      "mike": "we'll go ahead and lock in Blue Lotus and Mandrake for the Egyptians; we'll lock that in as the vibe of the Egyptian situation",
+      "look": "vivid hallucinations that feel completely real and present, not obviously illusory; a glimpse of something lurking, possibly the boss, that the player cannot be sure is actually there",
+      "amends": "§FP.0 call 1: for Egypt only, the no_hallucinations line of rule.kept_inside (§FM.3, §FN.5.3 a, §FN.6) does not hold; every other culture keeps it",
+      "kept_inside_for_egypt": {
+        "display_only": "the figures have no collision, no strike, no sound that counts, never stand where the real boss stands, and change no gameplay number or the floor's lit test (Claude's reading of §FM.7)",
+        "fades_with_the_brew": true,
+        "gates_nothing": true,
+        "never_harder": "a different experience, never a harder mode (§FM.7)"
+      },
+      "marks": {
+        "kind": "Egyptian hieroglyphs: marks when sober, lines of text under the brew (§FP.3)",
+        "confidence": "general"
+      },
+      "from_research": {
+        "source": "Claude's own summary, thin and folkloric (witch-trial confessions, medieval medical texts); no source opened for it here",
+        "reports": [
+          "vivid, often terrifying visions of people or creatures that seem completely real and interactive, with no sense of illusion",
+          "a feeling of flying or floating",
+          "beast-like or demonic figures, paranoia, dread"
+        ],
+        "evidence_note": "blue lotus's sedative effect is only inferred; mandrake is documented in Egyptian art and objects, not in ritual text (§FP.6)"
+      },
+      "open": "whether blue lotus gives the same vision, gentler, or its own (§FP.9 call 3); which figures it shows (§FP.9 call 7)"
     }
   },
   "unassigned": {
