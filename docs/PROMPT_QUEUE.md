@@ -98,7 +98,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 66 | §FM.2 | The snake's pool: freeze, doorway, observe, coil | built 1bc37be |
 | 67 | §FM.6 | The shaman and the cauldron at the hearth | built 3485919 |
 | 68 | §FM.6 | Floors and the fork: light the first floor and two ways open | built f2bd277 |
-| 69 | §FM.6 | Floor two's fog: the same stone, darker | todo |
+| 69 | §FM.6 | Floor two's fog: the same stone, darker | built a490eda |
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | todo |
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | todo |
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
@@ -1247,7 +1247,7 @@ CHECK (headless, tools/crawler_check.gd): floor one's torches cold: the way down
 
 ## 69 — Floor two's fog: the same stone, darker — §FM.6
 
-**Status:** todo
+**Status:** built a490eda
 **Mike sees:** Floor two is the same stone as floor one, but a low fog fills it all the way through, so it feels darker and you see less far.
 
 ```text

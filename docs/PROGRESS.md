@@ -4,6 +4,61 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-09 — Queue 69, §FM.6: floor two's fog: the same stone, darker (a490eda)
+§FM.6 (Mike, 9 Oct): floor two is the same stone and architecture as floor one, so it reads as one place, with the energy of the whole place *"a little bit darker"*: a layer of fog across floor two, uniform for now, doing to sight and to the torch's reach just what fog does. Built as queue 69 says, and nothing else from §FM.6. One number changed after the walkabout (the density, below).
+
+- **What changes on screen:**
+  - **Floor two is foggy.** Go down the stair past the fork and a navy fog fills all of floor two, the same everywhere on the floor. The farther off something is, the more it sinks into the navy. The room round you still reads, but the far end of a corridor is lost. Lit rooms seen down a long way look dim and blue instead of amber.
+  - **Its colour** is the look's shade navy (#06186C, LOOK_REFERENCE R3), never grey. Over the dark it takes distance a little lighter and bluer, never darker.
+  - **Your torch's pool still reads warm:** the floor and walls 1.2–4 m off are 94% as bright as without the fog.
+  - **The flames** (your torch's, the wall torches') are not fogged: only things that give off light glow. Their soft halos fade with the stone round them.
+  - **Floor one has none of it.** It keeps its own faint dark haze, exactly as before.
+  - **On the stair:** none of the fog until the last 4 m of the stair down (the flight is about 8 m), all of it at the foot. Going back up it eases out over the same metres. Stop half way and it stays half way. No pop.
+  - **Density:** Claude's first guess was 0.04 a metre. In the walkabout it was all but invisible: floor two looked the same with it and without it. I raised it to **0.08**: half of a wall 9 m off is fog, four fifths at 20 m. The far end of a corridor is lost and the room near you still reads. I also rendered 0.12, which is thicker (the room's own far wall starts to go). Tune by playing.
+  - **Only fog:** nothing else changes. Your torch's light, the light the skeletons and the snake keep to (the light field), what they see and hear, and every rule are exactly as before.
+- **How:**
+  - `FloorFog` (new, `scripts/crawler/floor_fog.gd`) is a node of the crawler. Every frame it works out how much of the fog is on from where your eye is: 0 on floor one, 1 on floor two, eased along the stair (smoothstep over its last `ease_m` metres). When that changes it writes two things:
+    - the environment's fog (Godot's exponential fog), for what Godot's own materials draw: the skeletons' bones, the voids, the vents' daylight;
+    - the look's haze (`look_fog_density`, `look_fog_color`), which every look material (the stone, the sprites, the folk, the glows) draws itself instead of the environment's fog. On floor two the floor's fog is added to floor one's faint haze, the two colours mixed by their densities (#061560 together).
+  - It writes only when the amount changes, so the sprite bakes (which switch the haze off while they bake) are never written over.
+  - `CrawlerMain` makes the node (four lines). No shader or project setting changed: the look's haze was already drawn by every material.
+  - Data, `descent.json → floor_two.fog`:
+    - `density` 0.04 → 0.08 (a one-line data constant, after the walkabout);
+    - `ease_m` 4 added (my first guess);
+    - `_help.floor_two`: `[NOT WIRED YET]` off, and what is built.
+  - `HOW_TO_RUN.md`: a bullet for the fog and one for its check; "no fog yet" gone.
+- **What you can tune** (restart after editing):
+  - `descent.json → floor_two.fog.density`: thicker or thinner. 0.04 hardly shows; 0.12 hides the far wall of a big room.
+  - `floor_two.fog.ease_m`: over how many metres of the stair the fog comes in.
+  - `floor_two.fog.color_from`: `look_shade_navy` (the default), `look_shade_deep` (a darker navy, #020A39), or a colour of your own (`"#rrggbb"`).
+- **Checks**, all 0 fails (`fog_check` and `crawler_check` on a490eda as pushed, after the merge with queue 66; `fork_check` and the walkabout on the same code before it):
+  - `tools/fog_check.gd` (new, this pass's checks; queue 69 named `crawler_check.gd`): 29 lines.
+    - **The data and the colour:** density 0.08 and `ease_m` 4 read. The colour is the look's shade navy (#06186C): blue above red, not grey (red, green and blue within 0.02 of each other fails), lighter and bluer than the tomb's own dark (#05081C). The look's haze on floor two (#061560, 0.105 a metre) passes the same tests.
+    - **Where it is, twenty layouts:** none of it on any of floor one's 456 pieces, all of it on every one of floor two's 338. Down the flight, every 5 cm: none above its last 4 m, all of it at the foot, rising and never back between, no step steeper than the ease's own. A doorway's thickness holds what it was. A one-floor tomb has none.
+    - **In the game:** waking on floor one, the environment's fog off and the look's haze floor one's own. On floor two, the environment's fog on at 0.080 a metre, exponential, in the shade navy, and the look's haze 0.105. The frame 854 × 480 (the default 480 lines) on both floors, the grade's dither the same (1.0, 31 levels).
+    - **Down the stair and back, your body walking:** the fog first in at 4.41 m down the flight (its last 4 m start at 4.30), full at the foot (8.30). Going up it is gone again by 4.27 m. The largest change in one frame is 0.0022 of 0.08: no pop.
+    - **Only fog:** pinned off and then on at one spot in the same frame (floor two, torch lit): the light field on all 203,885 squares, what a skeleton would count as seen at 32 points round you, whether the snake is in view, how loud you are, the torch's, the half-dark's and every fire's light, the grade, and every other value of the environment and the look are all the same. Only the fog's own values differ.
+    - **Taken back to the hearth from floor two** (as waking after "Good night"): the fog is off at once.
+  - `crawler_check` 271 (seed 7, 203 seeds walked; 271 before the merge too) and `fork_check` 48 (the floors and the fork): the same counts as before.
+  - The walkabout once, `crawler_frames.gd ONLY=fog` (seed 7, lavapipe, midnight), 8 lines. Floor two's longest straight view, 40 m from a pillared room through its doorway down a corridor, the torch lit:
+    - **28a** (lights cold, fog): the torch's pool warm on the flagstones round you. The pillars and walls beyond sink into navy, and the doorway at the far end is a blue murk.
+    - **28b**: the same with the fog pinned off. The room's walls show more of their stone, and the far doorway is plain black.
+    - **28c** (floor two's 32 lights relit, fog): the room you stand in is fully amber. The corridor past the doorway fades to navy, and its far end is lost.
+    - **28d**: the same without the fog. The corridor reads amber nearly to its far end.
+    - Checked: both fog frames 854 × 480, every pixel but the crosshair's on the grade's 5-bit grid, and the dither at work on the fog's far walls (all 217 of their 4×4 blocks mix levels; no flat bands). The pool 94% as bright as without the fog. The cold far walls #08124E in the fog against #080C4A without (navy, lighter and bluer). The relit far walls #251959 in the fog against amber #5F2627 without.
+    - Also rendered: 0.04 (**28e/28f_fog_0_04**, all but the same as no fog) and 0.12 (**28e/28f_fog_0_12**, thicker), for comparing.
+- **For Mike:**
+  - The density is my call after the walkabout (0.04 → 0.08). If floor two feels too thick or too thin, change it in `descent.json`.
+  - The flames shine through the fog undimmed. Real fog would dim a far flame and give it a halo; tell me if you want that.
+- **For chat:**
+  - `floor_two.fog.density` is your number: I changed it 0.04 → 0.08 after the walkabout, with the reason in its `_help` (the grey areas allow a one-line data constant, and the commit says so). Put it back if you'd rather Mike starts from 0.04.
+  - "Floor one has none": floor one keeps the faint haze it has had since §ET.11 3 (`crawler.json → look fog_density` 0.025, `fog_color` #05081C, the depth's own dark), and so does floor two. The floor's fog is added on top. Godot's environment fog, the one the queue's check names, is off on floor one.
+  - "Lighter and bluer with distance" is built as the effect of one navy fog over the dark: the fog has one colour, with no gradient of its own. The cold far walls go from #080C4A to #08124E; the grade already holds the dark at navy, so the change is small.
+  - `uniform` isn't read: the fog is always uniform for now.
+  - The look's materials write their own fog, which replaces Godot's environment fog for them. That is why the floor's fog goes into the look's haze as well as the environment's.
+  - For queue 71 (the surface): `FloorFog` writes the environment's fog and the look's haze only when its amount changes. Off every tomb piece (on the surface) it keeps its last amount, 0 coming up from floor one, so it never writes there. If the surface sets its own fog or haze, it should put floor one's back on the way down.
+  - The prompt's checks are in `tools/fog_check.gd`, not `crawler_check.gd`, to keep runs short and merges clean.
+
 ## 2026-10-09 — Queue 66, §FM.2: the snake's pool: the freeze, the doorway, observe then behind, the coil you turn into (1bc37be)
 Mike, 9 Oct (§FM.2): the snake goes still when you look at it from far away, "a little bit more camouflaged than it is now", never invisible; it sits in doorways and watches you; it studies you for a while before it attacks from behind; and if you hear it and turn around, it may already be coiled and striking. Built as queue 66 says, on queue 65's pool; the snake only, no other boss changes, and nothing it did before is gone.
 
