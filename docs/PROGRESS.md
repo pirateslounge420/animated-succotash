@@ -4,6 +4,59 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-10 — Queue 63–77 built side by side, then checked together on f9c54af (session wrap)
+Mike asked for the queue to be built in parallel wherever a prompt doesn't wait on another. Thirteen passes were built by agents working at the same time, each in its own copy of the repo. Each pushed its own pass and PROGRESS entry (below). This entry records the combined check and what is still open across them.
+
+- **Built:** 63, 65, 66, 67, 68, 69, 70, 71, 72, 73, 75, 76, 77, each in its own pass and entry below.
+  - Dependencies were honoured: 66 after 65; 69, 70 and 73 after 68; 71 after 63 and 68; 72 after 67 and 71.
+  - 72 was marked `waits (67, 71)`; it was started only after both were built.
+  - 74 still waits: it needs a second world and Mike's answers to §FM.10 calls 1 and 3.
+- **Queue table:** 62 now reads built 56dc352 (5513fe1). e9d01a3 had marked only its heading.
+- **A container restart** stopped four passes partway (66, 70, 71, 75).
+  - Pushed work was untouched.
+  - 66's and 75's unpushed drafts were carried over, checked again and finished by fresh agents.
+  - 70 and 71 had not started changing files, so they were started again.
+- **Combined check on f9c54af** (all thirteen passes together; seed 7 unless noted), all 0 fails:
+  - **Crawler:**
+    - `crawler_check` 273, `boss_check` 228, `residents_check` 177, `fire_pot_check` 104, `cleared_check` 90.
+    - `brew_check` 76, `stagger_check` 65, `boss_snake_check` 65, `hands_check` 61, `surface_check` 60.
+    - `crawler_harm_check` 59, `tome_pages_check` 57, `hearth_cauldron_check` 56, `hud_pin_check` 49, `boss_pool_check` 48.
+    - `fork_check` 48, `crawler_save_check` 39, `room_pool_check` 29, `fog_check` 29.
+  - **Plants:**
+    - `species_mesh_check`: 1,003 species at both levels.
+    - `giant_herb_check` 108, `mushroom_check` 82, `bulb_check` 56, `globe_cactus_check` 44.
+    - The last three each also find `data/sacred` still unloaded: 1,003 species before and after.
+  - **Open world** (73 touched the tomes): `tome_check` 10 (SEED=7731); `library_check` 12, with its 2 skips as before (STAMP=1 SEED=7731).
+  - 1,925 PASS lines in all.
+  - Earlier full runs on the combined code also had 0 fails: on a77d750 (the first ten passes) and on d86fc6c (the first twelve).
+  - `hud_pin_check`, `tome_check` and `library_check` crash in Godot's shutdown after their result line: the known one.
+- **For Mike, open calls gathered from the passes** (each pass's entry has the detail):
+  - **Which world is the tomb in?** (§FM.10 call 1)
+    - 71 built the surface as the desert world (worlds.json `surface.world`).
+    - §FM.3 makes the tomb the Aztec world, and 72's ololiuhqui doesn't grow in hot desert.
+    - 67's cauldron is iron; clay over three hearthstones would be the Mesoamerican way.
+  - **The fork and the boss:**
+    - The surface stair is never sealed (`descent.json → fork.gate_surface` false, §FM.10 call 2).
+    - The snake stays on floor one (call 4).
+  - **The snake's freeze** is barely visible at `boss_pool.json → pools.desert.freeze_watched.blend` 0.3. Try 0.5.
+  - **The coil and the torch:** the coil's strike waits out the flame's 4 s hold. Time spent stalking you counts toward that hold.
+  - **Floor two's fog:** 69 changed `descent.json → floor_two.fog.density` from 0.04 to 0.08 after looking at the frames (a data one-liner). Flames are not fogged.
+  - **The sunken court** has no shaft of sky. §EX.4 allows one column of sky per tomb.
+  - **The brew** is a placeholder violet tint and pulse (§FM.10 call 6): 2 game hours to regrow, one cutting at a time.
+    - The vine is the engine's plain liana: three green strands.
+  - **The I Ching's scrolls** lie on floor two before its text is in, so they open at the title page only.
+  - **In play only the first tomb is reachable:** its way out leads up to the surface. `worlds.json → surface.on` false brings back the walk to the next tomb.
+    - Continue doesn't remember that you were on the surface.
+  - **Plants:**
+    - When should leshoma flower in Torchfire 1?
+    - Peyote's small flower shows all year.
+- **For chat:**
+  - CLAUDE.md's §EW and §FM lines still say "not built yet". Now built: 63, 65–73, 75–77 (§FK.2–3, §FM.1, §FM.2, §FM.5, §FM.6, §FM.7, §FM.13).
+  - `data/sacred/sacred_plants.json` notes still say there is no mushroom, globe cactus or bulb shape.
+  - `PLANT_SCHEMA.md`'s engine shapes and `sports.json → by_shape` don't name MUSHROOM, GLOBE_CACTUS or BULB.
+  - `boss_pool.json`: `pools.desert.freeze_watched.blend` duplicates `camouflage.blend`.
+  - New data blocks with `_help`, Claude Code's first guesses: `data/brew.json` (72), `room_pool.json` archetypes (70), `worlds.json → surface` (71), and `boss_pool.json` `behind_s`, `turn_deg` and `let_go_s` (66).
+
 ## 2026-10-09 — Queue 73, §FM.5: tomes as collected pages: found on the base layer (1bff283)
 §FM.5 (Mike, 9 Oct): "Tomes and scrolls lie on the bottom layer of underground ruins. You pick them up and keep a collection, rather than reading one where it lies", different pages of a book from different ruins, or from different parts of one. Built as queue 73 says, with no new texts (the text fill is chat's): one book split so far, the I Ching.
 
