@@ -5837,9 +5837,9 @@ the swamp witch's "young shaman who turns" idea (locked afterwards, as §FR, not
 - **96** Camazotz and his three states (waits for 95).
 
 ### FQ.5 Open for Mike
-1. **Which biome world holds the Maya ruin,** and does a jungle world use Camazotz or the
-   centipede (§FO.9 call 2's twin)?
-2. **Do all of Camazotz's swoops hit,** or only the first, the later ones being a harassing chase?
+1. **Which biome world holds the Maya ruin** (answered by §FS.1: the jungle), and does a jungle
+   world use Camazotz or the centipede (provisional default in §FS.1)?
+2. **Do all of Camazotz's swoops hit,** or only the first? (Answered by §FS.2: all.)
 3. **The cenote:** is it the way down from the surface, a feature of the secret room, or only a
    motif?
 4. **Where does his lair sit,** and does he roost in the lair room too?
@@ -5914,7 +5914,7 @@ the frame); the witch anywhere but the swamp's hearth; a swamp culture (still th
 ruin of the roster: Mike's own "what would the swamp like" is unanswered).
 
 ### FR.5 Open for Mike
-1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick?
+1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick? (Answered by §FS.3: a trick.)
 2. **Is the trap every time you drink there, or only the first?** And after it, is there a shaman
    at the swamp's hearth at all?
 3. **How does the hearth hold against her?** Does the chase start in the lit room and follow you
@@ -5923,3 +5923,43 @@ ruin of the roster: Mike's own "what would the swamp like" is unanswered).
 5. **Is the cutscene skippable,** and does a repeat play shorter?
 6. **Does she need the brew at all,** or can the swamp's boss be met in the halls first?
 7. **The swamp itself:** which culture the Gulf South ruin is, if any.
+
+## FS. Answers to §FQ and §FR: the Maya sit in the jungle, the swoops all hit, the swamp's brew is a trick — LOCKED (10 Oct, by voice, Mike; "Yep, we'll do that", "We'll go with that", then "Yep, lock it in" to Claude's read-back of all three)
+
+Mike, 10 Oct, answering open calls left at the end of §FQ and §FR. Claude (voice) read the three
+answers back before he locked them, so they are in his own words. No number changes.
+
+### FS.1 The Maya ruin sits in the jungle biome world (answers §FQ.5 call 1, in part)
+- The Maya temple is a ruin kind inside **the jungle biome world** (§FN.0.2), not a world of its own.
+- **`worlds.json` has no jungle world yet:** it names eight (volcano, mine, sea caves, beach, desert,
+  tundra, swamp, mountains). `bosses.json` already has a `jungle` boss key (the centipede) and
+  `data/biomes/20_jungle.json` exists, so the world is implied. Claude (chat) wrote no entry: the
+  game reads `worlds.json` (the surface, the saves and the checks), so the named entry is added with
+  the Maya ruin's own pass (queue 95), as the other worlds are named (`status: named`).
+- **Provisional default, not a decision: the centipede and Camazotz.** A ruin kind owns its boss
+  (§FO.1's pharaoh, §FQ.2), so a Maya ruin takes Camazotz. The centipede stays `bosses.jungle` for
+  any other jungle dungeon. Mike has not said whether the jungle world has more than the Maya ruin.
+  Still open: §FQ.5 call 1's second half.
+- **The Maya plant is still open** (§FN.8 call 2).
+
+### FS.2 Every connected swoop is a hit (answers §FQ.5 call 2)
+Camazotz's swoops all count: each one that connects is one of the three hits (§FD). Confirmed as
+written in §FQ.2; the later swoops are not a harassing chase.
+
+### FS.3 The swamp's brew is not real (answers §FR.5 call 1)
+- **The witch's brew is purely her trick** to leave you vulnerable before the reveal. It is not a
+  psychoactive brew like the other ruins': no vision filter, no tint, no palette swap, no hidden
+  carvings. §FM.7 and §FN.5 govern the real brews and do not touch it.
+- What you see is only her change (§FR.2). Claude's reading: she still hands you a ladle of
+  something, as the other shamans do, and it does nothing.
+- **Open:** whether you still harvest a plant on the swamp's surface to carry to her (a fake brew
+  has no use for a real one, so the yaupon candidate in the roster is moot). §FR.5 call 7 is
+  unchanged (which culture the swamp is).
+
+### FS.4 What this changes in the queue
+- **89 still waits** for §FO.9 call 2: the Egyptian ruin's biome world is not answered. Only the Maya's is.
+- **95 no longer waits for an answer:** it waits for 89 (the first culture ruin kind) and 94. It is
+  also where the jungle world is named in `worlds.json`.
+- **98 builds no brew:** its placeholder tint is removed. It still waits for 97, the swamp world and
+  the witch built as a boss.
+- Everything else stands.

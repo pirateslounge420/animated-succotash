@@ -1,8 +1,8 @@
 {
  "_help": {
   "about": "[NOT WIRED YET — design §FQ] The Maya ruin and its boss Camazotz (Mike, 10 Oct, by voice: 'Lock it in'). Nothing reads this file yet. Every number is Claude (chat)'s first guess; Mike tunes by playing. The Maya are a ruin kind inside a biome world (§FN.0.2), not a world of their own. Queue 94 to 96 build it.",
-  "ruin": "§FQ.1. Limestone temple swallowed by lowland jungle (the Yucatan and Peten heartland), once painted stucco (often red), now bare weathered grey. One floor, with the secret room and phase two like every ruin (§FO). cenote_entrance: Claude's reading of the voice session (the cenote as a way down, Maya belief: a door to the underworld); how it meets the hearth and the way up and down (§FM.6, §FO.3) is open (§FQ.5 call 3). calendar: the Maya count (the 260-day Tzolkin, the 365-day Haab, the Calendar Round, the Long Count) as the ruin's motif, as the tonalpohualli is the Aztec ruin's. Flavour only for now, as the Aztec calendar room is (§FN.1). Marks are real and never named on screen (§FN.5.1).",
-  "camazotz": "§FQ.2. The Maya death-bat of the Popol Vuh (lives in the House of Bats, Xibalba). Never beaten (§FM.1), prowls only the unlit dark, and the last light drives it to its lair (§EY). Its pool, in Mike's words: it hangs from places overhead and picks the places it thinks you will go (roost_ambush); when you come in range it swoops and gets you once, and having shown itself it keeps swooping where there is room (swoop_chase); where the space is too tight it lands and crawls at you, slower than its swoop (ground_crawl). Which of these are drawn when, and the numbers, are Claude's first guesses. A swoop that connects is one of three hits (§FD, boss_pool rule never_breaks: a_hit_is_one_of_three); the tell always plays first. Not in boss_pool.json yet: bosses.json → unplaced.camazotz holds the plan, as the pharaoh's does, until it is keyed to a ruin (queue 96)."
+  "ruin": "§FQ.1. Limestone temple swallowed by lowland jungle (the Yucatan and Peten heartland), once painted stucco (often red), now bare weathered grey. One floor, with the secret room and phase two like every ruin (§FO). cenote_entrance: Claude's reading of the voice session (the cenote as a way down, Maya belief: a door to the underworld); how it meets the hearth and the way up and down (§FM.6, §FO.3) is open (§FQ.5 call 3). calendar: the Maya count (the 260-day Tzolkin, the 365-day Haab, the Calendar Round, the Long Count) as the ruin's motif, as the tonalpohualli is the Aztec ruin's. Flavour only for now, as the Aztec calendar room is (§FN.1). Marks are real and never named on screen (§FN.5.1). biome_world: jungle (§FS.1).",
+  "camazotz": "§FQ.2. The Maya death-bat of the Popol Vuh (lives in the House of Bats, Xibalba). Never beaten (§FM.1), prowls only the unlit dark, and the last light drives it to its lair (§EY). Its pool, in Mike's words: it hangs from places overhead and picks the places it thinks you will go (roost_ambush); when you come in range it swoops and gets you once, and having shown itself it keeps swooping where there is room (swoop_chase); where the space is too tight it lands and crawls at you, slower than its swoop (ground_crawl). Which of these are drawn when, and the numbers, are Claude's first guesses. A swoop that connects is one of three hits (§FD, boss_pool rule never_breaks: a_hit_is_one_of_three); the tell always plays first. Not in boss_pool.json yet: bosses.json → unplaced.camazotz holds the plan, as the pharaoh's does, until it is keyed to a ruin (queue 96). Every connecting swoop is one of the three hits (§FS.2, confirmed)."
  },
  "ruin": {
   "kind": "maya_temple",
@@ -24,7 +24,9 @@
    ],
    "flavour_only": true
   },
-  "marks": "real_maya_glyphs_never_named_on_screen"
+  "marks": "real_maya_glyphs_never_named_on_screen",
+  "biome_world": "jungle",
+  "biome_world_note": "§FS.1 (10 Oct, Mike): the jungle biome world. worlds.json has no jungle world yet; queue 95 names it. Camazotz is the Maya ruin's boss; bosses.jungle (the centipede) is untouched. Provisional default, not a decision."
  },
  "camazotz": {
   "creature": "death bat",
@@ -89,6 +91,7 @@
    "ignores_a_torch_hold",
    "skips_its_tell"
   ],
-  "in_phase_two": "open (§FQ.5 call 6)"
+  "in_phase_two": "open (§FQ.5 call 6)",
+  "every_swoop_hits": true
  }
 }

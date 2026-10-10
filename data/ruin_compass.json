@@ -5,7 +5,7 @@
   "walk": "fixed: the same neighbours every playthrough. Each ruin's inside still comes from the game's seed (§FK.2) and the first ruin is still drawn at random (§FJ.1). Open (§FM.10 call 3): whether walking a direction replaces or sits beside worlds.json → links (the underground passage).",
   "ruins": "id: culture, stone (what the ruin is built of), plant (its species and rite, one line, no doses or preparation), plant_status (in_game or not_in_game as of 9 Oct), exits (cardinal direction to the neighbouring ruin id). status: built (the tomb only), reference, or invented (no real ruin; ours). null exits are unplaced. plant_status entry_in_data_sacred_not_drawn: the species entry is in data/sacred/sacred_plants.json (9 Oct, §FM.9) but nothing loads or draws it yet.",
   "egypt": "§FO.1, §FP (10 Oct): Egypt is a ruin kind, not a world, and is UNPLACED: Mike has not put it on the compass (null exits, like the taiga), and its biome world is open (§FO.9 call 2). Stone: big sandstone blocks (Mike); true_pyramid in ruins.json is the nearest style, not wired. Plants: blue lotus and mandrake (Mike, 10 Oct, §FP.4), entries in data/sacred/sacred_plants.json, not loaded or drawn. Reference only, like every ruin but the tomb.",
-  "maya": "§FQ (10 Oct): the Maya are a ruin kind inside a biome world (§FN.0.2), not a world of their own. Limestone temple in jungle, the Maya calendar as its motif, Camazotz as its boss (data/maya_ruin.json). Plant: still open (§FN.8 call 2: Mike gave the mushroom to the Aztec). Which biome world holds it: open (§FQ.5 call 1)."
+  "maya": "§FQ (10 Oct): the Maya are a ruin kind inside a biome world (§FN.0.2), not a world of their own. Limestone temple in jungle, the Maya calendar as its motif, Camazotz as its boss (data/maya_ruin.json). Plant: still open (§FN.8 call 2: Mike gave the mushroom to the Aztec). Biome world: the jungle (§FS.1)."
  },
  "map": {
   "reference_only": true,
@@ -74,7 +74,8 @@
    "boss": "Camazotz, the death bat (§FQ.2); unplaced in bosses.json",
    "setting": "lowland jungle, the Yucatan and Peten heartland; a cenote as the way down (open, §FQ.5 call 3)",
    "theme": "the Maya calendar (§FQ.1)",
-   "ruin_kind": "maya_temple"
+   "ruin_kind": "maya_temple",
+   "biome_world": "jungle (Mike, 10 Oct, §FS.1; worlds.json names no jungle world yet)"
   },
   "inca": {
    "status": "reference",

@@ -63,7 +63,7 @@ map as thematic.
   a cenote (the underworld door) as a way down (the cenote's role is open). **Boss: Camazotz,** the
   death bat of the Popol Vuh: he roosts overhead where he predicts you will pass, swoops once and
   keeps swooping where there is room, and crawls where there is not (`data/maya_ruin.json`, unplaced
-  in `bosses.json`). A ruin kind inside a biome world, not a world of its own (§FN.0.2).
+  in `bosses.json`). A ruin kind inside the jungle biome world (§FS.1), not a world of its own (§FN.0.2).
 
 ### Inca (south of the Maya)
 - **Stone:** precision-cut andesite and granite, fitted without mortar. Real analogues: Machu
