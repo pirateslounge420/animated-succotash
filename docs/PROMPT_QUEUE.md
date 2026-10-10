@@ -107,7 +107,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
-| 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | todo |
+| 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | built |
 | 79 | §FN.1 | The Aztec temple's stone: a masonry style | todo |
 | 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | todo (after 79) |
 | 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |

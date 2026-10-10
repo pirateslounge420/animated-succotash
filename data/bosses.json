@@ -160,7 +160,26 @@
     "undulate_m": 0.22,
     "wave_m": 2.6,
     "px_head": 40,
-    "px_seg": 28
+    "px_seg": 28,
+    "plumes": {
+     "_help": "Design 10 Oct \u00a7FN.2 (queue 78, Claude Code's first guess from aztec_temple.json snake.plumes; Mike tunes by eye): the feathered serpent's quetzal plumes, baked into its sprites (BossBody): a crest of feathers lying back along the top of every length of body but the rattle's, and a ruff behind the head, alternating green and turquoise, with red feathers low at the throat (quetzal: green with a red breast). on false bakes the plain snake again. height_k and length_k: a feather's rise and length against the body's girth, kept under the sheet's top so the sprites' pixel heights (px_head, px_seg) are unchanged: at 28 px a body feather is about 4 px tall and 8 long. per_len: feathers on each length of body. Painted, no shine (\u00a7ES); the freeze's camouflage takes them too.",
+     "on": true,
+     "green": "#2f9a4c",
+     "turquoise": "#23a8a0",
+     "red": "#c0302a",
+     "height_k": 0.24,
+     "length_k": 0.5,
+     "per_len": 2
+    }
+   },
+   "rattle": {
+    "_help": "Design 10 Oct \u00a7FN.2 (queue 78; aztec_temple.json snake.rattle): the rattle at its tail's tip (rings pale rings, ring_line between them, on the last length of body, BossBody) and its sound (SoundSynth snake_rattle, a dry fast shiver), played from the tail on the same 3D tuning as its warning hiss (audio.json strike_tell: the same distance and muffling). WHEN IT SOUNDS IS MIKE'S CALL (\u00a7FN.8 call 8), not made: 'when' lists the moments it rattles, any of \"hold\" (it holds off at your flame, beside snake_warn: Claude's first guess, so the sharp snake_hiss still always means the strike, \u00a7FA.2), \"move\" (always while it moves: prowling, hunting, leaving, fleeing), \"wind_up\" (just before the strike, through its wind-up). [] never rattles. It stops the moment none of them holds. gap_s: the pause between shivers while one does.",
+    "sound": "snake_rattle",
+    "when": ["hold"],
+    "gap_s": [0.3, 0.8],
+    "rings": 4,
+    "ring_color": "#c8b48a",
+    "ring_line": "#3a2c1a"
    },
    "_help": "Claude Code's first guesses (7 Oct, queue 49; Mike tunes by playing). speed_mps: its rounds, slow and steady. hunt_mps: hunting you; 4.6 since Mike's note of 7 Oct ('the snake should be faster or just as fast as a walk and if you sprint you can outrun it'): faster than your walk (4.3), slower than your sprint (5.6), so walking it catches you and sprinting you get away; it keeps coming through its wind-up and its lunge at up to hunt_mps, so a walker it has caught can't step out of its strike and a sprinter can (queue 49 had 3.6, under your walk). leave_mps: sliding away from a room or stretch you lit round it. strike (queue 57's block, CreatureStrike): it rears back (wind-up) when you are within reach_m; strike_m is the same reach. torch_delay (rule.torch_in_hand delay, 'your torch is a delay'): with your torch lit it holds hang_m from you, at the edge of the torch's bright circle, reared and hissing, for hang_s in all before it closes; once it has struck it doesn't hold again until it has given you up; torch out, it closes straight in. feels_m: closer than this it knows you are there whatever your light (so a narrow corridor can't hide you). gives_up (queue 56's block, Pursuit): when it gives you up and goes back to its rounds. watch_s: how long it waits at the edge of its dark while you stand in a lit room before it gives you up. body (BossBody): length_m nose to tail, girth_m thick, head_m the head's length; spacing_m between its body sprites (they overlap two or three deep); coil_r_m the coil's outer radius; undulate_m and wave_m the slither's side-to-side swing and its wavelength; px_head and px_seg the sprites' frame heights in pixels (the bake). torch_delay.sound (queue 57, \u00a7FA.2): its hiss while it holds off at your flame, a low, slow, rasping warning (SoundSynth snake_warn), never its strike's sharp hiss (strike.sound, snake_hiss), so the sharp hiss always means the strike is coming; with the head drawing back and the jaws opening, that is its strike's tell. Claude Code's first guesses on Mike's note of 7 Oct: stun_s: a fire pot's burst on or by it stuns it this long (it reels and lies dazed: no strike, no chase), then it flees to its lair hole and down it for fire_pots.json vs_boss.drives_off_s ('a pot cant kill a boss but will stun it/cause it to retreat to its cave temporarily'). flee_mps: how fast it goes fleeing to its hole (after the pot, and the last light's release). peek_m: hunting you, it stops at the edge of the light (residents.json rules.chase_light_cap) and rears its head this far forward into the glow ('they may show just enough of their face/body near the fire'). tunnels: its own (Mike: 'they may have their own tunnels- this can be the case for the snake'), see tunnels._help.",
    "stun_s": 1.5,

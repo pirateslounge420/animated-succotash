@@ -28,6 +28,13 @@ var baked := false
 ## painted), and that stone.
 var camo := 0.0
 var camo_stone := Color(0.5, 0.5, 0.5)
+## The feathered serpent's plumes (design 10 Oct §FN.2, queue 78; body.plumes)
+## and its rattle (bosses.json bosses.<world>.rattle): {} bakes neither.
+var plumes: Dictionary = {}
+var rattle: Dictionary = {}
+## The baked sheets, for the checks: [image, height] for seg, shut, open,
+## band, tail.
+var sheets: Array = []
 
 ## The paint (§ES.2): an olive-brown back crossed every third length by a
 ## near-black band (so it reads as one long banded body against the tomb's
@@ -50,6 +57,10 @@ const FANG := Color("#ddd5bb")
 func setup(def: Dictionary) -> void:
 	var b: Dictionary = def.get("body", {})
 	D = b
+	var pl: Variant = b.get("plumes", {})
+	plumes = pl if pl is Dictionary and bool((pl as Dictionary).get("on", true)) else {}
+	var rt: Variant = def.get("rattle", {})
+	rattle = rt if rt is Dictionary else {}
 	girth = float(b.get("girth_m", 0.38))
 	spacing = float(b.get("spacing_m", 0.28))
 	head_len = float(b.get("head_m", 0.55))
@@ -84,8 +95,8 @@ func bake(host: Node) -> void:
 	var head_h := maxf(head_len * 1.1, girth * 1.7)
 	var px_seg := int(D.get("px_seg", 28))
 	var px_head := int(D.get("px_head", 40))
-	var sheets: Array = []
-	for part in [["seg", seg_h, px_seg], ["shut", head_h, px_head], ["open", head_h, px_head], ["band", seg_h, px_seg]]:
+	sheets = []
+	for part in [["seg", seg_h, px_seg], ["shut", head_h, px_head], ["open", head_h, px_head], ["band", seg_h, px_seg], ["tail", seg_h, px_seg]]:
 		var h := float(part[1])
 		var px := int(part[2])
 		var sheet: Image
@@ -100,6 +111,8 @@ func bake(host: Node) -> void:
 					model.add_child(_segment_mesh(false))
 				"band":
 					model.add_child(_segment_mesh(true))
+				"tail":
+					model.add_child(_segment_mesh(false, true))
 				"shut":
 					model.add_child(_head_mesh(false))
 				"open":
@@ -107,9 +120,11 @@ func bake(host: Node) -> void:
 			sheet = await FigureSprite.bake(host, model, h, px, 1, Callable())
 		sheets.append([sheet, h])
 	# The body's eye height for the rows: its own middle. Every third length
-	# banded.
+	# banded; the last one its rattle's (§FN.2), when it has one.
 	for i in segs.size():
 		var sh: Array = sheets[3] if i % BAND_EVERY == BAND_EVERY - 1 else sheets[0]
+		if i == segs.size() - 1 and not rattle.is_empty():
+			sh = sheets[4]
 		segs[i].setup(sh[0], float(sh[1]), 1, girth * 0.5, 0.0)
 	head_shut.setup(sheets[1][0], float(sheets[1][1]), 1, girth * 0.6, 0.0)
 	head_open.setup(sheets[2][0], float(sheets[2][1]), 1, girth * 0.6, 0.0)
@@ -177,10 +192,61 @@ static func _unshaded() -> StandardMaterial3D:
 	return m
 
 
+## A feather (§FN.2's plumes): a flat leaf from `root` along `along` (its
+## length and lean), `half` its half width at the broadest, the quill's end
+## in `c` and the tip a little lighter; seen from both sides.
+static func _feather(st: SurfaceTool, root: Vector3, along: Vector3, half: Vector3, c: Color) -> void:
+	var tip := root + along
+	var mid := root + along * 0.4
+	var cb := _paint(c, 0.7)
+	var ct := _paint(c.lightened(0.15), 1.0)
+	for tri: Array in [[root, mid + half, tip], [root, tip, mid - half]]:
+		for k in 3:
+			st.set_color(ct if k == 2 else cb)
+			st.add_vertex(tri[k])
+
+
+## A plume colour (body.plumes): green and turquoise by turns.
+func _plume_col(i: int) -> Color:
+	return Color(str(plumes.get("green" if i % 2 == 0 else "turquoise", "#2f9a4c")))
+
+
+## The rattle (§FN.2): `n` rings from z `z0` to the tip `z1`, each a short
+## flattened eight-sided drum a little smaller than the last, pale, with a
+## dark line where one sits in the next.
+func _rattle_rings(st: SurfaceTool, z0: float, z1: float, w: float, h: float, cy: float) -> void:
+	var n := maxi(int(rattle.get("rings", 4)), 1)
+	var pale := Color(str(rattle.get("ring_color", "#c8b48a")))
+	var line := Color(str(rattle.get("ring_line", "#3a2c1a")))
+	var step := (z1 - z0) / n
+	for r in n:
+		var k := lerpf(0.72, 0.42, float(r) / maxf(n - 1, 1))
+		var za := z0 + step * r
+		var zb := za + step
+		var zl := za + step * 0.18
+		for seg: Array in [[za, zl, line, k * 0.85], [zl, zb, pale, k]]:
+			for s in 8:
+				var a1 := TAU * (s + 0.5) / 8.0
+				var a2 := TAU * (s + 1.5) / 8.0
+				var kk := float(seg[3])
+				var p1 := Vector3(cos(a1) * w * kk, cy + sin(a1) * h * kk, float(seg[0]))
+				var p2 := Vector3(cos(a2) * w * kk, cy + sin(a2) * h * kk, float(seg[0]))
+				var c := _paint(seg[2], sin(a1) * 0.5 + 0.5)
+				for p: Vector3 in [p1, p2, p2 + Vector3(0, 0, float(seg[1]) - float(seg[0])), p1, p2 + Vector3(0, 0, float(seg[1]) - float(seg[0])), p1 + Vector3(0, 0, float(seg[1]) - float(seg[0]))]:
+					st.set_color(c)
+					st.add_vertex(p)
+				# The ring's back face, so the rattle is closed seen end on.
+				for p: Vector3 in [Vector3(0.0, cy, float(seg[1])), p1 + Vector3(0, 0, float(seg[1]) - float(seg[0])), p2 + Vector3(0, 0, float(seg[1]) - float(seg[0]))]:
+					st.set_color(c)
+					st.add_vertex(p)
+
+
 ## One length of body along z, lying on y 0: an eight-sided tube,
 ## flattened a little (snakes are); `band`: a dark band round its back and
-## flanks across its middle.
-func _segment_mesh(band: bool) -> MeshInstance3D:
+## flanks across its middle; with the plumes (§FN.2), a crest of feathers
+## lying back along its top. `tail` (the last length, §FN.2): the body's
+## front half, then the rattle's rings to its tip, and no plumes.
+func _segment_mesh(band: bool, tail := false) -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var w := girth * 0.5
@@ -199,6 +265,9 @@ func _segment_mesh(band: bool) -> MeshInstance3D:
 	# Rounded off at both ends, so the overlapping lengths melt into one
 	# body instead of a stack of drums.
 	var rings: Array = [ring.call(-l * 0.5, 0.62), ring.call(-l * 0.3, 0.95), ring.call(0.0, 1.0), ring.call(l * 0.3, 0.95), ring.call(l * 0.5, 0.62)]
+	if tail:
+		# The body ends a little past the middle; the rattle goes on from it.
+		rings = [ring.call(-l * 0.5, 0.62), ring.call(-l * 0.3, 0.95), ring.call(-l * 0.05, 0.9), ring.call(l * 0.05, 0.72)]
 	var col := func(p: Vector3, z: float) -> Color:
 		var up := clampf((p.y - cy) / h, -1.0, 1.0)
 		var side := absf(p.x) / w
@@ -227,6 +296,19 @@ func _segment_mesh(band: bool) -> MeshInstance3D:
 			for p: Vector3 in [c3, capr[s], capr[(s + 1) % sides]]:
 				st.set_color(col.call(p, 0.4 * l))
 				st.add_vertex(p)
+	if tail:
+		_rattle_rings(st, l * 0.05, l * 0.5, w, h, cy)
+	elif not plumes.is_empty():
+		# The crest: feathers rooted along the spine, lying back toward the
+		# tail (+z), leaning a little to each side by turns.
+		var n := maxi(int(plumes.get("per_len", 2)), 1)
+		var rise := girth * float(plumes.get("height_k", 0.24))
+		var flen := girth * float(plumes.get("length_k", 0.5))
+		for f in n:
+			var z := lerpf(-l * 0.45, l * 0.45 - flen * 0.6, (float(f) + 0.5) / n)
+			var sd := -1.0 if f % 2 == 0 else 1.0
+			var root := Vector3(sd * w * 0.12, cy + h * 0.97, z)
+			_feather(st, root, Vector3(sd * w * 0.1, rise, flen), Vector3(sd * w * 0.2, 0.0, 0.0), _plume_col(f))
 	var mi := MeshInstance3D.new()
 	mi.mesh = st.commit()
 	mi.material_override = _unshaded()
@@ -277,6 +359,22 @@ func _head_mesh(open: bool) -> Node3D:
 			for p: Vector3 in [c3, pts[s], pts[(s + 1) % 6]]:
 				st.set_color(paint.call(p))
 				st.add_vertex(p)
+	if not plumes.is_empty():
+		# The ruff (§FN.2): green and turquoise feathers from the crown and
+		# the back of the head, lying back and up, the last pair red, low at
+		# the throat (the quetzal's red breast); short enough to stay inside
+		# the sheet's frame.
+		var rise := girth * float(plumes.get("height_k", 0.24)) * 1.4
+		var flen := minf(girth * float(plumes.get("length_k", 0.5)), L * 0.32)
+		var red := Color(str(plumes.get("red", "#c0302a")))
+		var ruff: Array = [[0.0, 1.0, 0], [-0.45, 0.9, 1], [0.45, 0.9, 1], [-0.85, 0.6, 0], [0.85, 0.6, 0], [-0.95, 0.15, -1], [0.95, 0.15, -1]]
+		for f: Array in ruff:
+			var sx := float(f[0])
+			var up := float(f[1])
+			var froot := Vector3(sx * W * 0.4, y0 + H * up * 0.92, L * 0.12)
+			var lean := Vector3(sx * W * 0.18, rise * (0.35 + up * 0.65), flen)
+			var c := red if int(f[2]) < 0 else _plume_col(int(f[2]))
+			_feather(st, froot, lean, Vector3(W * 0.1, 0.0, 0.0) if absf(sx) < 0.5 else Vector3(0.0, rise * 0.25, 0.0), c)
 	var upper := MeshInstance3D.new()
 	upper.mesh = st.commit()
 	upper.material_override = _unshaded()
