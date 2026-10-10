@@ -4,7 +4,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
-## 2026-10-10 — Queue 78, §FN.2: the snake becomes the feathered serpent: plumes and a rattle
+## 2026-10-10 — Queue 78, §FN.2: the snake becomes the feathered serpent: plumes and a rattle (892698b)
 - **Built:** the snake's baked sprites now wear quetzal plumes (BossBody): a crest of green and turquoise feathers lying back along every length of body, and a ruff behind the head with red at the throat. The last length of body is a new fifth sheet, the tail: the body's front half and a rattle of four pale rings with dark lines between them. Sheet pixel sizes are unchanged (px_head 40, px_seg 28): the feathers are kept under the frame's top, so nothing was raised.
 - **The sound:** SoundSynth `snake_rattle`, a dry, fast shiver of clicks (50–70 a second, rung through two bright bands). It plays from the tail on its own player with the warning hiss's tuning (`audio.json strike_tell`: the same distance and muffling), on its own dice so it never moves the boss's draws.
 - **When it sounds is Mike's call (§FN.8 call 8), not made:** `bosses.json → bosses.desert.rattle.when` (new block, `_help`). First guess `["hold"]`: while it holds off at your flame, beside snake_warn, so the sharp snake_hiss still always means the strike. Other values: `"move"`, `"wind_up"`, any mix, or `[]`. Plumes: `bosses.desert.body.plumes` (colours, size, `on`).
