@@ -5506,3 +5506,142 @@ Mike plays and reports between each.
    everything lit up, you can either go to the surface or deeper") sound like gating; the data is
    still ungated, and §EX.5 says an exit always exists.
 8. **When the rattle sounds** (FN.2), and **which floor holds the altar chamber and the calendar room.**
+
+## FO. One floor, a boss driven home, a secret room, and the blackout; Egypt's pharaoh — LOCKED (10 Oct, by voice, Mike; "we'll probably lock it in like that. You got to run for the exit")
+
+Mike, 10 Oct, straight after §FN. He asked for the Egyptian ruin next ("they use like big sandstone
+blocks"; the boss "a big King Tut sarcophagus type" mummy that opens up, with other mummies
+around, never killable), and then changed the shape of every ruin. Talked through, locked. As in
+§FM and §FN, no number is settled: Claude's first guesses go in `data/ruin_loop.json` (new, not
+wired) and Mike tunes by playing. Not built.
+
+### FO.0 What this changes in earlier locks (said out loud, not picked quietly)
+1. **§FM.6 and §FN.3: one floor, not two or three.** Mike: "instead of having the ruins basically
+   having multiple layers, we'll just have it to where it's one layer." **Queue 81 (a third floor)
+   is superseded and not to be built.** What queues 68–70 built stays in the code: the fork and
+   floor two's fog go dormant by data (switched off, not deleted); the room pool stays, and now
+   fills the one floor.
+2. **§FM.6's fork (up and down together) is replaced** by FO.3: driving the boss home opens the
+   surface exit and the secret opening together.
+3. **§FM.1 / §EY.3's "base layer"** is the ruin's one floor. `descent.json → floors.base_layer`
+   (`last_floor`) now just means the floor. §FN.8 call 8's "which floor holds the altar chamber and
+   the calendar room" is answered: the one floor.
+4. **§EY.1 `puts_out_relit: never` and §ET.4 "relit stays lit"** hold everywhere except phase two
+   (FO.5), which puts every flame out.
+5. **§FM.5: tomes "lie on the bottom layer".** Each ruin's one tome or scroll now lies at the end
+   of its secret room (FO.4). Whether it is one of §FM.5's collected pages is FO.9 call 5.
+6. **§FM.10 call 2 / §FN.8 call 7 (is the surface exit gated by light?)** answered by his words:
+   the exit opens when the boss is first driven home. This is in tension with **§EX.5** ("an exit
+   always exists whether or not the lights are lit"). Locked as Mike said it; the tension is
+   FO.9 call 3.
+7. **§FN.0 call 2 confirmed:** the tomb's mummy and sarcophagi (§FJ.2) belong to Egypt, not the
+   Aztec temple.
+8. **Not changed:** §FM.4's game-wide secret true layer. A per-ruin secret room (FO.4) is a
+   different thing and does not replace it.
+
+### FO.1 Egypt: big sandstone blocks, and a pharaoh in a sarcophagus
+- **A ruin kind, not a world of its own** (§FN.0 call 2: culture ruins sit inside the biome
+  worlds, Mike 9 Oct). An earlier chat message of mine assumed a separate Egyptian world; Mike never
+  said that, and it is corrected here. Which biome world holds it is open (FO.9 call 2).
+- **Stone:** "big sandstone blocks" (Mike). `data/ruins.json → styles.true_pyramid` (Old Kingdom
+  Egypt, Giza; sandstone; not wired) is the nearest existing style. One ruin, one stone (§EX.1), so
+  it needs its own `masonry.json` style when built. From Claude's own knowledge, not a source opened
+  here (check before the style is built): Giza is mostly limestone; the big sandstone-block
+  temples are the later ones (Karnak, Luxor, Abu Simbel). Mike's "sandstone" stands; the check is
+  only about which real building the style copies.
+- **The boss is a mummy pharaoh,** on every rule bosses have: never beaten (§FM.1), prowls only the
+  dark, the last light drives it home (§EY), its own pool of behaviours (§FM.1).
+- **Its lair is its own sarcophagus** (Mike: "going back to the sarcophagus and then like it
+  closing"). The lid grinds aside while it prowls (the same near tell as the mummy resident, "a stone
+  lid grinding aside") and grinds shut when the last light drives it in (§EY.2's release). §EY.3 said
+  a hole "usually", so this is within it. Like the hole it is not enterable (a ring of collision keeps
+  you at the edge); Claude's reading.
+- **Its behaviours are not talked through yet.** `rounds` only, as every boss without a signature
+  has. The snake's four took a session of their own; the pharaoh's wait for one.
+- **Other mummies are ordinary residents** (`residents.json → mummy`: the waker, waking in its
+  sarcophagus), now Egypt's.
+- **Claude's first reading, Mike's call:** the pharaoh has its own body, as the snake does; the
+  ordinary mummies are the wrapped version of the one shared rig (§ET.9), as a mummy is wrapped
+  where the others are cloaked.
+- **The surface twin (§FN.4) is not assigned.** §FN.4 says no culture's silhouette is drawn until
+  he asks. "A pyramid" is the obvious Egyptian one; his call (FO.9 call 6).
+
+### FO.2 One floor
+Each ruin is one floor. The room pool (§FM.6) shuffles its big rooms into it from the seed (§FK.2);
+the one hearth and a torch in every other room (§EX.4) are as built. Nothing goes down.
+
+### FO.3 Driving the boss home opens two ways
+- **The trigger is §EY's last light.** Every torch on the floor is lit, the boss flees to its lair
+  and goes in (§EY.2's release). Mike: "defeating the boss the first time where you basically get
+  it to retreat back to its lair." It is still never beaten (§FM.1).
+- **Two things open together,** the first time only: **the surface exit**, and **the secret opening**
+  (FO.4). No penalty either way, as the fork had it.
+- **The cue is stone moving** (§FN.3's `stone_seal`, built, queue 68): the grinding that says
+  something opened, go back and look.
+
+### FO.4 The secret room and its tome
+- **The opening is on the map from the start** (Mike: "you might like see where it could open, but
+  it'll have been previously impassable until this"): a way you can see and cannot pass. Claude's
+  first guess is a stone seal like the others (`ruin_loop.json → secret.opening`).
+- **It joins the ruin, with no loading screen** (Mike: "instead of it being like a loading screen
+  ... it actually opens up a whole new thing that actually connects to the first ruin"). It is part of
+  the same floor's plan from the seed, walled off until FO.3.
+- **At its end lies one artifact: a scroll or a tome** (Mike: "the scroll or the tome or whatever it
+  is"), in the culture's own real marks (§FN.5.1), never named on screen.
+- **Taking it is phase two** (FO.5).
+
+### FO.5 Phase two: the blackout, and the run for the exit
+- **Trigger:** you pick up the artifact.
+- **Every flame goes out.** Every relit sconce and planted torch, the torch in your hand, and the
+  hearth. Mike: "every all the flames got blown out on the second try"; so there is nothing left to
+  relight from and your unlit torches stay unlit. He first said "all the lights that you've already
+  lit go out besides the original hearth"; the later line is the one locked (FO.9 call 1).
+- **The boss comes out again,** "an even next level": faster, creepier, more aggressive, prowling
+  the whole floor (no room is relit, so none is closed to it: §EY.1's `relit_closes_room` has
+  nothing to close). First guess: its speeds ×1.2, which keeps the snake's hunt (4.6 m/s) just
+  under your sprint (5.6), so running is a real answer. Mike tunes.
+- **You rely on ambient light only,** the light the place has without a flame. What counts is
+  FO.9 call 4.
+- **The exit stays open** (it opened in FO.3). "You got to run for the exit."
+- **Every boss, the snake included** (Mike: "we'll apply that to the snake as well"). The snake
+  re-emerges and prowls again at the same trigger. The snake is built, so it is the first test.
+- **Everything else in §EY and §FM.1 holds:** never beaten; three hits and "Good night" (§FD);
+  every tell and wind-up still plays. With no flame there is no torch hold to give, and a fire pot
+  (lit off your torch, §FA) cannot be lit; both follow from the rule, neither is a new decision.
+
+### FO.6 Bosses get angry
+Mike: "you know how like different bosses basically quote unquote like get mad." Confirmed as
+general: a boss has a calm round and an angry one, faster and more aggressive. **Phase two is the
+first and, so far, the only trigger.** No other escalation is locked, and nothing here gives any
+boss a timer or a health bar.
+
+### FO.7 Not taken
+A second trigger for anger; a timer on phase two; any new weapon or fight; Egypt's brew plant and
+vision (§FN.5 is per culture and Mike has not picked: the sacred-plants reference holds the blue
+lotus, frankincense and myrrh, none chosen); an Egyptian surface silhouette; a place on the
+compass; a pool of signature states for the pharaoh.
+
+### FO.8 Order of work
+`docs/PROMPT_QUEUE.md` **85–89**, one idea each (81 is marked superseded):
+- **85** one floor per ruin, and the surface exit opens when the boss is first driven home.
+- **86** the secret opening, its room and the tome (after 85).
+- **87** phase two: the blackout and the boss's angry round, the snake first (after 86).
+- **88** the Egyptian stone: a `masonry.json` style of big sandstone blocks. Ready.
+- **89** the Egyptian ruin and the pharaoh in its sarcophagus (after 87 and 88; waits for Mike's
+  FO.9 call 2).
+
+Mike plays and reports between each.
+
+### FO.9 Open for Mike
+1. **Is the hearth out too in the blackout?** Locked as "every flame", his later word. And what does
+   "Good night" do in phase two: you wake at the hearth (§ET.3), and it is dark?
+2. **Which biome world holds the Egyptian ruin?** Hot desert is the natural fit, and the desert world
+   has the snake (§FN.8 call 1 asks the same of the Aztec ruin): one question for both.
+3. **The exit behind the boss against §EX.5's "an exit always exists".** Locked as Mike said it. Does
+   a player who cannot light the floor have any way out?
+4. **What is ambient light underground?** Claude's first guess: the day and night shafts from above
+   and anything that gives off light on its own, nothing else.
+5. **Is the tome one of §FM.5's collected pages,** or a separate find?
+6. **Egypt's surface twin (§FN.4),** and the one-rig question in FO.1.
+7. **Does the blackout save?** If you quit mid-run and Continue, is it still dark?
+8. **Phase two's numbers** (speed ×1.2, the pause before the boss emerges): by playing.

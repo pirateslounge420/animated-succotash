@@ -1,0 +1,66 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FO] The shape of every ruin and how it ends (Mike, 10 Oct, by voice, §FO). Nothing reads this file yet. Every number is Claude (chat)'s first guess; Mike tunes by playing. Where it disagrees with descent.json (floors.count 2, fork, floor_two) §FO wins: Claude Code switches those blocks off by data when queue 85 is built and keeps the code (never deletes it). Queue 85 to 89 build it, one idea each.",
+  "floors": "§FO.2, amends §FM.6 and §FN.3 (queue 81 superseded). count: one floor per ruin. The room pool (§FM.6) shuffles its big rooms into it from the seed (§FK.2); the one hearth and a torch in every other room (§EX.4) are as built. Nothing goes down.",
+  "boss_home": "§FO.3. The trigger is §EY's last light: every torch on the floor lit, the boss flees to its lair and goes in (bosses.json → release). Never beaten (§FM.1). first_time_only: what opens, opens once.",
+  "exit": "§FO.3. The surface exit opens when the boss is first driven home, and stays open (it is the way out in phase two). Amends §FM.10 call 2 and §FN.8 call 7; in tension with §EX.5's 'an exit always exists' (§FO.9 call 3), so the code keeps its stand-in exit until Mike answers. cue: the stone moving (audio.json → stone_seal, queue 68).",
+  "secret": "§FO.4. opening: a way you can see on the map from the start and cannot pass until the boss is first driven home (kind stone_seal is a first guess: the same grinding seal as the others). joins: it opens onto rooms of the same floor's plan, from the seed, with no loading screen (loading_screen false). artifact: one scroll or tome lies at the end of the secret rooms, in the culture's own real marks (§FN.5.1), never named on screen. Taking it is phase two. Not §FM.4's game-wide secret true layer, which is a separate, undecided idea.",
+  "phase_two": "§FO.5, §FO.6. trigger: the artifact is picked up. applies_to: every boss (the snake first, it is the one built). blackout: every flame goes out: every relit holder, the torch in your hand and the hearth (his later word; §FO.9 call 1), nothing can be relit, so unlit torches stay unlit (relight false) and a fire pot cannot be lit off a torch. light: ambient_only, the light the place has without a flame (first guess: the day and night shafts and anything that gives off light itself; §FO.9 call 4). boss: it comes out again, speed_mult times its hunt, leave and walk speeds (1.2 keeps the snake's 4.6 m/s hunt just under the 5.6 sprint, so running is a real answer), emerge_after_s after the blackout (a first guess), and closed_rooms_reopen: no room is relit, so none is closed to it. exit: open. never_breaks: the rules that still hold (§EY, §FM.1, §FD). save: whether the blackout is kept on Continue is open (§FO.9 call 7)."
+ },
+ "floors": {
+  "count": 1,
+  "supersedes": [
+   "descent.json floors.count",
+   "descent.json fork",
+   "descent.json floor_two"
+  ]
+ },
+ "boss_home": {
+  "opens_when": "last_light_to_lair",
+  "first_time_only": true
+ },
+ "exit": {
+  "gated_by": "boss_driven_home_first_time",
+  "stays_open": true,
+  "cue": "stone_seal"
+ },
+ "secret": {
+  "opening": {
+   "kind": "stone_seal",
+   "visible_from_start": true,
+   "blocked_until": "boss_driven_home_first_time",
+   "joins": "same_floor",
+   "loading_screen": false
+  },
+  "artifact": {
+   "kind": "scroll_or_tome",
+   "lies": "end_of_secret_rooms",
+   "marks": "the_cultures_own_real_marks"
+  }
+ },
+ "phase_two": {
+  "trigger": "artifact_taken",
+  "applies_to": "every_boss",
+  "blackout": {
+   "flames": "all",
+   "relit_holders": "out",
+   "torch_in_hand": "out",
+   "hearth": "out",
+   "relight": false
+  },
+  "light": "ambient_only",
+  "boss": {
+   "emerges": true,
+   "speed_mult": 1.2,
+   "emerge_after_s": 3.0,
+   "closed_rooms_reopen": true
+  },
+  "exit": "open",
+  "never_breaks": [
+   "never_beaten",
+   "a_hit_is_one_of_three",
+   "wind_up_and_tell_always_play"
+  ],
+  "save": null
+ }
+}

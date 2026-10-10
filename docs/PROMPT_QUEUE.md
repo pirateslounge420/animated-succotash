@@ -110,10 +110,15 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | todo |
 | 79 | §FN.1 | The Aztec temple's stone: a masonry style | todo |
 | 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | todo (after 79) |
-| 81 | §FN.3 | A third floor, drawn by seed | todo |
+| 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |
 | 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
 | 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | waits (80 and 82) |
 | 84 | §FN.4 | The Aztec pyramid on the surface | todo (after 79 and 80) |
+| 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | todo |
+| 86 | §FO.4 | The secret opening, its room and the tome | todo (after 85) |
+| 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | waits (86) |
+| 88 | §FO.1 | The Egyptian stone: big sandstone blocks | todo |
+| 89 | §FO.1 | The Egyptian ruin and the pharaoh in its sarcophagus | waits (87, 88, and Mike's answer to §FO.9 call 2) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1434,7 +1439,7 @@ CHECK (headless): with enabled false, crawler_check, room_pool_check and the oth
 
 ## 81 — A third floor, drawn by seed — §FN.3
 
-**Status:** todo
+**Status:** superseded (§FO.0, 10 Oct: Mike made every ruin one floor; this prompt is not to be built)
 **Mike sees:** Some ruins now go three floors down instead of two. Light a floor and the stone seal grinds open onto the next, as it does on floor one.
 
 ```text
@@ -1490,4 +1495,79 @@ READ: §FN.4 (ambient world building; not a fast-travel landmark; whether you co
 BUILD: (1) A stepped pyramid in the Aztec stone: broad tiers, a stair up one face, a small altar on the flat top, weathered, crumbling, overgrown only as the surface's climate allows. (2) It stands on land (never water), in view from where you come up, as a landmark the eye is led to; the stair up from the dungeon comes out beside it for now (inside or beside is open). (3) It is scenery only: no fast travel, no beacon, no exit, no gameplay number; walking up its stair is just walking. (4) It stands only where the Aztec temple does: read aztec_temple.json → enabled (prompt 80), so with that false nothing changes.
 
 CHECK (headless): with enabled false, surface_check passes with the same counts; with it true there is exactly one pyramid, on land, visible from the arrival point, its stair walkable and its top reachable, and no gameplay number or exit differs. Walkabout once at dusk: the pyramid against the sky from the arrival point.
+```
+
+## 85 — One floor per ruin, and the way up opens when the boss is first driven home — §FO.2, §FO.3
+
+**Status:** todo
+**Mike sees:** Every ruin is one floor. Light every torch and the boss goes home to its lair; the stone grinds and the way up to the surface opens. There is no stair down and no darker second floor.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time (68 and 69 are built). This pass builds ONE thing: design §FO.2 and the exit half of §FO.3: one floor per ruin, and the way up opening when the boss is first driven home. It builds no secret room (86), no blackout (87) and nothing Egyptian (88, 89). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FO.0 to §FO.3 and §FO.9 call 3; §FM.6, §FN.3 (superseded: queue 81 is not to be built), §EX.4, §EX.5, §EY.2; data/ruin_loop.json (floors, boss_home, exit and their _help); data/descent.json (floors, fork, floor_two and their _help); data/audio.json stone_seal; scripts/crawler/tomb_floors.gd, fork.gd, relight_gate.gd, floor_fog.gd, way_out.gd, boss.gd (release), tomb_kit.gd, crawler_save.gd.
+
+BUILD: (1) A ruin has one floor: read ruin_loop.json floors.count where descent.json floors.count is read now, and set descent.json floors.count to 1 with §FO.2 in its _help. The stair down is not built and floor two's fog is not drawn; leave that code in place, switched off by data (never delete it), and say which keys you read. (2) The way up opens when the boss is first driven home: §EY.2's release, every torch lit and the boss gone down its lair. Add ruin_loop.json → exit.sealed_until_home, default true (Mike's word, §FO.3), with a _help line naming §EX.5's 'an exit always exists' and §FO.9 call 3: true seals the way up until then; false keeps it open from the start as built today. When it opens, the stone_seal grinding plays, heard as far as it is now. (3) First time only, and kept: crawler_save keeps the exit open on Continue. (4) The room pool fills the one floor as it filled floor one. Nothing else about the boss changes.
+
+CHECK (headless): over 100 seeds every dungeon is one floor with no stair down and no fog node; light every torch and the boss is in its lair and the way up is open, and it stays open after a save and Continue; before the last light, with sealed_until_home true, the way up is sealed, and with it false it is open as before; fork_check, fog_check, room_pool_check, boss_check and crawler_save_check pass, or are updated to say one floor (name each change). Walkabout once: light the floor, hear the stone, walk out.
+```
+
+## 86 — The secret opening, its room and the tome — §FO.4
+
+**Status:** todo (after 85)
+**Mike sees:** A sealed way you can see from the start. When the boss goes home it grinds open onto rooms joined to the ruin, with no loading screen, and at the end lies a scroll or tome you can take. Taking it does nothing else yet.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 85. This pass builds ONE thing: design §FO.4, the secret opening, its rooms and the tome, and nothing else. It builds no blackout and no angry boss (87). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FO.3, §FO.4 and §FO.9 call 5; §FM.4 (the game-wide secret layer: a different idea, untouched), §FM.5, §FM.6, §EX.5; data/ruin_loop.json (secret and its _help); data/room_pool.json; data/tomes.json; data/audio.json stone_seal; scripts/crawler/tomb_kit.gd, tomb_build.gd, tomb_floors.gd, room_pool.gd, room_pool_build.gd, relight_gate.gd, tome_pages.gd.
+
+BUILD: (1) From the dungeon's seed (§FK.2) the generator plans one secret wing on the floor: one or two rooms, built in the ruin's one stone, joined to the floor by one opening. The opening is placed where it can be seen from a main route as you walk (the thing to get right: you see a way you cannot pass), and it never sits on the way out (§EX.5). (2) The opening is a stone seal (ruin_loop.json secret.opening.kind) with collision until the boss is first driven home, then it slides open with the stone_seal grinding (prompt 85). The wing is the same floor and the same scene: no loading screen, no new world. (3) The wing has no sconces of its own and does not count toward the floor's lit test (§FF.2); you carry your torch in. (4) One scroll or tome lies at the end of the wing, in the ruin's culture's own real marks (§FN.5.1), never named on screen. Use tome_pages.gd's page object if it fits, else a plain scroll model; you pick it up with the usual interact and it joins your collection (§FM.5). Taking it does nothing else yet: prompt 87 hangs phase two on it. Say which you used and whether it counts as one of §FM.5's pages (§FO.9 call 5 is open).
+
+CHECK (headless): over 100 seeds every ruin has exactly one secret wing, joined by one opening that is visible from a main route and is not on the way out; the same seed gives the same plan; the wing is unreachable before the boss goes home and reachable after; the floor's lit test is unchanged with the wing present; the tome can be taken once; crawler_check, room_pool_check and tome_pages_check pass. Walkabout once: see the sealed way, light the floor, walk in, take the tome.
+```
+
+## 87 — Phase two: the blackout, and the boss's angry round — §FO.5, §FO.6
+
+**Status:** waits (86)
+**Mike sees:** Take the tome and every flame in the ruin goes out, the hearth and your own torch too, and nothing can be relit. The boss comes out again, faster and meaner, and you run for the exit on whatever light the place has without fire. The snake does it first.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 86. This pass builds ONE thing: design §FO.5 and §FO.6, phase two, and nothing else. The snake is the boss built, so it is the first test; no new boss. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FO.5, §FO.6 and §FO.9 calls 1, 4 and 7; §EY (rule, release), §FM.1 (never beaten; the pool's never_breaks), §FD (three hits), §FA (fire pots), §ET.3 (you wake at the hearth); data/ruin_loop.json (phase_two and its _help); data/bosses.json (rule, release, bosses.desert), data/boss_pool.json, data/torch.json, data/harm.json; scripts/crawler/boss.gd, boss_pool.gd, boss_ground.gd, crawler_fires.gd, light_field.gd, half_dark.gd, vents.gd, glow_moss.gd, fire_pots.gd, crawler_save.gd; tools/boss_snake_check.gd.
+
+BUILD: (1) The trigger is taking the tome (prompt 86). It puts out every flame: every relit holder and planted torch, the torch in your hand and the hearth fire. Nothing can be lit again: unlit torches stay unlit, a fire pot cannot be lit, the hearth cannot relight them (ruin_loop.json phase_two.blackout). The code that keeps a relit holder lit (§ET.4) and the torch hold hold everywhere else; only phase two overrides them. (2) The dark is ambient light only: count only what the place gives off without a flame. First guess: the day and night shafts from above (vents.gd, on the one clock), glow moss and anything else the look rules let glow. Say which sources you counted; Mike answers §FO.9 call 4. (3) The boss comes out again: it leaves its lair (the release reversed: its long cry travelling up from its hole, over emerge_after_s from the data), prowls the whole floor (no room is lit, so none is closed to it), and runs at its own speeds times phase_two.boss.speed_mult. Do it for any boss key through the one code path, no per-boss code; the snake is the one you can test. (4) Everything else holds: never beaten; three hits and Good night; every wind-up and tell plays; its pool is unchanged. 'Good night' wakes you at the hearth as built, in the dark; say what you saw (§FO.9 call 1). (5) The way up stays open and walking out ends the visit as it does now. (6) Save: first guess is that the blackout is kept, so Continue loads the dark (otherwise quitting restores the lights); put it in ruin_loop.json phase_two.save (true), say so in its _help, and flip by data if Mike answers otherwise (§FO.9 call 7).
+
+CHECK (headless): after the tome, no holder, torch or hearth is lit and none can be lit (hearth, sconce, pot, torch); the lit-holder count is zero; the snake emerges after emerge_after_s and its hunt speed is the base times speed_mult, still under the 5.6 sprint; no room is closed to it; the way up is open and reachable on foot with no flame; three hits end in Good night and a wake by the hearth; a save and Continue mid-blackout loads the dark; boss_check, boss_snake_check, boss_pool_check, fire_pot_check, crawler_harm_check and crawler_save_check pass. Walkabout once: take the tome, the dark, the run.
+```
+
+## 88 — The Egyptian stone: big sandstone blocks — §FO.1
+
+**Status:** todo
+**Mike sees:** Nothing in the crawler yet. The game can now cut a ruin in big squared sandstone blocks, so the Egyptian ruin has its own look and no other culture's stone is touched.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time. This pass builds ONE thing: design §FO.1's stone, a masonry.json style for the Egyptian ruin, and nothing else. It does not change any stone already in use. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FO.1 and §EX.1 (one ruin, one stone: floor, ceiling, doors, stairs, niches, sconces, stone dressing and rubble cut from the walls' own stone); data/masonry.json (styles, style_by_theme, andean_tomb and the prompt 79 style aztec_temple as models); data/ruins.json → styles.true_pyramid (the nearest existing source, not wired); data/ruin_compass.json → ruins.egypt; docs/design/RUIN_ROSTER_REFERENCE.md; scripts/crawler/ruin_style.gd and fitted_stone.gd; §EU (relief in real geometry, settled with age; firelit stone underground may go amber, §EU.6) and §ES (painted).
+
+BUILD: (1) A new style egyptian_pyramid in masonry.json, additive, with its own _help: very large squared sandstone blocks in even courses with tight, straight joints (Mike: 'big sandstone blocks'), pale to ochre, settled with age and wind-worn, relief possible on its faces; shade in the scene's navy, never grey; every stone surface cut from the same stone (no_general_palette true). Doors: a flat lintel over a square opening. Claude's note, from its own knowledge and not a source opened: Giza itself is mostly limestone and the big sandstone-block temples are Karnak, Luxor and Abu Simbel; build the sandstone Mike asked for. (2) Register it as a new style_by_theme key (egyptian_pyramid), changing no existing entry.
+
+CHECK (headless): the existing masonry and crawler checks pass with the same counts; every existing style is unchanged byte for byte; the new style builds a wall, a floor, a ceiling, a door, a stair and a niche all in the one stone, with no surface taking the general palette. Walkabout once: an Egyptian test room beside a tomb room and an Aztec one, reading as three different stones.
+```
+
+## 89 — The Egyptian ruin and the pharaoh in its sarcophagus — §FO.1
+
+**Status:** waits (87 and 88, and Mike's answer to §FO.9 call 2)
+**Mike sees:** An Egyptian ruin of big sandstone blocks, with mummies waking in their sarcophagi and a mummy pharaoh who prowls the dark, its own sarcophagus its lair: the lid grinds aside as it comes out and grinds shut when the last light sends it home.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompts 87 and 88 and Mike's answer to §FO.9 call 2 (which biome world holds the Egyptian ruin). If he hasn't answered, say so to Mike and stop. This pass builds ONE thing: design §FO.1, the Egyptian ruin kind and its pharaoh, and nothing else. No brew, no plant, no surface silhouette (§FO.7). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FO.1, §FO.7 and §FO.9 calls 2 and 6; §FJ.2 and §FN.0 call 2 (the mummy and sarcophagi are Egypt's); §EY.3 and §FM.1; data/bosses.json → unplaced.pharaoh and _help.pharaoh; data/residents.json → creatures.mummy; data/masonry.json (egyptian_pyramid, prompt 88); data/room_pool.json; scripts/crawler/boss.gd, boss_body.gd, boss_ground.gd, boss_pool.gd, residents.gd, resident.gd, tomb_build.gd, tomb_kit.gd, room_pool.gd.
+
+BUILD: (1) The Egyptian ruin as a kind the generator can build, in the egyptian_pyramid stone, one floor, drawn by the dungeon's seed (§FK.2). Add egyptian_pyramid.json → enabled, default false, read where the first ruin is drawn; with it false the game plays exactly as now. Do not choose a world: use the one Mike named. (2) Sarcophagi with ordinary mummies (residents.json mummy, the waker: its lid grinds aside) laid by the generator as the skeletons are. (3) The pharaoh: move its entry from bosses.json unplaced to bosses.<world> once Mike names the world, keep its lair block, and add its boss_pool.json entry with 'rounds' only (boss_pool_check counts one pool per boss in bosses). Its body is its own, as the snake's is (§FO.1). Its lair is its own sarcophagus: put it in the pharaoh's chamber at the base of the floor; the lid grinds aside while it prowls and grinds shut when the last light drives it in, through §EY.2's release as built for the snake; a ring of collision keeps you at its edge (enterable false). Its numbers are Claude Code's first guesses, slow and unhurried to start, in data with _help, and Mike tunes. No strike block yet beyond what boss.gd needs, with a tell distinct from the mummy resident's. Phase two (prompt 87) applies to it with no per-boss code.
+
+CHECK (headless): with enabled false everything passes with the same counts; with it true, over 100 seeds every Egyptian ruin has its pharaoh's chamber with one sarcophagus, mummies in sarcophagi, one floor, a plan reachable with every holder cold and the same plan for the same seed; the lid is open while the pharaoh prowls and shut once it is home; boss_check, boss_pool_check, residents_check and the prompt 85 to 87 checks pass. Walkabout once: the chamber, the lid.
 ```
