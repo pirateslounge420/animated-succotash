@@ -101,7 +101,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 69 | §FM.6 | Floor two's fog: the same stone, darker | built a490eda |
 | 70 | §FM.6 | The room pool: hand-built big rooms shuffled into each run | built fae9712 |
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | built 0181fcf |
-| 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | waits (67, 71) |
+| 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | built 376cf23 |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | todo |
 | 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
@@ -1292,7 +1292,7 @@ CHECK (headless, tools/crawler_check.gd): the stair up arrives on the surface at
 
 ## 72 — Harvest and brew: a plant from above, a brew from the shaman — §FM.7
 
-**Status:** waits (prompts 67 and 71; the plant entries are written, §FM.9)
+**Status:** built 376cf23
 **Mike sees:** On the surface you find the local sacred plant and take part of it, carry it down to the shaman, and he brews it in the cauldron. What you drink is a different experience for each plant.
 
 ```text
