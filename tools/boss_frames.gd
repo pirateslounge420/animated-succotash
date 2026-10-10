@@ -12,7 +12,11 @@ extends SceneTree
 ## once it has gone down its hole for good; and (Mike's note of 7 Oct) the
 ## snake at the edge of the hearth's light, its head forward into the glow,
 ## seen from by the fire through the hearth room's door, with it hidden to
-## count it; one of its tunnels' holes by torchlight.
+## count it; one of its tunnels' holes by torchlight. ONLY=freeze renders
+## the freeze alone (design 9 Oct §FM.2, queue 66; _freeze_frame): the
+## snake frozen about 20 m off in a corridor lit by one of its sconces, its
+## camouflage on (17), with it hidden (17b) and with its camouflage off, as
+## painted (17c), counting how much of it shows in each.
 ## Checks: every cell of every sheet holds the body; the snake shows at
 ## the torch's edge (pixels that change when it is hidden, warm-lit); the
 ## hole's mouth is the darkest thing round it; the snake shows at the edge
@@ -77,6 +81,10 @@ func _around(img: Image, at: Vector2, r: int) -> Color:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The snake on its built rounds (queue 49's behaviour, its pool's
+	# 'rounds'), as these checks test it: its pool's own states (design
+	# §FM.2, queue 66) are tools/boss_snake_check.gd's.
+	Boss.pool_off = true
 	# The tomb's skeletons sleep through this check (design §FE; queue 58).
 	Residents.stay_asleep = true
 	# Pictures, not a burn test: the torch never burns out mid-run (§FJ.4).
@@ -98,6 +106,12 @@ func _run() -> void:
 	main.world.days = 13.0
 	# Nothing in these frames may take you.
 	p._invulnerable = 1.0e6
+	if OS.get_environment("ONLY").split(",", false).has("freeze"):
+		# Only the freeze (design §FM.2, queue 66).
+		await _freeze_frame(main)
+		print("RESULT fails: %d (frames in %s)" % [fails, out_dir])
+		quit(1 if fails > 0 else 0)
+		return
 	_sheets(b)
 	# Out to the edge of the light: you in the corridor outside its dead end,
 	# your torch lit, facing its door; it has seen you.
@@ -225,6 +239,264 @@ func _run() -> void:
 		ok(_luma(mouth) < _luma(rim) * 0.3 and mouth.b > mouth.r, "the hole's mouth is the dark's navy against its firelit edge")
 	print("RESULT fails: %d (frames in %s)" % [fails, out_dir])
 	quit(1 if fails > 0 else 0)
+
+
+## The freeze (design 9 Oct §FM.2, queue 66; ONLY=freeze): the snake frozen
+## about 20 m down a corridor lit by one of its sconces (its own stretch
+## still its dark: the stretch's other end cold), the sconce on your side of
+## it where one is and as much of its length in view as can be, seen from
+## where you stand in a corridor with your torch lit, looking just over it
+## (so the reticle is clear of it), all of it farther than from_m[0]
+## (17_snake_frozen); the same with it hidden (17b), and the same with its
+## camouflage off, its colours as painted (17c). Then you walk up to about
+## 8.5 m of it, still frozen (close_m is 7): 17e frozen, 17f hidden, 17g as
+## painted. Time stands still for each three (Engine.time_scale 0: the
+## fires' flicker held), so only the snake differs: over the pixels it
+## covers, how far it stands out from the stone behind it (RGB),
+## camouflaged and as painted. 17d and 17h: each pair side by side, cropped
+## round it and blown up, to look at.
+func _freeze_frame(main: CrawlerMain) -> void:
+	var b := main.boss
+	var p := main.player
+	var def: Dictionary = ((BossPool.DATA.get("pools", {}) as Dictionary).get("desert", {}) as Dictionary).get("freeze_watched", {})
+	var lo := float((def.get("from_m", [12.0, 60.0]) as Array)[0])
+	var close_m := float(def.get("close_m", 7.0))
+	if not p.inventory.has_kind("torch"):
+		p.inventory.add(Inventory.make("torch"))
+	p.weapon = "torch"
+	p.torch.light()
+	# Candidates: a stretch of corridor with a sconce at one end and its other
+	# end dark, the snake laid along it, the sconce's light on its head; and
+	# a spot about 20 m off its head on open floor, in a corridor (else a
+	# room, never the hearth room), all of it at least from_m[0] + 1 off,
+	# nothing between.
+	var cands: Array = []
+	for id in range(b.ground.nodes.size()):
+		var n: Dictionary = b.ground.nodes[id]
+		if str(n.kind) != "stretch" or not b.ground.is_ground(id) or (n.ends as Array).size() < 2:
+			continue
+		var ends: Array = n.ends
+		for ei in ends.size():
+			var e: Dictionary = ends[ei]
+			if str(e.type) != "sconce":
+				continue
+			var other: Dictionary = ends[1 - ei] if ends.size() == 2 else {}
+			if other.is_empty() or str(other.type) == "open":
+				continue
+			if str(other.type) == "door" and not b.ground.is_ground(int(other.node)):
+				continue
+			if str(other.type) == "sconce" and FireStore.is_lit(main.fires.holders[int(other.holder)]):
+				continue
+			b._lie_along(id)
+			b._pose()
+			var hp := b.head + Vector3(0.0, 0.25, 0.0)
+			var h: Node3D = main.fires.holders[int(e.holder)]
+			var fl := LightField.fire_light(h)
+			var dl := (fl.pos as Vector3).distance_to(hp)
+			if dl >= float(fl.range) or b._blocked(fl.pos, hp, false):
+				continue
+			var w := 1.0 - pow(dl / float(fl.range), 4.0)
+			var lv := float(fl.energy) * w * w / pow(maxf(dl, 1.0), float(fl.att))
+			if lv < 0.03:
+				continue
+			var body: Array = b._body_pts(0.5)
+			for k in 72:
+				var a := TAU * k / 72.0
+				for r: float in [20.0, 19.5, 20.5, 19.0, 21.0]:
+					var q := hp + Vector3(cos(a), 0.0, sin(a)) * r
+					var c := b.nav.nearest_open(b.nav.cell_of(q), 2)
+					if c.x < 0:
+						continue
+					q = b.nav.point_of(c)
+					var dq := Vector2(q.x - hp.x, q.z - hp.z).length()
+					if dq < 18.5 or dq > 21.5 or absf(q.y - b.head.y) > 1.5:
+						continue
+					var qn := b.ground.node_at(q)
+					if qn < 0 or bool(b.ground.nodes[qn].hearth) or b.on_way_out(q):
+						continue
+					var near := INF
+					var a_min := INF
+					var a_max := -INF
+					var fwd := Vector2(hp.x - q.x, hp.z - q.z).normalized()
+					for bp: Vector3 in body:
+						var rel := Vector2(bp.x - q.x, bp.z - q.z)
+						near = minf(near, rel.length())
+						var ang := rad_to_deg(fwd.angle_to(rel))
+						a_min = minf(a_min, ang)
+						a_max = maxf(a_max, ang)
+					if near < lo + 1.0:
+						continue
+					if b._blocked(q + Vector3(0.0, p.eye_height(), 0.0), hp, false):
+						continue
+					var corridor := str(b.ground.nodes[qn].kind) == "stretch"
+					# Lit from your side: the sconce on your side of its head, so
+					# its light falls on the side of it you see (a sprite lit
+					# from behind is a dark shape whatever its colours).
+					var to_l := (fl.pos as Vector3) - hp
+					var to_q := q - hp
+					var front := to_l.x * to_q.x + to_l.z * to_q.z > 0.0
+					cands.append({"node": id, "holder": int(e.holder), "spot": q, "light": lv, "corridor": corridor, "front": front,
+						"ext": a_max - a_min, "off": absf(dq - 20.0), "near": near})
+	cands.sort_custom(_freeze_order)
+	# The first that holds in the game: its sconce lit, the snake laid, you
+	# there looking at it, and it watched (BossStalk.watched).
+	var pick := {}
+	var tried := 0
+	for cd in cands.slice(0, 24):
+		tried += 1
+		var h2: Node3D = main.fires.holders[int(cd.holder)]
+		if not FireStore.is_lit(h2):
+			FireStore.swing_light(h2, float(main.world.get("days")))
+			for i in 600:
+				FireStore.tick(self, 1.0 / 60.0, h2.global_position)
+				if FireStore.is_lit(h2):
+					break
+		b._lie_along(int(cd.node))
+		b.tick(1.0 / 30.0)
+		if b.node != int(cd.node) or not b.ground.is_ground(b.node):
+			continue
+		_look_over(p, cd.spot, b)
+		await _frames(2)
+		if BossStalk.watched(b, def):
+			pick = cd
+			break
+	var at_d := Vector2((pick.get("spot", Vector3.ZERO) as Vector3).x - b.head.x, (pick.get("spot", Vector3.ZERO) as Vector3).z - b.head.z).length() if not pick.is_empty() else -1.0
+	ok(not pick.is_empty(), "a corridor to freeze it in: stretch %d, its sconce %d lit (%.3f on its head, lit from %s), you %.1f m off its head in %s, all of it at least %.1f m off, %.0f degrees of your view across (%d of %d places tried)" % [int(pick.get("node", -1)), int(pick.get("holder", -1)), float(pick.get("light", 0.0)), "your side" if bool(pick.get("front", false)) else "beyond it", at_d, "a corridor" if bool(pick.get("corridor", false)) else "a room", float(pick.get("near", 0.0)), float(pick.get("ext", 0.0)), tried, cands.size()])
+	if pick.is_empty():
+		return
+	# Its rounds don't take you up meanwhile (a frames' placing).
+	b.let_go_t = 1.0e6
+	b.set_pool(BossPool.from_dict({"freeze_watched": def}, BossPool.RULE, "frames"))
+	var t := 0.0
+	while t < 2.0 and b.behaviour != "freeze_watched":
+		b.tick(1.0 / 30.0)
+		t += 1.0 / 30.0
+	var froze := b.behaviour == "freeze_watched"
+	for i in 60:
+		b.tick(1.0 / 30.0)
+	ok(froze and b.node == int(pick.node) and b.ground.is_ground(b.node) and b.camo > 0.25, "frozen %.1f m off its head (its nearest %.1f m) in its dark stretch, its camouflage %.2f" % [BossStalk.to_you(b), BossStalk.nearest_part_m(b), b.camo])
+	await _frames(6)
+	var far := await _freeze_shots(main, ["17_snake_frozen", "17b_same_without_it", "17c_same_unfrozen", "17d_crop_frozen_and_painted"])
+	ok(int(far.shown) > 10 and float(far.mean) > 0.03, "at 20 m, frozen, it still shows: readable on a second look (%d pixels, standing out %.3f from the stone behind; as painted %.3f: %.0f%% as much)" % [int(far.shown), float(far.mean), float(far.mean_plain), float(far.share) * 100.0])
+	# You walk up to about 8.5 m of it (outside close_m), looking at it: still
+	# frozen, camouflaged.
+	var head0 := b.head
+	var spot: Vector3 = pick.spot
+	var dv := Vector3(spot.x - head0.x, 0.0, spot.z - head0.z).normalized()
+	var near_spot := Vector3.INF
+	for k in 40:
+		var r := 6.0 + 0.25 * k
+		var q := head0 + dv * r
+		var c := b.nav.nearest_open(b.nav.cell_of(q), 2)
+		if c.x < 0:
+			continue
+		q = b.nav.point_of(c)
+		var m := INF
+		for bp: Vector3 in BossStalk.look_points(b):
+			m = minf(m, Vector2(bp.x - q.x, bp.z - q.z).length())
+		if m >= close_m + 1.3 and not b._blocked(q + Vector3(0.0, p.eye_height(), 0.0), b.head + Vector3(0.0, 0.25, 0.0), false):
+			near_spot = q
+			break
+	ok(near_spot.is_finite(), "a spot about 8.5 m off it on the way you came (%s)" % str(near_spot))
+	if not near_spot.is_finite():
+		return
+	_look_over(p, near_spot, b)
+	for i in 15:
+		b.tick(1.0 / 30.0)
+	ok(b.behaviour == "freeze_watched" and b.camo > 0.25, "walked up to %.1f m of it (close_m %.0f), it is still frozen, its camouflage %.2f" % [BossStalk.nearest_part_m(b), close_m, b.camo])
+	await _frames(6)
+	var near := await _freeze_shots(main, ["17e_frozen_8m", "17f_without_it_8m", "17g_unfrozen_8m", "17h_crop_8m"])
+	ok(int(near.shown) > 10 and float(near.share) < 0.97, "at 8.5 m, frozen, it stands out less than as painted, and still shows (%.0f%% as much: %.3f against %.3f, %d pixels)" % [float(near.share) * 100.0, float(near.mean), float(near.mean_plain), int(near.shown)])
+
+
+## You at `at`, looking at the snake's head from just above it (so the
+## reticle is clear of it, and the snake well inside look_deg).
+func _look_over(p: CrawlerPlayer, at: Vector3, b: Boss) -> void:
+	var hp := b.head + Vector3(0.0, 0.25, 0.0)
+	var eye := at + Vector3(0.0, p.eye_height(), 0.0)
+	var d := Vector2(hp.x - eye.x, hp.z - eye.z).length()
+	var aim := hp + Vector3(0.0, tan(deg_to_rad(5.0)) * d, 0.0)
+	var v := aim - eye
+	p.spawn_flat(at, atan2(-v.x, -v.z), atan2(v.y, Vector2(v.x, v.z).length()))
+
+
+## Three shots with time held still (the fires' flicker held): the snake as
+## it is, hidden, and with its camouflage off (as painted); then its pixels
+## (where it shows, either way, against the stone behind it) measured, and
+## the pair cropped round it and blown up (names[3]). {"shown" (its pixels
+## showing as it is), "mean", "mean_plain" (how far it stands out, RGB),
+## "share" (as it is against as painted)}.
+func _freeze_shots(main: CrawlerMain, names: Array) -> Dictionary:
+	var b := main.boss
+	Engine.time_scale = 0.0
+	await _frames(3)
+	var img := await _shot(str(names[0]))
+	b.body.visible = false
+	await _frames(3)
+	var bare := await _shot(str(names[1]))
+	b.body.visible = true
+	var th := str(main.lay.get("theme", ""))
+	b.body.set_camouflage(0.0, RuinStyle.tint(th), RuinStyle.spread(th))
+	await _frames(3)
+	var plain := await _shot(str(names[2]))
+	b.body.set_camouflage(b.camo, RuinStyle.tint(th), RuinStyle.spread(th))
+	Engine.time_scale = 1.0
+	var box := Rect2(_px(img, b.head + Vector3(0.0, 0.25, 0.0)), Vector2.ZERO)
+	for sp in b.body.all_sprites():
+		var q2 := _px(img, sp.global_position + Vector3(0.0, 0.2, 0.0))
+		if q2.x >= 0.0:
+			box = box.expand(q2)
+	box = box.grow(16.0)
+	var shown := 0
+	var sums := [0.0, 0.0]
+	var mask := 0
+	for y in range(maxi(int(box.position.y), 0), mini(int(box.end.y), img.get_height())):
+		for x in range(maxi(int(box.position.x), 0), mini(int(box.end.x), img.get_width())):
+			var cb := bare.get_pixel(x, y)
+			var dz := _rgb_d(img.get_pixel(x, y), cb)
+			var dp := _rgb_d(plain.get_pixel(x, y), cb)
+			if dz <= 0.03 and dp <= 0.03:
+				continue
+			mask += 1
+			sums[0] = float(sums[0]) + dz
+			sums[1] = float(sums[1]) + dp
+			if dz > 0.03:
+				shown += 1
+	var out := {"shown": shown, "mean": float(sums[0]) / maxf(mask, 1), "mean_plain": float(sums[1]) / maxf(mask, 1),
+		"share": float(sums[0]) / maxf(float(sums[1]), 1e-6)}
+	print("  %s: over its %d pixels it stands out %.3f (RGB, mean) from the stone behind, %d of them showing; as painted %.3f: %.0f%% as much" % [str(names[0]), mask, float(out.mean), shown, float(out.mean_plain), float(out.share) * 100.0])
+	var cr := box.intersection(Rect2(Vector2.ZERO, Vector2(img.get_width(), img.get_height())))
+	if cr.size.x >= 4.0 and cr.size.y >= 4.0:
+		var ri := Rect2i(cr)
+		var a1 := img.get_region(ri)
+		var a2 := plain.get_region(ri)
+		var both := Image.create(ri.size.x * 2 + 4, ri.size.y, false, a1.get_format())
+		both.fill(Color.BLACK)
+		both.blit_rect(a1, Rect2i(Vector2i.ZERO, ri.size), Vector2i.ZERO)
+		both.blit_rect(a2, Rect2i(Vector2i.ZERO, ri.size), Vector2i(ri.size.x + 4, 0))
+		var scale := clampi(int(480.0 / maxf(ri.size.y, 1.0)), 1, 4)
+		both.resize(both.get_width() * scale, both.get_height() * scale, Image.INTERPOLATE_NEAREST)
+		both.save_png(out_dir.path_join(str(names[3]) + ".png"))
+		print("  frame %s (frozen left, as painted right)" % str(names[3]))
+	return out
+
+
+## The freeze frame's places, the likeliest first: lit from your side, then
+## in a corridor, then as much of its length across your view as can be,
+## then nearest 20 m off its head.
+func _freeze_order(x: Dictionary, y: Dictionary) -> bool:
+	if bool(x.front) != bool(y.front):
+		return bool(x.front)
+	if bool(x.corridor) != bool(y.corridor):
+		return bool(x.corridor)
+	if absf(float(x.ext) - float(y.ext)) > 2.0:
+		return float(x.ext) > float(y.ext)
+	return float(x.off) < float(y.off)
+
+
+## RGB distance between two colours.
+func _rgb_d(a: Color, c: Color) -> float:
+	return Vector3(a.r - c.r, a.g - c.g, a.b - c.b).length()
 
 
 ## The snake at the edge of the hearth's light, its head forward into the

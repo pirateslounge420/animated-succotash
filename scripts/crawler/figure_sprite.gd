@@ -34,6 +34,12 @@ var _t := 0.0
 var _mat: ShaderMaterial
 ## The frame shown now [around index, row, idle frame] (tests).
 var shown := Vector3i.ZERO
+## Its camouflage (design §FM.2, set_blend): the share its colours move
+## toward `blend_color` (0 as painted), each stone of it straying by
+## `blend_spread`. Colour only, never its alpha.
+var blend_k := 0.0
+var blend_color := Color(0.5, 0.5, 0.5)
+var blend_spread := 0.0
 
 
 ## The sheet for the figure `body` (a node at the origin, its feet at 0,
@@ -128,11 +134,40 @@ func setup(sheet: Image, height_m: float, n_frames: int, eye: float, face_yaw: f
 	_mat.shader = preload("res://shaders/figure_sprite.gdshader")
 	_mat.set_shader_parameter("atlas", atlas)
 	_mat.set_shader_parameter("grid", Vector2(around * frames, rows_deg.size()))
+	_apply_blend()
 	Look.register(_mat)
 	material_override = _mat
 	cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	# Room round the quad as it turns.
 	custom_aabb = AABB(Vector3(-1.0, -0.2 * height_m, -1.0), Vector3(2.0, height_m * 1.4, 2.0))
+
+
+## Its colours moved toward `color` by share `k` (design 9 Oct §FM.2, the
+## snake's camouflage; BossBody.set_camouflage), each stone of it straying
+## lighter or darker by `spread`: the texture and its value only, never its
+## alpha, so the sprite is never transparent.
+func set_blend(k: float, color: Color, spread := 0.0) -> void:
+	blend_k = clampf(k, 0.0, 1.0)
+	blend_color = color
+	blend_spread = spread
+	_apply_blend()
+
+
+func _apply_blend() -> void:
+	if _mat == null:
+		return
+	_mat.set_shader_parameter("blend_k", blend_k)
+	_mat.set_shader_parameter("blend_color", blend_color)
+	_mat.set_shader_parameter("blend_spread", blend_spread)
+
+
+## The share its colours are moved now, as the material has it (tools: the
+## tint sampled).
+func blend_now() -> float:
+	if _mat == null:
+		return blend_k
+	var v: Variant = _mat.get_shader_parameter("blend_k")
+	return float(v) if v != null else 0.0
 
 
 ## The frame for a camera at `cam` (scene): [around index, row].

@@ -52,6 +52,8 @@ var weights: Array[float] = []
 var defs: Dictionary = {}
 ## One unit per live state, its own (id -> BossState).
 var units: Dictionary = {}
+## Its live states that may cut in (BossState.cuts_in; queue 66).
+var cut_ins: Array[String] = []
 ## The ids in its entry that no code registers (skipped).
 var skipped: Array[String] = []
 var repeat_gap := 1
@@ -161,6 +163,8 @@ static func from_dict(states: Dictionary, rule: Dictionary = RULE, label := "", 
 		p.weights.append(w)
 		p.defs[id] = e
 		p.units[id] = u
+		if u.cuts_in():
+			p.cut_ins.append(id)
 	if p.ids.is_empty():
 		# Nothing it can do of its own: its built behaviour.
 		var r := make_unit("rounds")
@@ -230,6 +234,28 @@ func draw(can: Callable = Callable()) -> String:
 		recent.pop_front()
 	draws += 1
 	return id
+
+
+## State `id` cutting in now (BossState.cuts_in, queue 66: its needs have
+## just begun to hold): it takes over from `in_charge` by its weight against
+## that one's, w / (w + w in charge), on its own dice (always, with nothing
+## in charge; never, if it is the one in charge). True if it does: that is
+## a draw (counted, and remembered for repeat_gap); else the one in charge
+## goes on as it was.
+func draw_cut_in(id: String, in_charge: String) -> bool:
+	var i := ids.find(id)
+	if i < 0 or id == in_charge:
+		return false
+	var w := weights[i]
+	var j := ids.find(in_charge)
+	var wc := weights[j] if j >= 0 else 0.0
+	if rng.randf() * (w + wc) >= w:
+		return false
+	recent.append(id)
+	while recent.size() > maxi(repeat_gap, 1):
+		recent.pop_front()
+	draws += 1
+	return true
 
 
 ## How long state `id` lasts (s): its dwell_s, [min, max] on its own dice

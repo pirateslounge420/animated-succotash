@@ -9,9 +9,11 @@ extends BossState
 
 ## From another state: back on its rounds from where that one left it
 ## (coiling or prowling, it carries on; anything else, it sets off on its
-## next round). From nothing or from itself, nothing changes.
+## next round). From itself, nothing changes; from nothing (the first draw,
+## a pool swapped), only a state of another's own is left (queue 66: the
+## snake's lie still in states of their own), so on its rounds it goes on.
 func enter(boss: Boss, from: String) -> void:
-	if from == "" or from == id:
+	if from == id:
 		return
 	boss.resume_rounds()
 

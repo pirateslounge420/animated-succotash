@@ -131,6 +131,15 @@ extends Node3D
 ##               the light (lit round it or walked into it, it leaves as
 ##               built) and never waits on the way out (on_way_out,
 ##               EXIT_WAIT_S).
+##   the snake's (design 9 Oct §FM.2, Mike's four; queue 66; BossStalk and
+##               scripts/crawler/boss_states/): freeze_watched (you look at
+##               it from far off: it stops dead, camouflaged toward the
+##               stone, never gone; it may cut in the moment you first
+##               catch sight of it, BossState.cuts_in), doorway_watch,
+##               observe_then_behind and coil_ambush. Those that stalk you
+##               out of your light spend your flame's delay lying back
+##               beyond its edge (begin_strike's held_s); coil_ambush,
+##               walked away from, lets you go (let_go).
 
 static var B: Dictionary = Tuning.table("bosses")
 static var RULE: Dictionary = B.get("rule", {})
@@ -342,6 +351,25 @@ var _way_out_doors: Array = []
 ## The way out's guard tripped: on its built rounds until it is off the way
 ## out, and only then the pool asked again.
 var _clear_way_out := false
+## A state of its pool cutting in (queue 66; BossState.cuts_in), looked for
+## this often (s); each such state's needs as last seen (id -> bool), so it
+## cuts in only on their turning true.
+const CUT_IN_S := 0.2
+var _cut_t := 0.0
+var _cut_was: Dictionary = {}
+## Its camouflage (§FM.2, freeze_watched; boss_pool.json camouflage): the
+## share its sprites have moved toward the stone, easing to camo_want over
+## CAMO_EASE_S, never above camouflage.max_blend (BossBody.set_camouflage).
+const CAMO_EASE_S := 0.8
+var camo := 0.0
+var camo_want := 0.0
+## It has let you go (coil_ambush, walked away from): for this long (s) its
+## rounds don't take you up by sight or hearing (feels_m still does), and
+## the states of its pool that go after you may not come
+## (BossStalk.may_stalk).
+var let_go_t := 0.0
+## Tools: the level its tell is easing to now (dB; -INF silent).
+var tell_want := -INF
 
 
 ## The boss of this dungeon (§EY.8: the tomb's world is open, so the one
@@ -1147,6 +1175,8 @@ func tick(delta: float) -> void:
 	if not started:
 		return
 	clock += delta
+	let_go_t = maxf(let_go_t - delta, 0.0)
+	_camo_tick(delta)
 	if light != null:
 		# (Its own step too: the checks drive it by hand, between the
 		# residents' physics steps.)
@@ -1359,6 +1389,13 @@ func _notice(delta: float) -> void:
 	# burst_heard_m.
 	var flared := not FirePots.flare_seen_from(_eye(), get_world_3d().direct_space_state).is_empty()
 	var burst := _hears_burst()
+	if let_go_t > 0.0:
+		# It has let you go (coil_ambush, walked away from; queue 66): only
+		# you right by it count.
+		seen = false
+		heard = false
+		flared = false
+		burst = false
 	perceives = seen or heard or felt or flared or burst
 	if perceives:
 		if not noticed:
@@ -2302,6 +2339,44 @@ func _pool_step(delta: float) -> void:
 			return
 		_clear_way_out = false
 		_draw_next()
+	elif not _in_tunnel() and not _clear_way_out:
+		_cut_in_step(delta)
+
+
+## A state that may cut in (queue 66, BossState.cuts_in: the freeze, the
+## moment you first catch sight of it from far off): every CUT_IN_S, when
+## its needs turn true and it is not in charge, the pool weighs it against
+## the one in charge (BossPool.draw_cut_in); if it wins it takes over at
+## once (exit, then enter). Only while the boss is free (_pool_step).
+func _cut_in_step(delta: float) -> void:
+	if pool.cut_ins.is_empty():
+		return
+	_cut_t -= delta
+	if _cut_t > 0.0:
+		return
+	_cut_t = CUT_IN_S
+	for id in pool.cut_ins:
+		var now := pool.unit(id).can_enter(self)
+		var was := bool(_cut_was.get(id, false))
+		_cut_was[id] = now
+		if not now or was or id == behaviour:
+			continue
+		var cut := pool.draw_cut_in(id, behaviour)
+		if draw_log.size() >= DRAW_LOG:
+			draw_log.pop_front()
+		draw_log.append({"id": id if cut else "", "state": state, "strike": strike.state, "tunnel": _in_tunnel(), "clock": clock, "cut_in": true})
+		if not cut:
+			continue
+		_end_unit("cut")
+		_pool_due = false
+		behaviour = id
+		_unit = pool.unit(id)
+		_unit.done = false
+		_dwell_left = pool.dwell(id)
+		_exit_wait = 0.0
+		_guard_at = base
+		_unit.enter(self, _prev_behaviour)
+		return
 
 
 ## The next state from the pool. The same one again (only when it is the
@@ -2321,8 +2396,11 @@ func _draw_next() -> void:
 		_end_unit("done" if ended_self else "dwell")
 	_pool_due = false
 	if id == "":
-		# None may come now: its built behaviour meanwhile.
+		# None may come now: its built behaviour meanwhile (back on its
+		# rounds from wherever a state of its own left it: queue 66's leave
+		# it lying still in states of their own, "freeze", "doorway"...).
 		_dwell_left = POOL_RETRY_S
+		resume_rounds()
 		return
 	behaviour = id
 	_unit = pool.unit(id)
@@ -2346,6 +2424,7 @@ func _end_unit(why: String) -> void:
 	_pool_due = true
 	_exit_wait = 0.0
 	states_ended[why] = int(states_ended.get(why, 0)) + 1
+	u.why = why
 	u.exit(self)
 
 
@@ -2395,6 +2474,38 @@ func end_state() -> void:
 		_unit.done = true
 
 
+## The state in charge has begun a move of its own that takes longer than
+## its dwell has left (queue 66: going round behind you, lying in wait once
+## it is there): the pool waits at least `s` more seconds. The rule's
+## moments still end it at once.
+func renew_dwell(s: float) -> void:
+	if _unit != null:
+		_dwell_left = maxf(_dwell_left, s)
+
+
+## It lets you go (queue 66, coil_ambush walked away from): the chase off,
+## and for `s` seconds its rounds don't take you up by sight or hearing,
+## only you right by it (feels_m), and nothing of its pool that goes after
+## you comes (BossStalk.may_stalk).
+func let_go(s: float) -> void:
+	_let_go("let_go")
+	let_go_t = maxf(let_go_t, s)
+
+
+## Its camouflage eased toward camo_want (never above camouflage.max_blend)
+## and shown on its sprites: toward the stone it lies on, the ruin's one
+## stone (RuinStyle), straying by that stone's own spread.
+func _camo_tick(delta: float) -> void:
+	var most := float((BossPool.DATA.get("camouflage", {}) as Dictionary).get("max_blend", 0.5))
+	var want := clampf(camo_want, 0.0, most)
+	if is_equal_approx(camo, want) and (body == null or is_equal_approx(body.camo, camo)):
+		return
+	camo = minf(move_toward(camo, want, delta / maxf(CAMO_EASE_S, 0.01) * maxf(most, 0.01)), most)
+	if body != null:
+		var th := str(lay.get("theme", ""))
+		body.set_camouflage(camo, RuinStyle.tint(th), RuinStyle.spread(th))
+
+
 ## Back on its built rounds from wherever a state of its pool left it (the
 ## pool's 'rounds' taking over from another): coiling or prowling it
 ## carries on; else it sets off on its next round from where it is.
@@ -2418,13 +2529,17 @@ func holding_off() -> bool:
 ## still holds it off it goes into the hold as built, the strike following
 ## from there (torch_hold_holds). Either way the chase is on (Pursuit) and
 ## the state is over (the strike and the chase are the rule's). True if
-## the wind-up began now.
-func begin_strike() -> bool:
+## the wind-up began now. `held_s` (queue 66): how long your lit flame has
+## already held it off, the state lying back beyond the edge of your
+## torch's bright circle (torch_delay.hang_m) while it stalked you: it
+## counts toward torch_delay.hang_s, "in all", as the hold does.
+func begin_strike(held_s := 0.0) -> bool:
 	if player == null or strike.busy() or rule_moment():
 		return false
 	if not noticed:
 		hang_t = 0.0
 		struck = false
+	hang_t = maxf(hang_t, held_s)
 	noticed = true
 	last_seen = player.global_position
 	pursuit.notice(_torch_lit())
@@ -2572,6 +2687,12 @@ func _sound_tick(delta: float) -> void:
 			want = -8.0 if speed < 0.1 else -2.0
 		"stunned":
 			want = -12.0
+		_:
+			# A state of its pool in a state of its own (queue 66): its own
+			# level (BossState.tell_db).
+			if _unit != null and not _unit.built():
+				want = _unit.tell_db(self)
+	tell_want = want
 	var tun := sub("tunnels")
 	var inside := _in_tunnel()
 	if inside and want > -INF:

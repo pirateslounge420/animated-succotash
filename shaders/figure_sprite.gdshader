@@ -16,6 +16,15 @@ render_mode cull_disabled, diffuse_lambert, specular_disabled, depth_prepass_alp
 uniform sampler2D atlas : filter_nearest, source_color;
 uniform vec2 grid = vec2(8.0, 3.0);
 uniform vec2 cell = vec2(0.0, 1.0);
+// A creature's camouflage (design 9 Oct §FM.2, the snake's freeze; Boss,
+// BossBody): its colours moved toward the stone it lies on by blend_k
+// (0 as painted), each stone straying lighter or darker by blend_spread
+// in a mottle of its own, so it takes on the floor's tone and its grain.
+// Colour only: the alpha (the silhouette) is never touched, so it is
+// never transparent and never gone.
+uniform float blend_k = 0.0;
+uniform vec3 blend_color : source_color = vec3(0.5);
+uniform float blend_spread = 0.0;
 
 varying vec3 world_pos;
 
@@ -34,7 +43,17 @@ void vertex() {
 void fragment() {
 	vec2 uv = (cell + vec2(UV.x, UV.y)) / grid;
 	vec4 t = texture(atlas, uv);
-	ALBEDO = t.rgb;
+	vec3 c = t.rgb;
+	if (blend_k > 0.0) {
+		// The mottle: a cell of the frame (about a stone's size on the
+		// body), seeded by where the sprite stands, so it holds still while
+		// the creature does.
+		vec2 sc = floor(UV * vec2(5.0, 7.0)) + floor(MODEL_MATRIX[3].xz * 3.0);
+		float h = fract(sin(dot(sc, vec2(12.9898, 78.233))) * 43758.5453);
+		vec3 stone = blend_color * (1.0 + blend_spread * (h * 2.0 - 1.0));
+		c = mix(c, stone, clamp(blend_k, 0.0, 1.0));
+	}
+	ALBEDO = c;
 	ALPHA = t.a;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	ROUGHNESS = 1.0;

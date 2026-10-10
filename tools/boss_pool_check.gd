@@ -520,7 +520,12 @@ func _routes(sv: int) -> void:
 		ok(int(c1.first) < 0, "its pool from boss_pool.json (%s, live %s): the same route, every one of %d frames (the farthest apart %.6f m; %d draws)" % [boss_key, str(data_pool.ids), (off.pts as PackedVector3Array).size(), float(c1.worst), int(data_run.draws)])
 	else:
 		print("  its pool from boss_pool.json has more than 'rounds' (%s): its route is its own by design (parts at frame %d); compared with 'rounds' alone below" % [str(data_pool.ids if data_pool != null else []), int(c1.first)])
+	# Booted with no pool, as the run above (since queue 66 the data's pool
+	# has the snake's own states, and the boot's first ticks would draw
+	# them), then a pool of 'rounds' alone.
+	Boss.pool_off = true
 	main = await _boot(sv)
+	Boss.pool_off = false
 	main.boss.set_pool(_test_pool({"rounds": [1.0, 0.1, 0.4]}, "rounds_fast"))
 	var fast := await _route(main)
 	await _done(main)

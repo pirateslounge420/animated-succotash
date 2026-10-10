@@ -1077,6 +1077,10 @@ func _in_room(pc: Dictionary, p: Vector3, margin: float) -> bool:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The snake on its built rounds (queue 49's behaviour, its pool's
+	# 'rounds'), as these checks test it: its pool's own states (design
+	# §FM.2, queue 66) are tools/boss_snake_check.gd's.
+	Boss.pool_off = true
 	Controls.path = "user://controls_frames.cfg"
 	# The skeletons sleep through the tour (design §FE); one is woken at
 	# the end for its frames.

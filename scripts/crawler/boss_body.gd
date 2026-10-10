@@ -23,6 +23,11 @@ var girth := 0.38
 var spacing := 0.28
 var head_len := 0.55
 var baked := false
+## Its camouflage now (design 9 Oct §FM.2, the freeze; set_camouflage):
+## the share every sprite's colour has moved toward the stone (0 as
+## painted), and that stone.
+var camo := 0.0
+var camo_stone := Color(0.5, 0.5, 0.5)
 
 ## The paint (§ES.2): an olive-brown back crossed every third length by a
 ## near-black band (so it reads as one long banded body against the tomb's
@@ -112,6 +117,29 @@ func bake(host: Node) -> void:
 		var k := taper(i)
 		segs[i].scale = Vector3.ONE * k
 	baked = true
+
+
+## Its camouflage (design 9 Oct §FM.2; boss_pool.json camouflage): every
+## sprite's colours moved toward `stone`, the stone it lies on, by share
+## `k`, each stone of it straying lighter or darker by `spread`
+## (FigureSprite.set_blend): its texture and value only, never its alpha,
+## so it is harder to see and never gone. Boss keeps `k` under
+## camouflage.max_blend.
+func set_camouflage(k: float, stone: Color, spread: float) -> void:
+	camo = k
+	camo_stone = stone
+	for s: FigureSprite in all_sprites():
+		s.set_blend(k, stone, spread)
+
+
+## Every sprite of it: the two heads, then the body.
+func all_sprites() -> Array[FigureSprite]:
+	var out: Array[FigureSprite] = []
+	for s: FigureSprite in [head_shut, head_open]:
+		if s != null:
+			out.append(s)
+	out.append_array(segs)
+	return out
 
 
 ## Place the chain: the head at `head` facing `head_dir` (flat), its mouth

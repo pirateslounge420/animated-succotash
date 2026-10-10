@@ -194,6 +194,10 @@ func _initialize() -> void:
 
 func _run() -> void:
 	WorldSave.read_only = true
+	# The snake on its built rounds (queue 49's behaviour, its pool's
+	# 'rounds'), as these checks test it: its pool's own states (design
+	# §FM.2, queue 66) are tools/boss_snake_check.gd's.
+	Boss.pool_off = true
 	Bow.need_capture = false
 	# The residents (design §FE) stay asleep for these checks, which put
 	# you all over the tomb; tools/residents_check.gd wakes them.
