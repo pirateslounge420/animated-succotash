@@ -1,0 +1,94 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FQ] The Maya ruin and its boss Camazotz (Mike, 10 Oct, by voice: 'Lock it in'). Nothing reads this file yet. Every number is Claude (chat)'s first guess; Mike tunes by playing. The Maya are a ruin kind inside a biome world (§FN.0.2), not a world of their own. Queue 94 to 96 build it.",
+  "ruin": "§FQ.1. Limestone temple swallowed by lowland jungle (the Yucatan and Peten heartland), once painted stucco (often red), now bare weathered grey. One floor, with the secret room and phase two like every ruin (§FO). cenote_entrance: Claude's reading of the voice session (the cenote as a way down, Maya belief: a door to the underworld); how it meets the hearth and the way up and down (§FM.6, §FO.3) is open (§FQ.5 call 3). calendar: the Maya count (the 260-day Tzolkin, the 365-day Haab, the Calendar Round, the Long Count) as the ruin's motif, as the tonalpohualli is the Aztec ruin's. Flavour only for now, as the Aztec calendar room is (§FN.1). Marks are real and never named on screen (§FN.5.1).",
+  "camazotz": "§FQ.2. The Maya death-bat of the Popol Vuh (lives in the House of Bats, Xibalba). Never beaten (§FM.1), prowls only the unlit dark, and the last light drives it to its lair (§EY). Its pool, in Mike's words: it hangs from places overhead and picks the places it thinks you will go (roost_ambush); when you come in range it swoops and gets you once, and having shown itself it keeps swooping where there is room (swoop_chase); where the space is too tight it lands and crawls at you, slower than its swoop (ground_crawl). Which of these are drawn when, and the numbers, are Claude's first guesses. A swoop that connects is one of three hits (§FD, boss_pool rule never_breaks: a_hit_is_one_of_three); the tell always plays first. Not in boss_pool.json yet: bosses.json → unplaced.camazotz holds the plan, as the pharaoh's does, until it is keyed to a ruin (queue 96)."
+ },
+ "ruin": {
+  "kind": "maya_temple",
+  "stone": "limestone",
+  "was_painted": "stucco_red",
+  "setting": "lowland_jungle",
+  "floors": 1,
+  "cenote_entrance": {
+   "status": "open",
+   "note": "§FQ.5 call 3"
+  },
+  "calendar": {
+   "motif": "maya_count",
+   "parts": [
+    "tzolkin_260",
+    "haab_365",
+    "calendar_round",
+    "long_count"
+   ],
+   "flavour_only": true
+  },
+  "marks": "real_maya_glyphs_never_named_on_screen"
+ },
+ "camazotz": {
+  "creature": "death bat",
+  "ruin_kind": "maya_temple",
+  "lair": {
+   "kind": "bat_house",
+   "note": "a high roost chamber; where it sits among the rooms is open (§FQ.5 call 4)"
+  },
+  "tell": {
+   "roost": "a faint leathery rustle overhead",
+   "swoop": "a thin high click and wings unfolding",
+   "crawl": "claws scraping on stone"
+  },
+  "pool_plan": {
+   "roost_ambush": {
+    "weight": 3,
+    "dwell_s": [
+     15,
+     40
+    ],
+    "roosts_at": "overhead point on the unlit way you are likely to take",
+    "predicts": "extrapolate your heading to the nearest unlit room or junction",
+    "strikes_when": "you pass inside strike_m beneath it",
+    "strike_m": 3.0,
+    "wind_up_s": 0.6,
+    "is_hit": "hit_1_of_three"
+   },
+   "swoop_chase": {
+    "weight": 4,
+    "dwell_s": [
+     10,
+     30
+    ],
+    "needs": "room_with_overhead_space",
+    "min_ceiling_m": 4.5,
+    "dive_mps": 8.0,
+    "dive_s": 0.9,
+    "recover_s": 1.5,
+    "strike_m": 2.5,
+    "is_hit": "hit_1_of_three",
+    "activated_by": "its first swoop",
+    "calms_when": "you hold a lit room or stretch watch_s, or it is driven home",
+    "watch_s": 10.0
+   },
+   "ground_crawl": {
+    "weight": 3,
+    "dwell_s": [
+     10,
+     25
+    ],
+    "needs": "space_too_tight_to_swoop",
+    "crawl_mps": 3.0,
+    "strike_m": 1.5,
+    "wind_up_s": 0.7,
+    "is_hit": "hit_1_of_three",
+    "slower_than": "swoop_chase.dive_mps"
+   }
+  },
+  "never": [
+   "enters_a_relit_room",
+   "blocks_the_exit",
+   "ignores_a_torch_hold",
+   "skips_its_tell"
+  ],
+  "in_phase_two": "open (§FQ.5 call 6)"
+ }
+}

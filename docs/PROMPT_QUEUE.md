@@ -123,6 +123,9 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 91 | §FP.2 | The pharaoh's locust swarm: a ranged slow | waits (89) |
 | 92 | §FP.3 | Hieroglyphs on the walls | waits (88 and 89) |
 | 93 | §FP.4 | The Egyptian brew: blue lotus, mandrake, a vision that feels real, glyphs that read | waits (89, 92, 83, and Mike's answer to §FO.9 call 2) |
+| 94 | §FQ.1 | The Maya stone: limestone | todo (after 88) |
+| 95 | §FQ.1 | The Maya ruin: a jungle temple, its calendar room and a way down | waits (89, 94, and Mike's answer to §FQ.5 call 1) |
+| 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1634,4 +1637,49 @@ READ: §FP.0 call 1, §FP.3 to §FP.6 and §FP.9 calls 3, 5 and 7; §FM.7, §FN.
 BUILD: (1) brew.json gets the Egyptian world's two plants, blue_lotus and mandrake, grown on the surface where their habitat allows and drawn in the nearest shape the engine has (neither draws right yet: no water-lily shape, no trunkless rosette; say so). The harvest, the shaman's teaching, the carry and the brew are as built for the other cultures, wordless, respectful, leave the rest standing. (2) The vision runs through prompt 83's filter, for Egypt only: the palette and hidden-carving behaviour as that prompt built it, plus display-only figures that look completely real: mummies and the pharaoh glimpsed in doorways and dark corners, standing where the real boss never is. They have no collision, no strike, no sound that counts, change no gameplay number or the floor's lit test, and fade with the brew; every other culture's brew keeps its 'no creatures' rule. Blue lotus and mandrake give the same vision for now; Mike has not said whether the lotus is gentler (§FP.9 call 3), so keep that in data. (3) The glyphs read: under the brew each hieroglyph panel of prompt 92 shows one line of text, and sober it is marks again. Mike has not picked the passages (§FP.9 call 5): use a plain placeholder line from a data list and say so; real passages only, with a public-domain translation (§DL). (4) How long it lasts is the built placeholder (§FN.8 call 6); do not change it.
 
 CHECK (headless): with the brew active the figures and the readable lines are drawn and with it off they are not; collision, harm counters, the lit test, every boss behaviour and every gameplay number are identical with and without the brew; no figure ever stands where the real boss stands; no light node is added; another culture's brew still draws no figures; the fade ends clean. Walkabout once: sober, the marks; under the brew, the lines and a figure in a doorway.
+```
+
+## 94 — The Maya stone: limestone — §FQ.1
+
+**Status:** todo (after 88)
+**Mike sees:** A new stone in the game's data: pale weathered limestone with a trace of old red in the carving. Nothing in the game uses it yet.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 88 and by the same method. This pass builds ONE thing: the Maya ruin's stone (design §FQ.1), and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FQ.1 and §EX.1 (one ruin, one stone); data/masonry.json (styles, and prompt 88's egyptian_pyramid as the model); data/maya_ruin.json (ruin); scripts/crawler/fitted_stone.gd, ruin_style.gd; the masonry checks.
+
+BUILD: (1) A masonry.json style maya_temple: pale grey-cream limestone, finely dressed and carved, a trace of old red stucco only in the deepest recesses (no bright paint; the look rules and diffuse-only hold, §ES). Block sizes, joint depth and settle are Claude Code's first guesses in data with _help; Mike tunes by eye. (2) Floor, ceiling, doors, stairs, niches and sconces cut from the same stone (§EX.1). (3) Nothing builds a Maya ruin yet: the style is only defined, so no existing ruin changes.
+
+CHECK (headless): the style loads and every masonry check passes with the same counts for the existing styles; the tomb and the Aztec temple are unchanged. Walkabout once: a test wall in the new stone beside the Egyptian one.
+```
+
+## 95 — The Maya ruin: a jungle temple, its calendar room and a way down — §FQ.1
+
+**Status:** waits (89, 94, and Mike's answer to §FQ.5 call 1)
+**Mike sees:** A limestone temple swallowed by jungle, with the Maya count carved in a room of its own, and a cenote leading down into it.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompts 89 and 94 and Mike's answer to §FQ.5 call 1 (which biome world holds the Maya ruin). If he hasn't answered, say so to Mike and stop. This pass builds ONE thing: design §FQ.1, the Maya ruin kind, and nothing else. No boss yet (96). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FQ.0 to §FQ.1 and §FQ.5 calls 1 and 3; §FO (one floor, the way out, the secret room); §FN.1 and §FN.5.1 (the Aztec calendar room as the model; real marks never named); data/maya_ruin.json (ruin); data/ruin_compass.json (maya); scripts/crawler/tomb_build.gd, room_pool_build.gd, dungeon_builder.gd as prompt 89 left them.
+
+BUILD: (1) The maya_temple ruin kind, built as prompt 89 builds the Egyptian one: the limestone of prompt 94, one floor, a plan reachable with every holder cold, the same plan for the same seed, and the secret room and the exit of §FO. (2) A calendar room, a fixed chamber among the shuffled rooms, carved with the Maya count: the 260-day Tzolkin, the 365-day Haab and the Calendar Round as real relief, never named, flavour only (as the Aztec calendar room). Use real signs only. (3) The cenote: a round natural shaft with a pool, open to the sky, as the way down only if Mike has said so in call 3; otherwise a set piece in the secret room, and say which. (4) Jungle growth on the stone only where the climate allows (§EU).
+
+CHECK (headless): over 100 seeds every Maya ruin has its calendar room, one floor and a plan reachable with every holder cold; the same plan for the same seed; its stone is the one limestone style; the prompt 85 to 87 checks and the masonry checks pass. Walkabout once: the temple, the calendar room and the cenote.
+```
+
+## 96 — Camazotz, the death bat — §FQ.2
+
+**Status:** waits (95)
+**Mike sees:** A bat the size of a man hangs in the dark overhead where you are about to walk. Pass beneath and it swoops and gets you once, then keeps diving through any room with room to dive, so you run. In a tight passage it drops and crawls at you, slower. A lit room is safe.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after prompt 95. This pass builds ONE thing: design §FQ.2, Camazotz and his three states, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FQ.2 and §FQ.5 calls 2, 4 to 6; §FM.1 (the pool's never_breaks), §EY and §FD (three hits); data/maya_ruin.json (camazotz and its _help); data/bosses.json → unplaced.camazotz; data/boss_pool.json (rule, the desert's entries as the model); scripts/crawler/boss.gd, boss_pool.gd, boss_state.gd, boss_states/coil_ambush.gd and observe_then_behind.gd (the models for a state), creature_strike.gd, boss_ground.gd, boss_sounds.gd, scripts/creatures/sound_synth.gd.
+
+BUILD: (1) Camazotz as the boss of the maya_temple ruin kind, keyed like the pharaoh in prompt 89: a boss_pool.json entry and a bosses.json entry in the same pass (boss_pool_check wants pools.size() == bosses.size()), with a lair in the bat house. (2) Three pool states (scripts/crawler/boss_states/): roost_ambush (it hangs from an overhead point on the unlit way you are likely to take, chosen by extrapolating your heading to the nearest unlit room or junction, and strikes when you pass beneath), swoop_chase (once it has swooped it is activated and keeps diving where the room has the overhead space, min_ceiling_m in the data) and ground_crawl (where the space is too tight to swoop it lands and crawls, slower than its swoop). All numbers are the data's first guesses; read them with defaults. (3) A connected swoop or crawl strike is one hit of three through the existing strike code (harm.json, CreatureStrike), after a tell that always plays (SoundSynth voices from the data). Whether every later swoop hits or only the first is Mike's call 2: build every swoop as a hit unless he has said otherwise, and say so. (4) It never enters a relit room, never blocks the exit, and a torch hold holds; the last light drives it to its lair. (5) Phase two: left out of the draw until Mike answers call 6, and say so.
+
+CHECK (headless): over 200 draws each state comes up and never the same twice running; the tell plays before every strike; a swoop that connects is exactly one hit and three end in Good night; it never enters a lit room; it never roosts on the way out; the pool counts match, boss_pool_check, boss_check, crawler_harm_check and stagger_check pass (update them to name the new states). Walkabout once: be ambushed from overhead, run from the dives, get into a tight passage and see the crawl.
 ```

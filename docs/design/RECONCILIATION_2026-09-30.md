@@ -5760,3 +5760,96 @@ Mike plays and reports between each.
 6. **Which other plagues join the pharaoh's pool?** (Frogs, darkness, boils and the rest are
    suggestions only.)
 7. **Which figures does the vision show?** The boss and its mummies are the obvious ones.
+
+## FQ. The Maya temple and Camazotz, the death bat — LOCKED (10 Oct, by voice, Mike; "Yep, that sounds good. That'll be the archetype", "Lock it in")
+
+Mike, 10 Oct, mapping the next ruin south of the Aztec. He asked what the Maya were, then asked
+for their creatures; Claude (voice) offered Camazotz, the Popol Vuh's death bat, and Mike said he
+liked it; he settled the stone and setting by agreeing to the heartland, then built the boss in his
+own words and said "Lock it in." As in §FM to §FP, no number is settled: Claude's first guesses go
+in `data/maya_ruin.json` (new, not wired) and Mike tunes by playing. Not built.
+
+### FQ.0 What this changes, and what it does not (said out loud, not picked quietly)
+1. **The Maya are a ruin kind inside a biome world, not a world of their own** (§FN.0.2: "these
+   ruins would be considered to be inside the biomes"). A relay asked for a `worlds.json` entry;
+   none is written. Which biome world holds the Maya ruin is open (FQ.5 call 1).
+2. **A second boss is now named for the jungle's ground.** `bosses.json` already has a `jungle`
+   boss (the centipede, Mike's own). Like the pharaoh, Camazotz is keyed to its ruin kind
+   (`maya_temple`), not to a world, so both can stand until Mike says which a jungle world uses
+   (FQ.5 call 1).
+3. **Unchanged:** §FM.1 (never beaten, prowls only the unlit, the last light drives it to its lair),
+   §FD's three hits (a connected swoop is one of three), §FO's one floor, secret room and phase two.
+4. **A small correction to what was said aloud:** the voice session said a feathered serpent was
+   ruled out for the Aztec ruin. It is the opposite: §FN.0.1 gave the Aztec snake its feathers
+   (Quetzalcoatl). Kukulkan is only the Maya name for the same serpent, which is why it would repeat.
+
+### FQ.1 The Maya ruin
+- **Setting:** the Maya lowland heartland: the Yucatan and the Peten, tropical rainforest on
+  limestone bedrock full of caves and sinkholes. Mike: "that'll be the archetype for that one."
+- **Stone: limestone.** Soft enough to carve finely, which is why the buildings carry such fine
+  relief and glyphs. It was painted in stucco, often red, and reads today as bare weathered grey.
+  Claude's first guess for the look: pale grey-cream limestone with a trace of old red in the
+  deepest carving; no bright paint (the look rules hold). It needs its `masonry.json` style
+  (§EX.1, queue 94).
+- **Jungle-swallowed stepped temple,** overgrown and crumbling like every ruin. One floor, with the
+  secret room and phase two (§FO).
+- **The cenote:** the Maya held sinkholes to be doors to the underworld (Xibalba). The voice session
+  offered it as the way down and Mike agreed to the archetype, so it is in as Claude's reading, not
+  his specified design. How it meets the hearth, the way up and the way down (§FM.6, §FO.3) is
+  open (FQ.5 call 3).
+- **Theme: the Maya calendar,** as the tonalpohualli is the Aztec ruin's (Mike: "we'll definitely
+  have the Mayan calendar as a theme"). Claude's summary of the real count, own knowledge, no source
+  opened here: the 260-day Tzolkin and the 365-day Haab, which together make the Calendar Round,
+  and the Long Count. Flavour only for now, as the Aztec calendar room is (§FN.1). The marks are
+  the real Maya script, never named on screen (§FN.5.1).
+- **Plant: still open** (§FN.8 call 2; Mike gave the mushroom to the Aztec).
+
+### FQ.2 Camazotz
+- **The creature:** the death bat of the Popol Vuh, lord of the House of Bats in Xibalba. A boss
+  like the others: never beaten, prowls only the unlit dark, driven to its lair by the last light
+  (§FM.1, §EY). It lives on the ruin's one floor.
+- **Its pool, in Mike's words** (first guesses in `maya_ruin.json → camazotz.pool_plan`):
+  - **Roost and ambush (`roost_ambush`).** It hangs from different overhead places and chooses the
+    ones it thinks you will go to: a predictive ambush, not a reactive stalk. Claude's reading of
+    "thinks you will go": it extrapolates your heading to the nearest unlit room or junction.
+  - **Swoop and chase (`swoop_chase`).** Once you are in range it swoops and gets you once. Having
+    shown itself it is activated: it does not go back to waiting, and in a room with room to dive it
+    keeps swooping, "so it kind of makes you want to run."
+  - **Ground crawl (`ground_crawl`).** Where the space is too tight to swoop it lands and crawls at
+    you "creepily," slower than its swoop. Tight spaces slow it; they never make you safe.
+- **Held from §FM.1 and §FD:** the tell always plays before a swoop or a crawl's strike; a lit
+  room stays safe; it never blocks the exit; a torch hold holds. A swoop that connects is one hit
+  of three. Claude's reading of "gets you one time … then continue swooping": each later swoop is
+  also a hit when it connects (FQ.5 call 2).
+- **Calms:** Claude's guess: it stops chasing when you hold a lit room or stretch for a while, as the
+  snake gives you up, or when it is driven home.
+
+### FQ.3 Not taken
+A Maya world in `worlds.json`; Camazotz in `boss_pool.json` before it is keyed to a ruin; Kukulkan,
+Vucub Caquix, Zipacna or a lord of Xibalba as a boss; the cenote as a fixed design; a Maya plant;
+the swamp witch's "young shaman who turns" idea (talked through and left unanswered, so it is not
+locked: see the note under FQ.5).
+
+### FQ.4 Order of work
+`docs/PROMPT_QUEUE.md` **94–96**:
+- **94** the Maya stone: limestone (after 88, same method).
+- **95** the Maya ruin kind: the jungle temple, its calendar room and the cenote way down (waits for
+  89, 94 and Mike's answer to FQ.5 call 1).
+- **96** Camazotz and his three states (waits for 95).
+
+### FQ.5 Open for Mike
+1. **Which biome world holds the Maya ruin,** and does a jungle world use Camazotz or the
+   centipede (§FO.9 call 2's twin)?
+2. **Do all of Camazotz's swoops hit,** or only the first, the later ones being a harassing chase?
+3. **The cenote:** is it the way down from the surface, a feature of the secret room, or only a
+   motif?
+4. **Where does his lair sit,** and does he roost in the lair room too?
+5. **What the swoop's tell sounds like,** and what he does to the light (a bat and your torch).
+6. **Does he run in phase two** (§FO.5), where he could be faster in the dark?
+7. **The Maya plant** (§FN.8 call 2).
+
+*Parked, not locked:* the swamp witch (Mike, by voice, 10 Oct): a young woman who ushers you in,
+shows you the local brew, and as you sip it she turns into the old witch and tries to take your
+soul, the change building gradually. Claude asked whether the swamp's brew is then real or only the
+witch's trick, and Mike has not answered. It touches §FM.7 and §FN.5 (a brew is never a harder
+mode), so it needs his word first.

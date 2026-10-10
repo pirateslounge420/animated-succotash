@@ -58,6 +58,12 @@ map as thematic.
 - **Overlap to know about:** the same mushroom serves the Aztec rites, so the two worlds share it.
   Claude's suggestion, not locked: the Maya water lily (*Nymphaea ampla*) as a motif. It is white,
   and its sedative effect is inferred from art only.
+- **Locked 10 Oct (§FQ):** the Maya lowland heartland (Yucatan and Peten): a limestone temple, once
+  red-painted stucco and now bare grey, swallowed by jungle, with the Maya calendar as its motif and
+  a cenote (the underworld door) as a way down (the cenote's role is open). **Boss: Camazotz,** the
+  death bat of the Popol Vuh: he roosts overhead where he predicts you will pass, swoops once and
+  keeps swooping where there is room, and crawls where there is not (`data/maya_ruin.json`, unplaced
+  in `bosses.json`). A ruin kind inside a biome world, not a world of its own (§FN.0.2).
 
 ### Inca (south of the Maya)
 - **Stone:** precision-cut andesite and granite, fitted without mortar. Real analogues: Machu
