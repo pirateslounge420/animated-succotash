@@ -5827,8 +5827,7 @@ in `data/maya_ruin.json` (new, not wired) and Mike tunes by playing. Not built.
 ### FQ.3 Not taken
 A Maya world in `worlds.json`; Camazotz in `boss_pool.json` before it is keyed to a ruin; Kukulkan,
 Vucub Caquix, Zipacna or a lord of Xibalba as a boss; the cenote as a fixed design; a Maya plant;
-the swamp witch's "young shaman who turns" idea (talked through and left unanswered, so it is not
-locked: see the note under FQ.5).
+the swamp witch's "young shaman who turns" idea (locked afterwards, as §FR, not part of this section).
 
 ### FQ.4 Order of work
 `docs/PROMPT_QUEUE.md` **94–96**:
@@ -5848,8 +5847,79 @@ locked: see the note under FQ.5).
 6. **Does he run in phase two** (§FO.5), where he could be faster in the dark?
 7. **The Maya plant** (§FN.8 call 2).
 
-*Parked, not locked:* the swamp witch (Mike, by voice, 10 Oct): a young woman who ushers you in,
-shows you the local brew, and as you sip it she turns into the old witch and tries to take your
-soul, the change building gradually. Claude asked whether the swamp's brew is then real or only the
-witch's trick, and Mike has not answered. It touches §FM.7 and §FN.5 (a brew is never a harder
-mode), so it needs his word first.
+*Locked afterwards as §FR:* the swamp witch's false shaman (talked through at the end of this
+session and locked with "Yes, sir."). Whether the swamp's brew is real is still open (FR.5 call 1).
+
+## FR. The ritual as a little cutscene, and the swamp's false shaman — LOCKED (10 Oct, by voice, Mike; "Yes, sir." to locking the whole swamp sequence)
+
+Mike, 10 Oct, picking up the swamp witch idea left open at the end of §FQ. Talked through; Claude
+(voice) asked "want me to lock this whole swamp sequence in now" and Mike said "Yes, sir." As in
+§FM to §FQ, no number is settled: first guesses go in `data/shaman_ritual.json` (new, not wired)
+and Mike tunes by playing. Not built.
+
+### FR.0 What this touches in earlier locks (said out loud, not picked quietly)
+1. **"Every real camp is friendly" (project brief) and the hearth's shaman (§FM.6, §FM.7).** The swamp
+   has no friendly shaman. This is §FE.3's own framing carried out: "she is the false camp, the one
+   welcoming voice in the dark that is a trap," which Mike took. The swamp's hearth is the exception
+   by design. Every other camp stays friendly.
+2. **Folk are mute (§ED, §FM.6: the shaman is wordless).** The relay says she "tells" you she has
+   learned to be a shaman. Claude's reading: no words; she shows it in the rig's own animations, as
+   every shaman does. Her only voice is the sweet calling of §FE.3 and, from the reveal, the cackle.
+3. **§FN.5.3(a), "a brew adds no creatures, faces or things not in the ruin."** Claude's reading of
+   the change: this is not a hallucination. She was the witch all along; the sip lets you see through
+   her glamour. So no face is added; her own is shown. Whether the swamp's brew is also a real visual
+   filter is unanswered (FR.5 call 1).
+4. **§FM.7, "a brew is a different experience, never a harder mode."** The trap is a scripted ambush
+   tied to a brew. Claude's reading: it is her boss behaviour starting, not the brew's effect, so
+   §FM.7 stands. It needs Mike's eye (FR.5 call 2).
+5. **The hearth is where a boss cannot follow (§FM.1: a relit room stays safe).** The shaman sits at
+   the hearth, so her chase begins in a lit room. Her chase may follow you into the light (§FD, boss
+   rule `chase_enters_light`), but how the hearth holds is open (FR.5 call 3).
+6. **Unchanged:** §FE.3's lure (her room's performance, "come here, sweetie") in the halls; her strikes
+   are hits (§FD); never beaten.
+
+### FR.1 The ritual is a little cutscene (every culture)
+- **Mike:** "for these type situations … whenever you have the shaman ritual, I want to make it to
+  where it's almost like a little cutscene, and so it kind of locks you in, in a certain camera
+  angle, and something happens."
+- **Locked as a frame for every shaman ritual:** when you take the brew, the camera is locked to a
+  fixed angle on the shaman for the beat and you cannot move or look until it ends. What
+  happens in it is each culture's own. **Only the swamp's is specified** (FR.2); for the others
+  nothing happens beyond the brew as built (§FM.7, §FN.5) until Mike says (FR.5 call 4).
+- Claude's first guesses: the lock begins when she lifts the ladle and ends when you have the
+  frame back; no hit or harm can happen to you while the camera is locked.
+
+### FR.2 The swamp's false shaman (Mike's sequence)
+1. **A young woman is the swamp's shaman.** A pretty young woman at the hearth who, as the shaman
+   does elsewhere, brings you to the local plant and its brew (§FM.7). Wordless.
+2. **You sip.** The camera locks (FR.1). As you drink, the change builds gradually (Mike: "probably
+   a gradual build-up"): you can see it coming, but the brew has its hooks in you.
+3. **She gets up and turns her back to do something.** What she does is not specified (Claude's
+   guess: she goes to the cauldron; it stays in the room).
+4. **She turns back around, and she is the old witch,** coming at you.
+5. **A creaky cackle** plays at the reveal as its sting, and **continues as her tell through the chase**
+   (Mike: "she'll have a creaky cackle"; the sting and the chase tell "of course").
+6. **It starts the chase** ("that'll initiate the chase"): the reveal ignites her boss behaviour
+   (`bosses.json → swamp`: `after_performance: snap_then_chase`). It is not a hit and not a grab: the
+   camera is yours again as she comes.
+
+### FR.3 First guesses (in the data)
+`data/shaman_ritual.json`: how long the lock lasts, how the change builds across the sip, how long her
+back is turned, how far from you she stands at the reveal, the cackle as a `SoundSynth` voice, and
+that the chase runs at her `chase_mps` (5.0, under your sprint). Mike tunes.
+
+### FR.4 Not taken
+A speaking shaman; a grab or a hit in the cutscene; a cutscene in any culture but the swamp (beyond
+the frame); the witch anywhere but the swamp's hearth; a swamp culture (still the invented folk-horror
+ruin of the roster: Mike's own "what would the swamp like" is unanswered).
+
+### FR.5 Open for Mike
+1. **Is the swamp's brew real,** with a vision of its own, or is it only her trick?
+2. **Is the trap every time you drink there, or only the first?** And after it, is there a shaman
+   at the swamp's hearth at all?
+3. **How does the hearth hold against her?** Does the chase start in the lit room and follow you
+   out, or does she step back at the edge of the light as the snake does?
+4. **What happens in the other cultures' cutscenes,** if anything?
+5. **Is the cutscene skippable,** and does a repeat play shorter?
+6. **Does she need the brew at all,** or can the swamp's boss be met in the halls first?
+7. **The swamp itself:** which culture the Gulf South ruin is, if any.

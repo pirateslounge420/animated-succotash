@@ -115,6 +115,7 @@ map as thematic.
   not a visionary brew. `Ilex` appears in the floodplain and maritime forest biome files; check
   for *vomitoria* before relying on it.
 - **Boss:** the witch (§EY, §FE) is the swamp's, already specified.
+- **Locked 10 Oct (§FR):** the swamp's hearth shaman is the witch in a young woman's glamour: she turns her back, turns round as the old witch with a creaky cackle, and the chase begins (`data/shaman_ritual.json`).
 
 ### Egypt (unplaced; §FO.1, §FP)
 - **Stone:** big sandstone blocks (`masonry.json → egyptian_pyramid`, queue 88). One floor, like every ruin (§FO).

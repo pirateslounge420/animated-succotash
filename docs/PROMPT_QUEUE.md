@@ -126,6 +126,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 94 | §FQ.1 | The Maya stone: limestone | todo (after 88) |
 | 95 | §FQ.1 | The Maya ruin: a jungle temple, its calendar room and a way down | waits (89, 94, and Mike's answer to §FQ.5 call 1) |
 | 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
+| 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | todo |
+| 98 | §FR.2 | The swamp's false shaman: the witch's reveal and the cackle | waits (97, the swamp world, and the witch built as a boss) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1682,4 +1684,34 @@ READ: §FQ.2 and §FQ.5 calls 2, 4 to 6; §FM.1 (the pool's never_breaks), §EY 
 BUILD: (1) Camazotz as the boss of the maya_temple ruin kind, keyed like the pharaoh in prompt 89: a boss_pool.json entry and a bosses.json entry in the same pass (boss_pool_check wants pools.size() == bosses.size()), with a lair in the bat house. (2) Three pool states (scripts/crawler/boss_states/): roost_ambush (it hangs from an overhead point on the unlit way you are likely to take, chosen by extrapolating your heading to the nearest unlit room or junction, and strikes when you pass beneath), swoop_chase (once it has swooped it is activated and keeps diving where the room has the overhead space, min_ceiling_m in the data) and ground_crawl (where the space is too tight to swoop it lands and crawls, slower than its swoop). All numbers are the data's first guesses; read them with defaults. (3) A connected swoop or crawl strike is one hit of three through the existing strike code (harm.json, CreatureStrike), after a tell that always plays (SoundSynth voices from the data). Whether every later swoop hits or only the first is Mike's call 2: build every swoop as a hit unless he has said otherwise, and say so. (4) It never enters a relit room, never blocks the exit, and a torch hold holds; the last light drives it to its lair. (5) Phase two: left out of the draw until Mike answers call 6, and say so.
 
 CHECK (headless): over 200 draws each state comes up and never the same twice running; the tell plays before every strike; a swoop that connects is exactly one hit and three end in Good night; it never enters a lit room; it never roosts on the way out; the pool counts match, boss_pool_check, boss_check, crawler_harm_check and stagger_check pass (update them to name the new states). Walkabout once: be ambushed from overhead, run from the dives, get into a tight passage and see the crawl.
+```
+
+## 97 — The shaman's ritual as a little cutscene: a locked camera — §FR.1
+
+**Status:** todo
+**Mike sees:** When the shaman gives you the brew, the camera settles on her at a fixed angle and you cannot move or look until the beat ends, then the frame is yours again. In the cultures built so far nothing else happens in it.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §FR.1, the ritual's camera lock, and nothing else. No swamp content (98). Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FR.0 and §FR.1; data/shaman_ritual.json (cutscene and its _help); data/brew.json; scripts/crawler/brew.gd, folk_motion.gd, crawler_player.gd (where input is read), scripts/ui/brew_vision.gd (prompt 72's drinking moment).
+
+BUILD: (1) A ritual cutscene frame: when you drink the shaman's brew (prompt 72), the camera moves to a fixed angle on the shaman and your movement and look are locked for lock_s (data, default from shaman_ritual.json), then the frame is yours again, exactly as before, with the same facing. (2) The locked camera stays inside the 480-line frame and the HUD rules. (3) harm_during_lock is false: nothing can hit you, no chase can start and no torch can burn out while the camera is locked (the torch's timer pauses and resumes exactly). (4) A hook where a culture's own beat can play inside the lock (prompt 98 uses it); with no beat the lock is just the drinking. Do not add any swamp content or any new creature.
+
+CHECK (headless): drinking the brew locks input for exactly lock_s and releases it; your position, facing and torch time are the same after as before apart from the pause; no harm counter moves during the lock; the brew still tints and fades as built. Walkabout once: take the brew and see the lock and the release.
+```
+
+## 98 — The swamp's false shaman: the witch's reveal and the cackle — §FR.2
+
+**Status:** waits (97, a second world with the swamp built, and the witch built as a boss; no prompt builds the witch yet)
+**Mike sees:** At the swamp's hearth a young woman gives you the brew. As you drink, she changes. She turns her back, and when she turns round she is the old witch, coming at you with a creaky cackle that keeps up through the chase.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only after prompt 97, a second world with the swamp built (prompt 74's walk) and the swamp witch built as a boss (§FE.3, bosses.json → swamp; no prompt builds her yet). If any is missing, say so to Mike and stop. This pass builds ONE thing: design §FR.2, the false shaman's sequence, and nothing else. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FR.0 to §FR.5 and §FE.3; data/shaman_ritual.json (swamp_witch and its _help); data/bosses.json → swamp (ritual_trap); data/boss_pool.json; scripts/crawler/boss.gd, boss_states/, creature_strike.gd, folk_motion.gd, boss_sounds.gd, scripts/creatures/sound_synth.gd; prompt 97's frame.
+
+BUILD: (1) In the swamp world only, the hearth's shaman is a young woman, drawn on the one shared rig, wordless. (2) Through prompt 97's lock: the change builds across build_s while you drink, she gets up and turns her back for back_turned_s, and turns round as the old witch standing reveal_m from you. (3) The cackle: a creaky SoundSynth voice, played as a sting at the reveal and kept as her tell through the chase. (4) The reveal ignites her existing snap_then_chase behaviour (bosses.json → swamp); it is not a hit, not a grab, and the camera is yours again as she comes. (5) The open calls (first time only, whether the brew is real, whether the hearth holds, §FR.5 calls 1 to 3) stay null in data: build the first-brew case, a placeholder tint as prompt 72 has, and the hearth as a lit room she may follow you out of (§FD chase_enters_light), and say so to Mike. Her strikes are hits and three end in Good night (§FD).
+
+CHECK (headless): the sequence runs in order on the swamp's first brew and on no other world; no harm counter moves until her first strike; the cackle plays at the reveal and again as her tell through the chase; her chase speed is her chase_mps; wake at the hearth is unchanged; the boss checks and crawler_harm_check pass. Walkabout once: sip, the change, the turn, the cackle, and run.
 ```
