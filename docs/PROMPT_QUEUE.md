@@ -113,8 +113,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 79 | §FN.1 | The Aztec temple's stone: a masonry style | built |
 | 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | built 45a8eb9 (switched off: aztec_temple.json enabled false) |
 | 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |
-| 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | built 5071fff |
-| 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | built e20beea |
+| 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | built 4a84d48 |
+| 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | built cb5b078 |
 | 84 | §FN.4 | The Aztec pyramid on the surface | built a4c8607 (switched off with the temple) |
 | 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | built 1df9350 |
 | 86 | §FO.4 | The secret opening, its room and the tome | built 882b0e7 |
@@ -1468,7 +1468,7 @@ CHECK (headless): over 200 seeds both counts occur and the same seed gives the s
 
 ## 82 — The Aztec brew plant becomes teonanácatl — §FN.5
 
-**Status:** built 5071fff (Mike, 12 Oct: the temple's world is central Mexico's montane grassland; the species grown is *Psilocybe aztecorum*, sacred_plants.json teonanacatl_aztecorum)
+**Status:** built 4a84d48 (Mike, 12 Oct: the temple's world is central Mexico's montane grassland; the species grown is *Psilocybe aztecorum*, sacred_plants.json teonanacatl_aztecorum)
 **Mike sees:** On the surface above the Aztec temple you find the sacred mushroom, take some, carry it down, and the shaman brews it.
 
 ```text
@@ -1483,7 +1483,7 @@ CHECK (headless): brew_check passes with the new plant; the group stands after a
 
 ## 83 — The vision filter: palette, hidden carvings, glowing and moving glyphs — §FN.5
 
-**Status:** built e20beea (switched off with the temple)
+**Status:** built cb5b078 (switched off with the temple)
 **Mike sees:** Drink the brew and the temple changes: its colours shift, carvings you could not see come up in the stone, and the glyphs glow and move. It fades, and the carvings are gone from view again. Nothing about how you play changes.
 
 ```text
