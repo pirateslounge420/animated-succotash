@@ -542,6 +542,8 @@ func _walks(seeds: Array) -> void:
 		var r: Dictionary = await _walk_out_of(int(s), world_node)
 		holes += int(r.get("holes", 0))
 		holes_open += int(r.get("holes_open", 0))
+		if int(r.get("holes_open", 0)) < int(r.get("holes", 0)):
+			print("  seed %d: %d of its %d holes with the floor before them shut to your capsule" % [s, int(r.get("holes", 0)) - int(r.get("holes_open", 0)), int(r.get("holes", 0))])
 		if bool(r.ok):
 			walked.append(float(r.m))
 		else:

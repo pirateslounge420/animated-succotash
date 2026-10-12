@@ -769,7 +769,8 @@ func _in_game(firsts: Dictionary) -> void:
 			await physics_frame
 			await physics_frame
 			var after := TombFloors.floor_lit(fires, lay, 0)
-			var opened := main.fork == null or main.fork.opened
+			# (One floor since §FO.2: no way down, so no fork to open.)
+			var opened := main.fork == null or main.fork.opened or main.fork.down == null
 			if before or lit_early or opened_early or not after or not opened:
 				count_ok = false
 				print("  seed %d %s %d: floor one lit before its last sconce %s (early %s), after %s, the fork %s" % [s, pc.big_room, id, str(before), str(lit_early), str(after), str(opened)])
@@ -780,7 +781,7 @@ func _in_game(firsts: Dictionary) -> void:
 		await process_frame
 	ok(n_sconces > 0 and reach_ok, "in the game (a tomb of each archetype: %s): every big room's sconce in your reach from where your body fits on its floor (%d; the farthest you need stand %.2f m from it)" % [str(tested), n_sconces, far])
 	ok(swing_ok, "each lit by the game's own swing of a lit torch")
-	ok(count_ok, "with every other torch of floor one lit, the floor isn't lit until a big room's last sconce catches, and is once it has: the fork opens (its torches count toward the floor's lit test, §FF.2)")
+	ok(count_ok, "with every other torch of floor one lit, the floor isn't lit until a big room's last sconce catches, and is once it has: the fork opens where there is a way down (its torches count toward the floor's lit test, §FF.2)")
 
 
 ## Where you'd stand to swing at sconce `h` in big room `pc`: in front of
