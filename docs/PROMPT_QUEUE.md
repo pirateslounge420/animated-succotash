@@ -119,13 +119,13 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | todo |
 | 86 | §FO.4 | The secret opening, its room and the tome | todo (after 85) |
 | 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | waits (86) |
-| 88 | §FO.1 | The Egyptian stone: big sandstone blocks | built |
+| 88 | §FO.1 | The Egyptian stone: big sandstone blocks | built 563c425 |
 | 89 | §FO.1 | The Egyptian ruin and the pharaoh in its sarcophagus | waits (87, 88, and Mike's answer to §FO.9 call 2) |
 | 90 | §FP.1 | Scarabs: ambient skitterers in the Egyptian ruin | waits (89) |
 | 91 | §FP.2 | The pharaoh's locust swarm: a ranged slow | waits (89) |
 | 92 | §FP.3 | Hieroglyphs on the walls | waits (88 and 89) |
 | 93 | §FP.4 | The Egyptian brew: blue lotus, mandrake, a vision that feels real, glyphs that read | waits (89, 92, 83, and Mike's answer to §FO.9 call 2) |
-| 94 | §FQ.1 | The Maya stone: limestone | built |
+| 94 | §FQ.1 | The Maya stone: limestone | built 67d2cb5 |
 | 95 | §FQ.1, §FS.1 | The Maya ruin: a jungle temple, its calendar room and a way down | waits (89, 94) |
 | 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
 | 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | todo |
@@ -1558,7 +1558,7 @@ CHECK (headless): after the tome, no holder, torch or hearth is lit and none can
 
 ## 88 — The Egyptian stone: big sandstone blocks — §FO.1
 
-**Status:** built (12 Oct)
+**Status:** built 563c425 (12 Oct)
 **Mike sees:** Nothing in the crawler yet. The game can now cut a ruin in big squared sandstone blocks, so the Egyptian ruin has its own look and no other culture's stone is touched.
 
 ```text
@@ -1648,7 +1648,7 @@ CHECK (headless): with the brew active the figures and the readable lines are dr
 
 ## 94 — The Maya stone: limestone — §FQ.1
 
-**Status:** built (12 Oct)
+**Status:** built 67d2cb5 (12 Oct)
 **Mike sees:** A new stone in the game's data: pale weathered limestone with a trace of old red in the carving. Nothing in the game uses it yet.
 
 ```text
