@@ -110,7 +110,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
 | 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | built 892698b |
-| 79 | §FN.1 | The Aztec temple's stone: a masonry style | todo |
+| 79 | §FN.1 | The Aztec temple's stone: a masonry style | built |
 | 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | todo (after 79) |
 | 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |
 | 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
@@ -1423,7 +1423,7 @@ CHECK (headless): boss_snake_check, boss_check and boss_pool_check still pass wi
 
 ## 79 — The Aztec temple's stone: a masonry style — §FN.1
 
-**Status:** todo
+**Status:** built (12 Oct)
 **Mike sees:** Nothing in the crawler yet. The game can now cut a temple in dark volcanic stone with red, pitted tezontle, so the Aztec ruin has its own look and the Inca stone stays the Inca's.
 
 ```text

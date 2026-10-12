@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 79, §FN.1: the Aztec temple's stone, a masonry style
+- **Built:** `masonry.json → styles → aztec_temple` (additive, `_help.aztec_temple`): one dark red-brown volcanic stone (`stone.tint` #5a4644, basalt warmed toward tezontle's red; `spread` 0.08) for every surface. Walls are a new preset `coursed_blocks`: true courses of squared blocks with staggered joints (FittedStone `cut: "squared"`, a new branch; every other preset is cut exactly as before). Floors flagged the same way, doors a square opening under one flat lintel (`doors.shape flat_lintel`), niches square, the hearth a square pit.
+- **Registered:** `style_by_theme.aztec_temple` (and `by_theme`); tomb, snow ruins and default unchanged. Nothing in the game uses it yet: the temple itself is queue 80.
+- **Data for later, not wired:** `carving` (the day-sign panels, queue 80) and `plaster` (red paint left in the recesses).
+- **One stone can't vary in hue:** RuinStyle moves each block lighter or darker only, so tezontle's red is in the tint, not a second stone. Blocks of black basalt beside red tezontle would need a rule change (§EX.1) — Mike's call.
+- **Checks** (seed 7): new `aztec_stone_check` 19 PASS, 0 fails (the data; the tomb still andean_tomb with fitted polygons; 40 wall faces tiled whole in squared courses, no joint over the one below; three tombs built in the temple's stone: walls, floors, ceilings, 123 doors all square, 14 stairs, 142 niches, 3.16 M stone vertices inside tint ± spread, none from the poisoned palette). `room_pool_check` 29, 0 fails, as before; `crawler_check` result to follow.
+- **Walkabout not done:** there is no temple room to stand in until queue 80; the look is checked there.
+- **For Mike:** the colour, block size (`presets.coursed_blocks.stone_m`, `aspect`) and the flat lintel are first guesses.
+
 ## 2026-10-10 — Queue 78, §FN.2: the snake becomes the feathered serpent: plumes and a rattle (892698b)
 - **Built:** the snake's baked sprites now wear quetzal plumes (BossBody): a crest of green and turquoise feathers lying back along every length of body, and a ruff behind the head with red at the throat. The last length of body is a new fifth sheet, the tail: the body's front half and a rattle of four pale rings with dark lines between them. Sheet pixel sizes are unchanged (px_head 40, px_seg 28): the feathers are kept under the frame's top, so nothing was raised.
 - **The sound:** SoundSynth `snake_rattle`, a dry, fast shiver of clicks (50–70 a second, rung through two bright bands). It plays from the tail on its own player with the warning hiss's tuning (`audio.json strike_tell`: the same distance and muffling), on its own dice so it never moves the boss's draws.

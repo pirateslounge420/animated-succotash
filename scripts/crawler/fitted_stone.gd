@@ -178,7 +178,8 @@ static func dry_of(cl: Vector2) -> float:
 ## points in loose courses (each course its own height, each stone its own
 ## width, both from stone_m; course_bias how true the courses run), then
 ## relax_steps of Lloyd's relaxation. `sizes` overrides the preset's
-## stone_m, aspect and course_bias (the floor's flags).
+## stone_m, aspect and course_bias (the floor's flags). A preset with cut
+## "squared" lays true courses of rectangular blocks instead (§FN.1).
 static func cells(length: float, height: float, rng: RandomNumberGenerator, sizes: Dictionary = {}) -> Array:
 	var p := preset().duplicate()
 	p.merge(sizes, true)
@@ -195,6 +196,35 @@ static func cells(length: float, height: float, rng: RandomNumberGenerator, size
 		rows.append(hh)
 		tot += hh
 	var k := height / tot
+	# Squared, coursed blocks (preset cut "squared", §FN.1's Aztec ashlar):
+	# each course cut straight into rectangles, the joints staggered course
+	# to course, no Voronoi.
+	if str(p.get("cut", "")) == "squared":
+		var blocks: Array = []
+		var by := 0.0
+		var below: Array[float] = []
+		for hh in rows:
+			var here: Array[float] = []
+			var h := hh * k
+			var cur := -rng.randf_range(0.2, 0.8) * s0
+			while cur < length - 0.01:
+				var x0 := maxf(cur, 0.0)
+				var x1 := minf(cur + rng.randf_range(s0, s1), length)
+				# Never a joint over the one below it (a straight crack).
+				for j in below:
+					if absf(x1 - j) < 0.1:
+						x1 = j + 0.1 if x1 >= j else j - 0.1
+				x1 = clampf(x1, x0 + 0.05, length)
+				if length - x1 < s0 * 0.35:
+					x1 = length
+				if x1 < length:
+					here.append(x1)
+				var poly := PackedVector2Array([Vector2(x0, by), Vector2(x1, by), Vector2(x1, by + h), Vector2(x0, by + h)])
+				blocks.append([Vector2((x0 + x1) * 0.5, by + h * 0.5), poly])
+				cur = x1
+			below = here
+			by += h
+		return blocks
 	var sites := PackedVector2Array()
 	var y := 0.0
 	for hh in rows:
