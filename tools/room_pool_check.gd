@@ -25,7 +25,9 @@ extends SceneTree
 ##     pieces overlapping unless a door joins them;
 ##  2. the walks (the same seeds, the player's own body in each tomb's real
 ##     collision, every holder cold, the fork's seal standing in the stair
-##     down's mouth): from the wake spot to the way out every time; and in
+##     down's mouth, and the way up's seal down as once the boss is home:
+##     since §FO.3, queue 85, the way up is sealed until then, which
+##     ruin_loop_check tests): from the wake spot to the way out every time; and in
 ##     every big room, from inside its way in across it to each other door
 ##     (or to its far end), up and down its steps and flights;
 ##  3. same seed, same dungeon: every seed's plan laid twice is the same
@@ -436,6 +438,10 @@ func _walks(seeds: Array) -> void:
 		var fork := Fork.new()
 		root.add_child(fork)
 		fork.build(lay, fires)
+		# The way up as it stands once the boss is home (§FO.3: sealed until
+		# then, ruin_loop.json exit.sealed_until_home; ruin_loop_check tests
+		# the seal): this walk is the route's own stone.
+		fork.open_exit(true)
 		await physics_frame
 		await physics_frame
 		var space := vp.find_world_3d().direct_space_state
@@ -485,7 +491,7 @@ func _walks(seeds: Array) -> void:
 		NodeRelease.free_later(vp)
 	walked.sort()
 	var med := float(walked[walked.size() / 2]) if not walked.is_empty() else 0.0
-	ok(out_fail.is_empty(), "%d seeds: with every holder cold (and the stair down's seal standing), your body walks from the wake spot to the way out every time (median %.0f m)%s" % [seeds.size(), med, "" if out_fail.is_empty() else ": " + ", ".join(out_fail)])
+	ok(out_fail.is_empty(), "%d seeds: with every holder cold (and the stair down's seal standing; the way up's seal down, as once the boss is home, §FO.3), your body walks from the wake spot to the way out every time (median %.0f m)%s" % [seeds.size(), med, "" if out_fail.is_empty() else ": " + ", ".join(out_fail)])
 	ok(room_legs > 0 and room_fail.is_empty(), "and across every big room, from its way in to each other door or its far end and back, up and down its steps (%d walks: %s)%s" % [room_legs, str(by_kind), "" if room_fail.is_empty() else ": " + ", ".join(room_fail)])
 	print("  the walks: %d s for %d tombs" % [(Time.get_ticks_msec() - t0) / 1000, seeds.size()])
 
