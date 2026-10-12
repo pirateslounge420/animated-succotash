@@ -1753,7 +1753,7 @@ CHECK (headless): every exit pointing at a built ruin has a shrine mouth at that
 
 ## 101 — A compass on the HUD — §FW
 
-**Status:** built (this commit; see PROGRESS)
+**Status:** built 22a4a49
 **Mike sees:** A thin strip at the top of the screen shows which way you face, N, E, S and W sliding past as you turn, the same north underground and on the surface. On the surface, small notches under it show which directions have a shrine leading on.
 
 ```text
