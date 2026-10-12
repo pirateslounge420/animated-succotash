@@ -115,7 +115,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |
 | 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
 | 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | waits (80 and 82) |
-| 84 | §FN.4 | The Aztec pyramid on the surface | todo (after 79 and 80) |
+| 84 | §FN.4 | The Aztec pyramid on the surface | built SHA84 (switched off with the temple) |
 | 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | built 1df9350 |
 | 86 | §FO.4 | The secret opening, its room and the tome | built 882b0e7 |
 | 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | built 60951ab |
@@ -1498,7 +1498,7 @@ CHECK (headless): with the brew active the hidden layer is drawn and with it off
 
 ## 84 — The Aztec pyramid on the surface — §FN.4
 
-**Status:** todo (after 79 and 80)
+**Status:** built SHA84; it stands only while aztec_temple.json enabled is true
 **Mike sees:** On the surface above the Aztec temple a step pyramid stands, overgrown and crumbling, with an altar at the top. It is scenery: it takes you nowhere.
 
 ```text

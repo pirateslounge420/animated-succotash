@@ -10,6 +10,8 @@ extends SceneTree
 ## just floor two's fog (28a-28d; §FM.6, queue 69); ONLY=surface just the
 ## tomb's surface up the stair: dawn, noon, dusk and midnight from where you come out,
 ## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71);
+## THEME=aztec_temple builds the Aztec temple (queues 80, 84): ONLY=rooms its
+## two chambers, ONLY=surface its surface with the pyramid at dusk (29h).
 ## ONLY=rooms just the room pool's big rooms (30a-30i; §FM.6, queue 70;
 ## ROOMS= some of them); ONLY=compass just the HUD compass strip facing N, E,
 ## S and W in the ruin and on the surface (31a-31h; §FW, queue 101);
@@ -1108,6 +1110,11 @@ func _run() -> void:
 		keep[key] = Settings.get_value(key) if Settings.has(key) else null
 	Settings.set_value("display.preset", _preset_of(480))
 	Settings.set_bool("hud.reticle", true)
+	# THEME=aztec_temple: the Aztec temple (queue 80) in the game, and the
+	# first ruin that one, so its surface has the pyramid (queue 84).
+	if OS.get_environment("THEME") != "":
+		CrawlerSave.force_first = OS.get_environment("THEME")
+		CrawlerSave.aztec_on = true
 	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
 	get_root().add_child(main)
 	while not main.baked:
@@ -1981,6 +1988,20 @@ func _surface(main: CrawlerMain) -> void:
 	var lumas := {}
 	var sands := {}
 	var moons := {}
+	# The Aztec temple's pyramid (design §FN.4, queue 84; THEME=aztec_temple):
+	# from where you come out at dusk, turned to it, against the sky (29h).
+	if not s.pyramid.is_empty():
+		world.days = Vents.days_at_solar_hour(base, 18.0)
+		p.spawn_flat(at.pos, float(at.yaw), 0.04)
+		var pc2: Vector2 = s.pyramid.c
+		var pa: Vector3 = at.pos
+		_look_at_from(p, pa, Vector3(pc2.x, float(s.pyramid.top_y) - 1.5, pc2.y))
+		await _frames(24)
+		var pimg := await _shot("29h_surface_pyramid_dusk")
+		var psky := _patch(pimg, 0.05, 0.02, 0.95, 0.16)
+		var pmid := _patch(pimg, 0.4, 0.3, 0.6, 0.6)
+		print("  29h the pyramid at dusk: sky #%s, its middle #%s (luma %.3f against the sky's %.3f)" % [(psky.color as Color).to_html(false), (pmid.color as Color).to_html(false), float(pmid.luma), float(psky.luma)])
+		ok(absf(float(pmid.luma) - float(psky.luma)) > 0.02, "the pyramid stands out against the dusk sky from where you come out")
 	for sh in [["29a_surface_dawn", 6.0], ["29b_surface_noon", 12.0], ["29c_surface_dusk", 18.0], ["29d_surface_night", 0.0]]:
 		world.days = Vents.days_at_solar_hour(base, float(sh[1]))
 		p.spawn_flat(at.pos, float(at.yaw), 0.04)

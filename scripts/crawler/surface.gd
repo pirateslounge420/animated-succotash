@@ -67,6 +67,9 @@ var stair: Dictionary = {}
 var stacks: Array = []
 var slots: Array = []
 var finds: Array = []
+## The Aztec temple's step pyramid (AztecPyramid; {} over any other ruin,
+## or while aztec_temple.json enabled is false).
+var pyramid: Dictionary = {}
 var stone: Node3D
 var ground_node: Node3D
 var plants: SurfacePlants
@@ -223,6 +226,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	stacks = data.stacks
 	slots = data.slots
 	finds = data.finds
+	pyramid = data.get("pyramid", {})
 	_stone(data)
 	var t3 := Time.get_ticks_msec()
 	ms["stone"] = t3 - t2
@@ -240,6 +244,8 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		var a: Vector3 = f.at
 		var r := 8.0 if str(f.kind) != "litter" else 2.5
 		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(r, r), Vector2(2.0 * r, 2.0 * r)))
+	if not pyramid.is_empty():
+		keep_out.append((pyramid.rect as Rect2).grow(2.0))
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
 	add_child(plants)

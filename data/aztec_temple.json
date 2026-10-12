@@ -117,6 +117,19 @@
     "overgrown_and_crumbling": true,
     "come_up": "inside it or beside it: open",
     "two_altars": "the summit altar above and the round blood altar below are read as two places; open (§FN.8 call 5)",
-    "other_cultures": "flagged only (mike: just flagging it for now); no other silhouette is assigned and none is to be drawn until he asks"
+    "other_cultures": "flagged only (mike: just flagging it for now); no other silhouette is assigned and none is to be drawn until he asks",
+    "pyramid": {
+      "_help": "(Claude Code, queue 84, design §FN.4; first guesses, tune by eye) The step pyramid over the Aztec temple (AztecPyramid), built only while enabled is true and the dungeon is the temple. tiers: how many (13 is the calendar's count, a guess not confirmed; 5 reads as a ruin's mound at this size); base_m: the lowest tier's side; tier_h_m: each tier's height; inset_m: how far each tier steps in; stair_w_m: the stair's width up the face toward where you come up; stair_slope: its rise over its run (0.6, the tomb's own stairs, walkable); altar_m: the altar block on the top [wide, high, deep]; crumble: the share of each tier's top course settled, askew or gone (more at the corners); at_m: how far from where you come up it stands [nearest, furthest tried]; off_deg: how far off the way you face [least, most], so it stands beside the way out's line, in view, out of the wash. Scenery only: no exit, no beacon, no fast travel, no gameplay number.",
+      "tiers": 5,
+      "base_m": 26.0,
+      "tier_h_m": 2.0,
+      "inset_m": 1.8,
+      "stair_w_m": 4.0,
+      "stair_slope": 0.6,
+      "altar_m": [1.4, 0.8, 0.9],
+      "crumble": 0.15,
+      "at_m": [34.0, 70.0],
+      "off_deg": [24.0, 42.0]
+    }
   }
 }

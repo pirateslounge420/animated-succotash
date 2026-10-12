@@ -46,6 +46,9 @@ var slots: Array = []
 var finds: Array = []
 ## Where the yard's stone stands (x/z rects), kept out of the finds.
 var _taken: Array = []
+## The Aztec temple's step pyramid (design §FN.4, queue 84; AztecPyramid):
+## {} unless the dungeon is the temple and the temple is in the game.
+var pyramid: Dictionary = {}
 
 
 func ground(x: float, z: float) -> float:
@@ -130,13 +133,17 @@ static func make(g: SurfaceGround, lay: Dictionary, p: Dictionary, seed_value: i
 	b._stone_mode()
 	b._stairhead()
 	b._stacks(lay)
+	# The Aztec temple's twin (§FN.4): scenery, kept out of the finds.
+	b.pyramid = AztecPyramid.build(b, lay, seed_value)
+	if not b.pyramid.is_empty():
+		b._taken.append(b.pyramid.rect)
 	b._finds(seed_value)
 	if kept == null:
 		FittedStone._climates.erase(th)
 	else:
 		FittedStone._climates[th] = kept
 	return {"v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch, "stones": b.stones, "faces": b.faces,
-		"stair": b.stair, "stacks": b.stacks, "slots": b.slots, "finds": b.finds, "doors": b.doors_built, "tags": b._runs}
+		"stair": b.stair, "stacks": b.stacks, "slots": b.slots, "finds": b.finds, "pyramid": b.pyramid, "doors": b.doors_built, "tags": b._runs}
 
 
 # --- The stairhead ----------------------------------------------------------------
