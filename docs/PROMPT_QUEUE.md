@@ -125,7 +125,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 91 | §FP.2 | The pharaoh's locust swarm: a ranged slow | waits (89) |
 | 92 | §FP.3 | Hieroglyphs on the walls | waits (88 and 89) |
 | 93 | §FP.4 | The Egyptian brew: blue lotus, mandrake, a vision that feels real, glyphs that read | waits (89, 92, 83, and Mike's answer to §FO.9 call 2) |
-| 94 | §FQ.1 | The Maya stone: limestone | todo (after 88) |
+| 94 | §FQ.1 | The Maya stone: limestone | built |
 | 95 | §FQ.1, §FS.1 | The Maya ruin: a jungle temple, its calendar room and a way down | waits (89, 94) |
 | 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
 | 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | todo |
@@ -1648,7 +1648,7 @@ CHECK (headless): with the brew active the figures and the readable lines are dr
 
 ## 94 — The Maya stone: limestone — §FQ.1
 
-**Status:** todo (after 88)
+**Status:** built (12 Oct)
 **Mike sees:** A new stone in the game's data: pale weathered limestone with a trace of old red in the carving. Nothing in the game uses it yet.
 
 ```text

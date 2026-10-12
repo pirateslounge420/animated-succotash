@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 94, §FQ.1: the Maya stone, limestone
+- **Built:** `masonry.json → styles → maya_temple` (additive, `_help.maya_temple`) and preset `dressed_blocks`: the squared cut in smaller, finely dressed blocks (0.4–0.9 m wide), fine joints, one pale grey-cream limestone (`stone.tint` #a59c88, `spread` 0.06) for floor, ceiling, doors, stairs, niches and sconces; flat lintels. Registered as `style_by_theme.maya_temple`; nothing builds a Maya ruin yet, no existing style changed, no code changed.
+- **Data for later, not wired:** `stucco` (#6a3328, a dulled red, only in the deepest recesses), `carving` (queue 95).
+- **Checks** (seed 7): `ruin_stone_check` STYLE=maya_temple 19 PASS, 0 fails (2986 inner blocks, mean 0.65 m wide; three tombs in the stone: 123 doors all square, 14 stairs, 142 niches, 3.70 M stone vertices #968d79–#b4ab97, none poisoned); STYLE=egyptian_pyramid 19 PASS and `aztec_stone_check` 17 PASS with the same numbers as before; the tomb's stone hash 738297319 unchanged.
+- **Walkabout not done:** no room in the stone to stand in until queue 95.
+- **For Mike:** the Maya are known for the corbel vault; this style's ceilings are flat lintel slabs like the others (the corbel vault exists as a method). Say if you want it.
+
 ## 2026-10-12 — Queue 88, §FO.1: the Egyptian stone, big sandstone blocks
 - **Built:** `masonry.json → styles → egyptian_pyramid` (additive, `_help.egyptian_pyramid`) and preset `great_blocks`: queue 79's squared cut with big blocks (1.1–2.4 m wide, courses ~0.6–1.2 m high), tight shallow joints, one ochre sandstone (`stone.tint` #8a6c48, `spread` 0.07) for every surface; doors a flat lintel over a square opening, niches square, square hearth pit. Registered as `style_by_theme.egyptian_pyramid` (and `by_theme`); no existing entry or style changed (compared field by field against the file before). No code changed.
 - **Data for later, not wired:** `carving` (hieroglyphs, queue 92), `wind_wear`.

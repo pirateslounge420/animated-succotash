@@ -11,7 +11,8 @@
   "styles": "A ruin type's whole kit (Mike, 6 Oct: \"each ruins type has a homogenized and thoughtful layout and aesthetic \u2026 crafted out of the same materials\"). Every built stone surface in a ruin draws from its style: rule.every_surface. One stone: stone.tint (\"theme\" as the presets) with stone.spread, the most any one stone strays from it (lighter or darker); rule.no_general_palette: nothing built of stone takes RuinBuilder's general palette or a hard-coded colour (the floor flags, the ceiling slabs, the stairs and the sconces did, 37fd8a7). rule.on_top: what may lie over the stone without being a second stone (the heart's ochre is paint, \u00a7BQ; soot \u00a7EV.1; moss and drift \u00a7EU.4). module_m: the builders' unit; room sides, corridor lengths and the spacing of doors and sconces are whole numbers of it (\u00a7EX.2). heights_m: the short list of ceiling heights (the kit's own as built). walls.preset: a presets entry. floor: method fitted_flags (the walls' Voronoi cutter laid flat, stones stone_scale times the wall's, pillow and proud times pillow_scale, joints packed with grit to joint_fill of their depth; wear: smoother and flatter along the middle of a passage, amount 0-1) or rough_slabs (big flags, the gaps packed with small stones, gap_share of the floor). ceiling: method lintel_slabs (single slabs wall to wall, slab_w_m wide each, settled like the walls) or corbel_vault (courses stepping in course_step_m each until a capstone closes it); rooms: how a room's ceiling starts (corbel_courses courses stepping corbel_step_m in, then the method); passages: a corridor's roof; gaps_share: passage capstones with a gap between them where snow and draft come in. max_span_m: no slab or vault spans wider; a wider room gets pillars of the style's stone on the module carrying stone beams, the ceiling spanning beam to beam. hearth_room four_pillars: four pillars round the hearth, the hearth's shaft (\u00a7EV.1) open between them (a megaron's plan). doors: shape trapezoid (top_share: the top's width over the foot's, the Inca batter) or trilithon (two uprights and a lintel); lintel monolith: one stone; threshold: one stone or a kerb stone. niches: the catacomb's bone shelves and any wall recess take this shape. stairs: block_steps (each step one block, settled like the walls) or big_blocks (few, broad). sconce: niche_cup (a niche of niches.shape cut in the wall, a stone cup in it, niche_w_m x niche_h_m) or recess_shelf (a recess between two orthostats, a flat stone shelf). dressing: coffins, benches, shelves and rubble of stone are cut from the style's stone. plan: how a ruin of this style lays out (\u00a7EX.2, crawler.json plan). models: the real places each is drawn from, for whoever builds it. First guesses by Claude (chat), 6 Oct; Mike tunes by playing (\u00a7EX.9 call 1). module_m and heights_m are read since 7 Oct (queue 46, \u00a7EX.2: TombKit lays the tomb's sizes in whole modules and its ceilings from heights_m); module_m also spaces the room sconces (\u00a7EX.4, queue 47) and the pillars (queue 48). Built 7 Oct (Claude Code, \u00a7EX.1, \u00a7EX.3; RuinStyle, TombBuild, FittedStone), for andean_tomb (the tomb); passage_grave_snow is data for when the snow ruins are built. One stone: every stone's colour is stone.tint (\"theme\": crawler.json themes.<theme>.stone; the tomb's is #636870, the mean its fitted walls showed before \u00a7EX, so the walls keep their tone) moved lighter or darker by up to stone.spread, every channel alike; the joints, feet and undersides go toward the scene's shade (navy) as the walls' do; RuinBuilder's palette is never read (TombBuild sets it to the style's own five tones, and the checks poison it). The walls' geometry is as before for the same seed: only the colour changed. floor: fitted_flags as above (FittedStone.flags); wear.band: how far out from a passage's middle the wear reaches (a share of its half width); wear.lighten: how far a fully worn flag goes toward the light end of the spread (0-1); in rooms the wear runs along the ways from each door to what the room holds (the hearth, the dead at the heart's end, else its middle). The flags' faces are one fan to the middle (no pillow ring: at pillow_scale it doesn't show), the collision one flat slab. ceiling: lintel_slabs, each slab a fitted stone drawn facing down (FittedStone.slabs), the joints between slabs a little out of true; rooms.corbel_h_m: the corbel course's height (corbel_step_m how far it steps in); the slabs span the room's shorter way. max_span_m and hearth_room four_pillars: where a room's span past its corbels is over max_span_m (and in the hearth room always), four pillars stand pillars.bays_modules modules apart round the room's middle (round the hearth), the first count that keeps every slab and beam span within max_span_m, a passage (0.9 m) clear of the walls, and the doors' ways in, the hearth, the mat, the bundle, the rescuer, a fire on the floor, the heart's box, the wall torches' bays (\u00a7EX.4), a crypt's coffin rows and the vents' columns clear (a single module, the 1 in bays_modules, only where no wider spacing stands clear; where none does, the spacing that crowds least, a torch's bay counting three times a coffin; a coffin a pillar stands on isn't laid, and no skeleton rests where it would climb out into one); two beams over them run wall to wall. pillars.side_m: a pillar's side (a base and a cap a little wider, drums between, settled a little); beam_w_m, beam_h_m: a beam's width and depth. The dressing keeps clear of the pillars. doors: trapezoid as above; jamb_w_m: the jamb stones' width up each side (three stacked, the doorway's shade in their faces); lintel_h_m: the monolithic lintel's height (it meets a room's corbel course when less than a course of wall would be left between them); bearing_m: how far the lintel reaches past the jambs. The threshold is one stone across the opening through the wall. niches: top_share for every niche; bone: the catacomb's bone niches (w_m wide at the foot, h_m high, depth_m deep, one at each of sills_m over the floor, a column every 1.4 m down both long walls clear of the doors and airways), the dead's bones and a skull on their sills; burial (Claude Code, 7 Oct, with queue 58's residents): where a skeleton sits, one tall niche in place of a column's two, w_m wide at its foot, h_m high over the sill stone it sits on (0.5 m over the floor, where TombKit.rest_place sits it; the stone stands 0.62 m out into the room), depth_m deep. sconce: niche_cup as above; niche_d_m: the niche's depth into the wall; cup_m: the stone cup's size (wide, high, deep); the flame stands in the cup a little inside the niche, its light 0.32 m out in front of it (where the old bracket held the flame: the rooms lit as \u00a7EX.4 counts them). stairs: block_steps, each step one block of the stone, a share settled (a little sunk, a little turned; settle), over the ramp you walk. dressing: coffins, the heart's box, the fallen slab, rubble (fallen wall stones and slab pieces), the hearth's kerb (nine stones where the campfire's ring stood), the airways' carved surrounds and the vents' flues, all the style's stone. hearth (Mike, 7 Oct: \"where the main hearths sit there should be a fire pit made into the ground instead of just having a campfire sitting right on the floor\"; Claude Code's first guesses): the dungeon's one hearth (\u00a7EX.4) and how its stone is cut, \u00a7EX.1's fire-holders. method sunk_pit: a pit sunk in the floor, a polygon of `sides` (12 reads round; 4 is a square box of slabs), r_m from its middle to its lining's face, depth_m deep, lined with the style's stone in fitted courses, its kerb kerb_w_m wide set into the floor round its lip and kerb_proud_m proud of it; the floor's flags are cut round it; the fire sits on a bed of ash (`ash`, sRGB) at its foot, its light kept where it was over the room's floor so the room is lit as before; you can't walk into it (an unseen guard over it to guard_m above the floor, under every eye, yours crouched included). Anything else, or no hearth block: the old ring of loose stones on the floor. The snow ruins' (passage_grave_snow) is data only until they are built.",
   "style_by_theme": "Which style each crawler.json theme is built in. by_theme (the wall preset) stays as built and must agree with the style's walls.preset. A theme not listed takes default. Built 7 Oct (Claude Code): the tomb is andean_tomb; a style's walls.preset is the wall preset (by_theme agrees, and the checks say so). TombKit.style_of reads it too, for the tomb's module and heights (\u00a7EX.2, queue 46).",
   "aztec_temple": "Built 12 Oct (Claude Code, \u00a7FN.1, queue 79): the Aztec temple's one stone. Walls preset coursed_blocks: true courses of squared blocks (cut \"squared\": FittedStone lays rectangles, the joints staggered course to course; no Voronoi), stone_m wide, aspect their width over height; the floor's flags are cut the same way. Doors shape flat_lintel: a square opening under one flat lintel (any shape but trapezoid is square; top_share 1). Niches square (top_share 1). Hearth a square pit (sides 4). stone.tint red tezontle (#6e3a30; Mike, 12 Oct); spread how far a block strays lighter or darker. carving and plaster are data for queue 80 and later. No theme is built in it yet: style_by_theme aztec_temple is read once a ruin of that theme exists (queue 80). Tune by eye.",
-  "egyptian_pyramid": "Built 12 Oct (Claude Code, \u00a7FO.1, queue 88): the Egyptian ruin's one stone, big sandstone blocks (Mike). Walls preset great_blocks: the squared cut of coursed_blocks (cut \"squared\", queue 79) with much bigger blocks (stone_m 1.1-2.4 m wide, aspect their width over height, so courses about 0.6-1.2 m high) and tight, straight, shallow joints (joint_m, joint_depth_m). stone.tint a pale-to-ochre sandstone kept dark enough for the firelit frame (shade goes navy as every style's does, never grey); spread how far a block strays lighter or darker (RuinStyle varies lightness only, so pale and ochre blocks can't sit side by side as two hues; \u00a7EX.1). Doors flat_lintel, niches square, the hearth a square pit. carving (relief on the faces; hieroglyphs are queue 92) and wind_wear are data for later passes. Claude's note: Giza is mostly limestone; the big sandstone-block temples are Karnak, Luxor and Abu Simbel; built as the sandstone Mike asked for. No theme is built in it yet (queue 89). Tune by eye."
+  "egyptian_pyramid": "Built 12 Oct (Claude Code, \u00a7FO.1, queue 88): the Egyptian ruin's one stone, big sandstone blocks (Mike). Walls preset great_blocks: the squared cut of coursed_blocks (cut \"squared\", queue 79) with much bigger blocks (stone_m 1.1-2.4 m wide, aspect their width over height, so courses about 0.6-1.2 m high) and tight, straight, shallow joints (joint_m, joint_depth_m). stone.tint a pale-to-ochre sandstone kept dark enough for the firelit frame (shade goes navy as every style's does, never grey); spread how far a block strays lighter or darker (RuinStyle varies lightness only, so pale and ochre blocks can't sit side by side as two hues; \u00a7EX.1). Doors flat_lintel, niches square, the hearth a square pit. carving (relief on the faces; hieroglyphs are queue 92) and wind_wear are data for later passes. Claude's note: Giza is mostly limestone; the big sandstone-block temples are Karnak, Luxor and Abu Simbel; built as the sandstone Mike asked for. No theme is built in it yet (queue 89). Tune by eye.",
+  "maya_temple": "Built 12 Oct (Claude Code, \u00a7FQ.1, queue 94): the Maya ruin's one stone, pale grey-cream limestone, finely dressed. Walls preset dressed_blocks: the squared cut (cut \"squared\", queue 79) in smaller, finer blocks than the Aztec or Egyptian (stone_m 0.4-0.9 m wide, aspect their width over height), fine shallow joints (joint_m, joint_depth_m), little proud. stone.tint pale grey-cream, spread how far a block strays lighter or darker. Doors flat_lintel (the corbel vault the Maya are known for would be ceiling.method corbel_vault, not chosen here: Mike's call), niches square, the hearth a square pit. stucco: old red only in the deepest recesses, never bright paint, data not wired; carving is data for queue 95. No ruin is built in it yet (queue 95). Block sizes, joints and settle are first guesses; tune by eye."
  },
  "seed": 0,
  "partition": {
@@ -144,6 +145,26 @@
     "joint_m": 0.006,
     "joint_depth_m": 0.03
    }
+  },
+  "dressed_blocks": {
+   "stone_m": [
+    0.4,
+    0.9
+   ],
+   "course_bias": 1.0,
+   "tint": "theme",
+   "aspect": 1.7,
+   "cut": "squared",
+   "relief": {
+    "bevel_m": 0.015,
+    "pillow_m": 0.008,
+    "proud_m": [
+     0.005,
+     0.02
+    ],
+    "joint_m": 0.006,
+    "joint_depth_m": 0.035
+   }
   }
  },
  "by_theme": {
@@ -151,7 +172,8 @@
   "snow_ruins": "megalithic",
   "default": "megalithic",
   "aztec_temple": "coursed_blocks",
-  "egyptian_pyramid": "great_blocks"
+  "egyptian_pyramid": "great_blocks",
+  "maya_temple": "dressed_blocks"
  },
  "styles": {
   "andean_tomb": {
@@ -668,6 +690,151 @@
     "_help": "[NOT WIRED YET \u2014 design \u00a7FO.1] Wind-worn arrises: how much a block's edges are rounded by sand, 0-1. Settle with age is built (the walls' relief).",
     "amount": 0.4
    }
+  },
+  "maya_temple": {
+   "name": "Maya temple stone (pale limestone, \u00a7FQ.1)",
+   "models": [
+    "Palenque and Copan: finely dressed limestone blocks, carved relief panels",
+    "Tikal and Calakmul: limestone faced in red-painted stucco in life, the paint now only in the recesses",
+    "Maya doorways: a flat lintel over a square opening"
+   ],
+   "rule": {
+    "every_surface": [
+     "walls",
+     "floor",
+     "ceiling",
+     "doors",
+     "thresholds",
+     "stairs",
+     "niches",
+     "fire_holders",
+     "stone_dressing",
+     "rubble"
+    ],
+    "no_general_palette": true,
+    "on_top": [
+     "stucco_red",
+     "soot",
+     "moss",
+     "drift"
+    ]
+   },
+   "stone": {
+    "tint": "#a59c88",
+    "spread": 0.06,
+    "_note": "one stone: pale grey-cream limestone (\u00a7FQ.1); RuinStyle varies every stone lighter or darker only"
+   },
+   "module_m": 2.0,
+   "heights_m": {
+    "corridor": 2.6,
+    "room": 3.2,
+    "hearth_room": 3.6
+   },
+   "walls": {
+    "preset": "dressed_blocks"
+   },
+   "floor": {
+    "method": "fitted_flags",
+    "stone_scale": 2.0,
+    "pillow_scale": 0.2,
+    "joint_fill": 0.7,
+    "wear": {
+     "along": "passage_middle",
+     "amount": 0.6,
+     "band": 0.7,
+     "lighten": 0.6
+    }
+   },
+   "ceiling": {
+    "method": "lintel_slabs",
+    "slab_w_m": [
+     0.5,
+     0.9
+    ],
+    "rooms": {
+     "corbel_courses": 1,
+     "corbel_step_m": 0.3,
+     "corbel_h_m": 0.36
+    },
+    "passages": "lintel_slabs",
+    "gaps_share": 0.0
+   },
+   "max_span_m": 6.0,
+   "hearth_room": "four_pillars",
+   "hearth": {
+    "method": "sunk_pit",
+    "sides": 4,
+    "r_m": 0.62,
+    "depth_m": 0.32,
+    "kerb_w_m": 0.24,
+    "kerb_proud_m": 0.06,
+    "guard_m": 0.45,
+    "ash": "#2a2422"
+   },
+   "pillars": {
+    "side_m": 0.6,
+    "beam_w_m": 0.5,
+    "beam_h_m": 0.45,
+    "bays_modules": [
+     2,
+     3,
+     4,
+     1
+    ]
+   },
+   "doors": {
+    "shape": "flat_lintel",
+    "top_share": 1.0,
+    "lintel": "monolith",
+    "threshold": "one_stone",
+    "jamb_w_m": 0.36,
+    "lintel_h_m": 0.48,
+    "bearing_m": 0.3
+   },
+   "niches": {
+    "shape": "square",
+    "top_share": 1.0,
+    "bone": {
+     "w_m": 0.9,
+     "h_m": 0.5,
+     "depth_m": 0.38,
+     "sills_m": [
+      0.45,
+      1.25
+     ]
+    },
+    "burial": {
+     "w_m": 1.0,
+     "h_m": 1.25,
+     "depth_m": 0.38
+    }
+   },
+   "stairs": {
+    "method": "block_steps"
+   },
+   "sconce": {
+    "method": "niche_cup",
+    "niche_w_m": 0.4,
+    "niche_h_m": 0.55,
+    "niche_d_m": 0.26,
+    "cup_m": [
+     0.22,
+     0.09,
+     0.18
+    ]
+   },
+   "dressing": "style_stone",
+   "plan": "gallery_and_chambers",
+   "carving": {
+    "_help": "[NOT WIRED YET \u2014 design \u00a7FQ.1, queue 95] Relief cut into a block's face (the calendar room's glyphs). on: whether this stone takes carving; depth_m: how deep a carved line sinks.",
+    "on": true,
+    "depth_m": 0.02
+   },
+   "stucco": {
+    "_help": "[NOT WIRED YET \u2014 design \u00a7FQ.1] A trace of old red stucco surviving only in the deepest recesses (carved lines, niche backs), never bright, diffuse only (\u00a7ES). color: the stucco (sRGB, a dulled red); share: how much of a deep recess still holds it. On top of the stone (rule.on_top), never a second stone.",
+    "color": "#6a3328",
+    "share": 0.12
+   }
   }
  },
  "style_by_theme": {
@@ -675,6 +842,7 @@
   "snow_ruins": "passage_grave_snow",
   "default": "andean_tomb",
   "aztec_temple": "aztec_temple",
-  "egyptian_pyramid": "egyptian_pyramid"
+  "egyptian_pyramid": "egyptian_pyramid",
+  "maya_temple": "maya_temple"
  }
 }
