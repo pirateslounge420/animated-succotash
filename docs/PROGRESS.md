@@ -4,6 +4,21 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 83, §FN.5: the vision filter (palette, hidden carvings, glowing and moving glyphs)
+- **Mike** (§FN.8 call 1, 12 Oct): "the mid Mexico biome is the Aztec"; "Aztec is not cloud forest. it should be montane grasslands/shrublands". Queue 82 put the teonanácatl brew in the temple's world. This pass gives it its vision.
+- **Built:** the teonanácatl brew's vision is a palette swap (BrewVision, `shaders/brew_palette.gdshader`) in place of the placeholder tint. The frame's light is read into violet, turquoise and gold, breathing slowly.
+- **Hidden carvings** (`HiddenCarvings`, `shaders/hidden_carvings.gdshader`) sit in the temple from the start and are drawn only under the brew:
+  - 20 over the day-sign panels;
+  - a left frieze telling a 4-panel wordless picture-history (placeholders: footprints, reeds in water, a stepped temple, a rayed disc; no faces);
+  - a right frieze of 4 glyphs;
+  - 8 on the blood altar chamber's corner faces.
+  They glow turquoise, multiply, change and breathe, and come up and fade with the vision. Tunables are in `brew.json → plants.teonanacatl_aztecorum.vision` (`_help.vision_aztec`).
+- **Bounds:** unshaded paint, no Light3D, no collision. The lit test, light field, boss, holders and torch are identical with them drawn. The length stays 120 s (§FN.8 call 6 open).
+- **Fixed on the way:** BrewVision had zero size (anchors without offsets), so no brew's tint had ever been drawn on screen. Ololiuhqui's placeholder now shows too.
+- **Checks** (seed 7): new `vision_check` 18 PASS, 0 fails. `brew_check` tomb 87 and `THEME=aztec_temple` 91, 0 fails each.
+- **Walkabout** (`THEME=aztec_temple ONLY=rooms`): 30h is the calendar room sober and 30k the same view under the brew, the glyphs glowing on the panels.
+- **For Mike:** every colour, the glow, how fast the glyphs change and multiply, and the friezes' places are first guesses to judge by eye. The picture-history's story is Claude (chat)'s to write.
+
 ## 2026-10-12 — Queue 82, §FN.5.4: the Aztec brew plant becomes teonanácatl
 - **Mike** (§FN.8 call 1): "the mid Mexico biome is the Aztec"; "Aztec is not cloud forest. it should be montane grasslands/shrublands".
 - **Built:** over the Aztec temple the surface grows teonanácatl (`brew.json → world.by_theme.aztec_temple`). The tomb keeps ololiuhqui.

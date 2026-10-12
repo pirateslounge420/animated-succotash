@@ -10,6 +10,13 @@ extends Control
 ## frame like the rest of the HUD (§Y; CrawlerHarmView's banded edges),
 ## under the crosshair and the panels.
 ##
+## A plant whose vision has a palette block (the Aztec brew's, design §FN.5,
+## queue 83) has a palette swap instead of the tint and the bands: the
+## frame's own light read into palette.shadow / mid / high and mixed over it
+## at palette.amount times the same envelope (shaders/brew_palette), the
+## ramp breathing across the frame (breathe, breathe_hz). The temple's
+## hidden carvings (HiddenCarvings) read reveal() to come up and fade with it.
+##
 ## It only draws (§FM.3): no light, no rule, no sense, no timer and no
 ## number of the game reads it or is changed by it, and nothing of it is
 ## saved (§FM.4).
@@ -27,12 +34,24 @@ var t := 0.0
 var active := false
 ## Visions begun this session (the checks).
 var started := 0
+## The palette swap (a full-frame rect reading the frame under it), shown
+## only while a vision with a palette block runs.
+var swap: ColorRect
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	visible = false
+	swap = ColorRect.new()
+	swap.name = "PaletteSwap"
+	swap.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	swap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://shaders/brew_palette.gdshader")
+	swap.material = mat
+	swap.visible = false
+	add_child(swap)
 
 
 ## Begin `p_plant`'s vision (its brew.json vision block) now.
@@ -43,6 +62,7 @@ func start(p_plant: String, p_v: Dictionary) -> void:
 	active = true
 	started += 1
 	visible = true
+	_palette_setup()
 	queue_redraw()
 
 
@@ -50,6 +70,42 @@ func stop() -> void:
 	active = false
 	visible = false
 	t = 0.0
+	if swap != null:
+		swap.visible = false
+		(swap.material as ShaderMaterial).set_shader_parameter("amount", 0.0)
+
+
+## Has this vision a palette swap (its palette block)?
+func has_palette() -> bool:
+	return active and v.get("palette") is Dictionary
+
+
+## How far the hidden carvings are up now, 0 .. 1 (its envelope, for a
+## vision with a carvings block; 0 for any other or none).
+func reveal() -> float:
+	return envelope() if active and v.get("carvings") is Dictionary else 0.0
+
+
+func _palette_setup() -> void:
+	if swap == null:
+		return
+	swap.visible = has_palette()
+	if not has_palette():
+		return
+	var P: Dictionary = v.palette
+	var mat := swap.material as ShaderMaterial
+	mat.set_shader_parameter("shadow_col", Color(str(P.get("shadow", "#1f0c40"))))
+	mat.set_shader_parameter("mid_col", Color(str(P.get("mid", "#268c7a"))))
+	mat.set_shader_parameter("high_col", Color(str(P.get("high", "#f2c870"))))
+	mat.set_shader_parameter("breathe", float(P.get("breathe", 0.06)))
+	mat.set_shader_parameter("breathe_hz", float(P.get("breathe_hz", 0.12)))
+	mat.set_shader_parameter("amount", 0.0)
+
+
+## The palette swap's strength now (palette.amount times the envelope; 0
+## with none).
+func palette_amount() -> float:
+	return clampf(float((v.palette as Dictionary).get("amount", 0.6)), 0.0, 1.0) * envelope() if has_palette() else 0.0
 
 
 ## The vision's whole length (s): held until last_s, then fade_s.
@@ -77,8 +133,11 @@ func pulse() -> float:
 	return 1.0 - depth * 0.5 * (1.0 - cos(TAU * hz * t))
 
 
-## The tint over the whole frame now (its alpha; 0 when none).
+## The vision's strength on the frame now: the tint's alpha, or for a
+## palette swap its amount (0 when none).
 func level() -> float:
+	if has_palette():
+		return palette_amount()
 	return clampf(float(v.get("strength", 0.16)), 0.0, 1.0) * envelope() * pulse() if active else 0.0
 
 
@@ -94,11 +153,16 @@ func _process(delta: float) -> void:
 	if t >= length_s():
 		stop()
 		return
+	if has_palette():
+		var mat := swap.material as ShaderMaterial
+		mat.set_shader_parameter("amount", palette_amount())
+		mat.set_shader_parameter("t", t)
 	queue_redraw()
 
 
 func _draw() -> void:
-	if not active:
+	if not active or has_palette():
+		# A palette swap replaces the placeholder tint and bands.
 		return
 	var col := tint()
 	var e := envelope() * pulse()

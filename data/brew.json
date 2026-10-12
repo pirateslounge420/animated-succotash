@@ -7,7 +7,8 @@
   "carry": "What you take (Inventory: a plant sample, part cutting, its species the entry's): one carried thing in your pack, at most max at once. reach_m: how near your eyes must be to the vine's foot for the interact button (right click) to take a cutting. While you carry it and your left hand holds no fire pot, it shows low in your left hand in view (view, camera space; view_len_m its length there). log_take: the log's line (the log only; no words on screen, §ET.3).",
   "rite": "The hand-over and the brew at the hearth (Brew, FolkMotion). With a cutting in your pack, the interact button (right click) within hand_reach_m of the hearth's middle (the usual spot, where you light a torch at the guard, is about 1.2 m out) hands it over: the shaman rises from his stone (rise_s; a step of rise_step_m off it), walks round the hearth to stand beside you on the kerb (walk_r_m round, at walk_mps, turning at turn_dps; stand_r_m from the middle, beside_deg round from you, the side away from the torch bundle), reaches for it and takes it (take_s), turns to the cauldron and drops it in (drop_s; the brew shows in the pot), stirs with his ladle (stir_s, a circle stir_r_m round at stir_hz), lifts a ladleful (fill_s), turns to you and holds it out. The interact button within drink_reach_m of him then drinks it; he lowers the ladle (lower_s), walks back and sits (sit_s). His ways are checked clear of the stone (the walls, the pillars, his own seat; clear_m round him) and of the bundle (bundle_m) and the tripod's feet (feet_m). log_drink: the log's line when you drink. Nothing he does speaks (§ED, §FM.3).",
   "plants": "Per plant, by its entry's id (only the tomb's world's, ololiuhqui, is built). take_share: how much of the plant's length one harvest takes (from its foot); keep_share: never cut below this share of its length (the plant always stands: nothing uproots it); regrow_game_h: game hours on the one clock (§FK.3; a game hour is 6 real minutes) for one take's length to grow back. brew_color: the brew in the cauldron and the ladle. vision (§FM.7: a different experience for each plant, never a harder one; what a brew does is NOT locked, so this is a placeholder): tint (colour) at strength over the whole frame and edge in bands from the frame's edges, pulsing at pulse_hz down to (1 - pulse_depth) of itself; it eases in over fade_in_s from the moment you drink, holds until last_s (a first guess of 120 seconds), then fades over fade_s. Drawn in the 480-line frame like the rest of the HUD; it touches nothing else. teonanacatl_aztecorum (queue 82): one take picks one mushroom of five, never below half of them (three of five stand), one comes back every 4 game hours; log_take its own line; the vision a placeholder until queue 83.",
-  "ground": "A plant that grows on the ground, not hung from a tree (a mushroom: the entry's shape mushroom; SacredVine, queue 82): a small group of count plants (each the shape's few caps on their stalks) within spread_m of one spot, on a length of rotting wood (wood: wood_m long, wood_color; the entry's fungus.substrate snag_log), under the crown of a tree host_h_m tall (a canopy tree, any shape: its shade and litter), from_trunk_m of the tree's height out from its trunk, toward where you come up first; never in the wash's bed, on the talus or cliffs, or on ground steeper than max_slope. Where the tree stands is chosen as for the vine (vine.from_arrival_m, near_m, ahead_deg; in sight within ruin_compass.json plant_stand.in_sight_within_s). Drawn out to visible_m. A take picks one plant of the group (take_share of it: 0.2 of 5); the rest stand, never fewer than keep_share; they come back on the game clock (regrow_game_h each)."
+  "ground": "A plant that grows on the ground, not hung from a tree (a mushroom: the entry's shape mushroom; SacredVine, queue 82): a small group of count plants (each the shape's few caps on their stalks) within spread_m of one spot, on a length of rotting wood (wood: wood_m long, wood_color; the entry's fungus.substrate snag_log), under the crown of a tree host_h_m tall (a canopy tree, any shape: its shade and litter), from_trunk_m of the tree's height out from its trunk, toward where you come up first; never in the wash's bed, on the talus or cliffs, or on ground steeper than max_slope. Where the tree stands is chosen as for the vine (vine.from_arrival_m, near_m, ahead_deg; in sight within ruin_compass.json plant_stand.in_sight_within_s). Drawn out to visible_m. A take picks one plant of the group (take_share of it: 0.2 of 5); the rest stand, never fewer than keep_share; they come back on the game clock (regrow_game_h each).",
+  "vision_aztec": "Design §FN.5 (queue 83; Claude Code's first guesses, Mike tunes by eye; visions.json cultures.aztec.look: 'the glyphs multiply and animate, geometry breathes across the stone; the largest palette swap of the set'). A vision with a palette block (teonanacatl_aztecorum's) swaps the frame's palette instead of the placeholder tint and bands (BrewVision, shaders/brew_palette): the frame's own light read into a ramp shadow -> mid -> high and mixed over it at amount times the vision's envelope (easing in over fade_in_s, held to last_s, fading over fade_s, as the placeholder does; its length is §FN.8 call 6's, open), the ramp breathing across the frame (breathe, a share of the light, at breathe_hz). A vision with a carvings block brings up the temple's hidden carvings (HiddenCarvings, shaders/hidden_carvings): marks cut in its stone from the start that are drawn only while the vision runs, at its envelope: over each of the calendar room's 20 day-sign panels (proud_m in front of the sign's glyph), a frieze over the panels on each long wall (frieze_m high; the left wall's history_panels panels a short wordless picture-history, placeholders until Claude (chat) writes the story: footprints walking, reeds in water, a stepped temple, a rayed disc; the right wall's glyphs), and one on each corner face of the blood altar's round chamber (altar_up_m over its floor). They glow in glow (glow_amount of it over the temple's own stone colour), the glyphs multiply up to cells_max across and change every change_s seconds, and the panels breathe (breathe, breathe_hz). Bounds (§FN.5.3, §FM.3): the carvings are really there, so nothing is added that is not stone (no creature, no face); the glow is paint, not light (no Light3D, no lit test, no boss, no dark); nothing about play changes."
  },
  "world": {
   "ruin": "aztec",
@@ -126,7 +127,27 @@
     "pulse_depth": 0.55,
     "fade_in_s": 4.0,
     "last_s": 120.0,
-    "fade_s": 10.0
+    "fade_s": 10.0,
+    "palette": {
+     "amount": 0.6,
+     "shadow": "#1f0c40",
+     "mid": "#268c7a",
+     "high": "#f2c870",
+     "breathe": 0.06,
+     "breathe_hz": 0.12
+    },
+    "carvings": {
+     "glow": "#80ffd0",
+     "glow_amount": 0.75,
+     "breathe": 0.05,
+     "breathe_hz": 0.12,
+     "change_s": 2.5,
+     "cells_max": 3,
+     "proud_m": 0.06,
+     "frieze_m": 0.55,
+     "history_panels": 4,
+     "altar_up_m": 1.6
+    }
    }
   }
  }

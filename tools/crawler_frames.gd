@@ -2333,7 +2333,20 @@ func _rooms(first: CrawlerMain) -> void:
 				target3 = Vector3(w2.x, low_y + 2.6, w2.y)
 		_look_at_from(p, at3, target3)
 		await _frames(14)
-		await _shot("30%s_%s_inside" % ["ghi"[i], k])
+		var sober := await _shot("30%s_%s_inside" % ["ghi"[i], k])
+		# The same view under the temple's brew (§FN.5, queue 83): the
+		# palette swapped, the hidden carvings up and glowing (30j, 30k).
+		if cur.hidden_carvings != null:
+			var vid := "teonanacatl_aztecorum"
+			cur.brew.vision.start(vid, SacredVine.plant_data(vid).get("vision", {}))
+			await _frames(330)
+			var high := await _shot("30%s_%s_brew" % ["jk"[i], k])
+			var s1 := _patch(sober, 0.2, 0.2, 0.8, 0.8)
+			var s2 := _patch(high, 0.2, 0.2, 0.8, 0.8)
+			print("  %s under the brew: the middle #%s against #%s sober, the carvings at %.2f" % [k, (s2.color as Color).to_html(false), (s1.color as Color).to_html(false), cur.hidden_carvings.reveal])
+			ok((s2.color as Color) != (s1.color as Color) and cur.hidden_carvings.visible, "the %s under the brew differs from sober: palette swapped, carvings up" % k)
+			cur.brew.vision.stop()
+			cur.hidden_carvings.set_reveal(0.0)
 		p.torch.put_out("stowed")
 
 

@@ -203,6 +203,9 @@ var tome_pages: TomePages
 var secret_wing: SecretWing
 ## Phase two's blackout (design §FO.5, Blackout).
 var blackout: Blackout
+## The Aztec temple's hidden carvings (design §FN.5, queue 83): drawn only
+## under its brew; null in any other ruin.
+var hidden_carvings: HiddenCarvings
 var tome_panel: TomePanel
 ## The tunnel between two ruins (design §FV.2, §FV.5, queue 100;
 ## RuinTunnel): in it while in_tunnel (the dungeon above's nodes in _below,
@@ -277,6 +280,8 @@ func _ready() -> void:
 	brew = Brew.new()
 	add_child(brew)
 	brew.setup(self)
+	if hidden_carvings != null:
+		hidden_carvings.vision = brew.vision
 	_rescuer()
 
 
@@ -290,6 +295,10 @@ func _load_tomb(s: int, at := 0) -> void:
 	seed_value = s
 	lay = TombKit.layout(s, CrawlerSave.theme_at(at))
 	_build_tomb()
+	# The temple's hidden carvings, in its stone from the start (§FN.5).
+	hidden_carvings = HiddenCarvings.make(lay, brew.vision if brew != null else null)
+	if hidden_carvings != null:
+		add_child(hidden_carvings)
 	fires = CrawlerFires.new()
 	fires.name = "Fires"
 	add_child(fires)
@@ -422,7 +431,7 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout, hidden_carvings]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
@@ -437,6 +446,7 @@ func _clear_tomb() -> void:
 	fork = null
 	tome_pages = null
 	secret_wing = null
+	hidden_carvings = null
 	blackout = null
 	baked = false
 	TorchSnuff.drafts = null
@@ -998,7 +1008,7 @@ func _toggle_settings(on: bool) -> void:
 ## fork, the pages lying on its base layer): what _clear_tomb frees. The
 ## fire pots stay with you.
 func _dungeon_nodes() -> Array:
-	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout]
+	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout, hidden_carvings]
 
 
 ## Up the stair into the day (design §FM.7; worlds.json surface.arrive): the
