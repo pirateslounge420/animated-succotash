@@ -6175,3 +6175,53 @@ affect things"; then "lock it in" to Claude's read-back. No number is settled; f
 **100** (new): the shrine mouths and the tunnel that changes between two cultures; it takes over the
 walk half of 74 and waits for a second culture's ruin to be built with its surface (95, the Maya, or 89,
 Egypt).
+
+## FW. A compass on the HUD, to keep your bearings — LOCKED (12 Oct, Mike; "also add a compass for helping the player stay oriented")
+
+Mike, 12 Oct, in text, the morning after §FV: "also add a compass for helping the player stay
+oriented." Now that the way on is chosen by direction (§FV.2, §FV.3: south from the Aztec is the Maya),
+the player needs to know which way is south underground, in a tunnel and on a small surface. Everything
+below the line Mike gave is Claude's first guess, in `data/hud.json → compass` (new, not wired). Not built.
+
+### FW.0 What this touches
+1. **Not §FM.8's "compass".** That word there names the fixed network of ruins (`ruin_compass.json`).
+   This is the player's instrument.
+2. **§ET.3 / §EX.7: the crawler's HUD has no words.** Claude's first guess draws the four cardinal letters
+   (N, E, S, W) as pixel glyphs, read as symbols rather than words. The alternative is a north mark only,
+   with ticks for the others. Mike's call (FW.4 call 1).
+3. **§FM.8 / §FO: the map takes you nowhere, and there is no fast travel.** Unchanged: the compass only
+   points; it shows no map, no route and no distances.
+
+### FW.1 What it is (Claude's first guesses)
+- **A thin heading strip at the top centre of the frame,** drawn inside the 480-line frame on its pixel
+  grid like the reticle (§Y, §EX.7): about a third of the frame wide, scrolling as you turn, with the
+  cardinal points and a small tick at every 45°. The reticle's cold blue (`hud.json → reticle.color`),
+  never warm (fire is the one warm accent).
+- **The same north everywhere:** −z is north and +x east, as `surface_ground.gd` already lays out the
+  surface (the sun rises in the east). The same in the ruin, in the tunnels (§FV.2) and on the surface,
+  so "go south" means one thing all the way across.
+- **The shrine mouths show on it** (on the surface only): a small notch under each direction with an
+  open shrine (§FV.2), so you can see from the hearth's stair which ways lead on. No names, no distances.
+  Claude's guess, aimed at Mike's "I didn't even find the mushroom" (§FV.1): the plant itself is **not**
+  marked (§FV.1: no HUD marker).
+- **It always works:** in phase two's blackout (§FO.5) and under a brew (§FN.5) it still shows, untinted.
+  It belongs to the HUD, not the world, and it does not glow in the scene.
+- **A Settings switch** (Compass), like Crosshair dot, on by default.
+
+### FW.2 Not taken
+A held compass you have to find (it bends "you start with nothing" the other way: Claude's first guess is
+that you always have it; FW.4 call 2); a minimap; waypoint arrows; a marker on the sacred plant or the
+boss.
+
+### FW.3 Data
+`data/hud.json → compass` (new, `[NOT WIRED YET — design §FW]`): `on`, `place` (top_centre), `width_frac`,
+`height_px`, `span_deg` (the arc the strip shows), `tick_every_deg`, `labels` (cardinal letters or
+`north_only`), `color` (the reticle's), `shrine_notches` (surface only), `in_blackout`, `under_brew`.
+
+### FW.4 Open for Mike
+1. **Letters (N E S W) or a north mark only,** given the wordless HUD (FW.0.2)?
+2. **Always on the HUD, or an object** you find or are handed by the first shaman?
+3. **Shrine notches on the strip:** a help or a giveaway?
+
+### FW.5 Order of work
+`docs/PROMPT_QUEUE.md` **101** (new): the compass strip, any time.
