@@ -71,6 +71,14 @@ func _frames(n: int) -> void:
 
 
 func _run() -> void:
+	# Floor two's code is switched off by data since §FO.2 (one floor per
+	# ruin, ruin_loop.json floors.count 1) but kept: this check holds it to
+	# two floors so the dormant code stays tested.
+	TombFloors.count_override = 2
+	# And the way up as it was built for the fork (ruin_loop.json
+	# exit.sealed_until_home false: never gated); the sealed case is the
+	# second scene, and ruin_loop_check's.
+	Fork.EXIT["sealed_until_home"] = false
 	WorldSave.read_only = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true
@@ -179,9 +187,9 @@ func _layouts(seeds: Array) -> void:
 				only_ok = false
 		# Floor one as built: every piece of a one-floor tomb of the seed where
 		# it was; only the room the stair leaves has a door more.
-		TombFloors.FLOORS["count"] = 1
+		TombFloors.count_override = 1
 		var one := TombKit.layout(int(s))
-		TombFloors.FLOORS["count"] = want
+		TombFloors.count_override = want
 		var f1: Array = (fl[0] as Dictionary).pieces
 		if f1.size() != (one.pieces as Array).size():
 			asbuilt_ok = false
@@ -534,8 +542,8 @@ func _walk_body(lay: Dictionary, root: Node3D, path: Array, arrived: Callable) -
 # --- 3, 4, 5. In the scene ---------------------------------------------------------
 
 func _scene(gate_surface: bool) -> void:
-	var was: Variant = Fork.F.get("gate_surface", false)
-	Fork.F["gate_surface"] = gate_surface
+	var was: Variant = Fork.EXIT.get("sealed_until_home", false)
+	Fork.EXIT["sealed_until_home"] = gate_surface
 	print("== the scene, fork.gate_surface %s" % str(gate_surface))
 	var main: CrawlerMain = load("res://scenes/crawler.tscn").instantiate()
 	get_root().add_child(main)
@@ -553,7 +561,7 @@ func _scene(gate_surface: bool) -> void:
 	var dsc: Dictionary = lay.get("descent", {})
 	if fork == null or fork.down == null or dsc.is_empty():
 		ok(false, "the fork and the seal on the way down are built (%s)" % str(dsc))
-		Fork.F["gate_surface"] = was
+		Fork.EXIT["sealed_until_home"] = was
 		main.queue_free()
 		await process_frame
 		return
@@ -592,9 +600,11 @@ func _scene(gate_surface: bool) -> void:
 		# now was done on the frame before.)
 		if cleared_frame < 0 and res.cleared_floors.has(0):
 			cleared_frame = Engine.get_physics_frames() - 1
-	var same := fork.opened and down.opened_frame == fork.opened_frame and (not gate_surface or (fork.surface != null and fork.surface.opened_frame == fork.opened_frame))
-	ok(same and down.opened_frame >= 0 and absi(down.opened_frame - cleared_frame) <= 0, "the last light on floor one: %s on the very tick the floor is cleared (fork tick %d, cleared %d)" % ["the way down and the way out open" if gate_surface else "the way down opens", fork.opened_frame, cleared_frame])
-	ok(down.sounded == 1 and down.voice.playing and (not gate_surface or fork.surface.sounded == 1), "the seal grinds as it goes, heard down the passages (audio.json stone_seal, %.0f m)" % down.voice.max_distance)
+	var same := fork.opened and down.opened_frame == fork.opened_frame
+	ok(same and down.opened_frame >= 0 and absi(down.opened_frame - cleared_frame) <= 0, "the last light on floor one: the way down opens on the very tick the floor is cleared (fork tick %d, cleared %d)" % [fork.opened_frame, cleared_frame])
+	if gate_surface:
+		ok(not fork.exit_opened and not fork.surface.opened, "ruin_loop.json exit.sealed_until_home true: the way out still sealed on the lights' tick (the boss not home yet, §FO.3)")
+	ok(down.sounded == 1 and down.voice.playing, "the seal grinds as it goes, heard down the passages (audio.json stone_seal, %.0f m)" % down.voice.max_distance)
 	# The log: the line once, after the floor's.
 	var at_fork := -1
 	var at_clear := -1
@@ -616,7 +626,22 @@ func _scene(gate_surface: bool) -> void:
 		if down.sunk > 0.3 and down.sunk < 0.7:
 			mid_y = down.slab.position.y
 	await _frames(2)
-	ok(mid_y < -0.3 and down.is_gone and not down.slab.visible and not _blocked(main, dd) and (not gate_surface or (fork.surface.is_gone and not _blocked(main, sdd))), "you see it go: the seal sinks into the floor (%.2f m down half way) and is gone in %.1f s (fork.seal.open_s), the doorway clear%s" % [mid_y, t, ", the way out's too" if gate_surface else ""])
+	ok(mid_y < -0.3 and down.is_gone and not down.slab.visible and not _blocked(main, dd) and true, "you see it go: the seal sinks into the floor (%.2f m down half way) and is gone in %.1f s (fork.seal.open_s), the doorway clear" % [mid_y, t])
+	if gate_surface:
+		# Since §FO.3 (queue 85) the way up waits for the boss to be home, not
+		# for the lights: still sealed on that tick, open once it is down.
+		var tw := 0.0
+		while not fork.home() and tw < 60.0:
+			await physics_frame
+			tw += DT
+		await _frames(2)
+		ok(fork.home() and fork.exit_opened and fork.surface.opened and fork.surface.sounded == 1, "the boss home in its lair (%.1f s after the last light): the way out's seal starts down, grinding" % tw)
+		var tg := 0.0
+		while not fork.surface.is_gone and tg < 10.0:
+			await physics_frame
+			tg += DT
+		await _frames(2)
+		ok(fork.surface.is_gone and not _blocked(main, sdd), "and it is gone, the way out's doorway clear")
 	ok(not res.nav.door_shut(dd) and not res.ground.shut.has(int(dd.id)) and not main.boss.ground.shut.has(int(dd.id)), "the doorway open again on the floor grid and in the light's graph")
 	var path := res.nav.path(_inside(lay, int(dsc.host), dd, 1.4), _foot_target(lay), false)
 	ok(TombNav.reaches(path, _foot_target(lay), 0.8), "the floor grid now runs from the room the stair leaves down onto floor two (%.0f m)" % TombNav.length_of(path))
@@ -626,7 +651,7 @@ func _scene(gate_surface: bool) -> void:
 	if not gate_surface:
 		ok(not _blocked(main, sdd) and fork.surface == null, "fork.gate_surface false: the surface stair open throughout, before and after (no seal at its foot)")
 		await _down_and_up(main)
-	Fork.F["gate_surface"] = was
+	Fork.EXIT["sealed_until_home"] = was
 	main.queue_free()
 	await process_frame
 	await process_frame

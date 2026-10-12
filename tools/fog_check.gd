@@ -64,6 +64,10 @@ func _frames(n: int) -> void:
 
 
 func _run() -> void:
+	# Floor two's code is switched off by data since §FO.2 (one floor per
+	# ruin, ruin_loop.json floors.count 1) but kept: this check holds it to
+	# two floors so the dormant code stays tested.
+	TombFloors.count_override = 2
 	WorldSave.read_only = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true
@@ -211,10 +215,10 @@ func _layouts(seeds: Array) -> void:
 	ok(none_above and full_at_foot, "down the flight: none above its last %.1f m, all of it at its foot" % e)
 	ok(rises and smooth, "between, rising and never back, no 5 cm step steeper than the ease's own (the steepest %.4f, at most %.4f): no pop" % [max_step, allowed])
 	ok(held_ok and held_n > 0, "in a doorway's thickness (on no piece) it holds what it was (%d doorways)" % held_n)
-	var keep: Variant = TombFloors.FLOORS.get("count", 2)
-	TombFloors.FLOORS["count"] = 1
+	var keep: Variant = TombFloors.count_override
+	TombFloors.count_override = 1
 	var single := TombKit.layout(7)
-	TombFloors.FLOORS["count"] = keep
+	TombFloors.count_override = keep
 	var hr: Dictionary = single.pieces[0]
 	var hc: Vector2 = hr.c
 	ok(not single.has("descent") and FloorFog.share_at(single, Vector3(hc.x, float(hr.y0) + 1.4, hc.y), 1.0) == 0.0, "a tomb of one floor (floors.count 1): no fog anywhere")

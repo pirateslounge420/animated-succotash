@@ -59,10 +59,22 @@ const BOSS_FLOOR := 0
 const BRANCH_BASE := 100
 
 
-## How many floors a dungeon has (descent.json floors.count: two for now;
-## a third is not built, so at most two).
+## The shape of every ruin (design 10 Oct §FO.2; data/ruin_loop.json
+## floors): one floor per ruin. Its floors.count is read first.
+static var LOOP_FLOORS: Dictionary = Tuning.table("ruin_loop").get("floors", {})
+## A check's own count (0: the data's): the checks of floor two's dormant
+## code (fork_check, fog_check) set 2 to keep testing it.
+static var count_override := 0
+
+
+## How many floors a dungeon has: ruin_loop.json floors.count (§FO.2: one,
+## every ruin), else descent.json floors.count (also 1 since §FO.2). Floor
+## two's code (the stair down, its rooms, its fog) is kept, switched off
+## by this number; a third floor is not built, so at most two.
 static func count() -> int:
-	return clampi(int(FLOORS.get("count", 2)), 1, 2)
+	if count_override > 0:
+		return clampi(count_override, 1, 2)
+	return clampi(int(LOOP_FLOORS.get("count", FLOORS.get("count", 2))), 1, 2)
 
 
 ## The floors laid in `lay` ([0], or [0, 1] with floor two).

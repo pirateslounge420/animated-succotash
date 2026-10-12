@@ -356,6 +356,13 @@ func _load_tomb(s: int, at := 0) -> void:
 	if bool(CrawlerSave.kept_value(at, "fork_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
 		fork.open_now(true)
 	fork.opened_now.connect(func() -> void: CrawlerSave.keep(at, "fork_open", true))
+	# The way up (design §FO.3, ruin_loop.json exit): sealed until the boss is
+	# first driven home, then kept open for good ("exit_open"); a kept
+	# dungeon with every light relit has its boss home already
+	# (Boss._start_far), so its way up is open too.
+	if not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
+		fork.open_exit(true)
+	fork.exit_opened_now.connect(func() -> void: CrawlerSave.keep(at, "exit_open", true))
 	# Tomes as collected pages (design §FM.5, queue 73): the pages due at its
 	# base layer's hearts, but those you hold, laid once the stone is in the
 	# physics world.

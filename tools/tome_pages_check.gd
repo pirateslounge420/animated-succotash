@@ -73,6 +73,10 @@ func _frames(n: int) -> void:
 
 
 func _run() -> void:
+	# Floor two's code is switched off by data since §FO.2 (one floor per
+	# ruin, ruin_loop.json floors.count 1) but kept: this check holds it to
+	# two floors so the dormant code stays tested.
+	TombFloors.count_override = 2
 	WorldSave.read_only = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true
@@ -237,8 +241,8 @@ func _layouts() -> void:
 	ok(deepest, "each the deepest room of its way (the room at its far end, as a delve's heart)")
 	ok(with_pages > 0 and with_pages < seeds.size(), "as the data stands (share_of_hearts %.2f) %d of %d tombs have pages on floor two (%d in all): rare finds, never everywhere" % [float((Tomes.D.get("find", {}) as Dictionary).get("share_of_hearts", 0.15)), with_pages, seeds.size(), pages_laid])
 	# A dungeon of one floor: its last floor is floor one.
-	var was: Variant = TombFloors.FLOORS.get("count", 2)
-	TombFloors.FLOORS["count"] = 1
+	var was: Variant = TombFloors.count_override
+	TombFloors.count_override = 1
 	for s in seeds.slice(0, 10):
 		var lay := TombKit.layout(int(s))
 		var hearts := TomePages.hearts_of(lay)
@@ -247,7 +251,7 @@ func _layouts() -> void:
 		for h in hearts:
 			if int((lay.pieces[int(h)] as Dictionary).get("floor", 0)) != 0:
 				one_floor_ok = false
-	TombFloors.FLOORS["count"] = was
+	TombFloors.count_override = was
 	ok(one_floor_ok, "with floors.count 1 the last floor is floor one: the hearts there, the tomb's heart among them (10 layouts)")
 	print("   (layouts in %d ms)" % (Time.get_ticks_msec() - t0))
 
