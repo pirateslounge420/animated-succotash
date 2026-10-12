@@ -8,7 +8,7 @@
   "sunken_court_sky": "The brief's shaft of daylight or moonlight into the court is not built: §EX.4 (locked) keeps one column of sky in a dungeon, over its one hearth (crawler_check asserts one shaft per tomb). The court is one stair below the corridors, taller over its court than any room, its middle the stela's. If Mike wants the sky over it, §EX.4 needs his word first.",
   "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan. As built: tools/room_pool_check.gd (queue 70).",
   "always": "(Claude Code, queue 80, design §FN.1) always true on an archetype: every ruin whose kind is in its ruin_kinds has it, once (no repeat), drawn first on the pool's dice; the ruin's other big rooms are still drawn at random on top of it by per_dungeon. A ruin left without one of its always chambers is laid again (TombKit.layout's second laying). The tomb has none, so its dice run exactly as before.",
-  "aztec": "(Claude Code, queue 80, design §FN.1, first guesses to tune by eye) The Aztec temple's two fixed chambers, in its one stone (masonry.json aztec_temple). shape round: the square room's corners filled in stone so its walls run as a polygon of `sides` (12: four straight runs on the walls' middles, where its doors and sconces are, and eight faces across the corners), each face coursed blocks with its collision. aztec_blood_altar stands: altar_drum, the round sacrificial stone (temalacatl) in the middle, radius_m, high_m, a carved ring round its rim and a dried stain on its top (stain, sRGB, near-black brown, never bright red: fire is the one warm accent); bowl, a stone bowl (cuauhxicalli) beside it, across_m off the middle line; offerings, count small stone offerings round the altar's foot. No bodies (aztec_temple.json chambers.blood_altar no_gore). aztec_calendar_room stands: day_signs, the tonalpohualli's 20 day-sign panels (aztec_temple.json calendar.day_signs, in order) carved in relief on its side walls, per_row panels a row, rows_up_m their middles over the floor, panel_m [wide, high], each with its sign (a glyph of its own, the same in every temple) and its day's number 1-13 in dots under it (the count's first twenty days: 1 Crocodile to 13 Reed, then 1 Jaguar to 7 Flower). Flavour only: no puzzle and nothing to operate. Which floor holds each chamber is open (§FN.8 call 8): both are on floor one, where the pool's big rooms are."
+  "aztec": "(Claude Code, queue 80, design §FN.1, first guesses to tune by eye) The Aztec temple's two fixed chambers, in its one stone (masonry.json aztec_temple). shape round: the square room's corners filled in stone so its walls run as a polygon of `sides` (12: four straight runs on the walls' middles, where its doors and sconces are, and eight faces across the corners), each face coursed blocks with its collision. aztec_blood_altar stands: altar_drum, the round sacrificial stone (temalacatl) in the middle, radius_m, high_m, a carved ring round its rim and a dried stain on its top (stain, sRGB, near-black brown, never bright red: fire is the one warm accent); bowl, a stone bowl (cuauhxicalli) beside it, across_m off the middle line; offerings, count small stone offerings round the altar's foot. No bodies (aztec_temple.json chambers.blood_altar no_gore). aztec_calendar_room stands: day_signs, the tonalpohualli's 20 day-sign panels (aztec_temple.json calendar.day_signs, in order) carved in relief on its side walls, per_row panels a row, rows_up_m their middles over the floor, panel_m [wide, high], each with its sign (a glyph of its own, the same in every temple) and its day's number 1-13 in dots under it (the count's first twenty days: 1 Crocodile to 13 Reed, then 1 Jaguar to 7 Flower). Flavour only: no puzzle and nothing to operate. Both stand on four pillars (pillars, as the room pool's halls do), because a 10 m ceiling unpropped would span past masonry.json max_span_m (§EX.3); in the round chamber they stand round the altar. Which floor holds each chamber is open (§FN.8 call 8): both are on floor one, where the pool's big rooms are."
  },
  "big_rooms": {
   "per_dungeon": [1, 2],
@@ -88,7 +88,7 @@
    "floor": {"kind": "flat"},
    "headroom": "room",
    "shape": {"kind": "round", "sides": 12},
-   "pillars": {},
+   "pillars": {"side_m": 0.7, "rows_m": [2.5, -2.5], "along_m": [2.5, 7.5]},
    "sconces": [
     {"wall": "left", "along_m": 5.0},
     {"wall": "right", "along_m": 5.0}
@@ -108,7 +108,7 @@
    "doors_on": ["end"],
    "floor": {"kind": "flat"},
    "headroom": "room",
-   "pillars": {},
+   "pillars": {"side_m": 0.7, "rows_m": [2.5, -2.5], "along_m": [4.0, 8.0]},
    "sconces": [
     {"wall": "end", "across_m": 3.0},
     {"wall": "end", "across_m": -3.0},

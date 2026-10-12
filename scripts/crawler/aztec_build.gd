@@ -54,7 +54,7 @@ static func round_room(b: TombBuild, pc: Dictionary, sides: int) -> void:
 			continue
 		var phi := step * k
 		var n := u * cos(phi) + v * sin(phi)
-		var t := -u * sin(phi) + v * cos(phi)
+		var t := Vector3.UP.cross(n)
 		var bs := Basis(t, Vector3.UP, n)
 		var mid := c + n * (a + 0.2)
 		for q in courses:
@@ -115,7 +115,7 @@ static func _drum(b: TombBuild, base: Vector3, r: float, h: float, sides: int, s
 	for k in sides:
 		var phi := step * k
 		var n := Vector3(cos(phi), 0.0, sin(phi))
-		var t := Vector3(-sin(phi), 0.0, cos(phi))
+		var t := Vector3.UP.cross(n)
 		var cc: Color = col if col is Color else RuinStyle.stone(b.rng)
 		b.box(Transform3D(Basis(t, Vector3.UP, n), base + n * (r - d * 0.5) + Vector3.UP * (h * 0.5)), Vector3(edge + 0.01, h, d), cc, b._growth(0.04), 0.025, 0.006)
 	b.solid = was_solid
@@ -154,7 +154,7 @@ static func altar_drum(b: TombBuild, pc: Dictionary, sd: Dictionary) -> void:
 		var rot := Basis(Vector3.UP, k * PI / 3.0 + b.rng.randf_range(-0.2, 0.2))
 		b.box(Transform3D(rot, top + rot * Vector3(r * 0.08, 0.0, 0.0)), Vector3(r * 0.95, 0.012, r * 0.95), stain, 0.0, 0.0, 0.0)
 	var side: Vector3 = -(TombBuild._axes(pc)[1] as Vector3)
-	b.box(Transform3D(Basis(side.cross(Vector3.UP).normalized(), Vector3.UP, side), p + side * (r + 0.004) + Vector3.UP * (h * 0.62)), Vector3(0.16, h * 0.7, 0.012), stain, 0.0, 0.0, 0.0)
+	b.box(Transform3D(Basis(Vector3.UP.cross(side).normalized(), Vector3.UP, side), p + side * (r + 0.004) + Vector3.UP * (h * 0.62)), Vector3(0.16, h * 0.7, 0.012), stain, 0.0, 0.0, 0.0)
 	b.solid = was_solid
 	b._stone_mode()
 
