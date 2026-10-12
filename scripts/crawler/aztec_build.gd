@@ -262,21 +262,25 @@ static func calendar_plan(pc: Dictionary) -> Array:
 static func _panel(b: TombBuild, o: Vector3, t: Vector3, n: Vector3, pw: float, ph: float, sign_n: int, dots: int) -> void:
 	var bs := Basis(t, Vector3.UP, n)
 	var col := RuinStyle.stone(b.rng)
-	var cut: Color = col if TombBuild.bare else Prelit.ao_tint(col, 0.35)
+	var cut: Color = col if TombBuild.bare else Prelit.ao_tint(col, 0.2)
+	# The slab, 0.1 m proud of the wall's face (clear of its stones' relief).
 	b.plain = false
-	b.box(Transform3D(bs, o + n * 0.03), Vector3(pw, ph, 0.14), col, 0.0, 0.025, 0.006)
+	b.box(Transform3D(bs, o + n * 0.04), Vector3(pw, ph, 0.12), col, 0.0, 0.025, 0.006)
 	b.plain = true
 	var face := o + n * 0.1
-	var fw := 0.05
-	b.box(Transform3D(bs, face + Vector3.UP * (ph * 0.5 - fw * 0.5)), Vector3(pw, fw, 0.03), col, 0.0)
-	b.box(Transform3D(bs, face - Vector3.UP * (ph * 0.5 - fw * 0.5)), Vector3(pw, fw, 0.03), col, 0.0)
+	var fw := 0.06
+	# The frame, 4 cm proud of the slab; the field inside it cut back dark.
+	b.box(Transform3D(bs, face + n * 0.02 + Vector3.UP * (ph * 0.5 - fw * 0.5)), Vector3(pw, fw, 0.04), col, 0.0)
+	b.box(Transform3D(bs, face + n * 0.02 - Vector3.UP * (ph * 0.5 - fw * 0.5)), Vector3(pw, fw, 0.04), col, 0.0)
 	for sg: float in [-1.0, 1.0]:
-		b.box(Transform3D(bs, face + t * sg * (pw * 0.5 - fw * 0.5)), Vector3(fw, ph - 2.0 * fw, 0.03), col, 0.0)
-	b.box(Transform3D(bs, face - n * 0.012), Vector3(pw - 2.0 * fw, ph - 2.0 * fw, 0.006), cut, 0.0)
+		b.box(Transform3D(bs, face + n * 0.02 + t * sg * (pw * 0.5 - fw * 0.5)), Vector3(fw, ph - 2.0 * fw, 0.04), col, 0.0)
+	b.box(Transform3D(bs, face + n * 0.004), Vector3(pw - 2.0 * fw, ph - 2.0 * fw, 0.008), cut, 0.0)
+	# The glyph: raised blocks on a 5 x 5 grid, mirrored across its middle,
+	# on the sign's own dice, 5 cm proud of the field.
 	var g := RandomNumberGenerator.new()
 	g.seed = hash(["day sign", sign_n])
-	var cell := (pw - 2.0 * fw) * 0.7 / 5.0
-	var gy := ph * 0.12
+	var cell := (pw - 2.0 * fw) * 0.75 / 5.0
+	var gy := ph * 0.1
 	for row in 5:
 		for colm in 3:
 			if g.randf() < 0.55 or (row == 2 and colm == 2):
@@ -284,11 +288,12 @@ static func _panel(b: TombBuild, o: Vector3, t: Vector3, n: Vector3, pw: float, 
 				for sg: float in mirror:
 					var x := (float(colm) - 2.0) * cell * sg
 					var yy := gy + (2.0 - float(row)) * cell
-					b.box(Transform3D(bs, face + t * x + Vector3.UP * yy + n * 0.006), Vector3(cell * 0.92, cell * 0.92, 0.035), col, 0.0)
-	var dot := 0.045
-	var gap := minf((pw - 2.0 * fw - 0.04) / 13.0, 0.07)
+					b.box(Transform3D(bs, face + n * 0.025 + t * x + Vector3.UP * yy), Vector3(cell * 0.9, cell * 0.9, 0.05), col, 0.0)
+	# The day's number in dots, a row under the glyph.
+	var dot := 0.05
+	var gap := minf((pw - 2.0 * fw - 0.04) / 13.0, 0.075)
 	var dy := -ph * 0.5 + fw + 0.1
 	for k in dots:
 		var x := (float(k) - (dots - 1) * 0.5) * gap
-		b.box(Transform3D(bs, face + t * x + Vector3.UP * dy + n * 0.006), Vector3(dot, dot, 0.03), col, 0.0)
+		b.box(Transform3D(bs, face + n * 0.02 + t * x + Vector3.UP * dy), Vector3(dot, dot, 0.04), col, 0.0)
 	b.plain = false

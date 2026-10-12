@@ -111,7 +111,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
 | 78 | §FN.2 | The snake becomes the feathered serpent: plumes and a rattle | built 892698b |
 | 79 | §FN.1 | The Aztec temple's stone: a masonry style | built |
-| 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | todo (after 79) |
+| 80 | §FN.1 | The Aztec temple as a ruin kind: the blood altar and the calendar room | built 22200c2 (switched off: aztec_temple.json enabled false) |
 | 81 | §FN.3 | A third floor, drawn by seed | superseded (§FO.0: one floor per ruin; do not build) |
 | 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
 | 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | waits (80 and 82) |
@@ -1438,7 +1438,7 @@ CHECK (headless): the existing masonry and crawler checks pass with the same cou
 
 ## 80 — The Aztec temple as a ruin kind: the blood altar and the calendar room — §FN.1
 
-**Status:** todo (after 79)
+**Status:** built 22200c2 (and 7b5ee4b); switched off until Mike names its world (aztec_temple.json enabled false)
 **Mike sees:** A new ruin, the Aztec temple, when the game is told to draw it: a round blood-altar chamber and a calendar room are always in it, joined by shuffled ways. Until Mike says which world it sits in, the game still plays the tomb.
 
 ```text
