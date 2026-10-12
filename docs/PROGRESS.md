@@ -9,7 +9,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Registered:** `style_by_theme.aztec_temple` (and `by_theme`); tomb, snow ruins and default unchanged. Nothing in the game uses it yet: the temple itself is queue 80.
 - **Data for later, not wired:** `carving` (the day-sign panels, queue 80) and `plaster` (red paint left in the recesses).
 - **One stone can't vary in hue:** RuinStyle moves each block lighter or darker only, so tezontle's red is in the tint, not a second stone. Blocks of black basalt beside red tezontle would need a rule change (§EX.1) — Mike's call.
-- **Checks** (seed 7): new `aztec_stone_check` 19 PASS, 0 fails (the data; the tomb still andean_tomb with fitted polygons; 40 wall faces tiled whole in squared courses, no joint over the one below; three tombs built in the temple's stone: walls, floors, ceilings, 123 doors all square, 14 stairs, 142 niches, 3.16 M stone vertices inside tint ± spread, none from the poisoned palette). `room_pool_check` 29, 0 fails, as before; `crawler_check` result to follow.
+- **Checks** (seed 7): new `aztec_stone_check` 19 PASS, 0 fails (the data; the tomb still andean_tomb with fitted polygons; 40 wall faces tiled whole in squared courses, no joint over the one below; three tombs built in the temple's stone: walls, floors, ceilings, 123 doors all square, 14 stairs, 142 niches, 3.16 M stone vertices inside tint ± spread, none from the poisoned palette). `room_pool_check` 29, 0 fails, as before; `crawler_check` 273, 0 fails, as before.
 - **Walkabout not done:** there is no temple room to stand in until queue 80; the look is checked there.
 - **For Mike:** the colour, block size (`presets.coursed_blocks.stone_m`, `aspect`) and the flat lintel are first guesses.
 
