@@ -2,6 +2,7 @@ extends SceneTree
 ## The room pool (design 9 Oct §FM.6, Phantasy Star Online style; queue 70;
 ## RoomPool, RoomPoolBuild, TombKit; data/room_pool.json), headless:
 ##   SEED=7 godot --headless --path . --fixed-fps 60 --script tools/room_pool_check.gd
+## THEME=aztec_temple (env) checks the Aztec temple instead of the tomb (queue 80).
 ## ROOM_SEEDS (env) sets how many seeds the plans and the walks run over
 ## (default 100: 1, 7, 42 and more drawn from a fixed seed).
 ## Asserts:
@@ -44,6 +45,9 @@ extends SceneTree
 ##     then lit (§FF.2: the fork opens).
 
 var fails := 0
+## The ruin checked (env THEME: tomb by default; aztec_temple checks the
+## temple, design §FN.1, queue 80: its own archetypes, its stone, in the game).
+var THEME: String = OS.get_environment("THEME") if OS.get_environment("THEME") != "" else "tomb"
 const DT := 1.0 / 60.0
 ## Seeds walked (env ROOM_SEEDS overrides).
 const MORE_SEEDS := 97
@@ -72,6 +76,8 @@ func _run() -> void:
 	Boss.pool_off = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true
+	if THEME != "tomb":
+		CrawlerSave.force_first = THEME
 	var seeds := _seeds()
 	var firsts := _plans(seeds)
 	_same(seeds, firsts)
@@ -125,11 +131,11 @@ func _plans(seeds: Array) -> Dictionary:
 	var kinds_ok := true
 	var overlap_ok := true
 	var kit_kinds: Dictionary = TombKit.K.get("kinds", {})
-	var max_span := RuinStyle.num("max_span_m", 6.0, "tomb")
-	var room_h := TombKit.height_of("tomb", "room", 3.2)
+	var max_span := RuinStyle.num("max_span_m", 6.0, THEME)
+	var room_h := TombKit.height_of(THEME, "room", 3.2)
 	var worst_span := 0.0
 	for s in seeds:
-		var lay := TombKit.layout(int(s))
+		var lay := TombKit.layout(int(s), THEME)
 		var pieces: Array = lay.pieces
 		var mod := float(lay.module)
 		# The spine through the heart to the way out (§EX.2, §EX.5).
@@ -277,10 +283,10 @@ func _plans(seeds: Array) -> Dictionary:
 	ok(hearth_ok, "one hearth per dungeon: one hearth room, every other fire a wall sconce, one shaft of daylight (§EX.4)")
 	ok(count_ok, "big rooms per dungeon inside big_rooms.per_dungeon %s (%s)" % [str([sp.x, sp.y]), str(counts)])
 	ok(repeat_ok, "no archetype twice in a dungeon")
-	ok(arch.size() == RoomPool.for_theme("tomb").size() and arch.size() == 3, "all three archetypes appear somewhere (%s)" % str(arch))
+	ok(arch.size() == RoomPool.for_theme(THEME).size() and (THEME != "tomb" or arch.size() == 3), "all its archetypes appear somewhere (%s)" % str(arch))
 	ok(int(where["spine"]) > 0 and int(where["side way"]) > 0, "big rooms on the spine and on side ways (%s)" % str(where))
 	ok(place_ok, "every big room on floor one, on the spine short of the room before the heart or on a side way: never the hearth room, the heart, the room before it or the way out")
-	ok(shape_ok, "every big room's floor its archetype's whole modules (%.0f m)" % TombKit.module_of("tomb"))
+	ok(shape_ok, "every big room's floor its archetype's whole modules (%.0f m)" % TombKit.module_of(THEME))
 	ok(doors_ok, "every big room's way in centred in its start wall, its other doors centred in the walls its archetype opens")
 	ok(sconce_ok, "every big room has its archetype's sconces")
 	ok(lit_ok, "and every one a holder of floor one, counted in that floor's lit test (TombFloors.holders_on, §FF.2)")
@@ -301,15 +307,15 @@ func _same(seeds: Array, firsts: Dictionary) -> void:
 	var t0 := Time.get_ticks_msec()
 	var differ: Array = []
 	for s in seeds:
-		var a := TombKit.layout(int(s))
-		var b := TombKit.layout(int(s))
+		var a := TombKit.layout(int(s), THEME)
+		var b := TombKit.layout(int(s), THEME)
 		if a != b or str(a) != str(b):
 			differ.append(s)
 	ok(differ.is_empty(), "same seed, same dungeon: each of %d seeds' plans laid twice is the same plan%s" % [seeds.size(), "" if differ.is_empty() else ": not %s" % str(differ)])
 	# And its stone, vertex for vertex.
 	var s0 := int(firsts.values()[0]) if not firsts.is_empty() else 1
-	var one := TombBuild.build(TombKit.layout(s0))
-	var two := TombBuild.build(TombKit.layout(s0))
+	var one := TombBuild.build(TombKit.layout(s0, THEME))
+	var two := TombBuild.build(TombKit.layout(s0, THEME))
 	var same := (one.v as PackedVector3Array) == (two.v as PackedVector3Array) and (one.c as PackedColorArray) == (two.c as PackedColorArray) and (one.cv as PackedVector3Array) == (two.cv as PackedVector3Array)
 	ok(same, "seed %d's tomb built twice: the same stone, vertex for vertex, colour for colour, and the same collision (%d triangles)" % [s0, (one.v as PackedVector3Array).size() / 3])
 	print("  same: %d ms" % (Time.get_ticks_msec() - t0))
@@ -319,8 +325,8 @@ func _same(seeds: Array, firsts: Dictionary) -> void:
 
 func _stone(seeds: Array) -> void:
 	var t0 := Time.get_ticks_msec()
-	var tint := RuinStyle.tint("tomb")
-	var spread := RuinStyle.spread("tomb")
+	var tint := RuinStyle.tint(THEME)
+	var spread := RuinStyle.spread(THEME)
 	var outside := 0
 	var poisoned := 0
 	var untold := 0
@@ -332,7 +338,7 @@ func _stone(seeds: Array) -> void:
 	TombBuild.bare = true
 	TombBuild.poison = true
 	# The first two tombs of each archetype among the seeds.
-	var kinds := RoomPool.for_theme("tomb")
+	var kinds := RoomPool.for_theme(THEME)
 	for s in seeds:
 		var done := true
 		for k in kinds:
@@ -340,7 +346,7 @@ func _stone(seeds: Array) -> void:
 				done = false
 		if done:
 			break
-		var lay := TombKit.layout(int(s))
+		var lay := TombKit.layout(int(s), THEME)
 		var want := false
 		for id in lay.big_rooms:
 			if int(built.get(str(lay.pieces[int(id)].big_room), 0)) < 2:
@@ -415,7 +421,7 @@ func _walks(seeds: Array) -> void:
 	var room_fail: Array = []
 	var by_kind := {}
 	for s in seeds:
-		var lay := TombKit.layout(int(s))
+		var lay := TombKit.layout(int(s), THEME)
 		var vp := SubViewport.new()
 		vp.own_world_3d = true
 		vp.size = Vector2i(4, 4)

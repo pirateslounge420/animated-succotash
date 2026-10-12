@@ -184,11 +184,48 @@ static func seed_at(at: int) -> int:
 	return int(d.seed) if d.has("seed") else dungeon_seed(game_seed, at)
 
 
-## The theme kept for dungeon `at`, or "" (the layout's own: §FJ.1's pick
-## is not wired yet, so opening.first_theme).
+## The theme kept for dungeon `at`, or "" (the layout's own:
+## opening.first_theme). The first dungeon of a game not yet kept is drawn
+## from the roster (first_theme): today the tomb alone, so "" as ever.
 static func theme_at(at: int) -> String:
 	var th := str(dungeon(at).get("theme", ""))
-	return th if (Tuning.table("crawler").get("themes", {}) as Dictionary).has(th) else ""
+	if (Tuning.table("crawler").get("themes", {}) as Dictionary).has(th):
+		return th
+	return first_theme(game_seed) if at == 0 else ""
+
+
+## Whether the Aztec temple is in the game (aztec_temple.json enabled,
+## design §FN.1, §FN.8 call 1: false until Mike says which world it sits
+## in). The tools set it true to check the temple.
+static var aztec_on: bool = bool(Tuning.table("aztec_temple").get("enabled", false))
+
+
+## The tools only: every game's first dungeon this theme ("" draws it).
+static var force_first := ""
+
+
+## The ruins a new game's first dungeon is drawn from (design §FJ.1's
+## roster, as far as it is built): the tomb, and the Aztec temple when
+## aztec_on.
+static func roster() -> Array:
+	var out: Array = [str(Tuning.table("crawler").get("opening", {}).get("first_theme", "tomb"))]
+	if aztec_on and (Tuning.table("crawler").get("themes", {}) as Dictionary).has("aztec_temple"):
+		out.append("aztec_temple")
+	return out
+
+
+## The first dungeon's theme for game `g` (§FJ.1: drawn from the roster by
+## the game's seed), or "" where the roster holds only the tomb (the layout
+## takes opening.first_theme, exactly as before).
+static func first_theme(g: int) -> String:
+	if force_first != "":
+		return force_first
+	var r := roster()
+	if r.size() < 2:
+		return ""
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([g, "first ruin"])
+	return str(r[rng.randi_range(0, r.size() - 1)])
 
 
 ## You are in dungeon `at` of this game now, built as `lay`

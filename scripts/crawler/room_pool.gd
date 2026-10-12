@@ -82,6 +82,16 @@ static func for_theme(theme: String) -> Array:
 	return out
 
 
+## The archetypes every ruin of `theme` has (archetypes.<id>.always true,
+## design §FN.1: count one each, never repeated), in the data's order.
+static func always_for(theme: String) -> Array:
+	var out: Array = []
+	for id in for_theme(theme):
+		if bool((ARCH[id] as Dictionary).get("always", false)):
+			out.append(id)
+	return out
+
+
 ## [least, most] big rooms in a dungeon (big_rooms.per_dungeon).
 static func span() -> Vector2i:
 	var s: Array = BIG.get("per_dungeon", [1, 2])
@@ -104,11 +114,22 @@ static func plan(seed_value: int, theme: String, spine_rooms: int, want: int, ea
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([seed_value, "room pool"])
 	var sp := span()
+	# The chambers the ruin always has (an archetype's always: the Aztec
+	# temple's blood altar and calendar room, design §FN.1), drawn first, the
+	# rest at random on top of them as before. A ruin with none (the tomb)
+	# draws on exactly the dice it always did.
+	var fixed := always_for(theme)
+	for id in fixed:
+		kinds.erase(id)
 	var n := clampi(rng.randi_range(sp.x, sp.y), 0, kinds.size())
 	if not bool(BIG.get("no_repeat_in_a_dungeon", true)):
 		push_warning("room_pool.json big_rooms.no_repeat_in_a_dungeon false: an archetype still appears once per dungeon (design §FM.6)")
 	_shuffle(rng, kinds)
 	var picks := kinds.slice(0, n)
+	if not fixed.is_empty():
+		_shuffle(rng, fixed)
+		picks = fixed + picks
+		n = picks.size()
 	# The slots: the spine's that may take one, then about two a side way.
 	var slots := maxi(spine_slots(spine_rooms), 0) + 2 * maxi(want - 1, 1)
 	if str(BIG.get("placed_on", "spine_or_branch")) == "spine":
@@ -165,6 +186,18 @@ static func passed(pool: Dictionary, room: Dictionary) -> void:
 static func short(lay: Dictionary) -> bool:
 	if for_theme(str(lay.get("theme", ""))).is_empty():
 		return false
+	var fixed := always_for(str(lay.theme))
+	if not fixed.is_empty():
+		# Every chamber the ruin always has, and the least of the rest.
+		var got := {}
+		for pc in lay.pieces:
+			if (pc as Dictionary).has("big_room"):
+				got[str(pc.big_room)] = true
+		for id in fixed:
+			if not got.has(id):
+				return true
+		var rest := for_theme(str(lay.theme)).size() - fixed.size()
+		return (lay.get("big_rooms", []) as Array).size() < fixed.size() + mini(span().x, rest)
 	return (lay.get("big_rooms", []) as Array).size() < mini(span().x, for_theme(str(lay.theme)).size())
 
 

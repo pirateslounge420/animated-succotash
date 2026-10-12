@@ -2147,10 +2147,15 @@ func _loop(main: CrawlerMain) -> void:
 ## keep their letters).
 func _rooms(first: CrawlerMain) -> void:
 	var order := ["pillar_hall", "stepped_hall", "sunken_court"]
+	# THEME=aztec_temple: the Aztec temple's chambers instead (queue 80).
+	var th := OS.get_environment("THEME")
+	if th != "":
+		order = RoomPool.for_theme(th)
+		CrawlerSave.force_first = th
 	var only := OS.get_environment("ROOMS")
 	var seeds := {}
 	for s in range(1, 400):
-		var lay := TombKit.layout(s)
+		var lay := TombKit.layout(s, th)
 		for id in lay.big_rooms:
 			var k := str(lay.pieces[int(id)].big_room)
 			if not seeds.has(k):
@@ -2166,7 +2171,7 @@ func _rooms(first: CrawlerMain) -> void:
 			ok(false, "a tomb that draws the %s" % k)
 			continue
 		var s := int(seeds[k])
-		if int(cur.lay.seed) != s:
+		if int(cur.lay.seed) != s or (th != "" and str(cur.lay.theme) != th):
 			cur.queue_free()
 			await _frames(2)
 			OS.set_environment("SEED", str(s))
@@ -2250,6 +2255,19 @@ func _rooms(first: CrawlerMain) -> void:
 				at3 = Vector3(top2.x, top_y, top2.y)
 				var low2 := RuinBuilder._pp(pc, 1.0, 0.0)
 				target3 = Vector3(low2.x, Delves.floor_of(pc, 1.0) + 0.8, low2.y)
+			"aztec_blood_altar":
+				# From beside a sconce's wall, across the round chamber at the
+				# altar, its stain and its bowl.
+				var c2 := RuinBuilder._pp(pc, float(pc.len) * 0.5 + 1.0, float(pc.half) - 1.6)
+				at3 = Vector3(c2.x, float(pc.y0), c2.y)
+				var m2 := RuinBuilder._pp(pc, float(pc.len) * 0.5, 0.0)
+				target3 = Vector3(m2.x, float(pc.y0) + 0.4, m2.y)
+			"aztec_calendar_room":
+				# From the middle of the room at the left wall's day signs.
+				var c2 := RuinBuilder._pp(pc, float(pc.len) * 0.5, -1.5)
+				at3 = Vector3(c2.x, float(pc.y0), c2.y)
+				var w2 := RuinBuilder._pp(pc, float(pc.len) * 0.5, float(pc.half))
+				target3 = Vector3(w2.x, float(pc.y0) + 1.6, w2.y)
 			"sunken_court":
 				# From the court beside the stela (a metre short of it and off
 				# its side), between the pillars, up at the far wall's stone

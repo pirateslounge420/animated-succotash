@@ -343,6 +343,10 @@ static func _trapezoid_front(b: TombBuild, o: Vector3, t: Vector3, n: Vector3, f
 ## What stands in big room `pc` (its archetype's stands): the stepped
 ## hall's seat, the sunken court's stela and tenon heads. The style's stone.
 static func dress(b: TombBuild, pc: Dictionary) -> void:
+	# A round chamber's corners (the Aztec blood altar's, AztecBuild).
+	var shape: Dictionary = RoomPool.archetype(str(pc.big_room)).get("shape", {})
+	if str(shape.get("kind", "")) == "round":
+		AztecBuild.round_room(b, pc, maxi(int(shape.get("sides", 12)), 8))
 	for st in RoomPool.archetype(str(pc.big_room)).get("stands", []):
 		var sd: Dictionary = st
 		match str(sd.get("kind", "")):
@@ -352,6 +356,14 @@ static func dress(b: TombBuild, pc: Dictionary) -> void:
 				_stela(b, pc, sd)
 			"tenon_heads":
 				_tenon_heads(b, pc, sd)
+			"altar_drum":
+				AztecBuild.altar_drum(b, pc, sd)
+			"bowl":
+				AztecBuild.bowl(b, pc, sd)
+			"offerings":
+				AztecBuild.offerings(b, pc, sd)
+			"day_signs":
+				AztecBuild.day_signs(b, pc, sd)
 	b._stone_mode()
 
 

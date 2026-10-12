@@ -6,7 +6,9 @@
   "archetypes": "id: a short brief for the room's shape, and ruin_kinds: which kinds may draw it. Each is built in the ruin's one stone (§EX.1). Geometry, props and sconce places are Claude Code's, painted per §ES, with the room's torches counting toward the floor's lit test (§FF.2). As built (queue 70, first guesses, Mike may rename or replace them): width_modules, length_modules: its floor in the style's modules (masonry.json styles module_m, 2 m in the tomb), length along the way in. doors_on: the walls a way may go on through, a door centred in each (§EX.2); a way always comes in through its start wall, in the middle. floor: flat; steps_up (lower_m of floor at the way in, then steps rises, each rise_m up a run_m slope, tread_m of tread between them, and the dais the rest of the way, where its far door is, if it has one); sunken (terrace_m of floor at each end at the doors' height, a flight run_m long down drop_m, and the court between, one stair below the corridors); every flight walked on a slope under its steps, as the tomb's stairs are. headroom: the style's heights_m entry over its highest floor; the ceiling is level, so a stepped hall is taller at its way in and a sunken court over its court. pillars: rows_m (across its middle line) and along_m, a pillar at each (side_m, else the style's pillars.side_m), carrying a beam down each row from end wall to end wall, the ceiling's slabs spanning across onto them (max_span_m holds). sconces: its wall torches, {wall, along_m (side walls) or across_m (end walls)} or {pillar: [along index, row index], face: aisle}: a sconce cut into the pillar's face toward the hall's middle line, its flue slot up the pillar (§EV.1). stands: what stands in it: a seat on the dais (along_m, size_m [across, high, deep]); a stela in the court (along_m, size_m [wide, high, thick]); tenon heads, carved stone heads set into the walls (walls, along_m, up_m over the court's floor, size_m [wide, high, how far each juts]).",
   "build": "(Claude Code, queue 70) flags_scale: a big room's floor flags that much bigger again than a room's (masonry.json styles floor.stone_scale): queue 48's remedy for a room past its 45,000 triangles, merging the floor's small cells. With it, and the walls' stone that would stand hidden behind a big room's steps left out, every big room stays inside that budget (tools/room_pool_check.gd and crawler_check count them).",
   "sunken_court_sky": "The brief's shaft of daylight or moonlight into the court is not built: §EX.4 (locked) keeps one column of sky in a dungeon, over its one hearth (crawler_check asserts one shaft per tomb). The court is one stair below the corridors, taller over its court than any room, its middle the stela's. If Mike wants the sky over it, §EX.4 needs his word first.",
-  "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan. As built: tools/room_pool_check.gd (queue 70)."
+  "check": "headless: over 100 seeds every dungeon still has its spine, heart and an exit reachable with all holders cold; big-room counts stay in range; all three archetypes appear somewhere; the same seed twice gives the same plan. As built: tools/room_pool_check.gd (queue 70).",
+  "always": "(Claude Code, queue 80, design §FN.1) always true on an archetype: every ruin whose kind is in its ruin_kinds has it, once (no repeat), drawn first on the pool's dice; the ruin's other big rooms are still drawn at random on top of it by per_dungeon. A ruin left without one of its always chambers is laid again (TombKit.layout's second laying). The tomb has none, so its dice run exactly as before.",
+  "aztec": "(Claude Code, queue 80, design §FN.1, first guesses to tune by eye) The Aztec temple's two fixed chambers, in its one stone (masonry.json aztec_temple). shape round: the square room's corners filled in stone so its walls run as a polygon of `sides` (12: four straight runs on the walls' middles, where its doors and sconces are, and eight faces across the corners), each face coursed blocks with its collision. aztec_blood_altar stands: altar_drum, the round sacrificial stone (temalacatl) in the middle, radius_m, high_m, a carved ring round its rim and a dried stain on its top (stain, sRGB, near-black brown, never bright red: fire is the one warm accent); bowl, a stone bowl (cuauhxicalli) beside it, across_m off the middle line; offerings, count small stone offerings round the altar's foot. No bodies (aztec_temple.json chambers.blood_altar no_gore). aztec_calendar_room stands: day_signs, the tonalpohualli's 20 day-sign panels (aztec_temple.json calendar.day_signs, in order) carved in relief on its side walls, per_row panels a row, rows_up_m their middles over the floor, panel_m [wide, high], each with its sign (a glyph of its own, the same in every temple) and its day's number 1-13 in dots under it (the count's first twenty days: 1 Crocodile to 13 Reed, then 1 Jaguar to 7 Flower). Flavour only: no puzzle and nothing to operate. Which floor holds each chamber is open (§FN.8 call 8): both are on floor one, where the pool's big rooms are."
  },
  "big_rooms": {
   "per_dungeon": [1, 2],
@@ -74,6 +76,47 @@
    "stands": [
     {"kind": "stela", "along_m": 6.0, "size_m": [0.7, 2.4, 0.4]},
     {"kind": "tenon_heads", "walls": ["left", "right"], "along_m": [5.0, 6.0, 7.0], "up_m": 2.65, "size_m": [0.44, 0.52, 0.42]}
+   ]
+  },
+  "aztec_blood_altar": {
+   "brief": "A round chamber with a low round stone altar in the middle, a stone bowl beside it, the stain dried near-black brown, offerings round its foot, no bodies (design §FN.1).",
+   "ruin_kinds": ["aztec_temple"],
+   "always": true,
+   "width_modules": 5,
+   "length_modules": 5,
+   "doors_on": ["end"],
+   "floor": {"kind": "flat"},
+   "headroom": "room",
+   "shape": {"kind": "round", "sides": 12},
+   "pillars": {},
+   "sconces": [
+    {"wall": "left", "along_m": 5.0},
+    {"wall": "right", "along_m": 5.0}
+   ],
+   "stands": [
+    {"kind": "altar_drum", "along_m": 5.0, "radius_m": 0.8, "high_m": 0.55, "stain": "#2b1a14"},
+    {"kind": "bowl", "along_m": 5.0, "across_m": 1.55, "radius_m": 0.32, "high_m": 0.42},
+    {"kind": "offerings", "along_m": 5.0, "count": 9}
+   ]
+  },
+  "aztec_calendar_room": {
+   "brief": "A long room whose side walls carry the tonalpohualli: the 20 day-sign panels with their dot numerals 1-13, in relief. Flavour, no puzzle (design §FN.1).",
+   "ruin_kinds": ["aztec_temple"],
+   "always": true,
+   "width_modules": 5,
+   "length_modules": 6,
+   "doors_on": ["end"],
+   "floor": {"kind": "flat"},
+   "headroom": "room",
+   "pillars": {},
+   "sconces": [
+    {"wall": "end", "across_m": 3.0},
+    {"wall": "end", "across_m": -3.0},
+    {"wall": "start", "across_m": 3.0},
+    {"wall": "start", "across_m": -3.0}
+   ],
+   "stands": [
+    {"kind": "day_signs", "walls": ["left", "right"], "per_row": 5, "rows_up_m": [2.15, 1.05], "panel_m": [0.95, 0.95]}
    ]
   }
  }
