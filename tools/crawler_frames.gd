@@ -12,7 +12,10 @@ extends SceneTree
 ## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71);
 ## ONLY=rooms just the room pool's big rooms (30a-30i; §FM.6, queue 70;
 ## ROOMS= some of them); ONLY=compass just the HUD compass strip facing N, E,
-## S and W in the ruin and on the surface (31a-31h; §FW, queue 101). The snake (queue 49) is held still for
+## S and W in the ruin and on the surface (31a-31h; §FW, queue 101);
+## ONLY=loop just the ruin's loop (32a-32f; §FO.3-§FO.5, queues 85-87): the
+## way up and the secret wing sealed, the wing open and its scroll, the
+## blackout. The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1160,6 +1163,12 @@ func _run() -> void:
 		await _compass(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "loop":
+		# Just the ruin's loop (design §FO.3-§FO.5, queues 85-87; 32a-32f).
+		await _frames(30)
+		await _loop(main)
+		_finish(keep)
+		return
 	if OS.get_environment("ONLY") == "rooms":
 		# Just the room pool's big rooms (design §FM.6, queue 70; 30a-30i),
 		# each in the first tomb from seed 1 on that draws it.
@@ -2047,6 +2056,78 @@ func _surface(main: CrawlerMain) -> void:
 		var col: Node3D = s._smokes[0].col
 		ok(col.visible and float(col.get_meta("top_m", 0.0)) > 1.0, "the hearth's smoke stands over its stack at dusk (%.0f m of column)" % float(col.get_meta("top_m", 0.0)))
 	world.days = keep_days
+
+
+## The ruin's loop (design §FO.3, §FO.4, §FO.5; queues 85-87; ONLY=loop), at
+## midnight, the torch in hand lit: 32a the secret opening's slab from the
+## middle of the room it opens from; 32b the way up's slab at the foot of
+## its flight, from the heart. Then every torch lit and the snake sent home
+## (it is down its hole: both slabs grind open): 32c the wing open, from the
+## same spot as 32a; 32d the scroll at its end. The scroll taken: 32e the
+## blackout from the same spot as 32d, 32f from the heart toward the way
+## up. Checks: the slabs there and gone; the blackout frames darker than
+## the same views lit (the frame's mean luma).
+func _loop(main: CrawlerMain) -> void:
+	var p := main.player
+	var lay := main.lay
+	var sec: Dictionary = lay.get("secret", {})
+	ok(not sec.is_empty() and main.fork.secret != null and main.fork.surface != null, "the secret wing and both slabs are there")
+	if sec.is_empty() or main.fork.secret == null or main.fork.surface == null:
+		return
+	main.world.days = 13.0
+	p._invulnerable = 1.0e9
+	_torch_in_hand(p)
+	p.torch.light()
+	var host: Dictionary = lay.pieces[int(sec.host)]
+	var wd: Dictionary = lay.doors[int(sec.door)]
+	var hc: Vector2 = (host.c as Vector2) + (host.dir as Vector2) * float(host.len) * 0.5
+	var wp: Vector2 = wd.p
+	var from_a := Vector3(hc.x, float(host.y0), hc.y)
+	var yaw_a := atan2(-(wp.x - hc.x), -(wp.y - hc.y))
+	p.spawn_flat(from_a, yaw_a, -0.05)
+	await _frames(20)
+	var a := await _shot("32a_secret_sealed")
+	var heart: Dictionary = lay.pieces[int(lay.heart)]
+	var sd: Dictionary = lay.doors[Fork.surface_door(lay)]
+	var hh: Vector2 = (heart.c as Vector2) + (heart.dir as Vector2) * float(heart.len) * 0.3
+	var sp: Vector2 = sd.p
+	var from_b := Vector3(hh.x, float(heart.y0), hh.y)
+	var yaw_b := atan2(-(sp.x - hh.x), -(sp.y - hh.y))
+	p.spawn_flat(from_b, yaw_b, 0.05)
+	await _frames(20)
+	var b := await _shot("32b_way_up_sealed")
+	# Every torch lit; the snake sent home.
+	for h in main.fires.holders:
+		FireStore.swing_light(h, float(main.world.get("days")))
+	for i in 600:
+		FireStore.tick(self, 1.0 / 60.0, p.global_position)
+	main.boss.auto = true
+	var t := 0.0
+	while not (main.fork.secret.is_gone and main.fork.surface.is_gone) and t < 90.0:
+		await process_frame
+		t += get_root().get_process_delta_time()
+	main.boss.auto = false
+	ok(main.fork.secret.is_gone and main.fork.surface.is_gone, "every torch lit, the snake home: both slabs gone (%.1f s)" % t)
+	p.spawn_flat(from_a, yaw_a, -0.05)
+	await _frames(20)
+	await _shot("32c_secret_open")
+	var art: Vector3 = sec.artifact
+	var ed: Vector2 = lay.pieces[int(sec.end)].dir
+	var from_d := art - Vector3(ed.x, 0.0, ed.y) * 2.2
+	p.spawn_flat(from_d, atan2(-ed.x, -ed.y), -0.35)
+	await _frames(20)
+	var d := await _shot("32d_the_scroll")
+	p.spawn_flat(art - Vector3(ed.x, 0.0, ed.y) * 1.0, atan2(-ed.x, -ed.y), -0.35)
+	await _frames(3)
+	ok(main.secret_wing.take(), "the scroll taken")
+	p.spawn_flat(from_d, atan2(-ed.x, -ed.y), -0.35)
+	await _frames(40)
+	var e := await _shot("32e_blackout_wing")
+	p.spawn_flat(from_b, yaw_b, 0.05)
+	await _frames(40)
+	var f := await _shot("32f_blackout_to_the_way_up")
+	print("  mean luma: 32a %.3f, 32b %.3f, 32d %.3f, 32e %.3f, 32f %.3f" % [_mean_luma(a), _mean_luma(b), _mean_luma(d), _mean_luma(e), _mean_luma(f)])
+	ok(_mean_luma(e) < _mean_luma(d) and _mean_luma(f) < _mean_luma(b), "the blackout darker than the same views by fire (the wing %.3f against %.3f, the heart %.3f against %.3f)" % [_mean_luma(e), _mean_luma(d), _mean_luma(f), _mean_luma(b)])
 
 
 ## The room pool's big rooms (design §FM.6, queue 70; ONLY=rooms; RoomPool,

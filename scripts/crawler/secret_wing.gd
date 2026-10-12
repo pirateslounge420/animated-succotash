@@ -89,7 +89,7 @@ static func lay_out(lay: Dictionary) -> void:
 	# fits anywhere, a module or two off the wall's middle.
 	var mod := float(lay.module)
 	var chalf := float(TombKit.K.get("corridor_half_m", 1.0))
-	for off_m in [0, 1, -1, 2, -2]:
+	for off_m in [0, 1, -1, 2, -2, 3, -3]:
 		for host in hosts:
 			for side in walls[int(host.id)]:
 				if _used(lay, host, str(side)):
@@ -100,6 +100,20 @@ static func lay_out(lay: Dictionary) -> void:
 				for n in range(want, 0, -1):
 					if _try(lay, rng, host, str(side), n, off):
 						return
+	# Last of all: a crypt or catacomb with no one resting in it, where the
+	# new door may cost a coffin or a niche (nobody lies in them).
+	_relaxed = true
+	for host in hosts:
+		if not str(host.get("room_kind", "")) in ["crypt", "catacomb"] or _rested_in(lay, host):
+			continue
+		for side in walls[int(host.id)]:
+			if _used(lay, host, str(side)):
+				continue
+			for n in range(want, 0, -1):
+				if _try(lay, rng, host, str(side), n, 0.0):
+					_relaxed = false
+					return
+	_relaxed = false
 	push_warning("SecretWing: tomb %d has no room on its route with space for a secret wing" % int(lay.seed))
 
 
@@ -137,15 +151,28 @@ static func _used(lay: Dictionary, pc: Dictionary, side: String) -> bool:
 ## What the room `pc` holds that a new door could move: its torches, a
 ## crypt's coffins' rows, a catacomb's niches, a collapsed room's rubble, its
 ## pillars.
+## The last pass (lay_out): a crypt's coffins and a catacomb's niches may
+## change where nobody rests in the room.
+static var _relaxed := false
+
+
+## Does any resident rest in room `pc`?
+static func _rested_in(lay: Dictionary, pc: Dictionary) -> bool:
+	for r in lay.get("residents", []):
+		if TombKit.piece_at(lay, r.pos) == int(pc.id):
+			return true
+	return false
+
+
 static func _room_things(lay: Dictionary, pc: Dictionary) -> String:
 	var parts: Array = []
 	for h in TombKit._room_sconces(lay, pc):
 		parts.append(str((h.pos as Vector3).snapped(Vector3.ONE * 0.01)))
 	# (A crypt's coffins stand in its rows, a catacomb's stacks in its
 	# niches: TombBuild lays them from these, so they must not move.)
-	if str(pc.get("room_kind", "")) == "crypt":
+	if str(pc.get("room_kind", "")) == "crypt" and not _relaxed:
 		parts.append(str(TombKit.coffin_rows(lay, pc)))
-	if str(pc.get("room_kind", "")) == "catacomb":
+	if str(pc.get("room_kind", "")) == "catacomb" and not _relaxed:
 		parts.append(str(TombKit.niche_spots(lay, pc)))
 	# A collapsed room's fallen slab and rubble keep clear of its doors
 	# (TombBuild.collapse_for): they must not move onto anything either.
