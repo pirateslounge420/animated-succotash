@@ -401,11 +401,11 @@ func _finds(seed_value: int) -> void:
 		var best := Vector2.INF
 		var best_score := -INF
 		# A few tries; the remains like high ground, a camp the wash's bank.
-		for t in 14:
+		for t in 40:  # §FV.1: more tries in the small pocket
 			var ang := frng.randf() * TAU
 			var dist := lerpf(float(within[0]), float(within[1]), sqrt(frng.randf()))
 			var q := center + Vector2(cos(ang), sin(ang)) * dist
-			if not land.on_floor(q, 30.0) or land.slope_at(q.x, q.y) > 0.28 or land.in_wash(q) > 0.05:
+			if not land.on_floor(q, minf(30.0, land.r_in * 0.15)) or land.slope_at(q.x, q.y) > 0.28 or land.in_wash(q) > 0.05:
 				continue
 			if (q - (stair.arrive as Vector2)).length() < clear or (q - center).length() < clear:
 				continue

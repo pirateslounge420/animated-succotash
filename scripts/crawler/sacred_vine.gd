@@ -118,14 +118,16 @@ static func drawable(s: PlantSpecies) -> bool:
 ## (Surface.stair: where you arrive, which way you face), the surface's
 ## seed `seed_value`. Null (with a warning) when the world's plant can't be
 ## drawn or no tree takes it.
-static func make(p_world: Node, p_land: SurfaceGround, stair: Dictionary, trees: Array, seed_value: int) -> SacredVine:
+## `reach_m` (§FV.1, Surface.stand_reach_m), when over 0, caps how far from
+## where you come up the tree may stand: in sight within half a minute.
+static func make(p_world: Node, p_land: SurfaceGround, stair: Dictionary, trees: Array, seed_value: int, reach_m := 0.0) -> SacredVine:
 	var id := plant_id()
 	var s := species_of(id)
 	if not drawable(s):
 		push_warning("SacredVine: the world's plant %s can't be drawn (data/sacred has no such entry, or no shape the engine draws)" % id)
 		return null
 	var V: Dictionary = B().get("vine", {})
-	var h := pick_host(stair, trees, seed_value, V)
+	var h := pick_host(stair, trees, seed_value, V, reach_m)
 	if h.is_empty():
 		push_warning("SacredVine: no tree on the surface to hang %s from" % id)
 		return null
@@ -147,7 +149,7 @@ static func make(p_world: Node, p_land: SurfaceGround, stair: Dictionary, trees:
 ## from_arrival_m from where you come up and within ahead_deg of the way
 ## you face there, the nearest to near_m (the seed breaking ties); else any
 ## such tree round the stair, nearer first; {} if none.
-static func pick_host(stair: Dictionary, trees: Array, seed_value: int, V: Dictionary) -> Dictionary:
+static func pick_host(stair: Dictionary, trees: Array, seed_value: int, V: Dictionary, reach_m := 0.0) -> Dictionary:
 	var arrive: Vector2 = stair.get("arrive", Vector2.ZERO)
 	var n: Vector2 = stair.get("n", Vector2(0.0, 1.0))
 	n = n.normalized() if n.length() > 1e-4 else Vector2(0.0, 1.0)
@@ -156,6 +158,12 @@ static func pick_host(stair: Dictionary, trees: Array, seed_value: int, V: Dicti
 	var near := float(V.get("near_m", 30.0))
 	var ahead := deg_to_rad(float(V.get("ahead_deg", 40.0)))
 	var tiers: Array = [[ahead, float(dr[0]), float(dr[1])], [PI, float(dr[0]), float(dr[1])], [PI, float(dr[0]), 240.0], [PI, 4.0, 4000.0]]
+	if reach_m > 0.0:
+		# §FV.1: never further than reach_m (ahead first, then anywhere).
+		var hi := minf(float(dr[1]), reach_m)
+		var lo := minf(float(dr[0]), hi * 0.5)
+		near = minf(near, hi * 0.75)
+		tiers = [[ahead, lo, hi], [deg_to_rad(90.0), lo, hi], [PI, 4.0, reach_m]]
 	for tier in tiers:
 		var rng := RandomNumberGenerator.new()
 		rng.seed = hash([seed_value, "sacred vine"])

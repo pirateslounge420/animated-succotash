@@ -5,8 +5,8 @@ extends RefCounted
 ## Surface builds it): one heightfield, generated from the surface's seed
 ## and the tomb's layout, the same every time for that game (§FK.2).
 ##
-##   the basin    surface.across_m across (§EW.1's 1-2 km; Claude Code's
-##                first guess 1.4 km), its floor at the tomb's surface level
+##   the basin    across_m across (§FV.1: Surface.sized draws it from
+##                ruin_compass.json surface.across_m, 200-300 m), its floor at the tomb's surface level
 ##                (smoke.json vents.surface_y_m: where every vent's top
 ##                already ends), rolling gently (roll_m over roll_scale_m),
 ##                a faint ripple of wind on it, flat round the stairhead
@@ -87,7 +87,7 @@ func setup(p: Dictionary, seed_value: int, stair: Vector2, out: Vector2, level: 
 	base_y = level
 	center = stair
 	n = out.normalized() if out.length() > 0.01 else Vector2(0.0, 1.0)
-	r_in = maxf(float(p.get("across_m", 1400.0)) * 0.5, 200.0)
+	r_in = maxf(float(p.get("across_m", 1400.0)) * 0.5, 60.0)
 	cell = clampf(float(G.get("cell_m", 4.0)), 1.0, 16.0)
 	var fr: Array = G.get("flat_round_stair_m", [16.0, 36.0])
 	_flat_a = float(fr[0])

@@ -52,6 +52,12 @@ static func _json(path: String) -> Dictionary:
 	return d if d is Dictionary else {}
 
 var world: Node
+## This surface's own settings: worlds.json surface sized to the §FV.1
+## pocket (sized(): ruin_compass.json surface.across_m and what scales with
+## it). Everything built up here reads these, not S.
+var P: Dictionary = {}
+## Its size across (m), drawn from ruin_compass.json surface.across_m.
+var across_m := 0.0
 var lay: Dictionary
 var seed_value := 0
 var land: SurfaceGround
@@ -82,6 +88,56 @@ var ms := {}
 ## The weather up here: fair, a little cloud, a breeze (sky.cloud,
 ## wind_mps). Not simulated (§EW.6).
 var weather := {}
+
+
+## The §FV.1 pocket (design 11 Oct; data/ruin_compass.json surface): the
+## surface's size drawn from surface.across_m (a range, Claude's first
+## guess 200-300 m, not Mike's number; worlds.json surface.across_m stays as
+## the open-world-sized fallback when ruin_compass.json has none), and what
+## was laid out for the old 1.4 km basin scaled to it: the finds' ring, the
+## creatures' ring, the talus band and the wash's wander. The same contents,
+## composed closer (§EF, §EG). `seed_value` the surface's seed.
+static func sized(seed_value: int) -> Dictionary:
+	var p: Dictionary = S.duplicate(true)
+	var C: Dictionary = _json("res://data/ruin_compass.json").get("surface", {})
+	var ar = C.get("across_m", null)
+	var across := float(S.get("across_m", 1400.0))
+	if ar is Array and (ar as Array).size() >= 2:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([seed_value, "surface across"])
+		across = rng.randf_range(float(ar[0]), float(ar[1]))
+	elif ar is float or ar is int:
+		across = float(ar)
+	else:
+		return p
+	p["across_m"] = across
+	var r := across * 0.5
+	var E: Dictionary = p.get("edge", {})
+	E["talus_width_m"] = minf(float(E.get("talus_width_m", 90.0)), r * 0.25)
+	var G: Dictionary = p.get("ground", {})
+	var wash: Dictionary = G.get("wash", {})
+	wash["wander_m"] = minf(float(wash.get("wander_m", 40.0)), r * 0.15)
+	var F: Dictionary = p.get("finds", {})
+	var fw: Array = F.get("within_m", [40.0, 460.0])
+	F["within_m"] = [minf(float(fw[0]), r * 0.22), minf(float(fw[1]), r * 0.55)]
+	F["apart_m"] = minf(float(F.get("apart_m", 30.0)), r * 0.14)
+	var PL: Dictionary = p.get("plants", {})
+	PL["upland_from_edge_m"] = minf(float(PL.get("upland_from_edge_m", 160.0)), r * 0.4)
+	PL["ground_within_m"] = minf(float(PL.get("ground_within_m", 240.0)), r)
+	var L: Dictionary = p.get("life", {})
+	var lw: Array = L.get("within_m", [35.0, 200.0])
+	L["within_m"] = [minf(float(lw[0]), r * 0.2), minf(float(lw[1]), r * 0.6)]
+	L["gone_past_m"] = minf(float(L.get("gone_past_m", 320.0)), r * 1.2)
+	p["life"] = L
+	return p
+
+
+## How far from where you come up the plant stand may stand (§FV.1): what
+## you walk in plant_stand.in_sight_within_s.
+static func stand_reach_m() -> float:
+	var C: Dictionary = _json("res://data/ruin_compass.json").get("surface", {})
+	var s := float((C.get("plant_stand", {}) as Dictionary).get("in_sight_within_s", 30.0))
+	return s * CrawlerPlayer.WALK_SPEED
 
 
 ## Does dungeon `lay` have this surface above it? (surface.on, and its
@@ -150,17 +206,19 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	lay = p_lay
 	hearth = p_hearth
 	seed_value = hash([int(lay.get("seed", 0)), "surface"])
+	P = sized(seed_value)
+	across_m = float(P.get("across_m", 1400.0))
 	var t0 := Time.get_ticks_msec()
-	var frame := SurfaceBuild.stair_frame(lay, S, level())
+	var frame := SurfaceBuild.stair_frame(lay, P, level())
 	land = SurfaceGround.new()
-	land.setup(S, seed_value, frame.mouth, frame.n, level())
+	land.setup(P, seed_value, frame.mouth, frame.n, level())
 	land.carve_stair(frame)
 	var t1 := Time.get_ticks_msec()
 	ms["ground"] = t1 - t0
 	_ground()
 	var t2 := Time.get_ticks_msec()
 	ms["ground_mesh"] = t2 - t1
-	var data := SurfaceBuild.make(land, lay, S, seed_value)
+	var data := SurfaceBuild.make(land, lay, P, seed_value)
 	stair = data.stair
 	stacks = data.stacks
 	slots = data.slots
@@ -185,16 +243,18 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
 	add_child(plants)
-	plants.build(land, S, biome_doc(), seed_value, keep_out)
+	plants.build(land, P, biome_doc(), seed_value, keep_out)
 	# The world's sacred plant, hung from one of those trees (queue 72).
-	vine = SacredVine.make(world, land, stair, plants.trees_placed, seed_value)
+	# §FV.1: by the path from the stair, in sight within plant_stand
+	# .in_sight_within_s at a walk (stand_reach_m).
+	vine = SacredVine.make(world, land, stair, plants.trees_placed, seed_value, stand_reach_m())
 	if vine != null:
 		add_child(vine)
 	var t4 := Time.get_ticks_msec()
 	ms["plants"] = t4 - t3
 	life = SurfaceLife.new()
 	add_child(life)
-	life.setup(land, S, climate(), seed_value, null)
+	life.setup(land, P, climate(), seed_value, null)
 	# The sky on the one clock (§FK.3).
 	sky = SkySystem.new()
 	sky.name = "Sky"
@@ -238,7 +298,7 @@ func _ground() -> void:
 	body.add_child(cs)
 	ground_node.add_child(body)
 	var far := ArrayMesh.new()
-	far.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, land.far_band_arrays(S, seed_value), [], {}, TerrainChunk.GROUND_FORMAT)
+	far.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, land.far_band_arrays(P, seed_value), [], {}, TerrainChunk.GROUND_FORMAT)
 	var fmi := MeshInstance3D.new()
 	fmi.name = "FarBand"
 	fmi.mesh = far

@@ -44,7 +44,8 @@ extends SceneTree
 ##     surface changed back (the environment, the grade's night and firelit
 ##     whites, the look's haze, the half-dark, the camera's reach, the drone
 ##     and drips); and up again, the same surface as you left it, at once;
-##  8. the edge (§DM, worlds.json size): the pocket within size.across_m;
+##  8. the edge (§DM; §FV.1): the pocket within ruin_compass.json
+##     surface.across_m;
 ##     walking 2000 m from the stair (your own body's capsule, slope and
 ##     step, in the surface's own collision) in WALK_DIRS ways, then again
 ##     sprinting and jumping, never leaves the pocket's edge into void: never
@@ -53,7 +54,9 @@ extends SceneTree
 ##     but the land, the stone and the trunks (no invisible wall);
 ##  9. no map, no fast travel, no edges to other worlds (§FM.8, §EW.7): the
 ##     stair down the surface's only way off;
-## 10. over twenty seeds the surface builds: the stair over each tomb's
+## 10. over twenty seeds the surface builds (§FV.1: within across_m, walking
+##     out 8 ways meets the land's edge, the plant stand in the path's view
+##     under plant_stand.in_sight_within_s at a walk): the stair over each tomb's
 ##     opening, the arrival on its yard on walkable ground, your body from
 ##     there down into the stair's mouth, every vent's top its stack or slot,
 ##     each zone grown, finds and creatures there, the same land twice from
@@ -279,7 +282,7 @@ func _look(main: CrawlerMain) -> void:
 		if sp == null or not sp.biomes.has(bid):
 			gate = false
 			wrong.append(name)
-	ok(plants.grown.size() == 3 and plants.placed > 2000 and gate, "its plants: %d of them, from %s (%s), every species one its biome lists%s" % [plants.placed, ", ".join(plants.grown.values()), _top(plants.counts, 6), "" if gate else " (not: %s)" % str(wrong)])
+	ok(plants.grown.size() == 3 and plants.placed > 300 and gate, "its plants: %d of them, from %s (%s), every species one its biome lists%s" % [plants.placed, ", ".join(plants.grown.values()), _top(plants.counts, 6), "" if gate else " (not: %s)" % str(wrong)])
 	# A stand mostly one species (§CS): in each zone the dominants lead its
 	# companions.
 	var lead := true
@@ -597,9 +600,11 @@ func _no_way_off(main: CrawlerMain) -> void:
 ## the stair every way, in the surface's own collision.
 func _edge(s: Surface, lay: Dictionary) -> void:
 	var land := s.land
-	var size: Array = (Surface.W.get("size", {}) as Dictionary).get("across_m", [1000, 2000])
-	var across := float(Surface.S.get("across_m", 1400.0))
-	ok(across >= float(size[0]) and across <= float(size[1]) and str((Surface.W.get("size", {}) as Dictionary).get("edge", "")) == "the_land" and not bool((Surface.W.get("size", {}) as Dictionary).get("invisible_walls", true)), "the pocket %.0f m across, within worlds.json size.across_m %s; its edge the land, no invisible walls" % [across, str(size)])
+	# §FV.1: the pocket's size is ruin_compass.json surface.across_m now
+	# (worlds.json size.across_m stays, the open-world-sized note).
+	var size: Array = _fv_across()
+	var across := s.across_m
+	ok(across >= float(size[0]) and across <= float(size[1]) and str((Surface.W.get("size", {}) as Dictionary).get("edge", "")) == "the_land" and not bool((Surface.W.get("size", {}) as Dictionary).get("invisible_walls", true)), "the pocket %.0f m across, within ruin_compass.json surface.across_m %s (§FV.1); its edge the land, no invisible walls" % [across, str(size)])
 	# Steeper than you can walk, all the way round: the face's every
 	# triangle through the middle of its height (the grid's own triangles,
 	# 4 m across: none of them reaches the foot or the lip).
@@ -627,7 +632,7 @@ func _edge(s: Surface, lay: Dictionary) -> void:
 ## Your body (CrawlerPlayer's capsule and floor rules) in a world of its
 ## own holding the surface's collision, walked `dirs` ways from the
 ## arrival 2000 m each. {"ok", "past", "far", "steps", "why"}.
-func _walks(s: Surface, dirs: int, sprint: bool) -> Dictionary:
+func _walks(s: Surface, dirs: int, sprint: bool, dist_m := 2000.0) -> Dictionary:
 	var vp := SubViewport.new()
 	vp.own_world_3d = true
 	vp.size = Vector2i(4, 4)
@@ -663,7 +668,7 @@ func _walks(s: Surface, dirs: int, sprint: bool) -> Dictionary:
 	# that could climb it would go on to its lip, cliff_width_m out.
 	var limit := 0.4 * float(land.E.get("cliff_width_m", 16.0))
 	var speed := CrawlerPlayer.SPRINT_SPEED if sprint else CrawlerPlayer.WALK_SPEED
-	var steps := int(2000.0 / maxf(speed, 0.5) / DT)
+	var steps := int(dist_m / maxf(speed, 0.5) / DT)
 	var out := {"ok": true, "past": -INF, "far": 0.0, "steps": 0, "why": ""}
 	for k in dirs:
 		var th := TAU * k / dirs
@@ -697,6 +702,17 @@ func _walks(s: Surface, dirs: int, sprint: bool) -> Dictionary:
 	return out
 
 
+## data/ruin_compass.json surface (§FV.1).
+func _fv() -> Dictionary:
+	return Surface._json("res://data/ruin_compass.json").get("surface", {})
+
+
+## Its across_m as [low, high].
+func _fv_across() -> Array:
+	var a = _fv().get("across_m", [200, 300])
+	return a if a is Array else [float(a), float(a)]
+
+
 # --- 10. Over twenty seeds ----------------------------------------------------------
 
 func _seeds() -> void:
@@ -719,6 +735,13 @@ func _seeds() -> void:
 	var zones_ok := true
 	var finds_ok := true
 	var life_ok := true
+	var fv_size: Array = _fv_across()
+	var fv_in_sight_s := float(((_fv().get("plant_stand", {})) as Dictionary).get("in_sight_within_s", 30.0))
+	var fv_size_ok := true
+	var fv_edge_ok := true
+	var stand_ok := true
+	var stand_worst_s := 0.0
+	var stand_worst_deg := 0.0
 	var notes: Array = []
 	var times: Array = []
 	for sv in seeds:
@@ -740,7 +763,8 @@ func _seeds() -> void:
 		if s.stacks.size() + s.slots.size() != (lay.vents as Array).size() or s.stacks.is_empty():
 			vents_ok = false
 			notes.append("seed %d: %d stacks + %d slots for %d vents" % [sv, s.stacks.size(), s.slots.size(), (lay.vents as Array).size()])
-		if s.plants.grown.size() < 3 or s.plants.placed < 2000:
+		# §FV.1: a 200-300 m pocket holds a few hundred plants, not thousands.
+		if s.plants.grown.size() < 3 or s.plants.placed < 300:
 			zones_ok = false
 			notes.append("seed %d: %d zones grown, %d plants" % [sv, s.plants.grown.size(), s.plants.placed])
 		var kinds := {}
@@ -751,6 +775,29 @@ func _seeds() -> void:
 			notes.append("seed %d: finds %s" % [sv, str(kinds.keys())])
 		if s.life.animals.is_empty():
 			life_ok = false
+		# §FV.1: within across_m; the plant stand there, in the path's
+		# view, under in_sight_within_s at a walk from the stair.
+		if s.across_m < float(fv_size[0]) or s.across_m > float(fv_size[1]):
+			fv_size_ok = false
+			notes.append("seed %d: %.0f m across" % [sv, s.across_m])
+		if s.vine == null:
+			stand_ok = false
+			notes.append("seed %d: no plant stand" % sv)
+		else:
+			var rel: Vector2 = (s.vine.host.q as Vector2) - (st.arrive as Vector2)
+			var secs := rel.length() / CrawlerPlayer.WALK_SPEED
+			var ang := rad_to_deg(absf((st.n as Vector2).angle_to(rel)))
+			stand_worst_s = maxf(stand_worst_s, secs)
+			stand_worst_deg = maxf(stand_worst_deg, ang)
+			if secs >= fv_in_sight_s or ang > 90.0 or s.vine.mmi.visibility_range_end < rel.length() + 2.0:
+				stand_ok = false
+				notes.append("seed %d: the stand %.0f s away at %.0f deg" % [sv, secs, ang])
+		# Out from the stair every way meets the land's edge, never void
+		# (twice the pocket's width: well past its edge).
+		var ew := await _walks(s, 8, false, 2.0 * s.across_m + 100.0)
+		if not bool(ew.ok):
+			fv_edge_ok = false
+			notes.append("seed %d: %s" % [sv, ew.why])
 		# Your body from the arrival down into the stair's mouth (its own
 		# world: the land, the stone), standing first on the yard's level
 		# floor at the surface level.
@@ -767,6 +814,8 @@ func _seeds() -> void:
 	ok(stair_ok and arrive_ok, "on every one the stair climbs from straight over the opening and you arrive on its yard's level ground" + ("" if stair_ok and arrive_ok else " (%s)" % str(notes.slice(0, 4))))
 	ok(walk_ok, "on every one your body walks from the arrival down the stairhead's steps to where the way down begins" + ("" if walk_ok else " (%s)" % str(notes.slice(0, 4))))
 	ok(vents_ok and zones_ok and finds_ok and life_ok, "on every one every vent's top has its stack or slot, all three stands grow, there are remains, a camp and litter to find, and creatures" + ("" if vents_ok and zones_ok and finds_ok and life_ok else " (%s)" % str(notes.slice(0, 6))))
+	ok(fv_size_ok and fv_edge_ok, "§FV.1: on every one the pocket is within ruin_compass.json surface.across_m %s, and walking out from the stair 8 ways meets the land's edge, never void" % str(fv_size) + ("" if fv_size_ok and fv_edge_ok else " (%s)" % str(notes.slice(0, 4))))
+	ok(stand_ok, "§FV.1: on every one the sacred plant's stand grows by the path from the stair, within %.0f degrees of the way you face coming up and %.1f s at a walk at most (under %.0f s), inside its drawing range" % [stand_worst_deg, stand_worst_s, fv_in_sight_s] + ("" if stand_ok else " (%s)" % str(notes.slice(0, 4))))
 	# The same land twice from the same seed (§FK.2).
 	var la := TombKit.layout(int(seeds[3]))
 	var s1 := Surface.new()
