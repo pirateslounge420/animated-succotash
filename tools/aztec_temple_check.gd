@@ -67,7 +67,8 @@ func _seeds() -> Array:
 # --- 1, 2. The roster ----------------------------------------------------------------
 
 func _off() -> void:
-	ok(not bool(Tuning.table("aztec_temple").get("enabled", true)) and not CrawlerSave.aztec_on, "aztec_temple.json enabled is false by default, and the game reads it so")
+	ok(bool(Tuning.table("aztec_temple").get("enabled", false)) and CrawlerSave.aztec_on, "aztec_temple.json enabled is true as shipped (12 Oct, Mike), and the game reads it so")
+	CrawlerSave.aztec_on = false
 	ok(CrawlerSave.roster() == ["tomb"], "with it false the roster is the tomb alone (%s)" % str(CrawlerSave.roster()))
 	var drawn := 0
 	for g in range(1, 201):

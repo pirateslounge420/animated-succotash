@@ -5,7 +5,7 @@ extends SceneTree
 ##   godot --headless --path . --fixed-fps 60 --script tools/aztec_pyramid_check.gd
 ## PYRAMID_SEEDS (env) sets how many seeds (default 20: 1, 7, 42 and more).
 ## Asserts:
-##  1. off (aztec_temple.json enabled false, the default): no pyramid over
+##  1. off (CrawlerSave.aztec_on false; shipped true since 12 Oct): no pyramid over
 ##     the tomb or over a temple, the surface's stone vertex for vertex as it
 ##     is with the pyramid's code there and switched off;
 ##  2. on (CrawlerSave.aztec_on true), over the seeds: over every temple
@@ -75,8 +75,8 @@ func _surface(lay: Dictionary) -> Dictionary:
 
 
 func _off(seeds: Array) -> void:
+	ok(bool(Tuning.table("aztec_temple").get("enabled", false)) and CrawlerSave.aztec_on, "aztec_temple.json enabled is true as shipped (12 Oct, Mike), and the game reads it so")
 	CrawlerSave.aztec_on = false
-	ok(not bool(Tuning.table("aztec_temple").get("enabled", true)), "aztec_temple.json enabled is false by default")
 	ok(Surface.covers({"theme": "tomb"}) and Surface.covers({"theme": "aztec_temple"}), "the tomb and the temple both have the surface over them (over_themes %s)" % str(Surface.S.get("over_themes", [])))
 	var none := true
 	for s in seeds.slice(0, 5):

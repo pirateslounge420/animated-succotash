@@ -7,7 +7,7 @@ extends SceneTree
 ##  1. the layouts (a hundred seeds): one floor, no stair down (no
 ##     lay.descent, no stair piece below floor one), no floor-two fog
 ##     anywhere (FloorFog.share_at 0 at every piece);
-##  2. the scene (SEED, as shipped, exit.sealed_until_home true): the way
+##  2. the scene (SEED, exit.sealed_until_home set true; shipped false since 12 Oct): the way
 ##     out's flight sealed at its foot, its doorway blocked, the floor grid
 ##     finding no way from the wake spot to the way out; every torch but one
 ##     lit: still sealed; the last: the boss released, and once it is down
@@ -15,7 +15,7 @@ extends SceneTree
 ##     is gone, the floor grid running from the wake spot to the way out;
 ##     kept in the save (exit_open);
 ##  3. Continue: the same ruin, its way up open at once and quiet;
-##  4. exit.sealed_until_home false: no seal, the way out open from the start.
+##  4. exit.sealed_until_home false (as shipped): no seal, the way out open from the start.
 ## And (queue 86, §FO.4, SecretWing):
 ##  5. the layouts (the same hundred): exactly one secret wing, its pieces
 ##     joined to the floor by one door only, that door not the way out's nor
@@ -69,8 +69,16 @@ func _run() -> void:
 	_layouts(_seeds())
 	_wings(_seeds())
 	OS.set_environment("SEED", str(seed_v))
+	# As shipped since 12 Oct (Mike: "the door open can be open even before
+	# lighting up all options"): sealed_until_home false, the way out open
+	# from the start (4). The sealed path (2, 3) stays built and is checked
+	# with the flag set true here.
+	ok(not Fork.gate_surface(), "as shipped (12 Oct, Mike): ruin_loop.json exit.sealed_until_home false, the way out open from the start")
+	var was: Variant = Fork.EXIT.get("sealed_until_home", false)
+	Fork.EXIT["sealed_until_home"] = true
 	await _exit_scene()
 	await _exit_kept()
+	Fork.EXIT["sealed_until_home"] = was
 	OS.set_environment("SEED", str(seed_v))
 	await _exit_unsealed()
 	OS.set_environment("SEED", str(seed_v))
@@ -252,7 +260,7 @@ func _exit_scene() -> void:
 	var lay := main.lay
 	var fork := main.fork
 	var sd := Fork.surface_door(lay)
-	ok(Fork.gate_surface() and fork != null and fork.surface != null and fork.down == null and sd >= 0, "as shipped the way up is sealed until home (ruin_loop.json exit.sealed_until_home true), and no seal on a way down (one floor)")
+	ok(Fork.gate_surface() and fork != null and fork.surface != null and fork.down == null and sd >= 0, "with exit.sealed_until_home set true the way up is sealed until home, and no seal on a way down (one floor)")
 	if fork == null or fork.surface == null:
 		await _close(main)
 		return

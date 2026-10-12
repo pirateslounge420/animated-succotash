@@ -190,6 +190,19 @@ func _light(h: Node3D) -> void:
 
 ## A tomb's pieces, holders and exits, as text (the same text, the same
 ## tomb).
+## The theme game `g` builds at place `at` (CrawlerSave.theme_at: since 12
+## Oct the first ruin is drawn from the roster, the tomb or the Aztec
+## temple, aztec_temple.json enabled).
+static func _th(g: int, at: int) -> String:
+	var keep := [CrawlerSave.game_seed, CrawlerSave.data]
+	CrawlerSave.game_seed = g
+	CrawlerSave.data = {"dungeons": {}}
+	var t := CrawlerSave.theme_at(at)
+	CrawlerSave.game_seed = keep[0]
+	CrawlerSave.data = keep[1]
+	return t
+
+
 static func _sig(lay: Dictionary) -> String:
 	return var_to_str([lay.get("pieces", []), lay.get("holders", []), lay.get("exits", [])])
 
@@ -296,15 +309,15 @@ func _seeds() -> void:
 			if CrawlerSave.dungeon_seed(g, at) != s:
 				again += 1
 	ok(clash == 0 and own == 0 and out == 0 and again == 0, "over 300 game seeds each later place's seed is drawn from the game's seed and the place: the first five places all different (%d clashes), none the game's own past the first (%d), all in 1-%d (%d out), the same when drawn again (%d not)" % [clash, own, CrawlerSave.SEED_MAX, out, again])
-	var a0 := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 0))
-	var a1 := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 1))
-	var a0b := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 0))
-	var a1b := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 1))
+	var a0 := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 0), _th(game_a, 0))
+	var a1 := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 1), _th(game_a, 1))
+	var a0b := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 0), _th(game_a, 0))
+	var a1b := TombKit.layout(CrawlerSave.dungeon_seed(game_a, 1), _th(game_a, 1))
 	sigs["%d/0" % game_a] = _sig(a0)
 	sigs["%d/1" % game_a] = _sig(a1)
 	ok(_sig(a0) == _sig(a0b) and _sig(a1) == _sig(a1b) and _sig(a0) != _sig(a1), "game %d builds the same first tomb (seed %d: %s) and the same next tomb (seed %d: %s) twice over: the same pieces, holders and exits" % [game_a, int(a0.seed), _counts(a0), int(a1.seed), _counts(a1)])
-	var b0 := TombKit.layout(CrawlerSave.dungeon_seed(game_b, 0))
-	var b1 := TombKit.layout(CrawlerSave.dungeon_seed(game_b, 1))
+	var b0 := TombKit.layout(CrawlerSave.dungeon_seed(game_b, 0), _th(game_b, 0))
+	var b1 := TombKit.layout(CrawlerSave.dungeon_seed(game_b, 1), _th(game_b, 1))
 	sigs["%d/0" % game_b] = _sig(b0)
 	sigs["%d/1" % game_b] = _sig(b1)
 	ok(_sig(a0) != _sig(b0) and _sig(a1) != _sig(b1), "two different game seeds build different first tombs (game %d: %s; game %d: %s) and different next ones" % [game_a, _counts(a0), game_b, _counts(b0)])
