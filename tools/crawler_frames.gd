@@ -17,7 +17,8 @@ extends SceneTree
 ## S and W in the ruin and on the surface (31a-31h; §FW, queue 101);
 ## ONLY=loop just the ruin's loop (32a-32f; §FO.3-§FO.5, queues 85-87): the
 ## way up and the secret wing sealed, the wing open and its scroll, the
-## blackout. The snake (queue 49) is held still for
+## blackout. ONLY=tunnel just the tunnel between the two ruins (33a-33h;
+## §FV.2, §FV.5, queue 100). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1168,6 +1169,14 @@ func _run() -> void:
 		# ruin, then on the surface, turning through all four points.
 		await _frames(30)
 		await _compass(main)
+		_finish(keep)
+		return
+	if OS.get_environment("ONLY") == "tunnel":
+		# Just the tunnel between two ruins (design §FV.2, §FV.5, queue 100;
+		# 33a-33h): the first ruin's shrine, the three stretches, the next
+		# ruin's surface, and back.
+		await _frames(30)
+		await _tunnel(main)
 		_finish(keep)
 		return
 	if OS.get_environment("ONLY") == "loop":
@@ -2745,3 +2754,80 @@ func _cleared(main: CrawlerMain) -> void:
 	if boss is Boss:
 		(boss as Boss).auto = keep_auto
 	p.torch.put_out("stowed")
+
+
+## The tunnel between two ruins (design §FV.2, §FV.5; queue 100; ONLY=tunnel),
+## at noon: up the stair, the shrine at the surface's edge from 14 m off
+## (33a); in through it, the tunnel's first stretch by torchlight, this
+## ruin's stone (33b), the mixed stretch (33c), the last, the next ruin's
+## stone (33d); through: up on the next ruin's surface out of its shrine on
+## the opposite edge (33e) and that shrine behind you (33f); back down it
+## and along the tunnel the other way (33g), and up at home (33h). Checks:
+## each step happened, and the tunnel's frames lit warm by the torch.
+func _tunnel(main: CrawlerMain) -> void:
+	var p := main.player
+	p._invulnerable = 1.0e9
+	main.world.days = Vents.days_at_solar_hour(floorf(float(main.world.get("days"))) + 1.0, 12.0)
+	_torch_in_hand(p)
+	p.torch.light()
+	main.go_up()
+	while not main.on_surface or main.leaving:
+		await process_frame
+	var sh: Array = main.surface.shrines
+	ok(sh.size() == 1, "one shrine on the surface (%d)" % sh.size())
+	if sh.is_empty():
+		return
+	var sp: Dictionary = sh[0]
+	var n: Vector2 = sp.n
+	var at: Vector3 = sp.pos
+	var off := at + Vector3(n.x, 0.0, n.y) * 14.0
+	off.y = main.surface.land.height_at(off.x, off.z)
+	p.spawn_flat(off, atan2(n.x, n.y), 0.05)
+	await _frames(30)
+	await _shot("33a_tunnel_shrine")
+	p.spawn_flat(at - Vector3(n.x, 0.0, n.y) * 1.8, atan2(n.x, n.y), 0.0)
+	while not main.in_tunnel or main.leaving:
+		await process_frame
+	p.set_physics_process(false)
+	var tn := main.tunnel
+	var al := Vector3(tn.along.x, 0.0, tn.along.y)
+	var yaw := atan2(-tn.along.x, -tn.along.y)
+	var names := ["33b_tunnel_own_stone", "33c_tunnel_mixed", "33d_tunnel_next_stone"]
+	for k in 3:
+		p.spawn_flat(tn.start + al * (RuinTunnel.stretch_m() * k + 3.0), yaw, -0.05)
+		await _frames(20)
+		var img := await _shot(names[k])
+		ok(_mean_luma(img) > 0.02, "%s: the stone lit by the torch (luma %.3f)" % [names[k], _mean_luma(img)])
+	p.set_physics_process(true)
+	p.spawn_flat(tn.start + al * (tn.length - 0.4), yaw, 0.0)
+	var n0 := main.tunnels_through
+	while main.tunnels_through == n0 or main.leaving:
+		await process_frame
+	ok(main.on_surface, "through: up on the %s's surface" % str(main.lay.get("theme", "")))
+	await _frames(30)
+	await _shot("33e_tunnel_arrive")
+	var sp2: Dictionary = main.surface.shrine_toward(str(RuinTunnel.OPPOSITE[str(sp.dir)]))
+	if not sp2.is_empty():
+		var n2: Vector2 = sp2.n
+		var at2: Vector3 = sp2.pos
+		var o2 := at2 + Vector3(n2.x, 0.0, n2.y) * 14.0
+		o2.y = main.surface.land.height_at(o2.x, o2.z)
+		p.spawn_flat(o2, atan2(n2.x, n2.y), 0.05)
+		await _frames(20)
+		await _shot("33f_tunnel_their_shrine")
+		p.spawn_flat(at2 - Vector3(n2.x, 0.0, n2.y) * 1.8, atan2(n2.x, n2.y), 0.0)
+		while not main.in_tunnel or main.leaving:
+			await process_frame
+		var t2 := main.tunnel
+		p.set_physics_process(false)
+		p.spawn_flat(t2.start + Vector3(t2.along.x, 0.0, t2.along.y) * 3.0, atan2(-t2.along.x, -t2.along.y), -0.05)
+		await _frames(20)
+		await _shot("33g_tunnel_back")
+		p.set_physics_process(true)
+		p.spawn_flat(t2.start + Vector3(t2.along.x, 0.0, t2.along.y) * (t2.length - 0.4), 0.0, 0.0)
+		var n1 := main.tunnels_through
+		while main.tunnels_through == n1 or main.leaving:
+			await process_frame
+		await _frames(30)
+		await _shot("33h_tunnel_home")
+		ok(main.on_surface and CrawlerSave.place == 0, "and back home (place %d)" % CrawlerSave.place)

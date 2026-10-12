@@ -22,7 +22,8 @@ extends SceneTree
 ##  7. phase two's blackout (§FO.5, not built: your torch put out) leaves it
 ##     showing; under a brew (the vision running) it is drawn above the
 ##     vision, unmodulated, its colour unchanged;
-##  8. up on the surface: still showing, north still -z, no notches.
+##  8. up on the surface: still showing, north still -z, one notch: the
+##     tunnel's shrine toward the other ruin (queue 100, RuinTunnel.bearings).
 
 var fails := 0
 
@@ -189,7 +190,7 @@ func _scene(main: CrawlerMain) -> void:
 			break
 		await process_frame
 	await _ticks(3)
-	ok(main.on_surface and c.showing() and c.notches.is_empty() and absf(c.heading_deg - Compass.heading_of(main.player.camera().global_basis)) < 0.01, "up on the surface it shows, north still -z (facing %.0f degrees), no notches (none built)" % c.heading_deg)
+	ok(main.on_surface and c.showing() and c.notches == RuinTunnel.bearings(str(main.lay.get("theme", ""))) and c.notches.size() == 1 and absf(c.heading_deg - Compass.heading_of(main.player.camera().global_basis)) < 0.01, "up on the surface it shows, north still -z (facing %.0f degrees), one notch: the tunnel's shrine (queue 100) at %s" % [c.heading_deg, str(c.notches)])
 	if had == null:
 		Settings.erase("hud.compass")
 	else:

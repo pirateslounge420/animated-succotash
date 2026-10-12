@@ -191,7 +191,15 @@ static func theme_at(at: int) -> String:
 	var th := str(dungeon(at).get("theme", ""))
 	if (Tuning.table("crawler").get("themes", {}) as Dictionary).has(th):
 		return th
-	return first_theme(game_seed) if at == 0 else ""
+	if at == 0:
+		return first_theme(game_seed)
+	# Across the tunnel (design §FV.2, queue 100, RuinTunnel): an odd place
+	# is the neighbour of the place before it.
+	if at % 2 == 1:
+		var nb := RuinTunnel.neighbour(theme_at(at - 1))
+		if nb != "":
+			return nb
+	return ""
 
 
 ## Whether the Aztec temple is in the game (aztec_temple.json enabled,

@@ -204,6 +204,15 @@ var secret_wing: SecretWing
 ## Phase two's blackout (design §FO.5, Blackout).
 var blackout: Blackout
 var tome_panel: TomePanel
+## The tunnel between two ruins (design §FV.2, §FV.5, queue 100;
+## RuinTunnel): in it while in_tunnel (the dungeon above's nodes in _below,
+## its surface out of the tree, kept for the walk back); the shrine you went
+## down (`_tunnel_from`); walks through to the far ruin this session.
+var tunnel: RuinTunnel
+var in_tunnel := false
+var _tunnel_from: Dictionary = {}
+var tunnels_through := 0
+var tunnels_back := 0
 
 
 func _ready() -> void:
@@ -439,14 +448,19 @@ func _exit_tree() -> void:
 	CrawlerSave.save()
 	# Whichever world is out of the tree, the dungeon below or the surface
 	# above (design §FM.7), goes too.
-	if on_surface:
+	if tunnel != null and is_instance_valid(tunnel) and not tunnel.is_inside_tree():
+		tunnel.free()
+	if on_surface or in_tunnel:
 		for n in _below:
 			if is_instance_valid(n) and not (n as Node).is_inside_tree():
 				NodeRelease.detach_all(n)
 				(n as Node).free()
 		_below = []
-		if surface != null and is_instance_valid(surface):
+		if surface != null and is_instance_valid(surface) and on_surface:
 			surface.drop_kept()
+		elif surface != null and is_instance_valid(surface) and not surface.is_inside_tree():
+			NodeRelease.detach_all(surface)
+			surface.free()
 	elif surface != null and is_instance_valid(surface) and not surface.is_inside_tree():
 		NodeRelease.detach_all(surface)
 		surface.free()
@@ -682,7 +696,7 @@ func shaman() -> HearthFolk:
 ## its cloak rolled and its head picked from the seed as the sprite's were
 ## (rescuer.beast "seed"), so a seed keeps its rescuer; then the dark
 ## lifts over `fade_in_s`.
-func _rescuer(fade_in_s := 2.5) -> void:
+func _rescuer(fade_in_s := 2.5, lift := true) -> void:
 	var r: Array = lay.rescuer
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([int(lay.seed), "rescuer"])
@@ -724,6 +738,10 @@ func _rescuer(fade_in_s := 2.5) -> void:
 			if residents.floor_of(one as Resident) in floors:
 				(one as Resident).retreat()
 	baked = true
+	if not lift:
+		# (Arriving by the tunnel, queue 100: the dark stays while you are
+		# taken up onto the surface.)
+		return
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, fade_in_s)
 	tw.tween_callback(func(): _fade.visible = false)
@@ -756,13 +774,33 @@ func _process(delta: float) -> void:
 		if cam3 != null:
 			compass.heading_deg = Compass.heading_of(cam3.global_basis)
 		# Notches on the surface only (§FV.2): the open shrine mouths'.
-		compass.notches = Compass.open_exits(str((Brew.data().get("world", {}) as Dictionary).get("ruin", "aztec"))) if on_surface else []
+		# And the tunnels' shrines over this ruin (queue 100, RuinTunnel).
+		var notches: Array = []
+		if on_surface:
+			notches = Compass.open_exits(str((Brew.data().get("world", {}) as Dictionary).get("ruin", "aztec"))).duplicate()
+			for b in RuinTunnel.bearings(str(lay.get("theme", ""))):
+				if not notches.has(b):
+					notches.append(b)
+		compass.notches = notches
 	if player.torch.note != "":
 		# Wordless (§ET.3): the torch's lines go to the log only.
 		player.torch.note = ""
 	if leaving:
 		return
+	if in_tunnel:
+		# The far end, the seam (§EW.3): on to the next ruin; the near end:
+		# back up the shrine you came down (queue 100).
+		if tunnel.at_far(player.global_position):
+			through_tunnel()
+		elif tunnel.at_near(player.global_position):
+			back_from_tunnel()
+		return
 	if on_surface:
+		# Down a shrine at the edge into the tunnel (design §FV.2, queue 100).
+		var sp := surface.shrine_entered(player.global_position)
+		if not sp.is_empty():
+			into_tunnel(sp)
+			return
 		# Back down the old stair (design §FM.7).
 		if surface.stepped_in(player.global_position):
 			go_down()
@@ -867,6 +905,8 @@ func _on_taken() -> void:
 	# below all the same, the frame already black.
 	if on_surface:
 		_down_now()
+	elif in_tunnel:
+		_tunnel_down_now()
 	if player.torch.lit():
 		player.torch.put_out("taken")
 	# A burnt-out one in your hand is dropped where you fell (§FJ.4).
@@ -1061,3 +1101,117 @@ func _free_surface() -> void:
 	NodeRelease.free_later(surface)
 	surface = null
 	on_surface = false
+
+
+# --- The tunnel between two ruins (design 11 Oct §FV.2, §FV.5; queue 100) ------------
+
+## Down a shrine at the surface's edge (RuinTunnel; the shrine `sp`): the
+## dark; the surface kept out of the tree as you leave it (the dungeon below
+## is still kept out of it, as it was while you were up); the tunnel built,
+## and you stand at its near end facing along it. Nothing gates it.
+func into_tunnel(sp: Dictionary) -> void:
+	if leaving or not on_surface:
+		return
+	leaving = true
+	var fade_s := maxf(float(RuinTunnel.T.get("fade_s", 1.2)), 0.05)
+	GameLog.add(str(RuinTunnel.T.get("log_down", "Down the shrine's steps, into a long dark way.")), "world")
+	await _fade_to(1.0, fade_s)
+	surface.leave(self)
+	remove_child(surface)
+	on_surface = false
+	_tunnel_from = sp
+	tunnel = RuinTunnel.new()
+	var pair := [CrawlerSave.place, RuinTunnel.across(CrawlerSave.place)]
+	tunnel.build(str(lay.get("theme", "")), str(sp.to), str(sp.dir), hash([CrawlerSave.game_seed, "tunnel", mini(pair[0], pair[1]), str(sp.dir)]))
+	add_child(tunnel)
+	TorchSnuff.drafts = null
+	in_tunnel = true
+	var at := tunnel.near_spawn()
+	player.spawn_flat(at.pos, float(at.yaw), 0.0)
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## Walked back to the near end: up the shrine you came down, on the
+## surface as you left it.
+func back_from_tunnel() -> void:
+	if leaving or not in_tunnel:
+		return
+	leaving = true
+	var fade_s := maxf(float(RuinTunnel.T.get("fade_s", 1.2)), 0.05)
+	GameLog.add(str(RuinTunnel.T.get("log_up", "Up the shrine's steps, under the open sky.")), "world")
+	await _fade_to(1.0, fade_s)
+	_free_tunnel()
+	add_child(surface)
+	surface.enter(self)
+	on_surface = true
+	var at := RuinTunnel.arrival(_tunnel_from)
+	player.spawn_flat(at.pos, float(at.yaw), 0.0)
+	tunnels_back += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## The far end, the load seam (§EW.3): in the dark the ruin you left goes
+## (kept in the save as it stands, §FK.2), the next one is built from the
+## game's seed (its place across the tunnel, CrawlerSave), its hearth room
+## readied, its surface built over it, and you come up out of its shrine on
+## the opposite edge, facing in. Its own way in is its stair, as ever.
+func through_tunnel() -> void:
+	if leaving or not in_tunnel:
+		return
+	leaving = true
+	var fade_s := maxf(float(RuinTunnel.T.get("fade_s", 1.2)), 0.05)
+	var d := str(tunnel.dir)
+	await _fade_to(1.0, fade_s)
+	CrawlerSave.save()
+	_free_tunnel()
+	_clear_tomb()
+	_below = []
+	var at := RuinTunnel.across(CrawlerSave.place)
+	_load_tomb(CrawlerSave.seed_at(at), at)
+	await _rescuer(0.0, false)
+	# The pages lying on its base layer, laid while its stone is in the
+	# physics world (TomePages._place), before it goes out of the tree.
+	var w := 0
+	while tome_pages != null and not tome_pages.placed and w < 30:
+		await get_tree().physics_frame
+		w += 1
+	surface = Surface.new()
+	surface.build(world, lay, fires.hearth)
+	_below = []
+	for n in _dungeon_nodes() + [floor_fog]:
+		var node := n as Node
+		if node != null and is_instance_valid(node) and node.get_parent() == self:
+			remove_child(node)
+			_below.append(node)
+	add_child(surface)
+	surface.enter(self)
+	on_surface = true
+	var sp := surface.shrine_toward(str(RuinTunnel.OPPOSITE.get(d, "south")))
+	var arr := RuinTunnel.arrival(sp) if not sp.is_empty() else surface.arrival()
+	player.spawn_flat(arr.pos, float(arr.yaw), 0.0)
+	GameLog.add(str(RuinTunnel.T.get("log_up", "Up the shrine's steps, under the open sky.")), "world")
+	tunnels_through += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+func _free_tunnel() -> void:
+	in_tunnel = false
+	if tunnel != null and is_instance_valid(tunnel):
+		if tunnel.get_parent() == self:
+			remove_child(tunnel)
+		NodeRelease.free_later(tunnel)
+	tunnel = null
+
+
+## Taken in the tunnel (only your own fire pot can): you wake below, by the
+## hearth of the ruin you went down from (the frame already black).
+func _tunnel_down_now() -> void:
+	_free_tunnel()
+	for n in _below:
+		if is_instance_valid(n) and (n as Node).get_parent() == null:
+			add_child(n)
+	_below = []
+	TorchSnuff.drafts = airways

@@ -35,7 +35,8 @@ extends Node3D
 ##                (smoke.json outlets.night_mouth)
 ##   the sound    the wind; cicadas by day, crickets by night (sound)
 ##
-## No map, no fast travel, no passage to another world (§EW.7 steps 3 and 4,
+## No map, no fast travel; the one passage on is a shrine at the edge into
+## the tunnel to the other ruin (§FV.2, queue 100, RuinTunnel) (§EW.7 steps 3 and 4,
 ## §FM.8); the interact button answers only the vine up here (Brew). CrawlerMain carries you up and down (go_up, go_down): the
 ## dungeon kept as you left it below, this kept as you left it above.
 ## Built the first time you go up, from the dungeon's own seed (§FK.2: the
@@ -70,6 +71,10 @@ var finds: Array = []
 ## The Aztec temple's step pyramid (AztecPyramid; {} over any other ruin,
 ## or while aztec_temple.json enabled is false).
 var pyramid: Dictionary = {}
+## The shrine mouths at its edge (design §FV.2, queue 100; RuinTunnel
+## shrine_spot, each with "to": the neighbour's theme). Edges with none are
+## closed by the land (§DM).
+var shrines: Array = []
 var stone: Node3D
 var ground_node: Node3D
 var plants: SurfacePlants
@@ -246,6 +251,15 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(r, r), Vector2(2.0 * r, 2.0 * r)))
 	if not pyramid.is_empty():
 		keep_out.append((pyramid.rect as Rect2).grow(2.0))
+	# The shrine mouths at the edge (design §FV.2, queue 100, RuinTunnel):
+	# one on the compass line toward each neighbour in the game.
+	for e in RuinTunnel.exits_of(str(lay.get("theme", ""))):
+		var spot := RuinTunnel.shrine_spot(land, str(e.dir))
+		spot["to"] = str(e.to)
+		shrines.append(spot)
+		add_child(RuinTunnel.shrine_node(spot, str(lay.get("theme", ""))))
+		var sp: Vector3 = spot.pos
+		keep_out.append(Rect2(Vector2(sp.x, sp.z) - Vector2(9.0, 9.0), Vector2(18.0, 18.0)))
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
 	add_child(plants)
@@ -392,6 +406,22 @@ func stepped_in(pos: Vector3) -> bool:
 	var lateral := absf(rel.dot(stair.side as Vector2))
 	var at := float((S.get("stairhead", {}) as Dictionary).get("down_at_m", 3.0))
 	return down > at and down < float(stair.run) + 1.5 and lateral < float(stair.half) + 0.3 and pos.y < float(stair.y) - 0.4
+
+
+## The shrine `pos` (feet) has gone in at, or {}.
+func shrine_entered(pos: Vector3) -> Dictionary:
+	for sp in shrines:
+		if RuinTunnel.stepped_in(sp, pos):
+			return sp
+	return {}
+
+
+## The shrine toward `d`, or {}.
+func shrine_toward(d: String) -> Dictionary:
+	for sp in shrines:
+		if str(sp.dir) == d:
+			return sp
+	return {}
 
 
 ## Is `pos` (scene) on the pocket's walkable land (short of the cliff's foot)?

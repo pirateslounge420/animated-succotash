@@ -131,7 +131,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | built db77c87 |
 | 98 | §FR.2, §FT | The swamp's false shaman: a jimsonweed brew, the witch's reveal and the cackle | waits (83, 97, the swamp world, and the witch built as a boss) |
 | 99 | §FV.1 | A smaller surface, its sacred plant in sight | todo |
-| 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | waits (a second culture's ruin with its surface) |
+| 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | built 12 Oct between the tomb and the Aztec temple (Mike's amendment: the temple is the second culture) |
 | 101 | §FW | A compass on the HUD | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -1738,7 +1738,7 @@ CHECK (headless): over 20 seeds the surface is within across_m and walking out f
 
 ## 100 — Shrine mouths and the tunnel that changes from one culture to the next — §FV.2, §FV.5
 
-**Status:** waits (a second culture's ruin built with its surface)
+**Status:** built 12 Oct (Claude Code), amended by Mike: the second built culture is the Aztec temple (queues 80, 84), so the tunnel joins the tomb and the temple. They are not neighbours on ruin_compass.json (the tomb stands in the aztec row), so they are joined along that row's north-south line: the temple's shrine at the south edge, the tomb's at the north (`ruin_compass.json → tunnel.built_pair`). Check `tools/ruin_tunnel_check.gd`; walkabout `ONLY=tunnel` (33a-33h). The Aztec–Maya walk waits for the Maya ruin (95).
 **Mike sees:** At each open edge of a surface stands a shrine. Go in and a tunnel leads on; the stone around you slowly turns from this culture's into the next one's, and you come up through a shrine on the far side, in a new place. Nothing has to be done first.
 
 ```text
