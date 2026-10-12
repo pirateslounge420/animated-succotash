@@ -11,7 +11,8 @@ extends SceneTree
 ## tomb's surface up the stair: dawn, noon, dusk and midnight from where you come out,
 ## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71);
 ## ONLY=rooms just the room pool's big rooms (30a-30i; §FM.6, queue 70;
-## ROOMS= some of them). The snake (queue 49) is held still for
+## ROOMS= some of them); ONLY=compass just the HUD compass strip facing N, E,
+## S and W in the ruin and on the surface (31a-31h; §FW, queue 101). The snake (queue 49) is held still for
 ## the whole tour; boss_frames pictures it.
 ## Frames go to OUT (default user://crawler_frames/<seed>/): waking by the
 ## hearth (noon and midnight), up the hearth's shaft, down into the
@@ -1152,6 +1153,13 @@ func _run() -> void:
 		await _surface(main)
 		_finish(keep)
 		return
+	if OS.get_environment("ONLY") == "compass":
+		# Just the HUD compass strip (design §FW, queue 101; 31a-31h): in the
+		# ruin, then on the surface, turning through all four points.
+		await _frames(30)
+		await _compass(main)
+		_finish(keep)
+		return
 	if OS.get_environment("ONLY") == "rooms":
 		# Just the room pool's big rooms (design §FM.6, queue 70; 30a-30i),
 		# each in the first tomb from seed 1 on that draws it.
@@ -1918,6 +1926,36 @@ func _dither_alive(img: Image, cam: Camera3D, lo: float, hi: float, exclude: Arr
 ## from out on the basin; the stack's smoke in view at dusk; with no moon the
 ## frame darker than the moonlit midnight's and its darkest share navy,
 ## never black.
+## The compass strip facing N, E, S and W in the ruin (31a-31d) and on the
+## surface at noon (31e-31h); its heading printed with each.
+func _compass(main: CrawlerMain) -> void:
+	var p := main.player
+	for i in 600:
+		if not main._fade.visible:
+			break
+		await process_frame
+	var names := ["n", "e", "s", "w"]
+	var pos := p.global_position
+	for k in 4:
+		p.spawn_flat(pos, -k * PI * 0.5, 0.04)
+		await _frames(12)
+		await _shot("31%s_compass_ruin_%s" % [["a", "b", "c", "d"][k], names[k]])
+		print("  the ruin, facing %.0f degrees" % main.compass.heading_deg)
+		ok(main.compass.showing(), "the compass shows in the ruin (facing %.0f degrees)" % main.compass.heading_deg)
+	main.world.days = Vents.days_at_solar_hour(floorf(float(main.world.get("days"))) + 1.0, 12.0)
+	main.go_up()
+	while not main.on_surface or main.leaving:
+		await process_frame
+	p.set_physics_process(false)
+	var at := main.surface.arrival()
+	for k in 4:
+		p.spawn_flat(at.pos, -k * PI * 0.5, 0.04)
+		await _frames(24)
+		await _shot("31%s_compass_surface_%s" % [["e", "f", "g", "h"][k], names[k]])
+		print("  the surface, facing %.0f degrees" % main.compass.heading_deg)
+		ok(main.compass.showing(), "the compass shows on the surface (facing %.0f degrees)" % main.compass.heading_deg)
+
+
 func _surface(main: CrawlerMain) -> void:
 	var p := main.player
 	var world: Node = main.world

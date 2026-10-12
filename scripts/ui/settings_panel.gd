@@ -31,6 +31,7 @@ const ITEMS := [
 	["hud.health", "Health bar", "bool"],
 	["hud.weapon", "Weapon in hand", "bool"],
 	["hud.reticle", "Crosshair dot", "bool"],
+	["hud.compass", "Compass", "bool"],
 	["hud.names", "Names (plants, animals)", "bool"],
 	["hud.damage", "Damage numbers", "bool"],
 	["hud.prompts", "Prompts (Right click: ...)", "bool"],

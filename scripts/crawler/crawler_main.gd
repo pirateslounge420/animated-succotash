@@ -149,6 +149,8 @@ var floor_fog: FloorFog
 var ui: CanvasLayer
 ## The crosshair (§EX.7), or null when crawler.json hud.reticle is off.
 var reticle: Reticle
+## The heading strip (§FW, hud.json compass), or null when compass.on is off.
+var compass: Compass
 var perf: PerfReadout
 var log_panel: LogPanel
 var settings_panel: SettingsPanel
@@ -605,6 +607,11 @@ func _ui() -> void:
 		reticle = Reticle.new()
 		reticle.name = "Reticle"
 		ui.add_child(reticle)
+	# The heading strip (§FW): over the brew's vision, under the panels.
+	if bool(Compass.C.get("on", true)):
+		compass = Compass.new()
+		compass.name = "Compass"
+		ui.add_child(compass)
 	perf = PerfReadout.new()
 	ui.add_child(perf)
 	log_panel = LogPanel.new()
@@ -711,6 +718,14 @@ func _process(delta: float) -> void:
 		reticle.shown = player.first_person and not player.ui_open
 		# Sneaking (§FC.1): the arms close into the dim ring.
 		reticle.sneak = player.crouching
+	if compass != null:
+		# One north everywhere (-z): the ruin, a tunnel, the surface.
+		compass.shown = not player.ui_open
+		var cam3 := player.camera()
+		if cam3 != null:
+			compass.heading_deg = Compass.heading_of(cam3.global_basis)
+		# Notches on the surface only (§FV.2): the open shrine mouths'.
+		compass.notches = Compass.open_exits(str((Brew.data().get("world", {}) as Dictionary).get("ruin", "aztec"))) if on_surface else []
 	if player.torch.note != "":
 		# Wordless (§ET.3): the torch's lines go to the log only.
 		player.torch.note = ""

@@ -3193,7 +3193,7 @@ func _reticle(main: CrawlerMain) -> void:
 		var t: Variant = ctl.get("text")
 		if t is String and str(t) != "":
 			words += 1
-	ok(not bool(H.get("words", true)) and shown_now == ["Reticle"] and words == 0 and ret.showing(), "in play the crawler's HUD shows the crosshair and nothing else, and no words (shown: %s)" % [shown_now])
+	ok(not bool(H.get("words", true)) and shown_now.filter(func(x): return x != "Compass") == ["Reticle"] and words == 0 and ret.showing(), "in play the crawler's HUD shows the crosshair (and the compass strip, §FW) and nothing else, and no words (shown: %s)" % [shown_now])
 	# Drawn over the finished frame (past the grade, the dither and the
 	# 3D glow, which never takes the canvas here), in a solid, ordinary
 	# colour: it gives off no light.

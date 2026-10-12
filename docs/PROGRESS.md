@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 101, §FW: a compass on the HUD
+- **Built:** `Compass` (`scripts/ui/compass.gd`), the heading strip at the top middle of the crawler's frame, drawn on its pixel grid like the crosshair: 120° of arc over a third of the width, a tick every 45°, N E S W as 3x5 pixel glyphs in the reticle's blue on its navy edge. North is −z everywhere (ruin, surface). Settings → **Compass** (on by default); `hud.json → compass` wired, its [NOT WIRED YET] taken off.
+- **Notches:** drawn for a ruin_compass.json exit whose neighbour is built; none is, and shrine mouths are queue 100, so no notches yet. Blackout (§FO.5) not built: nothing about the fires touches the strip. Drawn above BrewVision, never tinted.
+- **Checks:** new `compass_check` 18 PASS, 0 fails (each point centred to the pixel at 480 and 270 lines; a 360° turn walks each across once; all pixels on the grid, none warm; switch/data/panel off; torch out; under a brew; on the surface). `crawler_check` 273 PASS, 0 fails (its reticle line now allows the Compass beside the crosshair). Walkabout `ONLY=compass` (crawler_frames 31a–31h) added; it timed out on this machine's software renderer before a frame, so it's not been looked at.
+
+## 2026-10-12 — Queue 99, §FV.1: a smaller surface, its sacred plant in sight
+- **Built:** the surface's size comes from `ruin_compass.json → surface.across_m` (200–300 m, drawn per seed; Claude's first guess) via `Surface.sized`, with the finds, creatures, talus band, wash wander and upland band scaled to fit. `worlds.json` values left in place, `_help.size` names §FV.1. The land still closes it.
+- **The plant stand:** the existing sacred vine (ololiuhqui, brew.json world.plant) now hangs from a tree no further than `plant_stand.in_sight_within_s` (30 s) at a walk; over 20 seeds the worst is 16.7 s, within 21° of the way you face coming up. Never glows, no HUD mark.
+- **Checks:** `surface_check` 62 PASS, 0 fails. Changed: size checked against ruin_compass (was worlds.json size); plants >300 (was >2000: a quarter-km pocket holds ~500–1000); new per-seed lines for size + 8 edge walks and for the stand. Finds got 40 tries (was 14) and a floor margin scaled to the pocket, so every seed has a camp. `brew_check` 76 PASS, 0 fails. Walkabout not run (see 101).
 ## 2026-10-12 — Queue 97, §FR.1: the shaman's ritual as a little cutscene, a locked camera
 - **Built:** `RitualLock` (`scripts/crawler/ritual_lock.gd`, owned by Brew). When you drink the shaman's brew the view moves to a fixed camera a little behind and beside your eyes, looking at the shaman, and you cannot move, look, use your hands or press the button for `lock_s`; then your own camera is back, the same place, the same facing.
 - **lock_s** is a range in the data (`shaman_ritual.json → cutscene.lock_s`, [10, 20]); the code reads its low end, 10 s. `input_locked: false` turns the lock off. `skippable` (null) is not read.
