@@ -4,6 +4,22 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 82, §FN.5.4: the Aztec brew plant becomes teonanácatl
+- **Mike** (§FN.8 call 1): "the mid Mexico biome is the Aztec"; "Aztec is not cloud forest. it should be montane grasslands/shrublands".
+- **Built:** over the Aztec temple the surface grows teonanácatl (`brew.json → world.by_theme.aztec_temple`). The tomb keeps ololiuhqui.
+- **Choice: which species.** The data's `teonanacatl` is *Psilocybe mexicana*, which grows at 1,000–1,800 m in subtropical pasture, below this world. So I added an entry, `teonanacatl_aztecorum` (*P. aztecorum*), to `sacred_plants.json`. It is the teonanácatl of the high grassland round the Valley of Mexico (3,000–4,000 m, on buried rotting wood under Hartweg's pine). *P. mexicana* stays in the data, not grown, and so does ololiuhqui for the temple.
+- **How it grows:** a small group of five, drawn with the MUSHROOM shape (`brew.json → ground`, SacredVine's ground mode). They stand on a stick of rotting wood half sunk in the grass, under a canopy tree's crown, within half a minute's walk of the stair. Never in the wash's bed, on the talus or cliffs, or on steep ground. It grows only where its entry's biomes say, so the desert never grows it.
+- **Harvest, lesson, carry and hand-over** work as for the vine. One take picks one mushroom (its own log line), the rest stand (never fewer than half), and one comes back every 4 game hours. The vision is still the placeholder.
+- **Checks** (seed 7):
+  - `brew_check` on the tomb: 87 PASS, 0 fails.
+  - `THEME=aztec_temple brew_check` (new mode): 91 PASS, 0 fails. The group stands under an alligator juniper 48 m out, on the flats.
+  - In the temple's hearth room the check's walk from the mat slides along the guard into the corner, so that run stands you at the guard instead. The real walk sliding there is worth Mike trying.
+  - `surface_check` 69 PASS, `aztec_pyramid_check` 11 PASS.
+- **Walkabout** (`THEME=aztec_temple ONLY=surface`, 29a–29j, 0 fails):
+  - The ground now reads as grass: I changed the ground colour to an olive the terrain shader paints as grass and doubled the tufts. The first look read as sand.
+  - The dusk check reads the sky's glow over the grassland, where there is no sunlit sand.
+  - 29i, the mushrooms close, is blocked by the shaman standing over them on the first visit. Reframe it next time.
+
 ## 2026-10-12 — §FN.8 call 1 answered: the Aztec temple's world is central Mexico's montane grassland
 - **Mike:** "the mid Mexico biome is the Aztec", then "Aztec is not cloud forest. it should be montane grasslands/shrublands".
 - **Built:** a new biome file, `data/biomes/52_montane_grassland.json` (key `MONTANE_GRASSLAND`, a label slot after Tepui in BiomeTemplates: the open world classifies nothing as it). It covers the bunchgrass zacatonal and matorral round the Valley of Mexico: 2,200–3,000 m on the valley floor and rims, rising to about 4,000 m on the volcanoes. Days are mild and nights cool, with rain in summer. It holds 14 real species and 3 associations (Rzedowski's *Vegetación de México*):

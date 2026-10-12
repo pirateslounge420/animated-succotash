@@ -9,7 +9,8 @@
   "flags": "Per plant: what the engine can't draw yet (a mushroom, a low globe cactus, a bulb, a twisted vine stem), biome-key gaps, and doubts in the sources. Read before wiring.",
   "id": "Each entry's id matches its ruin_compass.json plant.",
   "egypt": "§FP (10 Oct): blue lotus (Nymphaea caerulea) and mandrake (Mandragora officinarum), the Egyptian ruin's two brew plants (Mike, 10 Oct). Written by two parallel agents, one per plant, each passing tools/plant_schema_check.py --strict. Both are 'ground' rosettes as the nearest shape the engine has: neither draws right (a water-lily shape and a trunkless ground rosette are missing; see flags). Evidence is thin for both: blue lotus's sedative effect is only inferred, and mandrake is documented in Egyptian objects and art, not in any ritual text. Mandrake is not native to Egypt (imported in the New Kingdom), and no hot-desert biome key honestly grows either plant: which world holds the Egyptian ruin is open (§FO.9 call 2, §FP.9).",
-  "gulf_swamp": "Jimsonweed (Datura stramonium), the Gulf South swamp ruin's local psychoactive (10 Oct), added to plants.shrub by one data-fill agent and passing tools/plant_schema_check.py --strict. It sits beside sacred_datura (D. wrightii, a Southwest desert species, unchanged). Evidence is thin: Datura residue (genus only) in Arkansas Mississippian and Caddoan vessels, no named ceremony, and the native range of the species is disputed (see flags). Not yet chosen as the swamp's plant in data/ruin_compass.json."
+  "gulf_swamp": "Jimsonweed (Datura stramonium), the Gulf South swamp ruin's local psychoactive (10 Oct), added to plants.shrub by one data-fill agent and passing tools/plant_schema_check.py --strict. It sits beside sacred_datura (D. wrightii, a Southwest desert species, unchanged). Evidence is thin: Datura residue (genus only) in Arkansas Mississippian and Caddoan vessels, no named ceremony, and the native range of the species is disputed (see flags). Not yet chosen as the swamp's plant in data/ruin_compass.json.",
+  "teonanacatl_aztecorum": "§FN.5.4, §FN.8 call 1 (Claude Code, 12 Oct, queue 82): Psilocybe aztecorum, the teonanácatl that grows where Mike put the Aztec world (the central Mexican montane grassland, data/biomes/52_montane_grassland.json, ~2,200-4,000 m). The entry teonanacatl (P. mexicana, 1,000-1,800 m in subtropical pasture and cloud-forest edges) does not grow at the Valley of Mexico's height, so the game grows this one there (brew.json world.by_theme.aztec_temple); teonanacatl is kept as it was. Its blocks are P. mexicana's where the two are alike, its own where they differ (cap, stipe, habitat, soil, substrate snag_log: buried rotting wood)."
  },
  "notes": "Engine gaps: no mushroom shape (teonanacatl as rosette, like Amanita), no low globe cactus (peyote as cactus), no bulb (leshoma as spike_rosette), no twisted liana stem (ayahuasca vine). Seeds of ololiuhqui, all of datura and leshoma's bulb are poisonous.",
  "plants": {
@@ -775,6 +776,198 @@
      "confidence": "documented"
     },
     "id": "teonanacatl"
+   },
+   {
+    "name": "Psilocybe aztecorum",
+    "display": "teonanácatl",
+    "genus": "Psilocybe",
+    "species": "aztecorum",
+    "origin": "Volcanoes of central Mexico (Popocatépetl, Iztaccíhuatl, Nevado de Toluca)",
+    "kingdom": "Fungi",
+    "family": "Hymenogastraceae",
+    "shape": "mushroom",
+    "temp_c": [
+     4,
+     14
+    ],
+    "moisture": [
+     0.45,
+     0.85
+    ],
+    "altitude_m": [
+     3000,
+     4000
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     0.05,
+     0.1
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "basalt",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.3,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#9a6a38",
+    "accent": "#d8c8a0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      3,
+      7
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.8
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       2
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       3
+      ],
+      [
+       "spent",
+       2
+      ]
+     ],
+     "final_size": 1.0,
+     "confidence": "estimated",
+     "source": "Fruiting-body stage lengths estimated for a small Psilocybe; fruits in the rains, August to October (Guzman 1978, 2003)."
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry",
+     "note": "The mycelium lives in buried, rotting pine wood and the needle litter over it for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through the wood; 'wind' = spores; 'dormant: dry' stands for the dry winter."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.4
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Psilocybe aztecorum R. Heim (Index Fungorum), section Aztecorum; Hymenogastraceae. Grows in small groups on rotting buried wood and woody debris in the open subalpine grassland (zacatonal of Festuca tolucensis and Muhlenbergia) under Pinus hartwegii, about 3000-4000 m on the volcanoes round the Valley of Mexico (Popocatepetl, where Heim and Wasson collected it at Paso de Cortes, 1955; Iztaccihuatl; Nevado de Toluca), August to October in the rains. Its Nahuatl name is recorded as apipiltzin, 'children of the waters'; it is one of the mushrooms the Mexica word teonanacatl covered. Active compound class: psilocybin. Guzman 1978 and 2003 (Psilocybe aztecorum var. aztecorum, Mexico's high volcanoes); Wikipedia Psilocybe aztecorum.",
+    "ceremonial": "documented",
+    "sacred": {
+     "effect_class": "visionary",
+     "rite": "The Mexica nobles' teonanácatl, the 'god mushroom' of feasts and divination in Sahagún's Florentine Codex, was gathered from the mountains round the Valley of Mexico, where this species grows; which species each source meant is not certain.",
+     "peoples": [
+      "Aztec (Mexica)",
+      "Nahua"
+     ],
+     "ruin": "aztec",
+     "conservation": "not assessed (IUCN Red List)",
+     "confidence": "reported",
+     "refs": "Sahagún, Florentine Codex (teonanácatl at feasts); Heim 1957 and Heim & Wasson 1958 (P. aztecorum described from Popocatépetl); Guzmán 1978, 2003; Wikipedia Psilocybe aztecorum."
+    },
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a5a30",
+      "secondary": "#d8c8a0",
+      "form": "convex to bell-shaped cap, opening flat with age, chestnut to golden brown drying pale straw to whitish; bruises blue",
+      "size_cm": [
+       1.5,
+       2.5
+      ],
+      "texture": "smooth",
+      "gloss": 0.25,
+      "notes": "hygrophanous: wet caps chestnut brown, drying to a pale cream-white; the margin translucent-striate when wet; blue where handled; no ring"
+     },
+     "underside": {
+      "colour": "#4a3a40",
+      "type": "gills grey-brown to dark purple-brown with pale edges, adnate"
+     },
+     "stipe": {
+      "colour": "#d8ccb0",
+      "height_cm": [
+       5,
+       7.5
+      ]
+     },
+     "habit": "in small groups on rotting buried wood and pine litter in open bunchgrass under Hartweg's pine",
+     "seasonal": "fruits in the rains, August to October; rots within days",
+     "silhouette": "small brown cap drying pale, on a whitish stalk, by rotten wood in the grass",
+     "confidence": "documented",
+     "refs": "Guzman 1978 and 2003 (cap 1.5-2.5 cm, convex to subcampanulate then plane, chestnut to golden brown, hygrophanous to whitish; stipe 5-7.5 cm, whitish; gills grey-violet to purple-brown); Wikipedia Psilocybe aztecorum"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.7,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.95,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "realm": "nearctic",
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "id": "teonanacatl_aztecorum"
    },
    {
     "id": "leshoma",

@@ -2,6 +2,13 @@ extends SceneTree
 ## Harvest and brew (design 9 Oct §FM.7, queue 72; Brew, SacredVine,
 ## FolkMotion, BrewVision; data/brew.json), headless:
 ##   SEED=7 godot --headless --path . --fixed-fps 60 --script tools/brew_check.gd
+##   THEME=aztec_temple SEED=7 godot ... tools/brew_check.gd: the same over the
+##     Aztec temple (queue 82, §FN.5.4, §FN.8 call 1): its world's plant
+##     teonanácatl (Psilocybe aztecorum), a small group of mushrooms on
+##     rotting wood under a tree's crown in the montane grassland, not a vine;
+##     the tomb's desert doesn't grow it; one take picks one of the group,
+##     the rest stand and come back on the game clock; carried down and
+##     handed over from the usual spot as the vine's cutting is.
 ## Asserts:
 ##  1. the data: brew.json's blocks, each with its _help line; the world's
 ##     plant ololiuhqui (world.plant, the Aztec world's: ruin_compass.json),
@@ -72,9 +79,20 @@ func _frames(n: int) -> void:
 		await physics_frame
 
 
+## Over the Aztec temple (THEME=aztec_temple): its plant grows on the
+## ground (a group), not from a tree.
+var temple := false
+
+
 func _run() -> void:
 	WorldSave.read_only = true
 	Residents.stay_asleep = true
+	var th := OS.get_environment("THEME")
+	if th != "":
+		CrawlerSave.force_first = th
+		CrawlerSave.aztec_on = true
+		Surface.use_theme(th)
+		temple = th == "aztec_temple"
 	_data()
 	await _offline_ways(_seeds())
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
@@ -125,7 +143,10 @@ func _data() -> void:
 	var id := SacredVine.plant_id()
 	var compass = JSON.parse_string(FileAccess.get_file_as_string("res://data/ruin_compass.json"))
 	var aztec: Dictionary = ((compass as Dictionary).get("ruins", {}) as Dictionary).get("aztec", {}) if compass is Dictionary else {}
-	ok(id == "ololiuhqui" and str((D.get("world", {}) as Dictionary).get("ruin", "")) == "aztec" and str(aztec.get("status", "")).begins_with("built_as_the_tomb") and str(aztec.get("plant", "")).contains("ololiuhqui"), "the tomb's world is the Aztec world (ruin_compass.json), its plant ololiuhqui (world.plant)")
+	if temple:
+		ok(id == "teonanacatl_aztecorum" and str(((D.get("world", {}) as Dictionary).get("by_theme", {}) as Dictionary).get("aztec_temple", "")) == id and str((D.get("world", {}) as Dictionary).get("plant", "")) == "ololiuhqui", "the Aztec temple's world grows teonanácatl (world.by_theme.aztec_temple: %s); the tomb's plant stays ololiuhqui (world.plant)" % id)
+	else:
+		ok(id == "ololiuhqui" and str((D.get("world", {}) as Dictionary).get("ruin", "")) == "aztec" and str(aztec.get("status", "")).begins_with("built_as_the_tomb") and str(aztec.get("plant", "")).contains("ololiuhqui"), "the tomb's world is the Aztec world (ruin_compass.json), its plant ololiuhqui (world.plant)")
 	var doc = JSON.parse_string(FileAccess.get_file_as_string(SpeciesDB.SACRED_PATH))
 	var entry := {}
 	for tier in ((doc as Dictionary).get("plants", {}) as Dictionary):
@@ -138,10 +159,19 @@ func _data() -> void:
 		var fl := str(f).to_lower()
 		if fl.contains("no mushroom shape") or fl.contains("engine has no") or fl.contains("can't draw") or fl.contains("cannot draw"):
 			blocking = true
-	ok(not entry.is_empty() and str(entry.get("shape", "")) == "liana" and flags.size() > 0 and not blocking, "its entry in data/sacred: a liana; its %d flags read, none says the engine can't draw it" % flags.size())
+	var want_shape := "mushroom" if temple else "liana"
+	ok(not entry.is_empty() and str(entry.get("shape", "")) == want_shape and (temple or flags.size() > 0) and not blocking, "its entry in data/sacred: a %s; its %d flags read, none says the engine can't draw it" % [want_shape, flags.size()])
 	var sp := SacredVine.species_of(id)
-	ok(sp != null and sp.shape == PlantSpecies.Shape.LIANA and SpeciesDB.index_of(sp) == -1 and SpeciesDB.find(str(entry.get("name", ""))) == null, "built from its entry as the catalogue builds one, never loaded: no index, the catalogue doesn't find %s" % str(entry.get("name", "")))
-	ok(SacredVine.drawable(sp), "the engine draws it: its own liana (PlantMeshes LIANA strands, %d triangles)" % ((PlantMeshes.arrays_for(sp, PlantMeshes.LOD_NEAR)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3 if sp != null else 0))
+	ok(sp != null and sp.shape == (PlantSpecies.Shape.MUSHROOM if temple else PlantSpecies.Shape.LIANA) and SpeciesDB.index_of(sp) == -1 and SpeciesDB.find(str(entry.get("name", ""))) == null, "built from its entry as the catalogue builds one, never loaded: no index, the catalogue doesn't find %s" % str(entry.get("name", "")))
+	ok(SacredVine.drawable(sp), "the engine draws it: its own %s (PlantMeshes, %d triangles)" % [want_shape, (PlantMeshes.arrays_for(sp, PlantMeshes.LOD_NEAR)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3 if sp != null else 0])
+	if temple:
+		# Its habitat (the entry's biomes): the montane grassland, never the
+		# tomb's desert.
+		var here := SacredVine.grows_here(sp)
+		Surface.use_theme("tomb")
+		var in_desert := SacredVine.grows_here(sp)
+		Surface.use_theme("aztec_temple")
+		ok(here and not in_desert and sp.biomes.has(BiomeTemplates.id_of_key("MONTANE_GRASSLAND")), "it grows only where its entry says: in the temple's montane grassland, not in the tomb's desert")
 	var P := SacredVine.plant_data(id)
 	var V: Dictionary = P.get("vision", {})
 	ok(absf(float(V.get("last_s", 0.0)) - 120.0) < 1e-6 and V.has("tint") and V.has("pulse_hz") and float(P.get("regrow_game_h", 0.0)) > 0.0 and float(P.get("keep_share", 0.0)) > 0.0, "its plant block: a vision (tint and pulse, a first guess of 120 seconds), the share a harvest takes and keeps, and its regrow time on the game clock")
@@ -286,7 +316,20 @@ func _up(main: CrawlerMain, count_before: int) -> void:
 	var arrive: Vector2 = s.stair.arrive
 	var d := (h.q as Vector2).distance_to(arrive)
 	var ang := rad_to_deg(absf((s.stair.n as Vector2).angle_to((h.q as Vector2) - arrive)))
-	ok(found and float(h.h) >= float(hr[0]) and float(h.h) <= float(hr[1]) and PlantMeshes.climbable(SpeciesDB.find(str(h.species)).shape), "hung from one of the surface's trees: a %s %.1f m tall, %.0f m from where you come up, %.0f° off the way you face there" % [str(h.species), float(h.h), d, ang])
+	if temple:
+		_group_up(main, vine, found, d, ang)
+	else:
+		ok(found and float(h.h) >= float(hr[0]) and float(h.h) <= float(hr[1]) and PlantMeshes.climbable(SpeciesDB.find(str(h.species)).shape), "hung from one of the surface's trees: a %s %.1f m tall, %.0f m from where you come up, %.0f° off the way you face there" % [str(h.species), float(h.h), d, ang])
+		_vine_up(main, vine)
+	ok(vine.find_children("*", "CollisionObject3D", true, false).filter(func(b): return not (b.get_parent() is PlayerBody)).is_empty() and vine.find_children("*", "Light3D", true, false).is_empty(), "no collision and no light of its own")
+	await _teacher_up(main, vine)
+
+
+## The vine as the open world hangs a liana.
+func _vine_up(main: CrawlerMain, vine: SacredVine) -> void:
+	var s := main.surface
+	var h := vine.host
+	var arrive: Vector2 = s.stair.arrive
 	var V: Dictionary = Brew.data().get("vine", {})
 	var foot_y := s.land.height_at((h.q as Vector2).x, (h.q as Vector2).y) - 0.04 * float(h.h)
 	var up_share := (vine.attach.y - foot_y) / float(h.h)
@@ -299,8 +342,38 @@ func _up(main: CrawlerMain, count_before: int) -> void:
 	var mm := vine.mmi.multimesh
 	var xf := vine.drawn
 	ok(mm.mesh == PlantMeshes.mesh_for(vine.sp, PlantMeshes.LOD_NEAR) and vine.mmi.material_override == PlantMeshes.material_for(vine.sp) and xf.origin.distance_to(vine.attach) < 1e-4 and absf(xf.basis.y.length() - vine.length_m) < 1e-3, "drawn as every plant up there: the entry's own mesh in a one-plant MultiMesh, in the foliage material")
-	ok(vine.find_children("*", "CollisionObject3D", true, false).filter(func(b): return not (b.get_parent() is PlayerBody)).is_empty() and vine.find_children("*", "Light3D", true, false).is_empty(), "no collision and no light of its own")
-	# The shaman by it: the same figure as the one at the hearth.
+
+
+## The temple's mushroom: a small group on rotting wood in the grass under a
+## tree's crown, on ground its habitat allows.
+func _group_up(main: CrawlerMain, vine: SacredVine, found: bool, d: float, ang: float) -> void:
+	var s := main.surface
+	var h := vine.host
+	var G: Dictionary = Brew.data().get("ground", {})
+	var hr: Array = G.get("host_h_m", [3.0, 30.0])
+	var tsp := SpeciesDB.find(str(h.species))
+	ok(vine.group and found and tsp != null and tsp.tier == PlantSpecies.Tier.CANOPY and float(h.h) >= float(hr[0]) and float(h.h) <= float(hr[1]), "it grows under one of the surface's trees: a %s %.1f m tall, %.0f m from where you come up, %.0f° off the way you face there" % [str(h.species), float(h.h), d, ang])
+	var spot: Vector2 = h.get("spot", Vector2.INF)
+	var from_trunk := spot.distance_to(h.q)
+	var land := s.land
+	ok(spot != Vector2.INF and from_trunk >= 0.75 and from_trunk <= 2.65 and SacredVine.ground_ok(land, spot, G) and land.in_wash(spot) <= SurfacePlants.BED_OPEN and land.zone_at(spot, 0.0) != "edge", "under its crown (%.1f m from the trunk, in its shade and litter), in the %s's grass: not the wash's bed, not the talus or cliffs, the slope %.2f" % [from_trunk, land.zone_at(spot, float((s.P.get("plants", {}) as Dictionary).get("upland_from_edge_m", 160.0))), land.slope_at(spot.x, spot.y)])
+	var on_ground := true
+	var spread := float(G.get("spread_m", 0.35))
+	for xf: Transform3D in vine._body_xf:
+		var q := Vector2(xf.origin.x, xf.origin.z)
+		if absf(xf.origin.y - (land.height_at(q.x, q.y) - 0.01)) > 0.02 or q.distance_to(spot) > spread + 1e-3 or xf.basis.y.length() < vine.sp.height_m.x - 1e-4 or xf.basis.y.length() > vine.sp.height_m.y + 1e-4:
+			on_ground = false
+	ok(vine.bodies == int(G.get("count", 5)) and vine._body_xf.size() == vine.bodies and on_ground, "a small group: %d mushrooms within %.2f m, each standing on the ground, %.0f-%.0f cm tall (its entry's height)" % [vine.bodies, spread, vine.sp.height_m.x * 100.0, vine.sp.height_m.y * 100.0])
+	var mm := vine.mmi.multimesh
+	ok(mm.mesh == PlantMeshes.mesh_for(vine.sp, PlantMeshes.LOD_NEAR) and vine.mmi.material_override == PlantMeshes.material_for(vine.sp) and mm.instance_count == vine.bodies and mm.visible_instance_count == vine.bodies and vine.shown_bodies == vine.bodies, "drawn as every plant up there: its own MUSHROOM mesh (caps on stalks) in the foliage material, all %d standing" % vine.bodies)
+	ok(vine.wood != null and vine.wood.is_inside_tree() and absf(vine.wood.position.y - land.height_at(spot.x, spot.y)) < 0.05, "on a length of rotting wood half sunk in the grass (its substrate)")
+	var tip := vine.tip()
+	ok(tip.y - land.height_at(spot.x, spot.y) >= -0.01 and tip.y - land.height_at(spot.x, spot.y) < 0.2, "low in the grass (its top %.2f m off the ground)" % (vine.attach.y - land.height_at(spot.x, spot.y)))
+
+
+## The shaman by it: the same figure as the one at the hearth.
+func _teacher_up(main: CrawlerMain, vine: SacredVine) -> void:
+	var s := main.surface
 	await _frames(2)
 	var te := vine.teacher
 	var r := main.rescuer
@@ -354,7 +427,10 @@ func _lesson(main: CrawlerMain, vine: SacredVine) -> void:
 	ok(vine.lesson == "done" and vine.taught and (vine._prop == null or not is_instance_valid(vine._prop)), "he shows it and puts it away: the lesson done, once")
 	ok(GameLog.entries.size() == log_before, "wordless: nothing in the log from him")
 	ok(bool(CrawlerSave.kept_value(CrawlerSave.place, "harvest_taught", false)), "the lesson kept in this game's save (harvest_taught)")
-	ok(vine.is_inside_tree() and vine.mmi.visible and vine.share_now() >= vine.keep_share() and vine.drawn.origin.distance_to(vine.attach) < 1e-4, "the plant still stands where it hung")
+	if temple:
+		ok(vine.is_inside_tree() and vine.mmi.visible and vine.share_now() >= vine.keep_share() and vine.shown_bodies == vine.bodies - 1, "the group still stands: %d of %d mushrooms" % [vine.shown_bodies, vine.bodies])
+	else:
+		ok(vine.is_inside_tree() and vine.mmi.visible and vine.share_now() >= vine.keep_share() and vine.drawn.origin.distance_to(vine.attach) < 1e-4, "the plant still stands where it hung")
 
 
 # --- 4. Your harvest ------------------------------------------------------------------------
@@ -376,7 +452,9 @@ func _harvest(main: CrawlerMain, vine: SacredVine) -> void:
 	var it := brew.carrying()
 	ok(not it.is_empty() and str(it.get("kind", "")) == "plant_sample" and str(it.get("part", "")) == "cutting" and str(it.get("sacred", "")) == vine.plant and str(it.get("binomial", "")) == vine.sp.binomial() and p.inventory.count() == carried0 + 1, "the button takes a cutting: one carried thing in your pack (a %s %s, %s)" % [str(it.get("part", "")), str(it.get("kind", "")), str(it.get("binomial", ""))])
 	ok(absf(vine.share_now() - (share0 - vine.take_share())) < 0.002 and vine.share_now() >= vine.keep_share() - 1e-4 and vine.is_inside_tree(), "the plant stands: %.2f of its length left (never below %.2f), its top where it hung" % [vine.share_now(), vine.keep_share()])
-	ok(GameLog.entries.size() == log_before + 1 and str(GameLog.entries[-1].get("text", "")) == str(Brew.C().get("log_take", "")), "the log's line: \"%s\"" % str(GameLog.entries[-1].get("text", "")))
+	ok(GameLog.entries.size() == log_before + 1 and str(GameLog.entries[-1].get("text", "")) == str(vine.P.get("log_take", Brew.C().get("log_take", ""))), "the log's line: \"%s\"" % str(GameLog.entries[-1].get("text", "")))
+	if temple:
+		ok(vine.shown_bodies == vine.bodies - 2 and vine.mmi.multimesh.visible_instance_count == vine.shown_bodies, "you picked one: %d of %d mushrooms still stand" % [vine.shown_bodies, vine.bodies])
 	var refusals := vine.refusals
 	_press(main)
 	await _frames(2)
@@ -406,8 +484,11 @@ func _regrow(main: CrawlerMain, vine: SacredVine) -> void:
 	# The game's own clock moves it: on by the regrow time, the strands as long.
 	w.days = d0 + gh
 	vine._process(0.0)
-	var xf := vine.drawn
-	ok(absf(xf.basis.y.length() - vine.length_m * whole) < 1e-3, "World.days moved on %.1f game hours: the strands drawn %.2f m long again (%.2f of %.2f m)" % [vine.regrow_h(), xf.basis.y.length(), whole, vine.length_m])
+	if temple:
+		ok(vine.shown_bodies == floori(whole * vine.bodies + 0.01) and vine.mmi.multimesh.visible_instance_count == vine.shown_bodies, "World.days moved on %.1f game hours: one has come back, %d of %d standing" % [vine.regrow_h(), vine.shown_bodies, vine.bodies])
+	else:
+		var xf := vine.drawn
+		ok(absf(xf.basis.y.length() - vine.length_m * whole) < 1e-3, "World.days moved on %.1f game hours: the strands drawn %.2f m long again (%.2f of %.2f m)" % [vine.regrow_h(), xf.basis.y.length(), whole, vine.length_m])
 
 
 # --- 6. Down, and up again ----------------------------------------------------------------
@@ -776,6 +857,19 @@ func _to_guard(main: CrawlerMain) -> void:
 		last = p.global_position
 	Input.action_release("move_forward")
 	await _frames(4)
+	# The temple's hearth room (THEME=aztec_temple): walked straight at the
+	# fire from the mat you meet its guard on a slant and slide along it past
+	# the fire into the room's corner (the tomb's guard stops you); stand at
+	# the guard where that walk met it instead, facing the fire: the usual
+	# spot, as the tomb's walk finds it.
+	var h: Vector3 = main.fires.hearth.global_position
+	if _flat(p.global_position, h) > 2.0:
+		var pt := TombBuild.pit()
+		var guard_m := float(pt.r) + float(pt.kerb_w) if not pt.is_empty() else 0.86
+		var out := Vector3((w[0] as Vector3).x - h.x, 0.0, (w[0] as Vector3).z - h.z).normalized()
+		var at := Vector3(h.x, (w[0] as Vector3).y, h.z) + out * (guard_m + CrawlerPlayer.RADIUS_M + 0.03)
+		p.spawn_flat(at, atan2(out.x, out.z), -0.32)
+		await _frames(4)
 
 
 func _flat(a: Vector3, b: Vector3) -> float:

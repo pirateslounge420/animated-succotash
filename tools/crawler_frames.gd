@@ -11,7 +11,8 @@ extends SceneTree
 ## tomb's surface up the stair: dawn, noon, dusk and midnight from where you come out,
 ## the ruin over the stair, the hearth's stack, a night with no moon (29a-29g; §FM.7, queue 71);
 ## THEME=aztec_temple builds the Aztec temple (queues 80, 84): ONLY=rooms its
-## two chambers, ONLY=surface its surface with the pyramid at dusk (29h).
+## two chambers, ONLY=surface its surface with the pyramid at dusk (29h)
+## and its teonanácatl under its tree (29i close, 29j from the stair).
 ## ONLY=rooms just the room pool's big rooms (30a-30i; §FM.6, queue 70;
 ## ROOMS= some of them); ONLY=compass just the HUD compass strip facing N, E,
 ## S and W in the ruin and on the surface (31a-31h; §FW, queue 101);
@@ -2011,6 +2012,24 @@ func _surface(main: CrawlerMain) -> void:
 		var pmid := _patch(pimg, 0.4, 0.3, 0.6, 0.6)
 		print("  29h the pyramid at dusk: sky #%s, its middle #%s (luma %.3f against the sky's %.3f)" % [(psky.color as Color).to_html(false), (pmid.color as Color).to_html(false), float(pmid.luma), float(psky.luma)])
 		ok(absf(float(pmid.luma) - float(psky.luma)) > 0.02, "the pyramid stands out against the dusk sky from where you come out")
+	# The temple's teonanácatl (queue 82, §FN.5.4): the little group on its
+	# rotting wood under its tree, at noon, from 1.6 m off, looking down at it
+	# (29i), then from where you come up, the tree it grows under (29j).
+	if s.vine != null and s.vine.group:
+		world.days = Vents.days_at_solar_hour(base, 12.0)
+		var g := s.vine.attach - Vector3.UP * s.vine.length_m
+		var from := g + s.vine.out_dir * 1.6
+		from.y = s.land.height_at(from.x, from.z)
+		p.spawn_flat(from, float(at.yaw), 0.04)
+		_look_at_from(p, from, g)
+		await _frames(24)
+		var gimg := await _shot("29i_surface_teonanacatl_noon")
+		var gmid := _patch(gimg, 0.4, 0.4, 0.6, 0.6)
+		print("  29i teonanácatl at noon: %d of %d standing, under a %s; the middle of the frame #%s (luma %.3f)" % [s.vine.shown_bodies, s.vine.bodies, str(s.vine.host.species), (gmid.color as Color).to_html(false), float(gmid.luma)])
+		p.spawn_flat(at.pos, float(at.yaw), 0.04)
+		_look_at_from(p, at.pos, Vector3((s.vine.host.q as Vector2).x, g.y + 2.0, (s.vine.host.q as Vector2).y))
+		await _frames(24)
+		await _shot("29j_surface_teonanacatl_tree")
 	for sh in [["29a_surface_dawn", 6.0], ["29b_surface_noon", 12.0], ["29c_surface_dusk", 18.0], ["29d_surface_night", 0.0]]:
 		world.days = Vents.days_at_solar_hour(base, float(sh[1]))
 		p.spawn_flat(at.pos, float(at.yaw), 0.04)
@@ -2033,7 +2052,12 @@ func _surface(main: CrawlerMain) -> void:
 			12.0:
 				ok(sc.b > sc.r and sc.b > sc.g and gc.r > gc.b, "at noon the sky blue (#%s) over the warm sand (#%s)" % [sc.to_html(false), gc.to_html(false)])
 			18.0:
-				ok(hc.r > hc.b * 0.9 or _stats(img).warm > 0.02, "at dusk the horizon warm (#%s, %.3f of the frame warm)" % [hc.to_html(false), _stats(img).warm])
+				# Over the desert the low sun warms the sand and the horizon; over
+				# the temple's grassland (§FN.8 call 1) its trees and the far
+				# ranges hold the horizon, and the dusk is the sky's glow (redder
+				# than green, as no noon sky is).
+				var grass := Surface.biome_key() != "HOT_DESERT"
+				ok(hc.r > hc.b * 0.9 or _stats(img).warm > 0.02 or (grass and sc.r > sc.g), "at dusk the horizon warm (#%s, %.3f of the frame warm)%s" % [hc.to_html(false), _stats(img).warm, (", the sky's glow #%s over %s" % [sc.to_html(false), Surface.biome_key()]) if grass else ""])
 			0.0:
 				var d: Color = _stats(img).dark
 				ok(d.b >= d.r and d.b >= d.g * 0.9, "at midnight the dark navy, never grey (#%s)" % d.to_html(false))

@@ -117,7 +117,7 @@ const INFO := [
 	["Glacier", "Glaciers", Color(0.8, 0.88, 0.96), Size.SMALL],
 	["Karst / caves", "Caves", Color(0.4, 0.36, 0.34), Size.SMALL],
 	["Tepui", "Mountain", Color(0.36, 0.44, 0.34), Size.SMALL],
-	["Montane grassland and shrubland", "High-altitude", Color(0.66, 0.63, 0.42), Size.SMALL],
+	["Montane grassland and shrubland", "High-altitude", Color(0.6, 0.61, 0.37), Size.SMALL],
 ]
 
 

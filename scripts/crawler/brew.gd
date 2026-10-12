@@ -162,7 +162,7 @@ func _carried_count() -> int:
 ## sample: part cutting, its species the entry's, never a catalogue index).
 static func cutting_item(vine: SacredVine) -> Dictionary:
 	var s := vine.sp
-	return Inventory.make("plant_sample", {"species": -1, "sacred": vine.plant, "binomial": s.binomial() if s != null else vine.plant, "part": "cutting", "shape": "LIANA", "color": s.color.to_html(false) if s != null else "4e9a3c", "accent": s.accent.to_html(false) if s != null else "7a6e5e", "length_m": snappedf(vine.length_m * vine.take_share(), 0.01)})
+	return Inventory.make("plant_sample", {"species": -1, "sacred": vine.plant, "binomial": s.binomial() if s != null else vine.plant, "part": "cutting", "shape": PlantSpecies.Shape.keys()[s.shape] if s != null else "LIANA", "color": s.color.to_html(false) if s != null else "4e9a3c", "accent": s.accent.to_html(false) if s != null else "7a6e5e", "length_m": snappedf(vine.cutting_len(), 0.01)})
 
 
 # --- The button --------------------------------------------------------------------
@@ -210,7 +210,9 @@ func _harvest() -> String:
 	vine.take()
 	vine.takes += 1
 	harvested += 1
-	GameLog.add(str(C().get("log_take", "Took a cutting of the vine. It stands, and will grow back.")), "world")
+	# The plant's own line where it has one (plants.<id>.log_take: the
+	# mushroom's), else carry.log_take.
+	GameLog.add(str(vine.P.get("log_take", C().get("log_take", "Took a cutting of the vine. It stands, and will grow back."))), "world")
 	return "taken"
 
 
