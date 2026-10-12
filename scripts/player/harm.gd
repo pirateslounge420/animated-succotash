@@ -187,7 +187,8 @@ func invulnerable() -> bool:
 func hit(who: String) -> bool:
 	if taking:
 		return true
-	if invulnerable():
+	if invulnerable() or RitualLock.active:
+		# Nothing lands while the ritual has the frame (§FR.1).
 		return false
 	hits.append(now)
 	_last_hit = now

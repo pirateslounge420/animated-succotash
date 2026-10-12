@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 97, §FR.1: the shaman's ritual as a little cutscene, a locked camera
+- **Built:** `RitualLock` (`scripts/crawler/ritual_lock.gd`, owned by Brew). When you drink the shaman's brew the view moves to a fixed camera a little behind and beside your eyes, looking at the shaman, and you cannot move, look, use your hands or press the button for `lock_s`; then your own camera is back, the same place, the same facing.
+- **lock_s** is a range in the data (`shaman_ritual.json → cutscene.lock_s`, [10, 20]); the code reads its low end, 10 s. `input_locked: false` turns the lock off. `skippable` (null) is not read.
+- **harm_during_lock false:** while it holds Harm lands no hit, Pursuit starts no chase, and the torch's burn timer pauses (the player skips its torch step), resuming exactly.
+- **Beat hook:** `RitualLock.beats[<ruin id>]` is a Callable a culture can register (prompt 98's witch); none is registered, so in the Aztec tomb the lock is just the drinking. No swamp content, no new creature.
+- **Checks** (seed 7): `brew_check` 76 PASS, 0 fails (9 new: lock_s read, the camera on him, held exactly 10.000 s, released, no movement pressing forward, same place and facing after mouse moved, torch 14.26306 min before and after, nothing landed and no chase, no beat); its "nothing changes while it runs" pace now runs after the lock. `crawler_check` 272 PASS, 0 fails.
+- **Walkabout not done** in this headless session: Mike, look at it once by taking the brew.
+- **For Mike:** is 10 s right (the data says 10–20)? Should it be skippable? The camera angle (0.55 m back, 0.55 m to the side) is a first guess.
+
 ## 2026-10-12 — Queue 94, §FQ.1: the Maya stone, limestone
 - **Built:** `masonry.json → styles → maya_temple` (additive, `_help.maya_temple`) and preset `dressed_blocks`: the squared cut in smaller, finely dressed blocks (0.4–0.9 m wide), fine joints, one pale grey-cream limestone (`stone.tint` #a59c88, `spread` 0.06) for floor, ceiling, doors, stairs, niches and sconces; flat lintels. Registered as `style_by_theme.maya_temple`; nothing builds a Maya ruin yet, no existing style changed, no code changed.
 - **Data for later, not wired:** `stucco` (#6a3328, a dulled red, only in the deepest recesses), `carving` (queue 95).

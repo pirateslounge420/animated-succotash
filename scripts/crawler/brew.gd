@@ -45,6 +45,8 @@ const STEPS := ["rise", "go", "face_you", "take", "face_pot", "drop", "stir", "f
 
 var main: CrawlerMain
 var vision: BrewVision
+## The ritual's camera lock (§FR.1, queue 97): RitualLock.
+var lock: RitualLock
 ## The cutting in your left hand, in view.
 var view: Node3D
 var _view_plant := ""
@@ -117,6 +119,9 @@ func setup(p_main: CrawlerMain) -> void:
 		main.ui.add_child(vision)
 		# Under the crosshair, the panels and the harm view.
 		main.ui.move_child(vision, 0)
+	lock = RitualLock.new()
+	add_child(lock)
+	lock.setup(main)
 	_voice = AudioStreamPlayer3D.new()
 	_voice.name = "BrewVoice"
 	_voice.unit_size = 3.0
@@ -166,6 +171,9 @@ static func cutting_item(vine: SacredVine) -> Dictionary:
 func interact() -> bool:
 	if main == null or main.leaving or main.player == null or main.player.dead:
 		return false
+	if main.player.ritual_locked:
+		# The ritual's lock (§FR.1): the button does nothing till it ends.
+		return true
 	if main.on_surface:
 		_harvest()
 		# Nothing else answers the button up there (the bundle is below).
@@ -373,6 +381,9 @@ func drink() -> void:
 	vision.start(plant, (SacredVine.plant_data(plant)).get("vision", {}))
 	_say(main.player.eye_position(), 1.25, -10.0)
 	GameLog.add(str(R().get("log_drink", "Drank the shaman's brew.")), "world")
+	# The little cutscene (§FR.1): the frame locked on him for lock_s.
+	if lock != null:
+		lock.begin(shaman)
 	_go_to("lower")
 
 
@@ -783,6 +794,8 @@ func _update_view() -> void:
 ## The rite gone (a new tomb, or the game starting over): its props freed,
 ## the one at the hearth (if he is still there) back on his stone.
 func reset() -> void:
+	if lock != null:
+		lock.reset()
 	if cutting != null and is_instance_valid(cutting):
 		cutting.queue_free()
 	cutting = null

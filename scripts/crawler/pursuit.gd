@@ -54,6 +54,9 @@ func _init(p_hunter: Object, p_rules: Dictionary) -> void:
 ## It noticed you: the chase is on (or goes on, the clock back to zero).
 ## `torch_lit`: your torch is lit now (so putting it out later counts).
 func notice(torch_lit := false) -> void:
+	if not on and RitualLock.active:
+		# No chase starts while the ritual has the frame (§FR.1).
+		return
 	if not on:
 		on = true
 		has_hit = false

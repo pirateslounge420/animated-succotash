@@ -98,6 +98,9 @@ const LEDGE_UP_M := 0.45
 var _crouch_k := 0.0
 ## Ticks the ledge guard has cut a move (the checks read it).
 var ledge_holds := 0
+## The shaman's ritual has the frame (§FR.1, RitualLock): no move, no look,
+## no hands, and the torch's burn paused, until it lets go.
+var ritual_locked := false
 
 
 func _ready() -> void:
@@ -180,6 +183,8 @@ func swap_weapon() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if ritual_locked and not event.is_action_pressed("release_mouse"):
+		return
 	if ui_open and event is InputEventMouseButton:
 		return
 	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not Controls.is_wheel(event):
@@ -204,6 +209,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if ritual_locked:
+		# The ritual's lock (§FR.1): held where you stood, facing as you
+		# faced; the torch's timer and the hands wait for it (RitualLock).
+		velocity = Vector3.ZERO
+		_invulnerable = maxf(_invulnerable - delta, 0.0)
+		return
 	if typing or ui_open:
 		for a in TYPING_ACTIONS:
 			if InputMap.has_action(a):

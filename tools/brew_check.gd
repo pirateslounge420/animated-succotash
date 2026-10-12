@@ -554,11 +554,13 @@ func _rite(main: CrawlerMain, base: Dictionary) -> void:
 	var watcher := func(n: Node) -> void: added_nodes.append(n)
 	node_added.connect(watcher)
 	var lights0 := main.find_children("*", "Light3D", true, false).size()
+	_pre = {"pos": p.global_position, "yaw": p.rotation.y, "pitch": p._spring.rotation.x, "burn": float(p.torch.item().get("burn_left_min", 0.0)), "lit": p.torch.lit(), "harm": [main.harm.hits.size(), main.harm.landed, main.harm.stage, main.harm.chased()]}
 	_press(main)
 	await _frames(1)
 	var vis := brew.vision
 	ok(brew.drinks == 1 and vis.active and vis.level() > 0.0 and (brew.fill == null or not is_instance_valid(brew.fill)), "the button drinks it: the vision starts at once (%.5f the next frame)" % vis.level())
 	ok(str(GameLog.entries[-1].get("text", "")) == str(Brew.R().get("log_drink", "")), "the log's line: \"%s\"" % str(GameLog.entries[-1].get("text", "")))
+	await _lock(main, base)
 	var V: Dictionary = vis.v
 	var fin := float(V.get("fade_in_s", 4.0))
 	var last := float(V.get("last_s", 120.0))
@@ -597,6 +599,57 @@ func _rite(main: CrawlerMain, base: Dictionary) -> void:
 	ok(diff2.is_empty(), "and nothing changed after it either%s" % ("" if diff2.is_empty() else " (changed: %s)" % str(diff2)))
 	var save_text := JSON.stringify(CrawlerSave.data).to_lower()
 	ok(not save_text.contains("brew") and not save_text.contains("vision") and not save_text.contains("secret") and not save_text.contains("drink"), "nothing of the brew in the save: nothing reaches a secret layer (§FM.4)")
+
+
+# --- §FR.1 (queue 97): the ritual's camera lock ------------------------------------------
+
+var _pre := {}
+
+
+## Drinking locks the frame on him for exactly lock_s, then gives it back:
+## the same place, the same facing, the torch's time paused, nothing landed.
+func _lock(main: CrawlerMain, base: Dictionary) -> void:
+	var p := main.player
+	var L := main.brew.lock
+	var want := RitualLock.lock_len()
+	ok(want > 0.0 and RitualLock.C().has("lock_s"), "§FR.1 lock_s read from shaman_ritual.json: %.1f s (the low end of %s)" % [want, str(RitualLock.C().get("lock_s"))])
+	ok(p.ritual_locked and RitualLock.active and L.cam.current and not p.camera().current, "the drink locks the frame: the ritual's camera current, yours not, input locked")
+	var f := main.rescuer
+	var to := (f.global_position + Vector3.UP * 1.2) - L.cam.global_position
+	ok(L.cam.global_basis.z.dot(-to.normalized()) > 0.8, "the camera faces the shaman (%.2f)" % L.cam.global_basis.z.dot(-to.normalized()))
+	var cam_at := L.cam.global_transform
+	var vp := main.get_viewport().get_visible_rect().size
+	# Try to move, look, swing and be hit while it holds.
+	Input.action_press("move_forward")
+	var ev := InputEventMouseMotion.new()
+	ev.relative = Vector2(300, 120)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	p._unhandled_input(ev)
+	var landed := main.harm.hit("creature:check")
+	var pu := Pursuit.new(null, {})
+	pu.notice(true)
+	var frames := 1
+	var max_off := 0.0
+	var cam_moved := false
+	while p.ritual_locked and frames < 60 * 60:
+		await physics_frame
+		frames += 1
+		max_off = maxf(max_off, p.global_position.distance_to(_pre.pos))
+		if not L.cam.global_transform.is_equal_approx(cam_at):
+			cam_moved = true
+	Input.action_release("move_forward")
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var held := float(frames) / 60.0
+	ok(absf(held - want) <= 1.5 / 60.0 and absf(L.last_len - want) <= 1.5 / 60.0, "input locked for exactly lock_s: %.3f s held against %.1f" % [held, want])
+	ok(not p.ritual_locked and not RitualLock.active and p.camera().current and not L.cam.current, "then released: your camera current again")
+	ok(max_off < 1e-3 and not cam_moved, "while locked you don't move (%.4f m at most, pressing forward) and the camera holds its angle" % max_off)
+	ok(p.global_position.distance_to(_pre.pos) < 1e-3 and absf(wrapf(p.rotation.y - float(_pre.yaw), -PI, PI)) < 1e-5 and absf(p._spring.rotation.x - float(_pre.pitch)) < 1e-5, "after it: the same place and the same facing (the mouse moved during it did nothing)")
+	var burn_now := float(p.torch.item().get("burn_left_min", 0.0))
+	ok(bool(_pre.lit) and p.torch.lit() and absf(burn_now - float(_pre.burn)) < float(base.burn) * 2.0, "the torch's time paused: %.5f min left before, %.5f after (a frame's burn is %.5f)" % [float(_pre.burn), burn_now, float(base.burn) / 60.0])
+	var h := main.harm
+	ok(not landed and not pu.on and [h.hits.size(), h.landed, h.stage, h.chased()] == _pre.harm, "nothing lands and no chase starts while locked (harm_during_lock false)")
+	ok(RitualLock.beats.is_empty() and L.runs == 1, "no culture's beat here: the lock is just the drinking (%s)" % L.culture)
+	ok(vp.x > 0.0, "drawn in the game's own frame (%dx%d)" % [int(vp.x), int(vp.y)])
 
 
 func handed_ok(brew: Brew) -> bool:
