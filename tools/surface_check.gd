@@ -113,6 +113,7 @@ func _run() -> void:
 	main.queue_free()
 	await process_frame
 	await _seeds()
+	_temple()
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -128,6 +129,51 @@ func _covers() -> void:
 	S["on"] = true
 	var w := Surface.world_entry()
 	ok(str(S.get("world", "")) == "desert" and Surface.biome_key() == str(w.get("biome", "")).to_upper() and not Surface.biome_doc().is_empty(), "the surface is worlds.json worlds.%s's (biome %s, its data/biomes file read)" % [S.get("world", ""), Surface.biome_key()])
+
+
+# --- 12. The temple's world (§FN.8 call 1) ------------------------------------------
+
+## The Aztec temple's surface is its own world (worlds.json surface.by_theme
+## aztec_temple: the central Mexican highland, biome montane_grassland),
+## grown from its own biome file; the tomb's stays the desert.
+func _temple() -> void:
+	var world_node: Node = get_root().get_node("World")
+	var keep_on := CrawlerSave.aztec_on
+	CrawlerSave.aztec_on = true
+	var grass_n := 0
+	var all_n := 0
+	var gate := true
+	var zones_ok := true
+	var kinds := {}
+	var bid := BiomeTemplates.id_of_key("MONTANE_GRASSLAND")
+	var col_ok := true
+	for sv in [1, 7, 42]:
+		var lay := TombKit.layout(int(sv), "aztec_temple")
+		var s := Surface.new()
+		s.build(world_node, lay, null)
+		ok(Surface.theme == "aztec_temple" and Surface.biome_key() == "MONTANE_GRASSLAND" and not Surface.biome_doc().is_empty(), "seed %d: the temple's surface is worlds.json worlds.%s's (biome %s, its data/biomes file read)" % [sv, Surface.settings().get("world", ""), Surface.biome_key()])
+		if s.plants.grown.size() < 3 or s.plants.placed < 300:
+			zones_ok = false
+		for name in s.plants.counts:
+			var sp := SpeciesDB.find(str(name))
+			var n := int(s.plants.counts[name])
+			all_n += n
+			if sp == null or not sp.biomes.has(bid):
+				gate = false
+				continue
+			kinds[sp.shape] = int(kinds.get(sp.shape, 0)) + n
+			if sp.shape in [PlantSpecies.Shape.TUSSOCK, PlantSpecies.Shape.GRASS, PlantSpecies.Shape.SHRUB, PlantSpecies.Shape.UMBRELLA, PlantSpecies.Shape.CACTUS, PlantSpecies.Shape.SPIKE_ROSETTE, PlantSpecies.Shape.GNARLED] and sp.height_m.y < 7.0:
+				grass_n += 1 * n
+		var c := s.land._color(s.land.count / 2 + 30, s.land.count / 2 + 30, 0.0, BiomeTemplates.color_of(bid))
+		if not (c.g > c.b and c.get_luminance() > 0.35):
+			col_ok = false
+		s.free()
+	ok(zones_ok and gate, "the temple's plants: its three zones grown (%s) and every species one montane_grassland lists" % ", ".join((Surface.settings().get("plants", {}) as Dictionary).get("zones", {}).values()))
+	ok(all_n > 0 and float(grass_n) / float(all_n) >= 0.8, "it reads as grassland and shrub: %d of %d plants bunchgrass, shrubs, nopal or maguey (by shape: %s)" % [grass_n, all_n, str(kinds)])
+	ok(col_ok, "its ground in the grassland's tawny olive, not the desert's sand")
+	Surface.use_theme("tomb")
+	ok(Surface.biome_key() == "HOT_DESERT", "the tomb's surface stays the desert (%s)" % Surface.biome_key())
+	CrawlerSave.aztec_on = keep_on
 
 
 # --- 1. Up ------------------------------------------------------------------------

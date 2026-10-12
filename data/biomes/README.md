@@ -1,7 +1,7 @@
 # Biome plant data
 
-One file per biome (51 files: the 50 surface biome templates from
-DESIGN.md plus Karst/caves). This is where plant variety goes: add plants
+One file per biome (53 files: the 50 surface biome templates from
+DESIGN.md plus Karst/caves, Tepui and, since 12 Oct, Montane grassland and shrubland: the Aztec temple's world, §FN.8 call 1). This is where plant variety goes: add plants
 to a biome's `plants` lists and they appear in the game the next time you
 run it. No code changes needed.
 

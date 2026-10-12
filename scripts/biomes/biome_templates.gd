@@ -7,7 +7,11 @@ class_name BiomeTemplates
 ## karst rock marks where caves would be densest). Tepui, the 52nd, comes
 ## last: the flat summit of an isolated sandstone table mountain. It is a
 ## landform label, so nothing classifies as it until the Phase 2 geology
-## raises tepuis (a handful per planet, none on the stamp).
+## raises tepuis (a handful per planet, none on the stamp). Montane
+## grassland and shrubland, the 53rd (design §FN.8 call 1, Mike 12 Oct: the
+## Aztec temple's world, central Mexico's zacatonal and matorral), is a
+## label slot the same way: Torchfire 1's surface reads its file, and
+## BiomePass classifies nothing as it.
 ##
 ## Each slot has a matching plant data file in data/biomes/ (see the README
 ## there), keyed by the names in KEYS.
@@ -37,6 +41,7 @@ enum {
 	GLACIER,
 	CAVES,
 	TEPUI,
+	MONTANE_GRASSLAND,
 	COUNT,
 }
 
@@ -55,6 +60,7 @@ const KEYS: Array[String] = [
 	"VOLCANIC_FIELD", "BADLANDS", "CANYON", "SALT_FLAT", "HOT_SPRING",
 	"GLACIER", "CAVES",
 	"TEPUI",
+	"MONTANE_GRASSLAND",
 ]
 
 ## id -> [name, group, map color, size]
@@ -111,6 +117,7 @@ const INFO := [
 	["Glacier", "Glaciers", Color(0.8, 0.88, 0.96), Size.SMALL],
 	["Karst / caves", "Caves", Color(0.4, 0.36, 0.34), Size.SMALL],
 	["Tepui", "Mountain", Color(0.36, 0.44, 0.34), Size.SMALL],
+	["Montane grassland and shrubland", "High-altitude", Color(0.66, 0.63, 0.42), Size.SMALL],
 ]
 
 

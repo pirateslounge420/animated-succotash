@@ -65,7 +65,10 @@ func _seeds() -> Array:
 
 ## The surface over `lay`: {"land", "data"} (as Surface.build makes them).
 func _surface(lay: Dictionary) -> Dictionary:
-	var S: Dictionary = Surface.S
+	# The ruin kind's own surface (worlds.json surface.by_theme: the temple's
+	# is the central Mexican highland, §FN.8 call 1; the tomb's the desert).
+	Surface.use_theme(str(lay.get("theme", "tomb")))
+	var S: Dictionary = Surface.settings()
 	var sv := hash([int(lay.get("seed", 0)), "surface"])
 	var frame := SurfaceBuild.stair_frame(lay, S, Surface.level())
 	var land := SurfaceGround.new()

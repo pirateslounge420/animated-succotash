@@ -9,14 +9,15 @@
     "snake": "The desert boss (bosses.json bosses.desert, boss_pool.json pools.desert) becomes the feathered serpent (§FN.2). This block adds a look and a sound; it replaces none of the snake's behaviour (queues 49, 57, 65, 66).",
     "enabled": "(Claude Code, queue 80, design §FN.1, §FN.8 call 1) Whether the Aztec temple is in the game. false (the default): no game draws it, and the first ruin is the tomb exactly as before. Set true 12 Oct (Mike: \"azetec should be activated to be able to spawn there\"): a new game's first ruin may be the temple; answers enough of §FN.8 call 1 to switch it on; which biome world is still open, it keeps the desert surface queue 84 gave it. true: the temple joins §FJ.1's roster (crawler.json opening_pick): a new game's first ruin is the tomb or the temple, drawn from the game's seed. It chooses no biome world: which world it sits in is Mike's call. Restart after editing.",
     "chambers_built": "(Claude Code, queue 80) Built: room_pool.json archetypes aztec_blood_altar and aztec_calendar_room (always true), one of each in every temple, both on floor one (floor_as_built; which floor holds each is open, §FN.8 call 8). The temple itself is the tomb generator (TombKit) in masonry.json's aztec_temple stone, crawler.json themes.aztec_temple.",
+    "world_answered": "(Claude Code, 12 Oct, design §FN.8 call 1) Mike: \"the mid Mexico biome is the Aztec\"; \"Aztec is not cloud forest. it should be montane grasslands/shrublands\". world: worlds.json worlds.aztec_highland (biome montane_grassland, data/biomes/52_montane_grassland.json); the surface over the temple grows it (worlds.json surface.by_theme.aztec_temple); the tomb's surface stays the desert. The kind line's 'assumed desert' is out of date.",
     "surface": "The Aztec silhouette on the surface (§FN.4): a step pyramid with an altar at the top, ambient, never a fast-travel point."
   },
   "kind": "aztec_temple",
   "enabled": true,
   "culture": "Aztec (Mexica)",
   "is_a": "temple",
-  "world": "desert",
-  "world_status": "open",
+  "world": "aztec_highland",
+  "world_status": "answered 12 Oct (Mike, §FN.8 call 1): the central Mexican montane grassland and shrubland",
   "stone": {
     "models": ["basalt", "andesite", "tezontle (red, porous volcanic rock)"],
     "masonry_style": null,

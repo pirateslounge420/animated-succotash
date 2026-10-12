@@ -183,6 +183,11 @@
    "grass_bundle": 0.7,
    "dung": 0.5
   },
+  "MONTANE_GRASSLAND": {
+   "grass_bundle": 0.6,
+   "branch": 0.3,
+   "dung": 0.3
+  },
   "ALPINE_MEADOW": {
    "grass_bundle": 0.6,
    "dung": 0.3,
@@ -1150,6 +1155,11 @@
     "grass_bundle",
     "tola_twigs",
     "dry_twigs"
+   ],
+   "MONTANE_GRASSLAND": [
+    "grass_bundle",
+    "dry_twigs",
+    "dead_leaves"
    ],
    "ALPINE_MEADOW": [
     "grass_bundle",

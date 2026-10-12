@@ -1,0 +1,2002 @@
+{
+ "key": "MONTANE_GRASSLAND",
+ "name": "Montane grassland and shrubland (central Mexico)",
+ "group": "High-altitude",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "The montane grassland and shrubland of central Mexico (Mike, 12 Oct, §FN.8 call 1: 'the mid Mexico biome is the Aztec'; 'Aztec is not cloud forest. it should be montane grasslands/shrublands'): the uplands round the Valley of Mexico, about 2,200-3,000 m on the valley's floor and rims, rising on the volcanoes' flanks as the zacatonal bunchgrass to about 4,000 m. Mild days, cool nights with frost in the dry winter, rain in a summer wet season (May to October). Below: matorral of nopal, maguey, palo dulce, gatuno, chapulixtle and palo loco on lava and thin soil, with tepozan in the barrancas. Above: tall bunchgrass (zacaton, Festuca tolucensis, Muhlenbergia, Calamagrostis) under scattered Hartweg's pine and alligator juniper. The Aztec temple's world in Torchfire 1 (worlds.json worlds.aztec_highland). WWF: the Trans-Mexican Volcanic Belt's zacatonal and the Central Mexican matorral (Nearctic). A label slot like TEPUI: the open world classifies nothing as it.",
+ "climate": {
+  "temp_c": [
+   6,
+   17
+  ],
+  "moisture": [
+   0.3,
+   0.65
+  ],
+  "altitude_m": [
+   2200,
+   4000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Hartweg's pine",
+    "genus": "Pinus",
+    "species": "hartwegii",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     3,
+     12
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     2900,
+     4100
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     8.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#3f5a3a",
+    "accent": "#5a4234",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      730
+     ],
+     "height_years": [
+      80,
+      200
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      500,
+      1000
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (open-crowned dark pine standing alone over the bunchgrass).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Whitebark pine as the nearest built form)."
+    },
+    "source": "Pinus hartwegii, the timberline pine of the Mexican volcanoes (Popocatepetl, Iztaccihuatl, Nevado de Toluca, Malinche), 2900-4100 m over Festuca tolucensis and Muhlenbergia zacatonal; often fire-scarred. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Pinus",
+     "species": "hartwegii",
+     "native_range": "Pinus hartwegii, the timberline pine of the Mexican volcanoes (Popocatepetl, Iztaccihuatl, Nevado de Toluca, Malinche), 2900-4100 m over Festuca tolucensis and Muhlenbergia zacatonal; often fire-scarred. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "needles in fives, stout and curved",
+     "trunk": "short trunk, often several stems from one nutcracker cache",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      8.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 5,
+     "size_cm": [
+      4,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#5a4234",
+     "color_2": "#7A6A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
+    },
+    "silhouette": "open-crowned dark pine standing alone over the bunchgrass",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Alligator juniper",
+    "genus": "Juniperus",
+    "species": "deppeana",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "conifer",
+    "temp_c": [
+     9,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     4.0,
+     14.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#4f6a52",
+    "accent": "#6a5a48",
+    "source": "Juniperus deppeana, central and northern Mexican uplands 1800-3000 m in grassland and pine-oak edges, bark in square plates like an alligator's hide. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Juniperus",
+     "species": "deppeana",
+     "native_range": "Juniperus deppeana, central and northern Mexican uplands 1800-3000 m in grassland and pine-oak edges, bark in square plates like an alligator's hide. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      4.0,
+      14.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.3
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1.5,
+     "color": "#6a5a48",
+     "color_2": "#6E5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "multi_stem",
+     "orders": 6,
+     "branch_angle_deg": [
+      20,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.45,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      90,
+      730
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      350,
+      1000
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (squat blue-green juniper with checkered bark).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Utah juniper as the nearest built form)."
+    },
+    "family": "Cupressaceae",
+    "needs": [],
+    "silhouette": "squat blue-green juniper with checkered bark",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Tepozan",
+    "genus": "Buddleja",
+    "species": "cordata",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     3.0,
+     12.0
+    ],
+    "density": 0.7,
+    "soil": "volcanic",
+    "color": "#6a7a5a",
+    "accent": "#7a6a56",
+    "source": "Buddleja cordata (tepozan), small tree of the Valley of Mexico's matorral and barrancas, typical of the Pedregal de San Angel lava scrub, 1500-3000 m. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Buddleja",
+     "species": "cordata",
+     "native_range": "Buddleja cordata (tepozan), small tree of the Valley of Mexico's matorral and barrancas, typical of the Pedregal de San Angel lava scrub, 1500-3000 m. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      3.0,
+      12.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.3,
+     "autumn": "#c8702a"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7a6a56",
+     "color_2": "#4E4840",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      90,
+      140
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (grey-green small tree, leaves felted white beneath).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Gambel oak as the nearest built form)."
+    },
+    "family": "Scrophulariaceae",
+    "needs": [],
+    "silhouette": "grey-green small tree, leaves felted white beneath",
+    "realm": "nearctic"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Palo dulce",
+    "genus": "Eysenhardtia",
+    "species": "polystachya",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     13,
+     24
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     1000,
+     2600
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6f8a4c",
+    "accent": "#6a5440",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (fine-leaved open shrub, white flower spikes in the rains).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Whistling thorn as the nearest built form)."
+    },
+    "source": "Eysenhardtia polystachya (palo dulce), shrub of the central Mexican matorral and grassland edges; its wood turns water blue (lignum nephriticum). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Eysenhardtia",
+     "species": "polystachya",
+     "native_range": "Eysenhardtia polystachya (palo dulce), shrub of the central Mexican matorral and grassland edges; its wood turns water blue (lignum nephriticum). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       600
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#6a5440",
+     "color_2": "#4A3E36",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "silhouette": "fine-leaved open shrub, white flower spikes in the rains",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Gatuno",
+    "genus": "Mimosa",
+    "species": "aculeaticarpa",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     12,
+     22
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     1500,
+     2700
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     1.0,
+     3.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5f7a44",
+    "accent": "#5a4a3a",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (low thorny mimosa thicket, feathery leaves).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Whistling thorn as the nearest built form)."
+    },
+    "source": "Mimosa aculeaticarpa (gatuno, 'cat's claw' for its hooked prickles), common in grassland and matorral of the Mexican highlands. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Mimosa",
+     "species": "aculeaticarpa",
+     "native_range": "Mimosa aculeaticarpa (gatuno, 'cat's claw' for its hooked prickles), common in grassland and matorral of the Mexican highlands. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      3.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       600
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#5a4a3a",
+     "color_2": "#4A3E36",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
+    },
+    "silhouette": "low thorny mimosa thicket, feathery leaves",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Chapulixtle",
+    "genus": "Dodonaea",
+    "species": "viscosa",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     1.0,
+     4.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#6a8040",
+    "accent": "#7a5a3a",
+    "source": "Dodonaea viscosa (chapulixtle, hopbush), common on lava and eroded slopes of the Valley of Mexico's matorral. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Dodonaea",
+     "species": "viscosa",
+     "native_range": "Dodonaea viscosa (chapulixtle, hopbush), common on lava and eroded slopes of the Valley of Mexico's matorral. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.7,
+     "base": "rounded",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 1.5,
+     "color": "#7a5a3a",
+     "color_2": "#5A5650",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      35,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (upright glossy shrub, papery winged seed heads).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Kermes oak as the nearest built form)."
+    },
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "family": "Sapindaceae",
+    "altitude_m": [
+     0,
+     2800
+    ],
+    "needs": [],
+    "silhouette": "upright glossy shrub, papery winged seed heads",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Escobilla",
+    "genus": "Baccharis",
+    "species": "conferta",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "family": "Asteraceae",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     16
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     2200,
+     3800
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     0.8,
+     2.0
+    ],
+    "density": 0.9,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#5f7a3c",
+    "accent": "#6a5a40",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (dense rounded broom-shrub of the upper grassland).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Lejía tola as the nearest built form)."
+    },
+    "source": "Baccharis conferta (escobilla), the commonest shrub of disturbed upper montane grassland and pine-fir clearings in central Mexico, 2200-3800 m. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Baccharis",
+     "species": "conferta",
+     "native_range": "Baccharis conferta (escobilla), the commonest shrub of disturbed upper montane grassland and pine-fir clearings in central Mexico, 2200-3800 m. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "small sticky resinous leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      0.8,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.3,
+      1.2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#6a5a40",
+     "color_2": "#4A4238",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      15,
+      35
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.08,
+     "confidence": "estimated"
+    },
+    "silhouette": "dense rounded broom-shrub of the upper grassland",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Palo loco",
+    "genus": "Pittocaulon",
+    "species": "praecox",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "gnarled",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     1.5,
+     4.0
+    ],
+    "density": 0.6,
+    "soil": "volcanic",
+    "color": "#7a8a48",
+    "accent": "#8a8a6a",
+    "source": "Pittocaulon praecox (Senecio praecox, palo loco), succulent-stemmed shrub that defines the Pedregal de San Angel lava matorral (the Xitle flow) in the south of the Valley of Mexico. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Pittocaulon",
+     "species": "praecox",
+     "native_range": "Pittocaulon praecox (Senecio praecox, palo loco), succulent-stemmed shrub that defines the Pedregal de San Angel lava matorral (the Xitle flow) in the south of the Valley of Mexico. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      1.5,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.5,
+     "layering": "tiered",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#b8a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 4,
+     "color": "#8a8a6a",
+     "color_2": "#6A6A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "candelabra",
+     "orders": 4,
+     "branch_angle_deg": [
+      25,
+      45
+     ],
+     "taper_exponent": 2.5,
+     "sinuosity": 0.35,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.4,
+     "confidence": "documented"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      14
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (fat-stemmed candelabra on black lava, yellow flowers before leaves).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Frangipani as the nearest built form)."
+    },
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "family": "Asteraceae",
+    "altitude_m": [
+     2200,
+     2700
+    ],
+    "needs": [],
+    "silhouette": "fat-stemmed candelabra on black lava, yellow flowers before leaves",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Nopal cardon",
+    "genus": "Opuntia",
+    "species": "streptacantha",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     22
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "height_m": [
+     1.5,
+     4.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#5a7a4a",
+    "accent": "#c84a5a",
+    "source": "Opuntia streptacantha (nopal cardon), the tree prickly pear of the southern Mexican Plateau's nopaleras and matorral; red fruit (tuna cardona). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Opuntia",
+     "species": "streptacantha",
+     "native_range": "Opuntia streptacantha (nopal cardon), the tree prickly pear of the southern Mexican Plateau's nopaleras and matorral; red fruit (tuna cardona). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      1.5,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#c84a5a",
+     "color_2": "#E8E0C8",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      60
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (tree-like prickly pear, red tunas).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Prickly pear as the nearest built form)."
+    },
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "family": "Cactaceae",
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "needs": [],
+    "silhouette": "tree-like prickly pear, red tunas",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Maguey pulquero",
+    "genus": "Agave",
+    "species": "salmiana",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "family": "Asparagaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     10,
+     22
+    ],
+    "moisture": [
+     0.2,
+     0.55
+    ],
+    "altitude_m": [
+     1500,
+     2900
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6a8a7a",
+    "accent": "#8a7a5a",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      4,
+      6
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (huge grey-green rosette of thick spined leaves).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Bromelia as the nearest built form)."
+    },
+    "source": "Agave salmiana (maguey pulquero), the great maguey of the central Mexican highlands, wild and kept in field borders; its sap is pulque (octli). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Agave",
+     "species": "salmiana",
+     "native_range": "Agave salmiana (maguey pulquero), the great maguey of the central Mexican highlands, wild and kept in field borders; its sap is pulque (octli). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "bird",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#8a7a5a",
+     "color_2": "#7A6A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "silhouette": "huge grey-green rosette of thick spined leaves",
+    "realm": "nearctic"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Zacaton",
+    "genus": "Muhlenbergia",
+    "species": "macroura",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "tussock",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "altitude_m": [
+     2200,
+     3700
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     0.8,
+     1.5
+    ],
+    "density": 1.2,
+    "soil": "rich",
+    "color": "#a89a5a",
+    "accent": "#8a7a4a",
+    "source": "Muhlenbergia macroura (zacaton), the big bunchgrass of the Valley of Mexico's grassland (zacatonal); its roots made brooms and brushes. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Muhlenbergia",
+     "species": "macroura",
+     "native_range": "Muhlenbergia macroura (zacaton), the big bunchgrass of the Valley of Mexico's grassland (zacatonal); its roots made brooms and brushes. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.8,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.8,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#c8b060"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8a7a4a",
+     "color_2": "#A09040",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (tall stiff bunchgrass, straw-gold).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Ichu grass as the nearest built form)."
+    },
+    "family": "Poaceae",
+    "needs": [],
+    "silhouette": "tall stiff bunchgrass, straw-gold",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Toluca fescue",
+    "genus": "Festuca",
+    "species": "tolucensis",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     3000,
+     4300
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 1.0,
+    "soil": "volcanic",
+    "color": "#8a9a5a",
+    "accent": "#a89a60",
+    "source": "Festuca tolucensis, dominant of the high zacatonal on the Mexican volcanoes above about 3000 m (Nevado de Toluca, Iztaccihuatl, Popocatepetl). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Festuca",
+     "species": "tolucensis",
+     "native_range": "Festuca tolucensis, dominant of the high zacatonal on the Mexican volcanoes above about 3000 m (Nevado de Toluca, Iztaccihuatl, Popocatepetl). Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.85,
+     "val": 1.1,
+     "underside": 0.05,
+     "autumn": "#c8b060"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#a89a60",
+     "color_2": "#A08A40",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (dense pale bunchgrass of the high slopes).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Bunch grass as the nearest built form)."
+    },
+    "family": "Poaceae",
+    "needs": [],
+    "silhouette": "dense pale bunchgrass of the high slopes",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Quadridentate muhly",
+    "genus": "Muhlenbergia",
+    "species": "quadridentata",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     13
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.9,
+    "soil": "volcanic",
+    "color": "#9aa060",
+    "accent": "#b0a068",
+    "source": "Muhlenbergia quadridentata, short bunchgrass of open pine-grassland (Pinus hartwegii) in central Mexico. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Muhlenbergia",
+     "species": "quadridentata",
+     "native_range": "Muhlenbergia quadridentata, short bunchgrass of open pine-grassland (Pinus hartwegii) in central Mexico. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c0aa60"
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#b0a068",
+     "color_2": "#A09060",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (low fine tuft).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Sheep fescue as the nearest built form)."
+    },
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "family": "Poaceae",
+    "altitude_m": [
+     2800,
+     4100
+    ],
+    "needs": [],
+    "silhouette": "low fine tuft",
+    "realm": "nearctic"
+   },
+   {
+    "name": "Toluca reedgrass",
+    "genus": "Calamagrostis",
+    "species": "tolucensis",
+    "origin": "Central Mexico (Trans-Mexican Volcanic Belt)",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     3000,
+     4200
+    ],
+    "biomes": [
+     "MONTANE_GRASSLAND"
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.8,
+    "soil": "volcanic",
+    "color": "#90a060",
+    "accent": "#b0a070",
+    "source": "Calamagrostis tolucensis, bunchgrass of the high zacatonal and Pinus hartwegii woodland of the Mexican and Central American volcanoes. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+    "traits": {
+     "genus": "Calamagrostis",
+     "species": "tolucensis",
+     "native_range": "Calamagrostis tolucensis, bunchgrass of the high zacatonal and Pinus hartwegii woodland of the Mexican and Central American volcanoes. Rzedowski 1975/2006, Vegetacion de Mexico; Rzedowski & Rzedowski 2005, Flora fanerogamica del Valle de Mexico",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.85,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#c8b060"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#b0a070",
+     "color_2": "#B09858",
+     "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling and young plant as the adult's form, smaller (soft tussock, nodding heads).",
+     "confidence": "estimated",
+     "source": "Life history estimated from the plant's form and genus (design §FN.8 call 1, 12 Oct; Claude Code's first guess, the leaf, bark and crown blocks taken from Tussock grass as the nearest built form)."
+    },
+    "family": "Poaceae",
+    "needs": [],
+    "silhouette": "soft tussock, nodding heads",
+    "realm": "nearctic"
+   }
+  ],
+  "epiphyte": []
+ },
+ "associations": [
+  {
+   "name": "Zacatonal bunchgrass with Hartweg's pine",
+   "realm": "nearctic",
+   "where": "the upper slopes and rims, open bunchgrass under scattered pine and juniper",
+   "dominant": [
+    "Zacaton",
+    "Toluca fescue"
+   ],
+   "companion": [
+    "Hartweg's pine",
+    "Alligator juniper",
+    "Escobilla"
+   ],
+   "ground": [
+    "Quadridentate muhly",
+    "Toluca reedgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Rzedowski 1975 (zacatonal, pastizal subalpino); Almeida-Lenero et al. 2004 (Iztaccihuatl)"
+  },
+  {
+   "name": "Valley-floor matorral and bunchgrass",
+   "realm": "nearctic",
+   "where": "the valley floor and gentle plain, bunchgrass with maguey, nopal and low shrubs",
+   "dominant": [
+    "Zacaton",
+    "Gatuno",
+    "Escobilla"
+   ],
+   "companion": [
+    "Maguey pulquero",
+    "Nopal cardon",
+    "Chapulixtle",
+    "Palo dulce",
+    "Alligator juniper"
+   ],
+   "ground": [
+    "Zacaton",
+    "Quadridentate muhly"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Rzedowski 1975 (matorral xerofilo and pastizal of the Valle de Mexico)"
+  },
+  {
+   "name": "Barranca shrubland",
+   "realm": "nearctic",
+   "where": "the barranca and wash channel and its banks: taller shrubs and small trees where water runs in the rains",
+   "dominant": [
+    "Tepozan",
+    "Palo dulce"
+   ],
+   "companion": [
+    "Palo loco",
+    "Chapulixtle",
+    "Gatuno",
+    "Nopal cardon"
+   ],
+   "ground": [
+    "Zacaton"
+   ],
+   "catalogue": [],
+   "cover": 0.45,
+   "source": "Rzedowski 1975 (matorral of the Pedregal and barrancas)"
+  }
+ ],
+ "hero_species": []
+}

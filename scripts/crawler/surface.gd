@@ -106,7 +106,7 @@ var weather := {}
 ## creatures' ring, the talus band and the wash's wander. The same contents,
 ## composed closer (§EF, §EG). `seed_value` the surface's seed.
 static func sized(seed_value: int) -> Dictionary:
-	var p: Dictionary = S.duplicate(true)
+	var p: Dictionary = settings()
 	var C: Dictionary = _json("res://data/ruin_compass.json").get("surface", {})
 	var ar = C.get("across_m", null)
 	var across := float(S.get("across_m", 1400.0))
@@ -154,9 +154,43 @@ static func covers(p_lay: Dictionary) -> bool:
 	return bool(S.get("on", true)) and (S.get("over_themes", ["tomb"]) as Array).has(str(p_lay.get("theme", "tomb")))
 
 
-## The world the surface is (worlds.json worlds.<surface.world>).
+## The ruin kind (crawler.json theme) whose surface is being built or was
+## built last: the tomb's by default. use_theme sets it.
+static var theme := "tomb"
+
+
+## Build the surface over ruin kind `t` from now on (design §FN.8 call 1:
+## the Aztec temple's world is the central Mexican highland, the tomb's
+## stays the desert): settings, world_entry, biome_key and climate read it.
+static func use_theme(t: String) -> void:
+	if t != theme:
+		_climate = {}
+	theme = t
+
+
+## worlds.json surface with surface.by_theme.<theme> laid over it, block by
+## block and key by key (a deep copy: the caller may change it).
+static func settings(t := "") -> Dictionary:
+	var th := t if t != "" else theme
+	var p: Dictionary = S.duplicate(true)
+	p.erase("by_theme")
+	var over: Dictionary = (S.get("by_theme", {}) as Dictionary).get(th, {})
+	_lay_over(p, over.duplicate(true))
+	return p
+
+
+static func _lay_over(base: Dictionary, over: Dictionary) -> void:
+	for k in over:
+		if base.get(k) is Dictionary and over[k] is Dictionary:
+			_lay_over(base[k], over[k])
+		else:
+			base[k] = over[k]
+
+
+## The world the surface is (worlds.json worlds.<surface.world>, the
+## theme's own world where by_theme names one).
 static func world_entry() -> Dictionary:
-	return (W.get("worlds", {}) as Dictionary).get(str(S.get("world", "desert")), {})
+	return (W.get("worlds", {}) as Dictionary).get(str(settings().get("world", "desert")), {})
 
 
 ## Its biome's key (data/biomes): the world's biome, upper case.
@@ -214,6 +248,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	lay = p_lay
 	hearth = p_hearth
 	seed_value = hash([int(lay.get("seed", 0)), "surface"])
+	use_theme(str(lay.get("theme", "tomb")))
 	P = sized(seed_value)
 	across_m = float(P.get("across_m", 1400.0))
 	var t0 := Time.get_ticks_msec()
