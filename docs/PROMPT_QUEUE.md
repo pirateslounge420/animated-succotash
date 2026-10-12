@@ -1723,7 +1723,7 @@ CHECK (headless): the sequence runs in order on the swamp's first brew and on no
 
 ## 99 — A smaller surface, its sacred plant in sight — §FV.1
 
-**Status:** built c069a9a
+**Status:** built a6d621c
 **Mike sees:** Come up the stair and the surface is a small, full place, not a big empty one. The ruin, a few things to find, and the culture's sacred plant growing by the path, where you see it within the first half minute.
 
 ```text
@@ -1753,7 +1753,7 @@ CHECK (headless): every exit pointing at a built ruin has a shrine mouth at that
 
 ## 101 — A compass on the HUD — §FW
 
-**Status:** built 22a4a49
+**Status:** built 8f8da27
 **Mike sees:** A thin strip at the top of the screen shows which way you face, N, E, S and W sliding past as you turn, the same north underground and on the surface. On the surface, small notches under it show which directions have a shrine leading on.
 
 ```text
