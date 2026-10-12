@@ -106,9 +106,11 @@ static func lay_out(lay: Dictionary) -> void:
 ## The rooms it may open from, the likeliest first: the spine's rooms past
 ## the hearth room (shuffled by the seed), then the heart, then the side
 ## ways' rooms. Floor one, never the hearth room, never a big room (its
-## doors are its archetype's).
+## doors are its archetype's), never the lair's room.
 static func _hosts(lay: Dictionary, rng: RandomNumberGenerator) -> Array:
 	var spine: Array = []
+	# Never the boss's lair room: its hole stands clear of that room's doors.
+	var lair_pc := int((lay.get("lair", {}) as Dictionary).get("piece", -1))
 	for id in lay.get("spine", []):
 		var pc: Dictionary = lay.pieces[int(id)]
 		if str(pc.kind) == "room" and not str(pc.get("room_kind", "")) in ["hearth", "heart"] and not pc.has("big_room") and int(pc.get("floor", 0)) == 0:
@@ -120,7 +122,7 @@ static func _hosts(lay: Dictionary, rng: RandomNumberGenerator) -> Array:
 	for bi in range(1, branches.size()):
 		for id in branches[bi]:
 			var pc: Dictionary = lay.pieces[int(id)]
-			if str(pc.kind) == "room" and not pc.has("big_room") and int(pc.get("floor", 0)) == 0 and str(pc.get("room_kind", "")) != "hearth":
+			if str(pc.kind) == "room" and not pc.has("big_room") and int(pc.get("floor", 0)) == 0 and str(pc.get("room_kind", "")) != "hearth" and int(pc.id) != lair_pc:
 				spine.append(pc)
 	return spine
 
@@ -133,7 +135,8 @@ static func _used(lay: Dictionary, pc: Dictionary, side: String) -> bool:
 
 
 ## What the room `pc` holds that a new door could move: its torches, a
-## crypt's coffins' rows, a catacomb's niches, its pillars.
+## crypt's coffins' rows, a catacomb's niches, a collapsed room's rubble, its
+## pillars.
 static func _room_things(lay: Dictionary, pc: Dictionary) -> String:
 	var parts: Array = []
 	for h in TombKit._room_sconces(lay, pc):
@@ -144,6 +147,10 @@ static func _room_things(lay: Dictionary, pc: Dictionary) -> String:
 		parts.append(str(TombKit.coffin_rows(lay, pc)))
 	if str(pc.get("room_kind", "")) == "catacomb":
 		parts.append(str(TombKit.niche_spots(lay, pc)))
+	# A collapsed room's fallen slab and rubble keep clear of its doors
+	# (TombBuild.collapse_for): they must not move onto anything either.
+	if str(pc.get("room_kind", "")) == "collapsed":
+		parts.append(str(TombBuild.collapse_for(lay, pc)))
 	parts.append(str(TombKit._pillars_aa(lay, pc)))
 	return "|".join(parts)
 

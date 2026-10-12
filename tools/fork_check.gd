@@ -4,8 +4,14 @@ extends SceneTree
 ##   SEED=7 godot --headless --path . --fixed-fps 60 --script tools/fork_check.gd
 ## FORK_SEEDS (env) sets how many seeds the layouts and the walks run over
 ## beyond 1, 7 and 42 (default 47: fifty in all, drawn from a fixed seed).
+## Since §FO.2 (queue 85) every ruin is one floor and this code is switched
+## off by data (ruin_loop.json floors.count 1); this check holds the count
+## at two (TombFloors.count_override) and the way up unsealed
+## (ruin_loop.json exit.sealed_until_home false) to keep the dormant code
+## tested; part 6 seals the way up, which since §FO.3 opens when the boss
+## is home (ruin_loop_check tests the game as shipped).
 ## Asserts:
-##  1. the layouts (fifty seeds): descent.json floors.count floors (two);
+##  1. the layouts (fifty seeds): two floors;
 ##     the stair down a door centred in a side wall of a floor-one room
 ##     near the far end of the spine (never the hearth room), a flight
 ##     straight on down floors.drop_m in whole modules, never spine; floor
@@ -40,10 +46,10 @@ extends SceneTree
 ##     ("fork_open"); the scene closed and Continue opens the same tomb with
 ##     the way down open at once, quiet (no grinding, no line), the doorway
 ##     open to you, the floor grid and the graph;
-##  6. fork.gate_surface true (a second scene): the way out's flight sealed
-##     at its foot too until floor one is lit (its doorway blocked, the
-##     way out not reached from the wake spot), then both seals open on the
-##     same tick, and the log's line once.
+##  6. exit.sealed_until_home true (a second scene): the way out's flight
+##     sealed at its foot too (its doorway blocked, the way out not reached
+##     from the wake spot), still sealed on the tick floor one is lit, then
+##     opening once the boss is down its lair (§FO.3), grinding, and gone.
 
 var fails := 0
 const DT := 1.0 / 60.0
@@ -79,6 +85,9 @@ func _run() -> void:
 	# exit.sealed_until_home false: never gated); the sealed case is the
 	# second scene, and ruin_loop_check's.
 	Fork.EXIT["sealed_until_home"] = false
+	# And no secret wing (§FO.4, queue 86): laid last on its own dice, it
+	# would differ between the one-floor and two-floor plans compared here.
+	SecretWing.S["on"] = false
 	WorldSave.read_only = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true

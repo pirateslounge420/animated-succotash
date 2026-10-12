@@ -946,6 +946,10 @@ func _ends_itself(main: CrawlerMain) -> void:
 
 func _gate(main: CrawlerMain) -> void:
 	var b := main.boss
+	# The way up's seal down, as once the boss has been home (§FO.3, queue
+	# 85: sealed until then, so the flight's foot would be shut to it).
+	if main.fork != null:
+		main.fork.open_exit(true)
 	var exits: Array = main.lay.get("exits", [])
 	var stair := -1
 	if not exits.is_empty():

@@ -68,6 +68,8 @@ func _run() -> void:
 	# ruin, ruin_loop.json floors.count 1) but kept: this check holds it to
 	# two floors so the dormant code stays tested.
 	TombFloors.count_override = 2
+	# No secret wing (§FO.4): this tests floor two's dormant fog alone.
+	SecretWing.S["on"] = false
 	WorldSave.read_only = true
 	Bow.need_capture = false
 	Residents.stay_asleep = true

@@ -254,7 +254,7 @@ func _plans(seeds: Array) -> Dictionary:
 					boss_ok = false
 		# The generic rooms: the kit's kinds.
 		for pc in pieces:
-			if str(pc.kind) != "room" or pc.has("big_room"):
+			if str(pc.kind) != "room" or pc.has("big_room") or bool(pc.get("secret", false)):
 				continue
 			var rk := str(pc.get("room_kind", ""))
 			if not (rk in ["hearth", "heart"] or kit_kinds.has(rk)):
@@ -289,7 +289,7 @@ func _plans(seeds: Array) -> Dictionary:
 	ok(host_ok, "the stair down never leaves a big room")
 	ok(boss_ok, "the snake's lair and its tunnels' holes never in a big room")
 	ok(lair_ok, "and every dungeon keeps its lair (§EY.1), in a room its tunnels start from (a tomb whose big rooms left it none is laid again: RoomPool.keeps_lair)")
-	ok(kinds_ok, "the generic rooms are the kit's (%s)" % str(kit_kinds.keys()))
+	ok(kinds_ok, "the generic rooms are the kit's (%s; the secret wing's plain rooms, §FO.4, aside)" % str(kit_kinds.keys()))
 	ok(overlap_ok, "no two pieces overlap except through a door")
 	print("  plans: %d ms; first seeds with each archetype %s" % [Time.get_ticks_msec() - t0, str(firsts)])
 	return firsts

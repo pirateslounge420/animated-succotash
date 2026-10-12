@@ -479,7 +479,7 @@ func _layouts(seeds: Array) -> void:
 				print("  seed %d: %s %d is %.2f m high, the style says %.2f" % [lay.seed, k, pc.id, pc.h, float(hs[hk])])
 			if k == "room":
 				kinds[str(pc.room_kind)] = int(kinds.get(str(pc.room_kind), 0)) + 1
-				if str(pc.room_kind) != "hearth":
+				if str(pc.room_kind) != "hearth" and not bool(pc.get("secret", false)):
 					rooms_n += 1
 					if int(in_room.get(int(pc.id), 0)) != _sconces_wanted(lay, pc):
 						holders_ok = false
@@ -490,7 +490,9 @@ func _layouts(seeds: Array) -> void:
 				for di in pc.doors:
 					var sd: Array = TombKit.door_side(pc, lay.doors[di])
 					walls.append(str(sd[0]))
-					if absf(float(sd[1])) > 0.01:
+					# (The secret opening may stand a module or two off its
+					# wall's middle where no centred one fits, §FO.4.)
+					if absf(float(sd[1])) > 0.01 and int(di) != int((lay.get("secret", {}) as Dictionary).get("door", -1)):
 						centred_ok = false
 						print("  seed %d: door %d sits %.2f m off the middle of room %d's %s wall" % [lay.seed, di, float(sd[1]), pc.id, sd[0]])
 				if walls.size() == 2:
@@ -521,7 +523,7 @@ func _layouts(seeds: Array) -> void:
 	ok(ends_ok, "no side way ends in a bare corridor: each ends in a room")
 	ok(module_ok, "every room's sides, every corridor and flight a whole number of the style's modules (%.1f m)" % float(TombKit.module_of("tomb")))
 	ok(heights_ok, "every ceiling one of the style's heights (masonry.json heights_m)")
-	ok(centred_ok, "every door centred on the wall it cuts")
+	ok(centred_ok, "every door centred on the wall it cuts (the secret opening aside where none centred fits)")
 	ok(facing_ok, "every spine room's two doors face each other (all two-door rooms: %d of %d facing)" % [facing_n, two_door])
 	ok(holders_ok, "every room past the hearth room has its wall sconces by the rule, and no hearth ring anywhere (§EX.4; %d rooms)" % rooms_n)
 	ok(spots_ok, "the mat, the bundle and the rescuer stand in the hearth room, clear of the hearth")
@@ -960,7 +962,8 @@ func _room_torches() -> void:
 					by_room[int(h.piece)] = []
 				(by_room[int(h.piece)] as Array).append(h)
 		for pc in lay.pieces:
-			if str(pc.kind) != "room" or str(pc.room_kind) == "hearth":
+			# (The secret wing's rooms have no torches of their own, §FO.4.)
+			if str(pc.kind) != "room" or str(pc.room_kind) == "hearth" or bool(pc.get("secret", false)):
 				continue
 			n_rooms += 1
 			var mine: Array = by_room.get(int(pc.id), [])
@@ -4297,8 +4300,12 @@ func _walk_tomb(main: CrawlerMain) -> Dictionary:
 	p.ui_open = false
 	# The stair down's seal gone, as when floor one is lit (design §FM.6, the
 	# fork: tools/fork_check.gd checks the seal shuts it until then).
+	# And the way up's seal and the secret wing's, as once the boss is home
+	# (design §FO.3, §FO.4: ruin_loop_check checks they shut them until then).
 	if main.fork != null:
 		main.fork.open_now(true)
+		main.fork.open_exit(true)
+		main.fork.open_secret(true)
 		await _frames(2)
 	var legs: Array = []
 	# A door: from its one side to its other, both ways. Not the way out's
