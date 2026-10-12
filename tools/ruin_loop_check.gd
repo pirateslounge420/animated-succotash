@@ -16,6 +16,18 @@ extends SceneTree
 ##     kept in the save (exit_open);
 ##  3. Continue: the same ruin, its way up open at once and quiet;
 ##  4. exit.sealed_until_home false: no seal, the way out open from the start.
+## And (queue 86, §FO.4, SecretWing):
+##  5. the layouts (the same hundred): exactly one secret wing, its pieces
+##     joined to the floor by one door only, that door not the way out's nor
+##     a spine door, opening off a room on a route (the spine, the heart or a
+##     side way), seen from that room's middle line past its pillars; no
+##     holder, airway or resident in the wing; the same seed the same plan;
+##     the floor's holders (its lit test) the same as with no wing;
+##  6. in the scene: the wing sealed before the boss is home (its doorway
+##     blocked, the floor grid finding no way to the scroll), open after
+##     (the grinding, the floor grid reaching the scroll); the scroll taken
+##     once (a second try takes nothing), kept in the save and the game's
+##     collection; Continue: the seal gone quiet and no scroll lying there.
 
 var fails := 0
 const DT := 1.0 / 60.0
@@ -44,6 +56,7 @@ func _run() -> void:
 	Torch.burn_down = false
 	var seed_v := int(OS.get_environment("SEED")) if OS.get_environment("SEED").is_valid_int() else 7
 	_layouts(_seeds())
+	_wings(_seeds())
 	OS.set_environment("SEED", str(seed_v))
 	await _exit_scene()
 	await _exit_kept()
@@ -91,6 +104,117 @@ func _layouts(seeds: Array) -> void:
 	print("   (layouts in %d ms)" % (Time.get_ticks_msec() - t0))
 
 
+# --- 5. The secret wing, laid out --------------------------------------------------
+
+func _wings(seeds: Array) -> void:
+	var t0 := Time.get_ticks_msec()
+	var one := 0
+	var joined := 0
+	var not_out := 0
+	var seen := 0
+	var empty := 0
+	var same := 0
+	var lit_same := 0
+	var rooms := {}
+	var hosts := {}
+	var off_mid := 0
+	var bad: Array = []
+	for s in seeds:
+		var lay := TombKit.layout(int(s))
+		var sec: Dictionary = lay.get("secret", {})
+		if sec.is_empty():
+			bad.append(s)
+			continue
+		one += 1
+		var wing := {}
+		for id in sec.pieces:
+			wing[int(id)] = true
+		var nr := 0
+		for id in sec.pieces:
+			if str(lay.pieces[int(id)].kind) == "room":
+				nr += 1
+		rooms[nr] = int(rooms.get(nr, 0)) + 1
+		# Joined by one door.
+		var links: Array = []
+		for d in lay.doors:
+			var a := wing.has(int(d.a))
+			var b := int(d.b) >= 0 and wing.has(int(d.b))
+			if a != b:
+				links.append(int(d.id))
+		if links.size() == 1 and int(links[0]) == int(sec.door):
+			joined += 1
+		var dd: Dictionary = lay.doors[int(sec.door)]
+		var host: Dictionary = lay.pieces[int(sec.host)]
+		var on_out := bool(dd.get("spine", false)) or dd.has("exit") or bool(host.get("exit", false))
+		for ex in lay.exits:
+			if int(ex.door) == int(dd.id) or int(ex.stair) == int(dd.b):
+				on_out = true
+		if not on_out:
+			not_out += 1
+		var key := "spine" if bool(host.get("spine", false)) and str(host.get("room_kind", "")) != "heart" else ("heart" if str(host.get("room_kind", "")) == "heart" else "side way")
+		hosts[key] = int(hosts.get(key, 0)) + 1
+		if _seen_from_route(lay, host, dd):
+			seen += 1
+		if absf(float(TombKit.door_side(host, dd)[1])) > 0.01:
+			off_mid += 1
+		var nothing := true
+		for h in lay.holders:
+			if wing.has(int(h.piece)):
+				nothing = false
+		for a in lay.airways:
+			if wing.has(int(a.piece)):
+				nothing = false
+		for r in lay.get("residents", []):
+			if wing.has(TombKit.piece_at(lay, r.pos)):
+				nothing = false
+		if nothing:
+			empty += 1
+		if str(TombKit.layout(int(s)).get("secret", {})) == str(sec):
+			same += 1
+		SecretWing.S["on"] = false
+		var bare := TombKit.layout(int(s))
+		SecretWing.S["on"] = true
+		if str(bare.holders) == str(lay.holders) and not bare.has("secret"):
+			lit_same += 1
+	var n := seeds.size()
+	ok(one == n, "%d seeds: every ruin has exactly one secret wing (%s rooms in it: %s)%s" % [n, "1 or 2", str(rooms), "" if bad.is_empty() else " (none: %s)" % str(bad)])
+	ok(joined == one, "joined to the floor by one opening only (%d of %d)" % [joined, one])
+	ok(not_out == one, "never on the way out (§EX.5): not the way out's door, not a spine door (%d of %d)" % [not_out, one])
+	ok(seen == one, "the opening opens off a room on a route (%s) and is seen from that room's middle line past its pillars (%d of %d; %d a module or two off its wall's middle, where no centred one fits)" % [str(hosts), seen, one, off_mid])
+	ok(empty == one, "no sconce, airway or resident in the wing: you carry your torch in (%d of %d)" % [empty, one])
+	ok(same == one, "the same seed gives the same plan (%d of %d)" % [same, one])
+	ok(lit_same == one, "the floor's holders, and so its lit test (§FF.2), the same as with no wing (%d of %d)" % [lit_same, one])
+	print("   (wings in %d ms)" % (Time.get_ticks_msec() - t0))
+
+
+## Is the opening `dd` in room `host`'s side wall seen from the room's
+## middle line (the route through it), at some point along it, past its
+## pillars' bases?
+func _seen_from_route(lay: Dictionary, host: Dictionary, dd: Dictionary) -> bool:
+	var pillars := TombKit._pillars_aa(lay, host)
+	var target := Delves.along_across(host, dd.p)
+	target.y = signf(target.y) * (absf(target.y) - 0.35)
+	var along := 0.6
+	while along < float(host.len) - 0.5:
+		var from := Vector2(along, 0.0)
+		var clear := true
+		for r: Rect2 in pillars:
+			if _seg_hits(from, target, r):
+				clear = false
+				break
+		if clear:
+			return true
+		along += 0.5
+	return false
+
+
+func _seg_hits(a: Vector2, b: Vector2, r: Rect2) -> bool:
+	for i in 41:
+		if r.has_point(a.lerp(b, float(i) / 40.0)):
+			return true
+	return false
+
+
 # --- 2. The way up, sealed until the boss is home --------------------------------
 
 func _open_scene() -> CrawlerMain:
@@ -126,6 +250,11 @@ func _exit_scene() -> void:
 	var ex: Dictionary = lay.exits[0]
 	var exp_: Vector3 = ex.p
 	ok(_blocked(main, sdd) and main.residents.nav.door_shut(sdd) and not _reaches(main, wk, exp_), "every torch cold: the way out's flight sealed at its foot (its doorway blocked, shut on the floor grid, no way from the wake spot to the way out)")
+	var sec: Dictionary = lay.get("secret", {})
+	var art: Vector3 = sec.get("artifact", Vector3.ZERO)
+	var wd: Dictionary = lay.doors[int(sec.get("door", 0))]
+	ok(fork.secret != null and _blocked(main, wd) and main.residents.nav.door_shut(wd) and not _reaches(main, wk, art) and main.secret_wing.scroll != null,
+		"the secret opening sealed from the start (a stone seal across it, shut on the floor grid, no way from the wake spot to the scroll lying at the wing's end)")
 	var hs := TombFloors.holders_on(lay, 0)
 	var last := int(hs[-1])
 	for i in hs:
@@ -148,6 +277,25 @@ func _exit_scene() -> void:
 	await _frames(3)
 	ok(fork.surface.is_gone and not _blocked(main, sdd) and not main.residents.nav.door_shut(sdd) and _reaches(main, wk, exp_), "gone in %.1f s: the doorway clear and the floor grid runs from the wake spot to the way out" % tg)
 	ok(bool(CrawlerSave.kept_value(CrawlerSave.place, "exit_open", false)), "kept in the game's save (exit_open: first time only, and kept)")
+	if fork.secret != null:
+		ok(fork.secret.opened and fork.secret.sounded == 1, "the boss home: the secret opening grinds open too (stone_seal)")
+		var ts := 0.0
+		while not fork.secret.is_gone and ts < 10.0:
+			await physics_frame
+			ts += DT
+		await _frames(3)
+		ok(fork.secret.is_gone and not _blocked(main, wd) and _reaches(main, wk, art), "gone: the floor grid runs from the wake spot through the opening to the scroll, the same floor, the same scene (no loading screen)")
+		var p := main.player
+		var ed: Vector2 = main.lay.pieces[int(sec.end)].dir
+		p.spawn_flat(art - Vector3(ed.x, 0.0, ed.y) * 1.0, 0.0, 0.0)
+		await _frames(3)
+		var log0 := GameLog.entries.size()
+		var first := main.secret_wing.take()
+		var second := main.secret_wing.take()
+		ok(first and not second and main.secret_wing.taken_count == 1 and main.secret_wing.scroll == null and _count(str(SecretWing.S.get("log_line", "")), log0) == 1,
+			"the scroll taken with the usual interact, once (a second try takes nothing), the log's plain line once")
+		ok(bool(CrawlerSave.kept_value(CrawlerSave.place, "secret_taken", false)) and SecretWing.collected().has(str(CrawlerSave.place)) and bool(CrawlerSave.kept_value(CrawlerSave.place, "secret_open", false)),
+			"kept in the save (secret_open, secret_taken) and in the game's collection (ruin_scrolls)")
 	await _close(main)
 
 
@@ -156,6 +304,8 @@ func _exit_kept() -> void:
 	var main := await _open_scene()
 	var fork := main.fork
 	var sd := Fork.surface_door(main.lay)
+	ok(fork != null and fork.secret != null and fork.secret.is_gone and fork.secret.sounded == 0 and main.secret_wing.scroll == null and main.secret_wing.taken,
+		"Continue: the secret opening open, quiet, and no scroll lying there (taken for good)")
 	ok(CrawlerSave.continued and fork != null and fork.exit_opened and fork.exit_open() and fork.surface.sounded == 0 and not _blocked(main, main.lay.doors[sd]), "Continue: the same ruin, its way up open at once and quiet (no grinding)")
 	await _close(main)
 
@@ -172,6 +322,14 @@ func _exit_unsealed() -> void:
 
 
 # --- Helpers ---------------------------------------------------------------------
+
+func _count(text: String, from: int) -> int:
+	var n := 0
+	for k in range(from, GameLog.entries.size()):
+		if str((GameLog.entries[k] as Dictionary).get("text", "")) == text:
+			n += 1
+	return n
+
 
 func _reaches(main: CrawlerMain, from: Vector3, to: Vector3) -> bool:
 	var path := main.residents.nav.path(from, to, false)

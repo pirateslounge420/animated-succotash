@@ -38,10 +38,18 @@ extends Node
 ## "exit_open" on exit_opened_now: first time only, §FO.3), and on
 ## Continue it is open at once, quiet (open_now(true), open_exit(true)).
 
+## The secret opening (design §FO.4, SecretWing; lay.secret.door): a
+## third seal of the same kind (ruin_loop.json secret.opening.kind
+## stone_seal), standing from the start, seen and not passed, until the
+## boss is first driven home (home()), whatever exit.sealed_until_home
+## says; then it sinks with the same grinding. Kept as "secret_open".
+
 ## The ways have just opened, in play (not from a save).
 signal opened_now
 ## The way up has just opened (the boss first driven home), in play.
 signal exit_opened_now
+## The secret opening has just opened, in play.
+signal secret_opened_now
 
 static var F: Dictionary = Tuning.table("descent").get("fork", {})
 ## ruin_loop.json exit (§FO.3).
@@ -54,6 +62,8 @@ var boss: Boss
 ## The seals: the way down's, and the way out's (gate_surface).
 var down: RelightGate
 var surface: RelightGate
+## The secret wing's seal (lay.secret), or null.
+var secret: RelightGate
 var gates: Array[RelightGate] = []
 ## The two ways are open (or opening): the floor's last light has caught,
 ## or a save said so.
@@ -85,6 +95,9 @@ func build(p_lay: Dictionary, p_fires: CrawlerFires, p_residents: Residents = nu
 		var sd := surface_door(lay)
 		if sd >= 0:
 			surface = _gate(sd)
+	var sec: Dictionary = lay.get("secret", {})
+	if not sec.is_empty():
+		secret = _gate(int(sec.door))
 	for g in gates:
 		for gr in _graphs():
 			(gr as BossGround).shut[int(g.door.id)] = true
@@ -158,6 +171,8 @@ func _physics_process(_delta: float) -> void:
 		open_now()
 	if not exit_opened and surface != null and home():
 		open_exit()
+	if secret != null and not secret.opened and home():
+		open_secret()
 
 
 ## Has the boss been driven home (§EY.2's release: the last light, and it
@@ -198,6 +213,16 @@ func open_exit(quiet := false) -> void:
 		surface.open(quiet)
 	if not quiet:
 		exit_opened_now.emit()
+
+
+## The secret opening opens (§FO.4), with the grinding (`quiet`: from a
+## save, gone at once). Once only.
+func open_secret(quiet := false) -> void:
+	if secret == null or secret.opened:
+		return
+	secret.open(quiet)
+	if not quiet:
+		secret_opened_now.emit()
 
 
 ## Is the way up open to walk (never sealed, or its seal gone)?

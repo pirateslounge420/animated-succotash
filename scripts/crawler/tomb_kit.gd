@@ -259,6 +259,10 @@ static func _layout(seed_value: int, theme: String, eager: bool) -> Dictionary:
 	# Floor two's own sconces, airways and residents (its own dice), and
 	# every fire's vent again with theirs (TombFloors.fill).
 	TombFloors.fill(lay)
+	# The secret wing (design §FO.4, SecretWing; its own dice, last, so
+	# nothing else moves): an opening off the main route onto a corridor and
+	# a room or two, sealed until the boss is first driven home.
+	SecretWing.lay_out(lay)
 	return lay
 
 

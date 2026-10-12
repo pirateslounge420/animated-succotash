@@ -199,6 +199,8 @@ var brew: Brew
 ## this dungeon's base layer (TomePages, the node "TomePages"), and the
 ## panel R reads what you hold in (TomePanel, "Tome").
 var tome_pages: TomePages
+## The secret wing's scroll (design §FO.4, SecretWing).
+var secret_wing: SecretWing
 var tome_panel: TomePanel
 
 
@@ -363,6 +365,15 @@ func _load_tomb(s: int, at := 0) -> void:
 	if not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
 		fork.open_exit(true)
 	fork.exit_opened_now.connect(func() -> void: CrawlerSave.keep(at, "exit_open", true))
+	# The secret opening (design §FO.4): sealed until the boss is first
+	# driven home, then kept open ("secret_open").
+	if bool(CrawlerSave.kept_value(at, "secret_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
+		fork.open_secret(true)
+	fork.secret_opened_now.connect(func() -> void: CrawlerSave.keep(at, "secret_open", true))
+	# Its scroll at the far end (SecretWing), unless taken already.
+	secret_wing = SecretWing.new()
+	add_child(secret_wing)
+	secret_wing.build(lay, player, at)
 	# Tomes as collected pages (design §FM.5, queue 73): the pages due at its
 	# base layer's hearts, but those you hold, laid once the stone is in the
 	# physics world.
@@ -391,7 +402,7 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
@@ -405,6 +416,7 @@ func _clear_tomb() -> void:
 	boss = null
 	fork = null
 	tome_pages = null
+	secret_wing = null
 	baked = false
 	TorchSnuff.drafts = null
 
@@ -928,7 +940,7 @@ func _toggle_settings(on: bool) -> void:
 ## fork, the pages lying on its base layer): what _clear_tomb frees. The
 ## fire pots stay with you.
 func _dungeon_nodes() -> Array:
-	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages]
+	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing]
 
 
 ## Up the stair into the day (design §FM.7; worlds.json surface.arrive): the
