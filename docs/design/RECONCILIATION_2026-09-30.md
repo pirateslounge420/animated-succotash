@@ -6070,3 +6070,108 @@ sound for her return.
 4. **Does the real brew run its vision on a later visit** until she shows up? Claude's guess: yes.
 5. Still open from §FR.5: how the hearth holds against her, skippability, meeting her in the halls before
    drinking, and the other cultures' cutscenes.
+
+## FV. Small surfaces, shrine tunnels between cultures, and nothing gating the way on — LOCKED (11 Oct, by voice, Mike; "Yeah, let's go ahead and lock it in.")
+
+Mike, 11 Oct, by voice: the surface "still feels a little bit empty"; "I didn't even find the mushroom to
+try to bring back to the shaman"; it should be "a lot smaller" and the plant "a little bit more obvious";
+"whenever you go to the surface there should be basically four cardinal directions … if we're starting at
+the Aztecs and you go south and you get to the Mayas, there's basically going to be like another shrine
+entrance to the south that you go into and then the tunnel starts, the architectural style starts moving
+from the Aztec to the Mayan"; "everything's going to be relative … if you spawn in the northern region,
+then all you can do is go south pretty much"; "each culture … their own shaman"; the Aztec loop as built
+("you get the torch, you go light up everything and you get the boss back") "feels kind of a dry loop … I
+want it to feel more ambient … more options to progress rather than just linear puzzle"; "little decisions
+affect things"; then "lock it in" to Claude's read-back. No number is settled; first guesses are in
+`data/ruin_compass.json → surface` and `→ tunnel` (new keys, not wired). Not built.
+
+### FV.0 What this touches in earlier locks (said out loud, not picked quietly)
+1. **Mostly confirms §FM.8:** the fixed compass, the same every playthrough, the first ruin random
+   (§FJ.1), every world from the game's seed (§FK.2). **And §FK.1:** no sphere in Torchfire 1.
+   *Correction:* in the voice chat Claude said the locked design still had the walkable sphere and asked
+   Mike to retire it; it was retired on 6–7 Oct (§ET.2, §EW.6, §FK.1). Only the Project brief still says
+   it (§FK.5 call 4).
+2. **Answers §FM.10 call 3** (does the compass walk replace §EW.3's underground passage?): they are one
+   thing. You walk to the edge of the surface in a direction, go down into a shrine there, and a tunnel
+   carries you to the next culture (FV.2). Amends prompt 74's "the open edge leads to the neighbour's
+   surface": the edge leads to a shrine, the shrine to a tunnel.
+3. **Narrows §EW.1's size and answers §EW.8 call 1 in direction:** much smaller than Claude's 1–2 km
+   guess (`worlds.json → size.across_m`). The number is still Mike's (FV.7 call 1).
+4. **In tension with §FO.3** (the way up opens only when the boss is first driven home; prompt 85, todo)
+   and with §FO.0.6. Mike agreed that nothing gates the way on (FV.5). Locked as said; whether §FO.3's
+   seal goes is FV.7 call 2. `ruin_loop.json → exit.sealed_until_home` (prompt 85) already lets it be
+   switched off by data.
+5. **§FG (atmosphere, not puzzles)** is confirmed and widened from the ruin's halls to the whole loop.
+
+### FV.1 A small surface where the plant is found
+- Each culture's surface is "way, way smaller" (Mike): a contained ruin site, not a stretch of land.
+  **Claude's first guess:** 200–300 m across, a minute or two edge to edge at a walk, so the four edges
+  (FV.2) are each near enough to see or sense from the middle.
+- **Fuller, not emptier:** the same things in less ground (§EF, §EG): the ruin, its plant stand, the
+  shrine mouths, a few things to find, the ambient life (§EW.1).
+- **The sacred plant is easy to come on** (Mike, who never found the mushroom). Claude's first guess: one
+  stand of it grows by the path between the stair up and one shrine mouth, in sight within the first
+  half minute, where its real habitat allows (§FM.9; a mushroom on the shaded rotting wood by the path).
+  It never glows (R-rules: only things that give off light glow) and nothing marks it on the HUD.
+
+### FV.2 Shrine mouths and the tunnel between cultures
+- Each direction the compass opens (`ruin_compass.json → exits`) has **a shrine entrance at that edge of
+  the surface** (Mike). Directions with no neighbour stay closed by the land (§DM). Under the shrine
+  begins a tunnel to the neighbour.
+- **The tunnel changes as you walk** (Mike): it starts in this culture's stone and builds and ends in the
+  next culture's, Aztec basalt and tezontle giving way to Maya limestone. Claude's first guess: three
+  stretches, this side's style, a mixed middle where the two meet, the far side's; the change shows in the
+  stone (§EX.1's one stone per ruin holds inside each ruin; the tunnel is the one place two meet).
+- The tunnel is §EW.3's seam: it hides the load, and coming out is the reveal (§BB). It comes up through
+  the far culture's shrine mouth on the opposite edge (go south, arrive at the north edge).
+- **Claude's readings, flagged:** the tunnel is walked in the dark like any passage (the torch, §EZ); it
+  holds no boss and no residents (FV.7 call 4); walked back it changes the other way.
+
+### FV.3 Relative and fixed: the compass
+- "Everything's relative" (Mike): a culture's exits are only toward its real neighbours. Start at the
+  north end of the known world and the only way on is south. **Confirms** `ruin_compass.json → exits`.
+- **Fixed every playthrough; the start is random** (Mike), confirming §FM.8 and §FJ.1.
+- **The roster grows (Mike):** north of the cliff dwellers the **plains**, and north again the
+  **tundra**; east of the Aztec the **swamp** (as §FM.8); south Maya, Inca, then the **Amazon** (as
+  §FM.8); across into **Africa's peoples** and **Egypt**. Added to `ruin_compass.json` as `plains` and
+  `tundra` (status `invented_placement`, no plant chosen).
+- **Flags:** (a) Mike said "north, it'll be like the Anasazi"; §FM.8 has peyote country between the Aztec
+  and the Pueblo. Kept as locked on 9 Oct (FV.7 call 3). (b) "Plains or some type of tundra": read as
+  plains then tundra. (c) The taiga ruin (fly agaric) is still unplaced; it may belong north of or beside
+  the tundra (FV.7 call 5). (d) Africa: Great Zimbabwe already sits east of the Inca; Egypt is still
+  unplaced (§FO.1). (e) The Gulf South swamp sits in the US Southeast, so it lies east of the Pueblo as
+  well as the Aztec; Mike said "east from the Anasazi or the … Aztecs"; kept east of the Aztec only.
+
+### FV.4 A shaman in every culture
+- Each culture has its own shaman at its hearth with its own sacred plant and brew (Mike). **Confirms**
+  §FM.7 and the per-culture shaman table; the swamp's false shaman (§FR, §FU) stays the exception.
+
+### FV.5 Nothing gates the way on
+- The loop as built ("get the torch, light everything, drive the boss back") "feels kind of a dry loop"
+  (Mike). **Locked:** the shrine mouths and tunnels onward are open from the start; no harvest, brew,
+  boss or lit room is a key to the next culture. You go as far as your light and your nerve take you.
+- **The shaman's ritual is optional:** a thing you can do, never a thing you must do.
+- What pulls you on is the dark, the horizon (§EW.5) and the next hearth to borrow a flame from (§AW).
+- The ruin below (its torches, its boss, §EY) stays as built; only its use as a gate is in question
+  (FV.0.4).
+
+### FV.6 Small choices leave quiet traces
+- "Little decisions affect things" (Mike). Nothing announced: no chime, no text, no quest log.
+- **Claude's first guesses, not Mike's words:** a hearth you helped stays lit on your next visit; a trail
+  you cleared stays clear; a mute traveller on the road nods. Kept for good on the save (§FK.2).
+
+### FV.7 Open for Mike
+1. **A surface's size** (FV.1; first guess 200–300 m).
+2. **Does §FO.3's seal stay?** Does the way up from a ruin wait for the boss driven home, or is it open
+   from the start like the shrine tunnels (FV.0.4)? Claude's reading of "nothing gating": open from the
+   start, with the boss and the torches left as the ruin's life, not its lock.
+3. **Peyote country between the Aztec and the Pueblo, or not** (FV.3a)?
+4. **The tunnels: empty and safe, or a stretch of the dark with its own life** (FV.2)?
+5. **Where the taiga and Egypt sit** on the compass (FV.3c, d).
+6. **Which small choices leave traces,** and the Project brief's sphere line (§FK.5 call 4).
+
+### FV.8 Order of work
+`docs/PROMPT_QUEUE.md` **99** (new): a smaller surface with its plant in sight, any time (71 is built).
+**100** (new): the shrine mouths and the tunnel that changes between two cultures; it takes over the
+walk half of 74 and waits for a second culture's ruin to be built with its surface (95, the Maya, or 89,
+Egypt).

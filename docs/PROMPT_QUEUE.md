@@ -28,6 +28,8 @@ engine only §DM.1 (the hard grade cap) is built, as `e4ba236`. §DM.2–6 and �
 
 Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oct). 44–48 are §EX, Mike's notes from playing the first dungeon (6 Oct night), Torchfire 1: do them in order, before §EW.7 step 2. 49 is §EY, the boss in every dungeon (6 Oct night): after 48. 50–51 are §EZ, the torch (6 Oct night): 50 (only water puts it out) is small and can run any time; 51 after 44. 52–61 are §FA–§FH, fire fights back, sneaking and what lurks (6 Oct, 22:32): 52, 53, 54 (after 50), 55 and 61 any time; 56, 57, 58 after 49, in that order; 59 after 58; 60 after 55, 57 and 58. 62 is §FJ (6 Oct, 22:52), torches burning down again: after 50 (whose no-burn-down step §FJ withdrew). 63 is §FK (7 Oct, 00:39), one world per new game, kept for good: after 46 (it replaces 46's new-seed stand-in with a seed drawn from the game's). 64 is §FL.2 (undone by Mike's 7 Oct evening correction; nothing to build). 65–74 are §FM (9 Oct, Mike by voice; bones only): 65 the boss pool, then 66 the snake's states; 67 the shaman and cauldron any time; 68 floors and the fork, then 69 fog, 70 the room pool and 73 tomes as pages (all after 68); 71 the tomb's surface (after 63 and 68). **Rows marked `waits` are not `todo`: 72 waits for 67 and 71 (its plant entries are written, §FM.9) and 74 for a second world and Mike's answers to §FM.10 calls 1 and 3. Do not start a `waits` row.** 75–77 are §FM.13, three new plant shapes (mushroom, globe cactus, bulb): any time, any order. The other ruins of the compass are in docs/design/RUIN_ROSTER_REFERENCE.md and data/ruin_compass.json, reference only, and have no queue rows. 78–84 are §FN (10 Oct, Mike by voice; bones plus what he specified): 78 the snake's plumes and rattle and 79 the Aztec stone any time; 80 the Aztec temple as a ruin kind with its two fixed chambers (after 79); 81 a third floor any time; 84 the surface pyramid (after 79 and 80). **82 waits for Mike's answer to §FN.8 call 1 (which biome world the Aztec ruin sits in, since the mushroom must grow where it grows) and 83 waits for 80 and 82. Do not start a `waits` row.**
 
+99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.**
+
 | # | § | Prompt | Status |
 |---|---|---|---|
 | 1 | §DA (part 1 of 3) | Wind I: the gust field and the plants | built cfd6f6d |
@@ -103,7 +105,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 71 | §FM.7 | The tomb's surface: day and night above the stair | built 0181fcf |
 | 72 | §FM.7 | Harvest and brew: a plant from above, a brew from the shaman | built 376cf23 |
 | 73 | §FM.5 | Tomes as collected pages: found on the base layer | built 1bff283 |
-| 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 calls 1, 3) |
+| 74 | §FM.8 | The compass walk and the reference map | waits (a second world; §FM.10 call 1); its walk is now 100 (§FV.2), its map stays here |
 | 75 | §FM.13 | A mushroom shape: a cap on a stalk | built 431c230 |
 | 76 | §FM.13 | A globe cactus shape: a low button in the ground | built d2c2859 |
 | 77 | §FM.13 | A bulb shape: a fan of leaves on a bulb, and its flower head | built ea48c3c |
@@ -128,6 +130,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
 | 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | todo |
 | 98 | §FR.2, §FT | The swamp's false shaman: a jimsonweed brew, the witch's reveal and the cackle | waits (83, 97, the swamp world, and the witch built as a boss) |
+| 99 | §FV.1 | A smaller surface, its sacred plant in sight | todo |
+| 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | waits (a second culture's ruin with its surface) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1714,4 +1718,34 @@ READ: §FR.0 to §FR.5, §FS.3, §FT, §FU and §FE.3; data/shaman_ritual.json (
 BUILD: (1) In the swamp world only, the hearth's shaman is a young woman, drawn on the one shared rig, wordless. (2) Through prompt 97's lock: the change builds across build_s while you drink, she gets up and turns her back for back_turned_s, and turns round as the old witch standing reveal_m from you. (3) The cackle: a creaky SoundSynth voice, played as a sting at the reveal and kept as her tell through the chase. (4) The reveal ignites her existing snap_then_chase behaviour (bosses.json → swamp); it is not a hit, not a grab, and the camera is yours again as she comes. (5) The repeat visit (§FU): the whole sequence runs on the first brew only; a later brew starts with nobody at the hearth and, with the data's return_chance, she appears partway through already the witch, with no slow build, the cackle and the chase. Who serves a later brew and the camera lock at her return are Mike's calls (§FU.5): use the data's first guesses and say so. The hearth hold (§FR.5 call 3) stays null in data: build the first-brew case, a real brew (§FT, superseding §FS.3): the swamp's plant is jimsonweed (sacred_plants.json → jimsonweed; it is shaped and drawn as the shrub it is and grows on the swamp's surface where its habitat allows, floodplain and river bank), harvested and brewed as for the other cultures, and its vision runs through prompt 83's filter in a marsh green with no phantom figures (Mike's call, §FT.5 call 2; say so). The game never says whether her change is real or the drug's. The hearth as a lit room she may follow you out of (§FD chase_enters_light), and say so to Mike. Her strikes are hits and three end in Good night (§FD).
 
 CHECK (headless): the sequence runs in order on the swamp's first brew and on no other world; on a later brew nobody is at the hearth at the start and she appears already the witch (at return_chance over many seeds), with no build; no harm counter moves until her first strike; the cackle plays at the reveal and again as her tell through the chase; her chase speed is her chase_mps; wake at the hearth is unchanged; the boss checks and crawler_harm_check pass. Walkabout once: sip, the change, the turn, the cackle, and run.
+```
+
+## 99 — A smaller surface, its sacred plant in sight — §FV.1
+
+**Status:** todo
+**Mike sees:** Come up the stair and the surface is a small, full place, not a big empty one. The ruin, a few things to find, and the culture's sacred plant growing by the path, where you see it within the first half minute.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this any time (71 is built). This pass builds ONE thing: design §FV.1, the smaller surface and the plant in sight. No shrine mouths or tunnels (100), no map. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FV.0, §FV.1, §FV.7 call 1; §EW.1, §EF, §EG, §FM.7, §FM.9; data/ruin_compass.json → surface and _help.fv; data/worlds.json → size; data/sacred/sacred_plants.json; the surface built in prompt 71 and the harvest of prompt 72 if built.
+
+BUILD: (1) The surface's size reads ruin_compass.json surface.across_m (first guess 200–300 m, Claude's, not Mike's number) where worlds.json size.across_m is read now; leave worlds.json's value in place with a _help line naming §FV.1. The land itself still closes it, never an invisible wall (§DM). (2) The same contents in the smaller ground, composed (§EF, §EG): the ruin, the stair, the ambient life, the things to find. (3) One stand of the ruin's sacred plant grows by the path from the stair, in sight within surface.plant_stand.in_sight_within_s at a walk, on ground its habitat allows (shaded rotting wood for a mushroom). It never glows and nothing on the HUD marks it. If the ruin's plant is not drawable yet, say so and leave the stand's place empty.
+
+CHECK (headless): over 20 seeds the surface is within across_m and walking out from the stair in any direction meets the land's edge, never void; the plant stand exists, sits within the path's view, and the time to walk from the stair to it is under in_sight_within_s; surface_check passes or is updated (name each change). Walkabout once at noon and once at night.
+```
+
+## 100 — Shrine mouths and the tunnel that changes from one culture to the next — §FV.2, §FV.5
+
+**Status:** waits (a second culture's ruin built with its surface)
+**Mike sees:** At each open edge of a surface stands a shrine. Go in and a tunnel leads on; the stone around you slowly turns from this culture's into the next one's, and you come up through a shrine on the far side, in a new place. Nothing has to be done first.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this only once a second culture's ruin is built with its surface (95 the Maya or 89 Egypt, plus its surface). If none is, say so to Mike and stop. This pass builds ONE thing: design §FV.2 and §FV.5, the shrine mouths and the tunnel between two neighbouring cultures. It takes over the walk half of prompt 74; 74's reference map is not built here. Torchfire 1, the crawler. No screenshots after every step: check with headless numbers, and look once at the end with the walkabout (§CA). Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, take [NOT WIRED YET] off ruin_compass.json _help.about for the parts you wire, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changes and what he can tune.
+
+READ: §FV (all), §FM.8, §EW.3, §FK.2, §EX.1, §FO.3 and §FV.7 call 2; data/ruin_compass.json (exits, tunnel, walk) and RUIN_ROSTER_REFERENCE.md; data/worlds.json → links; data/masonry.json (each culture's stone); data/ruin_loop.json → exit; the built surfaces and way_out.gd.
+
+BUILD: (1) On each surface, a shrine mouth at the edge for every exit in ruin_compass.json whose neighbour is built; edges with no built neighbour stay closed by the land (§DM). (2) The mouth leads down into a tunnel to the neighbour, with three stretches from ruin_compass.json tunnel.stretches: this culture's masonry style, a mixed stretch, the next culture's. It is the load seam (§EW.3): the next world loads behind it. (3) The tunnel comes up through the neighbour's shrine mouth on the opposite edge (go south, arrive at the north edge) and walks back the other way. (4) Nothing gates it (tunnel.gated false): no harvest, brew, boss or lit room is needed. No boss in the tunnel; residents follow tunnel.residents (open: none for now, and say so). (5) Do not change ruin_loop.json exit.sealed_until_home; that is Mike's call (§FV.7 call 2). The first ruin stays random and every inside still comes from the game's seed.
+
+CHECK (headless): every exit pointing at a built ruin has a shrine mouth at that edge and arrives at the opposite edge of the neighbour; walking back returns to the first surface with its state kept (lit stays lit, after a save and Continue); the tunnel's stone changes in the three stretches in order both ways; the tunnel is open on a fresh game with nothing done; exits pointing at unbuilt ruins stay closed by the land. Walkabout once: Aztec south to the Maya and back.
 ```
