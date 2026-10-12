@@ -116,9 +116,9 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 82 | §FN.5 | The Aztec brew plant becomes teonanácatl | waits (Mike's answer to §FN.8 call 1) |
 | 83 | §FN.5 | The vision filter: palette, hidden carvings, glowing and moving glyphs | waits (80 and 82) |
 | 84 | §FN.4 | The Aztec pyramid on the surface | todo (after 79 and 80) |
-| 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | todo |
-| 86 | §FO.4 | The secret opening, its room and the tome | todo (after 85) |
-| 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | waits (86) |
+| 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | built 1df9350 |
+| 86 | §FO.4 | The secret opening, its room and the tome | built 882b0e7 |
+| 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | built 60951ab |
 | 88 | §FO.1 | The Egyptian stone: big sandstone blocks | built 563c425 |
 | 89 | §FO.1 | The Egyptian ruin and the pharaoh in its sarcophagus | waits (87, 88, and Mike's answer to §FO.9 call 2) |
 | 90 | §FP.1 | Scarabs: ambient skitterers in the Egyptian ruin | waits (89) |
@@ -1513,7 +1513,7 @@ CHECK (headless): with enabled false, surface_check passes with the same counts;
 
 ## 85 — One floor per ruin, and the way up opens when the boss is first driven home — §FO.2, §FO.3
 
-**Status:** todo
+**Status:** built 1df9350 (with 4dbfa75, 73450cc)
 **Mike sees:** Every ruin is one floor. Light every torch and the boss goes home to its lair; the stone grinds and the way up to the surface opens. There is no stair down and no darker second floor.
 
 ```text
@@ -1528,7 +1528,7 @@ CHECK (headless): over 100 seeds every dungeon is one floor with no stair down a
 
 ## 86 — The secret opening, its room and the tome — §FO.4
 
-**Status:** todo (after 85)
+**Status:** built 882b0e7 (with 5dadcb1, 33da95d)
 **Mike sees:** A sealed way you can see from the start. When the boss goes home it grinds open onto rooms joined to the ruin, with no loading screen, and at the end lies a scroll or tome you can take. Taking it does nothing else yet.
 
 ```text
@@ -1543,7 +1543,7 @@ CHECK (headless): over 100 seeds every ruin has exactly one secret wing, joined 
 
 ## 87 — Phase two: the blackout, and the boss's angry round — §FO.5, §FO.6
 
-**Status:** waits (86)
+**Status:** built 60951ab (with 33da95d)
 **Mike sees:** Take the tome and every flame in the ruin goes out, the hearth and your own torch too, and nothing can be relit. The boss comes out again, faster and meaner, and you run for the exit on whatever light the place has without fire. The snake does it first.
 
 ```text
