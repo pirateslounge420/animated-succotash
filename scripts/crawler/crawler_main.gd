@@ -201,6 +201,8 @@ var brew: Brew
 var tome_pages: TomePages
 ## The secret wing's scroll (design §FO.4, SecretWing).
 var secret_wing: SecretWing
+## Phase two's blackout (design §FO.5, Blackout).
+var blackout: Blackout
 var tome_panel: TomePanel
 
 
@@ -374,6 +376,15 @@ func _load_tomb(s: int, at := 0) -> void:
 	secret_wing = SecretWing.new()
 	add_child(secret_wing)
 	secret_wing.build(lay, player, at)
+	# Phase two (design §FO.5, §FO.6; Blackout): taking the scroll puts out
+	# every flame and sends the boss out again, angry; kept in the save
+	# (phase_two.save), so Continue loads the dark.
+	blackout = Blackout.new()
+	add_child(blackout)
+	blackout.build(fires, boss, player, at)
+	secret_wing.taken_now.connect(func() -> void: blackout.start())
+	if Blackout.kept() and bool(CrawlerSave.kept_value(at, "blackout", false)):
+		blackout.start(true)
 	# Tomes as collected pages (design §FM.5, queue 73): the pages due at its
 	# base layer's hearts, but those you hold, laid once the stone is in the
 	# physics world.
@@ -402,7 +413,7 @@ func _clear_tomb() -> void:
 	# The drips back as they were before its prowl hushed them.
 	if boss != null and is_instance_valid(boss) and drips != null:
 		drips.volume_db = boss.bed_db
-	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing]:
+	for n in [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout]:
 		var node := n as Node
 		if node == null or not is_instance_valid(node):
 			continue
@@ -417,6 +428,7 @@ func _clear_tomb() -> void:
 	fork = null
 	tome_pages = null
 	secret_wing = null
+	blackout = null
 	baked = false
 	TorchSnuff.drafts = null
 
@@ -774,8 +786,10 @@ func _physics_process(_delta: float) -> void:
 			_lit_logged[f] = c.x
 			caught = true
 			GameLog.add("%d of %d lights burn again." % [c.x, c.y], "relit")
-	if caught:
-		# Kept for good in this game's save, written now (§FK.2).
+	if caught and not (blackout != null and is_instance_valid(blackout) and blackout.active):
+		# Kept for good in this game's save, written now (§FK.2). (Never in
+		# the blackout, §FO.5: the relit holders stay kept as they were, so
+		# phase_two.save false brings them back on Continue.)
 		CrawlerSave.keep_relit(CrawlerSave.place, CrawlerSave.relit_now(fires))
 
 
@@ -868,7 +882,11 @@ func _on_taken() -> void:
 	boss.after_wake()
 	# Every skeleton after you gives you up and goes home (§FD).
 	residents.player_woke()
-	GameLog.add("Taken in the dark. You wake by the hearth, and every light you lit still burns.", "death_cause")
+	if blackout != null and is_instance_valid(blackout) and blackout.active:
+		# Phase two (§FO.5): you wake by the hearth as built, and it is cold.
+		GameLog.add(str(Blackout.P2.get("wake_line", "Taken in the dark. You wake by the cold hearth, in the dark.")), "death_cause")
+	else:
+		GameLog.add("Taken in the dark. You wake by the hearth, and every light you lit still burns.", "death_cause")
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
 	tw.tween_callback(func(): _fade.visible = false)
@@ -940,7 +958,7 @@ func _toggle_settings(on: bool) -> void:
 ## fork, the pages lying on its base layer): what _clear_tomb frees. The
 ## fire pots stay with you.
 func _dungeon_nodes() -> Array:
-	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing]
+	return [tomb, fires, vents, airways, way_out, glow_moss, wall_life, residents, rescuer, cauldron, boss, fork, tome_pages, secret_wing, blackout]
 
 
 ## Up the stair into the day (design §FM.7; worlds.json surface.arrive): the

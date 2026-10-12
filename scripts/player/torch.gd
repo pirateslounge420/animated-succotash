@@ -494,8 +494,9 @@ func pass_flame() -> String:
 
 func light(line := "Lit a torch from a flame.") -> void:
 	var it := item()
-	# A burnt-out stick never catches again (§FJ.4).
-	if it.is_empty() or bool(it.get("burnt", false)):
+	# A burnt-out stick never catches again (§FJ.4); nor anything in the
+	# crawler's blackout (§FO.5, FireStore.blackout).
+	if it.is_empty() or bool(it.get("burnt", false)) or FireStore.blackout:
 		return
 	it["lit"] = true
 	snuff.reset()

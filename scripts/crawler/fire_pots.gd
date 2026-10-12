@@ -383,6 +383,9 @@ func _physics_process(delta: float) -> void:
 
 ## The wick catches off the torch: lit, the fuse running, a flare.
 func _catch(pot: Dictionary) -> void:
+	# A fire pot cannot be lit in the blackout (§FO.5).
+	if FireStore.blackout:
+		return
 	pot["lit"] = true
 	_set_state("aiming")
 	charge = 0.0

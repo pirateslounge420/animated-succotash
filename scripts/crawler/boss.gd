@@ -275,6 +275,15 @@ var _rng := RandomNumberGenerator.new()
 var lair: Dictionary = {}
 var lair_node := -1
 var released := false
+## Its angry round (design 10 Oct §FO.5, §FO.6; ruin_loop.json phase_two.boss;
+## Blackout): every speed of its own (every bosses.json key ending _mps,
+## read through num) times anger_mult, for any boss, one code path.
+var angry := false
+var anger_mult := 1.0
+## Seconds left before it comes up out of its lair again (-1: not waiting).
+var emerge_t := -1.0
+## Times it came out again (the checks).
+var emerged := 0
 var _bed_t := -1.0
 ## How fast it is leaving the light now (m/s; _leave).
 var _leave_mps := 4.0
@@ -522,9 +531,14 @@ func _hole_mouths() -> void:
 		mi.global_position = c
 
 
-## The numbers (bosses.json bosses.<key>), with first-guess defaults.
+## The numbers (bosses.json bosses.<key>), with first-guess defaults; in
+## its angry round (§FO.6) every speed (a key ending _mps) times
+## anger_mult.
 func num(k: String, dflt: float) -> float:
-	return float(def.get(k, dflt))
+	var v := float(def.get(k, dflt))
+	if angry and k.ends_with("_mps"):
+		v *= anger_mult
+	return v
 
 
 func sub(k: String) -> Dictionary:
@@ -1194,6 +1208,11 @@ func tick(delta: float) -> void:
 		# residents' physics steps.)
 		light.refresh()
 	if state == "lair" or state == "gone":
+		if emerge_t >= 0.0:
+			emerge_t -= delta
+			if emerge_t < 0.0:
+				_emerge()
+				return
 		_bed_tick(delta)
 		_sound_tick(delta)
 		return
@@ -2293,6 +2312,52 @@ func _in_view() -> bool:
 		if cam.is_position_in_frustum(p) and not _blocked(cam.global_position, p, false):
 			return true
 	return false
+
+
+# --- Phase two: its angry round (design 10 Oct §FO.5, §FO.6) ----------------------
+
+## The blackout (Blackout): it is angry from now on (every speed times
+## `mult`); down its lair (or home in its tunnels) it comes out again after
+## `after_s` (counted while it is home). Out already, it is simply angry.
+## Never beaten (§FM.1): no other rule changes.
+func anger(mult: float, after_s: float) -> void:
+	angry = true
+	anger_mult = maxf(mult, 0.01)
+	# The hearth is out too: its room is no longer closed to it.
+	if ground != null:
+		ground.hearth_dark = true
+	_lit_n = -1
+	# (Counted down only while it is home: a Continue in the dark finds it
+	# home only once _start_far has run.)
+	emerge_t = maxf(after_s, 0.0)
+
+
+## Out again (§FO.5: the release reversed): the light worked out afresh
+## (none burns: every room is its ground again, none closed to it), its
+## long cry travelling up out of its hole, and up the shaft onto the floor
+## (from its tunnels where it has no lair), then on its rounds.
+func _emerge() -> void:
+	emerge_t = -1.0
+	emerged += 1
+	released = false
+	_bed_t = -1.0
+	_lit_n = -1
+	_refresh(true)
+	if _breath != null:
+		_breath.stop()
+	if not lair.is_empty():
+		_cry.global_position = (lair.pos as Vector3) - Vector3(0.0, 1.2, 0.0)
+	else:
+		_cry.global_position = head
+	Audio3D.play(_cry)
+	body.visible = true
+	GameLog.add(str(Blackout.P2.get("emerge_line", "Something comes up out of the dark.")), "boss")
+	if lair.is_empty():
+		node = ground.node_at(base)
+		state = "coil"
+		_next_round()
+		return
+	_rise_up()
 
 
 # --- You were taken --------------------------------------------------------------

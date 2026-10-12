@@ -29,6 +29,13 @@ static var SWING_LOG: Dictionary = (Tuning.table("torch").get("swing", {}) as Di
 static var stores := {}
 ## Fires to tell the log about, once each: key -> last state logged.
 static var _logged := {}
+## The crawler's phase two (design 10 Oct §FO.5, Blackout; ruin_loop.json
+## phase_two.blackout.relight false): while true nothing catches: the
+## swing lights no fire (swing_light, relight: "no_fuel"), a torch does
+## not catch (Torch.light), a planted torch does not relight
+## (PlantedTorch.relight), a fire pot's wick does not catch (FirePots).
+## Only the Blackout node sets it, while its dungeon is in the tree.
+static var blackout := false
 
 
 ## A stable key for the fire at surface direction `d` (about 3 m cells).
@@ -239,6 +246,8 @@ static func add_fuel(fire: Node3D, it: Dictionary, days: float) -> String:
 ## A lit torch held to embers or a dead fire. Returns "ok", "no_fuel"
 ## (nothing there to burn) or "lit" (it was burning already).
 static func relight(fire: Node3D) -> String:
+	if blackout:
+		return "no_fuel"
 	var st := store_of(fire)
 	if st.is_empty() or str(st.state) in ["flames", "low"]:
 		return "lit"
@@ -287,6 +296,8 @@ static func is_laid(fire: Node3D) -> bool:
 ## embers with nothing to burn; "lit": burning already. `days`: the world
 ## clock (kindling dries).
 static func swing_light(fire: Node3D, days: float) -> String:
+	if blackout:
+		return "no_fuel"
 	var st := store_of(fire)
 	if st.is_empty() or str(st.state) in ["flames", "low", "flare", "catching"]:
 		return "lit"

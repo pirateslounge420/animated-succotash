@@ -28,6 +28,17 @@ extends SceneTree
 ##     (the grinding, the floor grid reaching the scroll); the scroll taken
 ##     once (a second try takes nothing), kept in the save and the game's
 ##     collection; Continue: the seal gone quiet and no scroll lying there.
+## And (queue 87, §FO.5, §FO.6, Blackout):
+##  7. taking the scroll: every flame out (no holder, no hearth, no torch in
+##     hand, the lit-holder count zero, no flame anywhere), and nothing can
+##     be lit (the swing at a sconce and at the hearth, a torch at the cold
+##     hearth, a fire pot's wick); the boss comes up out of its lair after
+##     phase_two.boss.emerge_after_s, its hunt its own times speed_mult and
+##     still under your sprint, every room its ground (none closed to it, the
+##     hearth's too); the way up open and reached on foot from the hearth with
+##     no flame; three hits and Good night, and you wake by the cold hearth in
+##     the dark; kept in the save, so Continue loads the dark with the boss
+##     angry.
 
 var fails := 0
 const DT := 1.0 / 60.0
@@ -296,6 +307,7 @@ func _exit_scene() -> void:
 			"the scroll taken with the usual interact, once (a second try takes nothing), the log's plain line once")
 		ok(bool(CrawlerSave.kept_value(CrawlerSave.place, "secret_taken", false)) and SecretWing.collected().has(str(CrawlerSave.place)) and bool(CrawlerSave.kept_value(CrawlerSave.place, "secret_open", false)),
 			"kept in the save (secret_open, secret_taken) and in the game's collection (ruin_scrolls)")
+		await _phase_two(main, fork.surface.door)
 	await _close(main)
 
 
@@ -306,6 +318,8 @@ func _exit_kept() -> void:
 	var sd := Fork.surface_door(main.lay)
 	ok(fork != null and fork.secret != null and fork.secret.is_gone and fork.secret.sounded == 0 and main.secret_wing.scroll == null and main.secret_wing.taken,
 		"Continue: the secret opening open, quiet, and no scroll lying there (taken for good)")
+	ok(main.blackout != null and main.blackout.active and FireStore.blackout and main.fires.lit_count() == 0 and not FireStore.is_lit(main.fires.hearth) and main.boss.angry,
+		"Continue mid-blackout (phase_two.save %s): the dark loaded, no holder or hearth lit, nothing lights (%d relit kept in the save as they were), the boss angry" % [str(Blackout.kept()), (CrawlerSave.dungeon(CrawlerSave.place).get("relit", []) as Array).size()])
 	ok(CrawlerSave.continued and fork != null and fork.exit_opened and fork.exit_open() and fork.surface.sounded == 0 and not _blocked(main, main.lay.doors[sd]), "Continue: the same ruin, its way up open at once and quiet (no grinding)")
 	await _close(main)
 
@@ -319,6 +333,88 @@ func _exit_unsealed() -> void:
 	ok(main.fork.surface == null and not _blocked(main, main.lay.doors[sd]) and _reaches(main, wk, main.lay.exits[0].p), "exit.sealed_until_home false: no seal, the way out open from the start as built before (§EX.5)")
 	Fork.EXIT["sealed_until_home"] = was
 	await _close(main)
+
+
+# --- 7. Phase two ------------------------------------------------------------------
+
+func _phase_two(main: CrawlerMain, exit_door: Dictionary) -> void:
+	var fires := main.fires
+	var boss := main.boss
+	var bo := main.blackout
+	var t_fell := 0.0
+	ok(bo != null and bo.active and bo.put_out > 0, "the scroll taken: the blackout comes down (%d flames put out)" % (bo.put_out if bo != null else 0))
+	await _frames(2)
+	var any_lit := FireStore.is_lit(fires.hearth)
+	for h in fires.holders:
+		if FireStore.is_lit(h):
+			any_lit = true
+	ok(not any_lit and fires.lit_count() == 0 and fires.flame_points().is_empty() and not main.player.torch.lit(), "every flame out: no holder, not the hearth, not the torch in hand; the lit-holder count %d, flames anywhere %d" % [fires.lit_count(), fires.flame_points().size()])
+	# Nothing can be lit.
+	var h0: Node3D = fires.holders[0]
+	var how := FireStore.swing_light(h0, 0.0)
+	var how_h := FireStore.swing_light(fires.hearth, 0.0)
+	var t := main.player.torch
+	if t.item().is_empty():
+		main.player.inventory.add(Inventory.make("torch"))
+	main.player.weapon = "torch"
+	t.light()
+	var torch_caught := t.lit()
+	var pot := {}
+	if FirePots.instance != null:
+		FirePots.instance._catch(pot)
+	await _frames(3)
+	ok(how == "no_fuel" and how_h == "no_fuel" and not FireStore.is_lit(h0) and not FireStore.is_lit(fires.hearth) and not torch_caught and not bool(pot.get("lit", false)) and fires.lit_count() == 0,
+		"nothing can be lit: a sconce (%s), the hearth (%s), a torch (%s), a fire pot's wick (%s)" % [how, how_h, "caught" if torch_caught else "stays cold", "lit" if bool(pot.get("lit", false)) else "stays cold"])
+	# The boss: out again, angry.
+	var after := float(Blackout.boss_def().get("emerge_after_s", 3.0))
+	var mult := float(Blackout.boss_def().get("speed_mult", 1.2))
+	var tw := 0.0
+	while boss.emerged == 0 and tw < after + 5.0:
+		await physics_frame
+		tw += DT
+	ok(boss.emerged == 1 and absf(tw - after) <= 0.2, "the %s comes up out of its lair %.2f s after the blackout (phase_two.boss.emerge_after_s %.1f), its cry rising from the hole" % [boss.name_text, tw, after])
+	var base_hunt := float(boss.def.get("hunt_mps", 4.6))
+	var sprint := Tuning.num("movement", "speed", "sprint_mps")
+	ok(boss.angry and absf(boss.num("hunt_mps", 0.0) - base_hunt * mult) < 1e-4 and boss.num("hunt_mps", 0.0) < sprint and absf(boss.num("speed_mps", 0.0) - float(boss.def.get("speed_mps", 2.0)) * mult) < 1e-4,
+		"angry: its hunt %.2f m/s (its own %.1f times %.1f), still under your %.1f m/s sprint; its rounds %.2f m/s" % [boss.num("hunt_mps", 0.0), base_hunt, mult, sprint, boss.num("speed_mps", 0.0)])
+	var rooms := 0
+	var closed := 0
+	for n in boss.ground.nodes:
+		if str(n.kind) == "room":
+			rooms += 1
+			if bool(n.lit):
+				closed += 1
+	ok(closed == 0 and rooms > 0, "no room closed to it: all %d rooms its ground, the hearth's too" % rooms)
+	var tr := 0.0
+	while boss.state == "rise" and tr < 20.0:
+		await physics_frame
+		tr += DT
+	ok(not (boss.state in ["lair", "gone", "rise", "release"]) and boss.body.visible, "out on the floor, on its rounds (%s)" % boss.state)
+	# The way up: open, and reached on foot from the hearth with no flame.
+	var wk: Vector3 = (main.lay.wake as Array)[0]
+	ok(main.fork.exit_open() and not _blocked(main, exit_door) and _reaches(main, wk, main.lay.exits[0].p), "the way up still open, reached on foot from the hearth in the dark")
+	# Three hits and Good night: you wake by the cold hearth.
+	main.player._invulnerable = 0.0
+	var harm := main.harm
+	harm.reset()
+	var log0 := GameLog.entries.size()
+	var landed := 0
+	for i in 3:
+		if harm.hit("creature:" + boss.name_text) or not harm.hits.is_empty():
+			landed = harm.hits.size()
+		# Past the hit's own grace (harm.json invuln_s) before the next.
+		for k in 45:
+			await physics_frame
+	var tt := 0.0
+	while _count(str(Blackout.P2.get("wake_line", "")), log0) == 0 and tt < 30.0:
+		await physics_frame
+		tt += DT
+	await _frames(3)
+	var at_wake := Vector2(main.player.global_position.x - wk.x, main.player.global_position.z - wk.z).length()
+	ok(_count(str(Blackout.P2.get("wake_line", "")), log0) == 1 and at_wake < 1.5 and not FireStore.is_lit(main.fires.hearth) and main.fires.lit_count() == 0,
+		"three hits and Good night: you wake by the hearth (%.1f m from the mat), cold and dark (\"%s\")" % [at_wake, str(Blackout.P2.get("wake_line", ""))])
+	main.player._invulnerable = 1.0e9
+	ok(bool(CrawlerSave.kept_value(CrawlerSave.place, "blackout", false)) == Blackout.kept(), "kept in the save (blackout; phase_two.save %s)" % str(Blackout.kept()))
 
 
 # --- Helpers ---------------------------------------------------------------------

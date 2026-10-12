@@ -67,6 +67,9 @@ var with_tunnels := false
 ## true): no way through them while they stand (_dijkstra), whatever the
 ## light.
 var shut := {}
+## The hearth is out (design §FO.5's blackout, Boss.anger): its room is no
+## longer lit by it, so it is ground like any other (no room is closed).
+var hearth_dark := false
 
 
 static func build(p_lay: Dictionary, p_with_tunnels := false) -> BossGround:
@@ -213,7 +216,7 @@ func update(lit: Array) -> bool:
 	# The rooms with torches of their own, and the hearth room, first.
 	var depends: Array = []
 	for n in nodes:
-		if bool(n.hearth):
+		if bool(n.hearth) and not hearth_dark:
 			n.lit = true
 		elif str(n.kind) == "room" and not (n.holders as Array).is_empty():
 			var all := true

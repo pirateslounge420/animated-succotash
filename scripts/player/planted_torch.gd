@@ -146,6 +146,9 @@ static func unlit_near(pos: Vector3, radius: float) -> PlantedTorch:
 
 
 func relight() -> void:
+	# Nothing relights in the crawler's blackout (§FO.5).
+	if FireStore.blackout:
+		return
 	item["lit"] = true
 	if not item.has("burn_left_min"):
 		item["burn_left_min"] = Torch.full_burn_min()
