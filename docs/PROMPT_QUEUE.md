@@ -119,7 +119,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 85 | §FO.2, §FO.3 | One floor per ruin, and the way up opens when the boss is first driven home | todo |
 | 86 | §FO.4 | The secret opening, its room and the tome | todo (after 85) |
 | 87 | §FO.5, §FO.6 | Phase two: the blackout, and the boss's angry round | waits (86) |
-| 88 | §FO.1 | The Egyptian stone: big sandstone blocks | todo |
+| 88 | §FO.1 | The Egyptian stone: big sandstone blocks | built |
 | 89 | §FO.1 | The Egyptian ruin and the pharaoh in its sarcophagus | waits (87, 88, and Mike's answer to §FO.9 call 2) |
 | 90 | §FP.1 | Scarabs: ambient skitterers in the Egyptian ruin | waits (89) |
 | 91 | §FP.2 | The pharaoh's locust swarm: a ranged slow | waits (89) |
@@ -1558,7 +1558,7 @@ CHECK (headless): after the tome, no holder, torch or hearth is lit and none can
 
 ## 88 — The Egyptian stone: big sandstone blocks — §FO.1
 
-**Status:** todo
+**Status:** built (12 Oct)
 **Mike sees:** Nothing in the crawler yet. The game can now cut a ruin in big squared sandstone blocks, so the Egyptian ruin has its own look and no other culture's stone is touched.
 
 ```text

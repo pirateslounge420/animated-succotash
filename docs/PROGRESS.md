@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-12 — Queue 88, §FO.1: the Egyptian stone, big sandstone blocks
+- **Built:** `masonry.json → styles → egyptian_pyramid` (additive, `_help.egyptian_pyramid`) and preset `great_blocks`: queue 79's squared cut with big blocks (1.1–2.4 m wide, courses ~0.6–1.2 m high), tight shallow joints, one ochre sandstone (`stone.tint` #8a6c48, `spread` 0.07) for every surface; doors a flat lintel over a square opening, niches square, square hearth pit. Registered as `style_by_theme.egyptian_pyramid` (and `by_theme`); no existing entry or style changed (compared field by field against the file before). No code changed.
+- **Data for later, not wired:** `carving` (hieroglyphs, queue 92), `wind_wear`.
+- **Checks** (seed 7): new `tools/ruin_stone_check.gd` (STYLE=egyptian_pyramid) 19 PASS, 0 fails (433 inner blocks, mean 1.72 m wide; three tombs in the stone: 123 doors all square, 14 stairs, 142 niches, 1.52 M stone vertices #785a36–#9c7e5a, none poisoned). `aztec_stone_check` 17 PASS, 0 fails, the tomb's stone hash 738297319 unchanged in both. `room_pool_check` and `crawler_check` below.
+- **Walkabout not done:** there is no Egyptian (or Aztec) room to stand in until queues 80 and 89.
+- **For Mike:** tint, block size and joints are first guesses. One stone varies in lightness only, so "pale to ochre" is one ochre with lighter and darker blocks.
+
 ## 2026-10-12 — Queue 79, §FN.1: the Aztec temple's stone, a masonry style
 - **Built:** `masonry.json → styles → aztec_temple` (additive, `_help.aztec_temple`): one red volcanic stone, tezontle (`stone.tint` #6e3a30 since Mike's call on 12 Oct, first #5a4644; `spread` 0.08) for every surface. Walls are a new preset `coursed_blocks`: true courses of squared blocks with staggered joints (FittedStone `cut: "squared"`, a new branch; every other preset is cut exactly as before). Floors flagged the same way, doors a square opening under one flat lintel (`doors.shape flat_lintel`), niches square, the hearth a square pit.
 - **Registered:** `style_by_theme.aztec_temple` (and `by_theme`); tomb, snow ruins and default unchanged. Nothing in the game uses it yet: the temple itself is queue 80.
