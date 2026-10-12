@@ -128,7 +128,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 94 | §FQ.1 | The Maya stone: limestone | built 67d2cb5 |
 | 95 | §FQ.1, §FS.1 | The Maya ruin: a jungle temple, its calendar room and a way down | waits (89, 94) |
 | 96 | §FQ.2 | Camazotz, the death bat | waits (95) |
-| 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | todo |
+| 97 | §FR.1 | The shaman's ritual as a little cutscene: a locked camera | built db77c87 |
 | 98 | §FR.2, §FT | The swamp's false shaman: a jimsonweed brew, the witch's reveal and the cackle | waits (83, 97, the swamp world, and the witch built as a boss) |
 | 99 | §FV.1 | A smaller surface, its sacred plant in sight | todo |
 | 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | waits (a second culture's ruin with its surface) |
@@ -1693,7 +1693,7 @@ CHECK (headless): over 200 draws each state comes up and never the same twice ru
 
 ## 97 — The shaman's ritual as a little cutscene: a locked camera — §FR.1
 
-**Status:** todo
+**Status:** built db77c87
 **Mike sees:** When the shaman gives you the brew, the camera settles on her at a fixed angle and you cannot move or look until the beat ends, then the frame is yours again. In the cultures built so far nothing else happens in it.
 
 ```text
