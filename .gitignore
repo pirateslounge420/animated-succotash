@@ -30,3 +30,10 @@ __pycache__/
 /tools/reference/walkabout/sheet_*.png
 /tools/reference/walkabout/sheet_*.png.import
 /tools/reference/walkabout/walkabout.txt
+
+# The real Earth's source rasters (design §FX, data/earth/README.md): ETOPO, CHELSA and
+# RESOLVE downloads are hundreds of MB each. Only the small derived files are committed.
+data/earth/sources/
+*.tif
+*.tiff
+*.nc

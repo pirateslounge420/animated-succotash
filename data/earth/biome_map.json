@@ -1,0 +1,93 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FX.5] Which of the game's biome templates (data/biomes/*.json, BiomeTemplates.KEYS) a land cell may become, given the RESOLVE 2017 biome its ecoregion belongs to. The ecoregion narrows the candidates; biome_pass's own climate and landform rules pick among them as they do today (the 'split' line says what should decide). Water, shore and landform templates are never chosen here: they come from the hydrology, geology and landform passes (see 'from_other_passes'). First guesses by Claude (chat), 18 Oct, from the RESOLVE biome definitions and the 52 templates' climate blocks; the designer owns them; tuned to what queue 105 reports.",
+  "by_resolve_biome": "Keyed by RESOLVE's BIOME_NUM (1–14; 'N/A' is RESOLVE's 'Rock and Ice'). templates: the candidates, the first one the fallback when no rule splits them. split: the rule of thumb for biome_pass, in plain words; the thresholds are Earth values and biome_pass applies HEIGHT_SCALE to heights as it does everywhere. gap: an Earth forest the 52 templates cannot yet show; a later data pass may add a template (§FX.5).",
+  "from_other_passes": "Templates that come from a pass, not from the ecoregion, and win over the ecoregion's list where their rule fires (as today).",
+  "no_ecoregion": "A land cell with no ecoregion within earth.json → ecoregions.nearest_fill_cells keeps today's climate rules over all 52 templates."
+ },
+ "by_resolve_biome": {
+  "1": {
+   "name": "Tropical & Subtropical Moist Broadleaf Forests",
+   "templates": ["TROPICAL_RAINFOREST", "JUNGLE", "CLOUD_FOREST", "FLOODPLAIN_FOREST", "SWAMP", "MANGROVE"],
+   "split": "CLOUD_FOREST above about 1,500 m Earth where the fog index is high; FLOODPLAIN_FOREST and SWAMP where the water passes say the ground floods; MANGROVE on tidal coasts (also from_other_passes); JUNGLE and TROPICAL_RAINFOREST as biome_pass tells them apart today (the disturbed, lighter, gap-rich forest against the closed canopy)."
+  },
+  "2": {
+   "name": "Tropical & Subtropical Dry Broadleaf Forests",
+   "templates": ["TROPICAL_DRY_FOREST", "THORN_SCRUB"],
+   "split": "THORN_SCRUB where annual precipitation is under about 600 mm or the soil is sharp; otherwise TROPICAL_DRY_FOREST."
+  },
+  "3": {
+   "name": "Tropical & Subtropical Coniferous Forests",
+   "templates": ["TROPICAL_DRY_FOREST", "MONTANE_GRASSLAND", "CLOUD_FOREST"],
+   "split": "MONTANE_GRASSLAND above about 2,000 m Earth in Mexico (the realm is neotropic and the cell is north of 15°N); CLOUD_FOREST where fog is high; otherwise TROPICAL_DRY_FOREST.",
+   "gap": "Tropical and subtropical conifer forest (Mexico's pine-oak, the Caribbean pine, the Sumatran and Luzon pines) has no template yet."
+  },
+  "4": {
+   "name": "Temperate Broadleaf & Mixed Forests",
+   "templates": ["TEMPERATE_DECIDUOUS", "TEMPERATE_RAINFOREST", "MARITIME_FOREST", "FLOODPLAIN_FOREST", "SWAMP"],
+   "split": "TEMPERATE_RAINFOREST where annual precipitation is over about 1,400 mm and the coldest month stays above about −2 °C; MARITIME_FOREST within a cell of the coast on sand; FLOODPLAIN_FOREST and SWAMP where the water passes say so; otherwise TEMPERATE_DECIDUOUS."
+  },
+  "5": {
+   "name": "Temperate Conifer Forests",
+   "templates": ["TAIGA", "TEMPERATE_RAINFOREST", "KRUMMHOLZ", "ALPINE_MEADOW", "TEMPERATE_DECIDUOUS"],
+   "split": "TEMPERATE_RAINFOREST on the wet coasts (precipitation over about 1,400 mm); KRUMMHOLZ at the treeline band and ALPINE_MEADOW above it, as the altitude rules say today; TEMPERATE_DECIDUOUS where the mean annual temperature is above about 9 °C; otherwise TAIGA.",
+   "gap": "Temperate conifer forest (the Rockies, the Sierra Nevada, the Alps' and Carpathians' conifer belt, inland Pacific Northwest, Hokkaido's firs) has no template yet; TAIGA stands in."
+  },
+  "6": {
+   "name": "Boreal Forests/Taiga",
+   "templates": ["TAIGA", "BOG", "FEN", "KRUMMHOLZ"],
+   "split": "BOG and FEN where the water passes say the ground is waterlogged (peat on the geology pass); KRUMMHOLZ at the treeline; otherwise TAIGA."
+  },
+  "7": {
+   "name": "Tropical & Subtropical Grasslands, Savannas & Shrublands",
+   "templates": ["SAVANNA", "THORN_SCRUB", "TROPICAL_DRY_FOREST", "FRESHWATER_MARSH"],
+   "split": "THORN_SCRUB where annual precipitation is under about 500 mm; TROPICAL_DRY_FOREST where it is over about 1,200 mm; FRESHWATER_MARSH where the water passes say so; otherwise SAVANNA."
+  },
+  "8": {
+   "name": "Temperate Grasslands, Savannas & Shrublands",
+   "templates": ["TALLGRASS_PRAIRIE", "SHORTGRASS_PRAIRIE", "STEPPE", "WET_MEADOW"],
+   "split": "In the nearctic: TALLGRASS_PRAIRIE where annual precipitation is over about 600 mm, SHORTGRASS_PRAIRIE below it. Elsewhere (the Eurasian steppes, the pampas, the veld): STEPPE. WET_MEADOW where the water passes say the ground is wet."
+  },
+  "9": {
+   "name": "Flooded Grasslands & Savannas",
+   "templates": ["FRESHWATER_MARSH", "WET_MEADOW", "SWAMP", "SALT_MARSH", "SAVANNA"],
+   "split": "SALT_MARSH on the coast or where the geology pass says salt; SWAMP where trees stand in the water (the warm, wet end); WET_MEADOW where the mean annual temperature is under about 10 °C; SAVANNA on the dry-season ground between the floods; otherwise FRESHWATER_MARSH."
+  },
+  "10": {
+   "name": "Montane Grasslands & Shrublands",
+   "templates": ["PARAMO", "PUNA", "ALPINE_MEADOW", "MONTANE_GRASSLAND", "ALPINE_TUNDRA"],
+   "split": "In the andes realm: PARAMO where annual precipitation is over about 900 mm (the wet north), PUNA where it is under (the dry centre and south). MONTANE_GRASSLAND in Mexico (neotropic north of 15°N) and on the African and Ethiopian highlands where the realm is afrotropic. ALPINE_TUNDRA where the mean annual temperature is under about 0 °C; otherwise ALPINE_MEADOW (the Tibetan, Alpine, Rocky Mountain meadows)."
+  },
+  "11": {
+   "name": "Tundra",
+   "templates": ["TUNDRA", "ALPINE_TUNDRA", "ICE_SHEET", "GLACIER", "BOG"],
+   "split": "ICE_SHEET where the mean annual temperature is under about −12 °C and the relief is the ice surface (Greenland's and Antarctica's interiors); GLACIER where the geology pass says ice on a slope; ALPINE_TUNDRA above the treeline on mountains outside the Arctic; BOG where the ground is waterlogged; otherwise TUNDRA."
+  },
+  "12": {
+   "name": "Mediterranean Forests, Woodlands & Scrub",
+   "templates": ["MEDITERRANEAN_SCRUB", "TEMPERATE_DECIDUOUS", "THORN_SCRUB"],
+   "split": "TEMPERATE_DECIDUOUS on the wet mountain side (precipitation over about 900 mm and the coldest month under about 5 °C); THORN_SCRUB on the driest ground (under about 300 mm); otherwise MEDITERRANEAN_SCRUB (the chaparral, matorral, fynbos, kwongan and maquis all read as this template; their plants differ by realm)."
+  },
+  "13": {
+   "name": "Deserts & Xeric Shrublands",
+   "templates": ["HOT_DESERT", "COLD_DESERT", "SAGEBRUSH", "THORN_SCRUB", "SALT_FLAT", "OASIS", "BADLANDS", "CANYON", "DUNES"],
+   "split": "HOT_DESERT where the mean annual temperature is over about 18 °C; COLD_DESERT below it; SAGEBRUSH in the nearctic where it is between about 5 and 12 °C (the Great Basin); THORN_SCRUB where annual precipitation is over about 250 mm; SALT_FLAT, OASIS, BADLANDS, CANYON and DUNES from their passes (from_other_passes)."
+  },
+  "14": {
+   "name": "Mangroves",
+   "templates": ["MANGROVE", "SALT_MARSH", "LAGOON", "ESTUARY"],
+   "split": "MANGROVE on the tidal shore; SALT_MARSH where the mean annual temperature is under about 20 °C (mangroves' cold limit); LAGOON and ESTUARY from the water passes."
+  },
+  "N/A": {
+   "name": "Rock and Ice",
+   "templates": ["ICE_SHEET", "GLACIER", "ALPINE_TUNDRA", "TUNDRA"],
+   "split": "ICE_SHEET where the mean annual temperature is under about −12 °C; GLACIER on a slope under about −2 °C; ALPINE_TUNDRA on mountains; otherwise TUNDRA."
+  }
+ },
+ "from_other_passes": {
+  "hydrology": ["FRESHWATER", "SHELF_SEA", "CORAL_REEF", "KELP_FOREST", "DEEP_OCEAN", "SEA_ICE", "LAGOON", "ESTUARY", "FLOODPLAIN_FOREST", "FRESHWATER_MARSH", "SWAMP", "BOG", "FEN", "OASIS", "SALT_FLAT"],
+  "shore": ["BEACH", "DUNES", "ROCKY_SHORE", "MARITIME_FOREST", "MANGROVE", "SALT_MARSH"],
+  "geology_and_landform": ["VOLCANIC_FIELD", "HOT_SPRING", "CAVES", "TEPUI", "CANYON", "BADLANDS", "GLACIER"]
+ },
+ "no_ecoregion": "today_rules"
+}

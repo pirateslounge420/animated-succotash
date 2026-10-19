@@ -1,0 +1,124 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FX] The real Earth as the planet (design 18 Oct §FX, Mike: 'lock it in'). Three rasters, all equirectangular (row 0 is the north edge at +90°, column 0 the −180° edge, sample centres at the half-step), built from public sources by Claude Code's build script (queue 103–105) and committed small; the sources themselves (hundreds of MB each) live outside the repo and are gitignored. The planet's size, heights and time are unchanged: world_scale.json (1/100 sideways, 1/10 up, the 144-minute day). First guesses by Claude (chat), 18 Oct; the designer owns them. Reference maths: tools/reference/earth_reference.py. Validator: tools/earth_data_check.py.",
+  "on": "true: TerrainField, climate_pass, RealmMap and biome_pass read the rasters below (§FX.3–5). false: the noise planet as built on 3 Oct (§CR), for comparison. The dev postage stamp (STAMP=1) is always the noise planet.",
+  "relief": "§FX.3. file: int16 Earth metres, 'width' × 'height' samples (10 arc-minutes: 2,160 × 1,080, about 4.7 MB raw). The game multiplies by world_scale.json → heights.height_scale (0.1). Below sea_level_m is sea; land below sea level (the Dead Sea, Death Valley) stays land and the hydrology pass fills closed basins. format: 'int16_le_raw' (relief.bin) or 'png16' (relief.png); Claude Code records which. source_grid is the ETOPO product averaged (60 arc-second ice surface). min_m, max_m and built are filled by the build script. The 10' average shaves the sharpest summits (§FX.3): the highest cell here is expected at 600–700 m, not 885.",
+  "sea_level_m": "Sea level in the map's metres. 0 is ETOPO's; a positive value floods, a negative one drains (a cheap way to see a lower sea).",
+  "blueprint_sampling": "How the 1 km blueprint reads the map: 'footprint_mean' averages all samples under a cell (the design's choice, §FX.3: climate and rivers see the smoothed relief); 'centre' takes one bilinear sample (aliases). The walking-scale chunks always sample bilinear and add the detail layers.",
+  "ranges": "§FX.3, §CR.4. stretch_max: 1.0 is the honest map (this pass). Above 1.0, the great ranges (regions above route_region_min_m here) are exaggerated sideways up to this factor, the lowland around them squeezed to pay for it, so routes at or under world_scale.json → mountains.route_max_deg exist (§FX.10 call 4; not built unless Mike asks after queue 106's report). route_region_min_m and lowland_max_m are the route check's thresholds (queue 106), in this world's metres.",
+  "peaks": "§FX.3, §FX.10 call 5. The named summits with their true coordinates and heights in Earth metres (Wikipedia / national surveys, rounded). restore_named false: nothing is stamped; queue 103's check reports how far below each the averaged cell sits. true: each is stamped back at walking scale at its coordinates at its height × height_scale, a spike inside its cell (not built).",
+  "climate": "§FX.4. CHELSA V2.1 climatologies 1981–2010 (Karger et al. 2017; CC0), block-averaged to 0.25° (1,440 × 720), int16. units: what each file holds after Claude Code's conversion (read CHELSA's technical documentation for each source file's scale and offset and record them in 'source_scale_offset'). CHELSA is land-only: sea_fill says what the sea samples hold ('nearest_land': the nearest land value; 'none': 0 and the simulation's own). The climate pass reads bio1 (mean annual temperature) and bio12 (annual precipitation) as the long-term climate; bio5 − bio6 sizes the seasons' swing; bio15 is kept for the weather simulation's rain seasonality. Fallback if the downloads are a problem: WorldClim 2.1 at 10' is 3 MB, but its site states no terms (Mike's call before anything ships).",
+  "ecoregions": "§FX.5. RESOLVE Ecoregions 2017 (Dinerstein et al. 2017; CC BY 4.0): 846 terrestrial ecoregions in 14 biomes and 8 realms. file: uint16 ECO_ID per sample at 0.1° (3,600 × 1,800), 0 where there is none (sea); 0.25° if it will not compress under about 3 MB. table: the attribute export (ECO_ID → ECO_NAME, BIOME_NUM, BIOME_NAME, REALM). realms: the rules that give each ecoregion one game realm (realms.json), resolved into resolved_realms by tools/earth_data_check.py --ecoregions --write. biome_map: which game templates each RESOLVE biome may be (biome_map.json). An id is never interpolated: nearest sample; a land cell with 0 takes the nearest non-zero within nearest_fill_cells blueprint cells.",
+  "credits": "Shown wherever the game shows credits (queue 103 decides where). RESOLVE's CC BY 4.0 requires its line; the others are courtesy.",
+  "checks": "Known places for the headless checks (queue 103–105), latitude then longitude in degrees, with the numbers to expect. bio1 in °C, bio12 in mm a year; relief in Earth metres before height_scale; biome is the template the cell is expected to get, realm the game realm. Tolerances: temperature ±2 °C, precipitation ±25%, position within one blueprint cell."
+ },
+ "on": true,
+ "relief": {
+  "file": "relief.bin",
+  "format": "int16_le_raw",
+  "width": 2160,
+  "height": 1080,
+  "arc_minutes": 10.0,
+  "units": "earth_metres",
+  "source": "ETOPO 2022 Global Relief Model, ice surface, 60 arc-second (NOAA National Centers for Environmental Information, 2022; doi:10.25921/fd45-gt74)",
+  "source_grid": "60 arc-second ice surface, block-averaged 10 × 10",
+  "min_m": null,
+  "max_m": null,
+  "built": null
+ },
+ "sea_level_m": 0.0,
+ "blueprint_sampling": "footprint_mean",
+ "ranges": {
+  "stretch_max": 1.0,
+  "route_region_min_m": 500.0,
+  "lowland_max_m": 200.0
+ },
+ "peaks": {
+  "restore_named": false,
+  "list": [
+   {"name": "Everest", "lat": 27.9881, "lon": 86.9250, "height_m": 8849},
+   {"name": "K2", "lat": 35.8808, "lon": 76.5133, "height_m": 8611},
+   {"name": "Kangchenjunga", "lat": 27.7025, "lon": 88.1475, "height_m": 8586},
+   {"name": "Aconcagua", "lat": -32.6532, "lon": -70.0109, "height_m": 6961},
+   {"name": "Denali", "lat": 63.0695, "lon": -151.0074, "height_m": 6190},
+   {"name": "Kilimanjaro", "lat": -3.0674, "lon": 37.3556, "height_m": 5895},
+   {"name": "Elbrus", "lat": 43.3499, "lon": 42.4453, "height_m": 5642},
+   {"name": "Vinson", "lat": -78.5254, "lon": -85.6171, "height_m": 4892},
+   {"name": "Puncak Jaya", "lat": -4.0786, "lon": 137.1584, "height_m": 4884},
+   {"name": "Mont Blanc", "lat": 45.8326, "lon": 6.8652, "height_m": 4808},
+   {"name": "Kosciuszko", "lat": -36.4558, "lon": 148.2636, "height_m": 2228}
+  ]
+ },
+ "climate": {
+  "source": "CHELSA V2.1 climatologies 1981–2010, 30 arc-second (Karger, D.N. et al. 2017, Scientific Data 4:170122; CC0 1.0)",
+  "width": 1440,
+  "height": 720,
+  "degrees": 0.25,
+  "format": "int16_le_raw",
+  "files": {
+   "bio1": "climate_bio1.bin",
+   "bio5": "climate_bio5.bin",
+   "bio6": "climate_bio6.bin",
+   "bio12": "climate_bio12.bin",
+   "bio15": "climate_bio15.bin"
+  },
+  "units": {
+   "bio1": "0.1 degC (mean annual air temperature)",
+   "bio5": "0.1 degC (mean daily maximum of the warmest month)",
+   "bio6": "0.1 degC (mean daily minimum of the coldest month)",
+   "bio12": "mm per year (annual precipitation)",
+   "bio15": "0.1 % (precipitation seasonality, coefficient of variation)"
+  },
+  "source_scale_offset": null,
+  "sea_fill": "nearest_land",
+  "built": null
+ },
+ "ecoregions": {
+  "source": "RESOLVE Ecoregions 2017 (Dinerstein, E. et al. 2017, BioScience 67(6):534–545; CC BY 4.0; ecoregions2017.appspot.com)",
+  "file": "ecoregions.bin",
+  "format": "uint16_le_raw",
+  "width": 3600,
+  "height": 1800,
+  "degrees": 0.1,
+  "no_data": 0,
+  "table": "ecoregions.json",
+  "realms": "realms.json",
+  "resolved_realms": "ecoregion_realms.json",
+  "biome_map": "biome_map.json",
+  "nearest_fill_cells": 2,
+  "built": null
+ },
+ "credits": [
+  "Relief: ETOPO 2022 Global Relief Model (NOAA National Centers for Environmental Information, 2022), doi:10.25921/fd45-gt74.",
+  "Climate: CHELSA V2.1 (Karger et al. 2017), CC0 1.0.",
+  "Ecoregions: RESOLVE Ecoregions 2017 (Dinerstein et al. 2017), © RESOLVE, CC BY 4.0."
+ ],
+ "checks": {
+  "land_fraction": [0.27, 0.31],
+  "places": [
+   {"name": "Manaus", "lat": -3.1, "lon": -60.0, "bio1_c": 27, "bio12_mm_min": 2000, "biome": "TROPICAL_RAINFOREST", "realm": "neotropic"},
+   {"name": "Cairo", "lat": 30.0, "lon": 31.2, "bio12_mm_max": 30, "biome": "HOT_DESERT", "realm": "palearctic"},
+   {"name": "Cherrapunji", "lat": 25.3, "lon": 91.7, "bio12_mm_min": 10000},
+   {"name": "Verkhoyansk", "lat": 67.5, "lon": 133.4, "bio1_c_max": -14, "biome": "TAIGA", "realm": "palearctic"},
+   {"name": "Death Valley", "lat": 36.5, "lon": -116.9, "bio1_c_min": 24, "relief_m_max": 0, "realm": "nearctic"},
+   {"name": "London", "lat": 51.5, "lon": -0.1, "bio1_c": 11, "bio12_mm": 600, "realm": "palearctic"},
+   {"name": "Dead Sea", "lat": 31.5, "lon": 35.5, "relief_m_max": -350, "land": true, "lake": true},
+   {"name": "Caspian, centre", "lat": 42.0, "lon": 50.5, "lake": true, "ocean": false},
+   {"name": "Amazon mouth", "lat": -0.5, "lon": -50.0, "coast": true},
+   {"name": "Nile delta", "lat": 31.3, "lon": 31.0, "coast": true},
+   {"name": "Mississippi delta", "lat": 29.2, "lon": -89.3, "coast": true},
+   {"name": "Central Andes", "lat": -16.0, "lon": -69.0, "biome": "PUNA", "realm": "andes"},
+   {"name": "Northern Andes", "lat": 4.5, "lon": -75.5, "biome": "PARAMO", "realm": "andes"},
+   {"name": "Central Sahara", "lat": 23.0, "lon": 10.0, "biome": "HOT_DESERT"},
+   {"name": "Great Basin", "lat": 40.0, "lon": -117.0, "biome_any": ["SAGEBRUSH", "COLD_DESERT"], "realm": "nearctic"},
+   {"name": "Sichuan", "lat": 30.0, "lon": 103.0, "realm": "sino_subtropical"},
+   {"name": "Hokkaido", "lat": 43.0, "lon": 142.0, "realm": "east_asia_temperate"},
+   {"name": "Crete", "lat": 35.2, "lon": 24.9, "realm": "mediterranean"},
+   {"name": "Borneo", "lat": 1.0, "lon": 114.0, "realm": "malesia"},
+   {"name": "Kazakh steppe", "lat": 49.0, "lon": 68.0, "biome": "STEPPE", "realm": "central_asia"},
+   {"name": "Madagascar west", "lat": -20.0, "lon": 44.3, "realm": "madagascar"},
+   {"name": "Congo basin", "lat": 0.5, "lon": 25.0, "biome": "TROPICAL_RAINFOREST", "realm": "afrotropic"},
+   {"name": "Taklamakan", "lat": 39.0, "lon": 83.0, "biome": "COLD_DESERT", "realm": "central_asia"}
+  ]
+ }
+}

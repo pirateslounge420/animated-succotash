@@ -4,17 +4,23 @@
 collaborators. This overview is for sharing: what the game is, how its systems fit, and where
 it stands. Feedback is welcome on anything. Updated 1 Oct 2026, after the ambient cut.*
 
-> **6 Oct 2026: the game has pivoted.** Torchfire 1 is now an ambient, first-person dungeon
-> crawler: torch-lit, procedurally generated ruins you reclaim by relighting them. The open
-> world this overview describes is Torchfire 2, shelved for later. See design §ET; this
-> overview will be rewritten once the crawler's first slice is played.
+> **18 Oct 2026: the open world is back, and it is the real Earth.** Design §FX: the open world
+> this overview describes leads again (the crawler, Torchfire 1, is parked with its code kept),
+> and its planet becomes the real Earth at 1/100 sideways and 1/10 up — real continents and
+> relief (ETOPO 2022), real climate (CHELSA) driving the biomes, the RESOLVE ecoregions as the
+> realm gate so every plant grows where it grows on Earth. Mike's reason: *"to learn more about
+> the plant life there."* The switch is built; the Earth is not yet (queue 102–107). This overview
+> will be rewritten once it is walked.
+>
+> *6 Oct 2026: the game had pivoted to Torchfire 1, an ambient, first-person dungeon crawler (§ET).
+> Superseded as the lead by §FX above; its code and queue stay.*
 
 ---
 
 ## The one-sentence version
 
-A slow, first-person walk across a planet one tenth the size of Earth, with real biomes, real
-seasons and real plants. Old roads lead between ruins and living camps. Fire is something you
+A slow, first-person walk across the real Earth at one hundredth its size, with its real biomes,
+real seasons and real plants where they really grow. Old roads lead between ruins and living camps. Fire is something you
 carry, never make. Every ruin goes down into the dark, and what lurks there is the only enemy.
 
 ## The thesis

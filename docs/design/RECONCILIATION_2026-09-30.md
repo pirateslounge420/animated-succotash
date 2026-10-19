@@ -6225,3 +6225,199 @@ boss.
 
 ### FW.5 Order of work
 `docs/PROMPT_QUEUE.md` **101** (new): the compass strip, any time.
+
+## FX. Torchfire 2 comes off the shelf: the ambient open world on the real Earth at 1/100 — LOCKED (18 Oct, Mike; "lock it in")
+
+Mike, 17–18 Oct, in text: *"i want to start developing the open world again- back when it was a
+ninja game. i want to make it like 1/100th size of earth and mimic earths biomes and continents
+to learn more about the plant life there."* Asked which open world comes back: *"everything
+before it changed to a dungeon crawler- it still should not have ninja abilities but should be
+able to climb. just regular running and jumping like on torchfire for other movement."* No
+preference on how faithful to Earth the biomes should be, nor on what happens to the crawler
+meanwhile: Claude's readings of both are marked below. Then *"lock it in"* (21:27).
+
+**The biggest amendment since §ET: it changes what this repo builds first, back again.** Data:
+`data/game.json → game` (flipped to `torchfire2`); `data/earth/` (new, not wired: `earth.json`,
+`realms.json`, `biome_map.json`, `README.md`). Validator: `tools/earth_data_check.py`. Reference
+maths: `tools/reference/earth_reference.py`. Not built, except the switch (FX.1).
+
+### FX.0 What this changes
+1. **§ET's order of work (§ET.11) is parked.** Torchfire 2, the open world, is built now. The
+   crawler (Torchfire 1: §ET–§FW, the tomb, the Aztec temple, the brews, the compass) keeps its
+   code, its scenes and its queue rows (44–101), none deleted and none `todo` until Mike says.
+   *Claude's reading of "no preference":* the open world leads outright rather than alternating.
+2. **§CM's "the kind of place, not Earth's map" is superseded: it is Earth's map.** A species
+   grows where it grows on Earth (FX.5). §CM's grottos, washes, rhododendron forests and mad
+   honey stand; only the mapping rule changes.
+3. **§CB "every new world is a new world" is amended:** the land is Earth every game; the seed
+   rolls everything that lives on it (FX.6).
+4. **§CR.1's continents** ("tuned at 400 km") are replaced by Earth's. Every number in §CR stands.
+5. **§AT's ninja game stays a separate game**; nothing of it turns on here (FX.2). §AT's "repo
+   to be made" line is unchanged.
+6. **§ET.2's "nothing simulates ranges"** no longer applies: the ranges are the point.
+7. **§AA's realm gate** stops being the engine's Voronoi provinces and reads the real map (FX.5).
+
+### FX.1 The switch back
+`data/game.json → game: "torchfire2"`. The project boots the open world as it stood on 5 Oct
+(§AT–§ES, with §EE–§EN's villages built 5–6 Oct): the dawn camp, the road, the planet. Everything
+the crawler built since stays behind `torchfire1` (`GAME=torchfire1` for one run). Mike can play
+the noise planet the same day; the Earth comes in under it pass by pass (FX.9).
+
+### FX.2 Movement: the ambient profile, as built
+§AU, unchanged: walk 4.3 m/s and sprint 5.6 (Minecraft's), sneak, a 1 m hop, the slow two-handed
+tree climb, first person (§AV), Tobler's pace on slopes (§CR.5). The shinobi profile stays off:
+no wall jump, cling, swing, roll, slide, super meter or momentum combat. **"Able to climb"** reads
+as trees (as built) and mountains by walkable routes (§CR.4); there is no rock-face climbing.
+*Open for Mike (FX.10 call 1)* if he wants a slow rock climb too.
+
+### FX.3 The planet is the real Earth at 1/100
+- **Source:** NOAA's **ETOPO 2022** global relief model, land and sea floor in one grid, the
+  ice-surface version (Greenland and Antarctica read as land). Free to use; the citation goes in
+  the credits. Claude Code downloads the 60 arc-second GeoTIFF once (hundreds of MB, kept outside
+  the repo and gitignored) and block-averages it to a **10 arc-minute equirectangular heightmap:
+  2,160 × 1,080 samples of int16 Earth metres**, about 4.7 MB raw, committed as
+  `data/earth/relief.bin` with its header in `earth.json` (a 16-bit PNG is fine too: Claude Code's
+  choice). One sample is 18.5 km of Earth, 185 m here, under the 260 m chunk. A 5' map (9.3 M
+  samples, about 19 MB) only if the coast needs it. Islands narrower than about 20 km on Earth
+  (200 m here) vanish at 10'.
+- **How it reads:** `TerrainField` samples the map by latitude and longitude (`CubeSphere`
+  already gives them), bilinear, times `HEIGHT_SCALE` (0.1). Below `sea_level_m` (0) is sea; the
+  Dead Sea and Death Valley are land below sea level, and the hydrology pass fills closed basins
+  as it does now (the Caspian becomes a lake under the 300-cell rule, not an ocean). When
+  `earth.json → on` is true the continent noise, the belts, the ridges, the hills, the nine
+  hotspots and the seeded great ranges are **off**; the walking-scale layers (detail, roll, shore
+  wiggle, escarpments, ravines, nests) stay, since no map holds them. The blueprint averages the
+  map over each cell's footprint (one cell is about 0.94°, 100 km of Earth) so climate and rivers
+  see the smoothed relief, not one sample. The map's north pole is the spin axis.
+- **Scale (§CR's numbers stand):** 400 km around; heights 1/10; the 144-minute day; everything
+  at walking scale true size.
+
+  | | on Earth | here |
+  |---|---|---|
+  | around the planet | 40,075 km | 400 km: about 26 real hours at the ambient walk |
+  | the USA, coast to coast | ~4,500 km | ~45 km: about 3 hours' walk |
+  | the Amazon basin, across | ~3,000 km | ~30 km |
+  | the Sahara, across | ~4,800 km | ~48 km |
+  | Britain, top to bottom | ~1,000 km | ~10 km |
+  | Everest / Kilimanjaro / Mont Blanc | 8,849 / 5,895 / 4,808 m | 885 / 590 / 481 m (before the 10' average) |
+  | one blueprint cell | ~100 km | ~1 km |
+  | one terrain chunk | ~26 km | 260 m |
+
+- **The average shaves the sharpest summits.** A 10' cell's mean over the Everest massif is
+  well under 8,849 m (6,000–7,000 m is the likely number: Claude Code reports it), so the
+  highest cell here may be 600–700 m, not 885. §CR's "885 m" becomes "up to about 885 m".
+  `earth.json → peaks` carries the named peaks (the eight-thousanders' three highest, Aconcagua,
+  Denali, Kilimanjaro, Elbrus, Vinson, Puncak Jaya, Mont Blanc, Kosciuszko) with their coordinates
+  and heights; `peaks.restore_named` is false. *Open for Mike (FX.10 call 5):* stamp them back at
+  walking scale, true summit heights at their true places.
+- **Slopes, the known cost (§CR.7's cousin).** Heights at 1/10 over distances at 1/100 makes
+  every slope ten times Earth's: a 3° Earth slope is 28° here, a 5° one 41°. The great ranges
+  read as walls with valley routes, and some summits are sheer by nature (the Matterhorn is a
+  wall in life too). §CR.4 and §CR.5 stand: Tobler's pace, 45° unwalkable, routes at ≤35° where
+  they exist. First guess: build the map honest (`earth.json → ranges.stretch_max: 1.0`), run
+  FX.9's route check (prompt 106), and let Mike see the Himalaya before deciding. The fix, if he
+  wants it, is §CR.4's own rule: a local sideways exaggeration of the great ranges up to 3×, with
+  the lowland around them squeezed to pay for it, one tunable.
+- **The sky comes free.** The 23.5° tilt and the derived day are built (§F, §F2), so real
+  latitudes get real days and seasons: polar night above the Arctic Circle, the midnight sun,
+  long June evenings in Scandinavia, the tropics' even twelve hours. The 29.5-day moon (§DD)
+  unchanged.
+- **The postage stamp** (`STAMP=1`, the checks) stays the noise planet; nothing there changes.
+
+### FX.4 Real climate drives the biomes (Claude's reading of "no preference")
+- **Source:** **CHELSA V2.1** climatologies (1981–2010, 30 arc-seconds, public domain, CC0):
+  `bio1` mean annual temperature, `bio12` annual precipitation, `bio5` and `bio6` the warmest
+  month's high and the coldest month's low, `bio15` precipitation seasonality. Claude Code
+  block-averages them to **0.25° (1,440 × 720, int16)**, about 2 MB each, committed; the sources
+  (hundreds of MB each) are not. CHELSA covers land only: over the sea the maps hold a nearest-land
+  fill or the simulation's own value (Claude Code's call; say which in the header). Fallback if
+  the downloads are a problem: WorldClim 2.1 at 10' is 3 MB, but its site states no terms, so
+  that is Mike's call before anything ships.
+- **How it reads:** the climate pass takes a cell's temperature and precipitation from the maps
+  instead of deriving them from height, latitude and the weather spin-up; fog and the moisture
+  index derive from them as now; the walking-scale lapse adjustment above the cell's height
+  stays. The weather simulation keeps making the day-to-day weather and the seasons' swing
+  (the swing's size from `bio5`−`bio6`, so winters bite in the continental interiors and stay
+  mild on the coasts), **nudged toward the map's climate** rather than inventing the climate:
+  the spin-up seeded from the maps and relaxed toward them with a long time constant, or a
+  per-cell nudge each step. Claude Code's call.
+- **Why real climate and not the simulation's:** the Amazon is rainforest and the Sahara desert
+  every game, which is what "learn the plant life there" needs; the simulation alone would drift
+  a continent's climate by a biome or two from Earth's, and a wrong map teaches wrong.
+
+### FX.5 Real ecoregions, the realm gate and the biome map
+- **Source:** **RESOLVE Ecoregions 2017** (846 terrestrial ecoregions in 14 biomes and 8 realms;
+  CC BY 4.0, so the credit line goes in the game's credits). Claude Code rasterizes the polygons
+  to an **ECO_ID map at 0.1°** (3,600 × 1,800, uint16, 0 for none; a couple of MB compressed,
+  0.25° if it won't compress) and exports the attribute table to `data/earth/ecoregions.json`
+  (ECO_ID → name, biome number and name, RESOLVE realm).
+- **The realm gate (§AA) reads the map.** `RealmMap` stops dealing Voronoi provinces: a site's
+  realm is its ecoregion's game realm, resolved by `data/earth/realms.json` (RESOLVE's 8 realms as
+  the default, then named overrides for the game's finer nine: madagascar, andes, himalaya,
+  central_asia, west_asia, mediterranean, sino_subtropical, east_asia_temperate, malesia).
+  `tools/earth_data_check.py --ecoregions <table>` gives every ECO_ID exactly one realm, writes
+  `ecoregion_realms.json` and prints the assignment for review; Claude (chat) reviews it and
+  tunes the rules. Coast cells with no ecoregion take the nearest one's. So a baobab grows only
+  in Africa, Madagascar and Australia; a monkey puzzle only in Chile and Argentina; Trichocereus
+  only on the Andes; each cannabis landrace in its own country (§AA.4 as written, now literal).
+- **The biome template reads the ecoregion first.** `data/earth/biome_map.json` names, for each
+  of RESOLVE's 14 biomes, the game templates it may be; the climate and landform rules already in
+  `biome_pass` pick among them (cloud forest by height and fog inside Biome 1, puna against
+  páramo by rainfall inside Biome 10, hot against cold desert by `bio1` inside Biome 13). The
+  water, shore and landform templates (freshwater, shelf sea, coral reef, kelp forest, deep
+  ocean, sea ice, lagoon, estuary, beach, dunes, rocky shore, volcanic field, hot spring, caves,
+  tepui, canyon, badlands, glacier, bog, fen, salt flat, oasis) come from the hydrology, geology
+  and landform passes as now, inside the ecoregion's realm. Two gaps the 52 templates have against
+  Earth, for a later data pass: a tropical and subtropical conifer forest (Mexico's pine-oak,
+  Biome 3) and a temperate conifer forest (the Rockies, the Alps' belt, the Pacific Northwest
+  inland, Biome 5); until then Biome 3 reads as tropical dry forest or montane grassland and
+  Biome 5 as taiga or temperate rainforest, by climate.
+- **The learning hook:** the ecoregion's real name shows wherever the biome's name shows today
+  (the map, the log): "Madagascar dry deciduous forests", "Central Andean wet puna". Plant names
+  on reach (§W) unchanged. *Open (FX.10 call 2):* a field notebook, the sighting log (§ED.5) kept
+  per ecoregion.
+- **§CR.6's biome shares** are honest by construction now (Earth's own). The floor for the niche
+  biomes (two places, 1 km² each) stays for the landform templates the ecoregions don't carry.
+  `world_scale.json → biome_shares.earth_reference` is filled by Claude (chat) from what prompt
+  104 reports, as §CR.6 said.
+
+### FX.6 What the seed rolls now (amends §CB)
+The land, the sea, the climate and the realms are Earth every game. The seed rolls: the weather;
+the rivers' exact courses at walking scale (the blueprint's rivers follow the real relief, so the
+Amazon, the Nile and the Mississippi run where they run, within a cell); where every plant
+stands; what lives where, and roams; the camps, villages, roads and ruins; and where you wake:
+§CY's dawn at a camp, now a real place, on land, never on the ice, drawn by land area so you
+most often wake on a big continent. The world's name stays its seed (§CB).
+
+### FX.7 Not taken
+A made-up planet with Earth-like continents (keeps §CB whole; Mike chose the real one). The full
+846 ecoregions each with its own plant list (the most to learn from and the biggest data job; it
+can come later as a layer on FX.5, since the ECO_ID is already on the map). A bigger planet (§CR
+stands; boats remain a later question). The ninja kit back on (§AT).
+
+### FX.8 Data (new, `[NOT WIRED YET — design §FX]` unless said)
+- `data/earth/earth.json`: `on`, the relief file's name, size, format and source, `sea_level_m`,
+  `ranges.stretch_max`, `peaks`, the climate and ecoregion files' names, sizes and sources, the
+  credit lines, and the headless check points (known places with the numbers to expect).
+- `data/earth/realms.json`: the realm rules (FX.5).
+- `data/earth/biome_map.json`: RESOLVE biome → candidate templates (FX.5).
+- `data/earth/README.md`: what each file is, where it came from, how to rebuild it, the licences.
+- `data/game.json → game`: "torchfire2" (wired: `GameMode` reads it; flipped by Claude, chat, as
+  this section mandates).
+
+### FX.9 Order of work (replaces §ET.11 while the open world leads)
+`docs/PROMPT_QUEUE.md` **102–107**, in order: **102** the switch back (the data is flipped;
+Claude Code checks both games boot and keeps `HOW_TO_RUN.md` true); **103** Earth relief;
+**104** Earth climate; **105** ecoregions, the realm gate and the biome map; **106** slopes and
+routes on the real relief; **107** waking on Earth, and the map. Claude (chat) meanwhile: the
+ecoregion-to-realm assignment reviewed; the biome map tuned to what 105 reports; the reference
+shares filled (FX.5); and the audit of every plant file's `biomes` and `realm` tags against Earth
+(parallel agents, `tools/biome_species_check.py`).
+
+### FX.10 Open for Mike
+1. **Rock-face climbing:** a slow two-handed climb like the trees', or none (as built)?
+2. **A field notebook:** the sighting log (§ED.5) kept per ecoregion?
+3. **Place names on the map:** real ones (the Amazon, the Alps), the ecoregion's only, or none
+   (the world is found, not read)?
+4. **The §CR.4 stretch,** once he has seen the Himalaya honest (prompt 106's report).
+5. **The named peaks** stamped back at their true heights (`peaks.restore_named`)?

@@ -1,6 +1,20 @@
 # animated-succotash — the brief (read at the start of every session)
 
-This repo is **Torchfire 1: an ambient, first-person dungeon crawler** (design §ET, 6 Oct, not
+**18 Oct 2026, design §FX (Mike: "lock it in"): the open world leads again.** This repo now builds
+**Torchfire 2: the ambient, first-person open world, on the real Earth at 1/100** (§FX; the switch
+is built, the Earth is not yet). It is the open world as it stood on 5 Oct, before the crawler
+(§AT–§ES, with §EE–§EN's villages): slow, torch-first, the dark the only enemy, the ambient
+movement profile (§AU: walk, sprint, sneak, a 1 m hop, the slow tree climb; the ninja kit stays
+off) — and its planet becomes the real Earth: real continents, coasts and relief from ETOPO 2022
+at 1/100 sideways and 1/10 up (§FX.3), real climate from CHELSA driving the biomes (§FX.4), the
+RESOLVE ecoregions as the realm gate so every plant grows where it grows on Earth (§FX.5). Mike's
+reason: *"to learn more about the plant life there."* **The order of work is §FX.9:
+`docs/PROMPT_QUEUE.md` 102–107, in order, before any crawler row.** The crawler (Torchfire 1, the
+paragraph below, §ET–§FW) keeps its code, its scenes and its queue, parked; nothing is deleted;
+`GAME=torchfire1` still boots it. Where this brief and §FX disagree, §FX wins; where §FX and §ET
+disagree on what is built first, §FX wins.
+
+The paragraph below is the crawler's brief, kept as it was: **Torchfire 1: an ambient, first-person dungeon crawler** (design §ET, 6 Oct, not
 built yet). You wake underground by a lit hearth and reclaim procedurally generated ruins by
 relighting them, stage by themed stage; fire is carried, never made; the dark is the only enemy;
 no combat. **The stages are pocket worlds (§EW, 6 Oct, not built yet):** one bounded slice per
@@ -15,20 +29,22 @@ wind-up staggers it (never wounds), and rare fire pots, lit off your torch, burn
 (`data/residents.json`) below its boss; a lit floor is cleared; three hits with a red first edge,
 and a chase can follow you into the light. The wheel and Tab-and-wheel replace Q (`data/hands.json`);
 the hearth folk are live 3D, not sprites (§FH). **§FJ (22:52):** torches burn down again (a timer, three at most, from the hearth's bundle; relight from any flame); the first ruin is drawn at random from the roster; the fire pot is clay. **§FK (7 Oct, built 10 Oct, queue 63):** a new game rolls one seed and every world and dungeon comes from it, unique to that playthrough and then kept for good (a save; relit and restored stay so); one 144-minute clock, the same in every world (no latitude). **§FM (9 Oct, bones only; built 9–10 Oct: queue 65–73 and 75–77, 74 waits):** no boss is ever beaten and every boss draws its moves from a random pool (the snake's: freeze when watched, doorway watcher, observe then strike from behind, the coil you turn into); a hidden deeper layer waits behind apparent completion (how to reach it is undecided); tomes are collected pages; the dungeon is PSO-style (hand-built big rooms shuffled in), you wake by a hearth with a shaman and a cauldron, and lighting floor one opens the way up and the way down together; floor two is the same stone under uniform fog; the surface above is that biome's overworld on the one clock; the map is reference only (no fast travel) and the ruins sit on a fixed compass (`docs/design/RUIN_ROSTER_REFERENCE.md`, reference only; only the tomb is built). **§FN (10 Oct, not built yet; queue 78–84, `data/aztec_temple.json`, `data/visions.json`):** the Aztec ruin is a temple, not a tomb (the mummy and sarcophagi go to a new Egyptian ruin), built on the tonalpohualli, with a round blood-altar chamber and a calendar room as its two fixed chambers among shuffled rooms; the snake becomes the feathered serpent Quetzalcoatl with plumes and a rattle (this supersedes §FM.2's "no feathers"), and the whole ruin is its lair; each ruin has two or three floors, and every lit floor opens the way on with the stone-seal cue (the floor count is SUPERSEDED by §FO: one floor per ruin, every ruin); every ruin has a twin on the surface (the Aztec one a step pyramid with an altar at the top, ambient, no fast travel); each culture leaves its own real marks in its temple and a brew is a per-culture visual filter (palette swap, hidden carvings, glowing and moving glyphs) that adds no creatures and gates nothing; the Aztec brew plant is teonanácatl. Which biome world the Aztec ruin sits in is open (§FN.8). **§FO (10 Oct, not built yet; queue 85–89, `data/ruin_loop.json`):** every ruin is one floor (this supersedes §FN's two or three floors and queue 81); driving the boss home the first time opens the surface exit and a visible-but-sealed secret opening onto rooms joined to the ruin, with a scroll or tome at the end; taking it is phase two: every flame goes out (the hearth and your own torch too), nothing can be relit, the boss comes out again faster, and you run for the exit on ambient light alone, for every boss, the snake first; Egypt is a ruin kind of big sandstone blocks whose boss is a mummy pharaoh with its own sarcophagus as its lair. Which biome world holds it is open (§FO.9). **§FP (10 Oct, not built yet; queue 90–93, `data/egypt_ruin.json`):** Egypt's scarabs are ambient skitterers (not hostile); the pharaoh's pool takes plague states, the locust swarm first, a ranged slow that is never a hit; real hieroglyphs on the walls, unreadable sober and readable under the local brew; the Egyptian brew is blue lotus and mandrake and, for Egypt only, shows vivid display-only hallucinations that feel real (this amends §FM.3 and §FN.5.3(a) for Egypt). **§FQ (10 Oct, not built yet; queue 94–96, `data/maya_ruin.json`):** the Maya are a ruin kind (a limestone jungle temple, the Maya calendar as its theme, a cenote as a way down) inside a biome world, not a world of their own; its boss is Camazotz, the death bat, who roosts overhead where he predicts you will pass, swoops and keeps swooping where there is room, and crawls where there is not. It sits in the jungle biome world (§FS, 10 Oct), and every connecting swoop is a hit. **§FR (10 Oct, not built yet; queue 97–98, `data/shaman_ritual.json`):** every shaman ritual is a little cutscene (the camera locks on her while you take the brew; only the swamp's has content); the swamp's hearth shaman is the witch in a young woman's glamour: after you sip she turns her back, turns round as the old witch with a creaky cackle, and the chase begins (not a hit); the swamp's plant is jimsonweed (datura) and its brew is real, her change and the trip happening together with the game never saying which is real (§FT, which supersedes §FS.3's "only her trick"); the trap is a first-time ambush, and on a later brew she shows up partway through already the witch (§FU). **The open world described below (planet, roads, ecology, weather, camp sim) is
-Torchfire 2:** shelved, its code kept and switched off, not deleted (§ET.2). Where this brief
-and §ET disagree, §ET wins. Mike Flow is the designer. He doesn't code, so explain every change in
-plain English: what it reads, what it writes, what changes on screen.
+Torchfire 2:** shelved on 6 Oct (§ET.2), **active again since 18 Oct (§FX)**. Mike Flow is the
+designer. He doesn't code, so explain every change in plain English: what it reads, what it
+writes, what changes on screen.
 
 ## Engine
 - **Godot 4.3, the standard build. GDScript only, no plugins.** Mike opens `project.godot`
   straight in the Godot editor. Plain Godot is the only engine (design 30 Sept doc §CI).
-- The project boots `scenes/boot.tscn`, which opens the game `data/game.json` names (§ET.2, `GameMode`): Torchfire 1, the crawler (`scenes/crawler.tscn`, `scripts/crawler/`), by default; the open world (Torchfire 2) is `scenes/main.tscn`, still the scene every check in `tools/` boots. The autoload is `World` (`scripts/core/world.gd`). How
+- The project boots `scenes/boot.tscn`, which opens the game `data/game.json` names (§ET.2, `GameMode`): **Torchfire 2, the open world (`scenes/main.tscn`), by default since 18 Oct (§FX.1)**; the crawler (Torchfire 1: `scenes/crawler.tscn`, `scripts/crawler/`) with `GAME=torchfire1` or `"game": "torchfire1"`. `main.tscn` is still the scene every check in `tools/` boots. The autoload is `World` (`scripts/core/world.gd`). How
   Mike opens and plays the game, the walkabout command, and where this machine's headless
   Godot lives are all in `docs/HOW_TO_RUN.md`.
 
 ## Scale
-**Torchfire 2's planet (the open world, shelved; §ET.2, §FK.1).** Torchfire 1 has no planet: bounded
-pocket worlds (§EW) and one clock (§FK.3). What follows is the open world's, as built.
+**Torchfire 2's planet (the open world, active again; §FX).** What follows is the planet as built;
+§FX.3 (18 Oct, not built yet; queue 103) replaces its noise continents with the real Earth's relief
+at the same scale, and §FX.4–5 put the real climate and ecoregions on it. Torchfire 1 has no planet:
+bounded pocket worlds (§EW) and one clock (§FK.3).
 **1/100 Earth in distance, 1/10 in height and time** (design §CR, built 3 Oct): **400 km around**
 (radius ~63.7 km, `data/world_scale.json` → `planet.circumference_m`), **heights 1/10** (an
 Everest-class summit is ~885 m; `HEIGHT_SCALE` 0.1), and a **144-minute day** (1/10 of a real day).
@@ -52,8 +68,9 @@ ruins (§AW, §CJ).
 
 ## Sources of truth, in order
 1. `docs/design/RECONCILIATION_2026-09-30.md`: the ambient cut and every decision since (§AT
-   onward, newest sections at the bottom). **§ET.11 is the order of work for Torchfire 1**; it
-   replaces §BR's queue until Mike reorders. §EW.7 and §EX.8 follow it (`docs/PROMPT_QUEUE.md` 44–48 first). It wins over everything below.
+   onward, newest sections at the bottom). **§FX.9 is the order of work (18 Oct): `docs/PROMPT_QUEUE.md`
+   102–107, in order.** §ET.11 (the crawler's order) and the crawler's queue rows are parked until Mike
+   says. It wins over everything below.
 2. `docs/design/RECONCILIATION_2026-09-27.md`: the earlier locked design (§0–§AS), for
    whatever the 30 Sept doc doesn't touch.
 3. `docs/design/LOOK_REFERENCE.md`: the look, with rules R1–R10 and the eye test, measured

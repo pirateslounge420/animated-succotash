@@ -1,0 +1,65 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FX.5] How each RESOLVE 2017 ecoregion gets one of the game's realms (design §AA's vocabulary: the 17 realms the plant associations and catalogues already carry), so the realm gate reads the real map instead of the engine's Voronoi provinces. First guesses by Claude (chat), 18 Oct, from the ecoregion names; the designer owns them, and Claude (chat) reviews the printed assignment after queue 105. tools/earth_data_check.py --ecoregions <table> applies these rules to every ECO_ID and, with --write, saves data/earth/ecoregion_realms.json for RealmMap to read.",
+  "vocabulary": "The realms a plant association or catalogue may name (§AA.2). 'any' is an association that grows in every realm; no ecoregion resolves to it.",
+  "by_resolve_realm": "The default: RESOLVE's REALM field → the game realm. Applied when no override matches.",
+  "overrides": "Finer realms by name, in order: the FIRST rule whose name_contains matches the ecoregion's ECO_NAME (case-insensitive substring) wins, whatever RESOLVE's realm says. Order matters where a name could match two lists (a Tibetan Plateau–Kunlun name is himalaya because himalaya is listed before central_asia). Keep each list short and specific; a pattern that catches the wrong ecoregion is worse than one left to the default.",
+  "notes": "What the finer realms mean here. madagascar: the island. malesia: the Malay Archipelago botanically (Sunda, the Philippines, Wallacea, New Guinea and the Bismarcks) whichever RESOLVE realm holds the piece. himalaya: the Himalaya, the Karakoram and the Tibetan Plateau. central_asia: Kazakhstan to Mongolia, the Tian Shan, Pamir, Altai, the Tarim, Afghanistan and Turkmenistan (the Irano-Turanian steppe and mountain flora: the Hindu Kush cannabis landraces, §AA.4). west_asia: Anatolia, the Caucasus and the Euxine-Colchic coast (§CM's mad-honey forest), Iran, Mesopotamia, Arabia, Baluchistan. mediterranean: the Mediterranean basin on every shore, the Canaries and Madeira. sino_subtropical: subtropical China south of the Qinling, with Taiwan. east_asia_temperate: north China, Manchuria, Korea, Japan, the Russian Far East's broadleaf country. andes: the Andes from Venezuela to Chile and Argentina (páramo, puna, yungas, the inter-Andean valleys, the Atacama's Andean side). Everything else keeps RESOLVE's realm."
+ },
+ "vocabulary": [
+  "afrotropic", "neotropic", "nearctic", "palearctic", "indomalaya", "malesia", "australasia",
+  "oceania", "madagascar", "andes", "central_asia", "west_asia", "himalaya", "sino_subtropical",
+  "east_asia_temperate", "mediterranean", "antarctic", "any"
+ ],
+ "by_resolve_realm": {
+  "Afrotropic": "afrotropic",
+  "Antarctica": "antarctic",
+  "Australasia": "australasia",
+  "Indomalayan": "indomalaya",
+  "Nearctic": "nearctic",
+  "Neotropic": "neotropic",
+  "Oceania": "oceania",
+  "Palearctic": "palearctic",
+  "N/A": "palearctic"
+ },
+ "overrides": [
+  {"realm": "madagascar", "name_contains": ["Madagascar"]},
+  {"realm": "malesia", "name_contains": [
+   "Borneo", "Sumatra", "Java", "Bali", "Sulawesi", "Philippine", "Mindanao", "Luzon", "Palawan",
+   "Visayas", "Mindoro", "Sulu", "New Guinea", "Papua", "Central Range", "Trans Fly", "Vogelkop",
+   "Huon", "Halmahera", "Seram", "Buru", "Timor", "Sunda", "Sumba", "Wetar", "Tanimbar", "Aru",
+   "Kai Islands", "Banda Sea", "Mentawai", "Peninsular Malaysian", "Biak", "Yapen", "Trobriand",
+   "Louisiade", "New Britain", "Admiralty"
+  ]},
+  {"realm": "himalaya", "name_contains": [
+   "Himalaya", "Tibet", "Yarlung", "Karakoram"
+  ]},
+  {"realm": "central_asia", "name_contains": [
+   "Central Asian", "Kazakh", "Tian Shan", "Pamir", "Altai", "Junggar", "Dzungarian", "Tarim",
+   "Taklimakan", "Emin Valley", "Gissaro", "Alai", "Kopet Dag", "Badghyz", "Karakum", "Kyzylkum",
+   "Afghan", "Hindu Kush", "Paropamisus", "Ghorat", "Qaidam", "Kunlun", "Qilian", "Mongolian",
+   "Gobi", "Alashan", "Ordos", "Daurian", "Khangai", "Selenge"
+  ]},
+  {"realm": "west_asia", "name_contains": [
+   "Anatolia", "Zagros", "Caucasus", "Elburz", "Caspian Hyrcanian", "Azerbaijan", "Euxine",
+   "Colchic", "Arabian", "Arabia", "Mesopotamian", "Tigris", "Euphrates", "Iranian", "Persian",
+   "Kuh Rud", "South Iran", "Syrian", "Baluchistan", "Sulaiman", "Registan"
+  ]},
+  {"realm": "mediterranean", "name_contains": [
+   "Mediterranean", "Iberian", "Italian", "Tyrrhenian", "Aegean", "Crete", "Cyprus", "Corsican",
+   "Apennine", "Pindus", "Illyrian", "Dinaric", "Canary", "Madeira"
+  ]},
+  {"realm": "sino_subtropical", "name_contains": [
+   "South China", "Jian Nan", "Guizhou", "Yunnan", "Sichuan", "Hengduan", "Daba", "Qin Ling",
+   "Changjiang", "Nujiang", "Taiwan"
+  ]},
+  {"realm": "east_asia_temperate", "name_contains": [
+   "Manchurian", "Changbai", "Northeast China", "Huang He", "Central China loess", "Korea",
+   "Hokkaido", "Nihonkai", "Taiheiyo", "Honshu", "Ussuri", "Amur", "Suiphun"
+  ]},
+  {"realm": "andes", "name_contains": [
+   "Andean", "Andes", "Puna", "Páramo", "Paramo", "Yungas", "Cordillera", "Magdalena Valley",
+   "Cauca Valley", "Marañón", "Maranon", "Bolivian montane", "Peruvian", "Atacama"
+  ]}
+ ]
+}

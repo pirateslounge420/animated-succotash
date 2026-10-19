@@ -7,15 +7,17 @@ Both agents read it at the start of a session: Claude Code gets it automatically
 `CLAUDE.md` (the brief at the repo root) imports it; Claude in chat reads it from the repo.
 The designer can change any line.
 
-The project is **plain Godot 4.3** (design 30 Sept doc §CI), and the planet is **1/10 Earth**
-in distance, height and time (4,000 km around; §I). Design §CR (3 Oct) moves distance to 1/100
-(400 km around; heights and time stay 1/10); not built yet.
+The project is **plain Godot 4.3** (design 30 Sept doc §CI), and the planet is **1/100 Earth in
+distance (400 km around; §CR, built 3 Oct), 1/10 in height and time**. Design §FX (18 Oct) makes it
+the **real Earth** (ETOPO relief, CHELSA climate, RESOLVE ecoregions) at that scale; not built yet
+(queue 103–107). The game that boots is Torchfire 2, the open world (§FX.1); the crawler is parked.
 
 ## Sources of truth, in order
 1. **`docs/design/RECONCILIATION_2026-09-30.md`**: the ambient cut and everything decided
    since (§AT onward). New decisions are appended here by Claude (chat) as the designer
-   makes them, dated and lettered. **§BR, the last section, is the order of work.** Where it
-   disagrees with the 27 Sept doc, it wins.
+   makes them, dated and lettered. **§FX.9 (18 Oct) is the order of work: `docs/PROMPT_QUEUE.md`
+   102–107.** (§BR was the open world's first queue, §ET.11 the crawler's; both are history.) Where
+   it disagrees with the 27 Sept doc, it wins.
 2. **`docs/design/RECONCILIATION_2026-09-27.md`**: the earlier locked design (§0–§AS). It
    still holds for everything the 30 Sept doc doesn't touch. Its momentum kit, combat and
    shinobi now belong to the separate ninja game (§AT).
@@ -57,7 +59,7 @@ files wholesale.
 - **Docs describe what exists.** `HOW_TO_RUN.md` and code comments describe the built
   game; unbuilt design is marked "(design §X, not built yet)". The design doc describes
   the intended game and never claims something is built.
-- **One thing at a time.** Claude Code works through the order of work (§ET.11 for Torchfire 1, which replaces §BR's queue) in order, plus whatever the
+- **One thing at a time.** Claude Code works through the order of work (§FX.9: queue 102–107 while the open world leads) in order, plus whatever the
   designer's Claude Code prompt lists. The design doc's other sections are context, not a
   to-do list.
 - **No screenshots after every step.** Mike plays on his Mac and reports back. A visual
