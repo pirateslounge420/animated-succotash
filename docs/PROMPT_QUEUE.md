@@ -141,7 +141,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 105 | §FX.5 | Ecoregions, the realm gate and the biome map | todo (after 104) |
 | 106 | §FX.3, §CR.4 | Slopes and routes on the real relief | todo (after 103) |
 | 107 | §FX.6, §CY | Waking on Earth, and the map | todo (after 105) |
-| 108 | §FY.0.2 | The ruins come up: every ruin kind a rare surface find by biome, its twin at the mouth, the crawler below | todo (after 105) |
+| 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | todo (after 105) |
 | 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | todo (after 108) |
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | todo (after 108) |
 

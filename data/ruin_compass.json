@@ -7,7 +7,8 @@
   "egypt": "§FO.1, §FP (10 Oct): Egypt is a ruin kind, not a world, and is UNPLACED: Mike has not put it on the compass (null exits, like the taiga), and its biome world is open (§FO.9 call 2). Stone: big sandstone blocks (Mike); true_pyramid in ruins.json is the nearest style, not wired. Plants: blue lotus and mandrake (Mike, 10 Oct, §FP.4), entries in data/sacred/sacred_plants.json, not loaded or drawn. Reference only, like every ruin but the tomb.",
   "maya": "§FQ (10 Oct): the Maya are a ruin kind inside a biome world (§FN.0.2), not a world of their own. Limestone temple in jungle, the Maya calendar as its motif, Camazotz as its boss (data/maya_ruin.json). Plant: still open (§FN.8 call 2: Mike gave the mushroom to the Aztec). Biome world: the jungle (§FS.1).",
   "fv": "§FV (11 Oct, Mike by voice): the compass walk is a shrine at the surface's edge and a tunnel to the neighbour whose stone changes from this culture's to the next's (answers §FM.10 call 3); surfaces are much smaller (first guess in surface.across_m, Claude's, not Mike's number); the sacred plant grows in sight of the path; nothing gates the way on (tunnels open from the start; §FO.3's boss seal is §FV.7 call 2). plains and tundra are new, placement invented from Mike's 'north from that … the plains … or some type of tundra'; no plant chosen.",
-  "tunnel_built": "Wired 12 Oct (Claude Code, queue 100, §FV.2, §FV.5; RuinTunnel, Surface, CrawlerMain, CrawlerSave). Mike, 12 Oct: \"you can go to the surface and head down another shrine on the cardinal direction of whatever you choose and youll go down that corridor and itll lead to a new biome ruin where you then emerge on the surface and then can go into the new biomes ruins\". built_pair (added): which built ruins the tunnel joins, by crawler.json theme and direction. The tomb has no compass row of its own (the aztec row is its stand-in), so the tomb and the Aztec temple are not neighbours on the compass; they are joined anyway along that row's north-south line, Claude Code's choice for Mike to move: the temple's shrine at its surface's south edge, the tomb's at its north edge. A shrine stands only while its neighbour is in the game (the temple: aztec_temple.json enabled). on (added): false lays no shrine. stretch_m (added): each of the three stretches' length; half_m, height_m: the run's half width and height; mix_band_m: the mixed stretch's bands, each wholly one style or the other, the next's the likelier further along; end_m: how near an end you step through; fade_s: the dark each way; log_down, log_up: the log's lines. shrine (added): width_m, depth_m, height_m of the little stone house; in_from_talus_m: how far in from the foot of the edge's slope it stands; in_at_m: how far through its doorway you go down; out_m: where you stand coming up. from, arrive, stretches, gated, boss, reversible and hides_load describe what is built; residents stays open (§FV.7 call 4): none."
+  "tunnel_built": "Wired 12 Oct (Claude Code, queue 100, §FV.2, §FV.5; RuinTunnel, Surface, CrawlerMain, CrawlerSave). Mike, 12 Oct: \"you can go to the surface and head down another shrine on the cardinal direction of whatever you choose and youll go down that corridor and itll lead to a new biome ruin where you then emerge on the surface and then can go into the new biomes ruins\". built_pair (added): which built ruins the tunnel joins, by crawler.json theme and direction. The tomb has no compass row of its own (the aztec row is its stand-in), so the tomb and the Aztec temple are not neighbours on the compass; they are joined anyway along that row's north-south line, Claude Code's choice for Mike to move: the temple's shrine at its surface's south edge, the tomb's at its north edge. A shrine stands only while its neighbour is in the game (the temple: aztec_temple.json enabled). on (added): false lays no shrine. stretch_m (added): each of the three stretches' length; half_m, height_m: the run's half width and height; mix_band_m: the mixed stretch's bands, each wholly one style or the other, the next's the likelier further along; end_m: how near an end you step through; fade_s: the dark each way; log_down, log_up: the log's lines. shrine (added): width_m, depth_m, height_m of the little stone house; in_from_talus_m: how far in from the foot of the edge's slope it stands; in_at_m: how far through its doorway you go down; out_m: where you stand coming up. from, arrive, stretches, gated, boss, reversible and hides_load describe what is built; residents stays open (§FV.7 call 4): none.",
+  "earth_home": "[NOT WIRED YET — design §FY.10] (22 Oct) Where each ruin kind may spawn on the real Earth (§FX): a culture ruin needs BOTH its region box (lat/lon degrees, generous) AND one of its biomes; a biome ruin needs only its biome. First guesses for Mike's eye. The compass walk above is reference only from 22 Oct."
  },
  "map": {
   "reference_only": true,
@@ -206,6 +207,179 @@
    "in_from_talus_m": 6.0,
    "in_at_m": 0.9,
    "out_m": 2.0
+  }
+ },
+ "earth_home": {
+  "aztec": {
+   "region": {
+    "lat": [
+     17,
+     22
+    ],
+    "lon": [
+     -104,
+     -96
+    ]
+   },
+   "biomes": [
+    "montane_grasslands_shrublands",
+    "tropical_dry_broadleaf"
+   ]
+  },
+  "maya": {
+   "region": {
+    "lat": [
+     14,
+     22
+    ],
+    "lon": [
+     -92,
+     -86
+    ]
+   },
+   "biomes": [
+    "tropical_moist_broadleaf",
+    "tropical_dry_broadleaf"
+   ],
+   "near": "karst_cenote"
+  },
+  "inca": {
+   "region": {
+    "lat": [
+     -20,
+     -5
+    ],
+    "lon": [
+     -78,
+     -64
+    ]
+   },
+   "biomes": [
+    "montane_grasslands_shrublands",
+    "deserts_xeric_shrublands",
+    "tropical_moist_broadleaf_edge"
+   ]
+  },
+  "egypt": {
+   "region": {
+    "lat": [
+     22,
+     31
+    ],
+    "lon": [
+     25,
+     36
+    ]
+   },
+   "biomes": [
+    "deserts_xeric_shrublands"
+   ],
+   "near": "the_nile"
+  },
+  "great_zimbabwe": {
+   "region": {
+    "lat": [
+     -22,
+     -16
+    ],
+    "lon": [
+     26,
+     33
+    ]
+   },
+   "biomes": [
+    "tropical_grasslands_savannas_shrublands"
+   ]
+  },
+  "pueblo": {
+   "region": {
+    "lat": [
+     35,
+     38
+    ],
+    "lon": [
+     -112,
+     -106
+    ]
+   },
+   "biomes": [
+    "deserts_xeric_shrublands",
+    "temperate_conifer_forests"
+   ]
+  },
+  "peyote": {
+   "region": {
+    "lat": [
+     22,
+     30
+    ],
+    "lon": [
+     -106,
+     -98
+    ]
+   },
+   "biomes": [
+    "deserts_xeric_shrublands"
+   ]
+  },
+  "gulf_swamp": {
+   "region": {
+    "lat": [
+     29,
+     33
+    ],
+    "lon": [
+     -94,
+     -88
+    ]
+   },
+   "biomes": [
+    "flooded_grasslands_savannas",
+    "temperate_broadleaf_mixed"
+   ]
+  },
+  "amazon": {
+   "region": {
+    "lat": [
+     -12,
+     3
+    ],
+    "lon": [
+     -74,
+     -50
+    ]
+   },
+   "biomes": [
+    "tropical_moist_broadleaf"
+   ]
+  },
+  "taiga_barbarian": {
+   "region": {
+    "lat": [
+     58,
+     70
+    ],
+    "lon": [
+     5,
+     120
+    ]
+   },
+   "biomes": [
+    "boreal_forests_taiga"
+   ]
+  },
+  "_biome_ruins": {
+   "rule": "biome only, anywhere on Earth",
+   "kinds": [
+    "mine",
+    "mountains",
+    "volcano",
+    "tundra",
+    "sea_caves",
+    "beach",
+    "jungle",
+    "desert_tomb"
+   ]
   }
  }
 }

@@ -6528,3 +6528,32 @@ to their own order after 108. The fishing pole gets a row when Mike writes its s
 2. Whether a boss that is `flesh_blood` can be *killed* (and stays dead for good, §FK's save),
    or only driven off (§FM.1 "no boss is ever beaten").
 3. The fishing pole's specs (FY.5).
+
+### FY.10 Ruins placed where they stand on Earth — LOCKED (22 Oct, 15:22, Mike; answers FY.9 call 1)
+Mike: *"we will have the ruins mapped to particular biomes associated where they can be found on
+earth- aztec for mexican, mayan for mexican peninsula, incans for andes, egyptian pyramids in
+egypt/desert, etc."* So the §FM.8 compass (a thematic walk between cultures) is retired as a
+*placement* rule, kept as reference; the real map of §FX places every culture ruin **in its own
+homeland**, and every biome ruin in **its own biome**, at 1/100. Data: `data/ruin_compass.json →
+earth_home` (new, not wired; first guesses, each a region plus the RESOLVE biomes allowed inside it).
+
+| Ruin | Where on Earth | In which biomes there |
+|---|---|---|
+| Aztec temple | the Mexican central highlands (the Valley of Mexico and around) | montane grassland and shrubland; dry forest edges (§FN.8 call 1 stands) |
+| Maya temple | the Yucatán peninsula and the Petén | tropical moist and dry broadleaf; near cenotes (karst) |
+| Inca | the Andes, Peru to Bolivia | montane grassland (puna), Andean dry valleys, the cloud-forest edge |
+| Egypt (pyramid, the pharaoh) | the Nile valley and the deserts either side | hot desert; the river's edge |
+| Great Zimbabwe | the Zimbabwe plateau | tropical savanna, miombo woodland |
+| Pueblo / Mesa Verde | the Four Corners of the American Southwest | cold desert, piñon-juniper, canyons |
+| Peyote country (invented) | the Chihuahuan Desert, both sides of the Rio Grande | hot desert and thorn scrub, where peyote grows |
+| Gulf South swamp (the witch) | the lower Mississippi and the Gulf coast | swamp, bayou, floodplain forest |
+| Amazon | the Amazon basin | tropical moist broadleaf; the river |
+| Taiga "barbarian" ruin | the boreal belt, Scandinavia to Siberia | taiga |
+| The biome ruins (mine, mountains, volcano, tundra, sea caves, beach, jungle, desert tomb) | wherever on Earth that biome is | their own biome only; the desert tomb becomes Egypt's or sits in any hot desert as a plain tomb (Mike's call) |
+
+Rules: a culture ruin spawns only inside its region **and** one of its allowed biomes (both
+gates); the biome ruins spawn by biome alone; every placement is rare (§FY.0.2) and seeded
+(§FX.6); the first ruin a new game points you down the road to (§CY) is whichever lies nearest
+your waking camp. The shrine tunnels of §FV between cultures are retired with the compass (the
+road joins them now). Rows: queue 108 takes this table as its placement rule; `earth_home` is
+its data. Open: whether the plain desert tomb stays as its own kind (FY.9 call 4).

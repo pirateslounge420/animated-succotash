@@ -10,7 +10,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Data (new, not wired):** `data/substance.json`: three substances (flesh_blood / flesh_no_blood / no_flesh), what a hit and light do to each, first-guess tags for every boss and resident, and reach (torch 1.5 m, spear 2.5 m, bow two-handed).
 - **Queue:** 108–110 after 107 (ruins on the surface, finds and substances, night on the surface). 102–107 unchanged and first.
 - **Brief and agreement:** `CLAUDE.md` and `docs/WORKING_AGREEMENT.md` say the crawler is folded in.
-- **Open (§FY.9):** which ruin kinds in which Earth biomes; whether a flesh-and-blood boss can be killed for good; the fishing specs.
+- **§FY.10 (15:22):** Mike placed the culture ruins in their Earth homelands (Aztec in the Mexican highlands, Maya on the Yucatán, Inca in the Andes, Egypt on the Nile…), biome ruins by biome; `ruin_compass.json → earth_home` holds the first-guess region boxes and biomes; the compass walk and §FV's shrine tunnels become reference only.
+- **Open (§FY.9):** whether a flesh-and-blood boss can be killed for good; the fishing specs.
 - **For Mike:** nothing to play yet; Claude Code's next prompt is still 102.
 
 ## 2026-10-18 — §FX locked: Torchfire 2 comes off the shelf, on the real Earth at 1/100 (Claude, chat)
