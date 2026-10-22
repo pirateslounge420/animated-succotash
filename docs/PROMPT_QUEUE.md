@@ -30,7 +30,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
-**18 Oct, §FX: the open world leads again.** Mike: *"i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"*; *"lock it in"*. **102–107 are §FX, the real Earth at 1/100, in order: 102 the switch back (the data is flipped), 103 Earth relief, 104 Earth climate, 105 ecoregions and the realm gate, 106 slopes and routes, 107 waking on Earth and the map. They go before every crawler row.** The crawler's open rows (99 and every `waits` row) are **parked** (§FX.0): not `todo` until Mike says. Torchfire 2 is the game `scenes/main.tscn` boots now; the checks in `tools/` never changed.
+**18 Oct, §FX: the open world leads again.** Mike: *"i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"*; *"lock it in"*. **102–107 are §FX, the real Earth at 1/100, in order: 102 the switch back (the data is flipped), 103 Earth relief, 104 Earth climate, 105 ecoregions and the realm gate, 106 slopes and routes, 107 waking on Earth and the map. They go before every crawler row.** **22 Oct, §FY: the crawler is folded into the open world (no longer parked): 108–110 follow 107 (ruins on the surface by biome, spear and bow as finds with the three substances, night rules on the surface); the parked crawler rows return to their own order after 108.** The crawler's open rows (99 and every `waits` row) are **parked** (§FX.0): not `todo` until Mike says. Torchfire 2 is the game `scenes/main.tscn` boots now; the checks in `tools/` never changed.
 
 | # | § | Prompt | Status |
 |---|---|---|---|
@@ -141,6 +141,9 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 105 | §FX.5 | Ecoregions, the realm gate and the biome map | todo (after 104) |
 | 106 | §FX.3, §CR.4 | Slopes and routes on the real relief | todo (after 103) |
 | 107 | §FX.6, §CY | Waking on Earth, and the map | todo (after 105) |
+| 108 | §FY.0.2 | The ruins come up: every ruin kind a rare surface find by biome, its twin at the mouth, the crawler below | todo (after 105) |
+| 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | todo (after 108) |
+| 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | todo (after 108) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 

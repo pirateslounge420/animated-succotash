@@ -1,0 +1,32 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §FY] (22 Oct) What a weapon can touch. Every creature that lurks carries one substance tag; the weapon never cares about the dark, only what the thing is made of. Mike: 'what lurks in the dark could be flesh and blood'; 'mummy is flesh- maybe not blood tho'; 'spear should have more reach than torch'. Tags and numbers are Claude's first guesses for Mike's eye.",
+  "classes": "flesh_blood: spear and bow wound and kill, light pushes back. flesh_no_blood: a hit lands and staggers but never stops it; only fire finishes it. no_flesh: weapons pass through; light alone (the torch's stagger is the light, so it still works).",
+  "reach": "metres, first guesses (§FY.3). The torch lights as it swings; the spear does not; the bow takes both hands so the torch goes to the belt."
+ },
+ "classes": {
+  "flesh_blood":    {"weapon_lands": true,  "weapon_stops": true,  "fire_finishes": true,  "light_pushes_back": true},
+  "flesh_no_blood": {"weapon_lands": true,  "weapon_stops": false, "fire_finishes": true,  "light_pushes_back": true},
+  "no_flesh":       {"weapon_lands": false, "weapon_stops": false, "fire_finishes": false, "light_pushes_back": true}
+ },
+ "creatures": {
+  "mine": "flesh_blood", "mountains": "flesh_blood", "swamp": "no_flesh", "desert": "flesh_no_blood",
+  "volcano": "flesh_blood", "tundra": "flesh_blood", "sea_caves": "flesh_blood", "beach": "flesh_blood",
+  "jungle": "flesh_blood", "hornet": "flesh_blood", "imps": "flesh_blood", "warden": "no_flesh",
+  "pharaoh": "flesh_no_blood", "camazotz": "flesh_blood",
+  "skeleton": "flesh_no_blood", "ghost": "no_flesh", "temple_cat": "flesh_blood", "zombie": "flesh_no_blood",
+  "were_mole": "flesh_blood", "mummy": "flesh_no_blood",
+  "overrun_beasts": "flesh_blood"
+ },
+ "notes": {
+  "swamp": "the witch: no_flesh in her own shape; under the brew she reads flesh_blood (§FT keeps it ambiguous)",
+  "volcano": "the dragon: flesh_blood, and still the one maker of fire (§EY)"
+ },
+ "reach": {
+  "torch_swing_m": 1.5,
+  "spear_thrust_m": 2.5,
+  "spear_throw_m": 12.0,
+  "bow_m": 40.0,
+  "bow_two_hands_torch_to_belt": true
+ }
+}

@@ -6421,3 +6421,110 @@ shares filled (FX.5); and the audit of every plant file's `biomes` and `realm` t
    (the world is found, not read)?
 4. **The §CR.4 stretch,** once he has seen the Himalaya honest (prompt 106's report).
 5. **The named peaks** stamped back at their true heights (`peaks.restore_named`)?
+
+## FY. The ruins come up into the open world; spear and bow come back for flesh; the fishing pole — LOCKED (22 Oct, Mike; "lock it in" at 09:58, the weapons and the Earth settled by 10:20)
+
+Mike, 21–22 Oct, in text. On the game: *"i do want the walk"*; he had cut the open world only
+for scope, *"if we gonna make this game good and go all in we may as well do it from the start"*;
+*"have the things we are designing be part of the proc gen … bring back the seasons, day light
+cycle 144 minutes, etc"*; ruins and dungeons *"something rare to find like how we used to have
+it"*, the surface *"mystical and ambient adventure, not always dangerous"*, with *"neutral npc type
+characters … that do their own thing in the world"*. On tech: *"tribal tech but also fantasy"*;
+he took the **Carried-Fire ceiling** by that name. On the Earth: *"could do 'real' Earth in the
+sense of how the biomes connect and are mapped … adjustments can be made … it wont be perfect
+earth and thats ok- this is only a representation."* On weapons: *"considering this is a tribal
+game, i think i would like to add combat actually- we will have spear and bow and arrow
+essentially. id also like to add a fishing pole for ambient fishing vibes. we can design the
+fishing specs later"*; *"what lurks in the dark could be flesh and blood actually considering
+theres other creatures prowling than just ghosts"*; *"mummy is flesh- maybe not blood tho"*;
+*"spear should have more reach than torch"*; *"have spear and bow be found"*.
+
+Data: `data/substance.json` (new, not wired). The §FX data stands. Nothing built.
+
+### FY.0 What this changes
+1. **§FX stands whole.** The planet is the real Earth at 1/100 as a *representation* (FX.3–FX.5);
+   the seed rolls what lives on it (FX.6). "Proc gen" in Mike's words means the life, the camps,
+   the roads and the ruins, which is what §FX.6 already says. Nothing here reverses §FX.
+2. **§FX.0 point 1 is amended: the crawler is no longer parked.** It is folded in. Every ruin
+   kind of Torchfire 1 (§ET–§FW: the tomb, the mine, the swamp, the desert, the volcano, the
+   tundra, the sea caves, the beach, the jungle, the Aztec temple, Egypt, the Maya temple) is a
+   **rare find on the surface of the open world**, placed by its biome under the realm gate
+   (§AA, FX.5), with its surface twin (§FN.6) at the mouth and the crawler's rooms below. §EW's
+   pocket worlds are retired as *worlds*; their generators become the *insides* of ruins. §EW's
+   horizons-of-other-worlds and underground joins go with them (a ruin is reached by road).
+3. **§ED.7 is amended, not reversed.** You still wake with the torch only (§AW); the spear and
+   the bow are **found** (the world, a ruin, a maker's work; §ED.7 as built in `items.json`
+   `_help_ed7`). What changes is what they may touch (FY.2).
+4. **§FA–§FH stand** (the torch staggers, fire pots burn, sneaking, hiding, three hits), now on
+   the surface at night as well as underground: the dark is the same dark.
+5. **§FM.8 / §FO stand: no fast travel, the map is reference only.** The road is the way back.
+6. **§EH's craft ceiling stands and gets its name;** §FL.1's "metal is back" is reversed (FY.4).
+7. **The surface by day is not dangerous by rule** (§EA's daytime danger stands only as the
+   rare, wary mythic sighting of §ED.6); folk, travellers and animals do their own thing (§BL–§BZ,
+   §CW, §EB). The dread, the creatures and the bosses belong to night and to ruins.
+
+### FY.1 The loop, named once
+Camp → road → ruin → road → camp. The hub is the hearth and the folk; the descent is the ruin
+with its boss and its lamps (§EY, §FO); coming back changed is what you carry out (a spear, a
+tome, a technique, seeds) and the lamps you left lit. This is PSO's rhythm with no PSO in it, and
+no system is added for it: it falls out of §FX plus FY.0.2.
+
+### FY.2 Three substances: what a weapon can touch
+Every creature that lurks carries one tag in `data/substance.json → creatures`. The weapon never
+cares about the dark; it cares what the thing is made of.
+- **`flesh_blood`**: spear and bow wound and kill. Light pushes it back (§FA, §BE). The beasts
+  that overrun ruins (§CN), the wolfman, the giant centipede, the hornet, the snake, the yeti, the
+  were-mole, the whale, the trilobite, Camazotz, the dragon (which still breathes fire, §EY).
+- **`flesh_no_blood`**: a hit *lands* (wrappings tear, a limb drops, it staggers) and does not
+  *stop* it; only fire finishes it (a pot, §FA.3, or driving it into a lit floor). The mummy and
+  the pharaoh, the zombie.
+- **`no_flesh`**: spear and arrow pass through; light alone (§FA.1's stagger still works, since
+  it is the light that staggers). Ghosts, the warden, the witch in her own shape (§FT keeps that
+  ambiguous: under the brew she reads `flesh_blood`).
+Imps are `flesh_blood`; skeletons `flesh_no_blood` (bone is flesh enough to break). The first
+guesses are in the file; Mike's eye decides each.
+
+### FY.3 Reach: the spear trades light for distance
+- Torch swing (§CN, §FA.1): reach ~1.5 m, lights as it goes.
+- Spear thrust: reach ~2.5 m, no light; throw (§AW, hold the click) and go and get it; lunge
+  fishes (§BF). Stuck in shallow water it stands; lost to a current it is gone (§BF).
+- Bow: at range; two hands, so the torch goes to the belt and the light shrinks to the hearth,
+  a set-down torch or a fire pot's pool (§FC's hands, Tab-and-wheel).
+- The torch left hand, the spear right, by the wheel (§FC). Numbers are first guesses in
+  `substance.json → reach`, for Claude Code's hand.
+
+### FY.4 The Carried-Fire ceiling (names §EH)
+Pottery, bone, stone, wood, fibre, and fire that is carried, never made (§AW, §BQ, §CQ). Nothing
+smelted, nothing with a wheel or a gear. The fantasy is in the folk and the dark (goblins, trolls,
+fae, the dragon, the witch; §EB, §EY), never in the tools. The dragon stays the one maker of fire.
+§FL.1's "metal is back" is reversed for this game; metal and the Wu Xing ring remain a later
+era's (§ED.9).
+
+### FY.5 The fishing pole: an item again, specs later
+The fishing pole returns as a real held item (supersedes the 29 Sept shelving and §BQ's
+"technique only"): found, or a fishing camp's gift (§BL), for *"ambient fishing vibes"*. Nothing
+about casting, reeling, bait, fish or the catch is decided: Mike will design the fishing specs
+later. The spear still lunges and throws for fish meanwhile. Not built; no data yet.
+
+### FY.6 Not taken
+Spawning with the spear and bow (Mike: found). Weapons that touch ghosts. A spear that lights.
+A health bar (three hits stand, §FE). A map that moves you. Metal. Fights on the road by day as
+a rule.
+
+### FY.7 Data (new, `[NOT WIRED YET — design §FY]`)
+`data/substance.json`: the three classes with what a hit and what light does to each; every
+boss and resident's first-guess tag; `reach` for torch, spear and bow.
+
+### FY.8 Order of work (adds to §FX.9)
+Queue **102–107 first, unchanged.** Then **108** the ruins placed on the surface by biome under
+the realm gate, with the surface twin at the mouth and the crawler below (FY.0.2); **109** the
+spear and bow as finds and the substance tags (FY.2–FY.3); **110** the crawler's night and ruin
+rules on the surface at night (FY.0.4). The parked crawler rows (99 and the `waits` rows) return
+to their own order after 108. The fishing pole gets a row when Mike writes its specs (FY.5).
+
+### FY.9 Open for Mike
+1. Which ruin kinds may sit in which Earth biomes (first guesses to go in `ruin_compass.json`
+   once 105 reports the biome map).
+2. Whether a boss that is `flesh_blood` can be *killed* (and stays dead for good, §FK's save),
+   or only driven off (§FM.1 "no boss is ever beaten").
+3. The fishing pole's specs (FY.5).

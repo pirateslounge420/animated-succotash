@@ -11,7 +11,7 @@ RESOLVE ecoregions as the realm gate so every plant grows where it grows on Eart
 reason: *"to learn more about the plant life there."* **The order of work is §FX.9:
 `docs/PROMPT_QUEUE.md` 102–107, in order, before any crawler row.** The crawler (Torchfire 1, the
 paragraph below, §ET–§FW) keeps its code, its scenes and its queue, parked; nothing is deleted;
-`GAME=torchfire1` still boots it. Where this brief and §FX disagree, §FX wins; where §FX and §ET
+`GAME=torchfire1` still boots it. **22 Oct, §FY (Mike: "lock it in"): the crawler is no longer parked but folded in: every ruin kind is a rare surface find placed by biome, its twin at the mouth and the crawler's rooms below; spear and bow return as finds (never starting kit) and touch flesh by the three substances in `data/substance.json` (flesh and blood: killed; flesh without blood: hit but not stopped, fire finishes; no flesh: light alone); the spear out-reaches the torch and gives no light; the fishing pole is an item again (specs later); the craft ceiling is the Carried-Fire ceiling (no metal; §FL.1 reversed); no fast travel. Queue 108–110 after 107.** Where this brief and §FX disagree, §FX wins; where §FY and §FX disagree, §FY wins; where §FX and §ET
 disagree on what is built first, §FX wins.
 
 The paragraph below is the crawler's brief, kept as it was: **Torchfire 1: an ambient, first-person dungeon crawler** (design §ET, 6 Oct, not

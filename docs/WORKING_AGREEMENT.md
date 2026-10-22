@@ -10,7 +10,7 @@ The designer can change any line.
 The project is **plain Godot 4.3** (design 30 Sept doc §CI), and the planet is **1/100 Earth in
 distance (400 km around; §CR, built 3 Oct), 1/10 in height and time**. Design §FX (18 Oct) makes it
 the **real Earth** (ETOPO relief, CHELSA climate, RESOLVE ecoregions) at that scale; not built yet
-(queue 103–107). The game that boots is Torchfire 2, the open world (§FX.1); the crawler is parked.
+(queue 103–107). The game that boots is Torchfire 2, the open world (§FX.1); the crawler is folded in as the inside of the rare ruins on the surface (§FY, 22 Oct; queue 108–110 after 107).
 
 ## Sources of truth, in order
 1. **`docs/design/RECONCILIATION_2026-09-30.md`**: the ambient cut and everything decided

@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-22 — §FY locked: the ruins come up into the open world; spear and bow as finds, three substances; the fishing pole (Claude, chat)
+- **Mike** (21–22 Oct): "i do want the walk"; ruins "something rare to find"; the surface "mystical and ambient adventure, not always dangerous"; "tribal tech but also fantasy" (the Carried-Fire ceiling); the Earth "only a representation"; "add combat actually- spear and bow and arrow … a fishing pole … design the fishing specs later"; "what lurks in the dark could be flesh and blood"; "mummy is flesh- maybe not blood tho"; "spear should have more reach than torch"; "have spear and bow be found"; "lock it in".
+- **Design:** §FY appended. §FX stands whole (real Earth as a representation; the seed rolls the life). The crawler is no longer parked: every ruin kind becomes a rare surface find placed by biome under the realm gate, twin at the mouth, rooms below (§EW's pocket *worlds* retired, their generators kept as the insides). §ED.7 stands (wake with the torch; spear and bow found). §FA–§FH stand, on the surface at night too. No fast travel (§FM.8). §EH named the Carried-Fire ceiling; §FL.1's metal reversed. Fishing pole returns as an item, specs open.
+- **Data (new, not wired):** `data/substance.json`: three substances (flesh_blood / flesh_no_blood / no_flesh), what a hit and light do to each, first-guess tags for every boss and resident, and reach (torch 1.5 m, spear 2.5 m, bow two-handed).
+- **Queue:** 108–110 after 107 (ruins on the surface, finds and substances, night on the surface). 102–107 unchanged and first.
+- **Brief and agreement:** `CLAUDE.md` and `docs/WORKING_AGREEMENT.md` say the crawler is folded in.
+- **Open (§FY.9):** which ruin kinds in which Earth biomes; whether a flesh-and-blood boss can be killed for good; the fishing specs.
+- **For Mike:** nothing to play yet; Claude Code's next prompt is still 102.
+
 ## 2026-10-18 — §FX locked: Torchfire 2 comes off the shelf, on the real Earth at 1/100 (Claude, chat)
 - **Mike** (17–18 Oct): "i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"; the open world as it was before the crawler, "it still should not have ninja abilities but should be able to climb"; "lock it in".
 - **Design:** §FX appended to `docs/design/RECONCILIATION_2026-09-30.md`. The open world (§AT–§ES as built to 5 Oct) leads again with the ambient movement profile (§AU) unchanged; the planet becomes the real Earth: ETOPO 2022 relief at 1/100 sideways and 1/10 up (§FX.3), CHELSA climate driving the biomes (§FX.4), the RESOLVE ecoregions as the §AA realm gate and a biome prior (§FX.5). Supersedes §CM's "not Earth's map"; amends §CB (the seed rolls life, not land); parks §ET.11. Claude's readings where Mike had no preference (real climate rather than simulated; the open world leads rather than alternating) are marked in §FX.0 and §FX.4. Five calls open in §FX.10.
