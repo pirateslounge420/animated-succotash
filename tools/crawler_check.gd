@@ -2,9 +2,10 @@ extends SceneTree
 ## Torchfire 1's first slice (design 6 Oct §ET.11), headless:
 ##   SEED=7 godot --headless --path . --fixed-fps 60 --script tools/crawler_check.gd
 ## Asserts:
-##  1. the switch (§ET.2): data/game.json boots the crawler (the project's
-##     main scene is the boot scene, which opens GameMode.scene()), GAME
-##     overrides it, the open world's scene is still there;
+##  1. the switch (§ET.2, §FX.1): data/game.json boots the open world
+##     (the project's main scene is the boot scene, which opens
+##     GameMode.scene()), GAME=torchfire1 still opens the crawler, and both
+##     scenes are there;
 ##  2. the tomb kit (§ET.3, §CJ.8) and its plan (§EX.2, §EX.5), over seeds
 ##     1, 7, 42 and WALK_SEEDS more (env WALK_SEEDS; default 200, drawn
 ##     from a fixed seed so a failure can be run again): three or four ways
@@ -254,9 +255,9 @@ func _switch() -> void:
 	ok(str(ProjectSettings.get_setting("application/run/main_scene")) == "res://scenes/boot.tscn", "the project boots the boot scene (scenes/boot.tscn)")
 	var want := OS.get_environment("GAME")
 	OS.set_environment("GAME", "")
-	ok(GameMode.game() == "torchfire1" and GameMode.scene() == "res://scenes/crawler.tscn", "data/game.json picks Torchfire 1, the crawler (%s)" % GameMode.scene())
-	OS.set_environment("GAME", "torchfire2")
-	ok(GameMode.scene() == "res://scenes/main.tscn" and ResourceLoader.exists("res://scenes/main.tscn"), "GAME=torchfire2 opens the open world, still there (scenes/main.tscn)")
+	ok(GameMode.game() == "torchfire2" and GameMode.scene() == "res://scenes/main.tscn" and ResourceLoader.exists("res://scenes/main.tscn"), "data/game.json picks Torchfire 2, the open world (%s; §FX.1)" % GameMode.scene())
+	OS.set_environment("GAME", "torchfire1")
+	ok(GameMode.scene() == "res://scenes/crawler.tscn" and ResourceLoader.exists("res://scenes/crawler.tscn"), "GAME=torchfire1 opens the crawler, still there (scenes/crawler.tscn)")
 	OS.set_environment("GAME", want)
 
 
