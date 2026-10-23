@@ -135,7 +135,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 99 | §FV.1 | A smaller surface, its sacred plant in sight | parked (§FX.0, 18 Oct; was todo) |
 | 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | built 12 Oct between the tomb and the Aztec temple (Mike's amendment: the temple is the second culture) |
 | 101 | §FW | A compass on the HUD | built 8f8da27 (its heading says so; this row still said todo on 18 Oct) |
-| 102 | §FX.1 | The switch back: Torchfire 2 boots | todo |
+| 102 | §FX.1 | The switch back: Torchfire 2 boots | built 5169124 |
 | 103 | §FX.3 | Earth relief: the real continents, coasts and sea floor at 1/100 | todo (after 102) |
 | 104 | §FX.4 | Earth climate: CHELSA temperature and rainfall drive the biomes | todo (after 103) |
 | 105 | §FX.5 | Ecoregions, the realm gate and the biome map | todo (after 104) |
@@ -1779,7 +1779,7 @@ CHECK (headless): facing north, east, south and west puts that point at the stri
 
 ## 102 — The switch back: Torchfire 2 boots — §FX.1
 
-**Status:** todo
+**Status:** built 5169124
 **Mike sees:** Pressing Play opens the open world again: the camp, the road, the planet as it stood on 5 Oct. The crawler is still there, one setting away.
 
 ```text
