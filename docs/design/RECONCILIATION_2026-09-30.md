@@ -6557,3 +6557,38 @@ gates); the biome ruins spawn by biome alone; every placement is rare (§FY.0.2)
 your waking camp. The shrine tunnels of §FV between cultures are retired with the compass (the
 road joins them now). Rows: queue 108 takes this table as its placement rule; `earth_home` is
 its data. Open: whether the plain desert tomb stays as its own kind (FY.9 call 4).
+
+## FZ. The hearth's six keepers, a TO DO — LOCKED as design, NOT for the current build (25 Oct, by voice, Mike; "yep that sounds good- lets lock it in for torchfire", then "doesnt necesarily have to be built right now like the models for example however need to lock it in the doc as a to do type thing")
+
+Mike, 25 Oct, in chat (voice). This section records a design and adds **no queue row**: nothing here
+is built or scheduled until Mike says. It does not change the order of work (§FX.9, queue 103–110).
+
+### FZ.1 Six keepers, one trade each
+At the tribal stage most people wear several hats, so the camp's trades are lumped into six folk.
+Each is their own little market: you buy from and sell to them, and **each pays a premium for
+finds in their own specialty** (the tanner for hides, the potter for clay, the herbalist for strange
+plants). There is **no trader**, no jack-of-all-trades shop: the tribe has no one to trade with yet.
+1. **Hunter-tanner** — the kill, then the hide, bone and sinew.
+2. **Fisher-weaver** — whoever twists the cordage fishes with it: nets, lines, baskets. **Fishing is in the hub.**
+3. **Woodcutter-firekeeper** — fetches the wood, keeps the fire, builds the shelters.
+4. **Forager-herbalist** — plants for food, for healing and for poison.
+5. **Knapper-potter** — the maker: stone, clay and the kiln, tools and weapons. The kiln is the
+   closest the tribe comes to smithing (no metal; the Carried-Fire ceiling, §FY.4, stands).
+6. **The hooded cook-shaman** — at the cauldron by the fire, face hidden so no one knows who or
+   what they are, maybe smoking a big pipe; cooks for the camp and reads the ruins' strange energies.
+
+### FZ.2 The camp is tribal
+A small band where everyone knows each other: hunting, gathering, fishing; stone, bone and wood;
+knowledge passed by word of mouth. Not the ancient era (no cities, farming, writing or metal).
+Whether the camp grows over time, or that is saved for another game, is open (FZ.4).
+
+### FZ.3 Teeth are money
+Creatures drop teeth, and **different teeth are worth different amounts** (a first guess at the
+ladder, not locked: critter teeth as small change, then fangs, then big-beast teeth, then boss
+teeth and tusks as treasures).
+
+### FZ.4 TO DO (when Mike says)
+- Each keeper's look, place round the fire and quirks (not designed yet).
+- Their 3D models (§FH: the hearth folk are live 3D, not sprites).
+- What each keeper buys and sells, and the tooth ladder's values.
+- Open: does the camp advance over time in Torchfire, or is that another game?
