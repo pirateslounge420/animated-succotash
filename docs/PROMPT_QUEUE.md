@@ -30,6 +30,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
+**25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). **There is no `todo` row until Mike gives the crawler a new order of work.** Do not start a parked row.
+
 **18 Oct, §FX: the open world leads again.** Mike: *"i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"*; *"lock it in"*. **102–107 are §FX, the real Earth at 1/100, in order: 102 the switch back (the data is flipped), 103 Earth relief, 104 Earth climate, 105 ecoregions and the realm gate, 106 slopes and routes, 107 waking on Earth and the map. They go before every crawler row.** **22 Oct, §FY: the crawler is folded into the open world (no longer parked): 108–110 follow 107 (ruins on the surface by biome, spear and bow as finds with the three substances, night rules on the surface); the parked crawler rows return to their own order after 108.** The crawler's open rows (99 and every `waits` row) are **parked** (§FX.0): not `todo` until Mike says. Torchfire 2 is the game `scenes/main.tscn` boots now; the checks in `tools/` never changed.
 
 | # | § | Prompt | Status |
@@ -136,14 +138,14 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 100 | §FV.2, §FV.5 | Shrine mouths and the tunnel that changes from one culture to the next | built 12 Oct between the tomb and the Aztec temple (Mike's amendment: the temple is the second culture) |
 | 101 | §FW | A compass on the HUD | built 8f8da27 (its heading says so; this row still said todo on 18 Oct) |
 | 102 | §FX.1 | The switch back: Torchfire 2 boots | built 5169124 |
-| 103 | §FX.3 | Earth relief: the real continents, coasts and sea floor at 1/100 | todo (after 102) |
-| 104 | §FX.4 | Earth climate: CHELSA temperature and rainfall drive the biomes | todo (after 103) |
-| 105 | §FX.5 | Ecoregions, the realm gate and the biome map | todo (after 104) |
-| 106 | §FX.3, §CR.4 | Slopes and routes on the real relief | todo (after 103) |
-| 107 | §FX.6, §CY | Waking on Earth, and the map | todo (after 105) |
-| 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | todo (after 105) |
-| 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | todo (after 108) |
-| 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | todo (after 108) |
+| 103 | §FX.3 | Earth relief: the real continents, coasts and sea floor at 1/100 | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 102) |
+| 104 | §FX.4 | Earth climate: CHELSA temperature and rainfall drive the biomes | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 103) |
+| 105 | §FX.5 | Ecoregions, the realm gate and the biome map | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 104) |
+| 106 | §FX.3, §CR.4 | Slopes and routes on the real relief | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 103) |
+| 107 | §FX.6, §CY | Waking on Earth, and the map | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105) |
+| 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105) |
+| 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
+| 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1794,7 +1796,7 @@ CHECK (headless): scenes/main.tscn boots with no errors and no missing resources
 
 ## 103 — Earth relief: the real continents, coasts and sea floor at 1/100 — §FX.3
 
-**Status:** todo (after 102)
+**Status:** parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 102)
 **Mike sees:** The planet is Earth. Real coastlines, the Andes and the Himalaya where they are, the Great Lakes, the Sahara as a flat expanse, the Mediterranean a sea you can walk around. A new world is the same Earth with a new place to wake.
 
 ```text
@@ -1809,7 +1811,7 @@ CHECK (headless, seed 42, full planet): land fraction 27–31% of the sphere (ET
 
 ## 104 — Earth climate: CHELSA temperature and rainfall drive the biomes — §FX.4
 
-**Status:** todo (after 103)
+**Status:** parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 103)
 **Mike sees:** The Sahara is hot and dry, the Amazon hot and wet, Siberia bitter in winter, Britain mild and grey. The weather you walk in follows the real climate of the place you are in, and the biomes fall where they fall on Earth.
 
 ```text
@@ -1824,7 +1826,7 @@ CHECK (headless, seed 42): at these places the blueprint's climate is within the
 
 ## 105 — Ecoregions, the realm gate and the biome map — §FX.5
 
-**Status:** todo (after 104)
+**Status:** parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 104)
 **Mike sees:** The log and the map name the real place you are in ("Madagascar dry deciduous forests"), and the plants there are that place's own: a baobab only in Africa, Madagascar and Australia; a monkey puzzle only in Chile and Argentina.
 
 ```text
@@ -1839,7 +1841,7 @@ CHECK (headless, seed 42): every land cell has an ecoregion or a nearest one wit
 
 ## 106 — Slopes and routes on the real relief — §FX.3, §CR.4
 
-**Status:** todo (after 103)
+**Status:** parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 103)
 **Mike sees:** A report, not a feature: which ranges can be crossed on foot and where, and which summits are walls. If Mike then asks for it, the great ranges stretch sideways so every one keeps a route.
 
 ```text
@@ -1854,7 +1856,7 @@ CHECK (headless): the report runs on seed 42 in under two minutes and names at l
 
 ## 107 — Waking on Earth, and the map — §FX.6, §CY
 
-**Status:** todo (after 105)
+**Status:** parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105)
 **Mike sees:** A new game wakes you at dawn at a camp somewhere real, on land, never on the ice; the map shows the Earth with your place on it and the name of where you are. Mike can pin a place by latitude and longitude to wake there.
 
 ```text

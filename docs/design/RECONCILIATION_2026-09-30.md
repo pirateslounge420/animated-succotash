@@ -6592,3 +6592,31 @@ teeth and tusks as treasures).
 - Their 3D models (§FH: the hearth folk are live 3D, not sprites).
 - What each keeper buys and sells, and the tooth ladder's values.
 - Open: does the camp advance over time in Torchfire, or is that another game?
+
+## GA. Torchfire is the crawler; the 1/100 Earth open world is a separate game — LOCKED (25 Oct, by voice, Mike; "Yeah, you can change that … That's going to be for a different open world game, not Torchfire.", then "fix")
+
+Mike, 25 Oct. Earlier the same day: Torchfire is *"the ambient dungeon crawler … a single hub with
+ever-deeper descents"*, *"not open world — just the hub camp plus dungeons"*, and the open world
+belongs to a different game, to be kept separate.
+
+### GA.1 What this changes
+1. **§FX and §FY are withdrawn for Torchfire.** The real Earth at 1/100 (ETOPO, CHELSA, RESOLVE),
+   the planet, roads, ecology and the folding of the ruins into it now belong to a **separate open
+   world game**, not this one. Nothing is deleted: the open world's code, data and checks stay in
+   the repo, compiling, as they are (`GAME=torchfire2` still boots it), until Mike says where that
+   game lives.
+2. **Torchfire boots the crawler.** `data/game.json → game` is `torchfire1` again (flipped by
+   Claude, chat, as §FX.8 flipped it the other way).
+3. **Queue 103–110 are parked** (they are the other game's work). The crawler's old rows stay
+   parked too, because the crawler's design moved on today: one hub camp with its six keepers
+   (§FZ) above **one big dungeon that goes ever deeper under the fire**, relit as you go. Those
+   decisions are not yet written into this doc; the next design pass records them.
+4. **There is no `todo` row** until Mike gives the crawler a new order of work. Claude Code does
+   not start a parked row.
+
+### GA.2 Open (for Mike)
+1. Where the open world game lives: this repo (as `torchfire2`, renamed) or a repo of its own.
+2. The crawler's new order of work, starting from the hub prototype.
+3. The look: on 25 Oct Mike chose a high-contrast, smooth, glossy stylised look (American McGee's
+   Alice, Virtual Villagers' tribal feel) over the pixelated one. That reverses §ES's 3D pixel art and
+   its "no normal maps or specular" rule; it is flagged here, not yet written as a section.

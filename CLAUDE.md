@@ -1,5 +1,7 @@
 # animated-succotash — the brief (read at the start of every session)
 
+**25 Oct 2026, design §GA (Mike: "That's going to be for a different open world game, not Torchfire."): Torchfire is the dungeon crawler again.** The 1/100 Earth open world below (§FX, §FY) belongs to a **separate open world game**; its code stays, `GAME=torchfire2` still boots it, and `data/game.json` now boots the crawler (`torchfire1`). **Queue 103–110 are parked, and there is no `todo` row until Mike gives the crawler a new order of work** (§GA.1). The crawler is now one hub camp with six keepers (§FZ) over one ever-deeper dungeon under the fire. Where §GA and anything below disagree, §GA wins.
+
 **18 Oct 2026, design §FX (Mike: "lock it in"): the open world leads again.** This repo now builds
 **Torchfire 2: the ambient, first-person open world, on the real Earth at 1/100** (§FX; the switch
 is built, the Earth is not yet). It is the open world as it stood on 5 Oct, before the crawler
