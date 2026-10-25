@@ -6620,3 +6620,91 @@ belongs to a different game, to be kept separate.
 3. The look: on 25 Oct Mike chose a high-contrast, smooth, glossy stylised look (American McGee's
    Alice, Virtual Villagers' tribal feel) over the pixelated one. That reverses §ES's 3D pixel art and
    its "no normal maps or specular" rule; it is flagged here, not yet written as a section.
+
+## GB. The look: high-contrast, smooth and glossy, a dream lit at night — LOCKED (25 Oct, by voice, Mike; "i want the high contrast smooth glossy look more than the pixelated one", "the stylized look of like being in a different world")
+
+Mike, 25 Oct, in chat after ~60 reference frames (Instagram screenshots, mostly @ozavry_, also
+@vohyak, @morgath0, @en4ria, @kristijan.xo/@showrunner.tv, @saveroomlofi, @uncrownedreigns). The
+frames are third-party and stay out of this public repo; this section describes them instead.
+Mike's further words: *"not hyper realism, but … the stylized look of being in a different world
+almost"*; *"all that … but tribal version"*; inspirations **American McGee's Alice** (2000) and the
+tribal feel of **Virtual Villagers**; on 25 Oct earlier also **The Quest** (heavy, empty, liminal fog)
+and PSO GameCube, Melee, F-Zero GX (the console era).
+
+### GB.0 What this changes
+1. **§ES's 3D pixel art is withdrawn for Torchfire.** No fixed low-res internal frame, no
+   nearest-neighbour upscale, no dither, no posterised flame bands. The game renders at the window's
+   resolution with smooth (linear, mipmapped, anisotropic) texture filtering.
+2. **The brief's "no normal maps or specular" is reversed.** Surfaces get normal maps and low
+   roughness: wet, sculpted, glossy.
+3. **What stands:** blue owns the frame; shade goes navy, never grey; fire is the only warm light
+   and every fire lights in one amber (§EX.6); only things that give off light glow; distance goes
+   bluer; mid-poly models with clean silhouettes; one ruin, one stone (§EX.1); fitted relief stone (§EU).
+4. **Nothing is deleted.** The pixel pipeline stays in the code as a preset (`look.json`), off.
+
+### GB.1 What the frames share (measured by eye, first guesses for the numbers)
+1. **Cobalt night.** Most frames are saturated ultramarine and cobalt with shadows crushed to
+   near-black navy (about #07071a). Not grey, not teal: blue with weight.
+2. **One hot accent per frame.** A green cauldron glow, an orange fire, glowing cyan or blue eyes
+   under a hood, a red-orange sunset. Everything else is blue.
+3. **Gloss and wet.** Stone paths, steps and walls catch hard, sharp specular streaks; water is the
+   brightest thing in view, near white-cyan where it catches light, with glowing stepping stones and
+   lilies; foliage has a waxy sheen. The look is slightly over-sharpened.
+4. **Glow.** Emissive things (mushrooms, flowers, crystals, eyes, fire, cauldrons) bloom softly.
+5. **Haze.** Distance melts into blue fog; skies are painted and streaky, with swirling clouds and
+   big moons.
+6. **Saturation without realism.** Purple and magenta flower carpets, acid-green moss, red trees:
+   colour pushed past real, shapes simple.
+7. **Folk read shamanic.** Hooded robed figures with hidden faces; animal-folk (a frog shaman, a
+   goat-headed robed figure); a frog cooking over a tripod-and-pot campfire is close to the hub.
+
+### GB.2 Torchfire's version (the tribal turn)
+Swap the frames' medieval props (teapots, cigars, gold, castles, knights, stained glass) for clay
+pots, bone pipes, shell beads, woven baskets, standing stones, bone totems, cave paintings. From
+**Alice**: a twisted storybook, warped architecture, impossible scale, familiar things turned
+menacing: crooked totems, roots and ribs curling into archways, carved faces slightly too big or
+wrong, and **each layer stranger than the one above** (it pairs with the lost-civilisation mystery).
+
+### GB.3 The palette (first guess; the designer owns it)
+Indigo #1a1a6e, cobalt #2b3fd1, near-black #07071a, moss #2f6b2a, acid green #7cff4f,
+torch orange #ff7a1a, ember red #c62a12, bone #d8cfa8. Cold blue is the unclaimed dark; the torch's
+orange is the only warmth, so relighting shows in the colour.
+
+### GB.4 How (Godot 4.3, Forward+; first guesses, tuned by play)
+- Textures 256–512 px, linear filtering with mipmaps and anisotropy; normal maps on stone, bark,
+  ground; roughness low (0.15–0.4) on wet stone and water, higher on cloth and earth.
+- Lights: a rim or back light so silhouettes pop out of the dark; specular on.
+- WorldEnvironment: filmic or ACES tonemap; glow (bloom) on, thresholded so only bright and emissive
+  things bloom; adjustments with contrast up (~1.2), saturation up (~1.3); a blue-pushed grade
+  (a colour-correction ramp is fine); screen-space reflections on wet floors if cheap.
+- Fog: heavy, coloured indigo, exponential, plus volumetric fog where the frame rate allows, so
+  distance dissolves (The Quest).
+- Emission on glowing things only (§ "only things that give off light glow" stands).
+
+## GC. Torchfire's shape: one hub camp, one dungeon ever deeper under the fire — LOCKED (24–25 Oct, by voice, Mike)
+
+Recorded from Mike's decisions of 24–25 Oct (the session's notes). It supersedes §EW's pocket worlds
+and §FO's one-floor ruins for Torchfire; the built crawler code is reused where it fits.
+1. **The hub is a camp on the surface**, first person, ambient, relaxed. You spawn at the campfire.
+   Its terrain is **seeded per new game** and **exaggerated** (towering rock, oversized roots), drawn
+   from a start kind: stone, ruins, overgrown vines; a **river** runs through for fresh water and
+   fishing. At the fire a **hooded cook-shaman** stirs a cauldron, face hidden, maybe smoking a big
+   pipe (§FZ.1.6); the other five keepers are a to-do (§FZ.4).
+2. **One big dungeon under the fire.** The way down is something stranger beneath the campfire, to be
+   discovered. You relight it with your torch as you go and **what you light stays lit**; the dark is
+   reclaimed over time. Each layer is harder, has its own monsters and a boss guarding the way on;
+   some bosses stalk rather than wait. Loot improves with depth (PSO); rare monsters and rare drops
+   go up to the surface to be identified. One difficulty.
+3. **Nineteen layers, in order:** 1 surface forest with standing stones and a sundial, 2 cliffs,
+   3 sunlit oasis, 4 root world, 5 insect hive, 6 dry mossy caves, 7 water caves, 8 glowing mushroom
+   forest, 9 Maya, 10 Aztec, 11 Inca (San Pedro imagery), 12 Egyptian sandstone, 13 haunted crypts
+   (vampires), 14 underground sea, 15 ice caves, 16 primal dwarven halls, 17 giant's graveyard,
+   18 lava caves, 19 alien-looking elder ruins. Bosses named so far: insect queen, a rotting tree
+   creature in the roots, a jaguar (Maya), Quetzalcoatl (Aztec), a giant glowing-shelled snail
+   (mushrooms), an ancient whale that lurches up the shore (water caves), a woolly mammoth (ice), a
+   magma golem (lava), a faceless guardian (the bottom).
+4. **Tribal.** Spear, bow, stone, bone, wood and rudimentary elemental tools from mined materials; no
+   metal. People are tribal because whatever came before was wiped out; finding out what happened is
+   the mystery. High fantasy all the same: ruin energies, fairies, gnomes.
+5. **Heavy fog** throughout (§GB.4). Teeth are money (§FZ.3).
+6. **Open:** the order of work past the hub (queue 111–112 are the first two steps).

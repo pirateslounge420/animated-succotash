@@ -30,7 +30,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
-**25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). **There is no `todo` row until Mike gives the crawler a new order of work.** Do not start a parked row.
+**25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). Mike's new order for the crawler (25 Oct): **111 then 112** (§GB, §GC). Do not start a parked row.
 
 **18 Oct, §FX: the open world leads again.** Mike: *"i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"*; *"lock it in"*. **102–107 are §FX, the real Earth at 1/100, in order: 102 the switch back (the data is flipped), 103 Earth relief, 104 Earth climate, 105 ecoregions and the realm gate, 106 slopes and routes, 107 waking on Earth and the map. They go before every crawler row.** **22 Oct, §FY: the crawler is folded into the open world (no longer parked): 108–110 follow 107 (ruins on the surface by biome, spear and bow as finds with the three substances, night rules on the surface); the parked crawler rows return to their own order after 108.** The crawler's open rows (99 and every `waits` row) are **parked** (§FX.0): not `todo` until Mike says. Torchfire 2 is the game `scenes/main.tscn` boots now; the checks in `tools/` never changed.
 
@@ -146,6 +146,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105) |
 | 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
+| 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
+| 112 | §GC.1, §GC.2 | The hub camp on the surface, the cook-shaman at the cauldron, the way down under the fire | todo (after 111) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1868,3 +1870,34 @@ BUILD: (1) The wake: a new game draws its first camp from the candidates on land
 
 CHECK (headless): 100 new seeds' wake points are all on land and none on the ice or in water; print the share per continent (by longitude and latitude bands is fine); the pin at (27.99, 86.93) wakes within two cells of Everest's cell and the pin at (−3.1, −60.0) near Manaus; the map overlay's land mask matches the blueprint's land cells. Walkabout once: a fresh seed's wake, the map opened, the name read.
 ```
+
+## 111 — The glossy look in the crawler — §GB
+
+**Status:** todo
+**Mike sees:** The crawler stops looking pixelated. Wet stone glints, water shines near white, the dark goes deep cobalt-navy, glowing things bloom, the torch is the one warm orange, and the distance melts into indigo fog. Smooth and high-contrast, like a dream at night.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §GB, the high-contrast smooth glossy look, in the crawler (GAME=torchfire1, now the default, §GA). No screenshots after every step: check with headless numbers, and look once at the end with the walkabout. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English at the end what changed on screen and which numbers he can tune.
+
+READ: §GB (all), §GA, §EX.6 (one firelight), §EU (fitted relief stone), §ES and §Y (the pixel pipeline being switched off); data/look.json (render, retro, fire), data/crawler.json (look, fog_color, fog_density); scripts/crawler/ (crawler_main.gd, crawler_fires.gd, fitted_stone.gd, floor_fog.gd, glow_moss.gd, hearth_cauldron.gd); docs/design/LOOK_REFERENCE.md (what stands and what §GB withdraws).
+
+BUILD: (1) A look preset in data/look.json, "glossy" (new block, additive, with _help citing §GB), made the crawler's default; the pixel pipeline stays as preset "pixel", off, nothing deleted. (2) Render at the window's resolution: no fixed internal frame, no nearest upscale, no dither, no posterised flame bands in the glossy preset. (3) Textures: linear filtering with mipmaps and anisotropy; normal maps on the ruin stone, floors and the hearth (generate them from the existing albedo or fitted-stone relief if there are none; say how); roughness low on wet stone and water (0.15–0.4 first guess), higher on cloth and earth; specular on. (4) WorldEnvironment for the crawler: filmic or ACES tonemap; glow on with a threshold so only emissive and bright things bloom (fire, cauldron, glow moss, eyes); contrast ~1.2, saturation ~1.3; a blue-pushed grade toward the §GB.3 palette (shadows near #07071a, mid-darks indigo #1a1a6e and cobalt #2b3fd1). (5) Fog: heavy exponential fog coloured indigo, plus volumetric fog if it holds 60 fps on Mike's Mac (fall back if not and say so). (6) A soft rim or back light on the player's view so walls and figures separate from the dark. (7) Fire stays the one amber (§EX.6), now a smooth animated flame with bloom instead of pixel bands. All values in data with _help lines; Mike tunes by play.
+
+CHECK (headless): the crawler boots with no errors under both presets; with "glossy" the frame is the window's size and no nearest-neighbour or dither pass runs; frame statistics from a fixed spot in the hearth room and one lit corridor: the darkest 5 % near #07071a, the mean hue in the blue band (200–250°), saturation higher than the pixel preset's, and the torch's pixels the only warm hue in an unlit corridor; frame time on the walkabout under 16.7 ms here or report it. Walkabout once at the end: the hearth room, a lit corridor, an unlit one.
+```
+
+## 112 — The hub camp on the surface, and the way down under the fire — §GC.1, §GC.2
+
+**Status:** todo (after 111)
+**Mike sees:** A new game wakes you at a campfire on the surface at night, in a small seeded clearing with exaggerated rock, roots, ruins or vines and a river running through. A hooded figure stirs a glowing cauldron at the fire. Beneath the fire is a strange way down that leads into the dungeon.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 111. This pass builds ONE thing: design §GC.1–2, the hub camp on the surface and the way down beneath its fire, in the crawler, in the §GB look. Not the five other keepers (§FZ.4 is a to-do), not trading, teeth or fishing, not the nineteen layers (§GC.3): the existing first ruin is the dungeon for now. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English what he will see.
+
+READ: §GC (all), §GB, §FZ, §GA; §FM's hearth, shaman and cauldron and §FH (live 3D folk); §FK (one seed per new game, kept); data/crawler.json (opening, persistence), data/game.json; scripts/crawler/ (crawler_main.gd, hearth_folk.gd, hearth_cauldron.gd, crawler_save.gd, fitted_stone.gd), scenes/crawler.tscn; whatever the open world already has for terrain, rivers and campfires that can be reused at small scale (say what you reused).
+
+BUILD: (1) The camp: a bounded surface clearing (first guess ~150–250 m across, closed in by cliffs, roots and fog, no edge visible), its terrain drawn from the game's seed and exaggerated (tall crooked rock, oversized roots), with a start kind picked from the seed: stone, ruins, or overgrown vines (data/crawler.json → hub, new block, each kind's props listed); a river through it; night by default on the one clock. (2) You spawn at the campfire. (3) The hooded cook-shaman at a cauldron by the fire: robed, hood shadowing the face (no face visible), a long pipe with a thin smoke wisp, idle stirring; reuse the hearth folk and cauldron code; the cauldron's glow is the frame's green accent, the fire its orange. (4) The way down: something stranger beneath the fire (first guess: a ring of old stones behind the fire around an opening and steps cut down into the dark), interact to descend into the existing first ruin; coming back up the ruin's exit returns you to the camp. (5) The camp is kept per game (§FK): the same layout every time you come back. All sizes and choices in data with _help lines.
+
+CHECK (headless): three seeds give three different camps, each of the three start kinds appears across 30 seeds, the same seed gives the same camp twice; spawn is at the fire on walkable ground; the river never cuts the spawn off from the way down (a walkable path exists); descending reaches the ruin and its exit returns to the camp with no errors; Continue reopens the same camp. Walkabout once: spawn, the cook-shaman, the river, the way down.
+```
+
