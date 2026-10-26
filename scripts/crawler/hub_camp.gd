@@ -532,7 +532,6 @@ func _shaman() -> void:
 	var n: Vector2 = stair.n
 	var side := Vector2(n.y, -n.x)
 	var d := float(S2.get("from_fire_m", 1.7))
-	var cauld2 := Vector2(fp.x, fp.z) + side * (d * 0.6)
 	var seat2 := Vector2(fp.x, fp.z) + side * (d + 0.6)
 	var seat := _ground_at(seat2)
 	var to := Vector2(fp.x, fp.z) - seat2
@@ -567,36 +566,38 @@ func _shaman() -> void:
 		wisp.mesh = q
 		wisp.position = Vector3(0.0, 0.05, 0.0)
 		bowl.add_child(wisp)
-	# The cauldron: a black iron-dark clay pot on three stones, its brew
+	# The cauldron: a black pot hung over the fire from a tripod of poles
+	# (Mike, 26 Oct: "the cauldron should be over the fire"), its brew
 	# glowing green (the frame's one green accent, §GB.1.2).
-	var cg := _ground_at(cauld2)
+	var hang := float(S2.get("hang_m", 1.05))
 	var pot := Node3D.new()
 	pot.name = "Cauldron"
-	pot.position = cg
+	pot.position = fp
 	add_child(pot)
+	var apex := Vector3(0.0, hang + 1.25, 0.0)
 	for i in 3:
-		var a := TAU * i / 3.0
-		_block(pot, Vector3(0.22, 0.2, 0.22), Transform3D(Basis(Vector3.UP, a), Vector3(cos(a) * 0.3, 0.1, sin(a) * 0.3)), "#3a3c55", 0.4, false)
+		var a := TAU * i / 3.0 + 0.5
+		var foot := _ground_at(Vector2(fp.x, fp.z) + Vector2(cos(a), sin(a)) * 1.05) - fp
+		_rod(pot, foot, apex + Vector3(cos(a), 0.0, sin(a)) * 0.08, 0.045, 0.035, "#3a2a1c", 0.6, true)
+	_rod(pot, apex, Vector3(0.0, hang + 0.42, 0.0), 0.015, 0.015, "#2a2c3e", 0.2)
 	var body := MeshInstance3D.new()
 	var sp := SphereMesh.new()
 	sp.radius = 0.42
 	sp.height = 0.62
 	body.mesh = sp
 	body.material_override = _mat("#14141c", 0.25)
-	body.position = Vector3(0.0, 0.48, 0.0)
+	body.position = Vector3(0.0, hang, 0.0)
 	pot.add_child(body)
 	var glow_hex := str(S2.get("glow", "#7cff4f"))
-	var brew := _cyl(pot, 0.34, 0.34, 0.02, Transform3D(Basis.IDENTITY, Vector3(0.0, 0.74, 0.0)), glow_hex, 0.2, 3.0)
+	var brew := _cyl(pot, 0.34, 0.34, 0.02, Transform3D(Basis.IDENTITY, Vector3(0.0, hang + 0.26, 0.0)), glow_hex, 0.2, 3.0)
 	brew.name = "Brew"
 	var gl := OmniLight3D.new()
 	gl.name = "BrewGlow"
 	gl.light_color = Color(glow_hex)
 	gl.light_energy = float(S2.get("glow_energy", 1.4))
 	gl.omni_range = float(S2.get("glow_range_m", 5.0))
-	gl.position = Vector3(0.0, 1.0, 0.0)
+	gl.position = Vector3(0.0, hang + 0.55, 0.0)
 	pot.add_child(gl)
-	var pc := PropCollision.body(pot)
-	PropCollision.capsule(pc, Transform3D(Basis.IDENTITY, Vector3(0.0, 0.5, 0.0)), 0.42, 0.9)
 
 
 func _keepers() -> void:

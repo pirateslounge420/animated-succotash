@@ -4,6 +4,9 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — The hub's cauldron over the fire (Claude Code)
+- Mike: *"the cauldron should be over the fire"*. The cook-shaman's cauldron now hangs from a tripod of three poles on a short chain straight over the campfire (`crawler.json → hub.shaman.hang_m` 1.05), its green brew and glow as before; the three stones it stood on are gone. `hub_check` 0 fails; seen once in the walkabout (the pot over the flames, the green on the poles).
+
 ## 2026-10-26 — The hub camp fleshed out by niche, and glossy up top (Claude Code)
 - **Mike:** *"the overworld place we spawn in ... needs to be more flushed out- please consider the different niches we established and also make it look less washed out and more high contrast even in the overworld layer"*.
 - **The niches (`HubCamp._dress`, `crawler.json → hub.keepers._help_dress`):** every keeper's site now has a shelter in its trade's way and a torch post (the one amber). Hunter-tanner: a hide tent, a hide on a hoop, a skull-and-antler totem, a spear rack, meat over a smoke pit. Fisher-weaver: a reed hut, a dugout on the bank, a fish-drying line, a fish trap. Woodcutter-firekeeper: a bark lean-to, a felled trunk with an axe in it, stumps, kindling bundles, the ember pot. Forager-herbalist: a thatched hut, a flower bed (purple, magenta, blue, yellow, glowing acid green), gourds, a mortar. Knapper-potter: a clay hut, the clay pit, pots drying on a plank, a knapping stone and flakes, kiln smoke. The common ground (`hub.common`): log benches round the fire, stepping-stone paths to each site, three totems.
