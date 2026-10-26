@@ -4,6 +4,30 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — Queue 115, §GF: the world gets ready at dawn and dusk (Claude Code)
+- **What Mike sees at the hub:**
+  - At dusk the day flowers close and the moonflowers and datura open, with moths round them. The birds circle in to roost; bats pour up out of the stair mouth. The birdsong thins, then insects, frogs by the river and owls come in.
+  - The cook-shaman builds the fire up. Each keeper walks to the fire for a flame, lights their torch post and the lamp in their shelter, and walks back to sit, one light at a time. The shaman's three candles come last.
+  - At dawn it runs back: a bird chorus, the bats home, the lights put out, the fire banked low.
+  - Underground nothing changes.
+- **Built:**
+  - `DayShift` (`scripts/crawler/day_shift.gd`), on every surface (Surface and HubCamp, `_day_shift()`). Each actor's night share comes from the local sun's height (`Surface.sun_deg_at`, the place's latitude, §GE.5) plus its own jitter; never a clock hour.
+  - Flowers: the herbalist's bed tagged by habit, and four clumps of night bloomers. Moths: at the bloomers and at lit torches. A bird flock that roosts; a bat colony from the stair mouth.
+  - `SurfaceLife.awake_fn` and `covers`: the ground animals walk to the nearest tree and sleep when their shift ends. Deer are twilight by `default_by_kind`; the hares stay "any".
+  - Sound layers on the sun with the crossfade. The keepers' rounds use `FolkMotion` walking, recheck the sun at every step, and hold to one light per 8 s.
+  - The hub: torch posts, a lamp in each shelter and three candles, all registered as `folk_lights`.
+  - `data/day_shift.json`: the NOT WIRED YET prefix is gone; added a `crawler` block (bloomer clumps, birds, bats, moths, the banked hearth, the build-up time, the walking pace). Registered `day_shift` in `Tuning.FILES`: it had no loader, so every value had been reading its default.
+- **Checks:** `tools/day_shift_check.gd` 0 fails.
+  - The changes fall inside the sun windows at the hub, 40° and 62°. At 62° the dusk change is at 20.4 h in summer and 14.5 h in winter.
+  - Noon: day flowers open, night bloomers shut, birds out, bats in, no lights, hearth banked. Midnight: the reverse, hearth built up, no day-shift ground creature about.
+  - Birds and bats out together in the twilight. All 13 lights lit at dusk, each at least 8 s apart, candles last; every keeper walked a round and sat again; all out at dawn, hearth banked.
+  - Nothing runs underground. Continue at midnight: all lit, bats out.
+  - `hub_check`, `calendar_check`, `cauldron_fx_check` 0 fails.
+- **Walkabout (`tools/day_shift_frames.gd`, once):** the camp from behind the fire, at the start, 2, 4 and 7 minutes later and at night. The lights come up one by one as amber glows and pools round the dark camp.
+- **For Mike:**
+  - The start is much darker than before 114. Dusk now begins at sunset on the §GE clock, so 3 minutes in (`hub.dusk_into_min`) the sun is already 5° down. A smaller or negative number starts nearer sunset.
+  - The hares have no hours of their own ("any") and stay out all night.
+
 ## 2026-10-26 — Queue 114, §GE and §GE.5: the calendar in the crawler (Claude Code)
 - **What Mike sees:** the days change through a 365-day year on every surface but the hub. At 35° there are long summer days, short summer nights, short winter days and long winter nights, with dawn and dusk 18 minutes each. The hub, on the equator, keeps about 60/18/48/18 all year. A new game starts on the spring equinox, 3 minutes into dusk; Continue keeps its day and hour. Deciduous plants turn, drop and bud where that place's winter drops leaves (temperate, swamp, cold); the hub's, the tropics' and the desert's keep theirs (a dry season). The log stamps lines "Spring day 27 · 17:30".
 - **Built:**

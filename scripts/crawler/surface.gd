@@ -96,6 +96,8 @@ var ms := {}
 ## The weather up here: fair, a little cloud, a breeze (sky.cloud,
 ## wind_mps). Not simulated (§EW.6).
 var weather := {}
+## The dawn and dusk routines (design §GF, DayShift).
+var day_shift: DayShift
 
 
 ## The §FV.1 pocket (design 11 Oct; data/ruin_compass.json surface): the
@@ -322,6 +324,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	var K: Dictionary = S.get("sky", {})
 	var wind_mps := float(K.get("wind_mps", 2.2))
 	weather = {"cloud": float(K.get("cloud", 0.15)), "storm": 0.0, "rain_mm_h": 0.0, "wind": Vector3(0.8, 0.0, 0.6).normalized() * wind_mps, "clear": 1.0 - float(K.get("cloud", 0.15))}
+	_day_shift()
 	ms["all"] = Time.get_ticks_msec() - t0
 	print("[surface] seed %d over tomb %d: %s, %d x %d ground at %.0f m (%d ms), the stairhead at %s, %d stacks and %d slots, %d finds, %d plants (%s), %d creatures (%s); built in %d ms" % [seed_value, int(lay.get("seed", 0)), biome_key(), land.count, land.count, land.cell, int(ms.ground) + int(ms.ground_mesh), str((stair.mouth as Vector2).snapped(Vector2.ONE * 0.1)), stacks.size(), slots.size(), finds.size(), plants.placed, ", ".join(plants.grown.values()), life.animals.size(), ", ".join(life.kinds.map(func(k): return k.name)), int(ms.all)])
 
@@ -361,6 +364,14 @@ func _ground() -> void:
 	fmi.material_override = mat
 	fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	ground_node.add_child(fmi)
+
+
+## The world getting ready at dawn and dusk (design §GF).
+func _day_shift() -> void:
+	day_shift = DayShift.new()
+	day_shift.setup(self, world, seed_value)
+	add_child(day_shift)
+	day_shift.build()
 
 
 ## Which place of the calendar this surface is (design §GE.5,
@@ -649,8 +660,10 @@ func _update(delta: float) -> void:
 	life.daylight = sky.daylight
 	var S2: Dictionary = S.get("sound", {})
 	_volume("wind", float(S2.get("wind_db", -19.0)), 1.0)
-	_volume("day", float(S2.get("day_db", -26.0)), sky.daylight)
-	_volume("night", float(S2.get("night_db", -23.0)), night)
+	# (The day and night layers follow the sun's routine, DayShift, §GF.4.)
+	if day_shift == null:
+		_volume("day", float(S2.get("day_db", -26.0)), sky.daylight)
+		_volume("night", float(S2.get("night_db", -23.0)), night)
 
 
 func _volume(key: String, db: float, share: float) -> void:

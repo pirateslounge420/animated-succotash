@@ -26,6 +26,11 @@ var animals: Array = []
 var kinds: Array[CreatureSpecies] = []
 ## 0-1, the day now (Surface sets it from the sky).
 var daylight := 1.0
+## Who is about (design §GF.3, DayShift): (a) -> bool, by its shift on the
+## local sun with its own offset; unset: by daylight, as before.
+var awake_fn: Callable = Callable()
+## Cover to walk to at the end of a shift (Vector2s: the trees' feet).
+var covers: Array = []
 var _rng := RandomNumberGenerator.new()
 var _within := Vector2(35.0, 200.0)
 var _gone_m := 320.0
@@ -94,6 +99,19 @@ func _place(a: Dictionary, from: Vector2, anywhere := false) -> void:
 	a.pos = Vector3(from.x, land.height_at(from.x, from.y), from.y)
 
 
+## The nearest cover to `p` (a tree's foot), or a spot further out.
+func _cover_of(p: Vector3) -> Vector3:
+	var best := Vector2.INF
+	for c in covers:
+		var q := c as Vector2
+		if best == Vector2.INF or q.distance_to(Vector2(p.x, p.z)) < best.distance_to(Vector2(p.x, p.z)):
+			best = q
+	if best == Vector2.INF:
+		var out := (Vector2(p.x, p.z) - land.center).normalized() * 12.0
+		best = Vector2(p.x, p.z) + out
+	return Vector3(best.x, land.height_at(best.x, best.y), best.y)
+
+
 ## Is `sp` about now (its active hours by the daylight)?
 func awake(sp: CreatureSpecies) -> bool:
 	match sp.active:
@@ -113,10 +131,30 @@ func _process(delta: float) -> void:
 	for a in animals:
 		var sp: CreatureSpecies = a.sp
 		var root: Node3D = a.root
-		var up := awake(sp)
-		root.visible = up
-		if not up:
-			continue
+		var up := bool(awake_fn.call(a)) if awake_fn.is_valid() else awake(sp)
+		if awake_fn.is_valid():
+			# Its shift over: it walks to cover and sleeps there; its shift
+			# begun: it comes out of it (design §GF.3).
+			if str(a.state) == "asleep":
+				if not up:
+					root.visible = false
+					continue
+				a.state = "rest"
+				a.t = _rng.randf_range(1.0, 4.0)
+			elif not up and str(a.state) != "to_cover":
+				a.state = "to_cover"
+				a.goal = _cover_of(a.pos)
+				a.speed = maxf(sp.speed_mps * 0.35, 0.6)
+			if str(a.state) == "to_cover" and Vector2((a.pos as Vector3).x - (a.goal as Vector3).x, (a.pos as Vector3).z - (a.goal as Vector3).z).length() < 0.5:
+				a.state = "asleep"
+				a.speed = 0.0
+				root.visible = false
+				continue
+			root.visible = true
+		else:
+			root.visible = up
+			if not up:
+				continue
 		var pos: Vector3 = a.pos
 		if you != Vector3.INF and Vector2(pos.x - you.x, pos.z - you.z).length() > _gone_m:
 			_place(a, Vector2(you.x, you.z))

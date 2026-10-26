@@ -150,7 +150,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 26 Oct as §GC.1–2 (Claude Code; see PROGRESS): camp, dusk start, cook-shaman, keepers' sites; but WITH the way down under the fire that §GD removes, and without seasons (114). Mike to say: take the way down out now, or when 113 lands |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
-| 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
+| 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1936,7 +1936,7 @@ CHECK (headless): the hub stays within 1 minute of 60/18/48/18 all year; at 35°
 
 ## 115 — The world gets ready at dawn and dusk — §GF
 
-**Status:** todo (after 112 and 114)
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** At dusk the day flowers close and the night bloomers open with moths round them; birds go quiet and settle, then insects, frogs and owls start; bats pour out of cave mouths; the folk light the camp one light at a time until it glows amber. At dawn it all runs back, birds first, lights going out, the hearth banked. Underground nothing changes.
 
 ```text

@@ -1,35 +1,91 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §GF] (26 Oct) The world gets ready for dawn and dusk. Every routine fires on the local sun's elevation (the place's latitude, §GE.5), never a clock hour; each actor adds a random offset so the change spreads across the twilight. First guesses by Claude (chat); Mike tunes by play.",
+  "about": "(26 Oct) The world gets ready for dawn and dusk. Every routine fires on the local sun's elevation (the place's latitude, §GE.5), never a clock hour; each actor adds a random offset so the change spreads across the twilight. First guesses by Claude (chat); Mike tunes by play. Wired 26 Oct (queue 115, DayShift).",
   "sun_deg": "Sun elevations (degrees) that start and finish the evening change (start > end) and the morning change (start < end). The 18-minute dusk and dawn of §GE sit inside these.",
   "flowers": "bloom habits; tagged plants keep their tag, the rest default to always. open_close_s is real seconds for a flower to open or close.",
   "creatures": "shift = day | night | twilight. Creatures without a tag default by kind (birds day, bats/owls/moths night, deer twilight).",
-  "folk_lights": "keepers light their own lights in turn at dusk; per_light_gap_s spreads them; at dawn they put them out, the hearth banked not out."
+  "folk_lights": "keepers light their own lights in turn at dusk; per_light_gap_s spreads them; at dawn they put them out, the hearth banked not out.",
+  "crawler": "(queue 115, Claude Code) The crawler's own numbers for the routines: night_bloomer_clumps how many clumps of moonflower and datura stand about the hub; birds the day flock that roosts at dusk; bats the colony that leaves the stair mouth (a ruin entrance) at dusk and returns at dawn; moths_per_light how many moths at each night bloomer clump and lit torch; hearth_banked the hearth's share of its light by day (banked, not out), hearth_change_s how long the cook-shaman takes to build it up or bank it; walk_mps the keepers' walking pace on their rounds."
  },
- "sun_deg": {"dusk_start": 4.0, "dusk_end": -8.0, "dawn_start": -8.0, "dawn_end": 4.0, "actor_jitter_deg": 2.5},
+ "sun_deg": {
+  "dusk_start": 4.0,
+  "dusk_end": -8.0,
+  "dawn_start": -8.0,
+  "dawn_end": 4.0,
+  "actor_jitter_deg": 2.5
+ },
  "flowers": {
   "open_close_s": 90,
-  "night": ["Datura", "Brugmansia", "Ipomoea alba", "Selenicereus", "Epiphyllum", "Oenothera", "Mirabilis jalapa"],
-  "day": ["Ipomoea", "Convolvulus", "Nymphaea", "Portulaca", "Helianthus"],
+  "night": [
+   "Datura",
+   "Brugmansia",
+   "Ipomoea alba",
+   "Selenicereus",
+   "Epiphyllum",
+   "Oenothera",
+   "Mirabilis jalapa"
+  ],
+  "day": [
+   "Ipomoea",
+   "Convolvulus",
+   "Nymphaea",
+   "Portulaca",
+   "Helianthus"
+  ],
   "night_scent_draws_moths_m": 12
  },
  "creatures": {
-  "default_by_kind": {"bird": "day", "butterfly": "day", "bat": "night", "owl": "night", "moth": "night", "frog": "night", "deer": "twilight", "fox": "twilight", "rodent": "night"},
+  "default_by_kind": {
+   "bird": "day",
+   "butterfly": "day",
+   "bat": "night",
+   "owl": "night",
+   "moth": "night",
+   "frog": "night",
+   "deer": "twilight",
+   "fox": "twilight",
+   "rodent": "night"
+  },
   "asleep_in_cover": true,
-  "bats_from": ["cave_mouth", "ruin_entrance"]
+  "bats_from": [
+   "cave_mouth",
+   "ruin_entrance"
+  ]
  },
  "sound": {
-  "dusk_order": ["birds_thin", "insects", "frogs_near_water", "owls"],
-  "dawn_order": ["dawn_chorus", "night_fades"],
+  "dusk_order": [
+   "birds_thin",
+   "insects",
+   "frogs_near_water",
+   "owls"
+  ],
+  "dawn_order": [
+   "dawn_chorus",
+   "night_fades"
+  ],
   "crossfade_s": 120
  },
  "folk_lights": {
-  "order": ["hearth_built_up", "torch_holders", "lamps", "candles"],
+  "order": [
+   "hearth_built_up",
+   "torch_holders",
+   "lamps",
+   "candles"
+  ],
   "per_light_gap_s": 8,
   "lit_from_existing_flame": true,
   "dawn_out": true,
   "hearth_at_dawn": "banked",
   "also_at_relit_area_hearths": true
  },
- "underground": false
+ "underground": false,
+ "crawler": {
+  "night_bloomer_clumps": 4,
+  "birds": 10,
+  "bats": 12,
+  "moths_per_light": 10,
+  "hearth_banked": 0.35,
+  "hearth_change_s": 20.0,
+  "walk_mps": 1.1
+ }
 }

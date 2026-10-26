@@ -33,6 +33,10 @@ var camp: Dictionary = {}
 var sites: Array = []
 var shaman: HearthFolk
 var cauldron_fx: CauldronFX
+## The folk's lights (design §GF.5, DayShift): [{"id", "kind" (torch,
+## lamp, candle), "owner" (a keeper, or shaman), "parts" (what shows lit),
+## "light", "at" (scene)}], all out until DayShift says.
+var folk_lights: Array = []
 var keeper_folk: Array = []
 var fire: Node3D
 var _mats := {}
@@ -215,6 +219,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	var K: Dictionary = S.get("sky", {})
 	var wind_mps := float(K.get("wind_mps", 2.2))
 	weather = {"cloud": float(K.get("cloud", 0.15)), "storm": 0.0, "rain_mm_h": 0.0, "wind": Vector3(0.8, 0.0, 0.6).normalized() * wind_mps, "clear": 1.0 - float(K.get("cloud", 0.15))}
+	_day_shift()
 	ms["all"] = Time.get_ticks_msec() - t0
 	print("[hub] seed %d (game %d): %s camp, %.0f m across, fire at %s, %d keepers' sites (%s), %d plants; built in %d ms" % [seed_value, CrawlerSave.game_seed, kind, across_m, str(Vector2(fp.x, fp.z).snapped(Vector2.ONE * 0.1)), sites.size(), ", ".join(sites.map(func(x): return str(x.keeper))), plants.placed, int(ms.all)])
 
@@ -576,6 +581,22 @@ func _shaman() -> void:
 	var cl: Array = S2.get("cloak", ["#1d1a2a", "#2c2638"])
 	_block(self, Vector3(0.6, 0.34, 0.45), Transform3D(Basis(Vector3.UP, atan2(-to.x, -to.y)), seat + Vector3(0.0, 0.12, 0.0)), "#3a3c55", 0.4)
 	shaman = HearthFolk.make(self, "CookShaman", seat, atan2(-to.x, -to.y), 1.62, [Color(str(cl[0])), Color(str(cl[1]))], "")
+	# Candles on a flat stone by the shaman's seat, lit last from the hearth
+	# (design §GF.5).
+	var cs := seat + Vector3(side.x, 0.0, side.y) * 0.9
+	_block(self, Vector3(0.5, 0.18, 0.4), Transform3D(Basis.IDENTITY, cs + Vector3(0, 0.07, 0)), "#4a4d6e", 0.3, false)
+	for i in 3:
+		var cp := cs + Vector3(-0.15 + i * 0.15, 0.16, 0.0)
+		var hgt := 0.08 + 0.04 * i
+		_cyl(self, 0.022, 0.022, hgt, Transform3D(Basis.IDENTITY, cp + Vector3(0, hgt * 0.5, 0)), "#e8dcc0", 0.5)
+		var fl := _cyl(self, 0.0, 0.012, 0.035, Transform3D(Basis(Vector3.RIGHT, PI), cp + Vector3(0, hgt + 0.02, 0)), "#ffc060", 0.3, 5.0)
+		var cl2 := OmniLight3D.new()
+		cl2.light_color = Torch.fire_color()
+		cl2.light_energy = 0.12
+		cl2.omni_range = 1.5
+		cl2.position = cp + Vector3(0, hgt + 0.1, 0)
+		add_child(cl2)
+		_register_light(self, "candle", fl, cl2, cp)
 	# The pipe: a long bone pipe from the hood, a thin smoke wisp off its bowl.
 	var head := shaman.body.head as Node3D
 	if head != null:
@@ -654,6 +675,7 @@ func _keepers() -> void:
 		var yaw := float(st.yaw)
 		var site := Node3D.new()
 		site.name = "Site_" + key
+		site.set_meta("keeper", key)
 		site.position = at
 		site.rotation.y = yaw
 		add_child(site)
@@ -708,6 +730,8 @@ func _on(site: Node3D, local: Vector3) -> Vector3:
 ## hub.keepers.dress).
 func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 	_torch_post(site, _on(site, Vector3(1.2, 0.0, -0.8)))
+	# The lamp inside its shelter (design §GF.5), lit after the torch.
+	_lamp(site, _on(site, Vector3(0.0, 0.0, 3.4)))
 	match key:
 		"hunter_tanner":
 			# A hide tent: a cone of stitched hides on poles.
@@ -798,6 +822,9 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 				var c := str(flower_cols[rng.randi_range(0, flower_cols.size() - 1)])
 				bloom.material_override = _mat(c, 0.3, 0.6 if c == "#7cff4f" else 0.0)
 				bloom.position = q + Vector3(0, h, 0)
+				# Its bloom habit (design §GF.2): the herbalist grows both kinds.
+				var hr := rng.randf()
+				bloom.set_meta("bloom_habit", "day" if hr < 0.45 else ("night" if hr < 0.8 else "always"))
 				site.add_child(bloom)
 			var line := _on(site, Vector3(-2.6, 0.0, 0.8))
 			_rod(site, line, line + Vector3(0, 1.8, 0), 0.03, 0.03, "#4a3a28")
@@ -848,6 +875,33 @@ func _torch_post(site: Node3D, at: Vector3) -> void:
 	l.omni_range = float((H.get("keepers", {}) as Dictionary).get("torch_range_m", 6.0))
 	l.position = at + Vector3(0, 2.0, 0)
 	site.add_child(l)
+	_register_light(site, "torch", head, l, at)
+
+
+## A light the keeper of `site` tends (DayShift lights it at dusk): out
+## for now.
+func _register_light(site: Node3D, kind: String, part: MeshInstance3D, l: OmniLight3D, at: Vector3) -> void:
+	var owner := str(site.get_meta("keeper", "shaman"))
+	part.visible = false
+	l.visible = false
+	folk_lights.append({"id": "%s_%s" % [owner, kind] if kind != "candle" else "candle_%d" % folk_lights.size(), "kind": kind, "owner": owner, "parts": [part], "light": l,
+		"at": site.transform * at if site != self else at})
+
+
+## A clay lamp in a keeper's shelter: a small bowl, its flame and a low
+## warm light.
+func _lamp(site: Node3D, at: Vector3) -> void:
+	_cyl(site, 0.1, 0.07, 0.07, Transform3D(Basis.IDENTITY, at + Vector3(0, 0.04, 0)), "#7a4a32", 0.4)
+	var fl := _cyl(site, 0.0, 0.035, 0.09, Transform3D(Basis(Vector3.RIGHT, PI), at + Vector3(0, 0.14, 0)), "#ffb04a", 0.3, 4.0)
+	fl.name = "LampFlame"
+	var l := OmniLight3D.new()
+	l.name = "LampLight"
+	l.light_color = Torch.fire_color()
+	l.light_energy = 0.45
+	l.omni_range = 3.2
+	l.position = at + Vector3(0, 0.4, 0)
+	site.add_child(l)
+	_register_light(site, "lamp", fl, l, at)
 
 
 ## A hide tent: a ring of poles leaning in, covered by a cone.
