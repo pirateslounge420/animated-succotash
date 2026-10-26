@@ -6708,3 +6708,58 @@ and §FO's one-floor ruins for Torchfire; the built crawler code is reused where
    the mystery. High fantasy all the same: ruin energies, fairies, gnomes.
 5. **Heavy fog** throughout (§GB.4). Teeth are money (§FZ.3).
 6. **Open:** the order of work past the hub (queue 111–112 are the first two steps).
+
+## GD. One hub, many areas joined by fire; you start on the surface at dusk; an alien world of high oxygen — LOCKED (25–26 Oct, by voice, Mike; "Yeah, we can do something like that", "so does that make sense?", then "fix repo")
+
+Mike, 25 Oct late and 26 Oct just after midnight, by voice. This **supersedes §GC.1–2's one dungeon
+under the hub fire**: Torchfire goes back to PSO-style separate areas, with one hub.
+
+### GD.1 The shape
+1. **One hub.** A new game starts **at the hub campfire, on the surface, at dusk**. Nothing about the
+   hub is underground, and there is no way down beneath its fire. The hub is the camp of §GC.1 and
+   §FZ (seeded, exaggerated terrain, a river, the hooded cook-shaman at the cauldron).
+2. **Areas.** Each area is **curated and procedurally generated**: explorable, its own feel, **not
+   open world**. Each has a **main hearth**, an **overworld surface** to explore, and a **ruin
+   entrance that leads underground**, with fire holders to relight below (§ET.4 stands).
+   **Creatures and critters live on the surface and underground.**
+3. **Travel by fire** (Claude's proposal; Mike: "we can do something like that"). An area's main
+   hearth starts cold. Reach it and light it with your torch and it is **linked to the hub fire**;
+   from then on the cook-shaman casts a powder into the hub fire, the flames take that area's
+   colour, you step through and come out at its hearth (and back the same way). PSO's teleporter,
+   as fire. The first area is reached how is open (GD.5).
+4. **The loop:** hub fire → an area's hearth → its surface → down into its ruin → back to the hub.
+5. **Reused from the open world:** the **144-minute day** and the **seasons**, and the **plant leaf
+   and structure shapes**, but plants **need not map to a real genus or species**.
+6. **The nineteen themes of §GC.3** become the areas' themes, their order and grouping open.
+
+### GD.2 The world
+1. **An alien planet, not Earth**, built from Earth ideas so it stays intuitive: **Earth-like gravity
+   and physics.** The lost cultures echo Earth's (a jaguar-temple people, a feathered-serpent sun cult,
+   sandstone tomb kings) without being them; their gods, glyphs and fall are invented.
+2. **Oxygen at 30–35 %** (Carboniferous; Earth today is 21 %): giant insects; fire burns hotter and
+   faster and even damp growth carries flame once lit, so wildfire is a force, fire-adapted plants
+   exist, and fire is the tribe's best friend and worst danger.
+3. **Creatures alien but believable:** evolved for a reason (convergent forms; every trait has a job;
+   many grazers, fewer predators, few apex hunters). An untamed, wild world.
+
+### GD.3 The tribe and its stuff
+1. **Stage: between tribal and ancient** (Neolithic): settled huts, no metal. **Basic boats**
+   (dugouts, reed rafts) to cross water.
+2. **Harvest from creatures, Monster Hunter-style:** teeth as money (§FZ.3); shells, carapace and
+   scales as armour (crab-shell chest, beetle helmet, fish-scale cloak); **materials from specific
+   places** (woods, stones, ivory, silk, sinew) taken to a keeper to be made into gear, so progress
+   shows in what you carry.
+3. **Basic farming, both ways:** the forager-herbalist tends plants and you can keep a small plot of
+   your own; specialty plants, cannabis first (fibre, seed, the shaman's pipe).
+4. **Fire tech found in the ruins** (the only tech past the tribe's, always fire): **flint and steel,
+   oil lamps, lanterns, bellows**. No phones, no guns; not Fallout. The deepest finds stay mysterious.
+5. Solarpunk is not Torchfire (for another game).
+
+### GD.4 Queue
+**112 is rewritten** (the hub at dusk, no way down) and **113 is new** (fire travel to a first area).
+111 stands.
+
+### GD.5 Open (for Mike)
+1. How the first area's hearth is reached before any link exists (a short walk out of the hub, a
+   boat down the river, or the shaman opens the first one).
+2. The areas' order and which of §GC.3's themes come first.
