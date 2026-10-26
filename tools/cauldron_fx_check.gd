@@ -56,6 +56,8 @@ func _run() -> void:
 			ok(fx._sparks.initial_velocity_max >= 1.0, "%s: embers fly up fast" % key)
 		elif kind == "spores":
 			ok(fx._sparks.lifetime >= 4.0 and fx._sparks.tangential_accel_max > 0.0 and fx._sparks.initial_velocity_max < 0.3, "%s: spores drift slow and wander" % key)
+		var sp_v := float(b.get("spill", 0.0))
+		ok(fx._spill.emitting == (sp_v > 0.0) and (sp_v <= 0.0 or (fx._spill.gravity.y < 0.0 and fx._spill.emission_ring_radius >= 0.3)), "%s: %s" % [key, "fog billows over the rim and sinks" if sp_v > 0.0 else "no spill"])
 		var heavy := float(b.get("steam_rate", 0.5)) > 0.85
 		ok((fx._steam.gravity.y < 0.0) == heavy, "%s: steam %s" % [key, "rolls over the rim and sinks" if heavy else "rises"])
 		looks[key] = [fx._steam.color.to_html(), fx._sparks.color.to_html(), kind]

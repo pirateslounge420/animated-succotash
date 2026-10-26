@@ -33,6 +33,9 @@ var _steam: CPUParticles3D
 var _bubbles: CPUParticles3D
 var _sparks: CPUParticles3D
 var _puff: CPUParticles3D
+## A heavy brew's fog, billowing over the rim and rolling down to the
+## ground round the fire (spill > 0 in its brew).
+var _spill: CPUParticles3D
 ## Set by HubCamp: the brew's surface mesh and its light.
 var surface: MeshInstance3D
 var light: OmniLight3D
@@ -52,6 +55,26 @@ func _ready() -> void:
 	_bubbles = _particles("Bubbles", 24, 0.5, 0.03)
 	_sparks = _particles("Sparks", 20, 2.6, 0.025)
 	_puff = _particles("Puff", 40, 2.2, 0.3)
+	_spill = _particles("Spill", 80, 9.0, 0.6)
+	_spill.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
+	_spill.emission_ring_axis = Vector3.UP
+	_spill.emission_ring_radius = 0.4
+	_spill.emission_ring_inner_radius = 0.3
+	_spill.emission_ring_height = 0.02
+	_spill.direction = Vector3(1.0, -0.2, 0.0)
+	_spill.spread = 180.0
+	_spill.flatness = 0.85
+	_spill.damping_min = 0.04
+	_spill.damping_max = 0.1
+	var grow := Curve.new()
+	grow.add_point(Vector2(0.0, 0.35))
+	grow.add_point(Vector2(0.4, 1.0))
+	grow.add_point(Vector2(1.0, 1.8))
+	_spill.scale_amount_curve = grow
+	var fade := Gradient.new()
+	fade.offsets = PackedFloat32Array([0.0, 0.2, 0.75, 1.0])
+	fade.colors = PackedColorArray([Color(1, 1, 1, 0), Color(1, 1, 1, 0.9), Color(1, 1, 1, 0.5), Color(1, 1, 1, 0)])
+	_spill.color_ramp = fade
 	_puff.one_shot = true
 	_puff.emitting = false
 	_puff.explosiveness = 0.9
@@ -180,6 +203,22 @@ func _look(recolour: bool) -> void:
 	_steam.initial_velocity_min = 0.15 + 0.25 * sr
 	_steam.initial_velocity_max = 0.35 + 0.45 * sr
 	_steam.spread = 12.0 if lift > 0.0 else 60.0
+	# A heavy brew's fog (spill, 0-1): slow, faint, wide puffs pushed out
+	# over the rim, sinking and spreading on the ground as they grow; the
+	# column above goes thin and wide (Mike, 26 Oct: "billowing and flowing
+	# over the edges").
+	var spill := float(b.get("spill", 0.0)) * k
+	_spill.visible = spill > 0.01
+	_spill.emitting = spill > 0.01
+	if spill > 0.01:
+		_spill.color = Color(steam_c.r, steam_c.g, steam_c.b, clampf(0.05 + 0.13 * spill, 0.0, 1.0))
+		_spill.initial_velocity_min = 0.3
+		_spill.initial_velocity_max = 0.45 + 0.35 * spill
+		_spill.gravity = Vector3(0.0, -0.4, 0.0)
+		_spill.scale_amount_min = 1.2
+		_spill.scale_amount_max = 2.0 + 1.5 * spill
+		_steam.color.a *= 0.5
+		_steam.scale_amount_max *= 1.6
 	var bub := float(b.get("bubbles", 0.4)) * k
 	_bubbles.color = glow_c.lightened(0.3)
 	_bubbles.color.a = clampf(bub, 0.0, 1.0)

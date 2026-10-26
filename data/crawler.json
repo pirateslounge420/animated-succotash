@@ -778,7 +778,8 @@
      "sparks": 0.9,
      "spark_kind": "spores",
      "glow": "#b24ad8",
-     "note": "the Aztec brew mushroom (§FN.5): thin magenta steam, slow thick bubbles, spores drifting up and wandering"
+     "note": "the Aztec brew mushroom (§FN.5): thin magenta steam, slow thick bubbles, spores drifting up and wandering",
+     "spill": 0.35
     },
     "blue_lotus": {
      "name": "Blue lotus and mandrake",
@@ -797,12 +798,14 @@
      "steam": "#b8c84a",
      "steam_rate": 1.0,
      "bubbles": 0.8,
-     "sparks": 0.3,
+     "sparks": 0.1,
      "spark_kind": "spores",
      "glow": "#a8c832",
-     "note": "the swamp witch's (§FR): heavy sickly yellow-green smoke that rolls over the rim and sinks, a hard boil"
+     "note": "the swamp witch's (§FR): heavy sickly yellow-green smoke that rolls over the rim and sinks, a hard boil",
+     "spill": 1.0
     }
-   }
+   },
+   "_help_spill": "spill (0-1, 0 or absent none): a heavy brew's fog, billowing out over the rim and rolling down round the fire, spreading and fading on the ground (Mike, 26 Oct: 'a more billowing and flowing over the edges type of fog'). Jimsonweed spills hard; teonanácatl a little."
   }
  }
 }

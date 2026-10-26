@@ -4,7 +4,7 @@ extends SceneTree
 ##   xvfb-run -a -s "-screen 0 640x360x24" godot --path . --rendering-method forward_plus \
 ##     --resolution 640x360 -s tools/cauldron_frames.gd
 ## Frames to OUT (default user://cauldron_frames/): one per brew, from a
-## few steps off, the pot against the dark.
+## few steps off, the pot against the dark. ONLY=<brew> just that one.
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -37,6 +37,8 @@ func _run() -> void:
 	var flat := Vector3(at.x - eye.x, 0.0, at.z - eye.z)
 	p.spawn_flat(eye, atan2(-flat.x, -flat.z), atan2(at.y + 0.6 - (eye.y + 1.55), flat.length()))
 	for key: String in CauldronFX.brews():
+		if OS.get_environment("ONLY") != "" and key != OS.get_environment("ONLY"):
+			continue
 		fx.start(key, true)
 		fx.advance(fx.brew_s() + 0.01)
 		await _frames(int(OS.get_environment("SETTLE")) if OS.get_environment("SETTLE").is_valid_int() else 90)

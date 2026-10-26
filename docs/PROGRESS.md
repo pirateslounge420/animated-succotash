@@ -4,6 +4,9 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — Heavy brews billow over the rim (Claude Code)
+- Mike: *"it would be cool for the effect to be a more billowing and flowing over the edges type of fog"*. `CauldronFX` gained a spill: faint, wide fog puffs pushed out from a ring at the pot's rim, sinking and spreading as they grow (9 s each), the column above thinner. `crawler.json → hub.cauldron_fx.brews.<brew>.spill` (0–1): jimsonweed 1.0, teonanácatl 0.35; jimsonweed's motes cut to 0.1 (they read as blobs). `cauldron_fx_check` 0 fails (the spill brews billow and sink, the others don't); seen once (`cauldron_frames.gd`, `ONLY=jimsonweed`): a faint yellow-green fog spilling round the pot and down past the fire.
+
 ## 2026-10-26 — The camp cauldron steams, brew by brew (Claude Code)
 - Mike: *"lets get some effects steaming up off the cauldron- also, for different brews which would take different times there will be different effects"*.
 - **Built:** `CauldronFX` (`scripts/crawler/cauldron_fx.gd`) at the hub cauldron's mouth: soft steam puffs, bubbles breaking on the surface, rising motes (embers, glowing motes or wandering spores), a puff when a brew is done, and the brew's surface colour and faint light. `crawler.json → hub.cauldron_fx` (new): six brews, each with its time and look: camp stew (0, always simmering), healing broth 60 s, ololiuhqui 120 s, teonanácatl 180 s, blue lotus and mandrake 150 s, jimsonweed 240 s (heavy smoke that sinks over the rim). Strength builds from a simmer to full over the brew's time. No brew system yet (what a brew does, how you ask for one, is undecided), so the cook-shaman cycles through them. `start(key, true)` is the hook a brew system will call.
