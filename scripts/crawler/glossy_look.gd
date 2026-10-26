@@ -117,20 +117,7 @@ static func environment(env: Environment) -> void:
 	env.adjustment_contrast = float(e.get("contrast", 1.2))
 	env.adjustment_saturation = float(e.get("saturation", 1.3))
 	env.adjustment_brightness = float(e.get("brightness", 1.0))
-	var stops: Array = e.get("grade", [])
-	if stops.size() >= 2:
-		var offs := PackedFloat32Array()
-		var cols := PackedColorArray()
-		for st: Array in stops:
-			offs.append(float(st[0]))
-			cols.append(Color(str(st[1])))
-		var g := Gradient.new()
-		g.offsets = offs
-		g.colors = cols
-		var gt := GradientTexture1D.new()
-		gt.gradient = g
-		gt.width = 256
-		env.adjustment_color_correction = gt
+	env.adjustment_color_correction = _ramp(e.get("grade", []))
 	env.fog_enabled = true
 	env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
 	env.fog_density = haze_density()
@@ -176,3 +163,75 @@ static func back_light(camera: Camera3D) -> OmniLight3D:
 	l.position = Vector3(float(o[0]), float(o[1]), -float(o[2]))
 	camera.add_child(l)
 	return l
+
+
+## The surface under glossy (look.json glossy.surface; Mike, 26 Oct): the
+## sky's environment graded like the dungeon's (tonemap, contrast,
+## saturation, the ramp, bloom); its fog and sky stay the sky's.
+static func surface_env(env: Environment) -> void:
+	var e: Dictionary = G().get("surface", {})
+	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC if str(e.get("tonemap", "aces")) == "filmic" else Environment.TONE_MAPPER_ACES
+	env.tonemap_exposure = float(e.get("exposure", 1.0))
+	env.adjustment_enabled = true
+	env.adjustment_contrast = float(e.get("contrast", 1.3))
+	env.adjustment_saturation = float(e.get("saturation", 1.4))
+	env.adjustment_brightness = float(e.get("brightness", 0.95))
+	env.adjustment_color_correction = _ramp(e.get("grade", []))
+	var gl: Dictionary = e.get("glow", {})
+	env.glow_enabled = bool(gl.get("enabled", true))
+	env.glow_hdr_threshold = float(gl.get("hdr_threshold", 1.0))
+	env.glow_intensity = float(gl.get("intensity", 0.6))
+	env.glow_strength = float(gl.get("strength", 1.0))
+	env.glow_bloom = float(gl.get("bloom", 0.0))
+	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE if str(gl.get("blend", "additive")) == "additive" else Environment.GLOW_BLEND_MODE_SCREEN
+
+
+static func _ramp(stops: Array) -> GradientTexture1D:
+	if stops.size() < 2:
+		return null
+	var offs := PackedFloat32Array()
+	var cols := PackedColorArray()
+	for st: Array in stops:
+		offs.append(float(st[0]))
+		cols.append(Color(str(st[1])))
+	var g := Gradient.new()
+	g.offsets = offs
+	g.colors = cols
+	var gt := GradientTexture1D.new()
+	gt.gradient = g
+	gt.width = 256
+	return gt
+
+
+static var _smooth := {}
+
+
+## Every shader material under `root` drawn smooth (the ground, the plants:
+## their tiles linear with every mip, per pixel, GLOSSY's retro_tex), once
+## per shader.
+static func smooth_all(root: Node) -> int:
+	var n := 0
+	var stack: Array = [root]
+	while not stack.is_empty():
+		var node: Node = stack.pop_back()
+		stack.append_array(node.get_children())
+		if node is GeometryInstance3D:
+			var m := (node as GeometryInstance3D).material_override
+			if m is ShaderMaterial and (m as ShaderMaterial).shader != null:
+				var sm := m as ShaderMaterial
+				if not sm.shader.code.contains("#define GLOSSY"):
+					sm.shader = smooth_shader(sm.shader)
+					n += 1
+	return n
+
+
+static func smooth_shader(sh: Shader) -> Shader:
+	if _smooth.has(sh):
+		return _smooth[sh]
+	var code := sh.code.replace("vertex_lighting, ", "").replace(", vertex_lighting", "")
+	code = code.replace("filter_nearest_mipmap,", "filter_linear_mipmap_anisotropic,")
+	code = code.replace("shader_type spatial;", "shader_type spatial;\n#define GLOSSY")
+	var out := Shader.new()
+	out.code = code
+	_smooth[sh] = out
+	return out

@@ -186,7 +186,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(4.0, 4.0), Vector2(8.0, 8.0)))
 	for st in sites:
 		var a: Vector3 = st.at
-		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(4.0, 4.0), Vector2(8.0, 8.0)))
+		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(7.0, 7.0), Vector2(14.0, 14.0)))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([seed_value, "hub props"])
 	_river()
@@ -195,6 +195,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	_fire()
 	_shaman()
 	_keepers()
+	_common(rng)
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
 	add_child(plants)
@@ -233,6 +234,17 @@ static func _climate_of(doc: Dictionary) -> Dictionary:
 	var t: Array = cl.get("temp_c", [6.0, 19.0])
 	var m: Array = cl.get("moisture", [0.5, 0.9])
 	return {"temp_c": Vector2(float(t[0]), float(t[1])), "moisture": Vector2(float(m[0]), float(m[1]))}
+
+
+## Up into the camp: Surface's enter, then (glossy, design §GB; Mike,
+## 26 Oct) the sky's environment graded high-contrast and the ground's and
+## plants' tiles drawn smooth.
+func enter(main: Node) -> void:
+	super.enter(main)
+	if GlossyLook.active:
+		GlossyLook.surface_env(sky.environment)
+		if not has_meta("smoothed"):
+			set_meta("smoothed", GlossyLook.smooth_all(self))
 
 
 ## You start (and come back up) at the fire, across it, facing it.
@@ -605,6 +617,9 @@ func _keepers() -> void:
 		f.hold("")
 		f.set_meta("keeper", key)
 		keeper_folk.append(f)
+		var drng := RandomNumberGenerator.new()
+		drng.seed = hash([seed_value, "dress", key])
+		_dress(site, key, drng)
 		match key:
 			"hunter_tanner":
 				_rack(site, Vector3(-1.8, 0.0, 1.4), "#6b4a2e", "#8a6a48", true)
@@ -632,6 +647,286 @@ func _keepers() -> void:
 					pot.name = "Pot"
 				for i in 6:
 					_block(site, Vector3(0.22, 0.12, 0.18), Transform3D(Basis(Vector3.UP, i * 1.1), Vector3(0.5 + (i % 3) * 0.2, 0.06, 1.8 + (i / 3) * 0.2)), "#2a2c3e", 0.2, false)
+
+
+## `local` (in `site`'s frame) set down on the ground there.
+func _on(site: Node3D, local: Vector3) -> Vector3:
+	var w := site.to_global(Vector3(local.x, 0.0, local.z)) if site.is_inside_tree() else site.transform * Vector3(local.x, 0.0, local.z)
+	return Vector3(local.x, land.height_at(w.x, w.z) - site.position.y + local.y, local.z)
+
+
+## Each keeper's place made theirs (Mike, 26 Oct: "more fleshed out ...
+## consider the different niches"): a shelter in their trade's way, a
+## torch post, and their trade's work laid round it (crawler.json
+## hub.keepers.dress).
+func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
+	_torch_post(site, _on(site, Vector3(1.2, 0.0, -0.8)))
+	match key:
+		"hunter_tanner":
+			# A hide tent: a cone of stitched hides on poles.
+			_tent(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.7, 2.6, "#7a5236", "#4a2e1e")
+			# A hide stretched on a hoop frame, a skull-and-antler totem,
+			# spears leaning on a crossbar, meat drying over a smoke pit.
+			var hoop := _on(site, Vector3(2.6, 0.0, 1.8))
+			_cyl(site, 0.9, 0.9, 0.05, Transform3D(Basis(Vector3.RIGHT, PI * 0.5 - 0.2), hoop + Vector3(0, 1.0, 0)), "#5a3e24", 0.6)
+			_cyl(site, 0.82, 0.82, 0.02, Transform3D(Basis(Vector3.RIGHT, PI * 0.5 - 0.2), hoop + Vector3(0, 1.0, 0.01)), "#a8805a", 0.75)
+			_totem(site, _on(site, Vector3(-2.8, 0.0, -0.6)), rng, true)
+			var rack := _on(site, Vector3(-3.0, 0.0, 2.8))
+			_rod(site, rack + Vector3(-0.8, 0, 0), rack + Vector3(-0.8, 1.4, 0), 0.04, 0.04, "#5a3e24", 0.6)
+			_rod(site, rack + Vector3(0.8, 0, 0), rack + Vector3(0.8, 1.4, 0), 0.04, 0.04, "#5a3e24", 0.6)
+			_rod(site, rack + Vector3(-0.8, 1.35, 0), rack + Vector3(0.8, 1.35, 0), 0.03, 0.03, "#5a3e24", 0.6)
+			for i in 4:
+				var x := -0.6 + i * 0.4
+				_rod(site, rack + Vector3(x, 0.0, 0.5), rack + Vector3(x + 0.1, 2.3, -0.1), 0.025, 0.02, "#6b4a2e", 0.5)
+				_cyl(site, 0.0, 0.05, 0.22, Transform3D(Basis.IDENTITY, rack + Vector3(x + 0.1, 2.4, -0.1)), "#2a2c3e", 0.15)
+			var pit := _on(site, Vector3(1.0, 0.0, 3.0))
+			_cyl(site, 0.5, 0.55, 0.12, Transform3D(Basis.IDENTITY, pit + Vector3(0, 0.03, 0)), "#1e1a1a", 0.9)
+			for i in 3:
+				_block(site, Vector3(0.3, 0.12, 0.05), Transform3D(Basis.IDENTITY, pit + Vector3(-0.3 + i * 0.3, 1.1, 0)), "#7a2a1e", 0.4, false)
+			_rod(site, pit + Vector3(-0.6, 0, 0), pit + Vector3(-0.6, 1.3, 0), 0.03, 0.03, "#5a3e24")
+			_rod(site, pit + Vector3(0.6, 0, 0), pit + Vector3(0.6, 1.3, 0), 0.03, 0.03, "#5a3e24")
+			_rod(site, pit + Vector3(-0.6, 1.25, 0), pit + Vector3(0.6, 1.25, 0), 0.02, 0.02, "#5a3e24")
+		"fisher_weaver":
+			# A reed hut, a dugout drawn up on the bank, a fish-drying line, a
+			# fish trap and a net spread on stakes.
+			_hut(site, _on(site, Vector3(-0.5, 0.0, 4.0)), 1.6, "#8a7a4a", "#5a4a2a")
+			var boat := _on(site, Vector3(2.6, 0.0, 2.2))
+			var hull := _cyl(site, 0.38, 0.38, 3.4, Transform3D(Basis(Vector3.FORWARD, PI * 0.5) * Basis.from_scale(Vector3(1.0, 1.0, 0.7)), boat + Vector3(0, 0.22, 0)), "#4a3220", 0.45)
+			hull.name = "Dugout"
+			_cyl(site, 0.3, 0.3, 3.2, Transform3D(Basis(Vector3.FORWARD, PI * 0.5) * Basis.from_scale(Vector3(1.0, 1.0, 0.55)), boat + Vector3(0, 0.36, 0)), "#24180e", 0.8)
+			var line := _on(site, Vector3(-2.6, 0.0, 1.2))
+			_rod(site, line, line + Vector3(0, 1.7, 0), 0.035, 0.03, "#5a4a2a")
+			_rod(site, line + Vector3(0, 0, 2.2), line + Vector3(0, 1.7, 2.2), 0.035, 0.03, "#5a4a2a")
+			_rod(site, line + Vector3(0, 1.62, 0), line + Vector3(0, 1.62, 2.2), 0.01, 0.01, "#b8a878")
+			for i in 6:
+				var fish := MeshInstance3D.new()
+				var sp := SphereMesh.new()
+				sp.radius = 0.06
+				sp.height = 0.32
+				sp.radial_segments = 6
+				sp.rings = 3
+				fish.mesh = sp
+				fish.material_override = _mat("#a8c0d8", 0.15)
+				fish.position = line + Vector3(0, 1.45, 0.25 + i * 0.32)
+				site.add_child(fish)
+			_basket(site, _on(site, Vector3(-1.2, 0.0, -1.2)))
+			var trap := _cyl(site, 0.0, 0.32, 0.9, Transform3D(Basis(Vector3.RIGHT, PI * 0.5), _on(site, Vector3(0.6, 0.25, 2.8))), "#9a8a5a", 0.8)
+			trap.name = "FishTrap"
+		"woodcutter_firekeeper":
+			# A bark lean-to, felled trunks with an axe bitten in, stumps,
+			# kindling bundles and a carried-fire pot (the firekeeper's ember).
+			_lean_to(site, _on(site, Vector3(0.0, 0.0, 4.0)), "#3e2a1a", "#5a4026")
+			var log_at := _on(site, Vector3(2.8, 0.0, 2.0))
+			_rod(site, log_at + Vector3(-1.8, 0.3, 0), log_at + Vector3(1.8, 0.3, 0.3), 0.3, 0.26, "#5a3e24", 0.7, true)
+			_rod(site, log_at + Vector3(0.4, 0.55, 0.1), log_at + Vector3(0.5, 1.1, 0.1), 0.025, 0.025, "#8a6a48")
+			_block(site, Vector3(0.05, 0.16, 0.2), Transform3D(Basis.IDENTITY, log_at + Vector3(0.38, 0.55, 0.1)), "#2a2c3e", 0.15, false)
+			for i in 3:
+				var st := _on(site, Vector3(-3.0 + i * 1.3, 0.0, -1.5 + (i % 2) * 0.8))
+				_cyl(site, 0.32, 0.36, 0.4, Transform3D(Basis.IDENTITY, st + Vector3(0, 0.15, 0)), "#5a3e24", 0.7)
+				_cyl(site, 0.3, 0.3, 0.02, Transform3D(Basis.IDENTITY, st + Vector3(0, 0.36, 0)), "#b8945a", 0.6)
+			for i in 3:
+				var b := _on(site, Vector3(-2.6, 0.0, 2.8 + i * 0.4))
+				for k in 5:
+					_rod(site, b + Vector3(-0.4, 0.1 + (k % 2) * 0.06, -0.1 + k * 0.05), b + Vector3(0.4, 0.1 + (k % 2) * 0.06, -0.1 + k * 0.05), 0.03, 0.03, "#6b4a2e")
+			var pot := _cyl(site, 0.16, 0.2, 0.3, Transform3D(Basis.IDENTITY, _on(site, Vector3(1.0, 0.15, 0.6))), "#7a4a32", 0.4)
+			_cyl(site, 0.13, 0.13, 0.02, Transform3D(Basis.IDENTITY, Vector3(0, 0.16, 0)), "#ff7a1a", 0.3, 3.0).reparent(pot, false)
+		"forager_herbalist":
+			# A thatched hut, a garden bed of strange flowers (the frame's
+			# purple and acid green), gourds on a line, a mortar on a stone.
+			_hut(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.8, "#6a7a3a", "#3e4a26")
+			var bed := _on(site, Vector3(2.8, 0.0, 1.6))
+			_block(site, Vector3(2.2, 0.12, 1.4), Transform3D(Basis.IDENTITY, bed + Vector3(0, 0.02, 0)), "#2a1e16", 0.95, false)
+			var flower_cols := ["#b24ad8", "#e04aa8", "#7cff4f", "#5a6aff", "#ffd84a"]
+			for i in 18:
+				var q := bed + Vector3(rng.randf_range(-1.0, 1.0), 0.0, rng.randf_range(-0.6, 0.6))
+				var h := rng.randf_range(0.25, 0.6)
+				_rod(site, q, q + Vector3(0, h, 0), 0.012, 0.01, "#2f6b2a")
+				var bloom := MeshInstance3D.new()
+				var sp := SphereMesh.new()
+				sp.radius = rng.randf_range(0.05, 0.1)
+				sp.height = sp.radius * 1.6
+				sp.radial_segments = 6
+				sp.rings = 3
+				bloom.mesh = sp
+				var c := str(flower_cols[rng.randi_range(0, flower_cols.size() - 1)])
+				bloom.material_override = _mat(c, 0.3, 0.6 if c == "#7cff4f" else 0.0)
+				bloom.position = q + Vector3(0, h, 0)
+				site.add_child(bloom)
+			var line := _on(site, Vector3(-2.6, 0.0, 0.8))
+			_rod(site, line, line + Vector3(0, 1.8, 0), 0.03, 0.03, "#4a3a28")
+			_rod(site, line + Vector3(0, 0, 2.0), line + Vector3(0, 1.8, 2.0), 0.03, 0.03, "#4a3a28")
+			_rod(site, line + Vector3(0, 1.75, 0), line + Vector3(0, 1.75, 2.0), 0.012, 0.012, "#8a7a4a")
+			for i in 4:
+				var g := MeshInstance3D.new()
+				var sp2 := SphereMesh.new()
+				sp2.radius = 0.12
+				sp2.height = 0.34
+				g.mesh = sp2
+				g.material_override = _mat("#c8a24a", 0.3)
+				g.position = line + Vector3(0, 1.48, 0.35 + i * 0.45)
+				site.add_child(g)
+			var mortar := _on(site, Vector3(-1.0, 0.0, -1.2))
+			_block(site, Vector3(0.7, 0.35, 0.6), Transform3D(Basis.IDENTITY, mortar + Vector3(0, 0.15, 0)), "#4a4d6e", 0.3, false)
+			_cyl(site, 0.16, 0.12, 0.16, Transform3D(Basis.IDENTITY, mortar + Vector3(0, 0.4, 0)), "#5a5a78", 0.25)
+			_rod(site, mortar + Vector3(0, 0.42, 0), mortar + Vector3(0.1, 0.7, 0.05), 0.025, 0.02, "#d8cfa8")
+		"knapper_potter":
+			# A clay hut, the clay pit, pots set out to dry on a plank, a
+			# knapping stone with flakes round it, the kiln's smoke.
+			_hut(site, _on(site, Vector3(1.0, 0.0, 4.4)), 1.7, "#8a5a3a", "#5a3a24")
+			var pit := _on(site, Vector3(2.8, 0.0, 1.2))
+			_cyl(site, 0.9, 1.0, 0.1, Transform3D(Basis.IDENTITY, pit + Vector3(0, 0.0, 0)), "#5a3420", 0.15)
+			var plank := _on(site, Vector3(-2.6, 0.0, 0.0))
+			_block(site, Vector3(0.4, 0.35, 2.4), Transform3D(Basis.IDENTITY, plank + Vector3(0, 0.18, 0)), "#5a3e24", 0.6)
+			for i in 5:
+				var h := rng.randf_range(0.2, 0.42)
+				_cyl(site, rng.randf_range(0.1, 0.16), rng.randf_range(0.07, 0.12), h, Transform3D(Basis.IDENTITY, plank + Vector3(0, 0.35 + h * 0.5, -0.9 + i * 0.45)), "#b8805a", 0.4)
+			var knap := _on(site, Vector3(0.9, 0.0, -1.3))
+			_block(site, Vector3(0.6, 0.3, 0.5), Transform3D(Basis.IDENTITY, knap + Vector3(0, 0.12, 0)), "#4a4d6e", 0.3, false)
+			for i in 8:
+				_block(site, Vector3(0.08, 0.02, 0.06), Transform3D(Basis(Vector3.UP, i * 0.8), knap + Vector3(cos(i * 0.8) * 0.5, 0.01, sin(i * 0.8) * 0.5)), "#1a1c2a", 0.1, false)
+			var smoke := _wisp(Color(0.5, 0.5, 0.6, 0.3), 0.4, 60)
+			smoke.position = _on(site, Vector3(-2.0, 1.4, 1.6))
+			site.add_child(smoke)
+
+
+## A torch post: a stake with a burning head (the one amber, §EX.6).
+func _torch_post(site: Node3D, at: Vector3) -> void:
+	_rod(site, at, at + Vector3(0, 1.7, 0), 0.04, 0.035, "#4a3220", 0.6)
+	var head := _cyl(site, 0.06, 0.07, 0.16, Transform3D(Basis.IDENTITY, at + Vector3(0, 1.75, 0)), "#ff9a3a", 0.3, 4.0)
+	head.name = "TorchHead"
+	var l := OmniLight3D.new()
+	l.name = "TorchLight"
+	l.light_color = Torch.fire_color()
+	l.light_energy = float((H.get("keepers", {}) as Dictionary).get("torch_energy", 0.9))
+	l.omni_range = float((H.get("keepers", {}) as Dictionary).get("torch_range_m", 6.0))
+	l.position = at + Vector3(0, 2.0, 0)
+	site.add_child(l)
+
+
+## A hide tent: a ring of poles leaning in, covered by a cone.
+func _tent(site: Node3D, at: Vector3, r: float, h: float, hide: String, pole: String) -> void:
+	var c := _cyl(site, r, 0.08, h, Transform3D(Basis.IDENTITY, at + Vector3(0, h * 0.5, 0)), hide, 0.7)
+	c.name = "Tent"
+	var body := PropCollision.body(site)
+	PropCollision.capsule(body, Transform3D(Basis.IDENTITY, at + Vector3(0, h * 0.5, 0)), r * 0.85, h)
+	for i in 5:
+		var a := TAU * i / 5.0
+		_rod(site, at + Vector3(cos(a) * r * 0.95, 0, sin(a) * r * 0.95), at + Vector3(cos(a) * 0.15, h + 0.5, sin(a) * 0.15), 0.03, 0.025, pole)
+	_block(site, Vector3(0.6, 1.0, 0.05), Transform3D(Basis.IDENTITY, at + Vector3(0, 0.5, -r * 0.62)), "#120c0a", 0.9, false)
+
+
+## A round hut: a low wall and a thatched cone roof.
+func _hut(site: Node3D, at: Vector3, r: float, roof: String, wall: String) -> void:
+	_cyl(site, r, r, 1.3, Transform3D(Basis.IDENTITY, at + Vector3(0, 0.65, 0)), wall, 0.8)
+	var rf := _cyl(site, r + 0.45, 0.05, 1.6, Transform3D(Basis.IDENTITY, at + Vector3(0, 2.05, 0)), roof, 0.85)
+	rf.name = "Roof"
+	var body := PropCollision.body(site)
+	PropCollision.capsule(body, Transform3D(Basis.IDENTITY, at + Vector3(0, 1.0, 0)), r, 2.0)
+	_block(site, Vector3(0.7, 1.05, 0.05), Transform3D(Basis.IDENTITY, at + Vector3(0, 0.52, -r - 0.01)), "#120c0a", 0.9, false)
+
+
+## A bark lean-to: two forked posts, a ridge pole, a sloped bark roof.
+func _lean_to(site: Node3D, at: Vector3, bark: String, pole: String) -> void:
+	_rod(site, at + Vector3(-1.4, 0, -0.8), at + Vector3(-1.4, 1.9, -0.8), 0.06, 0.05, pole, 0.6, true)
+	_rod(site, at + Vector3(1.4, 0, -0.8), at + Vector3(1.4, 1.9, -0.8), 0.06, 0.05, pole, 0.6, true)
+	_rod(site, at + Vector3(-1.6, 1.85, -0.8), at + Vector3(1.6, 1.85, -0.8), 0.05, 0.05, pole)
+	_block(site, Vector3(3.2, 0.06, 2.4), Transform3D(Basis(Vector3.RIGHT, -0.66), at + Vector3(0, 1.0, 0.1)), bark, 0.75)
+
+
+## A totem: stacked carved blocks, a face slightly too big (§GB.2), and
+## with `antlers` a skull and antlers on top.
+func _totem(site: Node3D, at: Vector3, rng: RandomNumberGenerator, antlers: bool) -> void:
+	var y := 0.0
+	for i in 3:
+		var h := rng.randf_range(0.6, 0.9)
+		_block(site, Vector3(0.5, h, 0.45), Transform3D(Basis(Vector3.UP, rng.randf_range(-0.1, 0.1)), at + Vector3(0, y + h * 0.5, 0)), ["#5a3e24", "#6b4a2e", "#4a3220"][i], 0.5, i == 0)
+		_block(site, Vector3(0.12, 0.12, 0.05), Transform3D(Basis.IDENTITY, at + Vector3(-0.12, y + h * 0.65, -0.24)), "#d8cfa8", 0.3, false)
+		_block(site, Vector3(0.12, 0.12, 0.05), Transform3D(Basis.IDENTITY, at + Vector3(0.12, y + h * 0.65, -0.24)), "#d8cfa8", 0.3, false)
+		y += h
+	if antlers:
+		var sk := MeshInstance3D.new()
+		var sp := SphereMesh.new()
+		sp.radius = 0.2
+		sp.height = 0.34
+		sk.mesh = sp
+		sk.material_override = _mat("#d8cfa8", 0.3)
+		sk.position = at + Vector3(0, y + 0.15, 0)
+		site.add_child(sk)
+		for side in [-1.0, 1.0]:
+			var base := at + Vector3(side * 0.15, y + 0.28, 0)
+			var tip := base + Vector3(side * 0.6, 0.7, 0)
+			_rod(site, base, tip, 0.03, 0.015, "#d8cfa8", 0.4)
+			_rod(site, base.lerp(tip, 0.5), base.lerp(tip, 0.5) + Vector3(side * 0.05, 0.35, -0.15), 0.02, 0.01, "#d8cfa8", 0.4)
+
+
+func _wisp(col: Color, size: float, amount: int) -> CPUParticles3D:
+	var w := CPUParticles3D.new()
+	w.amount = amount
+	w.lifetime = 5.0
+	w.direction = Vector3.UP
+	w.spread = 10.0
+	w.gravity = Vector3(0.1, 0.25, 0.0)
+	w.initial_velocity_min = 0.2
+	w.initial_velocity_max = 0.4
+	w.scale_amount_min = 0.6
+	w.scale_amount_max = 2.0
+	var q := QuadMesh.new()
+	q.size = Vector2(size, size)
+	var sm := StandardMaterial3D.new()
+	sm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	sm.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	sm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	sm.albedo_color = col
+	q.material = sm
+	w.mesh = q
+	return w
+
+
+## The camp's common ground: log benches round the fire, worn paths from
+## it to every keeper's site, and a few totems at the clearing's edge.
+func _common(rng: RandomNumberGenerator) -> void:
+	var root := Node3D.new()
+	root.name = "Common"
+	add_child(root)
+	var fp: Vector3 = camp.pos
+	var n: Vector2 = stair.n
+	var base_a := atan2(n.y, n.x)
+	# Benches: logs on the arc facing the fire, leaving the stair's side
+	# and the spawn's line open.
+	for i in 4:
+		var a := base_a + PI * 0.5 + (i - 1.5) * 0.55 + (PI if i >= 2 else 0.0) * 0.0
+		a = base_a + [1.25, 1.85, -1.25, -1.85][i]
+		var c := Vector2(fp.x, fp.z) + Vector2(cos(a), sin(a)) * 3.4
+		var g := _ground_at(c)
+		var t := Vector2(-sin(a), cos(a))
+		_rod(root, g + Vector3(-t.x, 0.22, -t.y) * 1.0 + Vector3(0, 0.22, 0) * 0.0, g + Vector3(t.x, 0.22, t.y) * 1.0, 0.22, 0.2, "#5a3e24", 0.65, true)
+	# Paths: stepping stones from the fire to each site (a solid strip
+	# read as a black slab under the grade, 26 Oct).
+	var C: Dictionary = H.get("common", {})
+	var step := float(C.get("step_m", 1.3))
+	for st in sites:
+		var a3: Vector3 = st.at
+		var from := Vector2(fp.x, fp.z)
+		var to := Vector2(a3.x, a3.z)
+		var d := to - from
+		var len := d.length()
+		var side := Vector2(-d.y, d.x).normalized()
+		var k := 4.2
+		while k < len - 1.6:
+			var t := k / len
+			var c := from + d * t + side * (sin(t * PI) * len * 0.08 + rng.randf_range(-0.15, 0.15))
+			var g := _ground_at(c)
+			_block(root, Vector3(rng.randf_range(0.5, 0.75), 0.1, rng.randf_range(0.4, 0.6)), Transform3D(Basis(Vector3.UP, rng.randf() * TAU), g + Vector3(0, 0.02, 0)), str(C.get("stone_color", "#6a6c8a")), 0.25, false)
+			k += step
+	# Totems at the clearing's edge.
+	for i in int((H.get("common", {}) as Dictionary).get("totems", 3)):
+		var p := _free_spot(rng, [], 9.0, 16.0, 2.0)
+		if p == Vector2.INF:
+			continue
+		var holder := Node3D.new()
+		holder.position = _ground_at(p)
+		root.add_child(holder)
+		_totem(holder, Vector3.ZERO, rng, i == 0)
 
 
 ## A drying rack: two posts and a crossbar, hung with `hang` (hides as flat

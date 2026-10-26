@@ -704,10 +704,19 @@
      ],
      "props": "clay kiln with a glowing mouth, pots, a flint pile"
     }
-   }
+   },
+   "_help_dress": "(Mike, 26 Oct: 'more fleshed out ... consider the different niches') Each site also has a shelter in its trade's way and its trade's work round it, built by HubCamp._dress: hunter-tanner a hide tent, a hide on a hoop, a skull-and-antler totem, a spear rack, meat over a smoke pit; fisher-weaver a reed hut, a dugout on the bank, a fish-drying line, a fish trap, a basket; woodcutter-firekeeper a bark lean-to, a felled trunk with an axe in it, stumps, kindling bundles, the firekeeper's ember pot; forager-herbalist a thatched hut, a garden bed of strange flowers, gourds on a line, a mortar on a stone; knapper-potter a clay hut, the clay pit, pots drying on a plank, a knapping stone and flakes, the kiln's smoke. Every site has a torch post (torch_energy, torch_range_m) so it reads at dusk.",
+   "torch_energy": 0.9,
+   "torch_range_m": 6.0
   },
   "log_start": "Dusk at the camp. The fire crackles; the cauldron steams.",
   "log_down": "Down the old steps beneath the fire, into the dark.",
-  "log_up": "Up out of the dark, into the camp."
+  "log_up": "Up out of the dark, into the camp.",
+  "common": {
+   "_help": "The camp's common ground: log benches round the fire, a line of flat stepping stones from the fire to each keeper's site (step_m apart, stone_color; a solid worn-earth strip read as a black slab under the grade, 26 Oct), and totems (how many) about the clearing, one crowned with a skull and antlers.",
+   "totems": 3,
+   "step_m": 1.3,
+   "stone_color": "#6a6c8a"
+  }
  }
 }

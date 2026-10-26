@@ -42,7 +42,7 @@ func _run() -> void:
 	root.add_child(main)
 	while not main.on_surface:
 		await process_frame
-	await _frames(200)
+	await _frames(int(OS.get_environment("SETTLE")) if OS.get_environment("SETTLE").is_valid_int() else 200)
 	var hub := main.surface as HubCamp
 	var p := main.player
 	p.set_physics_process(false)
