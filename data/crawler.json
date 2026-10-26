@@ -722,6 +722,87 @@
    "stone_color": "#6a6c8a"
   },
   "ground_color": "#3a3a2a",
-  "_help_ground": "ground_color: the camp's ground (forest floor, dark loam). It used the dungeon's world's desert sand before, which the glossy grade blew out to white round the fire (Mike, 26 Oct: 'the amount of light coming from the fire seems too bright')."
+  "_help_ground": "ground_color: the camp's ground (forest floor, dark loam). It used the dungeon's world's desert sand before, which the glossy grade blew out to white round the fire (Mike, 26 Oct: 'the amount of light coming from the fire seems too bright').",
+  "cauldron_fx": {
+   "_help": "(Mike, 26 Oct: 'lets get some effects steaming up off the cauldron- also, for different brews which would take different times there will be different effects') The camp cauldron's effects (CauldronFX). Each brew: brew_s how long it takes (0 = a pot that just simmers on); steam its colour and steam_rate how thick (0-1) at full boil; bubbles how hard it bubbles (0-1); sparks how many rising motes (0-1) and spark_kind what they are (embers, spores, motes, none); glow the brew's own colour (its surface and its faint light). Brewing, the steam, bubbles and motes build from a simmer to full over brew_s; done, a puff goes up and it holds at full for hold_s. Brews are first guesses tied to plants the design names (§FM.7, §FN, §FP, §FR); what each does is the brew system's to decide (not built). Until there is a way to ask for one, the cook-shaman works through cycle in order (rest_s of plain stew between).",
+   "hold_s": 40.0,
+   "rest_s": 30.0,
+   "cycle": [
+    "camp_stew",
+    "healing_broth",
+    "ololiuhqui",
+    "teonanacatl",
+    "blue_lotus",
+    "jimsonweed"
+   ],
+   "brews": {
+    "camp_stew": {
+     "name": "Camp stew",
+     "brew_s": 0.0,
+     "steam": "#d8dce8",
+     "steam_rate": 0.45,
+     "bubbles": 0.35,
+     "sparks": 0.15,
+     "spark_kind": "embers",
+     "glow": "#c87a3a",
+     "note": "the everyday pot: white steam, a slow bubble, the odd ember off the fire"
+    },
+    "healing_broth": {
+     "name": "Healing broth",
+     "brew_s": 60.0,
+     "steam": "#cfeedd",
+     "steam_rate": 0.6,
+     "bubbles": 0.5,
+     "sparks": 0.25,
+     "spark_kind": "motes",
+     "glow": "#7cff4f",
+     "note": "herbs (the forager-herbalist's): pale green steam, a steady boil, a few green motes"
+    },
+    "ololiuhqui": {
+     "name": "Ololiuhqui (morning glory seed)",
+     "brew_s": 120.0,
+     "steam": "#8a7cff",
+     "steam_rate": 0.55,
+     "bubbles": 0.4,
+     "sparks": 0.6,
+     "spark_kind": "motes",
+     "glow": "#5a6aff",
+     "note": "the Aztec world's vine (§FM.7, queue 72): violet steam curling, blue motes rising"
+    },
+    "teonanacatl": {
+     "name": "Teonanácatl (the flesh of the gods)",
+     "brew_s": 180.0,
+     "steam": "#e04aa8",
+     "steam_rate": 0.4,
+     "bubbles": 0.25,
+     "sparks": 0.9,
+     "spark_kind": "spores",
+     "glow": "#b24ad8",
+     "note": "the Aztec brew mushroom (§FN.5): thin magenta steam, slow thick bubbles, spores drifting up and wandering"
+    },
+    "blue_lotus": {
+     "name": "Blue lotus and mandrake",
+     "brew_s": 150.0,
+     "steam": "#6ac8ff",
+     "steam_rate": 0.7,
+     "bubbles": 0.45,
+     "sparks": 0.4,
+     "spark_kind": "embers",
+     "glow": "#2b8fff",
+     "note": "Egypt's brew (§FP): blue mist, gold sparks"
+    },
+    "jimsonweed": {
+     "name": "Jimsonweed (datura)",
+     "brew_s": 240.0,
+     "steam": "#b8c84a",
+     "steam_rate": 1.0,
+     "bubbles": 0.8,
+     "sparks": 0.3,
+     "spark_kind": "spores",
+     "glow": "#a8c832",
+     "note": "the swamp witch's (§FR): heavy sickly yellow-green smoke that rolls over the rim and sinks, a hard boil"
+    }
+   }
+  }
  }
 }

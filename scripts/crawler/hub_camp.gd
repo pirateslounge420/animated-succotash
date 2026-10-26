@@ -32,6 +32,7 @@ var camp: Dictionary = {}
 ## [{"keeper", "at" (Vector3), "yaw"}]: the five keepers' sites.
 var sites: Array = []
 var shaman: HearthFolk
+var cauldron_fx: CauldronFX
 var keeper_folk: Array = []
 var fire: Node3D
 var _mats := {}
@@ -629,6 +630,14 @@ func _shaman() -> void:
 	gl.omni_range = float(S2.get("glow_range_m", 5.0))
 	gl.position = Vector3(0.0, hang + 0.55, 0.0)
 	pot.add_child(gl)
+	# Its steam, bubbles and motes, by the brew in it (CauldronFX).
+	cauldron_fx = CauldronFX.new()
+	cauldron_fx.name = "FX"
+	cauldron_fx.surface = brew
+	cauldron_fx.light = gl
+	cauldron_fx.light_max = gl.light_energy
+	cauldron_fx.position = Vector3(0.0, hang + 0.28, 0.0)
+	pot.add_child(cauldron_fx)
 
 
 func _keepers() -> void:
