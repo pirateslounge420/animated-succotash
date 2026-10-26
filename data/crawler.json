@@ -500,5 +500,214 @@
   "first": "random_from_roster",
   "roster": "built_themes",
   "seeded_per_new_game": true
+ },
+ "hub": {
+  "_help": "(design §GC.1-2, §FZ.1, queue 112; Mike 26 Oct: 'spawn in around the campfire at dusk and also set up a RNG camp sites for each of our specialized village niches') The hub camp on the surface (HubCamp, built on Surface's machinery): a bounded clearing closed in by cliffs and fog, its ground, kind and keepers' sites drawn from the game's seed and kept for the game (§FK). You start every session at its campfire at dusk; the way down is the old stair behind the fire, ringed with standing stones, into the dungeon; the dungeon's way out brings you back up into the camp. on false: the old start (waking by the hearth below) and the old surface over the ruin.",
+  "on": true,
+  "across_m": [
+   150.0,
+   250.0
+  ],
+  "_help_across": "How wide the clearing is (m), drawn from the seed in this range; the cliffs close it.",
+  "dusk_sun_deg": 3.0,
+  "_help_dusk": "The sun's height (degrees) you start at: a few degrees over the horizon and sinking, the one clock set there each time you start (new game or Continue).",
+  "biome": "TEMPERATE_DECIDUOUS",
+  "zones": {
+   "wash": "Ash-elm streamside forest",
+   "flats": "Hawthorn-elderberry edge scrub",
+   "upland": "Beech-maple cove forest"
+  },
+  "_help_biome": "The camp's plants: data/biomes, by key, and which association grows in each zone (the river's banks, the clearing, under the cliffs).",
+  "surface": {
+   "_help": "Laid over worlds.json surface for the hub only (same keys): taller crooked cliffs, the wash a river closer to the camp.",
+   "edge": {
+    "wander": 0.16,
+    "talus_width_m": 30.0,
+    "talus_rise_m": [
+     6.0,
+     14.0
+    ],
+    "cliff_width_m": 10.0,
+    "cliff_m": [
+     45.0,
+     95.0
+    ],
+    "beyond_m": 120.0,
+    "landmark": {
+     "out_m": 80.0,
+     "radius_m": 30.0,
+     "height_m": 110.0
+    }
+   },
+   "ground": {
+    "flat_round_stair_m": [
+     12.0,
+     24.0
+    ],
+    "wash": {
+     "from_m": 16.0,
+     "width_m": 9.0,
+     "depth_m": 1.8,
+     "wander_m": 22.0,
+     "bank_m": 5.0
+    }
+   },
+   "finds": {
+    "remains": [
+     1,
+     2
+    ],
+    "camps": [
+     0,
+     0
+    ],
+    "litter": [
+     2,
+     4
+    ]
+   },
+   "plants": {
+    "per_hectare": 140.0,
+    "ground_per_hectare": 300.0
+   }
+  },
+  "fire": {
+   "_help": "The campfire: out_m in front of the stair's mouth (the way down opens just behind it); you spawn spawn_m from the fire on the far side, facing it.",
+   "out_m": 4.5,
+   "spawn_m": 2.6
+  },
+  "kinds": {
+   "_help": "The start kind, one per game from the seed: what towers round the clearing. Each lists its props: pillars (tall crooked rock stacks: how many, height m), roots (oversized arching roots), ruins (broken columns and fallen blocks), vines (hanging from the pillars).",
+   "stone": {
+    "pillars": [
+     9,
+     14
+    ],
+    "pillar_h_m": [
+     14.0,
+     34.0
+    ],
+    "roots": [
+     2,
+     3
+    ],
+    "ruins": [
+     0,
+     0
+    ],
+    "vines": 0.0
+   },
+   "ruins": {
+    "pillars": [
+     4,
+     7
+    ],
+    "pillar_h_m": [
+     10.0,
+     22.0
+    ],
+    "roots": [
+     1,
+     2
+    ],
+    "ruins": [
+     6,
+     10
+    ],
+    "vines": 0.2
+   },
+   "vines": {
+    "pillars": [
+     6,
+     9
+    ],
+    "pillar_h_m": [
+     12.0,
+     26.0
+    ],
+    "roots": [
+     4,
+     7
+    ],
+    "ruins": [
+     0,
+     2
+    ],
+    "vines": 1.0
+   }
+  },
+  "ring": {
+   "_help": "The standing stones round the way down (§GC.2: something stranger beneath the fire): how many, their height (m) and how far out from the stair's line.",
+   "stones": 7,
+   "h_m": [
+    1.8,
+    3.2
+   ],
+   "r_m": 4.2
+  },
+  "shaman": {
+   "_help": "The hooded cook-shaman (§FZ.1.6) at the cauldron beside the fire: cloak colours, how far from the fire, the cauldron's green glow (the frame's one green accent) and its light.",
+   "cloak": [
+    "#1d1a2a",
+    "#2c2638"
+   ],
+   "from_fire_m": 1.7,
+   "glow": "#7cff4f",
+   "glow_energy": 1.4,
+   "glow_range_m": 5.0
+  },
+  "keepers": {
+   "_help": "The other five keepers' sites (§FZ.1; their looks and trades are still §FZ.4's to-do: the figures are plain hooded stand-ins in their trade's cloak colours). Each site is placed from the seed on a ring round the fire (within_m), apart_m from each other, clear of the stair and the river; the fisher-weaver's goes on the river bank. Props per keeper are built by HubCamp.",
+   "within_m": [
+    11.0,
+    26.0
+   ],
+   "apart_m": 9.0,
+   "list": {
+    "hunter_tanner": {
+     "name": "Hunter-tanner",
+     "cloak": [
+      "#4a2e1e",
+      "#6b4a2e"
+     ],
+     "props": "drying rack with hides, a bone pile"
+    },
+    "fisher_weaver": {
+     "name": "Fisher-weaver",
+     "cloak": [
+      "#1e3a4a",
+      "#2e5a6b"
+     ],
+     "props": "net frame, baskets, a fish line; on the river bank"
+    },
+    "woodcutter_firekeeper": {
+     "name": "Woodcutter-firekeeper",
+     "cloak": [
+      "#3a2a18",
+      "#5a4426"
+     ],
+     "props": "woodpile, chopping stump"
+    },
+    "forager_herbalist": {
+     "name": "Forager-herbalist",
+     "cloak": [
+      "#25401e",
+      "#3e6a2e"
+     ],
+     "props": "herb drying rack, baskets"
+    },
+    "knapper_potter": {
+     "name": "Knapper-potter",
+     "cloak": [
+      "#4a3a30",
+      "#7a5e48"
+     ],
+     "props": "clay kiln with a glowing mouth, pots, a flint pile"
+    }
+   }
+  },
+  "log_start": "Dusk at the camp. The fire crackles; the cauldron steams.",
+  "log_down": "Down the old steps beneath the fire, into the dark.",
+  "log_up": "Up out of the dark, into the camp."
  }
 }

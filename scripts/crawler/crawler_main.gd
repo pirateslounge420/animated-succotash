@@ -291,7 +291,44 @@ func _ready() -> void:
 	brew.setup(self)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
-	_rescuer()
+	if HubCamp.on():
+		_start_at_camp()
+	else:
+		_rescuer()
+
+
+## Every start, new game or Continue, at the hub camp's fire at dusk
+## (design §GC.1; Mike, 26 Oct; crawler.json hub): the dungeon below made
+## ready in the dark, the clock set to dusk, up into the camp, the dark
+## lifting.
+func _start_at_camp() -> void:
+	await _rescuer(0.0, false)
+	# The pages lying on its base layer, laid while its stone is in the
+	# physics world (TomePages._place), before it goes out of the tree.
+	var w := 0
+	while tome_pages != null and not tome_pages.placed and w < 30:
+		await get_tree().physics_frame
+		w += 1
+	set_dusk()
+	_up_now()
+	GameLog.add(str(HubCamp.H.get("log_start", "Dusk at the camp.")), "world")
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", 0.0, 2.5)
+	tw.tween_callback(func(): _fade.visible = false)
+
+
+## The one clock set to dusk (hub.dusk_sun_deg: the sun that high and
+## sinking), later today or tomorrow.
+func set_dusk() -> void:
+	var want := float(HubCamp.H.get("dusk_sun_deg", 3.0))
+	var d0 := float(world.get("days"))
+	var t := d0
+	var step := 1.0 / 1440.0
+	while t < d0 + 1.0:
+		if Surface.sun_deg_at(t) <= want and Surface.sun_deg_at(t - step) > want:
+			world.days = t
+			return
+		t += step
 
 
 ## One tomb, all of it (TombKit's layout from `s`, its stone, fires,
@@ -391,7 +428,9 @@ func _load_tomb(s: int, at := 0) -> void:
 	# first driven home, then kept open for good ("exit_open"); a kept
 	# dungeon with every light relit has its boss home already
 	# (Boss._start_far), so its way up is open too.
-	if not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
+	# With the hub camp (design §GC.2) the way up is the way in from the
+	# camp: open from the start.
+	if HubCamp.on() or not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
 		fork.open_exit(true)
 	fork.exit_opened_now.connect(func() -> void: CrawlerSave.keep(at, "exit_open", true))
 	# The secret opening (design §FO.4): sealed until the boss is first
@@ -863,7 +902,7 @@ func walk_out() -> void:
 		return
 	# The surface above it (design §FM.7, queue 71): up the stair into the
 	# day; the stand-in stays for any dungeon with none yet.
-	if Surface.covers(lay):
+	if Surface.covers(lay) or HubCamp.on():
 		await go_up()
 		return
 	leaving = true
@@ -1036,10 +1075,20 @@ func go_up() -> void:
 	leaving = true
 	var A: Dictionary = Surface.S.get("arrive", {})
 	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
-	GameLog.add(str(A.get("log_up", "Up the old stair and out, under the open sky.")), "world")
+	GameLog.add(str(HubCamp.H.get("log_up", "Up out of the dark, into the camp.")) if HubCamp.on() else str(A.get("log_up", "Up the old stair and out, under the open sky.")), "world")
 	await _fade_to(1.0, fade_s)
+	_up_now()
+	went_up += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## The swap up at once (the frame black): the dungeon out of the tree,
+## the surface (the hub camp, design §GC.1, when crawler.json hub.on) in,
+## built the first time; you where it says you arrive.
+func _up_now() -> void:
 	if surface == null or not is_instance_valid(surface):
-		surface = Surface.new()
+		surface = HubCamp.new() if HubCamp.on() else Surface.new()
 		surface.build(world, lay, fires.hearth)
 	_below = []
 	# Floor two's fog goes too (it is the dungeon's look, and the sky's haze
@@ -1054,9 +1103,6 @@ func go_up() -> void:
 	var at := surface.arrival()
 	player.spawn_flat(at.pos, float(at.yaw), 0.0)
 	on_surface = true
-	went_up += 1
-	await _fade_to(0.0, fade_s)
-	leaving = false
 
 
 ## Back down the stair (design §FM.7): the dark; the surface kept out of
@@ -1070,7 +1116,7 @@ func go_down() -> void:
 	leaving = true
 	var A: Dictionary = Surface.S.get("arrive", {})
 	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
-	GameLog.add(str(A.get("log_down", "Down the old stair, back into the dark.")), "world")
+	GameLog.add(str(HubCamp.H.get("log_down", "Down the old steps beneath the fire, into the dark.")) if HubCamp.on() else str(A.get("log_down", "Down the old stair, back into the dark.")), "world")
 	await _fade_to(1.0, fade_s)
 	_down_now()
 	came_down += 1
