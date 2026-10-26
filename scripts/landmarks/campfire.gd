@@ -128,8 +128,11 @@ static func build_at(parent: Node3D, world: Node, xf: Transform3D, d: Vector3, s
 	flames.name = "Flames"
 	flames.position = Vector3(0, 0.1, 0)
 	root.add_child(flames)
-	for part in _ground_glow():
-		root.add_child(part)
+	# The glossy look (design §GB, look.json glossy.fire.ground_glow):
+	# the light's own fall-off draws the pool, no painted disc on top.
+	if not GlossyLook.active or GlossyLook.fire_ground_glow():
+		for part in _ground_glow():
+			root.add_child(part)
 	# Its voice: a hiss bed on a loop and pops on a random clock, both
 	# sources you can walk to (design 30 Sept §BG, §BZ).
 	var hiss := Audio3D.make("fire", root, "Hiss")
@@ -143,9 +146,9 @@ static func build_at(parent: Node3D, world: Node, xf: Transform3D, d: Vector3, s
 	var light := OmniLight3D.new()
 	light.name = "Light"
 	light.light_color = Color(str(L.get("color", "#FF6E24")))
-	light.light_energy = LIGHT_ENERGY
+	light.light_energy = LIGHT_ENERGY * GlossyLook.fire_energy_k()
 	light.omni_range = RANGE_M
-	light.omni_attenuation = ATTENUATION
+	light.omni_attenuation = GlossyLook.fire_attenuation(ATTENUATION)
 	light.position = Vector3(0, 1.0, 0)
 	root.add_child(light)
 	# One of the fires that may cast a shadow when it's among the nearest
@@ -529,7 +532,7 @@ static func flicker(camp: Node3D, time: float) -> void:
 	# lit edges move on the trunks; the burn-down scales it all.
 	var light := camp.get_node_or_null("Light") as OmniLight3D
 	if light:
-		light.light_energy = LIGHT_ENERGY * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
+		light.light_energy = LIGHT_ENERGY * GlossyLook.fire_energy_k() * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
 		light.omni_range = (float(camp.get_meta("range_m")) if camp.has_meta("range_m") else RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night))
 		var jm := float(fk.get("position_jitter_m", 0.06))
 		# (meta light_y: a fire whose light sits lower, a wall sconce's;

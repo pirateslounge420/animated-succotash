@@ -332,7 +332,7 @@ func _ground() -> void:
 	ground_node.name = "Ground"
 	add_child(ground_node)
 	var mat := TerrainChunk.terrain_material()
-	var col := BiomeTemplates.color_of(BiomeTemplates.id_of_key(biome_key())) if BiomeTemplates.id_of_key(biome_key()) >= 0 else TerrainChunk.SAND
+	var col := _ground_color()
 	var k := 0
 	for b in land.block_arrays(col):
 		var mesh := ArrayMesh.new()
@@ -360,6 +360,11 @@ func _ground() -> void:
 	fmi.material_override = mat
 	fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	ground_node.add_child(fmi)
+
+
+## The ground's colour: its biome's (the desert's sand by default).
+func _ground_color() -> Color:
+	return BiomeTemplates.color_of(BiomeTemplates.id_of_key(biome_key())) if BiomeTemplates.id_of_key(biome_key()) >= 0 else TerrainChunk.SAND
 
 
 ## The stone (SurfaceBuild's arrays): one mesh in blocks (CrawlerMain's

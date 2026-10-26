@@ -4,6 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — The fire's light: a gradient, not a white-out (Claude Code)
+- Mike: *"the amount of light coming from the fire seems too bright- please fix the gradient hue of the light level"*. The ground round the hub's fire read amber, then white, then cyan. Found by elimination over six renders (each by itself barely moved it): mostly the cauldron's green light, hung over the fire since the last change, adding to the fire's amber; then the colour ramp's mid stop lifting blue in the light's fading edge.
+- **Changes:** `crawler.json → hub.shaman.glow_energy` 1.4 → 0.35 and `glow_range_m` 5 → 2.5 (the brew still glows and blooms); `look.json → glossy.surface.grade` now only deepens the darks (straight above 0.18); every fire's light under glossy at 0.25 of its strength with a steeper fall-off (`glossy.fire.light_scale`, `attenuation` 2.2) and no painted warm disc under it (`ground_glow` false); the cobalt back light off on the surface (`back_light._help_surface`); the camp's ground its own forest-floor colour (`hub.ground_color`), not the desert's sand; the stone up top dry and matte (`glossy.surface.stone`). The game's own light maths (LightField: what keeps creatures off) is untouched.
+- **Seen:** the pool now grades from warm pink-amber at the fire's stones into the cobalt dark. `hub_check` 0 fails. `hub_frames.gd` gained `FIRE_ONLY=1` (just the two views of the fire) and `SETTLE=`.
+
 ## 2026-10-26 — The hub's cauldron over the fire (Claude Code)
 - Mike: *"the cauldron should be over the fire"*. The cook-shaman's cauldron now hangs from a tripod of three poles on a short chain straight over the campfire (`crawler.json → hub.shaman.hang_m` 1.05), its green brew and glow as before; the three stones it stood on are gone. `hub_check` 0 fails; seen once in the walkabout (the pot over the flames, the green on the poles).
 

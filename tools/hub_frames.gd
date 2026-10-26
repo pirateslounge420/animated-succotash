@@ -5,6 +5,7 @@ extends SceneTree
 ## Frames to OUT (default user://hub_frames/<seed>/): 01 the spawn at dusk,
 ## 02 the cook-shaman at the cauldron, 03 a keeper's site, 04 the
 ## fisher-weaver's site and the river, 05 the way down behind the fire.
+## SETTLE= frames to wait first (200); FIRE_ONLY=1 just 01 and 02.
 
 var out_dir := ""
 
@@ -52,6 +53,10 @@ func _run() -> void:
 	var from := sh + (Vector3(fp.x, sh.y, fp.z) - sh).normalized().rotated(Vector3.UP, 0.5) * 3.2
 	_look(p, Vector3(from.x, hub.land.height_at(from.x, from.z), from.z), sh + Vector3(0, 0.8, 0))
 	await _shot("02_cook_shaman")
+	# FIRE_ONLY=1: just the two views of the fire (tuning its light).
+	if OS.get_environment("FIRE_ONLY") != "":
+		quit(0)
+		return
 	for st in hub.sites:
 		var a: Vector3 = st.at
 		var to := (Vector3(fp.x, a.y, fp.z) - a).normalized()

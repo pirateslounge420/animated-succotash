@@ -235,3 +235,20 @@ static func smooth_shader(sh: Shader) -> Shader:
 	out.code = code
 	_smooth[sh] = out
 	return out
+
+
+## The fire's light under glossy (look.json glossy.fire; Mike, 26 Oct: "the
+## amount of light coming from the fire seems too bright"): its strength
+## scaled down and its fall-off steeper, so the pool grades from hot by the
+## fire through amber into the blue instead of blowing out white. 1 and
+## the file's own fall-off under the pixel look.
+static func fire_energy_k() -> float:
+	return float((G().get("fire", {}) as Dictionary).get("light_scale", 0.45)) if active else 1.0
+
+
+static func fire_attenuation(base: float) -> float:
+	return float((G().get("fire", {}) as Dictionary).get("attenuation", 2.2)) if active else base
+
+
+static func fire_ground_glow() -> bool:
+	return bool((G().get("fire", {}) as Dictionary).get("ground_glow", false))

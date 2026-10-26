@@ -245,6 +245,37 @@ func enter(main: Node) -> void:
 		GlossyLook.surface_env(sky.environment)
 		if not has_meta("smoothed"):
 			set_meta("smoothed", GlossyLook.smooth_all(self))
+			# The stone up here is dry (look.json glossy.surface.stone): the
+			# dungeon's wet gloss mirrored the dusk sky white off the yard's
+			# paving round the fire (26 Oct).
+			var st: Dictionary = (GlossyLook.G().get("surface", {}) as Dictionary).get("stone", {})
+			for c in stone.get_children():
+				if c is MeshInstance3D and (c as MeshInstance3D).material_override is ShaderMaterial:
+					var m := (c as MeshInstance3D).material_override as ShaderMaterial
+					m.set_shader_parameter("gloss_rough", Vector3(float(st.get("roughness", 0.75)), float(st.get("roughness", 0.75)), 0.9))
+					m.set_shader_parameter("gloss_specular", float(st.get("specular", 0.25)))
+	# The cobalt back light is for the dark below (§GB.4): up here it
+	# washed the open ground at your feet white (26 Oct).
+	_back_light(main, false)
+
+
+## Going down: the back light on again for the dark.
+func leave(main: Node) -> void:
+	_back_light(main, true)
+	super.leave(main)
+
+
+static func _back_light(main: Node, on_now: bool) -> void:
+	var cam: Camera3D = (main.player as CrawlerPlayer).camera()
+	var l := cam.get_node_or_null("GlossyBackLight") as OmniLight3D if cam != null else null
+	if l != null:
+		l.visible = on_now
+
+
+## The camp's ground: hub.ground_color (forest floor), not the dungeon's
+## world's sand, which read white under the glossy grade (26 Oct).
+func _ground_color() -> Color:
+	return Color(str(H.get("ground_color", "#3a3a2a")))
 
 
 ## You start (and come back up) at the fire, across it, facing it.

@@ -653,10 +653,11 @@
    ],
    "from_fire_m": 1.7,
    "glow": "#7cff4f",
-   "glow_energy": 1.4,
-   "glow_range_m": 5.0,
+   "glow_energy": 0.35,
+   "glow_range_m": 2.5,
    "hang_m": 1.05,
-   "_help_hang": "(Mike, 26 Oct: 'the cauldron should be over the fire') The cauldron hangs from a tripod of poles straight over the campfire; hang_m the height of its middle over the fire's floor."
+   "_help_hang": "(Mike, 26 Oct: 'the cauldron should be over the fire') The cauldron hangs from a tripod of poles straight over the campfire; hang_m the height of its middle over the fire's floor.",
+   "_help_glow": "glow_energy, glow_range_m: the brew's own light on what is round it. Faint on purpose: hung over the fire (26 Oct) its green added to the fire's amber washed the ground round the fire white and cyan at 1.4 over 5 m. The brew itself still glows (emissive) and blooms."
   },
   "keepers": {
    "_help": "The other five keepers' sites (§FZ.1; their looks and trades are still §FZ.4's to-do: the figures are plain hooded stand-ins in their trade's cloak colours). Each site is placed from the seed on a ring round the fire (within_m), apart_m from each other, clear of the stair and the river; the fisher-weaver's goes on the river bank. Props per keeper are built by HubCamp.",
@@ -719,6 +720,8 @@
    "totems": 3,
    "step_m": 1.3,
    "stone_color": "#6a6c8a"
-  }
+  },
+  "ground_color": "#3a3a2a",
+  "_help_ground": "ground_color: the camp's ground (forest floor, dark loam). It used the dungeon's world's desert sand before, which the glossy grade blew out to white round the fire (Mike, 26 Oct: 'the amount of light coming from the fire seems too bright')."
  }
 }

@@ -898,11 +898,16 @@
     0.0,
     0.6,
     3.0
-   ]
+   ],
+   "_help_surface": "Off on the surface (the hub camp): there the open ground at your feet caught it and washed out white-cyan (26 Oct). Below ground only."
   },
   "fire": {
    "_help": "The flame card under glossy (§GB, §EX.6): no texel grid, no stepped scroll, no four flat bands: the same colours (fire.flame.bands, the one amber) blended smoothly by heat, a soft edge, and the hot core pushed past white so it blooms. soft_edge: how wide the edge's fade is (0-1 of the flame's width).",
-   "soft_edge": 0.35
+   "soft_edge": 0.35,
+   "light_scale": 0.25,
+   "attenuation": 2.2,
+   "ground_glow": false,
+   "_help_light": "(Mike, 26 Oct: 'the amount of light coming from the fire seems too bright- please fix the gradient hue of the light level') Every fire's light under glossy (campfires, the hearth, sconces, the torch's fire): light_scale multiplies its strength (fire.light.energy); attenuation is its fall-off curve (higher = bright close in, fading fast, a longer amber-to-blue gradient; Godot's omni_attenuation; the pixel look's 1.1); ground_glow false drops the painted warm disc under a fire, so the light's own fall-off draws the pool."
   },
   "_help_magenta": "26 Oct, Mike: 'i prefer the screenshots where it looks magenta rather than all amber'. back_light.energy back to 0.45 and the stronger blue grade ramp, so firelit stone reads magenta where the cobalt meets the fire's amber. This knowingly bends §EX.6 (every fire lights one amber) in the frame: the fire's own light colour is unchanged; the cobalt fill and the grade mix with it. Mike's call; Claude (chat) to note it in the design doc.",
   "surface": {
@@ -918,12 +923,8 @@
      "#07071a"
     ],
     [
-     0.22,
-     "#2a2e58"
-    ],
-    [
-     0.55,
-     "#8a8fb4"
+     0.18,
+     "#1e2142"
     ],
     [
      1.0,
@@ -943,7 +944,13 @@
      5
     ],
     "blend": "additive"
-   }
+   },
+   "stone": {
+    "_help": "The stone up top (the yard round the stair, the ruin over it) is dry: roughness (high = matte) and specular. The dungeon's wet values mirrored the dusk sky white off the paving round the fire (Mike, 26 Oct).",
+    "roughness": 0.75,
+    "specular": 0.25
+   },
+   "_help_grade": "(Mike, 26 Oct: 'fix the gradient hue of the light level') The ramp only deepens the darks toward #07071a and indigo and is straight above 0.18. Its old mid stop (0.55 -> #8a8fb4) lifted blue in the firelight's fading edge, so the pool round the fire went amber, then white, then cyan."
   }
  }
 }
