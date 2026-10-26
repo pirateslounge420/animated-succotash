@@ -146,8 +146,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105) |
 | 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
-| 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
-| 112 | §GC.1, §GC.2 | The hub camp on the surface, the cook-shaman at the cauldron, the way down under the fire | todo (after 111) |
+| 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
+| 112 | §GC.1, §GC.2 | The hub camp on the surface, the cook-shaman at the cauldron, the way down under the fire | todo |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1873,7 +1873,7 @@ CHECK (headless): 100 new seeds' wake points are all on land and none on the ice
 
 ## 111 — The glossy look in the crawler — §GB
 
-**Status:** todo
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** The crawler stops looking pixelated. Wet stone glints, water shines near white, the dark goes deep cobalt-navy, glowing things bloom, the torch is the one warm orange, and the distance melts into indigo fog. Smooth and high-contrast, like a dream at night.
 
 ```text
@@ -1888,7 +1888,7 @@ CHECK (headless): the crawler boots with no errors under both presets; with "glo
 
 ## 112 — The hub camp on the surface, and the way down under the fire — §GC.1, §GC.2
 
-**Status:** todo (after 111)
+**Status:** todo
 **Mike sees:** A new game wakes you at a campfire on the surface at night, in a small seeded clearing with exaggerated rock, roots, ruins or vines and a river running through. A hooded figure stirs a glowing cauldron at the fire. Beneath the fire is a strange way down that leads into the dungeon.
 
 ```text

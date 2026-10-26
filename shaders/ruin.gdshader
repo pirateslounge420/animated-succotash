@@ -35,6 +35,16 @@ uniform int glow_moss_count = 0;
 uniform vec3 glow_moss_color = vec3(0.05, 0.52, 0.36);
 uniform vec2 glow_moss_light = vec2(0.9, 4.0);
 
+#ifdef GLOSSY
+// The glossy look (design §GB, GlossyLook, look.json glossy.stone): the
+// bump's depth (m), roughness (x walls, y floors, z moss and timber), the
+// specular and the rim (x amount, y tint).
+uniform float gloss_normal_depth = 0.012;
+uniform vec3 gloss_rough = vec3(0.38, 0.22, 0.75);
+uniform float gloss_specular = 0.6;
+uniform vec2 gloss_rim = vec2(0.35, 0.4);
+#endif
+
 varying vec3 world_pos;
 varying vec3 obj_pos;
 varying vec3 obj_normal;
@@ -159,8 +169,31 @@ void fragment() {
 	}
 	col = pal_pull(col, pal_grass_night, 0.7 * nk * gw);
 	ALBEDO = col * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 || kind == 6 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
+#ifdef GLOSSY
+	// Gloss and wet (§GB.1.3): the tile's own brightness is its height
+	// (bright texels proud, dark ones sunk), bumped per pixel from its
+	// screen derivatives (Mikkelsen's unparametrised bump), so the stone
+	// needs no normal-map files; floors wetter than walls, moss and timber
+	// matte.
+	float moss_k = clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 || kind == 6 ? 1.0 : 0.0);
+	vec3 tile_c = mix(surface, moss, moss_k);
+	float hgt = dot(tile_c, vec3(0.3333)) * gloss_normal_depth;
+	vec3 dpx = dFdx(VERTEX);
+	vec3 dpy = dFdy(VERTEX);
+	vec3 r1 = cross(dpy, NORMAL);
+	vec3 r2 = cross(NORMAL, dpx);
+	float det = dot(dpx, r1);
+	vec3 grad = sign(det) * (dFdx(hgt) * r1 + dFdy(hgt) * r2);
+	NORMAL = normalize(abs(det) * NORMAL - grad);
+	float wet = an.y > 0.6 ? gloss_rough.y : gloss_rough.x;
+	ROUGHNESS = mix(wet, gloss_rough.z, max(moss_k, kind == 1 ? 1.0 : 0.0));
+	SPECULAR = gloss_specular;
+	RIM = gloss_rim.x;
+	RIM_TINT = gloss_rim.y;
+#else
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
+#endif
 	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m
 	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
@@ -176,4 +209,6 @@ void fragment() {
 	ALBEDO = prelit_paint(ALBEDO, (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
 
+#ifndef GLOSSY
 #include "res://shaders/prelit_light.gdshaderinc"
+#endif

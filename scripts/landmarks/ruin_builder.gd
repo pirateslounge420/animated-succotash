@@ -205,6 +205,9 @@ static var _material_lit: ShaderMaterial = null
 
 
 static func material_lit() -> ShaderMaterial:
+	# The crawler's glossy look (design §GB): the same stone, wet and bumped.
+	if GlossyLook.active:
+		return GlossyLook.stone_material()
 	if _material_lit == null:
 		var sh := Shader.new()
 		sh.code = (preload("res://shaders/ruin.gdshader") as Shader).code.replace("vertex_lighting, ", "")

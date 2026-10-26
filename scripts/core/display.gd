@@ -136,6 +136,17 @@ static func internal_size() -> Vector2i:
 static func apply() -> void:
 	if _window == null:
 		return
+	# The crawler's glossy look (design §GB.0.1, GlossyLook): no fixed
+	# internal frame and no nearest upscale. The 3D draws at the window's
+	# own size; only the HUD is laid out at glossy.hud_reference (854x480)
+	# and scaled smoothly.
+	if native():
+		_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+		_window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+		_window.content_scale_size = GlossyLook.hud_size()
+		_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+		HudText.refresh()
+		return
 	_window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	_window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	_window.content_scale_size = internal_size()
@@ -144,9 +155,15 @@ static func apply() -> void:
 	HudText.refresh()
 
 
+## The window's own resolution, no pixel frame: the crawler under the
+## glossy look (design §GB).
+static func native() -> bool:
+	return GlossyLook.active
+
+
 ## Integer multiples when the window holds two or more; else fractional.
 static func _fit() -> void:
-	if _window == null:
+	if _window == null or native():
 		return
 	var s := internal_size()
 	# "auto" re-picks for the new window size.

@@ -260,6 +260,10 @@ float look_bay_glow(vec3 world_pos) {
 // A nearest-filtered detail tile at `uv`, its mip level picked as the
 // hardware would but never past look_max_mips (fragment only).
 vec4 retro_tex(sampler2D tex, vec2 uv) {
+#ifdef GLOSSY
+	// The glossy look (design §GB, GlossyLook): every mip, filtered smooth.
+	return texture(tex, uv);
+#endif
 	vec2 st = uv * vec2(textureSize(tex, 0));
 	vec2 dx = dFdx(st);
 	vec2 dy = dFdy(st);

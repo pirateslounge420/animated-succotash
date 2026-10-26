@@ -12,6 +12,8 @@ extends Node
 
 func _ready() -> void:
 	if GameMode.crawler() and CrawlerSave.can_continue():
+		# The crawler's look (design §GB): its menu at the window's size too.
+		GlossyLook.active = GlossyLook.wanted()
 		Display.install(get_window())
 		HudText.install()
 		var layer := CanvasLayer.new()

@@ -220,6 +220,10 @@ var tunnels_back := 0
 
 func _ready() -> void:
 	GameMode.crawler_running = true
+	# The look (design §GB, look.json glossy): glossy by default, the pixel
+	# look a preset.
+	GlossyLook.active = GlossyLook.wanted()
+	print("[look] crawler preset: %s" % GlossyLook.preset_name())
 	Controls.ensure()
 	Display.install(get_window())
 	HudText.install()
@@ -234,6 +238,9 @@ func _ready() -> void:
 	player.name = "Player"
 	player.world = world
 	add_child(player)
+	# The glossy look's cobalt back light rides with your eye (§GB.4).
+	if GlossyLook.active:
+		GlossyLook.back_light(player.get("_camera") as Camera3D)
 	half_dark = HalfDark.new()
 	half_dark.name = "HalfDark"
 	add_child(half_dark)
@@ -250,6 +257,8 @@ func _ready() -> void:
 	post = PostGrade.new()
 	add_child(post)
 	post.set_night(1.0)
+	if GlossyLook.active:
+		GlossyLook.post(post)
 	# One firelight (§EX.6, crawler.json firelight): stone the fire blows
 	# pale or white goes back to the fire's amber before the grade.
 	var fl: Dictionary = Tuning.table("crawler").get("firelight", {})
@@ -507,6 +516,8 @@ func _environment() -> void:
 	environment.glow_hdr_threshold = float(bloom.get("hdr_threshold", 1.0))
 	environment.glow_intensity = float(bloom.get("intensity", 0.25))
 	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	if GlossyLook.active:
+		GlossyLook.environment(environment)
 	var we := WorldEnvironment.new()
 	we.environment = environment
 	add_child(we)
@@ -518,8 +529,8 @@ func _environment() -> void:
 		"look_planet_center": Vector3(0.0, -1.0e6, 0.0),
 		"look_planet_radius": 1.0e6,
 		"look_ground_m": -50.0,
-		"look_fog_color": Color(str(LOOKD.get("fog_color", "#05081c"))),
-		"look_fog_density": float(LOOKD.get("fog_density", 0.025)),
+		"look_fog_color": FloorFog.haze_color(),
+		"look_fog_density": FloorFog.haze_density(),
 		"look_fog_start_m": 2.0,
 		"look_draw_m": 0.0,
 		"look_mist_density": 0.0,
