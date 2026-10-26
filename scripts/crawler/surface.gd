@@ -297,6 +297,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		keep_out.append(Rect2(Vector2(sp.x, sp.z) - Vector2(9.0, 9.0), Vector2(18.0, 18.0)))
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
+	plants.seasonal = CrawlerCalendar.drops_leaves(calendar_kind())
 	add_child(plants)
 	plants.build(land, P, biome_doc(), seed_value, keep_out)
 	# The world's sacred plant, hung from one of those trees (queue 72).
@@ -360,6 +361,12 @@ func _ground() -> void:
 	fmi.material_override = mat
 	fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	ground_node.add_child(fmi)
+
+
+## Which place of the calendar this surface is (design §GE.5,
+## CrawlerCalendar): its world's area kind (the desert's "desert").
+func calendar_kind() -> String:
+	return CrawlerCalendar.kind_of_world(str(settings().get("world", "desert")))
 
 
 ## The ground's colour: its biome's (the desert's sand by default).
@@ -475,6 +482,8 @@ func inside(pos: Vector3, margin := 0.0) -> bool:
 ## drone and drips), this world's put in.
 func enter(main: Node) -> void:
 	_main = main
+	# The sky, the day and the season at this place's latitude (§GE.5).
+	CrawlerCalendar.set_place(calendar_kind())
 	var player: CrawlerPlayer = main.player
 	_kept = {"look": Look._params.duplicate(), "touched": {}, "campfire_night": Campfire.night, "half_dark": (main.half_dark as HalfDark).enabled,
 		"far": player.camera().far if player.camera() != null else 400.0, "paused": [], "env": null, "wind": WeatherFX.plant_wind,
@@ -601,6 +610,9 @@ func _process(delta: float) -> void:
 func _update(delta: float) -> void:
 	var days := float(world.get("days"))
 	var K: Dictionary = S.get("sky", {})
+	# The season on the plants (§GE.1.6, CrawlerCalendar).
+	if plants != null and plants.seasonal:
+		CrawlerCalendar.apply_leaves(days, calendar_kind())
 	sky.update_sky(Vector3.UP, Vector3.RIGHT, Vector3.FORWARD, days, weather, 0.0, delta)
 	var night := 1.0 - sky.daylight
 	# The pocket's own haze: from the eye, lighter and bluer with distance,

@@ -149,7 +149,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 26 Oct as §GC.1–2 (Claude Code; see PROGRESS): camp, dusk start, cook-shaman, keepers' sites; but WITH the way down under the fire that §GD removes, and without seasons (114). Mike to say: take the way down out now, or when 113 lands |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
-| 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
+| 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1920,7 +1920,7 @@ CHECK (headless): from a new game, the stand-in opens the first link; travel hub
 
 ## 114 — The calendar in the crawler — §GE
 
-**Status:** todo (any time; 112 reads it)
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** In the crawler the days change through the year: long summer days and short summer nights, short winter days and long nights, dawn and dusk always 18 minutes; the plants on the surfaces bud in spring, colour in autumn and go bare in winter. A new game starts on the first evening of spring.
 
 ```text

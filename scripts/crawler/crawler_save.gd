@@ -314,6 +314,11 @@ static func save() -> void:
 		return
 	data["version"] = VERSION
 	data["game_seed"] = game_seed
+	# The game's own clock (design §GE: a kept game keeps its day).
+	var tree := Engine.get_main_loop() as SceneTree
+	var w: Node = tree.root.get_node_or_null("World") if tree != null else null
+	if w != null and GameMode.crawler_running:
+		data["days"] = float(w.get("days"))
 	_write(path_of(game_seed), data)
 
 

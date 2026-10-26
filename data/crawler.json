@@ -27,7 +27,7 @@
   "folk_3d": "The folk at the hearth are real 3D models of the shared rig, painted per §ES and made pixel by the 480-line frame and their texels (Mike: 'more like the goat pixel guy', frame 3), not baked billboards. Amends §ET.8 for folk; creatures and bosses stay sprites until Mike says (§FI.2 call 11). Built 7 Oct (Claude Code): the rescuer (who: hearth_folk; HearthFolk) is the shared rig in the scene, CloakedFigure with its beast head and cloak colours as before, seated on a low stone facing the hearth (rescuer). Painted per §ES: diffuse only, roughness 1, no normal maps, its occlusion baked toward navy (Prelit), lit live by the hearth's amber, casting the fire's shadow, its head's too. texels_per_m: its painted detail one value a texel on a grid of this many texels a metre in each part's own space (16: the tomb walls' fitted-stone grid, so it pixelates like them at 480 lines); its head on its own copy of the head's material, so no other head changes; 0 puts back the rig's fine weave and soft grain. step_fps: 0 runs its idle smooth at the frame rate (Claude Code's call: real geometry already moves a whole pixel at a time at 480 lines, and stepped head turns read as jerky); 8 steps it as the sprites stepped (sprites.anim_fps). render, painted, target: what it is, for the record.",
   "opening_pick": "[NOT WIRED YET — design §FJ.1] Mike, 6 Oct 22:52: 'first tomb should be randomly selected from the entire roster'. A new game's first dungeon is any built ruin kind (a key of themes), picked at random from the new game's seed; opening.first_theme stays the fallback until this is wired. Amends §ET.3. Each new kind joins the draw as it's built.",
   "themes_aztec_temple": "(Claude Code, queue 80, design §FN.1) themes.aztec_temple: the Aztec temple, built by the tomb's generator in masonry.json's aztec_temple stone with its two fixed chambers (room_pool.json always). It is drawn only when aztec_temple.json enabled is true (§FJ.1's roster, opening_pick); with it false (the default) no game ever draws it and the first ruin is the tomb as before. Which biome world it sits in is Mike's open call (§FN.8 call 1).",
-  "calendar": "[NOT WIRED YET — design §GE, §GE.5] (26 Oct) One calendar (date, season, clock hour) for the hub and every area (§FK.3). The hub reads the sky at hub_latitude_deg (the equator); each area at its own latitude by biome (area_latitude_deg, first guesses; kept under ~62° so dawn and dusk always exist). winter_by_biome: what winter does on each kind of surface (snow and frost only where cold). Year, tilt and phases stay in data/sky/day_cycle.json and data/seasons.json. start_year_day 0 = the northern spring equinox. Underground nothing seasonal changes but the shaft daylight (§FG)."
+  "calendar": "(26 Oct) One calendar (date, season, clock hour) for the hub and every area (§FK.3). The hub reads the sky at hub_latitude_deg (the equator); each area at its own latitude by biome (area_latitude_deg, first guesses; kept under ~62° so dawn and dusk always exist). winter_by_biome: what winter does on each kind of surface (snow and frost only where cold). Year, tilt and phases stay in data/sky/day_cycle.json and data/seasons.json. start_year_day 0 = the northern spring equinox. Underground nothing seasonal changes but the shaft daylight (§FG). Wired 26 Oct (queue 114, CrawlerCalendar): hub_area is the kind whose winter the hub has (tropical: a dry season, the plants keep their leaves; §GE.5.2: the hub's seasons are wet and dry); area_of_world maps a surface's world (worlds.json) to its kind where the names differ. A new game starts at start_year_day at dusk; Continue keeps the saved clock."
  },
  "opening": {
   "underground": true,
@@ -511,7 +511,7 @@
   ],
   "_help_across": "How wide the clearing is (m), drawn from the seed in this range; the cliffs close it.",
   "dusk_sun_deg": 3.0,
-  "_help_dusk": "The sun's height (degrees) you start at: a few degrees over the horizon and sinking, the one clock set there each time you start (new game or Continue).",
+  "_help_dusk": "dusk_into_min: how far into dusk (real minutes) every new game starts. Dusk begins at sunset on the crawler's clock (design §GE, CrawlerCalendar: the reference's stylised day, dusk the 18 minutes after the sun goes down). dusk_sun_deg is superseded by it (26 Oct, queue 114) and no longer read.",
   "biome": "TEMPERATE_DECIDUOUS",
   "zones": {
    "wash": "Ash-elm streamside forest",
@@ -807,7 +807,8 @@
     }
    },
    "_help_spill": "spill (0-1, 0 or absent none): a heavy brew's fog, billowing out over the rim and rolling down round the fire, spreading and fading on the ground (Mike, 26 Oct: 'a more billowing and flowing over the edges type of fog'). Jimsonweed spills hard; teonanácatl a little."
-  }
+  },
+  "dusk_into_min": 3.0
  },
  "calendar": {
   "start_year_day": 0.0,
@@ -833,6 +834,15 @@
    "mountains": "snow_and_frost",
    "cold": "snow_and_frost",
    "ice": "snow_and_frost"
+  },
+  "hub_area": "tropical",
+  "area_of_world": {
+   "aztec_highland": "mountains",
+   "beach": "tropical",
+   "volcano": "tropical",
+   "sea_caves": "temperate",
+   "mine": "temperate",
+   "tundra": "cold"
   }
  }
 }

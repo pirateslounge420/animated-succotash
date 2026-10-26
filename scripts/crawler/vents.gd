@@ -42,7 +42,13 @@ var sun := 1.0
 ## equinox: day 60, dusk 18, night 48, dawn 18 of the 144 minutes), the
 ## sky turning on its warp, the sun 90° up at noon and its hour angle off
 ## the overhead after.
+##
+## With calendar.underground_seasons on (design §GE.1.6; off by default)
+## the shafts read the place's own latitude and the day of the year
+## (SkySystem.one_clock_sun) instead.
 static func sun_deg(days: float) -> float:
+	if bool(CrawlerCalendar.C.get("underground_seasons", false)):
+		return rad_to_deg(asin(clampf(SkySystem.one_clock_sun(days, Vector3.UP, Vector3.RIGHT).y, -1.0, 1.0)))
 	return 90.0 - absf(DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5) * 360.0
 
 

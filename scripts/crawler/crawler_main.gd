@@ -187,6 +187,8 @@ var surface: Surface
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
 ## them: _below).
 var on_surface := false
+## The clock came back with a kept game (design §GE, CrawlerSave days).
+var _clock_restored := false
 ## Times you went up and came back down this session (tests wait on them).
 var went_up := 0
 var came_down := 0
@@ -282,6 +284,10 @@ func _ready() -> void:
 	# asked for, SEED='s fresh, else the last one kept (Continue), else new;
 	# then the dungeon you are in, its relit holders burning.
 	CrawlerSave.begin(CrawlerSave.pinned_seed())
+	# A kept game keeps its own clock (design §GE, §FK.2).
+	_clock_restored = CrawlerSave.continued and CrawlerSave.data.has("days")
+	if _clock_restored:
+		world.days = float(CrawlerSave.data.days)
 	print("[crawler] %s: game %d, place %d" % ["Continue" if CrawlerSave.continued else "a new game", CrawlerSave.game_seed, CrawlerSave.place])
 	_load_tomb(CrawlerSave.seed_at(CrawlerSave.place), CrawlerSave.place)
 	if CrawlerSave.continued:
@@ -309,7 +315,12 @@ func _start_at_camp() -> void:
 	while tome_pages != null and not tome_pages.placed and w < 30:
 		await get_tree().physics_frame
 		w += 1
-	set_dusk()
+	# The clock (design §GE.1.5, §FK.2): a new game at the spring equinox
+	# (calendar.start_year_day), at dusk; Continue as it was saved.
+	CrawlerCalendar.set_place("hub")
+	if not _clock_restored:
+		world.days = CrawlerCalendar.start_days()
+		set_dusk()
 	_up_now()
 	GameLog.add(str(HubCamp.H.get("log_start", "Dusk at the camp.")), "world")
 	var tw := create_tween()
@@ -320,15 +331,18 @@ func _start_at_camp() -> void:
 ## The one clock set to dusk (hub.dusk_sun_deg: the sun that high and
 ## sinking), later today or tomorrow.
 func set_dusk() -> void:
-	var want := float(HubCamp.H.get("dusk_sun_deg", 3.0))
+	# (design §GE, CrawlerCalendar: dusk begins at sunset on the stylised
+	# clock; hub.dusk_into_min minutes into it, the sun just down.)
 	var d0 := float(world.get("days"))
-	var t := d0
-	var step := 1.0 / 1440.0
-	while t < d0 + 1.0:
-		if Surface.sun_deg_at(t) <= want and Surface.sun_deg_at(t - step) > want:
-			world.days = t
+	var la := CrawlerCalendar.lat()
+	var into := float(HubCamp.H.get("dusk_into_min", 3.0)) / DayCycle.day_length_min()
+	for k in 2:
+		var day := floorf(d0) + k
+		var st := CrawlerCalendar.stylised(la, CrawlerCalendar.decl(day + 0.5))
+		var start := 0.5 + float(st.get("day", 60.0)) * 0.5 / DayCycle.day_length_min()
+		if day + start + into >= d0:
+			world.days = day + start + into
 			return
-		t += step
 
 
 ## One tomb, all of it (TombKit's layout from `s`, its stone, fires,
@@ -813,6 +827,8 @@ func _process(delta: float) -> void:
 	# none, so the crawler turns it (design §FG: the daylight down the
 	# shafts follows it).
 	world.days = float(world.get("days")) + delta / maxf(float(world.get("day_length_s")), 1.0)
+	# The log's stamp: the season, its day and the hour (§GE.1.7).
+	GameLog.now_text = CrawlerCalendar.stamp(float(world.get("days")))
 	# The folk at the hearth look to you while you're near and in front of
 	# them (the rig's head-look watches the player's head; here, your eyes).
 	var cam := get_viewport().get_camera_3d()

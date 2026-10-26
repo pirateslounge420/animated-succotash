@@ -199,6 +199,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	_common(rng)
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
+	plants.seasonal = CrawlerCalendar.drops_leaves(calendar_kind())
 	add_child(plants)
 	plants.build(land, P, _biome(), seed_value, keep_out)
 	life = SurfaceLife.new()
@@ -277,6 +278,11 @@ static func _back_light(main: Node, on_now: bool) -> void:
 ## world's sand, which read white under the glossy grade (26 Oct).
 func _ground_color() -> Color:
 	return Color(str(H.get("ground_color", "#3a3a2a")))
+
+
+## The hub on the calendar: the equator (design §GE.5.2).
+func calendar_kind() -> String:
+	return "hub"
 
 
 ## You start (and come back up) at the fire, across it, facing it.

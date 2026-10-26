@@ -4,6 +4,35 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — Queue 114, §GE and §GE.5: the calendar in the crawler (Claude Code)
+- **What Mike sees:** the days change through a 365-day year on every surface but the hub. At 35° there are long summer days, short summer nights, short winter days and long winter nights, with dawn and dusk 18 minutes each. The hub, on the equator, keeps about 60/18/48/18 all year. A new game starts on the spring equinox, 3 minutes into dusk; Continue keeps its day and hour. Deciduous plants turn, drop and bud where that place's winter drops leaves (temperate, swamp, cold); the hub's, the tropics' and the desert's keep theirs (a dry season). The log stamps lines "Spring day 27 · 17:30".
+- **Built:**
+  - `CrawlerCalendar` (`scripts/crawler/crawler_calendar.gd`): the place (hub or area kind) and its latitude, the day's declination (Astro), the season (Seasons), the leaf clock (LeafSeason's globals), winter by biome, the start day, the log stamp, and the stylised clock below.
+  - `SkySystem.one_clock_sun`/`moon` take a latitude, the year and a warp (`one_clock_lat`, `one_clock_year`, `one_clock_warp`; at rest exactly the old equator-equinox sun, so the open world is untouched).
+  - `Surface.enter` sets the place (`calendar_kind()`: the hub "hub", any other its world's kind); `Surface._update` runs the leaf clock; `SurfacePlants.seasonal` sets which deciduous crowns run it.
+  - `CrawlerSave` keeps `days`. `CrawlerMain`: the new-game clock and Continue's restore, `set_dusk` by the clock's phase (`hub.dusk_into_min`, which supersedes `dusk_sun_deg`), the log stamp.
+  - `Vents.sun_deg` reads the place only with `underground_seasons` on (off).
+  - `calendar._help`: the NOT WIRED YET prefix is gone; added `hub_area` (tropical) and `area_of_world`.
+- **A disagreement found, for Mike and Claude (chat):** the open world's `DayCycle` does not do §F2's stylised clock off the equator. At 35° it gives 21-minute twilights at the equinox and 23–24 at the solstices, with a 65-minute summer day. §GE's numbers come from `tools/reference/daylight_reference.py`, whose rule (twilight stretched to 18 minutes, never shorter than natural; the rest split day:night in the geometric ratio, biased to 60:48 at the equator's equinox) I built for the crawler only (`CrawlerCalendar.warp`). The open world keeps `DayCycle` as it was. Should the open world follow the reference too?
+- **Two numbers in the prompt corrected by the reference itself:**
+  - At 35° the equinox is 61.3/18/46.7/18, not 60/18/48/18; that split is the equator's.
+  - At the cold areas' latitudes (55°, 62°) a few midsummer days have a natural twilight over 18 minutes and almost no night (55°: 6 days, 62°: 14; the reference agrees within a minute). Dawn and dusk are exactly 18 every day up to 40°.
+- **One thing to settle:** year day 0 (the equinox) falls on day 27 of spring by `data/seasons.json` (its 20-day lag). If "the first evening of spring" should read "Spring day 1", either `calendar.start_year_day` ≈ 339.4 or the lag goes; Mike's call.
+- **Not built:** snow and frost (§GE.5.4 says where; nothing draws them yet); the season's temperature and wetness on the surfaces (their weather is fixed fair, §EW.6: nothing reads it yet).
+- **Checks:**
+  - `tools/calendar_check.gd`: 16/16.
+    - The hub is within 0.53 minutes of 60/18/48/18 all year.
+    - At 35°, summer 74.5/18/33.5/18 against the reference's 74.4/18/33.6/18; the equinox 61.3/18/46.7/18, equal to the reference; winter 50.6/18/57.4/18, equal to it.
+    - Dawn and dusk are 18 every day up to 40°.
+    - The noon sun at 35° stands 78.5° up in June and 31.5° in December.
+    - The seasons run spring, summer, autumn, winter, spring.
+    - Leaves drop only where the winter says.
+    - At rest, the one-clock sun is the old one.
+    - A new game starts at year day 0.73, dusk, on the hub, and the clock's phases over the day are 60.1/18/47.9/18.
+    - Continue keeps 41.029.
+  - `hub_check` 0 fails; its dusk line now reads the clock's phase. `cauldron_fx_check` 0 fails.
+- **Merged** the design branch's §GD, §GE, §GE.5 and queue 113–114 first. §GD rewrites queue 112: no way down under the hub fire. The hub as built still has one; the queue row now says so.
+
 ## 2026-10-26 — Heavy brews billow over the rim (Claude Code)
 - Mike: *"it would be cool for the effect to be a more billowing and flowing over the edges type of fog"*. `CauldronFX` gained a spill: faint, wide fog puffs pushed out from a ring at the pot's rim, sinking and spreading as they grow (9 s each), the column above thinner. `crawler.json → hub.cauldron_fx.brews.<brew>.spill` (0–1): jimsonweed 1.0, teonanácatl 0.35; jimsonweed's motes cut to 0.1 (they read as blobs). `cauldron_fx_check` 0 fails (the spill brews billow and sink, the others don't); seen once (`cauldron_frames.gd`, `ONLY=jimsonweed`): a faint yellow-green fog spilling round the pot and down past the fire.
 
