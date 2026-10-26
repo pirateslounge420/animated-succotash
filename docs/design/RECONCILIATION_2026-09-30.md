@@ -6708,3 +6708,136 @@ and §FO's one-floor ruins for Torchfire; the built crawler code is reused where
    the mystery. High fantasy all the same: ruin energies, fairies, gnomes.
 5. **Heavy fog** throughout (§GB.4). Teeth are money (§FZ.3).
 6. **Open:** the order of work past the hub (queue 111–112 are the first two steps).
+
+## GD. One hub, many areas joined by fire; you start on the surface at dusk; an alien world of high oxygen — LOCKED (25–26 Oct, by voice, Mike; "Yeah, we can do something like that", "so does that make sense?", then "fix repo")
+
+Mike, 25 Oct late and 26 Oct just after midnight, by voice. This **supersedes §GC.1–2's one dungeon
+under the hub fire**: Torchfire goes back to PSO-style separate areas, with one hub.
+
+### GD.1 The shape
+1. **One hub.** A new game starts **at the hub campfire, on the surface, at dusk**. Nothing about the
+   hub is underground, and there is no way down beneath its fire. The hub is the camp of §GC.1 and
+   §FZ (seeded, exaggerated terrain, a river, the hooded cook-shaman at the cauldron).
+2. **Areas.** Each area is **curated and procedurally generated**: explorable, its own feel, **not
+   open world**. Each has a **main hearth**, an **overworld surface** to explore, and a **ruin
+   entrance that leads underground**, with fire holders to relight below (§ET.4 stands).
+   **Creatures and critters live on the surface and underground.**
+3. **Travel by fire** (Claude's proposal; Mike: "we can do something like that"). An area's main
+   hearth starts cold. Reach it and light it with your torch and it is **linked to the hub fire**;
+   from then on the cook-shaman casts a powder into the hub fire, the flames take that area's
+   colour, you step through and come out at its hearth (and back the same way). PSO's teleporter,
+   as fire. The first area is reached how is open (GD.5).
+4. **The loop:** hub fire → an area's hearth → its surface → down into its ruin → back to the hub.
+5. **Reused from the open world:** the **144-minute day** and the **seasons**, and the **plant leaf
+   and structure shapes**, but plants **need not map to a real genus or species**.
+6. **The nineteen themes of §GC.3** become the areas' themes, their order and grouping open.
+
+### GD.2 The world
+1. **An alien planet, not Earth**, built from Earth ideas so it stays intuitive: **Earth-like gravity
+   and physics.** The lost cultures echo Earth's (a jaguar-temple people, a feathered-serpent sun cult,
+   sandstone tomb kings) without being them; their gods, glyphs and fall are invented.
+2. **Oxygen at 30–35 %** (Carboniferous; Earth today is 21 %): giant insects; fire burns hotter and
+   faster and even damp growth carries flame once lit, so wildfire is a force, fire-adapted plants
+   exist, and fire is the tribe's best friend and worst danger.
+3. **Creatures alien but believable:** evolved for a reason (convergent forms; every trait has a job;
+   many grazers, fewer predators, few apex hunters). An untamed, wild world.
+
+### GD.3 The tribe and its stuff
+1. **Stage: between tribal and ancient** (Neolithic): settled huts, no metal. **Basic boats**
+   (dugouts, reed rafts) to cross water.
+2. **Harvest from creatures, Monster Hunter-style:** teeth as money (§FZ.3); shells, carapace and
+   scales as armour (crab-shell chest, beetle helmet, fish-scale cloak); **materials from specific
+   places** (woods, stones, ivory, silk, sinew) taken to a keeper to be made into gear, so progress
+   shows in what you carry.
+3. **Basic farming, both ways:** the forager-herbalist tends plants and you can keep a small plot of
+   your own; specialty plants, cannabis first (fibre, seed, the shaman's pipe).
+4. **Fire tech found in the ruins** (the only tech past the tribe's, always fire): **flint and steel,
+   oil lamps, lanterns, bellows**. No phones, no guns; not Fallout. The deepest finds stay mysterious.
+5. Solarpunk is not Torchfire (for another game).
+
+### GD.4 Queue
+**112 is rewritten** (the hub at dusk, no way down) and **113 is new** (fire travel to a first area).
+111 stands.
+
+### GD.5 Open (for Mike)
+1. How the first area's hearth is reached before any link exists (a short walk out of the hub, a
+   boat down the river, or the shaman opens the first one).
+2. The areas' order and which of §GC.3's themes come first.
+
+## GE. Torchfire's clock and calendar: the 144-minute day, four seasons, 365 days, one home latitude — LOCKED (26 Oct, 16:32, Mike; "go ahead and start making sure the seasons (all 4), time (144 minutes), sun up and sundown gradients (dawn, dusk, day, night) with 365 days")
+
+Mike asks for the open world's clock in the crawler: all four seasons, the 144-minute day, the
+dawn/day/dusk/night gradients, a 365-day year. §GD.1.5 already reuses "the 144-minute day and the
+seasons"; this section says how, because the crawler as built cannot show seasons.
+
+### GE.0 The problem it fixes
+The crawler turns the world's clock (`crawler_main.gd`, §FG) but reads the sky at **latitude 0 with
+no year** (§ET.2, §FK.3: "one clock, no latitude"; `vents.gd`, `surface_plants.gd`: "no seasons
+here"). At the equator every day is the equinox day (60 / 18 / 48 / 18 minutes), so a year would
+pass with no change in the light. Seasons that change the days need a latitude.
+
+### GE.1 The rule
+1. **One clock, as §FK.3 says:** the 144-minute day (one game hour = 6 real minutes), the same in
+   the hub and every area, turning while you are underground.
+2. **One home latitude for the whole game: 35° north** (*Claude's reading;* Mike may move it). Every
+   area and the hub read the sky, the daylight and the seasons at that one latitude, so §FK.3's "one
+   clock everywhere" stays true. 35° is temperate: all four seasons are plain and the 18-minute dawn
+   and dusk never break (no polar night, no midnight sun). On the alien planet of §GD.2 it is simply
+   where the hub stands.
+3. **Axial tilt 23.5°, 365 days a year** (`data/sky/day_cycle.json`, unchanged): a year is 36.5 real
+   days; each season ~9 real days, with the ~2-day changes of `data/seasons.json` (lag 20 days,
+   transitions 20 days, unchanged).
+4. **What the light does at 35°** (from `tools/reference/daylight_reference.py`, real minutes):
+
+   | | day | dusk | night | dawn | daylight |
+   |---|---|---|---|---|---|
+   | summer solstice | 74 | 18 | 34 | 18 | ~15 game h |
+   | equinoxes | 60 | 18 | 48 | 18 | 12 game h |
+   | winter solstice | 51 | 18 | 57 | 18 | ~10 game h |
+
+   Dawn and dusk stay 18 minutes all year; summer nights are short and winter nights long. The
+   gradients themselves (the sky colours through dawn, day, dusk and night) are the open world's,
+   as built (`sky_paint.gd`, `sky_system.gd`, §GB's look on top).
+5. **A new game starts at the spring equinox** (year day 0), at dusk (§GD.1.1). *Claude's reading:*
+   spring first, so the first year runs spring → summer → autumn → winter.
+6. **What the seasons touch:** on the surfaces (the hub and every area's overworld): the length of
+   day and night, the sun's height, the plants (`LeafSeason`: spring buds, autumn colour, bare
+   winter; evergreens stay), and the season's temperature and wetness where the weather reads them.
+   **Underground nothing changes** except the daylight down the shafts (§FG), which follows the
+   day as it already does. Snow, frost and ice in winter are not decided here (open, GE.4).
+7. **The HUD clock** (§AQ's 12-hour face) stays; the season can show in the log's timestamps
+   ("day 12 of spring").
+
+### GE.2 Data
+`data/crawler.json → calendar` (new, `[NOT WIRED YET — design §GE]`): `home_latitude_deg` 35,
+`start_year_day` 0, `seasons_on` true, `underground_seasons` false. The year, tilt, day and phase
+numbers stay in `data/sky/day_cycle.json` and `data/seasons.json`; nothing duplicated.
+
+### GE.3 Queue
+**114, the calendar in the crawler:** any time (it needs nothing from 111); **112 reads it** for the
+hub's dusk start and its seasons.
+
+### GE.4 Open for Mike
+1. The home latitude (35° first guess; 30° is Louisiana's: milder winters, shorter summer days).
+2. Winter weather on the surfaces: snow and frost, or only bare trees and long nights?
+3. Should an area's theme set its own season (an ice area always winter) or does every surface
+   share the one calendar?
+
+### GE.5 One calendar, the hub on the equator, each area its own latitude; winter by biome — LOCKED (26 Oct, 16:37, Mike; answers GE.4)
+Mike: *"every area will share one calender and we can have the main spawn in like at the equator-
+snow and frost should be a thing only in particular biomes which its necessary- so not all biomes
+will have a super harsh snowy winter, some might just lose leaves, etc"*. Amends GE.1.2 and GE.1.4:
+1. **One calendar:** the date, the season and the clock hour are the same in the hub and every area
+   (§FK.3 stands). Spring in the hub is spring everywhere.
+2. **The hub sits on the equator.** Its days stay near the equinox split all year (60 / 18 / 48 / 18
+   real minutes); its seasons show as wet and dry and in the plants that answer them, not in the
+   length of the day. This is the steady fire you come home to.
+3. **Each area reads the sky at its own latitude, set by its biome** (`calendar.area_latitude_deg`,
+   first guesses): tropical areas near the equator, temperate ones around 35–45°, cold ones high
+   (the ice caves' surface ~62°, long winter nights, never polar night or midnight sun, so dawn and
+   dusk always exist). The same day of the year is a long summer evening in one area and a short
+   winter afternoon in another; travelling by fire (§GD.1.3) shows it.
+4. **Winter by biome** (`calendar.winter_by_biome`): only cold biomes get snow and frost; temperate
+   ones lose their leaves and frost lightly or not at all; tropical and desert ones get a dry season
+   and keep their plants (desert nights cold). Evergreens keep their leaves everywhere.
+5. GE.4 calls 1–3 are answered. Underground stays unseasonal (GE.1.6).

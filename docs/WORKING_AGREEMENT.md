@@ -10,7 +10,7 @@ The designer can change any line.
 The project is **plain Godot 4.3** (design 30 Sept doc §CI), and the planet is **1/100 Earth in
 distance (400 km around; §CR, built 3 Oct), 1/10 in height and time**. Design §FX (18 Oct) makes it
 the **real Earth** (ETOPO relief, CHELSA climate, RESOLVE ecoregions) at that scale; not built yet
-(queue 103–107). **25 Oct, §GA: the game that boots is Torchfire, the crawler (`torchfire1`); the 1/100 Earth open world (§FX, §FY) belongs to a separate open world game, and queue 103–110 are parked. The crawler's order of work is queue 111 then 112 (§GB, §GC).**
+(queue 103–107). **25 Oct, §GA: the game that boots is Torchfire, the crawler (`torchfire1`); the 1/100 Earth open world (§FX, §FY) belongs to a separate open world game, and queue 103–110 are parked. The crawler's order of work is queue 111, 112, 113 (§GB, §GD).**
 
 ## Sources of truth, in order
 1. **`docs/design/RECONCILIATION_2026-09-30.md`**: the ambient cut and everything decided
