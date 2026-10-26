@@ -6841,3 +6841,50 @@ will have a super harsh snowy winter, some might just lose leaves, etc"*. Amends
    ones lose their leaves and frost lightly or not at all; tropical and desert ones get a dry season
    and keep their plants (desert nights cold). Evergreens keep their leaves everywhere.
 5. GE.4 calls 1–3 are answered. Underground stays unseasonal (GE.1.6).
+
+## GF. The world gets ready: dawn and dusk routines on every surface — LOCKED (26 Oct, 17:16, Mike; "lock it")
+
+Mike, 16:48: *"i like the ideas of the world 'getting ready' for the various times of day- flowers
+opening closing, nocturnal creatures emerging and hiding for night and day respectively, villagers
+lighting candles/torches/lamps etc"*; then *"lock it"*. Data: `data/day_shift.json` (new, not wired).
+
+### GF.1 Keyed to the sun, not the clock
+Every routine fires on the **local sun** of the place (§GE.5: the hub on the equator, each area at its
+biome's latitude), read as the sun's elevation, never as a clock hour. A winter area lights up early, a
+summer one late; the hub nearly the same every day. Each actor gets its own small random offset so
+nothing changes all at once.
+
+### GF.2 Flowers
+Plants carry a bloom habit: `day` (open at dawn, close at dusk: morning glory and the like), `night`
+(open at dusk, close at dawn: datura, brugmansia, moonflower, night-blooming cereus), or `always`.
+Opening and closing take a minute or two of real time, not a pop. Night bloomers give off scent at
+night that draws moths (the scent is §DD's pheromone source where built; otherwise moths gather near
+them). Plants already tagged in their data keep their tag; the rest default to `always`.
+
+### GF.3 Creatures change shifts (carries the 1 Oct night-life pass into the crawler)
+Every creature is `day`, `night` or `twilight` (dawn and dusk). At dusk day creatures go to cover
+(burrows, trees, the long grass) and settle; night creatures come out from theirs (bats from cave
+mouths and ruin entrances, owls calling from trees, moths to every light, frogs to the water). At
+dawn it runs the other way. **The handover is staggered across the whole twilight, so for a few
+minutes both shifts are out.** A creature found in its daytime cover is asleep and can be walked past.
+
+### GF.4 The sound changes with it
+Dusk: birdsong thins, then insects, then frogs where there is water, then owls. Dawn: birds first
+(a dawn chorus), then the night sounds fade. Per biome, from the ambience the areas already have.
+
+### GF.5 The folk light up, one light at a time
+At dusk each keeper (§FZ) lights their own light, in turn: the cook-shaman builds up the hearth, a
+torch goes into its holder, candles and lamps come on in the huts. From the road you watch the camp
+go amber light by light (§EE.1's warm village). At dawn they put them out the same way, the hearth
+banked, not out. Every light is lit from a flame already burning (fire carried, never made).
+The same routine runs at every area's main hearth once it is relit.
+
+### GF.6 Underground
+Nothing in a ruin gets ready for anything: below ground it is always night. Only the shaft daylight
+(§FG) follows the sun.
+
+### GF.7 Not taken
+Clock-hour schedules. Everything switching at one instant. Lights that turn on by themselves.
+
+### GF.8 Queue
+**115:** after 112 (the hub and its folk) and 114 (the calendar).

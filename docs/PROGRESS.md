@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — §GF locked: the world gets ready at dawn and dusk (Claude, chat)
+- **Mike** (26 Oct): "the world 'getting ready' for the various times of day- flowers opening closing, nocturnal creatures emerging and hiding … villagers lighting candles/torches/lamps etc"; "lock it".
+- **Design:** §GF. Every routine fires on the local sun (§GE.5), staggered per actor: day and night bloomers open and close, night bloomers draw moths; creatures change shifts with a shared twilight (bats from cave mouths, owls, frogs; day creatures asleep in cover); the sound turns over; the keepers light the camp light by light at dusk and put it out at dawn, the hearth banked; the same at relit area hearths. Underground unchanged.
+- **Data (new, not wired):** `data/day_shift.json`.
+- **Queue:** 115, after 112 and 114.
+
 ## 2026-10-26 — §GE locked: the crawler's clock and calendar (Claude, chat)
 - **Mike** (26 Oct, 16:32): "go ahead and start making sure the seasons (all 4), time (144 minutes), sun up and sundown gradients (dawn, dusk, day, night) with 365 days".
 - **Found:** the crawler turns the 144-minute clock but reads the sky at latitude 0 with no year (§ET.2, §FK.3), so every day is the equinox and seasons could never show.

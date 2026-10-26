@@ -150,6 +150,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | todo (after 111) |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
+| 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1931,4 +1932,19 @@ READ: §GE (all; §GE.5 amends GE.1: the hub on the equator, each area at its ow
 BUILD: (1) One calendar for all (the same day and hour everywhere). The hub reads every sky, daylight and season value at calendar.hub_latitude_deg (the equator); each area at calendar.area_latitude_deg for its biome, with the year from day_cycle.json: DayCycle.warp/phase_at/daylight with that latitude and Astro's declination for the day, in place of latitude 0 and no year. (2) A new game's clock starts at calendar.start_year_day, at dusk (§GD.1.1); a saved game keeps its own clock (§FK). (3) Surfaces get the seasons, by calendar.winter_by_biome (snow and frost only where it says so; elsewhere leaf drop or a dry season): LeafSeason on surface plants (spring buds, autumn colour, bare winter; evergreens stay), and the season's temperature/wetness wherever the crawler's surfaces read weather. Underground: nothing seasonal except the shaft daylight following the day (§FG), per calendar.underground_seasons. (4) The log's timestamps may say the season and its day. (5) Remove the NOT WIRED YET prefix from calendar's _help once read, and keep docs/HOW_TO_RUN.md true.
 
 CHECK (headless): the hub stays within 1 minute of 60/18/48/18 all year; at 35° (a test latitude) the phase minutes match tools/reference/daylight_reference.py within 1 minute at both solstices and an equinox (summer ~74/18/34/18, equinox 60/18/48/18, winter ~51/18/57/18); dawn and dusk are 18 minutes every day of a fast-forwarded year; a fast-forwarded year passes through spring, summer, autumn, winter in that order and returns to spring after 365 days; a new game starts at year day 0 at dusk; Continue keeps the saved day; the open world (torchfire2) is unchanged; no errors. Prepend a PROGRESS entry.
+```
+
+## 115 — The world gets ready at dawn and dusk — §GF
+
+**Status:** todo (after 112 and 114)
+**Mike sees:** At dusk the day flowers close and the night bloomers open with moths round them; birds go quiet and settle, then insects, frogs and owls start; bats pour out of cave mouths; the folk light the camp one light at a time until it glows amber. At dawn it all runs back, birds first, lights going out, the hearth banked. Underground nothing changes.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 112 and 114. This pass builds ONE thing: design §GF, the dawn and dusk routines on every surface (the hub, and each relit area's surface). No screenshots between steps; Mike plays and reports.
+
+READ: §GF (all), §GE and §GE.5 (the local sun), §FZ (the keepers), §GD.1, §FG; data/day_shift.json (new, NOT WIRED YET), data/day_accents.json, data/night_accents.json, data/creatures/ (the active/activity tags), data/crawler.json → calendar; whatever already builds the open world's day/night creature swap, ambience and village lights (§EE.1), and scripts/sky/ for the sun's elevation.
+
+BUILD: (1) One small "day shift" driver that reads the local sun's elevation (never a clock hour) and gives each actor its own offset (sun_deg.actor_jitter_deg), so the change spreads over the twilight. (2) Flowers: bloom habit day / night / always from the plant's own tag or day_shift.flowers by genus, else always; opening and closing animate over open_close_s; night bloomers draw moths within night_scent_draws_moths_m. (3) Creatures: day / night / twilight from their tags or default_by_kind; at the change they walk to cover and sleep or come out of it; bats leave cave mouths and ruin entrances at dusk and return at dawn; both shifts overlap during the twilight. (4) Sound: the dusk and dawn orders with crossfade_s, per biome from the existing ambience. (5) Folk lights: at dusk the keepers light, in turn and on foot, the hearth, torch holders, lamps and candles (per_light_gap_s apart), each from an already-burning flame; at dawn they put them out and bank the hearth; the same at every relit area hearth. (6) Nothing underground (day_shift.underground false), except the shaft light already following the sun. (7) Remove the NOT WIRED YET prefix once read; keep HOW_TO_RUN.md true.
+
+CHECK (headless): over a fast-forwarded day at the hub and at a 40° and a 62° test latitude, each routine fires inside its sun_deg window and not by clock hour (the 62° dusk falls at a different clock hour in summer and winter); no two folk lights light in the same second; both creature shifts are present during twilight and only one at noon and midnight; night bloomers are open at midnight and closed at noon, day flowers the reverse; nothing in a ruin changes; Continue keeps the state; no errors. Walkabout once: the hub at dusk as the lights come on. Prepend a PROGRESS entry.
 ```
