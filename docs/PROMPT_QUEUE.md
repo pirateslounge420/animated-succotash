@@ -149,6 +149,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | todo (after 111) |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
+| 114 | §GE | The calendar in the crawler: the 144-minute day, four seasons and 365 days at one home latitude | todo (any time; 112 reads it) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1895,7 +1896,7 @@ CHECK (headless): the crawler boots with no errors under both presets; with "glo
 ```text
 Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 111. This pass builds ONE thing: the hub camp of design §GD.1 (points 1 and 5) and §GC.1, in the crawler, in the §GB look. §GD supersedes §GC.2: there is NO way down under the hub fire. Not the other five keepers (§FZ.4 is a to-do), not trading, teeth, fishing or farming, not travel to areas (that is 113). No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English what he will see.
 
-READ: §GD (all), §GC.1, §GB, §FZ, §GA; §FM's hearth, shaman and cauldron and §FH (live 3D folk); §FK (one seed per new game, kept); data/crawler.json (opening, persistence), data/game.json; scripts/crawler/ (crawler_main.gd, hearth_folk.gd, hearth_cauldron.gd, crawler_save.gd); and from the open world, whatever already builds the 144-minute day, the seasons, terrain, rivers, campfires and the plant shapes: reuse it at small scale and say what you reused.
+READ: §GD (all), §GE (the calendar: build on queue 114 if it is done, else do 114's work here), §GC.1, §GB, §FZ, §GA; §FM's hearth, shaman and cauldron and §FH (live 3D folk); §FK (one seed per new game, kept); data/crawler.json (opening, persistence), data/game.json; scripts/crawler/ (crawler_main.gd, hearth_folk.gd, hearth_cauldron.gd, crawler_save.gd); and from the open world, whatever already builds the 144-minute day, the seasons, terrain, rivers, campfires and the plant shapes: reuse it at small scale and say what you reused.
 
 BUILD: (1) The camp: a bounded surface clearing (first guess ~150–250 m across, closed in by cliffs, roots and fog, no edge visible), its terrain drawn from the game's seed and exaggerated (tall crooked rock, oversized roots), with a start kind from the seed: stone, ruins, or overgrown vines (data/crawler.json → hub, new block, each kind's props listed); a river through it. (2) A new game starts at the campfire at dusk; the 144-minute day and the seasons run here as in the open world; plants use the existing leaf and structure shapes, not tied to real species (§GD.1.5). (3) The hooded cook-shaman at a cauldron by the fire: robed, hood shadowing the face (no face visible), a long pipe with a thin smoke wisp, idle stirring; reuse the hearth folk and cauldron code; the cauldron's glow is the green accent, the fire the orange. (4) The camp is kept per game (§FK): the same layout every time. (5) The crawler no longer wakes underground: a new game and Continue open at the hub (the first ruin stays reachable by dev means for checks until 113). All sizes and choices in data with _help lines.
 
@@ -1915,4 +1916,19 @@ READ: §GD (all), §GB, §EW (pocket worlds, now areas), §FM (the way up and do
 BUILD: (1) The area: a bounded, curated, seeded surface (first guess ~300–600 m across, fog-bounded) with its main hearth at one edge, cold, and a ruin entrance that leads into the existing first ruin; creatures that already exist may roam it. (2) Getting there the first time: until Mike answers §GD.5 call 1, the cook-shaman opens the first link (interact with her) as a stand-in; say so in the _help. (3) The link: lighting the area's hearth with your torch links it to the hub fire and is saved (§FK). Linked: interacting at the hub fire (the shaman's powder) turns the flames that area's colour and moves you to its hearth; interacting at the area's hearth returns you to the hub. A short fire-wash transition, no loading screen if avoidable. (4) The ruin's exit brings you back up to the area's surface near the mouth. (5) Everything in data (data/crawler.json → areas, new block) with _help lines.
 
 CHECK (headless): from a new game, the stand-in opens the first link; travel hub → area → hub works with no errors; lighting the hearth saves the link and Continue keeps it; the ruin's mouth enters the tomb and its exit returns to the area's surface. Walkabout once: hub fire, the colour change, the cold hearth lit, the surface, the ruin mouth.
+```
+
+## 114 — The calendar in the crawler — §GE
+
+**Status:** todo (any time; 112 reads it)
+**Mike sees:** In the crawler the days change through the year: long summer days and short summer nights, short winter days and long nights, dawn and dusk always 18 minutes; the plants on the surfaces bud in spring, colour in autumn and go bare in winter. A new game starts on the first evening of spring.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §GE, the open world's clock and seasons running in the crawler. No screenshots between steps; Mike plays and reports.
+
+READ: §GE (all), §FK.3, §FG, §GD.1.5; data/crawler.json → calendar (new, prefixed NOT WIRED YET), data/sky/day_cycle.json, data/seasons.json; scripts/sky/day_cycle.gd, astro.gd, seasons.gd, sky_system.gd, sky_paint.gd; scripts/ecology/leaf_season.gd; scripts/crawler/crawler_main.gd (the clock turn), vents.gd and surface_plants.gd (both read latitude 0 and say "no seasons"); tools/reference/daylight_reference.py.
+
+BUILD: (1) The crawler reads every sky, daylight and season value at calendar.home_latitude_deg (one latitude for the hub and every area), with the year from day_cycle.json: DayCycle.warp/phase_at/daylight with that latitude and Astro's declination for the day, in place of latitude 0 and no year. (2) A new game's clock starts at calendar.start_year_day, at dusk (§GD.1.1); a saved game keeps its own clock (§FK). (3) Surfaces get the seasons: LeafSeason on surface plants (spring buds, autumn colour, bare winter; evergreens stay), and the season's temperature/wetness wherever the crawler's surfaces read weather. Underground: nothing seasonal except the shaft daylight following the day (§FG), per calendar.underground_seasons. (4) The log's timestamps may say the season and its day. (5) Remove the NOT WIRED YET prefix from calendar's _help once read, and keep docs/HOW_TO_RUN.md true.
+
+CHECK (headless): at 35° the phase minutes match tools/reference/daylight_reference.py within 1 minute at both solstices and an equinox (summer ~74/18/34/18, equinox 60/18/48/18, winter ~51/18/57/18); dawn and dusk are 18 minutes every day of a fast-forwarded year; a fast-forwarded year passes through spring, summer, autumn, winter in that order and returns to spring after 365 days; a new game starts at year day 0 at dusk; Continue keeps the saved day; the open world (torchfire2) is unchanged; no errors. Prepend a PROGRESS entry.
 ```

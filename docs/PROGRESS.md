@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-26 — §GE locked: the crawler's clock and calendar (Claude, chat)
+- **Mike** (26 Oct, 16:32): "go ahead and start making sure the seasons (all 4), time (144 minutes), sun up and sundown gradients (dawn, dusk, day, night) with 365 days".
+- **Found:** the crawler turns the 144-minute clock but reads the sky at latitude 0 with no year (§ET.2, §FK.3), so every day is the equinox and seasons could never show.
+- **Design:** §GE: one clock everywhere (§FK.3 stands); one home latitude for the hub and every area, 35° N (Claude's first guess), so the days lengthen and shorten through a 365-day year (summer ~74/18/34/18 min, winter ~51/18/57/18, dawn and dusk always 18); tilt 23.5°, seasons as `seasons.json`; a new game starts on the spring equinox at dusk; surfaces get the seasons, underground only the shaft daylight. Open (§GE.4): the latitude, winter snow, per-area seasons.
+- **Data (new, not wired):** `data/crawler.json → calendar`.
+- **Queue:** 114 (any time); 112 reads it.
+
 ## 2026-10-23 — Queue 102, §FX.1 the switch back: Torchfire 2 boots again (Claude Code)
 - **What Mike sees:** Play opens the open world again: the planet is generated, you wake at dawn in the fire circle by the road, as on 5 Oct. The crawler is untouched and one setting away: `data/game.json → game` `"torchfire1"` (restart), or `GAME=torchfire1` for one run.
 - **Built:** `GameMode` (`scripts/core/game_mode.gd`) now falls back to the open world, not the crawler, when `game.json` has no readable name (§FX.1). `crawler_check`'s switch lines now expect the file to pick the open world and `GAME=torchfire1` to open the crawler. `HOW_TO_RUN.md` says which game boots, how to pick the other, and marks where the open world's block starts. Nothing of the crawler is deleted or moved; no data changed (Claude, chat, had already flipped `game.json`).

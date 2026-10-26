@@ -6763,3 +6763,62 @@ under the hub fire**: Torchfire goes back to PSO-style separate areas, with one 
 1. How the first area's hearth is reached before any link exists (a short walk out of the hub, a
    boat down the river, or the shaman opens the first one).
 2. The areas' order and which of §GC.3's themes come first.
+
+## GE. Torchfire's clock and calendar: the 144-minute day, four seasons, 365 days, one home latitude — LOCKED (26 Oct, 16:32, Mike; "go ahead and start making sure the seasons (all 4), time (144 minutes), sun up and sundown gradients (dawn, dusk, day, night) with 365 days")
+
+Mike asks for the open world's clock in the crawler: all four seasons, the 144-minute day, the
+dawn/day/dusk/night gradients, a 365-day year. §GD.1.5 already reuses "the 144-minute day and the
+seasons"; this section says how, because the crawler as built cannot show seasons.
+
+### GE.0 The problem it fixes
+The crawler turns the world's clock (`crawler_main.gd`, §FG) but reads the sky at **latitude 0 with
+no year** (§ET.2, §FK.3: "one clock, no latitude"; `vents.gd`, `surface_plants.gd`: "no seasons
+here"). At the equator every day is the equinox day (60 / 18 / 48 / 18 minutes), so a year would
+pass with no change in the light. Seasons that change the days need a latitude.
+
+### GE.1 The rule
+1. **One clock, as §FK.3 says:** the 144-minute day (one game hour = 6 real minutes), the same in
+   the hub and every area, turning while you are underground.
+2. **One home latitude for the whole game: 35° north** (*Claude's reading;* Mike may move it). Every
+   area and the hub read the sky, the daylight and the seasons at that one latitude, so §FK.3's "one
+   clock everywhere" stays true. 35° is temperate: all four seasons are plain and the 18-minute dawn
+   and dusk never break (no polar night, no midnight sun). On the alien planet of §GD.2 it is simply
+   where the hub stands.
+3. **Axial tilt 23.5°, 365 days a year** (`data/sky/day_cycle.json`, unchanged): a year is 36.5 real
+   days; each season ~9 real days, with the ~2-day changes of `data/seasons.json` (lag 20 days,
+   transitions 20 days, unchanged).
+4. **What the light does at 35°** (from `tools/reference/daylight_reference.py`, real minutes):
+
+   | | day | dusk | night | dawn | daylight |
+   |---|---|---|---|---|---|
+   | summer solstice | 74 | 18 | 34 | 18 | ~15 game h |
+   | equinoxes | 60 | 18 | 48 | 18 | 12 game h |
+   | winter solstice | 51 | 18 | 57 | 18 | ~10 game h |
+
+   Dawn and dusk stay 18 minutes all year; summer nights are short and winter nights long. The
+   gradients themselves (the sky colours through dawn, day, dusk and night) are the open world's,
+   as built (`sky_paint.gd`, `sky_system.gd`, §GB's look on top).
+5. **A new game starts at the spring equinox** (year day 0), at dusk (§GD.1.1). *Claude's reading:*
+   spring first, so the first year runs spring → summer → autumn → winter.
+6. **What the seasons touch:** on the surfaces (the hub and every area's overworld): the length of
+   day and night, the sun's height, the plants (`LeafSeason`: spring buds, autumn colour, bare
+   winter; evergreens stay), and the season's temperature and wetness where the weather reads them.
+   **Underground nothing changes** except the daylight down the shafts (§FG), which follows the
+   day as it already does. Snow, frost and ice in winter are not decided here (open, GE.4).
+7. **The HUD clock** (§AQ's 12-hour face) stays; the season can show in the log's timestamps
+   ("day 12 of spring").
+
+### GE.2 Data
+`data/crawler.json → calendar` (new, `[NOT WIRED YET — design §GE]`): `home_latitude_deg` 35,
+`start_year_day` 0, `seasons_on` true, `underground_seasons` false. The year, tilt, day and phase
+numbers stay in `data/sky/day_cycle.json` and `data/seasons.json`; nothing duplicated.
+
+### GE.3 Queue
+**114, the calendar in the crawler:** any time (it needs nothing from 111); **112 reads it** for the
+hub's dusk start and its seasons.
+
+### GE.4 Open for Mike
+1. The home latitude (35° first guess; 30° is Louisiana's: milder winters, shorter summer days).
+2. Winter weather on the surfaces: snow and frost, or only bare trees and long nights?
+3. Should an area's theme set its own season (an ice area always winter) or does every surface
+   share the one calendar?
