@@ -10,6 +10,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Design:** §GE: one clock everywhere (§FK.3 stands); one home latitude for the hub and every area, 35° N (Claude's first guess), so the days lengthen and shorten through a 365-day year (summer ~74/18/34/18 min, winter ~51/18/57/18, dawn and dusk always 18); tilt 23.5°, seasons as `seasons.json`; a new game starts on the spring equinox at dusk; surfaces get the seasons, underground only the shaft daylight. Open (§GE.4): the latitude, winter snow, per-area seasons.
 - **Data (new, not wired):** `data/crawler.json → calendar`.
 - **Queue:** 114 (any time); 112 reads it.
+- **§GE.5 (16:37), Mike:** one calendar for all; the hub on the equator; each area at its biome's latitude (`calendar.area_latitude_deg`); snow and frost only in cold biomes, leaf drop or a dry season elsewhere (`calendar.winter_by_biome`).
 
 ## 2026-10-23 — Queue 102, §FX.1 the switch back: Torchfire 2 boots again (Claude Code)
 - **What Mike sees:** Play opens the open world again: the planet is generated, you wake at dawn in the fire circle by the road, as on 5 Oct. The crawler is untouched and one setting away: `data/game.json → game` `"torchfire1"` (restart), or `GAME=torchfire1` for one run.

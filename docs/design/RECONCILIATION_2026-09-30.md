@@ -6822,3 +6822,22 @@ hub's dusk start and its seasons.
 2. Winter weather on the surfaces: snow and frost, or only bare trees and long nights?
 3. Should an area's theme set its own season (an ice area always winter) or does every surface
    share the one calendar?
+
+### GE.5 One calendar, the hub on the equator, each area its own latitude; winter by biome — LOCKED (26 Oct, 16:37, Mike; answers GE.4)
+Mike: *"every area will share one calender and we can have the main spawn in like at the equator-
+snow and frost should be a thing only in particular biomes which its necessary- so not all biomes
+will have a super harsh snowy winter, some might just lose leaves, etc"*. Amends GE.1.2 and GE.1.4:
+1. **One calendar:** the date, the season and the clock hour are the same in the hub and every area
+   (§FK.3 stands). Spring in the hub is spring everywhere.
+2. **The hub sits on the equator.** Its days stay near the equinox split all year (60 / 18 / 48 / 18
+   real minutes); its seasons show as wet and dry and in the plants that answer them, not in the
+   length of the day. This is the steady fire you come home to.
+3. **Each area reads the sky at its own latitude, set by its biome** (`calendar.area_latitude_deg`,
+   first guesses): tropical areas near the equator, temperate ones around 35–45°, cold ones high
+   (the ice caves' surface ~62°, long winter nights, never polar night or midnight sun, so dawn and
+   dusk always exist). The same day of the year is a long summer evening in one area and a short
+   winter afternoon in another; travelling by fire (§GD.1.3) shows it.
+4. **Winter by biome** (`calendar.winter_by_biome`): only cold biomes get snow and frost; temperate
+   ones lose their leaves and frost lightly or not at all; tropical and desert ones get a dry season
+   and keep their plants (desert nights cold). Evergreens keep their leaves everywhere.
+5. GE.4 calls 1–3 are answered. Underground stays unseasonal (GE.1.6).
