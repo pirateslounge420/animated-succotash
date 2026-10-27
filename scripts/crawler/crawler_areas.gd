@@ -424,6 +424,8 @@ func to_hub() -> void:
 	home_songs += 1
 	await main._wash(realm_colour(key), 1.0, float(T.get("wash_s", 1.0)))
 	main._to_hub_now()
+	# Home: the pages you carried are yours for good (Mike, 27 Oct).
+	TomePages.home_all()
 	travels += 1
 	await main._wash(realm_colour(key), 0.0, float(T.get("wash_s", 1.0)))
 	_player_song.stop()
@@ -456,7 +458,7 @@ func die() -> void:
 	if pl.torch.lit():
 		pl.torch.put_out("taken")
 	var inv := pl.inventory
-	var lost := {"carried": [], "strip": [], "worn": [], "currency": carried_currency}
+	var lost := {"carried": [], "strip": [], "worn": [], "currency": carried_currency, "pages": TomePages.drop_carried()}
 	for i in inv.carried.size():
 		if inv.carried[i] != null:
 			(lost.carried as Array).append(inv.carried[i])
@@ -473,7 +475,7 @@ func die() -> void:
 				arr[i] = null
 	carried_currency = 0
 	var n := (lost.carried as Array).size() + (lost.strip as Array).size() + (lost.worn as Array).size()
-	if n > 0 or int(lost.currency) > 0:
+	if n > 0 or int(lost.currency) > 0 or not (lost.pages as Array).is_empty():
 		piles().append({"id": "pile_%d_%d" % [Time.get_ticks_usec(), piles().size()], "realm": "first", "where": where, "pos": [at.x, at.y, at.z], "lost": lost})
 	CrawlerSave.save()
 	pl.weapon = "hands"
@@ -580,12 +582,13 @@ func _pickups() -> void:
 				if not inv.add(it):
 					left.append(it)
 		carried_currency += int(lost.get("currency", 0))
+		TomePages.pick_up(lost.get("pages", []))
 		if left.is_empty():
 			piles().erase(p)
 			node.queue_free()
 			_pile_nodes.erase(str(p.id))
 		else:
-			p["lost"] = {"carried": left, "strip": [], "worn": [], "currency": 0}
+			p["lost"] = {"carried": left, "strip": [], "worn": [], "currency": 0, "pages": []}
 		CrawlerSave.save()
 		GameLog.add(str((A.get("death", {}) as Dictionary).get("log_pile", "You gather up what you lost.")), "world")
 

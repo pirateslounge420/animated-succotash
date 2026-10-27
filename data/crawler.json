@@ -963,7 +963,8 @@
    "glow_colour": "#ff7a1a",
    "glow_energy": 0.6,
    "log_wake": "Taken in the dark. You wake at the hub fire with nothing on you; all you carried lies where you fell.",
-   "log_pile": "You gather up what you lost."
+   "log_pile": "You gather up what you lost.",
+   "_help_pages": "(Mike, 27 Oct: 'tome pages should drop until you get it back to the hub') Tome pages you pick up are only carried until the shaman's song brings you home from a realm's hearth; die first and they drop in your pile with everything else, and lie nowhere else meanwhile (not back on their floor). Pages already brought home are never lost."
   }
  }
 }

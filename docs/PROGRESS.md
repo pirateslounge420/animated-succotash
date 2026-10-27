@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Tome pages drop until you get them home (Claude Code)
+- Mike: *"yea tome pages should drop until you get it back to the hub"*.
+- **Built:**
+  - `TomePages` keeps a second list in the save, `tome_pages_carried`: pages picked up but not yet brought home.
+  - The shaman's song home from a realm's hearth makes them yours for good (`home_all`).
+  - Dying drops them into your pile with everything else (`drop_carried`), and they leave what you hold. They are not laid back on their floor while they wait in a pile (`in_piles`).
+  - Picking the pile up brings them back as carried (`pick_up`). Pages already home are never lost. `crawler.json → areas.death._help_pages`.
+- **Check:** `bank_check` 19/19. A page carried home by the song stays yours. A page not yet home drops into the pile (this seed's ruin lays only one fragment, so the check uses a stand-in page id for the second) while the one brought home stays. Picking up the pile gives it back as carried.
+
 ## 2026-10-27 — Queue 117, §GI.1–2 and §GJ: the shaman a man, the song home, the bank, the pile where you fall (Claude Code)
 - **What Mike sees:**
   - The shaman at the hub fire is a man: a little taller, a beard showing under his hood, his face still hidden; he keeps his pipe, the cauldron and the singing.

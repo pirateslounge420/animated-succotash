@@ -110,11 +110,20 @@ func _run() -> void:
 	# 3. A find carried home by the song.
 	await _to_realm(main)
 	inv.add(Inventory.make("tome"))
+	# Two tome fragments from this game's ruin (Mike, 27 Oct: pages drop
+	# until you get them back to the hub).
+	var frags: Array = TomePages.plan(main.lay, []).map(func(d): return str(d.fragment))
+	var page_a: String = frags[0] if frags.size() > 0 else ""
+	# (This ruin may lay only one: a stand-in id then, as good as any to the save.)
+	var page_b: String = frags[1] if frags.size() > 1 else "check_page_b"
+	if page_a != "":
+		TomePages.keep(page_a)
 	var hp := main.area_node.area_hearth.global_position
 	main.player.global_position = hp + Vector3(2.0, 0.0, 0.0)
 	main.areas.interact()
 	await _settle(main)
 	ok(main.surface == main.hub_node and inv.has_kind("tome") and main.areas.home_songs == 1, "the hearth song carries you home, the tome still yours")
+	ok(page_a == "" or (TomePages.held().has(page_a) and not TomePages.carried().has(page_a)), "a tome page carried home by the song is yours for good (%s)" % page_a)
 	# 4. Carry things and die in the ruin.
 	await _to_realm(main)
 	inv.add(Inventory.make("fish"))
@@ -123,10 +132,13 @@ func _run() -> void:
 	# Deeper in, on the hearth room's floor (not the landing you come down to).
 	var wk: Array = main.lay.wake
 	main.player.global_position = wk[0]
+	if page_b != "":
+		TomePages.keep(page_b)
 	var died_at := main.player.global_position
 	var carried_before := _kinds(inv)
 	main._on_taken()
 	await _frames(10)
+	ok(page_b == "" or (not TomePages.held().has(page_b) and TomePages.held().has(page_a) and TomePages.in_piles().has(page_b)), "the page not yet home drops in the pile (%s); the one brought home stays yours" % page_b)
 	ok(main.on_surface and main.surface == main.hub_node and inv.count() == 0 and _kinds(inv).is_empty() and not main.player.torch.lit(), "taken in the ruin: you wake at the hub fire with nothing (lost %s)" % str(carried_before))
 	ok(CrawlerBank.items().size() == 1 and str(CrawlerBank.items()[0].kind) == "scroll", "the bank untouched (the scroll)")
 	var p1: Array = CrawlerAreas.piles()
@@ -164,5 +176,6 @@ func _run() -> void:
 	main2.player.global_position = r_pile.global_position + Vector3(0.4, 0.0, 0.0)
 	main2.areas._pickups()
 	ok(inv2.has_kind("fish") and CrawlerAreas.piles().is_empty(), "and gives it all back (%s); no piles left" % str(_kinds(inv2)))
+	ok(page_b == "" or (TomePages.held().has(page_b) and TomePages.carried().has(page_b)), "the dropped page is back with you, carried until you get it home")
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
