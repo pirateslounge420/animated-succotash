@@ -148,7 +148,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 27 Oct to §GD (Claude Code; see PROGRESS): no way down under the fire |
-| 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
+| 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
 
@@ -1906,7 +1906,7 @@ CHECK (headless): three seeds give three different camps; each start kind appear
 
 ## 113 — Fire travel to a first area — §GD.1.2–4
 
-**Status:** todo (after 112)
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** At the hub fire the cook-shaman throws a powder in, the flames change colour, and you step through to a cold hearth in another place with its own surface to explore and a ruin entrance leading down into the dungeon. Light that hearth and it stays linked: from then on the hub fire takes you there and back.
 
 ```text

@@ -4,6 +4,21 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Queue 113, §GD.1.2–4: fire travel to the first area (Claude Code)
+- **What Mike sees:**
+  - At the hub, the interact button by the fire or the cook-shaman turns the flames bright cyan; a cyan wash fills the screen and you step out beside a cold hearth in another place. If you held no lit torch you carry a brand from the hub fire.
+  - The area is the surface over the first ruin (for the tomb, the desert basin; 300–600 m across). Its hearth sits in a ring of big stones about 30 m in from the cliffs.
+  - Hold your torch to it and it catches: linked for good. From then on the hub fire takes you there and the hearth brings you home.
+  - The area's ruin entrance is the old stone gateway over the stair near its middle. The ruin's way out brings you back up beside it.
+- **Built:**
+  - `CrawlerAreas` (`scripts/crawler/crawler_areas.gd`): the interact routing, the shaman's stand-in first link (§GD.5 call 1 is still open; said so in `areas._help_stand_in`), the fire tint and wash, the brand, the torch-to-hearth lighting, and the link in `CrawlerSave.data.areas`.
+  - `Surface`: `area_hearth` (placed by `_hearth_spot`, built cold or lit by `_build_hearth`), `light_hearth`, `hearth_lit`, `hearth_arrival`; the size from `areas.first.across_m`.
+  - `CrawlerMain`: `hub_node` and `area_node` kept for the session, `_swap_surface`, `_to_area_now`, `_to_hub_now`, `_wash`. `_up_now` brings you up into the area once there is a hub. The interact button asks `areas` first. Both surfaces are freed on exit.
+  - `crawler.json → areas` (new, `_help` on every part).
+- **A choice for Mike:** before the hearth is lit, the cold hearth still brings you home during the session the shaman opened it, so you can never be stranded; only lighting it keeps the link.
+- **Checks:** `tools/area_check.gd` 18/18: the stand-in trip, the cold hearth and the brand, the size, home from the cold hearth, the torch lighting it and the link saved, down the area's stair and back up by the mouth, three linked crossings, Continue keeping the link. `hub_check`, `day_shift_check`, `calendar_check`, `cauldron_fx_check` all 0 fails.
+- **Walkabout (`tools/area_frames.gd`, once):** the hub fire, its flames turned cyan, the wash, the cold hearth, lit, the area's surface, the ruin mouth.
+
 ## 2026-10-27 — Queue 112 brought to §GD: the hub has no way down (Claude Code)
 - **111:** already built (26 Oct, the glossy look); nothing in its row or §GB has changed since, so nothing to redo.
 - **112 (§GD.1, §GC.1):** the hub was built on 26 Oct to §GC.1–2, with a stair down under the fire. §GD.1.1 (26 Oct) says nothing of the hub is underground and there is no way down beneath its fire. Changed:

@@ -844,5 +844,36 @@
    "mine": "temperate",
    "tundra": "cold"
   }
+ },
+ "areas": {
+  "_help": "(design §GD.1.2-4, queue 113) Areas joined to the hub by fire. Each area is a curated, seeded surface with a main hearth near one edge (cold until you light it), an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. Light an area's hearth with your torch (hold the flame to it for light_hold_s, within reach_m) and it is linked to the hub fire, kept in the game's save (§FK). Linked, the interact button at the hub fire or beside the cook-shaman (interact_reach_m) has her cast her powder: the flames take the area's colour, a wash of it fills the frame (travel.wash_s) and you step out at the area's hearth; the button at the area's hearth brings you home the same way. on false: no travel (the ruin only by the developer's way).",
+  "on": true,
+  "interact_reach_m": 3.0,
+  "_help_stand_in": "stand_in_first_link: until Mike answers §GD.5 call 1 (how the first area's hearth is reached before any link exists), the cook-shaman opens the first link herself: the button at the hub fire takes you to the first area even unlinked. Until its hearth is lit that link holds for this session only, and the cold hearth still brings you home (so you are never stranded); lighting it keeps it for good.",
+  "stand_in_first_link": true,
+  "_help_brand": "brand: stepping through the fire with no lit torch, you carry a brand from the hub fire (a lit torch in hand): fire carried, never made (§ET), and the way to light the far hearth.",
+  "brand": true,
+  "travel": {
+   "_help": "wash_s: the fire-wash in and out (seconds each way); flame_s how long the hub's flames hold the area's colour before you step through.",
+   "wash_s": 1.0,
+   "flame_s": 1.2
+  },
+  "first": {
+   "_help": "The first area: the surface over the game's first ruin (worlds.json surface, the ruin's own world), at areas size. across_m: how wide (a range, drawn from the seed; prompt's first guess 300-600). colour: the hub fire's flames when bound for it, and the wash. hearth: from_edge_m how far in from the cliff's foot the main hearth stands; reach_m how close your torch's flame must be; light_hold_s how long you hold it there.",
+   "name": "The dry basin",
+   "across_m": [
+    300.0,
+    600.0
+   ],
+   "colour": "#3fd0ff",
+   "hearth": {
+    "from_edge_m": 30.0,
+    "reach_m": 1.3,
+    "light_hold_s": 1.0
+   }
+  },
+  "log_link": "The hearth catches. Its fire is bound to the hub's now.",
+  "log_go": "The shaman casts her powder into the fire. The flames turn, and you step through.",
+  "log_home": "Through the fire, home to the camp."
  }
 }

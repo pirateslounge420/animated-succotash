@@ -184,6 +184,12 @@ var _bones_after_bake: Array = []
 ## the first time you go up and kept while you are below; null until then,
 ## and for a dungeon with none (exit.stand_in).
 var surface: Surface
+## The hub and the first area (design §GD.1, queue 113): both kept for the
+## session once built; `surface` is whichever you are on (or last left).
+var hub_node: Surface
+var area_node: Surface
+## Travel by fire (CrawlerAreas).
+var areas: CrawlerAreas
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
 ## them: _below).
 var on_surface := false
@@ -295,6 +301,9 @@ func _ready() -> void:
 	brew = Brew.new()
 	add_child(brew)
 	brew.setup(self)
+	areas = CrawlerAreas.new()
+	areas.setup(self)
+	add_child(areas)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
 	if HubCamp.on():
@@ -536,6 +545,11 @@ func _exit_tree() -> void:
 	elif surface != null and is_instance_valid(surface) and not surface.is_inside_tree():
 		NodeRelease.detach_all(surface)
 		surface.free()
+	# The other surface (hub or area) kept out of the tree goes too.
+	for n in [hub_node, area_node]:
+		if n != null and is_instance_valid(n) and n != surface and not (n as Node).is_inside_tree():
+			NodeRelease.detach_all(n)
+			(n as Node).free()
 	GameMode.crawler_running = false
 	PlayerBody.watch_point = Vector3(INF, INF, INF)
 	FireShadows.mode = ""
@@ -961,6 +975,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("interact"):
 		# The vine, the hand-over and the drink first (queue 72), else the
 		# bundle as built.
+		# Travel by fire first (design §GD.1.3, queue 113).
+		if areas != null and areas.interact():
+			return
 		if brew == null or not brew.interact():
 			take_torch()
 
@@ -1103,9 +1120,18 @@ func go_up() -> void:
 ## the surface (the hub camp, design §GC.1, when crawler.json hub.on) in,
 ## built the first time; you where it says you arrive.
 func _up_now() -> void:
-	if surface == null or not is_instance_valid(surface):
+	# Out of the ruin onto the surface over it: the area (design §GD.1.4,
+	# queue 113) once there is a hub; at the start, the hub itself.
+	if CrawlerAreas.on() and hub_node != null and is_instance_valid(hub_node):
+		if area_node == null or not is_instance_valid(area_node):
+			area_node = Surface.new()
+			area_node.build(world, lay, fires.hearth)
+		surface = area_node
+	elif surface == null or not is_instance_valid(surface):
 		surface = HubCamp.new() if HubCamp.on() else Surface.new()
 		surface.build(world, lay, fires.hearth)
+		if surface is HubCamp:
+			hub_node = surface
 	_below = []
 	# Floor two's fog goes too (it is the dungeon's look, and the sky's haze
 	# is the surface's): kept for the next tomb, never freed with this one.
@@ -1119,6 +1145,46 @@ func _up_now() -> void:
 	var at := surface.arrival()
 	player.spawn_flat(at.pos, float(at.yaw), 0.0)
 	on_surface = true
+
+
+## From one surface to another at once (the frame washed over): `to`
+## leaves the other out of the tree (kept), you stand at `at`.
+func _swap_surface(to: Surface, at: Dictionary) -> void:
+	if surface != null and is_instance_valid(surface) and surface.is_inside_tree():
+		surface.leave(self)
+		remove_child(surface)
+	surface = to
+	add_child(to)
+	to.enter(self)
+	player.spawn_flat(at.pos, float(at.yaw), 0.0)
+	on_surface = true
+
+
+## Through the hub fire to the first area's hearth (CrawlerAreas): its
+## surface built the first time (the surface over the first ruin).
+func _to_area_now() -> void:
+	if area_node == null or not is_instance_valid(area_node):
+		area_node = Surface.new()
+		area_node.build(world, lay, fires.hearth)
+	_swap_surface(area_node, area_node.hearth_arrival())
+
+
+## Through the area's hearth home to the hub fire.
+func _to_hub_now() -> void:
+	_swap_surface(hub_node, hub_node.arrival())
+
+
+## The fire-wash: the frame to `c` at alpha `a` over `s` seconds.
+func _wash(c: Color, a: float, s: float) -> void:
+	_fade.visible = true
+	if a > 0.0:
+		_fade.color = Color(c.r, c.g, c.b, _fade.color.a)
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", a, maxf(s, 0.01))
+	await tw.finished
+	if a <= 0.0:
+		_fade.visible = false
+		_fade.color = Color(0.0, 0.0, 0.01, 0.0)
 
 
 ## Back down the stair (design §FM.7): the dark; the surface kept out of
