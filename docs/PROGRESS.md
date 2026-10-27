@@ -4,6 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — §GI locked: the shaman a man, extraction home by song, brews as real trips (Claude, chat)
+- **Mike** (09:43–09:51): the shaman is male; die and you wake at the hub fire having lost your inventory; to keep a find, reach the realm's hearth and journey home by the song; brews as a filter like a real psychedelic experience; "yep sounds good".
+- **Design:** §GI. Closes §GH.4 calls 2 (home is a song) and 3 (male). Open: lose everything carried (Mike's words, the rule for now) or only that trip's finds.
+- **Queue:** 117 (after 116), 118 (any time).
+
 ## 2026-10-27 — §GH locked: travel is the shaman's song round the fire, not the powder (Claude, chat)
 - **Mike** (08:57): "the ability to go to different worlds/places is gonna be with the shamans song around the fire, not the powder".
 - **Design:** §GH. Sit at the hub fire; the shaman sings a realm's song; its colour and a moving glimpse of it in the flames; scroll through the realms whose songs you know; step in. Knowing the song is the key (lighting a hearth reclaims it, no longer gates travel). Stand-in: the first song known from a new game. 113's plumbing stays.

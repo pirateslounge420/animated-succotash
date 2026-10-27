@@ -7023,3 +7023,43 @@ The powder (its log line and help text go). A menu or map screen. Travel from an
 2. Whether coming home is a song too.
 3. The shaman's look and voice: §GG says "he" (Mike, by voice); the camp as built has the hooded
    cook-shaman as "her" (§FR). Which is it, or one of each?
+
+## GI. The shaman is a man; what you find comes home only by the song; brews as real trips — LOCKED (27 Oct, 09:51, Mike; "yep sounds good")
+
+Mike, 09:43: *"historically the shamans have been men so itll be a male. if you 'die' you just wake up
+around the home hearth but lost inventory- so perhaps in order to 'retrieve' something from another
+realm, you have to make it back to the hearth safely and do a shamanic journey back to hub. im thinking
+for the plant brews to have some sort of 'filtered effect' over what you regularly see- like a real
+psychedelic experience"*; then *"yep sounds good"* to all three.
+
+### GI.1 The shaman is a man
+The hub's shaman, the one who sings the realms open (§GH), is **male**. This replaces the hooded
+cook-shaman built as "her" (§FR's swamp witch is a different character and is untouched). He keeps the
+hood, the pipe, the cauldron and the singing. Closes §GH.4 call 3.
+
+### GI.2 Dying, and bringing things home (extraction)
+1. **Dying in a realm:** you wake at the **hub fire** and **lose what you were carrying** (Mike's
+   words: "lost inventory"; first reading: everything carried. *Open:* a gentler rule, losing only
+   what was found that trip, if the full loss feels too harsh in play).
+2. **Nothing found in a realm is yours until it reaches the hub.** To keep it, get back to **that
+   realm's main hearth alive** and have the **shaman's song carry you home** (a journey back, the same
+   fire and wash as going out). Closes §GH.4 call 2: coming home is a song too.
+3. What is kept at the hub (planted, given to a keeper, placed in the shrine, stored) stays safe; death
+   takes only what you had on you.
+4. This is the tension of every trip: the realm is ambient, but getting home with the find is the game.
+
+### GI.3 Brews: a real trip over what you see
+Builds on §FN.5 (a brew is a per-culture visual filter; built for the Aztec brew, queue 83) and keeps
+its rules: **display only**, adds no creatures, gates nothing (Egypt's hallucinations stay §FP's
+exception). Add the effects people report from real psychedelic experiences, mixed differently per plant:
+1. **Breathing:** surfaces slowly swell, drift and flow.
+2. **Colour:** richer, more saturated, shifting hues.
+3. **Trails:** moving things and your torch leave afterimages.
+4. **Patterns:** geometric and organic patterns crawling over stone, bark and leaves, strongest in
+   the corner of the eye.
+5. **Onset, peak and fade** over the brew's time, never a switch.
+Each brew in `data/visions.json` gets a mix (which effects, how strong); first guesses by Claude Code,
+tuned by Mike in play. No doses or preparation in any data or text (as §FN).
+
+### GI.4 Queue
+**117:** the male shaman and the trip home (after 116). **118:** the fuller brew filters (any time).

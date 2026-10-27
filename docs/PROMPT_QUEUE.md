@@ -30,7 +30,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
-**27 Oct, §GG and §GH: the first slice is the hub, the fire and the shaman.** 111–115 are built (Claude Code, 26–27 Oct). **Next: 116 (§GH), travel becomes the shaman's song round the fire, not the powder.**
+**27 Oct, §GG and §GH: the first slice is the hub, the fire and the shaman.** 111–115 are built (Claude Code, 26–27 Oct). **Next: 116 (§GH), travel becomes the shaman's song round the fire, not the powder; then 117 (§GI: the shaman a man, finds come home only by the song) and 118 (brews as real trips) any time.**
 
 **25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). Mike's new order for the crawler (25–26 Oct): **111, 112, 113** (§GB, §GD; §GD supersedes §GC's one dungeon under the hub). Do not start a parked row.
 
@@ -154,6 +154,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
 | 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | todo (after 113) |
+| 117 | §GI.1–2 | The shaman becomes a man; death returns you to the hub without your inventory; finds come home only by the song from the realm's hearth | todo (after 116) |
+| 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1965,4 +1967,34 @@ READ: §GH (all), §GG.1, §GD.1, §GF.5, §FK; data/crawler.json (areas, hub); 
 BUILD: (1) Sitting: the interact button at the hub fire or by the shaman sits you down facing the fire, the shaman beside it; moving or back stands you up with nothing changed. (2) The song: per realm a placeholder song (a drum loop and a hummed chant, generated or from data; a song key per realm in data so Mike's music can replace it) and the shaman's singing pose; the flames take the realm's colour while it plays. (3) The glimpse: a moving view of the realm (first guess a camera beside its hearth rendered to a viewport) shown in the fire and smoke, soft-edged and heat-wavering, fading in with the song. (4) The list: left and right scroll through the realms whose songs you know, changing song, colour and glimpse; with one realm known it is a list of one. (5) Choose: step into the fire, the existing wash, out at that realm's hearth. (6) Knowing the song is the key (§GH.2.1): travel no longer needs the realm's hearth lit; lighting it still reclaims it and is saved. Stand-in: the first realm's song is known from a new game (say so in _help; §GH.4 call 1 open). Coming home stays the button at the realm's hearth. (7) Remove the powder (log lines, help text). Everything in data (crawler.json → areas.songs or similar) with _help lines.
 
 CHECK (headless): from a new game, sit, the first realm's song plays and its colour and glimpse show; scroll with one realm known; choose and arrive at its hearth unlit; light it and Continue keeps it lit; home by its hearth; standing up changes nothing; no "powder" left in the crawler's data or log. Walkabout once: sitting at the fire, the song's colour and the glimpse in the flames, stepping in, the arrival.
+```
+
+## 117 — The shaman a man; finds come home only by the song — §GI.1–2
+
+**Status:** todo (after 116)
+**Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. In a realm, whatever you pick up is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you; what you left at the hub is still there.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 116. This pass builds ONE thing: design §GI.1 and §GI.2. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English.
+
+READ: §GI (all), §GH, §GD.1, §FK; data/crawler.json (hub, areas), the hearth folk and the cook-shaman's model, crawler_areas.gd, crawler_save.gd, the inventory and whatever handles being hit and dying in the crawler.
+
+BUILD: (1) The hub shaman is male: rework the cook-shaman's build and every "she/her" in data, log lines and help to "he/him" (the swamp witch of §FR is a different character: leave her). Keep the hood, the pipe, the cauldron and 116's singing. (2) Carried versus kept: everything picked up in a realm is "carried" until you reach the hub; at the hub it becomes kept (in the save, §FK). (3) Home by the song: at the realm's main hearth the interact button has the shaman's song carry you home (his song, the fire colour and the wash as in 116, the other way), and what you carried becomes kept. (4) Death in a realm (or underground in its ruin): you wake at the hub fire and lose everything carried (Mike: "lost inventory"; put the rule in data with a _help naming the gentler option, losing only that trip's finds, as an open call). Kept things are never lost. (5) Everything in data with _help lines.
+
+CHECK (headless): the shaman's data and lines are male; pick something up in a realm and go home by the hearth: it is kept and Continue keeps it; pick something up and die: you wake at the hub fire without it and the kept things are still there. Walkabout once: the shaman, the song home from a realm's hearth.
+```
+
+## 118 — Brews as real trips — §GI.3
+
+**Status:** todo (any time)
+**Mike sees:** Take a brew and the world slowly changes over its time: surfaces breathe and drift, colours deepen and shift, your torch and anything moving leave trails, and patterns crawl over the stone and leaves, strongest at the edge of your view, then it all eases off again. Each plant's brew mixes these differently.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Any time. This pass builds ONE thing: design §GI.3, on top of §FN.5's per-culture brew filter (built for the Aztec brew, queue 83). Display only: no creatures, no gates (Egypt's hallucinations stay §FP). No doses or preparation anywhere. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English.
+
+READ: §GI.3, §FN.5, §FP; data/visions.json, data/brew.json, crawler.json → hub.cauldron_fx; the Aztec vision's shader and code.
+
+BUILD: (1) Five effects as one post-process the brew drives: breathing (slow vertex or screen-space swell and drift), colour (saturation up, a slow hue shift), trails (frame feedback on moving things and the torch), patterns (procedural geometric/organic patterns over surfaces, stronger toward the edge of the view), and an onset, peak and fade over the brew's time. (2) Each brew in visions.json gets a mix (which effects, how strong), first guesses with _help lines for Mike to tune; the Aztec brew keeps its palette swap and hidden carvings on top. (3) A dev key or setting to try each brew's look without the ritual.
+
+CHECK (headless): each brew's mix loads; the strength rises, peaks and falls over its time and is zero after; nothing spawns or unlocks. Walkabout once: one brew at onset, peak and fade, in the hub and underground.
 ```
