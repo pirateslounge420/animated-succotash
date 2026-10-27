@@ -4,6 +4,16 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Queue 112 brought to §GD: the hub has no way down (Claude Code)
+- **111:** already built (26 Oct, the glossy look); nothing in its row or §GB has changed since, so nothing to redo.
+- **112 (§GD.1, §GC.1):** the hub was built on 26 Oct to §GC.1–2, with a stair down under the fire. §GD.1.1 (26 Oct) says nothing of the hub is underground and there is no way down beneath its fire. Changed:
+  - `HubCamp` no longer builds the stairhead: no stair cut into the ground, no stone gateway over it, no vent stacks (the hub is over no dungeon). It keeps the stair's frame only to lay the camp out (`frame`). The standing-stone ring stays behind the fire as a henge on plain ground.
+  - The hub's bats roost in a crevice at the cliff foot (`HubCamp.bat_roost`; a ruin's surface still uses its stair mouth).
+  - The first ruin is reachable only by the developer's way (`CrawlerMain.go_down`) until 113.
+  - The rest of the row was already in: the dusk start (§GE clock), the cook-shaman, the keepers, the river, the 144-minute day and the seasons (114).
+  - Plants still use the existing species' shapes from the temperate deciduous file; §GD.1.5 allows shapes not tied to a real species, but no alien palette exists yet.
+- **Checks:** `hub_check` 21/21 (30 seeds: no cut behind the fire; in the game: no stair, nothing round the fire leads down, a year at the camp spring, summer, autumn, winter, spring with the day within 0.53 min of 60, the developer's way to the ruin and back, Continue the same camp at dusk). `day_shift_check` 0 fails. Walkabout (`hub_frames.gd FIRE_ONLY=1`): the spawn at dusk with no gateway behind the fire, the shaman.
+
 ## 2026-10-26 — Queue 115, §GF: the world gets ready at dawn and dusk (Claude Code)
 - **What Mike sees at the hub:**
   - At dusk the day flowers close and the moonflowers and datura open, with moths round them. The birds circle in to roost; bats pour up out of the stair mouth. The birdsong thins, then insects, frogs by the river and owls come in.

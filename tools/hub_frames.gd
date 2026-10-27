@@ -4,7 +4,8 @@ extends SceneTree
 ##     --resolution 960x540 -s tools/hub_frames.gd
 ## Frames to OUT (default user://hub_frames/<seed>/): 01 the spawn at dusk,
 ## 02 the cook-shaman at the cauldron, 03 a keeper's site, 04 the
-## fisher-weaver's site and the river, 05 the way down behind the fire.
+## fisher-weaver's site and the river, 05 the standing stones behind the
+## fire (no way down since §GD.1.1).
 ## SETTLE= frames to wait first (200); FIRE_ONLY=1 just 01 and 02.
 
 var out_dir := ""
@@ -63,10 +64,10 @@ func _run() -> void:
 		var eye := a + to * 5.0
 		_look(p, Vector3(eye.x, hub.land.height_at(eye.x, eye.z), eye.z), a + Vector3(0, 0.8, 0))
 		await _shot("03_site_" + str(st.keeper))
-	var down: Vector2 = hub.stair.mouth
-	var n: Vector2 = hub.stair.n
+	var down: Vector2 = hub.frame.mouth
+	var n: Vector2 = hub.frame.n
 	var e2 := Vector2(fp.x, fp.z) + n * 3.0
 	_look(p, Vector3(e2.x, hub.land.height_at(e2.x, e2.y), e2.y), Vector3(down.x, hub.land.base_y, down.y) - Vector3(n.x, 0, n.y) * 2.0)
-	await _shot("05_way_down")
+	await _shot("05_henge")
 	print("[hub_frames] %s" % out_dir)
 	quit(0)

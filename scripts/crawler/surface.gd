@@ -374,6 +374,13 @@ func _day_shift() -> void:
 	day_shift.build()
 
 
+## Where the bats roost by day (design §GF.3): the ruin's stair mouth.
+func bat_roost() -> Vector3:
+	if stair.is_empty():
+		return Vector3.ZERO
+	return Vector3((stair.mouth as Vector2).x, float(stair.y) - 1.0, (stair.mouth as Vector2).y)
+
+
 ## Which place of the calendar this surface is (design §GE.5,
 ## CrawlerCalendar): its world's area kind (the desert's "desert").
 func calendar_kind() -> String:

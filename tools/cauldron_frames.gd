@@ -32,7 +32,7 @@ func _run() -> void:
 	p.set_physics_process(false)
 	var fx := hub.cauldron_fx
 	var at := fx.global_position
-	var n: Vector2 = hub.stair.n
+	var n: Vector2 = hub.frame.n
 	var eye := Vector3(at.x + n.x * 3.2, hub.land.height_at(at.x + n.x * 3.2, at.z + n.y * 3.2), at.z + n.y * 3.2)
 	var flat := Vector3(at.x - eye.x, 0.0, at.z - eye.z)
 	p.spawn_flat(eye, atan2(-flat.x, -flat.z), atan2(at.y + 0.6 - (eye.y + 1.55), flat.length()))

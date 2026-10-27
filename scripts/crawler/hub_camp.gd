@@ -3,17 +3,19 @@ extends Surface
 ## The hub camp on the surface (design §GC.1-2, §FZ.1; queue 112; Mike,
 ## 26 Oct: "spawn in around the campfire at dusk and also set up a RNG camp
 ## sites for each of our specialized village niches"; data/crawler.json
-## hub). Built on Surface's machinery (the basin closed by cliffs, the wash,
-## the plants, the life, the sky on the one clock, the old stair down into
-## the dungeon) with the hub's own settings laid over it, and on that:
+## hub; design §GD.1.1, 26 Oct: one hub, on the surface, nothing of it
+## underground and no way down beneath its fire). Built on Surface's
+## machinery (the basin closed by cliffs, the wash, the plants, the life,
+## the sky on the one clock) with the hub's own settings laid over it, and
+## on that:
 ##
 ##   the kind      stone, ruins or vines, one per game from the seed: what
 ##                 towers round the clearing (crooked rock pillars,
 ##                 oversized roots, broken columns, hanging vines)
 ##   the river     water down the wash, the brightest thing in view
-##   the fire      the campfire just in front of the stair's mouth, so the
-##                 way down opens behind it; you spawn across it, facing it
-##   the ring      standing stones round the way down
+##   the fire      the campfire at the camp's middle; you spawn across it,
+##                 facing it
+##   the ring      standing stones behind the fire (a henge; no way down)
 ##   the shaman    the hooded cook-shaman on a stone by the fire, stirring a
 ##                 cauldron that glows green (§FZ.1.6)
 ##   the keepers   the other five keepers' sites (§FZ.1), each placed from
@@ -33,6 +35,10 @@ var camp: Dictionary = {}
 var sites: Array = []
 var shaman: HearthFolk
 var cauldron_fx: CauldronFX
+## The layout's frame (SurfaceBuild.stair_frame: middle, facing, yard).
+## No stair is built from it (§GD.1.1); `stair` stays empty, so nothing
+## here leads down.
+var frame: Dictionary = {}
 ## The folk's lights (design §GF.5, DayShift): [{"id", "kind" (torch,
 ## lamp, candle), "owner" (a keeper, or shaman), "parts" (what shows lit),
 ## "light", "at" (scene)}], all out until DayShift says.
@@ -86,7 +92,9 @@ static func plan(p_lay: Dictionary, game_seed: int) -> Dictionary:
 	var frame := SurfaceBuild.stair_frame(p_lay, p, level())
 	var g := SurfaceGround.new()
 	g.setup(p, s, frame.mouth, frame.n, level())
-	g.carve_stair(frame)
+	# No way down under the hub (design §GD.1.1, 26 Oct, superseding
+	# §GC.2): the stair's frame only lays the camp out (its middle and the
+	# way it faces); nothing is cut into the ground.
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([s, "hub kind"])
 	var kinds := ["stone", "ruins", "vines"]
@@ -173,14 +181,12 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	land = pl.land
 	camp = pl.camp
 	sites = pl.sites
+	frame = pl.stair
 	_ground()
-	var data := SurfaceBuild.make(land, lay, P, seed_value)
-	stair = data.stair
-	stacks = data.stacks
-	slots = data.slots
-	finds = data.finds
-	_stone(data)
-	var keep_out: Array = [(stair.yard as Rect2).grow(4.0), SurfaceBuild._rect(stair.bottom, stair.mouth, float(stair.half) + 3.0)]
+	# Nothing of the old stairhead (§GD.1.1): no stair, no vents' stacks
+	# (the hub is over no dungeon), no ruin over a way down.
+	stair = {}
+	var keep_out: Array = [(frame.yard as Rect2).grow(4.0)]
 	var fp: Vector3 = camp.pos
 	keep_out.append(Rect2(Vector2(fp.x, fp.z) - Vector2(8.0, 8.0), Vector2(16.0, 16.0)))
 	for s in stacks:
@@ -256,7 +262,7 @@ func enter(main: Node) -> void:
 			# dungeon's wet gloss mirrored the dusk sky white off the yard's
 			# paving round the fire (26 Oct).
 			var st: Dictionary = (GlossyLook.G().get("surface", {}) as Dictionary).get("stone", {})
-			for c in stone.get_children():
+			for c in (stone.get_children() if stone != null else []):
 				if c is MeshInstance3D and (c as MeshInstance3D).material_override is ShaderMaterial:
 					var m := (c as MeshInstance3D).material_override as ShaderMaterial
 					m.set_shader_parameter("gloss_rough", Vector3(float(st.get("roughness", 0.75)), float(st.get("roughness", 0.75)), 0.9))
@@ -277,6 +283,16 @@ static func _back_light(main: Node, on_now: bool) -> void:
 	var l := cam.get_node_or_null("GlossyBackLight") as OmniLight3D if cam != null else null
 	if l != null:
 		l.visible = on_now
+
+
+## The hub has no ruin entrance (§GD.1.1): its bats roost in a crevice at
+## the foot of the cliff, behind the henge.
+func bat_roost() -> Vector3:
+	var n: Vector2 = frame.n
+	var th := atan2(-n.y, -n.x)
+	var r := land.edge_r(th) - 1.5
+	var p := land.center + Vector2(cos(th), sin(th)) * r
+	return Vector3(p.x, land.height_at(p.x, p.y) + 1.0, p.y)
 
 
 ## The camp's ground: hub.ground_color (forest floor), not the dungeon's
@@ -538,17 +554,17 @@ func _vines(parent: Node3D, rng: RandomNumberGenerator, top: Vector3) -> void:
 			k += rng.randf_range(0.12, 0.25)
 
 
-# --- The way down: standing stones round the stair ------------------------------------
+# --- A ring of standing stones behind the fire (no way down: §GD.1.1) -------------------
 
 func _ring(rng: RandomNumberGenerator) -> void:
 	var R: Dictionary = H.get("ring", {})
 	var root := Node3D.new()
 	root.name = "StandingStones"
 	add_child(root)
-	var mid: Vector2 = (stair.mouth as Vector2) - (stair.n as Vector2) * float(stair.run) * 0.5
+	var mid: Vector2 = (frame.mouth as Vector2) - (frame.n as Vector2) * float(frame.run) * 0.5
 	var n_stones := int(R.get("stones", 7))
 	var hr: Array = R.get("h_m", [1.8, 3.2])
-	var rad := float(R.get("r_m", 4.2)) + float(stair.run) * 0.5
+	var rad := float(R.get("r_m", 4.2)) + float(frame.run) * 0.5
 	var fp: Vector3 = camp.pos
 	for i in n_stones:
 		var a := TAU * float(i) / n_stones + rng.randf_range(-0.15, 0.15)
@@ -572,7 +588,7 @@ func _fire() -> void:
 func _shaman() -> void:
 	var S2: Dictionary = H.get("shaman", {})
 	var fp: Vector3 = camp.pos
-	var n: Vector2 = stair.n
+	var n: Vector2 = frame.n
 	var side := Vector2(n.y, -n.x)
 	var d := float(S2.get("from_fire_m", 1.7))
 	var seat2 := Vector2(fp.x, fp.z) + side * (d + 0.6)
@@ -990,7 +1006,7 @@ func _common(rng: RandomNumberGenerator) -> void:
 	root.name = "Common"
 	add_child(root)
 	var fp: Vector3 = camp.pos
-	var n: Vector2 = stair.n
+	var n: Vector2 = frame.n
 	var base_a := atan2(n.y, n.x)
 	# Benches: logs on the arc facing the fire, leaving the stair's side
 	# and the spawn's line open.

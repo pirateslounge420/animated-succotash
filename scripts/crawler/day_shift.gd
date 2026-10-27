@@ -17,7 +17,8 @@ extends Node3D
 ##              draw moths
 ##   creatures  the ground life walks to cover and sleeps, or comes out
 ##              (SurfaceLife.awake_fn); a flock of birds roosts at dusk;
-##              bats pour out of the stair mouth (a ruin entrance) at dusk
+##              bats pour out of their roost (a ruin's stair mouth; at the
+##              hub, a crevice at the cliff foot) at dusk
 ##              and go back in at dawn; moths come to the lit torches
 ##   sound      dusk: birds thin, then night insects, frogs by water, owls;
 ##              dawn: a chorus, then the night fades (crossfade_s)
@@ -64,8 +65,7 @@ func setup(p_surface: Surface, p_world: Node, seed_value: int) -> void:
 	hub = p_surface as HubCamp
 	_seed = seed_value
 	_rng.seed = hash([seed_value, "day shift"])
-	var st: Dictionary = p_surface.stair
-	_mouth = Vector3((st.mouth as Vector2).x, float(st.y) - 1.0, (st.mouth as Vector2).y) if not st.is_empty() else Vector3.ZERO
+	_mouth = p_surface.bat_roost()
 	_center = hub.camp.pos if hub != null else Vector3(p_surface.land.center.x, p_surface.land.base_y, p_surface.land.center.y)
 
 

@@ -45,7 +45,7 @@ func _run() -> void:
 	var p := main.player
 	p.set_physics_process(false)
 	var fp: Vector3 = hub.camp.pos
-	var n: Vector2 = hub.stair.n
+	var n: Vector2 = hub.frame.n
 	var eye := Vector3(fp.x + n.x * 9.0, 0.0, fp.z + n.y * 9.0)
 	eye.y = hub.land.height_at(eye.x, eye.z) + 1.5
 	var flat := Vector3(fp.x - eye.x, 0.0, fp.z - eye.z)

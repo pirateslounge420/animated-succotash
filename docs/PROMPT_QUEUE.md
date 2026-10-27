@@ -147,7 +147,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
-| 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 26 Oct as §GC.1–2 (Claude Code; see PROGRESS): camp, dusk start, cook-shaman, keepers' sites; but WITH the way down under the fire that §GD removes, and without seasons (114). Mike to say: take the way down out now, or when 113 lands |
+| 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 27 Oct to §GD (Claude Code; see PROGRESS): no way down under the fire |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
@@ -1891,7 +1891,7 @@ CHECK (headless): the crawler boots with no errors under both presets; with "glo
 
 ## 112 — The hub camp on the surface at dusk — §GD.1, §GC.1
 
-**Status:** built 26 Oct as §GC.1–2 (Claude Code; see PROGRESS); it still has the way down under the fire that §GD removes, and the seasons are 114's. Mike to say when the way down goes (now, or with 113).
+**Status:** built 27 Oct to §GD (Claude Code; see PROGRESS)
 **Mike sees:** A new game starts at a campfire on the surface at dusk, in a small seeded camp with exaggerated rock, roots, ruins or vines and a river through it. A hooded figure stirs a glowing cauldron at the fire. The 144-minute day turns to night and the seasons change the plants. There is no way down here: the hub is only the camp.
 
 ```text
