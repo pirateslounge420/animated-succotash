@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — §GH locked: travel is the shaman's song round the fire, not the powder (Claude, chat)
+- **Mike** (08:57): "the ability to go to different worlds/places is gonna be with the shamans song around the fire, not the powder".
+- **Design:** §GH. Sit at the hub fire; the shaman sings a realm's song; its colour and a moving glimpse of it in the flames; scroll through the realms whose songs you know; step in. Knowing the song is the key (lighting a hearth reclaims it, no longer gates travel). Stand-in: the first song known from a new game. 113's plumbing stays.
+- **Queue:** 113 marked built (as on Claude Code's branch); **116 new, next**.
+- **Open for Mike:** how songs are learned; whether coming home is a song; the shaman he or she.
+
 ## 2026-10-27 — §GG locked: the shaman's songs, the slow mystery, a living hub; first slice is the fire and the shaman (Claude, chat)
 - **Mike** (26 Oct, by voice): the shaman sings, a realm shows in the fire, you scroll and jump in, Mario 64 style; "Yes, yes"; then "lock it in please".
 - **Design:** §GG. Separate realms each with a song; seasons in every realm on the hub calendar; weather above ground only; Earth's constellations shifted, a sundial; the elders who merged with an AI, never said outright, told in texts; an interpreter (leaning the shaman), a shrine for relics and tablets, peoples you learn to speak to; lore rooms placed at random; keepers' work, festivals, planting, the I Ching oracle (consult only); disc and expansions; the name open.

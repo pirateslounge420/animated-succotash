@@ -6987,3 +6987,39 @@ Mike, late 26 Oct by voice, a long brainstorm; locked at the end ("this is it").
 **112 is the first slice** (the camp at dusk, the fire, the shaman; it already says so), with 114 and
 115. **113 now waits** for Mike: when it runs, the travel is the shaman's song and the glimpse in the
 fire (GG.1.2), not the powder. No new rows; GG.2–7 have none yet.
+
+## GH. Travel is the shaman's song round the fire, not the powder — LOCKED (27 Oct, 08:57, Mike; "the ability to go to different worlds/places is gonna be with the shamans song around the fire, not the powder")
+
+Makes §GG.1.2 the travel as built. **Supersedes §GD.1.3's powder and §GG.9's "113 waits":** 113 is
+built (Claude Code, 27 Oct, with the powder) and stays as the plumbing (the area, its hearth, the
+wash, the ruin mouth, the save); only how you choose and set off changes. Queue **116**.
+
+### GH.1 At the fire
+1. **Sit down at the hub fire** (the interact button at the fire or by the shaman). The view settles
+   on the fire with the shaman beside it; moving or the back button stands you up and nothing happens.
+2. **The shaman sings.** Each realm has **its own song** (placeholder: a drum and hummed chant per
+   realm, from data, until Mike's music exists). The flames take that realm's colour.
+3. **A glimpse of the realm opens in the fire and smoke**, like a small portal: a moving view of
+   the place (first guess: from beside its hearth), soft-edged, wavering with the heat.
+4. **Scroll left and right through the realms you know the songs of.** Each step: the song changes,
+   the colour changes, the glimpse changes. With one realm known, there is one; the scroll still shows
+   it is a list.
+5. **Choose one and step into the fire**: the wash (as built), and you come out at that realm's hearth.
+
+### GH.2 What the song means
+1. **Knowing a realm's song is what puts it in the fire.** Travel no longer waits on lighting the
+   realm's hearth (it did under §GD.1.3). Lighting the hearth stays: it is reclaiming the place (lit
+   for good, saved, §FK, and §GF's evening routine runs there), not the key.
+2. **How songs are learned is open** (§GG.1.3: from tablets, tomes or the other peoples). Stand-in:
+   the shaman knows the first realm's song from a new game. Say so in the data's `_help`.
+3. **The way home** stays as built: the button at the realm's hearth brings you back to the hub fire.
+   Whether coming home is also a song is open.
+
+### GH.3 Not taken
+The powder (its log line and help text go). A menu or map screen. Travel from anywhere but the hub fire.
+
+### GH.4 Open (for Mike)
+1. How each song is learned (stand-in above).
+2. Whether coming home is a song too.
+3. The shaman's look and voice: §GG says "he" (Mike, by voice); the camp as built has the hooded
+   cook-shaman as "her" (§FR). Which is it, or one of each?

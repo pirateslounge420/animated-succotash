@@ -30,7 +30,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
-**27 Oct, §GG: the first slice is the hub, the fire and the shaman (112, with 114 and 115). 113 now `waits` for Mike;** when it runs, travel is the shaman's song and a glimpse of the realm in the fire, not the powder (§GG.1). Do not start a `waits` row.
+**27 Oct, §GG and §GH: the first slice is the hub, the fire and the shaman.** 111–115 are built (Claude Code, 26–27 Oct). **Next: 116 (§GH), travel becomes the shaman's song round the fire, not the powder.**
 
 **25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). Mike's new order for the crawler (25–26 Oct): **111, 112, 113** (§GB, §GD; §GD supersedes §GC's one dungeon under the hub). Do not start a parked row.
 
@@ -150,9 +150,10 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | todo (after 111) |
-| 113 | §GD.1.2–4, §GG.1 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | waits (Mike, §GG.8.3) |
+| 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
+| 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | todo (after 113) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1908,7 +1909,7 @@ CHECK (headless): three seeds give three different camps; each start kind appear
 
 ## 113 — Fire travel to a first area — §GD.1.2–4
 
-**Status:** waits (Mike, §GG.8.3). When it runs: the shaman sings, the realm shows in the fire, you choose and step in (§GG.1.2) instead of the powder.
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** At the hub fire the cook-shaman throws a powder in, the flames change colour, and you step through to a cold hearth in another place with its own surface to explore and a ruin entrance leading down into the dungeon. Light that hearth and it stays linked: from then on the hub fire takes you there and back.
 
 ```text
@@ -1949,4 +1950,19 @@ READ: §GF (all), §GE and §GE.5 (the local sun), §FZ (the keepers), §GD.1, �
 BUILD: (1) One small "day shift" driver that reads the local sun's elevation (never a clock hour) and gives each actor its own offset (sun_deg.actor_jitter_deg), so the change spreads over the twilight. (2) Flowers: bloom habit day / night / always from the plant's own tag or day_shift.flowers by genus, else always; opening and closing animate over open_close_s; night bloomers draw moths within night_scent_draws_moths_m. (3) Creatures: day / night / twilight from their tags or default_by_kind; at the change they walk to cover and sleep or come out of it; bats leave cave mouths and ruin entrances at dusk and return at dawn; both shifts overlap during the twilight. (4) Sound: the dusk and dawn orders with crossfade_s, per biome from the existing ambience. (5) Folk lights: at dusk the keepers light, in turn and on foot, the hearth, torch holders, lamps and candles (per_light_gap_s apart), each from an already-burning flame; at dawn they put them out and bank the hearth; the same at every relit area hearth. (6) Nothing underground (day_shift.underground false), except the shaft light already following the sun. (7) Remove the NOT WIRED YET prefix once read; keep HOW_TO_RUN.md true.
 
 CHECK (headless): over a fast-forwarded day at the hub and at a 40° and a 62° test latitude, each routine fires inside its sun_deg window and not by clock hour (the 62° dusk falls at a different clock hour in summer and winter); no two folk lights light in the same second; both creature shifts are present during twilight and only one at noon and midnight; night bloomers are open at midnight and closed at noon, day flowers the reverse; nothing in a ruin changes; Continue keeps the state; no errors. Walkabout once: the hub at dusk as the lights come on. Prepend a PROGRESS entry.
+```
+
+## 116 — The shaman's song round the fire — §GH
+
+**Status:** todo (after 113)
+**Mike sees:** You sit down at the hub fire. The shaman starts a song, the flames take a new colour and a moving glimpse of another place opens in the fire and smoke. Scroll left or right and the song, the colour and the glimpse change to another realm you know. Pick one and step into the fire, and you come out at that realm's hearth. No powder.
+
+```text
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 113 (built on claude/prompt-queue-todo-sgo7ig; merge the design branch's §GG and §GH first). This pass builds ONE thing: design §GH, choosing and setting off for a realm by the shaman's song at the hub fire, in place of 113's powder. Keep 113's plumbing as built (CrawlerAreas, the area surface and hearth, the wash, the brand, the ruin mouth, the save); change only how you choose and set off. Not how songs are learned, not new realms, not real music. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English.
+
+READ: §GH (all), §GG.1, §GD.1, §GF.5, §FK; data/crawler.json (areas, hub); scripts/crawler/ (crawler_areas.gd, crawler_main.gd, hub_camp.gd, the hearth folk, crawler_save.gd).
+
+BUILD: (1) Sitting: the interact button at the hub fire or by the shaman sits you down facing the fire, the shaman beside it; moving or back stands you up with nothing changed. (2) The song: per realm a placeholder song (a drum loop and a hummed chant, generated or from data; a song key per realm in data so Mike's music can replace it) and the shaman's singing pose; the flames take the realm's colour while it plays. (3) The glimpse: a moving view of the realm (first guess a camera beside its hearth rendered to a viewport) shown in the fire and smoke, soft-edged and heat-wavering, fading in with the song. (4) The list: left and right scroll through the realms whose songs you know, changing song, colour and glimpse; with one realm known it is a list of one. (5) Choose: step into the fire, the existing wash, out at that realm's hearth. (6) Knowing the song is the key (§GH.2.1): travel no longer needs the realm's hearth lit; lighting it still reclaims it and is saved. Stand-in: the first realm's song is known from a new game (say so in _help; §GH.4 call 1 open). Coming home stays the button at the realm's hearth. (7) Remove the powder (log lines, help text). Everything in data (crawler.json → areas.songs or similar) with _help lines.
+
+CHECK (headless): from a new game, sit, the first realm's song plays and its colour and glimpse show; scroll with one realm known; choose and arrive at its hearth unlit; light it and Continue keeps it lit; home by its hearth; standing up changes nothing; no "powder" left in the crawler's data or log. Walkabout once: sitting at the fire, the song's colour and the glimpse in the flames, stepping in, the arrival.
 ```
