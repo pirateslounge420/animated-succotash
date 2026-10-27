@@ -154,7 +154,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
 | 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | todo (after 113) |
-| 117 | §GI.1–2 | The shaman becomes a man; death returns you to the hub without your inventory; finds come home only by the song from the realm's hearth | todo (after 116) |
+| 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | todo (after 116) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -1969,19 +1969,19 @@ BUILD: (1) Sitting: the interact button at the hub fire or by the shaman sits yo
 CHECK (headless): from a new game, sit, the first realm's song plays and its colour and glimpse show; scroll with one realm known; choose and arrive at its hearth unlit; light it and Continue keeps it lit; home by its hearth; standing up changes nothing; no "powder" left in the crawler's data or log. Walkabout once: sitting at the fire, the song's colour and the glimpse in the flames, stepping in, the arrival.
 ```
 
-## 117 — The shaman a man; finds come home only by the song — §GI.1–2
+## 117 — The shaman a man; the song home, the bank, and what you lose — §GI.1–2, §GJ
 
 **Status:** todo (after 116)
-**Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. In a realm, whatever you pick up is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you; what you left at the hub is still there.
+**Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. The camp has a bank, like PSO's: put teeth and items in and they're safe for good. In a realm, whatever you have on you is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you, but everything you had lies where you fell, glowing faintly, and it's still there whenever you go back for it.
 
 ```text
-Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 116. This pass builds ONE thing: design §GI.1 and §GI.2. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English.
+Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. Do this after 116. This pass builds design §GI.1, §GI.2 and §GJ. No screenshots after every step; walkabout once at the end. Prepend a PROGRESS entry, keep docs/HOW_TO_RUN.md true, pull with rebase before you push, never force. Explain to Mike in plain English.
 
-READ: §GI (all), §GH, §GD.1, §FK; data/crawler.json (hub, areas), the hearth folk and the cook-shaman's model, crawler_areas.gd, crawler_save.gd, the inventory and whatever handles being hit and dying in the crawler.
+READ: §GI, §GJ, §GH, §GD.1, §FZ (teeth as money), §FK; data/crawler.json (hub, areas), the cook-shaman's model and the hearth folk, crawler_areas.gd, crawler_save.gd, the inventory and whatever handles being hit and dying in the crawler.
 
-BUILD: (1) The hub shaman is male: rework the cook-shaman's build and every "she/her" in data, log lines and help to "he/him" (the swamp witch of §FR is a different character: leave her). Keep the hood, the pipe, the cauldron and 116's singing. (2) Carried versus kept: everything picked up in a realm is "carried" until you reach the hub; at the hub it becomes kept (in the save, §FK). (3) Home by the song: at the realm's main hearth the interact button has the shaman's song carry you home (his song, the fire colour and the wash as in 116, the other way), and what you carried becomes kept. (4) Death in a realm (or underground in its ruin): you wake at the hub fire and lose everything carried (Mike: "lost inventory"; put the rule in data with a _help naming the gentler option, losing only that trip's finds, as an open call). Kept things are never lost. (5) Everything in data with _help lines.
+BUILD: (1) The hub shaman is male: rework the cook-shaman's build and every "she/her" in data, log lines and help to "he/him" (the swamp witch of §FR is a different character: leave her). Keep the hood, the pipe, the cauldron and 116's singing. (2) The bank (§GJ.2): a store in the hub camp you interact with to deposit and withdraw items and currency (teeth, if they exist yet; otherwise the slot ready for them); its contents are in the save and never lost; capacity in data, generous first guess. (3) Home by the song: at a realm's main hearth the interact button has the shaman's song carry you home (as in 116, the other way). (4) Death in a realm, surface or ruin (§GJ.1): you wake at the hub fire with nothing carried (finds, gear, torches, currency). (5) The pile (§GJ.3): everything you carried drops where you died as one visible bundle with a faint ember glow; it never despawns and is in the save per realm; going back and touching it gives it all back; dying again leaves another pile, and every pile stays until picked up. (6) Everything in data with _help lines; the bank's keeper and look are open (§GJ.2): say so in _help.
 
-CHECK (headless): the shaman's data and lines are male; pick something up in a realm and go home by the hearth: it is kept and Continue keeps it; pick something up and die: you wake at the hub fire without it and the kept things are still there. Walkabout once: the shaman, the song home from a realm's hearth.
+CHECK (headless): the shaman's data and lines are male; deposit and withdraw at the bank, and Continue keeps it; carry something home by the hearth song and it is still yours; carry things and die: you wake at the hub fire empty-handed, the bank untouched, a pile where you fell; Continue, go back by the song, the pile is there and gives everything back; two deaths leave two piles. Walkabout once: the shaman, the bank, a pile glowing in the dark, the song home.
 ```
 
 ## 118 — Brews as real trips — §GI.3

@@ -7063,3 +7063,32 @@ tuned by Mike in play. No doses or preparation in any data or text (as §FN).
 
 ### GI.4 Queue
 **117:** the male shaman and the trip home (after 116). **118:** the fuller brew filters (any time).
+
+## GJ. The bank at the hub; what you lose waits where you fell — LOCKED (27 Oct, 09:57, Mike)
+
+Mike: *"i want dying to be impactful so you should lose everything not at the home hearth hub. there
+should be a 'bank' similar to PSO where your currency and items are safe. also, you should be able to
+retrieve the items lost by going back to the realm and it should not despawn"*. Settles §GI.2.1's open
+call (the full loss stands) and adds to it.
+
+### GJ.1 Lose everything not at the hub
+Dying anywhere in a realm (surface or ruin) wakes you at the hub fire with **nothing you were
+carrying**: finds, gear, torches, currency (teeth, §FZ.3). Only what is at the hub is safe.
+
+### GJ.2 The bank
+A **bank at the hub, like PSO's**: deposit and withdraw **currency and items**; whatever is in it is
+never lost. Its capacity, and who or what keeps it (a keeper's store, a cache in a hut, a pit by the
+fire), are open; first guess for building: a store in the camp you interact with, with a generous
+capacity. Things placed in the camp (planted, given to a keeper, set in the shrine) are safe too.
+
+### GJ.3 What you lose waits where you fell
+1. Everything you carried **drops where you died**, as one pile you can see (first guess: a small
+   bundle with a faint ember glow, so it reads in the dark).
+2. **It never despawns.** Go back to that realm (by the song) and walk to it to pick it all up.
+   It is kept in the save (§FK), across sessions.
+3. Dying again before you reach it leaves **a second pile**; every pile stays until picked up (Mike:
+   "it should not despawn"). *Open:* whether a realm remembers your piles on its map or HUD.
+4. Picked up, it is carried again: it is safe only once you are home by the song (§GI.2.2).
+
+### GJ.4 Queue
+Folded into **117** (not built yet), which now builds §GI.1–2 and §GJ.
