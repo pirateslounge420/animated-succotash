@@ -35,6 +35,8 @@ var camp: Dictionary = {}
 var sites: Array = []
 var shaman: HearthFolk
 var cauldron_fx: CauldronFX
+## The bank's store-basket by the fire (design §GJ.2, CrawlerBank).
+var bank_node: Node3D
 ## The layout's frame (SurfaceBuild.stair_frame: middle, facing, yard).
 ## No stair is built from it (§GD.1.1); `stair` stays empty, so nothing
 ## here leads down.
@@ -596,7 +598,27 @@ func _shaman() -> void:
 	var to := Vector2(fp.x, fp.z) - seat2
 	var cl: Array = S2.get("cloak", ["#1d1a2a", "#2c2638"])
 	_block(self, Vector3(0.6, 0.34, 0.45), Transform3D(Basis(Vector3.UP, atan2(-to.x, -to.y)), seat + Vector3(0.0, 0.12, 0.0)), "#3a3c55", 0.4)
-	shaman = HearthFolk.make(self, "CookShaman", seat, atan2(-to.x, -to.y), 1.62, [Color(str(cl[0])), Color(str(cl[1]))], "")
+	shaman = HearthFolk.make(self, "CookShaman", seat, atan2(-to.x, -to.y), float(S2.get("height_m", 1.76)), [Color(str(cl[0])), Color(str(cl[1]))], "")
+	shaman.set_meta("male", true)
+	# He is a man (design §GI.1): a beard shows under the hood, the face
+	# itself still hidden in its shadow.
+	var hd := shaman.body.head as Node3D
+	if hd != null:
+		var beard := MeshInstance3D.new()
+		beard.name = "Beard"
+		var bm := CylinderMesh.new()
+		bm.top_radius = 0.07
+		bm.bottom_radius = 0.0
+		bm.height = 0.2
+		bm.radial_segments = 8
+		beard.mesh = bm
+		beard.material_override = _mat(str(S2.get("beard", "#3a332c")), 0.8)
+		beard.position = Vector3(0.0, -0.13, -0.08)
+		beard.rotation.x = -0.25
+		hd.add_child(beard)
+	# The bank (design §GJ.2): a lidded store-basket across the fire from
+	# him (who keeps it is open).
+	_bank(Vector2(fp.x, fp.z) - side * float((H.get("bank", {}) as Dictionary).get("from_fire_m", 2.6)))
 	# Candles on a flat stone by the shaman's seat, lit last from the hearth
 	# (design §GF.5).
 	var cs := seat + Vector3(side.x, 0.0, side.y) * 0.9
@@ -1044,6 +1066,22 @@ func _common(rng: RandomNumberGenerator) -> void:
 		holder.position = _ground_at(p)
 		root.add_child(holder)
 		_totem(holder, Vector3.ZERO, rng, i == 0)
+
+
+## The bank: a big lidded basket on a flat stone, bound with cord.
+func _bank(p: Vector2) -> void:
+	var g := _ground_at(p)
+	bank_node = Node3D.new()
+	bank_node.name = "Bank"
+	bank_node.position = g
+	add_child(bank_node)
+	_block(bank_node, Vector3(1.0, 0.16, 0.8), Transform3D(Basis.IDENTITY, Vector3(0, 0.06, 0)), "#4a4d6e", 0.3)
+	_cyl(bank_node, 0.34, 0.42, 0.62, Transform3D(Basis.IDENTITY, Vector3(0, 0.45, 0)), "#8a6a3a", 0.75)
+	_cyl(bank_node, 0.38, 0.36, 0.08, Transform3D(Basis.IDENTITY, Vector3(0, 0.8, 0)), "#6b5030", 0.7)
+	for y in [0.3, 0.6]:
+		_cyl(bank_node, 0.4, 0.4, 0.03, Transform3D(Basis.IDENTITY, Vector3(0, y, 0)), "#3a2a1c", 0.6)
+	var body := PropCollision.body(bank_node)
+	PropCollision.capsule(body, Transform3D(Basis.IDENTITY, Vector3(0, 0.45, 0)), 0.4, 0.9)
 
 
 ## A drying rack: two posts and a crossbar, hung with `hang` (hides as flat

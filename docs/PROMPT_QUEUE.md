@@ -154,7 +154,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
 | 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | built 27 Oct (Claude Code; see PROGRESS) |
-| 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | todo (after 116) |
+| 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | built 27 Oct (Claude Code; see PROGRESS) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
@@ -1971,7 +1971,7 @@ CHECK (headless): from a new game, sit, the first realm's song plays and its col
 
 ## 117 — The shaman a man; the song home, the bank, and what you lose — §GI.1–2, §GJ
 
-**Status:** todo (after 116)
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. The camp has a bank, like PSO's: put teeth and items in and they're safe for good. In a realm, whatever you have on you is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you, but everything you had lies where you fell, glowing faintly, and it's still there whenever you go back for it.
 
 ```text

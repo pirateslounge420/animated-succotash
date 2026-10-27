@@ -190,6 +190,8 @@ var hub_node: Surface
 var area_node: Surface
 ## Travel by fire (CrawlerAreas).
 var areas: CrawlerAreas
+## The bank's panel (CrawlerBank).
+var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
 ## them: _below).
 var on_surface := false
@@ -306,10 +308,13 @@ func _ready() -> void:
 	add_child(areas)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
+	# What you lost in the ruin waits there (design §GJ.3).
+	areas.refresh_piles()
 	if HubCamp.on():
 		_start_at_camp()
 	else:
 		_rescuer()
+		areas.live = true
 
 
 ## Every start, new game or Continue, at the hub camp's fire at dusk
@@ -332,6 +337,7 @@ func _start_at_camp() -> void:
 		set_dusk()
 	_up_now()
 	GameLog.add(str(HubCamp.H.get("log_start", "Dusk at the camp.")), "world")
+	areas.live = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
 	tw.tween_callback(func(): _fade.visible = false)
@@ -754,6 +760,10 @@ func _ui() -> void:
 	tome_panel = TomePanel.new()
 	tome_panel.name = "Tome"
 	ui.add_child(tome_panel)
+	# The bank's panel (design §GJ.2, queue 117).
+	bank_panel = CrawlerBank.new()
+	bank_panel.setup(self)
+	ui.add_child(bank_panel)
 	# The hands' strip (§FB), under the panels.
 	hand_strip = HandStrip.new()
 	hand_strip.name = "HandStrip"
@@ -851,7 +861,7 @@ func _process(delta: float) -> void:
 	# (Taken, the keys let go while "Good night" plays: Harm; walking out,
 	# you stand still in the opening while the dark comes.)
 	player.typing = log_panel.visible or tome_panel.visible or (harm != null and harm.taking) or leaving
-	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible
+	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible or (bank_panel != null and bank_panel.visible)
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
 		reticle.shown = player.first_person and not player.ui_open
@@ -994,6 +1004,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_taken() -> void:
 	_fade.visible = true
 	_fade.color.a = 1.0
+	# With the hub (design §GI.2, §GJ, queue 117): you wake at the hub fire
+	# with nothing carried; all of it waits where you fell (CrawlerAreas).
+	if CrawlerAreas.on() and hub_node != null and is_instance_valid(hub_node):
+		areas.die()
+		return
 	# Taken up on the surface (only your own fire pot can, §FA.3): you wake
 	# below all the same, the frame already black.
 	if on_surface:
@@ -1123,9 +1138,7 @@ func _up_now() -> void:
 	# Out of the ruin onto the surface over it: the area (design §GD.1.4,
 	# queue 113) once there is a hub; at the start, the hub itself.
 	if CrawlerAreas.on() and hub_node != null and is_instance_valid(hub_node):
-		if area_node == null or not is_instance_valid(area_node):
-			area_node = Surface.new()
-			area_node.build(world, lay, fires.hearth)
+		_ensure_area()
 		surface = area_node
 	elif surface == null or not is_instance_valid(surface):
 		surface = HubCamp.new() if HubCamp.on() else Surface.new()
@@ -1176,12 +1189,37 @@ func _ensure_area() -> Surface:
 	if area_node == null or not is_instance_valid(area_node):
 		area_node = Surface.new()
 		area_node.build(world, lay, fires.hearth)
+		# What you lost on its surface waits there (design §GJ.3).
+		if areas != null:
+			areas.refresh_piles()
 	return area_node
 
 
 ## Through the area's hearth home to the hub fire.
 func _to_hub_now() -> void:
 	_swap_surface(hub_node, hub_node.arrival())
+
+
+## Up out of anywhere (the ruin or a realm's surface) onto the hub, at
+## once (the frame already dark): the dungeon kept out of the tree.
+func _to_hub_from_anywhere() -> void:
+	if in_tunnel:
+		return
+	if not on_surface:
+		_below = []
+		for n in _dungeon_nodes() + [floor_fog]:
+			var node := n as Node
+			if node != null and is_instance_valid(node) and node.get_parent() == self:
+				remove_child(node)
+				_below.append(node)
+		surface = hub_node
+		add_child(hub_node)
+		hub_node.enter(self)
+		var at := hub_node.arrival()
+		player.spawn_flat(at.pos, float(at.yaw), 0.0)
+		on_surface = true
+	else:
+		_swap_surface(hub_node, hub_node.arrival())
 
 
 ## The fire-wash: the frame to `c` at alpha `a` over `s` seconds.

@@ -123,6 +123,12 @@ func interact() -> bool:
 	var p := main.player.global_position
 	var reach := float(A.get("interact_reach_m", 3.0))
 	var hub := _hub()
+	# The bank first, beside the fire (design §GJ.2).
+	if hub != null and hub.bank_node != null and main.bank_panel != null:
+		var bp := hub.bank_node.global_position
+		if Vector2(p.x - bp.x, p.z - bp.z).length() <= float(CrawlerBank.B.get("reach_m", 2.2)):
+			main.bank_panel.open()
+			return true
 	if hub != null:
 		var near_fire := Vector2(p.x - hub.camp.pos.x, p.z - hub.camp.pos.z).length() <= reach
 		var near_shaman := hub.shaman != null and p.distance_to(hub.shaman.global_position) <= reach
@@ -398,18 +404,191 @@ func to_area(key := "first") -> void:
 	main.leaving = false
 
 
-## The first area -> the hub, through its hearth.
+## The realm -> the hub, through its hearth: the shaman's song carries you
+## home (design §GI.2.2), and what you carry is yours now.
 func to_hub() -> void:
 	if main.leaving:
 		return
 	main.leaving = true
-	GameLog.add(str(A.get("log_home", "Through the fire, home to the camp.")), "world")
+	GameLog.add(str(A.get("log_home", "The shaman's song carries you home through the fire.")), "world")
 	var T: Dictionary = A.get("travel", {})
-	await main._wash(colour(), 1.0, float(T.get("wash_s", 1.0)))
+	var key := "first"
+	if _player_song == null:
+		_player_song = AudioStreamPlayer.new()
+		_player_song.name = "Song"
+		_player_song.bus = AudioMix.bus("ambience")
+		add_child(_player_song)
+	_player_song.stream = song_stream(key)
+	_player_song.volume_db = -10.0
+	_player_song.play()
+	home_songs += 1
+	await main._wash(realm_colour(key), 1.0, float(T.get("wash_s", 1.0)))
 	main._to_hub_now()
 	travels += 1
-	await main._wash(colour(), 0.0, float(T.get("wash_s", 1.0)))
+	await main._wash(realm_colour(key), 0.0, float(T.get("wash_s", 1.0)))
+	_player_song.stop()
 	main.leaving = false
+
+
+# --- Dying, and what you lose (design §GI.2, §GJ) ------------------------------------
+
+var home_songs := 0
+## Play has begun (CrawlerMain sets it once you stand at the hub).
+var live := false
+## Pile id -> its node.
+var _pile_nodes := {}
+
+
+static func piles() -> Array:
+	var p: Variant = CrawlerSave.data.get("piles", null)
+	if not p is Array:
+		p = []
+		CrawlerSave.data["piles"] = p
+	return p
+
+
+## Taken in a realm, surface or ruin: everything carried drops where you
+## fell (one pile, kept), and you wake at the hub fire with nothing.
+func die() -> void:
+	var pl := main.player
+	var where := "ruin" if not main.on_surface else "surface"
+	var at := pl.global_position
+	if pl.torch.lit():
+		pl.torch.put_out("taken")
+	var inv := pl.inventory
+	var lost := {"carried": [], "strip": [], "worn": [], "currency": carried_currency}
+	for i in inv.carried.size():
+		if inv.carried[i] != null:
+			(lost.carried as Array).append(inv.carried[i])
+			inv.carried[i] = null
+	for i in inv.strip.size():
+		if inv.strip[i] != null:
+			(lost.strip as Array).append(inv.strip[i])
+			inv.strip[i] = null
+	for slot in inv.worn:
+		var arr: Array = inv.worn[slot]
+		for i in arr.size():
+			if arr[i] != null:
+				(lost.worn as Array).append(arr[i])
+				arr[i] = null
+	carried_currency = 0
+	var n := (lost.carried as Array).size() + (lost.strip as Array).size() + (lost.worn as Array).size()
+	if n > 0 or int(lost.currency) > 0:
+		piles().append({"id": "pile_%d_%d" % [Time.get_ticks_usec(), piles().size()], "realm": "first", "where": where, "pos": [at.x, at.y, at.z], "lost": lost})
+	CrawlerSave.save()
+	pl.weapon = "hands"
+	if pl.hands != null and not Hands.left_busy():
+		pl.hands.hold_left({})
+	pl.death_cause = ""
+	pl.revive()
+	main.harm.reset()
+	if main.boss != null:
+		main.boss.after_wake()
+	if main.residents != null:
+		main.residents.player_woke()
+	sitting = false
+	main._to_hub_from_anywhere()
+	refresh_piles()
+	GameLog.add(str((A.get("death", {}) as Dictionary).get("log_wake", "You wake at the hub fire with nothing on you.")), "death_cause")
+	var tw := main.create_tween()
+	tw.tween_property(main._fade, "color:a", 0.0, 2.5)
+	tw.tween_callback(func(): main._fade.visible = false)
+
+
+## Currency carried (teeth, §FZ.3; not built yet: kept ready, lost on death).
+var carried_currency := 0
+
+
+## A node for every kept pile whose place is built: the realm's surface or
+## its ruin (under the tomb, so it comes and goes with the dungeon).
+func refresh_piles() -> void:
+	for p in piles():
+		var id := str(p.id)
+		if _pile_nodes.has(id) and is_instance_valid(_pile_nodes[id]):
+			continue
+		var parent: Node3D = null
+		if str(p.where) == "surface":
+			parent = main.area_node
+		else:
+			parent = main.tomb
+		if parent == null or not is_instance_valid(parent):
+			continue
+		var pos: Array = p.pos
+		_pile_nodes[id] = _pile_node(parent, Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
+
+
+func _pile_node(parent: Node3D, at: Vector3) -> Node3D:
+	var D: Dictionary = A.get("death", {})
+	var root := Node3D.new()
+	root.name = "LostPile"
+	root.position = at
+	parent.add_child(root)
+	var bundle := MeshInstance3D.new()
+	var sm := SphereMesh.new()
+	sm.radius = 0.32
+	sm.height = 0.36
+	bundle.mesh = sm
+	var m := StandardMaterial3D.new()
+	m.albedo_color = Color("#5a4026")
+	m.roughness = 0.8
+	bundle.material_override = m
+	bundle.position = Vector3(0.0, 0.15, 0.0)
+	root.add_child(bundle)
+	var gc := Color(str(D.get("glow_colour", "#ff7a1a")))
+	for i in 5:
+		var e := MeshInstance3D.new()
+		var es := SphereMesh.new()
+		es.radius = 0.035
+		es.height = 0.07
+		e.mesh = es
+		var em := StandardMaterial3D.new()
+		em.albedo_color = gc
+		em.emission_enabled = true
+		em.emission = gc
+		em.emission_energy_multiplier = 3.0
+		e.material_override = em
+		e.position = Vector3(cos(i * 1.3) * 0.22, 0.05, sin(i * 1.3) * 0.22)
+		root.add_child(e)
+	var l := OmniLight3D.new()
+	l.light_color = gc
+	l.light_energy = float(D.get("glow_energy", 0.6))
+	l.omni_range = 2.5
+	l.position = Vector3(0.0, 0.5, 0.0)
+	root.add_child(l)
+	return root
+
+
+## Walk to a pile: all of it back to you (what will not fit stays).
+func _pickups() -> void:
+	# Not while the game is still setting you down (at the start the dungeon
+	# is readied with you on its mat for a moment), nor mid-crossing.
+	if not live or main.leaving:
+		return
+	var pp := main.player.global_position
+	var reach := float((A.get("death", {}) as Dictionary).get("pickup_m", 1.4))
+	for p in piles().duplicate():
+		var node: Node3D = _pile_nodes.get(str(p.id))
+		if node == null or not is_instance_valid(node) or not node.is_inside_tree():
+			continue
+		if node.global_position.distance_to(pp) > reach:
+			continue
+		var lost: Dictionary = p.lost
+		var inv := main.player.inventory
+		var left: Array = []
+		for k in ["carried", "strip", "worn"]:
+			for it in lost.get(k, []):
+				if not inv.add(it):
+					left.append(it)
+		carried_currency += int(lost.get("currency", 0))
+		if left.is_empty():
+			piles().erase(p)
+			node.queue_free()
+			_pile_nodes.erase(str(p.id))
+		else:
+			p["lost"] = {"carried": left, "strip": [], "worn": [], "currency": 0}
+		CrawlerSave.save()
+		GameLog.add(str((A.get("death", {}) as Dictionary).get("log_pile", "You gather up what you lost.")), "world")
+
 
 
 ## A lit torch in hand if you hold none lit (the brand from the hub fire).
@@ -460,6 +639,7 @@ func _untint_fire(kept: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
+	_pickups()
 	if sitting:
 		_sing_t += delta
 		_show = minf(_sing_t / maxf(float((A.get("glimpse", {}) as Dictionary).get("fade_s", 1.5)), 0.01), 1.0)

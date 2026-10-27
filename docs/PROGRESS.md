@@ -4,6 +4,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Queue 117, §GI.1–2 and §GJ: the shaman a man, the song home, the bank, the pile where you fall (Claude Code)
+- **What Mike sees:**
+  - The shaman at the hub fire is a man: a little taller, a beard showing under his hood, his face still hidden; he keeps his pipe, the cauldron and the singing.
+  - Across the fire from him stands a big lidded store-basket: the bank. Right click by it and a panel opens (what you carry, what is stored; click to move things across). Whatever is in it is safe for good.
+  - At a realm's hearth, right click and the realm's song plays as the wash carries you home with what you carry.
+  - Die in a realm (its surface or its ruin) and you wake at the hub fire with nothing on you. Everything you had lies where you fell as a bundle with glowing embers and a faint orange light. It never goes away; go back by the song and walk to it to get it all back. Die again and there is a second pile.
+- **Built:**
+  - `CrawlerBank` (`scripts/crawler/crawler_bank.gd`): storage in `CrawlerSave.data.bank`, deposit and withdraw, a currency slot ready for teeth (§FZ.3, not built yet), and the panel.
+  - `HubCamp`: the male shaman (`hub.shaman.height_m`, `beard`) and `bank_node`.
+  - `CrawlerAreas`: `to_hub` sings the realm's song; `die()` empties every carry slot, the left hand's strip and worn gear into one pile, kept in `CrawlerSave.data.piles` with its realm and whether it lies on the surface or in the ruin, and wakes you at the hub (`CrawlerMain._to_hub_from_anywhere`). `refresh_piles` builds the piles under the realm's surface or the tomb; `_pickups` gives a pile back when you walk to it (what will not fit stays).
+  - `CrawlerMain._on_taken` takes this path whenever there is a hub.
+  - `crawler.json`: `hub.bank` and `areas.death` (new), the shaman's male build, the home line. No "she" or "her" for him anywhere in the data.
+- **A bug found and fixed:** on Continue the game briefly stands you on the ruin's waking mat while it readies the hub, which silently picked up a pile lying there. Piles now only gather once play has begun (`CrawlerAreas.live`).
+- **Checks:** `tools/bank_check.gd` 16/16.
+  - He is male; no she or her in the data.
+  - Deposit and withdraw at the bank. A tome carried home by the hearth song is still yours.
+  - Taken in the ruin: you wake at the hub fire with nothing, the bank untouched, one pile where you fell. Dying again on the realm's surface leaves a second pile.
+  - Continue keeps the bank and both piles; back by the song, each pile is there and gives everything back.
+  - `area_check`, `hub_check`, `day_shift_check` 0 fails.
+- **Walkabout (`tools/bank_frames.gd`, once):** the shaman, the bank's panel, a pile on the ruin's hearth-room floor, the song home, the hub fire.
+- **For Mike:**
+  - The beard barely reads in the dusk dark at the fire.
+  - The pile picture is in the ruin's lit hearth room, so the glow reads less than it will in a dark corridor.
+  - Every trip without a lit torch hands you a brand, so torches pile up in what you carry; a cap or a rule for them is open.
+  - Tome pages you hold are kept as before and are not dropped on death; whether they should be is open.
+
 ## 2026-10-27 — Queue 116, §GH: the shaman's song round the fire (Claude Code)
 - **Merged** the design branch (§GG, §GH, §GI, §GJ, queue 116–118) first; queue rows 111–115 kept their built status, PROGRESS kept both sides.
 - **What Mike sees:**
