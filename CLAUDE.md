@@ -1,5 +1,7 @@
 # animated-succotash — the brief (read at the start of every session)
 
+**27 Oct 2026, design §GG (Mike, by voice: "lock it in"): the first slice is the hub camp, the fire and the shaman (queue 112); everything else is parked, not deleted, and 113 waits.** Later layers: the shaman sings each realm open in the fire (replaces §GD's powder), a slow never-stated mystery told through texts, an interpreter and a shrine, planting, festivals and an I Ching oracle. Where §GG and anything below disagree, §GG wins.
+
 **25 Oct 2026, design §GA (Mike: "That's going to be for a different open world game, not Torchfire."): Torchfire is the dungeon crawler again.** The 1/100 Earth open world below (§FX, §FY) belongs to a **separate open world game**; its code stays, `GAME=torchfire2` still boots it, and `data/game.json` now boots the crawler (`torchfire1`). **Queue 103–110 are parked; the crawler's order of work is queue 111, 112, 113** (§GA, §GD). **The look is now §GB: high-contrast, smooth and glossy (normal maps, specular, bloom, indigo fog); the pixel-art lines under "The look, in short" are withdrawn for Torchfire where §GB disagrees.** **§GD (26 Oct): one hub camp on the surface where a new game starts at dusk, with six keepers (§FZ), linked by fire to curated, seeded areas, each with a main hearth, a surface and a ruin below; an alien world at 30–35 % oxygen.** (§GD supersedes §GC's one dungeon under the hub.) Where §GA and anything below disagree, §GA wins.
 
 **18 Oct 2026, design §FX (Mike: "lock it in"): the open world leads again.** This repo now builds

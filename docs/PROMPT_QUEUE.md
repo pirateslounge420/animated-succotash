@@ -30,6 +30,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 
 99–100 are §FV (11 Oct, Mike by voice): 99 a smaller surface with its sacred plant in sight, any time; **100 (the shrine mouths and the tunnel between two cultures) waits for a second culture's ruin built with its surface. It takes over the walk half of 74. Do not start a `waits` row.** 101 is §FW (12 Oct), the HUD compass: any time.
 
+**27 Oct, §GG: the first slice is the hub, the fire and the shaman (112, with 114 and 115). 113 now `waits` for Mike;** when it runs, travel is the shaman's song and a glimpse of the realm in the fire, not the powder (§GG.1). Do not start a `waits` row.
+
 **25 Oct, §GA: Torchfire is the crawler again; the 1/100 Earth open world is a separate game.** Mike: *"That's going to be for a different open world game, not Torchfire."* **103–110 are parked** (they belong to that other game). The old crawler rows stay parked too, because the crawler's design has moved on (25 Oct: one hub camp, one ever-deeper dungeon; §FZ). Mike's new order for the crawler (25–26 Oct): **111, 112, 113** (§GB, §GD; §GD supersedes §GC's one dungeon under the hub). Do not start a parked row.
 
 **18 Oct, §FX: the open world leads again.** Mike: *"i want to start developing the open world again … 1/100th size of earth and mimic earths biomes and continents to learn more about the plant life there"*; *"lock it in"*. **102–107 are §FX, the real Earth at 1/100, in order: 102 the switch back (the data is flipped), 103 Earth relief, 104 Earth climate, 105 ecoregions and the realm gate, 106 slopes and routes, 107 waking on Earth and the map. They go before every crawler row.** **22 Oct, §FY: the crawler is folded into the open world (no longer parked): 108–110 follow 107 (ruins on the surface by biome, spear and bow as finds with the three substances, night rules on the surface); the parked crawler rows return to their own order after 108.** The crawler's open rows (99 and every `waits` row) are **parked** (§FX.0): not `todo` until Mike says. Torchfire 2 is the game `scenes/main.tscn` boots now; the checks in `tools/` never changed.
@@ -148,7 +150,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | todo (after 111) |
-| 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | todo (after 112) |
+| 113 | §GD.1.2–4, §GG.1 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | waits (Mike, §GG.8.3) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
 
@@ -1906,7 +1908,7 @@ CHECK (headless): three seeds give three different camps; each start kind appear
 
 ## 113 — Fire travel to a first area — §GD.1.2–4
 
-**Status:** todo (after 112)
+**Status:** waits (Mike, §GG.8.3). When it runs: the shaman sings, the realm shows in the fire, you choose and step in (§GG.1.2) instead of the powder.
 **Mike sees:** At the hub fire the cook-shaman throws a powder in, the flames change colour, and you step through to a cold hearth in another place with its own surface to explore and a ruin entrance leading down into the dungeon. Light that hearth and it stays linked: from then on the hub fire takes you there and back.
 
 ```text
