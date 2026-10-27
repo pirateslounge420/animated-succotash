@@ -4,6 +4,22 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Queue 116, §GH: the shaman's song round the fire (Claude Code)
+- **Merged** the design branch (§GG, §GH, §GI, §GJ, queue 116–118) first; queue rows 111–115 kept their built status, PROGRESS kept both sides.
+- **What Mike sees:**
+  - Right click at the hub fire (or by the shaman) and you sit down facing it. The shaman lifts his hands and sings; the flames turn the realm's colour (cyan for the first), and a soft, heat-wavering oval glimpse of the realm opens over the fire, a live view from beside its hearth, slowly drifting.
+  - A and D scroll the realms whose songs you know (one, so far). Right click again steps you into the fire: a cyan wash, and you are beside the realm's hearth, with a brand from the hub fire if you had no lit torch. Moving or Esc stands you up with nothing changed.
+  - The powder is gone.
+- **Built:**
+  - `CrawlerAreas` reworked (113's plumbing kept): `sit`, `stand`, `scroll`, `step_in`. The song is `song_stream`: Mike's track at `songs.<realm>.music` if the file exists, else a placeholder drum and hummed chant made from `bpm`, `root_hz`, `chant` and `drum`. The shaman's arms sway over the fire as he sings (FolkMotion).
+  - The glimpse: a SubViewport with its own world holding the realm's surface, paused, its camera beside the hearth, shown on `shaders/fire_glimpse.gdshader` (soft oval, heat ripple, the song's colour at the rim, fading in).
+  - `CrawlerMain._ensure_area` builds the realm without entering it.
+  - Knowing the song is the key: travel no longer waits on the hearth. Lighting it still reclaims it (saved as before under `areas.first.linked`). Home: the button at the realm's hearth, lit or not.
+  - `crawler.json → areas`: `songs` (with `known_from_start` as the stand-in, §GH.4 call 1 open), `glimpse`, `sit`, new log lines; the powder line and the old stand-in keys are gone.
+- **Checks:** `tools/area_check.gd` 20/20: sit, the song, its colour, its glimpse; a list of one; standing up changes nothing; step in to an unlit hearth with a brand; home by its hearth; reclaim it with the torch; the ruin mouth down and back; no powder in the data or log; Continue keeps the hearth lit and the song still takes you there. `hub_check` and `day_shift_check` 0 fails.
+- **Walkabout (`tools/area_frames.gd`, once):** sitting, the song with the cyan flames and the glimpse over the fire, stepping in, the arrival, the hearth lit, the ruin mouth.
+- **For Mike:** the glimpse reads pale and washed-out. The realm in it uses its own sky, which isn't graded like the hub's and was built at whatever hour the realm was made. A darker, graded glimpse is a tuning pass.
+
 ## 2026-10-27 — Queue 113, §GD.1.2–4: fire travel to the first area (Claude Code)
 - **What Mike sees:**
   - At the hub, the interact button by the fire or the cook-shaman turns the flames bright cyan; a cyan wash fills the screen and you step out beside a cold hearth in another place. If you held no lit torch you carry a brand from the hub fire.

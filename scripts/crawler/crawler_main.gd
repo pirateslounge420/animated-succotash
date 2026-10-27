@@ -1160,13 +1160,23 @@ func _swap_surface(to: Surface, at: Dictionary) -> void:
 	on_surface = true
 
 
-## Through the hub fire to the first area's hearth (CrawlerAreas): its
-## surface built the first time (the surface over the first ruin).
+## Through the hub fire to the first realm's hearth (CrawlerAreas, the
+## song): its surface built the first time (the surface over the first ruin).
 func _to_area_now() -> void:
+	_ensure_area()
+	if area_node.get_parent() != null and area_node.get_parent() != self:
+		area_node.get_parent().remove_child(area_node)
+	area_node.process_mode = Node.PROCESS_MODE_INHERIT
+	_swap_surface(area_node, area_node.hearth_arrival())
+
+
+## The first realm's surface, built the first time it is needed (its
+## glimpse in the hub fire, §GH, or the trip there), not entered.
+func _ensure_area() -> Surface:
 	if area_node == null or not is_instance_valid(area_node):
 		area_node = Surface.new()
 		area_node.build(world, lay, fires.hearth)
-	_swap_surface(area_node, area_node.hearth_arrival())
+	return area_node
 
 
 ## Through the area's hearth home to the hub fire.

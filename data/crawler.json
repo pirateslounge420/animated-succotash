@@ -846,11 +846,9 @@
   }
  },
  "areas": {
-  "_help": "(design §GD.1.2-4, queue 113) Areas joined to the hub by fire. Each area is a curated, seeded surface with a main hearth near one edge (cold until you light it), an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. Light an area's hearth with your torch (hold the flame to it for light_hold_s, within reach_m) and it is linked to the hub fire, kept in the game's save (§FK). Linked, the interact button at the hub fire or beside the cook-shaman (interact_reach_m) has her cast her powder: the flames take the area's colour, a wash of it fills the frame (travel.wash_s) and you step out at the area's hearth; the button at the area's hearth brings you home the same way. on false: no travel (the ruin only by the developer's way).",
+  "_help": "(design §GD.1.2-4, queue 113; §GH, queue 116) Realms (areas) reached from the hub by the shaman's song round the fire. Each realm is a curated, seeded surface with a main hearth near one edge, an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. The interact button at the hub fire or beside the shaman (interact_reach_m) sits you down facing the fire; the shaman sings the song of a realm you know (songs), the flames take its colour and a glimpse of it opens in the fire (glimpse); left and right scroll through the realms you know; the interact button again steps you into the fire: the wash (travel.wash_s) and you come out at that realm's hearth. Moving or Esc stands you up with nothing changed. Knowing the song is the key (§GH.2.1); lighting a realm's hearth with your torch reclaims it (lit for good, saved, §FK) but no longer gates travel. Home: the interact button at the realm's hearth. on false: no travel.",
   "on": true,
   "interact_reach_m": 3.0,
-  "_help_stand_in": "stand_in_first_link: until Mike answers §GD.5 call 1 (how the first area's hearth is reached before any link exists), the cook-shaman opens the first link herself: the button at the hub fire takes you to the first area even unlinked. Until its hearth is lit that link holds for this session only, and the cold hearth still brings you home (so you are never stranded); lighting it keeps it for good.",
-  "stand_in_first_link": true,
   "_help_brand": "brand: stepping through the fire with no lit torch, you carry a brand from the hub fire (a lit torch in hand): fire carried, never made (§ET), and the way to light the far hearth.",
   "brand": true,
   "travel": {
@@ -872,8 +870,81 @@
     "light_hold_s": 1.0
    }
   },
-  "log_link": "The hearth catches. Its fire is bound to the hub's now.",
-  "log_go": "The shaman casts her powder into the fire. The flames turn, and you step through.",
-  "log_home": "Through the fire, home to the camp."
+  "log_link": "The hearth catches. This place is reclaimed: its fire burns for good.",
+  "log_home": "Through the fire, home to the camp.",
+  "log_sing": "You sit at the fire. The shaman begins to sing.",
+  "log_step": "You step into the fire as the song swells.",
+  "log_stand": "You get up from the fire.",
+  "songs": {
+   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. known_from_start: the realms whose songs you know in a new game; a stand-in until Mike says how songs are learned (§GH.4 call 1, open; from tablets, tomes or the other peoples, §GG.1.3). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (areas.<key>.colour) while it plays.",
+   "known_from_start": [
+    "first"
+   ],
+   "first": {
+    "music": "",
+    "bpm": 76.0,
+    "root_hz": 98.0,
+    "chant": [
+     0,
+     3,
+     5,
+     3,
+     0,
+     null,
+     -2,
+     0,
+     3,
+     5,
+     7,
+     5,
+     3,
+     null,
+     0,
+     null
+    ],
+    "drum": [
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0.5,
+     0.5,
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0.5,
+     0.5,
+     0
+    ]
+   }
+  },
+  "glimpse": {
+   "_help": "(§GH.1.3) The glimpse of the realm in the fire and smoke: a view from beside its hearth (from_hearth_m out, eye_m up, looking toward the realm's middle, drifting drift_deg round over drift_s), rendered px wide, shown size_m across hung height_m over the hub fire, toward_you_m out toward you; soft-edged and wavering with the heat (waver); it fades in over fade_s as the song begins.",
+   "px": [
+    320,
+    200
+   ],
+   "size_m": [
+    1.5,
+    1.0
+   ],
+   "height_m": 1.55,
+   "toward_you_m": 0.55,
+   "from_hearth_m": 4.0,
+   "eye_m": 1.7,
+   "drift_deg": 25.0,
+   "drift_s": 20.0,
+   "waver": 0.012,
+   "fade_s": 1.5
+  },
+  "sit": {
+   "_help": "Where you sit: from_fire_m from the hub fire's middle on the side you came from, the view at eye_m, pitched to the fire.",
+   "from_fire_m": 2.4,
+   "eye_m": 1.05
+  }
  }
 }

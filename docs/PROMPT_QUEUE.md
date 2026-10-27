@@ -153,7 +153,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
-| 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | todo (after 113) |
+| 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | built 27 Oct (Claude Code; see PROGRESS) |
 | 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | todo (after 116) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 
@@ -1956,7 +1956,7 @@ CHECK (headless): over a fast-forwarded day at the hub and at a 40° and a 62° 
 
 ## 116 — The shaman's song round the fire — §GH
 
-**Status:** todo (after 113)
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** You sit down at the hub fire. The shaman starts a song, the flames take a new colour and a moving glimpse of another place opens in the fire and smoke. Scroll left or right and the song, the colour and the glimpse change to another realm you know. Pick one and step into the fire, and you come out at that realm's hearth. No powder.
 
 ```text
