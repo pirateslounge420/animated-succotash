@@ -6888,3 +6888,207 @@ Clock-hour schedules. Everything switching at one instant. Lights that turn on b
 
 ### GF.8 Queue
 **115:** after 112 (the hub and its folk) and 114 (the calendar).
+
+## GG. The shaman's songs open the realms; the slow mystery; a living hub; first slice is the fire and the shaman — LOCKED (26–27 Oct, by voice, Mike; "Yes, yes", then "lock it in please")
+
+Mike, late 26 Oct by voice, a long brainstorm; locked at the end ("this is it"). Where this and
+§GD disagree, this wins. Ideas below are marked **locked**, **leaning** (Mike's lean, not final) or
+**open**. Nothing here is built.
+
+### GG.1 Travel: the shaman sings the realms open — locked
+1. **Separate realms, not one dungeon** (restates §GD against §GC; Mike: Heathen already does the one
+   endless dungeon). Each realm is PSO-style: its own environment, creatures, drops and soundtrack,
+   and a whole vibe of its own, with its temples and ruins in it. Immersion in each place matters most.
+2. **Sit at the hub fire; the shaman sings.** Each realm has its own song. As he sings, the flames
+   shift and **a glimpse of that realm opens in the fire and smoke**, like a small portal. You
+   **scroll through the realms** you can reach and **choose one to jump into**. Mario 64's paintings,
+   as fire and song; a psychedelic, spirit-journey feel (the shamanic Lower/Middle/Upper Worlds are
+   reference, not rules). This replaces §GD.1.3's powder: the song is the key.
+3. **Each new realm needs a new song** (Claude's proposal, taken with the whole idea): learned from
+   tablets, tomes, or the other peoples (GG.4). How the first song is had is open (folds §GD.5.1).
+
+### GG.2 Seasons, weather and sky
+1. **Every realm follows the hub's calendar** (locked): summer, fall, winter, spring everywhere, so a
+   realm revisited in another season looks different. Festivals line up across realms.
+   *Open:* whether §GE.5's per-biome latitude stays (day length per realm) under this.
+   *Claude's scope note, not locked:* do seasons with palette, light, particles and a few prop swaps.
+2. **Weather is above ground only** (locked): ambient on the hub and realm surfaces (rain on the fire,
+   wind, fog rolling in). Underground: drips, rumbles, moving air, never weather. **The oasis, open to
+   the sky, catches surface rain.**
+3. **Sky and sundial** (locked): real constellations and a sundial that change with the seasons, read
+   on the 10x day. Constellations **taken from Earth's real ones, shifted** as if thousands of years
+   have passed (the pole star moved, e.g. Vega), each with **the tribe's own name**. A deep secret for
+   sky nerds. *Open:* this hints at Earth's far future, which clashes with §GD.2's alien planet; Mike
+   to pick.
+
+### GG.3 The mystery: the elders who became the machine — locked, never said outright
+1. **The story underneath** (Mike): the lost civilisation built an AI, merged with it and vanished;
+   become all-knowing, it grew bored, made biological bodies (humans), put its consciousness in them
+   and split itself up to play the game all over again. The tribe, and the player, are that. Cyclical.
+2. **Never stated.** Told only through **scrolls, tomes, books, tablets and hints from the past**.
+   Writing gets more advanced the deeper and older you go (cave paintings → glyphs → eerily modern
+   text). The ending may loop back to the campfire; whether there's a choice is open.
+3. **The elder ruins feel too familiar:** server-like pillars, mechanisms still humming.
+4. **Relics are lost technology the tribe misreads** (Dragon Ball's robot in the cave; Castle in the
+   Sky): treated as sacred, given tribal names and myths. *Note:* §GD.3.4 said no phones; whether the
+   relics include recognisable modern tech or stay unplaceable is open.
+5. Known echoes to steer clear of in execution: Horizon Zero Dawn, Outer Wilds, Nier, Asimov's
+   "The Last Question", Watts' "God playing hide and seek".
+
+### GG.4 Texts, the interpreter and the other peoples
+1. **Bring texts home to an interpreter** (locked), one of the last scholars of that language, who gives
+   you the gist. Deeper texts he struggles with and only half-reads. **Leaning: the interpreter is the
+   shaman** (keeps the hub small). Alternative kept: a blind hermit outside camp.
+2. **The shrine** (locked): a place in the hub where you bring relics for the tribe to marvel at and
+   ponder, and where **tablet pieces are fitted together**; a complete tablet can be interpreted
+   (partial ones give partial readings: Claude's proposal, taken). It fills up over the game.
+3. **Other peoples** (locked): human-esque branches of survivors you **cannot talk to** until you
+   assemble their language tome and the interpreter deciphers it; then they trade, give tasks, or
+   tell their side. Examples (Claude's, not locked): whistling cliff dwellers, pale clicking deep
+   folk, hive-tenders, keepers who half-worship the humming machines.
+4. **Real models:** the Rosetta Stone, the Phaistos Disc, Rongorongo, the Voynich manuscript (a tome
+   even the shaman can't read).
+
+### GG.5 Procedural and fixed
+1. **Hybrid** (locked): layouts, spawns, loot and weather procedural; lore texts, bosses and landmarks
+   fixed so players can compare notes.
+2. **Lore rooms** (locked): tablet pieces and tomes sit in a **recognisable hand-made room** (a shrine
+   look) that lands in a random spot in the procedural layout.
+3. **Secrets to last years** (locked): layered, from easy to ones only a community finds.
+
+### GG.6 A living hub
+1. **Keepers' work changes the camp** (locked): fetch a material (e.g. a kind of wood) for a crafter;
+   he works on it, and on a later visit you see what he made. **A mix of cosmetic growth and useful
+   builds.** Keepers keep daily routines (§GF).
+2. **Festivals on the calendar** (locked): the tribe celebrates seasonal moments the way cultures
+   everywhere do: winter solstice (fire and light), spring equinox, summer solstice, harvest, a time
+   for the dead, new year. Fire in all of them.
+3. **Planting** (locked): a small set of plants (not the old huge list) whose seed, nut or fruit you
+   gather and **plant anywhere in the hub**; it grows on the 10x clock, visibly day to day, so you
+   shape your own camp. Seeds from realms grow at home.
+4. **The I Ching oracle** (locked): the 64 hexagrams are pages found in the world; Mike writes his own
+   translation; at the fire you cast a real reading and get a hexagram with the shaman's reading.
+   **Consultation only for now**; in-game effects (an omen for the run) are for later.
+
+### GG.7 Release
+1. **A physical disc**, offline and complete, a nod to that small window in time (locked as intent).
+   Size is not a worry for a low-poly game.
+2. **Base game = the hub plus one realm; new realms as expansions** (locked).
+3. **The name** is open: Torchfire stays for now; Firesong floated (both are also book titles; a
+   trademark check before any change).
+
+### GG.8 Scope and order of work — locked
+1. **Existing systems are parked, not deleted.** They stay in the repo, off to the side.
+2. **You spawn in the overworld at a camp.** The first slice is **just the campfire and the shaman**:
+   build it slice by slice, the hub first, until it feels alive. Everything in GG.1–7 layers on later.
+3. Whether the first slice has a realm or ruin to go to at all is **open** ("I don't know yet").
+
+### GG.9 Queue
+**112 is the first slice** (the camp at dusk, the fire, the shaman; it already says so), with 114 and
+115. **113 now waits** for Mike: when it runs, the travel is the shaman's song and the glimpse in the
+fire (GG.1.2), not the powder. No new rows; GG.2–7 have none yet.
+
+## GH. Travel is the shaman's song round the fire, not the powder — LOCKED (27 Oct, 08:57, Mike; "the ability to go to different worlds/places is gonna be with the shamans song around the fire, not the powder")
+
+Makes §GG.1.2 the travel as built. **Supersedes §GD.1.3's powder and §GG.9's "113 waits":** 113 is
+built (Claude Code, 27 Oct, with the powder) and stays as the plumbing (the area, its hearth, the
+wash, the ruin mouth, the save); only how you choose and set off changes. Queue **116**.
+
+### GH.1 At the fire
+1. **Sit down at the hub fire** (the interact button at the fire or by the shaman). The view settles
+   on the fire with the shaman beside it; moving or the back button stands you up and nothing happens.
+2. **The shaman sings.** Each realm has **its own song** (placeholder: a drum and hummed chant per
+   realm, from data, until Mike's music exists). The flames take that realm's colour.
+3. **A glimpse of the realm opens in the fire and smoke**, like a small portal: a moving view of
+   the place (first guess: from beside its hearth), soft-edged, wavering with the heat.
+4. **Scroll left and right through the realms you know the songs of.** Each step: the song changes,
+   the colour changes, the glimpse changes. With one realm known, there is one; the scroll still shows
+   it is a list.
+5. **Choose one and step into the fire**: the wash (as built), and you come out at that realm's hearth.
+
+### GH.2 What the song means
+1. **Knowing a realm's song is what puts it in the fire.** Travel no longer waits on lighting the
+   realm's hearth (it did under §GD.1.3). Lighting the hearth stays: it is reclaiming the place (lit
+   for good, saved, §FK, and §GF's evening routine runs there), not the key.
+2. **How songs are learned is open** (§GG.1.3: from tablets, tomes or the other peoples). Stand-in:
+   the shaman knows the first realm's song from a new game. Say so in the data's `_help`.
+3. **The way home** stays as built: the button at the realm's hearth brings you back to the hub fire.
+   Whether coming home is also a song is open.
+
+### GH.3 Not taken
+The powder (its log line and help text go). A menu or map screen. Travel from anywhere but the hub fire.
+
+### GH.4 Open (for Mike)
+1. How each song is learned (stand-in above).
+2. Whether coming home is a song too.
+3. The shaman's look and voice: §GG says "he" (Mike, by voice); the camp as built has the hooded
+   cook-shaman as "her" (§FR). Which is it, or one of each?
+
+## GI. The shaman is a man; what you find comes home only by the song; brews as real trips — LOCKED (27 Oct, 09:51, Mike; "yep sounds good")
+
+Mike, 09:43: *"historically the shamans have been men so itll be a male. if you 'die' you just wake up
+around the home hearth but lost inventory- so perhaps in order to 'retrieve' something from another
+realm, you have to make it back to the hearth safely and do a shamanic journey back to hub. im thinking
+for the plant brews to have some sort of 'filtered effect' over what you regularly see- like a real
+psychedelic experience"*; then *"yep sounds good"* to all three.
+
+### GI.1 The shaman is a man
+The hub's shaman, the one who sings the realms open (§GH), is **male**. This replaces the hooded
+cook-shaman built as "her" (§FR's swamp witch is a different character and is untouched). He keeps the
+hood, the pipe, the cauldron and the singing. Closes §GH.4 call 3.
+
+### GI.2 Dying, and bringing things home (extraction)
+1. **Dying in a realm:** you wake at the **hub fire** and **lose what you were carrying** (Mike's
+   words: "lost inventory"; first reading: everything carried. *Open:* a gentler rule, losing only
+   what was found that trip, if the full loss feels too harsh in play).
+2. **Nothing found in a realm is yours until it reaches the hub.** To keep it, get back to **that
+   realm's main hearth alive** and have the **shaman's song carry you home** (a journey back, the same
+   fire and wash as going out). Closes §GH.4 call 2: coming home is a song too.
+3. What is kept at the hub (planted, given to a keeper, placed in the shrine, stored) stays safe; death
+   takes only what you had on you.
+4. This is the tension of every trip: the realm is ambient, but getting home with the find is the game.
+
+### GI.3 Brews: a real trip over what you see
+Builds on §FN.5 (a brew is a per-culture visual filter; built for the Aztec brew, queue 83) and keeps
+its rules: **display only**, adds no creatures, gates nothing (Egypt's hallucinations stay §FP's
+exception). Add the effects people report from real psychedelic experiences, mixed differently per plant:
+1. **Breathing:** surfaces slowly swell, drift and flow.
+2. **Colour:** richer, more saturated, shifting hues.
+3. **Trails:** moving things and your torch leave afterimages.
+4. **Patterns:** geometric and organic patterns crawling over stone, bark and leaves, strongest in
+   the corner of the eye.
+5. **Onset, peak and fade** over the brew's time, never a switch.
+Each brew in `data/visions.json` gets a mix (which effects, how strong); first guesses by Claude Code,
+tuned by Mike in play. No doses or preparation in any data or text (as §FN).
+
+### GI.4 Queue
+**117:** the male shaman and the trip home (after 116). **118:** the fuller brew filters (any time).
+
+## GJ. The bank at the hub; what you lose waits where you fell — LOCKED (27 Oct, 09:57, Mike)
+
+Mike: *"i want dying to be impactful so you should lose everything not at the home hearth hub. there
+should be a 'bank' similar to PSO where your currency and items are safe. also, you should be able to
+retrieve the items lost by going back to the realm and it should not despawn"*. Settles §GI.2.1's open
+call (the full loss stands) and adds to it.
+
+### GJ.1 Lose everything not at the hub
+Dying anywhere in a realm (surface or ruin) wakes you at the hub fire with **nothing you were
+carrying**: finds, gear, torches, currency (teeth, §FZ.3). Only what is at the hub is safe.
+
+### GJ.2 The bank
+A **bank at the hub, like PSO's**: deposit and withdraw **currency and items**; whatever is in it is
+never lost. Its capacity, and who or what keeps it (a keeper's store, a cache in a hut, a pit by the
+fire), are open; first guess for building: a store in the camp you interact with, with a generous
+capacity. Things placed in the camp (planted, given to a keeper, set in the shrine) are safe too.
+
+### GJ.3 What you lose waits where you fell
+1. Everything you carried **drops where you died**, as one pile you can see (first guess: a small
+   bundle with a faint ember glow, so it reads in the dark).
+2. **It never despawns.** Go back to that realm (by the song) and walk to it to pick it all up.
+   It is kept in the save (§FK), across sessions.
+3. Dying again before you reach it leaves **a second pile**; every pile stays until picked up (Mike:
+   "it should not despawn"). *Open:* whether a realm remembers your piles on its map or HUD.
+4. Picked up, it is carried again: it is safe only once you are home by the song (§GI.2.2).
+
+### GJ.4 Queue
+Folded into **117** (not built yet), which now builds §GI.1–2 and §GJ.
