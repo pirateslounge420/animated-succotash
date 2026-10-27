@@ -190,6 +190,8 @@ var hub_node: Surface
 var area_node: Surface
 ## Travel by fire (CrawlerAreas).
 var areas: CrawlerAreas
+## Where torches come from at the hub and in the realms (Mike, 27 Oct).
+var torch_supply: TorchSupply
 ## The bank's panel (CrawlerBank).
 var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
@@ -305,7 +307,10 @@ func _ready() -> void:
 	brew.setup(self)
 	areas = CrawlerAreas.new()
 	areas.setup(self)
+	torch_supply = TorchSupply.new()
+	torch_supply.setup(self)
 	add_child(areas)
+	add_child(torch_supply)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
 	# What you lost in the ruin waits there (design §GJ.3).
@@ -378,6 +383,10 @@ func _load_tomb(s: int, at := 0) -> void:
 	fires.name = "Fires"
 	add_child(fires)
 	fires.build(world, lay)
+	# The hearth's bundle is never laid again in this game (Mike, 27 Oct:
+	# torches are scarce; torch.json crawler_burn.supply).
+	if bool(TorchSupply.S.get("ruin_bundle_kept", true)):
+		fires.trim_bundle(int(CrawlerSave.kept_value(at, "bundle_left", fires.bundle_left)))
 	# Kept in this game (§FK.2): the holders you relit here burn again as
 	# you left them, before anything that reads the light is built.
 	var kept_lit := CrawlerSave.relight(fires, CrawlerSave.enter(at, lay))
@@ -988,6 +997,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Travel by fire first (design §GD.1.3, queue 113).
 		if areas != null and areas.interact():
 			return
+		# The firekeeper's stack at the hub, a realm's caches (TorchSupply).
+		if torch_supply != null and torch_supply.take():
+			return
 		if brew == null or not brew.interact():
 			take_torch()
 
@@ -1057,6 +1069,7 @@ func take_torch() -> bool:
 	if player.weapon != "torch":
 		player.weapon = "torch"
 		player.torch.block_until_release()
+	CrawlerSave.keep(CrawlerSave.place, "bundle_left", fires.bundle_left)
 	GameLog.add("Took a torch from the bundle.", "torch")
 	return true
 

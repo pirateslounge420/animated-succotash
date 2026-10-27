@@ -4,6 +4,17 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-27 — Torches are scarce (Claude Code)
+- Mike: *"torches shouldn't be too abundant, to create a sense of scarcity and encourage the player to either prepare during the day or venture out at night to find them"*.
+- **Before:** the ruin's bundle was laid fresh (3) every time the ruin was built, and the song handed you a full 15-minute torch whenever you held none, so torches never ran out.
+- **Built:** `TorchSupply` (`scripts/crawler/torch_supply.gd`, `torch.json → crawler_burn.supply`, Claude Code's first guesses):
+  - **The firekeeper's stack** at the hub: 2 in a new game, 2 more bound each day, at most 3.
+  - **Realm caches:** 4 old caches per realm, 1–2 torches each, refilling 2 days after being emptied.
+  - **The ruin's bundle** is kept in the save and never refilled (`CrawlerFires.trim_bundle`, `lay_sticks`).
+  - **The song's brand**, when you have no torch, burns only 3 minutes.
+- **Check:** `tools/torch_supply_check.gd` 13/13. `area_check`, `bank_check` and `hub_check` still fail 0. Every crawler check prints 36 "not in a scene tree" errors, and the last commit prints the same ones without these changes. `crawler_check`, `hands_check`, `hearth_cauldron_check` and `room_pool_check` give the same results as the last commit: their old failures come from the tomb-wake start (the game now starts at the hub) and are not touched here. `crawler_check` stalls at the same point on both (seed 42).
+- **For Mike to judge by play:** whether 2 a day, at most 3, against a 15-minute burn and a night of about 50 minutes, feels scarce but fair.
+
 ## 2026-10-27 — Tome pages drop until you get them home (Claude Code)
 - Mike: *"yea tome pages should drop until you get it back to the hub"*.
 - **Built:**

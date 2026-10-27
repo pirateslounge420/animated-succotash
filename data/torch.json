@@ -359,6 +359,33 @@
   "douse_stops_clock": true,
   "pitch_scale": 1.5,
   "embers_s": 20.0,
-  "embers_light_share": 0.25
+  "embers_light_share": 0.25,
+  "supply": {
+   "_help": "(Mike, 27 Oct: 'torches shouldn't be too abundant, to create a sense of scarcity and encourage the player to either prepare during the day or venture out at night to find them'; TorchSupply, Claude Code's first guesses) Where the crawler's unlit torches come from. hub: the woodcutter-firekeeper (keeper) binds per_day torches each day on the one clock into a stack by his site, holding at most max; a new game finds start in it. caches: count old torch caches per realm (a ring of stones round a few bound torches; seeded places at least from_hearth_m from the realm's hearth and apart_m apart), torches [min, max] in each; an emptied cache fills again restock_days later. ruin_bundle_kept: the bundle by a ruin's hearth is laid once a game and never refilled (its count kept in the save). brand_burn_min: the brand the song gives when you hold no torch burns only this long (a full torch: burn_min). reach_m: how near the interact button takes from a stack or cache. on false: the old supply (only the ruin's bundle, refilled every visit).",
+   "on": true,
+   "hub": {
+    "keeper": "woodcutter_firekeeper",
+    "start": 2,
+    "per_day": 2,
+    "max": 3
+   },
+   "caches": {
+    "count": 4,
+    "torches": [
+     1,
+     2
+    ],
+    "restock_days": 2.0,
+    "from_hearth_m": 35.0,
+    "apart_m": 30.0,
+    "stone_colour": "#4a4858"
+   },
+   "ruin_bundle_kept": true,
+   "brand_burn_min": 3.0,
+   "reach_m": 2.0,
+   "log_hub": "You take a torch from the firekeeper's stack.",
+   "log_cache": "You take an old torch from the cache.",
+   "log_full": "You can carry no more torches."
+  }
  }
 }
