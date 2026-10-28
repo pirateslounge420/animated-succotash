@@ -6,7 +6,7 @@ extends SceneTree
 ## Asserts, from a new game (SEED=7):
 ##  1. not linked yet; at the hub fire the interact button takes you (the
 ##     cook-shaman's stand-in) to the first area: on its surface, beside its
-##     main hearth, the hearth cold, a lit brand in your hand; the area
+##     main hearth, the hearth cold, the torch you carry lit by the fire; the area
 ##     sized from areas.first.across_m;
 ##  2. the cold hearth brings you home this session (never stranded);
 ##  3. back again, your torch's flame held to the hearth lights it: the
@@ -62,6 +62,9 @@ func _run() -> void:
 	Torch.burn_down = false
 	var main := await _boot("7")
 	main.player.set_physics_process(false)
+	# A torch from the firekeeper's stack in your pack (Mike, 28 Oct: the fire
+	# lights a torch you carry and hands out none, TorchSupply).
+	main.player.inventory.add(Inventory.make("torch"))
 	var hub := main.surface as HubCamp
 	var ar_ := main.areas
 	ok(hub != null and ar_.can_go() and CrawlerAreas.known() == ["first"], "a new game: on the hub, the first realm's song known (the stand-in)")
@@ -91,7 +94,7 @@ func _run() -> void:
 	var hp := area.area_hearth.global_position
 	var pp := main.player.global_position
 	ok(Vector2(pp.x - hp.x, pp.z - hp.z).length() < 4.0 and not area.hearth_lit(), "beside its hearth (%.1f m), unlit: travel no longer waits on it" % Vector2(pp.x - hp.x, pp.z - hp.z).length())
-	ok(main.player.torch.lit(), "a lit brand from the hub fire in your hand")
+	ok(main.player.torch.lit(), "the hub fire lights the torch you carry")
 	var ar: Array = CrawlerAreas.first().get("across_m", [300.0, 600.0])
 	ok(area.across_m >= float(ar[0]) and area.across_m <= float(ar[1]), "the realm %.0f m across (areas.first.across_m)" % area.across_m)
 	# 4. Home by its (unlit) hearth.

@@ -599,11 +599,14 @@ func _brand() -> void:
 	var pl := main.player
 	if pl.torch.lit():
 		return
-	# With none of your own, a short brand: enough to light the realm's
-	# hearth, not to walk its night (Mike, 27 Oct; torch.json
-	# crawler_burn.supply.brand_burn_min).
+	# The fire lights a torch you carry; with none of your own you go through
+	# with none (Mike, 28 Oct: torches are found or made, never handed out;
+	# torch.json crawler_burn.supply.brand_without_torch).
 	if not pl.inventory.has_kind("torch"):
-		pl.inventory.add(Inventory.make("torch", {"burn_left_min": float(TorchSupply.S.get("brand_burn_min", 3.0)), "brand": true}))
+		if not bool(TorchSupply.S.get("brand_without_torch", false)):
+			GameLog.add(str(TorchSupply.S.get("log_no_brand", "You carry no torch to take the fire with you.")), "torch")
+			return
+		pl.inventory.add(Inventory.make("torch"))
 	pl.weapon = "torch"
 	pl.torch.light("A brand from the hub fire.")
 

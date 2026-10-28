@@ -3,29 +3,34 @@ extends Node
 ## Where torches come from, and why there are few (Mike, 27 Oct: "torches
 ## shouldn't be too abundant, to create a sense of scarcity and encourage
 ## the player to either prepare during the day or venture out at night to
-## find them"; torch.json crawler_burn.supply). Fire is carried, never made
-## (§ET); unlit torches are made by the folk and found:
+## find them"; 28 Oct: "it can start with torches but it should not just
+## resupply itself; you should have to make it or find them"; torch.json
+## crawler_burn.supply). Fire is carried, never made (§ET); an unlit torch
+## is found or bound by hand, and nothing fills again by itself:
 ##   the firekeeper's stack  at the woodcutter-firekeeper's site at the hub
-##                (§FZ): he binds per_day torches each day, the stack
-##                holding at most max; a new game finds start in it. Take
-##                them by day, before night falls, and you are ready.
-##   the realms' caches     a few old torches left in each realm (caches.count
-##                places a realm, seeded), torches each; one emptied fills
-##                again restock_days later. Found by walking the realm, by
-##                day or, when you've run short, by night.
+##                (§FZ): a new game finds hub.start torches in it, and that
+##                is all. It is also where you bind torches (make): a branch
+##                and a lump of resin for each, from your pack.
+##   the realms' finds      seeded on each realm's floor: caches (old torches
+##                left in a ring of stones), deadfall branches and resin on
+##                old stumps. Taken once each, never laid again
+##                (finds.<kind>.regrow_days 0); walk the realm by day, or go
+##                out in the dark when you've run short.
 ##   the ruin's bundle      by its hearth, laid once in a game and never again
 ##                (ruin_bundle_kept; CrawlerMain.take_torch keeps its count).
-##   the brand    the song gives one only when you hold no torch, and it is
-##                short (brand_burn_min): enough to light the realm's hearth,
-##                not to walk the night (CrawlerAreas._brand).
-## What is in the stacks and caches lives in the game's save
-## (CrawlerSave.data.torch_supply). The interact button by a stack or a
-## cache takes one torch (carry_max still holds, the rustle when full).
+##   the song     lights a torch you carry (brand_without_torch false: with no
+##                torch of your own you go through with none).
+## What is left in each lives in the game's save
+## (CrawlerSave.data.torch_supply). The interact button by one takes from
+## it (carry_max still holds), and at the firekeeper's site binds a torch.
 
 static var S: Dictionary = (Tuning.table("torch").get("crawler_burn", {}) as Dictionary).get("supply", {})
 
+## The kinds of find a realm has, in finds' order.
+const KINDS := ["cache", "branch", "resin"]
+
 var main: CrawlerMain
-## [{"node", "where": "hub" | realm, "i" (cache index, -1 the hub's)}]
+## [{"node", "where": "hub" | realm, "kind" ("hub" or KINDS), "i"}]
 var _stacks: Array = []
 
 
@@ -41,30 +46,41 @@ static func on() -> bool:
 static func store() -> Dictionary:
 	var t: Variant = CrawlerSave.data.get("torch_supply", null)
 	if not t is Dictionary:
-		var H: Dictionary = S.get("hub", {})
-		t = {"hub": {"left": int(H.get("start", 2)), "day": -1}, "caches": {}}
+		t = {}
 		CrawlerSave.data["torch_supply"] = t
+	if not (t as Dictionary).has("hub"):
+		t["hub"] = {"left": int((S.get("hub", {}) as Dictionary).get("start", 3))}
+	if not (t as Dictionary).has("realms"):
+		t["realms"] = {}
 	return t
 
 
-## The firekeeper's stack: {"left", "day" (the last day he bound torches)}.
+## The firekeeper's stack: {"left"}.
 static func hub_stack() -> Dictionary:
 	return store().hub
 
 
-## Realm `realm`'s caches: [{"left", "emptied" (the day, -1 if not)}].
-static func caches(realm: String) -> Array:
-	var all: Dictionary = store().caches
+## Find `kind` (KINDS) in data: finds.<kind>.
+static func find_data(kind: String) -> Dictionary:
+	return (S.get("finds", {}) as Dictionary).get(kind, {})
+
+
+## Realm `realm`'s finds of `kind`: [{"left", "emptied" (the day, -1 if not)}].
+static func finds(realm: String, kind: String) -> Array:
+	var all: Dictionary = store().realms
 	if not all.has(realm):
-		var C: Dictionary = S.get("caches", {})
-		var tr: Array = C.get("torches", [1, 2])
+		all[realm] = {}
+	var r: Dictionary = all[realm]
+	if not r.has(kind):
+		var F := find_data(kind)
+		var each: Array = F.get("each", [1, 1])
 		var rng := RandomNumberGenerator.new()
-		rng.seed = hash([CrawlerSave.game_seed, realm, "torch caches"])
+		rng.seed = hash([CrawlerSave.game_seed, realm, kind, "finds"])
 		var list := []
-		for i in int(C.get("count", 4)):
-			list.append({"left": rng.randi_range(int(tr[0]), int(tr[1])), "emptied": -1.0})
-		all[realm] = list
-	return all[realm]
+		for i in int(F.get("count", 4)):
+			list.append({"left": rng.randi_range(int(each[0]), int(each[1])), "emptied": -1.0})
+		r[kind] = list
+	return r[kind]
 
 
 ## The day now on the one clock (§FK.3).
@@ -72,52 +88,37 @@ func _days() -> float:
 	return float(main.world.get("days")) if main != null and main.world != null else 0.0
 
 
-## The firekeeper binds torches each day (day: floor of the clock): per_day
-## more for every day gone since he last did, up to max. A stack the game has
-## not yet seen a day of (day -1) starts now.
-static func bind_days(st: Dictionary, days: float) -> void:
-	var H: Dictionary = S.get("hub", {})
-	var today := floorf(days)
-	if float(st.day) < 0.0:
-		st["day"] = today
+## An emptied find comes back regrow_days later, only where the data says
+## (0, the build: never; Mike, 28 Oct: nothing resupplies itself).
+static func regrow(list: Array, realm: String, kind: String, days: float) -> void:
+	var F := find_data(kind)
+	var wait := float(F.get("regrow_days", 0.0))
+	if wait <= 0.0:
 		return
-	var gone := int(today - float(st.day))
-	if gone < 0:
-		# The clock set back (a new game is set to its first dusk once built).
-		st["day"] = today
-		return
-	if gone == 0:
-		return
-	st["left"] = mini(int(st.left) + gone * int(H.get("per_day", 2)), maxi(int(H.get("max", 3)), int(st.left)))
-	st["day"] = today
-
-
-## An emptied cache fills again restock_days after (to its first count).
-static func restock(list: Array, realm: String, days: float) -> void:
-	var C: Dictionary = S.get("caches", {})
-	var tr: Array = C.get("torches", [1, 2])
+	var each: Array = F.get("each", [1, 1])
 	for i in list.size():
 		var c: Dictionary = list[i]
-		if int(c.left) <= 0 and float(c.emptied) >= 0.0 and days - float(c.emptied) >= float(C.get("restock_days", 2.0)):
+		if int(c.left) <= 0 and float(c.emptied) >= 0.0 and days - float(c.emptied) >= wait:
 			var rng := RandomNumberGenerator.new()
-			rng.seed = hash([CrawlerSave.game_seed, realm, i, int(days)])
-			c["left"] = rng.randi_range(int(tr[0]), int(tr[1]))
+			rng.seed = hash([CrawlerSave.game_seed, realm, kind, i, int(days)])
+			c["left"] = rng.randi_range(int(each[0]), int(each[1]))
 			c["emptied"] = -1.0
 
 
-## Where realm `area`'s caches lie (seeded; on its floor, away from its
-## hearth and its ruin's mouth).
-static func cache_spots(area: Surface, realm: String, n: int) -> Array:
-	var C: Dictionary = S.get("caches", {})
+## Where realm `area`'s finds of `kind` lie (seeded; on its floor, away
+## from its hearth and its ruin's mouth, apart from each other and from
+## `taken`, the spots already placed).
+static func spots(area: Surface, realm: String, kind: String, n: int, taken: Array = []) -> Array:
+	var F := find_data(kind)
 	var land := area.land
 	var rng := RandomNumberGenerator.new()
-	rng.seed = hash([area.seed_value, realm, "torch cache spots"])
-	var hp := area.area_hearth.global_position if area.area_hearth != null else Vector3(land.center.x, 0.0, land.center.y)
+	rng.seed = hash([area.seed_value, realm, kind, "find spots"])
+	var hp := area.area_hearth.position if area.area_hearth != null else Vector3(land.center.x, 0.0, land.center.y)
 	var h2 := Vector2(hp.x, hp.z)
 	var mouth: Vector2 = area.stair.get("mouth", Vector2.INF) if area.stair is Dictionary else Vector2.INF
-	var apart := float(C.get("apart_m", 30.0))
+	var apart := float(F.get("apart_m", 20.0))
 	var out: Array = []
-	for attempt in 600:
+	for attempt in 800:
 		if out.size() >= n:
 			break
 		var a := rng.randf() * TAU
@@ -125,11 +126,11 @@ static func cache_spots(area: Surface, realm: String, n: int) -> Array:
 		var p := land.center + Vector2(cos(a), sin(a)) * r
 		if not land.inside(p, 12.0) or land.slope_at(p.x, p.y) > 0.3 or land.in_wash(p) > 0.05:
 			continue
-		if p.distance_to(h2) < float(C.get("from_hearth_m", 35.0)) or (mouth != Vector2.INF and p.distance_to(mouth) < 10.0):
+		if p.distance_to(h2) < float(F.get("from_hearth_m", 20.0)) or (mouth != Vector2.INF and p.distance_to(mouth) < 10.0):
 			continue
 		var ok := true
-		for q: Vector3 in out:
-			if p.distance_to(Vector2(q.x, q.z)) < apart * (0.5 if attempt > 300 else 1.0):
+		for q: Vector3 in out + taken:
+			if p.distance_to(Vector2(q.x, q.z)) < apart * (0.5 if attempt > 400 else 1.0):
 				ok = false
 				break
 		if ok:
@@ -140,8 +141,6 @@ static func cache_spots(area: Surface, realm: String, n: int) -> Array:
 func _process(_delta: float) -> void:
 	if not on() or main == null:
 		return
-	var days := _days()
-	bind_days(hub_stack(), days)
 	_ensure_hub()
 	_ensure_area()
 	for s in _stacks:
@@ -167,10 +166,10 @@ func _ensure_hub() -> void:
 			var off := Vector3(-1.2, 0.0, 0.6).rotated(Vector3.UP, yaw)
 			at = (site.at as Vector3) + off
 			at.y = hub.land.height_at(at.x, at.z)
-	_stacks.append({"node": _stack_node(hub, at, yaw), "where": "hub", "i": -1, "realm": ""})
+	_stacks.append({"node": _node(hub, at, yaw), "where": "hub", "kind": "hub", "i": -1})
 
 
-## A realm's caches, laid once its surface is built.
+## A realm's finds, laid once its surface is built.
 func _ensure_area() -> void:
 	var area := main.area_node
 	# (Not while it is only the glimpse in the fire, CrawlerAreas.)
@@ -179,64 +178,130 @@ func _ensure_area() -> void:
 	var realm := "first"
 	if _has(realm):
 		return
-	var list := caches(realm)
-	var spots := cache_spots(area, realm, list.size())
-	for i in spots.size():
-		var node := _stack_node(area, spots[i], hash([realm, i]) % 628 / 100.0)
-		# An old cache: a ring of stones round it, so it reads as left there.
-		var C: Dictionary = S.get("caches", {})
-		for k in 6:
-			var st := MeshInstance3D.new()
-			var sm := SphereMesh.new()
-			sm.radius = 0.12
-			sm.height = 0.14
-			st.mesh = sm
-			var m := StandardMaterial3D.new()
-			m.albedo_color = Color(str(C.get("stone_colour", "#4a4858")))
-			m.roughness = 0.9
-			st.material_override = m
-			st.position = Vector3(cos(k * TAU / 6.0) * 0.55, 0.04, sin(k * TAU / 6.0) * 0.55)
-			node.add_child(st)
-		_stacks.append({"node": node, "where": realm, "i": i, "realm": realm})
+	var placed: Array = []
+	for kind in KINDS:
+		var list := finds(realm, kind)
+		var at := spots(area, realm, kind, list.size(), placed)
+		placed.append_array(at)
+		for i in at.size():
+			var node := _node(area, at[i], float(hash([realm, kind, i]) % 628) / 100.0)
+			_dress(node, kind)
+			_stacks.append({"node": node, "where": realm, "kind": kind, "i": i})
 
 
-func _stack_node(parent: Node3D, at: Vector3, yaw: float) -> Node3D:
+func _node(parent: Node3D, at: Vector3, yaw: float) -> Node3D:
 	var n := Node3D.new()
-	n.name = "TorchStack"
+	n.name = "TorchFind"
 	parent.add_child(n)
-	n.global_position = at
+	n.position = parent.to_local(at) if parent.is_inside_tree() else at
 	n.rotation.y = yaw
 	n.set_meta("shown", -1)
 	return n
 
 
-## How many torches stack `s` holds now.
-func left_of(s: Dictionary) -> int:
-	if str(s.where) == "hub":
-		return int(hub_stack().left)
-	var list := caches(str(s.realm))
-	restock(list, str(s.realm), _days())
-	return int(list[int(s.i)].left)
+func _mat(c: String, rough := 0.85) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_color = Color(c)
+	m.roughness = rough
+	return m
 
 
-## Its sticks, as many as it holds.
+## What stays when it is empty: a cache's ring of stones, a resin stump.
+func _dress(node: Node3D, kind: String) -> void:
+	var F := find_data(kind)
+	match kind:
+		"cache":
+			for k in 6:
+				var st := MeshInstance3D.new()
+				var sm := SphereMesh.new()
+				sm.radius = 0.12
+				sm.height = 0.14
+				st.mesh = sm
+				st.material_override = _mat(str(F.get("colour", "#4a4858")), 0.9)
+				st.position = Vector3(cos(k * TAU / 6.0) * 0.55, 0.04, sin(k * TAU / 6.0) * 0.55)
+				node.add_child(st)
+		"resin":
+			# An old pine stump, split and weeping.
+			var stump := MeshInstance3D.new()
+			var cm := CylinderMesh.new()
+			cm.top_radius = 0.24
+			cm.bottom_radius = 0.32
+			cm.height = 0.55
+			cm.radial_segments = 7
+			stump.mesh = cm
+			stump.material_override = _mat(str(F.get("wood_colour", "#4a3020")), 0.8)
+			stump.position = Vector3(0.0, 0.27, 0.0)
+			node.add_child(stump)
+
+
+## Its torches, branch or resin, as many as it holds.
 func _show(s: Dictionary) -> void:
 	var n := left_of(s)
 	var node: Node3D = s.node
 	if int(node.get_meta("shown")) == n:
 		return
 	node.set_meta("shown", n)
-	for c in node.get_children():
-		if str(c.name).begins_with("Stick") or str(c.name).begins_with("Tip") or str(c.name) == "Cord" or str(c.name) == "Sticks":
-			c.queue_free()
+	var old := node.get_node_or_null("Held")
+	if old != null:
+		node.remove_child(old)
+		old.queue_free()
 	var holder := Node3D.new()
-	holder.name = "Sticks"
+	holder.name = "Held"
 	node.add_child(holder)
-	CrawlerFires.lay_sticks(holder, n, hash(node.position))
+	match str(s.kind):
+		"hub", "cache":
+			CrawlerFires.lay_sticks(holder, n, hash(node.position))
+		"branch":
+			# Deadfall: a crooked branch lying on the ground, a twig off it.
+			if n > 0:
+				var F := find_data("branch")
+				var b := MeshInstance3D.new()
+				var cm := CylinderMesh.new()
+				cm.top_radius = 0.025
+				cm.bottom_radius = 0.04
+				cm.height = 1.1
+				cm.radial_segments = 5
+				b.mesh = cm
+				b.material_override = _mat(str(F.get("colour", "#5a3e24")))
+				b.rotation = Vector3(PI * 0.5, 0.0, 0.08)
+				b.position = Vector3(0.0, 0.05, 0.0)
+				holder.add_child(b)
+				var tw := MeshInstance3D.new()
+				var tm := CylinderMesh.new()
+				tm.top_radius = 0.01
+				tm.bottom_radius = 0.018
+				tm.height = 0.4
+				tm.radial_segments = 4
+				tw.mesh = tm
+				tw.material_override = b.material_override
+				tw.rotation = Vector3(PI * 0.5, 0.9, 0.0)
+				tw.position = Vector3(0.12, 0.05, 0.2)
+				holder.add_child(tw)
+		"resin":
+			# Amber beads down the stump's split side (no glow: resin gives no light).
+			var F := find_data("resin")
+			for k in n * 3:
+				var r := MeshInstance3D.new()
+				var sm := SphereMesh.new()
+				sm.radius = 0.035 + 0.01 * (k % 2)
+				sm.height = sm.radius * 2.4
+				r.mesh = sm
+				r.material_override = _mat(str(F.get("colour", "#d8902a")), 0.15)
+				r.position = Vector3(0.24 * cos(k * 0.5), 0.15 + 0.12 * k, 0.24 * sin(k * 0.5))
+				holder.add_child(r)
 
 
-## The nearest stack in reach with a torch in it, or {}.
-func in_reach() -> Dictionary:
+## How much `s` holds now.
+func left_of(s: Dictionary) -> int:
+	if str(s.kind) == "hub":
+		return int(hub_stack().left)
+	var list := finds(str(s.where), str(s.kind))
+	regrow(list, str(s.where), str(s.kind), _days())
+	return int(list[int(s.i)].left)
+
+
+## The nearest of `stacks` in reach of you (that `want` passes), or {}.
+func in_reach(want := func(_s): return true) -> Dictionary:
 	var p := main.player.global_position
 	var reach := float(S.get("reach_m", 2.0))
 	var best := {}
@@ -246,36 +311,90 @@ func in_reach() -> Dictionary:
 		if node == null or not is_instance_valid(node) or not node.is_inside_tree():
 			continue
 		var d := node.global_position.distance_to(p)
-		if d <= reach and d < bd and left_of(s) > 0:
+		if d <= reach and d < bd and want.call(s):
 			best = s
 			bd = d
 	return best
 
 
-## The interact button by a stack: one torch, unlit, into your hand (or
-## pack). True if it was taken (or refused for a full carry).
-func take() -> bool:
-	if not on():
+## The materials a torch is bound from (make.needs: {kind: n}).
+static func needs() -> Dictionary:
+	return (S.get("make", {}) as Dictionary).get("needs", {"branch": 1, "resin": 1})
+
+
+## How many things of `kind` you carry.
+static func carried_of(inv: Inventory, kind: String) -> int:
+	var n := 0
+	for it in inv.carried:
+		if it is Dictionary and str(it.get("kind", "")) == kind:
+			n += maxi(int(it.get("count", 1)), 1)
+	return n
+
+
+## Can you bind a torch from what you carry?
+static func can_make(inv: Inventory) -> bool:
+	var nd := needs()
+	for k in nd:
+		if carried_of(inv, str(k)) < int(nd[k]):
+			return false
+	return true
+
+
+## Bind one torch from your pack's materials (they are used up). True if made.
+static func make(inv: Inventory) -> bool:
+	if not can_make(inv):
 		return false
-	var s := in_reach()
-	if s.is_empty():
-		return false
-	var pl := main.player
-	if pl.torch.at_carry_max():
-		GameLog.add(str(S.get("log_full", "Your hands are full of torches.")), "torch")
-		return true
-	if not pl.inventory.add(Inventory.make("torch")):
-		return false
-	if str(s.where) == "hub":
-		hub_stack()["left"] = int(hub_stack().left) - 1
-	else:
-		var c: Dictionary = caches(str(s.realm))[int(s.i)]
-		c["left"] = int(c.left) - 1
-		if int(c.left) <= 0:
-			c["emptied"] = _days()
+	var nd := needs()
+	for k in nd:
+		for n in int(nd[k]):
+			inv.take(inv.slot_of(str(k)))
+	return inv.add(Inventory.make("torch"))
+
+
+func _in_hand(pl: CrawlerPlayer) -> void:
 	if pl.weapon != "torch":
 		pl.weapon = "torch"
 		pl.torch.block_until_release()
-	GameLog.add(str(S.get("log_hub" if str(s.where) == "hub" else "log_cache", "You take a torch.")), "torch")
+
+
+## The interact button by a find or the firekeeper's stack. True if it took
+## the press (a thing taken or made, or a full carry told).
+func take() -> bool:
+	if not on():
+		return false
+	var pl := main.player
+	var s := in_reach(func(x): return left_of(x) > 0)
+	if s.is_empty():
+		# At the firekeeper's site with nothing left in his stack: bind one.
+		var hub := in_reach(func(x): return str(x.kind) == "hub")
+		if hub.is_empty() or not can_make(pl.inventory):
+			return false
+		if pl.torch.at_carry_max():
+			GameLog.add(str(S.get("log_full", "You can carry no more torches.")), "torch")
+			return true
+		if make(pl.inventory):
+			_in_hand(pl)
+			GameLog.add(str((S.get("make", {}) as Dictionary).get("log", "You bind a branch and resin into a torch.")), "torch")
+			CrawlerSave.save()
+		return true
+	var kind := str(s.kind)
+	var what := "torch" if kind in ["hub", "cache"] else kind
+	if what == "torch" and pl.torch.at_carry_max():
+		GameLog.add(str(S.get("log_full", "You can carry no more torches.")), "torch")
+		return true
+	if not pl.inventory.add(Inventory.make(what)):
+		GameLog.add(str(S.get("log_pack_full", "Your pack is full.")), "torch")
+		return true
+	if kind == "hub":
+		hub_stack()["left"] = int(hub_stack().left) - 1
+	else:
+		var c: Dictionary = finds(str(s.where), kind)[int(s.i)]
+		c["left"] = int(c.left) - 1
+		if int(c.left) <= 0:
+			c["emptied"] = _days()
+	if what == "torch":
+		_in_hand(pl)
+	var logs: Dictionary = S.get("logs", {})
+	GameLog.add(str(logs.get(kind, "You take it.")), "torch")
 	CrawlerSave.save()
 	return true

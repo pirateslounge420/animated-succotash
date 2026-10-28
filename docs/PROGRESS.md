@@ -4,6 +4,16 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-28 — Torches are found or made, never resupplied (Claude Code)
+- Mike: *"it can start with torches but it should not just resupply itself- you should have to make it or find them"*. This replaces the 27 Oct entry below (the daily binding, the refilling caches and the short brand).
+- **Built** (`TorchSupply`, `torch.json → crawler_burn.supply`; new item kinds `branch` and `resin` in `items.json`):
+  - The firekeeper's stack starts with 3 and never refills.
+  - Each realm has seeded finds: 2 caches of old torches, 8 deadfall branches and 5 resin stumps. Each is taken once and never comes back (`regrow_days` 0, a knob).
+  - At the firekeeper's site, with his stack empty, the interact button binds one branch and one resin from your pack into a torch.
+  - The song lights a torch you carry and gives none when you carry none (`brand_without_torch` false; `crawler.json → areas._help_brand` notes it).
+- **Check:** `torch_supply_check` 14/14. `area_check` now starts with a torch from the stack in your pack, and passes 0 fails. `bank_check` and `hub_check` fail 0.
+- **For Mike:** with nothing regrowing, a realm's torches are finite: 3 + 2–4 from caches + up to 5 bound + the ruin's 3, at 15 minutes each. Once a realm is stripped, more must come from new realms (not built). If that turns out too harsh, the knob is `regrow_days` on branches and resin, a living thing growing back rather than a stack refilling.
+
 ## 2026-10-27 — Torches are scarce (Claude Code)
 - Mike: *"torches shouldn't be too abundant, to create a sense of scarcity and encourage the player to either prepare during the day or venture out at night to find them"*.
 - **Before:** the ruin's bundle was laid fresh (3) every time the ruin was built, and the song handed you a full 15-minute torch whenever you held none, so torches never ran out.
