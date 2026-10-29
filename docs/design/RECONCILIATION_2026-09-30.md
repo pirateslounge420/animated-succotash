@@ -7203,3 +7203,48 @@ bank). Capacity: generous (first guess).
 **116 is amended** (songs learned from plants; the platter of three). **117 is rewritten** (doors home,
 the keeper and his fee, the chest, layouts per run). **119 is new:** looting bodies, teeth by rarity,
 and stashes. Data: `data/song_web.json` (new, not wired).
+
+## GL. Scrolls and spells, mana, where the keys are found, rare spawns and the music — LOCKED (29 Oct, by voice then text, Mike; "Lock it all, my brother. Lock it all.", then "lock itnall" 16:31)
+
+Mike, 29 Oct, by voice: the game is turning into an RPG; finds should feel rewarding and help the
+world-building. Settles §GG.4.1 and §GK.9 call 6's interpreter.
+
+### GL.1 Scrolls, read by the shaman
+1. Scrolls and old texts come home **unreadable**. Bring them to **the shaman** (he is the hub's one
+   man for everything for now: he sings the realms open, reads texts, teaches spells). Settles the
+   interpreter: it is the shaman.
+2. **Reading takes time:** leave the scroll with him, go on a trip, come back, and he tells you what it is.
+3. A scroll is either **lore** (a piece of the story; §GG.3 stays never-said-outright) or a **spell**.
+
+### GL.2 Spells: all permanent, rarity sets the level
+1. **Every spell scroll teaches a permanent spell.** Common scrolls teach lower-level spells; rare ones
+   higher-level.
+2. **Spells are about light and the dark**, not fireballs. First ideas (Claude's, for Mike to pick from):
+   light every lamp in a room at once; see in the dark for a while; clear fog; calm nearby creatures.
+3. **Cost: cooldowns and one mana meter.** Each spell has its own cooldown and draws on one shared
+   meter; bigger spells cost more and recharge longer.
+4. **Mana comes back three ways:** slowly over time, faster by a fire, and from **mana potions**
+   (consumables; found in stashes, §GK.8, or brewed by the shaman from plants you bring; *Claude's
+   reading* of where they come from).
+
+### GL.3 Where each realm's two new keys are found (amends §GK.2.3)
+Of the two new key plants a realm offers, **one waits at the end** (past the realm's boss or its
+deepest point) and **one is tucked down a side path** you have to find. Rush and you bring home one
+key; explore and you bring home both.
+
+### GL.4 Rare spawns: PSO's loop
+Rare creature spawns (§ED.6's rare morphs and mythics, worth more teeth, §GK.8) are the reason to go back
+to realms you have already opened, as in PSO.
+
+### GL.5 The music: PSO's vibe
+Each realm has its own theme; it **settles to ambience while you explore and builds when creatures are
+near**, then settles again. (Claude's proposal from the same talk, taken in "lock it all".)
+
+### GL.6 Open
+The spell list itself; mana's numbers; how long the shaman takes to read; whether each item also
+carries a short lore line (PSO-style descriptions, proposed, not locked).
+
+### GL.7 Queue
+**120:** scrolls read by the shaman, spells, mana and potions (after 117). **121:** keys at the end and
+on a side path, rare spawns, the realm's music building and settling (after 116). Data:
+`data/spells.json` (new, not wired).

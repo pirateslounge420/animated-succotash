@@ -157,6 +157,8 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | todo (after 116) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 | 119 | §GK.8 | Looting bodies: kneel and take teeth and parts; teeth worth more the rarer the creature; teeth stashes only where people once kept things | todo (after 117) |
+| 120 | §GL.1–2 | Scrolls read by the shaman over a trip; permanent spells by rarity; cooldowns, one mana meter, regen faster by a fire, mana potions | todo (after 117) |
+| 121 | §GL.3–5 | One key at the end, one down a side path; rare spawns; each realm's music settles while you explore and builds when creatures are near | todo (after 116) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -2018,4 +2020,20 @@ CHECK (headless): a run keeps its layout after death; save-and-quit gives a new 
 Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK.8 first. After 117. No screenshots between steps.
 BUILD: (1) A creature killed (flesh: data/substance.json) leaves its body; kneel (interact) and take its parts: teeth, plus its own parts (hide, horn, feathers, venom; song_web.json → loot.parts, per creature first guesses). (2) Teeth value by the creature's rung (common / rare / mythic, song_web.json → loot.teeth_value_by_rung), per species. (3) Teeth stashes only at loot.stash_sites placed where people once kept things (a collapsed storeroom, a temple niche, a clay jar under roots, a cave cache), overgrown; no loose chests.
 CHECK (headless): a rare kill pays more teeth than a common one of the same kind; stashes never spawn outside their site kinds; looted bodies give nothing twice; no errors. Prepend a PROGRESS entry.
+```
+
+## 120 — Scrolls, spells and mana — §GL.1–2
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GL first. After 117. No screenshots between steps; Mike plays and reports.
+BUILD: (1) Unreadable scrolls (a find) can be given to the shaman; after data/spells.json → read_trips trips out and back he tells you what each was: lore (a page for the log) or a spell, by scroll_odds. (2) A spell learned is permanent; rarity sets its level. Start with spells_first_ideas (kindle, nighteye, clear_fog, hush) as stand-ins. (3) One mana meter (mana.max) with per-spell cooldowns and costs; mana regenerates over time, faster within fire_radius_m of any fire; mana potions restore potions.restore and are found in stashes. (4) A small HUD meter inside the §GB look; casting bound in data/hands.json style, rebindable. (5) Remove the NOT WIRED YET prefix once read.
+CHECK (headless): a scroll stays unread until a trip passes; scroll outcomes match scroll_odds over 1000 draws within 3 %; a spell on cooldown cannot be cast; mana regen is faster by a fire by regen_by_fire_mult; a potion restores the set amount; learned spells survive death and save-and-quit; no errors. Prepend a PROGRESS entry.
+```
+
+## 121 — Where the keys are, rare spawns, the realm's music — §GL.3–5
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GL first. After 116. No screenshots between steps.
+BUILD: (1) Of a realm's two new key plants (data/song_web.json → realm_offers), place one at the end (past its boss or deepest point) and one at the end of a side path, every layout. (2) Rare and mythic creature spawns per §ED.6's rungs, so returning to an opened realm can turn one up. (3) Each realm's music settles to ambience while you explore and builds within music.creatures_near_m of creatures (build_s, settle_s), then settles.
+CHECK (headless): over 30 layouts both keys are reachable, one at the deepest point and one off the main path; rare spawns occur at their set odds; the music level rises with a creature near and falls after it leaves; no errors. Prepend a PROGRESS entry.
 ```
