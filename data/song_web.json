@@ -1,6 +1,6 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §GK.2] (29 Oct) The song web. Each realm has a key (a plant, rarely a mineral); bring the shaman a cutting and he teaches its song. The hub's platter starts with three keys. Every realm offers three: the key that brought you plus two that lead on. 'grows_in' is where its cutting can be taken. Entries marked open are Mike's to fill (§GK.9 call 2).",
+  "about": "(29 Oct, design §GK.2) The song web. Wired 29 Oct (Claude Code, queue 116 amended; SongKeys): platter, keys (opens) and realm_offers; grows_in is not read (a realm grows what realm_offers lists). doors, keeper and loot: [NOT WIRED YET — design §GK.5-8, queue 117, 119]. Each realm has a key (a plant, rarely a mineral); bring the shaman a cutting and he teaches its song. The hub's platter starts with three keys. Every realm offers three: the key that brought you plus two that lead on. 'grows_in' is where its cutting can be taken. Entries marked open are Mike's to fill (§GK.9 call 2).",
   "realms": "key -> realm it opens. Names are working names."
  },
  "platter": ["cactus", "mushroom", "vine"],

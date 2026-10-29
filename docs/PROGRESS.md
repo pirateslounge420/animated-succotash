@@ -4,6 +4,22 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-29 — Queue 116 amended (§GK.2–3): plants are the keys, arriving by sound; and §GK.1.2 for queue 114 (Claude Code)
+- **Merged** the design branch (§GK, §GL, queue 119–121) into this branch first; queue rows kept their built status, 116 and 117 marked "built to the old design, §GK amendment todo".
+- **What Mike sees:**
+  - A new game: no song known. A wooden platter beside the hub fire holds a cactus, a mushroom and a vine. Look at one and right click: a cutting goes in your pack. Walk to the shaman and right click: he takes it, teaches you its realm's song and sings it straight away, you sitting at the fire. The other two stay on the platter for later.
+  - The cactus opens the desert, the realm that's built. The mushroom, vine, root and leaf teach songs of realms not made yet: they show in the fire's list with their own colour in the flames, but no glimpse, and stepping in just says the way isn't open.
+  - Stepping into the desert now arrives sound first: a beat of near-dark with only its wind and insects, then its music (its song, for now), then the picture fades up.
+  - The desert grows its three keys (cactus, root, leaf) on its floor, one plant of each; take a cutting (once a visit), bring it home, give it, learn the song.
+  - The sky: the hub is no longer on the equator. Every place shares one 35° year (§GK.1.2), so the hub's days now lengthen in summer and shorten in winter, the same as every realm.
+- **Built:** `SongKeys` (`scripts/crawler/song_keys.gd`): the platter, the realm's key plants (simple shapes: a ribbed barrel cactus with a flower, a cap mushroom, a coil of vine, roots, a broad leaf), take by aim, give to the shaman, the songs and the platter in the save (`songs`, `platter`; an old save's `"first"` reads as the desert's song). `CrawlerAreas`: realms by the song web's names (`areas.realms`; the desert is area `first`), stand-in realms, `sit(realm)`, the arrival (`arrive`, `arrive_phase`). `crawler.json → areas`: `realms`, `keys`, `arrive`, songs keyed by realm with placeholder chants for the four stand-ins, `known_from_start` empty. `items.json → key_cutting`. `ItemIcon` reads an item's `glyph`. `song_web.json` is now read (`Tuning`): platter, keys, realm_offers wired; doors, keeper and loot still not. `CrawlerCalendar.latitude_deg` reads `calendar.reference_latitude_deg` (35) for every place.
+- **Checks:** new `tools/song_keys_check.gd` 28/28 (the platter, take by aim, the give, the song at once, a stand-in sung but closed, the arrival's three beats in order with the realm's sounds before its music, the desert's three keys, one cutting a visit, the root's song from home, a known cutting kept, Continue, an old save). `area_check`, `bank_check`, `torch_supply_check` (each teaches the desert's song up front), `hub_check` (its year line now: the hub's day as long as a realm's), `day_shift_check`, `calendar_check` (one sky for all) 0 fails.
+- **For Mike (open calls):**
+  - Taking one plant off the platter doesn't remove the other two; you can learn all three songs at the start. §GK.2.2 says "choosing one decides your first realm": should the other two vanish once you choose? It's one setting to change.
+  - The cactus opens "the first realm", which is whichever ruin the game's seed draws (the tomb's desert basin or the Aztec temple's highland). §GK.1.4 says the cactus's realm is the Aztec one. Pin the first ruin to the Aztec temple?
+  - The hub's winter is still "dry season" (`hub_area` tropical), from when it sat on the equator; its plants are temperate forest. Should its winter drop leaves now?
+  - The plant models are first-pass stand-ins, judged by eye in the walkabout.
+
 ## 2026-10-29 — §GL locked: scrolls and spells, mana, where keys are found, rare spawns, the music (Claude, chat)
 - **Mike** (29 Oct, by voice): scrolls you can't read, brought to the shaman, who takes time; every spell permanent, rarity sets the level; cooldowns with a mana meter, regen over time and faster by a fire, plus mana potions; one key plant at a realm's end and one down a side path; PSO's rare spawns and music; "Lock it all".
 - **Design:** §GL. Settles the interpreter (the shaman). Spells are about light and the dark (first ideas: kindle, nighteye, clear fog, hush).

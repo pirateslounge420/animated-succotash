@@ -859,7 +859,7 @@
   }
  },
  "areas": {
-  "_help": "(design §GD.1.2-4, queue 113; §GH, queue 116) Realms (areas) reached from the hub by the shaman's song round the fire. Each realm is a curated, seeded surface with a main hearth near one edge, an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. The interact button at the hub fire or beside the shaman (interact_reach_m) sits you down facing the fire; the shaman sings the song of a realm you know (songs), the flames take its colour and a glimpse of it opens in the fire (glimpse); left and right scroll through the realms you know; the interact button again steps you into the fire: the wash (travel.wash_s) and you come out at that realm's hearth. Moving or Esc stands you up with nothing changed. Knowing the song is the key (§GH.2.1); lighting a realm's hearth with your torch reclaims it (lit for good, saved, §FK) but no longer gates travel. Home: the interact button at the realm's hearth. on false: no travel.",
+  "_help": "(design §GD.1.2-4, queue 113; §GH, queue 116) Realms (areas) reached from the hub by the shaman's song round the fire. Each realm is a curated, seeded surface with a main hearth near one edge, an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. The interact button at the hub fire or beside the shaman (interact_reach_m) sits you down facing the fire; the shaman sings the song of a realm you know (songs; learned by giving him its key plant, keys, design §GK.2), the flames take its colour and a glimpse of it opens in the fire (glimpse); left and right scroll through the realms you know; the interact button again steps you into the fire: the wash (travel.wash_s) and you come out at that realm's hearth. Moving or Esc stands you up with nothing changed. Knowing the song is the key (§GH.2.1); lighting a realm's hearth with your torch reclaims it (lit for good, saved, §FK) but no longer gates travel. Home: the interact button at the realm's hearth. on false: no travel.",
   "on": true,
   "interact_reach_m": 3.0,
   "_help_brand": "brand: stepping through the fire with no lit torch, you carry a brand from the hub fire (a lit torch in hand): fire carried, never made (§ET), and the way to light the far hearth. Since 28 Oct (Mike: torches are found or made, never handed out; torch.json crawler_burn.supply.brand_without_torch false) the fire lights a torch you carry, and with none you go through with none.",
@@ -870,7 +870,7 @@
    "flame_s": 1.2
   },
   "first": {
-   "_help": "The first area: the surface over the game's first ruin (worlds.json surface, the ruin's own world), at areas size. across_m: how wide (a range, drawn from the seed; prompt's first guess 300-600). colour: the hub fire's flames when bound for it, and the wash. hearth: from_edge_m how far in from the cliff's foot the main hearth stands; reach_m how close your torch's flame must be; light_hold_s how long you hold it there.",
+   "_help": "The first area: the surface over the game's first ruin (worlds.json surface, the ruin's own world), at areas size. across_m: how wide (a range, drawn from the seed; prompt's first guess 300-600). colour: the hub fire's flames when bound for it, and the wash. hearth: from_edge_m how far in from the cliff's foot the main hearth stands; reach_m how close your torch's flame must be; light_hold_s how long you hold it there. Since §GK.2 the first area is the desert, the realm the cactus opens (realms.desert_aztec_scrub); its colour is realms.desert_aztec_scrub.colour.",
    "name": "The dry basin",
    "across_m": [
     300.0,
@@ -883,17 +883,130 @@
     "light_hold_s": 1.0
    }
   },
+  "_help_realms": "(design §GK.2, queue 116 amended) The realms by the song web's names (data/song_web.json keys.<key>.opens). area: the built area that realm is (areas.<area>: its surface, hearth and ruin); today only the cactus's realm, the desert (§GK.1.4), is built, and it is the game's first area, over the first ruin. stand_in: a realm not made yet: its song can be learned and sung, its colour fills the flames, but no glimpse opens and the fire takes no one through (log_stand_in). name and colour for each.",
+  "realms": {
+   "desert_aztec_scrub": {
+    "area": "first",
+    "colour": "#3fd0ff"
+   },
+   "dark_caves": {
+    "stand_in": true,
+    "name": "The dark caves",
+    "colour": "#9a6cff"
+   },
+   "deep_jungle": {
+    "stand_in": true,
+    "name": "The deep jungle",
+    "colour": "#4fe08a"
+   },
+   "root_world": {
+    "stand_in": true,
+    "name": "The root world",
+    "colour": "#c88a4a"
+   },
+   "old_growth_forest": {
+    "stand_in": true,
+    "name": "The old-growth forest",
+    "colour": "#e8d060"
+   },
+   "swamp": {
+    "stand_in": true,
+    "name": "The swamp",
+    "colour": "#7aa860"
+   },
+   "volcanic_mine": {
+    "stand_in": true,
+    "name": "The volcanic mine",
+    "colour": "#ff5a2a"
+   }
+  },
+  "keys": {
+   "_help": "(design §GK.2, queue 116 amended; data/song_web.json) Songs are learned from plants. platter: a new game lays song_web.json platter's three key plants on a wooden platter by the hub fire (from_fire_m out from the fire toward the shaman's side, toward_you_m toward where you start); the interact button within reach_m takes the one you look at (within aim_deg of the middle of your view; looking elsewhere, the button does what it would anyway, such as sitting at the fire) as a cutting in your pack, and the others stay on the platter (kept in the save) until you take them too. Give him one: the interact button by the shaman or the fire with a cutting of a song you don't know yet, and he takes it, teaches you its realm's song (kept in the save) and sings it at once, you sitting at the fire. A cutting of a key whose song you already know stays in your pack (the shaman only takes what he can teach). In a realm: each key song_web.json realm_offers.<realm> lists grows there (in_realm: count of each, from_hearth_m [min, max] out, apart_m from each other); the interact button within reach_m takes a cutting (the plant stays; one cutting per plant per visit), carried home like anything else (§GL.3's end and side path, queue 121, will move where the two new ones grow). look: each key's plant and its icon (glyph: the pack's icon drawing) and colours.",
+   "reach_m": 1.6,
+   "aim_deg": 25.0,
+   "platter": {
+    "from_fire_m": 1.35,
+    "toward_you_m": 0.9,
+    "radius_m": 0.42,
+    "wood": "#6b4a2c"
+   },
+   "in_realm": {
+    "count": 1,
+    "from_hearth_m": [
+     18.0,
+     140.0
+    ],
+    "apart_m": 25.0
+   },
+   "look": {
+    "cactus": {
+     "title": "Cactus cutting",
+     "glyph": "column",
+     "colour": "#4f8a3a",
+     "accent": "#e8d27a"
+    },
+    "mushroom": {
+     "title": "Mushroom",
+     "glyph": "mushroom",
+     "colour": "#b0583a",
+     "accent": "#e8dcc0"
+    },
+    "vine": {
+     "title": "Vine cutting",
+     "glyph": "cutting",
+     "colour": "#5a8a3a",
+     "accent": "#6b4a2c"
+    },
+    "root": {
+     "title": "Root",
+     "glyph": "bundle",
+     "colour": "#a87a4a",
+     "accent": "#5a3e24"
+    },
+    "leaf": {
+     "title": "Leaf",
+     "glyph": "leaf",
+     "colour": "#6aa848",
+     "accent": "#3a6a2a"
+    },
+    "toad": {
+     "title": "Toad",
+     "glyph": "sample",
+     "colour": "#7a8a4a",
+     "accent": "#c8b060"
+    },
+    "rare_ore": {
+     "title": "Rare ore",
+     "glyph": "sample",
+     "colour": "#c86a3a",
+     "accent": "#404048"
+    }
+   },
+   "log_take_platter": "You take the %s from the platter.",
+   "log_take_realm": "You take a %s.",
+   "log_give": "The shaman takes the %s, turns it in the firelight, and begins to teach you its song.",
+   "log_no_song": "The shaman waits by the fire. Bring him a plant, and he will teach you its song.",
+   "log_stand_in": "The song rises, but the flames open no way through yet: that realm is not made.",
+   "log_full": "Your pack is full."
+  },
+  "arrive": {
+   "_help": "(design §GK.3, queue 116 amended) Arriving, sound first: the song's wash fills the frame, then you are there in near-dark (dark_alpha) for dark_s hearing only the realm's own sounds (its wind, its creatures, far calls); then its music comes in (music_db; until each realm has its own theme, queue 121, its song stands in) for music_s more; then the picture settles in over picture_s. The music fades out over music_out_s after.",
+   "dark_alpha": 0.96,
+   "dark_s": 1.6,
+   "music_s": 1.4,
+   "picture_s": 2.2,
+   "music_db": -12.0,
+   "music_out_s": 8.0
+  },
   "log_link": "The hearth catches. This place is reclaimed: its fire burns for good.",
   "log_home": "The shaman's song carries you home through the fire.",
   "log_sing": "You sit at the fire. The shaman begins to sing.",
   "log_step": "You step into the fire as the song swells.",
   "log_stand": "You get up from the fire.",
   "songs": {
-   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. known_from_start: the realms whose songs you know in a new game; a stand-in until Mike says how songs are learned (§GH.4 call 1, open; from tablets, tomes or the other peoples, §GG.1.3). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (areas.<key>.colour) while it plays.",
-   "known_from_start": [
-    "first"
-   ],
-   "first": {
+   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. Keyed by the song web's realm names (data/song_web.json keys.<key>.opens). known_from_start: the realms whose songs you know in a new game: none since §GK.2 (29 Oct; settles §GH.4 call 1): every song is learned by bringing the shaman its key plant (keys). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (realms.<realm>.colour) while it plays.",
+   "known_from_start": [],
+   "desert_aztec_scrub": {
     "music": "",
     "bpm": 76.0,
     "root_hz": 98.0,
@@ -930,6 +1043,170 @@
      0,
      1,
      0.5,
+     0.5,
+     0
+    ]
+   },
+   "dark_caves": {
+    "music": "",
+    "bpm": 58.0,
+    "root_hz": 73.4,
+    "chant": [
+     0,
+     null,
+     -2,
+     null,
+     0,
+     1,
+     0,
+     null,
+     -5,
+     null,
+     -2,
+     0,
+     null,
+     null,
+     0,
+     null
+    ],
+    "drum": [
+     1,
+     0,
+     0,
+     0,
+     0.5,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0.5,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "deep_jungle": {
+    "music": "",
+    "bpm": 92.0,
+    "root_hz": 130.8,
+    "chant": [
+     0,
+     2,
+     4,
+     7,
+     4,
+     2,
+     0,
+     null,
+     0,
+     2,
+     4,
+     9,
+     7,
+     4,
+     2,
+     null
+    ],
+    "drum": [
+     1,
+     0.5,
+     0,
+     0.5,
+     1,
+     0,
+     0.5,
+     0.5,
+     1,
+     0.5,
+     0,
+     0.5,
+     1,
+     0,
+     0.5,
+     0.5
+    ]
+   },
+   "root_world": {
+    "music": "",
+    "bpm": 66.0,
+    "root_hz": 87.3,
+    "chant": [
+     0,
+     0,
+     3,
+     null,
+     0,
+     -2,
+     -4,
+     null,
+     0,
+     3,
+     5,
+     null,
+     3,
+     0,
+     null,
+     null
+    ],
+    "drum": [
+     1,
+     0,
+     0,
+     0.5,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0.5,
+     1,
+     0,
+     0.5,
+     0
+    ]
+   },
+   "old_growth_forest": {
+    "music": "",
+    "bpm": 72.0,
+    "root_hz": 110.0,
+    "chant": [
+     0,
+     4,
+     7,
+     null,
+     9,
+     7,
+     4,
+     null,
+     2,
+     4,
+     7,
+     null,
+     4,
+     2,
+     0,
+     null
+    ],
+    "drum": [
+     1,
+     0,
+     0.5,
+     0,
+     0.5,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0.5,
+     0,
+     0.5,
+     0,
      0.5,
      0
     ]

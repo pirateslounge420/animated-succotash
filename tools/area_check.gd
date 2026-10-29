@@ -61,25 +61,28 @@ func _run() -> void:
 	Residents.stay_asleep = true
 	Torch.burn_down = false
 	var main := await _boot("7")
+	# Songs are learned from plants since §GK.2 (song_keys_check); here the
+	# desert's is taught up front.
+	SongKeys.learn(SongKeys.realm_of("cactus"))
 	main.player.set_physics_process(false)
 	# A torch from the firekeeper's stack in your pack (Mike, 28 Oct: the fire
 	# lights a torch you carry and hands out none, TorchSupply).
 	main.player.inventory.add(Inventory.make("torch"))
 	var hub := main.surface as HubCamp
 	var ar_ := main.areas
-	ok(hub != null and ar_.can_go() and CrawlerAreas.known() == ["first"], "a new game: on the hub, the first realm's song known (the stand-in)")
+	ok(hub != null and ar_.can_go() and CrawlerAreas.known() == [SongKeys.realm_of("cactus")], "a new game: on the hub, the desert's song known")
 	# 1. Sit; the song, its colour, its glimpse.
 	ok(ar_.interact() and ar_.sitting, "the interact button at the hub fire sits you down")
 	for i in 120:
 		await process_frame
 	var light := hub.fire.get_node_or_null("Light") as OmniLight3D
-	var want := CrawlerAreas.realm_colour("first")
-	ok(ar_.song_playing() and ar_.realm == "first", "the shaman sings the first realm's song")
+	var want := CrawlerAreas.realm_colour(SongKeys.realm_of("cactus"))
+	ok(ar_.song_playing() and ar_.realm == SongKeys.realm_of("cactus"), "the shaman sings the first realm's song")
 	ok(light != null and light.light_color.is_equal_approx(want), "the flames take its colour (#%s)" % want.to_html(false))
 	ok(ar_.glimpse_shown() > 0.9 and main.area_node != null and main.area_node.get_parent() == ar_._glimpse_vp, "its glimpse opens in the fire (shown %.2f, the realm in its own world)" % ar_.glimpse_shown())
 	ar_.scroll(1)
 	await process_frame
-	ok(ar_.realm == "first" and ar_.song_playing() and CrawlerAreas.known().size() == 1, "scrolling with one realm known: a list of one")
+	ok(ar_.realm == SongKeys.realm_of("cactus") and ar_.song_playing() and CrawlerAreas.known().size() == 1, "scrolling with one realm known: a list of one")
 	# 2. Standing up changes nothing.
 	ar_.stand()
 	await _frames(3)

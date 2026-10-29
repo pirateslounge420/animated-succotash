@@ -151,10 +151,10 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 27 Oct to §GD (Claude Code; see PROGRESS): no way down under the fire |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
-| 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
+| 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle); §GK.1.2's one 35° sky built 29 Oct |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
-| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | built 27 Oct to §GH (Claude Code; see PROGRESS); §GK.2–3 amendment todo |
-| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | built 27 Oct to §GI.1–2, §GJ (Claude Code; see PROGRESS); §GK.4–7 rewrite todo (after 116's amendment) |
+| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | built 27 Oct to §GH; §GK.2–3 amendment built 29 Oct (Claude Code; see PROGRESS) |
+| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | built 27 Oct to §GI.1–2, §GJ (Claude Code; see PROGRESS); §GK.4–7 rewrite todo (116's amendment is built) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 | 119 | §GK.8 | Looting bodies: kneel and take teeth and parts; teeth worth more the rarer the creature; teeth stashes only where people once kept things | todo (after 117) |
 | 120 | §GL.1–2 | Scrolls read by the shaman over a trip; permanent spells by rarity; cooldowns, one mana meter, regen faster by a fire, mana potions | todo (after 117) |
@@ -1929,7 +1929,7 @@ CHECK (headless): from a new game, the stand-in opens the first link; travel hub
 
 ## 114 — The calendar in the crawler — §GE
 
-**Status:** built 26 Oct (Claude Code; see PROGRESS)
+**Status:** built 26 Oct (Claude Code; see PROGRESS); §GK.1.2's one 35° sky for all built 29 Oct
 **Mike sees:** In the crawler the days change through the year: long summer days and short summer nights, short winter days and long nights, dawn and dusk always 18 minutes; the plants on the surfaces bud in spring, colour in autumn and go bare in winter. A new game starts on the first evening of spring.
 
 ```text
@@ -1959,7 +1959,7 @@ CHECK (headless): over a fast-forwarded day at the hub and at a 40° and a 62° 
 
 ## 116 — The shaman's song round the fire — §GH
 
-**Status:** built 27 Oct (Claude Code; see PROGRESS)
+**Status:** built 27 Oct (Claude Code; see PROGRESS); the §GK amendment (below) built 29 Oct
 **Mike sees:** You sit down at the hub fire. The shaman starts a song, the flames take a new colour and a moving glimpse of another place opens in the fire and smoke. Scroll left or right and the song, the colour and the glimpse change to another realm you know. Pick one and step into the fire, and you come out at that realm's hearth. No powder.
 
 ```text
@@ -1974,7 +1974,7 @@ CHECK (headless): from a new game, sit, the first realm's song plays and its col
 
 ## 117 — The shaman a man; the song home, the bank, and what you lose — §GI.1–2, §GJ
 
-**Status:** built 27 Oct (Claude Code; see PROGRESS)
+**Status:** built 27 Oct to §GI/§GJ (Claude Code; see PROGRESS); rewritten by §GK (below): todo
 **Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. The camp has a bank, like PSO's: put teeth and items in and they're safe for good. In a realm, whatever you have on you is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you, but everything you had lies where you fell, glowing faintly, and it's still there whenever you go back for it.
 
 ```text
@@ -2006,7 +2006,7 @@ CHECK (headless): each brew's mix loads; the strength rises, peaks and falls ove
 
 **Read §GK before 116, 117 and 119; where an older prompt below for 116 or 117 disagrees with §GK, §GK wins.**
 
-**116 (amended):** a new game lays the platter of three key plants at the hub fire (`data/song_web.json → platter`). Give the shaman one and he sings its realm's song (§GH); a cutting of any key taken in a realm and brought home teaches that song too. The desert (the built Aztec realm, dry highland scrub) is the cactus's realm and the only one that must work now; the others can be stand-ins. Arriving: a beat of near-dark with the realm's ambience, then its music, then the picture (§GK.3).
+**116 (amended; built 29 Oct, Claude Code, see PROGRESS):** a new game lays the platter of three key plants at the hub fire (`data/song_web.json → platter`). Give the shaman one and he sings its realm's song (§GH); a cutting of any key taken in a realm and brought home teaches that song too. The desert (the built Aztec realm, dry highland scrub) is the cactus's realm and the only one that must work now; the others can be stand-ins. Arriving: a beat of near-dark with the realm's ambience, then its music, then the picture (§GK.3).
 
 ```text
 Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK first. Build 117 as §GK.4–7 says, after 116. No screenshots between steps; Mike plays and reports.

@@ -182,6 +182,12 @@
    "icon": "fruit",
    "color": "#d8902a",
    "_help": "Pine resin scraped off an old stump in a realm; with a branch, bound into a torch at the firekeeper's site (torch.json crawler_burn.supply, Mike 28 Oct)."
+  },
+  "key_cutting": {
+   "name": "Cutting",
+   "icon": "sample",
+   "color": "#5a8a3a",
+   "_help": "(design §GK.2, queue 116 amended) A cutting of a song key (cactus, mushroom, vine, root, leaf...; data/song_web.json keys): give it to the shaman and he teaches you its realm's song. Its key, title, colours and icon drawing (glyph) come from crawler.json areas.keys.look."
   }
  },
  "sample_part": {

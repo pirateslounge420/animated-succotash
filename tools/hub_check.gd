@@ -15,7 +15,7 @@ extends SceneTree
 ## sun at dusk and sinking, the cook-shaman, the cauldron's glow, the five
 ## keepers and the river there; no stair, and nothing round the fire
 ## leads down; a fast-forwarded year turns the seasons at the camp (§GE)
-## while its day stays near 60/18/48/18; the first ruin still reachable by
+## its day as long as every realm's (§GK.1.2); the first ruin still reachable by
 ## the developer's way (CrawlerMain.go_down, until 113's fire travel) and
 ## back; and a Continue (the scene again, no SEED) opens the same camp, by
 ## the fire, at dusk.
@@ -136,8 +136,8 @@ func _run() -> void:
 			if hub.stepped_in(q):
 				leads = true
 	ok(hub.stair.is_empty() and not leads and hub.stone == null, "no stair and nothing round the fire leads down")
-	# The seasons over a fast-forwarded year at the camp (§GE.5: wet and dry
-	# on the equator, the day near 60/18/48/18).
+	# The seasons over a fast-forwarded year at the camp (§GK.1.2: the one
+	# shared sky, the day as long as in every realm that day).
 	var names := []
 	var worst := 0.0
 	for k in 73:
@@ -146,8 +146,9 @@ func _run() -> void:
 		if names.is_empty() or names[-1] != nm:
 			names.append(nm)
 		var pm := CrawlerCalendar.phase_minutes(dd, "hub")
-		worst = maxf(worst, absf(float(pm.day) - 60.0))
-	ok(names.size() >= 4 and worst < 1.0, "a year at the camp: %s, the day within %.2f min of 60" % [str(names), worst])
+		var pr := CrawlerCalendar.phase_minutes(dd, "desert")
+		worst = maxf(worst, absf(float(pm.day) - float(pr.day)))
+	ok(names.size() >= 4 and worst < 0.01, "a year at the camp: %s, the day as long as a realm's every day (worst %.2f min apart)" % [str(names), worst])
 	# The developer's way to the ruin and back (until 113).
 	await main.go_down()
 	await _frames(10)

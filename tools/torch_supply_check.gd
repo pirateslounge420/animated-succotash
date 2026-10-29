@@ -83,6 +83,9 @@ func _run() -> void:
 	var S := TorchSupply.S
 	var H: Dictionary = S.get("hub", {})
 	var main := await _boot("7")
+	# Songs are learned from plants since §GK.2 (song_keys_check); here the
+	# desert's is taught up front.
+	SongKeys.learn(SongKeys.realm_of("cactus"))
 	var ts := main.torch_supply
 	var hub := main.hub_node as HubCamp
 	var inv := main.player.inventory

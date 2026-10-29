@@ -46,6 +46,7 @@ func _run() -> void:
 	var p := main.player
 	p.set_physics_process(false)
 	var hub := main.surface as HubCamp
+	SongKeys.learn(SongKeys.realm_of("cactus"))
 	var sh := hub.shaman.global_position
 	var fp: Vector3 = hub.camp.pos
 	var eye := sh + (Vector3(fp.x, sh.y, fp.z) - sh).normalized() * 1.6

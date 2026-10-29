@@ -12,7 +12,7 @@ static func draw_icon(ci: CanvasItem, c: Vector2, r: float, it: Dictionary) -> v
 	var second: Color = cols[1]
 	var icon := str(Inventory.kind_info(it.kind).get("icon", "sample"))
 	if icon == "sample":
-		icon = str(it.get("part", "cutting"))
+		icon = str(it.get("glyph", it.get("part", "cutting")))
 	var w := maxf(1.0, r * 0.12)
 	match icon:
 		"cutting":

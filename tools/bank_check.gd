@@ -86,6 +86,9 @@ func _run() -> void:
 	Residents.stay_asleep = true
 	Torch.burn_down = false
 	var main := await _boot("7")
+	# Songs are learned from plants since §GK.2 (song_keys_check); here the
+	# desert's is taught up front.
+	SongKeys.learn(SongKeys.realm_of("cactus"))
 	var hub := main.surface as HubCamp
 	# 1. He.
 	var cj := FileAccess.get_file_as_string("res://data/crawler.json")

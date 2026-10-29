@@ -1,8 +1,8 @@
 class_name CrawlerAreas
 extends Node
 ## Realms reached from the hub by the shaman's song (design §GH, queue 116;
-## §GD.1.2-4, queue 113; data/crawler.json areas). One per session
-## (CrawlerMain makes it).
+## §GK.2-3, queue 116 amended; §GD.1.2-4, queue 113; data/crawler.json
+## areas). One per session (CrawlerMain makes it).
 ##
 ##   the realm    the surface over the game's first ruin (Surface, sized by
 ##                areas.first.across_m), with its main hearth near one edge
@@ -19,9 +19,13 @@ extends Node
 ##                camera beside its hearth, its own world, on a soft,
 ##                heat-wavering card over the fire)
 ##   the list     left and right scroll through the realms whose songs you
-##                know (songs.known_from_start: a stand-in until Mike says
-##                how songs are learned, §GH.4 call 1)
-##   stepping in  the interact button again: the wash, and you come out at
+##                know: each learned by giving the shaman its key plant
+##                (SongKeys, §GK.2). A realm not made yet (realms.<realm>
+##                stand_in) can be sung, its colour in the flames, but opens
+##                no glimpse and takes no one through
+##   stepping in  the interact button again: the wash; then, sound first
+##                (§GK.3, arrive), a beat of near-dark with only the realm's
+##                own sounds, its music, and the picture settling: you are at
 ##                that realm's hearth; with no lit torch you carry a brand
 ##                from the hub fire (brand). Knowing the song is the key:
 ##                travel no longer waits on the hearth (§GH.2.1)
@@ -46,7 +50,18 @@ static func first() -> Dictionary:
 
 
 static func colour() -> Color:
-	return Color(str(first().get("colour", "#3fd0ff")))
+	return realm_colour(SongKeys.realm_of_area("first"))
+
+
+## The realms by the song web's names (areas.realms).
+static func realms() -> Dictionary:
+	return A.get("realms", {})
+
+
+## Is realm `key` not made yet (sung, but takes no one through)?
+static func stand_in(key: String) -> bool:
+	var r: Dictionary = realms().get(key, {})
+	return bool(r.get("stand_in", false)) or not A.get(str(r.get("area", "")), null) is Dictionary
 
 
 ## Is the first realm reclaimed in this game (its hearth lit, kept)?
@@ -66,16 +81,16 @@ static func songs() -> Dictionary:
 	return A.get("songs", {})
 
 
-## The realms whose songs you know, in order (the save's, else the data's
-## stand-in), each one that exists (areas.<key>).
+## The realms whose songs you know, in the order learned (SongKeys), each
+## one the game has (areas.realms).
 static func known() -> Array:
-	var k: Variant = CrawlerSave.data.get("songs", null)
-	var list: Array = k if k is Array else (songs().get("known_from_start", ["first"]) as Array)
-	return list.filter(func(r): return A.get(str(r)) is Dictionary)
+	return SongKeys.known().filter(func(r): return realms().has(str(r)))
 
 
 static func realm_colour(key: String) -> Color:
-	return Color(str((A.get(key, {}) as Dictionary).get("colour", "#3fd0ff")))
+	var r: Dictionary = realms().get(key, {})
+	var area: Dictionary = A.get(str(r.get("area", "")), {})
+	return Color(str(r.get("colour", area.get("colour", "#3fd0ff"))))
 
 
 ## Can you go from the hub now? (You know at least one song.)
@@ -132,10 +147,22 @@ func interact() -> bool:
 	if hub != null:
 		var near_fire := Vector2(p.x - hub.camp.pos.x, p.z - hub.camp.pos.z).length() <= reach
 		var near_shaman := hub.shaman != null and p.distance_to(hub.shaman.global_position) <= reach
-		if (near_fire or near_shaman) and can_go():
-			sit()
+		# A plant for the shaman: he takes it and teaches its song (§GK.2).
+		if (near_fire or near_shaman) and main.song_keys != null and main.song_keys.give():
+			return true
+		# One off the platter.
+		if main.song_keys != null and main.song_keys.take():
+			return true
+		if near_fire or near_shaman:
+			if can_go():
+				sit()
+			else:
+				GameLog.add(str((A.get("keys", {}) as Dictionary).get("log_no_song", "The shaman waits by the fire. Bring him a plant.")), "world")
 			return true
 		return false
+	# A realm's key plant (§GK.2).
+	if _area() != null and main.song_keys != null and main.song_keys.take():
+		return true
 	var area := _area()
 	if area != null and area.area_hearth != null:
 		var hp := area.area_hearth.global_position
@@ -145,8 +172,9 @@ func interact() -> bool:
 	return false
 
 
-## Sit down facing the hub fire; the shaman sings the first known realm.
-func sit() -> void:
+## Sit down facing the hub fire; the shaman sings `which` (a realm you
+## know; else the first you learned).
+func sit(which := "") -> void:
 	var hub := _hub()
 	if hub == null or sitting:
 		return
@@ -164,8 +192,8 @@ func sit() -> void:
 	main.player.set_physics_process(false)
 	_shaman_motion = FolkMotion.new(hub.shaman) if hub.shaman != null else null
 	GameLog.add(str(A.get("log_sing", "You sit at the fire. The shaman begins to sing.")), "world")
-	_ri = 0
-	_sing(str(known()[0]))
+	_ri = maxi(known().find(which), 0)
+	_sing(str(known()[_ri]))
 
 
 ## Up from the fire, nothing changed.
@@ -276,6 +304,10 @@ static func song_stream(key: String) -> AudioStream:
 ## beside its hearth, on a card over the hub fire.
 func _open_glimpse(key: String) -> void:
 	var G: Dictionary = A.get("glimpse", {})
+	# A realm not made yet: its song and colour, but nothing in the flames.
+	if stand_in(key):
+		_close_glimpse()
+		return
 	var area := main._ensure_area()
 	if area == null:
 		return
@@ -380,6 +412,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func step_in() -> void:
 	if not sitting:
 		return
+	if stand_in(realm):
+		GameLog.add(str((A.get("keys", {}) as Dictionary).get("log_stand_in", "The flames open no way through yet.")), "world")
+		return
 	GameLog.add(str(A.get("log_step", "You step into the fire.")), "world")
 	var key := realm
 	sitting = false
@@ -387,21 +422,63 @@ func step_in() -> void:
 	await to_area(key)
 
 
-## Hub -> realm `key`'s hearth through the fire (the song's wash).
-func to_area(key := "first") -> void:
+## Hub -> realm `key`'s hearth through the fire (the song's wash), sound
+## first (§GK.3, arrive): near-dark with only the realm's own sounds, then
+## its music, then the picture.
+func to_area(key := "") -> void:
 	if main.leaving:
 		return
+	if key == "":
+		key = SongKeys.realm_of_area("first")
 	main.leaving = true
 	var c := realm_colour(key)
 	var T: Dictionary = A.get("travel", {})
+	var R: Dictionary = A.get("arrive", {})
 	await main._wash(c, 1.0, float(T.get("wash_s", 1.0)))
 	_stop_song()
 	if bool(A.get("brand", true)):
 		_brand()
 	main._to_area_now()
 	travels += 1
-	await main._wash(c, 0.0, float(T.get("wash_s", 1.0)))
+	arrive_phase = "dark"
+	var dark := Color(0.0, 0.0, 0.01, float(R.get("dark_alpha", 0.96)))
+	var tw := main.create_tween()
+	tw.tween_property(main._fade, "color", dark, 0.4)
+	await tw.finished
+	await get_tree().create_timer(float(R.get("dark_s", 1.6))).timeout
+	arrive_phase = "music"
+	_arrival_music(key, float(R.get("music_db", -12.0)))
+	await get_tree().create_timer(float(R.get("music_s", 1.4))).timeout
+	arrive_phase = "picture"
+	await main._wash(c, 0.0, float(R.get("picture_s", 2.2)))
+	arrive_phase = ""
 	main.leaving = false
+	if _player_arrive != null:
+		var out := main.create_tween()
+		out.tween_property(_player_arrive, "volume_db", -60.0, float(R.get("music_out_s", 8.0)))
+		out.tween_callback(_player_arrive.stop)
+
+
+## Where an arrival is (§GK.3): "dark", "music", "picture", or "" (none).
+var arrive_phase := ""
+var _player_arrive: AudioStreamPlayer
+
+
+## The realm's music as you arrive (its own theme is queue 121's; until
+## then its song stands in).
+func _arrival_music(key: String, db: float) -> void:
+	if _player_arrive == null:
+		_player_arrive = AudioStreamPlayer.new()
+		_player_arrive.name = "ArriveMusic"
+		_player_arrive.bus = AudioMix.bus("ambience")
+		add_child(_player_arrive)
+	_player_arrive.stream = song_stream(key)
+	_player_arrive.volume_db = db
+	_player_arrive.play()
+
+
+func arrival_music_playing() -> bool:
+	return _player_arrive != null and _player_arrive.playing
 
 
 ## The realm -> the hub, through its hearth: the shaman's song carries you
@@ -412,7 +489,7 @@ func to_hub() -> void:
 	main.leaving = true
 	GameLog.add(str(A.get("log_home", "The shaman's song carries you home through the fire.")), "world")
 	var T: Dictionary = A.get("travel", {})
-	var key := "first"
+	var key := SongKeys.realm_of_area("first")
 	if _player_song == null:
 		_player_song = AudioStreamPlayer.new()
 		_player_song.name = "Song"
