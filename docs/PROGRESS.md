@@ -4,6 +4,13 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-29 — §GK locked: plants are the keys, doors home, the keeper, looting and teeth (Claude, chat)
+- **Mike** (27–29 Oct, text and voice): our own Earth-inspired world; no latitude; relics are artifacts, scrolls and tomes; the bank a treasure chest; the Aztec realm dry highland scrub; arrive to sound first; doors home in odd places, steady at every depth; layouts fresh per run; a gnome/elf keeper per realm who holds your things and keeps your money as his fee, posted where you must fight to reach him; loot bodies for teeth (rarer = more) and parts; stashes only where people kept things; plants as the keys to songs, a hub platter of cactus, mushroom, vine, each realm offering three; "lockit in".
+- **Design:** §GK. Supersedes §GE.5's latitudes (one shared year), the 27 Oct fixed order (a web), §GH's stand-in song, §GI.2.2 (home by a door, not the hearth's song), §GJ.3 (the keeper, not piles), §FK's kept-for-good layouts for realms.
+- **Data (new, not wired):** `data/song_web.json` (keys, platter, realm offers, doors, keeper, loot).
+- **Queue:** 116 amended, 117 rewritten, 119 new.
+- **Open (§GK.9):** whether relit lamps carry over between runs; the other realms' plants; set times per realm; the graveyard island's key; key plants as brews; the interpreter, chest size, the name.
+
 ## 2026-10-27 — §GJ locked: the bank at the hub; what you lose waits where you fell (Claude, chat)
 - **Mike** (09:57): lose everything not at the hub; a PSO-style bank for currency and items; lost items can be retrieved in the realm and never despawn.
 - **Design:** §GJ. Settles §GI.2.1 (the full loss). Every death leaves a pile, kept in the save. Open: the bank's keeper and capacity; whether piles show on a map.

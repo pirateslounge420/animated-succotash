@@ -7092,3 +7092,114 @@ capacity. Things placed in the camp (planted, given to a keeper, set in the shri
 
 ### GJ.4 Queue
 Folded into **117** (not built yet), which now builds §GI.1–2 and §GJ.
+
+## GK. Plants are the keys; doors home; the keeper who holds your things; looting and teeth; arriving by sound — LOCKED (27–29 Oct, text and voice, Mike; "go ahead and lock it in" (27 Oct, voice), "yeah, we can lock that", "lockit in" (29 Oct, 15:43))
+
+Mike over 27–29 Oct. This section gathers everything locked since §GJ and supersedes parts of §GE.5,
+§GG, §GH, §GI.2 and §GJ.3, as marked. Where Claude filled a gap it says *Claude's reading*.
+
+### GK.1 The world
+1. **Our own world, inspired by Earth** (closes §GG.2.3's clash): an alien-esque planet; its
+   **constellations are new, echoing Earth's shapes**, not Earth's real sky shifted by time. The
+   elders-and-the-AI story (§GG.3) stands.
+2. **No latitude or longitude in the game** (supersedes §GE.5.2–3: no hub on the equator, no
+   per-realm latitude). **One shared year everywhere:** the hub and every realm share the date, the
+   season and the day length. Under the hood the day lengths are §GE.1.4's table (the 35° numbers:
+   summer ~74/18/34/18 real minutes, equinox 60/18/48/18, winter ~51/18/57/18), never called a
+   latitude. **Winter by biome stands** (§GE.5.4): snow and frost only in cold realms; leaf drop or a
+   dry season elsewhere.
+3. **Relics** are artifacts, scrolls and tomes. *Claude's reading:* the artifacts stay unplaceable
+   (strange lost objects, nothing plainly a phone or a computer), in keeping with "never said outright".
+4. **The Aztec realm is dry highland scrub** like the real Mexican highlands (consistent with §FN.8's
+   montane grassland and shrubland). *Claude's reading:* it is the realm the **cactus** opens (GK.2).
+
+### GK.2 Plants are the keys: the song web (supersedes the fixed order, and §GH's stand-in)
+1. **A song is learned by bringing the shaman a plant.** Each realm has a key plant (or, rarely, a
+   mineral); bring him a cutting and he teaches you its song. ("Go fetch me a plant, and I'll teach you
+   its song.") Knowing the song is the key to that realm (§GH stands).
+2. **The hub's platter:** a new game starts with **three plants already laid out** at the fire to
+   choose from: **cactus, mushroom, vine.** Choosing one decides your first realm.
+3. **Every realm offers three:** the plant that brought you (the link back) plus **two new ones** that
+   lead on. Neighbouring realms share plants, so several paths can reach one realm: a **web**, not a
+   line. This replaces the fixed PSO-style order agreed 27 Oct.
+4. **Keys so far:**
+
+   | Key | Opens | Grows in (so far) |
+   |---|---|---|
+   | cactus | the desert (the Aztec dry highland scrub) | the hub; the desert |
+   | mushroom | the dark caves | the hub |
+   | vine (ayahuasca-like) | the deep jungle | the hub |
+   | toad | the swamp | open |
+   | root | the root world: just under an ancient forest's floor, roots everywhere, the first cave | the desert |
+   | leaf | the old-growth forest (the root world's sunlit half above) | the desert |
+   | rare ore | the volcanic mine | open (further along) |
+
+   The desert offers **cactus, root, leaf**. The mushroom caves', the jungle's and the others' three
+   are open (GK.9).
+5. Each realm's **other plants are its local life**; only its three keys are songs.
+6. *Claude's reading:* the calm starts (old-growth forest, root world) sit one step past the platter;
+   the volcanic mine sits far along.
+
+### GK.3 Arriving: sound first
+Stepping through, you **hear the realm before you see it**: a moment of near-dark with its wind,
+creatures and far calls, then its music, then the picture settles. You arrive at the realm's **main
+hearth or arrival place**; there is one main hearth per realm, no network of hearths.
+
+### GK.4 Layouts: fresh each run
+Each realm's layout (surface and ruin: rooms and their order, door sites, stash sites, the keeper's
+nook) is **generated fresh for a run** and **kept for that run**: die and go back and it is the same
+place. **Save and quit, or start a new run, and the next visit is a new layout** (PSO's game
+sessions). Supersedes §FK's "kept for good" for realm layouts; the hub is kept for good. *Open:*
+whether relit lamps carry anything over between layouts (GK.9).
+
+### GK.5 Doors home (supersedes §GI.2.2's song home from the hearth)
+1. **Going home is a door.** Doors are tucked into **archetypal odd places**: a tree stump, a
+   hillside, a cave wall, a root hollow. Walk through and you are at the hub fire **with everything you
+   carry**. You learn what kind of place hides one; any given spot may not have one this run.
+2. **Steady at every depth:** never rarer deeper, never round every corner. First guess: one or two per
+   floor or stretch of surface, a few minutes' walk apart.
+3. You never have to finish a ruin: **go as deep and as long as you like, then go home**. Every door
+   you find is the choice: home with what you have, or deeper.
+
+### GK.6 The keeper: what you lose waits with him (supersedes §GJ.3's piles where you fell)
+1. **Each realm has a keeper**, a little gnome or elf, his nook set up somewhere in the realm. When you
+   die there he gathers what you carried. Find him and he hands it back: *"I've been holding these for
+   you."* Nothing is ever lost for good.
+2. **His fee: all the money you carried** (teeth). He gives back every item.
+3. **Finding him is a trip of its own:** he is not where you arrive; he can be posted past strong
+   creatures, so you may have to work your way back up to reach him.
+4. Save and quit and the layout changes, but **he still has your things**, somewhere in the new one.
+5. Dying wakes you at the hub fire (§GI.2.1 stands) with nothing on you.
+
+### GK.7 The chest: the bank (settles §GJ.2)
+The bank is **your treasure chest at the hub**, a big carved chest at your place in the camp. Whatever
+is in it is never lost. Since the keeper takes your money, **bank your teeth before a deep trip** (PSO's
+bank). Capacity: generous (first guess).
+
+### GK.8 Looting, teeth and stashes
+1. **Loot a body:** kneel at a creature you killed and take its parts: **teeth** (money) and what that
+   creature carries: hide, horn, feathers, venom and the like, for the hub's makers (§FZ).
+2. **Teeth are worth more the rarer the creature** (§ED.6's rungs: common, rare morph, mythic; each
+   species' teeth its own value). PSO's rare-enemy rush.
+3. **Teeth are also found in stashes**, only **where people really kept things before the fall**: a
+   storeroom behind a collapsed hut, a niche in a temple wall, a clay jar under roots, a cache in a cave
+   someone lived in, overgrown and retaken by nature. **No chests standing loose by a wall.**
+
+### GK.9 Open for Mike
+1. Does lighting a realm's lamps leave anything permanent, now that layouts change each run (a song, a
+   shortcut, the realm's hearth staying warm)? §FK's "relit stays relit" no longer holds across runs.
+2. The other realms' three plants (the caves, the jungle, the swamp…), and where the toad and the ore
+   are found.
+3. **Set times per realm:** should some realms keep their own hour (the graveyard island always night,
+   the old-growth forest always golden) against GK.1.2's one shared clock?
+4. **The graveyard island** (Mike, 29 Oct, an idea for a realm, not placed): night, a big moon, fog
+   rolling over headstones, wolves far off, a storm building on the horizon until the rain comes;
+   crypts and a chapel, the ruin under the graves. Which plant opens it?
+5. **Brews:** §GI.3's filters stand; Mike's 29 Oct idea of datura as a hub-only layer over a realm
+   was dropped in favour of plants as keys. Whether the key plants are also drunk as brews is open.
+6. The interpreter (§GG.4: the shaman or a hermit), the chest's capacity, and the game's name.
+
+### GK.10 Queue
+**116 is amended** (songs learned from plants; the platter of three). **117 is rewritten** (doors home,
+the keeper and his fee, the chest, layouts per run). **119 is new:** looting bodies, teeth by rarity,
+and stashes. Data: `data/song_web.json` (new, not wired).

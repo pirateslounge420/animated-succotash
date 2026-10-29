@@ -1,0 +1,29 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §GK.2] (29 Oct) The song web. Each realm has a key (a plant, rarely a mineral); bring the shaman a cutting and he teaches its song. The hub's platter starts with three keys. Every realm offers three: the key that brought you plus two that lead on. 'grows_in' is where its cutting can be taken. Entries marked open are Mike's to fill (§GK.9 call 2).",
+  "realms": "key -> realm it opens. Names are working names."
+ },
+ "platter": ["cactus", "mushroom", "vine"],
+ "keys": {
+  "cactus":   {"opens": "desert_aztec_scrub", "grows_in": ["hub", "desert_aztec_scrub"]},
+  "mushroom": {"opens": "dark_caves",         "grows_in": ["hub"]},
+  "vine":     {"opens": "deep_jungle",        "grows_in": ["hub"], "note": "ayahuasca-like"},
+  "toad":     {"opens": "swamp",              "grows_in": "open", "note": "an animal, not a plant"},
+  "root":     {"opens": "root_world",         "grows_in": ["desert_aztec_scrub"]},
+  "leaf":     {"opens": "old_growth_forest",  "grows_in": ["desert_aztec_scrub"]},
+  "rare_ore": {"opens": "volcanic_mine",      "grows_in": "open", "note": "a mineral, far along"}
+ },
+ "realm_offers": {
+  "hub": ["cactus", "mushroom", "vine"],
+  "desert_aztec_scrub": ["cactus", "root", "leaf"],
+  "dark_caves": "open",
+  "deep_jungle": "open",
+  "swamp": "open",
+  "root_world": "open",
+  "old_growth_forest": "open",
+  "volcanic_mine": "open"
+ },
+ "doors": {"_help": "§GK.5 first guesses", "per_floor_or_stretch": [1, 2], "minutes_apart": [2, 5], "sites": ["tree_stump", "hillside", "cave_wall", "root_hollow"], "rarer_with_depth": false},
+ "keeper": {"_help": "§GK.6", "kind": ["gnome", "elf"], "fee": "all_money_carried", "returns": "all_items", "posted": "somewhere_in_the_realm_may_be_past_strong_creatures", "survives_save_and_quit": true},
+ "loot": {"_help": "§GK.8", "teeth_value_by_rung": {"common": 1, "rare": 5, "mythic": 25}, "parts": ["hide", "horn", "feathers", "venom"], "stash_sites": ["collapsed_storeroom", "temple_niche", "buried_clay_jar", "cave_cache"]}
+}

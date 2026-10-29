@@ -153,9 +153,10 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
-| 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | todo (after 113) |
-| 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | todo (after 116) |
+| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | todo (after 112) |
+| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | todo (after 116) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
+| 119 | §GK.8 | Looting bodies: kneel and take teeth and parts; teeth worth more the rarer the creature; teeth stashes only where people once kept things | todo (after 117) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1997,4 +1998,24 @@ READ: §GI.3, §FN.5, §FP; data/visions.json, data/brew.json, crawler.json → 
 BUILD: (1) Five effects as one post-process the brew drives: breathing (slow vertex or screen-space swell and drift), colour (saturation up, a slow hue shift), trails (frame feedback on moving things and the torch), patterns (procedural geometric/organic patterns over surfaces, stronger toward the edge of the view), and an onset, peak and fade over the brew's time. (2) Each brew in visions.json gets a mix (which effects, how strong), first guesses with _help lines for Mike to tune; the Aztec brew keeps its palette swap and hidden carvings on top. (3) A dev key or setting to try each brew's look without the ritual.
 
 CHECK (headless): each brew's mix loads; the strength rises, peaks and falls over its time and is zero after; nothing spawns or unlocks. Walkabout once: one brew at onset, peak and fade, in the hub and underground.
+```
+
+## 116–117 amended and 119 — the song web, doors, the keeper, looting — §GK (29 Oct)
+
+**Read §GK before 116, 117 and 119; where an older prompt below for 116 or 117 disagrees with §GK, §GK wins.**
+
+**116 (amended):** a new game lays the platter of three key plants at the hub fire (`data/song_web.json → platter`). Give the shaman one and he sings its realm's song (§GH); a cutting of any key taken in a realm and brought home teaches that song too. The desert (the built Aztec realm, dry highland scrub) is the cactus's realm and the only one that must work now; the others can be stand-ins. Arriving: a beat of near-dark with the realm's ambience, then its music, then the picture (§GK.3).
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK first. Build 117 as §GK.4–7 says, after 116. No screenshots between steps; Mike plays and reports.
+BUILD: (1) The shaman is a man (§GI.1). (2) Layouts per run (§GK.4): a realm's surface and ruin are generated when you enter on a run and kept for that run; save-and-quit or a new run gives a new layout; the hub is kept for good. (3) Doors home (§GK.5, song_web.json → doors): one or two per floor or surface stretch, a few minutes apart, at archetypal sites (stump, hillside, cave wall, root hollow), never rarer with depth; walking through returns you to the hub fire with everything carried. Remove the old "home only by the song from the realm's hearth" path. (4) Death (§GI.2.1, §GK.6): wake at the hub fire with nothing; the realm's keeper (a small gnome or elf on the shared rig, scaled) holds every item, posted somewhere in the realm, possibly past strong creatures, and survives save-and-quit; talk to him and he returns every item and keeps all teeth carried as his fee. Remove §GJ.3's piles where you fell. (5) The chest at the hub (§GK.7): your carved chest, generous capacity, never lost.
+CHECK (headless): a run keeps its layout after death; save-and-quit gives a new layout and the keeper still holds the items; doors appear at every depth within the first-guess spacing; through a door you arrive home with everything; after death the keeper returns all items and keeps all teeth; the chest survives death; no errors. Prepend a PROGRESS entry.
+```
+
+## 119 — Looting bodies, teeth and stashes — §GK.8
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK.8 first. After 117. No screenshots between steps.
+BUILD: (1) A creature killed (flesh: data/substance.json) leaves its body; kneel (interact) and take its parts: teeth, plus its own parts (hide, horn, feathers, venom; song_web.json → loot.parts, per creature first guesses). (2) Teeth value by the creature's rung (common / rare / mythic, song_web.json → loot.teeth_value_by_rung), per species. (3) Teeth stashes only at loot.stash_sites placed where people once kept things (a collapsed storeroom, a temple niche, a clay jar under roots, a cave cache), overgrown; no loose chests.
+CHECK (headless): a rare kill pays more teeth than a common one of the same kind; stashes never spawn outside their site kinds; looted bodies give nothing twice; no errors. Prepend a PROGRESS entry.
 ```
