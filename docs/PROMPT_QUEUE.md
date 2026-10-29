@@ -153,9 +153,12 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
 | 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | built 26 Oct (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
-| 116 | §GH, §GG.1 | The shaman's song: sit at the hub fire, the shaman sings a realm's song, its glimpse opens in the flames, scroll through the realms and step in (replaces the powder) | built 27 Oct (Claude Code; see PROGRESS) |
-| 117 | §GI.1–2, §GJ | The shaman becomes a man; finds come home only by the song; a PSO-style bank at the hub; death drops everything carried where you fell, kept for good to go back for | built 27 Oct (Claude Code; see PROGRESS) |
+| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | built 27 Oct to §GH (Claude Code; see PROGRESS); §GK.2–3 amendment todo |
+| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | built 27 Oct to §GI.1–2, §GJ (Claude Code; see PROGRESS); §GK.4–7 rewrite todo (after 116's amendment) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
+| 119 | §GK.8 | Looting bodies: kneel and take teeth and parts; teeth worth more the rarer the creature; teeth stashes only where people once kept things | todo (after 117) |
+| 120 | §GL.1–2 | Scrolls read by the shaman over a trip; permanent spells by rarity; cooldowns, one mana meter, regen faster by a fire, mana potions | todo (after 117) |
+| 121 | §GL.3–5 | One key at the end, one down a side path; rare spawns; each realm's music settles while you explore and builds when creatures are near | todo (after 116) |
 
 ## 01 — Wind I: the gust field and the plants — §DA (part 1 of 3)
 
@@ -1932,11 +1935,11 @@ CHECK (headless): from a new game, the stand-in opens the first link; travel hub
 ```text
 Read CLAUDE.md and docs/WORKING_AGREEMENT.md first. This pass builds ONE thing: design §GE, the open world's clock and seasons running in the crawler. No screenshots between steps; Mike plays and reports.
 
-READ: §GE (all; §GE.5 amends GE.1: the hub on the equator, each area at its own latitude by biome, winter by biome), §FK.3, §FG, §GD.1.5; data/crawler.json → calendar (new, prefixed NOT WIRED YET), data/sky/day_cycle.json, data/seasons.json; scripts/sky/day_cycle.gd, astro.gd, seasons.gd, sky_system.gd, sky_paint.gd; scripts/ecology/leaf_season.gd; scripts/crawler/crawler_main.gd (the clock turn), vents.gd and surface_plants.gd (both read latitude 0 and say "no seasons"); tools/reference/daylight_reference.py.
+READ: §GE (all), then §GK.1.2, which SUPERSEDES §GE.5's latitudes: no latitude anywhere; the hub and every realm read the sky at one fixed reference (35°, never shown as a latitude) so all share one year and one day length; winter by biome (§GE.5.4) stands; §FK.3, §FG, §GD.1.5; data/crawler.json → calendar (new, prefixed NOT WIRED YET), data/sky/day_cycle.json, data/seasons.json; scripts/sky/day_cycle.gd, astro.gd, seasons.gd, sky_system.gd, sky_paint.gd; scripts/ecology/leaf_season.gd; scripts/crawler/crawler_main.gd (the clock turn), vents.gd and surface_plants.gd (both read latitude 0 and say "no seasons"); tools/reference/daylight_reference.py.
 
-BUILD: (1) One calendar for all (the same day and hour everywhere). The hub reads every sky, daylight and season value at calendar.hub_latitude_deg (the equator); each area at calendar.area_latitude_deg for its biome, with the year from day_cycle.json: DayCycle.warp/phase_at/daylight with that latitude and Astro's declination for the day, in place of latitude 0 and no year. (2) A new game's clock starts at calendar.start_year_day, at dusk (§GD.1.1); a saved game keeps its own clock (§FK). (3) Surfaces get the seasons, by calendar.winter_by_biome (snow and frost only where it says so; elsewhere leaf drop or a dry season): LeafSeason on surface plants (spring buds, autumn colour, bare winter; evergreens stay), and the season's temperature/wetness wherever the crawler's surfaces read weather. Underground: nothing seasonal except the shaft daylight following the day (§FG), per calendar.underground_seasons. (4) The log's timestamps may say the season and its day. (5) Remove the NOT WIRED YET prefix from calendar's _help once read, and keep docs/HOW_TO_RUN.md true.
+BUILD: (1) One calendar for all (the same day, hour and day length everywhere), every sky, daylight and season value read at one fixed 35° reference (§GK.1.2); ignore calendar.hub_latitude_deg and area_latitude_deg, with the year from day_cycle.json: DayCycle.warp/phase_at/daylight with that latitude and Astro's declination for the day, in place of latitude 0 and no year. (2) A new game's clock starts at calendar.start_year_day, at dusk (§GD.1.1); a saved game keeps its own clock (§FK). (3) Surfaces get the seasons, by calendar.winter_by_biome (snow and frost only where it says so; elsewhere leaf drop or a dry season): LeafSeason on surface plants (spring buds, autumn colour, bare winter; evergreens stay), and the season's temperature/wetness wherever the crawler's surfaces read weather. Underground: nothing seasonal except the shaft daylight following the day (§FG), per calendar.underground_seasons. (4) The log's timestamps may say the season and its day. (5) Remove the NOT WIRED YET prefix from calendar's _help once read, and keep docs/HOW_TO_RUN.md true.
 
-CHECK (headless): the hub stays within 1 minute of 60/18/48/18 all year; at 35° (a test latitude) the phase minutes match tools/reference/daylight_reference.py within 1 minute at both solstices and an equinox (summer ~74/18/34/18, equinox 60/18/48/18, winter ~51/18/57/18); dawn and dusk are 18 minutes every day of a fast-forwarded year; a fast-forwarded year passes through spring, summer, autumn, winter in that order and returns to spring after 365 days; a new game starts at year day 0 at dusk; Continue keeps the saved day; the open world (torchfire2) is unchanged; no errors. Prepend a PROGRESS entry.
+CHECK (headless): the hub and every realm give the same phase minutes on the same day; the phase minutes match tools/reference/daylight_reference.py within 1 minute at both solstices and an equinox (summer ~74/18/34/18, equinox 60/18/48/18, winter ~51/18/57/18); dawn and dusk are 18 minutes every day of a fast-forwarded year; a fast-forwarded year passes through spring, summer, autumn, winter in that order and returns to spring after 365 days; a new game starts at year day 0 at dusk; Continue keeps the saved day; the open world (torchfire2) is unchanged; no errors. Prepend a PROGRESS entry.
 ```
 
 ## 115 — The world gets ready at dawn and dusk — §GF
@@ -1997,4 +2000,40 @@ READ: §GI.3, §FN.5, §FP; data/visions.json, data/brew.json, crawler.json → 
 BUILD: (1) Five effects as one post-process the brew drives: breathing (slow vertex or screen-space swell and drift), colour (saturation up, a slow hue shift), trails (frame feedback on moving things and the torch), patterns (procedural geometric/organic patterns over surfaces, stronger toward the edge of the view), and an onset, peak and fade over the brew's time. (2) Each brew in visions.json gets a mix (which effects, how strong), first guesses with _help lines for Mike to tune; the Aztec brew keeps its palette swap and hidden carvings on top. (3) A dev key or setting to try each brew's look without the ritual.
 
 CHECK (headless): each brew's mix loads; the strength rises, peaks and falls over its time and is zero after; nothing spawns or unlocks. Walkabout once: one brew at onset, peak and fade, in the hub and underground.
+```
+
+## 116–117 amended and 119 — the song web, doors, the keeper, looting — §GK (29 Oct)
+
+**Read §GK before 116, 117 and 119; where an older prompt below for 116 or 117 disagrees with §GK, §GK wins.**
+
+**116 (amended):** a new game lays the platter of three key plants at the hub fire (`data/song_web.json → platter`). Give the shaman one and he sings its realm's song (§GH); a cutting of any key taken in a realm and brought home teaches that song too. The desert (the built Aztec realm, dry highland scrub) is the cactus's realm and the only one that must work now; the others can be stand-ins. Arriving: a beat of near-dark with the realm's ambience, then its music, then the picture (§GK.3).
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK first. Build 117 as §GK.4–7 says, after 116. No screenshots between steps; Mike plays and reports.
+BUILD: (1) The shaman is a man (§GI.1). (2) Layouts per run (§GK.4): a realm's surface and ruin are generated when you enter on a run and kept for that run; save-and-quit or a new run gives a new layout; the hub is kept for good. (3) Doors home (§GK.5, song_web.json → doors): one or two per floor or surface stretch, a few minutes apart, at archetypal sites (stump, hillside, cave wall, root hollow), never rarer with depth; walking through returns you to the hub fire with everything carried. Remove the old "home only by the song from the realm's hearth" path. (4) Death (§GI.2.1, §GK.6): wake at the hub fire with nothing; the realm's keeper (a small gnome or elf on the shared rig, scaled) holds every item, posted somewhere in the realm, possibly past strong creatures, and survives save-and-quit; talk to him and he returns every item and keeps all teeth carried as his fee. Remove §GJ.3's piles where you fell. (5) The chest at the hub (§GK.7): your carved chest, generous capacity, never lost.
+CHECK (headless): a run keeps its layout after death; save-and-quit gives a new layout and the keeper still holds the items; doors appear at every depth within the first-guess spacing; through a door you arrive home with everything; after death the keeper returns all items and keeps all teeth; the chest survives death; no errors. Prepend a PROGRESS entry.
+```
+
+## 119 — Looting bodies, teeth and stashes — §GK.8
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GK.8 first. After 117. No screenshots between steps.
+BUILD: (1) A creature killed (flesh: data/substance.json) leaves its body; kneel (interact) and take its parts: teeth, plus its own parts (hide, horn, feathers, venom; song_web.json → loot.parts, per creature first guesses). (2) Teeth value by the creature's rung (common / rare / mythic, song_web.json → loot.teeth_value_by_rung), per species. (3) Teeth stashes only at loot.stash_sites placed where people once kept things (a collapsed storeroom, a temple niche, a clay jar under roots, a cave cache), overgrown; no loose chests.
+CHECK (headless): a rare kill pays more teeth than a common one of the same kind; stashes never spawn outside their site kinds; looted bodies give nothing twice; no errors. Prepend a PROGRESS entry.
+```
+
+## 120 — Scrolls, spells and mana — §GL.1–2
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GL first. After 117. No screenshots between steps; Mike plays and reports.
+BUILD: (1) Unreadable scrolls (a find) can be given to the shaman; after data/spells.json → read_trips trips out and back he tells you what each was: lore (a page for the log) or a spell, by scroll_odds. (2) A spell learned is permanent; rarity sets its level. Start with spells_first_ideas (kindle, nighteye, clear_fog, hush) as stand-ins. (3) One mana meter (mana.max) with per-spell cooldowns and costs; mana regenerates over time, faster within fire_radius_m of any fire; mana potions restore potions.restore and are found in stashes. (4) A small HUD meter inside the §GB look; casting bound in data/hands.json style, rebindable. (5) Remove the NOT WIRED YET prefix once read.
+CHECK (headless): a scroll stays unread until a trip passes; scroll outcomes match scroll_odds over 1000 draws within 3 %; a spell on cooldown cannot be cast; mana regen is faster by a fire by regen_by_fire_mult; a potion restores the set amount; learned spells survive death and save-and-quit; no errors. Prepend a PROGRESS entry.
+```
+
+## 121 — Where the keys are, rare spawns, the realm's music — §GL.3–5
+
+```text
+Read CLAUDE.md, docs/WORKING_AGREEMENT.md and design §GL first. After 116. No screenshots between steps.
+BUILD: (1) Of a realm's two new key plants (data/song_web.json → realm_offers), place one at the end (past its boss or deepest point) and one at the end of a side path, every layout. (2) Rare and mythic creature spawns per §ED.6's rungs, so returning to an opened realm can turn one up. (3) Each realm's music settles to ambience while you explore and builds within music.creatures_near_m of creatures (build_s, settle_s), then settles.
+CHECK (headless): over 30 layouts both keys are reachable, one at the deepest point and one off the main path; rare spawns occur at their set odds; the music level rises with a creature near and falls after it leaves; no errors. Prepend a PROGRESS entry.
 ```

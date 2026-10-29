@@ -1,0 +1,19 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET — design §GL] (29 Oct) Scrolls, spells and mana. Every spell scroll teaches a permanent spell; rarity sets its level. Spells are about light and the dark. Cooldown per spell plus one shared mana meter. All numbers are Claude's first guesses for Mike to tune.",
+  "scroll_odds": "share of unreadable scrolls that turn out lore vs spell, and the spell's rarity",
+  "read_trips": "how many trips out and back before the shaman has read a scroll"
+ },
+ "scroll_odds": {"lore": 0.6, "spell": 0.4, "spell_rarity": {"common": 0.7, "rare": 0.25, "mythic": 0.05}},
+ "read_trips": 1,
+ "mana": {"max": 100, "regen_per_min": 4, "regen_by_fire_mult": 4, "fire_radius_m": 6},
+ "potions": {"restore": 50, "sources": ["stash", "shaman_brews_from_plants"]},
+ "spells_first_ideas": {
+  "kindle": {"level": "common", "does": "light every lamp in the room at once", "mana": 40, "cooldown_s": 90},
+  "nighteye": {"level": "common", "does": "see in the dark for a while", "mana": 25, "cooldown_s": 60, "lasts_s": 45},
+  "clear_fog": {"level": "rare", "does": "clear fog around you", "mana": 35, "cooldown_s": 120, "lasts_s": 60},
+  "hush": {"level": "rare", "does": "calm nearby creatures", "mana": 60, "cooldown_s": 180, "lasts_s": 20}
+ },
+ "keys_found": {"_help": "§GL.3", "one_at_the_end": true, "one_down_a_side_path": true},
+ "music": {"_help": "§GL.5", "explore": "ambient", "creatures_near_m": 25, "build_s": 4, "settle_s": 10}
+}
