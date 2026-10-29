@@ -1,6 +1,6 @@
 {
  "_help": {
-  "about": "(26 Oct) The world gets ready for dawn and dusk. Every routine fires on the local sun's elevation (the place's latitude, §GE.5), never a clock hour; each actor adds a random offset so the change spreads across the twilight. First guesses by Claude (chat); Mike tunes by play. Wired 26 Oct (queue 115, DayShift).",
+  "about": "(26 Oct) The world gets ready for dawn and dusk. Every routine fires on the local sun's elevation (the one shared sky, §GK.1.2; was the place's latitude, §GE.5), never a clock hour; each actor adds a random offset so the change spreads across the twilight. First guesses by Claude (chat); Mike tunes by play. Wired 26 Oct (queue 115, DayShift).",
   "sun_deg": "Sun elevations (degrees) that start and finish the evening change (start > end) and the morning change (start < end). The 18-minute dusk and dawn of §GE sit inside these.",
   "flowers": "bloom habits; tagged plants keep their tag, the rest default to always. open_close_s is real seconds for a flower to open or close.",
   "creatures": "shift = day | night | twilight. Creatures without a tag default by kind (birds day, bats/owls/moths night, deer twilight).",

@@ -600,10 +600,11 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 ## great circle through due east of `up`, overhead and due west, its hour
 ## angle off the overhead: 90 degrees up at noon, as Vents.sun_deg says.
 ##
-## The crawler's calendar (design §GE, §GE.5, CrawlerCalendar) sets
-## one_clock_lat (radians, the place's latitude) and one_clock_year (the
-## day of the year's declination, Astro): the same warp then gives that
-## latitude's long summer days and long winter nights, dawn and dusk still
+## The crawler's calendar (design §GE, §GK.1.2, CrawlerCalendar) sets
+## one_clock_lat (radians, its one fixed reference, the same for the hub and
+## every realm) and one_clock_year (the day of the year's declination,
+## Astro): the same warp then gives long summer days and long winter
+## nights, dawn and dusk still
 ## their 18 minutes. Both 0 / false: the equator on an equinox, as before.
 static var one_clock_lat := 0.0
 static var one_clock_year := false

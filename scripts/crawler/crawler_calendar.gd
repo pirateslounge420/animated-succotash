@@ -1,28 +1,26 @@
 class_name CrawlerCalendar
-## The crawler's calendar (design §GE, §GE.5; queue 114; data/crawler.json
+## The crawler's calendar (design §GE, §GK.1.2; queue 114; data/crawler.json
 ## calendar): the open world's 144-minute day and 365-day year, one for the
-## hub and every area (§FK.3: the same date, season and hour everywhere),
-## read at the latitude of the place you stand on:
+## hub and every realm (§FK.3: the same date, season, hour and day length
+## everywhere). No latitude anywhere (§GK.1.2, superseding §GE.5's): every
+## sky, daylight and season value is read at one fixed reference,
+## calendar.reference_deg (35, never shown as a latitude), so a summer day
+## is ~74 / 18 / 34 / 18 real minutes, an equinox ~60 / 18 / 48 / 18, a
+## winter day ~51 / 18 / 57 / 18, in the hub and in every realm alike
+## (DayCycle's warp at the reference and the day's declination, Astro).
 ##
-##   the hub      calendar.hub_latitude_deg (the equator): near the
-##                equinox split all year (60 / 18 / 48 / 18 real minutes);
-##                its seasons are wet and dry, its plants keep their leaves
-##                (calendar.hub_area, "tropical": dry_season)
-##   an area      calendar.area_latitude_deg by its kind (the surface's
-##                world, mapped by calendar.area_of_world): longer summer
-##                days and longer winter nights the further from the
-##                equator, dawn and dusk always 18 minutes (DayCycle's warp
-##                at that latitude and the day's declination, Astro)
 ##   underground  nothing seasonal (calendar.underground_seasons false): the
-##                shafts' daylight follows the day as at the equator (§FG)
+##                shafts' daylight follows the one shared sky (§FG, Vents)
 ##
-## What a winter does on a surface: calendar.winter_by_biome (snow and
-## frost only where cold; leaf drop or a dry season elsewhere). The plants
-## run the open world's leaf clock (LeafSeason's globals): deciduous crowns
+## What a winter does on a surface, by biome (§GE.5.4, which §GK.1.2 keeps):
+## calendar.winter_by_biome (snow and frost only where cold; leaf drop or a
+## dry season elsewhere); the hub's is calendar.hub_area's. The plants run
+## the open world's leaf clock (LeafSeason's globals): deciduous crowns
 ## colour, fall and bud again only where that winter drops leaves.
 
 static var C: Dictionary = Tuning.table("crawler").get("calendar", {})
-## The place being read now: "hub", or an area kind (area_latitude_deg's).
+## The place being read now: "hub", or a realm's kind (winter_by_biome's);
+## it picks the winter, never the sky.
 static var place := "hub"
 
 
@@ -30,32 +28,32 @@ static func seasons_on() -> bool:
 	return bool(C.get("seasons_on", true))
 
 
-## The latitude (degrees) of `kind` ("hub" or an area kind).
-static func latitude_deg(kind: String) -> float:
-	if kind == "hub":
-		return float(C.get("hub_latitude_deg", 0.0))
-	return float((C.get("area_latitude_deg", {}) as Dictionary).get(kind, 40.0))
+## The one reference (degrees) every sky, daylight and season is read at
+## (§GK.1.2): the same for the hub and every realm.
+static func reference_deg() -> float:
+	return float(C.get("reference_deg", 35.0))
 
 
-## The area kind of a surface world (worlds.json worlds.<name>): its own
-## name when area_latitude_deg has it, else calendar.area_of_world's.
+## The realm kind of a surface world (worlds.json worlds.<name>): its own
+## name when winter_by_biome has it, else calendar.area_of_world's.
 static func kind_of_world(world_name: String) -> String:
-	if (C.get("area_latitude_deg", {}) as Dictionary).has(world_name):
+	if (C.get("winter_by_biome", {}) as Dictionary).has(world_name):
 		return world_name
 	return str((C.get("area_of_world", {}) as Dictionary).get(world_name, "temperate"))
 
 
-## Read the sky, the day and the seasons at `kind` from now on (the
-## surface you came up onto).
+## Stand on `kind` from now on (the surface you came up onto): its winter
+## changes; the sky, the day and the season are the one shared ones.
 static func set_place(kind: String) -> void:
 	place = kind
-	SkySystem.one_clock_lat = deg_to_rad(latitude_deg(kind))
+	SkySystem.one_clock_lat = lat()
 	SkySystem.one_clock_year = seasons_on()
 	SkySystem.one_clock_warp = CrawlerCalendar.warp
 
 
+## The reference in radians (the one sky's; the same everywhere).
 static func lat() -> float:
-	return deg_to_rad(latitude_deg(place))
+	return deg_to_rad(reference_deg())
 
 
 ## The sun's declination on day `days` (0 with the seasons off).
@@ -74,15 +72,16 @@ static func drops_leaves(kind: String) -> bool:
 	return seasons_on() and not winter_of(kind).begins_with("dry_season")
 
 
-## The season at `kind` on day `days` (Seasons.at at its latitude).
-static func season(days: float, kind := "") -> Dictionary:
-	return Seasons.at(days, deg_to_rad(latitude_deg(kind if kind != "" else place)))
+## The season on day `days`: one for every place (Seasons.at at the
+## reference). `kind` is kept for callers and changes nothing.
+static func season(days: float, _kind := "") -> Dictionary:
+	return Seasons.at(days, lat())
 
 
 # --- The stylised clock (design §F2, §GE.1.4; tools/reference/daylight_reference.py) ---
 # The open world's DayCycle eases the sky's speed by the sun's height, which
 # holds the 18-minute dawn and dusk only at the equator on an equinox (at
-# 35° it gives 21-24 minutes). §GE asks for the reference's rule: every
+# the reference's 35° it gives 21-24 minutes). §GE asks for the reference's rule: every
 # dawn and dusk 18 real minutes (never shorter than its natural length),
 # the rest split between day and night in the geometric ratio, biased so
 # the equator's equinox is exactly 60/18/48/18. The crawler's sky runs on
@@ -183,9 +182,10 @@ static func phase_at(clock: float, la: float, de: float) -> String:
 	return "dawn"
 
 
-## Minutes of dawn, day, dusk and night at `kind` on day `days`.
-static func phase_minutes(days: float, kind := "") -> Dictionary:
-	var la := deg_to_rad(latitude_deg(kind if kind != "" else place))
+## Minutes of dawn, day, dusk and night on day `days`: the same at every
+## place (`kind` changes nothing, §GK.1.2).
+static func phase_minutes(days: float, _kind := "") -> Dictionary:
+	var la := lat()
 	var st := stylised(la, decl(days))
 	if not bool(st.get("ok", false)):
 		return DayCycle.phase_minutes_at(la, decl(days))
@@ -204,7 +204,7 @@ static func start_days() -> float:
 ## sheds and buds the deciduous crowns.
 static func apply_leaves(days: float, kind := "") -> void:
 	var k := kind if kind != "" else place
-	var p := Seasons.year_position(days, deg_to_rad(latitude_deg(k)))
+	var p := Seasons.year_position(days, lat())
 	var quarter := DayCycle.year_days() / 4.0
 	var q := fposmod(p - (3.5 - Seasons.half_transition()), 4.0)
 	RenderingServer.global_shader_parameter_set("leaf_clock", Vector2(q * quarter, (q - 2.0) * quarter))

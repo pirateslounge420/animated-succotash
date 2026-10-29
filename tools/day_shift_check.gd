@@ -3,9 +3,9 @@ extends SceneTree
 ## DayShift, data/day_shift.json), headless:
 ##   godot --headless --path . --script tools/day_shift_check.gd
 ## Asserts:
-##  1. keyed to the sun: over a fast-forwarded day at the hub, a 40° area
-##     (temperate) and a 62° one (ice), an actor's evening and morning
-##     changes fall inside the day_shift sun windows; at 62° the dusk
+##  1. keyed to the sun: over a fast-forwarded day at the hub, a temperate
+##     realm and an ice one (one shared sky, §GK.1.2), an actor's evening
+##     and morning changes fall inside the day_shift sun windows; the dusk
 ##     change comes at a different clock hour in summer and winter (so not
 ##     a clock hour);
 ##  2. in the game (SEED=7), the hub driven through a dusk and a dawn in
@@ -93,9 +93,10 @@ func _run() -> void:
 			var e := _evening(kind, yd)
 			var m := _morning(kind, yd)
 			ok(e.x >= 0.0 and e.y <= hi and e.y >= lo and m.x >= 0.0 and m.y <= hi and m.y >= lo, "%s, year day %.0f: dusk change at %.2f h (sun %.1f°), dawn at %.2f h (sun %.1f°), both inside %.0f..%.0f°" % [kind, yd, e.x, e.y, m.x, m.y, lo, hi])
-	var e62s := _evening("ice", 91.25)
-	var e62w := _evening("ice", 273.75)
-	ok(absf(e62s.x - e62w.x) > 0.5, "62°: the dusk change at %.2f h in summer, %.2f h in winter: the sun, not the clock" % [e62s.x, e62w.x])
+	var es := _evening("ice", 91.25)
+	var ew := _evening("ice", 273.75)
+	var hs := _evening("hub", 91.25)
+	ok(absf(es.x - ew.x) > 0.5 and absf(es.x - hs.x) < 0.01, "the dusk change at %.2f h in summer, %.2f h in winter: the sun, not the clock; the hub's summer one at %.2f h, the same sky (§GK.1.2)" % [es.x, ew.x, hs.x])
 	# 2. In the game.
 	WorldSave.read_only = true
 	Boss.pool_off = true

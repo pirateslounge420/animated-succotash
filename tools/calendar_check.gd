@@ -1,25 +1,23 @@
 extends SceneTree
-## The crawler's calendar (design §GE, §GE.5; queue 114; CrawlerCalendar,
+## The crawler's calendar (design §GE, §GK.1.2; queue 114; CrawlerCalendar,
 ## crawler.json calendar), headless:
 ##   godot --headless --path . --script tools/calendar_check.gd
 ## Asserts:
-##  1. the hub (the equator) within 1 minute of 60/18/48/18 every 5th day
-##     of the year;
-##  2. at 35° (a test latitude) the phase minutes match
-##     tools/reference/daylight_reference.py within 1 minute at both
-##     solstices and an equinox (summer 74.4/18/33.6/18, equinox
-##     60/18/48/18, winter 50.6/18/57.4/18);
-##  3. dawn and dusk are 18 minutes every day of a fast-forwarded year at
-##     the hub, 35° and every area latitude up to 40°; never shorter at
-##     the cold areas' (55°, 62°), whose summer twilights run longer where
-##     the sun skims the band all night (the reference's own rule);
-##  4. the sky agrees: the crawler's sun at 35° stands 90 - 35 + tilt
-##     degrees up at the June solstice's noon, 90 - 35 - tilt at
-##     December's; at the hub the equinox noon sun is overhead;
+##  1. one shared year, no latitude (§GK.1.2): the hub and every realm kind
+##     give the same phase minutes on every 5th day of the year, and the
+##     same sun at the same moment;
+##  2. the phase minutes match tools/reference/daylight_reference.py's 35°
+##     within 1 minute at both solstices and an equinox (summer
+##     74.4/18/33.6/18, equinox 61.3/18/46.7/18, winter 50.6/18/57.4/18);
+##  3. dawn and dusk are 18 minutes every day of a fast-forwarded year;
+##  4. the sky agrees: the noon sun stands 90 - 35 + tilt degrees up at the
+##     June solstice, 90 - 35 - tilt at December's, at the hub and in a
+##     realm alike; the shafts' daylight (Vents.sun_deg) is the same sun;
 ##  5. a fast-forwarded year passes spring, summer, autumn, winter in that
 ##     order, and is spring again after 365 days;
-##  6. winter by biome: plants drop leaves only where the winter is not a
-##     dry season (the hub keeps them; temperate areas drop them);
+##  6. winter by biome (§GE.5.4, kept by §GK.1.2): plants drop leaves only
+##     where the winter is not a dry season (the hub keeps them; temperate
+##     realms drop them);
 ##  7. in the game (SEED=7): a new game starts at year day 0 at dusk on
 ##     the hub; the log's stamp says the season; Continue keeps the saved
 ##     day and hour;
@@ -68,47 +66,54 @@ func _sun_noon(lat_deg: float, yd: float) -> float:
 func _run() -> void:
 	var year := DayCycle.year_days()
 	var tilt := rad_to_deg(DayCycle.axial_tilt())
-	# 1. The hub.
-	var hub_lat := CrawlerCalendar.latitude_deg("hub")
-	var worst := 0.0
+	var ref := CrawlerCalendar.reference_deg()
+	var kinds := ["hub"]
+	for k in (CrawlerCalendar.C.get("winter_by_biome", {}) as Dictionary):
+		kinds.append(str(k))
+	# 1. One shared year: every place the same.
+	var differ := []
 	var d := 0.0
 	while d < year:
-		var m := _mins(hub_lat, d)
-		worst = maxf(worst, maxf(absf(m.day - 60.0), maxf(absf(m.dusk - 18.0), maxf(absf(m.night - 48.0), absf(m.dawn - 18.0)))))
+		var days := d - DayCycle.year_start_day()
+		var m0 := CrawlerCalendar.phase_minutes(days, "hub")
+		for k in kinds:
+			var m := CrawlerCalendar.phase_minutes(days, k)
+			if not _near(m, [m0.day, m0.dusk, m0.night, m0.dawn], 0.001):
+				differ.append([k, d])
 		d += 5.0
-	ok(worst <= 1.0, "the hub (%.0f°) within 1 minute of 60/18/48/18 all year (worst %.2f min)" % [hub_lat, worst])
-	# 2. 35°.
-	var s35 := _mins(35.0, year * 0.25)
-	var e35 := _mins(35.0, 0.0)
-	var w35 := _mins(35.0, year * 0.75)
-	ok(_near(s35, [74.4, 18.0, 33.6, 18.0]), "35°, June solstice %s ~ 74.4/18/33.6/18" % _say(s35))
-	ok(_near(e35, [61.3, 18.0, 46.7, 18.0]), "35°, spring equinox %s ~ 61.3/18/46.7/18 (the reference's own; the prompt's 60/18/48/18 is the equator's)" % _say(e35))
-	ok(_near(w35, [50.6, 18.0, 57.4, 18.0]), "35°, December solstice %s ~ 50.6/18/57.4/18" % _say(w35))
+	SkySystem.one_clock_warp = CrawlerCalendar.warp
+	SkySystem.one_clock_year = true
+	CrawlerCalendar.set_place("hub")
+	var sun_h := Surface.sun_deg_at(40.37)
+	CrawlerCalendar.set_place("ice")
+	var sun_i := Surface.sun_deg_at(40.37)
+	CrawlerCalendar.set_place("hub")
+	ok(differ.is_empty() and absf(sun_h - sun_i) < 1e-4, "the hub and every realm (%s) share the phase minutes every 5th day and the sun (%.3f° at the hub, %.3f° in the ice realm); differ: %s" % [", ".join(kinds), sun_h, sun_i, str(differ.slice(0, 3))])
+	# 2. The reference's 35° numbers.
+	var s35 := _mins(ref, year * 0.25)
+	var e35 := _mins(ref, 0.0)
+	var w35 := _mins(ref, year * 0.75)
+	ok(absf(ref - 35.0) < 0.001, "the one reference is 35° (calendar.reference_deg %.1f)" % ref)
+	ok(_near(s35, [74.4, 18.0, 33.6, 18.0]), "June solstice %s ~ 74.4/18/33.6/18" % _say(s35))
+	ok(_near(e35, [61.3, 18.0, 46.7, 18.0]), "spring equinox %s ~ 61.3/18/46.7/18 (the reference script's own at 35°; §GK.1.2's table rounds it to 60/18/48/18)" % _say(e35))
+	ok(_near(w35, [50.6, 18.0, 57.4, 18.0]), "December solstice %s ~ 50.6/18/57.4/18" % _say(w35))
 	# 3. Dawn and dusk every day.
-	var lats := [hub_lat, 35.0]
-	for k in (CrawlerCalendar.C.get("area_latitude_deg", {}) as Dictionary):
-		lats.append(float(CrawlerCalendar.C.area_latitude_deg[k]))
-	# The reference's rule: exactly 18 wherever there is a night; where the
-	# sun never leaves the twilight band (a cold area's midsummer white
-	# nights) the natural twilight, never shorter than 18.
 	var bad := []
-	var white := {}
-	for la in lats:
-		for yd in int(year):
-			var m := _mins(float(la), float(yd))
-			if m.dawn < 17.5 or m.dusk < 17.5 or absf(m.dawn - m.dusk) > 0.1 or (float(la) <= 40.0 and (absf(m.dawn - 18.0) > 0.5 or absf(m.dusk - 18.0) > 0.5)):
-				bad.append([la, yd, _say(m)])
-				break
-			if m.dusk > 18.5:
-				white[la] = int(white.get(la, 0)) + 1
-	ok(bad.is_empty(), "dawn and dusk exactly 18 minutes every day up to 40° (the hub, 35°, every tropical, desert, swamp and temperate area), never shorter anywhere (%s°; bad: %s)" % [str(lats), str(bad)])
-	print("  days with a longer natural twilight (cold areas' summer, the sun skimming the band) per latitude: %s" % str(white))
+	for yd in int(year):
+		var m := _mins(ref, float(yd))
+		if absf(m.dawn - 18.0) > 0.5 or absf(m.dusk - 18.0) > 0.5:
+			bad.append([yd, _say(m)])
+	ok(bad.is_empty(), "dawn and dusk 18 minutes every day of the year (bad: %s)" % str(bad.slice(0, 3)))
 	# 4. The sky.
-	var up_s := _sun_noon(35.0, year * 0.25)
-	var up_w := _sun_noon(35.0, year * 0.75)
-	var up_h := _sun_noon(hub_lat, 0.0)
-	ok(absf(up_s - (90.0 - 35.0 + tilt)) < 1.5 and absf(up_w - (90.0 - 35.0 - tilt)) < 1.5, "35°: the noon sun %.1f° up in June, %.1f° in December (want %.1f, %.1f)" % [up_s, up_w, 90.0 - 35.0 + tilt, 90.0 - 35.0 - tilt])
-	ok(up_h > 88.5, "the hub: the equinox noon sun overhead (%.1f°)" % up_h)
+	var up_s := _sun_noon(ref, year * 0.25)
+	var up_w := _sun_noon(ref, year * 0.75)
+	ok(absf(up_s - (90.0 - ref + tilt)) < 1.5 and absf(up_w - (90.0 - ref - tilt)) < 1.5, "the noon sun %.1f° up in June, %.1f° in December (want %.1f, %.1f)" % [up_s, up_w, 90.0 - ref + tilt, 90.0 - ref - tilt])
+	var same_below := true
+	for i in 24:
+		var t := 40.0 + i / 24.0
+		if absf(Vents.sun_deg(t) - Surface.sun_deg_at(t)) > 1e-4:
+			same_below = false
+	ok(same_below, "the shafts' daylight reads the same sun as the surfaces, hour by hour")
 	SkySystem.one_clock_lat = 0.0
 	SkySystem.one_clock_year = false
 	SkySystem.one_clock_warp = Callable()

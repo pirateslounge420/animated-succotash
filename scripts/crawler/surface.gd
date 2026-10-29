@@ -492,8 +492,9 @@ func bat_roost() -> Vector3:
 	return Vector3((stair.mouth as Vector2).x, float(stair.y) - 1.0, (stair.mouth as Vector2).y)
 
 
-## Which place of the calendar this surface is (design §GE.5,
-## CrawlerCalendar): its world's area kind (the desert's "desert").
+## Which place of the calendar this surface is (design §GE.5.4, §GK.1.2,
+## CrawlerCalendar): its world's realm kind (the desert's "desert"), which
+## sets its winter only.
 func calendar_kind() -> String:
 	return CrawlerCalendar.kind_of_world(str(settings().get("world", "desert")))
 
@@ -611,7 +612,8 @@ func inside(pos: Vector3, margin := 0.0) -> bool:
 ## drone and drips), this world's put in.
 func enter(main: Node) -> void:
 	_main = main
-	# The sky, the day and the season at this place's latitude (§GE.5).
+	# This place's winter (§GE.5.4); the sky, the day and the season are
+	# the one shared ones (§GK.1.2).
 	CrawlerCalendar.set_place(calendar_kind())
 	var player: CrawlerPlayer = main.player
 	_kept = {"look": Look._params.duplicate(), "touched": {}, "campfire_night": Campfire.night, "half_dark": (main.half_dark as HalfDark).enabled,

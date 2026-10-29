@@ -36,20 +36,15 @@ var daylight := 1.0
 var sun := 1.0
 
 
-## The sun's height (degrees) over the tomb at world time `days`. One
-## clock everywhere (design §FK.3): no latitude, no axial tilt, no day of
-## the year, so every day is DayCycle's reference day (the equator on an
-## equinox: day 60, dusk 18, night 48, dawn 18 of the 144 minutes), the
-## sky turning on its warp, the sun 90° up at noon and its hour angle off
-## the overhead after.
-##
-## With calendar.underground_seasons on (design §GE.1.6; off by default)
-## the shafts read the place's own latitude and the day of the year
-## (SkySystem.one_clock_sun) instead.
+## The sun's height (degrees) over the tomb at world time `days`: the one
+## shared sky the surfaces read (design §FK.3, §GK.1.2; Surface.sun_deg_at),
+## so dusk falls down the shafts when it falls above, the day as long as
+## the season makes it. Nothing else underground is seasonal
+## (calendar.underground_seasons false, §GE.1.6). Before the calendar has
+## set its sky (SkySystem.one_clock_warp unset) it is DayCycle's reference
+## day: the equator on an equinox, day 60, dusk 18, night 48, dawn 18.
 static func sun_deg(days: float) -> float:
-	if bool(CrawlerCalendar.C.get("underground_seasons", false)):
-		return rad_to_deg(asin(clampf(SkySystem.one_clock_sun(days, Vector3.UP, Vector3.RIGHT).y, -1.0, 1.0)))
-	return 90.0 - absf(DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5) * 360.0
+	return rad_to_deg(asin(clampf(SkySystem.one_clock_sun(days, Vector3.UP, Vector3.RIGHT).y, -1.0, 1.0)))
 
 
 ## The world time on the day of `base_days` when the tomb's sky reaches
