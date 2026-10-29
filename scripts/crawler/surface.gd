@@ -96,6 +96,12 @@ var ms := {}
 ## The weather up here: fair, a little cloud, a breeze (sky.cloud,
 ## wind_mps). Not simulated (§EW.6).
 var weather := {}
+## The dawn and dusk routines (design §GF, DayShift).
+var day_shift: DayShift
+## The area's main hearth (design §GD.1.2-3, CrawlerAreas): near one edge,
+## cold until your torch lights it; null where there is none (the hub, or
+## areas off).
+var area_hearth: Node3D
 
 
 ## The §FV.1 pocket (design 11 Oct; data/ruin_compass.json surface): the
@@ -109,6 +115,9 @@ static func sized(seed_value: int) -> Dictionary:
 	var p: Dictionary = settings()
 	var C: Dictionary = _json("res://data/ruin_compass.json").get("surface", {})
 	var ar = C.get("across_m", null)
+	# An area joined by fire (design §GD.1.2, queue 113): the area's own size.
+	if CrawlerAreas.on() and CrawlerAreas.first().has("across_m"):
+		ar = CrawlerAreas.first().across_m
 	var across := float(S.get("across_m", 1400.0))
 	if ar is Array and (ar as Array).size() >= 2:
 		var rng := RandomNumberGenerator.new()
@@ -295,10 +304,19 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		add_child(RuinTunnel.shrine_node(spot, str(lay.get("theme", ""))))
 		var sp: Vector3 = spot.pos
 		keep_out.append(Rect2(Vector2(sp.x, sp.z) - Vector2(9.0, 9.0), Vector2(18.0, 18.0)))
+	# The area's main hearth near one edge (§GD.1.2, queue 113).
+	var hearth_at := Vector3.INF
+	if CrawlerAreas.on():
+		hearth_at = _hearth_spot()
+		if hearth_at != Vector3.INF:
+			keep_out.append(Rect2(Vector2(hearth_at.x, hearth_at.z) - Vector2(9.0, 9.0), Vector2(18.0, 18.0)))
 	plants = SurfacePlants.new()
 	plants.name = "Plants"
+	plants.seasonal = CrawlerCalendar.drops_leaves(calendar_kind())
 	add_child(plants)
 	plants.build(land, P, biome_doc(), seed_value, keep_out)
+	if hearth_at != Vector3.INF:
+		_build_hearth(hearth_at)
 	# The world's sacred plant, hung from one of those trees (queue 72).
 	# §FV.1: by the path from the stair, in sight within plant_stand
 	# .in_sight_within_s at a walk (stand_reach_m).
@@ -321,6 +339,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	var K: Dictionary = S.get("sky", {})
 	var wind_mps := float(K.get("wind_mps", 2.2))
 	weather = {"cloud": float(K.get("cloud", 0.15)), "storm": 0.0, "rain_mm_h": 0.0, "wind": Vector3(0.8, 0.0, 0.6).normalized() * wind_mps, "clear": 1.0 - float(K.get("cloud", 0.15))}
+	_day_shift()
 	ms["all"] = Time.get_ticks_msec() - t0
 	print("[surface] seed %d over tomb %d: %s, %d x %d ground at %.0f m (%d ms), the stairhead at %s, %d stacks and %d slots, %d finds, %d plants (%s), %d creatures (%s); built in %d ms" % [seed_value, int(lay.get("seed", 0)), biome_key(), land.count, land.count, land.cell, int(ms.ground) + int(ms.ground_mesh), str((stair.mouth as Vector2).snapped(Vector2.ONE * 0.1)), stacks.size(), slots.size(), finds.size(), plants.placed, ", ".join(plants.grown.values()), life.animals.size(), ", ".join(life.kinds.map(func(k): return k.name)), int(ms.all)])
 
@@ -332,7 +351,7 @@ func _ground() -> void:
 	ground_node.name = "Ground"
 	add_child(ground_node)
 	var mat := TerrainChunk.terrain_material()
-	var col := BiomeTemplates.color_of(BiomeTemplates.id_of_key(biome_key())) if BiomeTemplates.id_of_key(biome_key()) >= 0 else TerrainChunk.SAND
+	var col := _ground_color()
 	var k := 0
 	for b in land.block_arrays(col):
 		var mesh := ArrayMesh.new()
@@ -360,6 +379,128 @@ func _ground() -> void:
 	fmi.material_override = mat
 	fmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	ground_node.add_child(fmi)
+
+
+## The world getting ready at dawn and dusk (design §GF).
+func _day_shift() -> void:
+	day_shift = DayShift.new()
+	day_shift.setup(self, world, seed_value)
+	add_child(day_shift)
+	day_shift.build()
+
+
+## The main hearth's spot: on the basin's floor, from_edge_m in from the
+## talus, out of the wash and clear of the stairhead and the finds, on the
+## far side from where you come up (seeded).
+func _hearth_spot() -> Vector3:
+	var H: Dictionary = CrawlerAreas.first().get("hearth", {})
+	var inset := float(H.get("from_edge_m", 30.0))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([seed_value, "area hearth"])
+	var n: Vector2 = stair.n if not stair.is_empty() else Vector2(0.0, 1.0)
+	var base := atan2(-n.y, -n.x)
+	for i in 64:
+		var th := base + rng.randf_range(-1.2, 1.2) * (1.0 + i / 32.0)
+		var r := land.edge_r(th) - float(land.E.get("talus_width_m", 90.0)) - inset
+		var p := land.center + Vector2(cos(th), sin(th)) * maxf(r, 20.0)
+		if not land.on_floor(p, 4.0) or land.in_wash(p) > 0.0 or land.slope_at(p.x, p.y) > 0.25:
+			continue
+		var clear := true
+		for f in finds:
+			if Vector2((f.at as Vector3).x, (f.at as Vector3).z).distance_to(p) < 12.0:
+				clear = false
+		if clear and p.distance_to(land.center) > 40.0:
+			return Vector3(p.x, land.height_at(p.x, p.y), p.y)
+	return Vector3.INF
+
+
+## The main hearth: a campfire inside a kerb of big stones, cold (ash laid,
+## no flame, no light) until lit; lit at once if this game has linked it.
+func _build_hearth(at: Vector3) -> void:
+	var root := Node3D.new()
+	root.name = "AreaHearth"
+	root.position = at
+	add_child(root)
+	var m := StandardMaterial3D.new()
+	m.albedo_color = Color("#4a4d6e")
+	m.roughness = 0.5
+	var body := PropCollision.body(root)
+	for i in 10:
+		var a := TAU * i / 10.0
+		var mi := MeshInstance3D.new()
+		var b := BoxMesh.new()
+		b.size = Vector3(0.7, 0.45 + 0.15 * (i % 3), 0.45)
+		mi.mesh = b
+		mi.material_override = m
+		mi.position = Vector3(cos(a) * 1.5, b.size.y * 0.5 - 0.05, sin(a) * 1.5)
+		mi.rotation.y = -a
+		root.add_child(mi)
+		PropCollision.box(body, mi.transform, b.size)
+	var fire := Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, at), CrawlerFires.key_dir(at + Vector3(0.0, 0.2, 0.0)), false)
+	fire.name = "Fire"
+	area_hearth = fire
+	var st := FireStore.store_of(fire)
+	st["tended"] = true
+	st["kept"] = true
+	if CrawlerAreas.linked():
+		_set_hearth(true)
+	else:
+		st["state"] = "out"
+		FireStore.apply(fire)
+		_set_hearth(false)
+
+
+func _set_hearth(on_now: bool) -> void:
+	if area_hearth == null:
+		return
+	area_hearth.set_meta("lit", on_now)
+	area_hearth.set_meta("area_lit", on_now)
+	var l := area_hearth.get_node_or_null("Light") as OmniLight3D
+	if l != null:
+		l.visible = on_now
+	var fl := area_hearth.get_node_or_null("Flames") as Node3D
+	if fl != null:
+		fl.visible = on_now
+
+
+## Is the area's main hearth burning?
+func hearth_lit() -> bool:
+	return area_hearth != null and bool(area_hearth.get_meta("area_lit", false))
+
+
+## Your torch has lit it (CrawlerAreas).
+func light_hearth() -> void:
+	if area_hearth == null:
+		return
+	FireStore.relight(area_hearth)
+	_set_hearth(true)
+
+
+## Where you step out of the fire: beside the main hearth, facing into the
+## area (toward the middle).
+func hearth_arrival() -> Dictionary:
+	var hp := area_hearth.global_position if area_hearth.is_inside_tree() else area_hearth.position
+	var to := Vector2(land.center.x - hp.x, land.center.y - hp.z).normalized()
+	var at := Vector2(hp.x, hp.z) + to * 2.6
+	return {"pos": Vector3(at.x, land.height_at(at.x, at.y) + 0.05, at.y), "yaw": atan2(-to.x, -to.y)}
+
+
+## Where the bats roost by day (design §GF.3): the ruin's stair mouth.
+func bat_roost() -> Vector3:
+	if stair.is_empty():
+		return Vector3.ZERO
+	return Vector3((stair.mouth as Vector2).x, float(stair.y) - 1.0, (stair.mouth as Vector2).y)
+
+
+## Which place of the calendar this surface is (design §GE.5,
+## CrawlerCalendar): its world's area kind (the desert's "desert").
+func calendar_kind() -> String:
+	return CrawlerCalendar.kind_of_world(str(settings().get("world", "desert")))
+
+
+## The ground's colour: its biome's (the desert's sand by default).
+func _ground_color() -> Color:
+	return BiomeTemplates.color_of(BiomeTemplates.id_of_key(biome_key())) if BiomeTemplates.id_of_key(biome_key()) >= 0 else TerrainChunk.SAND
 
 
 ## The stone (SurfaceBuild's arrays): one mesh in blocks (CrawlerMain's
@@ -470,6 +611,8 @@ func inside(pos: Vector3, margin := 0.0) -> bool:
 ## drone and drips), this world's put in.
 func enter(main: Node) -> void:
 	_main = main
+	# The sky, the day and the season at this place's latitude (§GE.5).
+	CrawlerCalendar.set_place(calendar_kind())
 	var player: CrawlerPlayer = main.player
 	_kept = {"look": Look._params.duplicate(), "touched": {}, "campfire_night": Campfire.night, "half_dark": (main.half_dark as HalfDark).enabled,
 		"far": player.camera().far if player.camera() != null else 400.0, "paused": [], "env": null, "wind": WeatherFX.plant_wind,
@@ -596,6 +739,9 @@ func _process(delta: float) -> void:
 func _update(delta: float) -> void:
 	var days := float(world.get("days"))
 	var K: Dictionary = S.get("sky", {})
+	# The season on the plants (§GE.1.6, CrawlerCalendar).
+	if plants != null and plants.seasonal:
+		CrawlerCalendar.apply_leaves(days, calendar_kind())
 	sky.update_sky(Vector3.UP, Vector3.RIGHT, Vector3.FORWARD, days, weather, 0.0, delta)
 	var night := 1.0 - sky.daylight
 	# The pocket's own haze: from the eye, lighter and bluer with distance,
@@ -632,8 +778,10 @@ func _update(delta: float) -> void:
 	life.daylight = sky.daylight
 	var S2: Dictionary = S.get("sound", {})
 	_volume("wind", float(S2.get("wind_db", -19.0)), 1.0)
-	_volume("day", float(S2.get("day_db", -26.0)), sky.daylight)
-	_volume("night", float(S2.get("night_db", -23.0)), night)
+	# (The day and night layers follow the sun's routine, DayShift, §GF.4.)
+	if day_shift == null:
+		_volume("day", float(S2.get("day_db", -26.0)), sky.daylight)
+		_volume("night", float(S2.get("night_db", -23.0)), night)
 
 
 func _volume(key: String, db: float, share: float) -> void:

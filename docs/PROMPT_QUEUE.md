@@ -148,13 +148,13 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 108 | §FY.0.2, §FY.10 | The ruins come up: every culture ruin in its Earth homeland and biome (`ruin_compass.json → earth_home`), every biome ruin in its biome, rare; its twin at the mouth, the crawler below | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 105) |
 | 109 | §FY.2, §FY.3 | Spear and bow as finds; the three substances; reach | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
 | 110 | §FY.0.4 | The night rules on the surface: dread, residents and bosses out of the ruins after dark | parked (§GA, 25 Oct: the 1/100 Earth goes to a separate open-world game); was todo (after 108) |
-| 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | todo |
-| 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | todo (after 111) |
+| 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
+| 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 27 Oct to §GD (Claude Code; see PROGRESS): no way down under the fire |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
-| 114 | §GE, §GE.5 | The calendar in the crawler: one 144-minute day and 365-day year for all; the hub on the equator, each area at its biome's latitude, winter by biome | todo (any time; 112 reads it) |
-| 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | todo (after 112 and 114) |
-| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | todo (after 112) |
-| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | todo (after 116) |
+| 114 | §GE, §GK.1.2 | The calendar in the crawler: one 144-minute day and 365-day year for all, read at one fixed 35° reference (no latitude, §GK.1.2), winter by biome | built 26 Oct to §GE.5 (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle); §GK.1.2 rework todo |
+| 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
+| 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | built 27 Oct to §GH (Claude Code; see PROGRESS); §GK.2–3 amendment todo |
+| 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | built 27 Oct to §GI.1–2 and §GJ (Claude Code; see PROGRESS); §GK.4–7 rewrite todo (after 116's amendment) |
 | 118 | §GI.3 | Brews as real trips: breathing surfaces, richer colour, trails, crawling patterns, onset-peak-fade, mixed per plant | todo (any time) |
 | 119 | §GK.8 | Looting bodies: kneel and take teeth and parts; teeth worth more the rarer the creature; teeth stashes only where people once kept things | todo (after 117) |
 | 120 | §GL.1–2 | Scrolls read by the shaman over a trip; permanent spells by rarity; cooldowns, one mana meter, regen faster by a fire, mana potions | todo (after 117) |
@@ -1884,7 +1884,7 @@ CHECK (headless): 100 new seeds' wake points are all on land and none on the ice
 
 ## 111 — The glossy look in the crawler — §GB
 
-**Status:** todo
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** The crawler stops looking pixelated. Wet stone glints, water shines near white, the dark goes deep cobalt-navy, glowing things bloom, the torch is the one warm orange, and the distance melts into indigo fog. Smooth and high-contrast, like a dream at night.
 
 ```text
@@ -1899,7 +1899,7 @@ CHECK (headless): the crawler boots with no errors under both presets; with "glo
 
 ## 112 — The hub camp on the surface at dusk — §GD.1, §GC.1
 
-**Status:** todo (after 111)
+**Status:** built 27 Oct to §GD (Claude Code; see PROGRESS)
 **Mike sees:** A new game starts at a campfire on the surface at dusk, in a small seeded camp with exaggerated rock, roots, ruins or vines and a river through it. A hooded figure stirs a glowing cauldron at the fire. The 144-minute day turns to night and the seasons change the plants. There is no way down here: the hub is only the camp.
 
 ```text
@@ -1929,7 +1929,7 @@ CHECK (headless): from a new game, the stand-in opens the first link; travel hub
 
 ## 114 — The calendar in the crawler — §GE
 
-**Status:** todo (any time; 112 reads it)
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** In the crawler the days change through the year: long summer days and short summer nights, short winter days and long nights, dawn and dusk always 18 minutes; the plants on the surfaces bud in spring, colour in autumn and go bare in winter. A new game starts on the first evening of spring.
 
 ```text
@@ -1944,7 +1944,7 @@ CHECK (headless): the hub and every realm give the same phase minutes on the sam
 
 ## 115 — The world gets ready at dawn and dusk — §GF
 
-**Status:** todo (after 112 and 114)
+**Status:** built 26 Oct (Claude Code; see PROGRESS)
 **Mike sees:** At dusk the day flowers close and the night bloomers open with moths round them; birds go quiet and settle, then insects, frogs and owls start; bats pour out of cave mouths; the folk light the camp one light at a time until it glows amber. At dawn it all runs back, birds first, lights going out, the hearth banked. Underground nothing changes.
 
 ```text
@@ -1959,7 +1959,7 @@ CHECK (headless): over a fast-forwarded day at the hub and at a 40° and a 62° 
 
 ## 116 — The shaman's song round the fire — §GH
 
-**Status:** todo (after 113)
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** You sit down at the hub fire. The shaman starts a song, the flames take a new colour and a moving glimpse of another place opens in the fire and smoke. Scroll left or right and the song, the colour and the glimpse change to another realm you know. Pick one and step into the fire, and you come out at that realm's hearth. No powder.
 
 ```text
@@ -1974,7 +1974,7 @@ CHECK (headless): from a new game, sit, the first realm's song plays and its col
 
 ## 117 — The shaman a man; the song home, the bank, and what you lose — §GI.1–2, §GJ
 
-**Status:** todo (after 116)
+**Status:** built 27 Oct (Claude Code; see PROGRESS)
 **Mike sees:** The shaman at the hub fire is a man now, still hooded, with his pipe and cauldron. The camp has a bank, like PSO's: put teeth and items in and they're safe for good. In a realm, whatever you have on you is only carried: walk back to that realm's hearth and the shaman's song brings you home with it. Die out there and you wake at the hub fire with nothing on you, but everything you had lies where you fell, glowing faintly, and it's still there whenever you go back for it.
 
 ```text

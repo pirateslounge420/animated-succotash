@@ -18,6 +18,195 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Queue:** 116 amended, 117 rewritten, 119 new.
 - **Open (§GK.9):** whether relit lamps carry over between runs; the other realms' plants; set times per realm; the graveyard island's key; key plants as brews; the interpreter, chest size, the name.
 
+## 2026-10-28 — Torches are found or made, never resupplied (Claude Code)
+- Mike: *"it can start with torches but it should not just resupply itself- you should have to make it or find them"*. This replaces the 27 Oct entry below (the daily binding, the refilling caches and the short brand).
+- **Built** (`TorchSupply`, `torch.json → crawler_burn.supply`; new item kinds `branch` and `resin` in `items.json`):
+  - The firekeeper's stack starts with 3 and never refills.
+  - Each realm has seeded finds: 2 caches of old torches, 8 deadfall branches and 5 resin stumps. Each is taken once and never comes back (`regrow_days` 0, a knob).
+  - At the firekeeper's site, with his stack empty, the interact button binds one branch and one resin from your pack into a torch.
+  - The song lights a torch you carry and gives none when you carry none (`brand_without_torch` false; `crawler.json → areas._help_brand` notes it).
+- **Check:** `torch_supply_check` 14/14. `area_check` now starts with a torch from the stack in your pack, and passes 0 fails. `bank_check` and `hub_check` fail 0.
+- **For Mike:** with nothing regrowing, a realm's torches are finite: 3 + 2–4 from caches + up to 5 bound + the ruin's 3, at 15 minutes each. Once a realm is stripped, more must come from new realms (not built). If that turns out too harsh, the knob is `regrow_days` on branches and resin, a living thing growing back rather than a stack refilling.
+
+## 2026-10-27 — Torches are scarce (Claude Code)
+- Mike: *"torches shouldn't be too abundant, to create a sense of scarcity and encourage the player to either prepare during the day or venture out at night to find them"*.
+- **Before:** the ruin's bundle was laid fresh (3) every time the ruin was built, and the song handed you a full 15-minute torch whenever you held none, so torches never ran out.
+- **Built:** `TorchSupply` (`scripts/crawler/torch_supply.gd`, `torch.json → crawler_burn.supply`, Claude Code's first guesses):
+  - **The firekeeper's stack** at the hub: 2 in a new game, 2 more bound each day, at most 3.
+  - **Realm caches:** 4 old caches per realm, 1–2 torches each, refilling 2 days after being emptied.
+  - **The ruin's bundle** is kept in the save and never refilled (`CrawlerFires.trim_bundle`, `lay_sticks`).
+  - **The song's brand**, when you have no torch, burns only 3 minutes.
+- **Check:** `tools/torch_supply_check.gd` 13/13. `area_check`, `bank_check` and `hub_check` still fail 0. Every crawler check prints 36 "not in a scene tree" errors, and the last commit prints the same ones without these changes. `crawler_check`, `hands_check`, `hearth_cauldron_check` and `room_pool_check` give the same results as the last commit: their old failures come from the tomb-wake start (the game now starts at the hub) and are not touched here. `crawler_check` stalls at the same point on both (seed 42).
+- **For Mike to judge by play:** whether 2 a day, at most 3, against a 15-minute burn and a night of about 50 minutes, feels scarce but fair.
+
+## 2026-10-27 — Tome pages drop until you get them home (Claude Code)
+- Mike: *"yea tome pages should drop until you get it back to the hub"*.
+- **Built:**
+  - `TomePages` keeps a second list in the save, `tome_pages_carried`: pages picked up but not yet brought home.
+  - The shaman's song home from a realm's hearth makes them yours for good (`home_all`).
+  - Dying drops them into your pile with everything else (`drop_carried`), and they leave what you hold. They are not laid back on their floor while they wait in a pile (`in_piles`).
+  - Picking the pile up brings them back as carried (`pick_up`). Pages already home are never lost. `crawler.json → areas.death._help_pages`.
+- **Check:** `bank_check` 19/19. A page carried home by the song stays yours. A page not yet home drops into the pile (this seed's ruin lays only one fragment, so the check uses a stand-in page id for the second) while the one brought home stays. Picking up the pile gives it back as carried.
+
+## 2026-10-27 — Queue 117, §GI.1–2 and §GJ: the shaman a man, the song home, the bank, the pile where you fall (Claude Code)
+- **What Mike sees:**
+  - The shaman at the hub fire is a man: a little taller, a beard showing under his hood, his face still hidden; he keeps his pipe, the cauldron and the singing.
+  - Across the fire from him stands a big lidded store-basket: the bank. Right click by it and a panel opens (what you carry, what is stored; click to move things across). Whatever is in it is safe for good.
+  - At a realm's hearth, right click and the realm's song plays as the wash carries you home with what you carry.
+  - Die in a realm (its surface or its ruin) and you wake at the hub fire with nothing on you. Everything you had lies where you fell as a bundle with glowing embers and a faint orange light. It never goes away; go back by the song and walk to it to get it all back. Die again and there is a second pile.
+- **Built:**
+  - `CrawlerBank` (`scripts/crawler/crawler_bank.gd`): storage in `CrawlerSave.data.bank`, deposit and withdraw, a currency slot ready for teeth (§FZ.3, not built yet), and the panel.
+  - `HubCamp`: the male shaman (`hub.shaman.height_m`, `beard`) and `bank_node`.
+  - `CrawlerAreas`: `to_hub` sings the realm's song; `die()` empties every carry slot, the left hand's strip and worn gear into one pile, kept in `CrawlerSave.data.piles` with its realm and whether it lies on the surface or in the ruin, and wakes you at the hub (`CrawlerMain._to_hub_from_anywhere`). `refresh_piles` builds the piles under the realm's surface or the tomb; `_pickups` gives a pile back when you walk to it (what will not fit stays).
+  - `CrawlerMain._on_taken` takes this path whenever there is a hub.
+  - `crawler.json`: `hub.bank` and `areas.death` (new), the shaman's male build, the home line. No "she" or "her" for him anywhere in the data.
+- **A bug found and fixed:** on Continue the game briefly stands you on the ruin's waking mat while it readies the hub, which silently picked up a pile lying there. Piles now only gather once play has begun (`CrawlerAreas.live`).
+- **Checks:** `tools/bank_check.gd` 16/16.
+  - He is male; no she or her in the data.
+  - Deposit and withdraw at the bank. A tome carried home by the hearth song is still yours.
+  - Taken in the ruin: you wake at the hub fire with nothing, the bank untouched, one pile where you fell. Dying again on the realm's surface leaves a second pile.
+  - Continue keeps the bank and both piles; back by the song, each pile is there and gives everything back.
+  - `area_check`, `hub_check`, `day_shift_check` 0 fails.
+- **Walkabout (`tools/bank_frames.gd`, once):** the shaman, the bank's panel, a pile on the ruin's hearth-room floor, the song home, the hub fire.
+- **For Mike:**
+  - The beard barely reads in the dusk dark at the fire.
+  - The pile picture is in the ruin's lit hearth room, so the glow reads less than it will in a dark corridor.
+  - Every trip without a lit torch hands you a brand, so torches pile up in what you carry; a cap or a rule for them is open.
+  - Tome pages you hold are kept as before and are not dropped on death; whether they should be is open.
+
+## 2026-10-27 — Queue 116, §GH: the shaman's song round the fire (Claude Code)
+- **Merged** the design branch (§GG, §GH, §GI, §GJ, queue 116–118) first; queue rows 111–115 kept their built status, PROGRESS kept both sides.
+- **What Mike sees:**
+  - Right click at the hub fire (or by the shaman) and you sit down facing it. The shaman lifts his hands and sings; the flames turn the realm's colour (cyan for the first), and a soft, heat-wavering oval glimpse of the realm opens over the fire, a live view from beside its hearth, slowly drifting.
+  - A and D scroll the realms whose songs you know (one, so far). Right click again steps you into the fire: a cyan wash, and you are beside the realm's hearth, with a brand from the hub fire if you had no lit torch. Moving or Esc stands you up with nothing changed.
+  - The powder is gone.
+- **Built:**
+  - `CrawlerAreas` reworked (113's plumbing kept): `sit`, `stand`, `scroll`, `step_in`. The song is `song_stream`: Mike's track at `songs.<realm>.music` if the file exists, else a placeholder drum and hummed chant made from `bpm`, `root_hz`, `chant` and `drum`. The shaman's arms sway over the fire as he sings (FolkMotion).
+  - The glimpse: a SubViewport with its own world holding the realm's surface, paused, its camera beside the hearth, shown on `shaders/fire_glimpse.gdshader` (soft oval, heat ripple, the song's colour at the rim, fading in).
+  - `CrawlerMain._ensure_area` builds the realm without entering it.
+  - Knowing the song is the key: travel no longer waits on the hearth. Lighting it still reclaims it (saved as before under `areas.first.linked`). Home: the button at the realm's hearth, lit or not.
+  - `crawler.json → areas`: `songs` (with `known_from_start` as the stand-in, §GH.4 call 1 open), `glimpse`, `sit`, new log lines; the powder line and the old stand-in keys are gone.
+- **Checks:** `tools/area_check.gd` 20/20: sit, the song, its colour, its glimpse; a list of one; standing up changes nothing; step in to an unlit hearth with a brand; home by its hearth; reclaim it with the torch; the ruin mouth down and back; no powder in the data or log; Continue keeps the hearth lit and the song still takes you there. `hub_check` and `day_shift_check` 0 fails.
+- **Walkabout (`tools/area_frames.gd`, once):** sitting, the song with the cyan flames and the glimpse over the fire, stepping in, the arrival, the hearth lit, the ruin mouth.
+- **For Mike:** the glimpse reads pale and washed-out. The realm in it uses its own sky, which isn't graded like the hub's and was built at whatever hour the realm was made. A darker, graded glimpse is a tuning pass.
+
+## 2026-10-27 — Queue 113, §GD.1.2–4: fire travel to the first area (Claude Code)
+- **What Mike sees:**
+  - At the hub, the interact button by the fire or the cook-shaman turns the flames bright cyan; a cyan wash fills the screen and you step out beside a cold hearth in another place. If you held no lit torch you carry a brand from the hub fire.
+  - The area is the surface over the first ruin (for the tomb, the desert basin; 300–600 m across). Its hearth sits in a ring of big stones about 30 m in from the cliffs.
+  - Hold your torch to it and it catches: linked for good. From then on the hub fire takes you there and the hearth brings you home.
+  - The area's ruin entrance is the old stone gateway over the stair near its middle. The ruin's way out brings you back up beside it.
+- **Built:**
+  - `CrawlerAreas` (`scripts/crawler/crawler_areas.gd`): the interact routing, the shaman's stand-in first link (§GD.5 call 1 is still open; said so in `areas._help_stand_in`), the fire tint and wash, the brand, the torch-to-hearth lighting, and the link in `CrawlerSave.data.areas`.
+  - `Surface`: `area_hearth` (placed by `_hearth_spot`, built cold or lit by `_build_hearth`), `light_hearth`, `hearth_lit`, `hearth_arrival`; the size from `areas.first.across_m`.
+  - `CrawlerMain`: `hub_node` and `area_node` kept for the session, `_swap_surface`, `_to_area_now`, `_to_hub_now`, `_wash`. `_up_now` brings you up into the area once there is a hub. The interact button asks `areas` first. Both surfaces are freed on exit.
+  - `crawler.json → areas` (new, `_help` on every part).
+- **A choice for Mike:** before the hearth is lit, the cold hearth still brings you home during the session the shaman opened it, so you can never be stranded; only lighting it keeps the link.
+- **Checks:** `tools/area_check.gd` 18/18: the stand-in trip, the cold hearth and the brand, the size, home from the cold hearth, the torch lighting it and the link saved, down the area's stair and back up by the mouth, three linked crossings, Continue keeping the link. `hub_check`, `day_shift_check`, `calendar_check`, `cauldron_fx_check` all 0 fails.
+- **Walkabout (`tools/area_frames.gd`, once):** the hub fire, its flames turned cyan, the wash, the cold hearth, lit, the area's surface, the ruin mouth.
+
+## 2026-10-27 — Queue 112 brought to §GD: the hub has no way down (Claude Code)
+- **111:** already built (26 Oct, the glossy look); nothing in its row or §GB has changed since, so nothing to redo.
+- **112 (§GD.1, §GC.1):** the hub was built on 26 Oct to §GC.1–2, with a stair down under the fire. §GD.1.1 (26 Oct) says nothing of the hub is underground and there is no way down beneath its fire. Changed:
+  - `HubCamp` no longer builds the stairhead: no stair cut into the ground, no stone gateway over it, no vent stacks (the hub is over no dungeon). It keeps the stair's frame only to lay the camp out (`frame`). The standing-stone ring stays behind the fire as a henge on plain ground.
+  - The hub's bats roost in a crevice at the cliff foot (`HubCamp.bat_roost`; a ruin's surface still uses its stair mouth).
+  - The first ruin is reachable only by the developer's way (`CrawlerMain.go_down`) until 113.
+  - The rest of the row was already in: the dusk start (§GE clock), the cook-shaman, the keepers, the river, the 144-minute day and the seasons (114).
+  - Plants still use the existing species' shapes from the temperate deciduous file; §GD.1.5 allows shapes not tied to a real species, but no alien palette exists yet.
+- **Checks:** `hub_check` 21/21 (30 seeds: no cut behind the fire; in the game: no stair, nothing round the fire leads down, a year at the camp spring, summer, autumn, winter, spring with the day within 0.53 min of 60, the developer's way to the ruin and back, Continue the same camp at dusk). `day_shift_check` 0 fails. Walkabout (`hub_frames.gd FIRE_ONLY=1`): the spawn at dusk with no gateway behind the fire, the shaman.
+
+## 2026-10-26 — Queue 115, §GF: the world gets ready at dawn and dusk (Claude Code)
+- **What Mike sees at the hub:**
+  - At dusk the day flowers close and the moonflowers and datura open, with moths round them. The birds circle in to roost; bats pour up out of the stair mouth. The birdsong thins, then insects, frogs by the river and owls come in.
+  - The cook-shaman builds the fire up. Each keeper walks to the fire for a flame, lights their torch post and the lamp in their shelter, and walks back to sit, one light at a time. The shaman's three candles come last.
+  - At dawn it runs back: a bird chorus, the bats home, the lights put out, the fire banked low.
+  - Underground nothing changes.
+- **Built:**
+  - `DayShift` (`scripts/crawler/day_shift.gd`), on every surface (Surface and HubCamp, `_day_shift()`). Each actor's night share comes from the local sun's height (`Surface.sun_deg_at`, the place's latitude, §GE.5) plus its own jitter; never a clock hour.
+  - Flowers: the herbalist's bed tagged by habit, and four clumps of night bloomers. Moths: at the bloomers and at lit torches. A bird flock that roosts; a bat colony from the stair mouth.
+  - `SurfaceLife.awake_fn` and `covers`: the ground animals walk to the nearest tree and sleep when their shift ends. Deer are twilight by `default_by_kind`; the hares stay "any".
+  - Sound layers on the sun with the crossfade. The keepers' rounds use `FolkMotion` walking, recheck the sun at every step, and hold to one light per 8 s.
+  - The hub: torch posts, a lamp in each shelter and three candles, all registered as `folk_lights`.
+  - `data/day_shift.json`: the NOT WIRED YET prefix is gone; added a `crawler` block (bloomer clumps, birds, bats, moths, the banked hearth, the build-up time, the walking pace). Registered `day_shift` in `Tuning.FILES`: it had no loader, so every value had been reading its default.
+- **Checks:** `tools/day_shift_check.gd` 0 fails.
+  - The changes fall inside the sun windows at the hub, 40° and 62°. At 62° the dusk change is at 20.4 h in summer and 14.5 h in winter.
+  - Noon: day flowers open, night bloomers shut, birds out, bats in, no lights, hearth banked. Midnight: the reverse, hearth built up, no day-shift ground creature about.
+  - Birds and bats out together in the twilight. All 13 lights lit at dusk, each at least 8 s apart, candles last; every keeper walked a round and sat again; all out at dawn, hearth banked.
+  - Nothing runs underground. Continue at midnight: all lit, bats out.
+  - `hub_check`, `calendar_check`, `cauldron_fx_check` 0 fails.
+- **Walkabout (`tools/day_shift_frames.gd`, once):** the camp from behind the fire, at the start, 2, 4 and 7 minutes later and at night. The lights come up one by one as amber glows and pools round the dark camp.
+- **For Mike:**
+  - The start is much darker than before 114. Dusk now begins at sunset on the §GE clock, so 3 minutes in (`hub.dusk_into_min`) the sun is already 5° down. A smaller or negative number starts nearer sunset.
+  - The hares have no hours of their own ("any") and stay out all night.
+
+## 2026-10-26 — Queue 114, §GE and §GE.5: the calendar in the crawler (Claude Code)
+- **What Mike sees:** the days change through a 365-day year on every surface but the hub. At 35° there are long summer days, short summer nights, short winter days and long winter nights, with dawn and dusk 18 minutes each. The hub, on the equator, keeps about 60/18/48/18 all year. A new game starts on the spring equinox, 3 minutes into dusk; Continue keeps its day and hour. Deciduous plants turn, drop and bud where that place's winter drops leaves (temperate, swamp, cold); the hub's, the tropics' and the desert's keep theirs (a dry season). The log stamps lines "Spring day 27 · 17:30".
+- **Built:**
+  - `CrawlerCalendar` (`scripts/crawler/crawler_calendar.gd`): the place (hub or area kind) and its latitude, the day's declination (Astro), the season (Seasons), the leaf clock (LeafSeason's globals), winter by biome, the start day, the log stamp, and the stylised clock below.
+  - `SkySystem.one_clock_sun`/`moon` take a latitude, the year and a warp (`one_clock_lat`, `one_clock_year`, `one_clock_warp`; at rest exactly the old equator-equinox sun, so the open world is untouched).
+  - `Surface.enter` sets the place (`calendar_kind()`: the hub "hub", any other its world's kind); `Surface._update` runs the leaf clock; `SurfacePlants.seasonal` sets which deciduous crowns run it.
+  - `CrawlerSave` keeps `days`. `CrawlerMain`: the new-game clock and Continue's restore, `set_dusk` by the clock's phase (`hub.dusk_into_min`, which supersedes `dusk_sun_deg`), the log stamp.
+  - `Vents.sun_deg` reads the place only with `underground_seasons` on (off).
+  - `calendar._help`: the NOT WIRED YET prefix is gone; added `hub_area` (tropical) and `area_of_world`.
+- **A disagreement found, for Mike and Claude (chat):** the open world's `DayCycle` does not do §F2's stylised clock off the equator. At 35° it gives 21-minute twilights at the equinox and 23–24 at the solstices, with a 65-minute summer day. §GE's numbers come from `tools/reference/daylight_reference.py`, whose rule (twilight stretched to 18 minutes, never shorter than natural; the rest split day:night in the geometric ratio, biased to 60:48 at the equator's equinox) I built for the crawler only (`CrawlerCalendar.warp`). The open world keeps `DayCycle` as it was. Should the open world follow the reference too?
+- **Two numbers in the prompt corrected by the reference itself:**
+  - At 35° the equinox is 61.3/18/46.7/18, not 60/18/48/18; that split is the equator's.
+  - At the cold areas' latitudes (55°, 62°) a few midsummer days have a natural twilight over 18 minutes and almost no night (55°: 6 days, 62°: 14; the reference agrees within a minute). Dawn and dusk are exactly 18 every day up to 40°.
+- **One thing to settle:** year day 0 (the equinox) falls on day 27 of spring by `data/seasons.json` (its 20-day lag). If "the first evening of spring" should read "Spring day 1", either `calendar.start_year_day` ≈ 339.4 or the lag goes; Mike's call.
+- **Not built:** snow and frost (§GE.5.4 says where; nothing draws them yet); the season's temperature and wetness on the surfaces (their weather is fixed fair, §EW.6: nothing reads it yet).
+- **Checks:**
+  - `tools/calendar_check.gd`: 16/16.
+    - The hub is within 0.53 minutes of 60/18/48/18 all year.
+    - At 35°, summer 74.5/18/33.5/18 against the reference's 74.4/18/33.6/18; the equinox 61.3/18/46.7/18, equal to the reference; winter 50.6/18/57.4/18, equal to it.
+    - Dawn and dusk are 18 every day up to 40°.
+    - The noon sun at 35° stands 78.5° up in June and 31.5° in December.
+    - The seasons run spring, summer, autumn, winter, spring.
+    - Leaves drop only where the winter says.
+    - At rest, the one-clock sun is the old one.
+    - A new game starts at year day 0.73, dusk, on the hub, and the clock's phases over the day are 60.1/18/47.9/18.
+    - Continue keeps 41.029.
+  - `hub_check` 0 fails; its dusk line now reads the clock's phase. `cauldron_fx_check` 0 fails.
+- **Merged** the design branch's §GD, §GE, §GE.5 and queue 113–114 first. §GD rewrites queue 112: no way down under the hub fire. The hub as built still has one; the queue row now says so.
+
+## 2026-10-26 — Heavy brews billow over the rim (Claude Code)
+- Mike: *"it would be cool for the effect to be a more billowing and flowing over the edges type of fog"*. `CauldronFX` gained a spill: faint, wide fog puffs pushed out from a ring at the pot's rim, sinking and spreading as they grow (9 s each), the column above thinner. `crawler.json → hub.cauldron_fx.brews.<brew>.spill` (0–1): jimsonweed 1.0, teonanácatl 0.35; jimsonweed's motes cut to 0.1 (they read as blobs). `cauldron_fx_check` 0 fails (the spill brews billow and sink, the others don't); seen once (`cauldron_frames.gd`, `ONLY=jimsonweed`): a faint yellow-green fog spilling round the pot and down past the fire.
+
+## 2026-10-26 — The camp cauldron steams, brew by brew (Claude Code)
+- Mike: *"lets get some effects steaming up off the cauldron- also, for different brews which would take different times there will be different effects"*.
+- **Built:** `CauldronFX` (`scripts/crawler/cauldron_fx.gd`) at the hub cauldron's mouth: soft steam puffs, bubbles breaking on the surface, rising motes (embers, glowing motes or wandering spores), a puff when a brew is done, and the brew's surface colour and faint light. `crawler.json → hub.cauldron_fx` (new): six brews, each with its time and look: camp stew (0, always simmering), healing broth 60 s, ololiuhqui 120 s, teonanácatl 180 s, blue lotus and mandrake 150 s, jimsonweed 240 s (heavy smoke that sinks over the rim). Strength builds from a simmer to full over the brew's time. No brew system yet (what a brew does, how you ask for one, is undecided), so the cook-shaman cycles through them. `start(key, true)` is the hook a brew system will call.
+- **Checks:** `tools/cauldron_fx_check.gd` 46/46 (each brew's time, ready once with a puff, its colours, simmer weaker than full, its motes, the heavy one sinking; all times and looks distinct; the cycle; the camp's cauldron steaming). Pictures (`tools/cauldron_frames.gd`): the first puffs were hard squares, now soft and round.
+- **Queue:** no `todo` rows left: 111 and 112 built, 103–110 parked (§GA), the rest wait on Mike's calls or on other rows.
+
+## 2026-10-26 — The fire's light: a gradient, not a white-out (Claude Code)
+- Mike: *"the amount of light coming from the fire seems too bright- please fix the gradient hue of the light level"*. The ground round the hub's fire read amber, then white, then cyan. Found by elimination over six renders (each by itself barely moved it): mostly the cauldron's green light, hung over the fire since the last change, adding to the fire's amber; then the colour ramp's mid stop lifting blue in the light's fading edge.
+- **Changes:** `crawler.json → hub.shaman.glow_energy` 1.4 → 0.35 and `glow_range_m` 5 → 2.5 (the brew still glows and blooms); `look.json → glossy.surface.grade` now only deepens the darks (straight above 0.18); every fire's light under glossy at 0.25 of its strength with a steeper fall-off (`glossy.fire.light_scale`, `attenuation` 2.2) and no painted warm disc under it (`ground_glow` false); the cobalt back light off on the surface (`back_light._help_surface`); the camp's ground its own forest-floor colour (`hub.ground_color`), not the desert's sand; the stone up top dry and matte (`glossy.surface.stone`). The game's own light maths (LightField: what keeps creatures off) is untouched.
+- **Seen:** the pool now grades from warm pink-amber at the fire's stones into the cobalt dark. `hub_check` 0 fails. `hub_frames.gd` gained `FIRE_ONLY=1` (just the two views of the fire) and `SETTLE=`.
+
+## 2026-10-26 — The hub's cauldron over the fire (Claude Code)
+- Mike: *"the cauldron should be over the fire"*. The cook-shaman's cauldron now hangs from a tripod of three poles on a short chain straight over the campfire (`crawler.json → hub.shaman.hang_m` 1.05), its green brew and glow as before; the three stones it stood on are gone. `hub_check` 0 fails; seen once in the walkabout (the pot over the flames, the green on the poles).
+
+## 2026-10-26 — The hub camp fleshed out by niche, and glossy up top (Claude Code)
+- **Mike:** *"the overworld place we spawn in ... needs to be more flushed out- please consider the different niches we established and also make it look less washed out and more high contrast even in the overworld layer"*.
+- **The niches (`HubCamp._dress`, `crawler.json → hub.keepers._help_dress`):** every keeper's site now has a shelter in its trade's way and a torch post (the one amber). Hunter-tanner: a hide tent, a hide on a hoop, a skull-and-antler totem, a spear rack, meat over a smoke pit. Fisher-weaver: a reed hut, a dugout on the bank, a fish-drying line, a fish trap. Woodcutter-firekeeper: a bark lean-to, a felled trunk with an axe in it, stumps, kindling bundles, the ember pot. Forager-herbalist: a thatched hut, a flower bed (purple, magenta, blue, yellow, glowing acid green), gourds, a mortar. Knapper-potter: a clay hut, the clay pit, pots drying on a plank, a knapping stone and flakes, kiln smoke. The common ground (`hub.common`): log benches round the fire, stepping-stone paths to each site, three totems.
+- **High contrast up top (`look.json → glossy.surface`, `GlossyLook.surface_env`, `smooth_all`):** the sky's environment graded ACES, contrast 1.3, saturation 1.4, the deep-darks ramp, additive bloom; the ground's and plants' shaders rebuilt smooth (linear, every mip, anisotropic) and lit per pixel.
+- **Checks:** `hub_check` 20/20 again. Walkabout at 640×360 (lavapipe now ~15 s a frame up top: per-pixel ground and plants plus five torch lights; the Mac's frame rate is Mike's to watch): the camp reads cobalt and magenta at dusk with the fire and cauldron the bright accents; the paths first came out as black slabs (a flat earth strip, crushed by the grade, and still dark plum when lightened), so they are stepping stones now (`common.step_m`, `stone_color`).
+
+## 2026-10-26 — Queue 112, §GC.1–2 the hub camp, with Mike's dusk start and the keepers' sites (Claude Code)
+- **Mike's ask (26 Oct):** *"we spawn in around the campfire at dusk and also set up a RNG camp sites for each of our specialized village niches"*. Two changes to the queue row: **dusk** (the row said night) and **the five other keepers' sites** (§FZ.4 had them as a to-do; the row left them out). Their looks and trades are still §FZ.4's: the keepers are plain hooded stand-ins in their trade's colours, seated, doing nothing yet.
+- **What Mike sees:** every start (new game or Continue) fades up at dusk at a campfire in a walled clearing, the sun 3° up and sinking. The hooded cook-shaman sits by a green-glowing cauldron with a bone pipe and a smoke wisp. Round the fire: hunter-tanner (hide rack, bones), fisher-weaver (on the river bank: net rack, baskets, pole), woodcutter-firekeeper (woodpile, stump), forager-herbalist (herb rack, baskets), knapper-potter (glowing kiln, pots, flint). A river runs out of the camp; tall crooked rock stacks, oversized roots, broken columns or vines by the game's start kind. The way down is the old stair behind the fire, ringed by standing stones; it lands you at the top of the first ruin's way out, and walking back up it brings you to the fire.
+- **Built:** `HubCamp` (`scripts/crawler/hub_camp.gd`, extends `Surface`: reuses its cliff-walled basin, wash, plants, life, sky on the one clock and the stair; adds the river, kind props, ring, fire, shaman, cauldron and keepers' sites; `plan()` is the pure layout). `crawler.json → hub` (new block, `_help` on every part). `CrawlerMain`: `_start_at_camp()` (the dungeon readied in the dark, `set_dusk()`, up into the camp), `_up_now()` split out of `go_up()`, the hub built in place of the old surface, and the dungeon's way out open from the start while the hub is on (it is the way in). `hub.on` false restores the old start.
+- **Check (`tools/hub_check.gd`): 20 of 20.** Over 30 seeds: different camps, the same seed the same, kinds stone 11 / vines 12 / ruins 7, the spawn flat and dry by the fire, no water or steep rise between it and the way down, all five sites placed apart on walkable ground (fisher on the bank). In the game (seed 7): starts on the camp 2.6 m from the fire, sun 2.9° and sinking, shaman, cauldron glow, five keepers, river, fire lit; down into the ruin's landing; up into the same camp; Continue reopens the same camp at dusk.
+- **Walkabout (`tools/hub_frames.gd`, once):** the spawn, the shaman, each site, the way down. By eye: the camp reads. **Not yet glossy up top:** the ground and plants still use the open world's pixel-era terrain and plant shaders, and the surface swaps in the sky's own grade, not §GB's. A follow-up pass should carry §GB to the surface.
+- **Design notes for Claude (chat):** dusk instead of night (§GC.1 said night); the keepers' sites built ahead of §FZ.4; the way down lands at the ruin's way out, open from the start, so the old "drive the boss home to open the way up" (§FO.3) does not gate the hub.
+
+## 2026-10-26 — §GB tuning: magenta over amber (Claude Code)
+- Mike, after the walkabout frames: *"i prefer the screenshots where it looks magenta rather than all amber"*. `look.json → glossy`: `back_light.energy` 0.15 → 0.45 and `environment.grade` back to the stronger blue ramp (0.25 → #363a5e, 0.6 → #9499bd), the settings of the magenta corridor frame. Firelit stone now reads magenta where the cobalt fill meets the fire's amber; the fire's own light colour is untouched. This bends §EX.6 (one amber) on screen by Mike's choice; for Claude (chat) to record in the design doc.
+
+## 2026-10-26 — Queue 111, §GB the glossy look in the crawler (Claude Code)
+- **What Mike sees:** the crawler stops looking pixelated. It draws at the window's own resolution with smooth textures; the stone is wet and bumped and throws sharp highlights from the fire (floors glossier than walls); the dark goes cobalt and near-black navy, the haze indigo; the fire, the cauldron and glow moss bloom; flames are smooth and soft-edged in the one amber. The pixel look is kept as a preset (`look.json → glossy.crawler_preset` `"pixel"`, or `LOOK=pixel`).
+- **Built:** `GlossyLook` (`scripts/crawler/glossy_look.gd`) and `look.json → glossy` (new block, `_help` on every part). `Display` uses canvas_items stretch under glossy (3D at full resolution, HUD laid out at 854×480). `ruin.gdshader` built with `GLOSSY`: linear/mipmapped/anisotropic tiles, per-pixel bump drawn from each tile's own brightness (derivative bump mapping: no normal-map files), roughness 0.38 walls / 0.3 floors / 0.75 moss and timber, specular, rim; `RuinBuilder.material_lit()` hands it out, so walls, floors, hearth, pots and gates all get it. The WorldEnvironment: ACES, exposure 0.7, additive bloom over HDR 1.0, contrast 1.15, saturation 1.3, a colour ramp pushing the darks to #07071a; indigo exponential fog 0.06/m (FloorFog's haze, floor two's fog still adds). `post_grade.gdshader` skips its own grade, dither, grain and bleed under glossy (keeps the fire's whites and harm). A faint cobalt light rides 3 m ahead of your eye (energy 0.15). `flame.gdshader` built with `SMOOTH_FIRE`: no texel grid, no stepped scroll, the bands blended, a soft edge. Volumetric fog is wired but **off**: lavapipe can't tell us the Mac's frame time.
+- **Check (`tools/glossy_check.gd`, seed 7):** pixel 0 fails (854×480, dither on). Glossy at 1280×720: boots, frame the window's size, no dither, glossy stone, environment, the cold corridor warm only with the torch lit (71.7 % lit, 0.00 % smothered), saturation over pixel's in all three lit frames (0.83/0.81/0.88 vs 0.71/0.76/0.80); the lit corridor's darkest 5 % #07071a, the smothered corridor's mean hue 240°. **3 fails, reported, not forced:** the hearth room's darkest 5 % is #070736 (navy, bluer than #07071a), and the firelit frames' mean hue is 316–321° (the amber firelight fills half the frame, and amber plus cobalt averages to magenta). A lit place going amber is §GB.3's own rule, so the blue-band test may be the wrong test for lit frames; Mike's call. Frame time here 1.1 s (lavapipe, a CPU renderer): not a measure of the Mac.
+- **Walkabout (once, glossy):** the hearth room, a relit corridor, a cold corridor by torch and smothered. By eye: the firelit stone runs deep red-orange rather than the pixel look's amber (ACES plus saturation 1.3); exposure, saturation and `grade` are the knobs. Textures are still the 64 px tiles (§GB.4 asks 256–512): a follow-up.
 ## 2026-10-27 — §GJ locked: the bank at the hub; what you lose waits where you fell (Claude, chat)
 - **Mike** (09:57): lose everything not at the hub; a PSO-style bank for currency and items; lost items can be retrieved in the realm and never despawn.
 - **Design:** §GJ. Settles §GI.2.1 (the full loss). Every death leaves a pile, kept in the save. Open: the bank's keeper and capacity; whether piles show on a map.

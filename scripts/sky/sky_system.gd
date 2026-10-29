@@ -599,16 +599,48 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 ## 18, night 48, dawn 18 of the 144 minutes), and the sun stands on the
 ## great circle through due east of `up`, overhead and due west, its hour
 ## angle off the overhead: 90 degrees up at noon, as Vents.sun_deg says.
+##
+## The crawler's calendar (design §GE, §GE.5, CrawlerCalendar) sets
+## one_clock_lat (radians, the place's latitude) and one_clock_year (the
+## day of the year's declination, Astro): the same warp then gives that
+## latitude's long summer days and long winter nights, dawn and dusk still
+## their 18 minutes. Both 0 / false: the equator on an equinox, as before.
+static var one_clock_lat := 0.0
+static var one_clock_year := false
+## The clock's warp (clock, lat, decl) -> solar fraction: DayCycle's when
+## unset; the crawler's stylised one (CrawlerCalendar.warp) once it sets a
+## place.
+static var one_clock_warp: Callable = Callable()
+
+
+static func _warp1(clock: float, lat: float, decl: float) -> float:
+	return float(one_clock_warp.call(clock, lat, decl)) if one_clock_warp.is_valid() else DayCycle.warp(clock, lat, decl)
+
+
 static func one_clock_sun(days: float, up: Vector3, east: Vector3) -> Vector3:
-	var h := TAU * (DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5)
-	return (up * cos(h) - east * sin(h)).normalized()
+	var decl := Astro.declination(days) if one_clock_year else 0.0
+	var h := TAU * (_warp1(fposmod(days, 1.0), one_clock_lat, decl) - 0.5)
+	return _on_sky(h, decl, up, east)
+
+
+## The direction to a body at hour angle `h` and declination `decl` over
+## a place at one_clock_lat whose up is `up` and east `east` (north
+## up x east).
+static func _on_sky(h: float, decl: float, up: Vector3, east: Vector3) -> Vector3:
+	var la := one_clock_lat
+	var north := up.cross(east)
+	var e := -cos(decl) * sin(h)
+	var n := cos(la) * sin(decl) - sin(la) * cos(decl) * cos(h)
+	var u := sin(la) * sin(decl) + cos(la) * cos(decl) * cos(h)
+	return (east * e + north * n + up * u).normalized()
 
 
 ## The one clock's moon: on the sun's path, its elongation behind it (it
 ## rises later each day; its phases count days as ever, §DD).
 static func one_clock_moon(days: float, up: Vector3, east: Vector3) -> Vector3:
-	var h := TAU * (DayCycle.warp(fposmod(days, 1.0), 0.0, 0.0) - 0.5) - Astro.moon_elongation(days)
-	return (up * cos(h) - east * sin(h)).normalized()
+	var decl := Astro.declination(days) if one_clock_year else 0.0
+	var h := TAU * (_warp1(fposmod(days, 1.0), one_clock_lat, decl) - 0.5) - Astro.moon_elongation(days)
+	return _on_sky(h, 0.0, up, east)
 
 
 ## The environment's tonemapper (look.json grade.tonemap: linear, the

@@ -29,7 +29,12 @@ uniform vec3 band3 = vec3(0.113, 0.004, 0.0); // edge, #5A0A00
 uniform vec3 low0 = vec3(1.11, 0.074, 0.0);    // the collapsed (low fire) bands: #FF4A00
 uniform vec3 low1 = vec3(0.282, 0.011, 0.0);   // #8A1A00
 uniform vec3 low2 = vec3(0.046, 0.003, 0.0);   // #3A0800
-uniform float low = 0.0;                  // 0 = full fire, 1 = collapsed to a red flicker
+uniform float low = 0.0;
+#ifdef SMOOTH_FIRE
+// The glossy look (design §GB, GlossyLook): the edge's fade, a share of
+// the flame's width (look.json glossy.fire.soft_edge).
+uniform float soft_edge = 0.35;
+#endif                  // 0 = full fire, 1 = collapsed to a red flicker
 
 void vertex() {
 	// Billboard about the card's own up axis only: the card stays standing
@@ -47,14 +52,24 @@ void vertex() {
 void fragment() {
 	// Snap to the texel grid first; everything below reads from q, so the
 	// card is made of texels.x by texels.y flat squares.
+#ifdef SMOOTH_FIRE
+	// Glossy (§GB): no texel grid, the scroll slides.
+	vec2 q = UV;
+#else
 	vec2 q = (floor(UV * texels) + 0.5) / texels;
+#endif
 	float x = q.x * 2.0 - 1.0; // -1 left edge, 1 right edge
 	float y = 1.0 - q.y;       // 0 at the base, 1 at the tip
 	// The scroll climbs in whole texel rows, so the fire steps instead of
 	// sliding: one slow, large octave and one faster, smaller one.
 	float raw = TIME * scroll + phase;
+#ifdef SMOOTH_FIRE
+	float t1 = raw;
+	float t2 = raw * 1.9;
+#else
 	float t1 = floor(raw * texels.y) / texels.y;
 	float t2 = floor(raw * 1.9 * texels.y) / texels.y;
+#endif
 	float n1 = texture(look_grain_soft, vec2(q.x * 0.6 + phase, (y - t1) * 0.55)).r - 0.5;
 	float n2 = texture(look_grain_soft, vec2(q.x * 1.3 - phase, (y - t2) * 1.2)).r - 0.5;
 	// Licked sideways, more toward the tip and wilder when low; the height
@@ -75,7 +90,17 @@ void fragment() {
 	vec3 c1 = mix(band1, low1, low);
 	vec3 c2 = mix(band2, low2, low);
 	vec3 c3 = mix(band3, low2, low);
+#ifdef SMOOTH_FIRE
+	// Glossy (§GB): the same one amber's colours blended smoothly by heat,
+	// the hot heart past white so it blooms, and a soft edge.
+	vec3 cs = mix(c3, c2, smoothstep(0.0, 0.3, heat));
+	cs = mix(cs, c1, smoothstep(0.3, 0.6, heat));
+	ALBEDO = mix(cs, c0, smoothstep(0.6, 0.9, heat));
+	float tip = smoothstep(0.02, 0.18, width + n2 * 0.3);
+	ALPHA = (1.0 - smoothstep(1.0 - soft_edge, 1.0, d)) * tip;
+#else
 	ALBEDO = heat > 0.72 ? c0 : (heat > 0.45 ? c1 : (heat > 0.2 ? c2 : c3));
 	ALPHA = body;
 	ALPHA_SCISSOR_THRESHOLD = 0.5; // a hard cut, so the card writes depth
+#endif
 }

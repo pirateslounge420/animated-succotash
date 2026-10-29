@@ -83,10 +83,15 @@ static func color() -> Color:
 ## Floor one's own haze (crawler.json look, as CrawlerMain._environment sets
 ## it): the depth's dark, on both floors.
 static func haze_density() -> float:
+	# The glossy look's indigo haze (design §GB.4).
+	if GlossyLook.active:
+		return GlossyLook.haze_density()
 	return float(CrawlerMain.LOOKD.get("fog_density", 0.025))
 
 
 static func haze_color() -> Color:
+	if GlossyLook.active:
+		return GlossyLook.haze_color()
 	return Color(str(CrawlerMain.LOOKD.get("fog_color", "#05081c")))
 
 
@@ -165,15 +170,20 @@ func apply(s: float) -> void:
 	share = clampf(s, 0.0, 1.0)
 	writes += 1
 	var env: Environment = main.get("environment") if main != null else null
+	var h := look_haze(share)
 	if env != null:
-		env.fog_enabled = share > 0.0
+		env.fog_enabled = share > 0.0 or GlossyLook.active
 		env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
 		env.fog_density = density() * share
 		env.fog_light_color = color()
+		# Glossy (§GB.4): everything not drawn by the look's shaders fogs
+		# into the same indigo haze as the stone.
+		if GlossyLook.active:
+			env.fog_density = float(h.density)
+			env.fog_light_color = h.color as Color
 		env.fog_light_energy = 1.0
 		env.fog_sun_scatter = 0.0
 		env.fog_aerial_perspective = 0.0
 		env.fog_sky_affect = 0.0
 		env.fog_height_density = 0.0
-	var h := look_haze(share)
 	Look.apply({"look_fog_density": float(h.density), "look_fog_color": h.color as Color})

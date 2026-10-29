@@ -170,6 +170,18 @@
    "icon": "book",
    "color": "#5a4632",
    "_note": "A real philosophical text, found where someone left it in a ruin (most often at a delve's heart). Its title in play comes from data/tomes.json (the first: The Book of Changes). Read while you carry it, a page at a time."
+  },
+  "branch": {
+   "name": "Branch",
+   "icon": "branch",
+   "color": "#5a3e24",
+   "_help": "Deadfall from a realm's floor; with resin, bound into a torch at the firekeeper's site (torch.json crawler_burn.supply, Mike 28 Oct)."
+  },
+  "resin": {
+   "name": "Resin",
+   "icon": "fruit",
+   "color": "#d8902a",
+   "_help": "Pine resin scraped off an old stump in a realm; with a branch, bound into a torch at the firekeeper's site (torch.json crawler_burn.supply, Mike 28 Oct)."
   }
  },
  "sample_part": {

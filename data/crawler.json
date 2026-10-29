@@ -27,7 +27,7 @@
   "folk_3d": "The folk at the hearth are real 3D models of the shared rig, painted per §ES and made pixel by the 480-line frame and their texels (Mike: 'more like the goat pixel guy', frame 3), not baked billboards. Amends §ET.8 for folk; creatures and bosses stay sprites until Mike says (§FI.2 call 11). Built 7 Oct (Claude Code): the rescuer (who: hearth_folk; HearthFolk) is the shared rig in the scene, CloakedFigure with its beast head and cloak colours as before, seated on a low stone facing the hearth (rescuer). Painted per §ES: diffuse only, roughness 1, no normal maps, its occlusion baked toward navy (Prelit), lit live by the hearth's amber, casting the fire's shadow, its head's too. texels_per_m: its painted detail one value a texel on a grid of this many texels a metre in each part's own space (16: the tomb walls' fitted-stone grid, so it pixelates like them at 480 lines); its head on its own copy of the head's material, so no other head changes; 0 puts back the rig's fine weave and soft grain. step_fps: 0 runs its idle smooth at the frame rate (Claude Code's call: real geometry already moves a whole pixel at a time at 480 lines, and stepped head turns read as jerky); 8 steps it as the sprites stepped (sprites.anim_fps). render, painted, target: what it is, for the record.",
   "opening_pick": "[NOT WIRED YET — design §FJ.1] Mike, 6 Oct 22:52: 'first tomb should be randomly selected from the entire roster'. A new game's first dungeon is any built ruin kind (a key of themes), picked at random from the new game's seed; opening.first_theme stays the fallback until this is wired. Amends §ET.3. Each new kind joins the draw as it's built.",
   "themes_aztec_temple": "(Claude Code, queue 80, design §FN.1) themes.aztec_temple: the Aztec temple, built by the tomb's generator in masonry.json's aztec_temple stone with its two fixed chambers (room_pool.json always). It is drawn only when aztec_temple.json enabled is true (§FJ.1's roster, opening_pick); with it false (the default) no game ever draws it and the first ruin is the tomb as before. Which biome world it sits in is Mike's open call (§FN.8 call 1).",
-  "calendar": "[NOT WIRED YET — design §GE, §GE.5] (26 Oct) One calendar (date, season, clock hour) for the hub and every area (§FK.3). The hub reads the sky at hub_latitude_deg (the equator); each area at its own latitude by biome (area_latitude_deg, first guesses; kept under ~62° so dawn and dusk always exist). winter_by_biome: what winter does on each kind of surface (snow and frost only where cold). Year, tilt and phases stay in data/sky/day_cycle.json and data/seasons.json. start_year_day 0 = the northern spring equinox. Underground nothing seasonal changes but the shaft daylight (§FG)."
+  "calendar": "(26 Oct) One calendar (date, season, clock hour) for the hub and every area (§FK.3). The hub reads the sky at hub_latitude_deg (the equator); each area at its own latitude by biome (area_latitude_deg, first guesses; kept under ~62° so dawn and dusk always exist). winter_by_biome: what winter does on each kind of surface (snow and frost only where cold). Year, tilt and phases stay in data/sky/day_cycle.json and data/seasons.json. start_year_day 0 = the northern spring equinox. Underground nothing seasonal changes but the shaft daylight (§FG). Wired 26 Oct (queue 114, CrawlerCalendar): hub_area is the kind whose winter the hub has (tropical: a dry season, the plants keep their leaves; §GE.5.2: the hub's seasons are wet and dry); area_of_world maps a surface's world (worlds.json) to its kind where the names differ. A new game starts at start_year_day at dusk; Continue keeps the saved clock."
  },
  "opening": {
   "underground": true,
@@ -502,6 +502,325 @@
   "roster": "built_themes",
   "seeded_per_new_game": true
  },
+ "hub": {
+  "_help": "(design §GC.1-2, §FZ.1, queue 112; Mike 26 Oct: 'spawn in around the campfire at dusk and also set up a RNG camp sites for each of our specialized village niches') The hub camp on the surface (HubCamp, built on Surface's machinery): a bounded clearing closed in by cliffs and fog, its ground, kind and keepers' sites drawn from the game's seed and kept for the game (§FK). You start every session at its campfire at dusk; the way down is the old stair behind the fire, ringed with standing stones, into the dungeon; the dungeon's way out brings you back up into the camp. on false: the old start (waking by the hearth below) and the old surface over the ruin.",
+  "on": true,
+  "across_m": [
+   150.0,
+   250.0
+  ],
+  "_help_across": "How wide the clearing is (m), drawn from the seed in this range; the cliffs close it.",
+  "dusk_sun_deg": 3.0,
+  "_help_dusk": "dusk_into_min: how far into dusk (real minutes) every new game starts. Dusk begins at sunset on the crawler's clock (design §GE, CrawlerCalendar: the reference's stylised day, dusk the 18 minutes after the sun goes down). dusk_sun_deg is superseded by it (26 Oct, queue 114) and no longer read.",
+  "biome": "TEMPERATE_DECIDUOUS",
+  "zones": {
+   "wash": "Ash-elm streamside forest",
+   "flats": "Hawthorn-elderberry edge scrub",
+   "upland": "Beech-maple cove forest"
+  },
+  "_help_biome": "The camp's plants: data/biomes, by key, and which association grows in each zone (the river's banks, the clearing, under the cliffs).",
+  "surface": {
+   "_help": "Laid over worlds.json surface for the hub only (same keys): taller crooked cliffs, the wash a river closer to the camp.",
+   "edge": {
+    "wander": 0.16,
+    "talus_width_m": 30.0,
+    "talus_rise_m": [
+     6.0,
+     14.0
+    ],
+    "cliff_width_m": 10.0,
+    "cliff_m": [
+     45.0,
+     95.0
+    ],
+    "beyond_m": 120.0,
+    "landmark": {
+     "out_m": 80.0,
+     "radius_m": 30.0,
+     "height_m": 110.0
+    }
+   },
+   "ground": {
+    "flat_round_stair_m": [
+     12.0,
+     24.0
+    ],
+    "wash": {
+     "from_m": 16.0,
+     "width_m": 9.0,
+     "depth_m": 1.8,
+     "wander_m": 22.0,
+     "bank_m": 5.0
+    }
+   },
+   "finds": {
+    "remains": [
+     1,
+     2
+    ],
+    "camps": [
+     0,
+     0
+    ],
+    "litter": [
+     2,
+     4
+    ]
+   },
+   "plants": {
+    "per_hectare": 140.0,
+    "ground_per_hectare": 300.0
+   }
+  },
+  "fire": {
+   "_help": "The campfire: out_m in front of the stair's mouth (the way down opens just behind it); you spawn spawn_m from the fire on the far side, facing it.",
+   "out_m": 4.5,
+   "spawn_m": 2.6
+  },
+  "kinds": {
+   "_help": "The start kind, one per game from the seed: what towers round the clearing. Each lists its props: pillars (tall crooked rock stacks: how many, height m), roots (oversized arching roots), ruins (broken columns and fallen blocks), vines (hanging from the pillars).",
+   "stone": {
+    "pillars": [
+     9,
+     14
+    ],
+    "pillar_h_m": [
+     14.0,
+     34.0
+    ],
+    "roots": [
+     2,
+     3
+    ],
+    "ruins": [
+     0,
+     0
+    ],
+    "vines": 0.0
+   },
+   "ruins": {
+    "pillars": [
+     4,
+     7
+    ],
+    "pillar_h_m": [
+     10.0,
+     22.0
+    ],
+    "roots": [
+     1,
+     2
+    ],
+    "ruins": [
+     6,
+     10
+    ],
+    "vines": 0.2
+   },
+   "vines": {
+    "pillars": [
+     6,
+     9
+    ],
+    "pillar_h_m": [
+     12.0,
+     26.0
+    ],
+    "roots": [
+     4,
+     7
+    ],
+    "ruins": [
+     0,
+     2
+    ],
+    "vines": 1.0
+   }
+  },
+  "ring": {
+   "_help": "The standing stones round the way down (§GC.2: something stranger beneath the fire): how many, their height (m) and how far out from the stair's line.",
+   "stones": 7,
+   "h_m": [
+    1.8,
+    3.2
+   ],
+   "r_m": 4.2
+  },
+  "shaman": {
+   "_help": "The hooded cook-shaman (§FZ.1.6) at the cauldron beside the fire: cloak colours, how far from the fire, the cauldron's green glow (the frame's one green accent) and its light.",
+   "cloak": [
+    "#1d1a2a",
+    "#2c2638"
+   ],
+   "from_fire_m": 1.7,
+   "glow": "#7cff4f",
+   "glow_energy": 0.35,
+   "glow_range_m": 2.5,
+   "hang_m": 1.05,
+   "_help_hang": "(Mike, 26 Oct: 'the cauldron should be over the fire') The cauldron hangs from a tripod of poles straight over the campfire; hang_m the height of its middle over the fire's floor.",
+   "_help_glow": "glow_energy, glow_range_m: the brew's own light on what is round it. Faint on purpose: hung over the fire (26 Oct) its green added to the fire's amber washed the ground round the fire white and cyan at 1.4 over 5 m. The brew itself still glows (emissive) and blooms.",
+   "_help_male": "(design §GI.1, 27 Oct, Mike: 'historically the shamans have been men so itll be a male') The hub's shaman is a man: height_m, and a beard (beard colour) showing under the hood; the hood still hides his face. He keeps the pipe, the cauldron and the singing (§GH). The swamp witch of §FR is a different character, untouched.",
+   "height_m": 1.76,
+   "beard": "#3a332c"
+  },
+  "keepers": {
+   "_help": "The other five keepers' sites (§FZ.1; their looks and trades are still §FZ.4's to-do: the figures are plain hooded stand-ins in their trade's cloak colours). Each site is placed from the seed on a ring round the fire (within_m), apart_m from each other, clear of the stair and the river; the fisher-weaver's goes on the river bank. Props per keeper are built by HubCamp.",
+   "within_m": [
+    11.0,
+    26.0
+   ],
+   "apart_m": 9.0,
+   "list": {
+    "hunter_tanner": {
+     "name": "Hunter-tanner",
+     "cloak": [
+      "#4a2e1e",
+      "#6b4a2e"
+     ],
+     "props": "drying rack with hides, a bone pile"
+    },
+    "fisher_weaver": {
+     "name": "Fisher-weaver",
+     "cloak": [
+      "#1e3a4a",
+      "#2e5a6b"
+     ],
+     "props": "net frame, baskets, a fish line; on the river bank"
+    },
+    "woodcutter_firekeeper": {
+     "name": "Woodcutter-firekeeper",
+     "cloak": [
+      "#3a2a18",
+      "#5a4426"
+     ],
+     "props": "woodpile, chopping stump"
+    },
+    "forager_herbalist": {
+     "name": "Forager-herbalist",
+     "cloak": [
+      "#25401e",
+      "#3e6a2e"
+     ],
+     "props": "herb drying rack, baskets"
+    },
+    "knapper_potter": {
+     "name": "Knapper-potter",
+     "cloak": [
+      "#4a3a30",
+      "#7a5e48"
+     ],
+     "props": "clay kiln with a glowing mouth, pots, a flint pile"
+    }
+   },
+   "_help_dress": "(Mike, 26 Oct: 'more fleshed out ... consider the different niches') Each site also has a shelter in its trade's way and its trade's work round it, built by HubCamp._dress: hunter-tanner a hide tent, a hide on a hoop, a skull-and-antler totem, a spear rack, meat over a smoke pit; fisher-weaver a reed hut, a dugout on the bank, a fish-drying line, a fish trap, a basket; woodcutter-firekeeper a bark lean-to, a felled trunk with an axe in it, stumps, kindling bundles, the firekeeper's ember pot; forager-herbalist a thatched hut, a garden bed of strange flowers, gourds on a line, a mortar on a stone; knapper-potter a clay hut, the clay pit, pots drying on a plank, a knapping stone and flakes, the kiln's smoke. Every site has a torch post (torch_energy, torch_range_m) so it reads at dusk.",
+   "torch_energy": 0.9,
+   "torch_range_m": 6.0
+  },
+  "log_start": "Dusk at the camp. The fire crackles; the cauldron steams.",
+  "log_down": "Down the old steps beneath the fire, into the dark.",
+  "log_up": "Up out of the dark, into the camp.",
+  "common": {
+   "_help": "The camp's common ground: log benches round the fire, a line of flat stepping stones from the fire to each keeper's site (step_m apart, stone_color; a solid worn-earth strip read as a black slab under the grade, 26 Oct), and totems (how many) about the clearing, one crowned with a skull and antlers.",
+   "totems": 3,
+   "step_m": 1.3,
+   "stone_color": "#6a6c8a"
+  },
+  "ground_color": "#3a3a2a",
+  "_help_ground": "ground_color: the camp's ground (forest floor, dark loam). It used the dungeon's world's desert sand before, which the glossy grade blew out to white round the fire (Mike, 26 Oct: 'the amount of light coming from the fire seems too bright').",
+  "cauldron_fx": {
+   "_help": "(Mike, 26 Oct: 'lets get some effects steaming up off the cauldron- also, for different brews which would take different times there will be different effects') The camp cauldron's effects (CauldronFX). Each brew: brew_s how long it takes (0 = a pot that just simmers on); steam its colour and steam_rate how thick (0-1) at full boil; bubbles how hard it bubbles (0-1); sparks how many rising motes (0-1) and spark_kind what they are (embers, spores, motes, none); glow the brew's own colour (its surface and its faint light). Brewing, the steam, bubbles and motes build from a simmer to full over brew_s; done, a puff goes up and it holds at full for hold_s. Brews are first guesses tied to plants the design names (§FM.7, §FN, §FP, §FR); what each does is the brew system's to decide (not built). Until there is a way to ask for one, the cook-shaman works through cycle in order (rest_s of plain stew between).",
+   "hold_s": 40.0,
+   "rest_s": 30.0,
+   "cycle": [
+    "camp_stew",
+    "healing_broth",
+    "ololiuhqui",
+    "teonanacatl",
+    "blue_lotus",
+    "jimsonweed"
+   ],
+   "brews": {
+    "camp_stew": {
+     "name": "Camp stew",
+     "brew_s": 0.0,
+     "steam": "#d8dce8",
+     "steam_rate": 0.45,
+     "bubbles": 0.35,
+     "sparks": 0.15,
+     "spark_kind": "embers",
+     "glow": "#c87a3a",
+     "note": "the everyday pot: white steam, a slow bubble, the odd ember off the fire"
+    },
+    "healing_broth": {
+     "name": "Healing broth",
+     "brew_s": 60.0,
+     "steam": "#cfeedd",
+     "steam_rate": 0.6,
+     "bubbles": 0.5,
+     "sparks": 0.25,
+     "spark_kind": "motes",
+     "glow": "#7cff4f",
+     "note": "herbs (the forager-herbalist's): pale green steam, a steady boil, a few green motes"
+    },
+    "ololiuhqui": {
+     "name": "Ololiuhqui (morning glory seed)",
+     "brew_s": 120.0,
+     "steam": "#8a7cff",
+     "steam_rate": 0.55,
+     "bubbles": 0.4,
+     "sparks": 0.6,
+     "spark_kind": "motes",
+     "glow": "#5a6aff",
+     "note": "the Aztec world's vine (§FM.7, queue 72): violet steam curling, blue motes rising"
+    },
+    "teonanacatl": {
+     "name": "Teonanácatl (the flesh of the gods)",
+     "brew_s": 180.0,
+     "steam": "#e04aa8",
+     "steam_rate": 0.4,
+     "bubbles": 0.25,
+     "sparks": 0.9,
+     "spark_kind": "spores",
+     "glow": "#b24ad8",
+     "note": "the Aztec brew mushroom (§FN.5): thin magenta steam, slow thick bubbles, spores drifting up and wandering",
+     "spill": 0.35
+    },
+    "blue_lotus": {
+     "name": "Blue lotus and mandrake",
+     "brew_s": 150.0,
+     "steam": "#6ac8ff",
+     "steam_rate": 0.7,
+     "bubbles": 0.45,
+     "sparks": 0.4,
+     "spark_kind": "embers",
+     "glow": "#2b8fff",
+     "note": "Egypt's brew (§FP): blue mist, gold sparks"
+    },
+    "jimsonweed": {
+     "name": "Jimsonweed (datura)",
+     "brew_s": 240.0,
+     "steam": "#b8c84a",
+     "steam_rate": 1.0,
+     "bubbles": 0.8,
+     "sparks": 0.1,
+     "spark_kind": "spores",
+     "glow": "#a8c832",
+     "note": "the swamp witch's (§FR): heavy sickly yellow-green smoke that rolls over the rim and sinks, a hard boil",
+     "spill": 1.0
+    }
+   },
+   "_help_spill": "spill (0-1, 0 or absent none): a heavy brew's fog, billowing out over the rim and rolling down round the fire, spreading and fading on the ground (Mike, 26 Oct: 'a more billowing and flowing over the edges type of fog'). Jimsonweed spills hard; teonanácatl a little."
+  },
+  "dusk_into_min": 3.0,
+  "bank": {
+   "_help": "(design §GJ.2) The bank at the hub, like PSO's: what is in it is never lost (death takes only what you carry, §GJ.1). Interact with it (reach_m) to open it: click a thing you carry to put it in, a thing in the bank to take it out; Esc or the interact button closes it. capacity: how many things it holds (a generous first guess). currency: the money's name (teeth, §FZ.3): a slot kept ready, since teeth are not built yet. Who or what keeps it is open (§GJ.2): for now a lidded store-basket beside the fire, opposite the shaman (from_fire_m). Kept in the game's save (§FK).",
+   "capacity": 60,
+   "currency": "teeth",
+   "reach_m": 2.2,
+   "from_fire_m": 2.6,
+   "log_open": "You open the store by the fire."
+  }
+ },
  "calendar": {
   "start_year_day": 0.0,
   "seasons_on": true,
@@ -526,6 +845,126 @@
    "mountains": "snow_and_frost",
    "cold": "snow_and_frost",
    "ice": "snow_and_frost"
+  },
+  "hub_area": "tropical",
+  "area_of_world": {
+   "aztec_highland": "mountains",
+   "beach": "tropical",
+   "volcano": "tropical",
+   "sea_caves": "temperate",
+   "mine": "temperate",
+   "tundra": "cold"
+  }
+ },
+ "areas": {
+  "_help": "(design §GD.1.2-4, queue 113; §GH, queue 116) Realms (areas) reached from the hub by the shaman's song round the fire. Each realm is a curated, seeded surface with a main hearth near one edge, an overworld to explore and a ruin entrance (the old stair) down into its ruin; the ruin's way out brings you back up near the mouth. The interact button at the hub fire or beside the shaman (interact_reach_m) sits you down facing the fire; the shaman sings the song of a realm you know (songs), the flames take its colour and a glimpse of it opens in the fire (glimpse); left and right scroll through the realms you know; the interact button again steps you into the fire: the wash (travel.wash_s) and you come out at that realm's hearth. Moving or Esc stands you up with nothing changed. Knowing the song is the key (§GH.2.1); lighting a realm's hearth with your torch reclaims it (lit for good, saved, §FK) but no longer gates travel. Home: the interact button at the realm's hearth. on false: no travel.",
+  "on": true,
+  "interact_reach_m": 3.0,
+  "_help_brand": "brand: stepping through the fire with no lit torch, you carry a brand from the hub fire (a lit torch in hand): fire carried, never made (§ET), and the way to light the far hearth. Since 28 Oct (Mike: torches are found or made, never handed out; torch.json crawler_burn.supply.brand_without_torch false) the fire lights a torch you carry, and with none you go through with none.",
+  "brand": true,
+  "travel": {
+   "_help": "wash_s: the fire-wash in and out (seconds each way); flame_s how long the hub's flames hold the area's colour before you step through.",
+   "wash_s": 1.0,
+   "flame_s": 1.2
+  },
+  "first": {
+   "_help": "The first area: the surface over the game's first ruin (worlds.json surface, the ruin's own world), at areas size. across_m: how wide (a range, drawn from the seed; prompt's first guess 300-600). colour: the hub fire's flames when bound for it, and the wash. hearth: from_edge_m how far in from the cliff's foot the main hearth stands; reach_m how close your torch's flame must be; light_hold_s how long you hold it there.",
+   "name": "The dry basin",
+   "across_m": [
+    300.0,
+    600.0
+   ],
+   "colour": "#3fd0ff",
+   "hearth": {
+    "from_edge_m": 30.0,
+    "reach_m": 1.3,
+    "light_hold_s": 1.0
+   }
+  },
+  "log_link": "The hearth catches. This place is reclaimed: its fire burns for good.",
+  "log_home": "The shaman's song carries you home through the fire.",
+  "log_sing": "You sit at the fire. The shaman begins to sing.",
+  "log_step": "You step into the fire as the song swells.",
+  "log_stand": "You get up from the fire.",
+  "songs": {
+   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. known_from_start: the realms whose songs you know in a new game; a stand-in until Mike says how songs are learned (§GH.4 call 1, open; from tablets, tomes or the other peoples, §GG.1.3). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (areas.<key>.colour) while it plays.",
+   "known_from_start": [
+    "first"
+   ],
+   "first": {
+    "music": "",
+    "bpm": 76.0,
+    "root_hz": 98.0,
+    "chant": [
+     0,
+     3,
+     5,
+     3,
+     0,
+     null,
+     -2,
+     0,
+     3,
+     5,
+     7,
+     5,
+     3,
+     null,
+     0,
+     null
+    ],
+    "drum": [
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0.5,
+     0.5,
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0.5,
+     0.5,
+     0
+    ]
+   }
+  },
+  "glimpse": {
+   "_help": "(§GH.1.3) The glimpse of the realm in the fire and smoke: a view from beside its hearth (from_hearth_m out, eye_m up, looking toward the realm's middle, drifting drift_deg round over drift_s), rendered px wide, shown size_m across hung height_m over the hub fire, toward_you_m out toward you; soft-edged and wavering with the heat (waver); it fades in over fade_s as the song begins.",
+   "px": [
+    320,
+    200
+   ],
+   "size_m": [
+    1.5,
+    1.0
+   ],
+   "height_m": 1.55,
+   "toward_you_m": 0.55,
+   "from_hearth_m": 4.0,
+   "eye_m": 1.7,
+   "drift_deg": 25.0,
+   "drift_s": 20.0,
+   "waver": 0.012,
+   "fade_s": 1.5
+  },
+  "sit": {
+   "_help": "Where you sit: from_fire_m from the hub fire's middle on the side you came from, the view at eye_m, pitched to the fire.",
+   "from_fire_m": 2.4,
+   "eye_m": 1.05
+  },
+  "death": {
+   "_help": "(design §GI.2, §GJ.1, §GJ.3) Dying in a realm, on its surface or in its ruin: you wake at the hub fire with nothing carried (finds, gear, torches, the left hand's strip, currency). Everything you had drops where you fell as one pile (a bundle with a faint ember glow: glow_colour, glow_energy); it never despawns and is kept in the save per realm; walk to it (pickup_m) and it all comes back to you; dying again leaves another pile. What is in the bank (hub.bank) is untouched. What you carry is yours only once the shaman's song brings you home from the realm's hearth.",
+   "pickup_m": 1.4,
+   "glow_colour": "#ff7a1a",
+   "glow_energy": 0.6,
+   "log_wake": "Taken in the dark. You wake at the hub fire with nothing on you; all you carried lies where you fell.",
+   "log_pile": "You gather up what you lost.",
+   "_help_pages": "(Mike, 27 Oct: 'tome pages should drop until you get it back to the hub') Tome pages you pick up are only carried until the shaman's song brings you home from a realm's hearth; die first and they drop in your pile with everything else, and lie nowhere else meanwhile (not back on their floor). Pages already brought home are never lost."
   }
  }
 }

@@ -226,21 +226,30 @@ func _bundle(pos: Vector3) -> void:
 	_bundle_voice.name = "Voice"
 	_bundle_voice.unit_size = 2.0
 	bundle.add_child(_bundle_voice)
+	lay_sticks(bundle, bundle_left, hash(pos))
+
+
+## `n` unlit torches bound with a cord under `node` (Stick<i>, Tip<i>; the
+## hearth's bundle, and the hub's and the realms' stacks, TorchSupply).
+static func lay_sticks(node: Node3D, n: int, h: int) -> void:
 	var wood := Color(0.36, 0.25, 0.14)
 	const STICK_M := 0.62
 	const TOP_R := 0.018
-	for i in bundle_left:
+	for i in n:
 		# Six-sided like the torch in hand, so the wrap's sides line up.
-		var stick := CreatureBodies.cone(bundle, 0.022, TOP_R, STICK_M, Vector3((i - (bundle_left - 1) * 0.5) * 0.05, 0.03, 0.0), wood.darkened(0.05 * i), 0.0, 6)
+		var stick := CreatureBodies.cone(node, 0.022, TOP_R, STICK_M, Vector3((i - (n - 1) * 0.5) * 0.05, 0.03, 0.0), wood.darkened(0.05 * i), 0.0, 6)
 		stick.rotation = Vector3(PI * 0.5, 0.06 * (i - 1), 0.0)
 		stick.name = "Stick%d" % i
 		# The wrap round the stick's last length_m, the stick's end inside it.
-		var tip := PitchTorch.head_node(TOP_R, hash([pos, i]), false)
+		var tip := PitchTorch.head_node(TOP_R, hash([h, i]), false)
 		tip.name = "Tip%d" % i
-		bundle.add_child(tip)
+		node.add_child(tip)
 		var axis := stick.basis.y.normalized()
 		tip.transform = Transform3D(stick.basis, stick.position + axis * (STICK_M * 0.5 - PitchTorch.length_m() * 0.9))
-	CreatureBodies.cone(bundle, 0.07, 0.07, 0.04, Vector3(0.0, 0.03, -0.05), Color(0.5, 0.42, 0.28)).rotation = Vector3(PI * 0.5, 0.0, 0.0)
+	var cord := CreatureBodies.cone(node, 0.07, 0.07, 0.04, Vector3(0.0, 0.03, -0.05), Color(0.5, 0.42, 0.28))
+	cord.rotation = Vector3(PI * 0.5, 0.0, 0.0)
+	cord.name = "Cord"
+	cord.visible = n > 0
 
 
 ## Is the bundle within `reach` m of `pos`, with a torch left in it?
@@ -258,6 +267,13 @@ func take_torch() -> Dictionary:
 		if c:
 			c.queue_free()
 	return Inventory.make("torch")
+
+
+## Kept in this game (Mike, 27 Oct: torches are scarce; TorchSupply): the
+## bundle as you last left it, `n` torches left.
+func trim_bundle(n: int) -> void:
+	while bundle_left > maxi(n, 0):
+		take_torch()
 
 
 ## Three held already (§FJ.4, CrawlerMain.take_torch): nothing taken and no

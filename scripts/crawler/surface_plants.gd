@@ -258,8 +258,12 @@ static func _species(names: Array) -> Array:
 	return out
 
 
-## A species' material as in play (PlantMeshes.material_for), its leaves
-## kept all year (no seasons in Torchfire 1, §ET.2).
+## A species' material as in play (PlantMeshes.material_for). Deciduous
+## crowns run the season's leaf clock (CrawlerCalendar.apply_leaves) where
+## this place's winter drops leaves (design §GE.5, calendar.winter_by_biome);
+## where it is a dry season they keep them all year.
+var seasonal := false
+
 func _material(sp: PlantSpecies) -> Material:
 	if _mats.has(sp.name):
 		return _mats[sp.name]
@@ -267,6 +271,7 @@ func _material(sp: PlantSpecies) -> Material:
 	if sp.deciduous and m is ShaderMaterial:
 		m = (m as ShaderMaterial).duplicate()
 		Look.register(m as ShaderMaterial)
-		(m as ShaderMaterial).set_shader_parameter("sp_deciduous", false)
+		(m as ShaderMaterial).set_shader_parameter("sp_deciduous", seasonal)
+		(m as ShaderMaterial).set_shader_parameter("leaf_season", 1.0)
 	_mats[sp.name] = m
 	return m

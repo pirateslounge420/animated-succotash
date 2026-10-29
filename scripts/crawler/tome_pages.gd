@@ -79,7 +79,11 @@ static func held() -> Array:
 	return out
 
 
-## Fragment `fid` is yours: kept in the game's save, written now.
+## Fragment `fid` is yours: kept in the game's save, written now. With
+## the hub (design §GI.2, §GJ; Mike, 27 Oct: "tome pages should drop until
+## you get it back to the hub") it is only carried until the shaman's song
+## brings you home (carried(), home_all()); die first and it drops in your
+## pile with everything else (CrawlerAreas.die).
 static func keep(fid: String) -> void:
 	var h := held()
 	if h.has(fid):
@@ -87,7 +91,58 @@ static func keep(fid: String) -> void:
 	h.append(fid)
 	h.sort()
 	CrawlerSave.data[KEEP] = h
+	if CrawlerAreas.on():
+		var c := carried()
+		if not c.has(fid):
+			c.append(fid)
+		CrawlerSave.data[KEEP_CARRIED] = c
 	CrawlerSave.save()
+
+
+## The save's key for the fragments you hold but have not yet brought home.
+const KEEP_CARRIED := "tome_pages_carried"
+
+
+## The fragments you carry, not yet home (a subset of held()).
+static func carried() -> Array:
+	var v: Variant = CrawlerSave.data.get(KEEP_CARRIED, [])
+	return (v as Array).duplicate() if v is Array else []
+
+
+## Home by the song: every carried fragment is yours for good.
+static func home_all() -> void:
+	CrawlerSave.data[KEEP_CARRIED] = []
+	CrawlerSave.save()
+
+
+## Taken in a realm: the carried fragments leave you (for the pile); what
+## you had brought home stays. The fragments dropped.
+static func drop_carried() -> Array:
+	var c := carried()
+	if c.is_empty():
+		return []
+	var h := held().filter(func(f): return not c.has(f))
+	CrawlerSave.data[KEEP] = h
+	CrawlerSave.data[KEEP_CARRIED] = []
+	return c
+
+
+## Fragments `fids` back from a pile: held again, carried again.
+static func pick_up(fids: Array) -> void:
+	for f in fids:
+		keep(str(f))
+
+
+## The fragments lying in your piles (never laid on their floors again
+## while they wait there).
+static func in_piles() -> Array:
+	var out: Array = []
+	var ps: Variant = CrawlerSave.data.get("piles", [])
+	if ps is Array:
+		for p in ps:
+			for f in ((p as Dictionary).get("lost", {}) as Dictionary).get("pages", []):
+				out.append(str(f))
+	return out
 
 
 # --- Where they lie (pure: the layout in) --------------------------------------------
@@ -163,7 +218,7 @@ func _place() -> void:
 	if not is_inside_tree():
 		placed = true
 		return
-	for d in plan(lay, held()):
+	for d in plan(lay, held() + in_piles()):
 		var pc: Dictionary = lay.pieces[int(d.room)]
 		var rng := RandomNumberGenerator.new()
 		rng.seed = hash([int(lay.seed), "tome page", str(d.fragment)])

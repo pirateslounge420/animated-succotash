@@ -359,6 +359,70 @@
   "douse_stops_clock": true,
   "pitch_scale": 1.5,
   "embers_s": 20.0,
-  "embers_light_share": 0.25
+  "embers_light_share": 0.25,
+  "supply": {
+   "_help": "(Mike, 27 Oct: 'torches shouldn't be too abundant, to create a sense of scarcity and encourage the player to either prepare during the day or venture out at night to find them'; 28 Oct: 'it can start with torches but it should not just resupply itself- you should have to make it or find them'; TorchSupply, Claude Code's first guesses) Where the crawler's unlit torches come from; nothing fills again by itself. hub: the woodcutter-firekeeper's (keeper) stack by his site holds start torches in a new game and is never refilled. make: at his site the interact button binds a torch from what you carry (needs: kinds and how many, used up), when his stack is empty. finds: seeded on each realm's floor, at least from_hearth_m from its hearth and apart_m apart: cache (old torches in a ring of stones, each [min, max] torches), branch (deadfall) and resin (amber beads on an old stump), each [min, max] of it; taken once, never laid again (regrow_days 0; a number would bring an emptied one back that many days later). ruin_bundle_kept: the bundle by a ruin's hearth is laid once a game and never refilled (its count kept in the save). brand_without_torch: false: stepping through the fire lights a torch you carry, but with none of your own you go through with none (true: the old free brand). reach_m: how near the interact button takes. on false: the old supply (only the ruin's bundle, refilled every visit).",
+   "on": true,
+   "hub": {
+    "keeper": "woodcutter_firekeeper",
+    "start": 3
+   },
+   "make": {
+    "at": "hub",
+    "needs": {
+     "branch": 1,
+     "resin": 1
+    },
+    "log": "You bind a branch and a lump of resin into a torch."
+   },
+   "finds": {
+    "cache": {
+     "count": 2,
+     "each": [
+      1,
+      2
+     ],
+     "from_hearth_m": 35.0,
+     "apart_m": 30.0,
+     "regrow_days": 0,
+     "colour": "#4a4858"
+    },
+    "branch": {
+     "count": 8,
+     "each": [
+      1,
+      1
+     ],
+     "from_hearth_m": 15.0,
+     "apart_m": 14.0,
+     "regrow_days": 0,
+     "colour": "#5a3e24"
+    },
+    "resin": {
+     "count": 5,
+     "each": [
+      1,
+      2
+     ],
+     "from_hearth_m": 25.0,
+     "apart_m": 20.0,
+     "regrow_days": 0,
+     "colour": "#d8902a",
+     "wood_colour": "#4a3020"
+    }
+   },
+   "ruin_bundle_kept": true,
+   "brand_without_torch": false,
+   "reach_m": 2.0,
+   "logs": {
+    "hub": "You take a torch from the firekeeper's stack.",
+    "cache": "You take an old torch from the cache.",
+    "branch": "You pick up a dry branch.",
+    "resin": "You scrape a lump of resin off the stump."
+   },
+   "log_full": "You can carry no more torches.",
+   "log_pack_full": "Your pack is full.",
+   "log_no_brand": "You carry no torch to take the fire with you."
+  }
  }
 }

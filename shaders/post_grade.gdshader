@@ -202,6 +202,9 @@ vec3 grade(vec3 c, float expo, float m, float sat, float tl, vec3 shadow_col, fl
 	return c;
 }
 
+// The glossy look (§GB): 1 = the environment has graded, skip the grade.
+uniform float env_graded = 0.0;
+
 void fragment() {
 	vec2 px = SCREEN_PIXEL_SIZE;
 	vec3 c = texture(screen_tex, SCREEN_UV).rgb;
@@ -225,6 +228,19 @@ void fragment() {
 		col = mix(col, col * fire_white_tint, fw);
 	}
 
+	// The glossy look (design §GB, GlossyLook): the WorldEnvironment grades
+	// (ACES, contrast, saturation, the indigo ramp); here only the fire's
+	// whites above and harm below.
+	if (env_graded > 0.5) {
+		if (harm_vignette > 0.0 || harm_desat > 0.0) {
+			vec3 navy_g = max(shadow_floor, vec3(0.002, 0.004, 0.02));
+			float hy_g = luma_of(col);
+			col = mix(col, navy_g * (hy_g / max(luma_of(navy_g), 1e-4)), harm_desat * (1.0 - protect(col)));
+			float r_g = length((SCREEN_UV - 0.5) * vec2(1.0, 0.8));
+			col *= 1.0 - harm_vignette * smoothstep(0.62 - 0.5 * harm_vignette, 0.75, r_g) - harm_vignette * harm_vignette * 0.5;
+		}
+		COLOR = vec4(clamp(col, 0.0, 1.0), 1.0);
+	} else {
 	// The two presets, each in full, crossfaded by night.
 	float prot = protect(col);
 	vec3 day_c = grade(col, exposure.x, mids.x, saturation.x, teal.x, shadow_color_day, shadow_tint_amount.x, highlight_color_day, highlight_amount.x, olive_amount.x, contrast.x, vignette.x, prot, SCREEN_UV);
@@ -277,4 +293,5 @@ void fragment() {
 	col = mix(col, q, dither);
 
 	COLOR = vec4(clamp(col, 0.0, 1.0), 1.0);
+	}
 }

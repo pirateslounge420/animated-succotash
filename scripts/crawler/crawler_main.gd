@@ -184,9 +184,21 @@ var _bones_after_bake: Array = []
 ## the first time you go up and kept while you are below; null until then,
 ## and for a dungeon with none (exit.stand_in).
 var surface: Surface
+## The hub and the first area (design §GD.1, queue 113): both kept for the
+## session once built; `surface` is whichever you are on (or last left).
+var hub_node: Surface
+var area_node: Surface
+## Travel by fire (CrawlerAreas).
+var areas: CrawlerAreas
+## Where torches come from at the hub and in the realms (Mike, 27 Oct).
+var torch_supply: TorchSupply
+## The bank's panel (CrawlerBank).
+var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
 ## them: _below).
 var on_surface := false
+## The clock came back with a kept game (design §GE, CrawlerSave days).
+var _clock_restored := false
 ## Times you went up and came back down this session (tests wait on them).
 var went_up := 0
 var came_down := 0
@@ -220,6 +232,10 @@ var tunnels_back := 0
 
 func _ready() -> void:
 	GameMode.crawler_running = true
+	# The look (design §GB, look.json glossy): glossy by default, the pixel
+	# look a preset.
+	GlossyLook.active = GlossyLook.wanted()
+	print("[look] crawler preset: %s" % GlossyLook.preset_name())
 	Controls.ensure()
 	Display.install(get_window())
 	HudText.install()
@@ -234,6 +250,9 @@ func _ready() -> void:
 	player.name = "Player"
 	player.world = world
 	add_child(player)
+	# The glossy look's cobalt back light rides with your eye (§GB.4).
+	if GlossyLook.active:
+		GlossyLook.back_light(player.get("_camera") as Camera3D)
 	half_dark = HalfDark.new()
 	half_dark.name = "HalfDark"
 	add_child(half_dark)
@@ -250,6 +269,8 @@ func _ready() -> void:
 	post = PostGrade.new()
 	add_child(post)
 	post.set_night(1.0)
+	if GlossyLook.active:
+		GlossyLook.post(post)
 	# One firelight (§EX.6, crawler.json firelight): stone the fire blows
 	# pale or white goes back to the fire's amber before the grade.
 	var fl: Dictionary = Tuning.table("crawler").get("firelight", {})
@@ -273,6 +294,10 @@ func _ready() -> void:
 	# asked for, SEED='s fresh, else the last one kept (Continue), else new;
 	# then the dungeon you are in, its relit holders burning.
 	CrawlerSave.begin(CrawlerSave.pinned_seed())
+	# A kept game keeps its own clock (design §GE, §FK.2).
+	_clock_restored = CrawlerSave.continued and CrawlerSave.data.has("days")
+	if _clock_restored:
+		world.days = float(CrawlerSave.data.days)
 	print("[crawler] %s: game %d, place %d" % ["Continue" if CrawlerSave.continued else "a new game", CrawlerSave.game_seed, CrawlerSave.place])
 	_load_tomb(CrawlerSave.seed_at(CrawlerSave.place), CrawlerSave.place)
 	if CrawlerSave.continued:
@@ -280,9 +305,64 @@ func _ready() -> void:
 	brew = Brew.new()
 	add_child(brew)
 	brew.setup(self)
+	areas = CrawlerAreas.new()
+	areas.setup(self)
+	torch_supply = TorchSupply.new()
+	torch_supply.setup(self)
+	add_child(areas)
+	add_child(torch_supply)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
-	_rescuer()
+	# What you lost in the ruin waits there (design §GJ.3).
+	areas.refresh_piles()
+	if HubCamp.on():
+		_start_at_camp()
+	else:
+		_rescuer()
+		areas.live = true
+
+
+## Every start, new game or Continue, at the hub camp's fire at dusk
+## (design §GC.1; Mike, 26 Oct; crawler.json hub): the dungeon below made
+## ready in the dark, the clock set to dusk, up into the camp, the dark
+## lifting.
+func _start_at_camp() -> void:
+	await _rescuer(0.0, false)
+	# The pages lying on its base layer, laid while its stone is in the
+	# physics world (TomePages._place), before it goes out of the tree.
+	var w := 0
+	while tome_pages != null and not tome_pages.placed and w < 30:
+		await get_tree().physics_frame
+		w += 1
+	# The clock (design §GE.1.5, §FK.2): a new game at the spring equinox
+	# (calendar.start_year_day), at dusk; Continue as it was saved.
+	CrawlerCalendar.set_place("hub")
+	if not _clock_restored:
+		world.days = CrawlerCalendar.start_days()
+		set_dusk()
+	_up_now()
+	GameLog.add(str(HubCamp.H.get("log_start", "Dusk at the camp.")), "world")
+	areas.live = true
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", 0.0, 2.5)
+	tw.tween_callback(func(): _fade.visible = false)
+
+
+## The one clock set to dusk (hub.dusk_sun_deg: the sun that high and
+## sinking), later today or tomorrow.
+func set_dusk() -> void:
+	# (design §GE, CrawlerCalendar: dusk begins at sunset on the stylised
+	# clock; hub.dusk_into_min minutes into it, the sun just down.)
+	var d0 := float(world.get("days"))
+	var la := CrawlerCalendar.lat()
+	var into := float(HubCamp.H.get("dusk_into_min", 3.0)) / DayCycle.day_length_min()
+	for k in 2:
+		var day := floorf(d0) + k
+		var st := CrawlerCalendar.stylised(la, CrawlerCalendar.decl(day + 0.5))
+		var start := 0.5 + float(st.get("day", 60.0)) * 0.5 / DayCycle.day_length_min()
+		if day + start + into >= d0:
+			world.days = day + start + into
+			return
 
 
 ## One tomb, all of it (TombKit's layout from `s`, its stone, fires,
@@ -303,6 +383,10 @@ func _load_tomb(s: int, at := 0) -> void:
 	fires.name = "Fires"
 	add_child(fires)
 	fires.build(world, lay)
+	# The hearth's bundle is never laid again in this game (Mike, 27 Oct:
+	# torches are scarce; torch.json crawler_burn.supply).
+	if bool(TorchSupply.S.get("ruin_bundle_kept", true)):
+		fires.trim_bundle(int(CrawlerSave.kept_value(at, "bundle_left", fires.bundle_left)))
 	# Kept in this game (§FK.2): the holders you relit here burn again as
 	# you left them, before anything that reads the light is built.
 	var kept_lit := CrawlerSave.relight(fires, CrawlerSave.enter(at, lay))
@@ -382,7 +466,9 @@ func _load_tomb(s: int, at := 0) -> void:
 	# first driven home, then kept open for good ("exit_open"); a kept
 	# dungeon with every light relit has its boss home already
 	# (Boss._start_far), so its way up is open too.
-	if not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
+	# With the hub camp (design §GC.2) the way up is the way in from the
+	# camp: open from the start.
+	if HubCamp.on() or not Fork.gate_surface() or bool(CrawlerSave.kept_value(at, "exit_open", false)) or (kept_lit > 0 and TombFloors.floor_lit(fires, lay, 0)):
 		fork.open_exit(true)
 	fork.exit_opened_now.connect(func() -> void: CrawlerSave.keep(at, "exit_open", true))
 	# The secret opening (design §FO.4): sealed until the boss is first
@@ -474,6 +560,11 @@ func _exit_tree() -> void:
 	elif surface != null and is_instance_valid(surface) and not surface.is_inside_tree():
 		NodeRelease.detach_all(surface)
 		surface.free()
+	# The other surface (hub or area) kept out of the tree goes too.
+	for n in [hub_node, area_node]:
+		if n != null and is_instance_valid(n) and n != surface and not (n as Node).is_inside_tree():
+			NodeRelease.detach_all(n)
+			(n as Node).free()
 	GameMode.crawler_running = false
 	PlayerBody.watch_point = Vector3(INF, INF, INF)
 	FireShadows.mode = ""
@@ -507,6 +598,8 @@ func _environment() -> void:
 	environment.glow_hdr_threshold = float(bloom.get("hdr_threshold", 1.0))
 	environment.glow_intensity = float(bloom.get("intensity", 0.25))
 	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	if GlossyLook.active:
+		GlossyLook.environment(environment)
 	var we := WorldEnvironment.new()
 	we.environment = environment
 	add_child(we)
@@ -518,8 +611,8 @@ func _environment() -> void:
 		"look_planet_center": Vector3(0.0, -1.0e6, 0.0),
 		"look_planet_radius": 1.0e6,
 		"look_ground_m": -50.0,
-		"look_fog_color": Color(str(LOOKD.get("fog_color", "#05081c"))),
-		"look_fog_density": float(LOOKD.get("fog_density", 0.025)),
+		"look_fog_color": FloorFog.haze_color(),
+		"look_fog_density": FloorFog.haze_density(),
 		"look_fog_start_m": 2.0,
 		"look_draw_m": 0.0,
 		"look_mist_density": 0.0,
@@ -676,6 +769,10 @@ func _ui() -> void:
 	tome_panel = TomePanel.new()
 	tome_panel.name = "Tome"
 	ui.add_child(tome_panel)
+	# The bank's panel (design §GJ.2, queue 117).
+	bank_panel = CrawlerBank.new()
+	bank_panel.setup(self)
+	ui.add_child(bank_panel)
 	# The hands' strip (§FB), under the panels.
 	hand_strip = HandStrip.new()
 	hand_strip.name = "HandStrip"
@@ -763,6 +860,8 @@ func _process(delta: float) -> void:
 	# none, so the crawler turns it (design §FG: the daylight down the
 	# shafts follows it).
 	world.days = float(world.get("days")) + delta / maxf(float(world.get("day_length_s")), 1.0)
+	# The log's stamp: the season, its day and the hour (§GE.1.7).
+	GameLog.now_text = CrawlerCalendar.stamp(float(world.get("days")))
 	# The folk at the hearth look to you while you're near and in front of
 	# them (the rig's head-look watches the player's head; here, your eyes).
 	var cam := get_viewport().get_camera_3d()
@@ -771,7 +870,7 @@ func _process(delta: float) -> void:
 	# (Taken, the keys let go while "Good night" plays: Harm; walking out,
 	# you stand still in the opening while the dark comes.)
 	player.typing = log_panel.visible or tome_panel.visible or (harm != null and harm.taking) or leaving
-	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible
+	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible or (bank_panel != null and bank_panel.visible)
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
 		reticle.shown = player.first_person and not player.ui_open
@@ -852,7 +951,7 @@ func walk_out() -> void:
 		return
 	# The surface above it (design §FM.7, queue 71): up the stair into the
 	# day; the stand-in stays for any dungeon with none yet.
-	if Surface.covers(lay):
+	if Surface.covers(lay) or HubCamp.on():
 		await go_up()
 		return
 	leaving = true
@@ -895,6 +994,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("interact"):
 		# The vine, the hand-over and the drink first (queue 72), else the
 		# bundle as built.
+		# Travel by fire first (design §GD.1.3, queue 113).
+		if areas != null and areas.interact():
+			return
+		# The firekeeper's stack at the hub, a realm's caches (TorchSupply).
+		if torch_supply != null and torch_supply.take():
+			return
 		if brew == null or not brew.interact():
 			take_torch()
 
@@ -911,6 +1016,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_taken() -> void:
 	_fade.visible = true
 	_fade.color.a = 1.0
+	# With the hub (design §GI.2, §GJ, queue 117): you wake at the hub fire
+	# with nothing carried; all of it waits where you fell (CrawlerAreas).
+	if CrawlerAreas.on() and hub_node != null and is_instance_valid(hub_node):
+		areas.die()
+		return
 	# Taken up on the surface (only your own fire pot can, §FA.3): you wake
 	# below all the same, the frame already black.
 	if on_surface:
@@ -959,6 +1069,7 @@ func take_torch() -> bool:
 	if player.weapon != "torch":
 		player.weapon = "torch"
 		player.torch.block_until_release()
+	CrawlerSave.keep(CrawlerSave.place, "bundle_left", fires.bundle_left)
 	GameLog.add("Took a torch from the bundle.", "torch")
 	return true
 
@@ -1025,11 +1136,28 @@ func go_up() -> void:
 	leaving = true
 	var A: Dictionary = Surface.S.get("arrive", {})
 	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
-	GameLog.add(str(A.get("log_up", "Up the old stair and out, under the open sky.")), "world")
+	GameLog.add(str(HubCamp.H.get("log_up", "Up out of the dark, into the camp.")) if HubCamp.on() else str(A.get("log_up", "Up the old stair and out, under the open sky.")), "world")
 	await _fade_to(1.0, fade_s)
-	if surface == null or not is_instance_valid(surface):
-		surface = Surface.new()
+	_up_now()
+	went_up += 1
+	await _fade_to(0.0, fade_s)
+	leaving = false
+
+
+## The swap up at once (the frame black): the dungeon out of the tree,
+## the surface (the hub camp, design §GC.1, when crawler.json hub.on) in,
+## built the first time; you where it says you arrive.
+func _up_now() -> void:
+	# Out of the ruin onto the surface over it: the area (design §GD.1.4,
+	# queue 113) once there is a hub; at the start, the hub itself.
+	if CrawlerAreas.on() and hub_node != null and is_instance_valid(hub_node):
+		_ensure_area()
+		surface = area_node
+	elif surface == null or not is_instance_valid(surface):
+		surface = HubCamp.new() if HubCamp.on() else Surface.new()
 		surface.build(world, lay, fires.hearth)
+		if surface is HubCamp:
+			hub_node = surface
 	_below = []
 	# Floor two's fog goes too (it is the dungeon's look, and the sky's haze
 	# is the surface's): kept for the next tomb, never freed with this one.
@@ -1043,9 +1171,81 @@ func go_up() -> void:
 	var at := surface.arrival()
 	player.spawn_flat(at.pos, float(at.yaw), 0.0)
 	on_surface = true
-	went_up += 1
-	await _fade_to(0.0, fade_s)
-	leaving = false
+
+
+## From one surface to another at once (the frame washed over): `to`
+## leaves the other out of the tree (kept), you stand at `at`.
+func _swap_surface(to: Surface, at: Dictionary) -> void:
+	if surface != null and is_instance_valid(surface) and surface.is_inside_tree():
+		surface.leave(self)
+		remove_child(surface)
+	surface = to
+	add_child(to)
+	to.enter(self)
+	player.spawn_flat(at.pos, float(at.yaw), 0.0)
+	on_surface = true
+
+
+## Through the hub fire to the first realm's hearth (CrawlerAreas, the
+## song): its surface built the first time (the surface over the first ruin).
+func _to_area_now() -> void:
+	_ensure_area()
+	if area_node.get_parent() != null and area_node.get_parent() != self:
+		area_node.get_parent().remove_child(area_node)
+	area_node.process_mode = Node.PROCESS_MODE_INHERIT
+	_swap_surface(area_node, area_node.hearth_arrival())
+
+
+## The first realm's surface, built the first time it is needed (its
+## glimpse in the hub fire, §GH, or the trip there), not entered.
+func _ensure_area() -> Surface:
+	if area_node == null or not is_instance_valid(area_node):
+		area_node = Surface.new()
+		area_node.build(world, lay, fires.hearth)
+		# What you lost on its surface waits there (design §GJ.3).
+		if areas != null:
+			areas.refresh_piles()
+	return area_node
+
+
+## Through the area's hearth home to the hub fire.
+func _to_hub_now() -> void:
+	_swap_surface(hub_node, hub_node.arrival())
+
+
+## Up out of anywhere (the ruin or a realm's surface) onto the hub, at
+## once (the frame already dark): the dungeon kept out of the tree.
+func _to_hub_from_anywhere() -> void:
+	if in_tunnel:
+		return
+	if not on_surface:
+		_below = []
+		for n in _dungeon_nodes() + [floor_fog]:
+			var node := n as Node
+			if node != null and is_instance_valid(node) and node.get_parent() == self:
+				remove_child(node)
+				_below.append(node)
+		surface = hub_node
+		add_child(hub_node)
+		hub_node.enter(self)
+		var at := hub_node.arrival()
+		player.spawn_flat(at.pos, float(at.yaw), 0.0)
+		on_surface = true
+	else:
+		_swap_surface(hub_node, hub_node.arrival())
+
+
+## The fire-wash: the frame to `c` at alpha `a` over `s` seconds.
+func _wash(c: Color, a: float, s: float) -> void:
+	_fade.visible = true
+	if a > 0.0:
+		_fade.color = Color(c.r, c.g, c.b, _fade.color.a)
+	var tw := create_tween()
+	tw.tween_property(_fade, "color:a", a, maxf(s, 0.01))
+	await tw.finished
+	if a <= 0.0:
+		_fade.visible = false
+		_fade.color = Color(0.0, 0.0, 0.01, 0.0)
 
 
 ## Back down the stair (design §FM.7): the dark; the surface kept out of
@@ -1059,7 +1259,7 @@ func go_down() -> void:
 	leaving = true
 	var A: Dictionary = Surface.S.get("arrive", {})
 	var fade_s := maxf(float(A.get("fade_s", 2.0)), 0.05)
-	GameLog.add(str(A.get("log_down", "Down the old stair, back into the dark.")), "world")
+	GameLog.add(str(HubCamp.H.get("log_down", "Down the old steps beneath the fire, into the dark.")) if HubCamp.on() else str(A.get("log_down", "Down the old stair, back into the dark.")), "world")
 	await _fade_to(1.0, fade_s)
 	_down_now()
 	came_down += 1
