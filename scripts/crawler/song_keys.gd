@@ -261,7 +261,7 @@ func _ensure_platter() -> void:
 		var key := str(all[i])
 		if not want.has(key):
 			continue
-		var pl := plant(key, 1.0)
+		var pl := plant(key, float((K().get("platter", {}) as Dictionary).get("plant_scale", 1.8)))
 		pl.set_meta("key", key)
 		var a := TAU * float(i) / float(all.size())
 		pl.position = Vector3(cos(a) * r2, 0.115, sin(a) * r2)

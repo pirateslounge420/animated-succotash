@@ -921,14 +921,15 @@
    }
   },
   "keys": {
-   "_help": "(design §GK.2, queue 116 amended; data/song_web.json) Songs are learned from plants. platter: a new game lays song_web.json platter's three key plants on a wooden platter by the hub fire (from_fire_m out from the fire toward the shaman's side, toward_you_m toward where you start); the interact button within reach_m takes the one you look at (within aim_deg of the middle of your view; looking elsewhere, the button does what it would anyway, such as sitting at the fire) as a cutting in your pack, and the others stay on the platter (kept in the save) until you take them too. Give him one: the interact button by the shaman or the fire with a cutting of a song you don't know yet, and he takes it, teaches you its realm's song (kept in the save) and sings it at once, you sitting at the fire. A cutting of a key whose song you already know stays in your pack (the shaman only takes what he can teach). In a realm: each key song_web.json realm_offers.<realm> lists grows there (in_realm: count of each, from_hearth_m [min, max] out, apart_m from each other); the interact button within reach_m takes a cutting (the plant stays; one cutting per plant per visit), carried home like anything else (§GL.3's end and side path, queue 121, will move where the two new ones grow). look: each key's plant and its icon (glyph: the pack's icon drawing) and colours.",
+   "_help": "(design §GK.2, queue 116 amended; data/song_web.json) Songs are learned from plants. platter: a new game lays song_web.json platter's three key plants on a wooden platter by the hub fire (from_fire_m out from the fire toward the shaman's side, toward_you_m toward where you start; its plants drawn plant_scale times a cutting's size so they read in the firelight); the interact button within reach_m takes the one you look at (within aim_deg of the middle of your view; looking elsewhere, the button does what it would anyway, such as sitting at the fire) as a cutting in your pack, and the others stay on the platter (kept in the save) until you take them too. Give him one: the interact button by the shaman or the fire with a cutting of a song you don't know yet, and he takes it, teaches you its realm's song (kept in the save) and sings it at once, you sitting at the fire. A cutting of a key whose song you already know stays in your pack (the shaman only takes what he can teach). In a realm: each key song_web.json realm_offers.<realm> lists grows there (in_realm: count of each, from_hearth_m [min, max] out, apart_m from each other); the interact button within reach_m takes a cutting (the plant stays; one cutting per plant per visit), carried home like anything else (§GL.3's end and side path, queue 121, will move where the two new ones grow). look: each key's plant and its icon (glyph: the pack's icon drawing) and colours.",
    "reach_m": 1.6,
    "aim_deg": 25.0,
    "platter": {
     "from_fire_m": 1.35,
     "toward_you_m": 0.9,
     "radius_m": 0.42,
-    "wood": "#6b4a2c"
+    "wood": "#6b4a2c",
+    "plant_scale": 1.8
    },
    "in_realm": {
     "count": 1,
