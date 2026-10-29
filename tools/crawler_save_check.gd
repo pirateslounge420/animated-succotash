@@ -43,11 +43,13 @@ extends SceneTree
 ##     memory, none to disk; nothing under user://crawler changed;
 ##  8. one clock (§FK.3, worlds.json clock): the crawler's day is 144
 ##     minutes (World.day_length_s); dawn, day, dusk and night start at the
-##     same clock times in every game and tomb the run opened (the sun's
-##     height the crawler reads, Vents.sun_deg, crossing day_cycle.json's
-##     twilight lines), as DayCycle's reference day has them at no latitude
-##     and no tilt, lasting 18, 60, 18 and 48 minutes, the same on a day half
-##     a year on; the scene's shafts and way out read that clock; worlds.json
+##     same clock times in every game and tomb the run opened on a given day
+##     (the sun's height the crawler reads, Vents.sun_deg, crossing
+##     day_cycle.json's twilight lines): the one shared sky (§GK.1.2), the
+##     same wherever you stand, and its year reaches the shafts (a quarter
+##     year on the daylight is more than 10 minutes longer or shorter);
+##     day_cycle.json's reference split stays 18, 60, 18 and 48 minutes; the
+##     scene's shafts and way out read that clock; worlds.json
 ##     says one shared clock, no latitude.
 
 var fails := 0
@@ -523,9 +525,9 @@ func _no_save(before: Dictionary) -> void:
 ## daylight checked against the clock).
 func _phases_here(m: CrawlerMain) -> void:
 	var day := floorf(float(m.world.get("days")))
-	phase_seen["game %d place %d" % [CrawlerSave.game_seed, CrawlerSave.place]] = _crossings(day)
-	if not phase_seen.has("half a year on"):
-		phase_seen["half a year on"] = _crossings(day + 182.0)
+	phase_seen["game %d place %d" % [CrawlerSave.game_seed, CrawlerSave.place]] = [day, _crossings(day)]
+	if not phase_seen.has("a quarter year on"):
+		phase_seen["a quarter year on"] = [day + 91.0, _crossings(day + 91.0), day]
 	var t := float(m.world.get("days"))
 	var shaft_ok := m.vents == null or absf(m.vents.daylight - Vents.daylight_at(t)) < 0.02
 	var out_ok := m.way_out == null or absf(m.way_out.daylight - Vents.daylight_at(t)) < 0.02
@@ -564,15 +566,28 @@ func _clock() -> void:
 	var names := ["dawn", "day", "dusk", "night"]
 	var same := true
 	var tol := 2.0 / 14400.0
-	for k in phase_seen:
-		var c: Array = phase_seen[k]
-		for i in 4:
-			if absf(float(c[i]) - float(ref[i])) > tol:
-				same = false
 	var starts: Array = []
-	for i in 4:
-		starts.append("%s %.4f" % [names[i], float(ref[i])])
-	ok(same and phase_seen.size() >= 4, "dawn, day, dusk and night start at the same clock times in every game and tomb this run opened, and half a year on (%s: %s)" % [", ".join(phase_seen.keys()), ", ".join(starts)])
+	for k in phase_seen:
+		var e: Array = phase_seen[k]
+		var c: Array = e[1]
+		# The same day read standing anywhere else: one sky (§GK.1.2).
+		for kind in ["hub", "ice", "desert"]:
+			CrawlerCalendar.set_place(kind)
+			var c2 := _crossings(float(e[0]))
+			for i in 4:
+				if absf(float(c[i]) - float(c2[i])) > tol:
+					same = false
+		starts.append("%s (day %d): dawn %.4f, day %.4f, dusk %.4f, night %.4f" % [k, int(e[0]), c[0], c[1], c[2], c[3]])
+	CrawlerCalendar.set_place("hub")
+	var hy: Array = phase_seen.get("a quarter year on", [])
+	var lit_now := -1.0
+	var lit_half := -1.0
+	if hy.size() == 3:
+		var c0 := _crossings(float(hy[2]))
+		lit_now = fposmod(float(c0[2]) - float(c0[1]), 1.0) * DayCycle.day_length_min()
+		lit_half = fposmod(float(hy[1][2]) - float(hy[1][1]), 1.0) * DayCycle.day_length_min()
+	ok(same and phase_seen.size() >= 4, "dawn, day, dusk and night start at the same clock times wherever you stand, in every game and tomb this run opened (%s)" % "; ".join(starts))
+	ok(lit_now > 0.0 and absf(lit_now - lit_half) > 10.0, "the year reaches the shafts: %.1f minutes of daylight now, %.1f a quarter year on" % [lit_now, lit_half])
 	var day_min := DayCycle.day_length_min()
 	var mins := [
 		fposmod(float(ref[1]) - float(ref[0]), 1.0) * day_min,

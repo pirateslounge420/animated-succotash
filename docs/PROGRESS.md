@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-29 — Queue 114 reworked to §GK.1.2: one shared year, no latitude (Claude Code)
+- **Before:** the hub sat on the equator (its day ~60 / 18 / 48 / 18 all year) and each realm read the sky at its own latitude by biome (§GE.5).
+- **Now (§GK.1.2):** every sky, daylight and season value is read at one fixed reference, `crawler.json → calendar.reference_deg` 35 (new; never shown as a latitude). The hub and every realm share the date, the season and the day length: summer 74.5 / 18 / 33.5 / 18 real minutes, equinox 61.3 / 18 / 46.7 / 18, winter 50.6 / 18 / 57.4 / 18, dawn and dusk 18 minutes every day. `hub_latitude_deg` and `area_latitude_deg` stay in the data but are no longer read. Winter by biome stands (§GE.5.4): the hub keeps its dry-season plants, temperate and cold realms drop leaves.
+- **The shafts:** underground daylight (`Vents.sun_deg`) now reads the same sun as the surfaces, so dusk falls down the shafts when it falls above, in summer and winter alike (it used to keep the equator's equinox day).
+- **Code:** `CrawlerCalendar` (`reference_deg()` in place of `latitude_deg(kind)`; the place now picks only the winter), `Vents.sun_deg`, comments in `Surface`, `DayShift`, `SkySystem`; `day_shift.json` about text.
+- **Check:** `calendar_check` 0 fails (every place gives the same minutes every 5th day; the 35° numbers match `daylight_reference.py`; the shafts read the surfaces' sun), `day_shift_check` 0, `hub_check` 0 (the camp's day now runs 50.6–74.5 minutes over the year, as in a realm), `area_check`, `bank_check`, `torch_supply_check` 0. `crawler_save_check` 12 and `surface_check` 16: these failed before this change too (old tomb-wake checks; the game now starts at the hub). This change fixes one surface_check failure (the shafts and the surface sun now agree) and adds none. One crawler_save_check line that expected the shafts to keep the old no-seasons day now checks the one shared sky instead.
+- **For Mike:** the §GK.1.2 table rounds the equinox to 60 / 18 / 48 / 18; the Python reference gives 61.3 / 18 / 46.7 / 18 at 35°, and the game follows the reference.
+- **Branches:** this branch now holds the engine work too (merged from `claude/prompt-queue-todo-sgo7ig`, queue 111–117 built there).
+
 ## 2026-10-29 — §GL locked: scrolls and spells, mana, where keys are found, rare spawns, the music (Claude, chat)
 - **Mike** (29 Oct, by voice): scrolls you can't read, brought to the shaman, who takes time; every spell permanent, rarity sets the level; cooldowns with a mana meter, regen over time and faster by a fire, plus mana potions; one key plant at a realm's end and one down a side path; PSO's rare spawns and music; "Lock it all".
 - **Design:** §GL. Settles the interpreter (the shaman). Spells are about light and the dark (first ideas: kindle, nighteye, clear fog, hush).
