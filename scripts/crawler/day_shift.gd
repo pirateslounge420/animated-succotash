@@ -3,7 +3,7 @@ extends Node3D
 ## The world gets ready at dawn and dusk (design §GF; queue 115;
 ## data/day_shift.json). A child of a surface (Surface or HubCamp): every
 ## routine fires on the local sun's height (Surface.sun_deg_at, the place's
-## latitude, §GE.5), never on a clock hour, and every actor adds its own
+## one shared sky, §GK.1.2), never on a clock hour, and every actor adds its own
 ## offset (sun_deg.actor_jitter_deg) so the change spreads across the
 ## twilight. Nothing underground (day_shift.underground false): the
 ## dungeon has no DayShift.

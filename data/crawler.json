@@ -825,6 +825,8 @@
   "start_year_day": 0.0,
   "seasons_on": true,
   "underground_seasons": false,
+  "reference_latitude_deg": 35.0,
+  "_help_reference": "(design §GK.1.2, 29 Oct; supersedes §GE.5.2-3) No latitude in the game: the hub and every realm read the sky, the day lengths and the seasons at this one fixed reference, never shown as a latitude, so all share one year and one day (summer ~74/18/34/18, equinox ~61/18/47/18, winter ~51/18/57/18 real minutes). hub_latitude_deg and area_latitude_deg are kept but no longer read; winter_by_biome still says what a winter does where.",
   "hub_latitude_deg": 0.0,
   "area_latitude_deg": {
    "tropical": 5.0,

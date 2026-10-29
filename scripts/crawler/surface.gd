@@ -611,7 +611,8 @@ func inside(pos: Vector3, margin := 0.0) -> bool:
 ## drone and drips), this world's put in.
 func enter(main: Node) -> void:
 	_main = main
-	# The sky, the day and the season at this place's latitude (§GE.5).
+	# The sky, the day and the season: the one reference every place shares
+	# (§GK.1.2); the winter by this place's kind (§GE.5.4).
 	CrawlerCalendar.set_place(calendar_kind())
 	var player: CrawlerPlayer = main.player
 	_kept = {"look": Look._params.duplicate(), "touched": {}, "campfire_night": Campfire.night, "half_dark": (main.half_dark as HalfDark).enabled,

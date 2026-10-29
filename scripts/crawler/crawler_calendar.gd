@@ -2,19 +2,14 @@ class_name CrawlerCalendar
 ## The crawler's calendar (design §GE, §GE.5; queue 114; data/crawler.json
 ## calendar): the open world's 144-minute day and 365-day year, one for the
 ## hub and every area (§FK.3: the same date, season and hour everywhere),
-## read at the latitude of the place you stand on:
-##
-##   the hub      calendar.hub_latitude_deg (the equator): near the
-##                equinox split all year (60 / 18 / 48 / 18 real minutes);
-##                its seasons are wet and dry, its plants keep their leaves
-##                (calendar.hub_area, "tropical": dry_season)
-##   an area      calendar.area_latitude_deg by its kind (the surface's
-##                world, mapped by calendar.area_of_world): longer summer
-##                days and longer winter nights the further from the
-##                equator, dawn and dusk always 18 minutes (DayCycle's warp
-##                at that latitude and the day's declination, Astro)
-##   underground  nothing seasonal (calendar.underground_seasons false): the
-##                shafts' daylight follows the day as at the equator (§FG)
+## read at one fixed reference, calendar.reference_latitude_deg (35°, design
+## §GK.1.2, which supersedes §GE.5's per-place latitudes): no latitude in
+## the game, so the hub and every realm share the date, the season and the
+## day length (summer ~74 / 18 / 34 / 18 real minutes, winter ~51 / 18 /
+## 57 / 18, dawn and dusk always 18: DayCycle's warp at the reference and
+## the day's declination, Astro). Underground nothing is seasonal
+## (calendar.underground_seasons false): the shafts' daylight follows the
+## day (§FG).
 ##
 ## What a winter does on a surface: calendar.winter_by_biome (snow and
 ## frost only where cold; leaf drop or a dry season elsewhere). The plants
@@ -22,7 +17,7 @@ class_name CrawlerCalendar
 ## colour, fall and bud again only where that winter drops leaves.
 
 static var C: Dictionary = Tuning.table("crawler").get("calendar", {})
-## The place being read now: "hub", or an area kind (area_latitude_deg's).
+## The place being read now: "hub", or an area kind (winter_by_biome's).
 static var place := "hub"
 
 
@@ -30,17 +25,16 @@ static func seasons_on() -> bool:
 	return bool(C.get("seasons_on", true))
 
 
-## The latitude (degrees) of `kind` ("hub" or an area kind).
-static func latitude_deg(kind: String) -> float:
-	if kind == "hub":
-		return float(C.get("hub_latitude_deg", 0.0))
-	return float((C.get("area_latitude_deg", {}) as Dictionary).get(kind, 40.0))
+## The latitude (degrees) the sky is read at for `kind` ("hub" or an area
+## kind): the one reference for all (§GK.1.2).
+static func latitude_deg(_kind: String) -> float:
+	return float(C.get("reference_latitude_deg", 35.0))
 
 
 ## The area kind of a surface world (worlds.json worlds.<name>): its own
-## name when area_latitude_deg has it, else calendar.area_of_world's.
+## name when winter_by_biome has it, else calendar.area_of_world's.
 static func kind_of_world(world_name: String) -> String:
-	if (C.get("area_latitude_deg", {}) as Dictionary).has(world_name):
+	if (C.get("winter_by_biome", {}) as Dictionary).has(world_name):
 		return world_name
 	return str((C.get("area_of_world", {}) as Dictionary).get(world_name, "temperate"))
 

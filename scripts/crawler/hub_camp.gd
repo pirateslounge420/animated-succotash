@@ -303,7 +303,8 @@ func _ground_color() -> Color:
 	return Color(str(H.get("ground_color", "#3a3a2a")))
 
 
-## The hub on the calendar: the equator (design §GE.5.2).
+## The hub on the calendar: its winter is hub_area's; its sky the one
+## reference every place shares (design §GK.1.2).
 func calendar_kind() -> String:
 	return "hub"
 
