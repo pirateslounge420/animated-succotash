@@ -151,7 +151,7 @@ Built so far: 01–43 (37–43, §EH–§EN, the village economy, built 5–6 Oc
 | 111 | §GB | The glossy look in the crawler: smooth textures, gloss, bloom, indigo fog | built 26 Oct (Claude Code; see PROGRESS) |
 | 112 | §GD.1, §GC.1 | The hub camp on the surface at dusk, the cook-shaman at the cauldron, the day and seasons | built 27 Oct to §GD (Claude Code; see PROGRESS): no way down under the fire |
 | 113 | §GD.1.2–4 | Fire travel: the hub fire links to a first area's hearth, its surface and its ruin mouth | built 27 Oct (Claude Code; see PROGRESS) |
-| 114 | §GE, §GK.1.2 | The calendar in the crawler: one 144-minute day and 365-day year for all, read at one fixed 35° reference (no latitude, §GK.1.2), winter by biome | built 26 Oct to §GE.5 (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle); §GK.1.2 rework todo |
+| 114 | §GE, §GK.1.2 | The calendar in the crawler: one 144-minute day and 365-day year for all, read at one fixed 35° reference (no latitude, §GK.1.2), winter by biome | built 26 Oct, reworked 29 Oct to §GK.1.2 (Claude Code; see PROGRESS: the clock follows the Python reference, not the open world's DayCycle) |
 | 115 | §GF | The world gets ready: flowers open and close, creatures change shifts, sound turns over, the folk light up at dusk | built 26 Oct (Claude Code; see PROGRESS) |
 | 116 | §GH, §GG.1, §GK.2–3 | The shaman's song: sit at the hub fire, the platter of three plants (cactus, mushroom, vine), give him one and he sings its realm's song; its glimpse opens in the flames; scroll the songs you know; step in; arrive to sound first | built 27 Oct to §GH (Claude Code; see PROGRESS); §GK.2–3 amendment todo |
 | 117 | §GI.1, §GK.4–7 | The shaman a man; doors home tucked in stumps, hillsides and caves; dying wakes you at the hub; the realm's keeper holds your things (keeps your teeth as his fee); your chest at the hub; layouts fresh each run | built 27 Oct to §GI.1–2 and §GJ (Claude Code; see PROGRESS); §GK.4–7 rewrite todo (after 116's amendment) |
@@ -1929,7 +1929,7 @@ CHECK (headless): from a new game, the stand-in opens the first link; travel hub
 
 ## 114 — The calendar in the crawler — §GE
 
-**Status:** built 26 Oct (Claude Code; see PROGRESS)
+**Status:** built 26 Oct to §GE.5, reworked 29 Oct to §GK.1.2 (Claude Code; see PROGRESS)
 **Mike sees:** In the crawler the days change through the year: long summer days and short summer nights, short winter days and long nights, dawn and dusk always 18 minutes; the plants on the surfaces bud in spring, colour in autumn and go bare in winter. A new game starts on the first evening of spring.
 
 ```text
