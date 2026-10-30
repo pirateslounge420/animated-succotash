@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-30 — §GM locked: the keepers' real work (Claude, chat)
+- **Design §GM** (Mike, 30 Oct, after a hub playtest): the six keepers do their trades for real. Every action moves something: fetch from a source, turn store goods into other goods with a tool, or carry goods to where they're needed. No busywork; when the store is at target and no order waits, they rest (sit, pipe, visit, nap, eat early).
+- Tools are single real props at each camp (§GM.6 list), NPC-only for now; they wear, break and are reordered from the knapper-potter. The store shows as the props (woodpile height, fish on the line, pots on the plank). Everyone eats together in the evening; the hub catches up while you're away.
+- **Data:** `data/hub_work.json` (new, NOT WIRED YET): stocks, sources, recipes, tools, daily use, rest, the day's shape. First-guess balance: firewood supply ~18 a day against ~9 burned, food about twice what the meal takes, so keepers have quiet afternoons.
+- **Queue 122** added (after 115).
+
 ## 2026-10-29 — Queue 114 reworked to §GK.1.2: one shared year, no latitude (Claude Code)
 - **Before:** the hub sat on the equator (its day ~60 / 18 / 48 / 18 all year) and each realm read the sky at its own latitude by biome (§GE.5).
 - **Now (§GK.1.2):** every sky, daylight and season value is read at one fixed reference, `crawler.json → calendar.reference_deg` 35 (new; never shown as a latitude). The hub and every realm share the date, the season and the day length: summer 74.5 / 18 / 33.5 / 18 real minutes, equinox 61.3 / 18 / 46.7 / 18, winter 50.6 / 18 / 57.4 / 18, dawn and dusk 18 minutes every day. `hub_latitude_deg` and `area_latitude_deg` stay in the data but are no longer read. Winter by biome stands (§GE.5.4): the hub keeps its dry-season plants, temperate and cold realms drop leaves.

@@ -7248,3 +7248,135 @@ carries a short lore line (PSO-style descriptions, proposed, not locked).
 **120:** scrolls read by the shaman, spells, mana and potions (after 117). **121:** keys at the end and
 on a side path, rare spawns, the realm's music building and settling (after 116). Data:
 `data/spells.json` (new, not wired).
+
+## GM. The keepers' work is real: tools in hand, a camp store, rest when the day's work is done — LOCKED (30 Oct, 18:13, Mike; "lock it in")
+
+Mike, 30 Oct, after a playtest of the hub at dusk (he liked the little camps lighting up one by one,
+§GF): *"next thing we need to work on is the actual things the villagers do."* Then, on the tools:
+*"props and tools but more on the interactive side"*, *"for now, the player wont be able to interact
+with it- this is just for the npcs camps and their life"*, and the rule that shapes everything below:
+*"each camp shouldn't just 'act' like they're using tools to make themselves look busy- if they're
+done with their work for the day, they can relax. but anytime they take action it should be to
+actually do something for the camp or to make something- not just moving thru the motions."*
+Builds on §FZ.1 (the six keepers), §GG.6.1 (keepers' work changes the camp) and §GF (dawn and dusk).
+Data: `data/hub_work.json` (new, not wired). Queue **122**.
+
+### GM.1 The rule: no busywork
+1. **Every action moves something real.** A keeper only picks up a tool to turn one thing into
+   another (a log into firewood, clay into a pot, a carcass into meat, hide, sinew and bone), to fetch
+   from a source, or to carry to where it is needed. No idle loops that make nothing.
+2. **Work comes from need.** Each keeper looks at the camp store (GM.3) and their open orders (GM.5);
+   if something they own is below its target, they work on it. If nothing is short, **the day's work
+   is done and they rest** (GM.7).
+3. **Need comes from use.** The camp consumes every day: the fires burn wood, the evening meal eats
+   food, tools wear and break, pots crack. That is why there is work tomorrow, and why a quiet day
+   happens when the store is full.
+
+### GM.2 The tools are real objects, NPC only
+1. Every tool on the §GM.6 lists exists **once**, as a prop at its camp (the axe in the log, the
+   paddle by the dugout, the hammerstone on the knapping stone). A keeper picks it up to use it and
+   puts it back after; **while it is in use it is missing from its spot** (the dugout gone from the
+   bank while the fisher is out).
+2. **Tools wear.** Each has uses before it breaks (first guesses in data). A broken tool lies at its
+   spot broken, and the keeper sends an order to the knapper-potter for the part (GM.5).
+3. **The player does not use them, for now.** No pickup, no interact prompt. They are the keepers'
+   life, to watch. (Player use, and trade with the keepers per §FZ.1, are later.)
+
+### GM.3 The camp store is what you see
+1. The camp keeps a **store** of goods (`hub_work.json → stocks`), each with a target the keepers
+   work toward and a cap.
+2. **Stock is shown, not counted on a screen.** The existing props become the store: the woodpile's
+   height is the firewood, the fish on the line are the fish, hides on the rack, pots on the plank,
+   herbs on the drying rack, gourds on the line, meat over the smoke pit. A thin woodpile tells you
+   the woodcutter has work.
+3. Goods have to be **carried** between camps: a keeper walks over with a bundle and sets it down.
+   Delivery is real work, never a teleport.
+
+### GM.4 Where things come from (sources in the hub)
+Every raw material comes from a real place in the hub, and the places run down and come back:
+- **Wood:** fallen dead wood and standing dead trees; a felled tree leaves a stump; new dead wood
+  falls over days.
+- **Game:** the hub's own ground life (§GF's creatures). The hunter stalks a real animal when one is
+  in reach; when none is, he goes out past the camp's edge and is gone a while (an off-screen hunt
+  whose odds follow how much game is left). Game breeds back over days.
+- **Fish:** the river; the trap fills over hours, the net is quicker but wears.
+- **Plants:** the herbalist's garden bed (growth stages, §GG.6.3) and wild patches round the camp
+  (roots, greens, fibre plants, herbs) that regrow after picking.
+- **Clay:** the clay pit (it does not run out, but digging takes time). **Flint:** nodules on the
+  river bank, a few a day.
+
+### GM.5 What each keeper makes (the chains)
+Inputs → tool → output, and who uses the output. Times and counts are first guesses in data.
+1. **Woodcutter-firekeeper.** Dead wood → *stone axe* → logs; logs → *wedges and maul* → firewood;
+   twigs → kindling. He carries firewood to the main hearth before dusk, to the kiln when the potter
+   fires, and to the smoke pit. Keeps the *ember pot*; banks the hearth at dawn (§GF).
+2. **Hunter-tanner.** Takes *spear* and *bow* out; the kill comes home on his shoulder; *flint knife*
+   → meat, hide, sinew, bone, teeth. Meat → smoke pit (burns firewood) → smoked meat. Hide → hoop
+   frame, *scraper* → leather. Sinew goes to the weaver and to tool lashings; bone and antler go to
+   the knapper (awls, pressure flakers). Teeth go in a pouch (the tribe's money, §FZ.3).
+3. **Fisher-weaver.** Checks the *fish trap*; takes the *dugout and paddle* out with the *net*; fish →
+   gutted with a blade → drying line → dried fish. Fibre (from the forager) → twisted → cordage →
+   net mending, baskets, and lashings for everyone's tools.
+4. **Forager-herbalist.** *Digging stick* and *basket* out to the wild patches: roots and greens (to
+   the cauldron), fibre plants (to the weaver), herbs. Tends the garden bed (waters it with a gourd
+   from the river, harvests what is ripe). Herbs → drying rack → *mortar and pestle* → ground herbs
+   (to the shaman for brews).
+5. **Knapper-potter.** Flint → *hammerstone*, then *antler flaker* (from the hunter) → blades,
+   points, scrapers, axe heads: **the tool maker for the whole camp**, working the open orders.
+   Clay and water → *coiling board and paddle stones* → green pots → a day drying on the plank →
+   the *kiln* (needs firewood) → fired pots, for the cauldron, the herbalist and water.
+6. **Cook-shaman.** From the store: smoked meat, dried fish, roots, greens, water → the *cauldron*
+   and *ladle* → the evening meal, sized for the camp. Ground herbs → brews (§GI.3). At the meal he
+   plays the *drum*.
+
+**Orders between camps:** a keeper whose tool breaks, or who runs out of an input another keeper
+makes, posts an order; the maker works it ahead of their own stock; the finished thing is carried
+over. This is how the camps lean on each other (the knapper makes the woodcutter's axe head; the
+woodcutter feeds the knapper's kiln).
+
+### GM.6 The tool list per camp (from the 30 Oct list)
+- **Hunter-tanner:** spear, bow and quiver, flint skinning knife, hide scraper, hoop frame, bone awl.
+- **Fisher-weaver:** fishing spear, fish trap, net with stone weights, bone hooks and line, dugout and
+  paddle, weaving frame.
+- **Woodcutter-firekeeper:** stone axe, wedges and maul, fire drill, ember pot, carrying tumpline
+  (the bellows stay a ruin find, not camp kit yet).
+- **Forager-herbalist:** digging stick, gathering baskets, gourds, flint blade, mortar and pestle,
+  drying rack, clay pots.
+- **Knapper-potter:** hammerstone, antler flaker, leather knee pad, coiling board and paddle stones,
+  kiln, clay pit and water jar.
+- **Cook-shaman:** cauldron, ladle (already in his hand, §FM.6), grinding stone, cooking stones,
+  drum, pipe.
+
+### GM.7 Rest is real too
+When a keeper's stock is at target and no order waits, they stop. Rest is chosen from a small set,
+by the keeper and the hour: sit at their own fire or seat, smoke a pipe, walk over and sit with
+another keeper, nap in their shelter in the afternoon heat, stand at the river, drift to the main
+hearth early. **A full store makes a lazy afternoon; a hard night (lots of wood burned, a broken
+axe) makes a busy morning.**
+
+### GM.8 The day's shape
+On the one 144-minute clock (§GE), by the sun as §GF does:
+1. **Dawn:** lights out and the hearth banked (§GF, built). Keepers check the store.
+2. **Morning:** trips out (hunter, fisher, forager, woodcutter to the dead wood).
+3. **Midday and afternoon:** work at the camps (butchering, scraping, knapping, potting, drying,
+   weaving), orders carried over; whoever is done rests.
+4. **Before dusk:** the woodcutter feeds the hearth; the cook starts the meal.
+5. **Dusk:** the lighting round, each from the hearth's flame (§GF, built).
+6. **Evening:** **everyone eats together** on the log benches round the fire; the meal takes food from
+   the store; the shaman drums.
+7. **Night:** each keeper goes to their shelter and sleeps; their lamp burns (and burns firewood).
+
+### GM.9 While you are away
+The hub runs on the same clock while you are in a realm. On your return it **catches up** by the time
+passed (the store, sources, tools and growth stepped forward in the rules above), so you come home to
+a camp that kept living.
+
+### GM.10 Open
+- Whether a surplus grows the camp (§FZ.4's open question; §GG.6.1's "useful builds") — not here.
+- Whether leather, cordage and pots also go to the bank or the keepers' trade (§FZ.1) — later.
+- What the shaman smokes in the pipe.
+- How a starved camp looks (a store run to zero: no meal, a dim hearth) — first guess: the keepers
+  just work harder the next day; nobody dies.
+
+### GM.11 Queue
+**122:** the keepers' real work (after 115, which built the lighting round). Data: `data/hub_work.json`.

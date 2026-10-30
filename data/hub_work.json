@@ -1,0 +1,141 @@
+{
+  "_help": "[NOT WIRED YET — design §GM] The hub keepers' real work (Mike, 30 Oct: 'anytime they take action it should be to actually do something for the camp or to make something - not just moving thru the motions'). Keepers work only when a stock they own is below target or an order waits for them; otherwise they rest (§GM.1, §GM.7). All numbers are first guesses for Mike to tune by play. Times (*_min) are real minutes of play: the day is 144 minutes (§GE), with 50–75 of them daylight over the year (§GK.1.2), so a keeper's work has to fit there with rest left over.",
+
+  "_help_stocks": "The camp store (§GM.3). target = what the owner works toward; cap = the most the store holds; start = a new game's store; show = the prop that displays it (its fill follows count/cap). owner = the keeper who makes it.",
+  "stocks": {
+    "firewood":       {"owner": "woodcutter_firekeeper", "start": 14, "target": 16, "cap": 30, "show": "woodpile"},
+    "kindling":       {"owner": "woodcutter_firekeeper", "start": 4,  "target": 6,  "cap": 10, "show": "kindling_bundles"},
+    "logs":           {"owner": "woodcutter_firekeeper", "start": 2,  "target": 3,  "cap": 6,  "show": "felled_trunk"},
+    "raw_meat":       {"owner": "hunter_tanner", "start": 0, "target": 0, "cap": 6, "show": "butchering_stone"},
+    "smoked_meat":    {"owner": "hunter_tanner", "start": 3, "target": 6, "cap": 10, "show": "smoke_pit_rack"},
+    "raw_hide":       {"owner": "hunter_tanner", "start": 0, "target": 0, "cap": 3, "show": "hoop_frame"},
+    "leather":        {"owner": "hunter_tanner", "start": 1, "target": 3, "cap": 6, "show": "hide_rack"},
+    "sinew":          {"owner": "hunter_tanner", "start": 2, "target": 4, "cap": 8, "show": "hide_rack"},
+    "bone_antler":    {"owner": "hunter_tanner", "start": 2, "target": 3, "cap": 8, "show": "bone_pile"},
+    "teeth":          {"owner": "hunter_tanner", "start": 0, "target": 0, "cap": 999, "show": "tooth_pouch"},
+    "raw_fish":       {"owner": "fisher_weaver", "start": 0, "target": 0, "cap": 8, "show": "gutting_board"},
+    "dried_fish":     {"owner": "fisher_weaver", "start": 4, "target": 8, "cap": 12, "show": "fish_line"},
+    "cordage":        {"owner": "fisher_weaver", "start": 3, "target": 5, "cap": 10, "show": "cordage_coils"},
+    "baskets":        {"owner": "fisher_weaver", "start": 3, "target": 4, "cap": 6, "show": "baskets"},
+    "roots_greens":   {"owner": "forager_herbalist", "start": 4, "target": 6, "cap": 10, "show": "forage_baskets"},
+    "fibre":          {"owner": "forager_herbalist", "start": 3, "target": 4, "cap": 8, "show": "fibre_bundle"},
+    "fresh_herbs":    {"owner": "forager_herbalist", "start": 0, "target": 0, "cap": 6, "show": "herb_rack"},
+    "dried_herbs":    {"owner": "forager_herbalist", "start": 2, "target": 4, "cap": 8, "show": "herb_rack"},
+    "ground_herbs":   {"owner": "forager_herbalist", "start": 1, "target": 2, "cap": 6, "show": "gourd_line"},
+    "water":          {"owner": "forager_herbalist", "start": 3, "target": 4, "cap": 6, "show": "water_jar"},
+    "flint":          {"owner": "knapper_potter", "start": 4, "target": 5, "cap": 10, "show": "flint_pile"},
+    "clay":           {"owner": "knapper_potter", "start": 2, "target": 3, "cap": 6, "show": "clay_pit"},
+    "green_pots":     {"owner": "knapper_potter", "start": 0, "target": 0, "cap": 6, "show": "drying_plank"},
+    "fired_pots":     {"owner": "knapper_potter", "start": 3, "target": 4, "cap": 8, "show": "pots"},
+    "meal":           {"owner": "shaman", "start": 0, "target": 0, "cap": 1, "show": "cauldron"},
+    "brew":           {"owner": "shaman", "start": 0, "target": 1, "cap": 2, "show": "cauldron"}
+  },
+
+  "_help_sources": "Where raw materials come from in the hub (§GM.4). each = units taken per trip; count = how many there are in a new hub; regrow = units back per game day; walk = it is out past the camp, the keeper walks there (off_screen_min if none is in reach).",
+  "sources": {
+    "dead_wood":    {"gives": {"logs": 2}, "count": 12, "regrow_per_day": 3, "tool": "stone_axe", "work_min": 6},
+    "game":         {"gives": {"raw_meat": 3, "raw_hide": 1, "sinew": 1, "bone_antler": 1, "teeth": 4}, "count": 6, "regrow_per_day": 1, "tools": ["spear", "bow"], "work_min": 25, "off_screen_min": 40, "off_screen_success": 0.5, "_help": "the hunter stalks a real hub creature when one is in reach (§GF ground life); otherwise he leaves past the camp's edge for off_screen_min and comes back with a kill at off_screen_success x (game left / count)"},
+    "fish_trap":    {"gives": {"raw_fish": 1}, "fills_per_day": 2, "max_in_trap": 3, "tool": "fish_trap", "work_min": 3},
+    "river_net":    {"gives": {"raw_fish": 2}, "tools": ["dugout", "paddle", "net"], "work_min": 18, "success": 0.7},
+    "wild_patches": {"gives": {"roots_greens": 2, "fibre": 1, "fresh_herbs": 1}, "count": 8, "regrow_per_day": 2, "tools": ["digging_stick", "gathering_basket"], "work_min": 12},
+    "garden_bed":   {"gives": {"fresh_herbs": 2}, "ripe_every_days": 2, "tool": "gourd", "work_min": 5, "_help": "tended (watered) once a day; uses the bloom plants HubCamp already lays"},
+    "river_water":  {"gives": {"water": 1}, "tool": "gourd", "work_min": 2},
+    "clay_pit":     {"gives": {"clay": 1}, "endless": true, "tool": "digging_stick", "work_min": 6},
+    "flint_bank":   {"gives": {"flint": 1}, "count": 6, "regrow_per_day": 3, "work_min": 4}
+  },
+
+  "_help_recipes": "Turning one thing into another at a camp (§GM.5). in = taken from the store; out = put in the store; tool = picked up from its spot (and worn by one use); at = the prop it is done at; fuel = firewood burned; wait_min = hands-off time (drying, firing, smoking) during which the keeper is free.",
+  "recipes": {
+    "split_wood":   {"by": "woodcutter_firekeeper", "in": {"logs": 1}, "out": {"firewood": 3, "kindling": 1}, "tool": "wedges_maul", "at": "chopping_stump", "work_min": 5},
+    "smoke_meat":   {"by": "hunter_tanner", "in": {"raw_meat": 1}, "out": {"smoked_meat": 1}, "tool": "skinning_knife", "at": "smoke_pit", "fuel": 1, "work_min": 3, "wait_min": 60},
+    "scrape_hide":  {"by": "hunter_tanner", "in": {"raw_hide": 1}, "out": {"leather": 1}, "tool": "hide_scraper", "at": "hoop_frame", "work_min": 20},
+    "gut_dry_fish": {"by": "fisher_weaver", "in": {"raw_fish": 1}, "out": {"dried_fish": 1}, "tool": "flint_blade", "at": "fish_line", "work_min": 2, "wait_min": 90},
+    "twist_cord":   {"by": "fisher_weaver", "in": {"fibre": 1}, "out": {"cordage": 1}, "tool": "weaving_frame", "at": "weaving_frame", "work_min": 8},
+    "weave_basket": {"by": "fisher_weaver", "in": {"cordage": 2}, "out": {"baskets": 1}, "tool": "weaving_frame", "at": "weaving_frame", "work_min": 15},
+    "dry_herbs":    {"by": "forager_herbalist", "in": {"fresh_herbs": 1}, "out": {"dried_herbs": 1}, "at": "herb_rack", "work_min": 2, "wait_min": 120},
+    "grind_herbs":  {"by": "forager_herbalist", "in": {"dried_herbs": 2}, "out": {"ground_herbs": 1}, "tool": "mortar_pestle", "at": "mortar_stone", "work_min": 6},
+    "coil_pot":     {"by": "knapper_potter", "in": {"clay": 1, "water": 1}, "out": {"green_pots": 1}, "tool": "coiling_board", "at": "drying_plank", "work_min": 12},
+    "fire_pots":    {"by": "knapper_potter", "in": {"green_pots": 3}, "out": {"fired_pots": 3}, "at": "kiln", "fuel": 3, "work_min": 5, "wait_min": 120, "_help": "fires up to 3 at once; fires with fewer if the green pots have waited a day; the kiln smokes harder while it burns", "dry_first_min": 144},
+    "cook_meal":    {"by": "shaman", "in": {"smoked_meat": 1, "dried_fish": 1, "roots_greens": 2, "water": 1}, "out": {"meal": 1}, "tool": "ladle", "at": "cauldron", "work_min": 15, "wait_min": 20, "_help": "the evening meal for the whole camp; if the store is short he cooks with what there is (any two of the food lines)"},
+    "brew":         {"by": "shaman", "in": {"ground_herbs": 1, "water": 1}, "out": {"brew": 1}, "tool": "ladle", "at": "cauldron", "work_min": 10}
+  },
+
+  "_help_tools": "Every tool exists once, at its spot (§GM.2). uses = uses before it breaks; made_by = who makes the replacement and from what (an order, §GM.5). Only the keepers use them; the player cannot (Mike, 30 Oct).",
+  "tools": {
+    "spear":          {"camp": "hunter_tanner", "spot": "spear_rack", "uses": 20, "made_by": "knapper_potter", "from": {"flint": 1, "sinew": 1}},
+    "bow":            {"camp": "hunter_tanner", "spot": "spear_rack", "uses": 40, "made_by": "hunter_tanner", "from": {"sinew": 2}},
+    "skinning_knife": {"camp": "hunter_tanner", "spot": "butchering_stone", "uses": 15, "made_by": "knapper_potter", "from": {"flint": 1}},
+    "hide_scraper":   {"camp": "hunter_tanner", "spot": "hoop_frame", "uses": 12, "made_by": "knapper_potter", "from": {"flint": 1}},
+    "hoop_frame":     {"camp": "hunter_tanner", "spot": "hoop_frame", "uses": 0},
+    "bone_awl":       {"camp": "hunter_tanner", "spot": "hide_rack", "uses": 30, "made_by": "knapper_potter", "from": {"bone_antler": 1}},
+    "fishing_spear":  {"camp": "fisher_weaver", "spot": "bank", "uses": 25, "made_by": "knapper_potter", "from": {"bone_antler": 1, "cordage": 1}},
+    "fish_trap":      {"camp": "fisher_weaver", "spot": "river", "uses": 30, "made_by": "fisher_weaver", "from": {"cordage": 2}},
+    "net":            {"camp": "fisher_weaver", "spot": "net_stakes", "uses": 10, "made_by": "fisher_weaver", "from": {"cordage": 3}, "_help": "a worn net is mended (2 cordage) rather than remade"},
+    "hooks_line":     {"camp": "fisher_weaver", "spot": "fish_line", "uses": 15, "made_by": "knapper_potter", "from": {"bone_antler": 1}},
+    "dugout":         {"camp": "fisher_weaver", "spot": "bank", "uses": 0},
+    "paddle":         {"camp": "fisher_weaver", "spot": "bank", "uses": 60, "made_by": "woodcutter_firekeeper", "from": {"logs": 1}},
+    "weaving_frame":  {"camp": "fisher_weaver", "spot": "weaving_frame", "uses": 0},
+    "stone_axe":      {"camp": "woodcutter_firekeeper", "spot": "felled_trunk", "uses": 16, "made_by": "knapper_potter", "from": {"flint": 2, "sinew": 1}, "_help": "the knapper makes the head; the woodcutter hafts it"},
+    "wedges_maul":    {"camp": "woodcutter_firekeeper", "spot": "chopping_stump", "uses": 40, "made_by": "woodcutter_firekeeper", "from": {"logs": 1}},
+    "fire_drill":     {"camp": "woodcutter_firekeeper", "spot": "lean_to", "uses": 0, "_help": "kept, never needed while the hearth is banked rather than out (§GF)"},
+    "ember_pot":      {"camp": "woodcutter_firekeeper", "spot": "ember_pot", "uses": 0},
+    "tumpline":       {"camp": "woodcutter_firekeeper", "spot": "lean_to", "uses": 50, "made_by": "fisher_weaver", "from": {"cordage": 1, "leather": 1}},
+    "digging_stick":  {"camp": "forager_herbalist", "spot": "garden_bed", "uses": 50, "made_by": "woodcutter_firekeeper", "from": {"logs": 1}},
+    "gathering_basket": {"camp": "forager_herbalist", "spot": "forage_baskets", "uses": 25, "made_by": "fisher_weaver", "from": {"baskets": 1}},
+    "gourd":          {"camp": "forager_herbalist", "spot": "gourd_line", "uses": 30, "made_by": "forager_herbalist", "from": {}, "_help": "from the garden"},
+    "flint_blade":    {"camp": "forager_herbalist", "spot": "mortar_stone", "uses": 15, "made_by": "knapper_potter", "from": {"flint": 1}},
+    "mortar_pestle":  {"camp": "forager_herbalist", "spot": "mortar_stone", "uses": 0},
+    "herb_rack":      {"camp": "forager_herbalist", "spot": "herb_rack", "uses": 0},
+    "hammerstone":    {"camp": "knapper_potter", "spot": "knapping_stone", "uses": 0},
+    "antler_flaker":  {"camp": "knapper_potter", "spot": "knapping_stone", "uses": 20, "made_by": "knapper_potter", "from": {"bone_antler": 1}},
+    "knee_pad":       {"camp": "knapper_potter", "spot": "knapping_stone", "uses": 60, "made_by": "hunter_tanner", "from": {"leather": 1}},
+    "coiling_board":  {"camp": "knapper_potter", "spot": "drying_plank", "uses": 0},
+    "kiln":           {"camp": "knapper_potter", "spot": "kiln", "uses": 0},
+    "water_jar":      {"camp": "knapper_potter", "spot": "clay_pit", "uses": 0},
+    "cauldron":       {"camp": "shaman", "spot": "hearth", "uses": 0},
+    "ladle":          {"camp": "shaman", "spot": "in_hand", "uses": 0},
+    "grinding_stone": {"camp": "shaman", "spot": "hearth", "uses": 0},
+    "cooking_stones": {"camp": "shaman", "spot": "hearth", "uses": 0},
+    "drum":           {"camp": "shaman", "spot": "hearth", "uses": 0},
+    "pipe":           {"camp": "shaman", "spot": "in_hand", "uses": 0}
+  },
+
+  "_help_flake": "Knapping (§GM.5.5) is a recipe per tool part: flint (and bone/antler where the tool says) -> the part, at the knapping stone with the hammerstone then the antler flaker. Orders are worked ahead of the knapper's own stock.",
+  "flake": {"work_min_per_part": 10, "tools": ["hammerstone", "antler_flaker", "knee_pad"], "at": "knapping_stone"},
+
+  "_help_use": "What the camp burns and eats every day (§GM.1.3). These are why there is work tomorrow.",
+  "use": {
+    "firewood_per_night": {"hearth": 4, "each_lamp": 0.5, "each_torch_post": 0.5},
+    "meal_per_evening": 1,
+    "pot_crack_chance_per_day": 0.08,
+    "smoked_meat_spoil_days": 0,
+    "_help_spoil": "0 = never spoils (first guess: smoked and dried food keeps)"
+  },
+
+  "_help_rest": "When a keeper has nothing below target and no order (§GM.7). Picked by weight and the hour.",
+  "rest": {
+    "choices": {
+      "sit_own_fire": {"weight": 4},
+      "pipe":         {"weight": 2, "hours": ["afternoon", "evening"]},
+      "visit_keeper": {"weight": 2, "_help": "walks over and sits with another keeper who is also resting or working quietly"},
+      "nap_shelter":  {"weight": 1, "hours": ["afternoon"]},
+      "river_edge":   {"weight": 1},
+      "early_hearth": {"weight": 1, "hours": ["late_afternoon"]}
+    },
+    "min_min": 8,
+    "max_min": 30
+  },
+
+  "_help_day": "The day's shape (§GM.8), by the sun as day_shift.json does, not by clock hours.",
+  "day": {
+    "morning": ["trips_out"],
+    "midday": ["camp_work", "orders", "deliveries"],
+    "before_dusk": ["feed_hearth", "start_meal"],
+    "dusk": ["lighting_round"],
+    "evening": ["meal_together", "drum"],
+    "night": ["sleep_in_shelter"]
+  },
+
+  "_help_away": "While the player is in a realm the hub catches up on return by the game time passed (§GM.9), stepping the store, sources, tools and growth by these rules; at most catch_up_days_max days are simulated.",
+  "away": {"catch_up_days_max": 10}
+}
