@@ -4,6 +4,29 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-31 — Queue 116 amended to §GK.2–3: plants are the keys, the platter, arriving by sound (Claude Code)
+- **What Mike sees:**
+  - A new game knows no song. Right click at the fire and the shaman asks you to bring him a plant.
+  - On a flat stone by the fire is a woven tray with three cuttings: a cactus, a mushroom and a vine. Look at one and right click to take it. Right click by the shaman and he takes it, teaches you its song and sits you down to it.
+  - The cactus opens the desert (the built first realm). The mushroom, vine, root and leaf teach stand-in songs. Each has its own colour and tune in the fire, but no glimpse opens and the fire won't take you there yet ("The song falters").
+  - The desert grows its three keys on its floor, two plants of each: a tall flowering cactus, an arching root and a broad-leaved shrub. Take a cutting (the plant stays) and bring the root or leaf home to learn its song.
+  - Stepping through, you hear the realm before you see it: a moment of near-black with only its own sounds, then its song, then the picture fades up while the song eases off.
+- **Built:**
+  - `SongWeb` (`scripts/crawler/song_web.gd`): the platter, the key plants, cuttings (new item `key_cutting`), giving.
+  - `CrawlerAreas`: songs come from the save, and a new game starts with none (`CrawlerSave.begin`). Also `sit(key)`, the stand-ins, and `_arrive`, the sound-first arrival.
+  - `data/song_web.json`: the NOT WIRED prefix is off for the platter and keys. New blocks: `hub_platter`, `cuttings`, `look`. Doors, keeper and loot are still marked NOT WIRED (117, 119).
+  - `crawler.json → areas`: `first.realm` (desert_aztec_scrub), four stand-in realms with placeholder songs, `arrive`.
+- **Fixed on the way:** standing by the fire next to the platter, the button grabbed a plant instead of sitting. The platter now answers only when you look straight at a cutting (`hub_platter.look_cos`). A cutting the shaman can teach goes to him before the platter is touched.
+- **Checks:**
+  - `area_check` 31/31. It walks the platter, the hand-over, the sound-first arrival, the desert's three keys, a root cutting and the stand-in.
+  - `bank_check` 18, `hub_check` 21, `torch_supply_check` 14: 0 fails. `bank_check` and `torch_supply_check` now learn the cactus song at the start.
+  - `crawler_save_check` 12 fails, the same old tomb-wake ones as before.
+- **For Mike (your calls):**
+  - (1) Once you choose a plant, the other two stay on the platter. That keeps you from getting stuck on a stand-in, but makes the choice less final. `hub_platter.others_stay` false clears the platter.
+  - (2) The built first realm is a desert basin over the tomb, not yet the Aztec dry highland scrub of §GK.1.4.
+  - (3) Saves from before today keep the desert's song.
+  - (4) Key plants grow two of each at seeded spots. §GL.3's end-and-side-path placement is queue 121's.
+
 ## 2026-10-30 — §GM locked: the keepers' real work (Claude, chat)
 - **Design §GM** (Mike, 30 Oct, after a hub playtest): the six keepers do their trades for real. Every action moves something: fetch from a source, turn store goods into other goods with a tool, or carry goods to where they're needed. No busywork; when the store is at target and no order waits, they rest (sit, pipe, visit, nap, eat early).
 - Tools are single real props at each camp (§GM.6 list), NPC-only for now; they wear, break and are reordered from the knapper-potter. The store shows as the props (woodpile height, fish on the line, pots on the plank). Everyone eats together in the evening; the hub catches up while you're away.

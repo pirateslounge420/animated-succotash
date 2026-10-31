@@ -182,6 +182,12 @@
    "icon": "fruit",
    "color": "#d8902a",
    "_help": "Pine resin scraped off an old stump in a realm; with a branch, bound into a torch at the firekeeper's site (torch.json crawler_burn.supply, Mike 28 Oct)."
+  },
+  "key_cutting": {
+   "name": "Cutting",
+   "icon": "sample",
+   "color": "#4f9a3a",
+   "_help": "(\u00a7GK.2.1, queue 116 amended) A cutting of a key plant (its key in the item's 'key', its name in 'title'), from the hub's platter or a plant in a realm. Give it to the shaman and he teaches its song (song_web.json). Carried like anything else; lost into your pile if you are taken."
   }
  },
  "sample_part": {

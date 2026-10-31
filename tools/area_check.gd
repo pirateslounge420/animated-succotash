@@ -4,6 +4,9 @@ extends SceneTree
 ## CrawlerAreas, crawler.json areas), headless:
 ##   godot --headless --path . --fixed-fps 60 --script tools/area_check.gd
 ## Asserts, from a new game (SEED=7):
+##  0. no song known; the platter's cactus, given to the shaman, teaches
+##     the desert's song (design §GK.2); arriving is sound first (§GK.3);
+##     the desert's three keys grow there; the root's song is a stand-in;
 ##  1. not linked yet; at the hub fire the interact button takes you (the
 ##     cook-shaman's stand-in) to the first area: on its surface, beside its
 ##     main hearth, the hearth cold, the torch you carry lit by the fire; the area
@@ -67,9 +70,23 @@ func _run() -> void:
 	main.player.inventory.add(Inventory.make("torch"))
 	var hub := main.surface as HubCamp
 	var ar_ := main.areas
-	ok(hub != null and ar_.can_go() and CrawlerAreas.known() == ["first"], "a new game: on the hub, the first realm's song known (the stand-in)")
-	# 1. Sit; the song, its colour, its glimpse.
-	ok(ar_.interact() and ar_.sitting, "the interact button at the hub fire sits you down")
+	# 0. Plants are the keys (design §GK.2): no song yet; the platter.
+	ok(hub != null and not ar_.can_go() and CrawlerAreas.known().is_empty(), "a new game: on the hub, no song known")
+	ok(SongWeb.platter() == ["cactus", "mushroom", "vine"], "the platter at the fire holds the cactus, the mushroom and the vine")
+	ok(ar_.interact() and not ar_.sitting and str(GameLog.entries[-1].text).contains("Bring me a plant"), "the button at the fire with no plant: the shaman asks for one, you stay standing")
+	await _frames(3)
+	var web := main.song_web
+	var plat := web.platter_node
+	var cac: Node3D = web._on_platter["cactus"]
+	var c3 := cac.global_position
+	var from: Vector3 = plat.global_position + (hub.camp.pos - plat.global_position).normalized() * 0.9
+	from.y = hub.land.height_at(from.x, from.z)
+	var to3: Vector3 = c3 - (from + Vector3(0.0, 1.55, 0.0))
+	main.player.spawn_flat(from, atan2(-to3.x, -to3.z), atan2(to3.y, Vector2(to3.x, to3.z).length()))
+	await _frames(3)
+	ok(ar_.interact() and web.carried_key("cactus") >= 0 and SongWeb.platter() == ["mushroom", "vine"] and not cac.visible, "looking at the cactus on the platter: its cutting in your pack, the other two still there")
+	ok(ar_.interact() and ar_.sitting and web.carried_key("cactus") < 0 and CrawlerAreas.known() == ["first"], "giving it to the shaman: he teaches the desert's song and sits you down to it")
+	# 1. Sitting; the song, its colour, its glimpse.
 	for i in 120:
 		await process_frame
 	var light := hub.fire.get_node_or_null("Light") as OmniLight3D
@@ -84,11 +101,27 @@ func _run() -> void:
 	ar_.stand()
 	await _frames(3)
 	ok(not ar_.sitting and main.surface == hub and not ar_.song_playing() and not light.light_color.is_equal_approx(want) and main.area_node.get_parent() == null and main.player.is_physics_processing(), "standing up: no song, the fire its own colour again, the realm put away, you free to walk")
-	# 3. Sit and step in: the realm's hearth, unlit (the song is the key).
+	# 3. Sit and step in: the realm's hearth, unlit (the song is the key);
+	# sound first (design §GK.3).
 	ar_.interact()
 	await _frames(10)
 	ar_.interact()
-	await _settle(main)
+	var seen: Array = []
+	var dark_ok := true
+	var music_ok := false
+	var w := 0
+	while main.leaving and w < 3000:
+		var st0 := ar_.arriving
+		if st0 != "" and (seen.is_empty() or seen[-1] != st0):
+			seen.append(st0)
+		if st0 == "dark" and ar_.arrive_music_playing():
+			dark_ok = false
+		if st0 == "music" and ar_.arrive_music_playing():
+			music_ok = true
+		await process_frame
+		w += 1
+	await _frames(5)
+	ok(seen == ["dark", "music", "picture"] and dark_ok and music_ok, "arriving: near-dark with its own sounds, then its music, then the picture (%s)" % str(seen))
 	var area := main.surface
 	ok(main.on_surface and area == main.area_node and not (area is HubCamp), "stepping into the fire: you come out in the first realm")
 	var hp := area.area_hearth.global_position
@@ -97,10 +130,34 @@ func _run() -> void:
 	ok(main.player.torch.lit(), "the hub fire lights the torch you carry")
 	var ar: Array = CrawlerAreas.first().get("across_m", [300.0, 600.0])
 	ok(area.across_m >= float(ar[0]) and area.across_m <= float(ar[1]), "the realm %.0f m across (areas.first.across_m)" % area.across_m)
+	# 3b. The desert's keys growing on its floor: a cutting of the root.
+	var kinds := {}
+	for p in web.plants():
+		kinds[str(p.key)] = true
+	ok(kinds.has("cactus") and kinds.has("root") and kinds.has("leaf") and kinds.size() == 3, "the desert's three keys grow on its floor (%s)" % ", ".join(kinds.keys()))
+	var root_plant: Node3D = web.plants().filter(func(p): return str(p.key) == "root")[0].node
+	var keep := main.player.global_position
+	main.player.global_position = root_plant.global_position + Vector3(0.8, 0.0, 0.0)
+	ok(ar_.interact() and web.carried_key("root") >= 0 and is_instance_valid(root_plant) and root_plant.is_inside_tree(), "a cutting of the root, the plant still growing")
+	ar_.interact()
+	ok(main.player.inventory.carried.filter(func(it): return it is Dictionary and str(it.get("key", "")) == "root").size() == 1, "one cutting of a key at a time")
+	main.player.global_position = keep
 	# 4. Home by its (unlit) hearth.
 	ok(ar_.interact(), "the hearth's button")
 	await _settle(main)
 	ok(main.surface == main.hub_node, "brings you home to the hub fire")
+	# 4b. The root to the shaman: a stand-in realm's song (its place not built).
+	main.player.global_position = hub.shaman.global_position + Vector3(0.0, 0.0, 1.0)
+	ok(ar_.interact() and ar_.sitting and ar_.realm == "root_world" and CrawlerAreas.known() == ["first", "root_world"], "the root to the shaman: the root world's song, sung")
+	for i in 30:
+		await process_frame
+	ok(ar_.glimpse_shown() == 0.0 and CrawlerAreas.realm_colour("root_world").is_equal_approx((hub.fire.get_node("Light") as OmniLight3D).light_color), "a stand-in: its colour in the flames, no glimpse")
+	ar_.step_in()
+	await _frames(3)
+	ok(ar_.sitting and main.surface == main.hub_node and not main.leaving, "stepping in on a stand-in: the fire will not open, you stay by it")
+	ar_.stand(false)
+	main.player.global_position = hub.camp.spawn
+	await _frames(3)
 	# 5. Back, and reclaim it with the torch.
 	ar_.interact()
 	await _frames(5)

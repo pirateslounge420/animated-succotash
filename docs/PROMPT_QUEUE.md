@@ -2006,6 +2006,8 @@ CHECK (headless): each brew's mix loads; the strength rises, peaks and falls ove
 
 **Read §GK before 116, 117 and 119; where an older prompt below for 116 or 117 disagrees with §GK, §GK wins.**
 
+**Status:** 116 amended built 30 Oct (Claude Code; see PROGRESS). 117 rewritten: todo.
+
 **116 (amended):** a new game lays the platter of three key plants at the hub fire (`data/song_web.json → platter`). Give the shaman one and he sings its realm's song (§GH); a cutting of any key taken in a realm and brought home teaches that song too. The desert (the built Aztec realm, dry highland scrub) is the cactus's realm and the only one that must work now; the others can be stand-ins. Arriving: a beat of near-dark with the realm's ambience, then its music, then the picture (§GK.3).
 
 ```text

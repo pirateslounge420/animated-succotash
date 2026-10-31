@@ -86,6 +86,8 @@ func _run() -> void:
 	Residents.stay_asleep = true
 	Torch.burn_down = false
 	var main := await _boot("7")
+	# The desert's song, as from the platter's cactus (design §GK.2; area_check walks that path).
+	SongWeb.learn("cactus")
 	var hub := main.surface as HubCamp
 	# 1. He.
 	var cj := FileAccess.get_file_as_string("res://data/crawler.json")

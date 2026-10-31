@@ -1,6 +1,6 @@
 {
  "_help": {
-  "about": "[NOT WIRED YET — design §GK.2] (29 Oct) The song web. Each realm has a key (a plant, rarely a mineral); bring the shaman a cutting and he teaches its song. The hub's platter starts with three keys. Every realm offers three: the key that brought you plus two that lead on. 'grows_in' is where its cutting can be taken. Entries marked open are Mike's to fill (§GK.9 call 2).",
+  "about": "(29 Oct) The song web. Each realm has a key (a plant, rarely a mineral); bring the shaman a cutting and he teaches its song. The hub's platter starts with three keys. Every realm offers three: the key that brought you plus two that lead on. 'grows_in' is where its cutting can be taken. Entries marked open are Mike's to fill (§GK.9 call 2). Wired 30 Oct (queue 116 amended, SongWeb): platter, keys, hub_platter, cuttings, look; doors and keeper are queue 117's, loot queue 119's.",
   "realms": "key -> realm it opens. Names are working names."
  },
  "platter": ["cactus", "mushroom", "vine"],
@@ -23,7 +23,32 @@
   "old_growth_forest": "open",
   "volcanic_mine": "open"
  },
- "doors": {"_help": "§GK.5 first guesses", "per_floor_or_stretch": [1, 2], "minutes_apart": [2, 5], "sites": ["tree_stump", "hillside", "cave_wall", "root_hollow"], "rarer_with_depth": false},
- "keeper": {"_help": "§GK.6", "kind": ["gnome", "elf"], "fee": "all_money_carried", "returns": "all_items", "posted": "somewhere_in_the_realm_may_be_past_strong_creatures", "survives_save_and_quit": true},
- "loot": {"_help": "§GK.8", "teeth_value_by_rung": {"common": 1, "rare": 5, "mythic": 25}, "parts": ["hide", "horn", "feathers", "venom"], "stash_sites": ["collapsed_storeroom", "temple_niche", "buried_clay_jar", "cave_cache"]}
+ "hub_platter": {
+  "_help": "(§GK.2.2, Claude Code's first guesses) The platter at the hub fire: a woven tray on a flat stone, from_fire_m from the fire's middle, bearing_deg round from the shaman's side toward where you wake (0 his side, 90 your side), one cutting of each platter key on it. The interact button within reach_m takes the one you look at into your pack. others_stay true: the two you did not choose stay on the platter (your choice decides your first realm, and the others wait if you come back for them); false: choosing one clears the platter. Mike's call.",
+  "from_fire_m": 1.9, "bearing_deg": 45.0, "reach_m": 1.6, "look_cos": 0.9, "others_stay": true,
+  "_help_look": "look_cos: how straight you must look at a cutting to take it (the cosine of the angle off your line of sight; 0.9 is about 25 degrees). Looking at the fire instead, the button sits you down.",
+  "log_take": "You take the {name} from the platter."
+ },
+ "cuttings": {
+  "_help": "(§GK.2.1, §GK.2.3, Claude Code's first guesses) Key plants growing in a realm (keys.<key>.grows_in holds the realm's id, crawler.json areas.<area>.realm): plants_per_key living plants of each, seeded on its floor, from_hearth_m or more from its hearth and apart_m apart. The interact button within reach_m takes a cutting (an item, key_cutting); the plant stays, and you carry one cutting of a key at a time. Where §GL.3 puts them (the realm's end, a side path) is queue 121's. Give a cutting to the shaman (by him or the fire, the interact button) and he teaches its song; one whose song you know he hands back.",
+  "plants_per_key": 2, "from_hearth_m": 25.0, "apart_m": 30.0, "reach_m": 1.8,
+  "log_take": "You take a cutting of the {name}.",
+  "log_have": "You already carry a {name} cutting.",
+  "log_teach": "He turns the {name} in his hands. \"Go fetch me a plant, and I'll teach you its song.\" He begins to sing.",
+  "log_known": "He hands the {name} back. \"That song you have.\"",
+  "log_ask": "The shaman looks up from the fire. \"Bring me a plant, and I'll teach you its song.\""
+ },
+ "look": {
+  "_help": "Each key's name and colours (body, accent) for its cutting on the platter and its living plant in a realm. Claude Code's first guesses.",
+  "cactus":   {"name": "cactus",   "body": "#3f7a4a", "accent": "#ff5fa8"},
+  "mushroom": {"name": "mushroom", "body": "#e8dcc0", "accent": "#a0522d"},
+  "vine":     {"name": "vine",     "body": "#5a4a2a", "accent": "#4f9a3a"},
+  "root":     {"name": "root",     "body": "#6b4a30", "accent": "#c8a070"},
+  "leaf":     {"name": "leaf",     "body": "#4a3a28", "accent": "#58b048"},
+  "toad":     {"name": "toad",     "body": "#6a7a3a", "accent": "#e0c040"},
+  "rare_ore": {"name": "rare ore", "body": "#3a3040", "accent": "#ff7040"}
+ },
+ "doors": {"_help": "[NOT WIRED YET — design §GK.5, queue 117] §GK.5 first guesses", "per_floor_or_stretch": [1, 2], "minutes_apart": [2, 5], "sites": ["tree_stump", "hillside", "cave_wall", "root_hollow"], "rarer_with_depth": false},
+ "keeper": {"_help": "[NOT WIRED YET — design §GK.6, queue 117] §GK.6", "kind": ["gnome", "elf"], "fee": "all_money_carried", "returns": "all_items", "posted": "somewhere_in_the_realm_may_be_past_strong_creatures", "survives_save_and_quit": true},
+ "loot": {"_help": "[NOT WIRED YET — design §GK.8, queue 119] §GK.8", "teeth_value_by_rung": {"common": 1, "rare": 5, "mythic": 25}, "parts": ["hide", "horn", "feathers", "venom"], "stash_sites": ["collapsed_storeroom", "temple_niche", "buried_clay_jar", "cave_cache"]}
 }

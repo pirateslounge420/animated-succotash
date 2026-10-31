@@ -19,12 +19,17 @@ extends Node
 ##                camera beside its hearth, its own world, on a soft,
 ##                heat-wavering card over the fire)
 ##   the list     left and right scroll through the realms whose songs you
-##                know (songs.known_from_start: a stand-in until Mike says
-##                how songs are learned, §GH.4 call 1)
+##                know: learned by giving the shaman a key plant (design
+##                §GK.2, SongWeb; a new game knows none). Stand-in realms
+##                (areas.<key>.standin: songs you can learn whose places are
+##                not built) are sung with their colour but no glimpse, and
+##                the fire will not open on them
 ##   stepping in  the interact button again: the wash, and you come out at
 ##                that realm's hearth; with no lit torch you carry a brand
 ##                from the hub fire (brand). Knowing the song is the key:
 ##                travel no longer waits on the hearth (§GH.2.1)
+##   arriving     sound first (§GK.3, areas.arrive): near-dark with only the
+##                realm's own sounds, then its music, then the picture
 ##   reclaiming   hold your torch's flame to the realm's cold hearth
 ##                (reach_m, light_hold_s): it catches and is lit for good
 ##                (CrawlerSave.data.areas, §FK)
@@ -66,12 +71,18 @@ static func songs() -> Dictionary:
 	return A.get("songs", {})
 
 
-## The realms whose songs you know, in order (the save's, else the data's
-## stand-in), each one that exists (areas.<key>).
+## The realms whose songs you know, in order (the save's; a new game starts
+## with none, CrawlerSave.begin; a save from before §GK has no list and
+## knows songs.known_from_start), each one that exists (areas.<key>).
 static func known() -> Array:
 	var k: Variant = CrawlerSave.data.get("songs", null)
 	var list: Array = k if k is Array else (songs().get("known_from_start", ["first"]) as Array)
 	return list.filter(func(r): return A.get(str(r)) is Dictionary)
+
+
+## A realm whose song can be learned but whose place is not built yet.
+static func standin(key: String) -> bool:
+	return bool((A.get(key, {}) as Dictionary).get("standin", false))
 
 
 static func realm_colour(key: String) -> Color:
@@ -132,10 +143,16 @@ func interact() -> bool:
 	if hub != null:
 		var near_fire := Vector2(p.x - hub.camp.pos.x, p.z - hub.camp.pos.z).length() <= reach
 		var near_shaman := hub.shaman != null and p.distance_to(hub.shaman.global_position) <= reach
+		# The platter, or a cutting for the shaman (design §GK.2, SongWeb).
+		if main.song_web != null and main.song_web.interact(near_fire or near_shaman):
+			return true
 		if (near_fire or near_shaman) and can_go():
 			sit()
 			return true
 		return false
+	# A cutting from a key plant (SongWeb).
+	if main.song_web != null and main.song_web.interact(false):
+		return true
 	var area := _area()
 	if area != null and area.area_hearth != null:
 		var hp := area.area_hearth.global_position
@@ -145,8 +162,9 @@ func interact() -> bool:
 	return false
 
 
-## Sit down facing the hub fire; the shaman sings the first known realm.
-func sit() -> void:
+## Sit down facing the hub fire; the shaman sings realm `key` (the first
+## known realm if "").
+func sit(key := "") -> void:
 	var hub := _hub()
 	if hub == null or sitting:
 		return
@@ -164,8 +182,8 @@ func sit() -> void:
 	main.player.set_physics_process(false)
 	_shaman_motion = FolkMotion.new(hub.shaman) if hub.shaman != null else null
 	GameLog.add(str(A.get("log_sing", "You sit at the fire. The shaman begins to sing.")), "world")
-	_ri = 0
-	_sing(str(known()[0]))
+	_ri = maxi(known().find(key), 0)
+	_sing(str(known()[_ri]))
 
 
 ## Up from the fire, nothing changed.
@@ -209,7 +227,11 @@ func _sing(key: String) -> void:
 	_player_song.play()
 	_sing_t = 0.0
 	_show = 0.0
-	_open_glimpse(key)
+	# A stand-in's place is not built: no glimpse, only the dark in the smoke.
+	if standin(key):
+		_close_glimpse()
+	else:
+		_open_glimpse(key)
 
 
 func _stop_song(close_glimpse := true) -> void:
@@ -380,6 +402,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func step_in() -> void:
 	if not sitting:
 		return
+	if standin(realm):
+		GameLog.add(str(A.get("log_standin", "The song falters. The fire will not open there yet.")), "world")
+		return
 	GameLog.add(str(A.get("log_step", "You step into the fire.")), "world")
 	var key := realm
 	sitting = false
@@ -400,8 +425,52 @@ func to_area(key := "first") -> void:
 		_brand()
 	main._to_area_now()
 	travels += 1
-	await main._wash(c, 0.0, float(T.get("wash_s", 1.0)))
+	await _arrive(key, c)
 	main.leaving = false
+
+
+## Arriving: sound first (design §GK.3, areas.arrive). From the wash, the
+## frame goes near-dark and holds with only the realm's own sounds; then
+## its music; then the picture settles, and the music eases off.
+var _arrive_player: AudioStreamPlayer
+## The stage of the last arrival, for the checks: "dark", "music", "picture", "".
+var arriving := ""
+
+
+func _arrive(key: String, c: Color) -> void:
+	var R: Dictionary = A.get("arrive", {})
+	if not bool(R.get("on", true)):
+		await main._wash(c, 0.0, float((A.get("travel", {}) as Dictionary).get("wash_s", 1.0)))
+		return
+	var dark := Color(str(R.get("dark_colour", "#020308")))
+	dark.a = float(R.get("dark_alpha", 0.96))
+	arriving = "dark"
+	var tw := main.create_tween()
+	tw.tween_property(main._fade, "color", dark, maxf(float(R.get("to_dark_s", 0.6)), 0.01))
+	await tw.finished
+	await get_tree().create_timer(float(R.get("sound_s", 1.6))).timeout
+	arriving = "music"
+	if _arrive_player == null:
+		_arrive_player = AudioStreamPlayer.new()
+		_arrive_player.name = "ArriveMusic"
+		_arrive_player.bus = AudioMix.bus("ambience")
+		add_child(_arrive_player)
+	_arrive_player.stream = song_stream(key)
+	_arrive_player.volume_db = -60.0
+	_arrive_player.play()
+	var tm := create_tween()
+	tm.tween_property(_arrive_player, "volume_db", float(R.get("music_db", -12.0)), maxf(float(R.get("music_in_s", 1.0)), 0.01))
+	await get_tree().create_timer(float(R.get("music_s", 1.4))).timeout
+	arriving = "picture"
+	await main._wash(dark, 0.0, float(R.get("picture_s", 2.2)))
+	arriving = ""
+	var tf := create_tween()
+	tf.tween_property(_arrive_player, "volume_db", -60.0, maxf(float(R.get("music_fade_s", 10.0)), 0.01))
+	tf.tween_callback(_arrive_player.stop)
+
+
+func arrive_music_playing() -> bool:
+	return _arrive_player != null and _arrive_player.playing
 
 
 ## The realm -> the hub, through its hearth: the shaman's song carries you

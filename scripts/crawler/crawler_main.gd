@@ -192,6 +192,7 @@ var area_node: Surface
 var areas: CrawlerAreas
 ## Where torches come from at the hub and in the realms (Mike, 27 Oct).
 var torch_supply: TorchSupply
+var song_web: SongWeb
 ## The bank's panel (CrawlerBank).
 var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
@@ -309,8 +310,11 @@ func _ready() -> void:
 	areas.setup(self)
 	torch_supply = TorchSupply.new()
 	torch_supply.setup(self)
+	song_web = SongWeb.new()
+	song_web.setup(self)
 	add_child(areas)
 	add_child(torch_supply)
+	add_child(song_web)
 	if hidden_carvings != null:
 		hidden_carvings.vision = brew.vision
 	# What you lost in the ruin waits there (design §GJ.3).

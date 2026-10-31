@@ -880,7 +880,9 @@
     "from_edge_m": 30.0,
     "reach_m": 1.3,
     "light_hold_s": 1.0
-   }
+   },
+   "realm": "desert_aztec_scrub",
+   "_help_realm": "(§GK.2.4) realm: the song web's id for this area (song_web.json). The built first realm is the desert the cactus opens; its look as the Aztec dry highland scrub (§GK.1.4) is not built yet."
   },
   "log_link": "The hearth catches. This place is reclaimed: its fire burns for good.",
   "log_home": "The shaman's song carries you home through the fire.",
@@ -888,7 +890,7 @@
   "log_step": "You step into the fire as the song swells.",
   "log_stand": "You get up from the fire.",
   "songs": {
-   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. known_from_start: the realms whose songs you know in a new game; a stand-in until Mike says how songs are learned (§GH.4 call 1, open; from tablets, tomes or the other peoples, §GG.1.3). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (areas.<key>.colour) while it plays.",
+   "_help": "(§GH.1.2, §GH.2) Each realm's song, by realm key (areas.<key>). Knowing it is what puts the realm in the fire. known_from_start: the realms whose songs you know in a new game; a stand-in until Mike says how songs are learned (§GH.4 call 1, open; from tablets, tomes or the other peoples, §GG.1.3). Per song: music, a res:// path to Mike's track when it exists (used in place of the placeholder when the file is there); otherwise a placeholder generated from bpm (the drum), root_hz (the hummed chant's home note), chant (the tune, semitones from root, one per beat; null a rest) and drum (per beat: 1 a deep thump, 0.5 a light one, 0 none). The flames take the realm's colour (areas.<key>.colour) while it plays. Since §GK.2 (queue 116 amended): a new game knows no song (known_from_start applies only to saves from before §GK); songs are learned by giving the shaman a key plant (song_web.json).",
    "known_from_start": [
     "first"
    ],
@@ -932,6 +934,138 @@
      0.5,
      0
     ]
+   },
+   "dark_caves": {
+    "music": "",
+    "bpm": 64.0,
+    "root_hz": 82.0,
+    "chant": [
+     0,
+     null,
+     3,
+     0,
+     -5,
+     null,
+     0,
+     3,
+     5,
+     3,
+     null,
+     0
+    ],
+    "drum": [
+     1,
+     0,
+     0,
+     0.5,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0.5,
+     0
+    ]
+   },
+   "deep_jungle": {
+    "music": "",
+    "bpm": 92.0,
+    "root_hz": 110.0,
+    "chant": [
+     0,
+     2,
+     4,
+     2,
+     7,
+     4,
+     2,
+     0,
+     null,
+     2,
+     4,
+     7
+    ],
+    "drum": [
+     1,
+     0.5,
+     0,
+     0.5,
+     1,
+     0,
+     0.5,
+     0.5,
+     1,
+     0.5,
+     0,
+     0.5
+    ]
+   },
+   "root_world": {
+    "music": "",
+    "bpm": 70.0,
+    "root_hz": 73.0,
+    "chant": [
+     0,
+     0,
+     3,
+     null,
+     5,
+     3,
+     0,
+     null,
+     -2,
+     0,
+     3,
+     0
+    ],
+    "drum": [
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0,
+     0.5,
+     1,
+     0,
+     0.5,
+     0
+    ]
+   },
+   "old_growth_forest": {
+    "music": "",
+    "bpm": 80.0,
+    "root_hz": 131.0,
+    "chant": [
+     0,
+     4,
+     7,
+     4,
+     5,
+     4,
+     2,
+     null,
+     0,
+     2,
+     4,
+     0
+    ],
+    "drum": [
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0.5,
+     0,
+     1,
+     0,
+     0.5,
+     0.5
+    ]
    }
   },
   "glimpse": {
@@ -966,6 +1100,45 @@
    "log_wake": "Taken in the dark. You wake at the hub fire with nothing on you; all you carried lies where you fell.",
    "log_pile": "You gather up what you lost.",
    "_help_pages": "(Mike, 27 Oct: 'tome pages should drop until you get it back to the hub') Tome pages you pick up are only carried until the shaman's song brings you home from a realm's hearth; die first and they drop in your pile with everything else, and lie nowhere else meanwhile (not back on their floor). Pages already brought home are never lost."
+  },
+  "_help_standins": "(§GK.2.4, queue 116 amended) Stand-in realms: songs you can learn (their key plants, song_web.json) whose places are not built yet. The shaman sings them and the flames take their colour, but no glimpse opens and stepping in is refused (log_standin). standin true marks one; remove it once its realm is built.",
+  "log_standin": "The song falters. The fire will not open there yet.",
+  "dark_caves": {
+   "name": "The dark caves",
+   "realm": "dark_caves",
+   "colour": "#b07cff",
+   "standin": true
+  },
+  "deep_jungle": {
+   "name": "The deep jungle",
+   "realm": "deep_jungle",
+   "colour": "#5aff8a",
+   "standin": true
+  },
+  "root_world": {
+   "name": "The root world",
+   "realm": "root_world",
+   "colour": "#d0a060",
+   "standin": true
+  },
+  "old_growth_forest": {
+   "name": "The old-growth forest",
+   "realm": "old_growth_forest",
+   "colour": "#ffd27a",
+   "standin": true
+  },
+  "arrive": {
+   "_help": "(§GK.3, queue 116 amended) Arriving: you hear the realm before you see it. After the wash the frame goes to near-dark (dark_colour at dark_alpha over to_dark_s) and holds sound_s with only the realm's own sounds; then its music (its song at music_db, fading in over music_in_s) for music_s more; then the picture settles (picture_s); the music eases off over music_fade_s. Claude Code's first guesses. on false: the old plain wash.",
+   "on": true,
+   "dark_colour": "#020308",
+   "dark_alpha": 0.96,
+   "to_dark_s": 0.6,
+   "sound_s": 1.6,
+   "music_db": -12.0,
+   "music_in_s": 1.0,
+   "music_s": 1.4,
+   "picture_s": 2.2,
+   "music_fade_s": 10.0
   }
  }
 }

@@ -83,6 +83,8 @@ func _run() -> void:
 	var S := TorchSupply.S
 	var H: Dictionary = S.get("hub", {})
 	var main := await _boot("7")
+	# The desert's song, as from the platter's cactus (design §GK.2; area_check walks that path).
+	SongWeb.learn("cactus")
 	var ts := main.torch_supply
 	var hub := main.hub_node as HubCamp
 	var inv := main.player.inventory

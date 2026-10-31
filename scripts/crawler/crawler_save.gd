@@ -151,7 +151,8 @@ static func begin(pinned := 0) -> void:
 	if game_seed == 0:
 		game_seed = roll(last_seed())
 	if not continued:
-		data = {"version": VERSION, "game_seed": game_seed, "place": 0, "dungeons": {}}
+		# A new game knows no song: they are learned from plants (design §GK.2).
+		data = {"version": VERSION, "game_seed": game_seed, "place": 0, "dungeons": {}, "songs": []}
 	if not data.get("dungeons") is Dictionary:
 		data["dungeons"] = {}
 	place = maxi(int(data.get("place", 0)), 0)
