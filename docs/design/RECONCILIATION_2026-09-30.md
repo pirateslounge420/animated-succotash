@@ -7539,3 +7539,127 @@ In order, each step unlocked by the trades:
 5. **The quern**: grinding grain by hand, hard daily work you can see.
 6. **Guarding and storing:** kids scare birds off the fields; grain goes into sealed pits, pots, or
    granaries on stilts against mice. Irrigation comes once the camp is settled (GN.12.5).
+
+## §GO — Gardeners of the Wild: the rudimentary camp, supply chains, the realm loop and the oracle's library (Mike, 1 Nov, by chat and voice)
+
+**Mike, 1 Nov (chat then voice, locked with "lock"):** he wants to revert the fully-established spawn
+camp and have the camp earn its growth, with every resource moving through a real, visible supply chain,
+*"a lesson in supply chain and how different resources were originally prepared … kids these days …
+press a button and whatever they need appears at their door."* Builds on §GM, §GN and the song web
+(`data/song_web.json`, §GK). Docs only; no data or queue item yet (GO.12). Where this disagrees with
+earlier sections, it wins.
+
+### GO.1 The start: a rudimentary camp (reverts the fully-established camp)
+1. You wake by the campfire, found and brought in by the folk (only the player has amnesia).
+2. The camp is **bare bones but set up**: **a few lean-tos** and the **station archetypes already
+   placed** (fire, drying rack, butchering spot, hide frame, maker's spot, store), mostly empty.
+3. Real resources fill them: a caught fish, a hunter's kill, a load of wood each moves station to
+   station and ends up as something usable.
+4. **Growth is functional as well as ornamental** (loosens the earlier "ornamental only" rule): a hide
+   can become a better shelter cover, a waterskin or bedding, alongside paint, beads and carvings.
+
+### GO.2 The player's part: bring, never craft
+The player pitches in by **bringing raw resources and materials**; the camp works them (no-crafting
+rule stands). **Every station shows its work in progress**: the hide on the frame, meat on the rack,
+reeds soaking at the water. The camp is the progress bar; no HUD.
+
+### GO.3 The five fundamental chains (locked as the templates)
+1. **Fish** (the template): catch (spear, trap, weir) → clean on a flat stone at the water → eat fresh
+   (roasted on a stick) **or** split and hang on the rack to dry/smoke → visible food store →
+   leftovers: guts to the fields, bones to the maker (needles, hooks).
+2. **Water:** fetch from the river (gourds, hide skins) → settle in a pot so silt sinks → boil for
+   cooking and drinking; used to soak hides and reeds. Feeds nearly every chain (why every camp sits by
+   water).
+3. **Plants:** gather (greens, berries, roots, seeds) → sort (eat fresh, dry on mats, save seed) →
+   process (grind seed on a stone, roast roots in the coals, strip fibre for cordage) → store (dried in
+   baskets, seed stock kept apart).
+4. **Wood:** gather mostly deadfall → sort into tinder, kindling, fuel (the kid on kindling) → dry under
+   cover → woodpile (species tint, §BV) → the hearth (carried, never made) → leftovers: ash to the
+   fields and to ash-water for hides, charcoal to paint.
+5. **Hunt and hide:** the hunter returns with the kill over his shoulder → butchered at the camp's edge
+   into meat, hide, bone, sinew, horn → meat roasted or strip-dried → hide scraped, soaked in ash water,
+   stretched, smoked, softened → shelter cover, waterskin, bedding, gear → sinew to bowstring and
+   thread, bone to tools and needles, horn to cups and ornaments.
+The lesson in all five: **nothing is wasted**.
+
+### GO.4 Gardeners of the Wild (the philosophy)
+The folk see themselves as **gardeners of the wild, not its owners**: everything borrowed from the land
+is given back (guts to the fields, ash to the soil). Tenets: borrow, don't take; take less than
+regrows; tend the edges; nothing wasted; fire is kept, not made. **No spelled-out myths**: the world is
+ambient and the player draws their own conclusions. The player's amnesia twist (they may come from a
+people who owned and took) sits underneath this, in fragments only.
+
+### GO.5 Hand-scale clean contraptions
+Rudimentary technology that doesn't pollute, kept **hand-scale** (mills stay cut): bamboo water pipes,
+clay-pot evaporative coolers, fish weirs that let some fish pass, biochar in the fields, windcatchers,
+sun drying racks, a bamboo water clacker that scares birds off the crops. Clever, never industrial.
+
+### GO.6 The realm loop is the core (Super Mario 64 and PSO)
+1. **The camp is the castle; the shaman's fire-songs are the paintings.** Each realm is its own
+   handcrafted world with its own palette, music, creatures, weather, sound underfoot and haul (PSO's
+   areas as the bar). **Each realm stands on its own** (no episode sets).
+2. **Plant keys are the doors** (song web stands): bring back a cutting, learn its song, a new realm
+   opens.
+3. **Each realm has a signature haul** that goes through the camp's stations. First pass (Claude's,
+   open for Mike): desert scrub — agave fibre, obsidian, chillies, cactus fruit; dark caves —
+   mushrooms, cave salt, guano, ochre; deep jungle — rare feathers, bark cloth, cacao, resin; swamp —
+   reeds, bog iron, eels, peat; root world — tubers, seed stock, medicinal roots, dyes; old-growth
+   forest — big hides, heartwood, honey, birch bark; volcanic mine — the rare ore, pumice, sulphur,
+   cooking stones.
+4. **Every realm runs the one 144-minute clock** (§FK.3), so arriving at a different hour is a different
+   painting; **each realm has its own signature weather** (first pass): desert sandstorms; caves drips
+   and gusts from below; jungle sudden downpours and morning mist; swamp fog banks and fireflies at
+   dusk; root world spore drifts like snow; old growth light shafts and soft rain; volcanic mine ash
+   falls and tremors.
+5. **Desert scrub, first sketch:** calm, bleached days, sandstorms rolling through, cold star-heavy
+   nights; palette sand and terracotta by day, violet and silver by night; music sparse wind, lone
+   flute, clay percussion; landmarks the half-buried Aztec-style temple steps; creatures jackrabbits and
+   lizards by day, scorpions and coyote-like hunters at night, a rare mythic serpent.
+6. Gardening is a side you can dig into, never the main course: the heart stays wandering the realms.
+
+### GO.7 Smoking herbs and fireside sit-downs
+1. **Sit-down moments at the fire:** sit on a log, pack your pipe, light it with **an ember from the
+   hearth**, just be. Folk already do this in their idles (§CY). Others: drumming, carving, stargazing.
+2. **Smoking herbs** (cannabis strains and other smoking plants) are gathered in the realms, each with
+   its own look and smoke colour and **a gentle sensory effect**: sky tint, music change, time slowed
+   a little.
+3. **The plant loop:** travel to a realm → bring a plant back → grow it at camp → enjoy it by the fire.
+
+### GO.8 Gear made from what you bring
+The maker turns realm materials into tribal gear that **keeps the look of its material** (jungle
+feathers give a mask a crest in those colours; volcanic glass gives an obsidian-eyed mask). **Mostly
+cosmetic with small perks that nudge, never power up:** fur-lined gear warmer at night, a reed cloak
+sheds rain, an obsidian-eyed mask sees a touch further in the dark.
+
+### GO.9 A living camp: animations and festivals
+1. **Every station gets its own work loop** (scraping, grinding, weaving, the kid dragging sticks) so the
+   camp reads as alive from a distance.
+2. **Festivals and dances at night on moon cycles** (§DD phases): e.g. a full-moon dance round the fire,
+   a quieter new-moon vigil, a first-fish-run feast (first guesses, open).
+
+### GO.10 Realm NPCs: the bard and the oracle (both mute, every realm)
+1. **The bard:** plays a unique instrument you **hear from far off and home in on** (desert: clay ocarina
+   or cane flute, first guess). The bard **teaches the instrument as a technique**; the camp's maker
+   builds it from materials you bring. Each realm adds an instrument and a player to the **camp's band**,
+   so festivals sound fuller the further you've travelled.
+2. **The oracle:** **hidden, with no indication**: meditating, secluded, found only by searching. Offers a
+   fragment toward the player's identity, shown not said (a vision in smoke, an image in a pool), and is
+   **the text keeper** of that realm's sacred text. More NPC types may come; keep them dreamlike.
+
+### GO.11 The oracle's library (a collection)
+1. The texts are **a collection to read**, not a puzzle. Some unlock sit-down rituals by the fire.
+2. **I Ching:** Mike's own translation; toss three coins six times, get a hexagram and its reading.
+   **Reflection only for now** (no in-world hints yet).
+3. **The library:** I Ching, Bible (the fundamental verses; King James is the public-domain pick),
+   Tao Te Ching (Legge), Dhammapada (Müller), Bhagavad Gita, Upanishads, Quran, Analects, Guru Granth
+   Sahib, Popol Vuh, Rumi.
+4. **Respect rule:** quote respected public-domain translations rather than remixing, especially the
+   Quran and the Guru Granth Sahib.
+5. **Keepers tied to texts** (Mike: Jesus with the Bible; Laozi, the Buddha as first guesses). **Never
+   depict Muhammad:** the Quran's keeper is an anonymous scholar or a lamp in a niche. Open: whether
+   keepers are clearly recognisable or ambiguous; which realm holds which text.
+
+### GO.12 Open and next
+Per-realm palettes, music, creatures, NPCs and texts beyond the desert; which herbs grow where; festival
+calendar; shelter ladder from lean-to to hut; realm hauls into `data/song_web.json` (additive, NOT WIRED
+YET) once Mike confirms; a queue item for Claude Code. GN.4 stands: no managed burns.
