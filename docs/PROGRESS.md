@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-31 — §GN locked: the camps' history lesson, fire to exchange (Claude, chat)
+- **Mike** (31 Oct, by voice, chapter by chapter): the camps follow real history. Villagers wake in a new place with know-how but nothing built (Virtual Villagers feel); food, water, shelter first; trades branch off outputs.
+- **Design §GN:** each camp's own hearth lit from the main one, heat levels unlock crafts (blowpipe, then a bellows the craftsman makes from the tanner's hide; amends §GM.6); managed burns; the fish run and food preservation (fresh spoils fast, drying by weather, smoking burns wood, salting and fat sealing later, each its own shelf life); fields; herding later; specialists start when inputs flow; exchange by gift, never coin, with seasonal gatherings; shelter and villages by biome; the canopy village (platforms, yearly rope bridges, living root bridges).
+- **Docs only:** no data or queue item yet.
+- **Open (§GN.10):** which game each part belongs to (hub keepers vs the open-world camps), how the amnesia start fits the standing hub, shelf-life and heat numbers. Lasso taming is in the maybe pile.
+
 ## 2026-10-31 — Queue 116 amended to §GK.2–3: plants are the keys, the platter, arriving by sound (Claude Code)
 - **What Mike sees:**
   - A new game knows no song. Right click at the fire and the shaman asks you to bring him a plant.

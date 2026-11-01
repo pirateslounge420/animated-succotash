@@ -7380,3 +7380,114 @@ a camp that kept living.
 
 ### GM.11 Queue
 **122:** the keepers' real work (after 115, which built the lighting round). Data: `data/hub_work.json`.
+
+## §GN — The camps' history lesson: how camps grow, from fire to exchange (Mike, 31 Oct, by voice)
+
+**Mike, 31 Oct (voice call, chapter by chapter, each one "lock it in" / "log it in"):** he wants the
+villagers' work taught as a short, chronological history of how real camps came to be, so every rule
+in the camp life is one that real people lived by. On the start: *"it's like a group of villagers
+basically found themselves on this new area and so they kind of have to start from scratch … but
+they already have like the knowledge of where they came from … it's almost like everybody's got
+amnesia and y'all kind of just like woke up here."* On a camp's fire: *"different camps, if they
+depend on fire, could have their own little hearth … there should be some reason to basically try
+to get your fire hot as possible, so we'll have like bellows too."* Builds on §GM (no busywork, real
+stores, orders between camps) and the camp ladder fire → food → storage → specialist → exchange.
+Docs only; no data or queue item yet (GN.10).
+
+### GN.1 The start: waking up with nothing but know-how
+1. **Virtual Villagers feel.** A group wakes up in a new place with nothing built, like everyone has
+   amnesia, but they **keep the knowledge of where they came from**. They know how; they just have
+   nothing yet.
+2. **Fundamentals first:** everyone works **food, water and shelter** before anything else.
+3. **Trades branch off outputs.** A trade starts only once its input exists: after the first hunt the
+   tanner can start; once there are bones and antler, the bone and antler crafts start (GN.6).
+
+### GN.2 Chapter 1 — the fire keepers (the first camp)
+For hundreds of thousands of years the hearth *was* the camp: warmth, cooked food (calories raw food
+can't give) and safety from what's in the dark. Fire was carried, not made (§CQ stands).
+**Rule:** the fire is the first resource and everything depends on it. Wood in → the hearth stays
+lit; wood stops → the fire dies and the camp suffers.
+
+### GN.3 Each camp's own hearth, and heat as a ladder
+1. **The main hearth is the mother fire.** Every camp that works with fire keeps **its own working
+   hearth, lit from a coal off the main hearth**.
+2. **Each hearth has a heat level; hotter fire unlocks better crafts:** heat-treated flint (easier to
+   knap), then fired pottery (needs hotter, steadier fire), kilns.
+3. **Pushing heat: a blowpipe first, then bellows.** The **craftsman** (a forager-toolmaker who gathers
+   stone and clay) gets **hide from the tanner** and makes the **bellows**. No metal (§EH stands):
+   the bellows top out at hot kilns and heat-treated stone.
+4. **Amends §GM.6:** the bellows are no longer only a ruin find; a camp can make them this way.
+
+### GN.4 Chapter 2 — the managed burn
+Real analogues: Aboriginal Australian fire-stick farming, Native American burns in California and the
+eastern woodlands. Small, cool burns at the right season clear dead brush, feed the soil with ash,
+bring green shoots in weeks that draw grazers, and keep big wildfires away.
+**Rule:** fire becomes a tool aimed at the land. A burned patch regrows richer and draws animals over
+the next days; burn at the wrong time (dry, windy) and the land is lost.
+
+### GN.5 Chapter 3 — the fish run, and food preservation
+1. Fish return on a schedule (salmon in autumn, eels on dark rainy nights). Analogues: the Pacific
+   Northwest (weirs, nets, drying racks, smokehouses), the Gunditjmara eel farms at Budj Bim.
+2. **Stored food is what lets a camp stay through winter**; staying lets it build bigger and grow.
+3. **Rule:** the fish camp is busy in bursts and quiet the rest of the year. Its loop is catch →
+   process → store.
+4. **Preservation (locked):**
+   - **Fresh** fish spoils in a day or two.
+   - **Drying** is free but depends on the weather (dry, breezy days).
+   - **Smoking** is reliable but **burns wood**, so the fish camp depends on the fire camp.
+   - **Salting** and **fat sealing** (pemmican: dried pounded meat in rendered fat) come later; they
+     need trade (salt) or other camps (fat).
+   - **Fermenting** (pits, sealed pots) and **cold** (frozen caches, ice pits in cold biomes) also
+     exist.
+   - **Each method gives its own shelf life** (numbers open, GN.10).
+
+### GN.6 Chapters 4–6 — fields, herds, specialists
+1. **The first fields.** Grain, tubers, maize-beans-squash (the Three Sisters). A planted field ties
+   a camp to its spot; crops follow the seasons; the harvest needs storage (pits, jars). The player
+   bringing seeds and tubers is how a field camp starts.
+2. **The herders (later game).** A herd camp needs a field camp and open land first. It gives a
+   **steady** supply of hide, bone, wool and dung (fuel), so the tanner and bone workers don't rely on
+   lucky hunts. **Overgrazing strips the land** (take less than regrows).
+3. **The specialists** appear once there's spare food. **A specialist only starts once their inputs
+   flow in, and each one's output feeds another:**
+   - **Tanner:** hide (from a hunt) → scraped, brain-tanned, smoked over a smouldering fire →
+     clothing, shelter covers, bags, the bellows.
+   - **Weaver:** fibre plants → cordage → nets (for the fish camp), snares, baskets, bindings, rope.
+   - **Craftsman:** stone (heat-treated) → blades and points; bone and antler → needles, fish hooks,
+     harpoon heads.
+   - **Potter:** clay + a hot hearth → cooking pots and storage jars.
+
+### GN.7 Chapter 7 — exchange (the ceiling)
+1. **Each camp has a speciality from its site** (salt on the coast, obsidian at a volcano, salmon at
+   falls).
+2. **Trade is by gift and obligation, never coin.** Giving now, owing later, is what keeps camps
+   friendly (analogue: the Kula ring).
+3. **Seasonal gatherings** at rich spots (analogue: Celilo Falls in the salmon run) bring camps
+   together to trade and feast. Exchange stays the ceiling: no chiefs, no walls, no war.
+
+### GN.8 Chapter 8–9 — shelter, by biome
+1. **A camp's houses are built from its biome's materials**: rock shelters and cave mouths, pit
+   houses, hide tents, bark and reed houses, plank longhouses, mammoth-bone style domes where there
+   are no trees, snow houses. **All camps are settled camps**, but they borrow from nomadic shelters
+   (a new camp might start in hide tents and build up to pit houses or longhouses), so the houses
+   show how established a camp is at a glance.
+2. **Each biome's village solves its own big problem, and that shapes its look:**
+   - **Desert** — water and heat: mud-brick and adobe, cliff alcoves, sunken courtyard homes.
+   - **Wetland** — flooding: stilt houses, crannogs, floating reed islands.
+   - **Coast** — salt and the sea: shell middens, salt, seaweed, shellfish, boats.
+   - **Mountain** — stone, slope and cold: stone-built villages (Skara Brae), terraces.
+
+### GN.9 The canopy village
+In the big trees where you spawn (canopy folk, §BL's seventeen lives), the village grows in stages:
+1. **Platforms** in the trees (analogue: Korowai tree houses).
+2. **Rope bridges** of vine or grass from the weaver, **rebuilt every year** (analogue: Q'eswachaka).
+3. Over many in-game years, **living root bridges** slowly grow in (analogue: the Khasi root bridges).
+
+### GN.10 Open
+- **Which game these camps live in:** the hub's six keepers (§GM) already follow GN.1's supply-chain
+  rule; the biome villages, canopy village and exchange read as the open-world camps (§FX/§GA's
+  separate open world game). Mike to confirm where each part lands.
+- How the waking-with-amnesia start (GN.1) fits the hub's already-standing camp (§GD, §GM).
+- Shelf-life numbers per preservation method; heat-level numbers per craft.
+- **Maybe pile (not locked):** a lasso — the weaver makes a rope and you try to tame a wild beast to
+  ride (analogue: the Mongolian urga pole-lasso; horses first tamed on the steppe).
