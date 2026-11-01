@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-31 — §GN extended: one game, water, managed burns dropped, fire/fishing/fields in depth (Claude, chat)
+- **Mike** (31 Oct, by voice): all camps live in one game with different spawn points, each village a little unique (GN.11). **No managed burns** (GN.4 dropped).
+- **Water (GN.12):** every camp spawns by fresh water; fetching is real work; gourd vines grown by the forager for carriers, bowls and ladles before clay jars; water features with jobs; irrigation channels dug by villagers once a settled field camp learns it, spreading through the gatherings.
+- **Deeper chapters:** fire (banking, fuel by biome, kids on kindling, stone boiling, earth ovens; GN.13), the fishing progression spear → leister → line and gorge (no reel) → traps and nets → weirs and tidal traps → bent hooks and lures (GN.14), the fields progression (GN.15).
+- **Still to go deeper:** herding, water, shelter. Docs only.
+
 ## 2026-10-31 — §GN locked: the camps' history lesson, fire to exchange (Claude, chat)
 - **Mike** (31 Oct, by voice, chapter by chapter): the camps follow real history. Villagers wake in a new place with know-how but nothing built (Virtual Villagers feel); food, water, shelter first; trades branch off outputs.
 - **Design §GN:** each camp's own hearth lit from the main one, heat levels unlock crafts (blowpipe, then a bellows the craftsman makes from the tanner's hide; amends §GM.6); managed burns; the fish run and food preservation (fresh spoils fast, drying by weather, smoking burns wood, salting and fat sealing later, each its own shelf life); fields; herding later; specialists start when inputs flow; exchange by gift, never coin, with seasonal gatherings; shelter and villages by biome; the canopy village (platforms, yearly rope bridges, living root bridges).

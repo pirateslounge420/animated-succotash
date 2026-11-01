@@ -7418,12 +7418,9 @@ lit; wood stops → the fire dies and the camp suffers.
    the bellows top out at hot kilns and heat-treated stone.
 4. **Amends §GM.6:** the bellows are no longer only a ruin find; a camp can make them this way.
 
-### GN.4 Chapter 2 — the managed burn
-Real analogues: Aboriginal Australian fire-stick farming, Native American burns in California and the
-eastern woodlands. Small, cool burns at the right season clear dead brush, feed the soil with ash,
-bring green shoots in weeks that draw grazers, and keep big wildfires away.
-**Rule:** fire becomes a tool aimed at the land. A burned patch regrows richer and draws animals over
-the next days; burn at the wrong time (dry, windy) and the land is lost.
+### GN.4 ~~Chapter 2 — the managed burn~~ (dropped 31 Oct)
+**Mike, 31 Oct:** *"I don't want to have managed burns. We're not going to have that."* No managed
+burns. The fundamentals are **fire, water, shelter, and food from fishing, fields and herds**.
 
 ### GN.5 Chapter 3 — the fish run, and food preservation
 1. Fish return on a schedule (salmon in autumn, eels on dark rainy nights). Analogues: the Pacific
@@ -7483,11 +7480,62 @@ In the big trees where you spawn (canopy folk, §BL's seventeen lives), the vill
 2. **Rope bridges** of vine or grass from the weaver, **rebuilt every year** (analogue: Q'eswachaka).
 3. Over many in-game years, **living root bridges** slowly grow in (analogue: the Khasi root bridges).
 
-### GN.10 Open
-- **Which game these camps live in:** the hub's six keepers (§GM) already follow GN.1's supply-chain
-  rule; the biome villages, canopy village and exchange read as the open-world camps (§FX/§GA's
-  separate open world game). Mike to confirm where each part lands.
+### GN.10 Open (updated 31 Oct)
+- ~~Which game these camps live in~~ **Settled (GN.11):** all camps are in one game.
 - How the waking-with-amnesia start (GN.1) fits the hub's already-standing camp (§GD, §GM).
 - Shelf-life numbers per preservation method; heat-level numbers per craft.
 - **Maybe pile (not locked):** a lasso — the weaver makes a rope and you try to tame a wild beast to
   ride (analogue: the Mongolian urga pole-lasso; horses first tamed on the steppe).
+- Still to go deeper, chapter by chapter: herding, water, shelter.
+
+### GN.11 One game, many spawn points (31 Oct, by voice)
+*"The camps all go into the same game … there'd just be different spawn points … different villages
+will be a little bit unique."* Every camp in §GN lives in one game; where you spawn decides which
+village you start at, and each village is a little unique to its place.
+
+### GN.12 Chapter 10 — water (31 Oct, by voice)
+1. **Every camp spawns beside fresh water:** a river, stream, spring, oasis or lake. A coastal camp
+   also needs a stream or spring beside the sea (seawater can't be drunk; it is the salt camp's salt).
+2. **Fetching water is real work** (§GM.1), carried in vessels.
+3. **Gourds first, clay later.** The forager grows **gourd vines** near camp and dries the gourds into
+   water carriers, bowls and ladles (the bottle gourd was among the first plants people grew, before
+   pottery). The potter's clay jars come later for bigger storage.
+4. **Water features have jobs:** waterfalls (fish gather in the plunge pool; a grotto behind is a
+   hearth or ruin spot), rapids (weirs and fish traps), springs (the cleanest water), hot springs (a
+   cozy spot for the seasonal gatherings).
+5. **Irrigation, dug by the villagers once learned** (the player doesn't dig). Water flows only
+   downhill, so a channel runs from a higher source (lake, spring, hillside). Fields along a channel
+   grow better; dry fields away from it struggle. Take too much and the stream runs low for camps
+   downstream (take less than regrows). **A settled field camp invents it once it has crops worth
+   watering, and the know-how spreads to other camps through the seasonal gatherings** (GN.7.3).
+   Analogues: Hohokam canals, Persian qanats, Bali's subak.
+
+### GN.13 Deeper: the fire keepers (31 Oct, by voice)
+1. **Banking the fire:** at night the keeper buries the coals under ash so they still glow at dawn.
+   Hearths are stone rings, sometimes in shallow pits out of the wind.
+2. **Fuel by biome:** dry deadwood where there are trees; dried dung, fat or bones where there aren't.
+3. **Kids and elders gather kindling** close to camp; stronger gatherers bring heavy wood from further.
+4. **Cooking you can watch:** roasting, **stone boiling** (fire-hot stones dropped into a hide or basket
+   of water) and **earth ovens** (pits of hot rocks, food steamed for hours under soil).
+5. Evenings at the fire are for stories, which is how knowledge passes on.
+
+### GN.14 Deeper: the fishing progression (31 Oct, by voice)
+In order, each step unlocked by the trades:
+1. **Spear**, a sharpened stick.
+2. **Leister**, with barbed bone prongs from the craftsman.
+3. **Line and gorge**: cordage from the weaver plus a bone gorge; reaches deeper water. **No reel**
+   (reels are medieval): a pole and a line.
+4. **Basket traps, then nets** (stone sinkers, wood or bark floats) from the weaver; the camp catches
+   fish without someone standing there.
+5. **Weirs and tidal stone traps**, group projects for a settled camp; coastal camps get tidal traps,
+   cold camps fish through holes in the ice.
+6. **Bent bone or shell hooks and carved lures**, the craftsman's finest work.
+
+### GN.15 Deeper: the fields progression (31 Oct, by voice)
+1. **Tending the wild**: weeding wild patches, coming back each season.
+2. **Replanting tubers** (yam, taro, potato): no seeds needed.
+3. **Saving the best seeds** each harvest.
+4. **Tools:** digging stick, then a bone, antler or stone hoe; a sickle of flint blades for grain.
+5. **The quern**: grinding grain by hand, hard daily work you can see.
+6. **Guarding and storing:** kids scare birds off the fields; grain goes into sealed pits, pots, or
+   granaries on stilts against mice. Irrigation comes once the camp is settled (GN.12.5).
