@@ -195,6 +195,10 @@ var torch_supply: TorchSupply
 var song_web: SongWeb
 ## The pipe on a log by the hub fire, smoking herbs (design §GO.7, queue 124).
 var fire_pipe: FirePipe
+## The bard and the oracle in the realms; the library and the I Ching
+## (design §GO.10-11, queue 125).
+var realm_folk: RealmFolk
+var library: OracleLibrary
 ## The bank's panel (CrawlerBank).
 var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
@@ -317,6 +321,12 @@ func _ready() -> void:
 	fire_pipe = FirePipe.new()
 	fire_pipe.setup(self)
 	add_child(fire_pipe)
+	realm_folk = RealmFolk.new()
+	realm_folk.setup(self)
+	add_child(realm_folk)
+	library = OracleLibrary.new()
+	library.setup(self)
+	add_child(library)
 	add_child(areas)
 	add_child(torch_supply)
 	add_child(song_web)
@@ -993,8 +1003,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("log") and not log_panel.visible and not settings_panel.visible and not tome_panel.visible:
 		log_panel.open()
 	elif event.is_action_pressed("read_tome") and not tome_panel.visible and not log_panel.visible and not settings_panel.visible and not leaving:
-		# The pages you hold (design §FM.5, queue 73).
-		read_pages()
+		# The I Ching on a log, your library at the hub (design §GO.11,
+		# queue 125); else the pages you hold (design §FM.5, queue 73).
+		if library == null or not library.open_key():
+			read_pages()
 	elif event.is_action_pressed("dev_pixel"):
 		var pname := Display.cycle_preset()
 		print("[display] preset %s" % pname)

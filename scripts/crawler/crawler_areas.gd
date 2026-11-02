@@ -131,6 +131,12 @@ func interact() -> bool:
 	if sitting:
 		step_in()
 		return true
+	# A toss of the I Ching's coins while the cast is open (design §GO.11.2).
+	if main.library != null and main.library.cast_once():
+		return true
+	# The bard, their instrument's material, the oracle (design §GO.10).
+	if main.realm_folk != null and main.realm_folk.interact():
+		return true
 	# The pipe on a log, a bench to sit on, a herb's pinch (design §GO.7).
 	if main.fire_pipe != null and main.fire_pipe.interact():
 		return true

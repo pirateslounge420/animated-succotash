@@ -74,6 +74,11 @@ var batches: Array = []
 ## the daylight count (rest is tallied per daylight).
 var _last_part := ""
 var day_no := 0
+## The camp's band (design §GO.10.1, queue 125): the instruments you have
+## learned from the realms' bards (HubWorkView sets it from the save), and
+## those the maker has built: {instrument: the keeper who plays it}.
+var band_learned: Array = []
+var band_made := {}
 var S: Dictionary = D.get("sim", {})
 
 
@@ -101,7 +106,7 @@ func fresh(seed_value: int, p_days: float, p_day_min := 144.0) -> void:
 
 func _meta() -> void:
 	meta.clear()
-	for block in ["stocks", "stocks_chains"]:
+	for block in ["stocks", "stocks_chains", "stocks_band"]:
 		var b: Dictionary = D.get(block, {})
 		for g in b:
 			meta[g] = b[g]
@@ -681,7 +686,7 @@ func _plan(k: String, ph: Dictionary) -> void:
 		return
 	var tired := _worked(k) >= float(S.get("work_share_max", 0.7)) * float(ph.light)
 	if not tired:
-		for f in [_plan_order, _plan_item, _plan_upgrade, _plan_stock, _plan_leftover]:
+		for f in [_plan_order, _plan_band, _plan_item, _plan_upgrade, _plan_stock, _plan_leftover]:
 			var steps: Array = f.call(k, ph)
 			if not steps.is_empty() and _est(k, steps) <= fit:
 				kp.steps = steps
@@ -784,6 +789,22 @@ func _plan_order(k: String, _ph: Dictionary) -> Array:
 		var steps := _with_tools(use.slice(1), body)
 		steps.append({"do": "carry", "what": "tool", "tool": str(o.tool), "order": int(o.id), "to": tool_spot(str(o.tool))})
 		return steps
+	return []
+
+
+# 1b. An instrument for the band (§GO.10.1): learned from a bard, its
+# material set down in the store, the maker builds it.
+func _plan_band(k: String, _ph: Dictionary) -> Array:
+	var I: Dictionary = Tuning.table("realm_folk").get("instruments", {})
+	for id in band_learned:
+		var ins: Dictionary = I.get(str(id), {})
+		if ins.is_empty() or band_made.has(str(id)) or str(ins.get("made_by", "knapper_potter")) != k:
+			continue
+		var mat := {str(ins.get("material", "")): 1.0}
+		if not has_all(mat):
+			continue
+		var at := _spot_of(k, "knapping_stone" if k == "knapper_potter" else "seat")
+		return [{"do": "go", "to": at}, {"do": "work", "act": "make_" + str(id), "kind": "band", "instrument": str(id), "in": mat, "min": float(ins.get("work_min", 12.0))}]
 	return []
 
 
@@ -1152,6 +1173,10 @@ func _end_work(k: String, st: Dictionary) -> void:
 		"upgrade":
 			upgrades[str(st.upgrade)] = true
 			extra["upgrade"] = str(st.upgrade)
+		"band":
+			var ins: Dictionary = (Tuning.table("realm_folk").get("instruments", {}) as Dictionary).get(str(st.instrument), {})
+			band_made[str(st.instrument)] = str(ins.get("player", "fisher_weaver"))
+			extra["band"] = str(st.instrument)
 	delta = _diff(before, store)
 	for k2 in (st.get("took", {}) as Dictionary):
 		delta[k2] = snappedf(float(delta.get(k2, 0.0)) - float(st.took[k2]), 0.001)
@@ -1392,7 +1417,7 @@ func to_dict() -> Dictionary:
 	var tl := {}
 	for id in tools:
 		tl[id] = {"uses": int(tools[id].uses), "broken": bool(tools[id].broken), "by": ""}
-	return {"v": 1, "t": t, "days0": days0, "store": store.duplicate(), "sources": sources.duplicate(true), "tools": tl, "orders": orders.duplicate(true), "items": its, "upgrades": upgrades.duplicate(), "next": _next, "batches": batches.duplicate(true), "part": _last_part, "day_no": day_no, "seed": rng.seed, "rng": rng.state}
+	return {"v": 1, "t": t, "days0": days0, "store": store.duplicate(), "sources": sources.duplicate(true), "tools": tl, "orders": orders.duplicate(true), "items": its, "upgrades": upgrades.duplicate(), "next": _next, "batches": batches.duplicate(true), "band": band_made.duplicate(), "part": _last_part, "day_no": day_no, "seed": rng.seed, "rng": rng.state}
 
 
 func from_dict(d: Dictionary, p_day_min := 144.0) -> void:
@@ -1421,6 +1446,7 @@ func from_dict(d: Dictionary, p_day_min := 144.0) -> void:
 	upgrades = (d.get("upgrades", {}) as Dictionary).duplicate()
 	_next = int(d.get("next", 1))
 	batches = (d.get("batches", []) as Array).duplicate(true)
+	band_made = (d.get("band", {}) as Dictionary).duplicate()
 	_last_part = str(d.get("part", ""))
 	day_no = int(d.get("day_no", 0))
 	rng.seed = int(d.get("seed", 1))

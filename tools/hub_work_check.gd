@@ -44,7 +44,7 @@ func _frames(n: int) -> void:
 		await process_frame
 
 
-const WORK := ["recipe", "cook", "stage", "source", "tend", "order", "upgrade", "carry"]
+const WORK := ["recipe", "cook", "stage", "source", "tend", "order", "upgrade", "carry", "band"]
 
 
 func _run() -> void:

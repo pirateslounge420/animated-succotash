@@ -40,6 +40,9 @@ var _items := {}
 var _ups := {}
 var _carry := {}
 var _smoke := {}
+## The camp's band at the evening meal (design §GO.10.1, queue 125):
+## instrument -> its player's AudioStreamPlayer3D.
+var _band := {}
 ## Minutes caught up at the last setup (the checks).
 var caught_min := 0.0
 var _rng := RandomNumberGenerator.new()
@@ -92,11 +95,13 @@ func tick(delta: float) -> void:
 		_acc = 0.0
 		step()
 	_drive(delta)
+	_play_band()
 
 
 ## The work stepped to the world's clock now, and the props redrawn.
 func step() -> void:
 	var days := float(hub.world.get("days"))
+	sim.band_learned = RealmFolk.learned()
 	var dt := (days - sim.days0) * sim.day_min - sim.t
 	if dt > 5.0:
 		sim.catch_up(days)
@@ -234,6 +239,38 @@ func _carrying(k: String, f: HearthFolk, kp: Dictionary) -> void:
 		mi.mesh = bm
 		mi.material_override = hub._mat("#6b4a2e" if what == "tool" else "#8a7a4a", 0.7)
 	mi.visible = true
+
+
+## The band (§GO.10.1): through the evening meal, each instrument the maker
+## has built is played by its keeper on the bench, one more layer each.
+func _play_band() -> void:
+	var ph := sim.phase()
+	var evening := str(ph.part) == "night" and float(ph.get("since_dark", 0.0)) < float(sim.S.get("evening_min", 12.0))
+	for id in sim.band_made:
+		var k := str(sim.band_made[id])
+		var f: HearthFolk = _folk.get(k, null)
+		if f == null:
+			continue
+		var a: AudioStreamPlayer3D = _band.get(id, null)
+		if a == null:
+			a = AudioStreamPlayer3D.new()
+			a.name = "Band_" + str(id)
+			a.stream = RealmFolk.tune_stream(str(id))
+			a.bus = AudioMix.bus("ambience")
+			a.unit_size = 6.0
+			f.add_child(a)
+			a.position = Vector3(0, 1.1, 0)
+			_band[id] = a
+		var on := evening and str(sim.step_of(k).get("do", "")) == "meal" and f.visible
+		if on and not a.playing:
+			a.play()
+		elif not on and a.playing:
+			a.stop()
+
+
+## The instruments being played now.
+func band_playing() -> Array:
+	return _band.keys().filter(func(id): return (_band[id] as AudioStreamPlayer3D).playing)
 
 
 # --- Real game for the hunter (§GM.4) -------------------------------------------------------

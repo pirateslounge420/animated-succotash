@@ -1,0 +1,500 @@
+{
+ "_help": "(design §GO.11, queue 125, Claude Code) The oracle's library: the sacred texts, a collection to read, not a puzzle. Each text: title, keeper (who holds it in the realms: an anonymous figure unless `depict` says otherwise; §GO.11.5: no religious figure is depicted unless the data says so, and the Quran's keeper is never a depiction of Muhammad), realm_area (crawler.json areas key whose oracle holds it; null: not placed yet, §GO.11 open: which realm holds which text), source (the translation to quote, §GO.11.4: respected public-domain translations, never remixed), pages (the text as pages; placeholders until Mike fills them). Read at the hub: the read-tome key opens your library (left and right turn the pages, Esc closes).",
+ "texts": {
+  "i_ching": {
+   "title": "I Ching",
+   "keeper": "an anonymous hermit",
+   "depict": false,
+   "realm_area": "first",
+   "source": "Mike's own translation (§GO.11.2)",
+   "ritual": "iching",
+   "_help": "The desert's oracle holds it first. Its pages are the 64 hexagrams' numbers and names (placeholder); the readings are iching.hexagrams.<n>.reading, empty until Mike fills them with his translation.",
+   "pages": [
+    "1  Qián\n2  Kūn\n3  Zhūn\n4  Méng\n5  Xū\n6  Sòng\n7  Shī\n8  Bǐ\n9  Xiǎo Chù\n10  Lǚ\n11  Tài\n12  Pǐ\n13  Tóng Rén\n14  Dà Yǒu\n15  Qiān\n16  Yù",
+    "17  Suí\n18  Gǔ\n19  Lín\n20  Guān\n21  Shì Kè\n22  Bì\n23  Bō\n24  Fù\n25  Wú Wàng\n26  Dà Chù\n27  Yí\n28  Dà Guò\n29  Kǎn\n30  Lí\n31  Xián\n32  Héng",
+    "33  Dùn\n34  Dà Zhuàng\n35  Jìn\n36  Míng Yí\n37  Jiā Rén\n38  Kuí\n39  Jiǎn\n40  Xiè\n41  Sǔn\n42  Yì\n43  Guài\n44  Gòu\n45  Cuì\n46  Shēng\n47  Kùn\n48  Jǐng",
+    "49  Gé\n50  Dǐng\n51  Zhèn\n52  Gèn\n53  Jiàn\n54  Guī Mèi\n55  Fēng\n56  Lǚ\n57  Xùn\n58  Duì\n59  Huàn\n60  Jié\n61  Zhōng Fú\n62  Xiǎo Guò\n63  Jì Jì\n64  Wèi Jì"
+   ]
+  },
+  "bible": {
+   "title": "Bible (the fundamental verses)",
+   "keeper": "a figure Mike names (§GO.11.5: Jesus, first guess)",
+   "depict": false,
+   "realm_area": null,
+   "source": "King James Version (public domain)",
+   "pages": []
+  },
+  "tao_te_ching": {
+   "title": "Tao Te Ching",
+   "keeper": "a figure Mike names (§GO.11.5: Laozi, first guess)",
+   "depict": false,
+   "realm_area": null,
+   "source": "James Legge (1891)",
+   "pages": []
+  },
+  "dhammapada": {
+   "title": "Dhammapada",
+   "keeper": "a figure Mike names (§GO.11.5: the Buddha, first guess)",
+   "depict": false,
+   "realm_area": null,
+   "source": "F. Max Müller (1881)",
+   "pages": []
+  },
+  "bhagavad_gita": {
+   "title": "Bhagavad Gita",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "a public-domain translation, Mike's pick",
+   "pages": []
+  },
+  "upanishads": {
+   "title": "Upanishads",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "a public-domain translation, Mike's pick",
+   "pages": []
+  },
+  "quran": {
+   "title": "Quran",
+   "keeper": "an anonymous scholar, or a lamp in a niche (never a depiction of Muhammad, §GO.11.5)",
+   "depict": false,
+   "never_depict": "Muhammad",
+   "realm_area": null,
+   "source": "a respected public-domain translation, quoted not remixed",
+   "pages": []
+  },
+  "analects": {
+   "title": "Analects",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "James Legge (1861)",
+   "pages": []
+  },
+  "guru_granth_sahib": {
+   "title": "Guru Granth Sahib",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "a respected public-domain translation, quoted not remixed",
+   "pages": []
+  },
+  "popol_vuh": {
+   "title": "Popol Vuh",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "a public-domain translation, Mike's pick",
+   "pages": []
+  },
+  "rumi": {
+   "title": "Rumi",
+   "keeper": "an anonymous keeper",
+   "depict": false,
+   "realm_area": null,
+   "source": "a public-domain translation, Mike's pick",
+   "pages": []
+  }
+ },
+ "_help_iching": "The I Ching cast at the fire (§GO.11.2): sit on a log by the hub fire holding the I Ching and press the read-tome key; interact tosses three coins, six times, bottom line first (heads 3, tails 2: 6 old yin and 9 old yang change, 7 young yang, 8 young yin). Then the hexagram, its changing lines and, if any change, the changed hexagram, with their readings. Reflection only: nothing in the world changes. trigram_order and king_wen give the number from the lower and upper trigrams (each trigram's lines bottom to top, 1 yang).",
+ "iching": {
+  "trigram_order": [
+   "qian",
+   "zhen",
+   "kan",
+   "gen",
+   "kun",
+   "xun",
+   "li",
+   "dui"
+  ],
+  "trigrams": {
+   "qian": [
+    1,
+    1,
+    1
+   ],
+   "zhen": [
+    1,
+    0,
+    0
+   ],
+   "kan": [
+    0,
+    1,
+    0
+   ],
+   "gen": [
+    0,
+    0,
+    1
+   ],
+   "kun": [
+    0,
+    0,
+    0
+   ],
+   "xun": [
+    0,
+    1,
+    1
+   ],
+   "li": [
+    1,
+    0,
+    1
+   ],
+   "dui": [
+    1,
+    1,
+    0
+   ]
+  },
+  "_help_king_wen": "Rows: the upper trigram, columns: the lower, both in trigram_order.",
+  "king_wen": [
+   [
+    1,
+    25,
+    6,
+    33,
+    12,
+    44,
+    13,
+    10
+   ],
+   [
+    34,
+    51,
+    40,
+    62,
+    16,
+    32,
+    55,
+    54
+   ],
+   [
+    5,
+    3,
+    29,
+    39,
+    8,
+    48,
+    63,
+    60
+   ],
+   [
+    26,
+    27,
+    4,
+    52,
+    23,
+    18,
+    22,
+    41
+   ],
+   [
+    11,
+    24,
+    7,
+    15,
+    2,
+    46,
+    36,
+    19
+   ],
+   [
+    9,
+    42,
+    59,
+    53,
+    20,
+    57,
+    37,
+    61
+   ],
+   [
+    14,
+    21,
+    64,
+    56,
+    35,
+    50,
+    30,
+    38
+   ],
+   [
+    43,
+    17,
+    47,
+    31,
+    45,
+    28,
+    49,
+    58
+   ]
+  ],
+  "hexagrams": {
+   "1": {
+    "name": "Qián",
+    "reading": ""
+   },
+   "2": {
+    "name": "Kūn",
+    "reading": ""
+   },
+   "3": {
+    "name": "Zhūn",
+    "reading": ""
+   },
+   "4": {
+    "name": "Méng",
+    "reading": ""
+   },
+   "5": {
+    "name": "Xū",
+    "reading": ""
+   },
+   "6": {
+    "name": "Sòng",
+    "reading": ""
+   },
+   "7": {
+    "name": "Shī",
+    "reading": ""
+   },
+   "8": {
+    "name": "Bǐ",
+    "reading": ""
+   },
+   "9": {
+    "name": "Xiǎo Chù",
+    "reading": ""
+   },
+   "10": {
+    "name": "Lǚ",
+    "reading": ""
+   },
+   "11": {
+    "name": "Tài",
+    "reading": ""
+   },
+   "12": {
+    "name": "Pǐ",
+    "reading": ""
+   },
+   "13": {
+    "name": "Tóng Rén",
+    "reading": ""
+   },
+   "14": {
+    "name": "Dà Yǒu",
+    "reading": ""
+   },
+   "15": {
+    "name": "Qiān",
+    "reading": ""
+   },
+   "16": {
+    "name": "Yù",
+    "reading": ""
+   },
+   "17": {
+    "name": "Suí",
+    "reading": ""
+   },
+   "18": {
+    "name": "Gǔ",
+    "reading": ""
+   },
+   "19": {
+    "name": "Lín",
+    "reading": ""
+   },
+   "20": {
+    "name": "Guān",
+    "reading": ""
+   },
+   "21": {
+    "name": "Shì Kè",
+    "reading": ""
+   },
+   "22": {
+    "name": "Bì",
+    "reading": ""
+   },
+   "23": {
+    "name": "Bō",
+    "reading": ""
+   },
+   "24": {
+    "name": "Fù",
+    "reading": ""
+   },
+   "25": {
+    "name": "Wú Wàng",
+    "reading": ""
+   },
+   "26": {
+    "name": "Dà Chù",
+    "reading": ""
+   },
+   "27": {
+    "name": "Yí",
+    "reading": ""
+   },
+   "28": {
+    "name": "Dà Guò",
+    "reading": ""
+   },
+   "29": {
+    "name": "Kǎn",
+    "reading": ""
+   },
+   "30": {
+    "name": "Lí",
+    "reading": ""
+   },
+   "31": {
+    "name": "Xián",
+    "reading": ""
+   },
+   "32": {
+    "name": "Héng",
+    "reading": ""
+   },
+   "33": {
+    "name": "Dùn",
+    "reading": ""
+   },
+   "34": {
+    "name": "Dà Zhuàng",
+    "reading": ""
+   },
+   "35": {
+    "name": "Jìn",
+    "reading": ""
+   },
+   "36": {
+    "name": "Míng Yí",
+    "reading": ""
+   },
+   "37": {
+    "name": "Jiā Rén",
+    "reading": ""
+   },
+   "38": {
+    "name": "Kuí",
+    "reading": ""
+   },
+   "39": {
+    "name": "Jiǎn",
+    "reading": ""
+   },
+   "40": {
+    "name": "Xiè",
+    "reading": ""
+   },
+   "41": {
+    "name": "Sǔn",
+    "reading": ""
+   },
+   "42": {
+    "name": "Yì",
+    "reading": ""
+   },
+   "43": {
+    "name": "Guài",
+    "reading": ""
+   },
+   "44": {
+    "name": "Gòu",
+    "reading": ""
+   },
+   "45": {
+    "name": "Cuì",
+    "reading": ""
+   },
+   "46": {
+    "name": "Shēng",
+    "reading": ""
+   },
+   "47": {
+    "name": "Kùn",
+    "reading": ""
+   },
+   "48": {
+    "name": "Jǐng",
+    "reading": ""
+   },
+   "49": {
+    "name": "Gé",
+    "reading": ""
+   },
+   "50": {
+    "name": "Dǐng",
+    "reading": ""
+   },
+   "51": {
+    "name": "Zhèn",
+    "reading": ""
+   },
+   "52": {
+    "name": "Gèn",
+    "reading": ""
+   },
+   "53": {
+    "name": "Jiàn",
+    "reading": ""
+   },
+   "54": {
+    "name": "Guī Mèi",
+    "reading": ""
+   },
+   "55": {
+    "name": "Fēng",
+    "reading": ""
+   },
+   "56": {
+    "name": "Lǚ",
+    "reading": ""
+   },
+   "57": {
+    "name": "Xùn",
+    "reading": ""
+   },
+   "58": {
+    "name": "Duì",
+    "reading": ""
+   },
+   "59": {
+    "name": "Huàn",
+    "reading": ""
+   },
+   "60": {
+    "name": "Jié",
+    "reading": ""
+   },
+   "61": {
+    "name": "Zhōng Fú",
+    "reading": ""
+   },
+   "62": {
+    "name": "Xiǎo Guò",
+    "reading": ""
+   },
+   "63": {
+    "name": "Jì Jì",
+    "reading": ""
+   },
+   "64": {
+    "name": "Wèi Jì",
+    "reading": ""
+   }
+  },
+  "log_open": "You set three coins on the log beside you.",
+  "log_cast": "Hexagram {n}, {name}.",
+  "log_changed": "Changing to hexagram {n}, {name}."
+ }
+}

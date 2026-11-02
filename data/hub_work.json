@@ -170,6 +170,11 @@
     "hearth_wood": {"owner": "woodcutter_firekeeper", "start": 0, "target": 0, "cap": 8, "show": "hearth"}
   },
 
+  "_help_stocks_band": "[design §GO.10.1, queue 125] Instrument materials you bring home (realm_folk.json instruments → material): held in the store until the maker builds the instrument (once you have learned it from the realm's bard).",
+  "stocks_band": {
+    "red_clay": {"owner": "knapper_potter", "start": 0, "target": 0, "cap": 4, "show": "clay_pit"}
+  },
+
   "_help_chains": "[design §GO.3, queue 123] The five chains. A source trip (sources) brings one item home holding the source's goods (plus extra); it then goes stage by stage: a keeper (by) carries it to the stage's station (at: a spot of that keeper's, or hearth), works it there (work_h game hours, with tool), and it may then sit hands-off (wait_h: drying, soaking, settling, smoking) before the next stage. in = taken from the store when the work starts, fuel = firewood burned, out = put in the store (the leftovers); keep = goods that stay on the item for the next stage (the rest go to the store at the end of this stage); convert = {good: [new good, times]}; fresh_choice = at this stage the planner may send the food straight to tonight's fire instead (to fresh_food), when the store holds less than tonight's meal needs; short_to_store = goods moved to the store first if that stock is under its target. At the last stage every good left on the item goes to the store. Each station shows the item at the stage it is up to (show): the station is the progress bar, no HUD. replaces = the 30 Oct recipes these stages do instead (no longer run).",
   "chains": {
     "fish":  {"from": ["fish_trap", "river_net"], "replaces": ["gut_dry_fish"], "stages": [
@@ -231,6 +236,7 @@
     "cactus_fruit": {"chain": "plants", "goods": {"roots_greens": 2, "seed_stock": 1}},
     "chillies":     {"chain": "plants", "goods": {"fresh_herbs": 1, "seed_stock": 1}},
     "obsidian":     {"chain": "", "goods": {"flint": 2}},
+    "red_clay":     {"chain": "", "goods": {"red_clay": 1}, "_help": "[queue 125] the bard's instrument material (realm_folk.json instruments): into the store for the maker"},
     "_help_reach_m": "how near the camp store you must stand"
   },
   "store": {"reach_m": 2.2, "from_fire_m": 4.6, "log_drop": "You set the {name} down in the camp store.", "log_none": "Nothing you carry goes in the camp store."}

@@ -1,0 +1,25 @@
+{
+  "_help": "(design §GO.10, queue 125, Claude Code; first guesses for Mike to tune) The bard and the oracle, one of each in every realm, both mute (§ED): they never speak; the log says only what they do. Only the desert is built, so only the desert has them yet (realms.first); the stand-in realms get theirs when they are built.",
+
+  "_help_bard": "The bard sits by the realm's ruin (from_mouth_m from its mouth) playing their instrument on a loop, heard far off: full at ref_m, falling off with distance (inverse distance, from base_db), silent past hear_m. Follow it in. Interact within reach_m and they teach you the instrument as a technique (saved, kept through death and save-and-quit). Its material lies beside them (material_m off): take some, set it down in the camp store, and the maker builds the instrument; one of the keepers then plays it at the evening meal.",
+  "bard": {"hear_m": 120.0, "ref_m": 8.0, "base_db": -2.0, "reach_m": 2.5, "from_mouth_m": [12.0, 22.0], "material_m": 3.0, "cloak": ["#6a3a5a", "#8a5a7a"],
+    "log_learn": "The bard plays the phrase again, slower, and puts the {name} in your hands until your fingers find it.",
+    "log_known": "The bard plays on. You already know the {name}.",
+    "log_material": "You dig a lump of {name}.",
+    "log_material_have": "You already carry some {name}."},
+
+  "_help_oracle": "The oracle meditates somewhere secluded, with nothing pointing the way: no sound, no light, never within the bard's hearing (bard.hear_m + clear_of_bard_m), at least from_hearth_m from the realm's hearth, off_path_m off the line from the hearth to the ruin, toward the realm's edge (edge_share of the way out at least). (Doors home, §GK.5, are not built yet; when they are the oracle keeps clear of them too.) Interact within reach_m: a brief vision (vision_s, a still in smoke; placeholder art) and they hand you the realm's sacred text for your library.",
+  "oracle": {"reach_m": 2.2, "clear_of_bard_m": 15.0, "from_hearth_m": 70.0, "off_path_m": 40.0, "edge_share": 0.55, "vision_s": 6.0, "cloak": ["#3a3a4a", "#5a5a6a"],
+    "log_text": "The oracle opens their eyes, and presses a book into your hands: the {title}.",
+    "log_again": "The oracle sits in silence."},
+
+  "_help_realms": "Per realm (crawler.json areas key): its bard's instrument and its oracle's text (library.json texts).",
+  "realms": {"first": {"instrument": "clay_ocarina", "text": "i_ching"}},
+
+  "_help_instruments": "Each instrument: name, material (a haul key: hub_work.json bring, stocks_band), made_by (the keeper who builds it), work_min, player (the keeper who plays it at the evening meal), tune (the loop: root_hz, bpm, notes in semitones above the root, null a rest; a breathy flute voice). Desert first guess: a clay ocarina of the desert's red clay, made by the knapper-potter, played by the fisher-weaver.",
+  "instruments": {
+    "clay_ocarina": {"name": "clay ocarina", "material": "red_clay", "made_by": "knapper_potter", "work_min": 12, "player": "fisher_weaver",
+      "tune": {"root_hz": 523.25, "bpm": 84, "notes": [0, 3, 5, 7, 10, 7, 5, null, 3, 5, 0, null, 7, 5, 3, null]}}
+  },
+  "materials": {"red_clay": {"name": "red clay", "color": "#a8402a"}}
+}
