@@ -1,5 +1,5 @@
 {
-  "_help": "[NOT WIRED YET — design §GM] The hub keepers' real work (Mike, 30 Oct: 'anytime they take action it should be to actually do something for the camp or to make something - not just moving thru the motions'). Keepers work only when a stock they own is below target or an order waits for them; otherwise they rest (§GM.1, §GM.7). All numbers are first guesses for Mike to tune by play. Times (*_min) are real minutes of play: the day is 144 minutes (§GE), with 50–75 of them daylight over the year (§GK.1.2), so a keeper's work has to fit there with rest left over.",
+  "_help": "(design §GM, wired 1 Nov, queue 122: HubWork) The hub keepers' real work (Mike, 30 Oct: 'anytime they take action it should be to actually do something for the camp or to make something - not just moving thru the motions'). Keepers work only when a stock they own is below target or an order waits for them; otherwise they rest (§GM.1, §GM.7). All numbers are first guesses for Mike to tune by play. Times (*_min) are real minutes of play: the day is 144 minutes (§GE), with 50–75 of them daylight over the year (§GK.1.2), so a keeper's work has to fit there with rest left over.",
 
   "_help_stocks": "The camp store (§GM.3). target = what the owner works toward; cap = the most the store holds; start = a new game's store; show = the prop that displays it (its fill follows count/cap). owner = the keeper who makes it.",
   "stocks": {
@@ -137,5 +137,101 @@
   },
 
   "_help_away": "While the player is in a realm the hub catches up on return by the game time passed (§GM.9), stepping the store, sources, tools and growth by these rules; at most catch_up_days_max days are simulated.",
-  "away": {"catch_up_days_max": 10}
+  "away": {"catch_up_days_max": 10},
+
+  "_help_sim": "(queue 122, Claude Code) How the keepers' work is run (HubWork). tick_s: the planner looks again every this many real seconds (a few times a minute, never per frame). walk_mps: walking pace between spots (DayShift's). hour_min: real minutes in a game hour (144-minute day). The day's parts are fractions of the daylight (sun above day_shift.json's dusk_start): trips out before morning_frac; nobody starts new work after before_dusk_frac (the woodcutter feeds the hearth, the shaman cooks, the rest go home to sit for the lighting round). evening_min: how long everyone eats together at the fire after dusk before going to bed. work_share_max: a keeper stops starting work once they have worked this share of the day's daylight (real people stop). hunt_reach_m: a real ground animal this close to the fire can be stalked; else the hunter goes off past the camp edge. dead_wood_spots, wild_patch_spots: how many places in the clearing each comes from. on false: the keepers sit as before 1 Nov (no work, the 26 Oct camp). save_every_min: the store is written to the save this often while you are at the hub (and whenever you leave it).",
+  "sim": {"on": true, "tick_s": 15, "walk_mps": 1.1, "hour_min": 6, "morning_frac": 0.4, "before_dusk_frac": 0.86, "evening_min": 12, "work_share_max": 0.7, "hunt_reach_m": 60, "dead_wood_spots": 6, "wild_patch_spots": 5, "save_every_min": 6},
+
+  "_help_spots": "(queue 122, Claude Code) Where each keeper's work happens, in their site's own frame (metres; x across, z out from the fire, as HubCamp._dress lays the props). seat is where they sit; shelter where they sleep. A tool's spot (tools → spot) and a stock's prop (stocks → show) name one of these; river and bank are the fisher-weaver's.",
+  "spots": {
+    "hunter_tanner":         {"seat": [0, 0], "shelter": [0, 4.2], "hoop_frame": [2.6, 1.8], "smoke_pit": [1.0, 3.0], "smoke_pit_rack": [1.0, 3.0], "spear_rack": [-3.0, 2.8], "butchering_stone": [-1.2, -1.6], "hide_rack": [-1.8, 1.4], "soak_pit": [2.4, -0.8], "bone_pile": [1.6, 1.2], "tooth_pouch": [0.4, 0.6]},
+    "fisher_weaver":         {"seat": [0, 0], "shelter": [-0.5, 4.0], "bank": [2.6, 2.2], "river": [0.6, 2.8], "net_stakes": [-1.6, 1.2], "fish_line": [-2.6, 2.3], "drying_rack": [-2.6, 2.3], "cleaning_stone": [2.0, 0.4], "gutting_board": [2.0, 0.4], "weaving_frame": [1.2, -1.5], "cordage_coils": [1.8, -0.6], "baskets": [-1.2, -1.2]},
+    "woodcutter_firekeeper": {"seat": [0, 0], "shelter": [0, 4.0], "lean_to": [0, 3.6], "felled_trunk": [2.8, 2.0], "chopping_stump": [-3.0, -1.5], "woodpile": [-1.6, 1.6], "kindling_bundles": [-2.6, 3.2], "ember_pot": [1.0, 0.6]},
+    "forager_herbalist":     {"seat": [0, 0], "shelter": [0, 4.2], "garden_bed": [2.8, 1.6], "herb_rack": [-1.7, 1.3], "gourd_line": [-2.6, 1.8], "mortar_stone": [-1.0, -1.2], "forage_baskets": [1.4, 1.1], "sorting_mat": [0.6, -1.8], "drying_mats": [-0.4, 2.2], "water_jar": [1.8, -1.0], "fibre_bundle": [1.0, 1.9]},
+    "knapper_potter":        {"seat": [0, 0], "shelter": [1.0, 4.4], "clay_pit": [2.8, 1.2], "drying_plank": [-2.6, 0.0], "knapping_stone": [0.9, -1.3], "kiln": [-2.0, 1.6], "flint_pile": [0.7, 1.9], "pots": [1.4, 0.9]}
+  },
+
+  "_help_start": "[design §GO.1, queue 123] A new game's camp is bare bones but set up (Mike, 1 Nov: revert the fully-established spawn camp and have the camp earn its growth): a few lean-tos (shelter lean_to; \"trade\" brings back the 26 Oct tents and huts), every station placed but empty, no totems, and this store. The store is just enough that nobody goes cold or hungry the first night while the chains get going (first guesses). Stocks not listed start at 0. Continue keeps the saved camp.",
+  "start": {
+    "shelter": "lean_to",
+    "totems": false,
+    "stocks": {"firewood": 20, "kindling": 3, "smoked_meat": 2, "dried_fish": 2, "roots_greens": 3, "water": 3, "fibre": 1, "cordage": 2, "baskets": 2, "flint": 3, "clay": 1, "fired_pots": 2, "sinew": 1, "bone_antler": 1}
+  },
+
+  "_help_stocks_chains": "[design §GO.3, queue 123] The store goods the chains add (the leftovers, nothing wasted): compost (guts and spoiled food, to the fields: the garden bed takes it), ash and charcoal (left in the hearth each morning: ash soaks hides, charcoal is paint), horn (cups), fish_bones (the maker carves them into bone stock), seed_stock (kept apart, sown in the garden bed), fresh_food (roasted fish and meat for tonight; it spoils to compost after a day), hearth_wood (firewood the woodcutter has carried to the main hearth before dusk; the night burns it first). A store good at its cap goes back to the land (logged as 'fields').",
+  "stocks_chains": {
+    "compost":     {"owner": "forager_herbalist", "start": 0, "target": 0, "cap": 10, "show": "garden_bed"},
+    "ash":         {"owner": "woodcutter_firekeeper", "start": 0, "target": 0, "cap": 8, "show": "ember_pot"},
+    "charcoal":    {"owner": "woodcutter_firekeeper", "start": 0, "target": 0, "cap": 8, "show": "ember_pot"},
+    "horn":        {"owner": "hunter_tanner", "start": 0, "target": 0, "cap": 6, "show": "bone_pile"},
+    "fish_bones":  {"owner": "knapper_potter", "start": 0, "target": 0, "cap": 9, "show": "knapping_stone"},
+    "seed_stock":  {"owner": "forager_herbalist", "start": 0, "target": 0, "cap": 8, "show": "fibre_bundle"},
+    "fresh_food":  {"owner": "shaman", "start": 0, "target": 0, "cap": 6, "show": "hearth"},
+    "hearth_wood": {"owner": "woodcutter_firekeeper", "start": 0, "target": 0, "cap": 8, "show": "hearth"}
+  },
+
+  "_help_chains": "[design §GO.3, queue 123] The five chains. A source trip (sources) brings one item home holding the source's goods (plus extra); it then goes stage by stage: a keeper (by) carries it to the stage's station (at: a spot of that keeper's, or hearth), works it there (work_h game hours, with tool), and it may then sit hands-off (wait_h: drying, soaking, settling, smoking) before the next stage. in = taken from the store when the work starts, fuel = firewood burned, out = put in the store (the leftovers); keep = goods that stay on the item for the next stage (the rest go to the store at the end of this stage); convert = {good: [new good, times]}; fresh_choice = at this stage the planner may send the food straight to tonight's fire instead (to fresh_food), when the store holds less than tonight's meal needs; short_to_store = goods moved to the store first if that stock is under its target. At the last stage every good left on the item goes to the store. Each station shows the item at the stage it is up to (show): the station is the progress bar, no HUD. replaces = the 30 Oct recipes these stages do instead (no longer run).",
+  "chains": {
+    "fish":  {"from": ["fish_trap", "river_net"], "replaces": ["gut_dry_fish"], "stages": [
+      {"id": "clean", "by": "fisher_weaver", "at": "cleaning_stone", "tool": "flint_blade", "work_h": 0.4, "out": {"compost": 1, "fish_bones": 1}, "keep": ["raw_fish"], "fresh_choice": {"good": "raw_fish", "to": "fresh_food"}, "show": "fish_gutted"},
+      {"id": "rack", "by": "fisher_weaver", "at": "drying_rack", "work_h": 0.2, "wait_h": 15, "convert": {"raw_fish": ["dried_fish", 1]}, "show": "fish_split"}
+    ]},
+    "water": {"from": ["river_water"], "stages": [
+      {"id": "settle", "by": "forager_herbalist", "at": "water_jar", "work_h": 0.1, "wait_h": 2, "keep": ["water"], "show": "water_settling"},
+      {"id": "boil", "by": "shaman", "at": "hearth", "work_h": 0.3, "fuel": 0.5, "show": "water_boiling"}
+    ]},
+    "plants": {"from": ["wild_patches", "garden_bed"], "extra": {"seed_stock": 1}, "stages": [
+      {"id": "sort", "by": "forager_herbalist", "at": "sorting_mat", "work_h": 0.4, "keep": ["fresh_herbs"], "show": "forage_sorted"},
+      {"id": "dry", "by": "forager_herbalist", "at": "drying_mats", "work_h": 0.2, "wait_h": 12, "convert": {"fresh_herbs": ["dried_herbs", 1]}, "show": "herbs_drying"}
+    ]},
+    "wood":  {"from": ["dead_wood"], "replaces": ["split_wood"], "stages": [
+      {"id": "sort", "by": "woodcutter_firekeeper", "at": "chopping_stump", "tool": "wedges_maul", "work_h": 0.8, "short_to_store": {"logs": 1}, "convert": {"logs": ["firewood", 3]}, "out": {"kindling": 1}, "keep": ["firewood"], "show": "wood_split"},
+      {"id": "dry", "by": "woodcutter_firekeeper", "at": "lean_to", "work_h": 0.2, "wait_h": 8, "show": "wood_drying"}
+    ]},
+    "hunt":  {"from": ["game"], "extra": {"horn": 1}, "replaces": ["scrape_hide"], "stages": [
+      {"id": "butcher", "by": "hunter_tanner", "at": "butchering_stone", "tool": "skinning_knife", "work_h": 1.0, "keep": ["raw_hide"], "show": "carcass"},
+      {"id": "scrape", "by": "hunter_tanner", "at": "hoop_frame", "tool": "hide_scraper", "work_h": 2.0, "show": "hide_scraped"},
+      {"id": "soak", "by": "hunter_tanner", "at": "soak_pit", "in": {"water": 1, "ash": 1}, "work_h": 0.3, "wait_h": 12, "show": "hide_soaking"},
+      {"id": "stretch", "by": "hunter_tanner", "at": "hoop_frame", "work_h": 0.6, "show": "hide_stretched"},
+      {"id": "smoke", "by": "hunter_tanner", "at": "smoke_pit", "fuel": 1, "work_h": 0.3, "wait_h": 6, "show": "hide_smoking"},
+      {"id": "soften", "by": "hunter_tanner", "at": "hide_rack", "tool": "bone_awl", "work_h": 1.0, "convert": {"raw_hide": ["leather", 1]}, "show": "hide_soft"}
+    ]}
+  },
+
+  "_help_chain_recipes": "[queue 123] The leftovers' own work, so nothing is wasted: the maker carves fish bones into bone stock (needles, hooks). Same fields as recipes.",
+  "chain_recipes": {
+    "carve_bone": {"by": "knapper_potter", "in": {"fish_bones": 3}, "out": {"bone_antler": 1}, "tool": "antler_flaker", "at": "knapping_stone", "work_min": 6}
+  },
+
+  "_help_feeds": "[design §GO.3-4, queue 123] What a source is given back when it is worked, if the store has it (borrow, don't take): the garden bed takes compost and seed stock, and gives bonus more.",
+  "feeds": {
+    "garden_bed": {"take": {"compost": 1, "seed_stock": 1}, "bonus": {"fresh_herbs": 1}}
+  },
+
+  "_help_hearth_leftovers": "[design §GO.3.4, queue 123] What the main hearth leaves each morning (into the store): ash and charcoal.",
+  "hearth_leftovers": {"ash": 1, "charcoal": 1},
+
+  "_help_upgrades": "[design §GO.1.4, queue 123] The camp grows from what it makes (functional, not only ornament). Each upgrade is built once (per_keeper: once at each of the five keepers' shelters) by `by` at `at` from `in`, as soon as its goods are in the store (before that keeper's own stocks), in this order; it shows as `show` and is saved with the hub. effect: lamp_burn_mult (that shelter's lamp burns less wood), source_gives (a source gives more).",
+  "upgrades": {
+    "hide_cover": {"per_keeper": true, "by": "hunter_tanner", "at": "shelter", "in": {"leather": 1, "sinew": 1}, "work_h": 1.0, "show": "hide_cover", "effect": {"lamp_burn_mult": 0.5}},
+    "waterskin":  {"by": "hunter_tanner", "at": "forager_herbalist.gourd_line", "in": {"leather": 1, "sinew": 1}, "work_h": 1.0, "show": "waterskin", "effect": {"source_gives": {"river_water": {"water": 2}}}},
+    "bedding":    {"per_keeper": true, "by": "hunter_tanner", "at": "shelter", "in": {"leather": 1}, "work_h": 0.6, "show": "bedding"},
+    "horn_cups":  {"by": "knapper_potter", "at": "hearth", "in": {"horn": 3}, "work_h": 1.0, "show": "horn_cups"},
+    "painted_posts": {"by": "woodcutter_firekeeper", "at": "seat", "in": {"charcoal": 4}, "work_h": 0.5, "show": "painted_posts"}
+  },
+  "upgrade_order": ["hide_cover", "waterskin", "horn_cups", "painted_posts", "bedding"],
+
+  "_help_bring": "[design §GO.2, queue 123] What you can drop into the camp store (the baskets by the fire; interact there): each carried thing enters its chain at that chain's first stage (or `stage`) with these goods; the keepers do the rest (you never work a station). The realm hauls are §GO.6.3's first pass (open for Mike) and nothing in a realm drops them yet; haul items are {\"kind\": \"haul\", \"what\": <key>}.",
+  "bring": {
+    "fish":         {"chain": "fish", "goods": {"raw_fish": 1}},
+    "game":         {"chain": "hunt", "goods": {"raw_meat": 3, "raw_hide": 1, "sinew": 1, "bone_antler": 1, "teeth": 4, "horn": 1}},
+    "hide":         {"chain": "hunt", "stage": "scrape", "goods": {"raw_hide": 1}},
+    "deadwood":     {"chain": "wood", "goods": {"logs": 2}},
+    "agave_fibre":  {"chain": "plants", "goods": {"fibre": 2}},
+    "cactus_fruit": {"chain": "plants", "goods": {"roots_greens": 2, "seed_stock": 1}},
+    "chillies":     {"chain": "plants", "goods": {"fresh_herbs": 1, "seed_stock": 1}},
+    "obsidian":     {"chain": "", "goods": {"flint": 2}},
+    "_help_reach_m": "how near the camp store you must stand"
+  },
+  "store": {"reach_m": 2.2, "from_fire_m": 4.6, "log_drop": "You set the {name} down in the camp store.", "log_none": "Nothing you carry goes in the camp store."}
 }

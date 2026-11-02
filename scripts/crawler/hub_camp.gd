@@ -47,6 +47,15 @@ var frame: Dictionary = {}
 var folk_lights: Array = []
 var keeper_folk: Array = []
 var fire: Node3D
+## The keepers' work (design §GM, §GO; queue 122-123): HubWorkView, and
+## the camp store's baskets by the fire (§GO.2).
+var work_view: HubWorkView
+var store_node: Node3D
+## The work is on (hub_work.json sim.on): the stocks are drawn by the store
+## (HubWorkView), not laid here; with start.shelter lean_to every keeper
+## starts under a bare lean-to (§GO.1).
+var _work := false
+var _bare := false
 var _mats := {}
 
 
@@ -202,6 +211,8 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		keep_out.append(Rect2(Vector2(a.x, a.z) - Vector2(7.0, 7.0), Vector2(14.0, 14.0)))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([seed_value, "hub props"])
+	_work = work_on()
+	_bare = _work and str((HubWork.D.get("start", {}) as Dictionary).get("shelter", "lean_to")) == "lean_to"
 	_river()
 	_kind_props(rng, keep_out)
 	_ring(rng)
@@ -228,6 +239,12 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	var wind_mps := float(K.get("wind_mps", 2.2))
 	weather = {"cloud": float(K.get("cloud", 0.15)), "storm": 0.0, "rain_mm_h": 0.0, "wind": Vector3(0.8, 0.0, 0.6).normalized() * wind_mps, "clear": 1.0 - float(K.get("cloud", 0.15))}
 	_day_shift()
+	if _work:
+		_store()
+		work_view = HubWorkView.new()
+		work_view.name = "Work"
+		add_child(work_view)
+		work_view.setup(self)
 	ms["all"] = Time.get_ticks_msec() - t0
 	print("[hub] seed %d (game %d): %s camp, %.0f m across, fire at %s, %d keepers' sites (%s), %d plants; built in %d ms" % [seed_value, CrawlerSave.game_seed, kind, across_m, str(Vector2(fp.x, fp.z).snapped(Vector2.ONE * 0.1)), sites.size(), ", ".join(sites.map(func(x): return str(x.keeper))), plants.placed, int(ms.all)])
 
@@ -274,9 +291,12 @@ func enter(main: Node) -> void:
 	_back_light(main, false)
 
 
-## Going down: the back light on again for the dark.
+## Going down: the back light on again for the dark; the camp's store
+## written to the save (§GM.9: it catches up when you come back).
 func leave(main: Node) -> void:
 	_back_light(main, true)
+	if work_view != null:
+		work_view.flush()
 	super.leave(main)
 
 
@@ -727,6 +747,18 @@ func _keepers() -> void:
 		var drng := RandomNumberGenerator.new()
 		drng.seed = hash([seed_value, "dress", key])
 		_dress(site, key, drng)
+		if _work:
+			# The stations bare: what is in the store is HubWorkView's to show.
+			match key:
+				"hunter_tanner":
+					_rack(site, Vector3(-1.8, 0.0, 1.4), "#6b4a2e", "", false)
+				"fisher_weaver":
+					_rack(site, Vector3(-1.6, 0.0, 1.2), "#4a3a28", "", false)
+				"forager_herbalist":
+					_rack(site, Vector3(-1.7, 0.0, 1.3), "#4a3a28", "", false)
+				"knapper_potter":
+					_kiln(site, Vector3(-2.0, 0.0, 1.6))
+			continue
 		match key:
 			"hunter_tanner":
 				_rack(site, Vector3(-1.8, 0.0, 1.4), "#6b4a2e", "#8a6a48", true)
@@ -773,13 +805,15 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 	match key:
 		"hunter_tanner":
 			# A hide tent: a cone of stitched hides on poles.
-			_tent(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.7, 2.6, "#7a5236", "#4a2e1e")
+			_shelter(site, _on(site, Vector3(0.0, 0.0, 4.2)), func(): _tent(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.7, 2.6, "#7a5236", "#4a2e1e"))
 			# A hide stretched on a hoop frame, a skull-and-antler totem,
 			# spears leaning on a crossbar, meat drying over a smoke pit.
 			var hoop := _on(site, Vector3(2.6, 0.0, 1.8))
 			_cyl(site, 0.9, 0.9, 0.05, Transform3D(Basis(Vector3.RIGHT, PI * 0.5 - 0.2), hoop + Vector3(0, 1.0, 0)), "#5a3e24", 0.6)
-			_cyl(site, 0.82, 0.82, 0.02, Transform3D(Basis(Vector3.RIGHT, PI * 0.5 - 0.2), hoop + Vector3(0, 1.0, 0.01)), "#a8805a", 0.75)
-			_totem(site, _on(site, Vector3(-2.8, 0.0, -0.6)), rng, true)
+			if not _work:
+				_cyl(site, 0.82, 0.82, 0.02, Transform3D(Basis(Vector3.RIGHT, PI * 0.5 - 0.2), hoop + Vector3(0, 1.0, 0.01)), "#a8805a", 0.75)
+			if not _bare:
+				_totem(site, _on(site, Vector3(-2.8, 0.0, -0.6)), rng, true)
 			var rack := _on(site, Vector3(-3.0, 0.0, 2.8))
 			_rod(site, rack + Vector3(-0.8, 0, 0), rack + Vector3(-0.8, 1.4, 0), 0.04, 0.04, "#5a3e24", 0.6)
 			_rod(site, rack + Vector3(0.8, 0, 0), rack + Vector3(0.8, 1.4, 0), 0.04, 0.04, "#5a3e24", 0.6)
@@ -790,7 +824,7 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 				_cyl(site, 0.0, 0.05, 0.22, Transform3D(Basis.IDENTITY, rack + Vector3(x + 0.1, 2.4, -0.1)), "#2a2c3e", 0.15)
 			var pit := _on(site, Vector3(1.0, 0.0, 3.0))
 			_cyl(site, 0.5, 0.55, 0.12, Transform3D(Basis.IDENTITY, pit + Vector3(0, 0.03, 0)), "#1e1a1a", 0.9)
-			for i in 3:
+			for i in (0 if _work else 3):
 				_block(site, Vector3(0.3, 0.12, 0.05), Transform3D(Basis.IDENTITY, pit + Vector3(-0.3 + i * 0.3, 1.1, 0)), "#7a2a1e", 0.4, false)
 			_rod(site, pit + Vector3(-0.6, 0, 0), pit + Vector3(-0.6, 1.3, 0), 0.03, 0.03, "#5a3e24")
 			_rod(site, pit + Vector3(0.6, 0, 0), pit + Vector3(0.6, 1.3, 0), 0.03, 0.03, "#5a3e24")
@@ -798,7 +832,7 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 		"fisher_weaver":
 			# A reed hut, a dugout drawn up on the bank, a fish-drying line, a
 			# fish trap and a net spread on stakes.
-			_hut(site, _on(site, Vector3(-0.5, 0.0, 4.0)), 1.6, "#8a7a4a", "#5a4a2a")
+			_shelter(site, _on(site, Vector3(-0.5, 0.0, 4.0)), func(): _hut(site, _on(site, Vector3(-0.5, 0.0, 4.0)), 1.6, "#8a7a4a", "#5a4a2a"))
 			var boat := _on(site, Vector3(2.6, 0.0, 2.2))
 			var hull := _cyl(site, 0.38, 0.38, 3.4, Transform3D(Basis(Vector3.FORWARD, PI * 0.5) * Basis.from_scale(Vector3(1.0, 1.0, 0.7)), boat + Vector3(0, 0.22, 0)), "#4a3220", 0.45)
 			hull.name = "Dugout"
@@ -807,7 +841,7 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 			_rod(site, line, line + Vector3(0, 1.7, 0), 0.035, 0.03, "#5a4a2a")
 			_rod(site, line + Vector3(0, 0, 2.2), line + Vector3(0, 1.7, 2.2), 0.035, 0.03, "#5a4a2a")
 			_rod(site, line + Vector3(0, 1.62, 0), line + Vector3(0, 1.62, 2.2), 0.01, 0.01, "#b8a878")
-			for i in 6:
+			for i in (0 if _work else 6):
 				var fish := MeshInstance3D.new()
 				var sp := SphereMesh.new()
 				sp.radius = 0.06
@@ -818,7 +852,8 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 				fish.material_override = _mat("#a8c0d8", 0.15)
 				fish.position = line + Vector3(0, 1.45, 0.25 + i * 0.32)
 				site.add_child(fish)
-			_basket(site, _on(site, Vector3(-1.2, 0.0, -1.2)))
+			if not _work:
+				_basket(site, _on(site, Vector3(-1.2, 0.0, -1.2)))
 			var trap := _cyl(site, 0.0, 0.32, 0.9, Transform3D(Basis(Vector3.RIGHT, PI * 0.5), _on(site, Vector3(0.6, 0.25, 2.8))), "#9a8a5a", 0.8)
 			trap.name = "FishTrap"
 		"woodcutter_firekeeper":
@@ -827,13 +862,14 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 			_lean_to(site, _on(site, Vector3(0.0, 0.0, 4.0)), "#3e2a1a", "#5a4026")
 			var log_at := _on(site, Vector3(2.8, 0.0, 2.0))
 			_rod(site, log_at + Vector3(-1.8, 0.3, 0), log_at + Vector3(1.8, 0.3, 0.3), 0.3, 0.26, "#5a3e24", 0.7, true)
-			_rod(site, log_at + Vector3(0.4, 0.55, 0.1), log_at + Vector3(0.5, 1.1, 0.1), 0.025, 0.025, "#8a6a48")
-			_block(site, Vector3(0.05, 0.16, 0.2), Transform3D(Basis.IDENTITY, log_at + Vector3(0.38, 0.55, 0.1)), "#2a2c3e", 0.15, false)
+			if not _work:
+				_rod(site, log_at + Vector3(0.4, 0.55, 0.1), log_at + Vector3(0.5, 1.1, 0.1), 0.025, 0.025, "#8a6a48")
+				_block(site, Vector3(0.05, 0.16, 0.2), Transform3D(Basis.IDENTITY, log_at + Vector3(0.38, 0.55, 0.1)), "#2a2c3e", 0.15, false)
 			for i in 3:
 				var st := _on(site, Vector3(-3.0 + i * 1.3, 0.0, -1.5 + (i % 2) * 0.8))
 				_cyl(site, 0.32, 0.36, 0.4, Transform3D(Basis.IDENTITY, st + Vector3(0, 0.15, 0)), "#5a3e24", 0.7)
 				_cyl(site, 0.3, 0.3, 0.02, Transform3D(Basis.IDENTITY, st + Vector3(0, 0.36, 0)), "#b8945a", 0.6)
-			for i in 3:
+			for i in (0 if _work else 3):
 				var b := _on(site, Vector3(-2.6, 0.0, 2.8 + i * 0.4))
 				for k in 5:
 					_rod(site, b + Vector3(-0.4, 0.1 + (k % 2) * 0.06, -0.1 + k * 0.05), b + Vector3(0.4, 0.1 + (k % 2) * 0.06, -0.1 + k * 0.05), 0.03, 0.03, "#6b4a2e")
@@ -842,7 +878,7 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 		"forager_herbalist":
 			# A thatched hut, a garden bed of strange flowers (the frame's
 			# purple and acid green), gourds on a line, a mortar on a stone.
-			_hut(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.8, "#6a7a3a", "#3e4a26")
+			_shelter(site, _on(site, Vector3(0.0, 0.0, 4.2)), func(): _hut(site, _on(site, Vector3(0.0, 0.0, 4.2)), 1.8, "#6a7a3a", "#3e4a26"))
 			var bed := _on(site, Vector3(2.8, 0.0, 1.6))
 			_block(site, Vector3(2.2, 0.12, 1.4), Transform3D(Basis.IDENTITY, bed + Vector3(0, 0.02, 0)), "#2a1e16", 0.95, false)
 			var flower_cols := ["#b24ad8", "#e04aa8", "#7cff4f", "#5a6aff", "#ffd84a"]
@@ -868,7 +904,7 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 			_rod(site, line, line + Vector3(0, 1.8, 0), 0.03, 0.03, "#4a3a28")
 			_rod(site, line + Vector3(0, 0, 2.0), line + Vector3(0, 1.8, 2.0), 0.03, 0.03, "#4a3a28")
 			_rod(site, line + Vector3(0, 1.75, 0), line + Vector3(0, 1.75, 2.0), 0.012, 0.012, "#8a7a4a")
-			for i in 4:
+			for i in (0 if _work else 4):
 				var g := MeshInstance3D.new()
 				var sp2 := SphereMesh.new()
 				sp2.radius = 0.12
@@ -884,12 +920,12 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 		"knapper_potter":
 			# A clay hut, the clay pit, pots set out to dry on a plank, a
 			# knapping stone with flakes round it, the kiln's smoke.
-			_hut(site, _on(site, Vector3(1.0, 0.0, 4.4)), 1.7, "#8a5a3a", "#5a3a24")
+			_shelter(site, _on(site, Vector3(1.0, 0.0, 4.4)), func(): _hut(site, _on(site, Vector3(1.0, 0.0, 4.4)), 1.7, "#8a5a3a", "#5a3a24"))
 			var pit := _on(site, Vector3(2.8, 0.0, 1.2))
 			_cyl(site, 0.9, 1.0, 0.1, Transform3D(Basis.IDENTITY, pit + Vector3(0, 0.0, 0)), "#5a3420", 0.15)
 			var plank := _on(site, Vector3(-2.6, 0.0, 0.0))
 			_block(site, Vector3(0.4, 0.35, 2.4), Transform3D(Basis.IDENTITY, plank + Vector3(0, 0.18, 0)), "#5a3e24", 0.6)
-			for i in 5:
+			for i in (0 if _work else 5):
 				var h := rng.randf_range(0.2, 0.42)
 				_cyl(site, rng.randf_range(0.1, 0.16), rng.randf_range(0.07, 0.12), h, Transform3D(Basis.IDENTITY, plank + Vector3(0, 0.35 + h * 0.5, -0.9 + i * 0.45)), "#b8805a", 0.4)
 			var knap := _on(site, Vector3(0.9, 0.0, -1.3))
@@ -897,8 +933,108 @@ func _dress(site: Node3D, key: String, rng: RandomNumberGenerator) -> void:
 			for i in 8:
 				_block(site, Vector3(0.08, 0.02, 0.06), Transform3D(Basis(Vector3.UP, i * 0.8), knap + Vector3(cos(i * 0.8) * 0.5, 0.01, sin(i * 0.8) * 0.5)), "#1a1c2a", 0.1, false)
 			var smoke := _wisp(Color(0.5, 0.5, 0.6, 0.3), 0.4, 60)
+			smoke.name = "KilnSmoke"
 			smoke.position = _on(site, Vector3(-2.0, 1.4, 1.6))
 			site.add_child(smoke)
+
+
+## A keeper's shelter: their trade's (`build`) or, the camp bare (§GO.1),
+## a lean-to of poles and bark like the woodcutter's, its open side to the
+## fire. Named "Shelter" (an upgrade covers it in hide, HubWorkView).
+func _shelter(site: Node3D, at: Vector3, build: Callable) -> void:
+	if not _bare:
+		build.call()
+		return
+	var n := site.get_child_count()
+	_lean_to(site, at, "#4a3a28", "#5a4026")
+	for i in range(n, site.get_child_count()):
+		site.get_child(i).set_meta("shelter", true)
+
+
+## Is the keepers' work on (hub_work.json sim.on)?
+static func work_on() -> bool:
+	return bool((HubWork.D.get("sim", {}) as Dictionary).get("on", false))
+
+
+## The camp store (§GO.2): a ring of baskets on a mat beside the fire,
+## where what you bring home is set down for the keepers.
+func _store() -> void:
+	var B: Dictionary = HubWork.D.get("store", {})
+	var fp: Vector3 = camp.pos
+	var n: Vector2 = frame.n
+	var a := atan2(n.y, n.x) + PI * 0.5
+	var p := Vector2(fp.x, fp.z) + Vector2(cos(a), sin(a)) * float(B.get("from_fire_m", 4.6))
+	if bank_node != null and Vector2(bank_node.position.x - p.x, bank_node.position.z - p.y).length() < 3.0:
+		p = Vector2(fp.x, fp.z) - Vector2(cos(a), sin(a)) * float(B.get("from_fire_m", 4.6))
+	store_node = Node3D.new()
+	store_node.name = "CampStore"
+	store_node.position = _ground_at(p)
+	add_child(store_node)
+	_block(store_node, Vector3(1.6, 0.04, 1.2), Transform3D(Basis.IDENTITY, Vector3(0, 0.02, 0)), "#6b5a36", 0.9, false)
+	for i in 3:
+		_basket(store_node, Vector3(-0.5 + i * 0.5, 0.0, 0.25 * (i % 2)))
+
+
+## A point on the river nearest `p` (its middle, at the water).
+func river_near(p: Vector3) -> Vector3:
+	var W: Dictionary = land.G.get("wash", {})
+	var n := land.n
+	var side := Vector2(-n.y, n.x)
+	var best := Vector3.INF
+	var s := float(W.get("from_m", 16.0)) + 2.0
+	while s < across_m:
+		var c := land.center + n * s + side * land.wash_offset(s)
+		if not land.inside(c, 4.0):
+			break
+		var q := Vector3(c.x, land.height_at(c.x, c.y), c.y)
+		if best == Vector3.INF or Vector2(q.x - p.x, q.z - p.z).length() < Vector2(best.x - p.x, best.z - p.z).length():
+			best = q
+		s += 2.0
+	return best if best != Vector3.INF else p
+
+
+## Where the keepers' work happens (HubWork.spots): each site's spots
+## (hub_work.json spots) and its benches by the fire, the hearth, the
+## camp store, the river's banks for water and flint, the camp's edge, and
+## the dead wood and wild patches about the clearing (from the seed).
+func work_spots() -> Dictionary:
+	var out := {}
+	var SP: Dictionary = HubWork.D.get("spots", {})
+	var fp: Vector3 = camp.pos
+	out["hearth"] = fp + Vector3(0.0, 0.0, 0.0)
+	for st in sites:
+		var key := str(st.keeper)
+		var xf := Transform3D(Basis(Vector3.UP, float(st.yaw)), st.at as Vector3)
+		for sp in (SP.get(key, {}) as Dictionary):
+			var l: Array = SP[key][sp]
+			var w := xf * Vector3(float(l[0]), 0.0, float(l[1]))
+			out["%s.%s" % [key, sp]] = Vector3(w.x, land.height_at(w.x, w.z), w.z)
+		# Its place on a bench, on the side of the fire toward its site.
+		var d := Vector2((st.at as Vector3).x - fp.x, (st.at as Vector3).z - fp.z).normalized()
+		var b := Vector2(fp.x, fp.z) + d * 3.0
+		out["bench." + key] = Vector3(b.x, land.height_at(b.x, b.y), b.y)
+	if store_node != null:
+		out["store"] = store_node.position
+	out["river_water"] = river_near(out.get("forager_herbalist.seat", fp))
+	out["flint_bank"] = river_near(out.get("knapper_potter.seat", fp))
+	var n: Vector2 = frame.n
+	var e := Vector2(fp.x, fp.z) - n * minf(land.edge_r(atan2(-n.y, -n.x)) - 6.0, 70.0)
+	out["edge"] = Vector3(e.x, land.height_at(e.x, e.y), e.y)
+	var S: Dictionary = HubWork.D.get("sim", {})
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([seed_value, "work spots"])
+	var keep: Array = []
+	for st in sites:
+		var a3: Vector3 = st.at
+		keep.append(Rect2(Vector2(a3.x, a3.z) - Vector2(6.0, 6.0), Vector2(12.0, 12.0)))
+	keep.append(Rect2(Vector2(fp.x, fp.z) - Vector2(6.0, 6.0), Vector2(12.0, 12.0)))
+	for pair in [["dead_wood", int(S.get("dead_wood_spots", 6))], ["wild_patches", int(S.get("wild_patch_spots", 5))]]:
+		for i in int(pair[1]):
+			var q := _free_spot(rng, keep, 18.0, 40.0, 2.0)
+			if q == Vector2.INF:
+				continue
+			out["%s.%d" % [pair[0], i]] = _ground_at(q)
+	return out
 
 
 ## A torch post: a stake with a burning head (the one amber, §EX.6).
@@ -1058,7 +1194,7 @@ func _common(rng: RandomNumberGenerator) -> void:
 			_block(root, Vector3(rng.randf_range(0.5, 0.75), 0.1, rng.randf_range(0.4, 0.6)), Transform3D(Basis(Vector3.UP, rng.randf() * TAU), g + Vector3(0, 0.02, 0)), str(C.get("stone_color", "#6a6c8a")), 0.25, false)
 			k += step
 	# Totems at the clearing's edge.
-	for i in int((H.get("common", {}) as Dictionary).get("totems", 3)):
+	for i in (0 if _bare and not bool((HubWork.D.get("start", {}) as Dictionary).get("totems", false)) else int((H.get("common", {}) as Dictionary).get("totems", 3))):
 		var p := _free_spot(rng, [], 9.0, 16.0, 2.0)
 		if p == Vector2.INF:
 			continue
@@ -1092,6 +1228,8 @@ func _rack(parent: Node3D, at: Vector3, wood: String, hang: String, hides: bool)
 	_rod(parent, a - Vector3(0.0, 0.2, 0.0), a + Vector3(0.0, 1.8, 0.0), 0.05, 0.045, wood, 0.6, true)
 	_rod(parent, b - Vector3(0.0, 0.2, 0.0), b + Vector3(0.0, 1.8, 0.0), 0.05, 0.045, wood, 0.6, true)
 	_rod(parent, a + Vector3(0.0, 1.7, 0.0), b + Vector3(0.0, 1.7, 0.0), 0.04, 0.04, wood, 0.6)
+	if hang == "":
+		return
 	for i in 3:
 		var x := -0.55 + i * 0.55
 		if hides:

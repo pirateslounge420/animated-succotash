@@ -134,6 +134,11 @@ func interact() -> bool:
 	var p := main.player.global_position
 	var reach := float(A.get("interact_reach_m", 3.0))
 	var hub := _hub()
+	# The camp store (design §GO.2, queue 123): what the keepers can use goes in.
+	if hub != null and hub.store_node != null and hub.work_view != null:
+		var sp := hub.store_node.global_position
+		if Vector2(p.x - sp.x, p.z - sp.z).length() <= float((HubWork.D.get("store", {}) as Dictionary).get("reach_m", 2.2)) and hub.work_view.try_bring(main.player.inventory):
+			return true
 	# The bank first, beside the fire (design §GJ.2).
 	if hub != null and hub.bank_node != null and main.bank_panel != null:
 		var bp := hub.bank_node.global_position
