@@ -241,7 +241,7 @@ static func _flame_material(phase: float, scroll_scale: float) -> ShaderMaterial
 	var m := ShaderMaterial.new()
 	m.shader = preload("res://shaders/flame.gdshader")
 	# The crawler's glossy look (design §GB): a smooth flame, no bands.
-	if GlossyLook.active:
+	if GlossyLook.smooth():
 		m.shader = GlossyLook.flame_shader()
 		m.set_shader_parameter("soft_edge", GlossyLook.flame_soft_edge())
 	m.set_shader_parameter("look_grain_soft", Look.grain())

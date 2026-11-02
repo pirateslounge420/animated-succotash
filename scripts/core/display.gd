@@ -158,7 +158,7 @@ static func apply() -> void:
 ## The window's own resolution, no pixel frame: the crawler under the
 ## glossy look (design §GB).
 static func native() -> bool:
-	return GlossyLook.active
+	return GlossyLook.smooth()
 
 
 ## Integer multiples when the window holds two or more; else fractional.

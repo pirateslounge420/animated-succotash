@@ -206,7 +206,7 @@ static var _material_lit: ShaderMaterial = null
 
 static func material_lit() -> ShaderMaterial:
 	# The crawler's glossy look (design §GB): the same stone, wet and bumped.
-	if GlossyLook.active:
+	if GlossyLook.smooth():
 		return GlossyLook.stone_material()
 	if _material_lit == null:
 		var sh := Shader.new()

@@ -258,7 +258,7 @@ func enter(main: Node) -> void:
 	super.enter(main)
 	if GlossyLook.active:
 		GlossyLook.surface_env(sky.environment)
-		if not has_meta("smoothed"):
+		if GlossyLook.smooth() and not has_meta("smoothed"):
 			set_meta("smoothed", GlossyLook.smooth_all(self))
 			# The stone up here is dry (look.json glossy.surface.stone): the
 			# dungeon's wet gloss mirrored the dusk sky white off the yard's

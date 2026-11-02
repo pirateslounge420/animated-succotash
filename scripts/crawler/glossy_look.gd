@@ -22,6 +22,12 @@ class_name GlossyLook
 ## - the flame card is smooth (no texel grid, no bands), one amber (§EX.6).
 
 static var active := false
+## The retro preset (Mike, 2 Nov, a preview, not locked): glossy's colours
+## (the grade, tonemap, bloom, indigo haze, the fire's light) drawn with the
+## pixel look's frame and surfaces: the 480-line frame and nearest upscale,
+## crisp nearest tiles, no gloss, bump or specular, the banded pixel flame.
+## `active` stays true under it (the colours); `retro` turns the smoothing off.
+static var retro := false
 static var _stone: ShaderMaterial = null
 static var _flame: Shader = null
 
@@ -32,14 +38,25 @@ static func G() -> Dictionary:
 
 ## Whether the crawler should run glossy (the environment's LOOK first).
 static func wanted() -> bool:
+	var name := _wanted_name()
+	retro = name == "retro"
+	return name == "glossy" or name == "retro"
+
+
+static func _wanted_name() -> String:
 	var env := OS.get_environment("LOOK").strip_edges().to_lower()
-	if env == "glossy" or env == "pixel":
-		return env == "glossy"
-	return str(G().get("crawler_preset", "glossy")) == "glossy"
+	if env == "glossy" or env == "pixel" or env == "retro":
+		return env
+	return str(G().get("crawler_preset", "glossy"))
 
 
 static func preset_name() -> String:
-	return "glossy" if active else "pixel"
+	return ("retro" if retro else "glossy") if active else "pixel"
+
+
+## Glossy's smooth surfaces and full-size frame (glossy, not retro).
+static func smooth() -> bool:
+	return active and not retro
 
 
 ## The HUD's layout size under glossy.

@@ -4,6 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-11-02 — A retro look to try: glossy's colours in pixels (Claude Code; preview, not locked)
+- **Mike** (2 Nov) sent a retro low-poly art spec (point-filtered pixel textures, low poly, optional PS1 jitter), chose "full retro, replace §GB" and tribal props (§GB.2 stands), asked to see it before locking, then: "i want the colors to be more like it used to be".
+- **Built:** a third crawler look, `retro` (`LOOK=retro`, or `look.json → glossy → crawler_preset: "retro"`): §GB's colours (the grade, tonemap, bloom, indigo haze, the fire's light) with the pixel look's 480-line frame and nearest upscale, crisp nearest tiles, no gloss, bump or specular, and the banded pixel flame. `GlossyLook.retro` / `GlossyLook.smooth()`; display, hub camp, campfire and ruin stone ask `smooth()` instead of `active`.
+- **Default unchanged** (glossy). No design section yet: its design section (the next free letter) waits for Mike's word. Not built: vertex jitter / affine warp, the spec's green and cyan accents.
+- **Checked:** `hub_frames.gd` under `LOOK=retro`, seed 7: all eight frames, the same engine warnings as the glossy run.
 ## 2026-11-02 — §GP: the refocus written down, queue 126 for the fixes (Claude, chat)
 - **Mike** (1 Nov, by voice): one pitch to test everything against: "Wander a strange wild world from one living camp, and push its light into the dark."
 - **Design §GP:** one camp only; you wake in a teepee; seven villagers to start; life at the full 10x; skill games (fishing, painting, the one-way rope hook, Catch the Gibbon on the existing gibbon code); night sends you home and you push the camp's light outward with fires and torch posts; dungeon framework split off (maybe one secret dungeon as an Easter egg); sieges and outposts cut; the spin-off list.
