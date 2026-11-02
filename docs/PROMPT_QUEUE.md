@@ -2042,7 +2042,7 @@ CHECK (headless): over 30 layouts both keys are reachable, one at the deepest po
 
 ## 122 — The keepers' real work — §GM
 
-**Status:** not built yet
+**Status:** built 19f7411 (Claude Code, 1 Nov; with 123 folded in; see PROGRESS)
 **Mike sees:** The five keepers and the shaman live their trades. The woodcutter pulls the axe from the log, fells dead wood, splits it at the stump and carries it to the hearth before dusk; the woodpile grows and shrinks with what the fires burn. The hunter goes out and comes back with a kill, butchers it, smokes the meat and scrapes the hide. The fisher takes the dugout out (it is gone from the bank meanwhile) and hangs fish on the line. The forager comes back with full baskets and grinds herbs. The potter knaps new tool heads when someone's breaks and fires pots in a smoking kiln. Everyone eats together at the fire in the evening. When the store is full they sit, smoke, visit each other and nap.
 
 ```text
@@ -2054,7 +2054,7 @@ CHECK (headless, a 10-day run at speed): no keeper ever plays a work animation w
 
 ## 123 — The rudimentary camp and the five supply chains — §GO.1–3 (with 122)
 
-**Status:** todo (after 122, or folded into it)
+**Status:** built 19f7411 (Claude Code, 1 Nov; folded into 122; see PROGRESS)
 **Mike sees:** A new game opens on a bare camp: the fire, a few lean-tos, and the work spots set out but mostly empty (drying rack, butchering stone, hide frame, maker's spot, the store). As the keepers work, real things move through the camp: a fish is cleaned on the flat stone at the water and either roasted on a stick or hung on the rack; the hunter's kill is butchered at the camp's edge and its hide goes scraped, soaked, stretched and smoked on the frame; water is fetched, settled in a pot and boiled; wood is sorted into kindling and logs and dried under cover. Every spot shows where its work is up to. Over the days the camp visibly improves: a finished hide becomes a better lean-to cover, a waterskin or bedding. Anything you bring home from a realm goes into the store and through the same spots.
 
 ```text
@@ -2066,7 +2066,7 @@ CHECK (headless, a 10-day run at speed): a new game starts with the empty statio
 
 ## 124 — Sitting by the fire: the pipe, the ember, smoking herbs — §GO.7
 
-**Status:** todo (after 116)
+**Status:** built a033e57 (Claude Code, 1 Nov; see PROGRESS)
 **Mike sees:** Sit on a log at the hub fire, pack your pipe and light it with an ember from the hearth. Each smoking herb you've brought back from a realm has its own smoke colour and its own gentle effect while you sit: the sky tints, the music shifts, or time seems to slow a little. Then you stand up and the world's back to normal.
 
 ```text
@@ -2077,7 +2077,7 @@ CHECK (headless): no herb, no pipe; each herb's effect rises and fades and is ze
 
 ## 125 — The bard and the oracle in every realm, and the camp's band — §GO.10–11
 
-**Status:** todo (after 116; texts after 120's scroll plumbing if useful)
+**Status:** built ea3d908 (Claude Code, 1 Nov, on 117 as built to §GI.1–2/§GJ, Mike's call; see PROGRESS)
 **Mike sees:** In the desert you hear a faint melody on the wind and can follow it to a bard playing by a ruin. The bard teaches you the instrument; bring the maker the material and the camp gets a player and an instrument, so the fire nights sound fuller. Somewhere hidden, with nothing pointing the way, an oracle sits meditating. Find them and you see a brief vision, and they give you their realm's sacred text for your library. At the fire you can open the I Ching, toss three coins six times and read your hexagram.
 
 ```text
