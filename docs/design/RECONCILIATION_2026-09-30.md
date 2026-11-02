@@ -7663,3 +7663,79 @@ sheds rain, an obsidian-eyed mask sees a touch further in the dark.
 Per-realm palettes, music, creatures, NPCs and texts beyond the desert; which herbs grow where; festival
 calendar; shelter ladder from lean-to to hut; realm hauls into `data/song_web.json` (additive, NOT WIRED
 YET) once Mike confirms; a queue item for Claude Code. GN.4 stands: no managed burns.
+
+## §GP — The refocus: one pitch, one camp, the teepee wake, skill games, light pushed outward (Mike, 1 Nov, by voice; pushed 2 Nov)
+
+**Mike, 1 Nov (voice):** he felt he'd lost the vision under the spin-offs; this is the game he wants.
+Sits alongside §GO (same day) and fills in what §GO didn't write down. Docs only, plus queue 126
+for the fixes (GP.9). Where this disagrees with earlier sections, it wins.
+
+### GP.1 The pitch (test every idea against it)
+**"Wander a strange wild world from one living camp, and push its light into the dark."**
+
+### GP.2 One camp
+**One camp only for now**: no multiple camps, no founding new ones (sets aside GN.11's several
+spawn camps for Torchfire).
+
+### GP.3 The wake and the folk
+1. Only the player has amnesia: the tribe found you and brought you in.
+2. **You first wake inside a teepee**, its fire in the middle and the smoke going out the top; step
+   out to the camp fire (refines GO.1.1).
+3. **Seven villagers to start:** one fire keeper, three gatherers, one water and wood fetcher, one
+   builder or scout, one kid on kindling. (Amends the six hub roles of §FZ/§GM for the start; the
+   roles grow from here.)
+4. Life runs at the full 10x (§GN): a day about 2.4 real hours, a pregnancy about a real month, a
+   child grows up over about a real year. The camp is a place you check in on over weeks, with small
+   visible changes between visits.
+
+### GP.4 Camp ground rules (confirms §GN)
+Every camp sits by water; no wells, irrigation only maybe, later. Shelter ladder: natural cover →
+windbreak → lean-to → covered hut from local material. Herding is a late luxury, after fields and
+storage. Fire is never made, only carried; no crafting system (GO.2 stands).
+
+### GP.5 Skill games (kept few for now)
+Things the folk have mastered and the player can learn:
+1. **Fishing.**
+2. **Painting and drawing**: art, not crafting.
+3. **The one-way rope hook**: thrown, no retract; climb up to the hook to get it back, or leave the
+   rope as a route.
+4. **Catch the Gibbon** (Mike's idea): chase the tree-swinging gibbon; **reuse the existing gibbon
+   code** (`scripts/creatures/gibbon/`).
+5. Physics games are on the table; ideas floated, none picked: Gourd Swing, Hill Run, Skip Mark,
+   Rope Leap.
+
+### GP.6 Night and the light
+Night is dangerous, especially out in the woods, and sends you home. **You expand by pushing the one
+camp's safe light outward** with new fires and torch posts, not by founding camps. Exploration over
+dungeons; keep it ambient.
+
+### GP.7 Cut and kept
+1. **Kept:** the shaman realm loop is the core (GO.6): go with the shaman into the realms and bring
+   things back to feed the camp.
+2. **Split off:** the dungeon framework becomes its own dungeon-crawler game; maybe **one secret
+   dungeon in Torchfire as an Easter egg**.
+3. **Reverted as scope creep:** night sieges and camp-defence combat; outpost camps in the wild.
+
+### GP.8 Identity and the ambient camp
+1. The player slowly discovers who they are; pushed far enough, they realise they're from somewhere
+   else and may have been encroaching on these people's land. Hints and fragments only (GO.4).
+2. **Ambient first:** systems with placeholder figures now; better, more detailed models later.
+
+### GP.9 Fixes and feel (queue 126)
+1. **Villagers feel robotic:** more idle animations and more variance in behaviour that still makes
+   sense for their task.
+2. **Fire audio** sounds like static rain; it must crackle.
+3. **Bug:** in the shaman realms, the little chimney on the surface above the hearth in the ruins
+   traps you if you jump on top of it, forcing a restart.
+4. **Bug:** the river renders as a flat blue polygon ribbon that reads as a glitch.
+
+### GP.10 The spin-offs (Torchfire was the seedbed)
+Separate games: Fighter (the I Ching trilogy); Torchfire (active); a first-person from-scratch tribe
+sim (amnesia tribe; water → hand gathering → cover → stone and stick tools → spear and fishing →
+cordage and building; separate from the Virtual Villagers god-sim and the open-world colony sim); the
+dungeon crawler; the werewolf hunter. Mike wants these to be our own worlds, reusable across games; a
+shared world bible is floated, **not locked**.
+
+### GP.11 Open
+Which skill games ship first and how each is learned; the physics game pick; how far torch posts
+push the safe light and what they cost; the Easter-egg dungeon's place.

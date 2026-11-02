@@ -4,6 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-11-02 — §GP: the refocus written down, queue 126 for the fixes (Claude, chat)
+- **Mike** (1 Nov, by voice): one pitch to test everything against: "Wander a strange wild world from one living camp, and push its light into the dark."
+- **Design §GP:** one camp only; you wake in a teepee; seven villagers to start; life at the full 10x; skill games (fishing, painting, the one-way rope hook, Catch the Gibbon on the existing gibbon code); night sends you home and you push the camp's light outward with fires and torch posts; dungeon framework split off (maybe one secret dungeon as an Easter egg); sieges and outposts cut; the spin-off list.
+- **Queue 126:** less robotic villagers, a crackling fire, the realm chimney trap, the flat blue river.
+
 ## 2026-10-31 — §GN extended: one game, water, managed burns dropped, fire/fishing/fields in depth (Claude, chat)
 - **Mike** (31 Oct, by voice): all camps live in one game with different spawn points, each village a little unique (GN.11). **No managed burns** (GN.4 dropped).
 - **Water (GN.12):** every camp spawns by fresh water; fetching is real work; gourd vines grown by the forager for carriers, bowls and ladles before clay jars; water features with jobs; irrigation channels dug by villagers once a settled field camp learns it, spreading through the gatherings.
