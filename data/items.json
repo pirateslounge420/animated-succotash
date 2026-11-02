@@ -188,6 +188,18 @@
    "icon": "sample",
    "color": "#4f9a3a",
    "_help": "(\u00a7GK.2.1, queue 116 amended) A cutting of a key plant (its key in the item's 'key', its name in 'title'), from the hub's platter or a plant in a realm. Give it to the shaman and he teaches its song (song_web.json). Carried like anything else; lost into your pile if you are taken."
+  },
+  "smoking_herb": {
+   "name": "Herb",
+   "icon": "sample",
+   "color": "#8a9a3a",
+   "_help": "(\u00a7GO.7, queue 124) A pinch of a smoking herb (its key in 'herb', its name in 'title'; data/herbs.json), from a plant in a realm. Smoked in your pipe on a log by the hub fire (FirePipe); never used up."
+  },
+  "haul": {
+   "name": "Haul",
+   "icon": "fruit",
+   "color": "#b8945a",
+   "_help": "(\u00a7GO.2, \u00a7GO.6.3, queue 123) A realm's haul for the camp (its key in 'what', its name in 'title'; hub_work.json bring). Set it down in the camp store by the hub fire and the keepers work it."
   }
  },
  "sample_part": {

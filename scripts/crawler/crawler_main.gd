@@ -193,6 +193,8 @@ var areas: CrawlerAreas
 ## Where torches come from at the hub and in the realms (Mike, 27 Oct).
 var torch_supply: TorchSupply
 var song_web: SongWeb
+## The pipe on a log by the hub fire, smoking herbs (design §GO.7, queue 124).
+var fire_pipe: FirePipe
 ## The bank's panel (CrawlerBank).
 var bank_panel: CrawlerBank
 ## You are up on it (the dungeon's nodes kept out of the tree, as you left
@@ -312,6 +314,9 @@ func _ready() -> void:
 	torch_supply.setup(self)
 	song_web = SongWeb.new()
 	song_web.setup(self)
+	fire_pipe = FirePipe.new()
+	fire_pipe.setup(self)
+	add_child(fire_pipe)
 	add_child(areas)
 	add_child(torch_supply)
 	add_child(song_web)

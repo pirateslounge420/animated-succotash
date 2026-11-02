@@ -51,6 +51,9 @@ var fire: Node3D
 ## the camp store's baskets by the fire (§GO.2).
 var work_view: HubWorkView
 var store_node: Node3D
+## The log benches round the fire: [{"at" (the log's middle), "along"
+## (its length, flat)}] (FirePipe sits you on one, design §GO.7).
+var benches: Array = []
 ## The work is on (hub_work.json sim.on): the stocks are drawn by the store
 ## (HubWorkView), not laid here; with start.shelter lean_to every keeper
 ## starts under a bare lean-to (§GO.1).
@@ -1174,6 +1177,7 @@ func _common(rng: RandomNumberGenerator) -> void:
 		var c := Vector2(fp.x, fp.z) + Vector2(cos(a), sin(a)) * 3.4
 		var g := _ground_at(c)
 		var t := Vector2(-sin(a), cos(a))
+		benches.append({"at": g + Vector3(0, 0.22, 0), "along": Vector3(t.x, 0.0, t.y)})
 		_rod(root, g + Vector3(-t.x, 0.22, -t.y) * 1.0 + Vector3(0, 0.22, 0) * 0.0, g + Vector3(t.x, 0.22, t.y) * 1.0, 0.22, 0.2, "#5a3e24", 0.65, true)
 	# Paths: stepping stones from the fire to each site (a solid strip
 	# read as a black slab under the grade, 26 Oct).

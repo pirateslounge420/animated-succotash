@@ -131,6 +131,9 @@ func interact() -> bool:
 	if sitting:
 		step_in()
 		return true
+	# The pipe on a log, a bench to sit on, a herb's pinch (design §GO.7).
+	if main.fire_pipe != null and main.fire_pipe.interact():
+		return true
 	var p := main.player.global_position
 	var reach := float(A.get("interact_reach_m", 3.0))
 	var hub := _hub()

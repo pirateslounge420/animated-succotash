@@ -1,0 +1,28 @@
+{
+  "_help": "(design §GO.7, queue 124, Claude Code; first guesses for Mike to tune) Smoking herbs and the pipe at the hub fire. Display only (the queue's rule): no stats, no gates, no doses, no preparation. A herb is never used up: carry a pinch and smoke it as often as you sit. Sit on a log bench by the hub fire (interact standing by one, within seat.reach_m of its middle); with a herb carried, interact packs the pipe, takes an ember from the hearth with the tongs and puffs; left and right pick which herb you carry before you light it. While the pipe burns its effects rise over onset_s, hold for peak_s and fall over fade_s as the bowl burns out; standing up (a move key or Esc) ends it with seat.stand_fade_s.",
+
+  "_help_seat": "reach_m: how near a bench's middle you stand to sit on it, from beyond the fire's and the shaman's own reach (crawler.json areas.interact_reach_m: nearer, the button is the song's); eye_m: your eye above the ground seated; stand_fade_s: how long the effects take to fade when you stand. pose: seconds of each beat of lighting (pack the bowl, the ember brought with the tongs, the first puff).",
+  "seat": {"reach_m": 1.3, "eye_m": 1.0, "stand_fade_s": 2.0, "pose": {"pack_s": 1.6, "ember_s": 2.2, "puff_s": 1.4}},
+
+  "_help_herbs": "Each herb: name, realm_area (crawler.json areas key whose realm grows it: 'first' is the built desert; the stand-in realms are not built, so theirs grow nowhere yet), smoke (its smoke colour), leaf and flower (the plant's look), onset_s/peak_s/fade_s (seconds), effects (one or two, each 0..1 at the peak): sky_tint {color, strength} tints the sky part of the view; music_filter {cutoff_hz} muffles the music and ambience toward that low-pass cutoff; time_slow {scale} slows the feel of time to that share (Engine.time_scale, back to 1 when it ends). Mike asked for cannabis strains and other smoking plants (§GO.7.2): these three are traditional smoking herbs of their homelands as first guesses; strains can be added as more entries.",
+  "herbs": {
+    "damiana":  {"name": "damiana", "realm_area": "first", "smoke": "#e8b07a", "leaf": "#6a8a3a", "flower": "#f0d040", "onset_s": 8, "peak_s": 40, "fade_s": 14,
+                 "effects": {"sky_tint": {"color": "#ff8a5a", "strength": 0.35}, "time_slow": {"scale": 0.88}}},
+    "mapacho":  {"name": "mapacho", "realm_area": "deep_jungle", "smoke": "#c8d0b8", "leaf": "#3a6a2a", "flower": "#e8e0f0", "onset_s": 6, "peak_s": 35, "fade_s": 12,
+                 "effects": {"music_filter": {"cutoff_hz": 900}, "sky_tint": {"color": "#5aff9a", "strength": 0.2}}},
+    "mullein":  {"name": "mullein", "realm_area": "old_growth_forest", "smoke": "#d8d8e8", "leaf": "#8a9a7a", "flower": "#f8e070", "onset_s": 10, "peak_s": 45, "fade_s": 16,
+                 "effects": {"sky_tint": {"color": "#8aa0ff", "strength": 0.3}, "time_slow": {"scale": 0.82}}}
+  },
+
+  "_help_plants": "Where herbs grow (§GO.7.3): per_realm plants of each herb on its realm's floor, placed like the key cuttings (SongWeb.spots, apart from them); take a pinch by interacting within reach_m, the plant stays.",
+  "plants": {"per_realm": 3, "reach_m": 1.8, "log_take": "You pinch some {name}.", "log_have": "You already carry {name}."},
+
+  "_help_grow": "[NOT WIRED YET — design §GO.7.3] Bring a herb home and grow it at camp (the plant loop). FirePipe.can_plant() is the hook; nothing plants yet.",
+  "grow": {"at": "forager_herbalist.garden_bed"},
+
+  "log_sit": "You sit on the log by the fire.",
+  "log_no_herb": "You have nothing to smoke.",
+  "log_light": "You pack your pipe with {name} and light it with an ember from the hearth.",
+  "log_out": "The pipe goes out.",
+  "log_stand": "You get up from the log."
+}
