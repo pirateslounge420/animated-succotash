@@ -832,14 +832,27 @@
   "fog": {
    "_help": "(Mike, 6 Nov: 'perhaps to cut lag we can implement fog so its harder to see into the distance and stuff feels more ambient'; added by Claude Code, first guesses, Mike judges them on screen) The crawler's fog up top, in the sky's own horizon colour, so the far wood dissolves into the dream. on: false brings back the long view. clear_m: the clear ground round you before it starts. density: how quickly it thickens past clear_m. far_m: the wall in a realm, past which nothing shows; hub_far_m: the same in the hub camp. night_color_share: how much of the sky's colour the fog near the ground keeps at full night (lower is darker, so the dark stays dark). Higher up it takes the sky's own colour behind it, so far trees melt into the gradient and never paint over it; sky_band: how high the low fog colour reaches up the sky (0 to 1, straight up). Plants past the fog are not drawn at all, which is where the frame time comes back: plant_block_m is the size of the patches they are drawn and dropped in (smaller drops them closer to the fog line but makes more patches), plant_near_m where trees go from full models to flat pictures. Restart after editing.",
    "on": true,
-   "clear_m": 8.0,
-   "density": 0.03,
+   "clear_m": 18.0,
+   "density": 0.022,
    "far_m": 110.0,
    "hub_far_m": 75.0,
    "night_color_share": 0.22,
    "sky_band": 0.14,
    "plant_block_m": 32.0,
-   "plant_near_m": 48.0
+   "plant_near_m": 48.0,
+   "ground": {
+    "_help": "(Mike, 6 Nov: 'i want it more rolling on the ground level'; Claude Code, first guesses) The fog that rolls along the ground, on top of the far fog above. on: false turns it off. top_m: how high the banks stand on average (m). density: how thick. near_m: clear air right round you. reach_m: how far it is drawn. scale_m: how big the banks are. drift_mps: how fast they roll, along the wind. day_share: how thick by full day next to night (1 the same). sky_share: how much of the sky's colour it takes by day, night_sky_share at full night (above 0 so it reads as fog, not a black floor). Restart after editing.",
+    "on": true,
+    "top_m": 2.2,
+    "density": 0.22,
+    "near_m": 2.0,
+    "reach_m": 70.0,
+    "scale_m": 26.0,
+    "drift_mps": 0.5,
+    "day_share": 0.45,
+    "sky_share": 0.45,
+    "night_sky_share": 0.1
+   }
   },
   "wash": 0.4,
   "wash_scale": 1.6,

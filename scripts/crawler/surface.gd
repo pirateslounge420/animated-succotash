@@ -96,6 +96,8 @@ var ms := {}
 ## The weather up here: fair, a little cloud, a breeze (sky.cloud,
 ## wind_mps). Not simulated (§EW.6).
 var weather := {}
+## The rolling ground fog (_ground_fog).
+var _gfog: MeshInstance3D
 ## The dawn and dusk routines (design §GF, DayShift).
 var day_shift: DayShift
 ## The area's main hearth (design §GD.1.2-3, CrawlerAreas): near one edge,
@@ -647,6 +649,7 @@ func enter(main: Node) -> void:
 		sky.environment.fog_depth_end = fog_far_m() * 0.95
 		sky.environment.fog_depth_curve = 1.0
 		sky.environment.fog_aerial_perspective = 1.0
+		_ground_fog()
 	# One firelight's pale whites are for firelit stone underground (§EX.6):
 	# not for sunlit sand.
 	(main.post as PostGrade).set_fire_whites(0.0, Torch.fire_color())
@@ -758,6 +761,39 @@ func fog_far_m() -> float:
 	return float(fog().get("far_m", 0.0))
 
 
+## The rolling ground fog (Mike, 6 Nov; ground_fog.gdshader): one pass over
+## the frame, built once, kept with this surface.
+func _ground_fog() -> void:
+	var F: Dictionary = fog().get("ground", {})
+	if _gfog != null or not bool(F.get("on", false)):
+		return
+	var noise := FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.frequency = 0.02
+	noise.fractal_octaves = 3
+	var tex := NoiseTexture2D.new()
+	tex.width = 256
+	tex.height = 256
+	tex.seamless = true
+	tex.normalize = true
+	tex.noise = noise
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/ground_fog.gdshader")
+	m.render_priority = -100
+	m.set_shader_parameter("noise_tex", tex)
+	for k in ["top_m", "density", "near_m", "reach_m", "scale_m", "drift_mps", "sky_share", "night_sky_share"]:
+		m.set_shader_parameter(k, float(F.get(k, m.get_shader_parameter(k))))
+	var q := QuadMesh.new()
+	q.size = Vector2(2.0, 2.0)
+	_gfog = MeshInstance3D.new()
+	_gfog.name = "GroundFog"
+	_gfog.mesh = q
+	_gfog.material_override = m
+	_gfog.extra_cull_margin = 16384.0
+	_gfog.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(_gfog)
+
+
 ## World settings `p` with the plants cut at the dream fog (SurfacePlants).
 func fog_plants(p: Dictionary) -> Dictionary:
 	if fog_far_m() <= 0.0:
@@ -799,6 +835,12 @@ func _update(delta: float) -> void:
 		sky.sky_material.set_shader_parameter("ground_color", col)
 		var band := float(fog().get("sky_band", 0.14))
 		sky.sky_material.set_shader_parameter("horizon_haze", band)
+		if _gfog != null:
+			var gm := _gfog.material_override as ShaderMaterial
+			gm.set_shader_parameter("amount", lerpf(float((fog().get("ground", {}) as Dictionary).get("day_share", 0.6)), 1.0, night))
+			var w2 := Vector2((weather.get("wind", Vector3.ZERO) as Vector3).x, (weather.get("wind", Vector3.ZERO) as Vector3).z)
+			if w2.length() > 0.05:
+				gm.set_shader_parameter("wind", w2.normalized())
 		Look.apply({"look_fog_low": sky.sky_material.get_shader_parameter("horizon_color"), "look_fog_mid": sky.sky_material.get_shader_parameter("mid_color"),
 			"look_fog_top": sky.sky_material.get_shader_parameter("zenith_color"), "look_fog_shape": Vector2(float(sky.sky_material.get_shader_parameter("horizon_sharpness")), band)})
 	Look.apply({"look_draw_m": fog_far, "look_fog_density": density, "look_fog_start_m": fog_clear, "look_ground_m": land.base_y,

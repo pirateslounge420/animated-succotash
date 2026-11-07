@@ -551,6 +551,16 @@
      "depth_m": 1.8,
      "wander_m": 22.0,
      "bank_m": 5.0
+    },
+    "river": {
+     "_help": "(Mike, 6 Nov: 'i dont see a water source'; Claude Code, first guesses) The hub's water: a pond near the fire and the stream feeding it, cut into the ground below its banks at one level, so it reads as water from where you stand. pond_s_m: how far out from the camp's middle the pond sits, along the wash. pond_r_m: the pond's radius. width_m: the stream's width. bank_m: how wide its sloping banks are. bed_m: how deep the water is. below_m: how far under the lowest ground near it the water lies. end_s_m: how far out the stream reaches (it stops short of the talus).",
+     "pond_s_m": 24.0,
+     "pond_r_m": 8.0,
+     "width_m": 6.0,
+     "bank_m": 3.5,
+     "bed_m": 0.7,
+     "below_m": 0.3,
+     "end_s_m": 62.0
     }
    },
    "finds": {
@@ -722,7 +732,8 @@
     "flicker": 0.18
    }
   },
-  "log_start": "Dusk at the camp. The fire crackles; the cauldron steams.",
+  "log_start": "Dawn at the camp. The fire is banked low; the cauldron steams.",
+  "log_start_dusk": "Dusk at the camp. The fire crackles; the cauldron steams.",
   "log_down": "Down the old steps beneath the fire, into the dark.",
   "log_up": "Up out of the dark, into the camp.",
   "common": {
@@ -818,6 +829,9 @@
    "_help_spill": "spill (0-1, 0 or absent none): a heavy brew's fog, billowing out over the rim and rolling down round the fire, spreading and fading on the ground (Mike, 26 Oct: 'a more billowing and flowing over the edges type of fog'). Jimsonweed spills hard; teonanácatl a little."
   },
   "dusk_into_min": 3.0,
+  "start_at": "dawn",
+  "start_sun_deg": 1.5,
+  "_help_start_at": "(Mike, 6 Nov: start at dawn, 'to have some more sky gradient', amending §GC.1 and §GD's dusk start) When a new game starts: dawn, or dusk for the old start (dusk_into_min). start_sun_deg: how high the rising sun stands (degrees); above about 0.5 every keeper's torch is already put by. Each start has its own opening log line, log_start or log_start_dusk.",
   "bank": {
    "_help": "(design §GJ.2) The bank at the hub, like PSO's: what is in it is never lost (death takes only what you carry, §GJ.1). Interact with it (reach_m) to open it: click a thing you carry to put it in, a thing in the bank to take it out; Esc or the interact button closes it. capacity: how many things it holds (a generous first guess). currency: the money's name (teeth, §FZ.3): a slot kept ready, since teeth are not built yet. Who or what keeps it is open (§GJ.2): for now a lidded store-basket beside the fire, opposite the shaman (from_fire_m). Kept in the game's save (§FK).",
    "capacity": 60,

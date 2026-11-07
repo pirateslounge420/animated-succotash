@@ -26,6 +26,9 @@ var left := -1
 ## How long Tab (other_hand) has been held, s (HandStrip shows the strip
 ## past tab_hold.show_after_s).
 var tab_s := 0.0
+## This hold of Tab has scrolled a hand, or already opened the options: it
+## won't open them (again) till Tab is let go.
+var tab_spent := false
 ## The last step taken, [hand, from, to], and how many (the checks).
 var last_step: Array = []
 var steps := 0
@@ -194,6 +197,7 @@ func wheel_input(event: InputEvent) -> bool:
 		hand = tab_hand()
 		# Turning the wheel with Tab held shows the strip at once.
 		tab_s = maxf(tab_s, float(_tab().get("show_after_s", 0.15)))
+		tab_spent = true
 	cycle(hand, dir)
 	return true
 
@@ -235,6 +239,8 @@ func update(delta: float) -> void:
 		tab_s += delta
 	else:
 		tab_s = 0.0
+		if not Input.is_action_pressed("other_hand"):
+			tab_spent = false
 	if left >= 0 and left_item().is_empty():
 		# Gone from the strip (thrown): the hand is empty.
 		left = -1
@@ -245,6 +251,15 @@ func update(delta: float) -> void:
 func strip_showing() -> bool:
 	var t := _tab()
 	return bool(t.get("shows_strip", true)) and tab_s > 0.0 and tab_s >= float(t.get("show_after_s", 0.15))
+
+
+## Tab held on with no scrolling (Mike, 6 Nov): time for the options menu.
+## Once per hold.
+func menu_held() -> bool:
+	if tab_spent or tab_s < float(_tab().get("menu_after_s", 0.6)):
+		return false
+	tab_spent = true
+	return true
 
 
 ## What the strip shows for `hand`: [entries, chosen]. An entry is an

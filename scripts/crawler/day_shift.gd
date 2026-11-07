@@ -38,14 +38,16 @@ var hub: HubCamp
 var _seed := 0
 var _blooms: Array = []        # [{"node", "habit", "id", "open"}]
 var _moths: Array = []         # [{"p": CPUParticles3D, "id", "light": Node or null, "bloom": bool}]
-var _bats: Array = []          # [{"n", "id", "state", "a", "r", "y", "t"}]
-var _birds: Array = []         # [{"n", "id", "state", "at", "goal", "t", "roost"}]
+var _bats: Array = []          # [{"n", "id", "state", "at", "v", "patch", "goal", "leg", "speed", "jink", "t"}]
+var _birds: Array = []         # the same, and "roost"
 var _mouth := Vector3.ZERO
 var _center := Vector3.ZERO
 ## The folk's lights: [{"id", "kind", "owner", "parts", "light", "energy", "at", "lit"}].
 var lights: Array = []
 ## The keepers walking their rounds: owner -> {"motion", "seat", "yaw", "steps", "i", "wait"}.
 var _rounds := {}
+## The keepers whose torch has its flame from the hearth tonight: owner -> true.
+var _flame := {}
 var last_lit_s := -1e9
 var lit_log: Array = []        # [[clock_s, id, on]] (checks)
 var clock_s := 0.0
@@ -282,6 +284,9 @@ func settle_now() -> void:
 		var s := share(str(l.owner))
 		if s >= 0.98 or s <= 0.02:
 			_set_lit(l, s >= 0.5, false)
+	for owner in _rounds:
+		if share(str(owner)) >= 0.98:
+			_flame[owner] = true
 	var hs := share("shaman")
 	_hearth_k = 1.0 if hs >= 0.5 else float((D.get("crawler", {}) as Dictionary).get("hearth_banked", 0.35))
 	_apply_hearth()
@@ -354,7 +359,7 @@ func _flock(C: Dictionary) -> void:
 			var t: Array = trees[_rng.randi_range(0, trees.size() - 1)]
 			var q: Vector2 = t[0]
 			roost = Vector3(q.x, surface.land.height_at(q.x, q.y) + float(t[1]) * 0.85, q.y)
-		_birds.append({"n": n, "id": "bird_%d" % i, "state": "out", "at": roost + Vector3(0, 6, 0), "goal": roost, "t": 0.0, "roost": roost, "a": _rng.randf() * TAU, "r": _rng.randf_range(8.0, 22.0), "y": _rng.randf_range(7.0, 14.0)})
+		_birds.append({"n": n, "id": "bird_%d" % i, "state": "out", "at": roost + Vector3(0, 6, 0), "t": 0.0, "roost": roost, "r": _rng.randf_range(8.0, 22.0), "v": Vector3.ZERO, "patch": Vector3.INF, "goal": roost + Vector3(0, 6, 0), "leg": 0.0, "speed": 5.0, "jink": 0.0, "beat": 0.0, "beat_hz": _rng.randf_range(3.0, 4.5)})
 
 
 func _bat_colony(C: Dictionary) -> void:
@@ -365,7 +370,7 @@ func _bat_colony(C: Dictionary) -> void:
 		n.name = "Bat_%d" % i
 		n.visible = false
 		add_child(n)
-		_bats.append({"n": n, "id": "bat_%d" % i, "state": "in", "a": _rng.randf() * TAU, "r": _rng.randf_range(10.0, 26.0), "y": _rng.randf_range(6.0, 14.0), "t": 0.0, "at": _mouth})
+		_bats.append({"n": n, "id": "bat_%d" % i, "state": "in", "r": _rng.randf_range(10.0, 26.0), "t": 0.0, "at": _mouth, "v": Vector3.ZERO, "patch": Vector3.INF, "goal": _mouth, "leg": 0.0, "speed": 6.0, "jink": 0.0, "beat": 0.0, "beat_hz": _rng.randf_range(6.0, 9.0)})
 
 
 func birds_out() -> int:
@@ -377,56 +382,141 @@ func bats_out() -> int:
 
 
 func _fly(delta: float) -> void:
-	var flap := sin(clock_s * 18.0)
+	# Short steps, so the turns hold however long the frame (the checks).
+	var n_steps := clampi(ceili(delta / 0.05), 1, 40)
+	var dt := delta / float(n_steps)
+	var bat_p: Dictionary = (D.get("crawler", {}) as Dictionary).get("bat_flight", {})
+	var bird_p: Dictionary = (D.get("crawler", {}) as Dictionary).get("bird_flight", {})
+	for i in n_steps:
+		for b in _birds:
+			_fly_bird(b, dt, bird_p)
+		for b in _bats:
+			_fly_bat(b, dt, bat_p)
 	for b in _birds:
-		var n: Node3D = b.n
-		var night := is_night(str(b.id))
-		match str(b.state):
-			"out":
-				b.a = float(b.a) + delta * 0.25
-				b.at = _center + Vector3(cos(float(b.a)) * float(b.r), float(b.y), sin(float(b.a)) * float(b.r))
-				if night:
-					b.state = "to_roost"
-			"to_roost":
-				b.at = (b.at as Vector3).move_toward(b.roost, delta * 5.0)
-				if (b.at as Vector3).distance_to(b.roost) < 0.2:
-					b.state = "roosting"
-			"roosting":
-				if not night:
-					b.state = "out"
-		n.visible = str(b.state) != "roosting"
-		n.position = b.at
-		for w in n.get_children():
-			if w.name.begins_with("Wing"):
-				(w as Node3D).rotation.z = flap * 0.6 * (1.0 if w.name.ends_with("R") else -1.0)
+		_show_flier(b, delta, str(b.state) != "roosting")
 	for b in _bats:
-		var n: Node3D = b.n
-		var night := is_night(str(b.id))
-		match str(b.state):
-			"in":
-				if night:
-					b.state = "emerging"
-					b.at = _mouth
-			"emerging":
-				var target := _center + Vector3(cos(float(b.a)) * float(b.r), float(b.y), sin(float(b.a)) * float(b.r))
-				b.at = (b.at as Vector3).move_toward(target, delta * 6.0)
-				if (b.at as Vector3).distance_to(target) < 0.3:
-					b.state = "out"
-			"out":
-				b.a = float(b.a) + delta * 0.6
-				var jit := sin(clock_s * 3.1 + float(b.r)) * 1.2
-				b.at = _center + Vector3(cos(float(b.a)) * float(b.r), float(b.y) + jit, sin(float(b.a)) * float(b.r))
-				if not night:
-					b.state = "returning"
-			"returning":
-				b.at = (b.at as Vector3).move_toward(_mouth, delta * 6.0)
-				if (b.at as Vector3).distance_to(_mouth) < 0.3:
-					b.state = "in"
-		n.visible = str(b.state) != "in"
-		n.position = b.at
-		for w in n.get_children():
-			if w.name.begins_with("Wing"):
-				(w as Node3D).rotation.z = sin(clock_s * 26.0 + float(b.r)) * 0.8 * (1.0 if w.name.ends_with("R") else -1.0)
+		_show_flier(b, delta, str(b.state) != "in")
+
+
+func _fly_bird(b: Dictionary, dt: float, P: Dictionary) -> void:
+	var night := is_night(str(b.id))
+	match str(b.state):
+		"out":
+			_wander(b, dt, P)
+			if night:
+				b.state = "to_roost"
+		"to_roost":
+			if _home(b, b.roost, dt, P):
+				b.state = "roosting"
+		"roosting":
+			if not night:
+				b.state = "out"
+				b.v = Vector3.ZERO
+				b.patch = Vector3.INF
+
+
+func _fly_bat(b: Dictionary, dt: float, P: Dictionary) -> void:
+	var night := is_night(str(b.id))
+	match str(b.state):
+		"in":
+			if night:
+				b.state = "out"
+				b.at = _mouth
+				b.v = Vector3.ZERO
+				b.patch = Vector3.INF
+		"out":
+			_wander(b, dt, P)
+			if not night:
+				b.state = "returning"
+				b.t = 0.0
+		"returning":
+			if _home(b, _mouth, dt, P):
+				b.state = "in"
+
+
+## One flier feeding (Mike, 6 Nov: not flying in circles): a patch of air of
+## its own, short legs to random points in it at a speed of their own, and
+## sudden sideways jinks and height changes, as if after an insect. Now and
+## then it moves on to a new patch. day_shift.json crawler.bat_flight and
+## bird_flight (the birds have no jinks and long legs).
+func _wander(b: Dictionary, dt: float, P: Dictionary) -> void:
+	var at: Vector3 = b.at
+	if b.patch == Vector3.INF or _rng.randf() < float(P.get("new_patch_per_s", 0.1)) * dt:
+		var roam := float(P.get("roam_m", 36.0)) * sqrt(_rng.randf())
+		var a := _rng.randf() * TAU
+		b.patch = _center + Vector3(cos(a) * roam, 0.0, sin(a) * roam)
+		b.leg = 0.0
+	b.leg = float(b.leg) - dt
+	if float(b.leg) <= 0.0 or at.distance_to(b.goal) < 1.0:
+		var pm := float(P.get("patch_m", 12.0)) * sqrt(_rng.randf())
+		var a2 := _rng.randf() * TAU
+		var q: Vector3 = b.patch + Vector3(cos(a2) * pm, 0.0, sin(a2) * pm)
+		var hr: Array = P.get("height_m", [3.0, 12.0])
+		q.y = surface.land.height_at(q.x, q.z) + _rng.randf_range(float(hr[0]), float(hr[1]))
+		b.goal = q
+		var lr: Array = P.get("leg_s", [0.5, 2.0])
+		var sr: Array = P.get("speed_mps", [4.5, 9.0])
+		b.leg = _rng.randf_range(float(lr[0]), float(lr[1]))
+		b.speed = _rng.randf_range(float(sr[0]), float(sr[1]))
+	var jm: Array = P.get("jink_mps", [0.0, 0.0])
+	if float(jm[1]) > 0.0:
+		b.jink = float(b.jink) - dt
+		if float(b.jink) <= 0.0:
+			var jr: Array = P.get("jink_s", [0.2, 0.9])
+			b.jink = _rng.randf_range(float(jr[0]), float(jr[1]))
+			var v: Vector3 = b.v
+			var side := Vector3(-v.z, 0.0, v.x).normalized()
+			if side == Vector3.ZERO:
+				side = Vector3.RIGHT
+			var push := _rng.randf_range(float(jm[0]), float(jm[1])) * (1.0 if _rng.randf() < 0.5 else -1.0)
+			b.v = v + side * push + Vector3.UP * _rng.randf_range(-0.5, 0.5) * absf(push)
+	_steer(b, b.goal, float(b.speed), float(P.get("turn", 5.0)), dt)
+	var floor_y := surface.land.height_at((b.at as Vector3).x, (b.at as Vector3).z) + 1.2
+	if (b.at as Vector3).y < floor_y:
+		b.at = Vector3((b.at as Vector3).x, floor_y, (b.at as Vector3).z)
+
+
+## Flying back to `to`: true on arrival. A flier still circling it after
+## home_s just goes in.
+func _home(b: Dictionary, to: Vector3, dt: float, P: Dictionary) -> bool:
+	b.t = float(b.t) + dt
+	var sr: Array = P.get("speed_mps", [4.5, 9.0])
+	if float(b.t) > float(P.get("home_s", 30.0)):
+		b.at = (b.at as Vector3).move_toward(to, dt * float(sr[1]))
+	else:
+		_steer(b, to, float(sr[1]), float(P.get("turn", 5.0)) * 1.6, dt)
+	if (b.at as Vector3).distance_to(to) < 1.2:
+		b.at = to
+		b.t = 0.0
+		return true
+	return false
+
+
+func _steer(b: Dictionary, to: Vector3, speed: float, turn: float, dt: float) -> void:
+	var at: Vector3 = b.at
+	var want := (to - at).normalized() * speed
+	b.v = (b.v as Vector3).lerp(want, 1.0 - exp(-turn * dt))
+	b.at = at + (b.v as Vector3) * dt
+
+
+## Where it is, nose along its flight, banked into the turn, wings beating
+## at a rate of their own with short glides.
+func _show_flier(b: Dictionary, delta: float, on: bool) -> void:
+	var n: Node3D = b.n
+	n.visible = on
+	if not on:
+		return
+	n.position = b.at
+	var v: Vector3 = b.v
+	if v.length() > 0.3:
+		var was: Vector3 = b.get("seen_v", v)
+		var bank := clampf(was.cross(v).y * 0.05, -0.8, 0.8)
+		n.basis = Basis.looking_at(v.normalized(), Vector3.UP) * Basis(Vector3.BACK, bank)
+		b.seen_v = v
+	b.beat = float(b.beat) + delta * float(b.beat_hz) * TAU * (0.15 if sin(clock_s * 1.3 + float(b.r)) > 0.75 else 1.0)
+	for w in n.get_children():
+		if w.name.begins_with("Wing"):
+			(w as Node3D).rotation.z = sin(float(b.beat)) * 0.7 * (1.0 if w.name.ends_with("R") else -1.0)
 
 
 # --- Flowers and moths --------------------------------------------------------------
@@ -575,13 +665,13 @@ func _folk(delta: float) -> void:
 	for owner in _rounds:
 		var r: Dictionary = _rounds[owner]
 		var mine := lights.filter(func(o): return str(o.owner) == owner and str(o.kind) in ["torch", "lamp"])
-		if mine.is_empty():
-			continue
 		var night := is_night(owner)
+		if not night:
+			_flame.erase(owner)
 		var m: FolkMotion = r.motion
 		if not bool(r.walking):
 			var need := mine.filter(func(o): return bool(o.lit) != night)
-			if need.is_empty():
+			if need.is_empty() and (not night or has_flame(owner)):
 				continue
 			_plan_round(owner, r, need, night)
 		if bool(r.walking):
@@ -589,8 +679,14 @@ func _folk(delta: float) -> void:
 		m.update(delta)
 
 
+## Has keeper `owner` lit its torch at the hearth tonight?
+func has_flame(owner: String) -> bool:
+	return bool(_flame.get(owner, false))
+
+
 ## A keeper's round: up from the seat, (at dusk) to the hearth for a flame,
-## to each light in order, back to the seat.
+## to each light in order, back to the seat. The torch in its left hand
+## comes alight there (Mike, 6 Nov: the walk to the fire has to mean something).
 func _plan_round(owner: String, r: Dictionary, need: Array, night: bool) -> void:
 	var steps: Array = []
 	var seat: Vector3 = r.seat
@@ -638,9 +734,11 @@ func _walk_round(owner: String, r: Dictionary, delta: float, gap: float) -> void
 		"flame":
 			r.wait = float(r.wait) + delta
 			if float(r.wait) < 1.2:
-				m.reach_point(1, hub.camp.pos + Vector3(0, 0.4, 0))
+				r["at_fire"] = true
+				m.reach(0, hub.camp.pos + Vector3(0, 0.4, 0))
 				return
-			m.release(1)
+			r["at_fire"] = false
+			_flame[owner] = true
 		"light", "out":
 			var l: Dictionary = st.light
 			var want := str(st.do) == "light"

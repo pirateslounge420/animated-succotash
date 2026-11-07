@@ -193,7 +193,7 @@ static func phase_minutes(days: float, _kind := "") -> Dictionary:
 
 
 ## A new game's first moment: the spring equinox's day (start_year_day),
-## before dusk; CrawlerMain.set_dusk carries it on to dusk.
+## CrawlerMain.set_dawn carries it on to the morning.
 static func start_days() -> float:
 	var yd := float(C.get("start_year_day", 0.0))
 	return fposmod(yd - DayCycle.year_start_day(), DayCycle.year_days())

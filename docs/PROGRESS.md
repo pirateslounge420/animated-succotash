@@ -4,6 +4,16 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-11-06 — Dawn start, torches lit at the fire, rolling fog, a real pond, wild bats, Tab for options (Claude Code)
+- **Mike** (6 Nov): keepers spawned with torches lit, so walking to the fire meant nothing; start at dawn for more sky gradient; fog "more rolling on the ground level"; no water source; bats "more randomized" than flying in circles; options on holding Tab.
+- **Dawn** (`crawler.json → hub.start_at`, `start_sun_deg`): a new game starts with the sun 1.5° up and rising. This overrides §GC.1 and §GD's dusk start, which the design doc and `CLAUDE.md` still state; Claude in chat owns those lines. `start_at: "dusk"` brings the old start back.
+- **Torches:** carried dark at dusk, lit by reaching into the hearth on the keeper's round (`DayShift.has_flame`), out at dawn. A keeper with no lights of its own still walks to the fire for its flame.
+- **Ground fog** (`shaders/ground_fog.gdshader`, `look.json → dream_sky.fog.ground`): one full-screen pass that walks each view ray through a low layer; two drifting noise fields make banks swell and pass at knee to chest height. The far fog's clear ground went from 8 to 18 m and its density from 0.03 to 0.022, so the view stays crisp above the banks. Cost about 1.7 ms on the M1 at Retina (26.2 against 24.4 ms, dawn, seed 7).
+- **Water:** the old river floated about 1 m above the ground (a depth meant as a cut was added as a rise), so it showed only edge-on; that was the real "blue ribbon", which the earlier fix only recoloured, and it also ran uphill. Now a pond by the camp and the stream feeding it (`crawler.json → hub.surface.ground.river`, `SurfaceGround.river_cut`) are cut into the ground at one level, under the lowest ground near them. Keepers fetch from the water's edge (`river_near`); no plants grow in it.
+- **Flight** (`day_shift.json → crawler.bat_flight`, `bird_flight`): bats and birds steer between random points in a patch of their own that moves, at changing speeds and heights; bats add sudden sideways jinks. Both now face their flight and bank.
+- **Tab:** held 0.6 s with no scrolling, it opens Settings, which stays open (`hands.json → tab_hold.menu_after_s`). A tap does nothing; scrolling during the hold stays the left hand's.
+- **Check:** new `tools/dawn_check.gd` covers all of the above but the fog. Fog and water looked at in rendered frames at dawn, noon and night; Mike has not played it.
+
 ## 2026-11-06 — Dream fog, the lag, the river, and the keepers' torches
 
 Mike, from the hub: the game is laggy, the keepers walk about with nothing in hand, and a "blue ribbon" runs across the base camp; then "perhaps to cut lag we can implement fog". No design section yet; help text cites "Mike, 6 Nov".

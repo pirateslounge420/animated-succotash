@@ -115,6 +115,8 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 					break
 			if blocked:
 				continue
+			if land.river_cut(q) > 0.3:
+				continue
 			var zone := land.zone_at(q, up_from)
 			if not zones.has(zone):
 				continue

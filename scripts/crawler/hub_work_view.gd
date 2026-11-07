@@ -230,19 +230,21 @@ func _make_torch(k: String, f: HearthFolk) -> void:
 	var head := PitchTorch.head_node(0.02, k.hash())
 	head.position = Vector3(0, top - PitchTorch.length_m() * 0.9, 0)
 	root.add_child(head)
-	PitchTorch.set_lit(head, true)
+	PitchTorch.set_lit(head, false)
 	var l := OmniLight3D.new()
 	l.name = "FolkTorchLight"
 	l.light_color = Torch.fire_color()
 	l.light_energy = float(T.get("energy", 1.6))
 	l.omni_range = float(T.get("range_m", 9.0))
 	l.position = Vector3(0, top + 0.2, 0)
+	l.visible = false
 	root.add_child(l)
-	_torch[k] = {"root": root, "light": l, "seed": float(k.hash() % 97)}
+	_torch[k] = {"root": root, "head": head, "light": l, "seed": float(k.hash() % 97)}
 
 
-## After dark, up and about: the torch held out ahead and upright, flickering.
-## Sitting or by day it is put by.
+## After dark, up and about: the torch held out ahead and upright. It stays
+## unlit until the keeper has taken a flame from the hearth (DayShift), then
+## burns till dawn with its own flickering light. Sitting or by day it is put by.
 func _carry_torch(k: String, f: HearthFolk, m: FolkMotion, pz: Dictionary) -> void:
 	var e: Dictionary = _torch.get(k, {})
 	if e.is_empty():
@@ -253,10 +255,15 @@ func _carry_torch(k: String, f: HearthFolk, m: FolkMotion, pz: Dictionary) -> vo
 		root.visible = on
 		if not on:
 			m.release(0)
+	var lit: bool = on and hub.day_shift.has_flame(k)
+	PitchTorch.set_lit(e.head, lit)
+	(e.light as OmniLight3D).visible = lit
 	if not on or not f.visible:
 		return
-	var front := m.front()
-	m.reach(0, f.global_position + front * 0.4 + Vector3.UP.cross(front) * 0.22 + Vector3.UP * f.height * 0.82)
+	var r: Dictionary = hub.day_shift._rounds.get(k, {})
+	if not bool(r.get("at_fire", false)):
+		var front := m.front()
+		m.reach(0, f.global_position + front * 0.4 + Vector3.UP.cross(front) * 0.22 + Vector3.UP * f.height * 0.82)
 	root.global_basis = Basis.IDENTITY
 	var T: Dictionary = (HubCamp.H.get("keepers", {}) as Dictionary).get("folk_torch", {})
 	var t := _torch_t * 9.0 + float(e.seed)
@@ -265,7 +272,7 @@ func _carry_torch(k: String, f: HearthFolk, m: FolkMotion, pz: Dictionary) -> vo
 
 ## Torches alight now (the checks).
 func torches_lit() -> int:
-	return _torch.values().filter(func(e): return (e.root as Node3D).is_visible_in_tree()).size()
+	return _torch.values().filter(func(e): return (e.light as Node3D).is_visible_in_tree()).size()
 
 
 ## What keeper `k` carries, in its right hand: goods, an item of a chain,

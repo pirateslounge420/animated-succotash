@@ -121,7 +121,7 @@ func _run() -> void:
 	var days := float(main.world.get("days"))
 	var sun := Surface.sun_deg_at(days)
 	var ph := CrawlerCalendar.phase_at(fposmod(days, 1.0), CrawlerCalendar.lat(), CrawlerCalendar.decl(days))
-	ok(ph == "dusk" and Surface.sun_deg_at(days + 0.01) < sun, "at dusk on the clock (design §GE): the sun %.1f deg, just down and sinking" % sun)
+	ok(absf(sun - float(HubCamp.H.get("start_sun_deg", 1.5))) < 0.5 and Surface.sun_deg_at(days + 0.01) > sun, "at dawn (Mike, 6 Nov): the sun %.1f deg, just up and rising (%s)" % [sun, ph])
 	ok(hub.shaman != null and hub.get_node_or_null("Cauldron/BrewGlow") != null, "the hooded cook-shaman at the cauldron, its brew glowing")
 	ok(hub.keeper_folk.size() == hub.sites.size() and hub.sites.size() == keepers_n, "the five keepers at their sites (%s)" % ", ".join(hub.sites.map(func(x): return str(x.keeper))))
 	ok(hub.get_node_or_null("River") != null, "the river")
@@ -177,7 +177,7 @@ func _run() -> void:
 		ok(_sig({"kind": hub2.kind, "camp": hub2.camp, "P": hub2.P, "sites": hub2.sites}) == first_sig, "the same camp as before")
 		pp = main2.player.global_position
 		var fp2: Vector3 = hub2.camp.pos
-		ok(Vector2(pp.x, pp.z).distance_to(Vector2(fp2.x, fp2.z)) < 4.0 and Surface.sun_deg_at(float(main2.world.get("days"))) < 6.0, "by its fire at dusk again")
+		ok(Vector2(pp.x, pp.z).distance_to(Vector2(fp2.x, fp2.z)) < 4.0 and Surface.sun_deg_at(float(main2.world.get("days"))) < 6.0, "by its fire at the same low sun again")
 	_finish()
 
 

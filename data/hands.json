@@ -36,7 +36,9 @@
  "tab_hold": {
   "shows_strip": true,
   "tap_alone": "nothing",
-  "show_after_s": 0.15
+  "show_after_s": 0.15,
+  "menu_after_s": 0.6,
+  "_help_menu": "(Mike, 6 Nov: 'make the options menu come up when holding tab') Hold Tab this many seconds without scrolling and the Settings panel opens (the same one as O), and stays open when you let go; O, F10 or Esc closes it. Scrolling during the hold keeps it the left hand's and the menu stays away."
  },
  "wheel_step": {
   "notch": 1.0,

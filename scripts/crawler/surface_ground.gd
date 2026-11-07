@@ -76,6 +76,11 @@ var _talus := FastNoiseLite.new()
 ## the circle noises are not free).
 var _flat_a := 16.0
 var _flat_b := 36.0
+## The hub's water (ground.river; river_cut): its one level (INF with none,
+## or while it is being worked out), the pond's middle, where the stream stops.
+var river_y := INF
+var pond := Vector2.ZERO
+var river_end := 0.0
 
 
 ## Lay the ground out: `p` worlds.json surface, `seed_value` the surface's
@@ -119,6 +124,7 @@ func setup(p: Dictionary, seed_value: int, stair: Vector2, out: Vector2, level: 
 	var L: Dictionary = E.get("landmark", {})
 	var th := atan2(n.y, n.x)
 	landmark = center + n * (edge_r(th) + float(E.get("cliff_width_m", 16.0)) + float(L.get("out_m", 120.0)))
+	_lay_river()
 	# The grid: square, whole blocks, round the stairhead, past the
 	# plateau's own reach and the landmark.
 	var reach := r_in * (1.0 + absf(float(E.get("wander", 0.07)))) + float(E.get("cliff_width_m", 16.0)) + float(E.get("beyond_m", 170.0))
@@ -210,14 +216,65 @@ func wash_at(p: Vector2) -> Vector2:
 	return Vector2(absf(lat - wash_offset(s)), run)
 
 
-## 0..1 how far into the wash's bed `p` is (1 on its line).
+## 0..1 how far into the wash's bed `p` is (1 on its line), or the hub's
+## water, whichever is more.
 func in_wash(p: Vector2) -> float:
 	var W: Dictionary = G.get("wash", {})
 	var w := wash_at(p)
+	var cut := river_cut(p)
 	if w.y <= 0.0:
-		return 0.0
+		return cut
 	var half := float(W.get("width_m", 11.0)) * 0.5
-	return (1.0 - smoothstep(half * 0.5, half, w.x)) * w.y
+	return maxf((1.0 - smoothstep(half * 0.5, half, w.x)) * w.y, cut)
+
+
+## The hub's pond and stream (ground.river, Mike 6 Nov): where they lie and
+## their level, just under the lowest ground along them, so the water is
+## always below its banks. The ground is then cut down to it (raw).
+func _lay_river() -> void:
+	var R: Dictionary = G.get("river", {})
+	if R.is_empty():
+		return
+	var s0 := float(R.get("pond_s_m", 24.0))
+	var side := Vector2(-n.y, n.x)
+	pond = center + n * s0 + side * wash_offset(s0)
+	var foot := edge_r(atan2(n.y, n.x)) - float(E.get("talus_width_m", 90.0))
+	river_end = minf(float(R.get("end_s_m", 62.0)), foot + 4.0)
+	var low := INF
+	# Well past the banks, so no dip beside it leaves the water standing proud.
+	var clear := float(R.get("bank_m", 3.5)) + 6.0
+	var reach := float(R.get("width_m", 6.0)) * 0.5 + clear
+	var s := s0
+	while s < river_end + clear:
+		var c := center + n * s + side * wash_offset(s)
+		for o in [-reach, -reach * 0.5, 0.0, reach * 0.5, reach]:
+			var q: Vector2 = c + side * o
+			low = minf(low, raw(q.x, q.y))
+		s += 2.0
+	var pr := float(R.get("pond_r_m", 8.0))
+	for i in 24:
+		for k in [pr, pr + clear * 0.5, pr + clear]:
+			var q: Vector2 = pond + Vector2.from_angle(TAU * i / 24.0) * k
+			low = minf(low, raw(q.x, q.y))
+	river_y = low - float(R.get("below_m", 0.3))
+
+
+## 0..1 how far `p` is into the pond or the stream's channel (1 in the
+## water, falling away up the banks; 0 everywhere else, and with no river).
+func river_cut(p: Vector2) -> float:
+	if river_y == INF:
+		return 0.0
+	var R: Dictionary = G.get("river", {})
+	var half := float(R.get("width_m", 6.0)) * 0.5
+	var bank := float(R.get("bank_m", 3.5))
+	var d := p - center
+	var s := d.dot(n)
+	var dist := p.distance_to(pond) - float(R.get("pond_r_m", 8.0)) + half
+	var s0 := float(R.get("pond_s_m", 24.0))
+	if s >= s0 and s <= river_end + bank:
+		var lat := d.dot(Vector2(-n.y, n.x))
+		dist = minf(dist, absf(lat - wash_offset(s)) + maxf(s - river_end, 0.0))
+	return 1.0 - smoothstep(half, half + bank, dist)
 
 
 ## The height the ground's shape gives at (x, z) (the grid samples it).
@@ -245,6 +302,9 @@ func raw(x: float, z: float) -> float:
 	# Flat round the stairhead (the yard and the way out of it).
 	var f := 1.0 - smoothstep(_flat_a, _flat_b, r)
 	h = lerpf(h, base_y, f)
+	# The hub's pond and stream, cut down to their bed.
+	if river_y != INF:
+		h = lerpf(h, river_y - float((G.get("river", {}) as Dictionary).get("bed_m", 0.7)), river_cut(p))
 	# The edge: the talus, then the cliff, then the plateau.
 	if r > t0:
 		var t := clampf((r - t0) / tw, 0.0, 1.0)

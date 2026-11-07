@@ -3,7 +3,7 @@
 // a mirror's shine, so firelight and torches glint on it after dark, and it
 // runs dark with the night instead of glowing. By day it
 // is still the brightest thing in view (§GB.1.3). Ripples drift downstream
-// and the banks fade it out, so it has no hard painted edge.
+// and the ground's own banks draw its shore.
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx;
 
@@ -56,5 +56,5 @@ void fragment() {
 	SPECULAR = 0.6;
 	float glint = smoothstep(0.55, 0.8, h);
 	EMISSION = look_fog_low * mix(sky_night, sky_day, day) * (0.35 + 0.9 * h + 1.6 * glint);
-	ALPHA = smoothstep(1.0, 0.7, abs(UV.x));
+	ALPHA = 0.94;
 }

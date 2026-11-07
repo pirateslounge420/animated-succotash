@@ -341,10 +341,10 @@ func _ready() -> void:
 		areas.live = true
 
 
-## Every start, new game or Continue, at the hub camp's fire at dusk
-## (design §GC.1; Mike, 26 Oct; crawler.json hub): the dungeon below made
-## ready in the dark, the clock set to dusk, up into the camp, the dark
-## lifting.
+## Every start, new game or Continue, at the hub camp's fire (design
+## §GC.1; crawler.json hub): the dungeon below made ready in the dark, the
+## clock set to dawn (Mike, 6 Nov; hub.start_at), up into the camp, the
+## dark lifting.
 func _start_at_camp() -> void:
 	await _rescuer(0.0, false)
 	# The pages lying on its base layer, laid while its stone is in the
@@ -354,17 +354,34 @@ func _start_at_camp() -> void:
 		await get_tree().physics_frame
 		w += 1
 	# The clock (design §GE.1.5, §FK.2): a new game at the spring equinox
-	# (calendar.start_year_day), at dusk; Continue as it was saved.
+	# (calendar.start_year_day), at dawn; Continue as it was saved.
 	CrawlerCalendar.set_place("hub")
+	var at_dusk := str(HubCamp.H.get("start_at", "dawn")) == "dusk"
 	if not _clock_restored:
 		world.days = CrawlerCalendar.start_days()
-		set_dusk()
+		if at_dusk:
+			set_dusk()
+		else:
+			set_dawn()
 	_up_now()
-	GameLog.add(str(HubCamp.H.get("log_start", "Dusk at the camp.")), "world")
+	GameLog.add(str(HubCamp.H.get("log_start_dusk" if at_dusk else "log_start", "")), "world")
 	areas.live = true
 	var tw := create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 2.5)
 	tw.tween_callback(func(): _fade.visible = false)
+
+
+## The one clock set to dawn: the first moment from now that the rising sun
+## stands at hub.start_sun_deg.
+func set_dawn() -> void:
+	var want := float(HubCamp.H.get("start_sun_deg", 1.5))
+	var t := float(world.get("days"))
+	var step := 1.0 / 2880.0
+	for i in 5760:
+		if Surface.sun_deg_at(t) < want and Surface.sun_deg_at(t + step) >= want:
+			world.days = t + step
+			return
+		t += step
 
 
 ## The one clock set to dusk (hub.dusk_sun_deg: the sun that high and
@@ -890,6 +907,8 @@ func _process(delta: float) -> void:
 	# you stand still in the opening while the dark comes.)
 	player.typing = log_panel.visible or tome_panel.visible or (harm != null and harm.taking) or leaving
 	player.ui_open = settings_panel.visible or log_panel.visible or tome_panel.visible or (bank_panel != null and bank_panel.visible)
+	if not player.ui_open and not player.typing and player.hands.menu_held():
+		_toggle_settings(true)
 	if reticle != null:
 		# In first person, and not over a panel: both cover the middle.
 		reticle.shown = player.first_person and not player.ui_open

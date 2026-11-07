@@ -12,7 +12,7 @@ extends Surface
 ##   the kind      stone, ruins or vines, one per game from the seed: what
 ##                 towers round the clearing (crooked rock pillars,
 ##                 oversized roots, broken columns, hanging vines)
-##   the river     water down the wash, the brightest thing in view
+##   the river     a pond by the camp and the stream feeding it, down the wash
 ##   the fire      the campfire at the camp's middle; you spawn across it,
 ##                 facing it
 ##   the ring      standing stones behind the fire (a henge; no way down)
@@ -421,44 +421,45 @@ func _free_spot(rng: RandomNumberGenerator, keep_out: Array, r_from: float, r_to
 
 # --- The river ---------------------------------------------------------------------
 
-## Water down the wash's line (SurfaceGround), a hand under the banks: a
-## strip of quads following its bends, drawn by hub_river.gdshader: glossy,
-## the brightest thing in view by day (§GB.1.3), dark with the night and
-## glinting with the fires (Mike, 6 Nov: it glowed flat blue after dark).
+## The pond and the stream that feeds it (SurfaceGround.river_cut): one flat
+## sheet at the water's level, wider than the water, the ground's own banks
+## drawing its shore. hub_river.gdshader: glossy, the brightest thing in view
+## by day (§GB.1.3), dark with the night and glinting with the fires.
 func _river() -> void:
-	var W: Dictionary = land.G.get("wash", {})
-	var from := float(W.get("from_m", 16.0))
-	var half := float(W.get("width_m", 9.0)) * 0.42
-	var n := land.n
-	var side := Vector2(-n.y, n.x)
+	if land.river_y == INF:
+		return
+	var y := land.river_y
 	var v := PackedVector3Array()
-	var nr := PackedVector3Array()
-	var uv := PackedVector2Array()
-	var s := from + 2.0
-	var prev: Array = []
-	while s < across_m:
-		var c := land.center + n * s + side * land.wash_offset(s)
-		if not land.inside(c, 4.0):
-			break
-		var y := land.height_at(c.x, c.y) + float(W.get("depth_m", 1.8)) * 0.55
-		var l := Vector3(c.x - side.x * half, y, c.y - side.y * half)
-		var r := Vector3(c.x + side.x * half, y, c.y + side.y * half)
-		if not prev.is_empty():
-			var ps := s - 2.0
-			for q in [[prev[0], -1.0, ps], [r, 1.0, s], [prev[1], 1.0, ps], [prev[0], -1.0, ps], [l, -1.0, s], [r, 1.0, s]]:
-				v.append(q[0])
-				nr.append(Vector3.UP)
-				# Across (-1 .. 1, the shader fades the banks), down it (m).
-				uv.append(Vector2(q[1], q[2]))
-		prev = [l, r]
-		s += 2.0
+	var step := 2.0
+	var lo := land.pond
+	var hi := land.pond
+	var side := Vector2(-land.n.y, land.n.x)
+	var far := land.center + land.n * land.river_end
+	for q: Vector2 in [far + side * 40.0, far - side * 40.0, land.pond + side * 40.0, land.pond - side * 40.0, land.pond - land.n * 20.0]:
+		lo = Vector2(minf(lo.x, q.x), minf(lo.y, q.y))
+		hi = Vector2(maxf(hi.x, q.x), maxf(hi.y, q.y))
+	var x := lo.x
+	while x < hi.x:
+		var z := lo.y
+		while z < hi.y:
+			if land.river_cut(Vector2(x + step * 0.5, z + step * 0.5)) > 0.0:
+				var a := Vector3(x, y, z)
+				var b := Vector3(x + step, y, z)
+				var c := Vector3(x + step, y, z + step)
+				var d := Vector3(x, y, z + step)
+				for q in [a, b, c, a, c, d]:
+					v.append(q)
+			z += step
+		x += step
 	if v.is_empty():
 		return
+	var nr := PackedVector3Array()
+	nr.resize(v.size())
+	nr.fill(Vector3.UP)
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = v
 	arrays[Mesh.ARRAY_NORMAL] = nr
-	arrays[Mesh.ARRAY_TEX_UV] = uv
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
@@ -466,7 +467,8 @@ func _river() -> void:
 	mi.mesh = mesh
 	var m := ShaderMaterial.new()
 	m.shader = preload("res://shaders/hub_river.gdshader")
-	m.set_shader_parameter("flow", n)
+	m.set_shader_parameter("flow", -land.n)
+	m.render_priority = -120
 	mi.material_override = m
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mi)
@@ -985,22 +987,27 @@ func _store() -> void:
 		_basket(store_node, Vector3(-0.5 + i * 0.5, 0.0, 0.25 * (i % 2)))
 
 
-## A point on the river nearest `p` (its middle, at the water).
+## The water's edge nearest `p`: where a keeper stands to fill a skin.
 func river_near(p: Vector3) -> Vector3:
-	var W: Dictionary = land.G.get("wash", {})
-	var n := land.n
-	var side := Vector2(-n.y, n.x)
-	var best := Vector3.INF
-	var s := float(W.get("from_m", 16.0)) + 2.0
-	while s < across_m:
-		var c := land.center + n * s + side * land.wash_offset(s)
-		if not land.inside(c, 4.0):
-			break
-		var q := Vector3(c.x, land.height_at(c.x, c.y), c.y)
-		if best == Vector3.INF or Vector2(q.x - p.x, q.z - p.z).length() < Vector2(best.x - p.x, best.z - p.z).length():
-			best = q
+	if land.river_y == INF:
+		return p
+	var at := Vector2(p.x, p.z)
+	var side := Vector2(-land.n.y, land.n.x)
+	var best := land.pond
+	var s := float((land.G.get("river", {}) as Dictionary).get("pond_s_m", 24.0))
+	while s < land.river_end:
+		var c := land.center + land.n * s + side * land.wash_offset(s)
+		if c.distance_to(at) < best.distance_to(at):
+			best = c
 		s += 2.0
-	return best if best != Vector3.INF else p
+	# From the middle of the water, out toward `p` till the ground is dry.
+	var dir := (at - best).normalized()
+	var q := best
+	for i in 40:
+		if land.height_at(q.x, q.y) > land.river_y + 0.05:
+			break
+		q += dir * 0.5
+	return Vector3(q.x, land.height_at(q.x, q.y), q.y)
 
 
 ## Where the keepers' work happens (HubWork.spots): each site's spots
