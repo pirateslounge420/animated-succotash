@@ -11,6 +11,7 @@ extends SceneTree
 ##     the fire, and comes alight there
 ##  5. bats do not fly circles: their distance from the camp keeps changing
 ##     and no two take the same path
+##  6. the hub fire outshines a campfire at night, and flickers
 
 var fails := 0
 
@@ -157,6 +158,18 @@ func _run() -> void:
 				turns += 1
 	ok(all_vary, "each bat's distance from the camp keeps changing (m:%s)" % line)
 	ok(turns > 20, "they jink: %d sharp turns in 15 s among 4 bats (a circle has none)" % turns)
+	# 6. The hub's big fire: brighter than a plain campfire, and alive.
+	var hl := hub.fire.get_node("Light") as OmniLight3D
+	var plain := Campfire.LIGHT_ENERGY * GlossyLook.fire_energy_k() * float(Campfire.L.get("night_energy_scale", 1.0))
+	var e_lo := INF
+	var e_hi := 0.0
+	for i in 60:
+		await process_frame
+		e_lo = minf(e_lo, hl.light_energy)
+		e_hi = maxf(e_hi, hl.light_energy)
+	ok(e_lo > plain * 2.0 and hl.omni_range > Campfire.RANGE_M * 1.5, "the hub fire outshines a campfire at night (%.1f-%.1f against %.1f, reach %.1f m)" % [e_lo, e_hi, plain, hl.omni_range])
+	ok(e_hi - e_lo > 0.3, "and its light flickers (%.1f-%.1f)" % [e_lo, e_hi])
+	ok(hub.fire.get_node_or_null("Smoke") == null, "with no smoke column over the camp")
 	print("RESULT fails: %d" % fails)
 	print("dawn_check: %d fails" % fails)
 	quit(1 if fails > 0 else 0)

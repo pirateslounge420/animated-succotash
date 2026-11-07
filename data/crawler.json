@@ -585,7 +585,12 @@
   "fire": {
    "_help": "The campfire: out_m in front of the stair's mouth (the way down opens just behind it); you spawn spawn_m from the fire on the far side, facing it.",
    "out_m": 4.5,
-   "spawn_m": 2.6
+   "spawn_m": 2.6,
+   "light": {
+    "_help": "(Mike, 6 Nov: 'a larger fire should put out more light') The hub's big fire against an ordinary campfire (look.json fire.light): energy_k multiplies its brightness, range_m's reach by range_k. Raise energy_k for a brighter fire, range_k for one that lights further into the camp.",
+    "energy_k": 3.5,
+    "range_k": 1.8
+   }
   },
   "kinds": {
    "_help": "The start kind, one per game from the seed: what towers round the clearing. Each lists its props: pillars (tall crooked rock stacks: how many, height m), roots (oversized arching roots), ruins (broken columns and fallen blocks), vines (hanging from the pillars).",

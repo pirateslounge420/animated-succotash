@@ -311,14 +311,19 @@ func _set_lit(l: Dictionary, on: bool, log_it := true) -> void:
 		lit_log.append([clock_s, str(l.id), on])
 
 
+## The hub fire, every frame. The crawler's own fires loop stays below ground,
+## so the fire is flickered here (the swell at night, the noise, its voice,
+## its smoke), and then made the big fire it is (crawler.json hub.fire.light:
+## Mike, 6 Nov, a larger fire puts out more light) and banked or built up.
 func _apply_hearth() -> void:
 	if hub == null or hub.fire == null:
 		return
+	Campfire.flicker(hub.fire, clock_s)
+	var FL: Dictionary = (hub.H.get("fire", {}) as Dictionary).get("light", {})
 	var l := hub.fire.get_node_or_null("Light") as OmniLight3D
 	if l != null:
-		if not hub.fire.has_meta("base_energy"):
-			hub.fire.set_meta("base_energy", l.light_energy)
-		l.light_energy = float(hub.fire.get_meta("base_energy")) * _hearth_k
+		l.light_energy *= float(FL.get("energy_k", 1.0)) * _hearth_k
+		l.omni_range *= float(FL.get("range_k", 1.0))
 	for c in hub.fire.find_children("Card*", "", true, false):
 		var mi := c as MeshInstance3D
 		if mi != null and mi.material_override is ShaderMaterial:
@@ -651,7 +656,7 @@ func _folk(delta: float) -> void:
 	var want_k := 1.0 if is_night("shaman") else float(C.get("hearth_banked", 0.35))
 	if absf(_hearth_k - want_k) > 0.001:
 		_hearth_k = move_toward(_hearth_k, want_k, delta / maxf(float(C.get("hearth_change_s", 20.0)), 0.1))
-		_apply_hearth()
+	_apply_hearth()
 	var night_shaman := is_night("shaman")
 	for l in lights:
 		if str(l.kind) != "candle" or bool(l.lit) == night_shaman:

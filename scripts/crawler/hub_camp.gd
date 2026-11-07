@@ -617,6 +617,8 @@ func _fire() -> void:
 	var fp: Vector3 = camp.pos
 	fire = Campfire.build_at(self, world, Transform3D(Basis.IDENTITY, fp), CrawlerFires.key_dir(fp + Vector3(0.0, 0.37, 0.0)), false)
 	fire.name = "HubFire"
+	# No planet-sized smoke column here: the cauldron's steam is what rises.
+	fire.remove_meta("smoke")
 
 
 func _shaman() -> void:
