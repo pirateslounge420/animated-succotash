@@ -9,7 +9,8 @@ extends Node3D
 ##                seat or a bench by the fire, go out of sight while away
 ##                (a hunt past the camp's edge, the dugout out on the
 ##                river) and into their shelter at night; what they carry
-##                rides their right hand
+##                rides their right hand; after dark they carry a lit
+##                torch in the left, its light moving with them (Mike, 6 Nov)
 ##   the store    each good drawn at its prop (stocks → show): logs on the
 ##                woodpile, fish on the line, pots on the plank, hides on
 ##                the rack ... as many as count / cap of its pieces
@@ -40,6 +41,9 @@ var _items := {}
 var _ups := {}
 var _carry := {}
 var _smoke := {}
+## Each keeper's torch: k -> {"root", "light", "seed"}.
+var _torch := {}
+var _torch_t := 0.0
 ## The camp's band at the evening meal (design §GO.10.1, queue 125):
 ## instrument -> its player's AudioStreamPlayer3D.
 var _band := {}
@@ -79,6 +83,7 @@ func setup(p_hub: HubCamp) -> void:
 			m.ground = hub.land.height_at
 		_motion[k] = m
 		_pose[k] = {"seated": true, "to": Vector3.INF, "hidden": false}
+		_make_torch(k, f)
 	print("[hub work] %s camp: %d goods, %d tools, %d items in the chains, %d upgrades%s" % ["kept" if kept is Dictionary else "new", sim.store.size(), sim.tools.size(), sim.items.size(), sim.upgrades.size(), (", caught up %.0f min" % caught_min) if caught_min > 0.0 else ""])
 
 
@@ -126,10 +131,12 @@ func flush() -> void:
 
 func _drive(delta: float) -> void:
 	var speed := float(sim.S.get("walk_mps", 1.1))
+	_torch_t += delta
 	for k in _folk:
 		var f: HearthFolk = _folk[k]
 		var m: FolkMotion = _motion[k]
 		var pz: Dictionary = _pose[k]
+		_carry_torch(k, f, m, pz)
 		var r: Dictionary = hub.day_shift._rounds.get(k, {}) if hub.day_shift != null else {}
 		if bool(r.get("walking", false)):
 			# The lighting round is DayShift's (§GF).
@@ -202,6 +209,63 @@ func _show(k: String, f: HearthFolk, on: bool) -> void:
 	if f.visible != on:
 		f.visible = on
 	(_pose[k] as Dictionary).hidden = not on
+
+
+## Keeper `k`'s torch, in its left fist: a stick, the pitch head alight and
+## its own light; out of sight till dark (built here so the glossy look
+## smooths its flame with the rest of the camp).
+func _make_torch(k: String, f: HearthFolk) -> void:
+	var arm: Node3D = f.body.arms[0] if f.body != null else null
+	var elbow := arm.get_node_or_null("ElbowL") as Node3D if arm != null else null
+	if elbow == null:
+		return
+	var T: Dictionary = (HubCamp.H.get("keepers", {}) as Dictionary).get("folk_torch", {})
+	var root := Node3D.new()
+	root.name = "FolkTorch"
+	root.position = FolkMotion.FIST_L
+	root.visible = false
+	elbow.add_child(root)
+	var top := 0.34
+	hub._rod(root, Vector3(0, -0.22, 0), Vector3(0, top, 0), 0.02, 0.018, "#4a3220", 0.6)
+	var head := PitchTorch.head_node(0.02, k.hash())
+	head.position = Vector3(0, top - PitchTorch.length_m() * 0.9, 0)
+	root.add_child(head)
+	PitchTorch.set_lit(head, true)
+	var l := OmniLight3D.new()
+	l.name = "FolkTorchLight"
+	l.light_color = Torch.fire_color()
+	l.light_energy = float(T.get("energy", 1.6))
+	l.omni_range = float(T.get("range_m", 9.0))
+	l.position = Vector3(0, top + 0.2, 0)
+	root.add_child(l)
+	_torch[k] = {"root": root, "light": l, "seed": float(k.hash() % 97)}
+
+
+## After dark, up and about: the torch held out ahead and upright, flickering.
+## Sitting or by day it is put by.
+func _carry_torch(k: String, f: HearthFolk, m: FolkMotion, pz: Dictionary) -> void:
+	var e: Dictionary = _torch.get(k, {})
+	if e.is_empty():
+		return
+	var root: Node3D = e.root
+	var on := hub.day_shift != null and hub.day_shift.is_night(k) and not bool(pz.seated)
+	if root.visible != on:
+		root.visible = on
+		if not on:
+			m.release(0)
+	if not on or not f.visible:
+		return
+	var front := m.front()
+	m.reach(0, f.global_position + front * 0.4 + Vector3.UP.cross(front) * 0.22 + Vector3.UP * f.height * 0.82)
+	root.global_basis = Basis.IDENTITY
+	var T: Dictionary = (HubCamp.H.get("keepers", {}) as Dictionary).get("folk_torch", {})
+	var t := _torch_t * 9.0 + float(e.seed)
+	(e.light as OmniLight3D).light_energy = float(T.get("energy", 1.6)) * (1.0 + float(T.get("flicker", 0.18)) * (0.6 * sin(t) + 0.4 * sin(t * 2.7 + 1.3)))
+
+
+## Torches alight now (the checks).
+func torches_lit() -> int:
+	return _torch.values().filter(func(e): return (e.root as Node3D).is_visible_in_tree()).size()
 
 
 ## What keeper `k` carries, in its right hand: goods, an item of a chain,

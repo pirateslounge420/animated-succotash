@@ -314,7 +314,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	plants.name = "Plants"
 	plants.seasonal = CrawlerCalendar.drops_leaves(calendar_kind())
 	add_child(plants)
-	plants.build(land, P, biome_doc(), seed_value, keep_out)
+	plants.build(land, fog_plants(P), biome_doc(), seed_value, keep_out)
 	if hearth_at != Vector3.INF:
 		_build_hearth(hearth_at)
 	# The world's sacred plant, hung from one of those trees (queue 72).
@@ -332,6 +332,7 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	sky = SkySystem.new()
 	sky.name = "Sky"
 	sky.one_clock = true
+	sky.dream = SkySystem.dream_on()
 	sky.mist_place = float((S.get("sky", {}) as Dictionary).get("mist_place", 0.15))
 	add_child(sky)
 	_smoke()
@@ -637,6 +638,15 @@ func enter(main: Node) -> void:
 	(main.half_dark as HalfDark).enabled = false
 	if player.camera() != null:
 		player.camera().far = float((S.get("sky", {}) as Dictionary).get("camera_far_m", 6000.0))
+		if fog_far_m() > 0.0:
+			player.camera().far = fog_far_m() * 1.6
+	if fog_far_m() > 0.0:
+		# For what the look's shaders don't draw (the props, the folk).
+		sky.environment.fog_mode = Environment.FOG_MODE_DEPTH
+		sky.environment.fog_depth_begin = float(fog().get("clear_m", 8.0))
+		sky.environment.fog_depth_end = fog_far_m() * 0.95
+		sky.environment.fog_depth_curve = 1.0
+		sky.environment.fog_aerial_perspective = 1.0
 	# One firelight's pale whites are for firelit stone underground (§EX.6):
 	# not for sunlit sand.
 	(main.post as PostGrade).set_fire_whites(0.0, Torch.fire_color())
@@ -672,6 +682,7 @@ func step_ground(player: PlanetPlayer) -> String:
 func leave(main: Node) -> void:
 	for k in _sounds:
 		(_sounds[k] as AudioStreamPlayer).stop()
+	Look.apply({"look_fog_shape": Vector2.ZERO})
 	_restore_look()
 	var pm := (main.post as PostGrade)._rect.material as ShaderMaterial
 	var post: Dictionary = _kept.get("post", {})
@@ -736,6 +747,30 @@ func _process(delta: float) -> void:
 	_update(delta)
 
 
+## The dream fog's settings (look.json dream_sky.fog), {} with it off.
+static func fog() -> Dictionary:
+	var F: Dictionary = SkySystem.DREAM.get("fog", {})
+	return F if SkySystem.dream_on() and bool(F.get("on", false)) else {}
+
+
+## How far you see up here under the dream fog (m), 0 with it off.
+func fog_far_m() -> float:
+	return float(fog().get("far_m", 0.0))
+
+
+## World settings `p` with the plants cut at the dream fog (SurfacePlants).
+func fog_plants(p: Dictionary) -> Dictionary:
+	if fog_far_m() <= 0.0:
+		return p
+	var out := p.duplicate()
+	var pl: Dictionary = (p.get("plants", {}) as Dictionary).duplicate()
+	pl["draw_m"] = fog_far_m()
+	pl["block_m"] = float(fog().get("plant_block_m", 32.0))
+	pl["near_m"] = float(fog().get("plant_near_m", 48.0))
+	out["plants"] = pl
+	return out
+
+
 ## This frame's sky (the one clock, World.days: the same clock the dungeon
 ## below reads), haze, grade, smoke and sound.
 func _update(delta: float) -> void:
@@ -750,7 +785,23 @@ func _update(delta: float) -> void:
 	# no far edge (the land closes the view); the surface level the mist's.
 	var density := lerpf(float(K.get("fog_day", 0.0016)), float(K.get("fog_night", 0.0013)), night)
 	var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
-	Look.apply({"look_draw_m": 0.0, "look_fog_density": density, "look_fog_start_m": float(K.get("fog_start_m", 180.0)), "look_ground_m": land.base_y,
+	# Under the dream fog: a wall at fog_far_m (the shaders' far edge).
+	var fog_far := fog_far_m()
+	var fog_clear := float(K.get("fog_start_m", 180.0))
+	if fog_far > 0.0:
+		density = float(fog().get("density", 0.03))
+		fog_clear = float(fog().get("clear_m", 8.0))
+		var dim := lerpf(1.0, float(fog().get("night_color_share", 0.22)), night)
+		var col: Color = sky.environment.fog_light_color * Color(dim, dim, dim)
+		sky.environment.fog_light_color = col
+		Look.apply({"look_fog_color": col})
+		sky.sky_material.set_shader_parameter("fog_color", col)
+		sky.sky_material.set_shader_parameter("ground_color", col)
+		var band := float(fog().get("sky_band", 0.14))
+		sky.sky_material.set_shader_parameter("horizon_haze", band)
+		Look.apply({"look_fog_low": sky.sky_material.get_shader_parameter("horizon_color"), "look_fog_mid": sky.sky_material.get_shader_parameter("mid_color"),
+			"look_fog_top": sky.sky_material.get_shader_parameter("zenith_color"), "look_fog_shape": Vector2(float(sky.sky_material.get_shader_parameter("horizon_sharpness")), band)})
+	Look.apply({"look_draw_m": fog_far, "look_fog_density": density, "look_fog_start_m": fog_clear, "look_ground_m": land.base_y,
 		"look_planet_center": Vector3(0.0, -1.0e6, 0.0), "look_planet_radius": 1.0e6,
 		# The eye (the plants' leaves cast only near it, the open world's way).
 		"look_eye": cam.global_position if cam != null else Vector3(stair.arrive.x, land.base_y, stair.arrive.y)})

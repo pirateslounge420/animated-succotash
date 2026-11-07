@@ -91,6 +91,10 @@ global uniform float look_leaf_shadow_m;
 // y leaves; SkySystem, look.json light.plant_far_shade).
 global uniform float look_shadow_reach_m;
 global uniform vec2 look_plant_far_shade;
+// How much of the sun's and moon's light the plants lose, on top of a
+// cloud's shadow (SkySystem._plant_dim; the crawler only, 0 in the open
+// world): x every plant, y past the shadow map's reach.
+global uniform vec2 look_plant_dim;
 // Ground cover and shrubs are drawn only this near the eye (0: always;
 // design §W, look.json "ranges", set per node by VegetationPlacer): each
 // plant shrinks away into its root over the last tenth.
@@ -618,6 +622,7 @@ void fragment() {
 		ALPHA = 1.0;
 		ALPHA_SCISSOR_THRESHOLD = 0.5;
 		BACKLIGHT = c * (crown && look_shadow_reach_m <= 0.0 ? 0.6 : 0.0);
+		v_cloud = max(v_cloud, max(look_plant_dim.x, look_plant_dim.y));
 		ROUGHNESS = 1.0;
 		SPECULAR = 0.0;
 		FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
@@ -812,6 +817,7 @@ void fragment() {
 	bool wood_k = mat_id < 0.5 || (mat_id > 3.5 && mat_id < 4.5);
 	ALBEDO *= mix(1.0, wood_k ? look_plant_far_shade.x : look_plant_far_shade.y, far_k * (1.0 - 0.6 * look_night));
 	BACKLIGHT = ALBEDO * 0.6 * leafy * (1.0 - far_k);
+	v_cloud = max(v_cloud, max(look_plant_dim.x, look_plant_dim.y * far_k));
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);

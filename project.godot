@@ -198,10 +198,30 @@ look_plant_far_shade={
 "type": "vec2",
 "value": Vector2(0.62, 0.8)
 }
+look_plant_dim={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
 
 look_fog_color={
 "type": "vec3",
 "value": Vector3(0.26327, 0.60383, 1)
+}
+look_fog_low={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+look_fog_mid={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+look_fog_top={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+look_fog_shape={
+"type": "vec2",
+"value": Vector2(0, 0)
 }
 look_fog_density={
 "type": "float",

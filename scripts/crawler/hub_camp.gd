@@ -227,13 +227,14 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 	plants.name = "Plants"
 	plants.seasonal = CrawlerCalendar.drops_leaves(calendar_kind())
 	add_child(plants)
-	plants.build(land, P, _biome(), seed_value, keep_out)
+	plants.build(land, fog_plants(P), _biome(), seed_value, keep_out)
 	life = SurfaceLife.new()
 	add_child(life)
 	life.setup(land, P, _climate_of(_biome()), seed_value, null)
 	sky = SkySystem.new()
 	sky.name = "Sky"
 	sky.one_clock = true
+	sky.dream = SkySystem.dream_on()
 	sky.mist_place = float((S.get("sky", {}) as Dictionary).get("mist_place", 0.15))
 	add_child(sky)
 	_smoke()
@@ -250,6 +251,11 @@ func build(p_world: Node, p_lay: Dictionary, p_hearth: Node3D) -> void:
 		work_view.setup(self)
 	ms["all"] = Time.get_ticks_msec() - t0
 	print("[hub] seed %d (game %d): %s camp, %.0f m across, fire at %s, %d keepers' sites (%s), %d plants; built in %d ms" % [seed_value, CrawlerSave.game_seed, kind, across_m, str(Vector2(fp.x, fp.z).snapped(Vector2.ONE * 0.1)), sites.size(), ", ".join(sites.map(func(x): return str(x.keeper))), plants.placed, int(ms.all)])
+
+
+## The hub's fog sits closer than a realm's (look.json dream_sky.fog).
+func fog_far_m() -> float:
+	return float(fog().get("hub_far_m", 0.0))
 
 
 func _biome() -> Dictionary:
@@ -416,8 +422,9 @@ func _free_spot(rng: RandomNumberGenerator, keep_out: Array, r_from: float, r_to
 # --- The river ---------------------------------------------------------------------
 
 ## Water down the wash's line (SurfaceGround), a hand under the banks: a
-## strip of quads following its bends, glossy and bright (§GB.1.3: the
-## brightest thing in view).
+## strip of quads following its bends, drawn by hub_river.gdshader: glossy,
+## the brightest thing in view by day (§GB.1.3), dark with the night and
+## glinting with the fires (Mike, 6 Nov: it glowed flat blue after dark).
 func _river() -> void:
 	var W: Dictionary = land.G.get("wash", {})
 	var from := float(W.get("from_m", 16.0))
@@ -426,6 +433,7 @@ func _river() -> void:
 	var side := Vector2(-n.y, n.x)
 	var v := PackedVector3Array()
 	var nr := PackedVector3Array()
+	var uv := PackedVector2Array()
 	var s := from + 2.0
 	var prev: Array = []
 	while s < across_m:
@@ -436,9 +444,12 @@ func _river() -> void:
 		var l := Vector3(c.x - side.x * half, y, c.y - side.y * half)
 		var r := Vector3(c.x + side.x * half, y, c.y + side.y * half)
 		if not prev.is_empty():
-			for q in [prev[0], r, prev[1], prev[0], l, r]:
-				v.append(q)
+			var ps := s - 2.0
+			for q in [[prev[0], -1.0, ps], [r, 1.0, s], [prev[1], 1.0, ps], [prev[0], -1.0, ps], [l, -1.0, s], [r, 1.0, s]]:
+				v.append(q[0])
 				nr.append(Vector3.UP)
+				# Across (-1 .. 1, the shader fades the banks), down it (m).
+				uv.append(Vector2(q[1], q[2]))
 		prev = [l, r]
 		s += 2.0
 	if v.is_empty():
@@ -447,19 +458,15 @@ func _river() -> void:
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = v
 	arrays[Mesh.ARRAY_NORMAL] = nr
+	arrays[Mesh.ARRAY_TEX_UV] = uv
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
 	mi.name = "River"
 	mi.mesh = mesh
-	var m := StandardMaterial3D.new()
-	m.albedo_color = Color("#3fa8e8")
-	m.roughness = 0.04
-	m.metallic_specular = 1.0
-	m.emission_enabled = true
-	m.emission = Color("#2a7fd0")
-	m.emission_energy_multiplier = 0.35
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/hub_river.gdshader")
+	m.set_shader_parameter("flow", n)
 	mi.material_override = m
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mi)

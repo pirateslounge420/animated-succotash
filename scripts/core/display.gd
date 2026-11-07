@@ -35,6 +35,8 @@ static func install(window: Window) -> void:
 	_window = window
 	if not window.size_changed.is_connected(_fit):
 		window.size_changed.connect(_fit)
+	if not window.size_changed.is_connected(_fit_3d):
+		window.size_changed.connect(_fit_3d)
 	apply()
 
 
@@ -145,6 +147,7 @@ static func apply() -> void:
 		_window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
 		_window.content_scale_size = GlossyLook.hud_size()
 		_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+		_fit_3d()
 		HudText.refresh()
 		return
 	_window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
@@ -153,6 +156,18 @@ static func apply() -> void:
 	_fit()
 	# The HUD's text sizes follow the frame's lines (HudText.scale()).
 	HudText.refresh()
+
+
+## Under the glossy look, the 3D drawn at no more than glossy.render_lines
+## lines and scaled up smoothly (Mike, 6 Nov: a Retina window has more
+## pixels than the chip can fill); the HUD keeps the window's own size.
+static func _fit_3d() -> void:
+	if _window == null or not native():
+		return
+	var cap := float(GlossyLook.G().get("render_lines", 0))
+	var k := 1.0 if cap <= 0.0 or _window.size.y <= 0 else minf(cap / float(_window.size.y), 1.0)
+	_window.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	_window.scaling_3d_scale = k
 
 
 ## The window's own resolution, no pixel frame: the crawler under the

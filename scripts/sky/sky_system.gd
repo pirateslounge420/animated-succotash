@@ -83,6 +83,22 @@ var moonlight := 0.0 # 0-1, includes phase
 var _zenith := Gradient.new()
 var _mid := Gradient.new()
 var _horizon := Gradient.new()
+var _wash_a := Gradient.new()
+var _wash_b := Gradient.new()
+## The crawler's dream sky (Mike, 6 Nov; look.json dream_sky): a colour no
+## real sky has, in gradients, at every hour. Set before the sky enters the
+## tree (Surface, HubCamp). Off for the open world, whose sky is untouched.
+var dream := false
+var _dream_drift := 0.0
+static var DREAM: Dictionary = Tuning.section("look", "dream_sky")
+## The racing clouds (Mike, 6 Nov; dream_sky.racing_clouds): seconds to the
+## next front, how long this one has been over, and how long it stays.
+var _rush_wait := -1.0
+var _rush_age := -1.0
+var _rush_last := 0.0
+var _rush_offset := Vector2.ZERO
+var _rush_boil := 0.0
+var _rush_rng := RandomNumberGenerator.new()
 ## Cloud tones (lit tops, shaded undersides) for CloudLayers.
 
 var cloud_light := Color.WHITE
@@ -257,20 +273,42 @@ func _ready() -> void:
 	var zeniths := PackedColorArray()
 	var mids := PackedColorArray()
 	var horizons := PackedColorArray()
-	for key in _KEYS:
+	var washes_a := PackedColorArray()
+	var washes_b := PackedColorArray()
+	for key in (_dream_keys() if dream else _KEYS):
 		offsets.append(inverse_lerp(_ELEV_MIN, _ELEV_MAX, key[0]))
 		zeniths.append(key[1])
 		mids.append(key[2])
 		horizons.append(key[3])
+		if dream:
+			washes_a.append(key[4])
+			washes_b.append(key[5])
 	_zenith.offsets = offsets
 	_zenith.colors = zeniths
 	_mid.offsets = offsets
 	_mid.colors = mids
 	_horizon.offsets = offsets
 	_horizon.colors = horizons
+	_wash_a.offsets = offsets
+	_wash_b.offsets = offsets
+	if dream:
+		_wash_a.colors = washes_a
+		_wash_b.colors = washes_b
 
 	sky_material = ShaderMaterial.new()
 	sky_material.shader = SKY_SHADER
+	if dream:
+		# The painted clouds drawn smooth: their pixel steps read as a glitch
+		# against the soft gradient.
+		var smooth_sky := Shader.new()
+		smooth_sky.code = SKY_SHADER.code.replace("cloud_pano : filter_nearest", "cloud_pano : filter_linear")
+		sky_material.shader = smooth_sky
+		sky_material.set_shader_parameter("dream_amount", float(DREAM.get("wash", 0.4)))
+		sky_material.set_shader_parameter("dream_scale", float(DREAM.get("wash_scale", 1.6)))
+		sky_material.set_shader_parameter("star_gain", float(DREAM.get("star_gain", 0.7)))
+		sky_material.set_shader_parameter("speckle_gain", float(DREAM.get("speckle_gain", 0.4)))
+		sky_material.set_shader_parameter("rush_scale", float(_rush().get("scale", 3.0)))
+		_rush_rng.randomize()
 	sky_material.set_shader_parameter("sun_disc_deg", float(RETRO.get("sun_disc_deg", 1.5)))
 	# The painted clouds and starfield, baked once on the GPU.
 	var paint := SkyPaint.new()
@@ -437,14 +475,16 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var lift := moonlight * night * MOON_LIFT
 	# A full moon high up lifts the night sky by the moonlit palette's
 	# difference from the moonless one (#050938 toward #0000C0 overhead,
-	# on screen); a thin or low moon by its share (moonlight).
-	zenith += (MOON_SKY_ZENITH - NIGHT_SKY_ZENITH) * lift
-	mid += (MOON_SKY_MID - NIGHT_SKY_MID) * lift
-	horizon += (MOON_SKY_HORIZON - NIGHT_SKY_HORIZON) * lift
+	# on screen); a thin or low moon by its share (moonlight). (The dream
+	# sky's keys are its colours as they stand, at every hour.)
+	if not dream:
+		zenith += (MOON_SKY_ZENITH - NIGHT_SKY_ZENITH) * lift
+		mid += (MOON_SKY_MID - NIGHT_SKY_MID) * lift
+		horizon += (MOON_SKY_HORIZON - NIGHT_SKY_HORIZON) * lift
 	# The night sky glows (§BU step 5): indigo, never black, lifted by
 	# ambient_floor.night.sky_gain so the sky reads as the second brightest
 	# thing after the water.
-	var sky_gain := lerpf(1.0, float((FLOOR.get("night", {}) as Dictionary).get("sky_gain", 1.8)), night)
+	var sky_gain := 1.0 if dream else lerpf(1.0, float((FLOOR.get("night", {}) as Dictionary).get("sky_gain", 1.8)), night)
 	zenith *= sky_gain
 	mid *= sky_gain
 	horizon *= sky_gain
@@ -462,7 +502,12 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# Dusk and dawn: the gradient hugs the horizon, so the warm band stays
 	# low and the sky above goes ultramarine.
 	var warm_band := smoothstep(-12.0, -4.0, sun_elevation_deg) * (1.0 - smoothstep(4.0, 12.0, sun_elevation_deg))
-	sky_material.set_shader_parameter("horizon_sharpness", lerpf(SKY_SHARPNESS, 5.0, warm_band))
+	sky_material.set_shader_parameter("horizon_sharpness", float(DREAM.get("sharpness", 1.2)) if dream else lerpf(SKY_SHARPNESS, 5.0, warm_band))
+	if dream:
+		_dream_drift += delta * float(DREAM.get("wash_drift", 0.01))
+		sky_material.set_shader_parameter("dream_time", _dream_drift)
+		sky_material.set_shader_parameter("dream_wash_a", _scene_color(_wash_a.sample(t)))
+		sky_material.set_shader_parameter("dream_wash_b", _scene_color(_wash_b.sample(t)))
 
 	sky_material.set_shader_parameter("up_dir", up)
 	sky_material.set_shader_parameter("east_dir", east)
@@ -474,7 +519,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("mid_color", _scene_color(mid))
 	sky_material.set_shader_parameter("horizon_color", _scene_color(horizon))
 	sky_material.set_shader_parameter("sun_dir", sun_dir)
-	sky_material.set_shader_parameter("sun_color", sun_col)
+	sky_material.set_shader_parameter("sun_color", _scene_color(Color(str(DREAM.get("sun_glow", "#FF70C8")))) if dream else sun_col)
 	# The disc: the reference's pale yellow sunset sun, whiter up high.
 	sky_material.set_shader_parameter("sun_disc_color", _scene_color(SUNSET_SUN.lerp(Color(1.0, 0.98, 0.9), smoothstep(6.0, 30.0, sun_elevation_deg))))
 	sky_material.set_shader_parameter("sun_visible", smoothstep(-2.0, 1.0, sun_elevation_deg) * (1.0 - cloud * 0.8))
@@ -515,10 +560,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	painted_shade = painted_shade.lerp(BANDS[1].lerp(BANDS[2], 0.5), sunset * 0.85)
 	painted_shade = painted_shade.lerp(OVERCAST_SHADE * (0.4 + 0.6 * daylight), over * 0.8)
 	painted_shade = painted_shade.lerp(STORM_SKY.darkened(0.45) * (0.4 + 0.6 * daylight), storm * 0.6)
+	if dream:
+		painted_lit = Color(str(DREAM.get("cloud_night_lit", "#5A3AC0"))).lerp(Color(str(DREAM.get("cloud_lit", "#FFD8F0"))), daylight)
+		painted_shade = Color(str(DREAM.get("cloud_night_shade", "#1A0A60"))).lerp(Color(str(DREAM.get("cloud_shade", "#8A4AD0"))), daylight)
 	cloud_light = _scene_color(painted_lit)
 	cloud_shade = _scene_color(painted_shade)
 	sky_material.set_shader_parameter("cloud_lit", cloud_light)
 	sky_material.set_shader_parameter("cloud_shade", cloud_shade)
+	if dream:
+		_update_rush(delta, up, weather.get("wind", Vector3.ZERO), east, north)
 	# Their light's direction turns from the moon to the sun across the
 	# band, at an even pace. The two can point nearly opposite (a full
 	# moon), so it swings over through the local up: moon -> up -> sun.
@@ -553,6 +603,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# night_fog, a luminous blue.
 	var day_fog := horizon.lerp(zenith, 0.5 * warm_band).lerp(FAR_HILLS, smoothstep(4.0, 12.0, sun_elevation_deg))
 	var fog_color := _scene_color(day_fog.lerp(NIGHT_FOG, night)).lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
+	# Under the dream sky distance fades into the sky's own horizon.
+	if dream:
+		fog_color = _scene_color(horizon)
 	# (The day haze thins past the render distance it was tuned at,
 	# ChunkManager.fog_scale(); the fog's far edge, look_draw_m, closes in
 	# on the render distance itself, design §ER.1.)
@@ -577,6 +630,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		# shadow map's last fifth, and back-lit leaves stop glowing.
 		"look_shadow_reach_m": float((LIGHT.get("day_shadows_near", {}) as Dictionary).get("max_m", LIGHT.get("shadow_max_m", 35.0))) if day_shadows() else 0.0,
 		"look_plant_far_shade": _plant_far_shade(),
+		"look_plant_dim": _plant_dim(night),
 		"look_mist_density": mist,
 		"look_mist_scale_m": float(MIST.get("scale_m", 6.0)),
 		"look_fog_start_m": float(RETRO_FOG.get("start_m", 200.0)),
@@ -591,6 +645,79 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("fog_color", fog_color)
 	# Below the horizon (where no ground is drawn): distance, not a dark band.
 	sky_material.set_shader_parameter("ground_color", fog_color)
+
+
+## The crawler's trees after dark (Mike, 6 Nov: light on the trees in the
+## background when it should be night; look.json light.plant_dim). The moon
+## casts no shadow, so a full moon lit the whole forest evenly: x dims every
+## plant's sun and moon light by the night. The sun's shadows stop at
+## day_shadows_near.max_m, so a low sun lit the trees past that line while
+## the near ones went dark: y dims those. The open world keeps 0.
+func _plant_dim(night: float) -> Vector2:
+	if not one_clock:
+		return Vector2.ZERO
+	var D: Dictionary = LIGHT.get("plant_dim", {})
+	var from: Array = D.get("low_sun_deg", [4.0, 12.0])
+	return Vector2(float(D.get("night", 0.85)) * night, float(D.get("low_sun", 1.0)) * (1.0 - smoothstep(float(from[0]), float(from[1]), sun_elevation_deg)))
+
+
+static func _rush() -> Dictionary:
+	return DREAM.get("racing_clouds", {})
+
+
+## The racing clouds: wait, then a front rolls in, stays and clears, its
+## clouds carried along the wind at their own fast pace.
+func _update_rush(delta: float, up: Vector3, wind: Vector3, east: Vector3, north: Vector3) -> void:
+	var R := _rush()
+	var amount := 0.0
+	if bool(R.get("on", true)):
+		if _rush_age < 0.0:
+			if _rush_wait < 0.0:
+				_rush_wait = _rush_pick(R.get("every_s", [240.0, 600.0]))
+			_rush_wait -= delta
+			if _rush_wait <= 0.0:
+				_rush_age = 0.0
+				_rush_last = _rush_pick(R.get("last_s", [60.0, 120.0]))
+		else:
+			_rush_age += delta
+			var ease_s := float(R.get("ease_s", 15.0))
+			amount = smoothstep(0.0, ease_s, _rush_age) * (1.0 - smoothstep(_rush_last - ease_s, _rush_last, _rush_age))
+			if _rush_age >= _rush_last:
+				_rush_age = -1.0
+				_rush_wait = -1.0
+	var along := Vector2(wind.dot(east), wind.dot(north))
+	along = along.normalized() if along.length() > 0.01 else Vector2(0.8, 0.6)
+	_rush_offset -= along * float(R.get("speed", 0.25)) * delta
+	_rush_boil += float(R.get("boil", 0.03)) * delta
+	sky_material.set_shader_parameter("rush_amount", amount)
+	sky_material.set_shader_parameter("rush_offset", _rush_offset)
+	sky_material.set_shader_parameter("rush_boil", _rush_boil)
+	var above := sun_dir if sun_elevation_deg > -4.0 else moon_dir
+	sky_material.set_shader_parameter("rush_light", (above - up * above.dot(up)).normalized() if absf(above.dot(up)) < 0.999 else up)
+	sky_material.set_shader_parameter("rush_lit", _scene_color(Color(str(R.get("night_lit", "#4A4A80"))).lerp(Color(str(R.get("lit", "#F6F2F8"))), daylight)))
+	sky_material.set_shader_parameter("rush_shade", _scene_color(Color(str(R.get("night_shade", "#14102E"))).lerp(Color(str(R.get("shade", "#6A6490"))), daylight)))
+
+
+func _rush_pick(range_s: Array) -> float:
+	return _rush_rng.randf_range(float(range_s[0]), float(range_s[1]))
+
+
+## The dream sky's palette (look.json dream_sky.keys), in _KEYS's shape with
+## its two wash colours after the horizon: [elevation, zenith, mid,
+## horizon, wash a, wash b].
+static func _dream_keys() -> Array:
+	var out := []
+	for k: Array in DREAM.get("keys", []):
+		var row: Array = [float(k[0])]
+		for i in range(1, 6):
+			row.append(Color(str(k[i])))
+		out.append(row)
+	return out
+
+
+## Whether the crawler's surfaces take the dream sky.
+static func dream_on() -> bool:
+	return bool(DREAM.get("on", false))
 
 
 ## The one clock's sun (one_clock; design §FK.3: no latitude, no axial

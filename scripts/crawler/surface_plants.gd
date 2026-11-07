@@ -24,9 +24,11 @@ extends Node3D
 ## stairhead. Never on the cliffs, in the yard, on a stack or a find, or on
 ## ground too steep to hold them; every plant clear_m from the next tree.
 ##
-## Drawn in blocks of BLOCK_M: within near_m of your eye each block's near
-## meshes (the branchy trees' open-grown layouts), past it the far ones
-## (PlantMeshes' impostors), so the far plain stays light. A tree (taller
+## Drawn in blocks of BLOCK_M (plants.block_m under the dream fog): within
+## near_m of your eye each block's near meshes (the branchy trees'
+## open-grown layouts), past it the far ones (PlantMeshes' impostors), so
+## the far plain stays light; past plants.draw_m (the dream fog's wall) a
+## block isn't drawn at all. A tree (taller
 ## than TREE_M) has a trunk you can't walk through. No seasons here (§ET.2):
 ## the deciduous species keep their leaves.
 
@@ -82,6 +84,7 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 	var gnd_in := float(PL.get("ground_within_m", 240.0))
 	var up_from := float(PL.get("upland_from_edge_m", 160.0))
 	var clear := maxf(float(PL.get("clear_m", 3.0)), 0.5)
+	var block_m := float(PL.get("block_m", BLOCK_M))
 	var step := 5.0
 	var cell_ha := step * step / 10000.0
 	# [block key] -> {[species index, layout, near?] -> [Transform3D...]}
@@ -158,7 +161,7 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 			var xf := Transform3D(basis, Vector3(q.x, y, q.y))
 			var idx := SpeciesDB.index_of(sp)
 			var layout := rng.randi_range(0, 2) if TreeLayouts.branchy(sp) else -1
-			var bk := Vector2i(floori((q.x - lo.x) / BLOCK_M), floori((q.y - lo.y) / BLOCK_M))
+			var bk := Vector2i(floori((q.x - lo.x) / block_m), floori((q.y - lo.y) / block_m))
 			if not blocks.has(bk):
 				blocks[bk] = {}
 			var b: Dictionary = blocks[bk]
@@ -176,6 +179,10 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 			(zone_counts[zone] as Dictionary)[sp.name] = int((zone_counts[zone] as Dictionary).get(sp.name, 0)) + 1
 			placed += 1
 	var near_m := maxf(float(PL.get("near_m", 110.0)), 20.0)
+	# A block's range is taken to its middle: its nearest corner must still
+	# be behind the fog when it goes.
+	var draw_m := float(PL.get("draw_m", 0.0))
+	var last_m := draw_m + block_m * 0.71 if draw_m > 0.0 else 0.0
 	var all := SpeciesDB.all()
 	for bk in blocks:
 		var b: Dictionary = blocks[bk]
@@ -204,6 +211,7 @@ func build(land: SurfaceGround, p: Dictionary, biome: Dictionary, seed_value: in
 				mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if sp.tier != PlantSpecies.Tier.GROUND else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			else:
 				mmi.visibility_range_begin = near_m
+				mmi.visibility_range_end = last_m
 				mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(mmi)
 	trees_placed = trees

@@ -247,6 +247,8 @@ static func smooth_shader(sh: Shader) -> Shader:
 		return _smooth[sh]
 	var code := sh.code.replace("vertex_lighting, ", "").replace(", vertex_lighting", "")
 	code = code.replace("filter_nearest_mipmap,", "filter_linear_mipmap_anisotropic,")
+	# The far trees' pictures: blocks in the sky through the dream fog.
+	code = code.replace("sp_impostor : filter_nearest,", "sp_impostor : filter_linear,")
 	code = code.replace("shader_type spatial;", "shader_type spatial;\n#define GLOSSY")
 	var out := Shader.new()
 	out.code = code

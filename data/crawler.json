@@ -714,7 +714,13 @@
    },
    "_help_dress": "(Mike, 26 Oct: 'more fleshed out ... consider the different niches') Each site also has a shelter in its trade's way and its trade's work round it, built by HubCamp._dress: hunter-tanner a hide tent, a hide on a hoop, a skull-and-antler totem, a spear rack, meat over a smoke pit; fisher-weaver a reed hut, a dugout on the bank, a fish-drying line, a fish trap, a basket; woodcutter-firekeeper a bark lean-to, a felled trunk with an axe in it, stumps, kindling bundles, the firekeeper's ember pot; forager-herbalist a thatched hut, a garden bed of strange flowers, gourds on a line, a mortar on a stone; knapper-potter a clay hut, the clay pit, pots drying on a plank, a knapping stone and flakes, the kiln's smoke. Every site has a torch post (torch_energy, torch_range_m) so it reads at dusk.",
    "torch_energy": 0.9,
-   "torch_range_m": 6.0
+   "torch_range_m": 6.0,
+   "folk_torch": {
+    "_help": "(Mike, 6 Nov: 'the villagers should be seen carrying torches ... each of their torches they carry should emit their own light so it really feels like theyre all doing their own stuff'; added by Claude Code, first guesses) After dark each keeper up and about carries a lit torch in the left hand, whatever the right is doing, and puts it by to sit or sleep. energy, range_m: its light, which moves with them. flicker: how much the light shivers (0 steady).",
+    "energy": 1.6,
+    "range_m": 9.0,
+    "flicker": 0.18
+   }
   },
   "log_start": "Dusk at the camp. The fire crackles; the cauldron steams.",
   "log_down": "Down the old steps beneath the fire, into the dark.",

@@ -27,6 +27,15 @@
 // use them. Colors arrive already linear (Look converts them).
 global uniform vec3 look_fog_color;
 global uniform float look_fog_density; // per meter
+// The dream fog (Surface; x 0 off): the sky's own gradient at the point's
+// height in view, so far trees melt into the sky behind them. low, mid, top
+// and x its sharpness are sky.gdshader's horizon_color, mid_color,
+// zenith_color and horizon_sharpness; y its horizon_haze, where it meets
+// look_fog_color.
+global uniform vec3 look_fog_low;
+global uniform vec3 look_fog_mid;
+global uniform vec3 look_fog_top;
+global uniform vec2 look_fog_shape;
 const float look_fog_max = 0.96;
 global uniform vec3 look_up; // viewer's local up
 // Haze thins with altitude (an exponential atmosphere): planet center in
@@ -133,6 +142,17 @@ float look_mist_share(float a0, float a1, float h) {
 	return below + above;
 }
 
+vec3 look_fog_tint(vec3 dir) {
+	if (look_fog_shape.x <= 0.0) {
+		return look_fog_color;
+	}
+	float h = max(dir.y, 0.0);
+	float t = pow(h, 1.0 / look_fog_shape.x);
+	vec3 sky = t < 0.5 ? mix(look_fog_low, look_fog_mid, smoothstep(0.0, 1.0, t * 2.0))
+		: mix(look_fog_mid, look_fog_top, smoothstep(0.0, 1.0, t * 2.0 - 1.0));
+	return mix(sky, look_fog_color, (1.0 - smoothstep(0.0, look_fog_shape.y, h)) * 0.85);
+}
+
 vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 	float dist = distance(world_pos, cam_pos);
 	// Altitudes above the planet (the eye's, the point's).
@@ -157,7 +177,7 @@ vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 		tau += 3.5 * e * e;
 	}
 	float f = min(look_band(1.0 - exp(-tau)), look_fog_max);
-	return vec4(look_fog_color, f);
+	return vec4(look_fog_tint(normalize(world_pos - cam_pos)), f);
 }
 
 // Glow color drifts between teal and cobalt across space and time.

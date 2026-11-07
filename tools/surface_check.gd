@@ -306,7 +306,8 @@ func _look(main: CrawlerMain) -> void:
 	var amb := sky.environment.ambient_light_color
 	var fog: Color = Look._params.get("look_fog_color", Color.BLACK)
 	ok(amb.b > amb.r and amb.b > amb.g, "the shade navy: the ambient #%s" % amb.to_html(false))
-	ok(fog.b > fog.r and fog.b >= fog.g and fog.get_luminance() > amb.get_luminance(), "distance lighter and bluer: the haze #%s over the ambient #%s" % [fog.to_html(false), amb.to_html(false)])
+	# (Under the dream sky distance fades into the sky's own colours instead.)
+	ok(SkySystem.dream_on() or (fog.b > fog.r and fog.b >= fog.g and fog.get_luminance() > amb.get_luminance()), "distance lighter and bluer: the haze #%s over the ambient #%s" % [fog.to_html(false), amb.to_html(false)])
 	world.days = Vents.days_at_solar_hour(keep, 0.0)
 	s._update(0.0)
 	var amb_n := sky.environment.ambient_light_color

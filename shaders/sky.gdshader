@@ -88,6 +88,25 @@ uniform float star_gain = 1.6;
 uniform float speckle_gain = 0.9; // the faint per-pixel speckle
 uniform float band_gain = 0.3;
 
+// The crawler's dream sky (SkySystem.dream; look.json dream_sky): two
+// colours drifting across the gradient in slow warped washes. 0 (the open
+// world) leaves the sky as it was.
+uniform float dream_amount = 0.0;
+uniform float dream_time = 0.0; // the drift, already scaled by its speed
+uniform float dream_scale = 1.6; // above 1: smaller washes
+uniform vec3 dream_wash_a : source_color = vec3(0.1, 0.85, 0.8);
+uniform vec3 dream_wash_b : source_color = vec3(0.5, 0.2, 1.0);
+
+// The racing clouds (SkySystem; look.json dream_sky.racing_clouds): now and
+// then a front of soft, real-looking cloud tears across, over everything.
+uniform float rush_amount = 0.0; // 0 clear, 1 the front at its fullest
+uniform vec2 rush_offset = vec2(0.0); // how far the wind has carried them
+uniform float rush_boil = 0.0; // their shapes changing as they go
+uniform float rush_scale = 3.0; // above 1: smaller clouds
+uniform vec3 rush_light = vec3(0.0, 1.0, 0.0); // where their light comes from
+uniform vec3 rush_lit : source_color = vec3(1.0);
+uniform vec3 rush_shade : source_color = vec3(0.4, 0.38, 0.5);
+
 uniform vec2 glyph_stars[24];
 uniform int glyph_count = 0;
 uniform vec3 glyph_color : source_color = vec3(0.4, 0.7, 1.0);
@@ -125,6 +144,23 @@ float fbm(vec2 p) {
 		a *= 0.5;
 	}
 	return v;
+}
+
+// fbm with finer detail, for the racing clouds' wispy edges.
+float fbm_fine(vec2 p) {
+	float v = 0.0;
+	float a = 0.5;
+	for (int i = 0; i < 6; i++) {
+		v += a * vnoise(p);
+		p = p * 2.03 + vec2(17.0, 9.0);
+		a *= 0.5;
+	}
+	return v;
+}
+
+// The racing clouds' thickness at q: big slow shapes carrying fine detail.
+float rush_density(vec2 q) {
+	return fbm(q * 0.3 + rush_boil) * 0.55 + fbm_fine(q + vec2(rush_boil, -rush_boil)) * 0.45;
 }
 
 vec3 rotate_y(vec3 v, float a) {
@@ -190,6 +226,19 @@ void sky() {
 		col += sun_color * sun_visible * pow(side, 3.0) * (1.0 - smoothstep(0.0, 0.35, h)) * (0.04 + 0.26 * low_sun);
 	} else {
 		col = mix(horizon_color, ground_color, clamp(-h * 4.0, 0.0, 1.0));
+	}
+
+	// The dream washes (not in the radiance cubemap, which lights nothing
+	// here): noise bent by noise, flattened onto a dome so they meet
+	// overhead without a pole, and kept off the lowest degrees so the
+	// horizon stays one clean colour for the land to melt into.
+	if (!AT_CUBEMAP_PASS && dream_amount > 0.001 && h > 0.0) {
+		vec2 q = vec2(dot(d, east_dir), dot(d, north_dir)) / (h + 0.35) * dream_scale;
+		float warp = fbm(q + vec2(dream_time, -0.6 * dream_time));
+		float w = fbm(q * 0.7 + warp * 1.8 - vec2(0.5 * dream_time, 0.3 * dream_time));
+		float rise = smoothstep(0.0, 0.18, h) * dream_amount;
+		col = mix(col, dream_wash_a, smoothstep(0.44, 0.74, w) * rise);
+		col = mix(col, dream_wash_b, (1.0 - smoothstep(0.26, 0.5, w)) * rise);
 	}
 
 	// Sun: a big soft disc, bright in the middle and fading out to its
@@ -345,6 +394,24 @@ void sky() {
 		// (CloudLayers).
 		near_c.a *= 1.0 - smoothstep(0.28, 0.55, el);
 		col = mix(col, near_c.rgb, near_c.a * fade);
+	}
+
+	// The racing clouds: a flat layer overhead seen in perspective, so they
+	// bunch toward the horizon and fly fastest above you. Thickness against
+	// a step toward the light gives the lit tops and dark bellies.
+	if (!AT_CUBEMAP_PASS && rush_amount > 0.001 && h > 0.01) {
+		vec2 q = vec2(dot(d, east_dir), dot(d, north_dir)) / (h + 0.12) * rush_scale + rush_offset;
+		float n = rush_density(q);
+		float edge = mix(0.66, 0.47, rush_amount);
+		float thick = smoothstep(edge, edge + 0.2, n);
+		if (thick > 0.001) {
+			vec2 to_light = vec2(dot(rush_light, east_dir), dot(rush_light, north_dir));
+			float lit = clamp(0.6 + (n - rush_density(q + to_light * 0.3)) * 6.0, 0.0, 1.0);
+			vec3 c = mix(rush_shade, rush_lit, lit);
+			float sc = max(dot(d, sun_dir), 0.0);
+			c += sun_color * sun_visible * pow(sc, 10.0) * (1.0 - thick * 0.6) * 0.7;
+			col = mix(col, c, thick * smoothstep(0.01, 0.12, h) * min(rush_amount * 3.0, 1.0));
+		}
 	}
 
 	// Lightning lights the whole sky for an instant.

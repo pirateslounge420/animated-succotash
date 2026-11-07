@@ -39,6 +39,12 @@
   "blob_shadows": false,
   "rake_max_deg": 38.0,
   "rake_bias": 0.45,
+  "plant_dim": {
+   "_help": "(Mike, 6 Nov: 'light on the trees in the background when it should be night'; added by Claude Code, first guesses; the crawler only) How much sun and moon light trees and plants lose after dark. night: 0-1 for all of them, by how dark it is (a full moon has no shadows, so it lit the whole forest evenly; 0 is the old look, 1 no moonlight on trees at all). low_sun: 0-1 for the trees past the sun's shadows (day_shadows_near.max_m), which stayed sunlit at dusk while the near ones went dark. low_sun_deg: it comes in as the sun drops from the second number of degrees to the first.",
+   "night": 0.85,
+   "low_sun": 1.0,
+   "low_sun_deg": [4.0, 12.0]
+  },
   "day_shadows_near": {
    "enabled": true,
    "max_m": 35.0,
@@ -820,6 +826,55 @@
  "occlusion": {
   "on": false
  },
+ "dream_sky": {
+  "_help": "(Mike, 6 Nov: 'i want the game to feel more dream like so please adjust the sky to be an un-natural color with gradients'; added by Claude Code, first guesses, Mike judges them on screen) The crawler's sky at every hour, up top in the hub and the realms; the open world's sky never reads this. on: false brings back the old blue sky. keys: by the sun's height in degrees, [elevation, zenith, mid, horizon, wash a, wash b], blended between rows; the first row must be -18 and the last 40. The sky runs zenith to mid to horizon; the far land fades into the horizon colour. wash: how strongly the two wash colours drift over that gradient (0 none, 1 solid); wash_scale: above 1 for smaller patches; wash_drift: how fast they move. sharpness: where the gradient sits (lower brings the horizon colour higher up the sky). sun_glow: the glow round the sun and on the clouds near it. cloud_*: the painted clouds by day and by night. star_gain / speckle_gain: the bright stars and the faint speckle, dimmed so the night's gradient shows through. No amber or orange in the palette, so fire stays the one warm light (§EX.6). Restart after editing.",
+  "on": true,
+  "fog": {
+   "_help": "(Mike, 6 Nov: 'perhaps to cut lag we can implement fog so its harder to see into the distance and stuff feels more ambient'; added by Claude Code, first guesses, Mike judges them on screen) The crawler's fog up top, in the sky's own horizon colour, so the far wood dissolves into the dream. on: false brings back the long view. clear_m: the clear ground round you before it starts. density: how quickly it thickens past clear_m. far_m: the wall in a realm, past which nothing shows; hub_far_m: the same in the hub camp. night_color_share: how much of the sky's colour the fog near the ground keeps at full night (lower is darker, so the dark stays dark). Higher up it takes the sky's own colour behind it, so far trees melt into the gradient and never paint over it; sky_band: how high the low fog colour reaches up the sky (0 to 1, straight up). Plants past the fog are not drawn at all, which is where the frame time comes back: plant_block_m is the size of the patches they are drawn and dropped in (smaller drops them closer to the fog line but makes more patches), plant_near_m where trees go from full models to flat pictures. Restart after editing.",
+   "on": true,
+   "clear_m": 8.0,
+   "density": 0.03,
+   "far_m": 110.0,
+   "hub_far_m": 75.0,
+   "night_color_share": 0.22,
+   "sky_band": 0.14,
+   "plant_block_m": 32.0,
+   "plant_near_m": 48.0
+  },
+  "wash": 0.4,
+  "wash_scale": 1.6,
+  "wash_drift": 0.01,
+  "sharpness": 1.2,
+  "star_gain": 0.7,
+  "speckle_gain": 0.4,
+  "sun_glow": "#FF70C8",
+  "cloud_lit": "#FFD8F0",
+  "cloud_shade": "#8A4AD0",
+  "cloud_night_lit": "#5A3AC0",
+  "cloud_night_shade": "#1A0A60",
+  "racing_clouds": {
+   "_help": "(Mike, 6 Nov: 'we also want some cloud one occassion that look more like real life moving fast'; first guesses) Now and then a front of soft, realistic cloud races across the dream sky along the wind, then clears. on: false for none. every_s: the wait between fronts, a random number of real seconds in this range. last_s: how long a front stays. ease_s: how long it takes to roll in and to clear. speed: how fast they fly. boil: how fast their shapes change as they go. scale: above 1 for smaller clouds. lit / shade: their tops and bellies by day, night_lit / night_shade by night, near real cloud colours on purpose.",
+   "on": true,
+   "every_s": [240.0, 600.0],
+   "last_s": [60.0, 120.0],
+   "ease_s": 15.0,
+   "speed": 0.25,
+   "boil": 0.03,
+   "scale": 3.0,
+   "lit": "#E4E0F0",
+   "shade": "#6A6490",
+   "night_lit": "#4A4A80",
+   "night_shade": "#14102E"
+  },
+  "keys": [
+   [-18.0, "#2C0468", "#8A0CA0", "#12C8A8", "#10B0A0", "#C014B8"],
+   [-8.0, "#300880", "#9A12A8", "#14C8A8", "#14B8A8", "#C018C0"],
+   [-3.0, "#2A0A8C", "#B01C9C", "#FF5FA8", "#18B8B0", "#7A2CFF"],
+   [2.0, "#2B0B9E", "#D4189A", "#FF8FB8", "#18D8C8", "#7A2CFF"],
+   [12.0, "#7A12D8", "#E83AA8", "#7FF0D0", "#30E8D8", "#FF4FC0"],
+   [40.0, "#7A12D8", "#E83AA8", "#7FF0D0", "#30E8D8", "#FF4FC0"]
+  ]
+ },
  "glossy": {
   "_help": "(design §GB, 25 Oct, Mike: 'i want the high contrast smooth glossy look more than the pixelated one'; queue 111) The crawler's look presets. crawler_preset picks one: 'glossy' (§GB, the default) or 'pixel' (§ES/§EU's 3D pixel art: render.*, retro.*, the dither; kept, nothing deleted). LOOK=pixel or LOOK=glossy in the environment overrides it for one run. The open world (torchfire2) never reads this block. Glossy: the frame is the window's own size (no fixed internal frame, no nearest upscale; the HUD still lays out at render's 854x480 and scales smoothly), no dither, grain or bleed, smooth textures, gloss, bloom and indigo fog. Every number below is a first guess from §GB.1-4; Mike tunes by play. Restart after editing.",
   "crawler_preset": "glossy",
@@ -827,7 +882,9 @@
    854,
    480
   ],
-  "_help_hud_reference": "The size the HUD is laid out at; it is scaled smoothly to the window (Godot's canvas_items stretch). The 3D is drawn at the window's full resolution.",
+  "render_lines": 1000,
+  "_help_render_lines": "(Mike, 6 Nov: 'the game is laggy'; added by Claude Code) The most lines the 3D is drawn at. A Retina window has far more pixels than the graphics chip can fill (2880x1694 on Mike's M1, 61 ms a frame in the hub), so past this height the 3D is drawn smaller and scaled up smoothly; the HUD stays sharp at the window's own size. Higher is sharper and slower. 0 draws at the window's full size.",
+  "_help_hud_reference": "The size the HUD is laid out at; it is scaled smoothly to the window (Godot's canvas_items stretch). The 3D is drawn at the window's full resolution, up to render_lines.",
   "stone": {
    "_help": "The ruin stone (one shader for walls, floors, hearth, pots, gates: shaders/ruin.gdshader built with GLOSSY). Textures filtered linear with every mip and 16x anisotropy. normal_depth_m: the bump drawn from each tile's own brightness (bright texels stand proud, dark ones sink; derivative bump mapping in the shader, so no normal-map files: the tiles ARE the height maps), in metres of relief; 0 flat. roughness_wall / roughness_floor: wet stone, low = sharper, brighter glints (§GB.4: 0.15-0.4); floors are wetter. roughness_moss: moss and timber, matte. specular: the glint's strength (0.5 is Godot's plain default). rim: a soft edge sheen from the lights (Godot's RIM), so walls separate from the dark.",
    "normal_depth_m": 0.012,

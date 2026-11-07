@@ -4,6 +4,33 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-11-06 — Dream fog, the lag, the river, and the keepers' torches
+
+Mike, from the hub: the game is laggy, the keepers walk about with nothing in hand, and a "blue ribbon" runs across the base camp; then "perhaps to cut lag we can implement fog". No design section yet; help text cites "Mike, 6 Nov".
+
+- **The lag.** Measured on Mike's M1 at his Retina window (2880x1694): 61 ms a frame in the hub, all on the graphics chip. About half was the plants, about half the pixels; the dream sky cost under 5 ms and the post grade about 2.5. Now 21 ms at night and 24 ms by day in the hub, about 17 ms in the first realm (a realm was not measured before). The run was the debug build from the command line, seed 7.
+- **Dream fog** (`look.json dream_sky.fog`; `Surface.fog()`, `fog_far_m()`, `fog_plants()`): a wall at 75 m in the hub and 110 m in a realm. The shaders' far edge (`look_draw_m`) was already there and switched off up top. It takes the sky's own gradient at each point's height (`look_fog_tint`; `fog_aerial_perspective` for the props), because a flat fog colour painted the far trees over the sky up to about 35°. Near the ground at night it darkens (`night_color_share`). `look_fog_shape` is 0 in the open world and below ground, so neither changes.
+- **Plants behind the fog aren't drawn** (`SurfacePlants`: `block_m` 32, `near_m` 48, `draw_m`). The camera's far plane comes in to 1.6x the fog. The far trees' pictures are now filtered smoothly under glossy; they showed as blocks in the sky.
+- **The 3D is capped at 1000 lines** (`look.json glossy.render_lines`, `Display._fit_3d`): bilinear upscale, HUD still sharp at the window's size. This softens the 3D on Retina screens, and it applies below ground too.
+- **The river** was a flat glowing strip, so it stayed full blue in the dark. Now `shaders/hub_river.gdshader`: holds the sky's colour, dark at night with a teal shimmer, ripples running downstream, soft banks, a mirror's shine for firelight.
+- **The keepers' torches** (`HubWorkView._make_torch`, `_carry_torch`; `crawler.json hub.keepers.folk_torch`): after dark each keeper up and about holds a lit pitch torch in the left hand with its own flickering light (no shadows), and puts it by to sit or sleep. The right hand keeps what it carries.
+
+Checks: `hub_check` and `area_check` 0 fails; `shader_varying_check.py` OK. `hub_work_check` matches the last commit on seeds 7, 11 and 23 (0, 2 and 2 fails, the same on both). `surface_check` hits its time limit before finishing on both, with 18 fails at the last commit; the one new fail, "distance lighter and bluer", now passes under the dream sky by design (`tools/surface_check.gd`). Frames checked by eye at dusk, night and day: the hub spawn, the river, a keeper away from the fire, and a realm by day. Not yet played by Mike.
+
+## 2026-11-06 — The dream sky, racing clouds, and the trees dark after dark (Claude Code)
+- **Mike** (6 Nov): make the game feel more dreamlike with an unnatural sky in gradients; add occasional real-looking clouds moving fast; fix the light on the background trees at night.
+- **What Mike sees:**
+  - Up top in the hub and the realms, the sky runs through colours no real sky has, by the sun's height: indigo, magenta and pink at dusk; violet, pink and mint by day; deep violet, magenta and teal at night. Teal and violet washes drift slowly over it. Far land fades into the horizon colour. The painted clouds take pinks and violets and are drawn smooth.
+  - Every 4 to 10 minutes a front of soft, real-looking cloud rolls in over 15 seconds, races along the wind for a minute or two, and clears.
+  - Trees stay dark at night, even under a full moon, and the moon's light lands on the ground. At dusk the far trees no longer stay lit while the near ones go dark.
+- **Built:** `sky.gdshader` (the washes, the racing clouds; both off unless set), `SkySystem.dream` (set by `Surface` and `HubCamp`), `_update_rush`, `_plant_dim`. New global `look_plant_dim`, read in `foliage.gdshader` through the cloud-shade dimmer. `look.json`: `dream_sky` (with `racing_clouds`) and `light.plant_dim`. The open world's sky and trees are unchanged.
+- **The tree bug had two causes:** the moon casts no shadow, so a full moon lit the whole forest evenly (tree band 0.18 against 0.04 on a moonless night; now 0.05). And the sun's shadows stop at 35 m, so at low sun the trees past that line stayed lit (0.25 at +6°, 0.11 at +3°; now about 0.05).
+- **Checks:** rendered frames at dusk, day, blue hour, night and full moon on Mike's Mac. `hub_check`: 0 fails. `day_shift_check`: 0 fails in a full run before the clouds and the tree fix; on the final code 20 passes and no fails before a 280-second limit stopped it. `daylight_check` 0 fails (before the clouds and the tree fix). `day_accents_check` printed 0 fails, then didn't exit within the limit. `shader_varying_check`: within the limit.
+- **For Mike (your calls):**
+  - (1) The palette has no amber, so fire stays the one warm light (§EX.6), but this does overrule "blue owns the frame" (§ES) up top. `dream_sky.on` false brings back the old sky.
+  - (2) The cloud speed is a first guess, judged from stills only: `racing_clouds.speed`, and `every_s` for how often.
+  - (3) The moon still lights the ground brightly at full moon. Tell me if you want that dimmer too. `light.plant_dim.night` sets how dark the trees go.
+
 ## 2026-11-02 — A retro look to try: glossy's colours in pixels (Claude Code; preview, not locked)
 - **Mike** (2 Nov) sent a retro low-poly art spec (point-filtered pixel textures, low poly, optional PS1 jitter), chose "full retro, replace §GB" and tribal props (§GB.2 stands), asked to see it before locking, then: "i want the colors to be more like it used to be".
 - **Built:** a third crawler look, `retro` (`LOOK=retro`, or `look.json → glossy → crawler_preset: "retro"`): §GB's colours (the grade, tonemap, bloom, indigo haze, the fire's light) with the pixel look's 480-line frame and nearest upscale, crisp nearest tiles, no gloss, bump or specular, and the banded pixel flame. `GlossyLook.retro` / `GlossyLook.smooth()`; display, hub camp, campfire and ruin stone ask `smooth()` instead of `active`.
